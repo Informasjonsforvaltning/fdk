@@ -1,6 +1,7 @@
-FROM tomcat:8-jre8-alpine
+FROM tomcat:8-jre8
 
 ENV TZ=Europe/Oslo
+ENV CATALINA_OPTS="-Xmx2048m"
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 RUN mkdir /usr/local/tomcat/fusekiDownloadTemp

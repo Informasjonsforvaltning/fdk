@@ -192,10 +192,16 @@ public class CrawlerRestController {
         logger.info("HARVEST ALL - " + Calendar.getInstance().getTime().toString());
 
         logger.debug("Start Crawler Job for each dcat source");
-        List<DcatSource> dcatSources = getDcatSources();
-        for (DcatSource dcatSource : dcatSources) {
+
+        for (DcatSource dcatSource : adminDataStore.getDcatSources()) {
+            logger.info("STARTING CRAWLERJOB {}", dcatSource.getUrl());
+
             CrawlerJob job = crawlerJobFactory.createCrawlerJob(dcatSource);
-            crawler.execute(job);
+            try {
+                crawler.execute(job).get();
+            } catch (Exception e) {
+                logger.error("EXECUTION ERROR ", e);
+            }
         }
     }
 

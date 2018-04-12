@@ -31,11 +31,42 @@ public class AdminDataStore {
 		this.fuseki = fuseki;
 	}
 
+	public List<DcatSource> getDcatSourceUrls() {
+
+		ResultSet resultSet = fuseki.select("PREFIX  difiMeta: <http://dcat.difi.no/metadata/>\n" +
+				"PREFIX  dct:  <http://purl.org/dc/terms/>\n" +
+				"PREFIX  foaf: <http://xmlns.com/foaf/0.1/>\n" +
+				"SELECT ?dcatsrc ?url ?org ?user ?graph\n" +
+				"WHERE\n" +
+				" { \t?user  difiMeta:dcatSource ?dcatsrc.\n" +
+				"\t?dcatsrc difiMeta:orgnumber ?org;\n" +
+				"\t\tdifiMeta:url ?url;\n" +
+				"    \tdifiMeta:graph ?graph.\n" +
+				"}");
+
+		List<DcatSource> result = new ArrayList<>();
+
+		while (resultSet.hasNext()) {
+			QuerySolution qs = resultSet.next();
+			DcatSource dcatSource = new DcatSource();
+			dcatSource.setId(qs.get("dcatsrc").asResource().getURI());
+			dcatSource.setUrl(qs.get("url").asLiteral().getString());
+			dcatSource.setUser(qs.get("user").asResource().getURI());
+			dcatSource.setOrgnumber(qs.get("org").asLiteral().getString());
+			dcatSource.setGraph(qs.get("graph").asLiteral().getString());
+
+			logger.debug("dcatSource: {}", dcatSource.toString());
+			result.add(dcatSource);
+		}
+
+		return result;
+	}
+
 	/**
 	 * @return
 	 */
 	public List<DcatSource> getDcatSources() {
-		logger.trace("Listing all dcat sources");
+		logger.debug("Listing all dcat sources");
 		List<DcatSource> dcatSources = new ArrayList<>();
 
 		Map<String, String> map = new HashMap<>();
@@ -394,7 +425,10 @@ public class AdminDataStore {
 		String sparqlMessage = "";
 		if (message != null) {
 			sparqlMessage = "rdfs:comment ?message;";
-			map.put("message", message);
+
+			// max 250 characters TODO XXX - parameterize
+			String croppedMessage =  message.length() < 250 ? message : message.substring(0, 250);
+			map.put("message", croppedMessage);
 		}
 
 		String query = String.join("\n", "insert {", "     graph <http://dcat.difi.no/usersGraph/> {",

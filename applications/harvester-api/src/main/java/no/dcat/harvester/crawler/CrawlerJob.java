@@ -310,8 +310,7 @@ public class CrawlerJob implements Runnable {
                 status[0] = error.getRuleSeverity();
                 message[0] = error.toString();
                 logger.error(msg);
-            }
-            if (error.isWarning()) {
+            } else if (error.isWarning()) {
                 warnings[0]++;
                 if (status[0] != ValidationError.RuleSeverity.error) {
                     status[0] = error.getRuleSeverity();

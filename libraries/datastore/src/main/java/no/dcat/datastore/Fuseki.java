@@ -10,10 +10,18 @@ import org.apache.jena.util.FileManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.InetAddress;
+import java.net.Socket;
+import java.net.URL;
+import java.net.UnknownHostException;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 public class Fuseki {
 
+	public static final int FUSEKI_TIMEOUT = 20;
 	private String serviceUri;
 	private String updateServiceUri;
 	private final Logger logger = LoggerFactory.getLogger(Fuseki.class);
@@ -26,7 +34,7 @@ public class Fuseki {
 	);
 
 	public Fuseki(String serviceUri) {
-		logger.info("Connecting to Fuseki at {}", serviceUri);
+		logger.info("Endpoint for Fuseki is {}", serviceUri);
 		if (serviceUri.endsWith("/")) {
 			serviceUri = serviceUri.substring(0, serviceUri.length() - 1);
 		}
@@ -43,12 +51,33 @@ public class Fuseki {
 				.stream()
 				.forEach((key) -> p.setLiteral(key, map.get(key)));
 
+		logger.debug("sparqlUpdate: " + p.toString());
+		logger.info("Updating fuseki: {}", updateServiceUri);
+
 		try{
+
 			UpdateExecutionFactory.createRemoteForm(UpdateFactory.create(p.toString()), updateServiceUri).execute();
 
 		}catch (QueryParseException e){
 			logger.warn("Error parsing query: p={}", p.toString());
 			throw  e;
+		}
+	}
+
+
+	public static boolean isReachable(String targetUrl) throws IOException
+	{
+		HttpURLConnection httpUrlConnection = (HttpURLConnection) new URL(targetUrl).openConnection();
+		httpUrlConnection.setRequestMethod("HEAD");
+
+		try
+		{
+			int responseCode = httpUrlConnection.getResponseCode();
+
+			return responseCode == HttpURLConnection.HTTP_OK;
+		} catch (UnknownHostException noInternetConnection)
+		{
+			return false;
 		}
 	}
 
@@ -61,9 +90,9 @@ public class Fuseki {
 
 		Query query = QueryFactory.create(p.toString());
 
-		logger.trace(query.toString());
-		
-		return QueryExecutionFactory.sparqlService(serviceUri, query).execSelect();
+		logger.debug("Fuseki:select: {}", query.toString());
+
+		return getQueryExecution(query).execSelect();
 	}
 
 	public boolean ask(String query) {
@@ -71,6 +100,8 @@ public class Fuseki {
 
 		QueryExecution q = QueryExecutionFactory.sparqlService(serviceUri,
 				prefixes + query);
+		q.setTimeout(FUSEKI_TIMEOUT, TimeUnit.SECONDS);
+
 		return q.execAsk();
 	}
 	
@@ -84,17 +115,23 @@ public class Fuseki {
 		Query query = QueryFactory.create(p.toString());
 		
 		logger.trace(query.toString());
-		
+
+		return getQueryExecution(query).execAsk();
+
+	}
+
+	private QueryExecution getQueryExecution(Query query) {
 		QueryExecution q = QueryExecutionFactory.sparqlService(serviceUri,
 				query);
-		return q.execAsk();
+		q.setTimeout(FUSEKI_TIMEOUT, TimeUnit.SECONDS);
+
+		return q;
 	}
 
 	public void update(String name, Model model) {
 		logger.info("Updating graph {} with data", name);
+
 		DatasetAccessor accessor = DatasetAccessorFactory.createHTTP(serviceUri);
-
-
 		accessor.putModel(name, model);
 	}
 
@@ -114,6 +151,8 @@ public class Fuseki {
 		logger.trace(query);
 		QueryExecution q = QueryExecutionFactory.sparqlService(serviceUri,
 				prefixes + query);
+		q.setTimeout(FUSEKI_TIMEOUT, TimeUnit.SECONDS);
+
 		Model model = q.execConstruct();
 
 		return model;
@@ -124,23 +163,13 @@ public class Fuseki {
 
 		QueryExecution q = QueryExecutionFactory.sparqlService(serviceUri,
 				prefixes + query);
+		q.setTimeout(FUSEKI_TIMEOUT, TimeUnit.SECONDS);
+
 		ResultSet results = q.execSelect();
 
 		return results;
 	}
 
-	public static void main(String[] args) {
-		String serviceURI = "http://localhost:3030/fuseki/dcat";
-		Fuseki fusekiController = new Fuseki(serviceURI);
-
-		Model model = FileManager.get().loadModel("data.jsonld");
-
-		fusekiController.update("http://dcat.difi.no/test", model);
-
-		Model model2 = fusekiController.construct("construct {?s ?p ?o} where {?s ?p ?o}");
-
-		model2.getWriter("TURTLE").write(model2, System.out, null);
-	}
 
 	public Model describe(String sparql, Map<String, String> map) {
 
@@ -153,7 +182,7 @@ public class Fuseki {
 		Query query = QueryFactory.create(p.toString());
 		logger.debug("describe: {} --> {}", serviceUri, query.toString());
 
-		return QueryExecutionFactory.sparqlService(serviceUri, query).execDescribe();
+		return getQueryExecution(query).execDescribe();
 	}
 
 	public Model graph(String graphName) {
