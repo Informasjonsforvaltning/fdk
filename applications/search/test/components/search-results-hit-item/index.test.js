@@ -5,7 +5,6 @@ import datasets from '../../fixtures/datasets';
 
 let defaultProps;
 
-
 test('should render SearchHitItem NON_PUBLIC correctly', () => {
   defaultProps = {
     result: datasets[0]
@@ -30,7 +29,6 @@ test('should render SearchHitItem PUBLIC correctly', () => {
   expect(wrapper).toMatchSnapshot();
 });
 
-
 test('should render SearchHitItem with no title, description, accessRights and distribution with no format correctly', () => {
   defaultProps = {
     result: datasets[3]
@@ -38,4 +36,3 @@ test('should render SearchHitItem with no title, description, accessRights and d
   const wrapper = shallow(<SearchHitItem {...defaultProps} />);
   expect(wrapper).toMatchSnapshot();
 });
-

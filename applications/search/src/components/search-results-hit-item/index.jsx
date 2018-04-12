@@ -105,7 +105,7 @@ const SearchHitItem = props => {
 
   // Read fields from search-hit, use correct selectedLanguageCode field if specified.
   const hitId = encodeURIComponent(_source.id);
-  let { title, description, objective } = _source;
+  let { title, description, objective, provenance } = _source;
   if (title) {
     title = getTranslateText(_source.title, selectedLanguageCode);
   }
@@ -169,7 +169,13 @@ const SearchHitItem = props => {
         Søketreff.
       </span>
       <div className="fdk-container-search-hit">
-        <h2>{title}</h2>
+        <h2 className="inline-block">{title}</h2>
+        {provenance &&
+          provenance.code === 'NASJONAL' && (
+            <span className="fdk-label fdk-label-right">
+              {localization.search_hit.NationalBuildingBlock}
+            </span>
+          )}
         <div className="fdk-dataset-themes">
           {renderPublisher(_source)}
           {renderThemes(_source, selectedLanguageCode)}
