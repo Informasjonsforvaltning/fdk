@@ -33,6 +33,7 @@ import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.Statement;
 import org.apache.jena.rdf.model.StmtIterator;
 import org.apache.jena.vocabulary.RDF;
+import org.elasticsearch.action.admin.cluster.health.ClusterHealthResponse;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.action.get.GetRequest;
@@ -40,6 +41,7 @@ import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Client;
+import org.elasticsearch.cluster.health.ClusterHealthStatus;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.ConstantScoreQueryBuilder;
 import org.elasticsearch.index.query.ExistsQueryBuilder;
@@ -151,19 +153,26 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
             indexWithElasticsearch(dcatSource, model, elasticsearch, validationResults);
 
             logger.info("Submitted bulk requests");
+            long startTime = System.currentTimeMillis();
 
-            Thread.sleep(10000);
-            if (elasticsearch.elasticsearchStatus() != null)
-                logger.info("Elastisearch status {}", elasticsearch.elasticsearchStatus().toString());
+            waitForElasticToGoGreen(elasticsearch);
 
-        } catch (InterruptedException e) {
-            logger.error("INTERRUPTED");
+            long waitTime = (System.currentTimeMillis() - startTime) / 1000;
+            logger.info("Elastic is ready after {}s busy indexing", waitTime);
+
+
         } catch (Exception e) {
             logger.error("Exception: " + e.getMessage(), e);
             throw e;
         }
 
 
+    }
+
+    void waitForElasticToGoGreen(Elasticsearch elasticsearch) {
+        elasticsearch.getClient().admin().cluster().prepareHealth()
+                .setWaitForGreenStatus()
+                .execute().actionGet();
     }
 
     DcatReader getReader(Model model) {
@@ -354,7 +363,6 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
 
     /**
      * Add extra fields to the dataset to help visualization.
-     * <p>
      * <p>Assume that description contains basic htmltags. Swap description and descriptionFormatted and clean description. </p>
      *
      * @param dataset the dataset to enhance.
@@ -629,11 +637,13 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         logger.info("Found {} harvest records to nullify ", recordsWithNoChange.size());
 
         recordsWithNoChange.forEach(record -> {
-            String recordId = recordIdMap.get(record);
-            logger.debug("nullify: {} harvested at {}", recordId, dateFormat.format(record.getDate()));
-            record.setDataset(null);
-            record.setValidationStatus(null);
-            bulkRequest.add(createBulkRequest(HARVEST_INDEX, "dataset", recordId, record, gson));
+            if (record.getDataset() != null) {
+                String recordId = recordIdMap.get(record);
+                logger.debug("nullify: {} harvested at {}", recordId, dateFormat.format(record.getDate()));
+                record.setDataset(null);
+                record.setValidationStatus(null);
+                bulkRequest.add(createBulkRequest(HARVEST_INDEX, "dataset", recordId, record, gson));
+            }
         });
 
         return lastChangedRecord;
@@ -843,7 +853,8 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
             ValidationStatus vs = new ValidationStatus();
             vs.setWarnings((int) messages.stream().filter(m -> m.contains("validation_warning")).count());
             vs.setErrors((int) messages.stream().filter(m -> m.contains("validation_error")).count());
-            vs.setValidationMessages(messages);
+            List <String> croppedMessages = messages.size() < 10 ? messages : messages.subList(0,10);
+            vs.setValidationMessages(croppedMessages); // only 10 messages stored TODO PARAMETERIZE
 
             return vs;
         }

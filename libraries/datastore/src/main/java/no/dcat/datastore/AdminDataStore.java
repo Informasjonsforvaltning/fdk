@@ -425,7 +425,10 @@ public class AdminDataStore {
 		String sparqlMessage = "";
 		if (message != null) {
 			sparqlMessage = "rdfs:comment ?message;";
-			map.put("message", message);
+
+			// max 250 characters TODO XXX
+			String croppedMessage = 250 < message.length() ? message : message.substring(0,250);
+			map.put("message", croppedMessage);
 		}
 
 		String query = String.join("\n", "insert {", "     graph <http://dcat.difi.no/usersGraph/> {",

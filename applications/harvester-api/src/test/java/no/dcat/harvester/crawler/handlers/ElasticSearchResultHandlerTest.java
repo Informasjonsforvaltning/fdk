@@ -132,6 +132,7 @@ public class ElasticSearchResultHandlerTest {
         ElasticSearchResultHandler spyHandler = spy(resultHandler);
         doReturn(elasticsearch).when(spyHandler).createElasticsearch();
         doNothing().when(spyHandler).indexWithElasticsearch(Matchers.any(), Matchers.any(), Matchers.any(), Matchers.any());
+        doNothing().when(spyHandler).waitForElasticToGoGreen(anyObject());
 
         spyHandler.process(dcatSource, model, Collections.emptyList());
     }

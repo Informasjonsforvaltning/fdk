@@ -10,7 +10,14 @@ import org.apache.jena.util.FileManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.InetAddress;
+import java.net.Socket;
+import java.net.URL;
+import java.net.UnknownHostException;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 public class Fuseki {
 
@@ -26,7 +33,7 @@ public class Fuseki {
 	);
 
 	public Fuseki(String serviceUri) {
-		logger.info("Connecting to Fuseki at {}", serviceUri);
+		logger.info("Endpoint for Fuseki is {}", serviceUri);
 		if (serviceUri.endsWith("/")) {
 			serviceUri = serviceUri.substring(0, serviceUri.length() - 1);
 		}
@@ -47,11 +54,29 @@ public class Fuseki {
 		logger.info("Updating fuseki: {}", updateServiceUri);
 
 		try{
+
 			UpdateExecutionFactory.createRemoteForm(UpdateFactory.create(p.toString()), updateServiceUri).execute();
 
 		}catch (QueryParseException e){
 			logger.warn("Error parsing query: p={}", p.toString());
 			throw  e;
+		}
+	}
+
+
+	public static boolean isReachable(String targetUrl) throws IOException
+	{
+		HttpURLConnection httpUrlConnection = (HttpURLConnection) new URL(targetUrl).openConnection();
+		httpUrlConnection.setRequestMethod("HEAD");
+
+		try
+		{
+			int responseCode = httpUrlConnection.getResponseCode();
+
+			return responseCode == HttpURLConnection.HTTP_OK;
+		} catch (UnknownHostException noInternetConnection)
+		{
+			return false;
 		}
 	}
 
@@ -95,9 +120,8 @@ public class Fuseki {
 
 	public void update(String name, Model model) {
 		logger.info("Updating graph {} with data", name);
+		
 		DatasetAccessor accessor = DatasetAccessorFactory.createHTTP(serviceUri);
-
-
 		accessor.putModel(name, model);
 	}
 
@@ -156,7 +180,10 @@ public class Fuseki {
 		Query query = QueryFactory.create(p.toString());
 		logger.debug("describe: {} --> {}", serviceUri, query.toString());
 
-		return QueryExecutionFactory.sparqlService(serviceUri, query).execDescribe();
+		QueryExecution qexec = QueryExecutionFactory.sparqlService(serviceUri, query);
+		qexec.setTimeout(20, TimeUnit.SECONDS);
+
+		return qexec.execDescribe();
 	}
 
 	public Model graph(String graphName) {
