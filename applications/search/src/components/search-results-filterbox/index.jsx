@@ -7,11 +7,11 @@ import localization from '../localization';
 import FilterOption from '../search-results-filterbox-option';
 import './index.scss';
 
-class FilterBox extends React.Component {
+export default class FilterBox extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      openFilter: true, // (props.activeFilter && props.activeFilter !== '') ? true : false,
+      openFilter: true,
       open: false
     };
     this.toggleFilter = this.toggleFilter.bind(this);
@@ -63,7 +63,7 @@ class FilterBox extends React.Component {
               <Collapse in={open}>
                 <div>{options(buckets.slice(5))}</div>
               </Collapse>
-              <button onClick={this.toggleList}>
+              <button className="fdk-toggleList" onClick={this.toggleList}>
                 {open
                   ? localization.facet.showfewer
                   : localization.facet.showmore}
@@ -86,7 +86,7 @@ class FilterBox extends React.Component {
     return (
       <div className="fdk-panel--filter">
         <div className="fdk-panel__header">
-          <button className="p-0" onClick={this.toggleFilter}>
+          <button className="fdk-toggleFilter p-0" onClick={this.toggleFilter}>
             <i className={collapseIconClass} />
             <span>{title}</span>
           </button>
@@ -117,4 +117,4 @@ FilterBox.propTypes = {
   themesItems: PropTypes.object
 };
 
-export default FilterBox;
+// export default FilterBox;

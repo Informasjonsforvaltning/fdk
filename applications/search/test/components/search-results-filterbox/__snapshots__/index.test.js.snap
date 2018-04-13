@@ -1,0 +1,452 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render FilterBox correctly 1`] = `
+<div
+  className="fdk-panel--filter"
+>
+  <div
+    className="fdk-panel__header"
+  >
+    <button
+      className="fdk-toggleFilter p-0"
+      onClick={[Function]}
+    >
+      <i
+        className="fa mr-2 fa-angle-up"
+      />
+      <span>
+        Testbox
+      </span>
+    </button>
+  </div>
+  <Collapse
+    dimension="height"
+    getDimensionValue={[Function]}
+    in={true}
+    mountOnEnter={false}
+    timeout={300}
+    transitionAppear={false}
+    unmountOnExit={false}
+  >
+    <div
+      className="fdk-panel__content"
+    >
+      <div
+        className="fdk-items-list"
+      >
+        <div>
+          <FilterOption
+            active={false}
+            count={104}
+            displayClass={null}
+            itemKey={0}
+            key="0"
+            label="GOVE"
+            onClick={[MockFunction]}
+            themesItems={
+              Object {
+                "AGRI": Object {
+                  "code": "AGRI",
+                  "conceptSchema": Object {
+                    "id": "http://publications.europa.eu/resource/authority/data-theme",
+                    "title": Object {
+                      "en": "Dataset types Named Authority List",
+                    },
+                  },
+                  "id": "http://publications.europa.eu/resource/authority/data-theme/AGRI",
+                  "startUse": "2015-10-01",
+                  "title": Object {
+                    "bg": "Селско стопанство, рибарство, горско стопанство и храни",
+                    "pt": "Agricultura, pesca, silvicultura e alimentação",
+                  },
+                },
+              }
+            }
+            value="GOVE"
+          />
+          <FilterOption
+            active={false}
+            count={11}
+            displayClass={null}
+            itemKey={1}
+            key="1"
+            label="EDUC"
+            onClick={[MockFunction]}
+            themesItems={
+              Object {
+                "AGRI": Object {
+                  "code": "AGRI",
+                  "conceptSchema": Object {
+                    "id": "http://publications.europa.eu/resource/authority/data-theme",
+                    "title": Object {
+                      "en": "Dataset types Named Authority List",
+                    },
+                  },
+                  "id": "http://publications.europa.eu/resource/authority/data-theme/AGRI",
+                  "startUse": "2015-10-01",
+                  "title": Object {
+                    "bg": "Селско стопанство, рибарство, горско стопанство и храни",
+                    "pt": "Agricultura, pesca, silvicultura e alimentação",
+                  },
+                },
+              }
+            }
+            value="EDUC"
+          />
+          <FilterOption
+            active={false}
+            count={8}
+            displayClass={null}
+            itemKey={2}
+            key="2"
+            label="HEAL"
+            onClick={[MockFunction]}
+            themesItems={
+              Object {
+                "AGRI": Object {
+                  "code": "AGRI",
+                  "conceptSchema": Object {
+                    "id": "http://publications.europa.eu/resource/authority/data-theme",
+                    "title": Object {
+                      "en": "Dataset types Named Authority List",
+                    },
+                  },
+                  "id": "http://publications.europa.eu/resource/authority/data-theme/AGRI",
+                  "startUse": "2015-10-01",
+                  "title": Object {
+                    "bg": "Селско стопанство, рибарство, горско стопанство и храни",
+                    "pt": "Agricultura, pesca, silvicultura e alimentação",
+                  },
+                },
+              }
+            }
+            value="HEAL"
+          />
+          <FilterOption
+            active={false}
+            count={7}
+            displayClass={null}
+            itemKey={3}
+            key="3"
+            label="Ukjent"
+            onClick={[MockFunction]}
+            themesItems={
+              Object {
+                "AGRI": Object {
+                  "code": "AGRI",
+                  "conceptSchema": Object {
+                    "id": "http://publications.europa.eu/resource/authority/data-theme",
+                    "title": Object {
+                      "en": "Dataset types Named Authority List",
+                    },
+                  },
+                  "id": "http://publications.europa.eu/resource/authority/data-theme/AGRI",
+                  "startUse": "2015-10-01",
+                  "title": Object {
+                    "bg": "Селско стопанство, рибарство, горско стопанство и храни",
+                    "pt": "Agricultura, pesca, silvicultura e alimentação",
+                  },
+                },
+              }
+            }
+            value="Ukjent"
+          />
+          <FilterOption
+            active={false}
+            count={1}
+            displayClass={null}
+            itemKey={4}
+            key="4"
+            label="AGRI"
+            onClick={[MockFunction]}
+            themesItems={
+              Object {
+                "AGRI": Object {
+                  "code": "AGRI",
+                  "conceptSchema": Object {
+                    "id": "http://publications.europa.eu/resource/authority/data-theme",
+                    "title": Object {
+                      "en": "Dataset types Named Authority List",
+                    },
+                  },
+                  "id": "http://publications.europa.eu/resource/authority/data-theme/AGRI",
+                  "startUse": "2015-10-01",
+                  "title": Object {
+                    "bg": "Селско стопанство, рибарство, горско стопанство и храни",
+                    "pt": "Agricultura, pesca, silvicultura e alimentação",
+                  },
+                },
+              }
+            }
+            value="AGRI"
+          />
+          <div>
+            <Collapse
+              dimension="height"
+              getDimensionValue={[Function]}
+              in={false}
+              mountOnEnter={false}
+              timeout={300}
+              transitionAppear={false}
+              unmountOnExit={false}
+            >
+              <div />
+            </Collapse>
+            <button
+              className="fdk-toggleList"
+              onClick={[Function]}
+            >
+              Vis flere
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </Collapse>
+</div>
+`;
+
+exports[`should render FilterBox correctly with activeFilter 1`] = `
+<div
+  className="fdk-panel--filter"
+>
+  <div
+    className="fdk-panel__header"
+  >
+    <button
+      className="fdk-toggleFilter p-0"
+      onClick={[Function]}
+    >
+      <i
+        className="fa mr-2 fa-angle-up"
+      />
+      <span>
+        Testbox
+      </span>
+    </button>
+  </div>
+  <Collapse
+    dimension="height"
+    getDimensionValue={[Function]}
+    in={true}
+    mountOnEnter={false}
+    timeout={300}
+    transitionAppear={false}
+    unmountOnExit={false}
+  >
+    <div
+      className="fdk-panel__content"
+    >
+      <div
+        className="fdk-items-list"
+      >
+        <div>
+          <FilterOption
+            active={true}
+            count={104}
+            displayClass={null}
+            itemKey={0}
+            key="0"
+            label="GOVE"
+            onClick={[MockFunction]}
+            themesItems={
+              Object {
+                "AGRI": Object {
+                  "code": "AGRI",
+                  "conceptSchema": Object {
+                    "id": "http://publications.europa.eu/resource/authority/data-theme",
+                    "title": Object {
+                      "en": "Dataset types Named Authority List",
+                    },
+                  },
+                  "id": "http://publications.europa.eu/resource/authority/data-theme/AGRI",
+                  "startUse": "2015-10-01",
+                  "title": Object {
+                    "bg": "Селско стопанство, рибарство, горско стопанство и храни",
+                    "pt": "Agricultura, pesca, silvicultura e alimentação",
+                  },
+                },
+              }
+            }
+            value="GOVE"
+          />
+          <FilterOption
+            active={false}
+            count={11}
+            displayClass={null}
+            itemKey={1}
+            key="1"
+            label="EDUC"
+            onClick={[MockFunction]}
+            themesItems={
+              Object {
+                "AGRI": Object {
+                  "code": "AGRI",
+                  "conceptSchema": Object {
+                    "id": "http://publications.europa.eu/resource/authority/data-theme",
+                    "title": Object {
+                      "en": "Dataset types Named Authority List",
+                    },
+                  },
+                  "id": "http://publications.europa.eu/resource/authority/data-theme/AGRI",
+                  "startUse": "2015-10-01",
+                  "title": Object {
+                    "bg": "Селско стопанство, рибарство, горско стопанство и храни",
+                    "pt": "Agricultura, pesca, silvicultura e alimentação",
+                  },
+                },
+              }
+            }
+            value="EDUC"
+          />
+          <FilterOption
+            active={false}
+            count={8}
+            displayClass={null}
+            itemKey={2}
+            key="2"
+            label="HEAL"
+            onClick={[MockFunction]}
+            themesItems={
+              Object {
+                "AGRI": Object {
+                  "code": "AGRI",
+                  "conceptSchema": Object {
+                    "id": "http://publications.europa.eu/resource/authority/data-theme",
+                    "title": Object {
+                      "en": "Dataset types Named Authority List",
+                    },
+                  },
+                  "id": "http://publications.europa.eu/resource/authority/data-theme/AGRI",
+                  "startUse": "2015-10-01",
+                  "title": Object {
+                    "bg": "Селско стопанство, рибарство, горско стопанство и храни",
+                    "pt": "Agricultura, pesca, silvicultura e alimentação",
+                  },
+                },
+              }
+            }
+            value="HEAL"
+          />
+          <FilterOption
+            active={false}
+            count={7}
+            displayClass={null}
+            itemKey={3}
+            key="3"
+            label="Ukjent"
+            onClick={[MockFunction]}
+            themesItems={
+              Object {
+                "AGRI": Object {
+                  "code": "AGRI",
+                  "conceptSchema": Object {
+                    "id": "http://publications.europa.eu/resource/authority/data-theme",
+                    "title": Object {
+                      "en": "Dataset types Named Authority List",
+                    },
+                  },
+                  "id": "http://publications.europa.eu/resource/authority/data-theme/AGRI",
+                  "startUse": "2015-10-01",
+                  "title": Object {
+                    "bg": "Селско стопанство, рибарство, горско стопанство и храни",
+                    "pt": "Agricultura, pesca, silvicultura e alimentação",
+                  },
+                },
+              }
+            }
+            value="Ukjent"
+          />
+          <FilterOption
+            active={false}
+            count={1}
+            displayClass={null}
+            itemKey={4}
+            key="4"
+            label="AGRI"
+            onClick={[MockFunction]}
+            themesItems={
+              Object {
+                "AGRI": Object {
+                  "code": "AGRI",
+                  "conceptSchema": Object {
+                    "id": "http://publications.europa.eu/resource/authority/data-theme",
+                    "title": Object {
+                      "en": "Dataset types Named Authority List",
+                    },
+                  },
+                  "id": "http://publications.europa.eu/resource/authority/data-theme/AGRI",
+                  "startUse": "2015-10-01",
+                  "title": Object {
+                    "bg": "Селско стопанство, рибарство, горско стопанство и храни",
+                    "pt": "Agricultura, pesca, silvicultura e alimentação",
+                  },
+                },
+              }
+            }
+            value="AGRI"
+          />
+          <div>
+            <Collapse
+              dimension="height"
+              getDimensionValue={[Function]}
+              in={false}
+              mountOnEnter={false}
+              timeout={300}
+              transitionAppear={false}
+              unmountOnExit={false}
+            >
+              <div />
+            </Collapse>
+            <button
+              className="fdk-toggleList"
+              onClick={[Function]}
+            >
+              Vis flere
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </Collapse>
+</div>
+`;
+
+exports[`should render FilterBox correctly with activeFilter 2`] = `
+<div
+  className="fdk-panel--filter"
+>
+  <div
+    className="fdk-panel__header"
+  >
+    <button
+      className="fdk-toggleFilter p-0"
+      onClick={[Function]}
+    >
+      <i
+        className="fa mr-2 fa-angle-up"
+      />
+      <span>
+        Testbox
+      </span>
+    </button>
+  </div>
+  <Collapse
+    dimension="height"
+    getDimensionValue={[Function]}
+    in={true}
+    mountOnEnter={false}
+    timeout={300}
+    transitionAppear={false}
+    unmountOnExit={false}
+  >
+    <div
+      className="fdk-panel__content"
+    >
+      <div
+        className="fdk-items-list"
+      />
+    </div>
+  </Collapse>
+</div>
+`;
