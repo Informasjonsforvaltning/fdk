@@ -11,6 +11,7 @@ import DetailsPage from '../../containers/search-detailspage';
 import AboutPage from '../../containers/search-about';
 import GetStartedPage from '../../containers/search-getstarted-article';
 import ReportsPage from '../../containers/reports';
+import Breadcrumbs from '../../components/search-app-breadcrumbs';
 import '../../assets/css/main.scss';
 
 const getLangUrl = langCode => {
@@ -193,6 +194,14 @@ export default class App extends React.Component {
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+
+        <div className="container">
+          <div className="row">
+            <Breadcrumbs
+              selectedLanguageCode={this.state.selectedLanguageCode}
+            />
           </div>
         </div>
 

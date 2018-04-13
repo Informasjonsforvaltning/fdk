@@ -12,7 +12,6 @@ const Article = () => {
   return (
     <div className="container">
       <DocumentMeta {...meta} />
-      <div className="fdk-container-path" />
       <div className="row">
         <div className="col-sm-12 col-md-10 col-md-offset-1">
           <h1 className="fdk-margin-bottom">

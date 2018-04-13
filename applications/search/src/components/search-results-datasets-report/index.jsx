@@ -164,7 +164,6 @@ export default class ResultsDatasetsReport extends React.Component {
     return (
       <div>
         <div className="container">
-          <div className="fdk-container-path" />
           <section id="resultPanel">
             <div className="row">
               <div

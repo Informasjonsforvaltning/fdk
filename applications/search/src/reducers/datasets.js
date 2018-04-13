@@ -66,3 +66,12 @@ export default function datasets(
       return state;
   }
 }
+
+export const getDatasetById = (datasets, id) => {
+  if (datasets && datasets.datasetItems && datasets.datasetItems.hits) {
+    return datasets.datasetItems.hits.hits.filter(
+      dataset => dataset._source.id === id
+    );
+  }
+  return null;
+};

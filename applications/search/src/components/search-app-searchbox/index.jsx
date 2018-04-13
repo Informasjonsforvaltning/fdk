@@ -18,7 +18,7 @@ const SearchBox = props => {
   } = props;
   let refSearchBox; // eslint-disable-line no-unused-vars
   return (
-    <div className="row mb-60">
+    <div className="row mt-60 mb-60">
       <div className="col-12 col-md-8 col-md-offset-2 fdk-search-flex">
         <div className="visible-xs">
           <button
