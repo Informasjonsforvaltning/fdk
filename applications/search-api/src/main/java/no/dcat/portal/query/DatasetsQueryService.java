@@ -111,7 +111,8 @@ public class DatasetsQueryService extends ElasticsearchService {
                                          @RequestParam(value = "lang", defaultValue = "nb", required = false) String lang,
                                          @RequestParam(value = "sortfield", defaultValue = "", required = false) String sortfield,
                                          @RequestParam(value = "sortdirection", defaultValue = "", required = false) String sortdirection,
-                                         @RequestParam(value = "subject", defaultValue = "", required = false) String subject) {
+                                         @RequestParam(value = "subject", defaultValue = "", required = false) String subject,
+                                         @RequestParam(value = "provenance", defaultValue = "", required = false) String provenance) {
 
 
         StringBuilder loggMsg = new StringBuilder()
@@ -127,7 +128,8 @@ public class DatasetsQueryService extends ElasticsearchService {
                 .append(" lang:").append(lang)
                 .append(" sortfield:").append(sortfield)
                 .append(" sortdirection:").append(sortdirection)
-                .append(" subject:").append(subject);
+                .append(" subject:").append(subject)
+                .append(" provenance:").append(provenance);
 
         logger.debug(loggMsg.toString());
 
@@ -146,9 +148,10 @@ public class DatasetsQueryService extends ElasticsearchService {
         ResponseEntity<String> jsonError = initializeElasticsearchTransportClient();
         if (jsonError != null) return jsonError;
 
-        boolean emptySearch = isEmpty(query) &&
-                isEmpty(theme) &&
-                isEmpty(accessRights) &&
+        boolean emptySearch = isEmpty(query);
+
+        boolean emptyFilter = isEmpty(theme) &&
+                isEmpty(accessRights) && isEmpty(provenance) &&
                 isEmpty(orgPath) && isEmpty(publisher) &&
                 isEmpty(sortfield) && isEmpty(sortdirection) &&
                 isEmpty(subject) && firstHarvested == 0 && lastChanged == 0;
@@ -175,10 +178,8 @@ public class DatasetsQueryService extends ElasticsearchService {
                     .defaultOperator(SimpleQueryStringBuilder.Operator.OR);
         }
 
-        logger.trace(search.toString());
-
         // add filter
-        BoolQueryBuilder boolQuery = addFilter(theme, publisher, accessRights, search, orgPath, firstHarvested, lastChanged, subject);
+        BoolQueryBuilder boolQuery = addFilter(theme, publisher, accessRights, search, orgPath, firstHarvested, lastChanged, subject, provenance);
 
         // set up search query with aggregations
         SearchRequestBuilder searchBuilder = getClient().prepareSearch("dcat")
@@ -197,6 +198,8 @@ public class DatasetsQueryService extends ElasticsearchService {
                 .addAggregation(temporalAggregation("lastChanged", "harvest.lastChanged"))
                 .addAggregation(AggregationBuilders.missing("missingLastChanged").field("harvest.lastChanged"))
                 ;
+
+        logger.trace("Query: {}", searchBuilder.toString());
 
         if (emptySearch) {
             addSortForEmptySearch(searchBuilder);
@@ -302,14 +305,15 @@ public class DatasetsQueryService extends ElasticsearchService {
     private BoolQueryBuilder addFilter(String theme, String publisher, String accessRights,
                                        QueryBuilder search, String orgPath,
                                        int firstHarvested, int lastChanged,
-                                       String subject) {
+                                       String subject, String provenance) {
+
         BoolQueryBuilder boolQuery = QueryBuilders.boolQuery()
                 .must(search);
 
-        BoolQueryBuilder boolFilter = QueryBuilders.boolQuery();
 
         // theme can contain multiple themes, example: AGRI,HEAL
         if (!StringUtils.isEmpty(theme)) {
+            BoolQueryBuilder boolFilter = QueryBuilders.boolQuery();
 
             for (String t : theme.split(",")) {
                 if (t.equals("Ukjent")) {
@@ -372,6 +376,17 @@ public class DatasetsQueryService extends ElasticsearchService {
                 }
             }
             boolQuery.filter(subjectFilter);
+        }
+
+        if (!StringUtils.isEmpty(provenance)) {
+            BoolQueryBuilder provenanceFilter = QueryBuilders.boolQuery();
+            if (provenance.equals("Ukjent")) {
+                provenanceFilter.must(QueryBuilders.missingQuery("provenance.code.raw"));
+            } else {
+                provenanceFilter.must(QueryBuilders.termQuery("provenance.code.raw", provenance));
+            }
+
+            boolQuery.filter(provenanceFilter);
         }
 
         return boolQuery;

@@ -476,7 +476,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
                         gson.fromJson(lastCatalogRecordResponse.getHits().getAt(0).getSourceAsString(), CatalogHarvestRecord.class);
 
                 if (lastCatalogRecord.getCatalogUri().equals(thisCatalogRecord.getCatalogUri())) {
-                    logger.info("Last harvest for {} was {}", lastCatalogRecord.getCatalogUri(), dateFormat.format(lastCatalogRecord.getDate()));
+                    logger.debug("Last harvest for {} was {}", lastCatalogRecord.getCatalogUri(), dateFormat.format(lastCatalogRecord.getDate()));
                     logger.trace("found lastCatalogRecordResponse {}", gson.toJson(lastCatalogRecord));
 
                     Set<String> missingUris = new HashSet<>(lastCatalogRecord.getValidDatasetUris());
