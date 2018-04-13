@@ -194,6 +194,7 @@ public class DatasetsQueryServiceSearchTest {
         when(builder.setSize(anyInt())).thenReturn(builder);
         when(builder.addAggregation(any(AbstractAggregationBuilder.class))).thenReturn(builder);
         when(builder.addSort(anyString(), any(SortOrder.class))).thenReturn(builder);
+        when(builder.addSort(anyObject())).thenReturn(builder);
         when(builder.addAggregation(any(AbstractAggregationBuilder.class))).thenReturn(builder);
         when(builder.execute()).thenReturn(action);
 
