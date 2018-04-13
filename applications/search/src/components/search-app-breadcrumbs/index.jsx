@@ -27,7 +27,7 @@ const options = {
 
 // map & render your breadcrumb components however you want.
 // each `breadcrumb` has the props `key`, `location`, and `match` included!
-const Breadcrumbs = ({ breadcrumbs }) => {
+export const Breadcrumbs = ({ breadcrumbs }) => {
   if (breadcrumbs && breadcrumbs.length > 1) {
     return (
       <div className="col-xs-12">

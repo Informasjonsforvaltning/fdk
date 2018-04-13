@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { getParamFromUrl } from '../../utils/addOrReplaceUrlParam';
 
 import localization from '../localization';
 import CustomHitsStats from '../search-result-custom-hitstats';
@@ -72,6 +73,14 @@ const SearchBox = props => {
           isFetchingDatasets={isFetchingDatasets}
           countTerms={countTerms}
           isFetchingTerms={isFetchingTerms}
+          filteringOrTextSearchPerformed={
+            !!(
+              getParamFromUrl('q') ||
+              getParamFromUrl('theme') ||
+              getParamFromUrl('accessRight') ||
+              getParamFromUrl('publisher')
+            )
+          }
         />
       </div>
     </div>

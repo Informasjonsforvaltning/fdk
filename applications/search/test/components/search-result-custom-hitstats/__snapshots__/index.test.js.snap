@@ -1,0 +1,83 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render CustomHitsStats correctly when no hits 1`] = `
+<div
+  className="sk-hits-stats"
+  data-qa="hits-stats"
+>
+  <div
+    className="sk-hits-stats__info"
+    data-qa="info"
+  >
+    <span>
+      Søket ga
+       
+    </span>
+    <span>
+      dessverre ingen treff
+    </span>
+  </div>
+</div>
+`;
+
+exports[`should render CustomHitsStats correctly when no initial search 1`] = `
+<div
+  className="sk-hits-stats"
+  data-qa="hits-stats"
+>
+  <div
+    className="sk-hits-stats__info nosearch"
+    data-qa="info"
+  >
+    <div>
+      <span>
+        Søk blant
+         
+        100
+         
+        datasettbeskrivelser
+      </span>
+      <span>
+         
+        og
+         
+        100
+         
+        begrep
+      </span>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`should render CustomHitsStats correctly when search performed  1`] = `
+<div
+  className="sk-hits-stats"
+  data-qa="hits-stats"
+>
+  <div
+    className="sk-hits-stats__info"
+    data-qa="info"
+  >
+    <span>
+      Søket ga
+       
+    </span>
+    <span>
+      100
+       
+      treff i datasett
+    </span>
+    <span>
+       
+      og
+       
+    </span>
+    <span>
+      100
+       
+      treff i begrep
+    </span>
+  </div>
+</div>
+`;

@@ -170,11 +170,11 @@ const SearchHitItem = props => {
       </span>
       <div className="fdk-container-search-hit">
         {provenance &&
-        provenance.code === 'NASJONAL' && (
-          <div className="fdk-label mb-1 pull-right">
-            <strong>{localization.search_hit.NationalBuildingBlock}</strong>
+          provenance.code === 'NASJONAL' && (
+            <div className="fdk-label mb-1 pull-right">
+              <strong>{localization.search_hit.NationalBuildingBlock}</strong>
             </div>
-        )}
+          )}
         <h2>{title}</h2>
         <div className="fdk-dataset-themes">
           {renderPublisher(_source)}

@@ -115,5 +115,5 @@ DatasetDescription.propTypes = {
   publisher: PropTypes.object,
   themes: PropTypes.array,
   selectedLanguageCode: PropTypes.string,
-  harvest: null
+  harvest: PropTypes.object
 };

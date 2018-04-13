@@ -16,16 +16,9 @@ exports[`should render SearchHitItem NON_PUBLIC correctly 1`] = `
   <div
     className="fdk-container-search-hit"
   >
-    <h2
-      className="inline-block"
-    >
+    <h2>
       AAMarkagrensen Oslo Kommune og nærliggende kommuner
     </h2>
-    <span
-      className="fdk-label fdk-label-right"
-    >
-      Nasjonal felleskomponent
-    </span>
     <div
       className="fdk-dataset-themes"
     >
@@ -112,16 +105,9 @@ exports[`should render SearchHitItem PUBLIC correctly 1`] = `
   <div
     className="fdk-container-search-hit"
   >
-    <h2
-      className="inline-block"
-    >
+    <h2>
       AAMarkagrensen Oslo Kommune og nærliggende kommuner
     </h2>
-    <span
-      className="fdk-label fdk-label-right"
-    >
-      Nasjonal felleskomponent
-    </span>
     <div
       className="fdk-dataset-themes"
     >
@@ -188,16 +174,9 @@ exports[`should render SearchHitItem RESTRICTED correctly 1`] = `
   <div
     className="fdk-container-search-hit"
   >
-    <h2
-      className="inline-block"
-    >
+    <h2>
       AAMarkagrensen Oslo Kommune og nærliggende kommuner
     </h2>
-    <span
-      className="fdk-label fdk-label-right"
-    >
-      Nasjonal felleskomponent
-    </span>
     <div
       className="fdk-dataset-themes"
     >
@@ -292,14 +271,7 @@ exports[`should render SearchHitItem with no title, description, accessRights an
   <div
     className="fdk-container-search-hit"
   >
-    <h2
-      className="inline-block"
-    />
-    <span
-      className="fdk-label fdk-label-right"
-    >
-      Nasjonal felleskomponent
-    </span>
+    <h2 />
     <div
       className="fdk-dataset-themes"
     >
