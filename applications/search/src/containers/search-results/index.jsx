@@ -357,7 +357,6 @@ class SearchPage extends React.Component {
       <div>
         <section className={topSectionClass}>
           <div className="container">
-            <div className="fdk-container-path" />
             <SearchBox
               onSearchSubmit={this.handleSearchSubmit}
               onSearchChange={this.handleSearchChange}

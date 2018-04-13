@@ -149,18 +149,16 @@ a:hover {
     color: $color3;
     font-size: 1.3rem;
     font-weight: 300;
-    margin: 0;
-    padding: 0;
+    margin-bottom: .5em;
+    padding: 1em 0;
+    a {
+        text-decoration: none;
+        color: $color3;
+        &:hover {
+            text-decoration: underline;
+        }
+    }
 }
-.fdk-p-path > a {
-    text-decoration: none;
-    color: $color3;
-}
-
-.fdk-p-path > a:hover {
-    text-decoration: underline;
-}
-
 
 
 /*  F O N T   A W E S O M E  */

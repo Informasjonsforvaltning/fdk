@@ -29,6 +29,19 @@ export function fetchDatasetsIfNeeded(datasetsURL) {
     );
 }
 
+export function fetchDatasetDetailsIfNeeded(datasetURL) {
+  // add static size parameter
+  return (dispatch, getState) =>
+    shouldFetchApi(getState().datasetDetails) &&
+    dispatch(
+      fetchApi(datasetURL, [
+        actions.DATASETDETAILS_REQUEST,
+        actions.DATASETDETAILS_SUCCESS,
+        actions.DATASETDETAILS_FAILURE
+      ])
+    );
+}
+
 export function fetchTermsIfNeeded(termsURL) {
   // add static size parameter
   const url = addOrReplaceParam(termsURL, 'size', '50');
@@ -87,5 +100,12 @@ export function resetUser() {
   return dispatch =>
     dispatch({
       type: actions.USER_FAILURE
+    });
+}
+
+export function resetDatasetDetails() {
+  return dispatch =>
+    dispatch({
+      type: actions.DATASETDETAILS_RESET
     });
 }

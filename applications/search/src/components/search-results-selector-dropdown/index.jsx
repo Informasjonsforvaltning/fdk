@@ -8,7 +8,6 @@ import localization from '../localization';
 export default class Select extends React.Component {
   constructor(props) {
     super(props);
-    // const catalogDatasetsURL = datasetURL.substring(0, datasetURL.lastIndexOf('/'));
     const { activeSort } = this.props;
     this.state = {
       selectedValue: activeSort
@@ -61,9 +60,11 @@ export default class Select extends React.Component {
 }
 
 Select.defaultProps = {
-  selectedItems: null
+  selectedItems: null,
+  activeSort: null
 };
 
 Select.propTypes = {
-  selectedItems: PropTypes.array
+  selectedItems: PropTypes.array,
+  activeSort: PropTypes.string
 };
