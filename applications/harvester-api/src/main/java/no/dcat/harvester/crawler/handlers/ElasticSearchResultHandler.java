@@ -270,16 +270,17 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         if (enableHarvestLog) {
             try {
 
-                //get contents from harvest log file
+                // stop logging to harvest log file
                 rootLogger.detachAppender(fileAppender);
                 fileAppender.stop();
+
                 logger.info("stopping harvesterlogging");
 
                 String dcatSyntaxValidation = validationResults.stream().map(Object::toString).collect(Collectors.joining("\n"));
+                //get contents from harvest log file
                 String semanticValidation = new String(Files.readAllBytes(temporarylogFile));
 
-                //Files.delete(temporarylogFile);
-
+                Files.delete(temporarylogFile);
 
                 if (notificationService != null && (!dcatSyntaxValidation.isEmpty() || !semanticValidation.isEmpty())) {
                     //add special logger for the message that will be sent to dcatsource owner;
@@ -295,7 +296,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
                             semanticValidation + "\n\n" +
                             "----- the end ------\n";
 
-                    logger.info("EMAIL-MESSAGE: {}", message);
+                    logger.debug("EMAIL-MESSAGE: {}", message);
 
                     notificationService.sendValidationResultNotification(
                             notificationEmailSender,
