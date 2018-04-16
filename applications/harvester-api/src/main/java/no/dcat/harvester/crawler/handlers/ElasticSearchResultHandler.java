@@ -87,7 +87,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
 
     private EmailNotificationService notificationService;
 
-    private boolean enableHarvestLog = false;
+    private boolean enableHarvestLog = true;
     private boolean enableChangeHandling = true;
 
     String hostename;
@@ -165,7 +165,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
     }
 
     void waitForIndexing(Elasticsearch elasticsearch) {
-        logger.info("Checking elasticsearch status...");
+        logger.debug("Checking elasticsearch status...");
         long startTime = System.currentTimeMillis();
 
         elasticsearch.getClient().admin().cluster().prepareHealth()
@@ -174,7 +174,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
 
         long waitTime = (System.currentTimeMillis() - startTime) / 1000;
 
-        logger.info("Elastic is ready after {}s busy indexing", waitTime);
+        logger.debug("Elasticsearch is ready after {}s busy indexing", waitTime);
     }
 
     DcatReader getReader(Model model) {
@@ -259,7 +259,6 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
                 fileAppender.start();
 
                 rootLogger.addAppender(fileAppender);
-                rootLogger.setAdditive(false);
 
             } catch (Exception e) {
                 logger.error("Unable to create logging facade {}", e.getMessage());
@@ -270,11 +269,15 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
     void stopHarvestLogAndReport(DcatSource dcatSource, List<String> validationResults) {
         if (enableHarvestLog) {
             try {
-                //get contents from harvest log file
+
+                // stop logging to harvest log file
                 rootLogger.detachAppender(fileAppender);
                 fileAppender.stop();
 
+                logger.info("stopping harvesterlogging");
+
                 String dcatSyntaxValidation = validationResults.stream().map(Object::toString).collect(Collectors.joining("\n"));
+                //get contents from harvest log file
                 String semanticValidation = new String(Files.readAllBytes(temporarylogFile));
 
                 Files.delete(temporarylogFile);
@@ -292,7 +295,8 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
                             "--------------------\n\n" +
                             semanticValidation + "\n\n" +
                             "----- the end ------\n";
-                    logger.debug(message);
+
+                    logger.debug("EMAIL-MESSAGE: {}", message);
 
                     notificationService.sendValidationResultNotification(
                             notificationEmailSender,
@@ -317,10 +321,14 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         BulkRequestBuilder bulkRequest = elasticsearch.getClient().prepareBulk();
 
         Date harvestTime = new Date();
-        logger.info("Found {} dataset documents in dcat source {}", validDatasets.size(), dcatSource.getId());
+        logger.info("Found {} catalogs in dcat source {}", catalogs.size(), dcatSource.getId());
+        logger.info("Found {} syntactic valid datasets in dcat source {}", validDatasets.size(), dcatSource.getId());
 
         for (Catalog catalog : catalogs) {
-            logger.info("Processing catalog {}", catalog.getUri());
+
+            String catalogTitle = catalog.getTitle().get(catalog.getTitle().keySet().stream().findFirst().get());
+
+            logger.debug("Processing catalog {} - {}", catalogTitle, catalog.getUri());
 
             CatalogHarvestRecord catalogRecord = new CatalogHarvestRecord();
             catalogRecord.setCatalogUri(catalog.getUri());
@@ -355,7 +363,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
 
         }
 
-        logger.info("Processing {} bulkRequests ...", bulkRequest.numberOfActions());
+        logger.debug("Processing {} bulkRequests ...", bulkRequest.numberOfActions());
         BulkResponse response = bulkRequest.execute().actionGet();
         if (response.hasFailures()) {
             //TODO: process failures by iterating through each bulk response item?
@@ -414,7 +422,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
 
                 return lastHarvestRecord;
             } else {
-                logger.info("Dataset {} has no harvest metadata and are never harvested before", dataset.getUri());
+                logger.info("Dataset {} has no harvest metadata and is never been harvested before", dataset.getUri());
             }
 
         }
@@ -439,7 +447,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
             DatasetHarvestRecord firstHarvestRecord =
                     gson.fromJson(firstDatasetRecordResponse.getHits().getAt(0).getSourceAsString(), DatasetHarvestRecord.class);
 
-            logger.info("Found first harvest record for {} with date {}", firstHarvestRecord.getDatasetId(), dateFormat.format(firstHarvestRecord.getDate()));
+            logger.debug("Dataset {} was first harvested {}", firstHarvestRecord.getDatasetUri(), dateFormat.format(firstHarvestRecord.getDate()));
 
             return firstHarvestRecord;
         }
@@ -469,7 +477,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
                         gson.fromJson(lastCatalogRecordResponse.getHits().getAt(0).getSourceAsString(), CatalogHarvestRecord.class);
 
                 if (lastCatalogRecord.getCatalogUri().equals(thisCatalogRecord.getCatalogUri())) {
-                    logger.info("Last harvest for {} was {}", lastCatalogRecord.getCatalogUri(), dateFormat.format(lastCatalogRecord.getDate()));
+                    logger.debug("Last harvest for {} was {}", lastCatalogRecord.getCatalogUri(), dateFormat.format(lastCatalogRecord.getDate()));
                     logger.trace("found lastCatalogRecordResponse {}", gson.toJson(lastCatalogRecord));
 
                     Set<String> missingUris = new HashSet<>(lastCatalogRecord.getValidDatasetUris());
@@ -642,7 +650,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         }
 
         if (recordsWithNoChange.size() > 0) {
-            logger.info("Found {} harvest records to nullify ", recordsWithNoChange.size());
+            logger.info("Dataset has been imported {} times, and has been changed {} times ", allRecords.size(), (allRecords.size()) - recordsWithNoChange.size());
 
             recordsWithNoChange.forEach(record -> {
                 if (record.getDataset() != null) {
@@ -674,18 +682,10 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
             if (enableChangeHandling) {
                 DatasetHarvestRecord lastHarvestRecordWithContent;
 
-                {
-                    // TODO Compensate reset of harvest history
-                    lookupEntry.getHarvest().setFirstHarvested(null);
-                    lookupEntry.getHarvest().setLastChanged(null);
-                    lookupEntry.getHarvest().getChanged().clear();
-
-                }
-
                 // compensate if we do not have first harvest date (handles old way) harvest records.
                 if (lookupEntry.getHarvest().getFirstHarvested() == null) {
                     // this should be removed - TODO
-                    logger.info("Compensating actions for dataset: {}", dataset.getUri());
+                    logger.info("Dataset {} has no harvest record", dataset.getUri());
                     lookupEntry.getHarvest().setFirstHarvested(getFirstHarvestedDate(dataset, elasticsearch, gson));
                     lastHarvestRecordWithContent = updateDatasetHarvestRecordsAndReturnLastChanged(dataset, elasticsearch, gson, bulkRequest, lookupEntry);
                 } else {
@@ -927,7 +927,8 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
                 if (dataset.getSubject() != null) {
                     dataset.getSubject().forEach(subject -> {
 
-                        if (subject != null && subject.getUri() != null) {
+                        // only handle subjects with prefLabel
+                        if (subject != null && subject.getUri() != null && subject.getPrefLabel() != null && !subject.getPrefLabel().isEmpty()) {
 
                             Subject uniqueSubject = uniqueSubjectsToIndex.get(subject.getUri());
                             if (uniqueSubject == null) {

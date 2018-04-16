@@ -81,8 +81,6 @@ public class Elasticsearch implements AutoCloseable {
             logger.debug("ES address: " + address.toString());
             Settings settings = Settings.builder()
                     .put(CLUSTER_NAME, clusterName)
-                    .put("client.transport.ping_timeout", "30s")
-                    .put("discovery.zen.fd.ping_timeout", "30s")
                     .build();
 
             client = TransportClient.builder().settings(settings).build()

@@ -60,6 +60,7 @@ public class UploadSubjectsToElastic {
      */
     @Test
     @Ignore
+    @Deprecated
     public void uploadSubjectsFromFiletoElasticsearch() throws Throwable {
         Model model = FileManager.get().loadModel(BEGREP_TTL_URL);
         // model.write(System.out, "TURTLE");
@@ -92,6 +93,7 @@ public class UploadSubjectsToElastic {
         publisher.setUri("http://data.brreg.no/enhetsregisteret/enhet/974760673");
         publisher.setName("Brønnøysundregistrene");
         publisher.setId("974760673");
+        publisher.setOrgPath("/STAT/912660680/974760673");
 
         Model model = createRDFModel(extractSubjectsFromCSV(records, publisher));
 
@@ -147,6 +149,7 @@ public class UploadSubjectsToElastic {
         while (subjectsIterator.hasNext()) {
             Resource r = subjectsIterator.nextResource();
             Subject s = DatasetBuilder.extractSubject(r);
+            s.getCreator().setOrgPath("/STAT/912660680/974760673");
             subjects.add(s);
         }
 
@@ -156,9 +159,9 @@ public class UploadSubjectsToElastic {
         RestTemplate template = new RestTemplate();
 
         subjects.forEach(subject -> {
-            String url = host + "/dcat/subject/" + subject.getIdentifier();
+            String url = host + "/scat/subject/" + subject.getIdentifier();
             logger.info(url);
-            template.postForObject(host + "/dcat/subject/" + subject.getIdentifier(), subject, Subject.class);
+            template.postForObject(url, subject, Subject.class);
         });
 
         logger.info("Hurra {} begrep er lastet opp til {}", subjects.size(), host);
