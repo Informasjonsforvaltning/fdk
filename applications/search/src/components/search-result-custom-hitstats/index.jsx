@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
 import localization from '../localization';
-import { getParamFromUrl } from '../../utils/addOrReplaceUrlParam';
 
 const CustomHitsStats = props => {
   const { countDatasets, countTerms, filteringOrTextSearchPerformed } = props;

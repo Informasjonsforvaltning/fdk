@@ -105,7 +105,8 @@ const SearchHitItem = props => {
 
   // Read fields from search-hit, use correct selectedLanguageCode field if specified.
   const hitId = encodeURIComponent(_source.id);
-  let { title, description, objective, provenance } = _source;
+  let { title, description, objective } = _source;
+  const { provenance } = _source;
   if (title) {
     title = getTranslateText(_source.title, selectedLanguageCode);
   }

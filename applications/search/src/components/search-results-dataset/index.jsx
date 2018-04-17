@@ -11,10 +11,6 @@ import FilterBox from '../search-results-filterbox';
 import FilterBoxPublishers from '../search-results-filterbox-publishers';
 
 export default class ResultsDataset extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   _renderFilterModal() {
     const {
       showFilterModal,
