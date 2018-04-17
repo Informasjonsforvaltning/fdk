@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import * as axios from 'axios';
 import defaults from 'lodash/defaults';
 import TreeView from 'react-treeview';
@@ -145,7 +146,7 @@ export default class SearchPublishersTree extends React.Component {
           .toLowerCase()}`;
         const label = (
           <span
-            className="node"
+            className="mainTree-btn node"
             onClick={() => {
               this.onChange(node);
             }}
@@ -182,6 +183,12 @@ export default class SearchPublishersTree extends React.Component {
   }
 }
 
-SearchPublishersTree.defaultProps = {};
+SearchPublishersTree.defaultProps = {
+  onSearch: null,
+  orgPath: null
+};
 
-SearchPublishersTree.propTypes = {};
+SearchPublishersTree.propTypes = {
+  onSearch: PropTypes.func,
+  orgPath: PropTypes.string
+};

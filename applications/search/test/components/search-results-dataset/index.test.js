@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { shallow } from 'enzyme';
 import ResultsDataset from '../../../src/components/search-results-dataset';
