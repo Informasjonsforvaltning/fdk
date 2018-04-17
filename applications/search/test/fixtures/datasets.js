@@ -126,10 +126,7 @@ export default [
         }
       ],
       "temporal": [
-        {
-          "startDate": 1483228800000,
-          "endDate": 1514764799000
-        }
+
       ],
       "spatial": [
         {
@@ -356,9 +353,6 @@ export default [
         {
           "uri": "http://publications.europa.eu/resource/authority/language/NOR",
           "code": "NOR",
-          "prefLabel": {
-            "nb": "Norsk"
-          }
         }
       ],
       "landingPage": [
@@ -385,11 +379,7 @@ export default [
           "description": {
             "nb": "Dette er beskrivelsen av distribusjonen. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Vestibulum id ligula porta felis euismod semper con desbit arum. Se dokumentasjon for denne distribusjonen."
           },
-          "accessURL": [
-            "http://www.detteerenlenke.no/til-nedlasting",
-            "http://www.detteerenannenlenke.no/til-en-annen-nedlasting\n",
-            "http://www.detteerentredjelenke.no/til-en-tredje-nedlasting"
-          ],
+
           "license": {
             "uri": "https://www.kartverket.no/geodataarbeid/standarder/sosi/",
             "prefLabel": {
@@ -398,7 +388,6 @@ export default [
             "extraType": "dct:Standard"
           },
           "page": {
-            "uri": "http://lenke/til/mer/info",
             "prefLabel": {
               "nb": "Dokumentasjon av distribusjonen"
             }
@@ -585,9 +574,6 @@ export default [
           "uri": "https://data-david.github.io/Begrep/begrep/Enhet",
           "prefLabel": {
             "no": "enhet"
-          },
-          "definition": {
-            "no": "alt som er registrert med et organisasjonsnummer "
           },
           "note": {
             "no": "Alle hovedenheter, underenheter og organisasjonsledd som er identifisert med et organisasjonsnummer."

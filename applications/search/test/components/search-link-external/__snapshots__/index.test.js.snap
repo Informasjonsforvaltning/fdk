@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render LinkExternal correctly 1`] = `
+<a
+  href="uri"
+>
+  prefLabel
+  <i
+    className="fa fa-external-link fdk-fa-right"
+  />
+</a>
+`;

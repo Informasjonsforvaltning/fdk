@@ -8,21 +8,6 @@ import cx from 'classnames';
 import './index.scss';
 
 export default class SearchPublishersTree extends React.Component {
-  /*
-  static getPublishers (input) {
-    if (!input) {
-      return Promise.resolve({ options: [] });
-    }
-
-    return axios.get(`/publisher?q=${input}`)
-      .then((response) => {
-        const hits = response.data.hits.hits;
-        const nodes = hits.map(item => item._source);
-        return { options: nodes }
-      });
-  }
-  */
-
   static isItemCollapsed(itemOrgPath, chosenOrgPath) {
     if (chosenOrgPath && chosenOrgPath !== undefined) {
       const parentOrgPath = chosenOrgPath.substr(

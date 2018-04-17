@@ -99,7 +99,7 @@ export default class DatasetDescription extends React.Component {
 DatasetDescription.defaultProps = {
   title: '',
   description: '',
-  descriptionFormatted: '',
+  descriptionFormatted: null,
   objective: '',
   publisher: null,
   themes: null,

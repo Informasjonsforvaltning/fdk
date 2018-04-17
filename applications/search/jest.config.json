@@ -12,5 +12,6 @@
     "^.+\\.(css|less|scss)$": "identity-obj-proxy"
   },
   "collectCoverage": true,
+
   "coverageDirectory": "coverage"
 }
