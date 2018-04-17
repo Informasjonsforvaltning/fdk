@@ -10,7 +10,7 @@
     "server": "export NODE_ENV=production && node start.js",
     "test_mocha": "nyc --reporter=html --reporter=text mocha --compilers js:babel-register --require ./test/helpers.js --require ./test/dom.js --recursive ./test/**/*.spec.js --require ignore-styles",
     "test": "jest --config=jest.config.json",
-    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "coverage": "jest report --reporter=text-lcov | coveralls",
     "tdd": "npm test -- --watch",
     "lint": "eslint ./ --ext=.js,.jsx --fix"
   },
