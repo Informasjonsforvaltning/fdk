@@ -342,7 +342,6 @@ class SearchPage extends React.Component {
       selectedLanguageCode,
       datasetItems,
       publisherCountItems,
-      subjectsCountItems,
       isFetchingDatasets,
       termItems,
       publisherCountTermItems,
@@ -442,7 +441,6 @@ class SearchPage extends React.Component {
                   showClearFilterButton={!!this.state.searchQuery.orgPath}
                   publisherArray={publisherCountTermItems}
                   publishers={publisherItems}
-                  subjectsCountItems={subjectsCountItems}
                   {...props}
                 />
               )}
@@ -466,12 +464,10 @@ function mapStateToProps({ datasets, terms, themes, publishers }) {
   const {
     datasetItems,
     publisherCountItems,
-    subjectsCountItems,
     isFetchingDatasets
   } = datasets || {
     datasetItems: null,
-    publisherCountItems: null,
-    subjectsCountItems: null
+    publisherCountItems: null
   };
 
   const { termItems, publisherCountTermItems, isFetchingTerms } = terms || {
@@ -490,7 +486,6 @@ function mapStateToProps({ datasets, terms, themes, publishers }) {
   return {
     datasetItems,
     publisherCountItems,
-    subjectsCountItems,
     isFetchingDatasets,
     termItems,
     publisherCountTermItems,
