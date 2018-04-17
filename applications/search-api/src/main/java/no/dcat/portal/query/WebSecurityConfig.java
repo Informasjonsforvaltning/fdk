@@ -18,6 +18,8 @@ import org.springframework.security.web.firewall.HttpFirewall;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+    private static final String[] SWAGGER_WHITELIST = { "/swagger-resources/**", "/swagger-ui.html", "/api-docs/**", "/webjars/**"};
+
 
     // needed to allow %2F, i.e. / in url encoded dataset-identifier
     @Bean
@@ -38,7 +40,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
             .authorizeRequests()
                 .antMatchers("/").permitAll()
-                //.anyRequest().authenticated()
+                .antMatchers(SWAGGER_WHITELIST).permitAll()
                 .and()
             .formLogin()
                 .loginPage("/login")
