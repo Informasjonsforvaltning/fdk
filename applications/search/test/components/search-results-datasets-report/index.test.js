@@ -27,11 +27,3 @@ test('should render ResultsDatasetsReport correctly with hits', () => {
   expect(wrapper).toMatchSnapshot();
 });
 
-/*
-test('should render ResultsDatasetsReport correctly with hits', () => {
-  wrapper.setProps({
-    datasetItems: datasetItems[0]
-  });
-  expect(wrapper).toMatchSnapshot();
-});
-*/

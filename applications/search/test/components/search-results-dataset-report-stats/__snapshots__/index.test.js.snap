@@ -1,0 +1,304 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render ReportStats correctly 1`] = `
+<div>
+  <div
+    className="row"
+  >
+    <div
+      className="fdk-container-stats"
+    >
+      <h2>
+        Viser tall for 
+        <strong>
+          test entity
+        </strong>
+      </h2>
+    </div>
+  </div>
+  <div
+    className="row"
+  >
+    <div
+      className="fdk-container-stats fdk-container-stats-total"
+    >
+      <h1>
+        <strong>
+          <Link
+            replace={false}
+            to="/"
+          >
+            547
+          </Link>
+        </strong>
+      </h1>
+      <h1>
+        datasett totalt
+      </h1>
+    </div>
+  </div>
+  <div
+    className="row"
+  >
+    <div
+      className="fdk-container-stats fdk-container-stats-accesslevel-title"
+    >
+      <h2>
+        Tilgangsnivå
+      </h2>
+      <div
+        className="row"
+      >
+        <Link
+          className="col-md-3 fdk-container-stats-accesslevel fdk-container-stats-vr fdk-padding-no"
+          replace={false}
+          title="Datasett som er offentlig"
+          to="/?accessrights=PUBLIC"
+        >
+          <p>
+            <strong>
+              <i
+                className="fa fdk-fa-left fa-unlock fdk-color-offentlig"
+              />
+              463
+            </strong>
+          </p>
+          <p>
+            Datasett som er offentlig
+          </p>
+        </Link>
+        <Link
+          className="col-md-3 fdk-container-stats-accesslevel fdk-container-stats-vr fdk-padding-no"
+          replace={false}
+          title="Datasett med begrenset offentlighet"
+          to="/?accessrights=RESTRICTED"
+        >
+          <p>
+            <strong>
+               
+              <i
+                className="fa fdk-fa-left fa-unlock-alt fdk-color-begrenset"
+              />
+              52
+            </strong>
+          </p>
+          <p>
+            Datasett med begrenset offentlighet
+          </p>
+        </Link>
+        <Link
+          className="col-md-3 fdk-container-stats-accesslevel fdk-container-stats-vr fdk-padding-no"
+          replace={false}
+          to="/?accessrights=NON_PUBLIC"
+        >
+          <p>
+            <strong>
+              <i
+                className="fa fdk-fa-left fa-lock fdk-color-unntatt"
+              />
+              0
+            </strong>
+          </p>
+          <p>
+            Datasett som er unntatt offentlighet
+          </p>
+        </Link>
+        <Link
+          className="col-md-3 fdk-container-stats-accesslevel fdk-padding-no"
+          replace={false}
+          to="/?accessrights=Ukjent"
+        >
+          <p>
+            <strong>
+              <i
+                className="fa fdk-fa-left fa-question fdk-color4"
+              />
+              32
+            </strong>
+          </p>
+          <p>
+            Datasett med ukjent tilgangsnivå
+          </p>
+        </Link>
+      </div>
+    </div>
+  </div>
+  <div
+    className="row"
+  >
+    <div
+      className="col-md-4 fdk-container-stats-changes-left"
+    >
+      <div
+        className="fdk-container-stats fdk-container-stats-changes"
+      >
+        <h2>
+          Endring siste 7 dager
+        </h2>
+        <div
+          className="row"
+        >
+          <div>
+            <p>
+              <strong>
+                <Link
+                  className="fdk-plain-label"
+                  replace={false}
+                  title="Nye datasett"
+                  to="/?firstHarvested=7"
+                >
+                  547
+                </Link>
+              </strong>
+            </p>
+            <p>
+              Nye datasett
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      className="col-md-4 fdk-container-stats-changes-middle"
+    >
+      <div
+        className="fdk-container-stats fdk-container-stats-changes"
+      >
+        <h2>
+          Endring siste 30 dager
+        </h2>
+        <div
+          className="row"
+        >
+          <div>
+            <p>
+              <strong>
+                <Link
+                  className="fdk-plain-label"
+                  replace={false}
+                  to="/?firstHarvested=30"
+                >
+                  547
+                </Link>
+              </strong>
+            </p>
+            <p>
+              Nye datasett
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      className="col-md-4 fdk-container-stats-changes-right"
+    >
+      <div
+        className="fdk-container-stats fdk-container-stats-changes"
+      >
+        <h2>
+          Endring siste 365 dager
+        </h2>
+        <div
+          className="row"
+        >
+          <div>
+            <p>
+              <strong>
+                <Link
+                  className="fdk-plain-label"
+                  replace={false}
+                  title="Nye datasett"
+                  to="/?firstHarvested=365"
+                >
+                  547
+                </Link>
+              </strong>
+            </p>
+            <p>
+              Nye datasett
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="row"
+  >
+    <div
+      className="fdk-container-stats fdk-container-stats-concepts-title"
+    >
+      <h2>
+        Bruk av begrep
+      </h2>
+      <div
+        className="row fdk-container-stats-concepts"
+      >
+        <div
+          className="col-md-6 fdk-container-stats-vr"
+        >
+          <p>
+            <strong>
+              9
+            </strong>
+          </p>
+          <p>
+            Datasett som benytter begrep
+          </p>
+        </div>
+        <div
+          className="col-md-6"
+        >
+          <p>
+            <strong>
+              538
+            </strong>
+          </p>
+          <p>
+            Datasett som ikke benytter begrep
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="row"
+  >
+    <div
+      className="fdk-container-stats fdk-container-stats-concepts-title"
+    >
+      <h2>
+        Distribusjoner
+      </h2>
+      <div
+        className="row fdk-container-stats-concepts"
+      >
+        <div
+          className="col-md-6 fdk-container-stats-vr"
+        >
+          <p>
+            <strong>
+              429
+            </strong>
+          </p>
+          <p>
+            Offentlige datasett med distribusjoner
+          </p>
+        </div>
+        <div
+          className="col-md-6"
+        >
+          <p>
+            <strong>
+              34
+            </strong>
+          </p>
+          <p>
+            Offentlige datasett uten distribusjoner
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
