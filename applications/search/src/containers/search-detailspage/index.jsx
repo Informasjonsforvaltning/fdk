@@ -18,7 +18,7 @@ import localization from '../../components/localization';
 import { getTranslateText } from '../../utils/translateText';
 // import api from '../../utils/api.json';
 
-class DetailsPage extends React.Component {
+export class DetailsPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -29,39 +29,22 @@ class DetailsPage extends React.Component {
   }
 
   componentDidMount() {
-    window.scrollTo(0, 0);
-    this.loadDatasetFromServer();
+    const { match } = this.props
+    if (match) {
+      window.scrollTo(0, 0);
+      this.loadDatasetFromServer(match);
+    }
   }
 
   componentWillUnmount() {
-    this.props.dispatch(resetDatasetDetails());
+    this.props.resetDatasetDetails();
   }
 
   // @params: the function has no param but the query need dataset id from prop
   // loads all the info for this dataset
-  loadDatasetFromServer() {
-    const { match: { params } } = this.props;
-    const url = `/datasets/${params.id}`;
-    this.props.dispatch(fetchDatasetDetailsIfNeeded(url));
-
-    /*
-    const config = {
-      headers: { Pragma: 'no-cache' }
-    };
-    axios
-      .get(url, config)
-      .then(res => {
-        const data = res.data;
-        const dataset = data.hits.hits[0]._source;
-        this.setState({
-          dataset,
-          loading: false
-        });
-      })
-      .catch(error => {
-        console.error(error.response);
-      });
-      */
+  loadDatasetFromServer(match) {
+    const url = `/datasets/${match.params.id}`;
+    this.props.fetchDatasetDetailsIfNeeded(url);
   }
 
   _renderDatasetDescription() {
@@ -332,6 +315,7 @@ class DetailsPage extends React.Component {
 
   render() {
     const { datasetItem } = this.props;
+
     if (datasetItem) {
       return (
         <div className="container">
@@ -357,7 +341,9 @@ class DetailsPage extends React.Component {
 }
 
 DetailsPage.defaultProps = {
-  selectedLanguageCode: null
+  selectedLanguageCode: null,
+  datasetItem: null,
+  isFetchingDataset: false
 };
 
 DetailsPage.propTypes = {
@@ -376,4 +362,10 @@ const mapStateToProps = ({ datasetDetails }) => {
   };
 };
 
-export default connect(mapStateToProps)(DetailsPage);
+const mapDispatchToProps = dispatch => ({
+  fetchDatasetDetailsIfNeeded: url =>
+    dispatch(fetchDatasetDetailsIfNeeded(url)),
+  resetDatasetDetails: () => dispatch(resetDatasetDetails())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(DetailsPage);

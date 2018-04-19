@@ -1,0 +1,363 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render App correctly 1`] = `
+<div>
+  <div>
+    <a
+      aria-hidden="true"
+      className="uu-invisible"
+      href="blank#content"
+      id="focus-element"
+    >
+      Hopp til hovedinnhold
+    </a>
+  </div>
+  <div
+    id="skip-link-wrap"
+  >
+    <a
+      href="blank#content"
+      id="skip-link"
+    >
+      Hopp til hovedinnhold
+    </a>
+  </div>
+  <div
+    className="fdk-header-beta"
+  >
+    Dette er en beta-versjon. 
+    <br
+      className="visible-xs visible-sm"
+    />
+    Gi oss gjerne 
+    <a
+      className="white-link"
+      href="mailto:fellesdatakatalog@brreg.no"
+    >
+      tilbakemeldinger
+    </a>
+     
+    om hva du synes!
+  </div>
+  <div
+    className="fdk-header"
+  >
+    <div
+      className="container"
+    >
+      <div
+        className="row"
+      >
+        <div
+          className="col-xs-6 col-md-4"
+        >
+          <a
+            href="/"
+            title="Link til Felles datakatalog"
+          >
+            <span
+              aria-hidden="false"
+              className="uu-invisible"
+            >
+              Gå til forside
+            </span>
+            <img
+              alt="Logo for Felles datakatalog"
+              className="fdk-logo"
+              src="/static/img/fdk-logo@2x.png"
+            />
+          </a>
+        </div>
+        <div
+          className="col-xs-6 col-md-offset-5 col-md-3 fdk-header-flex"
+        >
+          <DropdownButton
+            bsStyle="default"
+            className="fdk-button-language visible-md visible-lg"
+            id="search-language-dropdown-1"
+            onSelect={[Function]}
+            tabIndex="0"
+            title="Language"
+          >
+            <MenuItem
+              bsClass="dropdown"
+              disabled={false}
+              divider={false}
+              eventKey="nb"
+              header={false}
+              key="1"
+            >
+              Norsk (bokmål)
+            </MenuItem>
+            <MenuItem
+              bsClass="dropdown"
+              disabled={false}
+              divider={false}
+              eventKey="nn"
+              header={false}
+              key="2"
+            >
+              Norsk (nynorsk)
+            </MenuItem>
+            <MenuItem
+              bsClass="dropdown"
+              disabled={false}
+              divider={false}
+              eventKey="en"
+              header={false}
+              key="3"
+            >
+              Engelsk
+            </MenuItem>
+          </DropdownButton>
+          <div
+            className="fdk-header-menu"
+          >
+            <DropdownButton
+              bsStyle="default"
+              className="fdk-button fdk-button-default fdk-button-menu"
+              id="search-menu-dropdown-1"
+              tabIndex="0"
+              title="Meny"
+            >
+              <li
+                role="presentation"
+              >
+                <Link
+                  replace={false}
+                  tabIndex="-1"
+                  to="/about"
+                >
+                  Om Felles Datakatalog
+                </Link>
+              </li>
+              <li
+                role="presentation"
+              >
+                <Link
+                  replace={false}
+                  tabIndex="-1"
+                  to="/about-registration"
+                >
+                  Registrere datasett
+                </Link>
+              </li>
+              <li
+                role="presentation"
+              >
+                <Link
+                  replace={false}
+                  tabIndex="-1"
+                  to="/reports"
+                >
+                  Rapporter
+                </Link>
+              </li>
+              <MenuItem
+                bsClass="dropdown"
+                className="visible-xs visible-sm"
+                disabled={false}
+                divider={false}
+                eventKey="nb"
+                header={false}
+                key="1"
+                onSelect={[Function]}
+              >
+                Norsk (bokmål)
+              </MenuItem>
+              <MenuItem
+                bsClass="dropdown"
+                className="visible-xs visible-sm"
+                disabled={false}
+                divider={false}
+                eventKey="nn"
+                header={false}
+                key="2"
+                onSelect={[Function]}
+              >
+                Norsk (nynorsk)
+              </MenuItem>
+              <MenuItem
+                bsClass="dropdown"
+                className="visible-xs visible-sm"
+                disabled={false}
+                divider={false}
+                eventKey="en"
+                header={false}
+                key="3"
+                onSelect={[Function]}
+              >
+                Engelsk
+              </MenuItem>
+            </DropdownButton>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="container"
+  >
+    <div
+      className="row"
+    >
+      <withRouter()
+        selectedLanguageCode="nb"
+      />
+    </div>
+  </div>
+  <div
+    className="app-routes"
+  >
+    <Switch>
+      <Route
+        exact={true}
+        path="/"
+        render={[Function]}
+      />
+      <Route
+        exact={true}
+        path="/concepts"
+        render={[Function]}
+      />
+      <Route
+        component={[Function]}
+        exact={true}
+        path="/datasets/:id"
+      />
+      <Route
+        component={[Function]}
+        exact={true}
+        path="/reports"
+      />
+      <Route
+        component={[Function]}
+        exact={true}
+        path="/about"
+      />
+      <Route
+        component={[Function]}
+        exact={true}
+        path="/about-registration"
+      />
+    </Switch>
+  </div>
+  <div
+    className="fdk-footer visible-xs visible-sm"
+  >
+    <div
+      className="container"
+    >
+      <div
+        className="row"
+      >
+        <div
+          className="col-sm-12 text-center mb-2"
+        >
+          <p
+            className="fdk-p-footer"
+          >
+            Dette er et samarbeidsprosjekt mellom Brønnøysundregistrene, Difi og øvrige SKATE-etater.
+          </p>
+        </div>
+        <div
+          className="col-sm-12 text-center mb-2"
+        >
+          <p
+            className="fdk-p-footer"
+          >
+            <a
+              href="https://www.brreg.no/personvernerklaering/"
+            >
+              Informasjonskapsler
+               og personvern
+              <i
+                className="fa fa-external-link fdk-fa-right"
+              />
+            </a>
+          </p>
+        </div>
+        <div
+          className="col-sm-12 text-center mb-2"
+        >
+          <p
+            className="fdk-p-footer"
+          >
+            <a
+              href="mailto:fellesdatakatalog@brreg.no"
+            >
+              fellesdatakatalog@brreg.no
+            </a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="fdk-footer visible-md visible-lg"
+  >
+    <div
+      className="container"
+    >
+      <div
+        className="row"
+      >
+        <div
+          className="col-md-3"
+        >
+          <p
+            className="fdk-p-footer"
+          >
+            <a
+              href="https://www.brreg.no/personvernerklaering/"
+            >
+              Informasjonskapsler
+              <br />
+               og personvern
+              <i
+                className="fa fa-external-link fdk-fa-right"
+              />
+            </a>
+          </p>
+        </div>
+        <div
+          className="col-md-6 text-center"
+        >
+          <span
+            aria-hidden="false"
+            className="uu-invisible"
+          >
+            Felles Datakatalog.
+          </span>
+          <p
+            className="fdk-p-footer"
+          >
+            Dette er et samarbeidsprosjekt mellom Brønnøysundregistrene, Difi og øvrige SKATE-etater.
+          </p>
+        </div>
+        <div
+          className="col-md-3 text-right"
+        >
+          <p
+            className="fdk-p-footer"
+          >
+            <a
+              href="mailto:fellesdatakatalog@brreg.no"
+            >
+              <span
+                aria-hidden="false"
+                className="uu-invisible"
+              >
+                Mailadresse.
+              </span>
+              Kontakt:
+              <br />
+              fellesdatakatalog@brreg.no
+            </a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
