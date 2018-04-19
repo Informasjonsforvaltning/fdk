@@ -30,7 +30,9 @@ for utveksling av datasettbeskrivelser.
 ## Test the search application
 The search application is available [here](https://fellesdatakatalog.brreg.no). The two other applications
 are only available for registered users. 
-Any questions can be sent to [fellesdatakatalog@brreg.no](mailto:fellesdatakatalog@brreg.no)
+Any questions can be sent to [fellesdatakatalog@brreg.no](mailto:fellesdatakatalog@brreg.no).
+
+The [search api](https://fellesdatakatalog.brreg.no/swagger_ui.html) can also be used.
 
 ## Comile
 The system consists of several modules which can be compiled with `mvn clean install`. 
