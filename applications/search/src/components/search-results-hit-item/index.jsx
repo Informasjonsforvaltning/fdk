@@ -12,208 +12,190 @@ import {
 } from '../../utils/translateText';
 import './index.scss';
 
-export default class SearchHitItem extends React.Component {
-  // eslint-disable-line react/prefer-stateless-function
-  constructor(props) {
-    super(props);
-    this.state = {
-      source: _.extend({}, props.result._source)
-    };
-  }
+const renderFormats = (source, code) => {
+  let formatNodes;
+  const { distribution } = source;
 
-  _renderFormats(code) {
-    let formatNodes;
-    const { distribution } = this.state.source;
-
-    const children = (items, code) =>
-      items.map(item => {
-        if (item !== null) {
-          const formatArray = item.trim().split(',');
-          return formatArray.map((item, index) => {
-            if (item === null) {
-              return null;
-            }
-            return (
-              <DistributionFormat
-                key={`dataset-distribution-format${index}`}
-                code={code}
-                text={item}
-              />
-            );
-          });
-        }
-        return null;
-      });
-
-    if (distribution && _.isArray(Object.keys(distribution))) {
-      formatNodes = Object.keys(distribution).map(key => {
-        if (distribution[key].format) {
-          return distribution[key].format[0];
-        }
-        return null;
-      });
-      if (formatNodes && formatNodes[0] !== null) {
-        return <div>{children(formatNodes, code)}</div>;
+  const children = (items, code) =>
+    items.map(item => {
+      if (typeof item !== 'undefined') {
+        const formatArray = item.trim().split(',');
+        return formatArray.map((item, index) => (
+          /*
+          if (typeof item == 'undefined') {
+            return null;
+          }
+          */
+          <DistributionFormat
+            key={`dataset-distribution-format${index}`}
+            code={code}
+            text={item}
+          />
+        ));
       }
-    }
-    return null;
-  }
-
-  _renderPublisher() {
-    const { publisher } = this.state.source;
-    if (publisher && publisher.name) {
-      return (
-        <span>
-          <span className="uu-invisible" aria-hidden="false">
-            Datasettet
-          </span>
-          {localization.search_hit.owned}&nbsp;
-          <span className="fdk-strong-virksomhet">
-            {publisher && publisher.name
-              ? publisher.name.charAt(0) +
-                publisher.name.substring(1).toLowerCase()
-              : ''}
-          </span>
-        </span>
-      );
-    }
-    return null;
-  }
-
-  _renderThemes() {
-    let themeNodes;
-    const { theme } = this.state.source;
-    if (theme) {
-      themeNodes = theme.map((singleTheme, index) => (
-        <div key={`dataset-description-theme-${index}`} className="fdk-label">
-          <span className="uu-invisible" aria-hidden="false">
-            Datasettets tema.
-          </span>
-          {getTranslateText(singleTheme.title, this.props.selectedLanguageCode)}
-        </div>
-      ));
-    }
-    return themeNodes;
-  }
-
-  _renderSample() {
-    const { sample } = this.state.source;
-    if (sample) {
-      if (sample.length > 0) {
-        return (
-          <div id="search-hit-sample">{localization.search_hit.sample}</div>
-        );
-      }
-    }
-    return null;
-  }
-
-  render() {
-    const language = this.props.selectedLanguageCode;
-    const langCode = getLanguageFromUrl();
-    const langParam = langCode ? `?lang=${langCode}` : '';
-    const { source } = this.state;
-
-    // Read fields from search-hit, use correct language field if specified.
-    const hitId = encodeURIComponent(source.id);
-    const hitElementId = `search-hit-${hitId}`;
-    let { title, description, objective } = source;
-    if (title) {
-      title =
-        source.title[language] ||
-        source.title.nb ||
-        source.title.nn ||
-        source.title.en;
-    }
-    if (description) {
-      description =
-        source.description[language] ||
-        source.description.nb ||
-        source.description.nn ||
-        source.description.en;
-    }
-    if (objective) {
-      objective =
-        objective[language] || objective.nb || objective.nn || objective.en;
-    }
-
-    if (description.length > 220) {
-      description = `${description.substr(0, 220)}...`;
-    } else if (description.length < 150 && objective) {
-      const freeLength = 200 - description.length;
-      const objectiveLength = objective.length;
-      description = `${description} ${objective.substr(
-        0,
-        200 - freeLength
-      )} ${objectiveLength > freeLength ? '...' : ''}`;
-    }
-    const link = `/datasets/${hitId}`;
-
-    let accessRightsLabel;
-    let distributionNonPublic = false;
-    let distributionRestricted = false;
-    let distributionPublic = false;
-
-    let authorityCode = '';
-    if (source.accessRights && source.accessRights.code) {
-      authorityCode = source.accessRights.code;
-    }
-
-    if (source.accessRights && authorityCode === 'NON_PUBLIC') {
-      distributionNonPublic = true;
-      accessRightsLabel =
-        localization.dataset.accessRights.authorityCode.nonPublic;
-    } else if (source.accessRights && authorityCode === 'RESTRICTED') {
-      distributionRestricted = true;
-      accessRightsLabel =
-        localization.dataset.accessRights.authorityCode.restricted;
-    } else if (source.accessRights && authorityCode === 'PUBLIC') {
-      distributionPublic = true;
-      accessRightsLabel =
-        localization.dataset.accessRights.authorityCode.public;
-    }
-
-    const distributionClass = cx({
-      'fdk-container-distributions':
-        distributionNonPublic || distributionRestricted || distributionPublic,
-      'fdk-distributions-red': distributionNonPublic,
-      'fdk-distributions-yellow': distributionRestricted,
-      'fdk-distributions-green': distributionPublic
+      return null;
     });
 
-    return (
-      <Link
-        id={hitElementId}
-        className="fdk-a-search-hit"
-        title={`${localization.result.dataset}: ${title}`}
-        to={`${link}${langParam}`}
-      >
-        <span className="uu-invisible" aria-hidden="false">
-          Søketreff.
-        </span>
-        <div className="fdk-container-search-hit">
-          <h2>{title}</h2>
-          <div className="fdk-dataset-themes">
-            {this._renderPublisher()}
-            {this._renderThemes()}
-          </div>
-          <p className="fdk-p-search-hit">
-            <span className="uu-invisible" aria-hidden="false">
-              Beskrivelse av datasettet,
-            </span>
-            {description}
-          </p>
+  if (distribution && _.isArray(Object.keys(distribution))) {
+    formatNodes = Object.keys(distribution).map(key => {
+      if (distribution[key].format) {
+        return distribution[key].format[0];
+      }
+      return null;
+    });
+    if (formatNodes && formatNodes[0] !== null) {
+      return <div>{children(formatNodes, code)}</div>;
+    }
+  }
+  return null;
+};
 
-          <div className={distributionClass}>
-            <strong>{accessRightsLabel}</strong>
-            {this._renderFormats(authorityCode)}
-            {this._renderSample()}
-          </div>
-        </div>
-      </Link>
+const renderPublisher = source => {
+  const { publisher } = source;
+  if (publisher && publisher.name) {
+    return (
+      <span>
+        <span className="uu-invisible" aria-hidden="false">
+          Datasettet
+        </span>
+        {localization.search_hit.owned}&nbsp;
+        <span className="fdk-strong-virksomhet">
+          {publisher && publisher.name
+            ? publisher.name.charAt(0) +
+              publisher.name.substring(1).toLowerCase()
+            : ''}
+        </span>
+      </span>
     );
   }
-}
+  return null;
+};
+
+const renderThemes = (source, selectedLanguageCode) => {
+  let themeNodes;
+  const { theme } = source;
+  if (theme) {
+    themeNodes = theme.map((singleTheme, index) => (
+      <div key={`dataset-description-theme-${index}`} className="fdk-label">
+        <span className="uu-invisible" aria-hidden="false">
+          Datasettets tema.
+        </span>
+        {getTranslateText(singleTheme.title, selectedLanguageCode)}
+      </div>
+    ));
+  }
+  return themeNodes;
+};
+
+const renderSample = source => {
+  const { sample } = source;
+  if (sample) {
+    if (sample.length > 0) {
+      return <div id="search-hit-sample">{localization.search_hit.sample}</div>;
+    }
+  }
+  return null;
+};
+
+const SearchHitItem = props => {
+  const { selectedLanguageCode } = props;
+  const langCode = getLanguageFromUrl();
+  const langParam = langCode ? `?lang=${langCode}` : '';
+  const { _source } = props.result;
+
+  // Read fields from search-hit, use correct selectedLanguageCode field if specified.
+  const hitId = encodeURIComponent(_source.id);
+  let { title, description, objective } = _source;
+  const { provenance } = _source;
+  if (title) {
+    title = getTranslateText(_source.title, selectedLanguageCode);
+  }
+  if (description) {
+    description = getTranslateText(_source.description, selectedLanguageCode);
+  }
+  if (objective) {
+    objective = getTranslateText(_source.objective, selectedLanguageCode);
+  }
+
+  if (description && description.length > 220) {
+    description = `${description.substr(0, 220)}...`;
+  } else if (description && description.length < 150 && objective) {
+    const freeLength = 200 - description.length;
+    const objectiveLength = objective.length;
+    description = `${description} ${objective.substr(
+      0,
+      200 - freeLength
+    )} ${objectiveLength > freeLength ? '...' : ''}`;
+  }
+  const link = `/datasets/${hitId}`;
+
+  let accessRightsLabel;
+  let distributionNonPublic = false;
+  let distributionRestricted = false;
+  let distributionPublic = false;
+
+  let authorityCode = '';
+  if (_source.accessRights && _source.accessRights.code) {
+    authorityCode = _source.accessRights.code;
+  }
+
+  if (_source.accessRights && authorityCode === 'NON_PUBLIC') {
+    distributionNonPublic = true;
+    accessRightsLabel =
+      localization.dataset.accessRights.authorityCode.nonPublic;
+  } else if (_source.accessRights && authorityCode === 'RESTRICTED') {
+    distributionRestricted = true;
+    accessRightsLabel =
+      localization.dataset.accessRights.authorityCode.restricted;
+  } else if (_source.accessRights && authorityCode === 'PUBLIC') {
+    distributionPublic = true;
+    accessRightsLabel = localization.dataset.accessRights.authorityCode.public;
+  }
+
+  const distributionClass = cx({
+    'fdk-container-distributions':
+      distributionNonPublic || distributionRestricted || distributionPublic,
+    'fdk-distributions-red': distributionNonPublic,
+    'fdk-distributions-yellow': distributionRestricted,
+    'fdk-distributions-green': distributionPublic
+  });
+
+  return (
+    <Link
+      className="fdk-a-search-hit"
+      title={`${localization.result.dataset}: ${title}`}
+      to={`${link}${langParam}`}
+    >
+      <span className="uu-invisible" aria-hidden="false">
+        Søketreff.
+      </span>
+      <div className="fdk-container-search-hit">
+        {provenance &&
+          provenance.code === 'NASJONAL' && (
+            <div className="fdk-label mb-1 pull-right">
+              <strong>{localization.search_hit.NationalBuildingBlock}</strong>
+            </div>
+          )}
+        <h2>{title}</h2>
+        <div className="fdk-dataset-themes">
+          {renderPublisher(_source)}
+          {renderThemes(_source, selectedLanguageCode)}
+        </div>
+        <p className="fdk-p-search-hit">
+          <span className="uu-invisible" aria-hidden="false">
+            Beskrivelse av datasettet,
+          </span>
+          {description}
+        </p>
+        <div className={distributionClass}>
+          <strong>{accessRightsLabel}</strong>
+          {renderFormats(_source, authorityCode)}
+          {renderSample(_source)}
+        </div>
+      </div>
+    </Link>
+  );
+};
 
 SearchHitItem.defaultProps = {
   result: null,
@@ -224,3 +206,5 @@ SearchHitItem.propTypes = {
   result: PropTypes.shape({}),
   selectedLanguageCode: PropTypes.string
 };
+
+export default SearchHitItem;

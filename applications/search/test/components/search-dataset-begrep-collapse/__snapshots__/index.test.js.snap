@@ -1,0 +1,71 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render BegrepCollapse correctly 1`] = `
+<div
+  className="fdk-container-detail fdk-container-detail-begrep"
+>
+  <div
+    className="fdk-ingress fdk-margin-bottom-no fdk-container-begrep"
+    onClick={[Function]}
+    role="button"
+    tabIndex={0}
+  >
+    <strong
+      className="pull-left"
+    >
+      enhet
+      : 
+    </strong>
+    <i
+      className="fa fa-chevron-down fdk-fa-right fdk-float-right"
+    />
+    <div>
+      alt som er registrert med et organisasjonsnummer 
+    </div>
+    <Collapse
+      dimension="height"
+      getDimensionValue={[Function]}
+      in={true}
+      mountOnEnter={false}
+      timeout={300}
+      transitionAppear={false}
+      unmountOnExit={false}
+    >
+      <div>
+        Alle hovedenheter, underenheter og organisasjonsledd som er identifisert med et organisasjonsnummer.
+      </div>
+    </Collapse>
+  </div>
+</div>
+`;
+
+exports[`should render BegrepCollapse correctly with no props 1`] = `
+<div
+  className="fdk-container-detail fdk-container-detail-begrep"
+>
+  <div
+    className="fdk-ingress fdk-margin-bottom-no fdk-container-begrep"
+    onClick={[Function]}
+    role="button"
+    tabIndex={0}
+  >
+    <strong
+      className="pull-left"
+    >
+      : 
+    </strong>
+    <div />
+    <Collapse
+      dimension="height"
+      getDimensionValue={[Function]}
+      in={false}
+      mountOnEnter={false}
+      timeout={300}
+      transitionAppear={false}
+      unmountOnExit={false}
+    >
+      <div />
+    </Collapse>
+  </div>
+</div>
+`;

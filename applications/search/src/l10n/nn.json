@@ -122,12 +122,14 @@
     "restricted": "Begrenset offentlighet",
     "ukjent": "Ukjent",
     "non_public": "Unntatt offentlighet",
-    "sample": "Eksempeldata tilgjengelig"
+    "sample": "Eksempeldata tilgjengelig",
+    "NationalBuildingBlock": "Nasjonal felleskomponent"
   },
   "dataset": {
     "accessRight": "Datasettet er",
     "title": "Datasett",
     "type": "Type",
+    "firstHarvested": "Publisert i Felles datakatalog",
     "conformsTo": "Innholdsstandard",
     "informationModel": "Informasjonsmodell",
     "informationModelDefaultText": "Informasjonsmodell",

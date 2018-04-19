@@ -53,6 +53,7 @@ export default class ResultsConcepts extends React.Component {
           />
         );
       });
+
     const compareButton = (
       <CompareTermModal
         terms={terms}
@@ -74,13 +75,8 @@ export default class ResultsConcepts extends React.Component {
   }
 
   _renderTerms() {
-    const { termItems, subjectsCountItems } = this.props;
-    if (
-      termItems &&
-      termItems.hits &&
-      termItems.hits.hits &&
-      subjectsCountItems
-    ) {
+    const { termItems } = this.props;
+    if (termItems && termItems.hits && termItems.hits.hits) {
       return termItems.hits.hits.map(item => (
         <ConceptsHitItem
           key={item._id}
@@ -228,9 +224,31 @@ export default class ResultsConcepts extends React.Component {
 }
 
 ResultsConcepts.defaultProps = {
-  selectedLanguageCode: ''
+  selectedLanguageCode: null,
+  termItems: null,
+  onClearSearch: null,
+  onPageChange: null,
+  onFilterPublisherHierarchy: null,
+  searchQuery: null,
+  hitsPerPage: null,
+  showFilterModal: null,
+  closeFilterModal: null,
+  showClearFilterButton: null,
+  publisherArray: null,
+  publishers: null
 };
 
 ResultsConcepts.propTypes = {
-  selectedLanguageCode: PropTypes.string
+  selectedLanguageCode: PropTypes.string,
+  termItems: PropTypes.object,
+  onClearSearch: PropTypes.func,
+  onPageChange: PropTypes.func,
+  onFilterPublisherHierarchy: PropTypes.func,
+  searchQuery: PropTypes.object,
+  hitsPerPage: PropTypes.number,
+  showFilterModal: PropTypes.bool,
+  closeFilterModal: PropTypes.func,
+  showClearFilterButton: PropTypes.bool,
+  publisherArray: PropTypes.array,
+  publishers: PropTypes.object
 };

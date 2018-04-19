@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import * as axios from 'axios';
 import defaults from 'lodash/defaults';
 import TreeView from 'react-treeview';
@@ -8,21 +9,6 @@ import cx from 'classnames';
 import './index.scss';
 
 export default class SearchPublishersTree extends React.Component {
-  /*
-  static getPublishers (input) {
-    if (!input) {
-      return Promise.resolve({ options: [] });
-    }
-
-    return axios.get(`/publisher?q=${input}`)
-      .then((response) => {
-        const hits = response.data.hits.hits;
-        const nodes = hits.map(item => item._source);
-        return { options: nodes }
-      });
-  }
-  */
-
   static isItemCollapsed(itemOrgPath, chosenOrgPath) {
     if (chosenOrgPath && chosenOrgPath !== undefined) {
       const parentOrgPath = chosenOrgPath.substr(
@@ -160,7 +146,7 @@ export default class SearchPublishersTree extends React.Component {
           .toLowerCase()}`;
         const label = (
           <span
-            className="node"
+            className="mainTree-btn node"
             onClick={() => {
               this.onChange(node);
             }}
@@ -197,6 +183,12 @@ export default class SearchPublishersTree extends React.Component {
   }
 }
 
-SearchPublishersTree.defaultProps = {};
+SearchPublishersTree.defaultProps = {
+  onSearch: null,
+  orgPath: null
+};
 
-SearchPublishersTree.propTypes = {};
+SearchPublishersTree.propTypes = {
+  onSearch: PropTypes.func,
+  orgPath: PropTypes.string
+};

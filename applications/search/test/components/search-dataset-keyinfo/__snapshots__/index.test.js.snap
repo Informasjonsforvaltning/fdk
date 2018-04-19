@@ -1,0 +1,158 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render DatasetKeyInfo correctly 1`] = `
+<section>
+  <div
+    className="fdk-container-detail fdk-container-detail-header fdk-margin-top-double"
+  >
+    <i
+      className="fa fdk-fa-left fdk-color-unntatt fa-lock"
+    />
+    Datasettet er
+     
+    begrenset
+  </div>
+  <div
+    className="row fdk-row"
+  >
+    <div
+      className="col-xs-12 fdk-padding-no"
+    >
+      <div
+        className="fdk-container-detail"
+      >
+        <div>
+          <h5>
+            Skjermingshjemmel
+          </h5>
+          <div
+            className="fdk-ingress"
+          >
+            <div
+              key="https://lovdata.no/dokument/NL/lov/1992-12-04-126"
+            >
+              <LinkExternal
+                key="https://lovdata.no/dokument/NL/lov/1992-12-04-126"
+                prefLabel="Lov om arkiv [arkivlova]"
+                uri="https://lovdata.no/dokument/NL/lov/1992-12-04-126"
+              />
+            </div>
+            <div
+              key="http://lovdata/paragraph/20"
+            >
+              <LinkExternal
+                key="http://lovdata/paragraph/20"
+                prefLabel="Den spesifikke loven § 20"
+                uri="http://lovdata/paragraph/20"
+              />
+            </div>
+            <div
+              key="http://lovdata/paragraph/26"
+            >
+              <LinkExternal
+                key="http://lovdata/paragraph/26"
+                prefLabel="Den mindre spesifikke loven § 26"
+                uri="http://lovdata/paragraph/26"
+              />
+            </div>
+          </div>
+        </div>
+        <div>
+          <h5>
+            Behandlingsgrunnlag
+          </h5>
+          <div
+            className="fdk-ingress"
+          >
+            <div
+              key="http://lovdata/paragraph/2"
+            >
+              <LinkExternal
+                key="http://lovdata/paragraph/2"
+                prefLabel="Den andre loven med lenger tittel § 2"
+                uri="http://lovdata/paragraph/2"
+              />
+            </div>
+          </div>
+        </div>
+        <div>
+          <h5>
+            Utleveringshjemmel
+          </h5>
+          <div
+            className="fdk-ingress"
+          >
+            <div
+              key="http://lovdata/paragraph/10"
+            >
+              <LinkExternal
+                prefLabel="Den siste loven med den lengste tittelen § 10"
+                uri="http://lovdata/paragraph/10"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="row-eq-height"
+  >
+    <div
+      className="col-xs-12 fdk-container-detail"
+    >
+      <h5>
+        Type
+      </h5>
+      <p
+        className="fdk-ingress fdk-margin-bottom-no"
+      >
+        Kodeliste
+      </p>
+    </div>
+    <div
+      className="col-xs-12 fdk-container-detail"
+    >
+      <h5>
+        Informasjonsmodell
+      </h5>
+      <p
+        className="fdk-ingress fdk-margin-bottom-no"
+      >
+        <LinkExternal
+          key="https://www.w3.org/2004/02/skos/"
+          prefLabel="SKOS"
+          uri="https://www.w3.org/2004/02/skos/"
+        />
+      </p>
+    </div>
+    <div
+      className="col-xs-12 fdk-container-detail"
+    >
+      <h5>
+        Innholdsstandard
+      </h5>
+      <p
+        className="fdk-ingress fdk-margin-bottom-no"
+      >
+        <LinkExternal
+          key="https://www.kartverket.no/geodataarbeid/standarder/sosi/"
+          prefLabel="SOSI"
+          uri="https://www.kartverket.no/geodataarbeid/standarder/sosi/"
+        />
+      </p>
+    </div>
+  </div>
+</section>
+`;
+
+exports[`should render DatasetKeyInfo correctly with no props 1`] = `
+<section>
+  <div
+    className="row fdk-row"
+  />
+  <div
+    className="row-eq-height"
+  />
+</section>
+`;

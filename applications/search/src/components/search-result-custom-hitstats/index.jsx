@@ -1,21 +1,9 @@
 import React from 'react';
-
+import PropTypes from 'prop-types';
 import localization from '../localization';
-import { getParamFromUrl } from '../../utils/addOrReplaceUrlParam';
 
 const CustomHitsStats = props => {
-  const { countDatasets, countTerms } = props;
-
-  let filteringOrTextSearchPerformed = false;
-
-  if (
-    getParamFromUrl('q') ||
-    getParamFromUrl('theme') ||
-    getParamFromUrl('accessRight') ||
-    getParamFromUrl('publisher')
-  ) {
-    filteringOrTextSearchPerformed = true;
-  }
+  const { countDatasets, countTerms, filteringOrTextSearchPerformed } = props;
 
   if (filteringOrTextSearchPerformed) {
     return (
@@ -41,25 +29,35 @@ const CustomHitsStats = props => {
         </div>
       </div>
     );
-  } else if (!filteringOrTextSearchPerformed) {
-    return (
-      <div className="sk-hits-stats" data-qa="hits-stats">
-        <div className="sk-hits-stats__info nosearch" data-qa="info">
-          <div>
-            <span>
-              {localization.hitstats.nosearch.search} {countDatasets}{' '}
-              {localization.hitstats.nosearch.descriptions}
-            </span>
-            <span>
-              &nbsp;{localization.hitstats.and} {countTerms}{' '}
-              {localization.hitstats.concepts}
-            </span>
-          </div>
+  }
+  return (
+    <div className="sk-hits-stats" data-qa="hits-stats">
+      <div className="sk-hits-stats__info nosearch" data-qa="info">
+        <div>
+          <span>
+            {localization.hitstats.nosearch.search} {countDatasets}{' '}
+            {localization.hitstats.nosearch.descriptions}
+          </span>
+          <span>
+            &nbsp;{localization.hitstats.and} {countTerms}{' '}
+            {localization.hitstats.concepts}
+          </span>
         </div>
       </div>
-    );
-  }
-  return null;
+    </div>
+  );
+};
+
+CustomHitsStats.defaultProps = {
+  countDatasets: null,
+  countTerms: null,
+  filteringOrTextSearchPerformed: false
+};
+
+CustomHitsStats.propTypes = {
+  countDatasets: PropTypes.number,
+  countTerms: PropTypes.number,
+  filteringOrTextSearchPerformed: PropTypes.bool
 };
 
 export default CustomHitsStats;

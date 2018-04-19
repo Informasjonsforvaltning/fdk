@@ -122,12 +122,14 @@
     "restricted": "Restricted",
     "ukjent": "Unknown",
     "non_public": "Non public",
-    "sample": "Sample data are available"
+    "sample": "Sample data are available",
+    "NationalBuildingBlock": "National Building Block"
   },
   "dataset": {
     "accessRight": "Dataset is",
     "title": "Dataset",
     "type": "Type",
+    "firstHarvested": "Published in The National Data Directory",
     "conformsTo": "Conforms to",
     "informationModel": "Information model",
     "informationModelDefaultText": "Information model",

@@ -11,23 +11,6 @@ import FilterBox from '../search-results-filterbox';
 import FilterBoxPublishers from '../search-results-filterbox-publishers';
 
 export default class ResultsDataset extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      showModal: false
-    };
-    this.close = this.close.bind(this);
-    this.open = this.open.bind(this);
-  }
-
-  close() {
-    this.setState({ showModal: false });
-  }
-
-  open() {
-    this.setState({ showModal: true });
-  }
-
   _renderFilterModal() {
     const {
       showFilterModal,
@@ -163,7 +146,6 @@ export default class ResultsDataset extends React.Component {
                       order: 'asc'
                     }
                   ]}
-                  selectedLanguageCode={this.props.selectedLanguageCode}
                   onChange={onSort}
                   activeSort={searchQuery.sortfield}
                 />
@@ -236,9 +218,36 @@ export default class ResultsDataset extends React.Component {
 }
 
 ResultsDataset.defaultProps = {
-  selectedLanguageCode: null
+  showFilterModal: false,
+  closeFilterModal: null,
+  datasetItems: null,
+  onFilterTheme: null,
+  onFilterAccessRights: null,
+  onFilterPublisherHierarchy: null,
+  searchQuery: {},
+  themesItems: null,
+  publisherArray: null,
+  publishers: null,
+  onClearSearch: null,
+  onPageChange: null,
+  showClearFilterButton: null,
+  hitsPerPage: null
 };
 
 ResultsDataset.propTypes = {
-  selectedLanguageCode: PropTypes.string
+  showFilterModal: PropTypes.bool,
+  closeFilterModal: PropTypes.func,
+  datasetItems: PropTypes.object,
+  onFilterTheme: PropTypes.func,
+  onFilterAccessRights: PropTypes.func,
+  onFilterPublisherHierarchy: PropTypes.func,
+  searchQuery: PropTypes.object,
+  themesItems: PropTypes.object,
+  publisherArray: PropTypes.array,
+  publishers: PropTypes.object,
+  onClearSearch: PropTypes.func,
+  onSort: PropTypes.func.isRequired,
+  onPageChange: PropTypes.func,
+  showClearFilterButton: PropTypes.bool,
+  hitsPerPage: PropTypes.number
 };

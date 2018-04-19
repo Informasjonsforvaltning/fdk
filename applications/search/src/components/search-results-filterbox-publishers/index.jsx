@@ -199,7 +199,10 @@ export default class SearchPublishersTree extends React.Component {
     return (
       <div className="search-filter-publisher">
         <div className="fdk-panel__header">
-          <button className="p-0" onClick={this.toggleFilter}>
+          <button
+            className="fdk-publisher-toggle p-0"
+            onClick={this.toggleFilter}
+          >
             <i className={collapseIconClass} />
             <span>{title}</span>
           </button>
@@ -216,14 +219,19 @@ export default class SearchPublishersTree extends React.Component {
 
 SearchPublishersTree.defaultProps = {
   title: null,
+  filter: null,
   activeFilter: null,
-  publishers: null
+  publishers: null,
+  onSearch: null,
+  orgPath: null
 };
 
 SearchPublishersTree.propTypes = {
   title: PropTypes.string,
-  filter: PropTypes.array.isRequired,
+  filter: PropTypes.array,
   onFilterPublisherHierarchy: PropTypes.func.isRequired,
   activeFilter: PropTypes.string,
-  publishers: PropTypes.object
+  publishers: PropTypes.object,
+  onSearch: PropTypes.func,
+  orgPath: PropTypes.string
 };

@@ -1,0 +1,596 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render DatasetInfo correctly 1`] = `
+<section
+  id="dataset-info"
+>
+  <div
+    className="row fdk-row "
+  >
+    <div
+      className="fdk-padding-no col-md-4"
+    >
+      <div
+        className="fdk-container-detail"
+      >
+        <div
+          className="fdk-detail-icon"
+        >
+          <i
+            className="fa fa-upload"
+          />
+        </div>
+        <div
+          className="fdk-detail-text"
+        >
+          <h5>
+            Utgivelsesdato
+          </h5>
+          <p
+            className="fdk-ingress fdk-margin-bottom-no text-nowrap"
+            id="dataset-info-issued"
+          >
+            <t
+              ago={false}
+              calendar={false}
+              element="time"
+              format="DD.MM.YYYY"
+              fromNow={false}
+              interval={60000}
+              onChange={[Function]}
+              toNow={false}
+              unix={false}
+              utc={false}
+            >
+              1325376000000
+            </t>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div
+      className="fdk-padding-no col-md-8"
+    >
+      <div
+        className="fdk-container-detail"
+      >
+        <div
+          className="fdk-detail-icon"
+        >
+          <i
+            className="fa fa-refresh"
+          />
+        </div>
+        <div
+          className="fdk-detail-text"
+        >
+          <h5>
+            Oppdateringsfrekvens
+          </h5>
+          <p
+            className="fdk-ingress fdk-margin-bottom-no"
+            id="dataset-info-accrualPeriodicity"
+          >
+            Å
+            rlig
+          </p>
+        </div>
+      </div>
+    </div>
+    <div
+      className="col-md-12 fdk-padding-no"
+    >
+      <div
+        className="fdk-container-detail"
+      >
+        <div
+          className="fdk-detail-icon"
+        >
+          <i
+            className="fa fa-user"
+          />
+        </div>
+        <div
+          className="fdk-detail-text"
+        >
+          <h5>
+            Opphav
+          </h5>
+          <p
+            className="fdk-ingress fdk-margin-bottom-no"
+            id="dataset-info-provenance"
+          >
+            Vedtak
+          </p>
+        </div>
+      </div>
+    </div>
+    <div
+      className="col-md-12 fdk-padding-no"
+    >
+      <div
+        className="fdk-container-detail"
+      >
+        <div
+          className="fdk-detail-icon"
+        >
+          <i
+            className="fa fa-certificate"
+          />
+        </div>
+        <div
+          className="fdk-detail-text"
+        >
+          <h5>
+            Aktualitet
+          </h5>
+          <p
+            className="fdk-ingress fdk-margin-bottom-no"
+            id="dataset-info-currentnessAnnotation"
+          >
+            Denne teksten sier noe om aktualiteten. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras mattis consectetur purus sit amet fermentum. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div
+      className="col-md-12 fdk-padding-no"
+    >
+      <div
+        className="fdk-container-detail"
+      >
+        <div
+          className="fdk-detail-icon"
+        >
+          <i
+            className="fa fa-map"
+          />
+        </div>
+        <div
+          className="fdk-detail-text"
+        >
+          <h5>
+            Geografisk avgrenset til
+          </h5>
+          <p
+            className="fdk-ingress fdk-margin-bottom-no"
+            id="dataset-info-spatial"
+          >
+            <span
+              className="fdk-ingress fdk-margin-bottom-no"
+              key="dataset-info-spatial-0"
+            >
+              Asker
+            </span>
+            <span
+              className="fdk-ingress fdk-margin-bottom-no"
+              key="dataset-info-spatial-1"
+            >
+              , Bærum
+            </span>
+            <span
+              className="fdk-ingress fdk-margin-bottom-no"
+              key="dataset-info-spatial-2"
+            >
+              , Hurum
+            </span>
+            <span
+              className="fdk-ingress fdk-margin-bottom-no"
+              key="dataset-info-spatial-3"
+            >
+              , Røyken
+            </span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="row fdk-row row-eq-height"
+  >
+    <div
+      className="fdk-container-detail col-md-12"
+    >
+      <div
+        className="fdk-detail-icon"
+      >
+        <i
+          className="fa fa-flag"
+        />
+      </div>
+      <div
+        className="fdk-detail-text"
+        id="dataset-info-language"
+      >
+        <h5>
+          Språk
+        </h5>
+        <p
+          className="fdk-ingress fdk-margin-bottom-no"
+          id="dataset-info-language-0"
+          key="dataset-info-language-0"
+        >
+          Norsk
+        </p>
+      </div>
+    </div>
+  </div>
+  <div
+    className="row fdk-row"
+  >
+    <div
+      className="col-md-12 fdk-padding-no"
+    >
+      <div
+        className="fdk-container-detail"
+      >
+        <div
+          className="fdk-detail-icon"
+        >
+          <i
+            className="fa fa-link"
+          />
+        </div>
+        <div
+          className="fdk-detail-text refer"
+          key="dataset-reference-0"
+        >
+          <h5>
+            Har versjon
+          </h5>
+          <p
+            className="fdk-ingress"
+          >
+            <a
+              href="http://referenced/dataset"
+            >
+              Relasjon
+              <i
+                className="fa fa-external-link fdk-fa-right"
+              />
+            </a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+`;
+
+exports[`should render DatasetInfo correctly 2`] = `
+<section
+  id="dataset-info"
+>
+  <div
+    className="row fdk-row "
+  >
+    <div
+      className="fdk-padding-no col-md-4"
+    >
+      <div
+        className="fdk-container-detail"
+      >
+        <div
+          className="fdk-detail-icon"
+        >
+          <i
+            className="fa fa-upload"
+          />
+        </div>
+        <div
+          className="fdk-detail-text"
+        >
+          <h5>
+            Utgivelsesdato
+          </h5>
+          <p
+            className="fdk-ingress fdk-margin-bottom-no text-nowrap"
+            id="dataset-info-issued"
+          >
+            <t
+              ago={false}
+              calendar={false}
+              element="time"
+              format="DD.MM.YYYY"
+              fromNow={false}
+              interval={60000}
+              onChange={[Function]}
+              toNow={false}
+              unix={false}
+              utc={false}
+            >
+              1325376000000
+            </t>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div
+      className="fdk-padding-no col-md-8"
+    >
+      <div
+        className="fdk-container-detail"
+      >
+        <div
+          className="fdk-detail-icon"
+        >
+          <i
+            className="fa fa-refresh"
+          />
+        </div>
+        <div
+          className="fdk-detail-text"
+        >
+          <h5>
+            Oppdateringsfrekvens
+          </h5>
+          <p
+            className="fdk-ingress fdk-margin-bottom-no"
+            id="dataset-info-accrualPeriodicity"
+          >
+            Å
+            rlig
+          </p>
+        </div>
+      </div>
+    </div>
+    <div
+      className="col-md-12 fdk-padding-no"
+    >
+      <div
+        className="fdk-container-detail"
+      >
+        <div
+          className="fdk-detail-icon"
+        >
+          <i
+            className="fa fa-user"
+          />
+        </div>
+        <div
+          className="fdk-detail-text"
+        >
+          <h5>
+            Opphav
+          </h5>
+          <p
+            className="fdk-ingress fdk-margin-bottom-no"
+            id="dataset-info-provenance"
+          >
+            Vedtak
+          </p>
+        </div>
+      </div>
+    </div>
+    <div
+      className="col-md-12 fdk-padding-no"
+    >
+      <div
+        className="fdk-container-detail"
+      >
+        <div
+          className="fdk-detail-icon"
+        >
+          <i
+            className="fa fa-certificate"
+          />
+        </div>
+        <div
+          className="fdk-detail-text"
+        >
+          <h5>
+            Aktualitet
+          </h5>
+          <p
+            className="fdk-ingress fdk-margin-bottom-no"
+            id="dataset-info-currentnessAnnotation"
+          >
+            Denne teksten sier noe om aktualiteten. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras mattis consectetur purus sit amet fermentum. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div
+      className="col-md-12 fdk-padding-no"
+    >
+      <div
+        className="fdk-container-detail"
+      >
+        <div
+          className="fdk-detail-icon"
+        >
+          <i
+            className="fa fa-map"
+          />
+        </div>
+        <div
+          className="fdk-detail-text"
+        >
+          <h5>
+            Geografisk avgrenset til
+          </h5>
+          <p
+            className="fdk-ingress fdk-margin-bottom-no"
+            id="dataset-info-spatial"
+          >
+            <span
+              className="fdk-ingress fdk-margin-bottom-no"
+              key="dataset-info-spatial-0"
+            >
+              Asker
+            </span>
+            <span
+              className="fdk-ingress fdk-margin-bottom-no"
+              key="dataset-info-spatial-1"
+            >
+              , Bærum
+            </span>
+            <span
+              className="fdk-ingress fdk-margin-bottom-no"
+              key="dataset-info-spatial-2"
+            >
+              , Hurum
+            </span>
+            <span
+              className="fdk-ingress fdk-margin-bottom-no"
+              key="dataset-info-spatial-3"
+            >
+              , Røyken
+            </span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="row fdk-row row-eq-height"
+  >
+    <div
+      className="fdk-container-detail col-md-8"
+    >
+      <div
+        className="fdk-detail-icon"
+      >
+        <i
+          className="fa fa-calendar"
+        />
+      </div>
+      <div
+        className="fdk-detail-text"
+        id="dataset-info-temporal"
+      >
+        <div
+          className="clearfix mb-1"
+          id="dataset-info-temporal-0"
+          key="dataset-info-temporal-0"
+        >
+          <div
+            className="col-md-6 dataset-temporal-date"
+          >
+            <h5>
+              Gjelder fra
+            </h5>
+            <p
+              className="fdk-ingress fdk-margin-bottom-no text-nowrap"
+            >
+              <t
+                ago={false}
+                calendar={false}
+                element="time"
+                format="DD.MM.YYYY"
+                fromNow={false}
+                interval={60000}
+                onChange={[Function]}
+                toNow={false}
+                unix={false}
+                utc={false}
+              >
+                1483228800000
+              </t>
+            </p>
+          </div>
+          <div
+            className="col-md-6 dataset-temporal-date"
+          >
+            <h5>
+              Gjelder til
+            </h5>
+            <p
+              className="fdk-ingress fdk-margin-bottom-no text-nowrap"
+            >
+              <t
+                ago={false}
+                calendar={false}
+                element="time"
+                format="DD.MM.YYYY"
+                fromNow={false}
+                interval={60000}
+                onChange={[Function]}
+                toNow={false}
+                unix={false}
+                utc={false}
+              >
+                1514764799000
+              </t>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      className="fdk-container-detail col-md-4"
+    >
+      <div
+        className="fdk-detail-icon"
+      >
+        <i
+          className="fa fa-flag"
+        />
+      </div>
+      <div
+        className="fdk-detail-text"
+        id="dataset-info-language"
+      >
+        <h5>
+          Språk
+        </h5>
+      </div>
+    </div>
+  </div>
+  <div
+    className="row fdk-row"
+  >
+    <div
+      className="col-md-12 fdk-padding-no"
+    >
+      <div
+        className="fdk-container-detail"
+      >
+        <div
+          className="fdk-detail-icon"
+        >
+          <i
+            className="fa fa-link"
+          />
+        </div>
+        <div
+          className="fdk-detail-text refer"
+          key="dataset-reference-0"
+        >
+          <h5>
+            Har versjon
+          </h5>
+          <p
+            className="fdk-ingress"
+          >
+            <a
+              href="http://referenced/dataset"
+            >
+              Relasjon
+              <i
+                className="fa fa-external-link fdk-fa-right"
+              />
+            </a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+`;
+
+exports[`should render DatasetInfo correctly with no props 1`] = `
+<section
+  id="dataset-info"
+>
+  <div
+    className="row fdk-row "
+  />
+  <div
+    className="row fdk-row row-eq-height"
+  />
+  <div
+    className="row fdk-row"
+  />
+</section>
+`;

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-const DistributionFormat = props => {
+export const DistributionFormat = props => {
   const { code, type, text } = props;
   const formatClass = cx('fdk-label-distribution', {
     'fdk-label-distribution-offentlig': code === 'PUBLIC',

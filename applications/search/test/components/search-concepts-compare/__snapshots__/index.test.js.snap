@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render CompareTerms correctly 1`] = `
+<div
+  className="fdk-container p-3"
+>
+  <button
+    className="pull-right fdk-button-small"
+    onClick={[Function]}
+  >
+    <i
+      className="fa fa-times"
+    />
+     
+    Fjern
+  </button>
+  <h4
+    className="clearfix"
+  >
+    Preflabel 1
+  </h4>
+  <div>
+    Creator 1
+  </div>
+</div>
+`;

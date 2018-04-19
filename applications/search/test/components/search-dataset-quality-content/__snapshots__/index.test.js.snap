@@ -1,0 +1,58 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render DatasetQuality correctly 1`] = `
+<section>
+  <div
+    className="fdk-container-detail fdk-container-detail-header"
+  >
+    <i
+      className="fa fa-star fdk-fa-left fdk-color-cta"
+    />
+    Kvalitet på innhold
+  </div>
+  <div
+    className="fdk-container-detail"
+  >
+    <div>
+      <h5>
+        Relevans
+      </h5>
+      <p
+        className="fdk-ingress fdk-margin-bottom-double"
+      >
+        relevance
+      </p>
+    </div>
+    <div>
+      <h5>
+        Kompletthet
+      </h5>
+      <p
+        className="fdk-ingress fdk-margin-bottom-double"
+      >
+        comleteness
+      </p>
+    </div>
+    <div>
+      <h5>
+        Nøyaktighet
+      </h5>
+      <p
+        className="fdk-ingress fdk-margin-bottom-double"
+      >
+        accuracy
+      </p>
+    </div>
+    <div>
+      <h5>
+        Tilgjengelighet
+      </h5>
+      <p
+        className="fdk-ingress fdk-margin-bottom-double"
+      >
+        availability
+      </p>
+    </div>
+  </div>
+</section>
+`;
