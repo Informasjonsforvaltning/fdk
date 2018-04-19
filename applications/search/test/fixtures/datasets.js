@@ -99,6 +99,28 @@ export default [
               "nb": "Dokumentasjon av distribusjonen"
             }
           }
+        },
+        {
+          "id": "96d63bba-e624-4f39-ad26-26b8c6a68880",
+          "uri": "http://brreg.no/catalogs/987654321/datasets/3645d5a8-6689-4fc1-8684-d3d6c2d47386/distributions/96d63bba-e624-4f39-ad26-26b8c6a68880",
+          "description": {
+            "nb": "Dette er beskrivelsen av distribusjonen. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Vestibulum id ligula porta felis euismod semper con desbit arum. Se dokumentasjon for denne distribusjonen."
+          },
+          "accessURL": [
+            "http://www.detteerenlenke.no/til-nedlasting",
+            "http://www.detteerenannenlenke.no/til-en-annen-nedlasting\n",
+            "http://www.detteerentredjelenke.no/til-en-tredje-nedlasting"
+          ],
+          "license": {
+            "uri": "http://data.norge.no/nlod",
+            "extraType": "dct:Standard"
+          },
+          "page": {
+            "uri": "http://lenke/til/mer/info",
+            "prefLabel": {
+              "nb": "Dokumentasjon av distribusjonen"
+            }
+          }
         }
       ],
       "sample": [

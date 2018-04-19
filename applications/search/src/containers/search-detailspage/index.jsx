@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 
 import {
   fetchDatasetDetailsIfNeeded,
-  resetDatasetDetails
+  resetDatasetDetails,
+  fetchOpenLicensesIfNeeded
 } from '../../actions/index';
 import DatasetDescription from '../../components/search-dataset-description';
 import DatasetKeyInfo from '../../components/search-dataset-keyinfo';
@@ -43,6 +44,7 @@ class DetailsPage extends React.Component {
     const { match: { params } } = this.props;
     const url = `/datasets/${params.id}`;
     this.props.dispatch(fetchDatasetDetailsIfNeeded(url));
+    this.props.dispatch(fetchOpenLicensesIfNeeded());
 
     /*
     const config = {
@@ -110,6 +112,7 @@ class DetailsPage extends React.Component {
 
   _renderDistribution() {
     const { distribution, accessRights } = this.props.datasetItem;
+    const { openLicenseItems } = this.props;
     if (!distribution) {
       return null;
     }
@@ -132,6 +135,7 @@ class DetailsPage extends React.Component {
         license={distribution.license}
         conformsTo={distribution.conformsTo}
         page={distribution.page}
+        openLicenseItems={openLicenseItems}
         selectedLanguageCode={this.props.selectedLanguageCode}
       />
     ));
@@ -364,15 +368,20 @@ DetailsPage.propTypes = {
   selectedLanguageCode: PropTypes.string
 };
 
-const mapStateToProps = ({ datasetDetails }) => {
+const mapStateToProps = ({ datasetDetails, openLicenses }) => {
   const { datasetItem, isFetchingDataset } = datasetDetails || {
     datasetItem: null,
     isFetchingDataset: null
   };
 
+  const { openLicenseItems } = openLicenses || {
+    openLicenseItems: null
+  };
+
   return {
     datasetItem,
-    isFetchingDataset
+    isFetchingDataset,
+    openLicenseItems
   };
 };
 

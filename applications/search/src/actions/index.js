@@ -80,6 +80,18 @@ export function fetchPublishersIfNeeded() {
     );
 }
 
+export function fetchOpenLicensesIfNeeded() {
+  return (dispatch, getState) =>
+    shouldFetchApi(getState().openLicenses) &&
+    dispatch(
+      fetchApi('/reference-data/codes/openlicenses', [
+        actions.OPENLICENSES_REQUEST,
+        actions.OPENLICENSES_SUCCESS,
+        actions.OPENLICENSES_FAILURE
+      ])
+    );
+}
+
 export function publishDataset(value) {
   return dispatch =>
     dispatch({
