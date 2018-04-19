@@ -132,6 +132,7 @@ class DetailsPage extends React.Component {
         license={distribution.license}
         conformsTo={distribution.conformsTo}
         page={distribution.page}
+        type={distribution.type}
         selectedLanguageCode={this.props.selectedLanguageCode}
       />
     ));
@@ -161,6 +162,7 @@ class DetailsPage extends React.Component {
         license={sample.license}
         conformsTo={sample.conformsTo}
         page={sample.page}
+        type={sample.type}
         selectedLanguageCode={this.props.selectedLanguageCode}
       />
     ));

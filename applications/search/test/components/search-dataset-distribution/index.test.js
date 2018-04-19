@@ -36,6 +36,7 @@ test('should render DatasetDistribution correctly', () => {
     license: _source.distribution[0].license,
     conformsTo: _source.conformsTo,
     page: _source.page,
+    type: "Feed",
     selectedLanguageCode: null
   };
   const wrapper = shallow(<DatasetDistribution {...defaultProps} />);
