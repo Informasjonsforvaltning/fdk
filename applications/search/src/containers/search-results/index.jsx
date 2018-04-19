@@ -30,9 +30,12 @@ const browser = detect();
 export class SearchPage extends React.Component {
   constructor(props) {
     super(props);
-    const searchQuery = (props.location && props.location.search) ? queryString.parse(props.location.search) : {
-      searchQuery: {}
-    };
+    const searchQuery =
+      props.location && props.location.search
+        ? queryString.parse(props.location.search)
+        : {
+            searchQuery: {}
+          };
 
     this.state = {
       showConcepts: false,
@@ -61,7 +64,10 @@ export class SearchPage extends React.Component {
 
   componentDidMount() {
     let hasSingleWord = false;
-    const q = (this.props.location && this.props.location.search) ? getParamFromString(this.props.location.search, 'q') : null;
+    const q =
+      this.props.location && this.props.location.search
+        ? getParamFromString(this.props.location.search, 'q')
+        : null;
     if (q) {
       hasSingleWord = !q.includes(' ') && !q.includes('*'); // no spaces and no asterix search
     }
@@ -74,7 +80,9 @@ export class SearchPage extends React.Component {
       this.props.fetchDatasetsIfNeeded(`/datasets/${modifiedQ}`);
       this.props.fetchTermsIfNeeded(`/terms/${modifiedQ}`);
     } else {
-      this.props.fetchDatasetsIfNeeded(`/datasets${this.props.location.search}`);
+      this.props.fetchDatasetsIfNeeded(
+        `/datasets${this.props.location.search}`
+      );
       this.props.fetchTermsIfNeeded(`/terms${this.props.location.search}`);
     }
 
@@ -99,7 +107,9 @@ export class SearchPage extends React.Component {
         this.props.fetchDatasetsIfNeeded(`/datasets${modifiedQ}`);
         this.props.fetchTermsIfNeeded(`/terms${modifiedQ}`);
       } else {
-        this.props.fetchDatasetsIfNeeded(`/datasets${nextProps.location.search}`);
+        this.props.fetchDatasetsIfNeeded(
+          `/datasets${nextProps.location.search}`
+        );
         this.props.fetchTermsIfNeeded(`/terms${nextProps.location.search}`);
       }
     }
@@ -494,10 +504,8 @@ const mapStateToProps = ({ datasets, terms, themes, publishers }) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  fetchDatasetsIfNeeded: url =>
-    dispatch(fetchDatasetsIfNeeded(url)),
-  fetchTermsIfNeeded: url =>
-    dispatch(fetchTermsIfNeeded(url)),
+  fetchDatasetsIfNeeded: url => dispatch(fetchDatasetsIfNeeded(url)),
+  fetchTermsIfNeeded: url => dispatch(fetchTermsIfNeeded(url)),
   fetchThemesIfNeeded: () => dispatch(fetchThemesIfNeeded()),
   fetchPublishersIfNeeded: () => dispatch(fetchPublishersIfNeeded())
 });

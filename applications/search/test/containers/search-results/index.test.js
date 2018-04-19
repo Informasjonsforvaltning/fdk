@@ -17,22 +17,8 @@ beforeEach(() => {
 });
 
 test('should render SearchPage correctly with no datasetItems', () => {
-  const wrap = shallow(
-    <SearchPage
-      {...defaultProps}
-    />
-  );
-  expect(wrap).toMatchSnapshot();
-})
-
-/*
-test('should render SearchPage correctly with no datasetItems', () => {
   expect(wrapper).toMatchSnapshot();
 })
 
-test('should render SearchPage correctly with datasetItem', () => {
-  expect(wrapper).toMatchSnapshot();
-});
-*/
 
 

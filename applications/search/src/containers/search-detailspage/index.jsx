@@ -29,7 +29,7 @@ export class DetailsPage extends React.Component {
   }
 
   componentDidMount() {
-    const { match } = this.props
+    const { match } = this.props;
     if (match) {
       window.scrollTo(0, 0);
       this.loadDatasetFromServer(match);
