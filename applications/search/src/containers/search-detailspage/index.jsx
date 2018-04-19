@@ -188,6 +188,7 @@ class DetailsPage extends React.Component {
     const {
       issued,
       accrualPeriodicity,
+      modified,
       provenance,
       hasCurrentnessAnnotation,
       spatial,
@@ -208,6 +209,7 @@ class DetailsPage extends React.Component {
               )
             : null
         }
+        modified={modified}
         provenance={
           provenance
             ? getTranslateText(
