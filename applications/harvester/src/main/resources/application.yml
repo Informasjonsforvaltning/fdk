@@ -42,3 +42,23 @@ server:
   port: 8082
 management:
   port: 8992
+
+---
+spring:
+  profiles: azurepoc
+logging:
+  level.: ERROR
+  level.no.brreg: INFO
+  level.no.difi: ERROR
+  level.no.dcat: INFO
+  level.org.springframework: ERROR
+  level.org.springframework.web: ERROR
+fuseki:
+  dcatServiceUri: http://fuseki-poc.westeurope.azurecontainer.io:8080/fuseki/dcat
+  adminServiceUri: http://fuseki-poc.westeurope.azurecontainer.io:8080/fuseki/admin
+application:
+  harvesterUrl: http://harvester-api-poc.westeurope.azurecontainer.io:8080
+server:
+  port: 8080
+management:
+  port: 8181
