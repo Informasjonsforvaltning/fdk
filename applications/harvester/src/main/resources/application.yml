@@ -32,4 +32,3 @@ server:
   port: 8082
 management:
   port: 8992
-

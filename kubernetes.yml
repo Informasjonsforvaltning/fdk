@@ -1,0 +1,631 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: reference-data
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: reference-data
+    spec:
+      containers:
+      - name: reference-data
+        image: dcatno/reference-data:st2_latest
+        ports:
+        - containerPort: 8080
+          name: reference-data
+        env:
+        - name: themesHttpUsername
+          value: themeUser
+        - name: themesHttpPassword
+          value: themePassword
+        - name: SPRNG_PROFILES_ACTIVE
+          value: fellesdatakatalog-st2
+        volumeMounts:
+        - name: reference-data-tdb
+          mountPath: /tdb
+      volumes:
+      - name: reference-data-tdb
+        azureDisk:
+          kind: Managed
+          diskName: fdkPocKubeDisk
+          diskURI: /subscriptions/21127853-b601-4cf1-9ecd-a135685e70cb/resourceGroups/MC_fdkpockube_fdkKubeCluster_westeurope/providers/Microsoft.Compute/disks/fdkPocKubeDisk
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: reference-data
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 8080
+  selector:
+    app: reference-data
+
+
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: elasticsearch
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: elasticsearch
+    spec:
+      containers:
+      - name: elasticsearch
+        image: elasticsearch:2.4.1
+        ports:
+        - containerPort: 9300
+          name: elastic-9300
+        - containerPort: 9200
+          name: elastic-9200
+        env:
+        - name: ELASTICSEARCH_SERVICE_NAME
+          value: elasticsearch
+        - name: ELASTICSEARCH_MAX_MEMORY
+          value: 1G
+        - name: ELASTICSEARCH_VOLUME_CAPACITY
+          value: 1Gi
+        - name: ELASTICSEARCH_CLUSTER_NAME
+          value: fellesdatakatalog
+        - name: ELASTICSEARCH_LOG_LEVEL
+          value: ERROR
+        volumeMounts:
+        - name: elasticsearch-data
+          mountPath: /elasticsearch/persistent
+      volumes:
+      - name: elasticsearch-data
+        azureDisk:
+          kind: Managed
+          diskName: fdkElasticsearchData
+          diskURI: /subscriptions/21127853-b601-4cf1-9ecd-a135685e70cb/resourceGroups/MC_fdkpockube_fdkKubeCluster_westeurope/providers/Microsoft.Compute/disks/fdkElasticsearchData
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: elasticsearch
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 9300
+    name: elastic-9300
+  - port: 9200
+    name: elastic-9200
+  selector:
+    app: elasticsearch
+
+
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: fuseki
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: fuseki
+    spec:
+      containers:
+      - name: fuseki
+        image: dcatno/fuseki:st2_latest
+        ports:
+        - containerPort: 8080
+          name: fuseki
+        volumeMounts:
+        - name: fuseki-data
+          mountPath: /etc/fuseki/databases/
+      volumes:
+      - name: fuseki-data
+        azureDisk:
+          kind: Managed
+          diskName: fdkFusekiData
+          diskURI: /subscriptions/21127853-b601-4cf1-9ecd-a135685e70cb/resourceGroups/MC_fdkpockube_fdkKubeCluster_westeurope/providers/Microsoft.Compute/disks/fdkFusekiData
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fuseki
+spec:
+  type: LoadBalancer
+  ports:
+  - name: fuseki-8080-tcp
+    protocol: TCP
+    port: 8080
+    targetPort: 8080
+  selector:
+    app: fuseki
+
+
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: search
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: search
+    spec:
+      containers:
+      - name: search
+        image: dcatno/search:st2_latest
+        ports:
+        - containerPort: 3000
+          protocol: TCP
+          name: search
+        env:
+          - name: SPRING_PROFILES_ACTIVE
+            value: prod
+          - name: JVM_OPTIONS
+            value: '-Xms128m -Xmx256m'
+          - name: NODE_ENV
+            value: production
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: search
+spec:
+  type: LoadBalancer
+  ports:
+  - name: search-3000
+    port: 3000
+    protocol: TCP
+    targetPort: 3000
+  selector:
+    app: search
+
+
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: search-api
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: search-api
+    spec:
+      containers:
+      - name: search-api
+        image: dcatno/search-api:st2_latest
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+          name: search-api
+        env:
+        - name: SPRING_PROFILES_ACTIVE
+          value: prod
+        - name: JVM_OPTIONS
+          value: '-Xms128m -Xmx256m'
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: search-api
+spec:
+  type: LoadBalancer
+  ports:
+  - name: search-api-8080
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: search-api
+
+
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: nginx-search
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: nginx-search
+    spec:
+      containers:
+      - name: nginx-search
+        image: dcatno/nginx-search:st2_latest
+        ports:
+        - containerPort: 80
+          protocol: TCP
+          name: nginx-s-80
+        - containerPort: 8080
+          protocol: TCP
+          name: nginx-s-8080
+        env:
+        - name: SPRING_PROFILES_ACTIVE
+          value: prod
+        - name: JVM_OPTIONS
+          value: '-Xms128m -Xmx256m'
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-search
+spec:
+  type: LoadBalancer
+  ports:
+  - name: nginxs-80-tcp
+    protocol: TCP
+    port: 80
+    targetPort: 80
+  - name: nginxs-8080-tcp
+    protocol: TCP
+    port: 8080
+    targetPort: 8080
+  selector:
+    app: nginx-search
+
+
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: harvester-api
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: harvester-api
+    spec:
+      containers:
+      - name: harvester-api
+        image: dcatno/harvester-api:azurepoc
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+          name: harvester-api
+        env:
+        - name: SPRING_PROFILES_ACTIVE
+          value: azurepoc
+        - name: JVM_OPTIONS
+          value: '-Xms128m -Xmx2048m'
+        - name: themesHttpPassword
+          value: themePassword
+        - name: themesHttpUsername
+          value: themeUser
+        - name: emailUsername
+          value: fdksystem
+        - name: emailPassword
+          value: bronnoyoslonarvik
+        - name: emailSenderAddress
+          value: fdksystem@gmail.com
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: harvester-api
+spec:
+  type: LoadBalancer
+  ports:
+  - name: har-api-8080
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: harvester-api
+
+
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: harvester
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: harvester
+    spec:
+      containers:
+      - name: harvester
+        image: dcatno/harvester:st2_latest
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+          name: harvester
+        env:
+        - name: SPRING_PROFILES_ACTIVE
+          value: prod
+        - name: JVM_OPTIONS
+          value: '-Xms128m -Xmx1024m'
+        - name: harvester_adminUsername
+          value: test_admin
+        - name: harvester_adminPassword
+          value: password
+        volumeMounts:
+        - name: registration-api-config
+          mountPath: /conf
+      volumes:
+      - name: registration-api-config
+        azureDisk:
+          kind: Managed
+          diskName: fdkRegistrationApiConfig
+          diskURI: /subscriptions/21127853-b601-4cf1-9ecd-a135685e70cb/resourceGroups/MC_fdkpockube_fdkKubeCluster_westeurope/providers/Microsoft.Compute/disks/fdkRegistrationApiConfig
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: harvester
+spec:
+  type: LoadBalancer
+  ports:
+  - name: har-8080
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: harvester
+
+
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: nginx-registration
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: nginx-registration
+    spec:
+      containers:
+      - name: nginx-registration
+        image: dcatno/nginx-registration:st2_latest
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+          name: nginx-r-8080
+        env:
+        - name: SPRING_PROFILES_ACTIVE
+          value: prod
+        - name: JVM_OPTIONS
+          value: '-Xms128m -Xmx256m'
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-registration
+spec:
+  type: LoadBalancer
+  ports:
+  - name: nginxr-80-tcp
+    protocol: TCP
+    port: 80
+    targetPort: 80
+  - name: nginxr-8080-tcp
+    protocol: TCP
+    port: 8080
+    targetPort: 8080
+  selector:
+    app: nginx-registration
+
+
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: registration-api
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: registration-api
+    spec:
+      containers:
+      - name: registration-api
+        image: dcatno/registration-api:st2_latest
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+          name: reg-api
+        env:
+        - name: SPRING_PROFILES_ACTIVE
+          value: prod-localauth
+        - name: JVM_OPTIONS
+          value: '-Xms128m -Xmx256m'
+        - name: registrationApi_IncludeServerPortInRequestUrl
+          value: 'false'
+        - name: registrationApi_OpenshiftEnvironment
+          value: st2
+        - name: registrationApi_ServerName
+          value: reg-gui-fellesdatakatalog-st2.ose-npc.brreg.no
+        - name: registrationApi_altinnServiceCode
+          value: '4814'
+        - name: registrationApi_altinnServiceEdition
+          value: '3'
+        - name: registrationApi_altinnServiceUrl
+          value: 'http://registration-auth:8080/'
+        - name: registrationApi_apikey
+          value: 948E57B8-8F44-43E6-921F-F512F67A7F76
+        - name: registrationApi_clientSSLCertificateKeystoreLocation
+          value: >-
+            conf/altinn/Buypass ID-REGISTERENHETEN I
+            BROENNOEYSUND-serienummer1544700822686643554309384-2017-05-31.p12
+        - name: registrationApi_clientSSLCertificateKeystorePassword
+          value: c71w6QjxMoJovm6g
+        - name: registrationApi_idportenMetadataFile
+          value: conf/idporten/idporten-ver2.difi.no-v3_signed_meta.xml
+        - name: registrationApi_ipKeyPassword
+          value: scxOcX4WuEgmRYFN
+        - name: registrationApi_ipStorePassword
+          value: odurkxLfyuoBGr8MHZ9c
+        - name: registrationApi_sslKeyPassword
+          value: changeit
+        - name: registrationApi_sslKeystoreLocation
+          value: conf/idporten/ssldevelop.p12
+        - name: registrationApi_harvesterUsername
+          value: test_admin
+        - name: registrationApi_harvesterPassword
+          value: password
+        volumeMounts:
+        - name: registration-api-config
+          mountPath: /conf
+      volumes:
+      - name: registration-api-config
+        azureDisk:
+          kind: Managed
+          diskName: fdkRegistrationApiConfig
+          diskURI: /subscriptions/21127853-b601-4cf1-9ecd-a135685e70cb/resourceGroups/MC_fdkpockube_fdkKubeCluster_westeurope/providers/Microsoft.Compute/disks/fdkRegistrationApiConfig
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: registration-api
+spec:
+  type: LoadBalancer
+  ports:
+  - name: reg-api-8080
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: registration-api
+
+
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: registration-react
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: registration-react
+    spec:
+      containers:
+      - name: registration-react
+        image: dcatno/registration-react:st2_latest
+        ports:
+        - containerPort: 4300
+          protocol: TCP
+          name: reg-react
+        env:
+        - name: SPRING_PROFILES_ACTIVE
+          value: prod
+        - name: JVM_OPTIONS
+          value: '-Xms128m -Xmx256m'
+        - name: NODE_ENV
+          value: production
+        - name: PORT
+          value: '4300'
+        - name: QUERY_SERVICE_URL
+          value: /reference-data
+        - name: REG_API_URL
+          value: 'https://40.91.217.125/'
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: registration-react
+spec:
+  type: LoadBalancer
+  ports:
+  - name: reg-react-4300
+    port: 4300
+    protocol: TCP
+    targetPort: 4300
+  selector:
+    app: registration-react
+
+
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: registration-auth
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: registration-auth
+    spec:
+      containers:
+      - name: registration-auth
+        image: dcatno/registration-auth:st2_latest
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+          name: reg-auth
+        env:
+        - name: SPRING_PROFILES_ACTIVE
+          value: prod
+        - name: JVM_OPTIONS
+          value: '-Xms128m -Xmx1024m'
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: registration-auth
+spec:
+  type: LoadBalancer
+  ports:
+  - name: reg-auth-8080
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: registration-auth
+
+
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: registration-validator
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: registration-validator
+    spec:
+      containers:
+      - name: registration-validator
+        image: dcatno/registration-validator:st2_latest
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+          name: reg-validator
+        env:
+        - name: SPRING_PROFILES_ACTIVE
+          value: prod
+        - name: JVM_OPTIONS
+          value: '-Xms128m -Xmx1024m'
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: registration-validator
+spec:
+  type: LoadBalancer
+  ports:
+  - name: reg-val-8080
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: registration-validator
