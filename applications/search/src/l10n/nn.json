@@ -144,7 +144,8 @@
       "page": "Mer informasjon om denne distribusjonen",
       "standard": "Standard",
       "referenceDefaultCode": "Andre relasjoner",
-      "referenceDefault": "Relasjon"
+      "referenceDefault": "Relasjon",
+      "type": "Type"
     },
     "issued": "Utgivelsesdato",
     "quality": "Kvalitet på innhold",

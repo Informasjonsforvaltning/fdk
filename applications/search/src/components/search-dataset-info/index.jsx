@@ -270,6 +270,7 @@ export default class DatasetInfo extends React.Component {
     const {
       issued,
       accrualPeriodicity,
+      modified,
       provenance,
       hasCurrentnessAnnotation
     } = this.props;
@@ -289,7 +290,7 @@ export default class DatasetInfo extends React.Component {
 
     return (
       <section id="dataset-info">
-        <div className="row fdk-row ">
+        <div className="row fdk-row">
           {issued && (
             <div className={issuedClass}>
               <div className="fdk-container-detail">
@@ -323,6 +324,24 @@ export default class DatasetInfo extends React.Component {
                   >
                     {accrualPeriodicity.charAt(0).toUpperCase()}
                     {accrualPeriodicity.substr(1)}
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {modified && (
+            <div className="col-xs-12 fdk-padding-no">
+              <div className="fdk-container-detail">
+                <div>
+                  <h5>{localization.dataset.modified}</h5>
+                  <p
+                    id="dataset-info-accrualPeriodicity"
+                    className="fdk-ingress fdk-margin-bottom-no"
+                  >
+                    {modified && (
+                      <Moment format="DD.MM.YYYY">{modified}</Moment>
+                    )}
                   </p>
                 </div>
               </div>
@@ -381,6 +400,7 @@ export default class DatasetInfo extends React.Component {
 DatasetInfo.defaultProps = {
   issued: null,
   accrualPeriodicity: '',
+  modified: null,
   provenance: '',
   hasCurrentnessAnnotation: '',
   spatial: null,
@@ -393,6 +413,7 @@ DatasetInfo.defaultProps = {
 DatasetInfo.propTypes = {
   issued: PropTypes.number,
   accrualPeriodicity: PropTypes.string,
+  modified: PropTypes.string,
   provenance: PropTypes.string,
   hasCurrentnessAnnotation: PropTypes.string,
   spatial: PropTypes.array,

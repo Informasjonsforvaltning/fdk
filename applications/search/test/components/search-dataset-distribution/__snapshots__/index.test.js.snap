@@ -125,6 +125,18 @@ exports[`should render DatasetDistribution correctly 2`] = `
   </p>
   <div>
     <h5
+      className="fdk-margin-top-double"
+    >
+      Type
+    </h5>
+    <p
+      className="fdk-ingress"
+    >
+      Feed
+    </p>
+  </div>
+  <div>
+    <h5
       className="fdk-space-above"
     >
       Tilgjengelige format
