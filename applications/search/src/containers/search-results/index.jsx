@@ -63,29 +63,27 @@ export class SearchPage extends React.Component {
   }
 
   componentDidMount() {
+    const { location } = this.props;
     let hasSingleWord = false;
     const q =
-      this.props.location && this.props.location.search
-        ? getParamFromString(this.props.location.search, 'q')
+      location && location.search
+        ? getParamFromString(location.search, 'q')
         : null;
     if (q) {
       hasSingleWord = !q.includes(' ') && !q.includes('*'); // no spaces and no asterix search
     }
     if (hasSingleWord) {
       const modifiedQ = addOrReplaceParamWithoutURL(
-        this.props.location.search,
+        location.search,
         'q',
         `${q} ${encodeURIComponent(q)}*`
       );
       this.props.fetchDatasetsIfNeeded(`/datasets/${modifiedQ}`);
       this.props.fetchTermsIfNeeded(`/terms/${modifiedQ}`);
     } else {
-      this.props.fetchDatasetsIfNeeded(
-        `/datasets${this.props.location.search}`
-      );
-      this.props.fetchTermsIfNeeded(`/terms${this.props.location.search}`);
+      this.props.fetchDatasetsIfNeeded(`/datasets${location.search}`);
+      this.props.fetchTermsIfNeeded(`/terms${location.search}`);
     }
-
     this.props.fetchThemesIfNeeded();
     this.props.fetchPublishersIfNeeded();
   }

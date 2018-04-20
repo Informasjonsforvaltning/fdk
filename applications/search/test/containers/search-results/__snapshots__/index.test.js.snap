@@ -1,3 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`should render SearchPage correctly with no datasetItems 1`] = `undefined`;
