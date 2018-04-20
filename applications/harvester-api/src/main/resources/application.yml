@@ -83,3 +83,31 @@ spring:
             enable: true
 application:
   notificationMailSenderAddress: fdksystembjg@gmail.com
+
+---
+spring:
+  profiles: azurepoc
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${emailUsername}
+    password: ${emailPassword}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          connectionTimeout: 5000
+          timeout: 3000
+          writetimeout: 5000
+          starttls:
+            enable: true
+fuseki:
+  dcatServiceUri: http://fuseki-poc.westeurope.azurecontainer.io:8080/fuseki/dcat
+  adminServiceUri: http://fuseki-poc.westeurope.azurecontainer.io:8080/fuseki/admin
+application:
+  crawlerThreadPoolSize: 2
+  elasticSearchHost: localhost
+  elasticSearchPort: 9300
+  elasticSearchCluster: elasticsearch
+  themesHostname: http://reference-data-poc.westeurope.azurecontainer.io:8080
+  notificationMailSenderAddress: fdksystembjg@gmail.com
