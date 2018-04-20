@@ -144,7 +144,8 @@
       "page": "More information about this distribution",
       "standard": "Standard",
       "referenceDefaultCode": "Other relations",
-      "referenceDefault": "Relation"
+      "referenceDefault": "Relation",
+      "type": "Type"
     },
     "issued": "Issue date",
     "quality": "Quality",

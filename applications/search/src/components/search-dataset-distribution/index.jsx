@@ -9,6 +9,22 @@ import './index.scss';
 
 export default class DatasetDistribution extends React.Component {
   // eslint-disable-line react/prefer-stateless-function
+
+  _renderType() {
+    const { type } = this.props;
+    if (type) {
+      return (
+        <div>
+          <h5 className="fdk-margin-top-double">
+            {localization.dataset.distribution.type}
+          </h5>
+          <p className="fdk-ingress">{type}</p>
+        </div>
+      );
+    }
+    return null;
+  }
+
   _renderFormats() {
     const { code, format } = this.props;
     const children = (items, code) =>
@@ -172,6 +188,7 @@ export default class DatasetDistribution extends React.Component {
         {this.props.description && (
           <p className="fdk-ingress">{this.props.description}</p>
         )}
+        {this._renderType()}
         {this._renderFormats()}
         {this._renderTilgangsURL()}
         {this._renderLicense()}
@@ -191,6 +208,7 @@ DatasetDistribution.defaultProps = {
   license: null,
   conformsTo: null,
   page: null,
+  type: null,
   selectedLanguageCode: null
 };
 
@@ -203,5 +221,6 @@ DatasetDistribution.propTypes = {
   license: PropTypes.object,
   conformsTo: PropTypes.array,
   page: PropTypes.array,
+  type: PropTypes.string,
   selectedLanguageCode: PropTypes.string
 };
