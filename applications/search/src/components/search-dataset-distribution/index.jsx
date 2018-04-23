@@ -5,10 +5,27 @@ import cx from 'classnames';
 import localization from '../../components/localization';
 import { getTranslateText } from '../../utils/translateText';
 import DistributionFormat from '../search-dataset-format';
+import { getOpenLicenseByUri } from '../../reducers/index';
 import './index.scss';
 
 export default class DatasetDistribution extends React.Component {
   // eslint-disable-line react/prefer-stateless-function
+
+  _renderType() {
+    const { type } = this.props;
+    if (type) {
+      return (
+        <div>
+          <h5 className="fdk-margin-top-double">
+            {localization.dataset.distribution.type}
+          </h5>
+          <p className="fdk-ingress">{type}</p>
+        </div>
+      );
+    }
+    return null;
+  }
+
   _renderFormats() {
     const { code, format } = this.props;
     const children = (items, code) =>
@@ -72,15 +89,33 @@ export default class DatasetDistribution extends React.Component {
   }
 
   _renderLicense() {
-    const { license, selectedLanguageCode } = this.props;
+    const { license, selectedLanguageCode, openLicenseItems } = this.props;
     if (license && license.uri) {
+      let foundLicenseItem;
+      if (openLicenseItems) {
+        foundLicenseItem = getOpenLicenseByUri(
+          openLicenseItems,
+          license.uri
+        )[0];
+      }
       return (
         <div>
           <h5 className="fdk-margin-top-double">
             {localization.dataset.distribution.license}
           </h5>
           <p className="fdk-ingress">
-            {license &&
+            {foundLicenseItem &&
+              typeof foundLicenseItem !== 'undefined' && (
+                <a href={foundLicenseItem.uri}>
+                  {getTranslateText(
+                    foundLicenseItem.prefLabel,
+                    selectedLanguageCode
+                  )}
+                  <i className="fa fa-external-link fdk-fa-right" />
+                </a>
+              )}
+            {!foundLicenseItem &&
+              license &&
               license.uri &&
               license.prefLabel && (
                 <a href={license.uri}>
@@ -88,7 +123,8 @@ export default class DatasetDistribution extends React.Component {
                   <i className="fa fa-external-link fdk-fa-right" />
                 </a>
               )}
-            {license &&
+            {!foundLicenseItem &&
+              license &&
               license.uri &&
               !license.prefLabel && (
                 <a href={license.uri}>
@@ -172,6 +208,7 @@ export default class DatasetDistribution extends React.Component {
         {this.props.description && (
           <p className="fdk-ingress">{this.props.description}</p>
         )}
+        {this._renderType()}
         {this._renderFormats()}
         {this._renderTilgangsURL()}
         {this._renderLicense()}
@@ -191,6 +228,8 @@ DatasetDistribution.defaultProps = {
   license: null,
   conformsTo: null,
   page: null,
+  openLicenseItems: null,
+  type: null,
   selectedLanguageCode: null
 };
 
@@ -203,5 +242,7 @@ DatasetDistribution.propTypes = {
   license: PropTypes.object,
   conformsTo: PropTypes.array,
   page: PropTypes.array,
+  type: PropTypes.string,
+  openLicenseItems: PropTypes.array,
   selectedLanguageCode: PropTypes.string
 };

@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 
 import {
   fetchDatasetDetailsIfNeeded,
-  resetDatasetDetails
+  resetDatasetDetails,
+  fetchOpenLicensesIfNeeded
 } from '../../actions/index';
 import DatasetDescription from '../../components/search-dataset-description';
 import DatasetKeyInfo from '../../components/search-dataset-keyinfo';
@@ -45,6 +46,7 @@ export class DetailsPage extends React.Component {
   loadDatasetFromServer(match) {
     const url = `/datasets/${match.params.id}`;
     this.props.fetchDatasetDetailsIfNeeded(url);
+    this.props.fetchOpenLicensesIfNeeded();
   }
 
   _renderDatasetDescription() {
@@ -93,6 +95,7 @@ export class DetailsPage extends React.Component {
 
   _renderDistribution() {
     const { distribution, accessRights } = this.props.datasetItem;
+    const { openLicenseItems } = this.props;
     if (!distribution) {
       return null;
     }
@@ -115,6 +118,8 @@ export class DetailsPage extends React.Component {
         license={distribution.license}
         conformsTo={distribution.conformsTo}
         page={distribution.page}
+        type={distribution.type}
+        openLicenseItems={openLicenseItems}
         selectedLanguageCode={this.props.selectedLanguageCode}
       />
     ));
@@ -144,6 +149,7 @@ export class DetailsPage extends React.Component {
         license={sample.license}
         conformsTo={sample.conformsTo}
         page={sample.page}
+        type={sample.type}
         selectedLanguageCode={this.props.selectedLanguageCode}
       />
     ));
@@ -169,6 +175,7 @@ export class DetailsPage extends React.Component {
     const {
       issued,
       accrualPeriodicity,
+      modified,
       provenance,
       hasCurrentnessAnnotation,
       spatial,
@@ -189,6 +196,7 @@ export class DetailsPage extends React.Component {
               )
             : null
         }
+        modified={modified}
         provenance={
           provenance
             ? getTranslateText(
@@ -315,7 +323,6 @@ export class DetailsPage extends React.Component {
 
   render() {
     const { datasetItem } = this.props;
-
     if (datasetItem) {
       return (
         <div className="container">
@@ -350,22 +357,28 @@ DetailsPage.propTypes = {
   selectedLanguageCode: PropTypes.string
 };
 
-const mapStateToProps = ({ datasetDetails }) => {
+const mapStateToProps = ({ datasetDetails, openLicenses }) => {
   const { datasetItem, isFetchingDataset } = datasetDetails || {
     datasetItem: null,
     isFetchingDataset: null
   };
 
+  const { openLicenseItems } = openLicenses || {
+    openLicenseItems: null
+  };
+
   return {
     datasetItem,
-    isFetchingDataset
+    isFetchingDataset,
+    openLicenseItems
   };
 };
 
 const mapDispatchToProps = dispatch => ({
   fetchDatasetDetailsIfNeeded: url =>
     dispatch(fetchDatasetDetailsIfNeeded(url)),
-  resetDatasetDetails: () => dispatch(resetDatasetDetails())
+  resetDatasetDetails: () => dispatch(resetDatasetDetails()),
+  fetchOpenLicensesIfNeeded: () => dispatch(fetchOpenLicensesIfNeeded())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DetailsPage);

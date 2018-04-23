@@ -125,6 +125,18 @@ exports[`should render DatasetDistribution correctly 2`] = `
   </p>
   <div>
     <h5
+      className="fdk-margin-top-double"
+    >
+      Type
+    </h5>
+    <p
+      className="fdk-ingress"
+    >
+      Feed
+    </p>
+  </div>
+  <div>
+    <h5
       className="fdk-space-above"
     >
       Tilgjengelige format
@@ -155,6 +167,115 @@ exports[`should render DatasetDistribution correctly 2`] = `
         href="https://www.kartverket.no/geodataarbeid/standarder/sosi/"
       >
         SOSI
+        <i
+          className="fa fa-external-link fdk-fa-right"
+        />
+      </a>
+    </p>
+  </div>
+  <div>
+    <h5
+      className="fdk-margin-top-double"
+    >
+      Innholdsstandard
+    </h5>
+    <p
+      className="fdk-ingress"
+    >
+      <a
+        href="https://www.kartverket.no/geodataarbeid/standarder/sosi/"
+        key="https://www.kartverket.no/geodataarbeid/standarder/sosi/"
+      >
+        SOSI
+        <i
+          className="fa fa-external-link fdk-fa-right"
+        />
+      </a>
+    </p>
+  </div>
+  <div>
+    <h5
+      className="fdk-margin-top-double"
+    >
+      Mer informasjon om denne distribusjonen
+    </h5>
+    <p
+      className="fdk-ingress"
+    />
+  </div>
+</section>
+`;
+
+exports[`should render DatasetDistribution correctly with distribution with Open License 1`] = `
+<section
+  className="fdk-container-detail"
+>
+  <h4
+    className="fdk-margin-bottom"
+  >
+    AAMarkagrensen Oslo Kommune og nærliggende kommuner
+  </h4>
+  <p
+    className="fdk-ingress"
+  >
+    Datasettet avgrenser område for virkeområdet til lov 6. juni 2009 nr. 35 om naturområder i Oslo og nærliggende kommuner (markaloven) som trådte i kraft 1. september 2009. Markalovens virkeområde er fastsatt i forskrift 4. september 2015 nr. 1032 om justering av markagrensen fastlegger markalovens geografiske virkeområde med tilhørende kart.
+  </p>
+  <div>
+    <h5
+      className="fdk-margin-top-double"
+    >
+      TilgangsURL
+    </h5>
+    <p
+      className="fdk-ingress"
+    >
+      <a
+        className="dataset-distribution-accessurl"
+        href="http://www.detteerenlenke.no/til-nedlasting"
+        key="dataset-distribution-accessurl-0"
+      >
+        http://www.detteerenlenke.no/til-nedlasting
+        <i
+          className="fa fa-external-link fdk-fa-right"
+        />
+      </a>
+      <a
+        className="dataset-distribution-accessurl"
+        href="http://www.detteerenannenlenke.no/til-en-annen-nedlasting
+"
+        key="dataset-distribution-accessurl-1"
+      >
+        http://www.detteerenannenlenke.no/til-en-annen-nedlasting
+
+        <i
+          className="fa fa-external-link fdk-fa-right"
+        />
+      </a>
+      <a
+        className="dataset-distribution-accessurl"
+        href="http://www.detteerentredjelenke.no/til-en-tredje-nedlasting"
+        key="dataset-distribution-accessurl-2"
+      >
+        http://www.detteerentredjelenke.no/til-en-tredje-nedlasting
+        <i
+          className="fa fa-external-link fdk-fa-right"
+        />
+      </a>
+    </p>
+  </div>
+  <div>
+    <h5
+      className="fdk-margin-top-double"
+    >
+      Forutsetning for bruk av datasettet
+    </h5>
+    <p
+      className="fdk-ingress"
+    >
+      <a
+        href="http://data.norge.no/nlod"
+      >
+        Lisens
         <i
           className="fa fa-external-link fdk-fa-right"
         />

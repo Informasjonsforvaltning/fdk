@@ -85,9 +85,9 @@ public class QueryApplication extends WebMvcConfigurerAdapter {
                 "National Data Directory Search API",
                 "Provides a basic search api against the National Data Directory of Norway",
                 "1.0",
-                "Terms of service",
-                new Contact("Info", "fellesdatakatalog.brreg.no", "fellesdatakatalog@brreg.no"),
-                "License of API", "API license URL", Collections.emptyList());
+                "https://fellesdatakatalog.brreg.no/about",
+                new Contact("Brønnøysundregistrene", "https://fellesdatakatalog.brreg.no", "fellesdatakatalog@brreg.no"),
+                "License of API", "https://data.norge.no/nlod/no/2.0", Collections.emptyList());
     }
 
 }
