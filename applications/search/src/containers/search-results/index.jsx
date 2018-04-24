@@ -27,16 +27,19 @@ import './index.scss';
 
 const browser = detect();
 
-class SearchPage extends React.Component {
+export class SearchPage extends React.Component {
   constructor(props) {
     super(props);
-    const searchQuery = queryString.parse(props.location.search) || {
-      searchQuery: {},
-      showFilterModal: false
-    };
+    const searchQuery =
+      props.location && props.location.search
+        ? queryString.parse(props.location.search)
+        : {
+            searchQuery: {}
+          };
 
     this.state = {
       showConcepts: false,
+      showFilterModal: false,
       searchQuery
     };
 
@@ -57,29 +60,32 @@ class SearchPage extends React.Component {
     this.handlePageChange = this.handlePageChange.bind(this);
     this.close = this.close.bind(this);
     this.open = this.open.bind(this);
+  }
 
-    const q = getParamFromString(props.location.search, 'q');
+  componentDidMount() {
+    const { location } = this.props;
     let hasSingleWord = false;
+    const q =
+      location && location.search
+        ? getParamFromString(location.search, 'q')
+        : null;
     if (q) {
       hasSingleWord = !q.includes(' ') && !q.includes('*'); // no spaces and no asterix search
     }
     if (hasSingleWord) {
       const modifiedQ = addOrReplaceParamWithoutURL(
-        props.location.search,
+        location.search,
         'q',
         `${q} ${encodeURIComponent(q)}*`
       );
-      this.props.dispatch(fetchDatasetsIfNeeded(`/datasets/${modifiedQ}`));
-      this.props.dispatch(fetchTermsIfNeeded(`/terms/${modifiedQ}`));
+      this.props.fetchDatasetsIfNeeded(`/datasets/${modifiedQ}`);
+      this.props.fetchTermsIfNeeded(`/terms/${modifiedQ}`);
     } else {
-      this.props.dispatch(
-        fetchDatasetsIfNeeded(`/datasets${props.location.search}`)
-      );
-      this.props.dispatch(fetchTermsIfNeeded(`/terms${props.location.search}`));
+      this.props.fetchDatasetsIfNeeded(`/datasets${location.search}`);
+      this.props.fetchTermsIfNeeded(`/terms${location.search}`);
     }
-
-    this.props.dispatch(fetchThemesIfNeeded());
-    this.props.dispatch(fetchPublishersIfNeeded());
+    this.props.fetchThemesIfNeeded();
+    this.props.fetchPublishersIfNeeded();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -96,15 +102,13 @@ class SearchPage extends React.Component {
           'q',
           `${q} ${encodeURIComponent(q)}*`
         );
-        this.props.dispatch(fetchDatasetsIfNeeded(`/datasets${modifiedQ}`));
-        this.props.dispatch(fetchTermsIfNeeded(`/terms${modifiedQ}`));
+        this.props.fetchDatasetsIfNeeded(`/datasets${modifiedQ}`);
+        this.props.fetchTermsIfNeeded(`/terms${modifiedQ}`);
       } else {
-        this.props.dispatch(
-          fetchDatasetsIfNeeded(`/datasets${nextProps.location.search}`)
+        this.props.fetchDatasetsIfNeeded(
+          `/datasets${nextProps.location.search}`
         );
-        this.props.dispatch(
-          fetchTermsIfNeeded(`/terms${nextProps.location.search}`)
-        );
+        this.props.fetchTermsIfNeeded(`/terms${nextProps.location.search}`);
       }
     }
     if (selectedLanguageCode !== this.props.selectedLanguageCode) {
@@ -460,7 +464,7 @@ SearchPage.propTypes = {
   selectedLanguageCode: PropTypes.string
 };
 
-function mapStateToProps({ datasets, terms, themes, publishers }) {
+const mapStateToProps = ({ datasets, terms, themes, publishers }) => {
   const {
     datasetItems,
     publisherCountItems,
@@ -495,6 +499,13 @@ function mapStateToProps({ datasets, terms, themes, publishers }) {
     publisherItems,
     isFetchingPublishers
   };
-}
+};
 
-export default connect(mapStateToProps)(SearchPage);
+const mapDispatchToProps = dispatch => ({
+  fetchDatasetsIfNeeded: url => dispatch(fetchDatasetsIfNeeded(url)),
+  fetchTermsIfNeeded: url => dispatch(fetchTermsIfNeeded(url)),
+  fetchThemesIfNeeded: () => dispatch(fetchThemesIfNeeded()),
+  fetchPublishersIfNeeded: () => dispatch(fetchPublishersIfNeeded())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchPage);
