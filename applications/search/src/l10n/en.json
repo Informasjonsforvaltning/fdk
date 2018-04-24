@@ -92,7 +92,14 @@
     "temporal":"Temporal",
     "standard":"Standard",
     "showmore":"Show more",
-    "showfewer":"Show fewer"
+    "showfewer":"Show fewer",
+    "publishers": {
+      "STAT": "Central authority",
+      "FYLKE": "County",
+      "KOMMUNE": "Municipality",
+      "PRIVAT": "Private",
+      "ANNET": "Other"
+    }
   },
   "result": {
     "dataset":"Dataset",

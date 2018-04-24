@@ -92,7 +92,14 @@
     "temporal":"Tidsperiode",
     "standard":"Standard",
     "showmore":"Vis flere",
-    "showfewer":"Vis færre"
+    "showfewer":"Vis færre",
+    "publishers": {
+      "STAT": "Stat",
+      "FYLKE": "Fylke",
+      "KOMMUNE": "Kommune",
+      "PRIVAT": "Privat",
+      "ANNET": "Annet"
+    }
   },
   "result": {
     "dataset":"Datasett",
