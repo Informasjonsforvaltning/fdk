@@ -77,7 +77,7 @@
     "datasetNoHits": "ingen treff i datasett",
     "conceptHits": "treff i begrep",
     "conceptNoHits": "ingen treff i begrep",
-    "noHits": "dessverre ingen treff",
+    "noHits": "Søket ga dessverre ingen treff",
     "concepts": "begrep",
     "and": "og",
     "but": "men"

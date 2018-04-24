@@ -69,18 +69,18 @@
   },
   "hitstats": {
     "nosearch": {
-      "search": "Søk blant",
-      "descriptions": "datasettbeskrivelser"
+      "search": "Search among",
+      "descriptions": "dataset descriptions"
     },
-    "search": "Søket ga",
-    "datasetHits": "treff i datasett",
-    "datasetNoHits": "ingen treff i datasett",
-    "conceptHits": "treff i begrep",
-    "conceptNoHits": "ingen treff i begrep",
-    "noHits": "dessverre ingen treff",
-    "concepts": "begrep",
-    "and": "og",
-    "but": "men"
+    "search": "Search gave",
+    "datasetHits": "hits among datasets",
+    "datasetNoHits": "no hits among datasets",
+    "conceptHits": "hits among concepts",
+    "conceptNoHits": "no hits among concepts",
+    "noHits": "Sorry, no hits",
+    "concepts": "concepts",
+    "and": "and",
+    "but": "but"
   },
   "facet": {
     "organisation":"Organization",
