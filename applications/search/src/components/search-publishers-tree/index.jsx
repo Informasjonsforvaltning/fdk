@@ -6,6 +6,7 @@ import TreeView from 'react-treeview';
 import 'react-treeview/react-treeview.css';
 import cx from 'classnames';
 
+import localization from '../localization';
 import './index.scss';
 
 export default class SearchPublishersTree extends React.Component {
@@ -141,9 +142,15 @@ export default class SearchPublishersTree extends React.Component {
           node.orgPath,
           orgPath
         );
-        const name = `${node.name.charAt(0)}${node.name
-          .substring(1)
-          .toLowerCase()}`;
+        const name =
+          node.name === 'STAT' ||
+          node.name === 'FYLKE' ||
+          node.name === 'KOMMUNE' ||
+          node.name === 'PRIVAT' ||
+          node.name === 'ANNET'
+            ? localization.facet.publishers[node.name]
+            : node.name;
+
         const label = (
           <span
             className="mainTree-btn node"
