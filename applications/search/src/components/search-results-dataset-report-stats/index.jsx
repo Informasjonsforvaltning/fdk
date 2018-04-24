@@ -102,16 +102,25 @@ const ReportStats = props => {
   const orgPathParam =
     encodedOrgPath !== null ? `&orgPath=${encodedOrgPath}` : '';
 
+  let name;
+  if (entity && entity.length > 0) {
+    name =
+      entity === 'STAT' ||
+      entity === 'FYLKE' ||
+      entity === 'KOMMUNE' ||
+      entity === 'PRIVAT' ||
+      entity === 'ANNET'
+        ? localization.facet.publishers[entity]
+        : `${entity.charAt(0)}${entity.substring(1).toLowerCase()}`;
+  } else {
+    name = localization.report.allEntities;
+  }
   const title = (
     <div className="row">
       <div className="fdk-container-stats">
         <h2>
           {localization.report.title}
-          <strong>
-            {entity && entity.length > 0
-              ? `${entity.charAt(0)}${entity.substring(1).toLowerCase()}`
-              : localization.report.allEntities}
-          </strong>
+          <strong>{name}</strong>
         </h2>
       </div>
     </div>
