@@ -10,6 +10,7 @@ import TextAreaField from '../reg-form-field-textarea';
 import DatepickerField from '../reg-form-field-datepicker';
 import asyncValidate from '../../utils/asyncValidate';
 import { validateMinTwoChars } from '../../validation/validation';
+import { currentnessAnnotationType } from '../../schemaTypes';
 
 const validate = values => {
   const errors = {}
@@ -101,7 +102,7 @@ let FormProvenance = props => {
         </div>
         <div className="form-group">
           <Helptext title="Aktualitet" helptextItems={helptextItems.Dataset_hasQualityAnnotation_currentness} />
-          <Field name="hasCurrentnessAnnotation.hasBody.no" component={TextAreaField} label="Aktualitet" />
+          <Field name="hasCurrentnessAnnotation.hasBody.nb" component={TextAreaField} label="Aktualitet" />
         </div>
       </form>
     )
@@ -122,7 +123,7 @@ const mapStateToProps = ({ dataset, frequency, provenance }) => (
       provenance: dataset.result.provenance || {},
       // modified: moment(dataset.result.modified).format('YYYY-MM-DD') || '',
       modified: dataset.result.modified ? moment(dataset.result.modified).format('YYYY-MM-DD') : null,
-      hasCurrentnessAnnotation: dataset.result.hasCurrentnessAnnotation,
+      hasCurrentnessAnnotation: dataset.result.hasCurrentnessAnnotation || currentnessAnnotationType,
       accrualPeriodicity: dataset.result.accrualPeriodicity
     }
   }
