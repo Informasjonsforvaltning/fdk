@@ -30,7 +30,7 @@
   },
   "query": {
     "intro": "Søk etter innhold",
-    "do": "Utfør søk",
+    "do": "Søk",
     "clear": "Fjern alle filtre"
   },
   "login": {

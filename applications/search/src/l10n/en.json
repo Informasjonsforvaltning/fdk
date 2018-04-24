@@ -30,7 +30,7 @@
   },
   "query": {
     "intro": "Search for datasets...",
-    "do": "search",
+    "do": "Search",
     "clear": "Clear"
   },
   "login": {
@@ -62,8 +62,8 @@
     "dataset":"treff",
     "nosearch.summary":"Søk blant",
     "nosearch.descriptions":"datasettbeskrivelser",
-    "datasetTab": "Datasett",
-    "termTab": "Begrep",
+    "datasetTab": "Dataset",
+    "termTab": "Concepts",
     "nosearch.concepts":"begreper",
     "nosearch.descriptions":"datasett beskrivelser"
   },
