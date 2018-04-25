@@ -5,7 +5,7 @@
       <rdfs:label xml:lang="no">Åpne data lisenser</rdfs:label>
    </skos:ConceptScheme>
 
-   <skos:Concept rdf:about="http://data.norge.no/nlod" >
+   <skos:Concept rdf:about="http://data.norge.no/nlod/" >
       <skos:inScheme rdf:resource="http:/data.norge.no/opne-data-lisensar" />
       <dc:identifier>NLOD</dc:identifier>
        <at:authority-code>NLOD</at:authority-code>

@@ -225,7 +225,9 @@ public abstract class AbstractBuilder {
                     result.add(concept);
                 }
             } else {
-                result.add(SkosConcept.getInstance(statement.getObject().toString()));
+                if (statement.getObject().toString() != null && !statement.getObject().toString().isEmpty()) {
+                    result.add(SkosConcept.getInstance(statement.getObject().toString()));
+                }
             }
         }
 
