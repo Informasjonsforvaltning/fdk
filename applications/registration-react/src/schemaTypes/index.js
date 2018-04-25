@@ -84,3 +84,9 @@ export const availabilityAnnotationType = {
   motivatedBy: 'dqv:qualityAssessment',
   hasBody: textType
 }
+
+export const currentnessAnnotationType = {
+  inDimension: 'iso:Currentness',
+  motivatedBy: 'dqv:qualityAssessment',
+  hasBody: textType
+}
