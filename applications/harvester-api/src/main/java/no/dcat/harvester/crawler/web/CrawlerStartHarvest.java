@@ -6,18 +6,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationListener;
+import org.springframework.context.annotation.Profile;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 /**
  * Created by dask on 28.02.2017.
  */
 @Component
+@Profile({"docker", "prod"})
 public class CrawlerStartHarvest implements ApplicationListener<ApplicationReadyEvent> {
 
     private static final Logger logger = LoggerFactory.getLogger(CrawlerStartHarvest.class);
 
     @Autowired
     private ApplicationContext context;
+
 
     public CrawlerRestController getController() {
         return context.getBean(CrawlerRestController.class);
