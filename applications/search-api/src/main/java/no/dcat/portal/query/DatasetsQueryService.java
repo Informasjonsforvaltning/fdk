@@ -17,9 +17,12 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.query.RangeQueryBuilder;
 import org.elasticsearch.index.query.SimpleQueryStringBuilder;
 import org.elasticsearch.index.query.TermQueryBuilder;
+import org.elasticsearch.script.Script;
+import org.elasticsearch.script.ScriptService;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms.Order;
+import org.elasticsearch.search.sort.ScriptSortBuilder;
 import org.elasticsearch.search.sort.SortBuilder;
 import org.elasticsearch.search.sort.SortBuilders;
 import org.elasticsearch.search.sort.SortOrder;
@@ -220,10 +223,8 @@ public class DatasetsQueryService extends ElasticsearchService {
     }
 
     private void addSortForEmptySearch(SearchRequestBuilder searchBuilder) {
-        TermQueryBuilder termFilter = QueryBuilders.termQuery("provenance.code.raw","NASJONAL");
 
-        SortBuilder sortFieldProvenance = SortBuilders.fieldSort("provenance.code")
-                .setNestedFilter(termFilter)
+        SortBuilder sortFieldProvenance = SortBuilders.fieldSort("provenanceSort")
                 .order(SortOrder.ASC);
 
         SortBuilder sortOnSource = SortBuilders.fieldSort("source")
