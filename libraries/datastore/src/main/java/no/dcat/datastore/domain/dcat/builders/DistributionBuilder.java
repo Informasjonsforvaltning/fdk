@@ -26,16 +26,12 @@ public class DistributionBuilder extends AbstractBuilder {
     private static Logger logger = LoggerFactory.getLogger(DistributionBuilder.class);
 
     protected final Model model;
-    protected final Map<String, SkosCode> locations;
     protected final Map<String, Map<String, SkosCode>> codes;
-    protected final Map<String, DataTheme> dataThemes;
 
-    public DistributionBuilder(Model model, Map<String, SkosCode> locations, Map<String, Map<String, SkosCode>> codes,
-                               Map<String, DataTheme> dataThemes) {
+
+    public DistributionBuilder(Model model, Map<String, Map<String, SkosCode>> codes) {
         this.model = model;
-        this.locations = locations;
         this.codes = codes;
-        this.dataThemes = dataThemes;
     }
 
     public List<Distribution> build() {
@@ -45,9 +41,7 @@ public class DistributionBuilder extends AbstractBuilder {
         while (catalogIterator.hasNext()) {
             Resource catalog = catalogIterator.next();
 
-            //ResIterator datasetIterator = catalog.getModel().listResourcesWithProperty(RDF.type, DCAT.Dataset);
             StmtIterator datasetIterator = catalog.listProperties(DCAT.dataset);
-
 
             while (datasetIterator.hasNext()) {
                 Resource dataset = datasetIterator.next().getResource();
@@ -58,18 +52,17 @@ public class DistributionBuilder extends AbstractBuilder {
 
                     if (next.getObject().isResource()) {
                         Resource distribution = next.getResource();
-                        distributions.add(create(distribution, dataset, catalog, locations, codes, dataThemes));
+                        distributions.add(create(distribution, codes));
                     }
                 }
             }
         }
 
         return distributions;
-
     }
 
-    public static Distribution create(Resource distResource, Resource dataset, Resource catalog, Map<String, SkosCode> locations,
-                                      Map<String, Map<String, SkosCode>> codes, Map<String, DataTheme> dataThemes) {
+    public static Distribution create(Resource distResource,
+                                      Map<String, Map<String, SkosCode>> codes) {
         Distribution dist = new Distribution();
 
         if (distResource != null) {
@@ -82,7 +75,7 @@ public class DistributionBuilder extends AbstractBuilder {
             dist.setDownloadURL(extractUriList(distResource, DCAT.downloadUrl));
 
             List<SkosConcept> licenses = extractSkosConcept(distResource, DCTerms.license);
-            if (licenses != null && licenses.size()>0) {
+            if (licenses != null && licenses.size() > 0) {
                 SkosConcept firstLicense = licenses.get(0);
 
                 // can we add a prefLabel on a uri with an open license
@@ -92,7 +85,6 @@ public class DistributionBuilder extends AbstractBuilder {
                         licenseCodeMap.forEach((key, code) -> {
                             if (firstLicense.getUri().startsWith(code.getUri())) {
                                 firstLicense.setPrefLabel(code.getPrefLabel());
-                                logger.info("PREFLABEL: {} - {}", firstLicense.getUri(), firstLicense.getPrefLabel().get("no"));
                             }
                         });
                     }
@@ -100,8 +92,7 @@ public class DistributionBuilder extends AbstractBuilder {
                 dist.setLicense(firstLicense);
 
                 if (licenses.size() > 1) {
-
-                    logger.warn("There are more than one recommended licence in inputdata. They will be ignored");
+                    logger.warn("There are more than one recommended licence in inputdata. Only first will be kept");
                 }
             }
 
@@ -111,9 +102,6 @@ public class DistributionBuilder extends AbstractBuilder {
 
             dist.setType(extractAsString(distResource, DCTerms.type));
 
-        }
-        if (dataset != null) {
-            dist.setDataset(DatasetBuilder.create(dataset, catalog, locations, codes, dataThemes));
         }
 
         return dist;

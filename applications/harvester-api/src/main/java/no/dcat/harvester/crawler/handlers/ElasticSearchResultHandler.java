@@ -267,7 +267,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
     }
 
     void stopHarvestLogAndReport(DcatSource dcatSource, List<String> validationResults) {
-        if (enableHarvestLog) {
+        if (enableHarvestLog ) {
             try {
 
                 // stop logging to harvest log file
@@ -276,7 +276,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
 
                 logger.info("stopping harvesterlogging");
 
-                String dcatSyntaxValidation = validationResults.stream().map(Object::toString).collect(Collectors.joining("\n"));
+                String dcatSyntaxValidation = validationResults != null ? validationResults.stream().map(Object::toString).collect(Collectors.joining("\n")) : "";
                 //get contents from harvest log file
                 String semanticValidation = new String(Files.readAllBytes(temporarylogFile));
 
