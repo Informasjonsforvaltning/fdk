@@ -10,11 +10,7 @@ exports[`should render CustomHitsStats correctly when no hits 1`] = `
     data-qa="info"
   >
     <span>
-      Søket ga
-       
-    </span>
-    <span>
-      dessverre ingen treff
+      Søket ga dessverre ingen treff
     </span>
   </div>
 </div>
@@ -59,25 +55,25 @@ exports[`should render CustomHitsStats correctly when search performed  1`] = `
     className="sk-hits-stats__info"
     data-qa="info"
   >
-    <span>
-      Søket ga
-       
-    </span>
-    <span>
-      100
-       
-      treff i datasett
-    </span>
-    <span>
-       
-      og
-       
-    </span>
-    <span>
+    <div>
+      <span>
+        Søket ga
+         
+      </span>
+      <span>
+        100
+         
+        treff i datasett
+      </span>
+      <span>
+         
+        og
+         
+      </span>
       100
        
       treff i begrep
-    </span>
+    </div>
   </div>
 </div>
 `;

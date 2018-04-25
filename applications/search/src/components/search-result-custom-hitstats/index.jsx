@@ -9,21 +9,35 @@ const CustomHitsStats = props => {
     return (
       <div className="sk-hits-stats" data-qa="hits-stats">
         <div className="sk-hits-stats__info" data-qa="info">
-          <span>{localization.hitstats.search}&nbsp;</span>
-          {countDatasets > 0 && (
-            <span>
-              {countDatasets} {localization.hitstats.datasetHits}
-            </span>
-          )}
+          {countDatasets > 0 &&
+            countTerms === 0 && (
+              <div>
+                <span>{localization.hitstats.search}&nbsp;</span>
+                <span>
+                  {countDatasets} {localization.hitstats.datasetHits}
+                </span>
+              </div>
+            )}
           {countDatasets > 0 &&
             countTerms > 0 && (
-              <span>&nbsp;{localization.hitstats.and}&nbsp;</span>
+              <div>
+                <span>{localization.hitstats.search}&nbsp;</span>
+                <span>
+                  {countDatasets} {localization.hitstats.datasetHits}
+                </span>
+                <span>&nbsp;{localization.hitstats.and}&nbsp;</span>
+                {countTerms} {localization.hitstats.conceptHits}
+              </div>
             )}
-          {countTerms > 0 && (
-            <span>
-              {countTerms} {localization.hitstats.conceptHits}
-            </span>
-          )}
+          {countDatasets === 0 &&
+            countTerms > 0 && (
+              <div>
+                <span>{localization.hitstats.search}&nbsp;</span>
+                <span>
+                  {countTerms} {localization.hitstats.conceptHits}
+                </span>
+              </div>
+            )}
           {countDatasets === 0 &&
             countTerms === 0 && <span>{localization.hitstats.noHits}</span>}
         </div>

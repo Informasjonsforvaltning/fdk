@@ -6,6 +6,7 @@ import cx from 'classnames';
 import { Collapse } from 'react-bootstrap';
 
 import FilterOption from '../search-results-filterbox-option';
+import localization from '../localization';
 import './index.scss';
 
 export default class SearchPublishersTree extends React.Component {
@@ -137,7 +138,14 @@ export default class SearchPublishersTree extends React.Component {
         if (publishers) {
           const currentPublisher = publishers[node.key];
           if (currentPublisher) {
-            name = currentPublisher.name; // .substring(0, 25);
+            name =
+              currentPublisher.id === 'STAT' ||
+              currentPublisher.id === 'FYLKE' ||
+              currentPublisher.id === 'KOMMUNE' ||
+              currentPublisher.id === 'PRIVAT' ||
+              currentPublisher.id === 'ANNET'
+                ? localization.facet.publishers[currentPublisher.name]
+                : currentPublisher.name;
           }
         }
 

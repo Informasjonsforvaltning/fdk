@@ -64,7 +64,7 @@ const SearchBox = props => {
           className="fdk-button-search btn btn-lg"
         >
           <i className="fa fa-search mr-2" />
-          Søk
+          {localization.query.do}
         </button>
       </div>
       <div className="col-md-12 text-center">

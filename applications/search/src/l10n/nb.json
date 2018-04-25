@@ -30,7 +30,7 @@
   },
   "query": {
     "intro": "Søk etter innhold",
-    "do": "Utfør søk",
+    "do": "Søk",
     "clear": "Fjern alle filtre"
   },
   "login": {
@@ -77,7 +77,7 @@
     "datasetNoHits": "ingen treff i datasett",
     "conceptHits": "treff i begrep",
     "conceptNoHits": "ingen treff i begrep",
-    "noHits": "dessverre ingen treff",
+    "noHits": "Søket ga dessverre ingen treff",
     "concepts": "begrep",
     "and": "og",
     "but": "men"
@@ -92,7 +92,14 @@
     "temporal":"Tidsperiode",
     "standard":"Standard",
     "showmore":"Vis flere",
-    "showfewer":"Vis færre"
+    "showfewer":"Vis færre",
+    "publishers": {
+      "STAT": "Stat",
+      "FYLKE": "Fylke",
+      "KOMMUNE": "Kommune",
+      "PRIVAT": "Privat",
+      "ANNET": "Annet"
+    }
   },
   "result": {
     "dataset":"Datasett",
