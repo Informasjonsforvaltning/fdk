@@ -15,7 +15,7 @@ const CompareTerms = props => {
   let title = getTranslateText(prefLabel, selectedLanguageCode);
   title = title.charAt(0).toUpperCase() + title.substring(1).toLowerCase();
   return (
-    <div className="fdk-container p-3">
+    <div className="fdk-container fdk-p-3">
       <button
         className="pull-right fdk-button-small"
         onClick={() => {

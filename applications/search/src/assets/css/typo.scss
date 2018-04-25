@@ -161,28 +161,14 @@ a:hover {
     }
 }
 
-.fdk-
-
-
 /*  F O N T   A W E S O M E  */
 
 .fdk-fa-right {
-	margin-left: 5px;
+	margin-left: .5em;
 }
 
 .fdk-fa-left {
-	margin-right: 5px;
-}
-
-.fdk-fa-big {
-    font-size: 1.875rem !important;
-    line-height: 1.875rem !important;
-    position: relative;
-    top: 2px;
-}
-
-.fdk-lLabel-neutral:active > .fdk-fa-arrow-left {
-	color: #fff;
+	margin-right: .5em;
 }
 
 .fdk-label-default:hover > .fdk-fa-button { /* Hovering for labels with font awesome icons */
@@ -191,15 +177,4 @@ a:hover {
 
 .fdk-label-default:active > .fdk-fa-button { /* Hovering for labels with font awesome icons */
 	color: #fff;
-}
-
-.fdk-fa-path {
-    color: $color3;
-    margin: 0px 8px;
-    font-size: 1.4rem !important;
-}
-
-.fdk-fa-link {
-    margin-right: 5px;
-    color: $color-cta2;
 }

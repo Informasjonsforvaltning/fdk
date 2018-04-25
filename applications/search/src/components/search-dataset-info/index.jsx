@@ -86,7 +86,7 @@ export default class DatasetInfo extends React.Component {
             <div
               key={`dataset-info-temporal-${index}`}
               id={`dataset-info-temporal-${index}`}
-              className="clearfix mb-1"
+              className="clearfix mb-1-em"
             >
               <div className="col-md-6 dataset-temporal-date">
                 <h5>{headerFrom}</h5>
@@ -107,7 +107,7 @@ export default class DatasetInfo extends React.Component {
             <div
               key={`dataset-info-temporal-${index}`}
               id={`dataset-info-temporal-${index}`}
-              className="clearfix mb-1"
+              className="clearfix mb-1-em"
             >
               <div className="col-md-6 dataset-temporal-date">
                 <h5>{headerFrom}</h5>

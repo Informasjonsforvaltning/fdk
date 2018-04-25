@@ -9,7 +9,7 @@ exports[`should render ResultsConcepts correctly with minimum of props 1`] = `
     id="conceptsPanel"
   >
     <div
-      className="row mt-1 mb-1 fdk-button-row"
+      className="row mt-1 mb-1-em fdk-button-row"
     >
       <div
         className="col-md-4"
@@ -90,7 +90,7 @@ exports[`should render ResultsConcepts correctly with props 1`] = `
     id="conceptsPanel"
   >
     <div
-      className="row mt-1 mb-1 fdk-button-row"
+      className="row mt-1 mb-1-em fdk-button-row"
     >
       <div
         className="col-md-4"

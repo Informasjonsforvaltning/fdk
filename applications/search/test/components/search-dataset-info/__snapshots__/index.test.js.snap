@@ -460,7 +460,7 @@ exports[`should render DatasetInfo correctly 2`] = `
         id="dataset-info-temporal"
       >
         <div
-          className="clearfix mb-1"
+          className="clearfix mb-1-em"
           id="dataset-info-temporal-0"
           key="dataset-info-temporal-0"
         >

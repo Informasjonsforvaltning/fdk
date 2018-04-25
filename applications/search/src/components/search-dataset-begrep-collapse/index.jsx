@@ -28,7 +28,7 @@ export default class BegrepCollapse extends React.Component {
         >
           <strong className="pull-left">{this.props.prefLabel}:&nbsp;</strong>
           {this.props.note && (
-            <i className="fa fa-chevron-down fdk-fa-right fdk-float-right" />
+            <i className="fa fa-chevron-down fdk-fa-right pull-right" />
           )}
           <div>{this.props.definition}</div>
           <Collapse in={this.state.detailed}>

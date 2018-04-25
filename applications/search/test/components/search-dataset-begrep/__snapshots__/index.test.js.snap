@@ -20,7 +20,7 @@ exports[`should render DatasetBegrep correctly 1`] = `
     />
   </div>
   <div
-    className="fdk-container-detail fdk-container-detail-begrep mt-60"
+    className="fdk-container-detail fdk-container-detail-begrep mt-5"
   >
     <div
       className="fdk-detail-icon"
@@ -83,7 +83,7 @@ exports[`should render DatasetBegrep correctly with no subject definition 1`] = 
     </div>
   </div>
   <div
-    className="fdk-container-detail fdk-container-detail-begrep mt-60"
+    className="fdk-container-detail fdk-container-detail-begrep mt-5"
   >
     <div
       className="fdk-detail-icon"

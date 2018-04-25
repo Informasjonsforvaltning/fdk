@@ -158,7 +158,7 @@ export default class ResultsConcepts extends React.Component {
     return (
       <div id="content" role="main">
         <div id="conceptsPanel">
-          <div className="row mt-1 mb-1 fdk-button-row">
+          <div className="row mt-1 mb-1-em fdk-button-row">
             <div className="col-md-4">
               <button
                 className={clearButtonClass}

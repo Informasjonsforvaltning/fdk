@@ -4,6 +4,7 @@ import withBreadcrumbs from 'react-router-breadcrumbs-hoc';
 
 import PureDatasetBreadcrumb from '../search-app-breadcrumbs-dataset';
 import PurePathNameBreadcrumb from '../search-app-breadcrumbs-pathname';
+import './index.scss';
 
 // define some custom breadcrumbs for certain routes (optional)
 const routes = [

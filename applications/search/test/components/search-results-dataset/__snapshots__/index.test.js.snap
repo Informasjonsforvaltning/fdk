@@ -9,7 +9,7 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
     id="resultPanel"
   >
     <div
-      className="row mt-1 mb-1"
+      className="row mt-1 mb-1-em"
     >
       <div
         className="col-xs-6 col-md-4"
@@ -248,7 +248,7 @@ exports[`should render ResultsDataset correctly with minimum of props 1`] = `
     id="resultPanel"
   >
     <div
-      className="row mt-1 mb-1"
+      className="row mt-1 mb-1-em"
     >
       <div
         className="col-xs-6 col-md-4"
@@ -362,7 +362,7 @@ exports[`should render ResultsDataset correctly with props 1`] = `
     id="resultPanel"
   >
     <div
-      className="row mt-1 mb-1"
+      className="row mt-1 mb-1-em"
     >
       <div
         className="col-xs-6 col-md-4"

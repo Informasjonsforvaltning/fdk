@@ -353,7 +353,7 @@ export class SearchPage extends React.Component {
       themesItems,
       publisherItems
     } = this.props;
-    const topSectionClass = cx('top-section-search', 'mb-1', {
+    const topSectionClass = cx('top-section-search', 'mb-1-em', {
       'top-section-search--image': !!(browser && browser.name !== 'ie')
     });
     return (

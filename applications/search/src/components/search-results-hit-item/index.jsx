@@ -172,7 +172,7 @@ const SearchHitItem = props => {
       <div className="fdk-container-search-hit">
         {provenance &&
           provenance.code === 'NASJONAL' && (
-            <div className="fdk-label mb-1 pull-right">
+            <div className="fdk-label mb-1-em pull-right">
               <strong>{localization.search_hit.NationalBuildingBlock}</strong>
             </div>
           )}

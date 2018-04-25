@@ -49,7 +49,7 @@ const Article = () => {
 
           <div className="fdk-subtitle">
             Hvordan gjøre en ansatt til datasettansvarlig
-            <span className="label label-default ml-1">Anbefalt</span>
+            <span className="label label-default ml-1-em">Anbefalt</span>
           </div>
 
           <div className="fdk-box fdk-box--yellow fdk-box--flex fdk-box--noMargin">

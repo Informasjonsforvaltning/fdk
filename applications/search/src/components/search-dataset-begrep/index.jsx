@@ -81,7 +81,7 @@ export default class DatasetBegrep extends React.Component {
       });
     if (keyword) {
       return (
-        <div className="fdk-container-detail fdk-container-detail-begrep mt-60">
+        <div className="fdk-container-detail fdk-container-detail-begrep mt-5">
           <div className="fdk-detail-icon">
             <i className="fa fa-search" />
           </div>

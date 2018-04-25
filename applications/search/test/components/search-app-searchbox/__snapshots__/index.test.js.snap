@@ -2,7 +2,7 @@
 
 exports[`should render SearchBox correctly 1`] = `
 <div
-  className="row mt-60 mb-60"
+  className="row mt-6 mb-6"
 >
   <div
     className="col-12 col-md-8 col-md-offset-2 fdk-search-flex"
