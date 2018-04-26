@@ -48,11 +48,4 @@ public class Crawler {
 		return executorService.submit(crawlerJob);
 	}
 
-	synchronized public List<Future<?>> execute(List<CrawlerJob> crawlerJobs) {
-		List<Future<?>> futures = new ArrayList<>();
-		for (CrawlerJob crawlerJob : crawlerJobs) {
-			futures.add(execute(crawlerJob));
-		}
-		return futures;
-	}
 }

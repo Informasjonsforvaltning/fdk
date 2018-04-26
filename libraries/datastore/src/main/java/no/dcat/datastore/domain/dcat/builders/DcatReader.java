@@ -56,7 +56,7 @@ public class DcatReader {
     }
 
     public List<Distribution> getDistributions() {
-        return new DistributionBuilder(model, locations, codes, dataThemes).build();
+        return new DistributionBuilder(model, codes).build();
     }
 
     public List<Dataset> getDatasets() {

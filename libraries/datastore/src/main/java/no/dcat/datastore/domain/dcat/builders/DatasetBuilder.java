@@ -114,8 +114,7 @@ public class DatasetBuilder extends AbstractBuilder {
 
             if (next.getObject().isResource()) {
                 Resource distribution = next.getResource();
-                distributions.add(DistributionBuilder.create(distribution, null, null, null,
-                        null, null));
+                distributions.add(DistributionBuilder.create(distribution, codes));
             }
 
         }

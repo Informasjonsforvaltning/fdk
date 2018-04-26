@@ -4,8 +4,7 @@ import PropTypes from 'prop-types';
 
 import {
   fetchDatasetDetailsIfNeeded,
-  resetDatasetDetails,
-  fetchOpenLicensesIfNeeded
+  resetDatasetDetails
 } from '../../actions/index';
 import DatasetDescription from '../../components/search-dataset-description';
 import DatasetKeyInfo from '../../components/search-dataset-keyinfo';
@@ -46,7 +45,6 @@ export class DetailsPage extends React.Component {
   loadDatasetFromServer(match) {
     const url = `/datasets/${match.params.id}`;
     this.props.fetchDatasetDetailsIfNeeded(url);
-    this.props.fetchOpenLicensesIfNeeded();
   }
 
   _renderDatasetDescription() {
@@ -357,28 +355,22 @@ DetailsPage.propTypes = {
   selectedLanguageCode: PropTypes.string
 };
 
-const mapStateToProps = ({ datasetDetails, openLicenses }) => {
+const mapStateToProps = ({ datasetDetails }) => {
   const { datasetItem, isFetchingDataset } = datasetDetails || {
     datasetItem: null,
     isFetchingDataset: null
   };
 
-  const { openLicenseItems } = openLicenses || {
-    openLicenseItems: null
-  };
-
   return {
     datasetItem,
-    isFetchingDataset,
-    openLicenseItems
+    isFetchingDataset
   };
 };
 
 const mapDispatchToProps = dispatch => ({
   fetchDatasetDetailsIfNeeded: url =>
     dispatch(fetchDatasetDetailsIfNeeded(url)),
-  resetDatasetDetails: () => dispatch(resetDatasetDetails()),
-  fetchOpenLicensesIfNeeded: () => dispatch(fetchOpenLicensesIfNeeded())
+  resetDatasetDetails: () => dispatch(resetDatasetDetails())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DetailsPage);

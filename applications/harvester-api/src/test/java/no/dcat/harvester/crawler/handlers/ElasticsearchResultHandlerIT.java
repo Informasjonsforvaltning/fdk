@@ -202,15 +202,4 @@ public class ElasticsearchResultHandlerIT {
         sleep();
     }
 
-
-    @Test
-	public void harvestDifiData() {
-
-
-
-	}
-
-
-
-
 }

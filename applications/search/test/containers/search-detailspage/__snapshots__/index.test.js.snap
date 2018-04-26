@@ -144,7 +144,6 @@ exports[`should render DetailsPage correctly with datasetItem 1`] = `
               "uri": "https://www.kartverket.no/geodataarbeid/standarder/sosi/",
             }
           }
-          openLicenseItems={null}
           page={
             Array [
               Object {
@@ -180,7 +179,6 @@ exports[`should render DetailsPage correctly with datasetItem 1`] = `
               "uri": "http://data.norge.no/nlod",
             }
           }
-          openLicenseItems={null}
           page={
             Array [
               Object {
@@ -212,7 +210,6 @@ exports[`should render DetailsPage correctly with datasetItem 1`] = `
           id="http%3A%2F%2Fbrreg.no%2Fcatalogs%2F987654321%2Fdatasets%2F3645d5a8-6689-4fc1-8684-d3d6c2d47386%2Fdistributions%2F95a6b5e5-753c-4bc3-a421-2671c8f6a7bb"
           key="http%3A%2F%2Fbrreg.no%2Fcatalogs%2F987654321%2Fdatasets%2F3645d5a8-6689-4fc1-8684-d3d6c2d47386%2Fdistributions%2F95a6b5e5-753c-4bc3-a421-2671c8f6a7bb"
           license={null}
-          openLicenseItems={null}
           page={null}
           selectedLanguageCode={null}
           title="Eksempeldata"
