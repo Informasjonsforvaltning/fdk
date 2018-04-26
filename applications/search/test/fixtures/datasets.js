@@ -46,8 +46,8 @@ export default [
         "id": "987654321",
         "name": "TESTETATEN"
       },
-      "issued": 1325376000000,
-      "modified": 1474421403000,
+      "issued": "2018-04-26T00:00:00+0200",
+      "modified": "2018-04-26T00:00:00+0200",
       "language": [
         {
           "uri": "http://publications.europa.eu/resource/authority/language/NOR",
@@ -95,10 +95,10 @@ export default [
           },
           "page": [
             {
-            "uri": "http://lenke/til/mer/info",
-            "prefLabel": {
-              "nb": "Dokumentasjon av distribusjonen"
-            }
+              "uri": "http://lenke/til/mer/info",
+              "prefLabel": {
+                "nb": "Dokumentasjon av distribusjonen"
+              }
             }
           ]
         },
@@ -117,12 +117,13 @@ export default [
             "uri": "http://data.norge.no/nlod",
             "extraType": "dct:Standard"
           },
-          "page": {
+          "page": [{
             "uri": "http://lenke/til/mer/info",
             "prefLabel": {
               "nb": "Dokumentasjon av distribusjonen"
             }
           }
+          ]
         }
       ],
       "sample": [
@@ -149,9 +150,7 @@ export default [
           "extraType": "dct:Standard"
         }
       ],
-      "temporal": [
-
-      ],
+      "temporal": [],
       "spatial": [
         {
           "uri": "http://www.geonames.org/3162656/asker.html",
@@ -371,8 +370,8 @@ export default [
         "id": "987654321",
         "name": "TESTETATEN"
       },
-      "issued": 1325376000000,
-      "modified": 1474421403000,
+      "issued": "2018-04-26T00:00:00+0200",
+      "modified": "2018-04-26T00:00:00+0200",
       "language": [
         {
           "uri": "http://publications.europa.eu/resource/authority/language/NOR",
@@ -417,7 +416,7 @@ export default [
             }
           }],
           "format": [
-            "application/json","xml"
+            "application/json", "xml"
           ]
         }
       ],
@@ -662,8 +661,8 @@ export default [
           "nb": "statlig bestemmelse"
         }
       ],
-      "issued": 1325376000000,
-      "modified": 1474421403000,
+      "issued": "2018-04-26T00:00:00+0200",
+      "modified": "2018-04-26T00:00:00+0200",
       "language": [
         {
           "uri": "http://publications.europa.eu/resource/authority/language/NOR",
@@ -916,8 +915,8 @@ export default [
         "id": "987654321",
         "name": "TESTETATEN"
       },
-      "issued": 1325376000000,
-      "modified": 1474421403000,
+      "issued": "2018-04-26T00:00:00+0200",
+      "modified": "2018-04-26T00:00:00+0200",
       "language": [
         {
           "uri": "http://publications.europa.eu/resource/authority/language/NOR",
@@ -955,14 +954,10 @@ export default [
               "nb": "Dokumentasjon av distribusjonen"
             }
           }],
-          "format": [
-
-          ]
+          "format": []
         }
       ],
-      "sample": [
-
-      ],
+      "sample": [],
       "conformsTo": [
         {
           "uri": "https://www.kartverket.no/geodataarbeid/standarder/sosi/",
@@ -1182,8 +1177,8 @@ export default [
         "id": "987654321",
         "name": "TESTETATEN"
       },
-      "issued": 1325376000000,
-      "modified": 1474421403000,
+      "issued": "2018-04-26T00:00:00+0200",
+      "modified": "2018-04-26T00:00:00+0200",
       "language": [
         {
           "uri": "http://publications.europa.eu/resource/authority/language/NOR",
@@ -1221,14 +1216,10 @@ export default [
               "nb": "Dokumentasjon av distribusjonen"
             }
           }],
-          "format": [
-
-          ]
+          "format": []
         }
       ],
-      "sample": [
-
-      ],
+      "sample": [],
       "conformsTo": [
         {
           "uri": "https://www.kartverket.no/geodataarbeid/standarder/sosi/",
