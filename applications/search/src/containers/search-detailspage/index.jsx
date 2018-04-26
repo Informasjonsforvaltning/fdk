@@ -45,7 +45,6 @@ export class DetailsPage extends React.Component {
   loadDatasetFromServer(match) {
     const url = `/datasets/${match.params.id}`;
     this.props.fetchDatasetDetailsIfNeeded(url);
-    this.props.fetchOpenLicensesIfNeeded();
   }
 
   _renderDatasetDescription() {
