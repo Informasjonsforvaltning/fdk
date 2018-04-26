@@ -49,7 +49,7 @@ public abstract class AbstractBuilder {
 
     // TODO - remove in next iteration
     public static boolean hasGeneratedContactPrefix(Contact contact) {
-        return (contact.getUri() != null && (contact.getUri().startsWith(CONTACT_PREFIX) || contact.getUri().startsWith(CONTACT_PREFIX_FEIL)) );
+        return (contact.getUri() != null && (contact.getUri().startsWith(CONTACT_PREFIX) || contact.getUri().startsWith(CONTACT_PREFIX_FEIL)));
     }
 
     public static List<String> extractMultipleStrings(Resource resource, Property property) {
@@ -84,7 +84,7 @@ public abstract class AbstractBuilder {
         List<String> result = new ArrayList<>();
 
         StmtIterator iterator = resource.listProperties(property);
-        while (iterator.hasNext()){
+        while (iterator.hasNext()) {
             Statement statement = iterator.next();
 
             String uri = statement.getObject().asResource().toString();
@@ -102,7 +102,7 @@ public abstract class AbstractBuilder {
 
     public static String extractUri(Resource resource, Property property) {
         String valueToStrip = extractAsString(resource, property);
-        if ( valueToStrip != null) {
+        if (valueToStrip != null) {
             String uri = removeDefaultBaseUri(resource.getModel(), valueToStrip);
 
             if (uri.startsWith("http://")) {
@@ -169,7 +169,6 @@ public abstract class AbstractBuilder {
     }
 
 
-
     private static String getStringFromStatement(Statement statement) {
         if (statement != null) {
             if (statement.getObject().isLiteral()) {
@@ -205,14 +204,28 @@ public abstract class AbstractBuilder {
                 StmtIterator stmtIterator = skosConcept.listProperties(RDF.type);
                 while (stmtIterator.hasNext()) {
                     Statement typeStmnt = stmtIterator.next();
-                    if( typeStmnt != null && !typeStmnt.getObject().toString().equals(SKOS.Concept.getURI())) {
+                    if (typeStmnt != null && !typeStmnt.getObject().toString().equals(SKOS.Concept.getURI())) {
                         type = typeStmnt.getObject().toString();
                     }
                 }
 
-                Map<String,String> prefLabel = extractLanguageLiteral(skosConcept, SKOS.prefLabel);
-                if (prefLabel != null && prefLabel.size() == 0) {
-                    prefLabel = null;
+                Map<String, String> prefLabel = extractLanguageLiteral(skosConcept, SKOS.prefLabel);
+
+                // check and remove empty entries
+                if (prefLabel != null) {
+                    List<String> emptyKeys = new ArrayList<>();
+                    prefLabel.forEach((key, value) -> {
+                        if (value == null || value.isEmpty()) {
+                            emptyKeys.add(key);
+                        }
+                    });
+                    for (String key : emptyKeys) {
+                        prefLabel.remove(key);
+                    }
+
+                    if (prefLabel.size() == 0) {
+                        prefLabel = null;
+                    }
                 }
 
                 String source = null;
@@ -239,9 +252,7 @@ public abstract class AbstractBuilder {
     }
 
 
-
-
-    public static List<Reference> extractReferences(Resource resource, Map<String,SkosCode> referenceTypes) {
+    public static List<Reference> extractReferences(Resource resource, Map<String, SkosCode> referenceTypes) {
         List<Reference> result = new ArrayList<>();
 
         Property[] propertyList = {
@@ -297,7 +308,7 @@ public abstract class AbstractBuilder {
             if (language == null || language.isEmpty()) {
                 language = "no";
             }
-            if (statement.getString() != null && ! statement.getString().isEmpty()) {
+            if (statement.getString() != null && !statement.getString().isEmpty()) {
                 map.put(language, statement.getString());
             }
         }
@@ -319,7 +330,7 @@ public abstract class AbstractBuilder {
             if (language == null || language.isEmpty()) {
                 language = "no";
             }
-            if (statement.getString() != null && ! statement.getString().isEmpty()) {
+            if (statement.getString() != null && !statement.getString().isEmpty()) {
                 List<String> x = map.get(language);
                 if (x == null) {
                     x = new ArrayList<>();
@@ -330,7 +341,7 @@ public abstract class AbstractBuilder {
         }
 
         if (map.keySet().size() > 0) {
-            List<Map<String,String>> result = new ArrayList<>();
+            List<Map<String, String>> result = new ArrayList<>();
 
             for (String language : map.keySet()) {
                 for (String value : map.get(language)) {
@@ -361,7 +372,7 @@ public abstract class AbstractBuilder {
             result.add(map);
         }
 
-        if (result.size() > 0 ) {
+        if (result.size() > 0) {
             return result;
         }
 
@@ -386,7 +397,7 @@ public abstract class AbstractBuilder {
 
     /**
      * Extracts contactInformation objects from RDF as a vcard:Kind/Organization.
-     *
+     * <p>
      * If no contacts is found. It only creates contacts if it has attributes.
      *
      * @param datasetResource the resource which contains the contact point resource
@@ -482,7 +493,6 @@ public abstract class AbstractBuilder {
     }
 
 
-
     /**
      * Extract period of time property from DCAT resource and map to model class.
      *
@@ -523,10 +533,10 @@ public abstract class AbstractBuilder {
                         }
                         // the standard way dcat-ap-no
                         if (tpStmt.getPredicate().equals(schema_startDate)) {
-                            period.setStartDate(extractDate(timePeriodRes,schema_startDate));
+                            period.setStartDate(extractDate(timePeriodRes, schema_startDate));
                         }
                         if (tpStmt.getPredicate().equals(schema_endDate)) {
-                            period.setEndDate(extractDate(timePeriodRes,schema_endDate));
+                            period.setEndDate(extractDate(timePeriodRes, schema_endDate));
                         }
                     }
                     logger.debug("   POT: Periode identifisert: start: " + period.getStartDate() + " end: " + period.getEndDate());
@@ -563,7 +573,7 @@ public abstract class AbstractBuilder {
 
     protected static void extractPublisherFromStmt(Publisher publisher, Resource object) {
         publisher.setUri(object.getURI());
-        publisher.setId(extractAsString(object,DCTerms.identifier));
+        publisher.setId(extractAsString(object, DCTerms.identifier));
         publisher.setName(extractAsString(object, FOAF.name));
         publisher.setValid(extractAsBoolean(object, DCTerms.valid));
         publisher.setOrgPath(extractAsString(object, DCATNO.organizationPath));
@@ -590,7 +600,7 @@ public abstract class AbstractBuilder {
         String kode = extractAsString(codeResource, EnhetsregisteretRDF.kode);
         skosCode.setUri(codeUri + kode);
         skosCode.setCode(kode);
-        Map<String,String> languageString = new HashMap<>();
+        Map<String, String> languageString = new HashMap<>();
         languageString.put("no", beskrivelse);
         skosCode.setPrefLabel(languageString);
 
