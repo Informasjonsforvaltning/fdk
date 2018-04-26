@@ -33,7 +33,6 @@ import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.Statement;
 import org.apache.jena.rdf.model.StmtIterator;
 import org.apache.jena.vocabulary.RDF;
-import org.elasticsearch.action.admin.cluster.health.ClusterHealthResponse;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.action.get.GetRequest;
@@ -41,7 +40,6 @@ import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Client;
-import org.elasticsearch.cluster.health.ClusterHealthStatus;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.ConstantScoreQueryBuilder;
 import org.elasticsearch.index.query.ExistsQueryBuilder;
@@ -346,6 +344,8 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
 
                 addDisplayFields(dataset);
 
+                addSortField(dataset);
+
                 saveDatasetAndHarvestRecord(dcatSource, elasticsearch, validationResults, gson, bulkRequest, harvestTime, dataset, stats);
 
             }
@@ -372,6 +372,31 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
 
         waitForIndexing(elasticsearch);
 
+    }
+
+    /**
+     * Add extra sort field to handle sorting of provencance codes
+     *
+     * @param dataset with new provenanceSort value
+     */
+    void addSortField(Dataset dataset) {
+        String sortString = "";
+
+        final String provenance = dataset.getProvenance() != null ? dataset.getProvenance().getCode() : null;
+
+        if ("NASJONAL".equals(provenance)) {
+            sortString = "1NASJONAL";
+        } else if ("VEDTAK".equals(provenance)) {
+            sortString = "2VEDTAK";
+        } else if ("BRUKER".equals(provenance)) {
+            sortString = "3BRUKER";
+        } else if ("TREDJEPART".equals(provenance)) {
+            sortString = "4TREDJEPART";
+        } else {
+            sortString = "9UKJENT";
+        }
+
+        dataset.setProvenanceSort(sortString);
     }
 
 
