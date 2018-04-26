@@ -11,23 +11,24 @@ beforeEach(() => {
   onSearch = jest.fn();
   toggleFilter = jest.fn();
 
-
   defaultProps = {
     title: 'title',
-    filter: filter,
-    onFilterPublisherHierarchy: onFilterPublisherHierarchy,
+    filter,
+    onFilterPublisherHierarchy,
     activeFilter: null,
-    publishers: publishers,
-    onSearch: onSearch,
+    publishers,
+    onSearch,
     orgPath: '/STAT/872417842/960885406' // publishers[1].orgPath
-  }
-  wrapper = shallow(
-    <SearchPublishersTree {...defaultProps} />
-  );
+  };
+  wrapper = shallow(<SearchPublishersTree {...defaultProps} />);
 });
 
 test('should render SearchPublishersTree correctly with minimum of props', () => {
-  const minWrapper = shallow(<SearchPublishersTree onFilterPublisherHierarchy={onFilterPublisherHierarchy} />)
+  const minWrapper = shallow(
+    <SearchPublishersTree
+      onFilterPublisherHierarchy={onFilterPublisherHierarchy}
+    />
+  );
   expect(minWrapper).toMatchSnapshot();
 });
 
@@ -38,14 +39,14 @@ test('should render SearchPublishersTree correctly with props', () => {
 test('should render SearchPublishersTree correctly with active filter', () => {
   wrapper.setProps({
     activeFilter: '/STAT'
-  })
+  });
   expect(wrapper).toMatchSnapshot();
 });
 
 test('should render SearchPublishersTree correctly with active sub filter', () => {
   wrapper.setProps({
     activeFilter: '/KOMMUNE/958935420/974770482'
-  })
+  });
   expect(wrapper).toMatchSnapshot();
 });
 
@@ -53,4 +54,3 @@ test('should handle toggleFilter', () => {
   wrapper.find('button.fdk-publisher-toggle').simulate('click');
   expect(wrapper.state('openFilter')).toBe(false);
 });
-

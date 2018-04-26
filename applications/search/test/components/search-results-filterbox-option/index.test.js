@@ -71,4 +71,3 @@ test('should handle onChange', () => {
   wrapper.find('input.list-group-item').prop('onChange')(filterOptions[1]);
   expect(onClick).toHaveBeenLastCalledWith(filterOptions[1]);
 });
-

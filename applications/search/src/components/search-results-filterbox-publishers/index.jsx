@@ -208,7 +208,7 @@ export default class SearchPublishersTree extends React.Component {
       <div className="search-filter-publisher">
         <div className="fdk-panel__header">
           <button
-            className="fdk-publisher-toggle p-0"
+            className="fdk-publisher-toggle fdk-p-0"
             onClick={this.toggleFilter}
           >
             <i className={collapseIconClass} />

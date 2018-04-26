@@ -8,14 +8,34 @@ beforeEach(() => {
   onClick = jest.fn();
   defaultProps = {
     title: 'Testbox',
-    filter: {"buckets":[{"key":"GOVE","doc_count":104},{"key":"EDUC","doc_count":11},{"key":"HEAL","doc_count":8},{"key":"Ukjent","doc_count":7},{"key":"AGRI","doc_count":1}]},
-    onClick: onClick,
+    filter: {
+      buckets: [
+        { key: 'GOVE', doc_count: 104 },
+        { key: 'EDUC', doc_count: 11 },
+        { key: 'HEAL', doc_count: 8 },
+        { key: 'Ukjent', doc_count: 7 },
+        { key: 'AGRI', doc_count: 1 }
+      ]
+    },
+    onClick,
     activeFilter: null,
-    themesItems: {"AGRI":{"id":"http://publications.europa.eu/resource/authority/data-theme/AGRI","code":"AGRI","startUse":"2015-10-01","title":{"pt":"Agricultura, pesca, silvicultura e alimentação","bg":"Селско стопанство, рибарство, горско стопанство и храни"},"conceptSchema":{"id":"http://publications.europa.eu/resource/authority/data-theme","title":{"en":"Dataset types Named Authority List"}}}}
+    themesItems: {
+      AGRI: {
+        id: 'http://publications.europa.eu/resource/authority/data-theme/AGRI',
+        code: 'AGRI',
+        startUse: '2015-10-01',
+        title: {
+          pt: 'Agricultura, pesca, silvicultura e alimentação',
+          bg: 'Селско стопанство, рибарство, горско стопанство и храни'
+        },
+        conceptSchema: {
+          id: 'http://publications.europa.eu/resource/authority/data-theme',
+          title: { en: 'Dataset types Named Authority List' }
+        }
+      }
+    }
   };
-  wrapper = shallow(
-    <FilterBox {...defaultProps} />
-  );
+  wrapper = shallow(<FilterBox {...defaultProps} />);
 });
 
 test('should render FilterBox correctly', () => {

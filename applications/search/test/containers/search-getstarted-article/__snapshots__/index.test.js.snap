@@ -56,7 +56,7 @@ exports[`should render Article correctly 1`] = `
       >
         Hvordan gjøre en ansatt til datasettansvarlig
         <span
-          className="label label-default ml-1"
+          className="label label-default ml-1-em"
         >
           Anbefalt
         </span>

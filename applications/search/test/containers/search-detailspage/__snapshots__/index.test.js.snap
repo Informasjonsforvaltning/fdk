@@ -182,12 +182,14 @@ exports[`should render DetailsPage correctly with datasetItem 1`] = `
           }
           openLicenseItems={null}
           page={
-            Object {
-              "prefLabel": Object {
-                "nb": "Dokumentasjon av distribusjonen",
+            Array [
+              Object {
+                "prefLabel": Object {
+                  "nb": "Dokumentasjon av distribusjonen",
+                },
+                "uri": "http://lenke/til/mer/info",
               },
-              "uri": "http://lenke/til/mer/info",
-            }
+            ]
           }
           selectedLanguageCode={null}
           title="Distribusjon"
@@ -219,7 +221,7 @@ exports[`should render DetailsPage correctly with datasetItem 1`] = `
         <DatasetInfo
           accrualPeriodicity="årlig"
           hasCurrentnessAnnotation="Denne teksten sier noe om aktualiteten. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras mattis consectetur purus sit amet fermentum. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus."
-          issued={1325376000000}
+          issued="2018-04-26T00:00:00+0200"
           language={
             Array [
               Object {
@@ -231,7 +233,7 @@ exports[`should render DetailsPage correctly with datasetItem 1`] = `
               },
             ]
           }
-          modified={1474421403000}
+          modified="2018-04-26T00:00:00+0200"
           provenance="Vedtak"
           references={
             Array [

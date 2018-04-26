@@ -110,7 +110,7 @@ export default class ResultsDataset extends React.Component {
     return (
       <div id="content" role="main">
         <div id="resultPanel">
-          <div className="row mt-1 mb-1">
+          <div className="row mt-1 mb-1-em">
             <div className="col-xs-6 col-md-4">
               <button
                 className={clearButtonClass}

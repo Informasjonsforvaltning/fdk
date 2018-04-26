@@ -11,7 +11,7 @@ beforeEach(() => {
       nb: 'PrefLabel 1'
     },
     creator: 'Creator 1',
-    onDeleteTerm: onDeleteTerm,
+    onDeleteTerm,
     termIndex: 0,
     selectedLanguageCode: 'nb'
   };

@@ -3,7 +3,12 @@ import { shallow } from 'enzyme';
 import ResultsDatasetsReport from '../../../src/components/search-results-datasets-report';
 import aggregateDataset from '../../fixtures/aggregateDataset';
 
-let handleOnPublisherSearchonPageChange, getPublishers, handleOnClearSearch, handleOnTreeChange, handleOnChangeSearchField, handleOnPublisherSearch;
+let handleOnPublisherSearchonPageChange,
+  getPublishers,
+  handleOnClearSearch,
+  handleOnTreeChange,
+  handleOnChangeSearchField,
+  handleOnPublisherSearch;
 
 beforeEach(() => {
   handleOnPublisherSearch = jest.fn();
@@ -22,8 +27,7 @@ test('should render ResultsDatasetsReport correctly with props', () => {
 test('should render ResultsDatasetsReport correctly with hits', () => {
   const wrapper = shallow(<ResultsDatasetsReport />);
   wrapper.setState({
-    aggregateDataset: aggregateDataset
-  })
+    aggregateDataset
+  });
   expect(wrapper).toMatchSnapshot();
 });
-

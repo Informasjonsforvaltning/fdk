@@ -42,7 +42,7 @@ exports[`should render DatasetInfo correctly 1`] = `
               unix={false}
               utc={false}
             >
-              1325376000000
+              2018-04-26T00:00:00+0200
             </t>
           </p>
         </div>
@@ -299,7 +299,7 @@ exports[`should render DatasetInfo correctly 2`] = `
               unix={false}
               utc={false}
             >
-              1325376000000
+              2018-04-26T00:00:00+0200
             </t>
           </p>
         </div>
@@ -460,7 +460,7 @@ exports[`should render DatasetInfo correctly 2`] = `
         id="dataset-info-temporal"
       >
         <div
-          className="clearfix mb-1"
+          className="clearfix mb-1-em"
           id="dataset-info-temporal-0"
           key="dataset-info-temporal-0"
         >

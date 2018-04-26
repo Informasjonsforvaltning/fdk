@@ -17,7 +17,7 @@ exports[`should render BegrepCollapse correctly 1`] = `
       : 
     </strong>
     <i
-      className="fa fa-chevron-down fdk-fa-right fdk-float-right"
+      className="fa fa-chevron-down fdk-fa-right pull-right"
     />
     <div>
       alt som er registrert med et organisasjonsnummer 

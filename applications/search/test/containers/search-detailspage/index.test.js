@@ -7,22 +7,15 @@ let wrapper;
 
 beforeEach(() => {
   wrapper = shallow(
-    <DetailsPage
-      datasetItem={datasets[0]._source}
-      isFetchingDataset={false}
-    />
-  )
+    <DetailsPage datasetItem={datasets[0]._source} isFetchingDataset={false} />
+  );
 });
 
 test('should render DetailsPage correctly with no datasetItem', () => {
-  const wrap = shallow(
-    <DetailsPage/>
-  );
+  const wrap = shallow(<DetailsPage />);
   expect(wrap).toMatchSnapshot();
-})
+});
 
 test('should render DetailsPage correctly with datasetItem', () => {
   expect(wrapper).toMatchSnapshot();
 });
-
-

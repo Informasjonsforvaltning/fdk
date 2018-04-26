@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import DatasetKeyInfo from '../../../src/components/search-dataset-keyinfo';
-import datasets from '../../fixtures/datasets'
+import datasets from '../../fixtures/datasets';
 
 let defaultProps, wrapper;
 
@@ -18,7 +18,6 @@ beforeEach(() => {
     selectedLanguageCode: null
   };
   wrapper = shallow(<DatasetKeyInfo {...defaultProps} />);
-
 });
 
 test('should render DatasetKeyInfo correctly with no props', () => {
@@ -29,4 +28,3 @@ test('should render DatasetKeyInfo correctly with no props', () => {
 test('should render DatasetKeyInfo correctly', () => {
   expect(wrapper).toMatchSnapshot();
 });
-

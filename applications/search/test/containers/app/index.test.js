@@ -5,10 +5,7 @@ import App from '../../../src/containers/app';
 let onSearchSubmit, onSearchChange, preventDefault, open, defaultProps, wrapper;
 
 beforeEach(() => {
-
-  defaultProps = {
-
-  };
+  defaultProps = {};
 });
 test('should render App correctly', () => {
   const wrapper = shallow(<App />);

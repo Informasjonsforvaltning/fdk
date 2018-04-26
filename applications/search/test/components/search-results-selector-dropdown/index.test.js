@@ -8,24 +8,25 @@ beforeEach(() => {
   onChange = jest.fn();
   items = [
     {
-      "label":"relevance",
-      "field":"_score",
-      "order":"asc",
-      "defaultOption":true
-    },
-    {"label":"title",
-      "field":"title",
-      "order":"asc"
+      label: 'relevance',
+      field: '_score',
+      order: 'asc',
+      defaultOption: true
     },
     {
-      "label":"modified",
-      "field":"modified",
-      "order":"desc"
+      label: 'title',
+      field: 'title',
+      order: 'asc'
     },
     {
-      "label":"publisher",
-      "field":"publisher.name",
-      "order":"asc"
+      label: 'modified',
+      field: 'modified',
+      order: 'desc'
+    },
+    {
+      label: 'publisher',
+      field: 'publisher.name',
+      order: 'asc'
     }
   ];
 });
@@ -36,7 +37,9 @@ test('should render Select correctly with no active sort', () => {
 });
 
 test('should render Select correctly with active sort', () => {
-  const wrapper = shallow(<Select onChange={onChange} items={items} activeSort="title.nb" />);
+  const wrapper = shallow(
+    <Select onChange={onChange} items={items} activeSort="title.nb" />
+  );
   expect(wrapper).toMatchSnapshot();
 });
 

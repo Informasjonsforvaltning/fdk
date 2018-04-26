@@ -13,9 +13,7 @@ test('should render PureDatasetBreadcrumb with "Dataset" active correctly', () =
 });
 
 test('should render PureDatasetBreadcrumb correctly with no datasetItem', () => {
-  const defaultProps = {
-
-  };
+  const defaultProps = {};
   const wrapper = shallow(<PureDatasetBreadcrumb {...defaultProps} />);
   expect(wrapper).toMatchSnapshot();
 });
