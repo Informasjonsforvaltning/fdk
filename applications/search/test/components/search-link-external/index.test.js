@@ -10,10 +10,8 @@ beforeEach(() => {
     prefLabel: 'prefLabel'
   };
   wrapper = shallow(<LinkExternal {...defaultProps} />);
-
 });
 
 test('should render LinkExternal correctly', () => {
   expect(wrapper).toMatchSnapshot();
 });
-

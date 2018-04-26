@@ -9,11 +9,9 @@ beforeEach(() => {
   handleDeleteTerm = jest.fn();
   defaultProps = {
     terms: [concepts.hits.hits[0]._source, concepts.hits.hits[1]._source],
-    handleDeleteTerm: handleDeleteTerm
-  }
-  wrapper = shallow(
-    <CompareTermModal  {...defaultProps} />
-  );
+    handleDeleteTerm
+  };
+  wrapper = shallow(<CompareTermModal {...defaultProps} />);
 });
 
 test('should render CompareTermModal correctly with props', () => {
@@ -25,10 +23,8 @@ test('should render CompareTermModal correctly with one term', () => {
   const props = {
     terms: [concepts.hits.hits[0]._source],
     handleDeleteTerm: deleteTerm
-  }
-  const wrapperWithProp = shallow(
-    <CompareTermModal  {...props} />
-  );
+  };
+  const wrapperWithProp = shallow(<CompareTermModal {...props} />);
   expect(wrapperWithProp).toMatchSnapshot();
 });
 
@@ -36,7 +32,7 @@ test('should handle open correctly', () => {
   wrapper.find('button.bottom-modal-label').simulate('click');
   expect(wrapper.state('showModal')).toBe(true);
   expect(wrapper.state('showBar')).toBe(false);
-})
+});
 
 test('should handle modal onClick', () => {
   wrapper.find('ModalTitle').prop('onClick');
@@ -45,8 +41,9 @@ test('should handle modal onClick', () => {
 });
 
 test('should handle onChange', () => {
-  wrapper.find('button.fdk-concepts-compare-rm-term').at(0).prop('onClick')();
+  wrapper
+    .find('button.fdk-concepts-compare-rm-term')
+    .at(0)
+    .prop('onClick')();
   expect(handleDeleteTerm).toHaveBeenLastCalledWith(0);
 });
-
-

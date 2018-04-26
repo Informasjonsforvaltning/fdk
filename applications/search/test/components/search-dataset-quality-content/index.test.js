@@ -12,10 +12,8 @@ beforeEach(() => {
     availabilityAnnotations: 'availability'
   };
   wrapper = shallow(<DatasetQuality {...defaultProps} />);
-
 });
 
 test('should render DatasetQuality correctly', () => {
   expect(wrapper).toMatchSnapshot();
 });
-

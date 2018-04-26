@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import DatasetContactInfo from '../../../src/components/search-dataset-contactinfo';
-import datasets from '../../fixtures/datasets'
+import datasets from '../../fixtures/datasets';
 
 test('should render DatasetContactInfo correctly with no props', () => {
   const minWrapper = shallow(<DatasetContactInfo />);
@@ -21,4 +21,3 @@ test('should render DatasetContactInfo correctly', () => {
   const wrapper = shallow(<DatasetContactInfo />);
   expect(wrapper).toMatchSnapshot();
 });
-

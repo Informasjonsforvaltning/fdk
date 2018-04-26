@@ -12,7 +12,6 @@ beforeEach(() => {
     cols: '6'
   };
   wrapper = shallow(<CompareTermModalContent {...defaultProps} />);
-
 });
 
 test('should render CompareTermModalContent correctly', () => {

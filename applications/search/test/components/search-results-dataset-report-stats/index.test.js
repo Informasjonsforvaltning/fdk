@@ -9,12 +9,10 @@ beforeEach(() => {
   onSearch = jest.fn();
 
   defaultProps = {
-    aggregateDataset: aggregateDataset,
+    aggregateDataset,
     entity: 'test entity'
-  }
-  wrapper = shallow(
-    <ReportStats {...defaultProps} />
-  );
+  };
+  wrapper = shallow(<ReportStats {...defaultProps} />);
 });
 
 test('should render ReportStats correctly', () => {

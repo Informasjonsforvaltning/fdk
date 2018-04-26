@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import BegrepCollapse from '../../../src/components/search-dataset-begrep-collapse';
-import datasets from '../../fixtures/datasets'
+import datasets from '../../fixtures/datasets';
 
 test('should render BegrepCollapse correctly with no props', () => {
   const minWrapper = shallow(<BegrepCollapse />);

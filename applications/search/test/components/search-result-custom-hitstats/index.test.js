@@ -2,7 +2,6 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import CustomHitsStats from '../../../src/components/search-result-custom-hitstats';
 
-
 test('should render CustomHitsStats correctly when no initial search', () => {
   const defaultProps = {
     countDatasets: 100,
@@ -22,7 +21,6 @@ test('should render CustomHitsStats correctly when search performed ', () => {
   const wrapper = shallow(<CustomHitsStats {...defaultProps} />);
   expect(wrapper).toMatchSnapshot();
 });
-
 
 test('should render CustomHitsStats correctly when no hits', () => {
   const defaultProps = {

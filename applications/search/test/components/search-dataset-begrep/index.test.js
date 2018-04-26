@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import DatasetBegrep from '../../../src/components/search-dataset-begrep';
-import datasets from '../../fixtures/datasets'
+import datasets from '../../fixtures/datasets';
 
 test('should render DatasetBegrep correctly with no props', () => {
   const minWrapper = shallow(<DatasetBegrep />);
@@ -29,5 +29,3 @@ test('should render DatasetBegrep correctly with no subject definition', () => {
   const wrapper = shallow(<DatasetBegrep {...defaultProps} />);
   expect(wrapper).toMatchSnapshot();
 });
-
-

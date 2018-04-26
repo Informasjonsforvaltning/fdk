@@ -9,10 +9,8 @@ beforeEach(() => {
     landingPage: 'landingpage'
   };
   wrapper = shallow(<DatasetLandingPage {...defaultProps} />);
-
 });
 
 test('should render DatasetLandingPage correctly', () => {
   expect(wrapper).toMatchSnapshot();
 });
-

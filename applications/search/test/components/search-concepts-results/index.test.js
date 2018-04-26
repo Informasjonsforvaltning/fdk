@@ -1,11 +1,14 @@
-
 import React from 'react';
 import { shallow } from 'enzyme';
 import ResultsConcepts from '../../../src/components/search-concepts-results';
 import concepts from '../../fixtures/concepts';
 
-let onClearSearch, onPageChange, onFilterPublisherHierarchy, closeFilterModal, defaultProps, wrapper;
-
+let onClearSearch,
+  onPageChange,
+  onFilterPublisherHierarchy,
+  closeFilterModal,
+  defaultProps,
+  wrapper;
 
 beforeEach(() => {
   onClearSearch = jest.fn();
@@ -16,28 +19,25 @@ beforeEach(() => {
   defaultProps = {
     selectedLanguageCode: null,
     termItems: concepts,
-    onClearSearch: onClearSearch,
-    onPageChange: onPageChange,
-    onFilterPublisherHierarchy: onFilterPublisherHierarchy,
+    onClearSearch,
+    onPageChange,
+    onFilterPublisherHierarchy,
     searchQuery: {},
     hitsPerPage: 50,
     showFilterModal: false,
-    closeFilterModal: closeFilterModal,
+    closeFilterModal,
     showClearFilterButton: false,
     publisherArray: null,
     publishers: null
-  }
-  wrapper = shallow(
-    <ResultsConcepts  {...defaultProps} />
-  );
+  };
+  wrapper = shallow(<ResultsConcepts {...defaultProps} />);
   wrapper.setState({
     terms: [concepts.hits.hits[0]._source]
-  })
+  });
 });
 
-
 test('should render ResultsConcepts correctly with minimum of props', () => {
-  const minWrapper = shallow(<ResultsConcepts />)
+  const minWrapper = shallow(<ResultsConcepts />);
   expect(minWrapper).toMatchSnapshot();
 });
 

@@ -11,9 +11,7 @@ test('should render PurePathNameBreadcrumb  correctly', () => {
 });
 
 test('should render PurePathNameBreadcrumb correctly with no pathname', () => {
-  const defaultProps = {
-
-  };
+  const defaultProps = {};
   const wrapper = shallow(<PurePathNameBreadcrumb {...defaultProps} />);
   expect(wrapper).toMatchSnapshot();
 });

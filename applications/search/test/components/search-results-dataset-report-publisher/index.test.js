@@ -8,7 +8,7 @@ let onSearch, defaultProps, wrapper;
 beforeEach(() => {
   onSearch = jest.fn();
   defaultProps = {
-    onSearch: onSearch,
+    onSearch,
     value: 'STAT'
   };
   wrapper = shallow(<SearchPublishers {...defaultProps} />);
@@ -17,4 +17,3 @@ beforeEach(() => {
 test('should render SearchPublishers correctly with props', () => {
   expect(wrapper).toMatchSnapshot();
 });
-

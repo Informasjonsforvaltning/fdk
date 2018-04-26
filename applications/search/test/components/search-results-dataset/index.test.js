@@ -3,7 +3,15 @@ import { shallow } from 'enzyme';
 import ResultsDataset from '../../../src/components/search-results-dataset';
 import datasetItems from '../../fixtures/datasetItems';
 
-let closeFilterModal, onFilterTheme, onFilterAccessRights, onFilterPublisherHierarchy, onClearSearch, onSort, onPageChange, defaultProps, wrapper;
+let closeFilterModal,
+  onFilterTheme,
+  onFilterAccessRights,
+  onFilterPublisherHierarchy,
+  onClearSearch,
+  onSort,
+  onPageChange,
+  defaultProps,
+  wrapper;
 
 beforeEach(() => {
   closeFilterModal = jest.fn();
@@ -15,7 +23,7 @@ beforeEach(() => {
   onPageChange = jest.fn();
 
   defaultProps = {
-    onSort: onSort
+    onSort
   };
   defaultProps = {
     showFilterModal: true,
@@ -26,21 +34,19 @@ beforeEach(() => {
     publishers: {},
     showClearFilterButton: false,
     hitsPerPage: 10,
-    closeFilterModal: closeFilterModal,
-    onFilterTheme: onFilterTheme,
-    onFilterAccessRights: onFilterAccessRights,
-    onFilterPublisherHierarchy: onFilterPublisherHierarchy,
-    onClearSearch: onClearSearch,
-    onSort: onSort,
-    onPageChange: onPageChange,
-  }
-  wrapper = shallow(
-    <ResultsDataset  {...defaultProps} />
-  );
+    closeFilterModal,
+    onFilterTheme,
+    onFilterAccessRights,
+    onFilterPublisherHierarchy,
+    onClearSearch,
+    onSort,
+    onPageChange
+  };
+  wrapper = shallow(<ResultsDataset {...defaultProps} />);
 });
 
 test('should render ResultsDataset correctly with minimum of props', () => {
-  const minWrapper = shallow(<ResultsDataset onSort={onSort} />)
+  const minWrapper = shallow(<ResultsDataset onSort={onSort} />);
   expect(minWrapper).toMatchSnapshot();
 });
 
