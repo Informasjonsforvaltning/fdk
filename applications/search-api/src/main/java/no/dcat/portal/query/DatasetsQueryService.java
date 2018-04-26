@@ -5,10 +5,7 @@ import com.google.gson.Gson;
 import io.swagger.annotations.ApiOperation;
 import no.dcat.datastore.domain.dcat.builders.DcatBuilder;
 import no.dcat.shared.Dataset;
-import no.dcat.shared.SkosCode;
 import no.dcat.shared.SkosConcept;
-import org.apache.lucene.queryparser.xml.builders.TermsFilterBuilder;
-import org.apache.lucene.search.TermQuery;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.index.query.BoolQueryBuilder;
@@ -16,7 +13,6 @@ import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.query.RangeQueryBuilder;
 import org.elasticsearch.index.query.SimpleQueryStringBuilder;
-import org.elasticsearch.index.query.TermQueryBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms.Order;
@@ -220,10 +216,8 @@ public class DatasetsQueryService extends ElasticsearchService {
     }
 
     private void addSortForEmptySearch(SearchRequestBuilder searchBuilder) {
-        TermQueryBuilder termFilter = QueryBuilders.termQuery("provenance.code.raw","NASJONAL");
 
-        SortBuilder sortFieldProvenance = SortBuilders.fieldSort("provenance.code")
-                .setNestedFilter(termFilter)
+        SortBuilder sortFieldProvenance = SortBuilders.fieldSort("provenanceSort")
                 .order(SortOrder.ASC);
 
         SortBuilder sortOnSource = SortBuilders.fieldSort("source")
