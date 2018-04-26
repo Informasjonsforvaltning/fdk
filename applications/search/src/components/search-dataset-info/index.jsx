@@ -411,7 +411,7 @@ DatasetInfo.defaultProps = {
 };
 
 DatasetInfo.propTypes = {
-  issued: PropTypes.number,
+  issued: PropTypes.string,
   accrualPeriodicity: PropTypes.string,
   modified: PropTypes.string,
   provenance: PropTypes.string,
