@@ -211,21 +211,9 @@ public abstract class AbstractBuilder {
 
                 Map<String, String> prefLabel = extractLanguageLiteral(skosConcept, SKOS.prefLabel);
 
-                // check and remove empty entries
-                if (prefLabel != null) {
-                    List<String> emptyKeys = new ArrayList<>();
-                    prefLabel.forEach((key, value) -> {
-                        if (value == null || value.isEmpty()) {
-                            emptyKeys.add(key);
-                        }
-                    });
-                    for (String key : emptyKeys) {
-                        prefLabel.remove(key);
-                    }
-
-                    if (prefLabel.size() == 0) {
-                        prefLabel = null;
-                    }
+                // check and remove empty prefLabel
+                if (prefLabel != null && prefLabel.size() == 0) {
+                    prefLabel = null;
                 }
 
                 String source = null;
