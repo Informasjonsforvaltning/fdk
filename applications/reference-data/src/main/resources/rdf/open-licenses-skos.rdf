@@ -13,7 +13,7 @@
       <skos:prefLabel xml:lang="en">Norwegian Licence for Open Government Data</skos:prefLabel>
    </skos:Concept>
 
-   <skos:Concept rdf:about="https://creativecommons.org/licenses/by/4.0/" >
+   <skos:Concept rdf:about="http://creativecommons.org/licenses/by/4.0/" >
       <skos:inScheme rdf:resource="http:/data.norge.no/opne-data-lisensar" />
       <dc:identifier>CC BY 4.0</dc:identifier>
       <at:authority-code>CC BY 4.0</at:authority-code>
@@ -21,7 +21,7 @@
       <skos:prefLabel xml:lang="en">Creative Commons Attribution 4.0 International</skos:prefLabel>
    </skos:Concept>
 
-   <skos:Concept rdf:about="https://creativecommons.org/publicdomain/zero/1.0/" >
+   <skos:Concept rdf:about="http://creativecommons.org/publicdomain/zero/1.0/" >
       <skos:inScheme rdf:resource="http:/data.norge.no/opne-data-lisensar" />
       <dc:identifier>CC0 1.0</dc:identifier>
       <at:authority-code>CC0 1.0</at:authority-code>
