@@ -5,9 +5,6 @@ import no.dcat.shared.Contact;
 import no.dcat.shared.Distribution;
 import org.junit.Test;
 
-import static org.hamcrest.Matchers.contains;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.containsString;
 import static org.junit.Assert.assertThat;
 /**
