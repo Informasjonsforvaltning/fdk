@@ -202,6 +202,34 @@ public class CatalogControllerIT {
 
     }
 
+
+    @Test
+    @WithUserDetails("03096000854")
+    public void updateCatalogWithPutRunsOK() throws Exception {
+        listCatalogToCreateCatalogs();
+
+        Catalog catalog = catalogRepository.findOne("910244132");
+
+        // change title
+        Map<String, String> title2 = new HashMap<>();
+        title2.put("en", "aTest");
+        catalog.setTitle(title2);
+
+        mockMvc
+                .perform(
+                        MockMvcRequestBuilders
+                                .put("/catalogs/910244132", catalog)
+                                .content(asJsonString(catalog))
+                                .contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(content().string("{\"id\":\"910244132\",\"uri\":\"http://brreg.no/catalogs/910244132\",\"title\":{\"en\":\"aTest\"},\"description\":{},\"publisher\":{\"uri\":\"http://data.brreg.no/enhetsregisteret/enhet/910244132\",\"id\":\"910244132\",\"name\":\"RAMSUND OG ROGNAN REVISJON\"}}"))
+                .andExpect(status().isOk());
+
+    }
+
+
+
+
+
     @Test
     @WithUserDetails("03096000854")
     public void deleteCatalogRunsOK() throws Exception {
