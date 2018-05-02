@@ -306,6 +306,26 @@ public class DatasetControllerIT {
 
     @Test
     @WithUserDetails("03096000854")
+    public void deleteDatasetsShouldWork() throws Exception {
+
+        //setup test data
+        String catalogId = "910244132";
+        String datasetId = createCatalogAndSimpleDataset(catalogId);
+
+
+        //delete dataset
+        mockMvc
+                .perform(
+                        MockMvcRequestBuilders
+                                .delete("/catalogs/" + catalogId + "/datasets/" + datasetId)
+                                .contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andDo(print())
+                .andExpect(status().isOk());
+    }
+
+
+    @Test
+    @WithUserDetails("03096000854")
     public void deleteUnknownDatasetShouldResultIn404() throws Exception {
 
         mockMvc
