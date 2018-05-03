@@ -8,6 +8,7 @@ import InputField from '../reg-form-field-input';
 import InputTagsField from '../reg-form-field-input-tags';
 import TextAreaField from '../reg-form-field-textarea';
 import RadioField from '../reg-form-field-radio';
+import SelectField from '../reg-form-field-select';
 import asyncValidate from '../../utils/asyncValidate';
 import { textType, licenseType } from '../../schemaTypes';
 import { validateMinTwoChars, validateLinkReturnAsSkosType, validateURL } from '../../validation/validation';
@@ -73,10 +74,8 @@ const renderDistributionLandingpage = ({ fields }) => (
 );
 
 const renderDistributions = (props) => {
-  /*
+  const { fields, helptextItems, openLicenseItems } = props;
 
-   */
-  const { fields, helptextItems } = props
   return (
     <div>
       {fields.map((distribution, index) => (
@@ -119,7 +118,11 @@ const renderDistributions = (props) => {
           </div>
           <div className="form-group">
             <Helptext title="Lisens" helptextItems={helptextItems.Distribution_modified} />
-            <Field name={`${distribution}.license.uri`} component={InputField} label="Lisens" />
+            <Field
+              name={`${distribution}.license`}
+              component={SelectField}
+              items={openLicenseItems}
+            />
           </div>
           <div className="form-group">
             <Helptext title="Beskrivelse" helptextItems={helptextItems.Distribution_description} />
@@ -180,13 +183,15 @@ const renderDistributions = (props) => {
 }
 
 let FormDistribution = props => {
-  const { helptextItems } = props;
+  const { helptextItems, initialValues } = props;
+  const { openLicenseItems } = initialValues;
   return (
     <form>
       <FieldArray
         name="distribution"
         component={renderDistributions}
         helptextItems={helptextItems}
+        openLicenseItems={openLicenseItems}
       />
     </form>
   )
@@ -219,10 +224,11 @@ const distributionTypes = values => {
   return distributions;
 }
 
-const mapStateToProps = ({ dataset }) => (
+const mapStateToProps = ({ dataset, openlicenses }) => (
   {
     initialValues: {
-      distribution: distributionTypes(dataset.result.distribution)
+      distribution: distributionTypes(dataset.result.distribution),
+      openLicenseItems: openlicenses.openLicenseItems,
     }
   }
 )

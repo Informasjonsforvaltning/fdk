@@ -11,7 +11,8 @@ import {
   fetchFrequencyIfNeeded,
   fetchThemesIfNeeded,
   fetchReferenceTypesIfNeeded,
-  fetchReferenceDatasetsIfNeeded
+  fetchReferenceDatasetsIfNeeded,
+  fetchOpenLicensesIfNeeded
 } from '../../actions/index';
 import FormTemplate from '../../components/reg-form-template';
 import FormTitle from '../../components/reg-form-schema-title';
@@ -58,6 +59,7 @@ class RegDataset extends React.Component {
     this.props.dispatch(fetchFrequencyIfNeeded());
     this.props.dispatch(fetchThemesIfNeeded());
     this.props.dispatch(fetchReferenceTypesIfNeeded());
+    this.props.dispatch(fetchOpenLicensesIfNeeded());
     this.refreshSession = this.refreshSession.bind(this);
   }
 
@@ -94,7 +96,8 @@ class RegDataset extends React.Component {
       lastSaved,
       result,
       referenceTypesItems,
-      referenceDatasetsItems
+      referenceDatasetsItems,
+      openLicenseItems
     } = this.props;
     const datasetURL = window.location.pathname;
     const catalogDatasetsURL = datasetURL.substring(0, datasetURL.lastIndexOf('/'));
@@ -111,7 +114,7 @@ class RegDataset extends React.Component {
               Tilbake til katalogen
             </Link>
           </div>
-          {!isFetching && helptextItems && title && referenceTypesItems && referenceDatasetsItems &&
+          {!isFetching && helptextItems && title && referenceTypesItems && referenceDatasetsItems && openLicenseItems &&
           <div className="col-md-8">
 
             <FormTemplate
@@ -287,7 +290,7 @@ RegDataset.propTypes = {
   dispatch: PropTypes.func.isRequired
 };
 
-function mapStateToProps({ app, dataset, helptexts, provenance, frequency, themes, referenceTypes, referenceDatasets, form }) {
+function mapStateToProps({ app, dataset, helptexts, provenance, frequency, themes, referenceTypes, referenceDatasets, openlicenses, form }) {
   const { result, isFetching } = dataset || {
     result: null,
     isFetching: false
@@ -317,6 +320,9 @@ function mapStateToProps({ app, dataset, helptexts, provenance, frequency, theme
     referenceDatasetsItems: null
   }
 
+  const { openLicenseItems } = openlicenses || {
+    openLicenseItems: null
+  }
 
   const title = form.title || {
     title: null
@@ -384,6 +390,7 @@ function mapStateToProps({ app, dataset, helptexts, provenance, frequency, theme
     themesItems,
     referenceTypesItems,
     referenceDatasetsItems,
+    openLicenseItems,
     title,
     accessRights,
     formThemes,
