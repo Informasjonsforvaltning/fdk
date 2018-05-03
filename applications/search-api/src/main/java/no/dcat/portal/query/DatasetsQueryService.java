@@ -3,11 +3,15 @@ package no.dcat.portal.query;
 
 import com.google.gson.Gson;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import no.dcat.datastore.domain.dcat.builders.DcatBuilder;
 import no.dcat.shared.Dataset;
 import no.dcat.shared.SkosConcept;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.common.joda.DateMathParser;
+import org.elasticsearch.common.joda.FormatDateTimeFormatter;
+import org.elasticsearch.common.joda.Joda;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
@@ -16,9 +20,12 @@ import org.elasticsearch.index.query.SimpleQueryStringBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms.Order;
+import org.elasticsearch.search.aggregations.support.format.ValueParser;
 import org.elasticsearch.search.sort.SortBuilder;
 import org.elasticsearch.search.sort.SortBuilders;
 import org.elasticsearch.search.sort.SortOrder;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -30,9 +37,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.management.Query;
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.text.SimpleDateFormat;
+import java.time.ZoneId;
 import java.util.Date;
 
 
@@ -70,6 +80,7 @@ public class DatasetsQueryService extends ElasticsearchService {
     public static final String QUERY_THEME_COUNT = "/themecount";
 
     public static final String QUERY_PUBLISHER_COUNT = "/publishercount";
+    public static final long DAY_IN_MS = 1000 * 3600 * 24;
 
 
     /**
@@ -95,19 +106,48 @@ public class DatasetsQueryService extends ElasticsearchService {
                     "Max number returned by a single query is 100. Size parameters greater than 100 will not return more than 100 datasets. " +
                     "In order to access all datasets, use multiple queries and increment from parameter.", response = Dataset.class)
     @RequestMapping(value = QUERY_SEARCH, method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<String> search(@RequestParam(value = "q", defaultValue = "", required = false) String query,
+    public ResponseEntity<String> search(@ApiParam("the query string") @RequestParam(value = "q", defaultValue = "", required = false) String query,
+
+                                         @ApiParam("Filters on specified theme(s). ex. GOVE, or GOVE,SOCI")
                                          @RequestParam(value = "theme", defaultValue = "", required = false) String theme,
+
+                                         @ApiParam("Filters on publisher name")
                                          @RequestParam(value = "publisher", defaultValue = "", required = false) String publisher,
+
+                                         @ApiParam("Filters on accessrights, codes are PUBLIC, RESTRICTED or NON_PUBLIC ")
                                          @RequestParam(value = "accessrights", defaultValue = "", required = false) String accessRights,
+
+                                         @ApiParam("Filters on publisher's organization path (orgPath), e.g. /STAT/972417858/971040238")
                                          @RequestParam(value = "orgPath", defaultValue = "", required = false) String orgPath,
+
+                                         @ApiParam("Filters datasets that were first harvested x-days ago, e.g. a value of 100 will result in datasets that were harvested more than 100 days ago")
                                          @RequestParam(value = "firstHarvested", defaultValue = "0", required = false) int firstHarvested,
+
+                                         @ApiParam("Filters datasets that were last harvested x-days ago, e.g. 10 will result in datasets that have not been harvested for the last 10 days.")
+                                         @RequestParam(value = "lastHarvested", defaultValue = "0", required = false) int lastHarvested,
+
+                                         @ApiParam("Filters datasets that has changed within the last x-days, e.g. a value of 10 will result in datasets that were changed during 10 days, i.e. its values have changed within the last 10 days")
                                          @RequestParam(value = "lastChanged", defaultValue = "0", required = false) int lastChanged,
+
+                                         @ApiParam("Returns datatasets from position x in the result set, 0 is the default value. A value of 150 will return the 150th dataset in the resultset")
                                          @RequestParam(value = "from", defaultValue = "0", required = false) int from,
+
+                                         @ApiParam("Specifies the size, i.e. the number of datasets to return in one request. The default is 10, the maximum number of datasets returned is 100")
                                          @RequestParam(value = "size", defaultValue = "10", required = false) int size,
+
+                                         @ApiParam("Specifies the language elements of the datasets to search in, default is nb")
                                          @RequestParam(value = "lang", defaultValue = "nb", required = false) String lang,
+
+                                         @ApiParam("Specifies the sort field, at the present we support title, modified and publisher. Default is no value")
                                          @RequestParam(value = "sortfield", defaultValue = "", required = false) String sortfield,
+
+                                         @ApiParam("Specifies the sort direction of the sorted result. The directions are: asc for ascending and desc for descending")
                                          @RequestParam(value = "sortdirection", defaultValue = "", required = false) String sortdirection,
+
+                                         @ApiParam("Filters datasets according their referred subjects")
                                          @RequestParam(value = "subject", defaultValue = "", required = false) String subject,
+
+                                         @ApiParam("Filters datasets according to their provenance code, e.g. NASJONAL - nasjonal building block, VEDTAK - governmental decisions, BRUKER - user collected data and TREDJEPART - third party data")
                                          @RequestParam(value = "provenance", defaultValue = "", required = false) String provenance) {
 
 
@@ -118,6 +158,7 @@ public class DatasetsQueryService extends ElasticsearchService {
                 .append(" accessRights:").append(accessRights)
                 .append(" orgPath:").append(orgPath)
                 .append(" firstHarvested:").append(firstHarvested)
+                .append(" lastHarvested:").append(lastHarvested)
                 .append(" lastChanged:").append(lastChanged)
                 .append(" from:").append(from)
                 .append(" size:").append(size)
@@ -150,7 +191,7 @@ public class DatasetsQueryService extends ElasticsearchService {
                 isEmpty(accessRights) && isEmpty(provenance) &&
                 isEmpty(orgPath) && isEmpty(publisher) &&
                 isEmpty(sortfield) && isEmpty(sortdirection) &&
-                isEmpty(subject) && firstHarvested == 0 && lastChanged == 0;
+                isEmpty(subject) && firstHarvested == 0 && lastChanged == 0 && lastHarvested == 0;
 
         QueryBuilder search;
 
@@ -175,7 +216,7 @@ public class DatasetsQueryService extends ElasticsearchService {
         }
 
         // add filter
-        BoolQueryBuilder boolQuery = addFilter(theme, publisher, accessRights, search, orgPath, firstHarvested, lastChanged, subject, provenance);
+        BoolQueryBuilder boolQuery = addFilter(theme, publisher, accessRights, search, orgPath, firstHarvested, lastHarvested, lastChanged, subject, provenance);
 
         // set up search query with aggregations
         SearchRequestBuilder searchBuilder = getClient().prepareSearch("dcat")
@@ -237,17 +278,20 @@ public class DatasetsQueryService extends ElasticsearchService {
     AggregationBuilder temporalAggregation(String name, String dateField) {
 
         return AggregationBuilders.filters(name)
-                .filter("last7days", temporalRange(7, dateField))
-                .filter("last30days", temporalRange(30, dateField))
-                .filter("last365days", temporalRange(365, dateField));
+                .filter("last7days", temporalRangeFromXdaysToNow(7, dateField))
+                .filter("last30days", temporalRangeFromXdaysToNow(30, dateField))
+                .filter("last365days", temporalRangeFromXdaysToNow(365, dateField));
     }
 
 
-    RangeQueryBuilder temporalRange(int days, String dateField) {
+    RangeQueryBuilder temporalRangeFromXdaysToNow(int days, String dateField) {
         long now = new Date().getTime();
-        long DAY_IN_MS = 1000 * 3600 * 24;
 
         return QueryBuilders.rangeQuery(dateField).from(now - days * DAY_IN_MS).to(now).format("epoch_millis");
+    }
+
+    RangeQueryBuilder temporalRangeFromBegining(int days, String dateField) {
+        return QueryBuilders.rangeQuery(dateField).lte("now-"+days+"d/d");
     }
 
 
@@ -298,7 +342,7 @@ public class DatasetsQueryService extends ElasticsearchService {
      */
     private BoolQueryBuilder addFilter(String theme, String publisher, String accessRights,
                                        QueryBuilder search, String orgPath,
-                                       int firstHarvested, int lastChanged,
+                                       int firstHarvested, int lastHarvested, int lastChanged,
                                        String subject, String provenance) {
 
         BoolQueryBuilder boolQuery = QueryBuilders.boolQuery()
@@ -350,13 +394,20 @@ public class DatasetsQueryService extends ElasticsearchService {
 
         if (firstHarvested > 0) {
             BoolQueryBuilder firstHarvestedFilter = QueryBuilders.boolQuery();
-            firstHarvestedFilter.must(temporalRange(firstHarvested, "harvest.firstHarvested"));
+            firstHarvestedFilter.must(temporalRangeFromXdaysToNow(firstHarvested, "harvest.firstHarvested"));
             boolQuery.filter(firstHarvestedFilter);
+        }
+
+        if (lastHarvested > 0) {
+            BoolQueryBuilder lastHarvestedFilter = QueryBuilders.boolQuery();
+            lastHarvestedFilter.must(temporalRangeFromBegining(lastHarvested, "harvest.lastHarvested"));
+
+            boolQuery.filter(lastHarvestedFilter);
         }
 
         if (lastChanged > 0) {
             BoolQueryBuilder lastChangedFilter = QueryBuilders.boolQuery();
-            lastChangedFilter.must(temporalRange(lastChanged, "harvest.lastChanged"));
+            lastChangedFilter.must(temporalRangeFromXdaysToNow(lastChanged, "harvest.lastChanged"));
             boolQuery.filter(lastChangedFilter);
         }
 
