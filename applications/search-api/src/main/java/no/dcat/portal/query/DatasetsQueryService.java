@@ -281,7 +281,7 @@ public class DatasetsQueryService extends ElasticsearchService {
         return QueryBuilders.rangeQuery(dateField).from(now - days * DAY_IN_MS).to(now).format("epoch_millis");
     }
 
-    RangeQueryBuilder temporalRangeFromBegining(int days, String dateField) {
+    RangeQueryBuilder temporalRangeBefore(int days, String dateField) {
         return QueryBuilders.rangeQuery(dateField).lte("now-"+days+"d/d");
     }
 
@@ -391,7 +391,7 @@ public class DatasetsQueryService extends ElasticsearchService {
 
         if (lastHarvested > 0) {
             BoolQueryBuilder lastHarvestedFilter = QueryBuilders.boolQuery();
-            lastHarvestedFilter.must(temporalRangeFromBegining(lastHarvested, "harvest.lastHarvested"));
+            lastHarvestedFilter.must(temporalRangeBefore(lastHarvested, "harvest.lastHarvested"));
 
             boolQuery.filter(lastHarvestedFilter);
         }
