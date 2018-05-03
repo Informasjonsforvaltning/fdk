@@ -8,6 +8,7 @@ import InputField from '../reg-form-field-input';
 import InputTagsField from '../reg-form-field-input-tags';
 import TextAreaField from '../reg-form-field-textarea';
 import RadioField from '../reg-form-field-radio';
+import SelectField from '../reg-form-field-select';
 import asyncValidate from '../../utils/asyncValidate';
 import { textType, licenseType } from '../../schemaTypes';
 import { validateMinTwoChars, validateLinkReturnAsSkosType, validateURL } from '../../validation/validation';
@@ -73,7 +74,7 @@ const renderSampleLandingpage = ({ fields }) => (
 );
 
 const renderSamples = (props) => {
-  const { fields, helptextItems } = props
+  const { fields, helptextItems, openLicenseItems } = props
   return (
     <div>
       {fields.map((sample, index) => (
@@ -115,7 +116,11 @@ const renderSamples = (props) => {
           </div>
           <div className="form-group">
             <Helptext title="Lisens" helptextItems={helptextItems.Distribution_modified} />
-            <Field name={`${sample}.license.uri`} component={InputField} label="Lisens" />
+            <Field
+              name={`${sample}.license`}
+              component={SelectField}
+              items={openLicenseItems}
+            />
           </div>
           <div className="form-group">
             <Helptext title="Beskrivelse" helptextItems={helptextItems.Distribution_description} />
@@ -177,13 +182,15 @@ const renderSamples = (props) => {
 }
 
 let FormSample = props => {
-  const { helptextItems } = props;
+  const { helptextItems, initialValues } = props;
+  const { openLicenseItems } = initialValues;
   return (
     <form>
       <FieldArray
         name="sample"
         component={renderSamples}
         helptextItems={helptextItems}
+        openLicenseItems={openLicenseItems}
       />
     </form>
   )
@@ -217,10 +224,11 @@ const sampleTypes = values => {
   return samples;
 }
 
-const mapStateToProps = ({ dataset }) => (
+const mapStateToProps = ({ dataset, openlicenses }) => (
   {
     initialValues: {
-      sample: sampleTypes(dataset.result.sample) || [{}]
+      sample: sampleTypes(dataset.result.sample) || [{}],
+      openLicenseItems: openlicenses.openLicenseItems
     }
   }
 )
