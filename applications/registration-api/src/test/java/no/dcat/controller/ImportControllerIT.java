@@ -107,11 +107,10 @@ public class ImportControllerIT {
     public void parseAndSaveDatasetsOK() throws IOException {
         model = FileManager.get().loadModel("export.jsonld");
         Catalog existingCat = new Catalog();
-        existingCat.setId("http://data.brreg.no/datakatalog/katalog/974760673/1");
-        List<Dataset> result = importController.parseAndSaveDatasets(model, existingCat, "http://data.brreg.no/datakatalog/katalog/974760673/1");
+        existingCat.setId("974760673");
+        List<Dataset> result = importController.parseAndSaveDatasets(model, existingCat, "974760673");
 
-
-        assertThat(resultCat.getId(), is(existingCat.getId()));
+        assertThat(result.size(), is(27));
     }
 
 
