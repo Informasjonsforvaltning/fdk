@@ -12,6 +12,7 @@ import referenceDatasets from './referenceDatasets';
 import catalog from './catalog';
 import datasets from './datasets';
 import catalogs from './catalogs';
+import openlicenses from './openlicenses';
 
 const rootReducer = combineReducers({
   form: formReducer,
@@ -26,7 +27,8 @@ const rootReducer = combineReducers({
   referenceDatasets,
   catalog,
   datasets,
-  catalogs
+  catalogs,
+  openlicenses
 });
 
 export default rootReducer;
