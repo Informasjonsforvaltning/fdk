@@ -178,7 +178,7 @@ export const provenanceValues = values => {
       retVal += `${moment(modified).format('DD.MM.YYYY')}. `
     }
     if (hasCurrentnessAnnotation) {
-      if (hasCurrentnessAnnotation.hasBody && hasCurrentnessAnnotation.hasBody.no !== '') {
+      if (hasCurrentnessAnnotation.hasBody && hasCurrentnessAnnotation.hasBody.nb !== '') {
         retVal += `${getTranslateText(hasCurrentnessAnnotation.hasBody)}. `
       }
     }
