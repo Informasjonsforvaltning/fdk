@@ -5,7 +5,6 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import no.dcat.datastore.Elasticsearch;
 import no.dcat.datastore.domain.dcat.builders.DatasetBuilder;
 import no.dcat.datastore.domain.dcat.builders.DcatBuilder;
 import no.dcat.shared.Publisher;
@@ -15,9 +14,12 @@ import org.apache.commons.csv.CSVRecord;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ResIterator;
 import org.apache.jena.rdf.model.Resource;
-import org.apache.jena.util.FileManager;
 import org.apache.jena.vocabulary.RDF;
 import org.apache.jena.vocabulary.SKOS;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -43,7 +45,7 @@ import java.util.Map;
 
 public class UploadSubjectsToElastic {
 
-    private static final String BEGREP_TTL_URL = "file://d:/git/fdk/conf/subjects/begrep.ttl";
+    private static final String BEGREP_TTL_URL = "D:\\git\\fdk\\conf\\subjects\\jira@brreg 2018-05-04T15_33_37+0200.html";
     private static Logger logger = LoggerFactory.getLogger(UploadSubjectsToElastic.class);
 
     private static final String FOLDER = "D://git/fdk/conf/subjects";
@@ -53,20 +55,9 @@ public class UploadSubjectsToElastic {
     final String tt1 = "http://elasticsearch-fellesdatakatalog-tt1.ose-npc.brreg.no";
     final String st2 = "http://elasticsearch-fellesdatakatalog-st2.ose-npc.brreg.no";
     final String ppe = "http://elasticsearch-fellesdatakatalog-ppe.ose-pc.brreg.no";
-    /**
-     * Should not be run as a test. Hack to upload subjects to elastic.
-     *
-     * @throws Throwable
-     */
-    @Test
-    @Ignore
-    @Deprecated
-    public void uploadSubjectsFromFiletoElasticsearch() throws Throwable {
-        Model model = FileManager.get().loadModel(BEGREP_TTL_URL);
-        // model.write(System.out, "TURTLE");
 
-        postSubjectsFromModel(ppe, model);
-    }
+    final String ELASTIC_TARGET = ppe;
+
 
     /**
      * Reads subjects from CSV file (exported from JIRA) and extracts subject information from the file.
@@ -81,7 +72,7 @@ public class UploadSubjectsToElastic {
     @Ignore
     public void uploadSubjectsFromJiraCSVtoElasticsearch() throws Throwable {
 
-        String filename = FOLDER + "/Begreper.csv";
+        String filename = FOLDER + "/brreg_begreper4_2018-05-07.csv";
         Iterable<CSVRecord> records = readCsvRecords(filename);
 
         if (records == null) {
@@ -98,22 +89,30 @@ public class UploadSubjectsToElastic {
         Model model = createRDFModel(extractSubjectsFromCSV(records, publisher));
 
         // update elasticsearch instance
-        postSubjectsFromModel(ppe, model);
+        postSubjectsFromModel(ELASTIC_TARGET, model);
     }
+
+    @Test
+    @Ignore
+    public void upladSubjectsFromJiraHtml2Elasticsearch() throws Throwable {
+        List<Map<String, String>> records = readHtmlTable(BEGREP_TTL_URL);
+    }
+
 
     @Test
     @Ignore
     public void deleteSubjectsFromElastic() throws Throwable {
 
-        String host = tt1;
+        String host = st2;
 
-        List<String> identifiersToBeDeleted = getSubjectsToBeDeleted(host);
+        List<String> identifiersToBeDeleted = new ArrayList<>(); //getSubjectsToBeDeleted(host);
+        identifiersToBeDeleted.add("null");
         RestTemplate template = new RestTemplate();
 
         for (String id : identifiersToBeDeleted) {
             try {
                 if (!id.startsWith("http")) {
-                    template.delete(host + "/dcat/subject/" + id);
+                    template.delete(host + "/scat/subject/" + id);
                     logger.info("Successfully deleted: {}", id);
                 }
             } catch (HttpClientErrorException ex) {
@@ -121,6 +120,7 @@ public class UploadSubjectsToElastic {
             }
         }
     }
+
 
     private List<String> getSubjectsToBeDeleted(String host) {
 
@@ -190,12 +190,18 @@ public class UploadSubjectsToElastic {
     private List<Subject> extractSubjectsFromCSV(Iterable<CSVRecord> records, Publisher publisher) {
         List<Subject> subjects = new ArrayList<>();
         for (CSVRecord record : records) {
-            logger.info("Processing: {} ", record.get("Summary"));
+
+            final String term = record.get("Summary");
+            if (term == null || term.isEmpty()) {
+                continue;
+            }
+
+            logger.info("Processing: {} ", term);
             Subject subject = new Subject();
 
             // prefLabel: skos:prefLabel
             subject.setPrefLabel(new HashMap<>());
-            subject.getPrefLabel().put("no", record.get("Summary"));
+            subject.getPrefLabel().put("no", term);
 
             // Creator: dct:creator
             subject.setCreator(publisher);
@@ -211,42 +217,52 @@ public class UploadSubjectsToElastic {
                 subject.setAltLabel(new ArrayList<>());
                 String[] terms = altTerm.split(",");
 
-                for (String term : terms) {
+                for (String t : terms) {
                     Map<String, String> label = new HashMap<>();
-                    label.put("no", term);
+                    label.put("no", t);
                     subject.getAltLabel().add(label);
                 }
             }
 
             // Created dct:created
-            final String created = record.get("Created");
-            SimpleDateFormat firstJiraDate = new SimpleDateFormat("dd.MM.yyyy HH:mm");
-            SimpleDateFormat secondJiraDate = new SimpleDateFormat("dd/MMM/yy HH:mm", Locale.ENGLISH);
-            SimpleDateFormat isoDate = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
-
-            Date dt = null;
             try {
-                dt = firstJiraDate.parse(created);
-            } catch (ParseException pe) {
+                final String created = record.get("Created");
+                SimpleDateFormat firstJiraDate = new SimpleDateFormat("dd.MM.yyyy HH:mm");
+                SimpleDateFormat secondJiraDate = new SimpleDateFormat("dd/MMM/yy HH:mm", Locale.ENGLISH);
+                SimpleDateFormat isoDate = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+
+
+                Date dt = null;
                 try {
-                    dt = secondJiraDate.parse(created);
-                } catch (ParseException pe2) {
-                    logger.error("Wrong input date format {}", created);
+                    dt = firstJiraDate.parse(created);
+                } catch (ParseException pe) {
+                    try {
+                        dt = secondJiraDate.parse(created);
+                    } catch (ParseException pe2) {
+                        logger.error("Wrong input date format {}", created);
+                    }
                 }
-            }
-            if (dt != null) {
-                // handle creation date, but subject doesn't have that field
-                String dctCreated = isoDate.format(dt);
+                if (dt != null) {
+                    // handle creation date, but subject doesn't have that field
+                    String dctCreated = isoDate.format(dt);
 
+                }
+            } catch (IllegalArgumentException e) {
+                logger.warn("Created not present");
             }
-
             // Definition: dct:definition
             subject.setDefinition(new HashMap<>());
             subject.getDefinition().put("no", record.get("Definisjon"));
 
             // Source: dct:source
 
-            subject.setSource("https://www.arkivverket.no/forvaltning-og-utvikling/noark-standarden");
+            try {
+                final String source = record.get("Kilde til definisjon");
+
+                subject.setSource(source);
+            } catch (IllegalArgumentException e) {
+                logger.warn("Kilde til definisjon er ikke satt");
+            }
 
             // Note
             final String note = record.get("Kommentar");
@@ -272,5 +288,43 @@ public class UploadSubjectsToElastic {
             return null;
         }
         return records;
+    }
+
+    private List<Map<String, String>> readHtmlTable(String fileName) {
+        List<Map<String, String>> result = new ArrayList<>();
+
+        org.springframework.core.io.Resource subjectResource = new PathResource(fileName);
+        try {
+            Document doc = Jsoup.parse(subjectResource.getFile(), "UTF-8", "http://brreg.no");
+
+            Element table = doc.getElementById("issuetable");
+            Elements headings_rows = table.select("thead tr");
+
+            List<String> headings = new ArrayList<>();
+            headings_rows.select("th").forEach(heading -> headings.add(heading.text()));
+
+            Elements rows = table.select("tbody tr");
+
+            rows.forEach(row -> {
+                Map<String, String> record = new HashMap<>();
+
+                Elements values = row.children();
+                for (int i = 0; i < values.size(); i++) {
+                    Element value = values.get(i);
+                    String heading = headings.get(i);
+
+                    record.put(heading, value.text());
+                }
+
+                result.add(record);
+
+            });
+
+            return result;
+
+        } catch (IOException e) {
+            logger.error("Could not read subject file: {}", e.getMessage());
+            return null;
+        }
     }
 }
