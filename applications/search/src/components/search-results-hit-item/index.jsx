@@ -18,14 +18,9 @@ const renderFormats = (source, code) => {
 
   const children = (items, code) =>
     items.map(item => {
-      if (typeof item !== 'undefined') {
+      if (item && typeof item !== 'undefined') {
         const formatArray = item.trim().split(',');
         return formatArray.map((item, index) => (
-          /*
-          if (typeof item == 'undefined') {
-            return null;
-          }
-          */
           <DistributionFormat
             key={`dataset-distribution-format${index}`}
             code={code}
