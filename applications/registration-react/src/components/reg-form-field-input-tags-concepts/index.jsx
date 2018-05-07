@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 
 import TagsInput from 'react-tagsinput';
+import AutosizeInput from 'react-input-autosize';
 import '../reg-form-field-input-tags/index.scss';
+import './index.scss';
 
 const updateInput = (updates, props) => {
   const { input } = props;
@@ -49,6 +51,13 @@ const handleChange = (props, tags, changed, changedIndexes) => {
   }
 }
 
+const autosizingRenderInput = ({addTag, ...props}) => {
+  const {onChange, value, ...other} = props
+  return (
+    <AutosizeInput type='text' onChange={onChange} value={value} {...other} />
+  )
+}
+
 const InputTagsFieldConcepts  = (props) => {
   const { input, label, meta: { error, warning }, fieldLabel, showLabel } = props;
   let tagNodes = [];
@@ -66,6 +75,7 @@ const InputTagsFieldConcepts  = (props) => {
             className="fdk-reg-input-tags"
             inputProps={{placeholder: ''}}
             onChange={(tags, changed, changedIndexes) => (handleChange(props, tags, changed, changedIndexes))}
+            renderInput={autosizingRenderInput}
           />
         </div>
       </label>
