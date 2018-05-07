@@ -21,7 +21,7 @@ public class RegistrationFactory {
     public static Contact createContact(String catalogId) {
         Contact contact = new Contact();
         contact.setId(UUID.randomUUID().toString());
-        contact.setUri(getCatalogUri(catalogId) + "/contacts/" + contact.getUri());
+        contact.setUri(getCatalogUri(catalogId) + "/contacts/" + contact.getId());
 
         return contact;
     }
