@@ -163,7 +163,7 @@ export class SearchPage extends React.Component {
     const { theme } = this.state.searchQuery;
     if (event.target.checked) {
       ReactGA.event({
-        category: 'Fasett datasett',
+        category: 'Fasett',
         action: 'Legge til tema',
         label: event.target.value
       });
@@ -180,7 +180,7 @@ export class SearchPage extends React.Component {
       );
     } else {
       ReactGA.event({
-        category: 'Fasett datasett',
+        category: 'Fasett',
         action: 'Fjerne tema',
         label: event.target.value
       });
@@ -202,7 +202,7 @@ export class SearchPage extends React.Component {
     const { accessrights } = this.state.searchQuery;
     if (event.target.checked) {
       ReactGA.event({
-        category: 'Fasett datasett',
+        category: 'Fasett',
         action: 'Legge til tilgang',
         label: event.target.value
       });
@@ -219,7 +219,7 @@ export class SearchPage extends React.Component {
       );
     } else {
       ReactGA.event({
-        category: 'Fasett datasett',
+        category: 'Fasett',
         action: 'Fjerne tilgang',
         label: event.target.value
       });
@@ -269,7 +269,7 @@ export class SearchPage extends React.Component {
   handleDatasetFilterPublisherHierarchy(event) {
     if (event.target.checked) {
       ReactGA.event({
-        category: 'Fasett datasett',
+        category: 'Fasett',
         action: 'Legge til virksomhet',
         label: event.target.value
       });
@@ -286,7 +286,7 @@ export class SearchPage extends React.Component {
       );
     } else {
       ReactGA.event({
-        category: 'Fasett datasett',
+        category: 'Fasett',
         action: 'Fjerne virksomhet',
         label: event.target.value
       });
@@ -308,7 +308,7 @@ export class SearchPage extends React.Component {
     let sortField = event.field;
 
     ReactGA.event({
-      category: 'Sortere datasett',
+      category: 'Sortere',
       action: 'Sortere',
       label: sortField
     });
@@ -348,7 +348,7 @@ export class SearchPage extends React.Component {
     const offset = Math.ceil(selected * 50);
 
     ReactGA.event({
-      category: 'Paginering datasett',
+      category: 'Paginering',
       action: 'Ny side',
       label: offset
     });
