@@ -1,6 +1,7 @@
 package no.dcat.portal.query;
 
 import com.google.common.base.Predicates;
+import org.assertj.core.util.Sets;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -22,6 +23,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Collections;
+import java.util.Set;
 
 @SpringBootApplication
 @PropertySource("classpath:swagger.properties")
@@ -71,13 +73,18 @@ public class QueryApplication extends WebMvcConfigurerAdapter {
 
     @Bean
     public Docket swaggerDocket() {
-        return new Docket(DocumentationType.SWAGGER_2)
 
+        Set<String> secureProtocols = Sets.newHashSet();
+        secureProtocols.add("https");
+
+        return new Docket(DocumentationType.SWAGGER_2)
+                .protocols(secureProtocols)
                 .select()
                 .apis(Predicates.not(RequestHandlerSelectors.basePackage("org.springframework.boot")))
                 .paths(PathSelectors.any())
                 .build()
                 .apiInfo(apiInfo());
+
     }
 
     private ApiInfo apiInfo() {
@@ -87,7 +94,7 @@ public class QueryApplication extends WebMvcConfigurerAdapter {
                 "1.0",
                 "https://fellesdatakatalog.brreg.no/about",
                 new Contact("Brønnøysundregistrene", "https://fellesdatakatalog.brreg.no", "fellesdatakatalog@brreg.no"),
-                "License of API", "https://data.norge.no/nlod/no/2.0", Collections.emptyList());
+                "License of API", "http://data.norge.no/nlod/no/2.0", Collections.emptyList());
     }
 
 }
