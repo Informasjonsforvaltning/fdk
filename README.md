@@ -34,7 +34,7 @@ Any questions can be sent to [fellesdatakatalog@brreg.no](mailto:fellesdatakatal
 
 The [search api](https://fellesdatakatalog.brreg.no/swagger_ui.html) can also be used.
 
-## Comile
+## Compile
 The system consists of several modules which can be compiled with `mvn clean install`. 
 A successful build results in corresponding docker images. 
 
