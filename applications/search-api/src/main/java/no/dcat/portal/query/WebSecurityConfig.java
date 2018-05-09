@@ -1,15 +1,13 @@
 package no.dcat.portal.query;
 
-/**
+/*
  * Created by nodavsko on 28.09.2016.
  */
 
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -20,7 +18,7 @@ import org.springframework.security.web.firewall.HttpFirewall;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-    private static final String[] SWAGGER_WHITELIST = { "/swagger-resources/**", "/swagger-ui.html**", "/api-docs/**", "/webjars/**"};
+    private static final String[] SWAGGER_WHITELIST = { "/swagger-resources/**", "/swagger-ui.html", "/api-docs/**", "/webjars/**"};
 
 
     // needed to allow %2F, i.e. / in url encoded dataset-identifier

@@ -5,6 +5,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.Data;
 import no.dcat.shared.Dataset;
 import no.dcat.shared.Publisher;
@@ -39,7 +40,9 @@ public class PublisherQueryService extends ElasticsearchService {
     @ApiOperation(value = "query a publisher",
             notes = "Returns the elasticsearch response with matching publishers", response = Publisher.class)
     @RequestMapping(value = QUERY_PUBLISHER, method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<String> publishers(@RequestParam(value = "q", defaultValue = "", required = false) String query) {
+    public ResponseEntity<String> publishers(
+            @ApiParam("A query string to match a publisher name")
+            @RequestParam(value = "q", defaultValue = "", required = false) String query) {
         logger.info("/publisher query: {}", query);
 
         ResponseEntity<String> jsonError = initializeElasticsearchTransportClient();

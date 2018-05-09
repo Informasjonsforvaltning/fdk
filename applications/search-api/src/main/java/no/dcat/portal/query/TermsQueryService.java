@@ -2,6 +2,7 @@ package no.dcat.portal.query;
 
 
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import no.dcat.shared.Subject;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
@@ -55,12 +56,24 @@ import org.springframework.web.bind.annotation.RestController;
     @ApiOperation(value = "query for terms (concepts)",
             notes = "Returns the elasticsearch response with matching terms (dct:subject)", response = Subject.class)
     @RequestMapping(value = QUERY_SEARCH, method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<String> search(@RequestParam(value = "q", defaultValue = "", required = false) String query,
-                                         @RequestParam(value = "creator", defaultValue = "", required = false) String creator,
-                                         @RequestParam(value = "orgPath", defaultValue = "", required = false) String orgPath,
-                                         @RequestParam(value = "from", defaultValue = "0", required = false) int from,
-                                         @RequestParam(value = "size", defaultValue = "10", required = false) int size,
-                                         @RequestParam(value = "lang", defaultValue = "nb", required = false) String lang) {
+    public ResponseEntity<String> search(
+            @ApiParam("The query to match a concept")
+            @RequestParam(value = "q", defaultValue = "", required = false) String query,
+
+            @ApiParam("Search for the creator (owner) of the term")
+            @RequestParam(value = "creator", defaultValue = "", required = false) String creator,
+
+            @ApiParam(value = "Search for concepts based on orgpath", example = "/STAT")
+            @RequestParam(value = "orgPath", defaultValue = "", required = false) String orgPath,
+
+            @ApiParam("The index position of the result set to start return concepts for")
+            @RequestParam(value = "from", defaultValue = "0", required = false) int from,
+
+            @ApiParam("The size of the result set")
+            @RequestParam(value = "size", defaultValue = "10", required = false) int size,
+
+            @ApiParam("The language to search in")
+            @RequestParam(value = "lang", defaultValue = "nb", required = false) String lang) {
 
         StringBuilder loggMsg = new StringBuilder()
                 .append("query: ").append(query)

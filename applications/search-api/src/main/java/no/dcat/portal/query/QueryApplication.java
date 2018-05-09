@@ -1,7 +1,6 @@
 package no.dcat.portal.query;
 
 import com.google.common.base.Predicates;
-import org.assertj.core.util.Sets;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -20,6 +19,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
 @SpringBootApplication
@@ -69,7 +69,7 @@ public class QueryApplication extends WebMvcConfigurerAdapter {
     @Bean
     public Docket swaggerDocket() {
 
-        Set<String> secureProtocols = Sets.newHashSet();
+        Set<String> secureProtocols = new HashSet<>();
         secureProtocols.add("https");
 
         return new Docket(DocumentationType.SWAGGER_2)
