@@ -76,12 +76,43 @@ public class ImportControllerIT {
     }
 
     @Test
-    public void importCatalog() throws IOException {
+    public void parseCatalogsReturnsWithContent() throws IOException {
         model = FileManager.get().loadModel("export.jsonld");
         List<Catalog> ds = importController.parseCatalogs(model);
 
         assertThat(ds.size(), is(1));
     }
+
+    @Test
+    public void parseCatalogFindsExistingCatalogInExternalData() throws IOException, CatalogNotFoundException {
+        model = FileManager.get().loadModel("export.jsonld");
+        Catalog existingCat = new Catalog();
+        existingCat.setId("http://data.brreg.no/datakatalog/katalog/974760673/1");
+        Catalog resultCat = importController.parseCatalog(model, existingCat, "http://data.brreg.no/datakatalog/katalog/974760673/1");
+
+        assertThat(resultCat.getId(), is(existingCat.getId()));
+    }
+
+
+    @Test(expected = CatalogNotFoundException.class)
+    public void parseCatalogNonexistingCatalogThrowsException() throws IOException, CatalogNotFoundException {
+        model = FileManager.get().loadModel("export.jsonld");
+        Catalog existingCat = new Catalog();
+        existingCat.setId("doesNotExist");
+        Catalog resultCat = importController.parseCatalog(model, existingCat, "doesNotExist");
+    }
+
+
+    @Test
+    public void parseAndSaveDatasetsOK() throws IOException {
+        model = FileManager.get().loadModel("export.jsonld");
+        Catalog existingCat = new Catalog();
+        existingCat.setId("974760673");
+        List<Dataset> result = importController.parseAndSaveDatasets(model, existingCat, "974760673");
+
+        assertThat(result.size(), is(27));
+    }
+
 
     @Test
     public void importCatalogFromGdocSubjectOK() throws Throwable {

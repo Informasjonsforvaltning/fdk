@@ -213,6 +213,7 @@ public class ImportController {
 
     private final Set<String> languages = Sets.newHashSet("no", "nb", "nn", "en");
 
+
     void pruneLanguages(List<SkosCode> codelist) {
         codelist.forEach(skosCode -> skosCode.getPrefLabel().keySet().removeIf(lang -> !languages.contains(lang)));
     }
@@ -226,6 +227,7 @@ public class ImportController {
 
         return null;
     }
+
 
     private String frame(org.apache.jena.query.Dataset dataset, String frame) {
 
