@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 export default class TimeoutModal extends React.Component {
@@ -99,6 +100,26 @@ export default class TimeoutModal extends React.Component {
     );
   }
 }
+
+TimeoutModal.defaultProps = {
+  modal: false,
+  title: null,
+  ingress: null,
+  body: null,
+  buttonConfirm: null,
+  buttonLogout: null
+};
+
+TimeoutModal.propTypes = {
+  modal: PropTypes.bool,
+  refreshSession: PropTypes.func.isRequired,
+  toggle: PropTypes.func.isRequired,
+  title: PropTypes.string,
+  ingress: PropTypes.string,
+  body: PropTypes.string,
+  buttonConfirm: PropTypes.string,
+  buttonLogout: PropTypes.string
+};
 
 
 // export default TimeoutModal;

@@ -210,10 +210,12 @@ class DatasetItemsList extends React.Component {
 }
 
 DatasetItemsList.defaultProps = {
+  datasetItems: null
 };
 
 DatasetItemsList.propTypes = {
-  catalogId: PropTypes.string.isRequired
+  catalogId: PropTypes.string.isRequired,
+  datasetItems: PropTypes.object
 };
 
 export default DatasetItemsList;

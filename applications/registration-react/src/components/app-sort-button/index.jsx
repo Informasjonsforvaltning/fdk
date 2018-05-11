@@ -28,7 +28,8 @@ const SortButtons  = (props) => {
 SortButtons.propTypes = {
   field: PropTypes.string.isRequired,
   sortField: PropTypes.string.isRequired,
-  sortType: PropTypes.string.isRequired
+  sortType: PropTypes.string.isRequired,
+  onSortField: PropTypes.func.isRequired
 };
 
 export default SortButtons;

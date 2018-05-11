@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 export default class AppImportModal extends React.Component {
@@ -82,3 +83,25 @@ export default class AppImportModal extends React.Component {
     );
   }
 }
+
+AppImportModal.defaultProps = {
+  modal: false,
+  className: null,
+  title: null,
+  body: null,
+  setURL: null,
+  btnConfirm: null,
+  btnCancel: null
+};
+
+AppImportModal.propTypes = {
+  handleAction: PropTypes.func.isRequired,
+  toggle: PropTypes.func.isRequired,
+  modal: PropTypes.bool,
+  className: PropTypes.string,
+  title: PropTypes.string,
+  body: PropTypes.string,
+  setURL: PropTypes.string,
+  btnConfirm: PropTypes.string,
+  btnCancel: PropTypes.string
+};

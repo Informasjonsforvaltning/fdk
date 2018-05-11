@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 const AppDeleteModal  = (props) => (
@@ -19,5 +20,20 @@ const AppDeleteModal  = (props) => (
   </div>
 );
 
+AppDeleteModal.defaultProps = {
+  modal: false,
+  className: "null",
+  title: "null",
+  body: "null"
+};
+
+AppDeleteModal.propTypes = {
+  modal: PropTypes.bool,
+  toggle: PropTypes.func.isRequired,
+  className: PropTypes.string,
+  title: PropTypes.string,
+  body: PropTypes.string,
+  handleAction: PropTypes.func.isRequired
+};
 
 export default AppDeleteModal;

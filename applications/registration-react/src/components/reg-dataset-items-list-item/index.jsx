@@ -43,10 +43,12 @@ const DatasetItemsListItem  = (props) => {
 }
 
 DatasetItemsListItem.defaultProps = {
+  item: null
 };
 
 DatasetItemsListItem.propTypes = {
-  catalogId: PropTypes.string.isRequired
+  catalogId: PropTypes.string.isRequired,
+  item: PropTypes.object
 };
 
 export default DatasetItemsListItem;

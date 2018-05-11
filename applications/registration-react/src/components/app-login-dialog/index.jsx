@@ -75,11 +75,12 @@ class LoginDialog extends React.Component {
 }
 
 LoginDialog.defaultProps = {
-
+  loggedOut: false
 };
 
 LoginDialog.propTypes = {
-  dispatch: PropTypes.func.isRequired
+  dispatch: PropTypes.func.isRequired,
+  loggedOut: PropTypes.bool
 };
 
 function mapStateToProps({ user }) {

@@ -10,7 +10,7 @@ import localization from '../../utils/localization';
 import '../../assets/style/main.scss';
 import './index.scss';
 
-class Header extends React.Component {
+export class Header extends React.Component {
   constructor(props) {
     super(props);
     this.toggle = this.toggle.bind(this);
@@ -134,11 +134,12 @@ class Header extends React.Component {
 }
 
 Header.defaultProps = {
-
+  userItem: null
 };
 
 Header.propTypes = {
-  dispatch: PropTypes.func.isRequired
+  dispatch: PropTypes.func.isRequired,
+  userItem: PropTypes.object
 };
 
 function mapStateToProps({ user }) {
