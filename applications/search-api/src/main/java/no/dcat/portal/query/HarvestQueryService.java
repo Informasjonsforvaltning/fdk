@@ -1,6 +1,7 @@
 package no.dcat.portal.query;
 
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import no.dcat.datastore.domain.harvest.CatalogHarvestRecord;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
@@ -35,7 +36,9 @@ public class HarvestQueryService extends ElasticsearchService {
     @CrossOrigin
     @ApiOperation(value = "Finds all harvest catalog records for a given orgpath")
     @RequestMapping(value = "/harvest/catalog", method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<String> listCatalogHarvestRecords(@RequestParam(value = "q", defaultValue = "", required = false) String query) {
+    public ResponseEntity<String> listCatalogHarvestRecords(
+            @ApiParam("The orgpath of the publisher, e.g. /STAT or /FYLKE")
+            @RequestParam(value = "q", defaultValue = "", required = false) String query) {
         logger.info("/harvest query: {}", query);
 
         ResponseEntity<String> jsonError = initializeElasticsearchTransportClient();
