@@ -19,7 +19,7 @@
     "bootstrap": "^4.0.0-beta.3",
     "classnames": "^2.2.5",
     "compression": "^1.7.1",
-    "copy-webpack-plugin": "^4.3.1",
+    "copy-webpack-plugin": "^4.5.1",
     "ejs": "^2.5.7",
     "express": "^4.16.2",
     "extract-text-webpack-plugin": "^3.0.2",
@@ -54,7 +54,6 @@
     "yup": "^0.23.0"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.2.1",
     "babel-loader": "^7.1.2",
@@ -81,7 +80,7 @@
     "jsdom": "^11.6.2",
     "lint-staged": "^6.0.1",
     "mocha": "^5.0.0",
-    "node-sass": "^4.7.2",
+    "node-sass": "^4.9.0",
     "redux-test-utils": "^0.2.2",
     "sass-loader": "^6.0.6",
     "sinon": "^4.2.2",
