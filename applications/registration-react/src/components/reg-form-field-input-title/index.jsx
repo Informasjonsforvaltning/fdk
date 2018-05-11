@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 import './index.scss';
 
-// const InputTitleField  = ({ input, label, type, meta: { touched, error, warning }, showLabel, onToggleTitle }) => (
 export default class InputTitleField extends React.Component {
   handleOnBlur() {
     const { onToggleTitle } = this.props;

@@ -35,10 +35,15 @@ const InputTagsFieldArray  = (props) => {
 }
 
 InputTagsFieldArray.defaultProps = {
+  label: null,
+  fieldLabel: null,
   showLabel: false
 };
 
 InputTagsFieldArray.propTypes = {
+  input: PropTypes.object.isRequired,
+  label: PropTypes.string,
+  fieldLabel: PropTypes.string,
   showLabel: PropTypes.bool
 };
 
