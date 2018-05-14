@@ -7,11 +7,11 @@ In the next phase we will focus on API descriptions and register our user storie
 
 If you want to contribute you have a several options:
 
+1) Submit an issue (feature request) or submit a bug-report
+
+1) Fork the project, develop new functionality and submit a pull request.
+
 1) Become a member of the development team. Contact us on [fellesdatakatalog@brreg.no](mailto:fellesdataktalog@brreg.no) and describe who you are, who your represent, contact information and to what extent you can contribute. 
-
-2) Fork the project, develop new functionality and submit a pull request.
-
-3) Submit an issue (feature request)
 
 
 
