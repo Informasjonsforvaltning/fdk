@@ -36,5 +36,27 @@ minikube delete
 sudo rm -rf ~/.minikube
 ```
 
+For deploying to azure (mac)
+```
+# install azure cli
+brew update && brew install azure-cli
+
+#login (opens browser for logging in)
+az login
+
+# merge kubernetes credentials to ~/.kube/config
+az aks get-credentials --resource-group fdkpockube --name fdkKubeCluster
+
+#check 
+kubectl config current-context
+# switch if needed
+# kubectl config use-context fdkKubeCluster
+kubectl get nodes
+
+
+#deploy or change configuration 
+kubectl apply -f kubernetes.azure.yml
+```
+
 Todo
  - mount source code volumes
