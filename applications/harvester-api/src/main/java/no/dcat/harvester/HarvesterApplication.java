@@ -43,7 +43,10 @@ public class HarvesterApplication {
 
                         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
-                        if (connection.getResponseCode() == HttpURLConnection.HTTP_MOVED_TEMP || connection.getResponseCode() == HttpURLConnection.HTTP_MOVED_PERM) {
+                        // follow redirect http -> https
+                        if (connection.getResponseCode() == HttpURLConnection.HTTP_MOVED_TEMP ||
+                                connection.getResponseCode() == HttpURLConnection.HTTP_MOVED_PERM ||
+                                connection.getResponseCode() == 307) {
                             String location = connection.getHeaderField("Location");
                             location = URLDecoder.decode(location, "UTF-8");
                             connection.disconnect();
