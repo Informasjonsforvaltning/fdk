@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Field, FieldArray, reduxForm, formValueSelector, getFormSyncErrors } from 'redux-form';
 import { connect } from 'react-redux';
 import _throttle from 'lodash/throttle';
@@ -87,13 +88,13 @@ const resetFields = (props) => {
   props.change('legalBasisForAccess', [legalBasisType]);
 }
 
-const renderLegalBasisFields = (item, index, fields, props) => (
+const renderLegalBasisFields = (item, index, fields, customProps) => (
   <div className="d-flex mb-2" key={index}>
     <div className="w-50">
       <Field
         name={`${item}.prefLabel.nb`}
         component={InputField}
-        label={props.titleLabel}
+        label={customProps.titleLabel}
         showLabel
       />
     </div>
@@ -101,7 +102,7 @@ const renderLegalBasisFields = (item, index, fields, props) => (
       <Field
         name={`${item}.uri`}
         component={InputField}
-        label={props.linkLabel}
+        label={customProps.linkLabel}
         showLabel
       />
     </div>
@@ -120,7 +121,7 @@ const renderLegalBasisFields = (item, index, fields, props) => (
             if (fields.length > 1) {
               fields.remove(index);
             }
-            asyncValidate(fields.getAll(), props.dispatch, props, `remove_${fields.name}_${index}`);
+            asyncValidate(fields.getAll(), customProps.dispatch, customProps, `remove_${fields.name}_${index}`);
           }
         }
       >
@@ -130,12 +131,12 @@ const renderLegalBasisFields = (item, index, fields, props) => (
   </div>
 );
 
-const renderLegalBasis = (props) => {
-  const { fields } = props;
+const renderLegalBasis = (customProps) => {
+  const { fields } = customProps;
   return (
     <div>
       {fields && fields.map((item, index) =>
-        renderLegalBasisFields(item, index, fields, props)
+        renderLegalBasisFields(item, index, fields, customProps)
       )}
       <button className="fdk-btn-no-border" type="button" onClick={() => fields.push({})}>
         <i className="fa fa-plus mr-2" />
@@ -145,8 +146,12 @@ const renderLegalBasis = (props) => {
   );
 };
 
-let FormAccessRights = (props) => {
-  const { syncErrors: { accessRight }, helptextItems, hasAccessRightsURI } = props;
+export const FormAccessRights = (props) => {
+  const { syncErrors, helptextItems, hasAccessRightsURI } = props;
+  let accessRight = null;
+  if (syncErrors) {
+    accessRight = syncErrors.accessRight;
+  }
   return (
     <form>
       <div className="form-group">
@@ -222,9 +227,20 @@ let FormAccessRights = (props) => {
   )
 }
 
+FormAccessRights.defaultProps = {
+  syncErrors: null,
+  hasAccessRightsURI: null
+};
+
+FormAccessRights.propTypes = {
+  syncErrors: PropTypes.object,
+  helptextItems: PropTypes.object.isRequired,
+  hasAccessRightsURI: PropTypes.string
+};
+
 const selector = formValueSelector('accessRights');
 
-FormAccessRights = reduxForm({
+let FormAccessRightsSchema = reduxForm({
   form: 'accessRights',
   validate,
   asyncValidate: _throttle(asyncValidate, 250),
@@ -248,4 +264,4 @@ const mapStateToProps = ({ dataset }) => (
   }
 )
 
-export default connect(mapStateToProps)(FormAccessRights)
+export default connect(mapStateToProps)(FormAccessRightsSchema)

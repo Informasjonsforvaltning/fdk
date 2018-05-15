@@ -28,7 +28,7 @@ InputField.propTypes = {
   input: PropTypes.object,
   label: PropTypes.string,
   type: PropTypes.string,
-  meta: PropTypes.object,
+  meta: PropTypes.object
 };
 
 export default InputField;

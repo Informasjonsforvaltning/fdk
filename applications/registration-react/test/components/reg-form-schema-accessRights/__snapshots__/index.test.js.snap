@@ -1,0 +1,53 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render FormAccessRights correctly 1`] = `
+<form>
+  <div
+    className="form-group"
+  >
+    <Helptext
+      helptextItems={
+        Object {
+          "description": Object {
+            "nb": "For å angi hvor man kan få tilgang til datasettet skal det angis ulike distribusjoner.
+* Det angis i utgangspunktet en distribusjon per fil, feed eller API
+* Dersom det er ett API som leverer flere filformater angis det som en distribusjon",
+          },
+          "id": "Dataset_distribution",
+          "shortdesc": Object {
+            "nb": "For å angi hvor man kan få tilgang til datasettet skal det angis ulike distribusjoner.",
+          },
+          "uri": "http://brreg.no/fdk/fields#Dataset_distribution",
+        }
+      }
+      required={false}
+      title="Tilgangsnivå"
+    />
+    <Field
+      component={[Function]}
+      label="Offentlig"
+      name="accessRights.uri"
+      onChange={[Function]}
+      radioId="accessRight-public"
+      type="radio"
+      value="http://publications.europa.eu/resource/authority/access-right/PUBLIC"
+    />
+    <Field
+      component={[Function]}
+      label="Begrenset offentlighet"
+      name="accessRights.uri"
+      radioId="accessRight-restricted"
+      type="radio"
+      value="http://publications.europa.eu/resource/authority/access-right/RESTRICTED"
+    />
+    <Field
+      component={[Function]}
+      label="Unntatt offentlighet"
+      name="accessRights.uri"
+      radioId="accessRight-non_public"
+      type="radio"
+      value="http://publications.europa.eu/resource/authority/access-right/NON_PUBLIC"
+    />
+  </div>
+</form>
+`;

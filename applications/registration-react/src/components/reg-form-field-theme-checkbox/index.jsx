@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const handleChange = (props, event) => {
   const { input } = props;
@@ -46,5 +47,18 @@ const CheckboxFieldTheme = (props) => {
     </div>
   );
 }
+
+CheckboxFieldTheme.defaultProps = {
+  input: {
+    value:[]
+  },
+  label: null
+};
+
+CheckboxFieldTheme.propTypes = {
+  input: PropTypes.object,
+  label: PropTypes.string,
+  themesItems: PropTypes.array.isRequired
+};
 
 export default CheckboxFieldTheme;
