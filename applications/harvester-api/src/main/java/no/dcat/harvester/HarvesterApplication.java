@@ -19,7 +19,9 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.io.InputStream;
+import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLDecoder;
 
 @SpringBootApplication
 @PropertySource({"classpath:swagger.properties"})
@@ -27,34 +29,47 @@ import java.net.URL;
 public class HarvesterApplication {
     static Logger logger = LoggerFactory.getLogger(HarvesterApplication.class);
 
-	@Value("${springfox.documentation.swagger.v2.path}")
-	private String swagger2Endpoint;
+    @Value("${springfox.documentation.swagger.v2.path}")
+    private String swagger2Endpoint;
 
 
     @Bean
     public static LoadingCache<URL, String> getBrregCache() {
         logger.debug("Starting BRREG cache 2!");
 
-		LoadingCache<URL, String> brregCache = CacheBuilder.newBuilder().maximumSize(1000)
-				.build(new CacheLoader<URL, String>() {
-					public String load(URL url) throws Exception {
-						try (InputStream inputStream = url.openStream()) {
-							return IOUtils.toString(inputStream);
-						}
-					}
-				});
+        LoadingCache<URL, String> brregCache = CacheBuilder.newBuilder().maximumSize(1000)
+                .build(new CacheLoader<URL, String>() {
+                    public String load(URL url) throws Exception {
 
-		return brregCache;
+                        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+                        if (connection.getResponseCode() == HttpURLConnection.HTTP_MOVED_TEMP || connection.getResponseCode() == HttpURLConnection.HTTP_MOVED_PERM) {
+                            String location = connection.getHeaderField("Location");
+                            location = URLDecoder.decode(location, "UTF-8");
+                            connection.disconnect();
+
+                            url = new URL(location);
+                        }
+
+                        InputStream inputStream = url.openStream();
+                        String result = IOUtils.toString(inputStream);
+                        inputStream.close();
+
+                        return result;
+                    }
+                });
+
+        return brregCache;
     }
 
-	@Bean
-	public Docket api() {
-		return new Docket(DocumentationType.SWAGGER_2)
-				.select()
-				.apis(RequestHandlerSelectors.any())
-				.paths(PathSelectors.any())
-				.build();
-	}
+    @Bean
+    public Docket api() {
+        return new Docket(DocumentationType.SWAGGER_2)
+                .select()
+                .apis(RequestHandlerSelectors.any())
+                .paths(PathSelectors.any())
+                .build();
+    }
 
     public static void main(String[] args) {
 

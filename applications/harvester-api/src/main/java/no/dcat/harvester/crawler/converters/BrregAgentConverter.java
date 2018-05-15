@@ -10,7 +10,14 @@ import no.dcat.datastore.domain.dcat.vocabulary.DCATNO;
 import no.dcat.harvester.theme.builders.vocabulary.EnhetsregisteretRDF;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
-import org.apache.jena.rdf.model.*;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.rdf.model.NodeIterator;
+import org.apache.jena.rdf.model.Property;
+import org.apache.jena.rdf.model.RDFNode;
+import org.apache.jena.rdf.model.ResIterator;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.Statement;
 import org.apache.jena.sparql.vocabulary.FOAF;
 import org.apache.jena.util.ResourceUtils;
 import org.apache.jena.vocabulary.DCTerms;
@@ -50,7 +57,6 @@ public class BrregAgentConverter {
                 .setBaseNamespace("http://data.brreg.no/meta/", Builder.AppliesTo.bothElementsAndAttributes)
                 .convertComplexElementsWithOnlyAttributesAndSimpleTypeChildrenToPredicate(true)
                 .convertComplexElementsWithOnlyAttributesToPredicate(true)
-                //.uuidBasedIdInsteadOfBlankNodes("dcat://meta/") // generates uuid for blank nodes
                 .renameElement("http://data.brreg.no/meta/navn", FOAF.name.getURI())
                 .renameElement("http://data.brreg.no/meta/enhet", FOAF.Agent.getURI()).build();
         logger.debug("end ");
@@ -64,10 +70,15 @@ public class BrregAgentConverter {
         } catch (IOException e) {
             logger.error("Could not read canonical names: {}", e.getMessage());
         }
-        for (CSVRecord line : records) {
-            canonicalNames.put(line.get(0), line.get(1));
+
+        if (records != null) {
+            for (CSVRecord line : records) {
+                canonicalNames.put(line.get(0), line.get(1));
+            }
+
+            logger.debug("Read {} canonical names from file.", canonicalNames.size());
         }
-        logger.debug("Read {} canonical names from file.", canonicalNames.size());
+
     }
 
     private Model convert(InputStream inputStream) throws IOException, SAXException, ParserConfigurationException {
@@ -90,7 +101,6 @@ public class BrregAgentConverter {
             extractedModel = postProcessing
                     .mustacheTransform(classLoader.getResourceAsStream("brreg/transforms/00001.qr"), new Object())
                     .mustacheTransform(classLoader.getResourceAsStream("brreg/transforms/00010.qr"), new Object())
-                    //	.mustacheExtract(classLoader.getResourceAsStream("brreg/constructs/00001.qr"), new Object())
                     .getModel();
 
             applyNamespaces(extractedModel);
@@ -125,7 +135,6 @@ public class BrregAgentConverter {
                     logger.info("Used dct:identifier to lookup publisher {} from {}", orgresource.getURI(), url);
                     collectFromUri(url, model, orgresource);
                 }
-                //model.addLiteral(orgresource, DCTerms.valid, true);
             } else {
                 logger.warn("{} is not a resource. Probably really broken input!", next);
             }
@@ -394,15 +403,11 @@ public class BrregAgentConverter {
             Statement officialProperty = incomingResource.getProperty(property);
 
             if (oldProperty == null) {
-                if (officialProperty == null) {
-                    // do nothing
-                } else {
+                if (officialProperty != null) {
                     logger.debug("Publisher name: is missing from dataset. Found " + officialProperty.getString() + " which is added to dataset. for resource " + incomingResource.getURI());
                 }
             } else {
-                if (officialProperty == null) {
-                    // keep existing property
-                } else {
+                if (officialProperty != null) {
                     logger.debug("Publisher name: found " + oldProperty.getString() + " which is replaced with " + officialProperty.getString() + " for resource " + incomingResource.getURI());
                     existingResource.removeAll(property);
                 }
@@ -415,16 +420,11 @@ public class BrregAgentConverter {
         extractedModel.setNsPrefix("foaf", FOAF.getURI());
     }
 
-    // Only used for unittest purposes.
-    protected void setPublisherIdURI(String publisherIdURI) {
-        this.publisherIdURI = publisherIdURI;
-    }
-
     private String getOrgnrFromIdentifier(Model model, Resource orgresource) {
-        NodeIterator identiterator = model.listObjectsOfProperty(orgresource, DCTerms.identifier);
+        NodeIterator identIterator = model.listObjectsOfProperty(orgresource, DCTerms.identifier);
         // TODO: deal with the possibility of multiple dct:identifiers?
-        if (identiterator.hasNext()) {
-            String orgnr = identiterator.next().asLiteral().getValue().toString();
+        if (identIterator.hasNext()) {
+            String orgnr = identIterator.next().asLiteral().getValue().toString();
             return orgnr.replaceAll("\\s", "");
         } else {
             logger.debug("Found no identifier for {}", orgresource.getURI());
