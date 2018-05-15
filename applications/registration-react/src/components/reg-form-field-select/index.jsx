@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Select from 'react-select';
 import 'react-select/dist/react-select.css';
 
@@ -46,5 +47,17 @@ const SelectField  = (props) => {
     </div>
   );
 }
+
+SelectField.defaultProps = {
+  input: null,
+  meta: null,
+  items: null
+};
+
+SelectField.propTypes = {
+  input: PropTypes.object,
+  meta: PropTypes.object,
+  items: PropTypes.array
+};
 
 export default SelectField;

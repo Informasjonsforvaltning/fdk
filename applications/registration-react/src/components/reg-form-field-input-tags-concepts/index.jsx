@@ -87,11 +87,19 @@ const InputTagsFieldConcepts  = (props) => {
 }
 
 InputTagsFieldConcepts.defaultProps = {
-  showLabel: false
+  showLabel: false,
+  input: null,
+  label: null,
+  meta: null,
+  fieldLabel: null
 };
 
 InputTagsFieldConcepts.propTypes = {
-  showLabel: PropTypes.bool
+  showLabel: PropTypes.bool,
+  input: PropTypes.object,
+  label: PropTypes.string,
+  meta: PropTypes.object,
+  fieldLabel: PropTypes.string
 };
 
 export default InputTagsFieldConcepts;

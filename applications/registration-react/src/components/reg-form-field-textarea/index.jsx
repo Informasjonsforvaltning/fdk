@@ -14,11 +14,19 @@ const TextAreaField  = ({ input, label, type, meta: { touched, error, warning },
 )
 
 TextAreaField.defaultProps = {
-  showLabel: false
+  showLabel: false,
+  input: null,
+  label: null,
+  type: null,
+  meta: null
 };
 
 TextAreaField.propTypes = {
-  showLabel: PropTypes.bool
+  showLabel: PropTypes.bool,
+  input: PropTypes.object,
+  label: PropTypes.string,
+  type: PropTypes.string,
+  meta: PropTypes.object
 };
 
 export default TextAreaField;

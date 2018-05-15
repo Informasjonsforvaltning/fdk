@@ -34,11 +34,17 @@ const InputTagsField  = (props) => {
 }
 
 InputTagsField.defaultProps = {
-  showLabel: false
+  showLabel: false,
+  input: null,
+  label: null,
+  meta: null
 };
 
 InputTagsField.propTypes = {
-  showLabel: PropTypes.bool
+  showLabel: PropTypes.bool,
+  input: PropTypes.object,
+  label: PropTypes.string,
+  meta: PropTypes.object
 };
 
 export default InputTagsField;

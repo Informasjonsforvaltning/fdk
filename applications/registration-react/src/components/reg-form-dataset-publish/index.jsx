@@ -213,7 +213,7 @@ DatasetPublish.defaultProps = {
 DatasetPublish.propTypes = {
   dispatch: PropTypes.func.isRequired,
   registrationStatus: PropTypes.string,
-  syncErrors: PropTypes.bool.isRequired,
+  syncErrors: PropTypes.bool,
   distributionErrors: PropTypes.object,
   lastSaved: PropTypes.string
 };

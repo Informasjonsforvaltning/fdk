@@ -41,10 +41,21 @@ export default class InputTitleField extends React.Component {
 
 
 InputTitleField.defaultProps = {
-  showLabel: false
+  showLabel: false,
+  input: null,
+  label: null,
+  type: null,
+  meta: null,
+  hideInput: false
 };
 
 InputTitleField.propTypes = {
-  showLabel: PropTypes.bool
+  showLabel: PropTypes.bool,
+  onToggleTitle: PropTypes.func.isRequired,
+  input: PropTypes.object,
+  label: PropTypes.string,
+  type: PropTypes.string,
+  meta: PropTypes.object,
+  hideInput: PropTypes.bool
 };
 

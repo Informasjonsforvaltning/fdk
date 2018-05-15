@@ -12,11 +12,15 @@ const RadioField  = ({ input, label, radioId }) => (
 )
 
 RadioField.defaultProps = {
-  radioId: ''
+  radioId: '',
+  input: null,
+  label: null
 };
 
 RadioField.propTypes = {
-  radioId: PropTypes.string
+  radioId: PropTypes.string,
+  input: PropTypes.object,
+  label: PropTypes.string
 };
 
 export default RadioField;

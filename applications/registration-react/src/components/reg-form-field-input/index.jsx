@@ -16,11 +16,19 @@ const InputField  = ({ input, label, type, meta: { touched, error, warning }, sh
 )
 
 InputField.defaultProps = {
-  showLabel: false
+  showLabel: false,
+  input: null,
+  label: null,
+  type: null,
+  meta: null
 };
 
 InputField.propTypes = {
-  showLabel: PropTypes.bool
+  showLabel: PropTypes.bool,
+  input: PropTypes.object,
+  label: PropTypes.string,
+  type: PropTypes.string,
+  meta: PropTypes.object,
 };
 
 export default InputField;
