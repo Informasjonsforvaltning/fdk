@@ -81,11 +81,13 @@ const CheckboxField = (props) => {
 CheckboxField.defaultProps = {
   input: {
     value:[]
-  }
+  },
+  label: null
 };
 
 CheckboxField.propTypes = {
-  input: PropTypes.object
+  input: PropTypes.object,
+  label: PropTypes.string
 };
 
 export default CheckboxField;

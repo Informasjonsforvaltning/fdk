@@ -204,11 +204,16 @@ export default class DatasetPublish extends Component {
 }
 
 DatasetPublish.defaultProps = {
-  registrationStatus: false
+  registrationStatus: false,
+  syncErrors: false,
+  distributionErrors: null,
+  lastSaved: null
 };
 
 DatasetPublish.propTypes = {
   dispatch: PropTypes.func.isRequired,
   registrationStatus: PropTypes.string,
-  syncErrors: PropTypes.bool.isRequired
+  syncErrors: PropTypes.bool.isRequired,
+  distributionErrors: PropTypes.object,
+  lastSaved: PropTypes.string
 };

@@ -1,0 +1,228 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render DatasetItemsList correctly with datasetItems 1`] = `
+<div>
+  <div
+    className="d-flex mb-3"
+  >
+    <button
+      className="fdk-button fdk-button-cta"
+      onClick={[Function]}
+    >
+      <i
+        className="fa fa-plus fdk-color0 mr-2"
+      />
+      Legg til ny datasettbeskrivelse
+    </button>
+    <button
+      className="ml-2 transparentButton"
+      onClick={[Function]}
+    >
+      <i
+        className="fa fa-plus fdk-color1 mr-2"
+      />
+      Importer datasett
+    </button>
+  </div>
+  <div
+    className="fdk-datasets-list-header d-flex"
+  >
+    <div
+      className="d-flex align-items-center w-75"
+    >
+      <span
+        className="header-item mr-1"
+      >
+        Tittel på datasett
+      </span>
+      <SortButtons
+        field="title"
+        onSortField={[Function]}
+        sortField=""
+        sortType=""
+      />
+    </div>
+    <div
+      className="d-flex align-items-center w-25"
+    >
+      <span
+        className="header-item mr-1"
+      >
+        Status
+      </span>
+      <SortButtons
+        field="registrationStatus"
+        onSortField={[Function]}
+        sortField=""
+        sortType=""
+      />
+    </div>
+  </div>
+  <DatasetItemsListItem
+    catalogId="123"
+    item={
+      Object {
+        "_lastModified": "2018-05-07T10:36:20.388+0000",
+        "accessRights": Object {
+          "prefLabel": Object {},
+          "uri": "http://publications.europa.eu/resource/authority/access-right/PUBLIC",
+        },
+        "catalogId": "910244132",
+        "description": Object {
+          "nb": "tester",
+        },
+        "id": "084f747f-04a9-460e-b07e-ee74c60a2086",
+        "landingPage": Array [
+          "",
+        ],
+        "legalBasisForAccess": Array [
+          Object {
+            "extraType": null,
+            "prefLabel": Object {
+              "nb": "",
+            },
+            "uri": "",
+          },
+        ],
+        "legalBasisForProcessing": Array [
+          Object {
+            "extraType": null,
+            "prefLabel": Object {
+              "nb": "",
+            },
+            "uri": "",
+          },
+        ],
+        "legalBasisForRestriction": Array [
+          Object {
+            "extraType": null,
+            "prefLabel": Object {
+              "nb": "",
+            },
+            "uri": "",
+          },
+        ],
+        "objective": Object {
+          "nb": "",
+        },
+        "publisher": Object {
+          "name": "RAMSUND OG ROGNAN REVISJON",
+          "uri": "http://data.brreg.no/enhetsregisteret/enhet/910244132",
+        },
+        "registrationStatus": "PUBLISH",
+        "theme": Array [
+          Object {
+            "title": Object {
+              "nb": "",
+            },
+            "uri": "",
+          },
+          Object {
+            "title": Object {
+              "nb": "Jordbruk, fiskeri, skogbruk og mat",
+            },
+            "uri": "http://publications.europa.eu/resource/authority/data-theme/AGRI",
+          },
+        ],
+        "title": Object {
+          "nb": "test ois",
+        },
+        "uri": "http://brreg.no/catalogs/910244132/datasets/084f747f-04a9-460e-b07e-ee74c60a2086",
+      }
+    }
+    key="084f747f-04a9-460e-b07e-ee74c60a2086"
+  />
+  <AppImportModal
+    body="DCAT-modellen som blir importert må inneholde en katalog som har samme organisasjonsnr som katalogen du redigerer. Kun datasett som er med i denne katalogen vil bli importert."
+    btnCancel="Avbryt"
+    btnConfirm="Importer"
+    className={null}
+    handleAction={[Function]}
+    modal={false}
+    setURL="Angi url til DCAT ressurs:"
+    title="Importer datasett fra DCAT RDF ressurs."
+    toggle={[Function]}
+  />
+</div>
+`;
+
+exports[`should render DatasetItemsList correctly with missing datasetItems 1`] = `
+<div>
+  <div
+    className="d-flex mb-3"
+  >
+    <button
+      className="fdk-button fdk-button-cta"
+      onClick={[Function]}
+    >
+      <i
+        className="fa fa-plus fdk-color0 mr-2"
+      />
+      Legg til ny datasettbeskrivelse
+    </button>
+    <button
+      className="ml-2 transparentButton"
+      onClick={[Function]}
+    >
+      <i
+        className="fa fa-plus fdk-color1 mr-2"
+      />
+      Importer datasett
+    </button>
+  </div>
+  <div
+    className="fdk-datasets-list-header d-flex"
+  >
+    <div
+      className="d-flex align-items-center w-75"
+    >
+      <span
+        className="header-item mr-1"
+      >
+        Tittel på datasett
+      </span>
+      <SortButtons
+        field="title"
+        onSortField={[Function]}
+        sortField=""
+        sortType=""
+      />
+    </div>
+    <div
+      className="d-flex align-items-center w-25"
+    >
+      <span
+        className="header-item mr-1"
+      >
+        Status
+      </span>
+      <SortButtons
+        field="registrationStatus"
+        onSortField={[Function]}
+        sortField=""
+        sortType=""
+      />
+    </div>
+  </div>
+  <div
+    className="fdk-datasets-list-item d-flex"
+  >
+    <span
+      className="fdk-text-size-small fdk-color2"
+    >
+      Ingen datasettbeskrivelse registrert
+    </span>
+  </div>
+  <AppImportModal
+    body="DCAT-modellen som blir importert må inneholde en katalog som har samme organisasjonsnr som katalogen du redigerer. Kun datasett som er med i denne katalogen vil bli importert."
+    btnCancel="Avbryt"
+    btnConfirm="Importer"
+    className={null}
+    handleAction={[Function]}
+    modal={false}
+    setURL="Angi url til DCAT ressurs:"
+    title="Importer datasett fra DCAT RDF ressurs."
+    toggle={[Function]}
+  />
+</div>
+`;

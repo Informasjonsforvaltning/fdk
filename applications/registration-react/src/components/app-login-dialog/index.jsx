@@ -10,7 +10,7 @@ import localization from '../../utils/localization';
 import './index.scss';
 
 // const LoginDialog = props => {
-class LoginDialog extends React.Component {
+export class LoginDialog extends React.Component {
   componentWillMount() {
     if(this.props.loggedOut) {
       axios.get('/logout')

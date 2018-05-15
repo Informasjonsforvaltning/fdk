@@ -47,11 +47,17 @@ const DatepickerField  = (props) => {
 }
 
 DatepickerField.defaultProps = {
-  showLabel: false
+  showLabel: false,
+  input: {
+    value:[]
+  },
+  label: null
 };
 
 DatepickerField.propTypes = {
-  showLabel: PropTypes.bool
+  showLabel: PropTypes.bool,
+  input: PropTypes.object,
+  label: PropTypes.string
 };
 
 export default DatepickerField;

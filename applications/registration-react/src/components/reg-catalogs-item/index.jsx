@@ -24,7 +24,7 @@ const CatalogItem  = (props) => {
 }
 
 CatalogItem.defaultProps = {
-  item: null
+
 }
 
 CatalogItem.propTypes = {
@@ -32,7 +32,7 @@ CatalogItem.propTypes = {
     id: PropTypes.string,
     title: PropTypes.object,
     description: PropTypes.object
-  })
+  }).isRequired
 };
 
 export default CatalogItem;
