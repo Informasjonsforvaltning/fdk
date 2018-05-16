@@ -4,21 +4,12 @@ import no.dcat.harvester.HarvesterApplication;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.NodeIterator;
-import org.apache.jena.rdf.model.ResIterator;
-import org.apache.jena.rdf.model.Resource;
-import org.apache.jena.sparql.vocabulary.FOAF;
 import org.apache.jena.util.FileManager;
 import org.apache.jena.vocabulary.RDF;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.springframework.core.io.ClassPathResource;
 
-import java.io.File;
-import java.net.URL;
-import java.nio.file.Paths;
-
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+
 
 public class BrregAgentConverterTest {
 
@@ -46,5 +37,6 @@ public class BrregAgentConverterTest {
 		
 		assertTrue("Expected empty model", listObjectsOfProperty.toList().isEmpty());
 	}
+
 
 }
