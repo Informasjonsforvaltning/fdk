@@ -54,5 +54,15 @@ public class ForwardingCacheLoaderTest {
         String actual = app.load(url);
 
         Assert.assertThat("openStream returns TEST", actual, is("TEST") );
+
+        PowerMockito.when(connection.getResponseCode()).thenReturn(301);
+
+        actual = app.load(url);
+
+        PowerMockito.when(connection.getResponseCode()).thenReturn(307);
+
+        actual = app.load(url);
+
+
     }
 }
