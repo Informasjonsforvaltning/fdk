@@ -6,7 +6,7 @@ let defaultProps, wrapper;
 
 beforeEach(() => {
   defaultProps = {
-    input: {'name':'date','value':[]},
+    input: {"name":"date","value":"2018-05-15T12:46:34.495Z"},
     showLabel: true,
     label: 'label'
   };

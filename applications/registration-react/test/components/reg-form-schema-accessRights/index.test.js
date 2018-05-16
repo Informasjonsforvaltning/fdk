@@ -1,16 +1,18 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { FormAccessRights } from '../../../src/components/reg-form-schema-accessRights';
+import { FormAccessRights, renderLegalBasis } from '../../../src/components/reg-form-schema-accessRights';
 import helptext from '../../fixtures/helptext';
 
-let defaultProps, wrapper;
+let defaultProps, wrapper, resetFields;
 
 beforeEach(() => {
+  resetFields = jest.fn();
   const { helptextItems } = helptext;
   defaultProps = {
     syncErrors: null,
     helptextItems,
-    hasAccessRightsURI: 'hasAccessRightsURI'
+    hasAccessRightsURI: 'hasAccessRightsURI',
+    fields: [{"_isFieldArray":true,"length":1,"name":"legalBasisForRestriction"}]
   };
   wrapper = shallow(<FormAccessRights {...defaultProps} />);
 });
@@ -18,3 +20,22 @@ beforeEach(() => {
 test('should render FormAccessRights correctly', () => {
   expect(wrapper).toMatchSnapshot();
 });
+
+test('should render FormAccessRights correctly with syncErrors', () => {
+  wrapper.setProps({
+    syncErrors: {
+      accessRight: {
+        nb: 'Feil'
+      }
+    },
+    hasAccessRightsURI: 'http://publications.europa.eu/resource/authority/access-right/RESTRICTED'
+  })
+  expect(wrapper).toMatchSnapshot();
+});
+
+
+test('should render renderLegalBasis correctly', () => {
+  wrapper = shallow(renderLegalBasis(defaultProps));
+  expect(wrapper).toMatchSnapshot();
+});
+

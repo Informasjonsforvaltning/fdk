@@ -131,7 +131,7 @@ const renderLegalBasisFields = (item, index, fields, customProps) => (
   </div>
 );
 
-const renderLegalBasis = (customProps) => {
+export const renderLegalBasis = (customProps) => {
   const { fields } = customProps;
   return (
     <div>
@@ -148,10 +148,8 @@ const renderLegalBasis = (customProps) => {
 
 export const FormAccessRights = (props) => {
   const { syncErrors, helptextItems, hasAccessRightsURI } = props;
-  let accessRight = null;
-  if (syncErrors) {
-    accessRight = syncErrors.accessRight;
-  }
+  const accessRight = syncErrors ? syncErrors.accessRight : null;
+
   return (
     <form>
       <div className="form-group">
@@ -240,7 +238,7 @@ FormAccessRights.propTypes = {
 
 const selector = formValueSelector('accessRights');
 
-let FormAccessRightsSchema = reduxForm({
+const FormAccessRightsSchema = reduxForm({
   form: 'accessRights',
   validate,
   asyncValidate: _throttle(asyncValidate, 250),

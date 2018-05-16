@@ -20,7 +20,7 @@ const validate = values => {
   return errors
 }
 
-let FormConcept = (props) => {
+export const FormConcept = (props) => {
   const { syncErrors: { keyword }, helptextItems } = props;
   // if((subject.indexOf('https://') !== -1 || subject.indexOf('http://') !== -1) && !this.subjectLookupInProgress) {
   return (
@@ -52,7 +52,7 @@ let FormConcept = (props) => {
   )
 }
 
-FormConcept = reduxForm({
+const FormConceptSchema = reduxForm({
   form: 'concept',
   validate,
   asyncValidate
@@ -69,4 +69,4 @@ const mapStateToProps = ({ dataset }) => (
   }
 )
 
-export default connect(mapStateToProps)(FormConcept)
+export default connect(mapStateToProps)(FormConceptSchema)
