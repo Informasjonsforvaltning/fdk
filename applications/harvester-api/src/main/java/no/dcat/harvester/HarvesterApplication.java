@@ -41,15 +41,22 @@ public class HarvesterApplication {
                 .build(new CacheLoader<URL, String>() {
                     public String load(URL url) throws Exception {
 
+                        logger.debug("load url: {}", url);
+
                         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
+                        int response = connection.getResponseCode();
+
                         // follow redirect http -> https
-                        if (connection.getResponseCode() == HttpURLConnection.HTTP_MOVED_TEMP ||
-                                connection.getResponseCode() == HttpURLConnection.HTTP_MOVED_PERM ||
-                                connection.getResponseCode() == 307) {
+                        if (response == HttpURLConnection.HTTP_MOVED_TEMP ||
+                                response == HttpURLConnection.HTTP_MOVED_PERM ||
+                                response == 307) {
+
                             String location = connection.getHeaderField("Location");
                             location = URLDecoder.decode(location, "UTF-8");
                             connection.disconnect();
+
+                            logger.info("forward url: {} ::: {} -> {}", response, url.toString(), location);
 
                             url = new URL(location);
                         }
