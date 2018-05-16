@@ -4,7 +4,7 @@
 # The National Data Directory (Felles datakatalog)
 
 This repository contains the source code for the [National Data Directory](https://fellesdatakatalog.brreg.no) of Norway. 
-The work was funded and led by the [Brønnøysund Register Centre](https://www.brreg.no/home/) and the Data Directory was launched November 2017. 
+The work is led by the [Brønnøysund Register Centre](https://www.brreg.no/home/) and the Data Directory was launched November 2017. 
 The Data Directory contains metadata about the datasets that the various Governmental bodies maintain in their data catalogs. 
 We provide a search service that allow users to discover datasets and where they are kept. 
 The data catalogs are formatted according to the Norwegian profile [DCAT-AP-NO 1.1](https://doc.difi.no/dcat-ap-no/)
@@ -44,7 +44,7 @@ This means that you do not have to compile the project to run it. But you need d
 You need to download the following two files [docker-compose.yml](/docker-compose.yml) and
 [docker-compose.override.yml](/docker-compose.override.yml). And then you can run the following command:
 
-        `docker-compose up -d`.
+        docker-compose up -d
 
 # Modules 
 
