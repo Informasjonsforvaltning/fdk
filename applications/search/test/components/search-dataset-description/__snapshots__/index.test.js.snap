@@ -30,14 +30,14 @@ exports[`should render DatasetDescription correctly 1`] = `
       </strong>
     </span>
     <div
-      className="fdk-label fdk-label-on-grey"
+      className="fdk-label fdk-label-on-grey mr-2 mb-2"
       id="dataset-description-theme-undefined"
       key="dataset-description-theme-undefined"
     >
       Forvaltning og offentlig støtte
     </div>
     <div
-      className="fdk-label fdk-label-on-grey"
+      className="fdk-label fdk-label-on-grey mr-2 mb-2"
       id="dataset-description-theme-undefined"
       key="dataset-description-theme-undefined"
     >
@@ -90,14 +90,14 @@ exports[`should render DatasetDescription correctly 2`] = `
       </strong>
     </span>
     <div
-      className="fdk-label fdk-label-on-grey"
+      className="fdk-label fdk-label-on-grey mr-2 mb-2"
       id="dataset-description-theme-undefined"
       key="dataset-description-theme-undefined"
     >
       Forvaltning og offentlig støtte
     </div>
     <div
-      className="fdk-label fdk-label-on-grey"
+      className="fdk-label fdk-label-on-grey mr-2 mb-2"
       id="dataset-description-theme-undefined"
       key="dataset-description-theme-undefined"
     >
