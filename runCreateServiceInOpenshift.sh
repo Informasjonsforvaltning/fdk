@@ -106,14 +106,16 @@ openshiftProject=fellesdatakatalog-$environment
 if [ $environment = ppe ] || [ $environment = pp2 ]|| [ $environment = prd ]
 then
     #run on prod cluster
-    cluster=ose-pc
+    cluster=paas-prd
 else
     #run on non-prod cluster if environment is ut1, st1, st2, tt1, pp2
-    cluster=ose-npc
+    cluster=paas-nprd
 fi
 
 #configuration - ppe and prd environmens should use Altinn and Idporten prod environment
 # others, including pp2 use test environments
+# Remark: Files in conf/ directory must be copied manually into the environment
+# as they cannot be stored in the public github repository
 if [ $environment = ppe ] || [ $environment = prd ]
 then
     #point to Altinn prod environment
