@@ -51,8 +51,8 @@ const handleChange = (props, tags, changed, changedIndexes) => {
   }
 }
 
-const autosizingRenderInput = ({addTag, ...props}) => {
-  const {onChange, value, ...other} = props
+const autosizingRenderInput = ({addTag, ...componentProps}) => {
+  const {onChange, value, ...other} = componentProps
   return (
     <AutosizeInput type='text' onChange={onChange} value={value} {...other} />
   )
