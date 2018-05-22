@@ -27,18 +27,19 @@ const renderInformationModelFields = (item, index, fields, compopnentProps) => (
   </div>
 );
 
-export const renderInformationModel = (compopnentProps) => {
+export const renderInformationModel = compopnentProps => {
   const { fields } = compopnentProps;
   return (
     <div>
-      {fields && fields.map((item, index) =>
-        renderInformationModelFields(item, index, fields, compopnentProps)
-      )}
+      {fields &&
+        fields.map((item, index) =>
+          renderInformationModelFields(item, index, fields, compopnentProps)
+        )}
     </div>
   );
 };
 
-const FormInformationModel = (props) => {
+const FormInformationModel = props => {
   const { helptextItems } = props;
   return (
     <form>
@@ -46,7 +47,10 @@ const FormInformationModel = (props) => {
         {
           <div className="mt-4">
             <div className="form-group">
-              <Helptext title="Informasjonsmodell" helptextItems={helptextItems.Dataset_informationModel} />
+              <Helptext
+                title="Informasjonsmodell"
+                helptextItems={helptextItems.Dataset_informationModel}
+              />
               <FieldArray
                 name="informationModel"
                 component={renderInformationModel}
@@ -58,11 +62,11 @@ const FormInformationModel = (props) => {
         }
       </div>
     </form>
-  )
-}
+  );
+};
 
 FormInformationModel.propTypes = {
-  helptextItems: PropTypes.object.isRequired,
-}
+  helptextItems: PropTypes.object.isRequired
+};
 
-export default FormInformationModel
+export default FormInformationModel;

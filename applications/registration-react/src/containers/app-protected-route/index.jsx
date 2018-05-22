@@ -5,9 +5,7 @@ import PropTypes from 'prop-types';
 import IdleTimer from 'react-idle-timer';
 
 import localization from '../../utils/localization';
-import {
-  fetchUserIfNeeded
-} from '../../actions/index';
+import { fetchUserIfNeeded } from '../../actions/index';
 import TimeoutModal from '../../components/app-timeout-modal';
 
 class ProtectedRoute extends React.Component {
@@ -15,7 +13,7 @@ class ProtectedRoute extends React.Component {
     super(props);
     this.state = {
       showInactiveWarning: false
-    }
+    };
     this.onIdle = this.onIdle.bind(this);
     this.toggle = this.toggle.bind(this);
     this.refreshSession = this.refreshSession.bind(this);
@@ -24,7 +22,7 @@ class ProtectedRoute extends React.Component {
   onIdle() {
     this.setState({
       showInactiveWarning: true
-    })
+    });
   }
 
   toggle() {
@@ -42,7 +40,12 @@ class ProtectedRoute extends React.Component {
   }
 
   render() {
-    const { userItem, isFetchingUser, component: Component, ...props} = this.props;
+    const {
+      userItem,
+      isFetchingUser,
+      component: Component,
+      ...props
+    } = this.props;
     return (
       <IdleTimer
         element={document}
@@ -54,16 +57,17 @@ class ProtectedRoute extends React.Component {
           <span />
           <span>{localization.app.autoSave}</span>
         </div>
-        {!isFetchingUser &&
-        <Route
-          {...props}
-          render={props => (
-            (userItem && userItem.name !== '') ?
-              <Component {...props} /> :
-              <Redirect {...props} to='/loggin' />
-          )}
-        />
-        }
+        {!isFetchingUser && (
+          <Route
+            {...props}
+            render={props =>
+              userItem && userItem.name !== '' ? (
+                <Component {...props} />
+              ) : (
+                <Redirect {...props} to="/loggin" />
+              )}
+          />
+        )}
         <TimeoutModal
           modal={this.state.showInactiveWarning}
           toggle={this.toggle}
@@ -96,7 +100,7 @@ function mapStateToProps({ user }) {
   const { userItem, isFetchingUser } = user || {
     userItem: null,
     isFetchingUser: false
-  }
+  };
   return {
     userItem,
     isFetchingUser

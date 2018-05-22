@@ -18,24 +18,25 @@ const FormThemes = props => {
             component={CheckboxFieldTheme}
             themesItems={themesItems}
           />
-          {errorTheme &&
-          <div className="alert alert-danger mt-3">{errorTheme}</div>
-          }
+          {errorTheme && (
+            <div className="alert alert-danger mt-3">{errorTheme}</div>
+          )}
         </div>
       </form>
-    )
-  } return null;
-}
+    );
+  }
+  return null;
+};
 
 FormThemes.defaultProps = {
   initialValues: null,
   syncErrors: null
-}
+};
 
 FormThemes.propTypes = {
   initialValues: PropTypes.object,
   syncErrors: PropTypes.object,
-  helptextItems: PropTypes.object.isRequired,
-}
+  helptextItems: PropTypes.object.isRequired
+};
 
-export default FormThemes
+export default FormThemes;

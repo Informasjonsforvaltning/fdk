@@ -9,7 +9,7 @@ const validate = values => {
       errors = validateMinTwoChars('keyword', item.nb, errors);
     });
   }
-  return errors
-}
+  return errors;
+};
 
-export default validate
+export default validate;

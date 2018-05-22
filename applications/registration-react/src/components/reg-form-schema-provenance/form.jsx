@@ -13,14 +13,13 @@ const handleProvenanceChange = (componentProps, event, provenanceItem) => {
   // Skal fjerne fra array
   if (!event.target.checked) {
     input.onChange(null);
-  }
-  // Skal legge til array
-  else {
+  } else {
+    // Skal legge til array
     input.onChange(provenanceItem);
   }
-}
+};
 
-export const renderProvenance = (componentProps) => {
+export const renderProvenance = componentProps => {
   const { input, label, provenanceItems } = componentProps;
   let provenanceNodes;
   if (provenanceItems) {
@@ -28,38 +27,57 @@ export const renderProvenance = (componentProps) => {
       if (provenanceItems[key].code) {
         const { code } = provenanceItems[key];
         return (
-          <div
-            key={key}
-            className="form-check fdk-form-checkbox"
-          >
+          <div key={key} className="form-check fdk-form-checkbox">
             <input
               type="checkbox"
               name="provenance"
               id={provenanceItems[key].code}
               value={provenanceItems[key].code}
-              checked={(input.value && input.value.uri && input.value.uri.includes(`${provenanceItems[key].uri}`)) ? 'checked' : ''}
-              onChange={(e) => handleProvenanceChange(componentProps, e, provenanceItems[code] )}
+              checked={
+                input.value &&
+                input.value.uri &&
+                input.value.uri.includes(`${provenanceItems[key].uri}`)
+                  ? 'checked'
+                  : ''
+              }
+              onChange={e =>
+                handleProvenanceChange(
+                  componentProps,
+                  e,
+                  provenanceItems[code]
+                )}
             />
             {/* eslint-disable jsx-a11y/label-has-for */}
-            <label className="form-check-label fdk-form-check-label" htmlFor={provenanceItems[key].code} />
+            <label
+              className="form-check-label fdk-form-check-label"
+              htmlFor={provenanceItems[key].code}
+            />
             {/* eslint-enable jsx-a11y/label-has-for */}
-            <span>{provenanceItems[key].prefLabel.no || provenanceItems[key].prefLabel.nb}</span>
+            <span>
+              {provenanceItems[key].prefLabel.no ||
+                provenanceItems[key].prefLabel.nb}
+            </span>
           </div>
         );
-      } return null;
-    })
+      }
+      return null;
+    });
     return provenanceNodes;
-  } return null;
-}
+  }
+  return null;
+};
 
 const FormProvenance = props => {
-  const { helptextItems, initialValues} = props;
+  const { helptextItems, initialValues } = props;
   const { provenance, provenanceItems, frequencyItems } = initialValues;
   if (provenance) {
     return (
       <form>
         <div className="form-group">
-          <Helptext title="Opphav" helptextItems={helptextItems.Dataset_provenance} />
+          <Helptext
+            title="Opphav"
+            helptextItems={helptextItems.Dataset_provenance}
+          />
           <Field
             name="provenance"
             component={renderProvenance}
@@ -67,7 +85,10 @@ const FormProvenance = props => {
           />
         </div>
         <div className="form-group">
-          <Helptext title="Oppdateringsfrekvens" helptextItems={helptextItems.Dataset_accruralPeriodicity} />
+          <Helptext
+            title="Oppdateringsfrekvens"
+            helptextItems={helptextItems.Dataset_accruralPeriodicity}
+          />
           <Field
             name="accrualPeriodicity"
             component={SelectField}
@@ -75,7 +96,10 @@ const FormProvenance = props => {
           />
         </div>
         <div className="form-group">
-          <Helptext title="Sist oppdatert" helptextItems={helptextItems.Dataset_modified} />
+          <Helptext
+            title="Sist oppdatert"
+            helptextItems={helptextItems.Dataset_modified}
+          />
           <Field
             name="modified"
             type="text"
@@ -84,21 +108,31 @@ const FormProvenance = props => {
           />
         </div>
         <div className="form-group">
-          <Helptext title="Aktualitet" helptextItems={helptextItems.Dataset_hasQualityAnnotation_currentness} />
-          <Field name="hasCurrentnessAnnotation.hasBody.nb" component={TextAreaField} label="Aktualitet" />
+          <Helptext
+            title="Aktualitet"
+            helptextItems={
+              helptextItems.Dataset_hasQualityAnnotation_currentness
+            }
+          />
+          <Field
+            name="hasCurrentnessAnnotation.hasBody.nb"
+            component={TextAreaField}
+            label="Aktualitet"
+          />
         </div>
       </form>
-    )
-  } return null;
-}
+    );
+  }
+  return null;
+};
 
 FormProvenance.defaultProps = {
   initialValues: null
-}
+};
 
 FormProvenance.propTypes = {
   initialValues: PropTypes.object,
-  helptextItems: PropTypes.object.isRequired,
-}
+  helptextItems: PropTypes.object.isRequired
+};
 
-export default FormProvenance
+export default FormProvenance;

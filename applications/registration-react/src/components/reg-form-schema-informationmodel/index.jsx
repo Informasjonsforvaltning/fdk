@@ -10,15 +10,17 @@ const FormInformationModel = reduxForm({
   form: 'informationModel',
   validate,
   asyncValidate,
-  asyncChangeFields: [],
-})(Form)
+  asyncChangeFields: []
+})(Form);
 
-const mapStateToProps = ({ dataset }) => (
-  {
-    initialValues: {
-      informationModel: (dataset.result.informationModel && dataset.result.informationModel.length > 0) ? dataset.result.informationModel : [informationModelType],
-    }
+const mapStateToProps = ({ dataset }) => ({
+  initialValues: {
+    informationModel:
+      dataset.result.informationModel &&
+      dataset.result.informationModel.length > 0
+        ? dataset.result.informationModel
+        : [informationModelType]
   }
-)
+});
 
-export default connect(mapStateToProps)(FormInformationModel)
+export default connect(mapStateToProps)(FormInformationModel);

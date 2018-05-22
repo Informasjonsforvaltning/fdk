@@ -11,20 +11,20 @@ import SelectField from '../reg-form-field-select';
 import asyncValidate from '../../utils/asyncValidate';
 import { textType, licenseType } from '../../schemaTypes';
 
-export const renderDistributionLandingpage = (componentProps) => (
+export const renderDistributionLandingpage = componentProps => (
   <div>
-    {componentProps.fields.map((item, index) =>
-      (<Field
+    {componentProps.fields.map((item, index) => (
+      <Field
         key={index}
         name={`${item}.uri`}
         component={InputField}
         label="Landingsside"
-      />)
-    )}
+      />
+    ))}
   </div>
 );
 
-export const renderDistributions = (componentProps) => {
+export const renderDistributions = componentProps => {
   const { fields, helptextItems, openLicenseItems } = componentProps;
   return (
     <div>
@@ -36,20 +36,55 @@ export const renderDistributions = (componentProps) => {
               className="fdk-btn-no-border"
               type="button"
               title="Remove distribution"
-              onClick={() => {fields.remove(index); asyncValidate(fields.getAll(), null, componentProps, `remove_distribution_${index}`);}}
+              onClick={() => {
+                fields.remove(index);
+                asyncValidate(
+                  fields.getAll(),
+                  null,
+                  componentProps,
+                  `remove_distribution_${index}`
+                );
+              }}
             >
               <i className="fa fa-trash mr-2" />
-                Slett distribusjon
+              Slett distribusjon
             </button>
           </div>
           <div className="form-group">
-            <Helptext title="Type" helptextItems={helptextItems.Dataset_distribution} />
-            <Field name={`${distribution}.type`} radioId={`distribution-api-${index}`} component={RadioField} type="radio" value="API" label="API"  />
-            <Field name={`${distribution}.type`} radioId={`distribution-feed-${index}`}  component={RadioField} type="radio" value="Feed" label="Feed"  />
-            <Field name={`${distribution}.type`} radioId={`distribution-file-${index}`} component={RadioField} type="radio" value="Nedlastbar fil" label="Nedlastbar fil" />
+            <Helptext
+              title="Type"
+              helptextItems={helptextItems.Dataset_distribution}
+            />
+            <Field
+              name={`${distribution}.type`}
+              radioId={`distribution-api-${index}`}
+              component={RadioField}
+              type="radio"
+              value="API"
+              label="API"
+            />
+            <Field
+              name={`${distribution}.type`}
+              radioId={`distribution-feed-${index}`}
+              component={RadioField}
+              type="radio"
+              value="Feed"
+              label="Feed"
+            />
+            <Field
+              name={`${distribution}.type`}
+              radioId={`distribution-file-${index}`}
+              component={RadioField}
+              type="radio"
+              value="Nedlastbar fil"
+              label="Nedlastbar fil"
+            />
           </div>
           <div className="form-group">
-            <Helptext title="Tilgangs URL" helptextItems={helptextItems.Distribution_accessURL} />
+            <Helptext
+              title="Tilgangs URL"
+              helptextItems={helptextItems.Distribution_accessURL}
+            />
             <Field
               name={`${distribution}.accessURL.0`}
               type="text"
@@ -58,7 +93,10 @@ export const renderDistributions = (componentProps) => {
             />
           </div>
           <div className="form-group">
-            <Helptext title="Format" helptextItems={helptextItems.Distribution_format} />
+            <Helptext
+              title="Format"
+              helptextItems={helptextItems.Distribution_format}
+            />
             <Field
               name={`${distribution}.format`}
               type="text"
@@ -67,7 +105,10 @@ export const renderDistributions = (componentProps) => {
             />
           </div>
           <div className="form-group">
-            <Helptext title="Lisens" helptextItems={helptextItems.Distribution_modified} />
+            <Helptext
+              title="Lisens"
+              helptextItems={helptextItems.Distribution_modified}
+            />
             <Field
               name={`${distribution}.license`}
               component={SelectField}
@@ -75,8 +116,15 @@ export const renderDistributions = (componentProps) => {
             />
           </div>
           <div className="form-group">
-            <Helptext title="Beskrivelse" helptextItems={helptextItems.Distribution_description} />
-            <Field name={`${distribution}.description.nb`} component={TextAreaField} label="Beskrivelse" />
+            <Helptext
+              title="Beskrivelse"
+              helptextItems={helptextItems.Distribution_description}
+            />
+            <Field
+              name={`${distribution}.description.nb`}
+              component={TextAreaField}
+              label="Beskrivelse"
+            />
           </div>
 
           <div className="form-group">
@@ -98,22 +146,31 @@ export const renderDistributions = (componentProps) => {
             />
             <div className="d-flex">
               <div className="w-50">
-                <Field name={`${distribution}.conformsTo[0].prefLabel.nb`} component={InputField} showLabel label="Tittel" />
+                <Field
+                  name={`${distribution}.conformsTo[0].prefLabel.nb`}
+                  component={InputField}
+                  showLabel
+                  label="Tittel"
+                />
               </div>
               <div className="w-50">
-                <Field name={`${distribution}.conformsTo[0].uri`} component={InputField} showLabel label="Lenke" />
+                <Field
+                  name={`${distribution}.conformsTo[0].uri`}
+                  component={InputField}
+                  showLabel
+                  label="Lenke"
+                />
               </div>
             </div>
           </div>
           <hr />
         </div>
-      )
-      )}
+      ))}
       <button
         className="fdk-btn-no-border"
         type="button"
-        onClick={() => fields.push(
-          {
+        onClick={() =>
+          fields.push({
             id: '',
             description: textType,
             accessURL: [],
@@ -122,15 +179,14 @@ export const renderDistributions = (componentProps) => {
             page: [licenseType],
             format: [],
             type: ''
-          }
-        )}
+          })}
       >
         <i className="fa fa-plus mr-2" />
         Legg til distribusjon
       </button>
     </div>
   );
-}
+};
 
 export const FormDistribution = props => {
   const { helptextItems, initialValues } = props;
@@ -144,15 +200,15 @@ export const FormDistribution = props => {
         openLicenseItems={openLicenseItems}
       />
     </form>
-  )
-}
+  );
+};
 
 FormDistribution.defaultProps = {
-  initialValues: null,
-}
+  initialValues: null
+};
 FormDistribution.propTypes = {
   initialValues: PropTypes.object.isRequired,
-  helptextItems: PropTypes.object.isRequired,
-}
+  helptextItems: PropTypes.object.isRequired
+};
 
-export default FormDistribution
+export default FormDistribution;

@@ -33,19 +33,22 @@ const renderTemporalFields = (item, index, fields, componentProps) => (
         className="fdk-btn-no-border"
         type="button"
         title="Remove temporal"
-        onClick={
-          () => {
-            if (fields.length === 1) {
-              fields.remove(index);
-              fields.push({});
-            }
-
-            if (fields.length > 1) {
-              fields.remove(index);
-            }
-            asyncValidate(fields.getAll(), null, componentProps, `remove_temporal_${index}`);
+        onClick={() => {
+          if (fields.length === 1) {
+            fields.remove(index);
+            fields.push({});
           }
-        }
+
+          if (fields.length > 1) {
+            fields.remove(index);
+          }
+          asyncValidate(
+            fields.getAll(),
+            null,
+            componentProps,
+            `remove_temporal_${index}`
+          );
+        }}
       >
         <i className="fa fa-trash mr-2" />
       </button>
@@ -53,15 +56,20 @@ const renderTemporalFields = (item, index, fields, componentProps) => (
   </div>
 );
 
-export const renderTemporal = (componentProps) => {
+export const renderTemporal = componentProps => {
   const { fields } = componentProps;
 
   return (
     <div>
-      {fields && fields.map((item, index) =>
-        renderTemporalFields(item, index, fields, componentProps)
-      )}
-      <button className="fdk-btn-no-border" type="button" onClick={() => fields.push({})}>
+      {fields &&
+        fields.map((item, index) =>
+          renderTemporalFields(item, index, fields, componentProps)
+        )}
+      <button
+        className="fdk-btn-no-border"
+        type="button"
+        onClick={() => fields.push({})}
+      >
         <i className="fa fa-plus mr-2" />
         Legg til tidsperiode
       </button>
@@ -71,11 +79,14 @@ export const renderTemporal = (componentProps) => {
 
 const FormSpatial = props => {
   const { helptextItems, initialValues } = props;
-  if (initialValues ) {
+  if (initialValues) {
     return (
       <form>
         <div className="form-group">
-          <Helptext title="Geografisk avgrensning" helptextItems={helptextItems.Dataset_spatial} />
+          <Helptext
+            title="Geografisk avgrensning"
+            helptextItems={helptextItems.Dataset_spatial}
+          />
           <Field
             name="spatial"
             type="text"
@@ -85,14 +96,17 @@ const FormSpatial = props => {
           />
         </div>
         <div className="form-group">
-          <Helptext title="Tidsmessig avgrenset til" helptextItems={helptextItems.Dataset_temporal} />
-          <FieldArray
-            name="temporal"
-            component={renderTemporal}
+          <Helptext
+            title="Tidsmessig avgrenset til"
+            helptextItems={helptextItems.Dataset_temporal}
           />
+          <FieldArray name="temporal" component={renderTemporal} />
         </div>
         <div className="form-group">
-          <Helptext title="Utgivelsesdato" helptextItems={helptextItems.Dataset_issued} />
+          <Helptext
+            title="Utgivelsesdato"
+            helptextItems={helptextItems.Dataset_issued}
+          />
           <Field
             name="issued"
             type="text"
@@ -101,25 +115,25 @@ const FormSpatial = props => {
           />
         </div>
         <div className="form-group">
-          <Helptext title="Språk" helptextItems={helptextItems.Dataset_language} />
-          <Field
-            name="language"
-            component={CheckboxField}
+          <Helptext
+            title="Språk"
+            helptextItems={helptextItems.Dataset_language}
           />
+          <Field name="language" component={CheckboxField} />
         </div>
-
       </form>
-    )
-  } return null;
-}
+    );
+  }
+  return null;
+};
 
 FormSpatial.defaultProps = {
   initialValues: null
-}
+};
 
 FormSpatial.propTypes = {
   initialValues: PropTypes.object,
-  helptextItems: PropTypes.object.isRequired,
-}
+  helptextItems: PropTypes.object.isRequired
+};
 
-export default FormSpatial
+export default FormSpatial;

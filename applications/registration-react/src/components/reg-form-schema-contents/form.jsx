@@ -29,26 +29,30 @@ export const renderStandardFields = (item, index, fields, fieldProps) => (
 );
 
 // At the moment, support only one standard entry
-export const renderStandard = (fieldProps) => {
+export const renderStandard = fieldProps => {
   const { fields } = fieldProps;
   return (
     <div>
-      {fields && fields.map((item, index) =>
-        renderStandardFields(item, index, fields, fieldProps)
-      )}
+      {fields &&
+        fields.map((item, index) =>
+          renderStandardFields(item, index, fields, fieldProps)
+        )}
     </div>
   );
 };
 
-export const FormContentsComponent = (props) => {
-  const {helptextItems} = props;
+export const FormContentsComponent = props => {
+  const { helptextItems } = props;
   return (
     <form>
       <div className="form-group">
         {
           <div className="mt-4">
             <div className="form-group">
-              <Helptext title="Standard" helptextItems={helptextItems.Dataset_conformsTo} />
+              <Helptext
+                title="Standard"
+                helptextItems={helptextItems.Dataset_conformsTo}
+              />
               <FieldArray
                 name="conformsTo"
                 component={renderStandard}
@@ -60,27 +64,59 @@ export const FormContentsComponent = (props) => {
         }
       </div>
       <div className="form-group">
-        <Helptext title="Relevans" helptextItems={helptextItems.Dataset_hasQualityAnnotation_relevance} />
-        <Field name="hasRelevanceAnnotation.hasBody.nb" component={TextAreaField} label="Relevans" />
+        <Helptext
+          title="Relevans"
+          helptextItems={helptextItems.Dataset_hasQualityAnnotation_relevance}
+        />
+        <Field
+          name="hasRelevanceAnnotation.hasBody.nb"
+          component={TextAreaField}
+          label="Relevans"
+        />
       </div>
       <div className="form-group">
-        <Helptext title="Kompletthet" helptextItems={helptextItems.Dataset_hasQualityAnnotation_completeness} />
-        <Field name="hasCompletenessAnnotation.hasBody.nb" component={TextAreaField} label="Kompletthet" />
+        <Helptext
+          title="Kompletthet"
+          helptextItems={
+            helptextItems.Dataset_hasQualityAnnotation_completeness
+          }
+        />
+        <Field
+          name="hasCompletenessAnnotation.hasBody.nb"
+          component={TextAreaField}
+          label="Kompletthet"
+        />
       </div>
       <div className="form-group">
-        <Helptext title="Nøyaktighet" helptextItems={helptextItems.Dataset_hasQualityAnnotation_accuracy} />
-        <Field name="hasAccuracyAnnotation.hasBody.nb" component={TextAreaField} label="Nøyaktighet" />
+        <Helptext
+          title="Nøyaktighet"
+          helptextItems={helptextItems.Dataset_hasQualityAnnotation_accuracy}
+        />
+        <Field
+          name="hasAccuracyAnnotation.hasBody.nb"
+          component={TextAreaField}
+          label="Nøyaktighet"
+        />
       </div>
       <div className="form-group">
-        <Helptext title="Tilgjengelighet" helptextItems={helptextItems.Dataset_hasQualityAnnotation_availability} />
-        <Field name="hasAvailabilityAnnotation.hasBody.nb" component={TextAreaField} label="Tilgjengelighet" />
+        <Helptext
+          title="Tilgjengelighet"
+          helptextItems={
+            helptextItems.Dataset_hasQualityAnnotation_availability
+          }
+        />
+        <Field
+          name="hasAvailabilityAnnotation.hasBody.nb"
+          component={TextAreaField}
+          label="Tilgjengelighet"
+        />
       </div>
     </form>
-  )
-}
+  );
+};
 
 FormContentsComponent.propTypes = {
   helptextItems: PropTypes.object.isRequired
-}
+};
 
-export default FormContentsComponent
+export default FormContentsComponent;

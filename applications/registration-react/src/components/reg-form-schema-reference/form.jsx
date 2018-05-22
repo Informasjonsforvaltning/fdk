@@ -6,7 +6,14 @@ import Helptext from '../reg-form-helptext';
 import SelectField from '../reg-form-field-select';
 import asyncValidate from '../../utils/asyncValidate';
 
-const renderReferenceFields = (item, index, fields, componentProps, referenceTypesItems, referenceDatasetsItems) => (
+const renderReferenceFields = (
+  item,
+  index,
+  fields,
+  componentProps,
+  referenceTypesItems,
+  referenceDatasetsItems
+) => (
   <div className="d-flex mb-2" key={index}>
     <div className="w-50">
       <Field
@@ -27,19 +34,22 @@ const renderReferenceFields = (item, index, fields, componentProps, referenceTyp
         className="fdk-btn-no-border"
         type="button"
         title="Remove temporal"
-        onClick={
-          () => {
-            if (fields.length === 1) {
-              fields.remove(index);
-              fields.push({});
-            }
-
-            if (fields.length > 1) {
-              fields.remove(index);
-            }
-            asyncValidate(fields.getAll(), null, componentProps, `remove_references_${index}`);
+        onClick={() => {
+          if (fields.length === 1) {
+            fields.remove(index);
+            fields.push({});
           }
-        }
+
+          if (fields.length > 1) {
+            fields.remove(index);
+          }
+          asyncValidate(
+            fields.getAll(),
+            null,
+            componentProps,
+            `remove_references_${index}`
+          );
+        }}
       >
         <i className="fa fa-trash mr-2" />
       </button>
@@ -47,14 +57,30 @@ const renderReferenceFields = (item, index, fields, componentProps, referenceTyp
   </div>
 );
 
-export const renderReference = (componentProps) => {
-  const { fields, referenceTypesItems, referenceDatasetsItems } = componentProps;
+export const renderReference = componentProps => {
+  const {
+    fields,
+    referenceTypesItems,
+    referenceDatasetsItems
+  } = componentProps;
   return (
     <div>
-      {fields && fields.map((item, index) =>
-        renderReferenceFields(item, index, fields, componentProps, referenceTypesItems, referenceDatasetsItems)
-      )}
-      <button className="fdk-btn-no-border" type="button" onClick={() => fields.push({})}>
+      {fields &&
+        fields.map((item, index) =>
+          renderReferenceFields(
+            item,
+            index,
+            fields,
+            componentProps,
+            referenceTypesItems,
+            referenceDatasetsItems
+          )
+        )}
+      <button
+        className="fdk-btn-no-border"
+        type="button"
+        onClick={() => fields.push({})}
+      >
         <i className="fa fa-plus mr-2" />
         Legg til relaterte datasett
       </button>
@@ -65,11 +91,14 @@ export const renderReference = (componentProps) => {
 const FormReference = props => {
   const { helptextItems, initialValues } = props;
   const { referenceTypesItems, referenceDatasetsItems } = initialValues;
-  if (initialValues ) {
+  if (initialValues) {
     return (
       <form>
         <div className="form-group">
-          <Helptext title="Relasjoner" helptextItems={helptextItems.Dataset_relation} />
+          <Helptext
+            title="Relasjoner"
+            helptextItems={helptextItems.Dataset_relation}
+          />
           <FieldArray
             name="references"
             component={renderReference}
@@ -78,17 +107,18 @@ const FormReference = props => {
           />
         </div>
       </form>
-    )
-  } return null;
-}
+    );
+  }
+  return null;
+};
 
 FormReference.defaultProps = {
   initialValues: null
-}
+};
 
 FormReference.propTypes = {
   initialValues: PropTypes.object,
-  helptextItems: PropTypes.object.isRequired,
-}
+  helptextItems: PropTypes.object.isRequired
+};
 
-export default FormReference
+export default FormReference;

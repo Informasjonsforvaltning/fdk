@@ -1,10 +1,8 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import {
-  fetchUserIfNeeded
-} from '../../actions/index';
+import { fetchUserIfNeeded } from '../../actions/index';
 import '../../assets/style/main.scss';
 
 class App extends Component {
@@ -12,16 +10,14 @@ class App extends Component {
     super(props);
     this.props.dispatch(fetchUserIfNeeded());
   }
-  render () {
+  render() {
     const { userItem } = this.props;
     return (
       <div className="site-content">
         {this.props.children}
-        {!userItem &&
-        <div>Logg inn</div>
-        }
+        {!userItem && <div>Logg inn</div>}
       </div>
-    )
+    );
   }
 }
 
@@ -39,7 +35,7 @@ App.propTypes = {
 function mapStateToProps({ user }) {
   const { userItem } = user || {
     userItem: null
-  }
+  };
 
   return {
     userItem

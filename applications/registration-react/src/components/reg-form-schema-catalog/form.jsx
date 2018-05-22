@@ -39,14 +39,11 @@ class FormCatalog extends React.Component {
       {
         'fdk-reg_collapse_open': this.state.collapse
       }
-    )
-
-    const fieldClass = cx(
-      'fdk-title-input',
-      {
-        'w-100': this.state.collapseTitle
-      }
     );
+
+    const fieldClass = cx('fdk-title-input', {
+      'w-100': this.state.collapseTitle
+    });
 
     return (
       <form className="mb-5 fdk-reg-catalogs">
@@ -54,55 +51,70 @@ class FormCatalog extends React.Component {
           <Field name="id" component={InputField} label="Beskrivelse" />
         </div>
         <div className="d-flex align-items-center justify-content-between">
-          {title && title.nb && !this.state.collapseTitle &&
-          <h1 className="w-75 fdk-text-strong">
-            {title.nb}
-          </h1>
-          }
+          {title &&
+            title.nb &&
+            !this.state.collapseTitle && (
+              <h1 className="w-75 fdk-text-strong">{title.nb}</h1>
+            )}
           <div className={fieldClass}>
-            <Field name="title.nb" component={InputTitleField} label="Tittel" hideInput={this.state.collapseTitle} onToggleTitle={this.toggleTitle} />
+            <Field
+              name="title.nb"
+              component={InputTitleField}
+              label="Tittel"
+              hideInput={this.state.collapseTitle}
+              onToggleTitle={this.toggleTitle}
+            />
           </div>
         </div>
 
-        {publisher && publisher.name &&
-        <div className="fdk-reg-datasets-publisher mt-2 mb-4">
-          Eies av {publisher.name}
-        </div>
-        }
+        {publisher &&
+          publisher.name && (
+            <div className="fdk-reg-datasets-publisher mt-2 mb-4">
+              Eies av {publisher.name}
+            </div>
+          )}
 
         <div className={collapseClass}>
           <div className="d-flex justify-content-between w-100">
-            <div className="d-flex fdk-color1">
-              {values.description.nb}
-            </div>
-            <button onClick={(e) => {e.preventDefault(); this.toggleDescription();}}>
+            <div className="d-flex fdk-color1">{values.description.nb}</div>
+            <button
+              onClick={e => {
+                e.preventDefault();
+                this.toggleDescription();
+              }}
+            >
               <i className="fa fa-pencil mr-2" />
               Rediger beskrivelse
             </button>
           </div>
-          <Collapse
-            className="mt-3"
-            isOpen={this.state.collapse}
-          >
+          <Collapse className="mt-3" isOpen={this.state.collapse}>
             <div className="form-group">
-              <Helptext title="Beskrivelse" required helptextItems={helptextItems.Catalog_title} />
-              <Field name="description.nb" component={TextAreaField} label="Beskrivelse" />
+              <Helptext
+                title="Beskrivelse"
+                required
+                helptextItems={helptextItems.Catalog_title}
+              />
+              <Field
+                name="description.nb"
+                component={TextAreaField}
+                label="Beskrivelse"
+              />
             </div>
           </Collapse>
         </div>
       </form>
-    )
+    );
   }
 }
 
 FormCatalog.defaultProps = {
   initialValues: null,
   values: null
-}
+};
 FormCatalog.propTypes = {
   helptextItems: PropTypes.object.isRequired,
   initialValues: PropTypes.object,
   values: PropTypes.object
-}
+};
 
-export default FormCatalog
+export default FormCatalog;

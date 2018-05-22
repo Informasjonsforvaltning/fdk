@@ -1,6 +1,13 @@
-import { DATASETS_REQUEST, DATASETS_SUCCESS, DATASETS_FAILURE } from '../constants/ActionTypes';
+import {
+  DATASETS_REQUEST,
+  DATASETS_SUCCESS,
+  DATASETS_FAILURE
+} from '../constants/ActionTypes';
 
-export default function datasets(state = { isFetchingDatasets: false, datasetItems: null }, action) {
+export default function datasets(
+  state = { isFetchingDatasets: false, datasetItems: null },
+  action
+) {
   switch (action.type) {
     case DATASETS_REQUEST:
       return {
@@ -12,7 +19,7 @@ export default function datasets(state = { isFetchingDatasets: false, datasetIte
         ...state,
         isFetchingDatasets: false,
         datasetItems: action.response.data
-      }
+      };
     case DATASETS_FAILURE:
       return {
         ...state,

@@ -1,10 +1,10 @@
-import { validateAtLeastRequired} from '../../validation/validation';
+import { validateAtLeastRequired } from '../../validation/validation';
 
 const validate = values => {
-  let errors = {}
+  let errors = {};
   const { theme } = values;
   errors = validateAtLeastRequired('errorTheme', theme, 1, errors, false);
-  return errors
-}
+  return errors;
+};
 
-export default validate
+export default validate;

@@ -11,37 +11,33 @@ import { textType, licenseType } from '../../schemaTypes';
 const FormSample = reduxForm({
   form: 'sample',
   validate,
-  asyncValidate: _throttle(asyncValidate, 250),
-})(Form)
+  asyncValidate: _throttle(asyncValidate, 250)
+})(Form);
 
 const sampleTypes = values => {
-  let samples  = null;
+  let samples = null;
   if (values && values.length > 0) {
-    samples = values.map(item => (
-      {
-        id: item.id ? item.id : '',
-        description: item.description ? item.description : textType,
-        accessURL: item.accessURL ? item.accessURL : [],
-        license: item.license ? item.license : licenseType,
-        conformsTo: item.conformsTo ? item.conformsTo : [],
-        page: (item.page && item.page.length > 0) ? item.page : [{}],
-        format: item.format ? item.format : [],
-        type: item.type ? item.type : ''
-      }
-    ))
+    samples = values.map(item => ({
+      id: item.id ? item.id : '',
+      description: item.description ? item.description : textType,
+      accessURL: item.accessURL ? item.accessURL : [],
+      license: item.license ? item.license : licenseType,
+      conformsTo: item.conformsTo ? item.conformsTo : [],
+      page: item.page && item.page.length > 0 ? item.page : [{}],
+      format: item.format ? item.format : [],
+      type: item.type ? item.type : ''
+    }));
   } else {
-    samples = []
+    samples = [];
   }
   return samples;
-}
+};
 
-const mapStateToProps = ({ dataset, openlicenses }) => (
-  {
-    initialValues: {
-      sample: sampleTypes(dataset.result.sample) || [{}],
-      openLicenseItems: openlicenses.openLicenseItems
-    }
+const mapStateToProps = ({ dataset, openlicenses }) => ({
+  initialValues: {
+    sample: sampleTypes(dataset.result.sample) || [{}],
+    openLicenseItems: openlicenses.openLicenseItems
   }
-)
+});
 
-export default connect(mapStateToProps)(FormSample)
+export default connect(mapStateToProps)(FormSample);

@@ -12,11 +12,11 @@ import { legalBasisType } from '../../schemaTypes';
 /*
  Resets fields when radio button "Offentlig" is chosen.
  */
-const resetFields = (props) => {
+const resetFields = props => {
   props.change('legalBasisForRestriction', [legalBasisType]);
   props.change('legalBasisForProcessing', [legalBasisType]);
   props.change('legalBasisForAccess', [legalBasisType]);
-}
+};
 
 const renderLegalBasisFields = (item, index, fields, customProps) => (
   <div className="d-flex mb-2" key={index}>
@@ -41,19 +41,22 @@ const renderLegalBasisFields = (item, index, fields, customProps) => (
         className="fdk-btn-no-border"
         type="button"
         title="Remove temporal"
-        onClick={
-          () => {
-            if (fields.length === 1) {
-              fields.remove(index);
-              fields.push({});
-            }
-
-            if (fields.length > 1) {
-              fields.remove(index);
-            }
-            asyncValidate(fields.getAll(), customProps.dispatch, customProps, `remove_${fields.name}_${index}`);
+        onClick={() => {
+          if (fields.length === 1) {
+            fields.remove(index);
+            fields.push({});
           }
-        }
+
+          if (fields.length > 1) {
+            fields.remove(index);
+          }
+          asyncValidate(
+            fields.getAll(),
+            customProps.dispatch,
+            customProps,
+            `remove_${fields.name}_${index}`
+          );
+        }}
       >
         <i className="fa fa-trash mr-2" />
       </button>
@@ -61,14 +64,19 @@ const renderLegalBasisFields = (item, index, fields, customProps) => (
   </div>
 );
 
-export const renderLegalBasis = (customProps) => {
+export const renderLegalBasis = customProps => {
   const { fields } = customProps;
   return (
     <div>
-      {fields && fields.map((item, index) =>
-        renderLegalBasisFields(item, index, fields, customProps)
-      )}
-      <button className="fdk-btn-no-border" type="button" onClick={() => fields.push({})}>
+      {fields &&
+        fields.map((item, index) =>
+          renderLegalBasisFields(item, index, fields, customProps)
+        )}
+      <button
+        className="fdk-btn-no-border"
+        type="button"
+        onClick={() => fields.push({})}
+      >
         <i className="fa fa-plus mr-2" />
         Legg til
       </button>
@@ -76,14 +84,17 @@ export const renderLegalBasis = (customProps) => {
   );
 };
 
-export const FormAccessRights = (props) => {
+export const FormAccessRights = props => {
   const { syncErrors, helptextItems, hasAccessRightsURI } = props;
   const accessRight = syncErrors ? syncErrors.accessRight : null;
 
   return (
     <form>
       <div className="form-group">
-        <Helptext title="Tilgangsnivå" helptextItems={helptextItems.Dataset_distribution} />
+        <Helptext
+          title="Tilgangsnivå"
+          helptextItems={helptextItems.Dataset_distribution}
+        />
         <Field
           name="accessRights.uri"
           radioId="accessRight-public"
@@ -110,59 +121,93 @@ export const FormAccessRights = (props) => {
           label="Unntatt offentlighet"
         />
 
-        {accessRight &&
-        <div className="alert alert-danger mt-3">{accessRight.nb}</div>
-        }
+        {accessRight && (
+          <div className="alert alert-danger mt-3">{accessRight.nb}</div>
+        )}
 
-        {
-          (hasAccessRightsURI === 'http://publications.europa.eu/resource/authority/access-right/RESTRICTED' ||
-            hasAccessRightsURI === 'http://publications.europa.eu/resource/authority/access-right/NON_PUBLIC'
-          ) && (
-            <div className="mt-4">
-              <div className="form-group">
-                <Helptext title={localization.schema.accessRights.legalBasisForRestriction.heading} helptextItems={helptextItems.Dataset_legalBasisForRestriction} />
-                <FieldArray
-                  name="legalBasisForRestriction"
-                  component={renderLegalBasis}
-                  titleLabel={localization.schema.accessRights.legalBasisForRestriction.titleLabel}
-                  linkLabel={localization.schema.accessRights.legalBasisForRestriction.linkLabel}
-                />
-              </div>
-
-              <div className="form-group">
-                <Helptext title={localization.schema.accessRights.legalBasisForProcessing.heading} helptextItems={helptextItems.Dataset_legalBasisForProcessing} />
-                <FieldArray
-                  name="legalBasisForProcessing"
-                  component={renderLegalBasis}
-                  titleLabel={localization.schema.accessRights.legalBasisForProcessing.titleLabel}
-                  linkLabel={localization.schema.accessRights.legalBasisForProcessing.linkLabel}
-                />
-              </div>
-
-              <div className="form-group">
-                <Helptext title={localization.schema.accessRights.legalBasisForAccess.heading} helptextItems={helptextItems.Dataset_legalBasisForAccess} />
-                <FieldArray
-                  name="legalBasisForAccess"
-                  component={renderLegalBasis}
-                  titleLabel={localization.schema.accessRights.legalBasisForAccess.titleLabel}
-                  linkLabel={localization.schema.accessRights.legalBasisForAccess.linkLabel}
-                />
-              </div>
+        {(hasAccessRightsURI ===
+          'http://publications.europa.eu/resource/authority/access-right/RESTRICTED' ||
+          hasAccessRightsURI ===
+            'http://publications.europa.eu/resource/authority/access-right/NON_PUBLIC') && (
+          <div className="mt-4">
+            <div className="form-group">
+              <Helptext
+                title={
+                  localization.schema.accessRights.legalBasisForRestriction
+                    .heading
+                }
+                helptextItems={helptextItems.Dataset_legalBasisForRestriction}
+              />
+              <FieldArray
+                name="legalBasisForRestriction"
+                component={renderLegalBasis}
+                titleLabel={
+                  localization.schema.accessRights.legalBasisForRestriction
+                    .titleLabel
+                }
+                linkLabel={
+                  localization.schema.accessRights.legalBasisForRestriction
+                    .linkLabel
+                }
+              />
             </div>
-          )}
+
+            <div className="form-group">
+              <Helptext
+                title={
+                  localization.schema.accessRights.legalBasisForProcessing
+                    .heading
+                }
+                helptextItems={helptextItems.Dataset_legalBasisForProcessing}
+              />
+              <FieldArray
+                name="legalBasisForProcessing"
+                component={renderLegalBasis}
+                titleLabel={
+                  localization.schema.accessRights.legalBasisForProcessing
+                    .titleLabel
+                }
+                linkLabel={
+                  localization.schema.accessRights.legalBasisForProcessing
+                    .linkLabel
+                }
+              />
+            </div>
+
+            <div className="form-group">
+              <Helptext
+                title={
+                  localization.schema.accessRights.legalBasisForAccess.heading
+                }
+                helptextItems={helptextItems.Dataset_legalBasisForAccess}
+              />
+              <FieldArray
+                name="legalBasisForAccess"
+                component={renderLegalBasis}
+                titleLabel={
+                  localization.schema.accessRights.legalBasisForAccess
+                    .titleLabel
+                }
+                linkLabel={
+                  localization.schema.accessRights.legalBasisForAccess.linkLabel
+                }
+              />
+            </div>
+          </div>
+        )}
       </div>
     </form>
-  )
-}
+  );
+};
 
 FormAccessRights.defaultProps = {
   syncErrors: null,
   hasAccessRightsURI: null
-}
+};
 FormAccessRights.propTypes = {
   syncErrors: PropTypes.object,
   helptextItems: PropTypes.object.isRequired,
   hasAccessRightsURI: PropTypes.string
-}
+};
 
-export default FormAccessRights
+export default FormAccessRights;

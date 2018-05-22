@@ -9,17 +9,23 @@ const FormConcept = reduxForm({
   form: 'concept',
   validate,
   asyncValidate
-})(connect(state => ({
-  syncErrors: getFormSyncErrors("concept")(state)
-}))(Form));
+})(
+  connect(state => ({
+    syncErrors: getFormSyncErrors('concept')(state)
+  }))(Form)
+);
 
-const mapStateToProps = ({ dataset }) => (
-  {
-    initialValues: {
-      subject: (dataset.result.subject && dataset.result.subject.length > 0) ? dataset.result.subject : [],
-      keyword: (dataset.result.keyword && dataset.result.keyword.length > 0) ? dataset.result.keyword : []
-    }
+const mapStateToProps = ({ dataset }) => ({
+  initialValues: {
+    subject:
+      dataset.result.subject && dataset.result.subject.length > 0
+        ? dataset.result.subject
+        : [],
+    keyword:
+      dataset.result.keyword && dataset.result.keyword.length > 0
+        ? dataset.result.keyword
+        : []
   }
-)
+});
 
-export default connect(mapStateToProps)(FormConcept)
+export default connect(mapStateToProps)(FormConcept);

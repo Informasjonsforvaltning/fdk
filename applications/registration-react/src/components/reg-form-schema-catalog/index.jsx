@@ -14,21 +14,34 @@ const FormCatalog = reduxForm({
   validate,
   shouldAsyncValidate,
   asyncValidate,
-  asyncChangeFields: [],
-})(connect(state => ({
-  values: getFormValues('catalog')(state)
-}))(Form));
+  asyncChangeFields: []
+})(
+  connect(state => ({
+    values: getFormValues('catalog')(state)
+  }))(Form)
+);
 
-const mapStateToProps = ({ catalog }) => (
-  {
-    initialValues: {
-      id: (catalog.catalogItem.id && catalog.catalogItem.id.length > 0) ? catalog.catalogItem.id : '',
-      title: (catalog.catalogItem.title && catalog.catalogItem.title.nb && catalog.catalogItem.title.nb.length > 0) ? catalog.catalogItem.title : textType,
-      description: (catalog.catalogItem.description && catalog.catalogItem.description.nb && catalog.catalogItem.description.nb.length > 0) ? catalog.catalogItem.description : textType,
-      publisher: catalog.catalogItem.publisher
-    }
+const mapStateToProps = ({ catalog }) => ({
+  initialValues: {
+    id:
+      catalog.catalogItem.id && catalog.catalogItem.id.length > 0
+        ? catalog.catalogItem.id
+        : '',
+    title:
+      catalog.catalogItem.title &&
+      catalog.catalogItem.title.nb &&
+      catalog.catalogItem.title.nb.length > 0
+        ? catalog.catalogItem.title
+        : textType,
+    description:
+      catalog.catalogItem.description &&
+      catalog.catalogItem.description.nb &&
+      catalog.catalogItem.description.nb.length > 0
+        ? catalog.catalogItem.description
+        : textType,
+    publisher: catalog.catalogItem.publisher
   }
-)
+});
 
-export default connect(mapStateToProps)(FormCatalog)
+export default connect(mapStateToProps)(FormCatalog);
 /* eslint-enable no-class-assign */

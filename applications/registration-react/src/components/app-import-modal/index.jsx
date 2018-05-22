@@ -64,18 +64,32 @@ export default class AppImportModal extends React.Component {
             <div className="d-flex flex-column align-items-center mt-5">
               <label className="fdk-form-label w-100" htmlFor="importURL">
                 {setURL}
-                <input id="importURL" className="form-control" type="input" onChange={(e) => this.handleChangeURL(e)} />
+                <input
+                  id="importURL"
+                  className="form-control"
+                  type="input"
+                  onChange={e => this.handleChangeURL(e)}
+                />
               </label>
-              {this.state.errorMsg &&
-              <div className="alert alert-danger mt-3 w-100">{this.state.errorMsg}</div>
-              }
+              {this.state.errorMsg && (
+                <div className="alert alert-danger mt-3 w-100">
+                  {this.state.errorMsg}
+                </div>
+              )}
             </div>
           </ModalBody>
-          <ModalFooter
-            className="d-flex justify-content-center"
-          >
-            <Button color="danger" onClick={() => this.onBtnConfirm()}>{btnConfirm}</Button>
-            <Button color="primary" onClick={() => {this.onBtnCancel()}}>{btnCancel}</Button>
+          <ModalFooter className="d-flex justify-content-center">
+            <Button color="danger" onClick={() => this.onBtnConfirm()}>
+              {btnConfirm}
+            </Button>
+            <Button
+              color="primary"
+              onClick={() => {
+                this.onBtnCancel();
+              }}
+            >
+              {btnCancel}
+            </Button>
           </ModalFooter>
           <ModalFooter />
         </Modal>

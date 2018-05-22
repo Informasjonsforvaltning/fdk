@@ -11,21 +11,21 @@ import SelectField from '../reg-form-field-select';
 import asyncValidate from '../../utils/asyncValidate';
 import { textType, licenseType } from '../../schemaTypes';
 
-const renderSampleLandingpage = (componentProps) => (
+const renderSampleLandingpage = componentProps => (
   <div>
-    {componentProps.fields.map((item, index) =>
-      (<Field
+    {componentProps.fields.map((item, index) => (
+      <Field
         key={index}
         name={`${item}.uri`}
         component={InputField}
         label="Landingsside"
-      />)
-    )}
+      />
+    ))}
   </div>
 );
 
-const renderSamples = (componentProps) => {
-  const { fields, helptextItems, openLicenseItems } = componentProps
+const renderSamples = componentProps => {
+  const { fields, helptextItems, openLicenseItems } = componentProps;
   return (
     <div>
       {fields.map((sample, index) => (
@@ -35,20 +35,55 @@ const renderSamples = (componentProps) => {
               className="fdk-btn-no-border"
               type="button"
               title="Remove distribution"
-              onClick={() => {fields.remove(index); asyncValidate(fields.getAll(), null, componentProps, `remove_sample_${index}`);}}
+              onClick={() => {
+                fields.remove(index);
+                asyncValidate(
+                  fields.getAll(),
+                  null,
+                  componentProps,
+                  `remove_sample_${index}`
+                );
+              }}
             >
               <i className="fa fa-trash mr-2" />
-                Slett eksempeldata
+              Slett eksempeldata
             </button>
           </div>
           <div className="form-group">
-            <Helptext title="Type" helptextItems={helptextItems.Dataset_example} />
-            <Field name={`${sample}.type`} radioId="sample-api" component={RadioField} type="radio" value="API" label="API" />
-            <Field name={`${sample}.type`} radioId="sample-feed" component={RadioField} type="radio" value="Feed" label="Feed" />
-            <Field name={`${sample}.type`} radioId="sample-file" component={RadioField} type="radio" value="Nedlastbar fil" label="Nedlastbar fil" />
+            <Helptext
+              title="Type"
+              helptextItems={helptextItems.Dataset_example}
+            />
+            <Field
+              name={`${sample}.type`}
+              radioId="sample-api"
+              component={RadioField}
+              type="radio"
+              value="API"
+              label="API"
+            />
+            <Field
+              name={`${sample}.type`}
+              radioId="sample-feed"
+              component={RadioField}
+              type="radio"
+              value="Feed"
+              label="Feed"
+            />
+            <Field
+              name={`${sample}.type`}
+              radioId="sample-file"
+              component={RadioField}
+              type="radio"
+              value="Nedlastbar fil"
+              label="Nedlastbar fil"
+            />
           </div>
           <div className="form-group">
-            <Helptext title="Tilgangs URL" helptextItems={helptextItems.Distribution_accessURL} />
+            <Helptext
+              title="Tilgangs URL"
+              helptextItems={helptextItems.Distribution_accessURL}
+            />
             <Field
               name={`${sample}.accessURL.0`}
               type="text"
@@ -57,7 +92,10 @@ const renderSamples = (componentProps) => {
             />
           </div>
           <div className="form-group">
-            <Helptext title="Format" helptextItems={helptextItems.Distribution_format} />
+            <Helptext
+              title="Format"
+              helptextItems={helptextItems.Distribution_format}
+            />
             <Field
               name={`${sample}.format`}
               type="text"
@@ -66,7 +104,10 @@ const renderSamples = (componentProps) => {
             />
           </div>
           <div className="form-group">
-            <Helptext title="Lisens" helptextItems={helptextItems.Distribution_modified} />
+            <Helptext
+              title="Lisens"
+              helptextItems={helptextItems.Distribution_modified}
+            />
             <Field
               name={`${sample}.license`}
               component={SelectField}
@@ -74,8 +115,15 @@ const renderSamples = (componentProps) => {
             />
           </div>
           <div className="form-group">
-            <Helptext title="Beskrivelse" helptextItems={helptextItems.Distribution_description} />
-            <Field name={`${sample}.description.nb`} component={TextAreaField} label="Beskrivelse" />
+            <Helptext
+              title="Beskrivelse"
+              helptextItems={helptextItems.Distribution_description}
+            />
+            <Field
+              name={`${sample}.description.nb`}
+              component={TextAreaField}
+              label="Beskrivelse"
+            />
           </div>
 
           <div className="form-group">
@@ -97,40 +145,49 @@ const renderSamples = (componentProps) => {
             />
             <div className="d-flex">
               <div className="w-50">
-                <Field name={`${sample}.conformsTo[0].prefLabel.nb`} component={InputField} showLabel label="Tittel" />
+                <Field
+                  name={`${sample}.conformsTo[0].prefLabel.nb`}
+                  component={InputField}
+                  showLabel
+                  label="Tittel"
+                />
               </div>
               <div className="w-50">
-                <Field name={`${sample}.conformsTo[0].uri`} component={InputField} showLabel label="Lenke" />
+                <Field
+                  name={`${sample}.conformsTo[0].uri`}
+                  component={InputField}
+                  showLabel
+                  label="Lenke"
+                />
               </div>
             </div>
           </div>
         </div>
-      )
-      )}
-      {fields && fields.length === 0 &&
-      <button
-        className="fdk-btn-no-border"
-        type="button"
-        onClick={() => fields.push(
-          {
-            id: '',
-            description: textType,
-            accessURL: [],
-            license: licenseType,
-            conformsTo: [],
-            page: [licenseType],
-            format: [],
-            type: ''
-          }
+      ))}
+      {fields &&
+        fields.length === 0 && (
+          <button
+            className="fdk-btn-no-border"
+            type="button"
+            onClick={() =>
+              fields.push({
+                id: '',
+                description: textType,
+                accessURL: [],
+                license: licenseType,
+                conformsTo: [],
+                page: [licenseType],
+                format: [],
+                type: ''
+              })}
+          >
+            <i className="fa fa-plus mr-2" />
+            Legg til eksempeldata
+          </button>
         )}
-      >
-        <i className="fa fa-plus mr-2" />
-        Legg til eksempeldata
-      </button>
-      }
     </div>
   );
-}
+};
 
 const FormSample = props => {
   const { helptextItems, initialValues } = props;
@@ -144,16 +201,16 @@ const FormSample = props => {
         openLicenseItems={openLicenseItems}
       />
     </form>
-  )
-}
+  );
+};
 
 FormSample.defaultProps = {
   initialValues: null
-}
+};
 
 FormSample.propTypes = {
   initialValues: PropTypes.object,
-  helptextItems: PropTypes.object.isRequired,
-}
+  helptextItems: PropTypes.object.isRequired
+};
 
-export default FormSample
+export default FormSample;

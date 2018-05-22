@@ -1,19 +1,26 @@
-import { validateMinTwoChars, validateLinkReturnAsSkosType, validateURL } from '../../validation/validation';
+import {
+  validateMinTwoChars,
+  validateLinkReturnAsSkosType,
+  validateURL
+} from '../../validation/validation';
 
 const validate = values => {
-  const errors = {}
+  const errors = {};
   const { sample } = values;
   let errorNodes = null;
   let conformsToNodes = null;
 
   if (sample) {
     errorNodes = sample.map(item => {
-      let errors = {}
+      let errors = {};
 
       const accessURL = item.accessURL ? item.accessURL : null;
-      const license = (item.license && item.license.uri) ? item.license.uri : null;
-      const description = (item.description && item.description.nb) ? item.description.nb : null;
-      const page = (item.page && item.page[0] && item.page[0].uri) ? item.page[0].uri : null;
+      const license =
+        item.license && item.license.uri ? item.license.uri : null;
+      const description =
+        item.description && item.description.nb ? item.description.nb : null;
+      const page =
+        item.page && item.page[0] && item.page[0].uri ? item.page[0].uri : null;
       const { conformsTo } = item || null;
 
       errors = validateURL('accessURL', accessURL[0], errors, true);
@@ -23,15 +30,22 @@ const validate = values => {
 
       if (conformsTo) {
         conformsToNodes = conformsTo.map(item => {
-          let itemErrors = {}
-          const conformsToPrefLabel = (item.prefLabel && item.prefLabel.nb) ? item.prefLabel.nb : null;
+          let itemErrors = {};
+          const conformsToPrefLabel =
+            item.prefLabel && item.prefLabel.nb ? item.prefLabel.nb : null;
           const conformsToURI = item.uri ? item.uri : null;
-          itemErrors = validateMinTwoChars('prefLabel', conformsToPrefLabel, itemErrors);
+          itemErrors = validateMinTwoChars(
+            'prefLabel',
+            conformsToPrefLabel,
+            itemErrors
+          );
           itemErrors = validateURL('uri', conformsToURI, itemErrors);
           return itemErrors;
         });
         let showSyncError = false;
-        showSyncError = (conformsToNodes.filter(item => (item && JSON.stringify(item) !== '{}')).length > 0);
+        showSyncError =
+          conformsToNodes.filter(item => item && JSON.stringify(item) !== '{}')
+            .length > 0;
         if (showSyncError) {
           errors.conformsTo = conformsToNodes;
         }
@@ -39,12 +53,14 @@ const validate = values => {
       return errors;
     });
     let showSyncError = false;
-    showSyncError = (errorNodes.filter(item => (item && JSON.stringify(item) !== '{}')).length > 0);
+    showSyncError =
+      errorNodes.filter(item => item && JSON.stringify(item) !== '{}').length >
+      0;
     if (showSyncError) {
       errors.sample = errorNodes;
     }
   }
-  return errors
-}
+  return errors;
+};
 
-export default validate
+export default validate;

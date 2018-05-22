@@ -1,6 +1,13 @@
-import { HELPTEXTS_REQUEST, HELPTEXTS_SUCCESS, HELPTEXTS_FAILURE } from '../constants/ActionTypes';
+import {
+  HELPTEXTS_REQUEST,
+  HELPTEXTS_SUCCESS,
+  HELPTEXTS_FAILURE
+} from '../constants/ActionTypes';
 
-export default function dataset(state = { isFetchingHelptext: false, helptextItems: null }, action) {
+export default function dataset(
+  state = { isFetchingHelptext: false, helptextItems: null },
+  action
+) {
   switch (action.type) {
     case HELPTEXTS_REQUEST: {
       return {
@@ -9,15 +16,18 @@ export default function dataset(state = { isFetchingHelptext: false, helptextIte
       };
     }
     case HELPTEXTS_SUCCESS: {
-      const objFromArray = action.response.data.reduce((accumulator, current) => {
-        accumulator[current.id] = current // eslint-disable-line no-param-reassign
-        return accumulator
-      }, {})
+      const objFromArray = action.response.data.reduce(
+        (accumulator, current) => {
+          accumulator[current.id] = current; // eslint-disable-line no-param-reassign
+          return accumulator;
+        },
+        {}
+      );
       return {
         ...state,
         isFetchingHelptext: false,
         helptextItems: objFromArray
-      }
+      };
     }
     case HELPTEXTS_FAILURE: {
       return {
