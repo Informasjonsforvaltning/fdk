@@ -4,10 +4,10 @@ set -e
 function startLoad {
     echo "Start loading ..."
     environment=$1
-    targetElasticUrl=http://elasticsearch-fellesdatakatalog-${environment}.ose-npc.brreg.no
+    targetElasticUrl=http://elasticsearch-fellesdatakatalog-${environment}.paas-nprd.brreg.no
     if [ "$environment" == "ppe" ]
     then
-        targetElasticUrl=http://elasticsearch-fellesdatakatalog-${environment}.ose-pc.brreg.no
+        targetElasticUrl=http://elasticsearch-fellesdatakatalog-${environment}.paas.brreg.no
     fi
 
     DATETIME=`date "+%Y-%m-%dT%H_%M_%S"`
