@@ -46,6 +46,7 @@ jobs:
       - comment=First build the project to look for syntax/build problems
 
     - stage: Tests # Run regular unit tests
+      if: type != cron
       script: mvn install -DskipTests -DskipDockerBuild -Dmaven.javadoc.skip=true -Dmaven.exec.skip=true -B > /dev/null && mvn test -B
       after_success:
        - mvn org.eluder.coveralls:coveralls-maven-plugin:report
@@ -53,6 +54,7 @@ jobs:
         - comment=Run regular unit tests
 
     - stage: Tests # Run regular React unit tests
+      if: type != cron
       script: cd applications/search && npm install npm -g npm@'>=5.4.2' && npm install && npm test
       after_success: npm run coverage
       env:
@@ -65,6 +67,13 @@ jobs:
       - mvn org.eluder.coveralls:coveralls-maven-plugin:report
       env:
       - comment=Run unit and integration tests + generate test coverage report
+
+    - stage: Tests # Run regular React unit tests
+      if: type = cron
+      script: cd applications/search && npm install npm -g npm@'>=5.4.2' && npm install && npm test
+      after_success: npm run coverage
+      env:
+      - comment=Run regular React unit tests + generate test coverage report
 
 
     #- stage: Tests # Run Angular e2e tests
