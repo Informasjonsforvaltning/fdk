@@ -37,36 +37,30 @@ export default {
             }
           ],
           accessRights: {
-            uri: 'http://publications.europa.eu/resource/authority/access-right/PUBLIC',
+            uri: "http://publications.europa.eu/resource/authority/access-right/NON_PUBLIC",
             prefLabel: {}
           },
-          legalBasisForRestriction: [
-            {
-              uri: '',
-              prefLabel: {
-                nb: ''
-              },
-              extraType: null
-            }
-          ],
-          legalBasisForProcessing: [
-            {
-              uri: '',
-              prefLabel: {
-                nb: ''
-              },
-              extraType: null
-            }
-          ],
-          legalBasisForAccess: [
-            {
-              uri: '',
-              prefLabel: {
-                nb: ''
-              },
-              extraType: null
-            }
-          ],
+          legalBasisForRestriction: [{
+            uri: "http://google.no",
+            prefLabel: {
+              nb: "skjerming"
+            },
+            extraType: null
+          }],
+          legalBasisForProcessing: [{
+            uri: "http://google.no",
+            prefLabel: {
+              nb: "behandling"
+            },
+            extraType: null
+          }],
+          legalBasisForAccess: [{
+            uri: "http://google.no",
+            prefLabel: {
+              nb: "utlevering"
+            },
+            extraType: null
+          }],
           catalogId: '910244132',
           _lastModified: '2018-05-07T10:36:20.388+0000',
           registrationStatus: 'PUBLISH'

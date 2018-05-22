@@ -65,7 +65,7 @@ exports[`should render DatasetItemsList correctly with datasetItems 1`] = `
         "_lastModified": "2018-05-07T10:36:20.388+0000",
         "accessRights": Object {
           "prefLabel": Object {},
-          "uri": "http://publications.europa.eu/resource/authority/access-right/PUBLIC",
+          "uri": "http://publications.europa.eu/resource/authority/access-right/NON_PUBLIC",
         },
         "catalogId": "910244132",
         "description": Object {
@@ -79,27 +79,27 @@ exports[`should render DatasetItemsList correctly with datasetItems 1`] = `
           Object {
             "extraType": null,
             "prefLabel": Object {
-              "nb": "",
+              "nb": "utlevering",
             },
-            "uri": "",
+            "uri": "http://google.no",
           },
         ],
         "legalBasisForProcessing": Array [
           Object {
             "extraType": null,
             "prefLabel": Object {
-              "nb": "",
+              "nb": "behandling",
             },
-            "uri": "",
+            "uri": "http://google.no",
           },
         ],
         "legalBasisForRestriction": Array [
           Object {
             "extraType": null,
             "prefLabel": Object {
-              "nb": "",
+              "nb": "skjerming",
             },
-            "uri": "",
+            "uri": "http://google.no",
           },
         ],
         "objective": Object {
