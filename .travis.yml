@@ -1,3 +1,5 @@
+sudo: required
+
 matrix:
   include:
     - language: java
@@ -63,13 +65,6 @@ jobs:
       - mvn org.eluder.coveralls:coveralls-maven-plugin:report
       env:
       - comment=Run unit and integration tests + generate test coverage report
-
-    - stage: Tests # Run regular React unit tests
-      if: type = cron #run only during nightly cron job - time-consuming operation
-      script: cd applications/search && npm install npm -g npm@'>=5.4.2' && npm install && npm test
-      after_success: npm run coverage
-      env:
-      - comment=Run regular React unit tests + generate test coverage report
 
 
     #- stage: Tests # Run Angular e2e tests
