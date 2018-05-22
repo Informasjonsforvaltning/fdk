@@ -26,11 +26,14 @@ class App extends Component {
 }
 
 App.defaultProps = {
-
+  userItem: null,
+  children: null
 };
 
 App.propTypes = {
-  dispatch: PropTypes.func.isRequired
+  dispatch: PropTypes.func.isRequired,
+  userItem: PropTypes.object,
+  children: PropTypes.object
 };
 
 function mapStateToProps({ user }) {

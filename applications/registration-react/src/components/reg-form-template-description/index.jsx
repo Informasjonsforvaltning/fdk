@@ -65,9 +65,15 @@ export default class FormTemplateDescription extends Component {
 }
 
 FormTemplateDescription.defaultProps = {
-  values: null
+  values: null,
+  title: null,
+  syncErrors: false,
+  children: null
 };
 
 FormTemplateDescription.propTypes = {
-  values: PropTypes.string
+  values: PropTypes.string,
+  title: PropTypes.string,
+  syncErrors: PropTypes.bool,
+  children: PropTypes.object
 };

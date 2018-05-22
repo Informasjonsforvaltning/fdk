@@ -86,6 +86,13 @@ const InputTagsFieldConcepts  = (props) => {
   );
 }
 
+autosizingRenderInput.defaultProps = {
+  addTag: null
+}
+autosizingRenderInput.propTypes = {
+  addTag: PropTypes.object
+}
+
 InputTagsFieldConcepts.defaultProps = {
   showLabel: false,
   input: null,

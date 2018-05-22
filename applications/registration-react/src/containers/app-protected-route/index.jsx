@@ -80,11 +80,16 @@ class ProtectedRoute extends React.Component {
 }
 
 ProtectedRoute.defaultProps = {
-
+  userItem: null,
+  isFetchingUser: false,
+  component: null
 };
 
 ProtectedRoute.propTypes = {
-  dispatch: PropTypes.func.isRequired
+  dispatch: PropTypes.func.isRequired,
+  userItem: PropTypes.object,
+  isFetchingUser: PropTypes.bool,
+  component: PropTypes.func
 };
 
 function mapStateToProps({ user }) {

@@ -283,11 +283,52 @@ class RegDataset extends React.Component {
 }
 
 RegDataset.defaultProps = {
-
+  helptextItems: null,
+  isFetching: false,
+  title: null,
+  accessRights: null,
+  formThemes: null,
+  type: null,
+  concept: null,
+  spatial: null,
+  formProvenance: null,
+  contents: null,
+  informationModel: null,
+  reference: null,
+  contactPoint: null,
+  distribution: null,
+  sample: null,
+  registrationStatus: null,
+  lastSaved: null,
+  result: null,
+  referenceTypesItems: null,
+  referenceDatasetsItems: null,
+  openLicenseItems: null
 };
 
 RegDataset.propTypes = {
-  dispatch: PropTypes.func.isRequired
+  dispatch: PropTypes.func.isRequired,
+  helptextItems: PropTypes.object,
+  isFetching: PropTypes.bool,
+  title: PropTypes.object,
+  accessRights: PropTypes.object,
+  formThemes: PropTypes.object,
+  type: PropTypes.object,
+  concept: PropTypes.object,
+  spatial: PropTypes.object,
+  formProvenance: PropTypes.object,
+  contents: PropTypes.object,
+  informationModel: PropTypes.object,
+  reference: PropTypes.object,
+  contactPoint: PropTypes.object,
+  distribution: PropTypes.object,
+  sample: PropTypes.object,
+  registrationStatus: PropTypes.string,
+  lastSaved: PropTypes.string,
+  result: PropTypes.object,
+  referenceTypesItems: PropTypes.array,
+  referenceDatasetsItems: PropTypes.array,
+  openLicenseItems: PropTypes.array
 };
 
 function mapStateToProps({ app, dataset, helptexts, provenance, frequency, themes, referenceTypes, referenceDatasets, openlicenses, form }) {

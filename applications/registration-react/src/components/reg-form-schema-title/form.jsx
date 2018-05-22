@@ -6,8 +6,7 @@ import Helptext from '../reg-form-helptext';
 import InputField from '../reg-form-field-input';
 import TextAreaField from '../reg-form-field-textarea';
 
-export const renderLandingpage = (componentProps) => {
-  return (
+export const renderLandingpage = (componentProps) => (
   <div>
     {componentProps.fields.map((item, index) =>
       (<Field
@@ -18,8 +17,7 @@ export const renderLandingpage = (componentProps) => {
       />)
     )}
   </div>
-  )
-};
+);
 
 const FormTitle = (props) => {
   const { helptextItems } = props;

@@ -77,11 +77,14 @@ class RegCatalogs extends React.Component {
 }
 
 RegCatalogs.defaultProps = {
-
+  catalogItems: null,
+  isFetchingCatalogs: false
 };
 
 RegCatalogs.propTypes = {
-  dispatch: PropTypes.func.isRequired
+  dispatch: PropTypes.func.isRequired,
+  catalogItems: PropTypes.object,
+  isFetchingCatalogs: PropTypes.bool
 };
 
 function mapStateToProps({ catalogs }) {

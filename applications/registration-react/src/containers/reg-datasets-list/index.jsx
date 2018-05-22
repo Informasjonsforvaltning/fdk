@@ -65,11 +65,18 @@ class RegDatasetsList extends React.Component {
 }
 
 RegDatasetsList.defaultProps = {
-
+  datasetItems: null,
+  helptextItems: null,
+  isFetchingCatalog: false,
+  catalogItem: null
 };
 
 RegDatasetsList.propTypes = {
-  dispatch: PropTypes.func.isRequired
+  dispatch: PropTypes.func.isRequired,
+  datasetItems: PropTypes.object,
+  helptextItems: PropTypes.object,
+  isFetchingCatalog: PropTypes.bool,
+  catalogItem: PropTypes.object
 };
 
 function mapStateToProps({ helptexts, catalog, datasets }) {
