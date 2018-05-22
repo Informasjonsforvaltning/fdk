@@ -33,12 +33,6 @@ services:
     networks:
       platform:
 
-  gdoc:
-    ports:
-      - 127.0.0.1:8084:8080
-    environment:
-     - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
-
   registration-validator:
     restart: always
     ports:

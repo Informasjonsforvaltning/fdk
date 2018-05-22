@@ -339,18 +339,6 @@ then
         deployNewDockerImage search
     fi
 
-elif [ $service = gdoc ]
-then
-    if [ $deploymode = recreateServices ]
-    then
-        profile=prod
-        createOpenshiftService gdoc
-        exposeService gdoc
-    else
-        # deploymentmode = onlyDeployImages
-        deployNewDockerImage gdoc
-    fi
-
 elif [ $service = harvester ]
 then
     if [ $deploymode = recreateServices ]

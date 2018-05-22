@@ -64,7 +64,7 @@ public class HarvestSteps extends CommonPage {
 
         CatalogForCucumberTest catalog = catalogsToHarvest.get(query);
         if(catalog == null){
-            throw new IllegalStateException("Query should be either gdoc or difi, was: "+query);
+            throw new IllegalStateException("Query should be difi, was: "+query);
         }
 
         By xpath = By.xpath("//tr[td[contains(text(),'" + catalog.urlInput + "')]]");
@@ -114,8 +114,7 @@ public class HarvestSteps extends CommonPage {
     private static Map<String, CatalogForCucumberTest> catalogsToHarvest = new HashMap<>();
 
     static {
-        catalogsToHarvest.put("gdoc", new CatalogForCucumberTest("Innføringsteamets gdoc data", "http://gdoc:8080/versions/latest", "91919191"));
-        catalogsToHarvest.put("difi", new CatalogForCucumberTest("difi katalog", "http://data.norge.no/api/dcat2/991825827/data.jsonld", "991825827"));
+       catalogsToHarvest.put("difi", new CatalogForCucumberTest("difi katalog", "http://data.norge.no/api/dcat2/991825827/data.jsonld", "991825827"));
     }
 
 }
