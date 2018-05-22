@@ -100,10 +100,8 @@ there is no data registered in the repositories (see the harvester application)
 This starts the harvester application with the corresponding harvester-api. 
   - Log in to the administration application on [http://localhost:8082](http://localhost:8082).
       You will need a username and a password for the application (test_user, password). 
-  - Next you need to register a catalog to be harvested. Try to register the following url: 
-    [http://gdoc-fdk.tt1.brreg.no/versions/latest](http://gdoc-fdk.tt1.brreg.no/versions/latest)
-    Alternatively start the gdoc application and enter the following url 
-    [http://localhost:8084/versions/latest](http://localhost:8084/versions/latest)
+  - Next you need to register a catalog to be harvested. You may use the registration application to register data about datasets which can be harvested here. 
+    [http://registration-api:8080/catalogs/123456699](http://registration-api:8080/catalogs/123456699) given your catalog has id 123456699.    
 
 ## Registration application:
 >`docker-compose up -d registration`
