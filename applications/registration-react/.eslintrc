@@ -27,6 +27,7 @@
     "react/prop-types": 1,
     "react/forbid-prop-types": ["error", { "forbid": ["any"] }],
     "react/no-array-index-key": "off",
+    "no-param-reassign": ["error", { "props": true, "ignorePropertyModificationsFor": ["accumulator"] }],
     "no-restricted-globals": ["error", "event", "fdescribe"],
     "no-control-regex": "off",
     "jsx-a11y/anchor-is-valid": [ "error", {
