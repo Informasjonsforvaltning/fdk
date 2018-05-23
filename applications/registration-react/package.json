@@ -13,7 +13,6 @@
     "coverage": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
   },
   "lint-staged": {
-    "gitDir": "../../",
     "linters": {
       "*.{js,jsx}": [
         "lint",
