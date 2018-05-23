@@ -7,10 +7,11 @@ const SortButtons = props => {
     <div className="d-flex flex-column">
       <button
         name={`${field}asc`}
-        className={`d-flex sortButton transparentButton ${sortField ===
-          `${field}` && sortType === 'asc'
-          ? 'visibilityHidden'
-          : ''}`}
+        className={`d-flex sortButton transparentButton ${
+          sortField === `${field}` && sortType === 'asc'
+            ? 'visibilityHidden'
+            : ''
+        }`}
         onClick={() => onSortField(`${field}`, 'asc')}
         title="Stigende"
       >
@@ -18,10 +19,11 @@ const SortButtons = props => {
       </button>
       <button
         name={`${field}desc`}
-        className={`d-flex sortButton transparentButton ${sortField ===
-          `${field}` && sortType === 'desc'
-          ? 'visibilityHidden'
-          : ''}`}
+        className={`d-flex sortButton transparentButton ${
+          sortField === `${field}` && sortType === 'desc'
+            ? 'visibilityHidden'
+            : ''
+        }`}
         onClick={() => onSortField(`${field}`, 'desc')}
         title="Synkende"
       >

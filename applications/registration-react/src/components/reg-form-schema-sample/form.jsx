@@ -180,7 +180,8 @@ export const renderSamples = componentProps => {
                 page: [licenseType],
                 format: [],
                 type: ''
-              })}
+              })
+            }
           >
             <i className="fa fa-plus mr-2" />
             Legg til eksempeldata

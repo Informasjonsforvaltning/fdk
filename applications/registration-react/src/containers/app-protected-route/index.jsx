@@ -65,7 +65,8 @@ export class ProtectedRoute extends React.Component {
                 <Component {...props} />
               ) : (
                 <Redirect {...props} to="/loggin" />
-              )}
+              )
+            }
           />
         )}
         <TimeoutModal

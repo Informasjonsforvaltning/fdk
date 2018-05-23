@@ -41,11 +41,8 @@ export const renderProvenance = componentProps => {
                   : ''
               }
               onChange={e =>
-                handleProvenanceChange(
-                  componentProps,
-                  e,
-                  provenanceItems[code]
-                )}
+                handleProvenanceChange(componentProps, e, provenanceItems[code])
+              }
             />
             {/* eslint-disable jsx-a11y/label-has-for */}
             <label

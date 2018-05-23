@@ -8,19 +8,19 @@ export const titleValues = values => {
     let retVal = '';
     const { title, description, objective, landingPage } = values;
     if (title) {
-      retVal = `${retVal} ${getTranslateText(title)
-        ? `${getTranslateText(title)}.`
-        : ''}`;
+      retVal = `${retVal} ${
+        getTranslateText(title) ? `${getTranslateText(title)}.` : ''
+      }`;
     }
     if (description) {
-      retVal = `${retVal} ${getTranslateText(description)
-        ? `${getTranslateText(description)}.`
-        : ''}`;
+      retVal = `${retVal} ${
+        getTranslateText(description) ? `${getTranslateText(description)}.` : ''
+      }`;
     }
     if (objective) {
-      retVal = `${retVal} ${getTranslateText(objective)
-        ? `${getTranslateText(objective)}.`
-        : ''}`;
+      retVal = `${retVal} ${
+        getTranslateText(objective) ? `${getTranslateText(objective)}.` : ''
+      }`;
     }
     if (landingPage && landingPage[0]) {
       retVal = `${retVal} ${landingPage[0]}`;
@@ -212,9 +212,11 @@ export const provenanceValues = values => {
       }
     }
     if (accrualPeriodicity && accrualPeriodicity.code) {
-      retVal += `${localization.schema.provenance.accrualPeriodicity[
-        accrualPeriodicity.code
-      ]}. `;
+      retVal += `${
+        localization.schema.provenance.accrualPeriodicity[
+          accrualPeriodicity.code
+        ]
+      }. `;
     }
     if (modified) {
       retVal += `${moment(modified).format('DD.MM.YYYY')}. `;
@@ -247,9 +249,11 @@ export const contentsValues = values => {
     if (conformsTo) {
       retVal += conformsTo.map(item => {
         if (item.prefLabel) {
-          return `${getTranslateText(item.prefLabel)
-            ? `${getTranslateText(item.prefLabel)}.`
-            : ''}`;
+          return `${
+            getTranslateText(item.prefLabel)
+              ? `${getTranslateText(item.prefLabel)}.`
+              : ''
+          }`;
         }
         return '';
       });

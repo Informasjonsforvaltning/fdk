@@ -6,7 +6,10 @@ import Helptext from '../reg-form-helptext';
 import CheckBoxFieldType from '../reg-form-field-checkbox-type';
 
 const FormType = props => {
-  const { syncErrors: { errorType }, helptextItems } = props;
+  const {
+    syncErrors: { errorType },
+    helptextItems
+  } = props;
   return (
     <form>
       <div className="form-group">

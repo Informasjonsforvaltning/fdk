@@ -84,7 +84,8 @@ const InputTagsFieldConcepts = props => {
             className="fdk-reg-input-tags"
             inputProps={{ placeholder: '' }}
             onChange={(tags, changed, changedIndexes) =>
-              handleChange(props, tags, changed, changedIndexes)}
+              handleChange(props, tags, changed, changedIndexes)
+            }
             renderInput={autosizingRenderInput}
           />
         </div>

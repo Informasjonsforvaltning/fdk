@@ -6,7 +6,11 @@ import Helptext from '../reg-form-helptext';
 import CheckboxFieldTheme from '../reg-form-field-theme-checkbox';
 
 const FormThemes = props => {
-  const { syncErrors: { errorTheme }, helptextItems, initialValues } = props;
+  const {
+    syncErrors: { errorTheme },
+    helptextItems,
+    initialValues
+  } = props;
   const { theme, themesItems } = initialValues;
   if (theme && themesItems) {
     return (

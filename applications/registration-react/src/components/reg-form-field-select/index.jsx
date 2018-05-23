@@ -19,7 +19,11 @@ const handleChange = (props, selectedURI) => {
 };
 
 const SelectField = props => {
-  const { input, meta: { touched, error, warning }, items } = props;
+  const {
+    input,
+    meta: { touched, error, warning },
+    items
+  } = props;
   return (
     <div className="pl-2 mt-3">
       <Select
