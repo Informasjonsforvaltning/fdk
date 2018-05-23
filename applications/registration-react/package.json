@@ -7,7 +7,7 @@
     "start": "node start.js",
     "dev": "webpack-dev-server --config webpack.dev.config.js",
     "build": "webpack --config webpack.prod.config.js -p",
-    "lint": "eslint ./src --ext=.js,.jsx --fix",
+    "lint": "eslint ./ --ext=.js,.jsx --fix",
     "test": "jest --config=jest.config.json",
     "test_mocha": "mocha --compilers js:babel-register --require ./test/helpers.js --require ./test/dom.js --recursive --require ignore-styles"
   },
