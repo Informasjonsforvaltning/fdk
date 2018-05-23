@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 const SortButtons = props => {
   const { field, sortField, sortType, onSortField } = props;
   return (
-    <div className="d-flex flex-column">
+    <div className="d-flex flex-column test">
       <button
         name={`${field}asc`}
         className={`d-flex sortButton transparentButton ${
