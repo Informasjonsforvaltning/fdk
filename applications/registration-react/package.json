@@ -11,6 +11,15 @@
     "test": "jest --config=jest.config.json",
     "test_mocha": "mocha --compilers js:babel-register --require ./test/helpers.js --require ./test/dom.js --recursive --require ignore-styles"
   },
+  "lint-staged": {
+    "gitDir": "../../",
+    "linters": {
+      "*.{js,jsx}": [
+        "lint",
+        "git add"
+      ]
+    }
+  },
   "author": "",
   "license": "ISC",
   "dependencies": {
