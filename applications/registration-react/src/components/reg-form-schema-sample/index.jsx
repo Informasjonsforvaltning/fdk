@@ -14,7 +14,7 @@ const FormSample = reduxForm({
   asyncValidate: _throttle(asyncValidate, 250)
 })(Form);
 
-const sampleTypes = values => {
+export const sampleTypes = values => {
   let samples = null;
   if (values && values.length > 0) {
     samples = values.map(item => ({

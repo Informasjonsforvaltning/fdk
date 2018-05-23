@@ -11,7 +11,7 @@ import FormCatalog from '../../components/reg-form-schema-catalog';
 import DatasetItemsList from '../../components/reg-dataset-items-list';
 import './index.scss';
 
-class RegDatasetsList extends React.Component {
+export class RegDatasetsList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};

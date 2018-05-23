@@ -155,6 +155,34 @@ export default {
             format: ["json", "xml"],
             type: "API"
           }],
+          sample: [
+            {
+              id: '',
+              description: {
+                nb: ''
+              },
+              accessURL: [],
+              license: {
+                uri: '',
+                prefLabel: {
+                  nb: ''
+                },
+                extraType: null
+              },
+              conformsTo: [],
+              page: [
+                {
+                  uri: '',
+                  prefLabel: {
+                    nb: ''
+                  },
+                  extraType: null
+                }
+              ],
+              format: [],
+              type: 'API'
+            }
+          ],
           openLicenseItems: [{
             uri: "http://creativecommons.org/licenses/by/4.0/",
             code: "CC BY 4.0",

@@ -242,6 +242,34 @@ exports[`should render DatasetItemsList correctly with datasetItems 1`] = `
           "uri": "http://data.brreg.no/enhetsregisteret/enhet/910244132",
         },
         "registrationStatus": "PUBLISH",
+        "sample": Array [
+          Object {
+            "accessURL": Array [],
+            "conformsTo": Array [],
+            "description": Object {
+              "nb": "",
+            },
+            "format": Array [],
+            "id": "",
+            "license": Object {
+              "extraType": null,
+              "prefLabel": Object {
+                "nb": "",
+              },
+              "uri": "",
+            },
+            "page": Array [
+              Object {
+                "extraType": null,
+                "prefLabel": Object {
+                  "nb": "",
+                },
+                "uri": "",
+              },
+            ],
+            "type": "API",
+          },
+        ],
         "spatial": Array [
           Object {
             "uri": "Oslo",

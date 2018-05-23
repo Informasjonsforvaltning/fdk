@@ -8,7 +8,7 @@ import { fetchCatalogsIfNeeded } from '../../actions/index';
 import CatalogItem from '../../components/reg-catalogs-item';
 import './index.scss';
 
-class RegCatalogs extends React.Component {
+export class RegCatalogs extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};

@@ -8,7 +8,7 @@ import localization from '../../utils/localization';
 import { fetchUserIfNeeded } from '../../actions/index';
 import TimeoutModal from '../../components/app-timeout-modal';
 
-class ProtectedRoute extends React.Component {
+export class ProtectedRoute extends React.Component {
   constructor(props) {
     super(props);
     this.state = {

@@ -46,7 +46,7 @@ import {
 } from './logic';
 import './index.scss';
 
-class RegDataset extends React.Component {
+export class RegDataset extends React.Component {
   constructor(props) {
     super(props);
     const datasetURL = window.location.pathname;
@@ -386,9 +386,37 @@ function mapStateToProps({
     openLicenseItems: null
   };
 
+  const title = form && form.title ? form.title : {};
+
+  const accessRights = form && form.accessRight ? form.accessRight : {};
+
+  const formThemes = form && form.themes ? form.themes : {};
+
+  const type = form && form.type ? form.type : {};
+
+  const concept = form && form.concept ? form.concept : {};
+
+  const spatial = form && form.spatial ? form.spatial : {};
+
+  const formProvenance = form && form.provenance ? form.provenance : {};
+
+  const contents = form && form.contents ? form.contents : {};
+
+  const informationModel =
+    form && form.informationModel ? form.informationModel : {};
+
+  const reference = form && form.reference ? form.reference : {};
+
+  const contactPoint = form && form.contactPoint ? form.contactPoint : {};
+
+  const distribution = form && form.distribution ? form.distribution : {};
+
+  const sample = form && form.sample ? form.sample : {};
+
+  /*
   const title = form.title || {
-    title: null
-  };
+      title: null
+    };
 
   const accessRights = form.accessRights || {
     accessRights: null
@@ -437,6 +465,9 @@ function mapStateToProps({
   const sample = form.sample || {
     sample: null
   };
+
+
+  */
 
   const { registrationStatus, lastSaved } = app || {
     registrationStatus: null,

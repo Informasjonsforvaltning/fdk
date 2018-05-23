@@ -9,7 +9,7 @@ import InputField from '../reg-form-field-input';
 import InputTitleField from '../reg-form-field-input-title';
 import TextAreaField from '../reg-form-field-textarea';
 
-class FormCatalog extends React.Component {
+export class FormCatalog extends React.Component {
   constructor(props) {
     super(props);
     this.toggleTitle = this.toggleTitle.bind(this);

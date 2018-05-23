@@ -8,7 +8,7 @@ import DatepickerField from '../reg-form-field-datepicker';
 import CheckboxField from '../reg-form-field-checkbox';
 import asyncValidate from '../../utils/asyncValidate';
 
-const renderTemporalFields = (item, index, fields, componentProps) => (
+export const renderTemporalFields = (item, index, fields, componentProps) => (
   <div className="d-flex mb-2" key={index}>
     <div className="w-50">
       <Field

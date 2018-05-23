@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import FormSpatial from '../../../src/components/reg-form-schema-spatial/form';
+import FormSpatial, { renderTemporal, renderTemporalFields } from '../../../src/components/reg-form-schema-spatial/form';
 import helptext from '../../fixtures/helptext';
 
 let defaultProps, wrapper;
@@ -8,13 +8,46 @@ let defaultProps, wrapper;
 beforeEach(() => {
   const { helptextItems } = helptext;
   defaultProps = {
-    helptextItems: helptextItems,
+    helptextItems: helptextItems
   };
   wrapper = shallow(<FormSpatial {...defaultProps} />);
 });
 
 
 test('should render FormSpatial correctly', () => {
+  expect(wrapper).toMatchSnapshot();
+});
+
+test('should render FormSpatial correctly with initialValues', () => {
+  wrapper.setProps({
+    initialValues: {
+      spatial: [
+        {
+          uri: 'Oslo',
+          prefLabel: {}
+        }
+      ],
+      temporal: [
+        {
+          startDate: null,
+          endDate: null
+        }
+      ],
+      issued: null,
+      language: []
+    }
+  })
+  expect(wrapper).toMatchSnapshot();
+});
+
+test('should render renderTemporal correctly', () => {
+  wrapper = shallow(renderTemporal(defaultProps));
+  expect(wrapper).toMatchSnapshot();
+});
+
+test('should render renderTemporalFields correctly', () => {
+  const temporal = [{}]
+  wrapper = shallow(renderTemporalFields(temporal, 0, null, defaultProps));
   expect(wrapper).toMatchSnapshot();
 });
 
