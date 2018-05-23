@@ -1,7 +1,5 @@
 package no.dcat.harvester.validation;
 
-import org.apache.jena.query.QuerySolution;
-import org.apache.jena.rdf.model.Literal;
 import org.apache.jena.rdf.model.RDFNode;
 
 public class ValidationError {

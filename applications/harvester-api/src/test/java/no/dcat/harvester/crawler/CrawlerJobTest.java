@@ -9,10 +9,8 @@ import no.dcat.harvester.HarvesterApplication;
 import no.dcat.harvester.crawler.handlers.ElasticSearchResultHandler;
 import no.dcat.harvester.crawler.handlers.FusekiResultHandler;
 import no.dcat.harvester.validation.ValidationError;
-import org.apache.jena.query.QuerySolution;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
-import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.ResIterator;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.riot.RiotException;
@@ -34,7 +32,8 @@ import java.util.List;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 
 public class CrawlerJobTest {
@@ -144,7 +143,7 @@ public class CrawlerJobTest {
         List<String> report =  spyJob.getValidationResult();
 
         logger.debug("validation report: {}", report);
-        assertThat(report.size(), is(66));
+        assertThat(report.size(), is(41));
     }
 
 

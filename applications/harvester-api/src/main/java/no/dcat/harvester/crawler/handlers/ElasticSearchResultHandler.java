@@ -313,7 +313,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
                             semanticValidation + "\n\n" +
                             "----- the end ------\n";
 
-                    logger.debug("EMAIL-MESSAGE: {}", message);
+                    logger.info("EMAIL-MESSAGE: {}", message);
 
                     notificationService.sendValidationResultNotification(
                             notificationEmailSender,
