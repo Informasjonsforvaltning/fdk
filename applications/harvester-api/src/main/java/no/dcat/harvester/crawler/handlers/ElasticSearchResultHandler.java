@@ -54,6 +54,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -264,6 +265,24 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         }
     }
 
+    String removeDuplicatedLines(String input) {
+        List<String> result = new ArrayList<>();
+        String[] lines = input.split("\r\n|\r|\n");
+        Set<String> uniqueLines = new HashSet<>();
+
+        Arrays.stream(lines).forEach(line -> {
+            if (!uniqueLines.contains(line)) {
+
+                result.add(line);
+                uniqueLines.add(line);
+            }
+        });
+
+        logger.info("Original {} lines, {} unique lines, removed {} duplicated lines", lines.length, uniqueLines.size(), lines.length - uniqueLines.size());
+
+        return result.stream().collect(Collectors.joining("\n"));
+    }
+
     void stopHarvestLogAndReport(DcatSource dcatSource, List<String> validationResults) {
         if (enableHarvestLog ) {
             try {
@@ -276,7 +295,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
 
                 String dcatSyntaxValidation = validationResults != null ? validationResults.stream().map(Object::toString).collect(Collectors.joining("\n")) : "";
                 //get contents from harvest log file
-                String semanticValidation = new String(Files.readAllBytes(temporarylogFile));
+                String semanticValidation = removeDuplicatedLines(new String(Files.readAllBytes(temporarylogFile)));
 
                 Files.delete(temporarylogFile);
 
