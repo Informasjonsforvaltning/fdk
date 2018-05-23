@@ -30,3 +30,18 @@ Angi referanser til andre datasett som gir supplerende informasjon om innholdet.
   </div>
 </form>
 `;
+
+exports[`should render renderReference correctly 1`] = `
+<div>
+  <button
+    className="fdk-btn-no-border"
+    onClick={[Function]}
+    type="button"
+  >
+    <i
+      className="fa fa-plus mr-2"
+    />
+    Legg til relaterte datasett
+  </button>
+</div>
+`;
