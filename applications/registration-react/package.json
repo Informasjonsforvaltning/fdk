@@ -4,12 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "precommit": "lint-staged",
     "start": "node start.js",
     "dev": "webpack-dev-server --config webpack.dev.config.js",
     "build": "webpack --config webpack.prod.config.js -p",
     "lint": "eslint ./ --ext=.js,.jsx --fix",
     "test": "jest --config=jest.config.json",
-    "test_mocha": "mocha --compilers js:babel-register --require ./test/helpers.js --require ./test/dom.js --recursive --require ignore-styles"
+    "coverage": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
   },
   "lint-staged": {
     "gitDir": "../../",
@@ -73,6 +74,7 @@
     "babel-preset-stage-0": "^6.24.1",
     "babel-register": "^6.26.0",
     "chai": "^4.1.2",
+    "coveralls": "^3.0.1",
     "css-loader": "^0.28.8",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
@@ -94,6 +96,7 @@
     "lint-staged": "^6.0.1",
     "mocha": "^5.0.0",
     "node-sass": "^4.9.0",
+    "prettier": "^1.12.1",
     "redux-test-utils": "^0.2.2",
     "sass-loader": "^6.0.6",
     "sinon": "^4.2.2",
