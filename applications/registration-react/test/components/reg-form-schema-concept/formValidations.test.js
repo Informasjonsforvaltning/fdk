@@ -1,5 +1,4 @@
-import React from "react";
-import validate from "../../../src/components/reg-form-schema-concept/formValidations";
+import validate from '../../../src/components/reg-form-schema-concept/formValidations';
 import datasets from '../../fixtures/datasets';
 
 it('should validate without errors', () => {

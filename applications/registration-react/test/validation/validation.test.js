@@ -1,4 +1,3 @@
-import React from "react";
 import {
   validateRequired,
   validateMinTwoChars,
@@ -7,7 +6,7 @@ import {
   validateLinkReturnAsSkosType,
   validateEmail,
   validatePhone
-} from "../../src/validation/validation";
+} from '../../src/validation/validation';
 
 it('should run validateRequired correctly', () => {
   expect(validateRequired('nameOfObject', null, [])).not.toBeNull();
@@ -31,14 +30,22 @@ it('should run validateURL correctly', () => {
 });
 
 it('should run validateLinkReturnAsSkosType correctly', () => {
-  expect(validateLinkReturnAsSkosType('nameOfObject', {nb: 'http'}, [], false)).not.toBeNull();
-  expect(validateLinkReturnAsSkosType('nameOfObject', {nb: 'http'}, [], true)).not.toBeNull();
-  expect(validateLinkReturnAsSkosType('nameOfObject', 'http://www.google.com', [])).toEqual([]);
+  expect(
+    validateLinkReturnAsSkosType('nameOfObject', { nb: 'http' }, [], false)
+  ).not.toBeNull();
+  expect(
+    validateLinkReturnAsSkosType('nameOfObject', { nb: 'http' }, [], true)
+  ).not.toBeNull();
+  expect(
+    validateLinkReturnAsSkosType('nameOfObject', 'http://www.google.com', [])
+  ).toEqual([]);
 });
 
 it('should run validateEmail correctly', () => {
   expect(validateEmail('nameOfObject', 'fellesdatakatalog', [])).not.toBeNull();
-  expect(validateEmail('nameOfObject', 'fellesdatakatalog@brreg.no', [])).toEqual([]);
+  expect(
+    validateEmail('nameOfObject', 'fellesdatakatalog@brreg.no', [])
+  ).toEqual([]);
 });
 
 it('should run validatePhone correctly', () => {

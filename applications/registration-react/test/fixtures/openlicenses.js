@@ -17,4 +17,4 @@ export default {
       prefLabel_no: 'Norsk lisens for offentlige data'
     }
   ]
-}
+};

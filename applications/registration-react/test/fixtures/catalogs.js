@@ -1,6 +1,6 @@
 export default {
   isFetchingCatalogs: false,
-    catalogItems: {
+  catalogItems: {
     _embedded: {
       catalogs: [
         {
@@ -24,9 +24,9 @@ export default {
     },
     page: {
       size: 20,
-        totalElements: 1,
-        totalPages: 1,
-        number: 0
+      totalElements: 1,
+      totalPages: 1,
+      number: 0
     }
   }
-}
+};

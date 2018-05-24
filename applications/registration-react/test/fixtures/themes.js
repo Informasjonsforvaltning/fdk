@@ -386,7 +386,7 @@ export default {
         pl: 'Regiony i miasta',
         lt: 'Regionai ir miestai',
         sv: 'Regioner och städer',
-        nl: 'Regio\'s en steden',
+        nl: "Regio's en steden",
         bg: 'Региони и градове',
         cs: 'Regiony a města',
         sk: 'Regióny a mestá',
@@ -522,4 +522,4 @@ export default {
       }
     }
   ]
-}
+};

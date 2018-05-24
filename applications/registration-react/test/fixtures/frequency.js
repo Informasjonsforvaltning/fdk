@@ -10,27 +10,32 @@ export default {
       prefLabel_no: 'årlig'
     },
     {
-      uri: 'http://publications.europa.eu/resource/authority/frequency/ANNUAL_2',
+      uri:
+        'http://publications.europa.eu/resource/authority/frequency/ANNUAL_2',
       code: 'ANNUAL_2',
       prefLabel_no: 'halvårlig'
     },
     {
-      uri: 'http://publications.europa.eu/resource/authority/frequency/ANNUAL_3',
+      uri:
+        'http://publications.europa.eu/resource/authority/frequency/ANNUAL_3',
       code: 'ANNUAL_3',
       prefLabel_no: 'tre ganger per år'
     },
     {
-      uri: 'http://publications.europa.eu/resource/authority/frequency/BIENNIAL',
+      uri:
+        'http://publications.europa.eu/resource/authority/frequency/BIENNIAL',
       code: 'BIENNIAL',
       prefLabel_no: 'annethvert år'
     },
     {
-      uri: 'http://publications.europa.eu/resource/authority/frequency/BIMONTHLY',
+      uri:
+        'http://publications.europa.eu/resource/authority/frequency/BIMONTHLY',
       code: 'BIMONTHLY',
       prefLabel_no: 'annenhver måned'
     },
     {
-      uri: 'http://publications.europa.eu/resource/authority/frequency/BIWEEKLY',
+      uri:
+        'http://publications.europa.eu/resource/authority/frequency/BIWEEKLY',
       code: 'BIWEEKLY',
       prefLabel_no: 'hver fjortende dag'
     },
@@ -60,12 +65,14 @@ export default {
       prefLabel_no: 'månedlig'
     },
     {
-      uri: 'http://publications.europa.eu/resource/authority/frequency/MONTHLY_2',
+      uri:
+        'http://publications.europa.eu/resource/authority/frequency/MONTHLY_2',
       code: 'MONTHLY_2',
       prefLabel_no: 'to ganger i måneden'
     },
     {
-      uri: 'http://publications.europa.eu/resource/authority/frequency/MONTHLY_3',
+      uri:
+        'http://publications.europa.eu/resource/authority/frequency/MONTHLY_3',
       code: 'MONTHLY_3',
       prefLabel_no: 'tre ganger i måneden'
     },
@@ -75,7 +82,8 @@ export default {
       prefLabel_no: 'aldri'
     },
     {
-      uri: 'http://publications.europa.eu/resource/authority/frequency/OP_DATPRO'
+      uri:
+        'http://publications.europa.eu/resource/authority/frequency/OP_DATPRO'
     },
     {
       uri: 'http://publications.europa.eu/resource/authority/frequency/OTHER',
@@ -83,12 +91,14 @@ export default {
       prefLabel_no: 'annet'
     },
     {
-      uri: 'http://publications.europa.eu/resource/authority/frequency/QUARTERLY',
+      uri:
+        'http://publications.europa.eu/resource/authority/frequency/QUARTERLY',
       code: 'QUARTERLY',
       prefLabel_no: 'kvartalsvis'
     },
     {
-      uri: 'http://publications.europa.eu/resource/authority/frequency/TRIENNIAL',
+      uri:
+        'http://publications.europa.eu/resource/authority/frequency/TRIENNIAL',
       code: 'TRIENNIAL',
       prefLabel_no: 'hvert tredje år'
     },
@@ -98,7 +108,8 @@ export default {
       prefLabel_no: 'ukjent'
     },
     {
-      uri: 'http://publications.europa.eu/resource/authority/frequency/UPDATE_CONT',
+      uri:
+        'http://publications.europa.eu/resource/authority/frequency/UPDATE_CONT',
       code: 'UPDATE_CONT',
       prefLabel_no: 'kontinuerlig oppdatert'
     },
@@ -108,14 +119,16 @@ export default {
       prefLabel_no: 'ukentlig'
     },
     {
-      uri: 'http://publications.europa.eu/resource/authority/frequency/WEEKLY_2',
+      uri:
+        'http://publications.europa.eu/resource/authority/frequency/WEEKLY_2',
       code: 'WEEKLY_2',
       prefLabel_no: 'to ganger i uken'
     },
     {
-      uri: 'http://publications.europa.eu/resource/authority/frequency/WEEKLY_3',
+      uri:
+        'http://publications.europa.eu/resource/authority/frequency/WEEKLY_3',
       code: 'WEEKLY_3',
       prefLabel_no: 'tre ganger i uken'
     }
   ]
-}
+};

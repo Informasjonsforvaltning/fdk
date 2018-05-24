@@ -4,4 +4,4 @@ export default {
     name: 'WESTLIE MICHELLE',
     catalogs: null
   }
-}
+};

@@ -2,7 +2,7 @@ import { shallow } from 'enzyme';
 
 const shallowWithStore = (component, store) => {
   const context = {
-    store,
+    store
   };
   return shallow(component, { context });
 };

@@ -1,19 +1,14 @@
-import React from "react";
-import validate from "../../../src/components/reg-form-schema-provenance/formValidations";
 import {
   titleValues,
   accessRightsValues,
   themesValues,
-  typeValues,
   conceptValues,
   spatialValues,
   provenanceValues,
   contentsValues,
   informationModelValues,
-  referenceValues,
   contactPointValues,
-  distributionValues,
-  sampleValues
+  distributionValues
 } from '../../../src/containers/reg-dataset/logic';
 import datasets from '../../fixtures/datasets';
 
