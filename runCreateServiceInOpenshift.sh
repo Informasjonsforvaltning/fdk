@@ -230,6 +230,7 @@ then
 
         #mount persistent storage volumes - midlertidig kommentert ut for reference-data, virker ikke i git bash
         #oc volumes dc/reference-data --add --type=persistentVolumeClaim --claim-name=fdk-tdb --mount-path=/tdb
+        echo Remember to mount /tdb volume manually
 
         #create secure route for reference-data
         oc create route edge --service=reference-data --hostname=reference-data-fellesdatakatalog-$environment.$cluster.brreg.no
@@ -349,8 +350,8 @@ then
         createOpenshiftService harvester
 
         oc env dc/harvester \
-            harvester_adminUsername=changeme \
-            harvester_adminPassword=changeme
+            harvester_adminUsername=test_user \
+            harvester_adminPassword=password
 
         exposeService harvester
     else

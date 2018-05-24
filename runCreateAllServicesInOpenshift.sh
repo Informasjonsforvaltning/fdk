@@ -52,7 +52,6 @@ dateTag=$3
 deploymentmode=$4
 
 
-#midlertidig tatt ut reference-data pga at mounting av volum ikke virker
 services="elasticsearch fuseki reference-data registration-react registration-auth registration-api registration-validator harvester harvester-api search search-api nginx-registration nginx-search"
 
 for i in $services
