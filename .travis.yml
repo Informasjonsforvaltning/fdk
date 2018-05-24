@@ -56,11 +56,6 @@ jobs:
       env:
       - comment=Run regular React unit tests + generate test coverage report
 
-    - stage: Tests # Run regular React unit tests Registration
-          script: cd applications/registration-react && npm install npm -g npm@'>=5.4.2' && npm install && npm test
-          after_success: npm run coverage
-          env:
-          - comment=Run regular React unit tests + generate test coverage report
 
     - stage: Tests # Run unit and integration tests + generate test coverage report
       if: type = cron #run only during nightly cron job - time-consuming operation
