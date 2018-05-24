@@ -48,3 +48,4 @@ beforeEach(() => {
 test('should render InputTagsFieldConcepts correctly', () => {
   expect(wrapper).toMatchSnapshot();
 });
+

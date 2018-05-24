@@ -1,6 +1,6 @@
 export default {
   isFetchingDatasets: false,
-    datasetItems: {
+  datasetItems: {
     _embedded: {
       datasets: [
         {
@@ -249,9 +249,9 @@ export default {
     },
     page: {
       size: 1000,
-        totalElements: 1,
-        totalPages: 1,
-        number: 0
+      totalElements: 1,
+      totalPages: 1,
+      number: 0
     }
   }
 }

@@ -2,11 +2,13 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import AppImportModal from '../../../src/components/app-import-modal';
 
-let defaultProps, wrapper, handleAction, toggle;
+let defaultProps, wrapper, handleAction, toggle, onBtnConfirm, preventDefault;
 
 beforeEach(() => {
   handleAction = jest.fn();
   toggle = jest.fn();
+  onBtnConfirm = jest.fn();
+  preventDefault = jest.fn();
   defaultProps = {
     handleAction,
     toggle,
@@ -23,4 +25,31 @@ beforeEach(() => {
 
 test('should render AppImportModal correctly', () => {
   expect(wrapper).toMatchSnapshot();
+});
+
+test('should handle handleAction', () => {
+  const mockedEvent = {
+    preventDefault
+  };
+  wrapper.setState({
+    url: 'url'
+  });
+  wrapper.find('Button').first().prop('onClick')(mockedEvent);
+  expect(handleAction).toHaveBeenCalled();
+});
+
+test('should handle handleAction', () => {
+  const mockedEvent = {
+    preventDefault
+  };
+  wrapper.find('Button').first().prop('onClick')(mockedEvent);
+  expect(handleAction).not.toHaveBeenCalled();
+});
+
+test('should handle onBtnCancel', () => {
+  const mockedEvent = {
+    preventDefault
+  };
+  wrapper.find('Button').at(1).prop('onClick')(mockedEvent);
+  expect(toggle).toHaveBeenCalled();
 });
