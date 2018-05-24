@@ -1,6 +1,7 @@
 import React from "react";
 import {shallow} from "enzyme";
-import FormDistribution from "../../../src/components/reg-form-schema-distribution/form";
+import FormDistribution, { renderDistributions, renderDistributionLandingpage } from "../../../src/components/reg-form-schema-distribution/form";
+import { distributionTypes } from '../../../src/components/reg-form-schema-distribution/index';
 import helptext from "../../fixtures/helptext";
 import openlicenses from "../../fixtures/openlicenses";
 import distribution from "../../fixtures/distributions";
@@ -12,7 +13,7 @@ beforeEach(() => {
   const {openLicenseItems} = openlicenses;
   defaultProps = {
     initialValues: {
-      distribution,
+      distribution: distributionTypes(distribution),
       openLicenseItems
     },
     helptextItems: helptextItems,
@@ -25,5 +26,12 @@ test('should render FormDistribution correctly', () => {
   expect(wrapper).toMatchSnapshot();
 });
 
+test('should render renderDistributions correctly', () => {
+  wrapper = shallow(renderDistributions(defaultProps));
+  expect(wrapper).toMatchSnapshot();
+});
 
-
+test('should render renderDistributionLandingpage correctly', () => {
+  wrapper = shallow(renderDistributionLandingpage(defaultProps));
+  expect(wrapper).toMatchSnapshot();
+});

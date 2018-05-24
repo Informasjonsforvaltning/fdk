@@ -1,6 +1,6 @@
 import React from "react";
 import {shallow} from "enzyme";
-import FormAccessRights, {renderLegalBasis} from "../../../src/components/reg-form-schema-accessRights/form";
+import FormAccessRights, { renderLegalBasis } from "../../../src/components/reg-form-schema-accessRights/form";
 import helptext from "../../fixtures/helptext";
 
 let defaultProps, wrapper, resetFields;

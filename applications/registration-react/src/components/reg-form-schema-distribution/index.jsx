@@ -13,7 +13,7 @@ const FormDistribution = reduxForm({
   asyncValidate: _throttle(asyncValidate, 250)
 })(Form);
 
-const distributionTypes = values => {
+export const distributionTypes = values => {
   let distributions = null;
   if (values && values.length > 0) {
     distributions = values.map(item => ({

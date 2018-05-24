@@ -812,4 +812,4 @@ Det skal angis distribusjonens type
 </form>
 `;
 
-exports[`should render renderTemporal correctly 1`] = `<div />`;
+exports[`should render renderSamples correctly 1`] = `<div />`;

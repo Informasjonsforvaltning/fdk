@@ -26,7 +26,7 @@ test('should render FormSample correctly', () => {
   expect(wrapper).toMatchSnapshot();
 });
 
-test('should render renderTemporal correctly', () => {
+test('should render renderSamples correctly', () => {
   wrapper = shallow(renderSamples(defaultProps));
   expect(wrapper).toMatchSnapshot();
 });

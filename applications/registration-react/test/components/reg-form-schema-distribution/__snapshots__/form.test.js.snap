@@ -811,3 +811,20 @@ Det skal angis distribusjonens type
   />
 </form>
 `;
+
+exports[`should render renderDistributionLandingpage correctly 1`] = `<div />`;
+
+exports[`should render renderDistributions correctly 1`] = `
+<div>
+  <button
+    className="fdk-btn-no-border"
+    onClick={[Function]}
+    type="button"
+  >
+    <i
+      className="fa fa-plus mr-2"
+    />
+    Legg til distribusjon
+  </button>
+</div>
+`;
