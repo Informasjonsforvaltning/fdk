@@ -266,11 +266,19 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
     }
 
     String removeDuplicatedLines(String input) {
+        Map<String,Integer> countThemAll = new HashMap<>();
+
         List<String> result = new ArrayList<>();
         String[] lines = input.split("\r\n|\r|\n");
         Set<String> uniqueLines = new HashSet<>();
 
-        Arrays.stream(lines).forEach(line -> {
+        Arrays.stream(lines).forEach((String line) -> {
+            if (countThemAll.containsKey(line)) {
+                Integer counter = countThemAll.get(line);
+                countThemAll.put(line, ++counter);
+            } else {
+                countThemAll.put(line, 0);
+            }
             if (!uniqueLines.contains(line)) {
 
                 result.add(line);
@@ -280,7 +288,14 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
 
         logger.info("Original {} lines, {} unique lines, removed {} duplicated lines", lines.length, uniqueLines.size(), lines.length - uniqueLines.size());
 
-        return result.stream().collect(Collectors.joining("\n"));
+        return result.stream().map(line -> {
+            Integer counter = countThemAll.get(line);
+            if (counter > 1) {
+                return line + " (Occurs " + counter + " times)";
+            } else {
+                return line;
+            }
+        }).collect(Collectors.joining("\n"));
     }
 
     void stopHarvestLogAndReport(DcatSource dcatSource, List<String> validationResults) {
@@ -291,7 +306,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
                 rootLogger.detachAppender(fileAppender);
                 fileAppender.stop();
 
-                logger.info("stopping harvesterlogging");
+                logger.info("stopped harvesterlogging");
 
                 String dcatSyntaxValidation = validationResults != null ? validationResults.stream().map(Object::toString).collect(Collectors.joining("\n")) : "";
                 //get contents from harvest log file
@@ -313,7 +328,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
                             semanticValidation + "\n\n" +
                             "----- the end ------\n";
 
-                    logger.info("EMAIL-MESSAGE: {}", message);
+                    logger.debug("EMAIL-MESSAGE: {}", message);
 
                     notificationService.sendValidationResultNotification(
                             notificationEmailSender,
