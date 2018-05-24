@@ -375,8 +375,6 @@
 						<jacocoReport>applications/end2end-test/target/site/jacoco-it/jacoco.xml</jacocoReport>
 						<jacocoReport>applications/end2end-test/target/site/jacoco-ut/jacoco.xml</jacocoReport>
 						-->
-						<jacocoReport>applications/gdoc/target/site/jacoco-it/jacoco.xml</jacocoReport>
-						<jacocoReport>applications/gdoc/target/site/jacoco-ut/jacoco.xml</jacocoReport>
 						<jacocoReport>applications/harvester/target/site/jacoco-it/jacoco.xml</jacocoReport>
 						<jacocoReport>applications/harvester/target/site/jacoco-ut/jacoco.xml</jacocoReport>
 						<jacocoReport>applications/harvester-api/target/site/jacoco-it/jacoco.xml</jacocoReport>

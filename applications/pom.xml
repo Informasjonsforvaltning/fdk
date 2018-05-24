@@ -34,7 +34,6 @@
         <module>harvester</module>
 
         <module>dev-management</module>
-        <module>gdoc</module>
         <module>migration</module>
 
         <module>end2end-test</module>
