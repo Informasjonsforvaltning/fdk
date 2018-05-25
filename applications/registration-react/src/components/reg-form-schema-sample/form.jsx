@@ -5,21 +5,9 @@ import { Field, FieldArray } from 'redux-form';
 import Helptext from '../reg-form-helptext';
 import InputField from '../reg-form-field-input';
 import InputTagsField from '../reg-form-field-input-tags';
+import TextAreaField from '../reg-form-field-textarea';
 import asyncValidate from '../../utils/asyncValidate';
 import { textType, licenseType } from '../../schemaTypes';
-
-const renderSampleLandingpage = componentProps => (
-  <div>
-    {componentProps.fields.map((item, index) => (
-      <Field
-        key={index}
-        name={`${item}.uri`}
-        component={InputField}
-        label="Landingsside"
-      />
-    ))}
-  </div>
-);
 
 export const renderSamples = componentProps => {
   const { fields, helptextItems } = componentProps;
@@ -49,6 +37,18 @@ export const renderSamples = componentProps => {
             </div>
             <div className="form-group">
               <Helptext
+                title="Tilgangslenke"
+                helptextItems={helptextItems.Distribution_accessURL}
+              />
+              <Field
+                name={`${sample}.accessURL.0`}
+                type="text"
+                component={InputField}
+                label="Tilgangs URL"
+              />
+            </div>
+            <div className="form-group">
+              <Helptext
                 title="Format"
                 helptextItems={helptextItems.Distribution_format}
               />
@@ -61,13 +61,13 @@ export const renderSamples = componentProps => {
             </div>
             <div className="form-group">
               <Helptext
-                title="Lenke til dokumentasjon av distribusjonen"
-                helptextItems={helptextItems.Distribution_documentation}
+                title="Beskrivelse"
+                helptextItems={helptextItems.Distribution_description}
               />
-              <FieldArray
-                name={`${sample}.page`}
-                component={renderSampleLandingpage}
-                helptextItems={helptextItems}
+              <Field
+                name={`${sample}.description.nb`}
+                component={TextAreaField}
+                label="Beskrivelse"
               />
             </div>
           </div>
