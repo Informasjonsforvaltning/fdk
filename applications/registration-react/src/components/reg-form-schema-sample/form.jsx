@@ -5,9 +5,6 @@ import { Field, FieldArray } from 'redux-form';
 import Helptext from '../reg-form-helptext';
 import InputField from '../reg-form-field-input';
 import InputTagsField from '../reg-form-field-input-tags';
-import TextAreaField from '../reg-form-field-textarea';
-import RadioField from '../reg-form-field-radio';
-import SelectField from '../reg-form-field-select';
 import asyncValidate from '../../utils/asyncValidate';
 import { textType, licenseType } from '../../schemaTypes';
 
@@ -25,7 +22,7 @@ const renderSampleLandingpage = componentProps => (
 );
 
 export const renderSamples = componentProps => {
-  const { fields, helptextItems, openLicenseItems } = componentProps;
+  const { fields, helptextItems } = componentProps;
   return (
     <div>
       {fields &&
@@ -52,48 +49,6 @@ export const renderSamples = componentProps => {
             </div>
             <div className="form-group">
               <Helptext
-                title="Type"
-                helptextItems={helptextItems.Dataset_example}
-              />
-              <Field
-                name={`${sample}.type`}
-                radioId="sample-api"
-                component={RadioField}
-                type="radio"
-                value="API"
-                label="API"
-              />
-              <Field
-                name={`${sample}.type`}
-                radioId="sample-feed"
-                component={RadioField}
-                type="radio"
-                value="Feed"
-                label="Feed"
-              />
-              <Field
-                name={`${sample}.type`}
-                radioId="sample-file"
-                component={RadioField}
-                type="radio"
-                value="Nedlastbar fil"
-                label="Nedlastbar fil"
-              />
-            </div>
-            <div className="form-group">
-              <Helptext
-                title="Tilgangs URL"
-                helptextItems={helptextItems.Distribution_accessURL}
-              />
-              <Field
-                name={`${sample}.accessURL.0`}
-                type="text"
-                component={InputField}
-                label="Tilgangs URL"
-              />
-            </div>
-            <div className="form-group">
-              <Helptext
                 title="Format"
                 helptextItems={helptextItems.Distribution_format}
               />
@@ -106,29 +61,6 @@ export const renderSamples = componentProps => {
             </div>
             <div className="form-group">
               <Helptext
-                title="Lisens"
-                helptextItems={helptextItems.Distribution_modified}
-              />
-              <Field
-                name={`${sample}.license`}
-                component={SelectField}
-                items={openLicenseItems}
-              />
-            </div>
-            <div className="form-group">
-              <Helptext
-                title="Beskrivelse"
-                helptextItems={helptextItems.Distribution_description}
-              />
-              <Field
-                name={`${sample}.description.nb`}
-                component={TextAreaField}
-                label="Beskrivelse"
-              />
-            </div>
-
-            <div className="form-group">
-              <Helptext
                 title="Lenke til dokumentasjon av distribusjonen"
                 helptextItems={helptextItems.Distribution_documentation}
               />
@@ -137,31 +69,6 @@ export const renderSamples = componentProps => {
                 component={renderSampleLandingpage}
                 helptextItems={helptextItems}
               />
-            </div>
-
-            <div className="form-group">
-              <Helptext
-                title="Standard"
-                helptextItems={helptextItems.Distribution_conformsTo}
-              />
-              <div className="d-flex">
-                <div className="w-50">
-                  <Field
-                    name={`${sample}.conformsTo[0].prefLabel.nb`}
-                    component={InputField}
-                    showLabel
-                    label="Tittel"
-                  />
-                </div>
-                <div className="w-50">
-                  <Field
-                    name={`${sample}.conformsTo[0].uri`}
-                    component={InputField}
-                    showLabel
-                    label="Lenke"
-                  />
-                </div>
-              </div>
             </div>
           </div>
         ))}
@@ -192,26 +99,21 @@ export const renderSamples = componentProps => {
 };
 
 export const FormSample = props => {
-  const { helptextItems, initialValues } = props;
-  const { openLicenseItems } = initialValues;
+  const { helptextItems } = props;
   return (
     <form>
       <FieldArray
         name="sample"
         component={renderSamples}
         helptextItems={helptextItems}
-        openLicenseItems={openLicenseItems}
       />
     </form>
   );
 };
 
-FormSample.defaultProps = {
-  initialValues: null
-};
+FormSample.defaultProps = {};
 
 FormSample.propTypes = {
-  initialValues: PropTypes.object,
   helptextItems: PropTypes.object.isRequired
 };
 
