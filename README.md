@@ -4,9 +4,10 @@
 # The National Data Directory (Felles datakatalog)
 
 This repository contains the source code for the [National Data Directory](https://fellesdatakatalog.brreg.no) of Norway. 
-The work was funded and led by the [Brønnøysund Register Centre](https://www.brreg.no/home/) and the Data Directory was launched November 2017. 
+The work is led by the [Brønnøysund Register Centre](https://www.brreg.no/home/) and the Data Directory was launched November 2017. 
 The Data Directory contains metadata about the datasets that the various Governmental bodies maintain in their data catalogs. 
 We provide a search service that allow users to discover datasets and where they are kept. 
+The content of the data catalog is harvested once a day from several more specific data catalogs including the registration application.  
 The data catalogs are formatted according to the Norwegian profile [DCAT-AP-NO 1.1](https://doc.difi.no/dcat-ap-no/)
 of the [European profile](https://joinup.ec.europa.eu/release/dcat-ap-v11) of [W3C's Data Catalog standard](https://www.w3.org/TR/vocab-dcat/). 
 
@@ -24,6 +25,10 @@ som skal bidra til å bedre integrasjon mellom offentlige virksomheter og bedre 
 Systemet er basert på en norsk profil [DCAT-AP-NO 1.1](https://doc.difi.no/dcat-ap-no/),
 av en [Europeisk profil](https://joinup.ec.europa.eu/release/dcat-ap-v11) av [W3C Datakatalog standard](https://www.w3.org/TR/vocab-dcat/)
 for utveksling av datasettbeskrivelser. 
+
+# Contact
+
+If you have any questions please send them to [fellesdatakatalog@brreg.no](mailto:fellesdatakatalog@brreg.no).
 
 # Usage
 
@@ -44,7 +49,7 @@ This means that you do not have to compile the project to run it. But you need d
 You need to download the following two files [docker-compose.yml](/docker-compose.yml) and
 [docker-compose.override.yml](/docker-compose.override.yml). And then you can run the following command:
 
-        `docker-compose up -d`.
+        docker-compose up -d
 
 # Modules 
 
@@ -95,10 +100,8 @@ there is no data registered in the repositories (see the harvester application)
 This starts the harvester application with the corresponding harvester-api. 
   - Log in to the administration application on [http://localhost:8082](http://localhost:8082).
       You will need a username and a password for the application (test_user, password). 
-  - Next you need to register a catalog to be harvested. Try to register the following url: 
-    [http://gdoc-fdk.tt1.brreg.no/versions/latest](http://gdoc-fdk.tt1.brreg.no/versions/latest)
-    Alternatively start the gdoc application and enter the following url 
-    [http://localhost:8084/versions/latest](http://localhost:8084/versions/latest)
+  - Next you need to register a catalog to be harvested. You may use the registration application to register data about datasets which can be harvested here. 
+    [http://registration-api:8080/catalogs/123456699](http://registration-api:8080/catalogs/123456699) given your catalog has id 123456699.    
 
 ## Registration application:
 >`docker-compose up -d registration`
@@ -127,57 +130,21 @@ run and test the code.
  - Travis: https://travis-ci.org/Altinn/fdk
  - Coveralls: https://coveralls.io/github/Altinn/fdk
 
-The travis config file has two main sections.
-
-```$yml
- -- SECTION 1 --
-language: java
-...
-install:
- ...
-
- -- SECTION 2 --
-jobs:
-  include:
-    - stage: Build
-      script: mvn install ...
-   ...
-
-```
-
-Section 1 covers setup and configuration of travis, while section 2 covers the 
-instructions for how to build and test the system. Each section has multiple phases. We use 
-`before_install` and `install` in section 1, and `jobs` in section 2. Take a look at the `.travis.yml` file, 
-it has inline comments for what is done in each stage.
-
-Our Travis is set up to use Java as the main language. To support javascript we install nodejs 
-version 6 in the before_install phase. Travis also supports running up docker containers and running
-Chrome for automated e2e tests.
-
-Section 2, covering how to build and test is a bit fiddly. In Jobs -> include ; there 
-are many stages. Each stage runs after the previous stage, but on a clean VM. So no files are shared
-between stages. Many of the stages have the same name, this makes Travis run them in parallel.
-Since there is no shared data between the stages, building must happen for each stage. The reason 
-for not having building in the install phase in section 1 is that maven produces a lot of useful output,
-but too much output. The build stage outputs all info from maven, while all the test stages forward 
-all the output to `/dev/null`. The maven builds in the test stages build in parallel with the arguments
-`-T 2C` which means: use 2 threads per core. 
+Our Travis is set up to use Java jdk8 as the main language. To support javascript we install nodejs 
+version 8. Travis also supports running up docker containers and running
+Chrome for automated e2e tests. 
 
 Coveralls is enabled by having the `org.eluder.coveralls` plugin for maven in the root `pom.xml`. 
 Travis automatically injects the api key for Coveralls. Coveralls will comment on a pull request with the 
 coverage % for every successful build in Travis. 
 
-Bjørn is the user who has admin access to Travis and to Coveralls since he has admin access to the git 
-repo in Github.
-
-There is no other configuration of Travis or Coveralls besides what has been mentioned here.
-
-
  
-## Common Problems
+## Common Docker Problems
+
+Some times docker can be a bit overworked and one might need to clean up.
 
 Solution: remove old containers
-bash: docker rm -f $(docker ps -aq)
+> `bash: docker rm -f $(docker ps -aq)`
 
 Remove old images
-bash: docker rmi -f $(docker images -q)
+>  `bash: docker rmi -f $(docker images -q)`

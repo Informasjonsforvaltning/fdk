@@ -25,6 +25,8 @@ import {
 } from '../../utils/addOrReplaceUrlParam';
 import './index.scss';
 
+const ReactGA = require('react-ga');
+
 const browser = detect();
 
 export class SearchPage extends React.Component {
@@ -160,6 +162,11 @@ export class SearchPage extends React.Component {
   handleDatasetFilterThemes(event) {
     const { theme } = this.state.searchQuery;
     if (event.target.checked) {
+      ReactGA.event({
+        category: 'Fasett',
+        action: 'Legge til tema',
+        label: event.target.value
+      });
       this.setState(
         {
           searchQuery: {
@@ -172,6 +179,11 @@ export class SearchPage extends React.Component {
           this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
       );
     } else {
+      ReactGA.event({
+        category: 'Fasett',
+        action: 'Fjerne tema',
+        label: event.target.value
+      });
       this.setState(
         {
           searchQuery: {
@@ -189,6 +201,11 @@ export class SearchPage extends React.Component {
   handleDatasetFilterAccessRights(event) {
     const { accessrights } = this.state.searchQuery;
     if (event.target.checked) {
+      ReactGA.event({
+        category: 'Fasett',
+        action: 'Legge til tilgang',
+        label: event.target.value
+      });
       this.setState(
         {
           searchQuery: {
@@ -201,6 +218,11 @@ export class SearchPage extends React.Component {
           this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
       );
     } else {
+      ReactGA.event({
+        category: 'Fasett',
+        action: 'Fjerne tilgang',
+        label: event.target.value
+      });
       this.setState(
         {
           searchQuery: {
@@ -246,6 +268,11 @@ export class SearchPage extends React.Component {
 
   handleDatasetFilterPublisherHierarchy(event) {
     if (event.target.checked) {
+      ReactGA.event({
+        category: 'Fasett',
+        action: 'Legge til virksomhet',
+        label: event.target.value
+      });
       this.setState(
         {
           searchQuery: {
@@ -258,6 +285,11 @@ export class SearchPage extends React.Component {
           this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
       );
     } else {
+      ReactGA.event({
+        category: 'Fasett',
+        action: 'Fjerne virksomhet',
+        label: event.target.value
+      });
       this.setState(
         {
           searchQuery: {
@@ -274,6 +306,12 @@ export class SearchPage extends React.Component {
 
   handleDatasetSort(event) {
     let sortField = event.field;
+
+    ReactGA.event({
+      category: 'Sortere',
+      action: 'Sortere',
+      label: sortField
+    });
 
     if (sortField === '_score') {
       this.setState(
@@ -308,6 +346,13 @@ export class SearchPage extends React.Component {
   handlePageChange(data) {
     const selected = data.selected;
     const offset = Math.ceil(selected * 50);
+
+    ReactGA.event({
+      category: 'Paginering',
+      action: 'Ny side',
+      label: offset
+    });
+
     if (offset === 0) {
       this.setState(
         {

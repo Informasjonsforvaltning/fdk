@@ -4,42 +4,14 @@ import no.dcat.harvester.HarvesterApplication;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.NodeIterator;
-import org.apache.jena.rdf.model.ResIterator;
-import org.apache.jena.rdf.model.Resource;
-import org.apache.jena.sparql.vocabulary.FOAF;
 import org.apache.jena.util.FileManager;
 import org.apache.jena.vocabulary.RDF;
-import org.junit.Ignore;
 import org.junit.Test;
 
-import java.io.File;
-import java.net.URL;
-import java.nio.file.Paths;
-
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+
 public class BrregAgentConverterTest {
-	
-	@Test
-	public void testConvertBrregFile() throws Exception {
-		BrregAgentConverter converter = new BrregAgentConverter(HarvesterApplication.getBrregCache());
-		
-		Model model = ModelFactory.createDefaultModel();
-		
-		URL uri = Paths.get("src/test/resources/brreg/814716902.xml").toUri().toURL();
-
-		String currentPath = new File(new File(".").getAbsolutePath()).toString().replace(".","");
-
-		converter.setPublisherIdURI("file:////"+ currentPath + "/src/test/resources/brreg/%s");
-		converter.collectFromUri(uri.toString(), model, model.createResource("http://data.brreg.no/enhetsregisteret/underenhet/814716902"));
-
-
-		ResIterator iterator = model.listResourcesWithProperty(RDF.type);
-
-		assertEquals("Expected model to contain one resource.", "http://data.brreg.no/enhetsregisteret/underenhet/814716902", iterator.nextResource().getURI());
-		assertEquals("Expected model to contain one resource.", "http://data.brreg.no/enhetsregisteret/enhet/814716872", iterator.nextResource().getURI());
-	}
 
 	@Test
 	public void testConvertBrregFileBlankNode() throws Exception {
@@ -65,31 +37,6 @@ public class BrregAgentConverterTest {
 		
 		assertTrue("Expected empty model", listObjectsOfProperty.toList().isEmpty());
 	}
-
-	@Test
-	public void testWrongUrlFiletypeEnding() throws Exception {
-		BrregAgentConverter converter = new BrregAgentConverter(HarvesterApplication.getBrregCache());
-
-		Model model = ModelFactory.createDefaultModel();
-
-		URL uri = Paths.get("src/test/resources/brreg/814716902.json").toUri().toURL();
-
-		String currentPath = new File(new File(".").getAbsolutePath()).toString().replace(".","");
-
-		Resource resource = model.createResource("http://test.no/resource/1");
-
-		converter.setPublisherIdURI("file:////"+ currentPath + "/src/test/resources/brreg/%s");
-		converter.collectFromUri(uri.toString(), model,resource);
-
-		//model.write(System.out, "TTL");
-
-		ResIterator iterator = model.listResourcesWithProperty(RDF.type);
-
-		assertEquals("Expected model to contain one resource.", "http://data.brreg.no/enhetsregisteret/underenhet/814716902", iterator.nextResource().getURI());
-		assertEquals("Expected model to contain one resource.", "http://data.brreg.no/enhetsregisteret/enhet/814716872", iterator.nextResource().getURI());
-  }
-  
-
 
 
 }

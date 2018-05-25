@@ -25,11 +25,6 @@ services:
     networks:
       platform:
 
-  gdoc:
-    image: dcatno/gdoc:latest
-    networks:
-      platform:
-
   fuseki:
     image: dcatno/fuseki:latest
     networks:

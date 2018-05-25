@@ -3,19 +3,26 @@ package no.dcat.harvester.crawler.converters;
 import no.dcat.datastore.domain.dcat.vocabulary.DCATNO;
 import no.dcat.harvester.HarvesterApplication;
 import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.NodeIterator;
+import org.apache.jena.rdf.model.ResIterator;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.sparql.vocabulary.FOAF;
 import org.apache.jena.util.FileManager;
 import org.apache.jena.vocabulary.DCTerms;
+import org.apache.jena.vocabulary.RDF;
 import org.hamcrest.core.Is;
 import org.junit.Assert;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.ClassPathResource;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.OutputStream;
+import java.net.URL;
+import java.nio.file.Paths;
 
 import static org.junit.Assert.assertEquals;
 
@@ -208,6 +215,26 @@ public class BrregAgentConverterEnhetsregIT {
         String publisherUri = hitraKommune.getProperty(DCATNO.organizationPath).getString();
 
         Assert.assertThat(publisherUri, Is.is("/KOMMUNE/938772924"));
+    }
+
+    @Test
+    public void testConvertUrl() throws Exception {
+        BrregAgentConverter converter = new BrregAgentConverter(HarvesterApplication.getBrregCache());
+
+        Model model = ModelFactory.createDefaultModel();
+
+        String enhetsUri = "http://data.brreg.no/enhetsregisteret/enhet/981544315";
+
+        URL uri = new URL(enhetsUri);
+
+        converter.collectFromUri(uri.toString(), model, model.createResource(enhetsUri));
+
+        ResIterator iterator = model.listResourcesWithProperty(RDF.type);
+
+        assertEquals("Expected model to contain one resource.", "http://data.brreg.no/enhetsregisteret/enhet/972417874", iterator.nextResource().getURI());
+        assertEquals("Expected model to contain one resource.", enhetsUri, iterator.nextResource().getURI());
+
+        model.write(System.out, "TURTLE");
     }
 
 }

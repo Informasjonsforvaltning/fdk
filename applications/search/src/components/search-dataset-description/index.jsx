@@ -51,7 +51,7 @@ export default class DatasetDescription extends React.Component {
         <div
           key={`dataset-description-theme-${singleTheme.code}`}
           id={`dataset-description-theme-${singleTheme.code}`}
-          className="fdk-label fdk-label-on-grey"
+          className="fdk-label fdk-label-on-grey mr-2 mb-2"
         >
           {getTranslateText(singleTheme.title, selectedLanguageCode)}
         </div>

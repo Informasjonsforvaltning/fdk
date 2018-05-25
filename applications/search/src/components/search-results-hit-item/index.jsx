@@ -71,7 +71,10 @@ const renderThemes = (source, selectedLanguageCode) => {
   const { theme } = source;
   if (theme) {
     themeNodes = theme.map((singleTheme, index) => (
-      <div key={`dataset-description-theme-${index}`} className="fdk-label">
+      <div
+        key={`dataset-description-theme-${index}`}
+        className="fdk-label mr-2 mb-2"
+      >
         <span className="uu-invisible" aria-hidden="false">
           Datasettets tema.
         </span>

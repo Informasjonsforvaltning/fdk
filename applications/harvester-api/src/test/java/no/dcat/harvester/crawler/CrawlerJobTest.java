@@ -170,7 +170,6 @@ public class CrawlerJobTest {
         assertThat(orgPats.contains("/STAT/912660680"), is(true));
         assertThat(orgPats.contains("/STAT/912660680/974760673"), is(true));
 
-
     }
 
     @Test(expected = RiotException.class)
