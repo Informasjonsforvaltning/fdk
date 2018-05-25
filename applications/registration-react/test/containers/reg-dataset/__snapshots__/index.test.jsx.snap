@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render RegDataset correctly 1`] = `
+<div
+  className="container"
+>
+  <div
+    className="row mb-2 mb-md-5"
+  >
+    <div
+      className="col-md-2"
+    >
+      <i
+        className="fa fa-arrow-left mr-2"
+      />
+      <Link
+        className="fdk-text-size-small fdk-color1 font-weight-light"
+        replace={false}
+        to=""
+      >
+        Tilbake til katalogen
+      </Link>
+    </div>
+    <div
+      className="col-md-2"
+    />
+  </div>
+</div>
+`;

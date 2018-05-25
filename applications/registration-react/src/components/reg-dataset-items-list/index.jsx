@@ -15,22 +15,25 @@ const handleCreateDataset = () => {
 
   const header = {
     Accept: 'application/json'
-  }
+  };
 
   const getInit = {
     headers: header,
     credentials: 'same-origin'
   };
 
-  return axios.post(
-    `${catalogURL}/${datasetPath}`, getInit
-  ).then((response) => {
-    window.location.replace(`${catalogURL}/${datasetPath}${response.data.id}`);
-  }).catch((response) => {
-    const { error } = response;
-    return Promise.reject(error);
-  });
-}
+  return axios
+    .post(`${catalogURL}/${datasetPath}`, getInit)
+    .then(response => {
+      window.location.replace(
+        `${catalogURL}/${datasetPath}${response.data.id}`
+      );
+    })
+    .catch(response => {
+      const { error } = response;
+      return Promise.reject(error);
+    });
+};
 
 class DatasetItemsList extends React.Component {
   constructor(props) {
@@ -66,21 +69,24 @@ class DatasetItemsList extends React.Component {
 
     const header = {
       Accept: 'application/json'
-    }
+    };
 
     const getInit = {
       headers: header,
       credentials: 'same-origin'
     };
 
-    return axios.post(
-      `${catalogURL}`, url, getInit
-    ).then((response) => {
-      window.location.replace(`${catalogURL}/${datasetPath}${response.data.id}`);
-    }).catch((response) => {
-      const { error } = response;
-      return Promise.reject(error);
-    });
+    return axios
+      .post(`${catalogURL}`, url, getInit)
+      .then(response => {
+        window.location.replace(
+          `${catalogURL}/${datasetPath}${response.data.id}`
+        );
+      })
+      .catch(response => {
+        const { error } = response;
+        return Promise.reject(error);
+      });
 
     /*
      this.service.import(this.catalog, this.import.datasetImportUrl).then(() => {
@@ -115,46 +121,56 @@ class DatasetItemsList extends React.Component {
 
   _renderDatasetItems() {
     const { catalogId, datasetItems } = this.props;
-    if (datasetItems && datasetItems._embedded && datasetItems._embedded.datasets) {
+    if (
+      datasetItems &&
+      datasetItems._embedded &&
+      datasetItems._embedded.datasets
+    ) {
       if (this.state.sortField === 'title') {
         // order by title and ignore case
         datasetItems._embedded.datasets = orderBy(
           datasetItems._embedded.datasets,
-          [item => {
-            const { nb } = item.title;
-            if (nb) {
-              return nb.toLowerCase();
+          [
+            item => {
+              const { nb } = item.title;
+              if (nb) {
+                return nb.toLowerCase();
+              }
+              return null;
             }
-            return null;
-          }],
+          ],
           [this.state.sortType]
         );
       } else if (this.state.sortField === 'registrationStatus') {
-        datasetItems._embedded.datasets = orderBy(datasetItems._embedded.datasets, 'registrationStatus', [this.state.sortType]);
+        datasetItems._embedded.datasets = orderBy(
+          datasetItems._embedded.datasets,
+          'registrationStatus',
+          [this.state.sortType]
+        );
       }
 
       return datasetItems._embedded.datasets.map(item => (
-        <DatasetItemsListItem
-          key={item.id}
-          catalogId={catalogId}
-          item={item}
-        />
+        <DatasetItemsListItem key={item.id} catalogId={catalogId} item={item} />
       ));
     }
     return (
       <div className="fdk-datasets-list-item d-flex">
-        <span className="fdk-text-size-small fdk-color2">{localization.datasets.list.missingItems}</span>
+        <span className="fdk-text-size-small fdk-color2">
+          {localization.datasets.list.missingItems}
+        </span>
       </div>
     );
-
   }
 
   render() {
-    const { sortField, sortType} = this.state;
+    const { sortField, sortType } = this.state;
     return (
       <div>
         <div className="d-flex mb-3">
-          <button className="fdk-button fdk-button-cta" onClick={handleCreateDataset}>
+          <button
+            className="fdk-button fdk-button-cta"
+            onClick={handleCreateDataset}
+          >
             <i className="fa fa-plus fdk-color0 mr-2" />
             {localization.datasets.list.btnNewDataset}
           </button>
@@ -168,7 +184,6 @@ class DatasetItemsList extends React.Component {
         </div>
 
         <div className="fdk-datasets-list-header d-flex">
-
           <div className="d-flex align-items-center w-75">
             <span className="header-item mr-1">
               {localization.datasets.list.header.title}
@@ -210,10 +225,12 @@ class DatasetItemsList extends React.Component {
 }
 
 DatasetItemsList.defaultProps = {
+  datasetItems: null
 };
 
 DatasetItemsList.propTypes = {
-  catalogId: PropTypes.string.isRequired
+  catalogId: PropTypes.string.isRequired,
+  datasetItems: PropTypes.object
 };
 
 export default DatasetItemsList;

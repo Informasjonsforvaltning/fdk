@@ -1,0 +1,99 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render FormCatalog correctly 1`] = `
+<form
+  className="mb-5 fdk-reg-catalogs"
+>
+  <div
+    className="d-none"
+  >
+    <Field
+      component={[Function]}
+      label="Beskrivelse"
+      name="id"
+    />
+  </div>
+  <div
+    className="d-flex align-items-center justify-content-between"
+  >
+    <div
+      className="fdk-title-input"
+    >
+      <Field
+        component={[Function]}
+        hideInput={false}
+        label="Tittel"
+        name="title.nb"
+        onToggleTitle={[Function]}
+      />
+    </div>
+  </div>
+  <div
+    className="fdk-reg_collapse fdk-reg_backgroundDefault fdk-datasets-description"
+  >
+    <div
+      className="d-flex justify-content-between w-100"
+    >
+      <div
+        className="d-flex fdk-color1"
+      >
+        Beskrivelse
+      </div>
+      <button
+        onClick={[Function]}
+      >
+        <i
+          className="fa fa-pencil mr-2"
+        />
+        Rediger beskrivelse
+      </button>
+    </div>
+    <Collapse
+      appear={false}
+      className="mt-3"
+      enter={true}
+      exit={true}
+      in={false}
+      isOpen={false}
+      mountOnEnter={false}
+      onEnter={[Function]}
+      onEntered={[Function]}
+      onEntering={[Function]}
+      onExit={[Function]}
+      onExited={[Function]}
+      onExiting={[Function]}
+      tag="div"
+      timeout={350}
+      unmountOnExit={false}
+    >
+      <div
+        className="form-group"
+      >
+        <Helptext
+          helptextItems={
+            Object {
+              "description": Object {
+                "nb": "Kortfattet om katalogen
+* Angi, uten å liste, hvilke datasett den omfatter, 
+* f.eks. datasettene til Brønnøysundregistrene.",
+              },
+              "id": "Catalog_title",
+              "shortdesc": Object {
+                "nb": "Kortfattet om katalogen. Angi, uten å liste, hvilke datasett den omfatter.",
+              },
+              "uri": "http://brreg.no/fdk/fields#Catalog_title",
+            }
+          }
+          required={true}
+          title="Beskrivelse"
+        />
+        <Field
+          component={[Function]}
+          label="Beskrivelse"
+          name="description.nb"
+        />
+      </div>
+    </Collapse>
+  </div>
+</form>
+`;

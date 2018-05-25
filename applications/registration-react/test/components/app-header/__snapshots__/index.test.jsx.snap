@@ -1,0 +1,152 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render Header correctly 1`] = `
+<header>
+  <div>
+    <a
+      aria-hidden="true"
+      className="uu-invisible"
+      href="blank#content"
+      id="focus-element"
+    >
+      Hopp til hovedinnhold
+    </a>
+  </div>
+  <div
+    id="skip-link-wrap"
+  >
+    <a
+      href="blank#content"
+      id="skip-link"
+    >
+      Hopp til hovedinnhold
+    </a>
+  </div>
+  <div
+    className="fdk-header-beta"
+  >
+    Dette er en beta-versjon. 
+    <br
+      className="d-md-none"
+    />
+    Gi oss gjerne 
+    <a
+      className="white-link"
+      href="mailto:fellesdatakatalog@brreg.no"
+    >
+      tilbakemeldinger
+    </a>
+     
+    om hva du synes!
+  </div>
+  <div
+    className="fdk-header"
+  >
+    <div
+      className="container"
+    >
+      <div
+        className="row"
+      >
+        <div
+          className="col-6 col-md-4"
+        >
+          <a
+            href="/"
+            title="Link til Felles datakatalog"
+          >
+            <span
+              aria-hidden="false"
+              className="uu-invisible"
+            >
+              Gå til forside
+            </span>
+            <img
+              alt="Logo for Felles datakatalog"
+              className="fdk-logo"
+              src="/static/img/fdk-logo@2x.png"
+            />
+          </a>
+        </div>
+        <div
+          className="col-6 col-md-4 d-flex justify-content-center align-items-center"
+        >
+          <span>
+            <strong>
+              Registrering
+            </strong>
+          </span>
+        </div>
+        <div
+          className="col-md-4 d-flex align-items-center fdk-header-text_items justify-content-end"
+        >
+          <div
+            className="fdk-margin-right-double fdk-auth-link"
+          >
+            <a
+              href="null/login"
+            >
+              Logg inn
+            </a>
+          </div>
+          <div>
+            <Dropdown
+              className="btn-group-default"
+              dropup={false}
+              isOpen={false}
+              nav={false}
+              toggle={[Function]}
+            >
+              <DropdownToggle
+                aria-haspopup={true}
+                caret={true}
+                className="fdk-button fdk-button-default fdk-button-menu dropdown-toggle btn-default"
+                color="secondary"
+              >
+                <i
+                  className="fa fa-bars fdk-fa-dark fdk-fa-left"
+                />
+                <span>
+                  Meny
+                </span>
+              </DropdownToggle>
+              <DropdownMenu
+                flip={true}
+                tag="div"
+              >
+                <a
+                  className="dropdown-item"
+                  href="https://doc.difi.no/data/veileder-for-beskrivelse-av-datasett/"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                  title="Veileder"
+                >
+                  Veileder
+                </a>
+                <a
+                  className="dropdown-item"
+                  href="https://doc.difi.no/dcat-ap-no/"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                  title="Standard"
+                >
+                  Standard
+                </a>
+                <a
+                  className="dropdown-item"
+                  href="https://fellesdatakatalog.brreg.no"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                  title="Felles datakatalog"
+                >
+                  Felles datakatalog
+                </a>
+              </DropdownMenu>
+            </Dropdown>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+`;

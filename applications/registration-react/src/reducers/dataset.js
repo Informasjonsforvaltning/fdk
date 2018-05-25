@@ -1,6 +1,13 @@
-import { DATASET_REQUEST, DATASET_SUCCESS, DATASET_FAILURE } from '../constants/ActionTypes';
+import {
+  DATASET_REQUEST,
+  DATASET_SUCCESS,
+  DATASET_FAILURE
+} from '../constants/ActionTypes';
 
-export default function dataset(state = { isFetching: false, result: null }, action) {
+export default function dataset(
+  state = { isFetching: false, result: null },
+  action
+) {
   switch (action.type) {
     case DATASET_REQUEST: {
       return {

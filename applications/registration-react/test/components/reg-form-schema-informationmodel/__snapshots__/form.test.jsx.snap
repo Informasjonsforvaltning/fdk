@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render FormInformationModel, { renderS correctly 1`] = `
+<form>
+  <div
+    className="form-group"
+  >
+    <div
+      className="mt-4"
+    >
+      <div
+        className="form-group"
+      >
+        <Helptext
+          helptextItems={
+            Object {
+              "description": Object {
+                "nb": "En eksplisitt referanse til informasjonsmodell
+* Benyttes til å angi en maskinlesbar referanse til informasjonsmodell.",
+              },
+              "id": "Dataset_informationModel",
+              "shortdesc": Object {
+                "nb": "Refereranse til datasettets informasjonsmodell",
+              },
+              "uri": "http://brreg.no/fdk/fields#Dataset_informationModel",
+            }
+          }
+          required={false}
+          title="Informasjonsmodell"
+        />
+        <FieldArray
+          component={[Function]}
+          linkLabel="Lenke"
+          name="informationModel"
+          titleLabel="Tittel"
+        />
+      </div>
+    </div>
+  </div>
+</form>
+`;
+
+exports[`should render renderInformationModel correctly 1`] = `<div />`;

@@ -9,9 +9,7 @@ import axios from 'axios';
 import Modal from '../app-modal';
 import AppDeleteModal from '../app-delete-modal';
 import localization from '../../utils/localization';
-import {
-  publishDataset
-} from '../../actions/index';
+import { publishDataset } from '../../actions/index';
 import './index.scss';
 
 export default class DatasetPublish extends Component {
@@ -40,11 +38,11 @@ export default class DatasetPublish extends Component {
     const { syncErrors, distributionErrors } = this.props;
     const postURL = window.location.pathname;
     const api = {
-      Authorization: `Basic ${  null}`
-    }
+      Authorization: `Basic ${null}`
+    };
     const values = {
       registrationStatus: value
-    }
+    };
 
     let foundDistributionErrors = false;
     if (distributionErrors) {
@@ -59,30 +57,31 @@ export default class DatasetPublish extends Component {
     }
 
     let allowedToPublish = false;
-    if ( (value === 'PUBLISH' && !syncErrors && !foundDistributionErrors) || value === 'DRAFT') {
+    if (
+      (value === 'PUBLISH' && !syncErrors && !foundDistributionErrors) ||
+      value === 'DRAFT'
+    ) {
       allowedToPublish = true;
     }
     if (allowedToPublish) {
       if (value === 'PUBLISH') {
         this.setState({
           showPublishInfo: true
-        })
+        });
       }
-      return axios.patch(
-        postURL, values, {headers: api}
-      )
+      return axios
+        .patch(postURL, values, { headers: api })
         .then(() => {
           this.props.dispatch(publishDataset(value));
         })
-        .catch((response) => {
+        .catch(response => {
           const { error } = response;
           return Promise.reject(error);
-        })
-      ;
+        });
     }
     this.setState({
       showPublishModal: true
-    })
+    });
     return null;
   }
 
@@ -102,86 +101,94 @@ export default class DatasetPublish extends Component {
     this.closeDeleteModal();
     const datasetURL = window.location.pathname;
     // find catalog url, remove all from second last slash
-    const catalogDatasetsURL = datasetURL.substring(0, datasetURL.lastIndexOf('/' ,datasetURL.lastIndexOf("/")-1));
+    const catalogDatasetsURL = datasetURL.substring(
+      0,
+      datasetURL.lastIndexOf('/', datasetURL.lastIndexOf('/') - 1)
+    );
     const api = {
       Authorization: `Basic user:password`
-    }
-    return axios.delete(
-      datasetURL, {headers: api}
-    ).then(() => {
-      window.location.replace(catalogDatasetsURL);
-    }).catch((response) => {
-      const { error } = response;
-      return Promise.reject(error);
-    });
+    };
+    return axios
+      .delete(datasetURL, { headers: api })
+      .then(() => {
+        window.location.replace(catalogDatasetsURL);
+      })
+      .catch(response => {
+        const { error } = response;
+        return Promise.reject(error);
+      });
   }
 
   render() {
     const { registrationStatus, lastSaved } = this.props;
     const calendarStrings = {
-      lastDay : '[i går kl.] LT',
-      sameDay() {return `[for ${moment(lastSaved).fromNow()}]`},
-      lastWeek : '[på] dddd [kl.] LT',
-      sameElse : 'DD.MM.YYYY'
+      lastDay: '[i går kl.] LT',
+      sameDay() {
+        return `[for ${moment(lastSaved).fromNow()}]`;
+      },
+      lastWeek: '[på] dddd [kl.] LT',
+      sameElse: 'DD.MM.YYYY'
     };
     return (
       <div>
         <div className="d-flex align-items-center ml-2 mt-5">
-          {registrationStatus === 'DRAFT' &&
-          <Button
-            id="dataset-setPublish-button"
-            className="fdk-button fdk-button-default w-25 mr-3"
-            color="secondary"
-            onClick={() => this.handleDatasetStatus('PUBLISH')}
-          >
-            Publiser
-          </Button>
-          }
-          {registrationStatus === 'PUBLISH' &&
-          <Button
-            id="dataset-setDraft-button"
-            className="fdk-button fdk-button-default w-25 mr-3"
-            color="info"
-            onClick={() => this.handleDatasetStatus('DRAFT')}
-          >
-            Avpubliser
-          </Button>
-          }
+          {registrationStatus === 'DRAFT' && (
+            <Button
+              id="dataset-setPublish-button"
+              className="fdk-button fdk-button-default w-25 mr-3"
+              color="secondary"
+              onClick={() => this.handleDatasetStatus('PUBLISH')}
+            >
+              Publiser
+            </Button>
+          )}
+          {registrationStatus === 'PUBLISH' && (
+            <Button
+              id="dataset-setDraft-button"
+              className="fdk-button fdk-button-default w-25 mr-3"
+              color="info"
+              onClick={() => this.handleDatasetStatus('DRAFT')}
+            >
+              Avpubliser
+            </Button>
+          )}
           <div>
-            {lastSaved &&
-            <span>
-              <i className="fa fa-check-circle mr-2" />
-              {`${localization.app.lastSaved} `} <Moment locale="nb" calendar={calendarStrings}>{lastSaved}</Moment>
-            </span>
-            }
+            {lastSaved && (
+              <span>
+                <i className="fa fa-check-circle mr-2" />
+                {`${localization.app.lastSaved} `}{' '}
+                <Moment locale="nb" calendar={calendarStrings}>
+                  {lastSaved}
+                </Moment>
+              </span>
+            )}
           </div>
         </div>
 
         <div className="ml-2 mt-5">
-          {registrationStatus === 'DRAFT' &&
-          (
+          {registrationStatus === 'DRAFT' && (
             <div>
               <strong>{localization.app.notPublished}</strong>
-              <div>
-                {localization.app.notPublishedText}
+              <div>{localization.app.notPublishedText}</div>
+            </div>
+          )}
+          {registrationStatus === 'PUBLISH' &&
+            this.state.showPublishInfo && (
+              <div className="mt-2 alert alert-success" role="alert">
+                <strong>{localization.app.published}</strong>{' '}
+                {localization.app.publishedText}
               </div>
-            </div>
-          )}
-          {registrationStatus === 'PUBLISH' && this.state.showPublishInfo &&
-          (
-            <div className="mt-2 alert alert-success" role="alert">
-              <strong>{localization.app.published}</strong> {localization.app.publishedText}
-            </div>
-          )}
+            )}
 
           <div className="mt-2 ">
-            <button className="fdk-dataset-delete text-left no-padding" onClick={this.showDeleteModal}>
+            <button
+              className="fdk-dataset-delete text-left no-padding"
+              onClick={this.showDeleteModal}
+            >
               <i className="mr-1 fa fa-trash fdk-color-red" />
               Slette datasett
             </button>
           </div>
-
-
         </div>
         <Modal
           modal={this.state.showPublishModal}
@@ -197,18 +204,22 @@ export default class DatasetPublish extends Component {
           title={localization.deleteDataset.title}
           body={localization.deleteDataset.body}
         />
-
       </div>
     );
   }
 }
 
 DatasetPublish.defaultProps = {
-  registrationStatus: false
+  registrationStatus: false,
+  syncErrors: false,
+  distributionErrors: null,
+  lastSaved: null
 };
 
 DatasetPublish.propTypes = {
   dispatch: PropTypes.func.isRequired,
   registrationStatus: PropTypes.string,
-  syncErrors: PropTypes.bool.isRequired
+  syncErrors: PropTypes.bool,
+  distributionErrors: PropTypes.object,
+  lastSaved: PropTypes.string
 };
