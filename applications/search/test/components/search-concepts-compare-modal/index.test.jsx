@@ -3,7 +3,9 @@ import { shallow } from 'enzyme';
 import CompareTermModal from '../../../src/components/search-concepts-compare-modal';
 import concepts from '../../fixtures/concepts';
 
-let close, handleDeleteTerm, defaultProps, wrapper;
+let handleDeleteTerm;
+let defaultProps;
+let wrapper;
 
 beforeEach(() => {
   handleDeleteTerm = jest.fn();

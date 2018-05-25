@@ -1,9 +1,10 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import SearchPublishers from '../../../src/components/search-results-dataset-report-publisher';
-import aggregateDataset from '../../fixtures/aggregateDataset';
 
-let onSearch, defaultProps, wrapper;
+let onSearch;
+let defaultProps;
+let wrapper;
 
 beforeEach(() => {
   onSearch = jest.fn();

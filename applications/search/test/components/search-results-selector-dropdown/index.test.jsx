@@ -2,7 +2,8 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import Select from '../../../src/components/search-results-selector-dropdown';
 
-let onChange, items, wrapper;
+let onChange;
+let items;
 
 beforeEach(() => {
   onChange = jest.fn();

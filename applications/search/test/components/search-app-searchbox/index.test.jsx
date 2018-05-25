@@ -2,7 +2,11 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import SearchBox from '../../../src/components/search-app-searchbox';
 
-let onSearchSubmit, onSearchChange, preventDefault, open, defaultProps, wrapper;
+let onSearchSubmit;
+let onSearchChange;
+let preventDefault;
+let open;
+let defaultProps;
 
 beforeEach(() => {
   onSearchSubmit = jest.fn();
@@ -59,10 +63,6 @@ test('should call onSearchSubmit prop for valid form submission', () => {
 });
 
 test('should call open when filter clicked', () => {
-  const mockedEvent = {
-    target: { value: 'test value' },
-    preventDefault
-  };
   const wrapper = shallow(<SearchBox {...defaultProps} />);
   wrapper.find('button.fdk-button-filter').prop('onClick')();
   expect(open).toHaveBeenCalled();

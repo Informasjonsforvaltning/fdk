@@ -3,15 +3,15 @@ import { shallow } from 'enzyme';
 import ResultsDataset from '../../../src/components/search-results-dataset';
 import datasetItems from '../../fixtures/datasetItems';
 
-let closeFilterModal,
-  onFilterTheme,
-  onFilterAccessRights,
-  onFilterPublisherHierarchy,
-  onClearSearch,
-  onSort,
-  onPageChange,
-  defaultProps,
-  wrapper;
+let closeFilterModal;
+let onFilterTheme;
+let onFilterAccessRights;
+let onFilterPublisherHierarchy;
+let onClearSearch;
+let onSort;
+let onPageChange;
+let defaultProps;
+let wrapper;
 
 beforeEach(() => {
   closeFilterModal = jest.fn();

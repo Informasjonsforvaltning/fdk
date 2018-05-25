@@ -3,12 +3,12 @@ import { shallow } from 'enzyme';
 import ResultsConcepts from '../../../src/components/search-concepts-results';
 import concepts from '../../fixtures/concepts';
 
-let onClearSearch,
-  onPageChange,
-  onFilterPublisherHierarchy,
-  closeFilterModal,
-  defaultProps,
-  wrapper;
+let onClearSearch;
+let onPageChange;
+let onFilterPublisherHierarchy;
+let closeFilterModal;
+let defaultProps;
+let wrapper;
 
 beforeEach(() => {
   onClearSearch = jest.fn();
