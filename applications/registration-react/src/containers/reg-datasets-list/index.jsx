@@ -22,17 +22,6 @@ export class RegDatasetsList extends React.Component {
     this.props.dispatch(fetchDatasetsIfNeeded(datasetsURL));
   }
 
-  _renderDatasets() {
-    const { datasetItems } = this.props;
-    if (
-      datasetItems &&
-      datasetItems._embedded &&
-      datasetItems._embedded.datasets
-    ) {
-      return datasetItems._embedded.datasets.map(item => <div>{item.id}</div>);
-    }
-    return null;
-  }
   render() {
     const {
       helptextItems,

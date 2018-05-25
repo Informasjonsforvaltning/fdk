@@ -20,6 +20,7 @@ export default {
             uri: 'http://data.brreg.no/enhetsregisteret/enhet/910244132',
             name: 'RAMSUND OG ROGNAN REVISJON'
           },
+          type: 'Data',
           landingPage: [''],
           theme: [
             {
@@ -114,6 +115,21 @@ export default {
                 nb: 'test'
               },
               extraType: null
+            }
+          ],
+          references: [
+            {
+              referenceType: {
+                uri: 'dct:isPartOf',
+                code: 'isPartOf',
+                prefLabel: {}
+              },
+              source: {
+                uri:
+                  'http://brreg.no/catalogs/910244132/datasets/0aa1861a-9af0-4388-a81e-6b05de0fb63e',
+                prefLabel: null,
+                extraType: null
+              }
             }
           ],
           hasRelevanceAnnotation: {
@@ -255,22 +271,7 @@ export default {
           ],
           temporal: [{}],
           issued: null,
-          language: [],
-          references: [
-            {
-              referenceType: {
-                uri: 'dct:isPartOf',
-                code: 'isPartOf',
-                prefLabel: {}
-              },
-              source: {
-                uri:
-                  'http://brreg.no/catalogs/910244132/datasets/0aa1861a-9af0-4388-a81e-6b05de0fb63e',
-                prefLabel: null,
-                extraType: null
-              }
-            }
-          ]
+          language: []
         }
       ]
     },

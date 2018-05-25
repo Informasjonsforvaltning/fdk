@@ -26,7 +26,7 @@ beforeEach(() => {
 });
 
 test('should render ProtectedRoute correctly', () => {
-  expect(wrapper).toHaveLength(1);
+  expect(wrapper).toMatchSnapshot();
 });
 
 test('should render FormAccessRightsSchema correctly', () => {
@@ -35,5 +35,5 @@ test('should render FormAccessRightsSchema correctly', () => {
   };
   const store = createMockStore(testState);
   wrapper = shallowWithStore(<RegDatasetsListComponent />, store);
-  expect(wrapper).toHaveLength(1);
+  expect(wrapper).toMatchSnapshot();
 });

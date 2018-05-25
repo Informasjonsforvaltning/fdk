@@ -333,6 +333,7 @@ exports[`should render DatasetItemsList correctly sortField equal title 1`] = `
         "title": Object {
           "nb": "test ois",
         },
+        "type": "Data",
         "uri": "http://brreg.no/catalogs/910244132/datasets/084f747f-04a9-460e-b07e-ee74c60a2086",
       }
     }
@@ -685,6 +686,7 @@ exports[`should render DatasetItemsList correctly sortField equal title 2`] = `
         "title": Object {
           "nb": "test ois",
         },
+        "type": "Data",
         "uri": "http://brreg.no/catalogs/910244132/datasets/084f747f-04a9-460e-b07e-ee74c60a2086",
       }
     }
@@ -1037,6 +1039,7 @@ exports[`should render DatasetItemsList correctly with datasetItems 1`] = `
         "title": Object {
           "nb": "test ois",
         },
+        "type": "Data",
         "uri": "http://brreg.no/catalogs/910244132/datasets/084f747f-04a9-460e-b07e-ee74c60a2086",
       }
     }
@@ -1389,6 +1392,7 @@ exports[`should render DatasetItemsList correctly with missing datasetItems 1`] 
         "title": Object {
           "nb": "test ois",
         },
+        "type": "Data",
         "uri": "http://brreg.no/catalogs/910244132/datasets/084f747f-04a9-460e-b07e-ee74c60a2086",
       }
     }

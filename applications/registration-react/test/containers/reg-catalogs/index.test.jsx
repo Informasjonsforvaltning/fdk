@@ -5,7 +5,6 @@ import shallowWithStore from '../../shallowWithStore';
 import RegCatalogsComponent, {
   RegCatalogs
 } from '../../../src/containers/reg-catalogs';
-import user from '../../fixtures/user';
 import catalogs from '../../fixtures/catalogs';
 
 let defaultProps;
@@ -16,14 +15,14 @@ beforeEach(() => {
   dispatch = jest.fn();
   defaultProps = {
     dispatch,
-    userItem: user.userItem,
-    isFetchingUser: false
+    catalogItems: catalogs.catalogItems,
+    isFetchingCatalogs: false
   };
   wrapper = shallow(<RegCatalogs {...defaultProps} />);
 });
 
 test('should render ProtectedRoute correctly', () => {
-  expect(wrapper).toHaveLength(1);
+  expect(wrapper).toMatchSnapshot();
 });
 
 test('should render FormAccessRightsSchema correctly', () => {
@@ -32,5 +31,5 @@ test('should render FormAccessRightsSchema correctly', () => {
   };
   const store = createMockStore(testState);
   wrapper = shallowWithStore(<RegCatalogsComponent />, store);
-  expect(wrapper).toHaveLength(1);
+  expect(wrapper).toMatchSnapshot();
 });

@@ -413,62 +413,6 @@ function mapStateToProps({
 
   const sample = form && form.sample ? form.sample : {};
 
-  /*
-  const title = form.title || {
-      title: null
-    };
-
-  const accessRights = form.accessRights || {
-    accessRights: null
-  };
-
-  const formThemes = form.themes || {
-    formThemes: null
-  };
-
-  const type = form.type || {
-    type: null
-  };
-
-  const concept = form.concept || {
-    concept: null
-  };
-
-  const spatial = form.spatial || {
-    spatial: null
-  };
-
-  const formProvenance = form.provenance || {
-    formProvenance: null
-  };
-
-  const contents = form.contents || {
-    contents: null
-  };
-
-  const informationModel = form.informationModel || {
-    informationModel: null
-  };
-
-  const reference = form.reference || {
-    reference: null
-  };
-
-  const contactPoint = form.contactPoint || {
-    contactPoint: null
-  };
-
-  const distribution = form.distribution || {
-    distribution: null
-  };
-
-  const sample = form.sample || {
-    sample: null
-  };
-
-
-  */
-
   const { registrationStatus, lastSaved } = app || {
     registrationStatus: null,
     lastSaved: null
