@@ -1,13 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const SortButtons  = (props) => {
+const SortButtons = props => {
   const { field, sortField, sortType, onSortField } = props;
   return (
     <div className="d-flex flex-column">
       <button
         name={`${field}asc`}
-        className={`d-flex sortButton transparentButton ${(sortField === `${field}` && sortType === 'asc') ? 'visibilityHidden' : ''}`}
+        className={`d-flex sortButton transparentButton ${
+          sortField === `${field}` && sortType === 'asc'
+            ? 'visibilityHidden'
+            : ''
+        }`}
         onClick={() => onSortField(`${field}`, 'asc')}
         title="Stigende"
       >
@@ -15,7 +19,11 @@ const SortButtons  = (props) => {
       </button>
       <button
         name={`${field}desc`}
-        className={`d-flex sortButton transparentButton ${(sortField === `${field}` && sortType === 'desc') ? 'visibilityHidden' : ''}`}
+        className={`d-flex sortButton transparentButton ${
+          sortField === `${field}` && sortType === 'desc'
+            ? 'visibilityHidden'
+            : ''
+        }`}
         onClick={() => onSortField(`${field}`, 'desc')}
         title="Synkende"
       >
@@ -23,12 +31,13 @@ const SortButtons  = (props) => {
       </button>
     </div>
   );
-}
+};
 
 SortButtons.propTypes = {
   field: PropTypes.string.isRequired,
   sortField: PropTypes.string.isRequired,
-  sortType: PropTypes.string.isRequired
+  sortType: PropTypes.string.isRequired,
+  onSortField: PropTypes.func.isRequired
 };
 
 export default SortButtons;

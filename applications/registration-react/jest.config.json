@@ -1,0 +1,17 @@
+{
+  "testMatch": ["<rootDir>/test/**/(test).js?(x)", "**/?(*.)(test).js?(x)"],
+  "testPathIgnorePatterns": ["/node_modules/", "<rootDir>/test/jestsetup.js", "<rootDir>/test/fixtures/", "/target/"],
+  "setupFiles": [
+    "raf/polyfill",
+    "<rootDir>/test/jestsetup.js"
+  ],
+  "snapshotSerializers": [
+    "enzyme-to-json/serializer"
+  ],
+  "moduleNameMapper": {
+    "^.+\\.(css|less|scss)$": "identity-obj-proxy"
+  },
+  "collectCoverage": true,
+  "collectCoverageFrom": ["src/components/**/*.{js,jsx}", "src/containers/**/*.{js,jsx}", "src/validation/*.js"],
+  "coverageDirectory": "coverage"
+}

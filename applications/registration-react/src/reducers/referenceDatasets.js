@@ -1,6 +1,13 @@
-import { REFERENCEDATASETS_REQUEST, REFERENCEDATASETS_SUCCESS, REFERENCEDATASETS_FAILURE } from '../constants/ActionTypes';
+import {
+  REFERENCEDATASETS_REQUEST,
+  REFERENCEDATASETS_SUCCESS,
+  REFERENCEDATASETS_FAILURE
+} from '../constants/ActionTypes';
 
-export default function referenceDatasets(state = { isFetchingReferenceDatasets: false, referenceDatasetsItems: null }, action) {
+export default function referenceDatasets(
+  state = { isFetchingReferenceDatasets: false, referenceDatasetsItems: null },
+  action
+) {
   switch (action.type) {
     case REFERENCEDATASETS_REQUEST: {
       return {
@@ -9,18 +16,18 @@ export default function referenceDatasets(state = { isFetchingReferenceDatasets:
       };
     }
     case REFERENCEDATASETS_SUCCESS: {
-      const referenceDatasetsItems = action.response.data._embedded.datasets.map(item => (
-        {
+      const referenceDatasetsItems = action.response.data._embedded.datasets.map(
+        item => ({
           id: item.id,
           uri: item.uri,
           prefLabel_no: item.title.nb
-        }
-      ));
+        })
+      );
       return {
         ...state,
         isFetchingReferenceDatasets: false,
         referenceDatasetsItems
-      }
+      };
     }
     case REFERENCEDATASETS_FAILURE: {
       return {

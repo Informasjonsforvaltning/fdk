@@ -14,36 +14,37 @@ import LoginDialog from './components/app-login-dialog';
 
 const store = configureStore();
 
+const routes = (
+  <Switch>
+    <Route
+      exact
+      path="/loggedOut"
+      render={props => <LoginDialog {...props} loggedOut />}
+    />
+    <Route exact path="/loggin" render={props => <LoginDialog {...props} />} />
+    <ProtectedRoute exact path="/" component={RegCatalogs} />
+    <ProtectedRoute
+      exact
+      path="/catalogs/:catalogId"
+      component={RegDatasetsList}
+    />
+    <ProtectedRoute
+      exact
+      path="/catalogs/:catalogId/datasets/:id"
+      component={RegDataset}
+    />
+  </Switch>
+);
 
-const routes =
-  (
-    <Switch>
-      <Route
-        exact
-        path='/loggedOut'
-        render={(props) => <LoginDialog {...props} loggedOut />}
-      />
-      <Route
-        exact
-        path='/loggin'
-        render={(props) => <LoginDialog {...props} />}
-      />
-      <ProtectedRoute exact path="/" component={RegCatalogs} />
-      <ProtectedRoute exact path="/catalogs/:catalogId" component={RegDatasetsList} />
-      <ProtectedRoute exact path="/catalogs/:catalogId/datasets/:id" component={RegDataset} />
-    </Switch>
-  );
-
-ReactDOM.render((
+ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
       <div className="d-flex flex-column site">
         <Header />
-        <div className="site-content d-flex flex-column">
-          {routes}
-        </div>
+        <div className="site-content d-flex flex-column">{routes}</div>
         <Footer />
       </div>
     </BrowserRouter>
-  </Provider>
-), document.getElementById('root'))
+  </Provider>,
+  document.getElementById('root')
+);

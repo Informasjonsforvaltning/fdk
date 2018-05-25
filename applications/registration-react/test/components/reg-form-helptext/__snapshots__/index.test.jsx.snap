@@ -1,0 +1,62 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render Helptext correctly 1`] = `
+<div
+  className="fdk-reg-helptext mb-2 p-2"
+>
+  <div
+    className="d-flex align-items-center"
+  >
+    <h3>
+      Title
+    </h3>
+  </div>
+  <div
+    className="d-md-flex"
+  >
+    <p
+      className="m-0 text-ellipsis"
+      dangerouslySetInnerHTML={
+        Object {
+          "__html": "",
+        }
+      }
+    />
+    <button
+      className="fdk-btn-no-border text-left no-padding ml-1 fdk-reg-helptext-more align-self-start"
+      onClick={[Function]}
+    >
+      <i
+        className="fa fdk-fa-left fa-angle-double-down"
+      />
+      Flere anbefalinger
+    </button>
+  </div>
+  <Collapse
+    appear={false}
+    className="mt-3"
+    enter={true}
+    exit={true}
+    in={false}
+    isOpen={false}
+    mountOnEnter={false}
+    onEnter={[Function]}
+    onEntered={[Function]}
+    onEntering={[Function]}
+    onExit={[Function]}
+    onExited={[Function]}
+    onExiting={[Function]}
+    tag="div"
+    timeout={350}
+    unmountOnExit={false}
+  >
+    <p
+      dangerouslySetInnerHTML={
+        Object {
+          "__html": "",
+        }
+      }
+    />
+  </Collapse>
+</div>
+`;

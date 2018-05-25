@@ -1,6 +1,13 @@
-import { USER_REQUEST, USER_SUCCESS, USER_FAILURE } from '../constants/ActionTypes';
+import {
+  USER_REQUEST,
+  USER_SUCCESS,
+  USER_FAILURE
+} from '../constants/ActionTypes';
 
-export default function user(state = { isFetchingUser: false, userItem: null }, action) {
+export default function user(
+  state = { isFetchingUser: false, userItem: null },
+  action
+) {
   switch (action.type) {
     case USER_REQUEST:
       return {
@@ -12,7 +19,7 @@ export default function user(state = { isFetchingUser: false, userItem: null }, 
         ...state,
         isFetchingUser: false,
         userItem: action.response.data
-      }
+      };
     case USER_FAILURE:
       return {
         ...state,

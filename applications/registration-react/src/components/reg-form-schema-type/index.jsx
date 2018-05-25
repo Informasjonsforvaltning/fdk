@@ -1,53 +1,25 @@
-import React from 'react';
-import { Field, reduxForm, getFormSyncErrors } from 'redux-form';
+import { reduxForm, getFormSyncErrors } from 'redux-form';
 import { connect } from 'react-redux';
 
-import Helptext from '../reg-form-helptext';
-import CheckBoxFieldType from '../reg-form-field-checkbox-type';
+import Form from './form';
 import asyncValidate from '../../utils/asyncValidate';
 
-/*
-const validate = values => {
-  let errors = {}
-  const { type } = values;
-
-  errors = validateRequired('errorType', type, errors, false);
-
-  return errors
-}
-*/
-
-let FormType = (props) => {
-  const { syncErrors: { errorType }, helptextItems } = props;
-  return (
-    <form>
-      <div className="form-group">
-        <Helptext title="Type" helptextItems={helptextItems.Dataset_type} />
-        <Field
-          name="type"
-          component={CheckBoxFieldType}
-        />
-        {errorType &&
-        <div className="alert alert-danger mt-3">{errorType}</div>
-        }
-      </div>
-    </form>
-  )
-}
-
-FormType = reduxForm({
+const FormType = reduxForm({
   form: 'type',
-  asyncValidate,
-})(connect(state => ({
-  syncErrors: getFormSyncErrors("type")(state)
-}))(FormType));
+  asyncValidate
+})(
+  connect(state => ({
+    syncErrors: getFormSyncErrors('type')(state)
+  }))(Form)
+);
 
-const mapStateToProps = ({ dataset }) => (
-  {
-    initialValues: {
-      type: (dataset.result.type && dataset.result.type.length > 0) ? dataset.result.type : ''
-    }
+const mapStateToProps = ({ dataset }) => ({
+  initialValues: {
+    type:
+      dataset.result.type && dataset.result.type.length > 0
+        ? dataset.result.type
+        : ''
   }
-)
+});
 
-export default connect(mapStateToProps)(FormType)
+export default connect(mapStateToProps)(FormType);

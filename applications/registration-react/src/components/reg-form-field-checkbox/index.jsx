@@ -7,21 +7,20 @@ const handleChangeLang = (props, event) => {
   const { input } = props;
   // Skal fjerne fra array
   if (!event.target.checked) {
-    const newInput = input.value.filter((returnableObjects) => returnableObjects.code !== event.target.value);
+    const newInput = input.value.filter(
+      returnableObjects => returnableObjects.code !== event.target.value
+    );
     input.onChange(newInput);
-  }
-  // Skal legge til array
-  else {
+  } else {
+    // Skal legge til array
     let updates = [];
-    updates = input.value.map((item) => (
-      {
-        "uri": item.uri,
-        "code": item.code
-      }
-    ));
+    updates = input.value.map(item => ({
+      uri: item.uri,
+      code: item.code
+    }));
     if (event.target.value === 'NOR') {
       updates.push({
-        uri: "http://publications.europa.eu/resource/authority/language/NOR",
+        uri: 'http://publications.europa.eu/resource/authority/language/NOR',
         code: 'NOR',
         prefLabel: {
           nb: 'Norsk'
@@ -29,7 +28,7 @@ const handleChangeLang = (props, event) => {
       });
     } else if (event.target.value === 'ENG') {
       updates.push({
-        uri: "http://publications.europa.eu/resource/authority/language/ENG",
+        uri: 'http://publications.europa.eu/resource/authority/language/ENG',
         code: 'ENG',
         prefLabel: {
           nb: 'Engelsk'
@@ -37,7 +36,7 @@ const handleChangeLang = (props, event) => {
       });
     } else if (event.target.value === 'SMI') {
       updates.push({
-        uri: "http://publications.europa.eu/resource/authority/language/SMI",
+        uri: 'http://publications.europa.eu/resource/authority/language/SMI',
         code: 'SMI',
         prefLabel: {
           nb: 'Samisk'
@@ -46,9 +45,9 @@ const handleChangeLang = (props, event) => {
     }
     input.onChange(updates);
   }
-}
+};
 
-const CheckboxField = (props) => {
+const CheckboxField = props => {
   const { input, label } = props;
 
   let langCodes = [];
@@ -60,32 +59,55 @@ const CheckboxField = (props) => {
   return (
     <div>
       <label className="form-check fdk-form-checkbox" htmlFor="ENG">
-        <input type="checkbox" name="language" id="ENG" value="ENG"  checked={langCodes.includes('ENG') ? 'checked' : ''} onChange={(e) => handleChangeLang(props, e)} />
+        <input
+          type="checkbox"
+          name="language"
+          id="ENG"
+          value="ENG"
+          checked={langCodes.includes('ENG') ? 'checked' : ''}
+          onChange={e => handleChangeLang(props, e)}
+        />
         <span className="form-check-label fdk-form-check-label" />
         <span>Engelsk</span>
       </label>
       <label className="form-check fdk-form-checkbox" htmlFor="NOR">
-        <input type="checkbox" name="language" id="NOR" value="NOR"  checked={langCodes.includes('NOR') ? 'checked' : ''} onChange={(e) => handleChangeLang(props, e)} />
+        <input
+          type="checkbox"
+          name="language"
+          id="NOR"
+          value="NOR"
+          checked={langCodes.includes('NOR') ? 'checked' : ''}
+          onChange={e => handleChangeLang(props, e)}
+        />
         <span className="form-check-label fdk-form-check-label" />
         <span>Norsk</span>
       </label>
       <label className="form-check fdk-form-checkbox" htmlFor="SMI">
-        <input type="checkbox" name="language" id="SMI" value="SMI"  checked={langCodes.includes('SMI') ? 'checked' : ''} onChange={(e) => handleChangeLang(props, e)} />
+        <input
+          type="checkbox"
+          name="language"
+          id="SMI"
+          value="SMI"
+          checked={langCodes.includes('SMI') ? 'checked' : ''}
+          onChange={e => handleChangeLang(props, e)}
+        />
         <span className="form-check-label fdk-form-check-label" />
         <span>Samisk</span>
       </label>
     </div>
   );
-}
+};
 
 CheckboxField.defaultProps = {
   input: {
-    value:[]
-  }
+    value: []
+  },
+  label: null
 };
 
 CheckboxField.propTypes = {
-  input: PropTypes.object
+  input: PropTypes.object,
+  label: PropTypes.string
 };
 
 export default CheckboxField;
