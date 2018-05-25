@@ -3,7 +3,8 @@ import { shallow } from 'enzyme';
 import CompareTermModalContent from '../../../src/components/search-concepts-compare-modal-content';
 import concepts from '../../fixtures/concepts';
 
-let defaultProps, wrapper;
+let defaultProps;
+let wrapper;
 
 beforeEach(() => {
   defaultProps = {

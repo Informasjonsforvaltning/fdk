@@ -3,7 +3,8 @@ import { shallow } from 'enzyme';
 import DatasetKeyInfo from '../../../src/components/search-dataset-keyinfo';
 import datasets from '../../fixtures/datasets';
 
-let defaultProps, wrapper;
+let defaultProps;
+let wrapper;
 
 beforeEach(() => {
   const { _source } = datasets[0];

@@ -3,11 +3,10 @@ import { shallow } from 'enzyme';
 import ReportStats from '../../../src/components/search-results-dataset-report-stats';
 import aggregateDataset from '../../fixtures/aggregateDataset';
 
-let onSearch, defaultProps, wrapper;
+let defaultProps;
+let wrapper;
 
 beforeEach(() => {
-  onSearch = jest.fn();
-
   defaultProps = {
     aggregateDataset,
     entity: 'test entity'

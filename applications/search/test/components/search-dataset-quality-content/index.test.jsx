@@ -2,7 +2,8 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import DatasetQuality from '../../../src/components/search-dataset-quality-content';
 
-let defaultProps, wrapper;
+let defaultProps;
+let wrapper;
 
 beforeEach(() => {
   defaultProps = {
