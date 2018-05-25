@@ -174,14 +174,12 @@ public class BrregAgentConverter {
      */
     private void substitutePublisherResourceInDataset(Resource dataset, Resource nonStandardPublisherResource, Resource masterPublisherResource) {
 
-        logger.warn("Subject (dataset) {} has publisher with incorrect organisation number URI: {}",
-                dataset.getURI(), nonStandardPublisherResource.getURI());
+        logger.warn("Dataset {} has dct:publisher with incorrect URI: {}, which is replaced by URI: {}",
+                dataset.getURI(), nonStandardPublisherResource.getURI(), masterPublisherResource.getURI());
 
         dataset.removeAll(DCTerms.publisher);
         dataset.addProperty(DCTerms.publisher, masterPublisherResource);
 
-        logger.info("Subject (dataset) {} substituted organisation number URI: {}",
-                dataset.getURI(), masterPublisherResource.getURI());
     }
 
     String extractOrganizationPath(Publisher publisher, Map<String, Publisher> publisherMap) {
