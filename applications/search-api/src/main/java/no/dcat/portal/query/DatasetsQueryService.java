@@ -78,17 +78,6 @@ public class DatasetsQueryService extends ElasticsearchService {
      * Compose and execute an elasticsearch query on dcat based on the input parameters.
      * <p>
      *
-     * @param query         The search query to be executed as defined in
-     *                      https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-multi-match-query.html
-     *                      The search is performed on the fileds titel, keyword, description and publisher.name.
-     * @param theme         Narrows the search to the specified theme. ex. GOVE
-     * @param publisher     Narrows the search to the specified publisher. ex. UTDANNINGSDIREKTORATET
-     * @param accessRights  Narrows the search to the specified theme. ex. RESTRICTED
-     * @param from          The starting index (starting from 0) of the sorted hits that is returned.
-     * @param size          The number of hits that is returned. Max number is 100.
-     * @param lang          The language of the query string. Used for analyzing the query-string.
-     * @param sortfield     Defines that field that the search result shall be sorted on. Default is source
-     * @param sortdirection Defines the direction of the sort, ascending or descending.
      * @return List of  elasticsearch records.
      */
     @CrossOrigin
@@ -139,7 +128,10 @@ public class DatasetsQueryService extends ElasticsearchService {
                                          @RequestParam(value = "subject", defaultValue = "", required = false) String subject,
 
                                          @ApiParam("Filters datasets according to their provenance code, e.g. NASJONAL - nasjonal building block, VEDTAK - governmental decisions, BRUKER - user collected data and TREDJEPART - third party data")
-                                         @RequestParam(value = "provenance", defaultValue = "", required = false) String provenance) {
+                                         @RequestParam(value = "provenance", defaultValue = "", required = false) String provenance,
+
+                                         @ApiParam("Filters datasets according to their spatial label, e.g. Oslo, Norge")
+                                         @RequestParam(value = "spatial", defaultValue = "", required = false) String spatial) {
 
 
         StringBuilder loggMsg = new StringBuilder()
@@ -157,7 +149,8 @@ public class DatasetsQueryService extends ElasticsearchService {
                 .append(" sortfield:").append(sortfield)
                 .append(" sortdirection:").append(sortdirection)
                 .append(" subject:").append(subject)
-                .append(" provenance:").append(provenance);
+                .append(" provenance:").append(provenance)
+                .append(" spatial:").append(spatial);
 
         logger.debug(loggMsg.toString());
 
@@ -207,7 +200,7 @@ public class DatasetsQueryService extends ElasticsearchService {
         }
 
         // add filter
-        BoolQueryBuilder boolQuery = addFilter(theme, publisher, accessRights, search, orgPath, firstHarvested, lastHarvested, lastChanged, subject, provenance);
+        BoolQueryBuilder boolQuery = addFilter(theme, publisher, accessRights, search, orgPath, firstHarvested, lastHarvested, lastChanged, subject, provenance, spatial);
 
         // set up search query with aggregations
         SearchRequestBuilder searchBuilder = getClient().prepareSearch("dcat")
@@ -225,6 +218,7 @@ public class DatasetsQueryService extends ElasticsearchService {
                 .addAggregation(AggregationBuilders.missing("missingFirstHarvested").field("harvest.firstHarvested"))
                 .addAggregation(temporalAggregation("lastChanged", "harvest.lastChanged"))
                 .addAggregation(AggregationBuilders.missing("missingLastChanged").field("harvest.lastChanged"))
+                .addAggregation(createAggregation("spatial", "spatial.prefLabel.no", "Ukjent"))
                 ;
 
         logger.trace("Query: {}", searchBuilder.toString());
@@ -334,7 +328,7 @@ public class DatasetsQueryService extends ElasticsearchService {
     private BoolQueryBuilder addFilter(String theme, String publisher, String accessRights,
                                        QueryBuilder search, String orgPath,
                                        int firstHarvested, int lastHarvested, int lastChanged,
-                                       String subject, String provenance) {
+                                       String subject, String provenance, String spatial) {
 
         BoolQueryBuilder boolQuery = QueryBuilders.boolQuery()
                 .must(search);
@@ -423,6 +417,19 @@ public class DatasetsQueryService extends ElasticsearchService {
             }
 
             boolQuery.filter(provenanceFilter);
+        }
+
+        if (!StringUtils.isEmpty(spatial)) {
+            BoolQueryBuilder spatialFilter = QueryBuilders.boolQuery();
+            if (spatial.equals("Ukjent")) {
+                spatialFilter.must(QueryBuilders.missingQuery("spatial.prefLabel"));
+            } else if (spatial.startsWith("http")) {
+                spatialFilter.must(QueryBuilders.missingQuery("spatial.uri"));
+            } else {
+                spatialFilter.must(QueryBuilders.termQuery("spatial.prefLabel.no", provenance));
+            }
+
+            boolQuery.filter(spatialFilter);
         }
 
         return boolQuery;
