@@ -44,7 +44,7 @@ export const renderSamples = componentProps => {
                 name={`${sample}.accessURL.0`}
                 type="text"
                 component={InputField}
-                label="Tilgangs URL"
+                label="Tilgangslenke"
               />
             </div>
             <div className="form-group">
