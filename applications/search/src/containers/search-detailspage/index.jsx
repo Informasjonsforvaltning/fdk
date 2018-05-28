@@ -144,10 +144,6 @@ export class DetailsPage extends React.Component {
         accessUrl={sample.accessURL}
         format={sample.format}
         code="SAMPLE"
-        license={sample.license}
-        conformsTo={sample.conformsTo}
-        page={sample.page}
-        type={sample.type}
         selectedLanguageCode={this.props.selectedLanguageCode}
       />
     ));
@@ -280,9 +276,9 @@ export class DetailsPage extends React.Component {
       return null;
     }
     const contactPoints = items =>
-      items.map(item => (
+      items.map((item, index) => (
         <DatasetContactInfo
-          key={item.uri}
+          key={index}
           landingPage={landingPage}
           contactPoint={item}
         />

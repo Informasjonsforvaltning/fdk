@@ -87,14 +87,14 @@ export const renderDistributions = componentProps => {
             </div>
             <div className="form-group">
               <Helptext
-                title="Tilgangs URL"
+                title="Tilgangslenke"
                 helptextItems={helptextItems.Distribution_accessURL}
               />
               <Field
                 name={`${distribution}.accessURL.0`}
                 type="text"
                 component={InputField}
-                label="Tilgangs URL"
+                label="Tilgangslenke"
               />
             </div>
             <div className="form-group">
