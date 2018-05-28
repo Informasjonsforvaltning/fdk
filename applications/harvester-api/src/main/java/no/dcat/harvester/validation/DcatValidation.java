@@ -2,7 +2,9 @@ package no.dcat.harvester.validation;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.jena.query.QueryExecutionFactory;
+import org.apache.jena.query.QuerySolution;
 import org.apache.jena.query.ResultSet;
+import org.apache.jena.rdf.model.Literal;
 import org.apache.jena.rdf.model.Model;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,69 +21,89 @@ import java.io.InputStream;
  */
 public class DcatValidation {
 
-	private static final Logger logger = LoggerFactory.getLogger(DcatValidation.class);
+    private static final Logger logger = LoggerFactory.getLogger(DcatValidation.class);
 
-	/**
-	 * Validates the model argument against the various validation rules of DCAT-AP-xx
-	 * Validation warnings and errors are recorded in the validationHandler parameter.
-	 * <predicate>
-	 * The operation returns false if errors are detected. It returns true if only warnings have been detected.
-	 * It reads validation files in SPARQL format that is stored under src/main/resources/validation-rules.
-	 *
-	 * @param model the DCAT RDF model to be validated.
-	 * @param validationHandler a handler for reporting validation problems
-	 * @return a boolean that is true if no errors are detected and false if errors are detected
-	 */
-	public static boolean validate(Model model, ValidationHandler validationHandler) {
-		Assert.notNull(model);
+    /**
+     * Validates the model argument against the various validation rules of DCAT-AP-xx
+     * Validation warnings and errors are recorded in the validationHandler parameter.
+     * <predicate>
+     * The operation returns false if errors are detected. It returns true if only warnings have been detected.
+     * It reads validation files in SPARQL format that is stored under src/main/resources/validation-rules.
+     *
+     * @param model             the DCAT RDF model to be validated.
+     * @param validationHandler a handler for reporting validation problems
+     * @return a boolean that is true if no errors are detected and false if errors are detected
+     */
+    public static boolean validate(Model model, ValidationHandler validationHandler) {
+        Assert.notNull(model);
 
-		if (validationHandler == null) {
-			validationHandler = (error) -> {
-			};
-		}
+        if (validationHandler == null) {
+            validationHandler = (error) -> {
+            };
+        }
 
-		PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-		try {
-			// identify validation rules files
-			Resource[] resources = resolver.getResources("classpath*:validation-rules/**/*.rq");
+        PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
+        try {
+            // identify validation rules files
+            Resource[] resources = resolver.getResources("classpath*:validation-rules/**/*.rq");
 
-			final boolean[] valid = {true};
-			final ValidationHandler finalValidationHandler = validationHandler;
+            final boolean[] valid = {true};
+            final ValidationHandler finalValidationHandler = validationHandler;
 
-			// for each file validate
-			for (Resource r : resources) {
-				//logger.trace("Checking against validation-rule in file: " + r.toString());
-				InputStream is = r.getInputStream();
+            // for each file validate
+            for (Resource r : resources) {
+                //logger.trace("Checking against validation-rule in file: " + r.toString());
+                InputStream is = r.getInputStream();
 
-				String query = IOUtils.toString(is, "UTF-8");
+                String query = IOUtils.toString(is, "UTF-8");
 
-				ResultSet resultSet = null;
-				try {
-					resultSet = QueryExecutionFactory.create(query, model).execSelect();
+                ResultSet resultSet = null;
+                try {
+                    resultSet = QueryExecutionFactory.create(query, model).execSelect();
 
-				} catch (Exception e) {
+                } catch (Exception e) {
 
-					logger.error("QueryParseException in " + r.toString() + " : " + e.getMessage());
-					throw e;
-				} finally {
-					IOUtils.closeQuietly(is);
-				}
+                    logger.error("QueryParseException in " + r.toString() + " : " + e.getMessage());
+                    throw e;
+                } finally {
+                    IOUtils.closeQuietly(is);
+                }
 
-				while (resultSet != null && resultSet.hasNext()) {
+                while (resultSet != null && resultSet.hasNext()) {
 
-					ValidationError error = new ValidationError(resultSet.next());
-					finalValidationHandler.handle(error);
-					if (error.isError()) {
-						valid[0] = false;
-					}
-				}
-			}
+                    ValidationError error = validationError(resultSet.next());
+                    finalValidationHandler.handle(error);
+                    if (error.isError()) {
+                        valid[0] = false;
+                    }
+                }
+            }
 
-			return valid[0];
-		} catch (IOException e) {
-			logger.error("Unable to load validation rules " + e.getMessage(),e);
-		}
-		return false;
-	}
+            return valid[0];
+        } catch (IOException e) {
+            logger.error("Unable to load validation rules " + e.getMessage(), e);
+        }
+        return false;
+    }
+
+    static ValidationError validationError(QuerySolution next) {
+        Literal messageLiteral = next.getLiteral("Message");
+        String message = "Validation error: no error message supplied";
+        if (messageLiteral != null) {
+            message = messageLiteral.toString();
+        }
+
+        ValidationError error = new ValidationError(
+                next.getLiteral("Class_Name").toString(),
+                next.getLiteral("Rule_ID").getInt(),
+                ValidationError.RuleSeverity.valueOf(next.getLiteral("Rule_Severity").toString()),
+                next.getLiteral("Rule_Description").toString(),
+                message,
+                next.get("s"),
+                next.get("p"),
+                next.get("o"));
+
+        return error;
+    }
 
 }

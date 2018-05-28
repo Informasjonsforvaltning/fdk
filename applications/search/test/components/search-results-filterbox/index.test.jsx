@@ -2,7 +2,9 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import FilterBox from '../../../src/components/search-results-filterbox';
 
-let onClick, defaultProps, wrapper;
+let onClick;
+let defaultProps;
+let wrapper;
 
 beforeEach(() => {
   onClick = jest.fn();

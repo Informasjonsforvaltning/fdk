@@ -13,7 +13,7 @@ WHERE {
   FILTER(!EXISTS {?o a dct:Location}).
   BIND ("Dataset" AS ?Class_Name).
   BIND (71 AS ?Rule_ID).
-  BIND ("error" AS ?Rule_Severity).
-  BIND ("dct:spatial should be a dct:Location." AS ?Rule_Description).
+  BIND ("warning" AS ?Rule_Severity).
+  BIND ("dct:spatial should be an optional dct:Location." AS ?Rule_Description).
   BIND (concat("The dct:spatial ",str(?o)," is not a dct:Location.") AS ?Message).
 }

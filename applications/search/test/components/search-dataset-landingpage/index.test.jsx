@@ -2,7 +2,8 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import DatasetLandingPage from '../../../src/components/search-dataset-landingpage';
 
-let defaultProps, wrapper;
+let defaultProps;
+let wrapper;
 
 beforeEach(() => {
   defaultProps = {

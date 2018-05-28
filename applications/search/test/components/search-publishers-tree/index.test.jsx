@@ -3,7 +3,9 @@ import { shallow } from 'enzyme';
 import SearchPublishersTree from '../../../src/components/search-publishers-tree';
 import publisherHierarchy from '../../fixtures/publisherHierarchy';
 
-let onSearch, defaultProps, wrapper;
+let onSearch;
+let defaultProps;
+let wrapper;
 
 beforeEach(() => {
   onSearch = jest.fn();

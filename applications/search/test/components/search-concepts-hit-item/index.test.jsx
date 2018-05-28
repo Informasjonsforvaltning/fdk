@@ -3,7 +3,9 @@ import { shallow } from 'enzyme';
 import ConceptsHitItem from '../../../src/components/search-concepts-hit-item';
 import concepts from '../../fixtures/concepts';
 
-let onAddTerm, defaultProps, wrapper;
+let onAddTerm;
+let defaultProps;
+let wrapper;
 
 beforeEach(() => {
   onAddTerm = jest.fn();
@@ -40,7 +42,7 @@ test('should render ConceptsHitItem correctly with compare button not showing', 
     selectedLanguageCode: null
   };
   const shallowWrapper = shallow(<ConceptsHitItem {...props} />);
-  expect(wrapper).toMatchSnapshot();
+  expect(shallowWrapper).toMatchSnapshot();
 });
 
 test('should render ConceptsHitItem correctly with no alt label, no source and no note', () => {
@@ -51,5 +53,5 @@ test('should render ConceptsHitItem correctly with no alt label, no source and n
     selectedLanguageCode: null
   };
   const shallowWrapper = shallow(<ConceptsHitItem {...props} />);
-  expect(wrapper).toMatchSnapshot();
+  expect(shallowWrapper).toMatchSnapshot();
 });

@@ -277,6 +277,35 @@ public class CrawlerJob implements Runnable {
         }
     }
 
+    String formatValidationMessage(ValidationError error) {
+
+        String subject = "";
+        if (error.getSubject() != null ) {
+            if (error.getSubject().isURIResource()) {
+                String subjectUri = error.getSubject().asResource().getURI();
+                if (subjectUri.startsWith("http")) {
+                    subject = " <" + subjectUri  + ">";
+                } else if (subjectUri.startsWith("file")){
+                    subject = " <" + lastPath(subjectUri) +">";
+                } else {
+                    subject = " " + subjectUri + "";
+                }
+            }
+        }
+
+        String msg = "[" + error.getRuleSeverity() + "] " + error.getClassName() +  subject + ". Rule " + error.getRuleId() + ": " + error.getRuleDescription();
+        //String oldmsg = "[validation_" + error.getRuleSeverity() + "] " + error.toString() + ", " + this.dcatSource.toString();
+        return msg;
+    }
+
+    String lastPath(String path) {
+        if (path != null && path.contains("/")) {
+            return path.substring(path.lastIndexOf("/")+1, path.length());
+        }
+
+        return path;
+    }
+
     /**
      * Checks if a RDF model is valid according to the validation rules that are defined for DCAT.
      *
@@ -296,7 +325,8 @@ public class CrawlerJob implements Runnable {
         final int[] errors ={0}, warnings ={0}, others ={0};
 
         DcatValidation.validate(model, (error) -> {
-            String msg = "[validation_" + error.getRuleSeverity() + "] " + error.toString() + ", " + this.dcatSource.toString();
+            String msg = formatValidationMessage(error);
+
             validationResult.add(msg);
 //            validationErrors.add(error);
 
@@ -378,7 +408,13 @@ public class CrawlerJob implements Runnable {
         ResIterator locIter = model.listSubjectsWithProperty(DCTerms.spatial);
         while (locIter.hasNext()) {
             Resource resource = locIter.next();
+
             String locUri = resource.getPropertyResourceValue(DCTerms.spatial).getURI();
+
+            if (locUri != null && locUri.startsWith("file://")) { // hack to remove fuseki file namespace on locations.
+                locUri = lastPath(locUri);
+            }
+
             try {
                 if (!illegalUris.contains(locUri)) {
                     URL locUrl = new URL(locUri);
@@ -394,9 +430,11 @@ public class CrawlerJob implements Runnable {
                     }
                 }
             } catch (MalformedURLException | ClassCastException e) {
-                logger.error("URL not valid: {}. Reason {}", locUri,e.getLocalizedMessage());
+                logger.error("URL not valid: {}. Reason {}", locUri, e.getLocalizedMessage());
+                illegalUris.add(locUri);
             } catch (IOException e) {
                 logger.error("IOException: {}. Reason {}", locUri, e.getLocalizedMessage());
+                illegalUris.add(locUri);
             }
 
         }

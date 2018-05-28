@@ -2,7 +2,9 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import CompareTerms from '../../../src/components/search-concepts-compare';
 
-let defaultProps, wrapper, onDeleteTerm;
+let defaultProps;
+let wrapper;
+let onDeleteTerm;
 
 beforeEach(() => {
   onDeleteTerm = jest.fn();

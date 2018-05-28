@@ -6,7 +6,9 @@ import no.dcat.datastore.DcatDataStore;
 import no.dcat.datastore.domain.DcatSource;
 import no.dcat.datastore.domain.dcat.vocabulary.DCATNO;
 import no.dcat.harvester.HarvesterApplication;
+import no.dcat.harvester.crawler.handlers.ElasticSearchResultHandler;
 import no.dcat.harvester.crawler.handlers.FusekiResultHandler;
+import no.dcat.harvester.validation.ValidationError;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.ResIterator;
@@ -28,12 +30,74 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 
 public class CrawlerJobTest {
     private static Logger logger = LoggerFactory.getLogger(CrawlerJobTest.class);
 
+
+    @Test
+    public void testLastPath() {
+        DcatSource dcatSource = new DcatSource("http//dcat.difi.no/test", "Test", "https://test", "tester", "123456789");
+        AdminDataStore adminDataStore = Mockito.mock(AdminDataStore.class);
+        ElasticSearchResultHandler elasticHandler = Mockito.mock(ElasticSearchResultHandler.class);
+
+        CrawlerJob job = new CrawlerJob(dcatSource, adminDataStore, null,null, elasticHandler);
+        job.testMode();
+
+        String actual = job.lastPath("/p1/p2");
+        assertThat(actual, is("p2"));
+
+        assertThat(job.lastPath("/"),  is(""));
+
+        assertThat(job.lastPath(""), is(""));
+
+        assertThat(job.lastPath(null), is (nullValue()));
+    }
+
+    @Test
+    public void testErrorFormat() {
+
+        ValidationError error = new ValidationError("Catalog",
+                1, ValidationError.RuleSeverity.warning,
+                "description", "message", null, null, null);
+
+        DcatSource dcatSource = new DcatSource("http//dcat.difi.no/test", "Test", "https://test", "tester", "123456789");
+        AdminDataStore adminDataStore = Mockito.mock(AdminDataStore.class);
+        ElasticSearchResultHandler elasticHandler = Mockito.mock(ElasticSearchResultHandler.class);
+
+        CrawlerJob job = new CrawlerJob(dcatSource, adminDataStore, null,null, elasticHandler);
+        job.testMode();
+
+        String actual = job.formatValidationMessage(error);
+
+        assertThat(actual, is("[warning] Catalog. Rule 1: description"));
+
+        Resource node = mock(Resource.class);
+
+        when(node.getURI()).thenReturn("http://subject");
+        when(node.isURIResource()).thenReturn(true);
+        when(node.asResource()).thenReturn(node);
+
+        ValidationError error2 = new ValidationError("Catalog",
+                1, ValidationError.RuleSeverity.warning,
+                "description", "message", node, null, null);
+
+        assertThat(job.formatValidationMessage(error2), is("[warning] Catalog <http://subject>. Rule 1: description"));
+
+        when(node.getURI()).thenReturn("file://file/path");
+
+        assertThat(job.formatValidationMessage(error2), is( "[warning] Catalog <path>. Rule 1: description"));
+
+        when(node.getURI()).thenReturn("path");
+
+        assertThat(job.formatValidationMessage(error2), is( "[warning] Catalog path. Rule 1: description"));
+
+    }
 
     @Test
     public void testBRREGCrawlerJob() throws IOException {
@@ -79,7 +143,7 @@ public class CrawlerJobTest {
         List<String> report =  spyJob.getValidationResult();
 
         logger.debug("validation report: {}", report);
-        assertThat(report.size(), is(66));
+        assertThat(report.size(), is(41));
     }
 
 

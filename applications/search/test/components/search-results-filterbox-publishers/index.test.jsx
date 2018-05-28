@@ -4,12 +4,14 @@ import SearchPublishersTree from '../../../src/components/search-results-filterb
 import publishers from '../../fixtures/publishers';
 import filter from '../../fixtures/filter';
 
-let onFilterPublisherHierarchy, onSearch, toggleFilter, defaultProps, wrapper;
+let onFilterPublisherHierarchy;
+let onSearch;
+let defaultProps;
+let wrapper;
 
 beforeEach(() => {
   onFilterPublisherHierarchy = jest.fn();
   onSearch = jest.fn();
-  toggleFilter = jest.fn();
 
   defaultProps = {
     title: 'title',
