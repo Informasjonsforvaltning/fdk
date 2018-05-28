@@ -7,6 +7,7 @@ import no.dcat.themes.database.TDBInferenceService;
 import no.dcat.themes.database.TDBService;
 import no.dcat.themes.service.CodesService;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
