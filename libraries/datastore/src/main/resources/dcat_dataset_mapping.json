@@ -402,6 +402,30 @@
           }
         }
       },
+      "spatial": {
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "prefLabel": {
+            "properties": {
+              "no": {
+                "type": "string",
+                "fields": {
+                  "raw": {
+                    "type": "string",
+                    "index": "not_analyzed"
+                  }
+                }
+              }
+            }
+          },
+          "uri": {
+            "type": "string",
+            "index": "not_analyzed"
+          }
+        }
+      },
       "provenanceSort": {
         "type": "string",
         "index": "not_analyzed"

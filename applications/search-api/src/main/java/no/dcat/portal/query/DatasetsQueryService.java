@@ -218,7 +218,7 @@ public class DatasetsQueryService extends ElasticsearchService {
                 .addAggregation(AggregationBuilders.missing("missingFirstHarvested").field("harvest.firstHarvested"))
                 .addAggregation(temporalAggregation("lastChanged", "harvest.lastChanged"))
                 .addAggregation(AggregationBuilders.missing("missingLastChanged").field("harvest.lastChanged"))
-                .addAggregation(createAggregation("spatial", "spatial.prefLabel.no", "Ukjent"))
+                .addAggregation(createAggregation("spatial", "spatial.prefLabel.no.raw", "Ukjent"))
                 ;
 
         logger.trace("Query: {}", searchBuilder.toString());
@@ -424,9 +424,9 @@ public class DatasetsQueryService extends ElasticsearchService {
             if (spatial.equals("Ukjent")) {
                 spatialFilter.must(QueryBuilders.missingQuery("spatial.prefLabel"));
             } else if (spatial.startsWith("http")) {
-                spatialFilter.must(QueryBuilders.missingQuery("spatial.uri"));
+                spatialFilter.must(QueryBuilders.termQuery("spatial.uri", spatial));
             } else {
-                spatialFilter.must(QueryBuilders.termQuery("spatial.prefLabel.no", provenance));
+                spatialFilter.must(QueryBuilders.termQuery("spatial.prefLabel.no.raw", spatial));
             }
 
             boolQuery.filter(spatialFilter);
