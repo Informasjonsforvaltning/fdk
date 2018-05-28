@@ -79,6 +79,7 @@ exports[`should render SearchHitItem NON_PUBLIC correctly 1`] = `
       <strong>
         Unntatt offentlighet
       </strong>
+      <div />
       <div
         id="search-hit-sample"
       >
@@ -242,6 +243,12 @@ exports[`should render SearchHitItem RESTRICTED correctly 1`] = `
           code="RESTRICTED"
           key="dataset-distribution-format0"
           text="application/json"
+          type={null}
+        />
+        <DistributionFormat
+          code="RESTRICTED"
+          key="dataset-distribution-format1"
+          text="xml"
           type={null}
         />
       </div>
