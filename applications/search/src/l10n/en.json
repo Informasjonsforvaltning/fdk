@@ -99,7 +99,8 @@
       "KOMMUNE": "Municipality",
       "PRIVAT": "Private",
       "ANNET": "Other"
-    }
+    },
+    "provenance": "Provenance"
   },
   "result": {
     "dataset":"Dataset",
@@ -130,7 +131,11 @@
     "ukjent": "Unknown",
     "non_public": "Non public",
     "sample": "Sample data are available",
-    "NationalBuildingBlock": "National Building Block"
+    "NationalBuildingBlock": "National Building Block",
+    "bruker": "User collected data",
+    "nasjonal": "National Building Block",
+    "tredjepart": "Third party",
+    "vedtak": "Decision"
   },
   "dataset": {
     "accessRight": "Dataset is",

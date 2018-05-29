@@ -1,0 +1,87 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render FormAccessRightsSchema correctly 1`] = `
+<RegCatalogs
+  catalogItems={
+    Object {
+      "_embedded": Object {
+        "catalogs": Array [
+          Object {
+            "description": Object {},
+            "id": "910244132",
+            "publisher": Object {
+              "name": "RAMSUND OG ROGNAN REVISJON",
+              "uri": "http://data.brreg.no/enhetsregisteret/enhet/910244132",
+            },
+            "title": Object {
+              "nb": "Datakatalog for RAMSUND OG ROGNAN REVISJON",
+            },
+            "uri": "http://brreg.no/catalogs/910244132",
+          },
+        ],
+      },
+      "_links": Object {
+        "self": Object {
+          "href": "http://registration-api:8080/catalogs?page=0&size=20",
+        },
+      },
+      "page": Object {
+        "number": 0,
+        "size": 20,
+        "totalElements": 1,
+        "totalPages": 1,
+      },
+    }
+  }
+  dispatch={[Function]}
+  isFetchingCatalogs={false}
+/>
+`;
+
+exports[`should render ProtectedRoute correctly 1`] = `
+<div
+  className="container"
+>
+  <div
+    className="row"
+  >
+    <div />
+  </div>
+  <div
+    className="row mb-2 mb-md-5"
+  >
+    <div
+      className="col-12"
+    >
+      <div>
+        <h1
+          className="fdk-text-strong mb-4"
+        >
+          Dine kataloger
+        </h1>
+      </div>
+      <CardGroup
+        tag="div"
+      >
+        <CatalogItem
+          item={
+            Object {
+              "description": Object {},
+              "id": "910244132",
+              "publisher": Object {
+                "name": "RAMSUND OG ROGNAN REVISJON",
+                "uri": "http://data.brreg.no/enhetsregisteret/enhet/910244132",
+              },
+              "title": Object {
+                "nb": "Datakatalog for RAMSUND OG ROGNAN REVISJON",
+              },
+              "uri": "http://brreg.no/catalogs/910244132",
+            }
+          }
+          key="http://brreg.no/catalogs/910244132"
+        />
+      </CardGroup>
+    </div>
+  </div>
+</div>
+`;

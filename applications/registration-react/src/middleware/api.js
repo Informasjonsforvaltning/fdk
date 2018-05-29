@@ -1,7 +1,6 @@
 import axios from 'axios';
 
 function callApi(url) {
-
   /*
   const getHeaders = new Headers();
   getHeaders.append('pragma', 'no-cache');
@@ -13,7 +12,7 @@ function callApi(url) {
     pragma: 'no-cache',
     'cache-control': 'no-cache',
     Accept: 'application/json'
-  }
+  };
 
   const getInit = {
     method: 'GET',
@@ -21,17 +20,18 @@ function callApi(url) {
     credentials: 'same-origin'
   };
 
-  return axios.get(url, getInit)
-    .then((response) => response)
-    .catch((response) => {
+  return axios
+    .get(url, getInit)
+    .then(response => response)
+    .catch(response => {
       const { error } = response;
       return Promise.reject(error);
-    })
+    });
 }
 
 export const CALL_API = 'CALL_API';
 
-export default () => next => (action) => {
+export default () => next => action => {
   const callApiOptions = action[CALL_API];
 
   if (typeof callApiOptions === 'undefined') {
@@ -51,12 +51,20 @@ export default () => next => (action) => {
   next(actionWith({ type: requestType }));
 
   return callApi(url)
-    .then(response => next(actionWith({
-      type: successType,
-      response
-    })))
-    .catch(error => next(actionWith({
-      type: failureType,
-      error
-    })));
+    .then(response =>
+      next(
+        actionWith({
+          type: successType,
+          response
+        })
+      )
+    )
+    .catch(error =>
+      next(
+        actionWith({
+          type: failureType,
+          error
+        })
+      )
+    );
 };

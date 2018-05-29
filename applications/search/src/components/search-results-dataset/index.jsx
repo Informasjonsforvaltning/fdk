@@ -19,6 +19,7 @@ export default class ResultsDataset extends React.Component {
       onFilterTheme,
       onFilterAccessRights,
       onFilterPublisherHierarchy,
+      onFilterProvenance,
       searchQuery,
       themesItems,
       publisherArray,
@@ -43,6 +44,12 @@ export default class ResultsDataset extends React.Component {
               filter={datasetItems.aggregations.accessRightsCount}
               onClick={onFilterAccessRights}
               activeFilter={searchQuery.accessrights}
+            />
+            <FilterBox
+              title={localization.facet.provenance}
+              filter={datasetItems.aggregations.provenanceCount}
+              onClick={onFilterProvenance}
+              activeFilter={searchQuery.provenance}
             />
             <FilterBoxPublishers
               title={localization.facet.organisation}
@@ -82,6 +89,7 @@ export default class ResultsDataset extends React.Component {
       onFilterTheme,
       onFilterAccessRights,
       onFilterPublisherHierarchy,
+      onFilterProvenance,
       onSort,
       onPageChange,
       showClearFilterButton,
@@ -175,6 +183,12 @@ export default class ResultsDataset extends React.Component {
                       onClick={onFilterAccessRights}
                       activeFilter={searchQuery.accessrights}
                     />
+                    <FilterBox
+                      title={localization.facet.provenance}
+                      filter={datasetItems.aggregations.provenanceCount}
+                      onClick={onFilterProvenance}
+                      activeFilter={searchQuery.provenance}
+                    />
                     <FilterBoxPublishers
                       title={localization.facet.organisation}
                       filter={publisherArray}
@@ -224,6 +238,7 @@ ResultsDataset.defaultProps = {
   onFilterTheme: null,
   onFilterAccessRights: null,
   onFilterPublisherHierarchy: null,
+  onFilterProvenance: null,
   searchQuery: {},
   themesItems: null,
   publisherArray: null,
@@ -241,6 +256,7 @@ ResultsDataset.propTypes = {
   onFilterTheme: PropTypes.func,
   onFilterAccessRights: PropTypes.func,
   onFilterPublisherHierarchy: PropTypes.func,
+  onFilterProvenance: PropTypes.func,
   searchQuery: PropTypes.object,
   themesItems: PropTypes.object,
   publisherArray: PropTypes.array,

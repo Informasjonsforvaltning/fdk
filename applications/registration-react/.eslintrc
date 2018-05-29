@@ -3,37 +3,32 @@
     "browser": true,
     "es6": true,
     "node": true,
-    "mocha": true
+    "mocha": true,
+    "jest": true
   },
-  "extends": ["airbnb", "prettier"],
+  "extends": ["airbnb", "prettier", "prettier/react"],
   "plugins": ["prettier"],
   "parser": "babel-eslint",
   "globals": {
     "$": false
   },
   "rules": {
-    /*
     "prettier/prettier": [ // customizing prettier rules (unfortunately not many of them are customizable)
       "error",
       {
         "singleQuote": true
       }
     ],
-    */
     "no-console": ["error", { "allow": ["warn", "error"] }],
-    "indent": [
-      2,
-      2,
-      {"SwitchCase": 1}
-    ],
+    "import/no-named-as-default": 0,
     "no-else-return": 2,
     "no-shadow": 0,
     "no-underscore-dangle": 0,
     "wrap-iife": 2,
-    "react/prop-types": 0,
+    "react/prop-types": 1,
     "react/forbid-prop-types": ["error", { "forbid": ["any"] }],
     "react/no-array-index-key": "off",
-    //"no-restricted-globals": "off"
+    "no-param-reassign": ["error", { "props": true, "ignorePropertyModificationsFor": ["accumulator"] }],
     "no-restricted-globals": ["error", "event", "fdescribe"],
     "no-control-regex": "off",
     "jsx-a11y/anchor-is-valid": [ "error", {

@@ -1,0 +1,357 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render ConceptsHitItem correctly 1`] = `
+<div
+  className="fdk-a-search-hit"
+  id="concepts-hit-https%3A%2F%2Fdata-david.github.io%2FBegrep%2Fbegrep%2FEnhet"
+  tabIndex="0"
+  title="Begrep: Enhet"
+>
+  <span
+    aria-hidden="false"
+    className="uu-invisible"
+  >
+    Søketreff begrep.
+  </span>
+  <div
+    className="fdk-container-search-hit "
+  >
+    <button
+      className="fdk-button fdk-button-default pull-right mt-3 visible-md visible-lg"
+      onClick={[Function]}
+      type="button"
+    >
+      <span
+        aria-hidden="true"
+      >
+        +
+      </span>
+       
+      Legg til i sammenligning
+    </button>
+    <button
+      className="fdk-button fdk-button-default fdk-btn-compare visible-xs visible-sm"
+      onClick={[Function]}
+      type="button"
+    >
+      <span
+        aria-hidden="true"
+      >
+        +
+      </span>
+       
+      Legg til i sammenligning
+    </button>
+    <span
+      aria-hidden="false"
+      className="uu-invisible"
+    >
+      Tittel.
+    </span>
+    <h2
+      className="inline-block mr-2"
+    >
+      Enhet
+    </h2>
+    <span
+      className="inline-block fdk-strong-virksomhet"
+    >
+      <span
+        aria-hidden="false"
+        className="uu-invisible"
+      >
+        Utgiver.
+      </span>
+      Brønnøysundregistrene
+    </span>
+    <div
+      className="mt-3"
+    >
+      <span
+        className="fdk-label"
+        id="dataset-description-inScheme-0"
+        key="dataset-description-inScheme-0"
+      >
+        <span
+          aria-hidden="false"
+          className="uu-invisible"
+        >
+          Tema.
+        </span>
+        Befolkning
+      </span>
+    </div>
+    <p
+      className="fdk-p-search-hit"
+    >
+      <span
+        aria-hidden="false"
+        className="uu-invisible"
+      >
+        Beskrivelse av begrep.
+      </span>
+      alt som er registrert med et organisasjonsnummer 
+    </p>
+    <div>
+      <span
+        className="fa-stack fdk-fa-left fdk-fa-circle"
+      >
+        <i
+          className="fa fa-file-text fa-stack-1x fdk-color0"
+        />
+      </span>
+      <a
+        href="https://jira.brreg.no/browse/BEGREP-208"
+        title="Link til lovhjemmel for begrep"
+      >
+        <span
+          aria-hidden="false"
+          className="uu-invisible"
+        >
+          Link til lovhjemmel for begrep.
+        </span>
+        https://jira.brreg.no/browse/BEGREP-208
+        <i
+          className="fa fa-external-link fdk-fa-right"
+        />
+      </a>
+    </div>
+    <hr />
+    <p
+      className="fdk-p-search-hit"
+    >
+      Alle hovedenheter, underenheter og organisasjonsledd som er identifisert med et organisasjonsnummer.
+    </p>
+    <p>
+      <a
+        className="fdk-hit-dataset-count"
+        href="/?subject=enhet"
+        title="Link til datasett med begrep"
+      >
+        Brukt i
+         
+        1
+         
+        datasett
+      </a>
+    </p>
+  </div>
+</div>
+`;
+
+exports[`should render ConceptsHitItem correctly with compare button not showing 1`] = `
+<div
+  className="fdk-a-search-hit"
+  id="concepts-hit-https%3A%2F%2Fdata-david.github.io%2FBegrep%2Fbegrep%2FEnhet"
+  tabIndex="0"
+  title="Begrep: Enhet"
+>
+  <span
+    aria-hidden="false"
+    className="uu-invisible"
+  >
+    Søketreff begrep.
+  </span>
+  <div
+    className="fdk-container-search-hit toBeCompared"
+  >
+    <span
+      aria-hidden="false"
+      className="uu-invisible"
+    >
+      Tittel.
+    </span>
+    <h2
+      className="inline-block mr-2"
+    >
+      Enhet
+    </h2>
+    <span
+      className="inline-block fdk-strong-virksomhet"
+    >
+      <span
+        aria-hidden="false"
+        className="uu-invisible"
+      >
+        Utgiver.
+      </span>
+      Brønnøysundregistrene
+    </span>
+    <div
+      className="mt-3"
+    >
+      <span
+        className="fdk-label"
+        id="dataset-description-inScheme-0"
+        key="dataset-description-inScheme-0"
+      >
+        <span
+          aria-hidden="false"
+          className="uu-invisible"
+        >
+          Tema.
+        </span>
+        Befolkning
+      </span>
+    </div>
+    <p
+      className="fdk-p-search-hit"
+    >
+      <span
+        aria-hidden="false"
+        className="uu-invisible"
+      >
+        Beskrivelse av begrep.
+      </span>
+      alt som er registrert med et organisasjonsnummer 
+    </p>
+    <div>
+      <span
+        className="fa-stack fdk-fa-left fdk-fa-circle"
+      >
+        <i
+          className="fa fa-file-text fa-stack-1x fdk-color0"
+        />
+      </span>
+      <a
+        href="https://jira.brreg.no/browse/BEGREP-208"
+        title="Link til lovhjemmel for begrep"
+      >
+        <span
+          aria-hidden="false"
+          className="uu-invisible"
+        >
+          Link til lovhjemmel for begrep.
+        </span>
+        https://jira.brreg.no/browse/BEGREP-208
+        <i
+          className="fa fa-external-link fdk-fa-right"
+        />
+      </a>
+    </div>
+    <hr />
+    <p
+      className="fdk-p-search-hit"
+    >
+      Alle hovedenheter, underenheter og organisasjonsledd som er identifisert med et organisasjonsnummer.
+    </p>
+    <p>
+      <a
+        className="fdk-hit-dataset-count"
+        href="/?subject=enhet"
+        title="Link til datasett med begrep"
+      >
+        Brukt i
+         
+        1
+         
+        datasett
+      </a>
+    </p>
+  </div>
+</div>
+`;
+
+exports[`should render ConceptsHitItem correctly with no alt label, no source and no note 1`] = `
+<div
+  className="fdk-a-search-hit"
+  id="concepts-hit-https%3A%2F%2Fdata-david.github.io%2FBegrep%2Fbegrep%2FOrganisasjonsnummer"
+  tabIndex="0"
+  title="Begrep: Organisasjonsnummer"
+>
+  <span
+    aria-hidden="false"
+    className="uu-invisible"
+  >
+    Søketreff begrep.
+  </span>
+  <div
+    className="fdk-container-search-hit "
+  >
+    <button
+      className="fdk-button fdk-button-default pull-right mt-3 visible-md visible-lg"
+      onClick={[Function]}
+      type="button"
+    >
+      <span
+        aria-hidden="true"
+      >
+        +
+      </span>
+       
+      Legg til i sammenligning
+    </button>
+    <button
+      className="fdk-button fdk-button-default fdk-btn-compare visible-xs visible-sm"
+      onClick={[Function]}
+      type="button"
+    >
+      <span
+        aria-hidden="true"
+      >
+        +
+      </span>
+       
+      Legg til i sammenligning
+    </button>
+    <span
+      aria-hidden="false"
+      className="uu-invisible"
+    >
+      Tittel.
+    </span>
+    <h2
+      className="inline-block mr-2"
+    >
+      Organisasjonsnummer
+    </h2>
+    <p
+      className="fdk-p-search-hit"
+    >
+      <span
+        aria-hidden="false"
+        className="uu-invisible"
+      >
+        Beskrivelse av begrep.
+      </span>
+      Et nisifret nummer som tildeles av Enhetsregisteret for en organisasjon som skal operere som en offentlig aktør
+    </p>
+    <hr />
+    <p>
+      <span
+        aria-hidden="false"
+        className="uu-invisible"
+      >
+        Begrep er
+      </span>
+      <strong>
+        Også kjent som:
+         
+      </strong>
+      <span
+        key="concepts-altlabel-0"
+      >
+        Orgid
+      </span>
+      <span
+        key="concepts-altlabel-1"
+      >
+        , Orgnr
+      </span>
+    </p>
+    <p>
+      <a
+        className="fdk-hit-dataset-count"
+        href="/?subject=organisasjonsnummer"
+        title="Link til datasett med begrep"
+      >
+        Brukt i
+         
+        8
+         
+        datasett
+      </a>
+    </p>
+  </div>
+</div>
+`;

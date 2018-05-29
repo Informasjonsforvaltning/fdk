@@ -1,6 +1,13 @@
-import { CATALOGS_REQUEST, CATALOGS_SUCCESS, CATALOGS_FAILURE } from '../constants/ActionTypes';
+import {
+  CATALOGS_REQUEST,
+  CATALOGS_SUCCESS,
+  CATALOGS_FAILURE
+} from '../constants/ActionTypes';
 
-export default function catalogs(state = { isFetchingCatalogs: false, catalogItems: null }, action) {
+export default function catalogs(
+  state = { isFetchingCatalogs: false, catalogItems: null },
+  action
+) {
   switch (action.type) {
     case CATALOGS_REQUEST:
       return {
@@ -12,7 +19,7 @@ export default function catalogs(state = { isFetchingCatalogs: false, catalogIte
         ...state,
         isFetchingCatalogs: false,
         catalogItems: action.response.data
-      }
+      };
     case CATALOGS_FAILURE:
       return {
         ...state,

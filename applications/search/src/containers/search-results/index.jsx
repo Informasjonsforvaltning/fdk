@@ -58,6 +58,9 @@ export class SearchPage extends React.Component {
     this.handleDatasetFilterPublisherHierarchy = this.handleDatasetFilterPublisherHierarchy.bind(
       this
     );
+    this.handleDatasetFilterProvenance = this.handleDatasetFilterProvenance.bind(
+      this
+    );
     this.handleDatasetSort = this.handleDatasetSort.bind(this);
     this.handlePageChange = this.handlePageChange.bind(this);
     this.close = this.close.bind(this);
@@ -304,6 +307,45 @@ export class SearchPage extends React.Component {
     }
   }
 
+  handleDatasetFilterProvenance(event) {
+    const { provenance } = this.state.searchQuery;
+    if (event.target.checked) {
+      ReactGA.event({
+        category: 'Fasett',
+        action: 'Legge til opphav',
+        label: event.target.value
+      });
+      this.setState(
+        {
+          searchQuery: {
+            ...this.state.searchQuery,
+            provenance: addValue(provenance, event.target.value),
+            from: undefined
+          }
+        },
+        () =>
+          this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
+      );
+    } else {
+      ReactGA.event({
+        category: 'Fasett',
+        action: 'Fjerne opphav',
+        label: event.target.value
+      });
+      this.setState(
+        {
+          searchQuery: {
+            ...this.state.searchQuery,
+            provenance: removeValue(provenance, event.target.value),
+            from: undefined
+          }
+        },
+        () =>
+          this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
+      );
+    }
+  }
+
   handleDatasetSort(event) {
     let sortField = event.field;
 
@@ -451,6 +493,7 @@ export class SearchPage extends React.Component {
                   onFilterPublisherHierarchy={
                     this.handleDatasetFilterPublisherHierarchy
                   }
+                  onFilterProvenance={this.handleDatasetFilterProvenance}
                   onSort={this.handleDatasetSort}
                   onPageChange={this.handlePageChange}
                   searchQuery={this.state.searchQuery}
@@ -460,6 +503,7 @@ export class SearchPage extends React.Component {
                     !!(
                       this.state.searchQuery.theme ||
                       this.state.searchQuery.accessrights ||
+                      this.state.searchQuery.provenance ||
                       this.state.searchQuery.orgPath
                     )
                   }

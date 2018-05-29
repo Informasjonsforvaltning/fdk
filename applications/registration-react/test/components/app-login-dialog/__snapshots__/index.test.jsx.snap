@@ -1,0 +1,59 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render LoginDialog correctly 1`] = `
+<div
+  className="login-dialog-wrapper p-5"
+>
+  <div
+    className="container"
+  >
+    <div
+      className="row"
+    >
+      <div
+        className="col-12"
+      >
+        <div
+          className="col-12 col-md-8"
+        >
+          <div
+            className="mt-2 alert alert-warning fdk-text-size-small fdk-color1"
+            role="alert"
+          >
+            <span>
+              <strong>
+                Du har blitt logget ut. 
+              </strong>
+            </span>
+            <span>
+              Sesjonen ble tidsavbrutt, men vi har tatt vare på alle endringene du har gjort. Logg inn på nytt for å fortsette å jobbe med registreringen.
+            </span>
+          </div>
+          <a
+            className="fdk-button fdk-button-cta mb-2 mb-md-5"
+            href="/login"
+          >
+            Logg inn
+          </a>
+          <div
+            className="fdk-text-size-small fdk-text-line-medium"
+          >
+            <strong>
+              Trenger du tilgang?
+            </strong>
+            <p>
+              Kontakt din leder for å få tilgang til å registrere datasett.
+            </p>
+            <strong>
+              Skal du gi andre tilgang?
+            </strong>
+            <p>
+              Du kan gi andre tilgang til å redigere datasett for din virksomhet via Altinn. Les mer om hvordan du gir andre tilgang.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

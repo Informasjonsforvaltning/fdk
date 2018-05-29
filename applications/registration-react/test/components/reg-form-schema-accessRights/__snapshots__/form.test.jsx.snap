@@ -1,0 +1,251 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render FormAccessRights correctly 1`] = `
+<form>
+  <div
+    className="form-group"
+  >
+    <Helptext
+      helptextItems={
+        Object {
+          "description": Object {
+            "nb": "For å angi hvor man kan få tilgang til datasettet skal det angis ulike distribusjoner.
+* Det angis i utgangspunktet en distribusjon per fil, feed eller API
+* Dersom det er ett API som leverer flere filformater angis det som en distribusjon",
+          },
+          "id": "Dataset_distribution",
+          "shortdesc": Object {
+            "nb": "For å angi hvor man kan få tilgang til datasettet skal det angis ulike distribusjoner.",
+          },
+          "uri": "http://brreg.no/fdk/fields#Dataset_distribution",
+        }
+      }
+      required={false}
+      title="Tilgangsnivå"
+    />
+    <Field
+      component={[Function]}
+      label="Offentlig"
+      name="accessRights.uri"
+      onChange={[Function]}
+      radioId="accessRight-public"
+      type="radio"
+      value="http://publications.europa.eu/resource/authority/access-right/PUBLIC"
+    />
+    <Field
+      component={[Function]}
+      label="Begrenset offentlighet"
+      name="accessRights.uri"
+      radioId="accessRight-restricted"
+      type="radio"
+      value="http://publications.europa.eu/resource/authority/access-right/RESTRICTED"
+    />
+    <Field
+      component={[Function]}
+      label="Unntatt offentlighet"
+      name="accessRights.uri"
+      radioId="accessRight-non_public"
+      type="radio"
+      value="http://publications.europa.eu/resource/authority/access-right/NON_PUBLIC"
+    />
+  </div>
+</form>
+`;
+
+exports[`should render FormAccessRights correctly with syncErrors 1`] = `
+<form>
+  <div
+    className="form-group"
+  >
+    <Helptext
+      helptextItems={
+        Object {
+          "description": Object {
+            "nb": "For å angi hvor man kan få tilgang til datasettet skal det angis ulike distribusjoner.
+* Det angis i utgangspunktet en distribusjon per fil, feed eller API
+* Dersom det er ett API som leverer flere filformater angis det som en distribusjon",
+          },
+          "id": "Dataset_distribution",
+          "shortdesc": Object {
+            "nb": "For å angi hvor man kan få tilgang til datasettet skal det angis ulike distribusjoner.",
+          },
+          "uri": "http://brreg.no/fdk/fields#Dataset_distribution",
+        }
+      }
+      required={false}
+      title="Tilgangsnivå"
+    />
+    <Field
+      component={[Function]}
+      label="Offentlig"
+      name="accessRights.uri"
+      onChange={[Function]}
+      radioId="accessRight-public"
+      type="radio"
+      value="http://publications.europa.eu/resource/authority/access-right/PUBLIC"
+    />
+    <Field
+      component={[Function]}
+      label="Begrenset offentlighet"
+      name="accessRights.uri"
+      radioId="accessRight-restricted"
+      type="radio"
+      value="http://publications.europa.eu/resource/authority/access-right/RESTRICTED"
+    />
+    <Field
+      component={[Function]}
+      label="Unntatt offentlighet"
+      name="accessRights.uri"
+      radioId="accessRight-non_public"
+      type="radio"
+      value="http://publications.europa.eu/resource/authority/access-right/NON_PUBLIC"
+    />
+    <div
+      className="alert alert-danger mt-3"
+    >
+      Feil
+    </div>
+    <div
+      className="mt-4"
+    >
+      <div
+        className="form-group"
+      >
+        <Helptext
+          helptextItems={
+            Object {
+              "description": Object {
+                "nb": "Dersom datasettet har begrensninger på deling trenger vi å vite hva skjermingen gjelder. Det kan være hjemmel (kilde for påstand) i offentlighetsloven, sikkerhetsloven, beskyttelsesinstruksen eller annet lovverk som ligger til grunn for vurdering av tilgangsnivå.
+* Angi referanse til relevant lov eller forskrift. Helst til lovdata på paragrafnivå. 
+* Egenskapen er anbefalt dersom «tilgangsnivå» har verdiene «begrenset» eller «ikke-offentlig»",
+              },
+              "id": "Dataset_legalBasisForRestriction",
+              "shortdesc": Object {
+                "nb": "Angi referanse til relevant lov eller forskrift.",
+              },
+              "uri": "http://brreg.no/fdk/fields#Dataset_legalBasisForRestriction",
+            }
+          }
+          required={false}
+          title="Skjermingshjemmel"
+        />
+        <FieldArray
+          component={[Function]}
+          linkLabel="Lenke"
+          name="legalBasisForRestriction"
+          titleLabel="Tittel"
+        />
+      </div>
+      <div
+        className="form-group"
+      >
+        <Helptext
+          helptextItems={
+            Object {
+              "description": Object {
+                "nb": "Etter personopplysningsloven § 8 og 9 skal det foreligge et grunnlag for behandling av personopplysninger. 
+Dersom et datasett inneholder personopplysninger skal det være et grunnlag for behandlingen.
+* Behandlingsgrunnlag knyttes enten til lovhjemmel, samtykke eller nødvendighetsvurdering. Angi dette i tekst.
+* Dersom behandlingsgrunnlaget er knyttet til lovhjemmel angis en referanse til dette.",
+              },
+              "id": "Dataset_legalBasisForProcessing",
+              "shortdesc": Object {
+                "nb": "Behandlingsgrunnlag knyttes enten til angitt lovhjemmel, samtykke eller nødvendighetsvurdering.",
+              },
+              "uri": "http://brreg.no/fdk/fields#Dataset_legalBasisForProcessing",
+            }
+          }
+          required={false}
+          title="Behandlingsgrunnlag"
+        />
+        <FieldArray
+          component={[Function]}
+          linkLabel="Lenke"
+          name="legalBasisForProcessing"
+          titleLabel="Tittel"
+        />
+      </div>
+      <div
+        className="form-group"
+      >
+        <Helptext
+          helptextItems={
+            Object {
+              "description": Object {
+                "nb": "Informasjon om utleveringshjemmel gjør det enklere for brukere av datasettet å se om det er nødvendig med egen hjemmel for innhenting eller om de kan få tillatelse til å bruke opplysninger etter søknad til dataeier.
+* Henvisning til regelverk som begrunner en offentlig virksomhet sin rett eller plikt til å utlevere opplysninger til andre private personer eller juridiske personer.
+* Henvisningen gjøres til lovdata på paragraf-nivå.",
+              },
+              "id": "Dataset_legalBasisForAccess",
+              "shortdesc": Object {
+                "nb": "Henvisning til regelverk som begrunner en offentlig virksomhet sin rett eller plikt til å utlevere opplysninger til andre private personer eller juridiske personer.",
+              },
+              "uri": "http://brreg.no/fdk/fields#Dataset_legalBasisForAccess",
+            }
+          }
+          required={false}
+          title="Utleveringshjemmel"
+        />
+        <FieldArray
+          component={[Function]}
+          linkLabel="Lenke"
+          name="legalBasisForAccess"
+          titleLabel="Tittel"
+        />
+      </div>
+    </div>
+  </div>
+</form>
+`;
+
+exports[`should render renderLegalBasis correctly 1`] = `
+<div>
+  <div
+    className="d-flex mb-2"
+    key="0"
+  >
+    <div
+      className="w-50"
+    >
+      <Field
+        component={[Function]}
+        name="[object Object].prefLabel.nb"
+        showLabel={true}
+      />
+    </div>
+    <div
+      className="w-50"
+    >
+      <Field
+        component={[Function]}
+        name="[object Object].uri"
+        showLabel={true}
+      />
+    </div>
+    <div
+      className="d-flex align-items-end"
+    >
+      <button
+        className="fdk-btn-no-border"
+        onClick={[Function]}
+        title="Remove temporal"
+        type="button"
+      >
+        <i
+          className="fa fa-trash mr-2"
+        />
+      </button>
+    </div>
+  </div>
+  <button
+    className="fdk-btn-no-border"
+    onClick={[Function]}
+    type="button"
+  >
+    <i
+      className="fa fa-plus mr-2"
+    />
+    Legg til
+  </button>
+</div>
+`;

@@ -1,0 +1,42 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render DatepickerField correctly 1`] = `
+<div
+  className="pl-2"
+>
+  <label
+    className="fdk-form-label"
+    htmlFor="date"
+  >
+    label
+    <DatePicker
+      allowSameDay={false}
+      className="fdk-reg-datepicker"
+      dateFormat="DD.MM.YYYY"
+      dateFormatCalendar="MMMM YYYY"
+      disabled={false}
+      disabledKeyboardNavigation={false}
+      dropdownMode="scroll"
+      id="date"
+      locale="nb-no"
+      monthsShown={1}
+      onBlur={[Function]}
+      onChange={[Function]}
+      onClickOutside={[Function]}
+      onFocus={[Function]}
+      onKeyDown={[Function]}
+      onMonthChange={[Function]}
+      onSelect={[Function]}
+      onYearChange={[Function]}
+      preventOpenOnFocus={false}
+      selected={"2018-05-15T12:46:34.495Z"}
+      shouldCloseOnSelect={true}
+      showTimeSelect={false}
+      showYearDropdown={true}
+      timeIntervals={30}
+      withPortal={false}
+      yearDropdownItemNumber={5}
+    />
+  </label>
+</div>
+`;

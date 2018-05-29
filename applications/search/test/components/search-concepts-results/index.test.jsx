@@ -1,0 +1,60 @@
+import React from 'react';
+import { shallow } from 'enzyme';
+import ResultsConcepts from '../../../src/components/search-concepts-results';
+import concepts from '../../fixtures/concepts';
+
+let onClearSearch;
+let onPageChange;
+let onFilterPublisherHierarchy;
+let closeFilterModal;
+let defaultProps;
+let wrapper;
+
+beforeEach(() => {
+  onClearSearch = jest.fn();
+  onPageChange = jest.fn();
+  onFilterPublisherHierarchy = jest.fn();
+  closeFilterModal = jest.fn();
+
+  defaultProps = {
+    selectedLanguageCode: null,
+    termItems: concepts,
+    onClearSearch,
+    onPageChange,
+    onFilterPublisherHierarchy,
+    searchQuery: {},
+    hitsPerPage: 50,
+    showFilterModal: false,
+    closeFilterModal,
+    showClearFilterButton: false,
+    publisherArray: null,
+    publishers: null
+  };
+  wrapper = shallow(<ResultsConcepts {...defaultProps} />);
+  wrapper.setState({
+    terms: [concepts.hits.hits[0]._source]
+  });
+});
+
+test('should render ResultsConcepts correctly with minimum of props', () => {
+  const minWrapper = shallow(<ResultsConcepts />);
+  expect(minWrapper).toMatchSnapshot();
+});
+
+test('should render ResultsConcepts correctly with props', () => {
+  expect(wrapper).toMatchSnapshot();
+});
+
+/*
+test('should render ResultsConcepts correctly with renderCompareTerms', () => {
+  expect(wrapper).toMatchSnapshot();
+});
+*/
+/*
+test('should render ResultsConcepts correctly with hits', () => {
+  wrapper.setProps({
+    datasetItems: datasetItems[0]
+  });
+  expect(wrapper).toMatchSnapshot();
+});
+*/

@@ -1,0 +1,319 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render SearchHitItem NON_PUBLIC correctly 1`] = `
+<Link
+  className="fdk-a-search-hit"
+  replace={false}
+  title="Datasett: AAMarkagrensen Oslo Kommune og nærliggende kommuner"
+  to="/datasets/3645d5a8-6689-4fc1-8684-d3d6c2d47386"
+>
+  <span
+    aria-hidden="false"
+    className="uu-invisible"
+  >
+    Søketreff.
+  </span>
+  <div
+    className="fdk-container-search-hit"
+  >
+    <h2>
+      AAMarkagrensen Oslo Kommune og nærliggende kommuner
+    </h2>
+    <div
+      className="fdk-dataset-themes"
+    >
+      <span>
+        <span
+          aria-hidden="false"
+          className="uu-invisible"
+        >
+          Datasettet
+        </span>
+        Eies av
+         
+        <span
+          className="fdk-strong-virksomhet"
+        >
+          Testetaten
+        </span>
+      </span>
+      <div
+        className="fdk-label mr-2 mb-2"
+        key="dataset-description-theme-0"
+      >
+        <span
+          aria-hidden="false"
+          className="uu-invisible"
+        >
+          Datasettets tema.
+        </span>
+        Forvaltning og offentlig støtte
+      </div>
+      <div
+        className="fdk-label mr-2 mb-2"
+        key="dataset-description-theme-1"
+      >
+        <span
+          aria-hidden="false"
+          className="uu-invisible"
+        >
+          Datasettets tema.
+        </span>
+        Miljø
+      </div>
+    </div>
+    <p
+      className="fdk-p-search-hit"
+    >
+      <span
+        aria-hidden="false"
+        className="uu-invisible"
+      >
+        Beskrivelse av datasettet,
+      </span>
+      Datasettet avgrenser område for virkeområdet til lov 6. juni 2009 nr. 35 om naturområder i Oslo og nærliggende kommuner (markaloven) som trådte i kraft 1. september 2009. Markalovens virkeområde er fastsatt i forskrift 4...
+    </p>
+    <div
+      className="fdk-container-distributions fdk-distributions-red"
+    >
+      <strong>
+        Unntatt offentlighet
+      </strong>
+      <div />
+      <div
+        id="search-hit-sample"
+      >
+        Eksempeldata tilgjengelig
+      </div>
+    </div>
+  </div>
+</Link>
+`;
+
+exports[`should render SearchHitItem PUBLIC correctly 1`] = `
+<Link
+  className="fdk-a-search-hit"
+  replace={false}
+  title="Datasett: AAMarkagrensen Oslo Kommune og nærliggende kommuner"
+  to="/datasets/3645d5a8-6689-4fc1-8684-d3d6c2d47386"
+>
+  <span
+    aria-hidden="false"
+    className="uu-invisible"
+  >
+    Søketreff.
+  </span>
+  <div
+    className="fdk-container-search-hit"
+  >
+    <h2>
+      AAMarkagrensen Oslo Kommune og nærliggende kommuner
+    </h2>
+    <div
+      className="fdk-dataset-themes"
+    >
+      <div
+        className="fdk-label mr-2 mb-2"
+        key="dataset-description-theme-0"
+      >
+        <span
+          aria-hidden="false"
+          className="uu-invisible"
+        >
+          Datasettets tema.
+        </span>
+        Forvaltning og offentlig støtte
+      </div>
+      <div
+        className="fdk-label mr-2 mb-2"
+        key="dataset-description-theme-1"
+      >
+        <span
+          aria-hidden="false"
+          className="uu-invisible"
+        >
+          Datasettets tema.
+        </span>
+        Miljø
+      </div>
+    </div>
+    <p
+      className="fdk-p-search-hit"
+    >
+      <span
+        aria-hidden="false"
+        className="uu-invisible"
+      >
+        Beskrivelse av datasettet,
+      </span>
+      Datasettet avgrenser område for virkeområdet til lov 6. juni 2009 nr. 35 om naturområder Datasettes formål er nullam quis rius eget urna mollis ornare vel eu leo. Praesent commo ...
+    </p>
+    <div
+      className="fdk-container-distributions fdk-distributions-green"
+    >
+      <strong>
+        Offentlig
+      </strong>
+    </div>
+  </div>
+</Link>
+`;
+
+exports[`should render SearchHitItem RESTRICTED correctly 1`] = `
+<Link
+  className="fdk-a-search-hit"
+  replace={false}
+  title="Datasett: AAMarkagrensen Oslo Kommune og nærliggende kommuner"
+  to="/datasets/3645d5a8-6689-4fc1-8684-d3d6c2d47386"
+>
+  <span
+    aria-hidden="false"
+    className="uu-invisible"
+  >
+    Søketreff.
+  </span>
+  <div
+    className="fdk-container-search-hit"
+  >
+    <h2>
+      AAMarkagrensen Oslo Kommune og nærliggende kommuner
+    </h2>
+    <div
+      className="fdk-dataset-themes"
+    >
+      <span>
+        <span
+          aria-hidden="false"
+          className="uu-invisible"
+        >
+          Datasettet
+        </span>
+        Eies av
+         
+        <span
+          className="fdk-strong-virksomhet"
+        >
+          Testetaten
+        </span>
+      </span>
+      <div
+        className="fdk-label mr-2 mb-2"
+        key="dataset-description-theme-0"
+      >
+        <span
+          aria-hidden="false"
+          className="uu-invisible"
+        >
+          Datasettets tema.
+        </span>
+        Forvaltning og offentlig støtte
+      </div>
+      <div
+        className="fdk-label mr-2 mb-2"
+        key="dataset-description-theme-1"
+      >
+        <span
+          aria-hidden="false"
+          className="uu-invisible"
+        >
+          Datasettets tema.
+        </span>
+        Miljø
+      </div>
+    </div>
+    <p
+      className="fdk-p-search-hit"
+    >
+      <span
+        aria-hidden="false"
+        className="uu-invisible"
+      >
+        Beskrivelse av datasettet,
+      </span>
+      Datasettet avgrenser område for virkeområdet til lov 6. juni 2009 nr. 35 om naturområder i Oslo og nærliggende kommuner (markaloven) som trådte i kraft 1. september 2009. Markalovens virkeområde er fastsatt i forskrift 4...
+    </p>
+    <div
+      className="fdk-container-distributions fdk-distributions-yellow"
+    >
+      <strong>
+        Begrenset offentlighet
+      </strong>
+      <div>
+        <DistributionFormat
+          code="RESTRICTED"
+          key="dataset-distribution-format0"
+          text="application/json"
+          type={null}
+        />
+        <DistributionFormat
+          code="RESTRICTED"
+          key="dataset-distribution-format1"
+          text="xml"
+          type={null}
+        />
+      </div>
+      <div
+        id="search-hit-sample"
+      >
+        Eksempeldata tilgjengelig
+      </div>
+    </div>
+  </div>
+</Link>
+`;
+
+exports[`should render SearchHitItem with no title, description, accessRights and distribution with no format correctly 1`] = `
+<Link
+  className="fdk-a-search-hit"
+  replace={false}
+  title="Datasett: undefined"
+  to="/datasets/3645d5a8-6689-4fc1-8684-d3d6c2d47386"
+>
+  <span
+    aria-hidden="false"
+    className="uu-invisible"
+  >
+    Søketreff.
+  </span>
+  <div
+    className="fdk-container-search-hit"
+  >
+    <h2 />
+    <div
+      className="fdk-dataset-themes"
+    >
+      <span>
+        <span
+          aria-hidden="false"
+          className="uu-invisible"
+        >
+          Datasettet
+        </span>
+        Eies av
+         
+        <span
+          className="fdk-strong-virksomhet"
+        >
+          Testetaten
+        </span>
+      </span>
+    </div>
+    <p
+      className="fdk-p-search-hit"
+    >
+      <span
+        aria-hidden="false"
+        className="uu-invisible"
+      >
+        Beskrivelse av datasettet,
+      </span>
+    </p>
+    <div
+      className=""
+    >
+      <strong />
+      <div />
+    </div>
+  </div>
+</Link>
+`;
