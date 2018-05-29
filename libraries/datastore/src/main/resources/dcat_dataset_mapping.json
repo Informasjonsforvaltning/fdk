@@ -402,6 +402,43 @@
           }
         }
       },
+      "subject": {
+        "properties": {
+          "prefLabel": {
+            "properties": {
+              "no": {
+                "type": "string",
+                "fields": {
+                  "raw": {
+                    "type": "string",
+                    "index": "not_analyzed"
+                  }
+                }
+              }
+            }
+          },
+          "altLabel": {
+            "properties": {
+              "no": {
+                "type": "string",
+                "analyzer": "norwegian"
+              }
+            }
+          },
+          "definition": {
+            "properties": {
+              "no": {
+                "type": "string",
+                "analyzer": "norwegian"
+              }
+            }
+          },
+          "uri": {
+            "type": "string",
+            "index": "not_analyzed"
+          }
+        }
+      },
       "spatial": {
         "properties": {
           "code": {

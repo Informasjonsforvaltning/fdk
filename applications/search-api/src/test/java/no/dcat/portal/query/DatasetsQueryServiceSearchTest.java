@@ -171,6 +171,10 @@ public class DatasetsQueryServiceSearchTest {
         sqs.search("","","","","", 0, 0, 0, 0, 20,"", "","", "", "", "http://tulletse");
     }
 
+    @Test
+    public void checkMultipleSpatialLabels() {
+        sqs.search("","","","","", 0, 0, 0, 0, 20,"", "","", "", "", "Ukjent,Oslo Fylke");
+    }
 
     @Test
     public void checkProvenance() {
