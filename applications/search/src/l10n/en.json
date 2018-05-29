@@ -100,7 +100,8 @@
       "PRIVAT": "Private",
       "ANNET": "Other"
     },
-    "provenance": "Provenance"
+    "provenance": "Provenance",
+    "spatial": "Spatial"
   },
   "result": {
     "dataset":"Dataset",

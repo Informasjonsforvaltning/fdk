@@ -28,21 +28,23 @@ export default class FilterBox extends React.Component {
 
   _renderOptions({ buckets }, onClick, activeFilter) {
     const { open } = this.state;
-    const { themesItems } = this.props;
+    const { htmlKey, themesItems } = this.props;
     let filters;
     if (activeFilter) {
       filters = activeFilter.split(',');
     }
     const options = items =>
       items.map((item, index) => {
+        // generate unique key, this is used by FilterOption on label htmlFor
+        const itemKey = Number.parseInt(`${htmlKey}${index}`, 10);
         let active = false;
         if (filters && filters.includes(item.key)) {
           active = true;
         }
         return (
           <FilterOption
-            key={index}
-            itemKey={index}
+            key={itemKey}
+            itemKey={itemKey}
             value={item.key}
             label={item.key}
             count={item.doc_count}
@@ -113,6 +115,7 @@ FilterBox.defaultProps = {
 };
 
 FilterBox.propTypes = {
+  htmlKey: PropTypes.number.isRequired,
   title: PropTypes.string,
   filter: PropTypes.object.isRequired,
   onClick: PropTypes.func.isRequired,

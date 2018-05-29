@@ -20,6 +20,7 @@ export default class ResultsDataset extends React.Component {
       onFilterAccessRights,
       onFilterPublisherHierarchy,
       onFilterProvenance,
+      onFilterSpatial,
       searchQuery,
       themesItems,
       publisherArray,
@@ -33,6 +34,7 @@ export default class ResultsDataset extends React.Component {
         <Modal.Body>
           <div className="search-filters">
             <FilterBox
+              htmlKey={0}
               title={localization.facet.theme}
               filter={datasetItems.aggregations.theme_count}
               onClick={onFilterTheme}
@@ -40,12 +42,14 @@ export default class ResultsDataset extends React.Component {
               themesItems={themesItems}
             />
             <FilterBox
+              htmlKey={1}
               title={localization.facet.accessRight}
               filter={datasetItems.aggregations.accessRightsCount}
               onClick={onFilterAccessRights}
               activeFilter={searchQuery.accessrights}
             />
             <FilterBox
+              htmlKey={2}
               title={localization.facet.provenance}
               filter={datasetItems.aggregations.provenanceCount}
               onClick={onFilterProvenance}
@@ -90,6 +94,7 @@ export default class ResultsDataset extends React.Component {
       onFilterAccessRights,
       onFilterPublisherHierarchy,
       onFilterProvenance,
+      onFilterSpatial,
       onSort,
       onPageChange,
       showClearFilterButton,
@@ -171,6 +176,7 @@ export default class ResultsDataset extends React.Component {
                   <div>
                     {this._renderFilterModal()}
                     <FilterBox
+                      htmlKey={0}
                       title={localization.facet.theme}
                       filter={datasetItems.aggregations.theme_count}
                       onClick={onFilterTheme}
@@ -178,17 +184,28 @@ export default class ResultsDataset extends React.Component {
                       themesItems={themesItems}
                     />
                     <FilterBox
+                      htmlKey={1}
                       title={localization.facet.accessRight}
                       filter={datasetItems.aggregations.accessRightsCount}
                       onClick={onFilterAccessRights}
                       activeFilter={searchQuery.accessrights}
                     />
                     <FilterBox
+                      htmlKey={2}
+                      title={localization.facet.spatial}
+                      filter={datasetItems.aggregations.spatial}
+                      onClick={onFilterSpatial}
+                      activeFilter={searchQuery.spatial}
+                    />
+
+                    <FilterBox
+                      htmlKey={3}
                       title={localization.facet.provenance}
                       filter={datasetItems.aggregations.provenanceCount}
                       onClick={onFilterProvenance}
                       activeFilter={searchQuery.provenance}
                     />
+
                     <FilterBoxPublishers
                       title={localization.facet.organisation}
                       filter={publisherArray}
@@ -239,6 +256,7 @@ ResultsDataset.defaultProps = {
   onFilterAccessRights: null,
   onFilterPublisherHierarchy: null,
   onFilterProvenance: null,
+  onFilterSpatial: null,
   searchQuery: {},
   themesItems: null,
   publisherArray: null,
@@ -257,6 +275,7 @@ ResultsDataset.propTypes = {
   onFilterAccessRights: PropTypes.func,
   onFilterPublisherHierarchy: PropTypes.func,
   onFilterProvenance: PropTypes.func,
+  onFilterSpatial: PropTypes.func,
   searchQuery: PropTypes.object,
   themesItems: PropTypes.object,
   publisherArray: PropTypes.array,
