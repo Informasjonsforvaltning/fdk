@@ -4,17 +4,18 @@ import cx from 'classnames';
 
 export const DistributionFormat = props => {
   const { code, type, text } = props;
-  const formatClass = cx('fdk-label-distribution', {
+  const formatClass = cx('fdk-label-distribution mr-2', {
     'fdk-label-distribution-offentlig': code === 'PUBLIC',
     'fdk-label-distribution-begrenset': code === 'RESTRICTED',
     'fdk-label-distribution-skjermet': code === 'NON-PUBLIC'
   });
 
+  // <i className="fa fa-cogs fdk-fa-left" /> TYPE ICON
+
   return (
     <div className={formatClass}>
       {type && (
         <span>
-          <i className="fa fa-cogs fdk-fa-left" />
           <strong className="fdk-distribution-format">{type}</strong>
         </span>
       )}

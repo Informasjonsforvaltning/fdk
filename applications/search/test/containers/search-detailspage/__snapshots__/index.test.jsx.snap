@@ -349,7 +349,7 @@ exports[`should render DetailsPage correctly with datasetItem 1`] = `
                 "uri": "http://brreg.no/catalogs/987654321/contacts/null",
               }
             }
-            key="http://brreg.no/catalogs/987654321/contacts/null"
+            key="0"
             landingPage={
               Array [
                 "http://testetaten.no/landingsside/nr1",

@@ -2,12 +2,9 @@
 
 exports[`should render DistributionFormat with "Dataset" correctly 1`] = `
 <div
-  className="fdk-label-distribution fdk-label-distribution-offentlig"
+  className="fdk-label-distribution mr-2 fdk-label-distribution-offentlig"
 >
   <span>
-    <i
-      className="fa fa-cogs fdk-fa-left"
-    />
     <strong
       className="fdk-distribution-format"
     >
@@ -20,7 +17,7 @@ exports[`should render DistributionFormat with "Dataset" correctly 1`] = `
 
 exports[`should render DistributionFormat with "Dataset" correctly with no type 1`] = `
 <div
-  className="fdk-label-distribution fdk-label-distribution-offentlig"
+  className="fdk-label-distribution mr-2 fdk-label-distribution-offentlig"
 >
   ESRI Filgeodatabase
 </div>
