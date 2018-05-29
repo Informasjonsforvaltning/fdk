@@ -6,6 +6,8 @@ import no.dcat.themes.database.TDBConnection;
 import no.dcat.themes.database.TDBInferenceService;
 import no.dcat.themes.database.TDBService;
 import no.dcat.themes.service.CodesService;
+import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -24,8 +26,11 @@ public class LocationTest {
     @Rule
     public TemporaryFolder testFolder = new TemporaryFolder();
 
-    @Test
-    public void testNorwayFromGeonames() throws IOException {
+    CodesService codesService;
+
+
+    @Before
+    public void setup() throws IOException {
         TDBService tdbService = new TDBService(testFolder.getRoot().getCanonicalPath());
         tdbService.postConstruct();
 
@@ -33,7 +38,11 @@ public class LocationTest {
         TDBConnection tdbConnection = new TDBConnection(tdbInferenceService);
 
 
-        CodesService codesService = new CodesService(tdbConnection);
+        codesService = new CodesService(tdbConnection);
+    }
+
+    @Test
+    public void testNorwayFromGeonames() throws IOException {
         SkosCode code = codesService.addLocation("http://sws.geonames.org/3144096/");
 
         assertEquals("Norge", code.getPrefLabel().get("no"));
@@ -44,7 +53,24 @@ public class LocationTest {
         List<SkosCode> subjects = codesService.getCodes(Types.subject);
         assertTrue(subjects.size() == 0);
 
+    }
 
+    @Test
+    public void testNorwayFromGeonames2() throws IOException {
+
+        SkosCode code = codesService.addLocation("http://sws.geonames.org/3143242/");
+
+        assertEquals("Oslo Fylke", code.getPrefLabel().get("no"));
+
+
+    }
+
+    @Test
+    @Ignore
+    public void testFromGeonorge() throws IOException {
+        SkosCode code = codesService.addLocation("http://data.geonorge.no/administrativeEnheter/fylke/id/173150");
+
+        assertEquals("XXX", code.getPrefLabel().get("no"));
     }
 
 

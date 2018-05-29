@@ -100,7 +100,8 @@
       "PRIVAT": "Privat",
       "ANNET": "Annet"
     },
-    "provenance": "Opphav"
+    "provenance": "Opphav",
+    "spatial": "Geografi"
   },
   "result": {
     "dataset":"Datasett",

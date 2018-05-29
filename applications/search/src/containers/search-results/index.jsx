@@ -61,6 +61,9 @@ export class SearchPage extends React.Component {
     this.handleDatasetFilterProvenance = this.handleDatasetFilterProvenance.bind(
       this
     );
+    this.handleDatasetFilterSpatial = this.handleDatasetFilterSpatial.bind(
+      this
+    );
     this.handleDatasetSort = this.handleDatasetSort.bind(this);
     this.handlePageChange = this.handlePageChange.bind(this);
     this.close = this.close.bind(this);
@@ -346,6 +349,45 @@ export class SearchPage extends React.Component {
     }
   }
 
+  handleDatasetFilterSpatial(event) {
+    const { spatial } = this.state.searchQuery;
+    if (event.target.checked) {
+      ReactGA.event({
+        category: 'Fasett',
+        action: 'Legge til geografi',
+        label: event.target.value
+      });
+      this.setState(
+        {
+          searchQuery: {
+            ...this.state.searchQuery,
+            spatial: addValue(spatial, event.target.value),
+            from: undefined
+          }
+        },
+        () =>
+          this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
+      );
+    } else {
+      ReactGA.event({
+        category: 'Fasett',
+        action: 'Fjerne geografi',
+        label: event.target.value
+      });
+      this.setState(
+        {
+          searchQuery: {
+            ...this.state.searchQuery,
+            spatial: removeValue(spatial, event.target.value),
+            from: undefined
+          }
+        },
+        () =>
+          this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
+      );
+    }
+  }
+
   handleDatasetSort(event) {
     let sortField = event.field;
 
@@ -388,12 +430,6 @@ export class SearchPage extends React.Component {
   handlePageChange(data) {
     const selected = data.selected;
     const offset = Math.ceil(selected * 50);
-
-    ReactGA.event({
-      category: 'Paginering',
-      action: 'Ny side',
-      label: offset
-    });
 
     if (offset === 0) {
       this.setState(
@@ -494,6 +530,7 @@ export class SearchPage extends React.Component {
                     this.handleDatasetFilterPublisherHierarchy
                   }
                   onFilterProvenance={this.handleDatasetFilterProvenance}
+                  onFilterSpatial={this.handleDatasetFilterSpatial}
                   onSort={this.handleDatasetSort}
                   onPageChange={this.handlePageChange}
                   searchQuery={this.state.searchQuery}
@@ -504,6 +541,7 @@ export class SearchPage extends React.Component {
                       this.state.searchQuery.theme ||
                       this.state.searchQuery.accessrights ||
                       this.state.searchQuery.provenance ||
+                      this.state.searchQuery.spatial ||
                       this.state.searchQuery.orgPath
                     )
                   }
