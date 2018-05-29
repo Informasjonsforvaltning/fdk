@@ -106,7 +106,7 @@ openshiftProject=fellesdatakatalog-$environment
 if [ $environment = ppe ] || [ $environment = pp2 ]|| [ $environment = prd ]
 then
     #run on prod cluster
-    cluster=paas-prd
+    cluster=paas
 else
     #run on non-prod cluster if environment is ut1, st1, st2, tt1, pp2
     cluster=paas-nprd
