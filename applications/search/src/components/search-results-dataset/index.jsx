@@ -34,7 +34,7 @@ export default class ResultsDataset extends React.Component {
         <Modal.Body>
           <div className="search-filters">
             <FilterBox
-              htmlKey={0}
+              htmlKey={1}
               title={localization.facet.theme}
               filter={datasetItems.aggregations.theme_count}
               onClick={onFilterTheme}
@@ -42,21 +42,21 @@ export default class ResultsDataset extends React.Component {
               themesItems={themesItems}
             />
             <FilterBox
-              htmlKey={1}
+              htmlKey={2}
               title={localization.facet.accessRight}
               filter={datasetItems.aggregations.accessRightsCount}
               onClick={onFilterAccessRights}
               activeFilter={searchQuery.accessrights}
             />
             <FilterBox
-              htmlKey={2}
+              htmlKey={3}
               title={localization.facet.spatial}
               filter={datasetItems.aggregations.spatial}
               onClick={onFilterSpatial}
               activeFilter={searchQuery.spatial}
             />
             <FilterBox
-              htmlKey={3}
+              htmlKey={4}
               title={localization.facet.provenance}
               filter={datasetItems.aggregations.provenanceCount}
               onClick={onFilterProvenance}
@@ -183,7 +183,7 @@ export default class ResultsDataset extends React.Component {
                   <div>
                     {this._renderFilterModal()}
                     <FilterBox
-                      htmlKey={0}
+                      htmlKey={1}
                       title={localization.facet.theme}
                       filter={datasetItems.aggregations.theme_count}
                       onClick={onFilterTheme}
@@ -191,21 +191,21 @@ export default class ResultsDataset extends React.Component {
                       themesItems={themesItems}
                     />
                     <FilterBox
-                      htmlKey={1}
+                      htmlKey={2}
                       title={localization.facet.accessRight}
                       filter={datasetItems.aggregations.accessRightsCount}
                       onClick={onFilterAccessRights}
                       activeFilter={searchQuery.accessrights}
                     />
                     <FilterBox
-                      htmlKey={2}
+                      htmlKey={3}
                       title={localization.facet.spatial}
                       filter={datasetItems.aggregations.spatial}
                       onClick={onFilterSpatial}
                       activeFilter={searchQuery.spatial}
                     />
                     <FilterBox
-                      htmlKey={3}
+                      htmlKey={4}
                       title={localization.facet.provenance}
                       filter={datasetItems.aggregations.provenanceCount}
                       onClick={onFilterProvenance}

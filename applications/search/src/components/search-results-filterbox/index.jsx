@@ -36,7 +36,10 @@ export default class FilterBox extends React.Component {
     const options = items =>
       items.map((item, index) => {
         // generate unique key, this is used by FilterOption on label htmlFor
-        const itemKey = Number.parseInt(`${htmlKey}${index}`, 10);
+        let itemKey = 0;
+        if (htmlKey) {
+          itemKey = Number.parseInt(`${htmlKey}${index}`, 10);
+        }
         let active = false;
         if (filters && filters.includes(item.key)) {
           active = true;
@@ -109,13 +112,14 @@ export default class FilterBox extends React.Component {
 }
 
 FilterBox.defaultProps = {
+  htmlKey: null,
   title: null,
   activeFilter: null,
   themesItems: null
 };
 
 FilterBox.propTypes = {
-  htmlKey: PropTypes.number.isRequired,
+  htmlKey: PropTypes.number,
   title: PropTypes.string,
   filter: PropTypes.object.isRequired,
   onClick: PropTypes.func.isRequired,
