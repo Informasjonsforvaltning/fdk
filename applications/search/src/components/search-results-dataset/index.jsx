@@ -50,6 +50,13 @@ export default class ResultsDataset extends React.Component {
             />
             <FilterBox
               htmlKey={2}
+              title={localization.facet.spatial}
+              filter={datasetItems.aggregations.spatial}
+              onClick={onFilterSpatial}
+              activeFilter={searchQuery.spatial}
+            />
+            <FilterBox
+              htmlKey={3}
               title={localization.facet.provenance}
               filter={datasetItems.aggregations.provenanceCount}
               onClick={onFilterProvenance}
@@ -197,7 +204,6 @@ export default class ResultsDataset extends React.Component {
                       onClick={onFilterSpatial}
                       activeFilter={searchQuery.spatial}
                     />
-
                     <FilterBox
                       htmlKey={3}
                       title={localization.facet.provenance}
