@@ -56,22 +56,35 @@ public class LocationTest {
     }
 
     @Test
-    public void testNorwayFromGeonames2() throws IOException {
+    public void testOsloFromGeonames2() throws IOException {
 
         SkosCode code = codesService.addLocation("http://sws.geonames.org/3143242/");
 
         assertEquals("Oslo Fylke", code.getPrefLabel().get("no"));
-
-
     }
 
     @Test
-    @Ignore
-    public void testFromGeonorge() throws IOException {
+    public void testGeonorgeFylke() throws IOException {
         SkosCode code = codesService.addLocation("http://data.geonorge.no/administrativeEnheter/fylke/id/173150");
 
-        assertEquals("XXX", code.getPrefLabel().get("no"));
+        assertEquals("Sogn og Fjordane", code.getPrefLabel().get("no"));
     }
+
+    @Test
+    public void testGeonorgeKommune() throws IOException {
+        SkosCode code = codesService.addLocation("http://data.geonorge.no/administrativeEnheter/kommune/id/172778");
+
+        assertEquals("Bergen", code.getPrefLabel().get("no"));
+    }
+
+    @Test
+    @Ignore // syntax error
+    public void testGeonorgeNasjon() throws IOException {
+        SkosCode code = codesService.addLocation("http://data.geonorge.no/administrativeEnheter/nasjon/id/173163");
+
+        assertEquals("Norge", code.getPrefLabel().get("no"));
+    }
+
 
 
 }
