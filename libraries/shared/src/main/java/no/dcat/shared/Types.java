@@ -10,6 +10,7 @@ public enum Types {
     linguisticsystem("rdf/languages-skos.rdf", "linguisticsystem"),
     referencetypes("rdf/reference-code-skos.ttl", "referencetypes"),
     openlicenses("rdf/open-licenses-skos.rdf", "openlicenses"),
+    distributiontype("rdf/distribution-type-skos.rdf", "distributiontypes"),
 
     location(null, "location"),
     subject(null, "subject");
