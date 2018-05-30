@@ -22,7 +22,7 @@ const renderFormats = (source, code) => {
       let { type } = item;
       if (format && typeof format !== 'undefined') {
         if (!(type === 'API' || type === 'Feed' || type === 'Nedlastbar fil')) {
-          type = null
+          type = null;
         }
         const formatNodes = Object.keys(format).map(key => (
           <DistributionFormat

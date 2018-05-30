@@ -191,6 +191,15 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
                   themesItems={null}
                   title="Tilgang"
                 />
+                <SearchPublishersTree
+                  activeFilter={null}
+                  filter={Array []}
+                  onFilterPublisherHierarchy={[MockFunction]}
+                  onSearch={null}
+                  orgPath={null}
+                  publishers={Object {}}
+                  title="Virksomhet"
+                />
                 <FilterBox
                   activeFilter={null}
                   filter={
@@ -228,15 +237,6 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
                   onClick={null}
                   themesItems={null}
                   title="Opphav"
-                />
-                <SearchPublishersTree
-                  activeFilter={null}
-                  filter={Array []}
-                  onFilterPublisherHierarchy={[MockFunction]}
-                  onSearch={null}
-                  orgPath={null}
-                  publishers={Object {}}
-                  title="Virksomhet"
                 />
               </div>
             </ModalBody>
@@ -331,6 +331,15 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
             themesItems={null}
             title="Tilgang"
           />
+          <SearchPublishersTree
+            activeFilter={null}
+            filter={Array []}
+            onFilterPublisherHierarchy={[MockFunction]}
+            onSearch={null}
+            orgPath={null}
+            publishers={Object {}}
+            title="Virksomhet"
+          />
           <FilterBox
             activeFilter={null}
             filter={
@@ -368,15 +377,6 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
             onClick={null}
             themesItems={null}
             title="Opphav"
-          />
-          <SearchPublishersTree
-            activeFilter={null}
-            filter={Array []}
-            onFilterPublisherHierarchy={[MockFunction]}
-            onSearch={null}
-            orgPath={null}
-            publishers={Object {}}
-            title="Virksomhet"
           />
         </div>
       </div>
