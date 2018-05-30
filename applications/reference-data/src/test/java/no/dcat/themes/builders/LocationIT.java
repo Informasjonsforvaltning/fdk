@@ -1,7 +1,6 @@
 package no.dcat.themes.builders;
 
 import no.dcat.shared.SkosCode;
-import no.dcat.shared.Types;
 import no.dcat.themes.database.TDBConnection;
 import no.dcat.themes.database.TDBInferenceService;
 import no.dcat.themes.database.TDBService;
@@ -13,15 +12,13 @@ import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
 import java.io.IOException;
-import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Test class for CodeBuildersTest
  */
-public class LocationTest {
+public class LocationIT {
 
     @Rule
     public TemporaryFolder testFolder = new TemporaryFolder();
@@ -37,7 +34,6 @@ public class LocationTest {
         TDBInferenceService tdbInferenceService = new TDBInferenceService(tdbService);
         TDBConnection tdbConnection = new TDBConnection(tdbInferenceService);
 
-
         codesService = new CodesService(tdbConnection);
     }
 
@@ -46,32 +42,38 @@ public class LocationTest {
         SkosCode code = codesService.addLocation("http://sws.geonames.org/3144096/");
 
         assertEquals("Norge", code.getPrefLabel().get("no"));
-
-        List<SkosCode> locations = codesService.getCodes(Types.location);
-        assertTrue(locations.size() == 1);
-
-        List<SkosCode> subjects = codesService.getCodes(Types.subject);
-        assertTrue(subjects.size() == 0);
-
     }
 
     @Test
-    public void testNorwayFromGeonames2() throws IOException {
+    public void testOsloFromGeonames2() throws IOException {
 
         SkosCode code = codesService.addLocation("http://sws.geonames.org/3143242/");
 
-        assertEquals("Oslo Fylke", code.getPrefLabel().get("no"));
-
-
+        assertEquals("Oslo", code.getPrefLabel().get("no"));
     }
 
     @Test
-    @Ignore
-    public void testFromGeonorge() throws IOException {
+    public void testGeonorgeFylke() throws IOException {
         SkosCode code = codesService.addLocation("http://data.geonorge.no/administrativeEnheter/fylke/id/173150");
 
-        assertEquals("XXX", code.getPrefLabel().get("no"));
+        assertEquals("Sogn og Fjordane", code.getPrefLabel().get("no"));
     }
+
+    @Test
+    public void testGeonorgeKommune() throws IOException {
+        SkosCode code = codesService.addLocation("http://data.geonorge.no/administrativeEnheter/kommune/id/172778");
+
+        assertEquals("Bergen", code.getPrefLabel().get("no"));
+    }
+
+    @Test
+    @Ignore // syntax error
+    public void testGeonorgeNasjon() throws IOException {
+        SkosCode code = codesService.addLocation("http://data.geonorge.no/administrativeEnheter/nasjon/id/173163");
+
+        assertEquals("Norge", code.getPrefLabel().get("no"));
+    }
+
 
 
 }
