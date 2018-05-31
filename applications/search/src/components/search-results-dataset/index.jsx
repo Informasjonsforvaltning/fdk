@@ -48,6 +48,13 @@ export default class ResultsDataset extends React.Component {
               onClick={onFilterAccessRights}
               activeFilter={searchQuery.accessrights}
             />
+            <FilterBoxPublishers
+              title={localization.facet.organisation}
+              filter={publisherArray}
+              onFilterPublisherHierarchy={onFilterPublisherHierarchy}
+              activeFilter={searchQuery.orgPath}
+              publishers={publishers}
+            />
             <FilterBox
               htmlKey={3}
               title={localization.facet.spatial}
@@ -61,13 +68,6 @@ export default class ResultsDataset extends React.Component {
               filter={datasetItems.aggregations.provenanceCount}
               onClick={onFilterProvenance}
               activeFilter={searchQuery.provenance}
-            />
-            <FilterBoxPublishers
-              title={localization.facet.organisation}
-              filter={publisherArray}
-              onFilterPublisherHierarchy={onFilterPublisherHierarchy}
-              activeFilter={searchQuery.orgPath}
-              publishers={publishers}
             />
           </div>
         </Modal.Body>
@@ -197,6 +197,13 @@ export default class ResultsDataset extends React.Component {
                       onClick={onFilterAccessRights}
                       activeFilter={searchQuery.accessrights}
                     />
+                    <FilterBoxPublishers
+                      title={localization.facet.organisation}
+                      filter={publisherArray}
+                      onFilterPublisherHierarchy={onFilterPublisherHierarchy}
+                      activeFilter={searchQuery.orgPath}
+                      publishers={publishers}
+                    />
                     <FilterBox
                       htmlKey={3}
                       title={localization.facet.spatial}
@@ -210,14 +217,6 @@ export default class ResultsDataset extends React.Component {
                       filter={datasetItems.aggregations.provenanceCount}
                       onClick={onFilterProvenance}
                       activeFilter={searchQuery.provenance}
-                    />
-
-                    <FilterBoxPublishers
-                      title={localization.facet.organisation}
-                      filter={publisherArray}
-                      onFilterPublisherHierarchy={onFilterPublisherHierarchy}
-                      activeFilter={searchQuery.orgPath}
-                      publishers={publishers}
                     />
                   </div>
                 )}
