@@ -10,14 +10,21 @@
         <version>0.2.4-SNAPSHOT</version>
     </parent>
 
-	<build>
-	<plugins>
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 
-		<plugin>
-            <groupId>com.spotify</groupId>
-            <artifactId>docker-maven-plugin</artifactId>
-		</plugin>
-    </plugins>
+	<build>
+        <plugins>
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
     </build>
-	
+
 </project>
