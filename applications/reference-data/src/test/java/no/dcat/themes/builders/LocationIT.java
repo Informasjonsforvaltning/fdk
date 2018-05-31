@@ -67,7 +67,6 @@ public class LocationIT {
     }
 
     @Test
-    @Ignore // syntax error
     public void testGeonorgeNasjon() throws IOException {
         SkosCode code = codesService.addLocation("http://data.geonorge.no/administrativeEnheter/nasjon/id/173163");
 
