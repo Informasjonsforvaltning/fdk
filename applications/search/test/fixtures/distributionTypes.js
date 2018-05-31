@@ -8,7 +8,8 @@ export default {
       }
     },
     {
-      uri: 'http://publications.europa.eu/resource/authority/distribution-type/DOWNLOADABLE_FILE',
+      uri:
+        'http://publications.europa.eu/resource/authority/distribution-type/DOWNLOADABLE_FILE',
       code: 'DOWNLOADABLE_FILE',
       prefLabel: {
         el: 'Μεταφορτώσιμο αρχείο',
@@ -26,7 +27,7 @@ export default {
         lv: 'Lejupielādējama datne',
         lt: 'Rinkmena, kurią galima parsisiųsti',
         sk: 'Prevzateľný súbor',
-        mt: 'Fajl li jista\' jiġi ddawnlowdjat',
+        mt: "Fajl li jista' jiġi ddawnlowdjat",
         es: 'Archivo descargable',
         sl: 'Prenosljiva datoteka',
         it: 'File scaricabile',
@@ -38,7 +39,8 @@ export default {
       }
     },
     {
-      uri: 'http://publications.europa.eu/resource/authority/distribution-type/FEED_INFO',
+      uri:
+        'http://publications.europa.eu/resource/authority/distribution-type/FEED_INFO',
       code: 'FEED_INFO',
       prefLabel: {
         sv: 'Informationsflöde',
@@ -57,8 +59,8 @@ export default {
         en: 'Information feed',
         de: 'Informations-Feed',
         bg: 'Информационен канал',
-        fr: 'Fil d\'information',
-        mt: 'Sors ta\' informazzjoni',
+        fr: "Fil d'information",
+        mt: "Sors ta' informazzjoni",
         nl: 'Informatiefeed',
         es: 'Flujo de información',
         pt: 'Fluxo de informação',
@@ -68,7 +70,8 @@ export default {
       }
     },
     {
-      uri: 'http://publications.europa.eu/resource/authority/distribution-type/OP_DATPRO',
+      uri:
+        'http://publications.europa.eu/resource/authority/distribution-type/OP_DATPRO',
       prefLabel: {
         es: 'Datos provisionales',
         lv: 'Provizoriski dati',
@@ -97,7 +100,8 @@ export default {
       }
     },
     {
-      uri: 'http://publications.europa.eu/resource/authority/distribution-type/VISUALIZATION',
+      uri:
+        'http://publications.europa.eu/resource/authority/distribution-type/VISUALIZATION',
       code: 'VISUALIZATION',
       prefLabel: {
         fi: 'Visualisointi',
@@ -127,7 +131,8 @@ export default {
       }
     },
     {
-      uri: 'http://publications.europa.eu/resource/authority/distribution-type/WEB_SERVICE',
+      uri:
+        'http://publications.europa.eu/resource/authority/distribution-type/WEB_SERVICE',
       code: 'WEB_SERVICE',
       prefLabel: {
         pl: 'Usługa sieciowa',
@@ -157,4 +162,4 @@ export default {
       }
     }
   ]
-}
+};

@@ -27,29 +27,32 @@ const renderFormats = (
       const { format } = item;
       let { type } = item;
       if (format && typeof format !== 'undefined') {
-          if ( type && (type !== 'API' && type !== 'Feed' && type !== 'Nedlastbar fil') ) {
-            const distributionType = getDistributionTypeByUri(
-              distributionTypeItems,
-              type
+        if (
+          type &&
+          (type !== 'API' && type !== 'Feed' && type !== 'Nedlastbar fil')
+        ) {
+          const distributionType = getDistributionTypeByUri(
+            distributionTypeItems,
+            type
+          );
+          if (distributionType !== null && distributionType.length > 0) {
+            type = getTranslateText(
+              distributionType[0].prefLabel,
+              selectedLanguageCode
             );
-            if (distributionType !== null && distributionType.length > 0) {
-              type = getTranslateText(
-                distributionType[0].prefLabel,
-                selectedLanguageCode
-              );
-            } else {
-              type = null;
-            }
+          } else {
+            type = null;
           }
-          const formatNodes = Object.keys(format).map(key => (
-            <DistributionFormat
-              key={`dataset-distribution-format${key}`}
-              code={code}
-              text={format[key]}
-              type={type}
-            />
-          ));
-          nodes.push(formatNodes);
+        }
+        const formatNodes = Object.keys(format).map(key => (
+          <DistributionFormat
+            key={`dataset-distribution-format${key}`}
+            code={code}
+            text={format[key]}
+            type={type}
+          />
+        ));
+        nodes.push(formatNodes);
       }
     });
     return nodes;

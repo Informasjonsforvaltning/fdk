@@ -1715,12 +1715,9 @@ export default [
               }
             }
           ],
-          format: [
-            'xml',
-            'tekst',
-            'json'
-          ],
-          type: 'http://publications.europa.eu/resource/authority/distribution-type/DOWNLOADABLE_FILE'
+          format: ['xml', 'tekst', 'json'],
+          type:
+            'http://publications.europa.eu/resource/authority/distribution-type/DOWNLOADABLE_FILE'
         },
         {
           id: '96d63bba-e624-4f39-ad26-26b8c6a68880',
@@ -1750,14 +1747,10 @@ export default [
               }
             }
           ],
-          format: [
-            'xml',
-            'tekst',
-            'json'
-          ],
+          format: ['xml', 'tekst', 'json'],
           type: 'non-valid-just-for-test'
         }
-      ],
+      ]
     }
   }
 ];
