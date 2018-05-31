@@ -262,6 +262,113 @@ exports[`should render SearchHitItem RESTRICTED correctly 1`] = `
 </Link>
 `;
 
+exports[`should render SearchHitItem with distribution type correctly 1`] = `
+<Link
+  className="fdk-a-search-hit"
+  replace={false}
+  title="Datasett: AAMarkagrensen Oslo Kommune og nærliggende kommuner"
+  to="/datasets/3645d5a8-6689-4fc1-8684-d3d6c2d47386"
+>
+  <span
+    aria-hidden="false"
+    className="uu-invisible"
+  >
+    Søketreff.
+  </span>
+  <div
+    className="fdk-container-search-hit"
+  >
+    <h2>
+      AAMarkagrensen Oslo Kommune og nærliggende kommuner
+    </h2>
+    <div
+      className="fdk-dataset-themes"
+    >
+      <div
+        className="fdk-label mr-2 mb-2"
+        key="dataset-description-theme-0"
+      >
+        <span
+          aria-hidden="false"
+          className="uu-invisible"
+        >
+          Datasettets tema.
+        </span>
+        Forvaltning og offentlig støtte
+      </div>
+      <div
+        className="fdk-label mr-2 mb-2"
+        key="dataset-description-theme-1"
+      >
+        <span
+          aria-hidden="false"
+          className="uu-invisible"
+        >
+          Datasettets tema.
+        </span>
+        Miljø
+      </div>
+    </div>
+    <p
+      className="fdk-p-search-hit"
+    >
+      <span
+        aria-hidden="false"
+        className="uu-invisible"
+      >
+        Beskrivelse av datasettet,
+      </span>
+      Datasettet avgrenser område for virkeområdet til lov 6. juni 2009 nr. 35 om naturområder Datasettes formål er nullam quis rius eget urna mollis ornare vel eu leo. Praesent commo ...
+    </p>
+    <div
+      className="fdk-container-distributions fdk-distributions-green"
+    >
+      <strong>
+        Offentlig
+      </strong>
+      <div>
+        <DistributionFormat
+          code="PUBLIC"
+          key="dataset-distribution-format0"
+          text="xml"
+          type="Downloadable file"
+        />
+        <DistributionFormat
+          code="PUBLIC"
+          key="dataset-distribution-format1"
+          text="tekst"
+          type="Downloadable file"
+        />
+        <DistributionFormat
+          code="PUBLIC"
+          key="dataset-distribution-format2"
+          text="json"
+          type="Downloadable file"
+        />
+        <DistributionFormat
+          code="PUBLIC"
+          key="dataset-distribution-format0"
+          text="xml"
+          type={null}
+        />
+        <DistributionFormat
+          code="PUBLIC"
+          key="dataset-distribution-format1"
+          text="tekst"
+          type={null}
+        />
+        <DistributionFormat
+          code="PUBLIC"
+          key="dataset-distribution-format2"
+          text="json"
+          type={null}
+        />
+      </div>
+    </div>
+  </div>
+</Link>
+`;
+
 exports[`should render SearchHitItem with no title, description, accessRights and distribution with no format correctly 1`] = `
 <Link
   className="fdk-a-search-hit"

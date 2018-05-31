@@ -385,6 +385,7 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
         id="datasets"
       >
         <SearchHitItem
+          distributionTypeItems={null}
           key="b12e9e8d-3833-49e2-9f62-0f8fd877be05"
           result={
             Object {

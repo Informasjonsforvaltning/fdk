@@ -84,10 +84,14 @@ export default class ResultsDataset extends React.Component {
   }
 
   _renderHits() {
-    const { datasetItems } = this.props;
+    const { datasetItems, distributionTypeItems } = this.props;
     if (datasetItems && datasetItems.hits && datasetItems.hits.hits) {
       return datasetItems.hits.hits.map(item => (
-        <SearchHitItem key={item._source.id} result={item} />
+        <SearchHitItem
+          key={item._source.id}
+          result={item}
+          distributionTypeItems={distributionTypeItems}
+        />
       ));
     }
     return null;
@@ -266,6 +270,7 @@ ResultsDataset.defaultProps = {
   themesItems: null,
   publisherArray: null,
   publishers: null,
+  distributionTypeItems: null,
   onClearSearch: null,
   onPageChange: null,
   showClearFilterButton: null,
@@ -285,6 +290,7 @@ ResultsDataset.propTypes = {
   themesItems: PropTypes.object,
   publisherArray: PropTypes.array,
   publishers: PropTypes.object,
+  distributionTypeItems: PropTypes.array,
   onClearSearch: PropTypes.func,
   onSort: PropTypes.func.isRequired,
   onPageChange: PropTypes.func,
