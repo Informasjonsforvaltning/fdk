@@ -4,9 +4,11 @@ import com.google.gson.Gson;
 import no.dcat.model.Catalog;
 import no.dcat.service.CatalogRepository;
 import no.dcat.shared.admin.DcatSourceDto;
+import no.dcat.shared.testcategories.IntegrationTest;
 import org.apache.commons.codec.binary.Base64;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,6 +48,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = RANDOM_PORT)
 @AutoConfigureMockMvc
+@Category(IntegrationTest.class)
 public class CatalogControllerIT {
     private static Logger logger = LoggerFactory.getLogger(CatalogControllerIT.class);
 

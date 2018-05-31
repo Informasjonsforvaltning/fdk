@@ -6,10 +6,12 @@ import no.dcat.model.exceptions.CatalogNotFoundException;
 import no.dcat.model.exceptions.DatasetNotFoundException;
 import no.dcat.service.CatalogRepository;
 import no.dcat.shared.Subject;
+import no.dcat.shared.testcategories.IntegrationTest;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.util.FileManager;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.slf4j.Logger;
@@ -43,6 +45,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = RANDOM_PORT)
 @AutoConfigureMockMvc
+@Category(IntegrationTest.class)
 public class ImportControllerIT {
     private static Logger logger = LoggerFactory.getLogger(ImportControllerIT.class);
 

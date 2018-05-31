@@ -7,6 +7,7 @@ import no.dcat.harvester.crawler.CrawlerJob;
 import no.dcat.shared.Dataset;
 import no.dcat.datastore.Elasticsearch;
 import no.dcat.datastore.domain.DcatSource;
+import no.dcat.shared.testcategories.IntegrationTest;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.jena.rdf.model.Model;
@@ -24,6 +25,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
@@ -39,6 +41,7 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 
+@Category(IntegrationTest.class)
 public class ElasticsearchResultHandlerIT {
 
 	private static final String DATA_DIR = "target/elasticsearch";
