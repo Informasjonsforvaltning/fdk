@@ -18,8 +18,12 @@ const renderFormats = (source, code) => {
   const children = (distributions, code) => {
     const nodes = [];
     distributions.forEach(item => {
-      const { format, type } = item;
+      const { format } = item;
+      let { type } = item;
       if (format && typeof format !== 'undefined') {
+        if (!(type === 'API' || type === 'Feed' || type === 'Nedlastbar fil')) {
+          type = null;
+        }
         const formatNodes = Object.keys(format).map(key => (
           <DistributionFormat
             key={`dataset-distribution-format${key}`}
