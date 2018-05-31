@@ -1,8 +1,10 @@
 package no.dcat.themes.builders;
 
 import no.dcat.shared.SkosCode;
+import no.dcat.shared.testcategories.UnitTest;
 import no.dcat.themes.Controller;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,6 +17,7 @@ import static org.hamcrest.Matchers.*;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
+@Category(UnitTest.class)
 public class ReferenceTest {
 
     @Autowired

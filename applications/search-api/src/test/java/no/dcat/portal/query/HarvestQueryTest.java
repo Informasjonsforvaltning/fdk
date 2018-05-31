@@ -11,6 +11,7 @@ import no.dcat.datastore.Elasticsearch;
 import no.dcat.datastore.domain.dcat.Publisher;
 import no.dcat.datastore.domain.harvest.CatalogHarvestRecord;
 import no.dcat.datastore.domain.harvest.ChangeInformation;
+import no.dcat.shared.testcategories.UnitTest;
 import org.apache.commons.io.FileUtils;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.action.bulk.BulkResponse;
@@ -27,6 +28,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -42,6 +44,7 @@ import java.util.Random;
 import static org.junit.Assert.*;
 import static org.hamcrest.Matchers.*;
 
+@Category(UnitTest.class)
 public class HarvestQueryTest {
     private static Logger logger = LoggerFactory.getLogger(HarvestQueryTest.class);
 

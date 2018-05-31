@@ -1,6 +1,7 @@
 
 package no.dcat.portal.query;
 
+import no.dcat.shared.testcategories.UnitTest;
 import org.elasticsearch.action.ListenableActionFuture;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
@@ -18,6 +19,7 @@ import org.elasticsearch.search.sort.SortOrder;
 import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
@@ -38,6 +40,7 @@ import static org.mockito.Mockito.*;
  * Class for testing detail resr API in DatasetsQueryService.
  */
 @RunWith(MockitoJUnitRunner.class)
+@Category(UnitTest.class)
 public class DatasetsQueryServicePublishercountTest {
 
     DatasetsQueryService sqs;

@@ -3,9 +3,11 @@ package no.dcat.datastore.domain.dcat;
 import no.dcat.datastore.domain.dcat.builders.DcatReader;
 import no.dcat.shared.Contact;
 import no.dcat.shared.Dataset;
+import no.dcat.shared.testcategories.UnitTest;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.riot.RDFDataMgr;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +21,7 @@ import java.util.List;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
+@Category(UnitTest.class)
 public class DcatConverterTest {
     private static Logger logger = LoggerFactory.getLogger(DcatConverterTest.class);
     static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");

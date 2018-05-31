@@ -1,6 +1,7 @@
 
 package no.dcat.portal.query;
 
+import no.dcat.shared.testcategories.UnitTest;
 import org.elasticsearch.action.ListenableActionFuture;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
@@ -14,6 +15,7 @@ import org.elasticsearch.search.sort.SortOrder;
 import org.hamcrest.core.Is;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.http.HttpStatus;
@@ -29,6 +31,7 @@ import static org.mockito.Mockito.*;
  * Class for testing detail rest-API in DatasetsQueryService.
  */
 @RunWith(MockitoJUnitRunner.class)
+@Category(UnitTest.class)
 public class DatasetsQueryServiceSearchTest {
 
     DatasetsQueryService sqs;

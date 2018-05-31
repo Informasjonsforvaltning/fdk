@@ -1,9 +1,11 @@
 package no.dcat.themes.builders;
 
 import no.dcat.shared.HelpText;
+import no.dcat.shared.testcategories.UnitTest;
 import no.dcat.themes.Controller;
 import org.apache.jena.shared.NotFoundException;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,6 +23,7 @@ import static org.junit.Assert.assertTrue;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
+@Category(UnitTest.class)
 public class HelpTextControllerTest {
     @Autowired
     private Controller controller;

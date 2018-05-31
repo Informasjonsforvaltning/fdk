@@ -1,11 +1,13 @@
 package no.dcat.validation.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import no.dcat.shared.testcategories.UnitTest;
 import no.dcat.validation.logic.Validator;
 import no.dcat.validation.model.PropertyRule;
 import no.dcat.validation.model.Validation;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
@@ -28,6 +30,7 @@ import static org.mockito.Mockito.*;
 /**
  * Created by dask on 24.04.2017.
  */
+@Category(UnitTest.class)
 public class ValidateDatasetTest {
     private static final Logger logger = LoggerFactory.getLogger(ValidateDatasetTest.class);
 

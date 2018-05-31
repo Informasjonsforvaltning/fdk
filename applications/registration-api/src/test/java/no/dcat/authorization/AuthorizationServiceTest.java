@@ -2,8 +2,10 @@ package no.dcat.authorization;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import no.dcat.shared.testcategories.UnitTest;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
@@ -17,6 +19,7 @@ import static org.mockito.Mockito.*;
  * Created by dask on 07.06.2017.
  */
 
+@Category(UnitTest.class)
 public class AuthorizationServiceTest {
 
     private static Logger logger = LoggerFactory.getLogger(AuthorizationServiceTest.class);

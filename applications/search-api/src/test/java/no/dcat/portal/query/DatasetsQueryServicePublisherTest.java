@@ -1,5 +1,6 @@
 package no.dcat.portal.query;
 
+import no.dcat.shared.testcategories.UnitTest;
 import org.elasticsearch.action.ListenableActionFuture;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
@@ -10,6 +11,7 @@ import org.elasticsearch.search.SearchHits;
 import org.elasticsearch.search.internal.InternalSearchHit;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.http.HttpStatus;
@@ -23,6 +25,7 @@ import static org.mockito.Mockito.*;
  * Class for testing publisher rest-API in DatasetsQueryService.
  */
 @RunWith(MockitoJUnitRunner.class)
+@Category(UnitTest.class)
 public class DatasetsQueryServicePublisherTest {
     public static final String INDEX = "dcat";
     public static final String TYPE = "publisher";

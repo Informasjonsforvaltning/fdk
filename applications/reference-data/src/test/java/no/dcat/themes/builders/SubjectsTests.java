@@ -2,6 +2,7 @@ package no.dcat.themes.builders;
 
 import no.dcat.shared.SkosCode;
 import no.dcat.shared.Subject;
+import no.dcat.shared.testcategories.UnitTest;
 import no.dcat.themes.database.TDBConnection;
 import no.dcat.themes.database.TDBInferenceService;
 import no.dcat.themes.database.TDBService;
@@ -10,6 +11,7 @@ import org.apache.jena.vocabulary.SKOS;
 import org.hamcrest.Matchers;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.junit.rules.TemporaryFolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +26,7 @@ import static org.junit.Assert.assertThat;
 /**
  * Test class for CodeBuildersTest
  */
+@Category(UnitTest.class)
 public class SubjectsTests {
     private static Logger logger = LoggerFactory.getLogger(SubjectsTests.class);
 

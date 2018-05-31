@@ -4,7 +4,9 @@ import no.dcat.harvester.crawler.handlers.ElasticSearchResultHandler;
 import no.dcat.datastore.AdminDataStore;
 import no.dcat.datastore.DcatDataStore;
 import no.dcat.datastore.domain.DcatSource;
+import no.dcat.shared.testcategories.UnitTest;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 
 import java.io.IOException;
@@ -12,6 +14,7 @@ import java.io.IOException;
 /**
  * Created by bgrova on 11.10.2016.
  */
+@Category(UnitTest.class)
 public class LoadMiniDatasett {
 
     @Test

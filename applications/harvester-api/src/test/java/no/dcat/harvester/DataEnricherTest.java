@@ -2,11 +2,13 @@ package no.dcat.harvester;
 
 import no.dcat.datastore.domain.DcatSource;
 import no.dcat.datastore.domain.dcat.vocabulary.DCAT;
+import no.dcat.shared.testcategories.UnitTest;
 import org.apache.jena.query.Dataset;
 import org.apache.jena.rdf.model.*;
 import org.apache.jena.riot.RDFDataMgr;
 import org.apache.jena.vocabulary.DCTerms;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import java.io.IOException;
 
@@ -18,6 +20,7 @@ import static org.junit.Assert.assertFalse;
 /**
  * Created by bjg on 14.10.2016.
  */
+@Category(UnitTest.class)
 public class DataEnricherTest {
 
     /**
