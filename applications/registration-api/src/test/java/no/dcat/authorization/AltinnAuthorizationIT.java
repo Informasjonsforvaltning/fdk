@@ -1,7 +1,9 @@
 package no.dcat.authorization;
 
+import no.dcat.shared.testcategories.IntegrationTest;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,6 +28,7 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 @ActiveProfiles("unit-integration")
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = RANDOM_PORT)
+@Category(IntegrationTest.class)
 public class AltinnAuthorizationIT {
 
     private static Logger logger = LoggerFactory.getLogger(AltinnAuthorizationIT.class);

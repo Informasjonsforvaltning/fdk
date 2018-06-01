@@ -2,11 +2,14 @@ package no.dcat.datastore.domain;
 
 import static org.junit.Assert.assertEquals;
 
+import no.dcat.shared.testcategories.UnitTest;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 /**
  * Created by havardottestad on 18/01/16.
  */
+@Category(UnitTest.class)
 public class HarvestTest {
 
 	@Test

@@ -1,7 +1,9 @@
 package no.dcat.authorization;
 
+import no.dcat.shared.testcategories.UnitTest;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -16,6 +18,7 @@ import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
+@Category(UnitTest.class)
 public class OpenDataAuthorizedOrgformServiceTest {
 
     private AuthorizedOrgformService orgformService = new OpenDataAuthorizedOrgformService();

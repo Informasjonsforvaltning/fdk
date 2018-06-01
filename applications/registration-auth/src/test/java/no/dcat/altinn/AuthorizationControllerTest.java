@@ -1,6 +1,8 @@
 package no.dcat.altinn;
 
+import no.dcat.shared.testcategories.UnitTest;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.springframework.http.HttpEntity;
 
 import java.util.List;
@@ -11,6 +13,7 @@ import static org.junit.Assert.assertThat;
 /**
  * Created by dask on 02.08.2017.
  */
+@Category(UnitTest.class)
 public class AuthorizationControllerTest {
 
     @Test

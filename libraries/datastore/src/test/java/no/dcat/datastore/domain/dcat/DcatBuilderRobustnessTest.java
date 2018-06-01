@@ -9,12 +9,14 @@ import no.dcat.shared.Contact;
 import no.dcat.shared.Dataset;
 import no.dcat.datastore.domain.dcat.builders.DcatBuilder;
 import no.dcat.shared.QualityAnnotation;
+import no.dcat.shared.testcategories.UnitTest;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.sparql.vocabulary.FOAF;
 import org.apache.jena.vocabulary.DCTerms;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
@@ -36,6 +38,7 @@ import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.*;
 
 
+@Category(UnitTest.class)
 public class DcatBuilderRobustnessTest {
 
     static Logger logger = LoggerFactory.getLogger(DcatBuilderRobustnessTest.class);

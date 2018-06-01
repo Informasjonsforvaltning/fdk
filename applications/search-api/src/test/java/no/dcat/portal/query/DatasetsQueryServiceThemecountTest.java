@@ -1,6 +1,7 @@
 
 package no.dcat.portal.query;
 
+import no.dcat.shared.testcategories.UnitTest;
 import org.elasticsearch.action.ListenableActionFuture;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
@@ -15,6 +16,7 @@ import org.elasticsearch.search.aggregations.bucket.terms.Terms;
 import org.elasticsearch.search.sort.SortOrder;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.http.HttpStatus;
@@ -31,6 +33,7 @@ import static org.mockito.Mockito.*;
  * Class for testing detail resr API in DatasetsQueryService.
  */
 @RunWith(MockitoJUnitRunner.class)
+@Category(UnitTest.class)
 public class DatasetsQueryServiceThemecountTest {
 
     DatasetsQueryService sqs;

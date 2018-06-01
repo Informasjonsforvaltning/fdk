@@ -16,6 +16,7 @@ import no.dcat.shared.Types;
 import no.dcat.datastore.domain.dcat.builders.CatalogBuilder;
 import no.dcat.datastore.domain.dcat.builders.DcatBuilder;
 import no.dcat.datastore.domain.dcat.vocabulary.DCAT;
+import no.dcat.shared.testcategories.UnitTest;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.ResIterator;
@@ -26,6 +27,7 @@ import org.apache.jena.vocabulary.RDF;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,6 +45,7 @@ import static org.hamcrest.Matchers.startsWith;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
+@Category(UnitTest.class)
 public class DatasetConverterTest {
     private static Logger logger = LoggerFactory.getLogger(DatasetConverterTest.class);
 

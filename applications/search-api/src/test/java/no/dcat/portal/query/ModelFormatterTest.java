@@ -1,14 +1,17 @@
 package no.dcat.portal.query;
 
+import no.dcat.shared.testcategories.UnitTest;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
 
+@Category(UnitTest.class)
 public class ModelFormatterTest {
 
     private ModelFormatter modelFormatter;

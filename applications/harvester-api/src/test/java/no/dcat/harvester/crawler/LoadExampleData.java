@@ -4,7 +4,9 @@ import no.dcat.harvester.crawler.handlers.ElasticSearchResultHandler;
 import no.dcat.datastore.AdminDataStore;
 import no.dcat.datastore.DcatDataStore;
 import no.dcat.datastore.domain.DcatSource;
+import no.dcat.shared.testcategories.UnitTest;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.slf4j.Logger;
@@ -20,6 +22,7 @@ import java.util.List;
  */
 @RunWith(SpringRunner.class)
 @EnableConfigurationProperties
+@Category(UnitTest.class)
 public class LoadExampleData {
 
     private final Logger logger = LoggerFactory.getLogger(CrawlerJob.class);

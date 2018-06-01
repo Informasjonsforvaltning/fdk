@@ -2,7 +2,9 @@ package no.dcat.harvester.crawler.client;
 
 
 import no.dcat.datastore.Elasticsearch;
+import no.dcat.shared.testcategories.UnitTest;
 import org.elasticsearch.action.admin.indices.exists.indices.IndicesExistsResponse;
+import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 
 import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
@@ -12,6 +14,7 @@ import static org.mockito.Mockito.when;
 /**
  * Class for testing LoadLocations.
  */
+@Category(UnitTest.class)
 public class LoadLocationsTest {
 
     Elasticsearch elasticsearch = mock(Elasticsearch.class, RETURNS_DEEP_STUBS);

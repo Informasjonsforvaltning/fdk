@@ -1,13 +1,16 @@
 package no.dcat.portal.query;
 
+import no.dcat.shared.testcategories.UnitTest;
 import org.apache.jena.riot.Lang;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import java.util.Optional;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
+@Category(UnitTest.class)
 public class SupportedFormatTest {
 
     @Test

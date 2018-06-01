@@ -7,9 +7,12 @@ import java.util.Arrays;
 import java.util.Optional;
 
 import no.dcat.datastore.domain.DcatSource;
+import no.dcat.shared.testcategories.LoadTest;
 import org.apache.jena.rdf.model.ResourceFactory;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
+@Category(LoadTest.class)
 public class HarvestTest {
 	
 	@Test

@@ -1,5 +1,6 @@
 package no.dcat.portal.query;
 
+import no.dcat.shared.testcategories.UnitTest;
 import org.elasticsearch.action.ListenableActionFuture;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
@@ -10,6 +11,7 @@ import org.elasticsearch.search.SearchHits;
 import org.elasticsearch.search.internal.InternalSearchHit;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -27,6 +29,7 @@ import static org.mockito.Mockito.when;
 /**
  * Class for testing detail rest-API in DatasetsQueryService.
  */
+@Category(UnitTest.class)
 public class DatasetsQueryServiceDetailTest {
     DatasetsQueryService sqs;
     Client client;

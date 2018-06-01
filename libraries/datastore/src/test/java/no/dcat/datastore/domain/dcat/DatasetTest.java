@@ -8,6 +8,7 @@ import no.dcat.shared.Subject;
 import no.dcat.shared.Types;
 import no.dcat.datastore.domain.DcatSource;
 import no.dcat.datastore.domain.dcat.vocabulary.DCAT;
+import no.dcat.shared.testcategories.UnitTest;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.ResIterator;
@@ -18,6 +19,7 @@ import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,6 +32,7 @@ import java.util.*;
  * Created by nodavsko on 01.11.2016.
  */
 
+@Category(UnitTest.class)
 public class DatasetTest {
 
     static private Logger logger = LoggerFactory.getLogger(DatasetTest.class);

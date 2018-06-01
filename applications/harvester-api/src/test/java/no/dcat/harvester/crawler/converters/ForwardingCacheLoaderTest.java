@@ -3,9 +3,11 @@ package no.dcat.harvester.crawler.converters;
 import com.google.common.cache.LoadingCache;
 import no.dcat.harvester.ForwardingCacheLoader;
 import no.dcat.harvester.HarvesterApplication;
+import no.dcat.shared.testcategories.UnitTest;
 import org.apache.commons.io.IOUtils;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -24,6 +26,7 @@ import static org.hamcrest.Matchers.*;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({ URL.class, URLConnection.class, LoadingCache.class, ForwardingCacheLoader.class} )
+@Category(UnitTest.class)
 public class ForwardingCacheLoaderTest {
 
     @InjectMocks
