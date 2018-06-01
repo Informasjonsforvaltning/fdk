@@ -7,19 +7,19 @@ Source: [Dockerfile](https://github.com/...)
 Provides a query api for the data catalog repository.
 
 
-# License
+## License
 dcatno/search: [Apache License, version 2.0](http://www.apache.org/licenses/LICENSE-2.0)
 
-# Use
+## Use
 
 `docker run -p 8081:8080 dcatno/search-api`
 
-# Depends on
+## Depends on
 
   * dcatno/elasticsearch
   * dcatno/fuseki
   
-# Search for Datasets
+## Search for Datasets
 
 Example `/datasets?q=enhet&from=2`. Returns datasets that match *enhet* in title, objective, description, keywords, themes, publisher name and accessrights.  
 
@@ -37,7 +37,7 @@ Query parameters
 - `sortfield=title` (sort datasets by title, publisher or modified)
 - `sortdirection=asc` (sort direction: asc or desc)
 
-# Search for Terms (concepts)
+## Search for Terms (concepts)
 
 Example `/terms?q=enhet`
 
@@ -46,7 +46,7 @@ Query paramters
 - `creator=DIFI` (terms of which has DIFI as creator)
 - `orgPath=/STAT/962738899` (all terms defined by government (STAT) and organization number 96273889 and any subunits)
 
-# Search for HarvestCatalogRecords
+## Search for HarvestCatalogRecords
 
 Example `/harvest/catalog?q=/STAT` which returns aggregations of harvestRecords for the last 7 days, last 30 days and last 365 days for all publisher under the /STAT hierarchy level.
 
