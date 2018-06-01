@@ -35,12 +35,12 @@ export class Header extends React.Component {
             href={`${location.pathname}#content`}
             aria-hidden="true"
           >
-            Hopp til hovedinnhold
+            {localization.app.skipLink}
           </a>
         </div>
         <div id="skip-link-wrap">
           <a id="skip-link" href={`${location.pathname}#content`}>
-            Hopp til hovedinnhold
+            {localization.app.skipLink}
           </a>
         </div>
         <div className="fdk-header-beta">
@@ -58,7 +58,7 @@ export class Header extends React.Component {
               <div className="col-6 col-md-4">
                 <a title="Link til Felles datakatalog" href="/">
                   <span className="uu-invisible" aria-hidden="false">
-                    Gå til forside
+                    {localization.app.navigateFrontpage}
                   </span>
                   <img
                     className="fdk-logo"
@@ -70,7 +70,7 @@ export class Header extends React.Component {
 
               <div className="col-6 col-md-4 d-flex justify-content-center align-items-center">
                 <span>
-                  <strong>Registrering</strong>
+                  <strong>{localization.app.title}</strong>
                 </span>
               </div>
               <div className="col-md-4 d-flex align-items-center fdk-header-text_items justify-content-end">
@@ -107,7 +107,7 @@ export class Header extends React.Component {
                       caret
                     >
                       <i className="fa fa-bars fdk-fa-dark fdk-fa-left" />
-                      <span>Meny</span>
+                      <span>{localization.menu.title}</span>
                     </DropdownToggle>
                     <DropdownMenu>
                       <a
@@ -117,7 +117,7 @@ export class Header extends React.Component {
                         rel="noopener noreferrer"
                         href="https://doc.difi.no/data/veileder-for-beskrivelse-av-datasett/"
                       >
-                        Veileder
+                        {localization.menu.guide}
                       </a>
 
                       <a
@@ -127,7 +127,7 @@ export class Header extends React.Component {
                         rel="noopener noreferrer"
                         href="https://doc.difi.no/dcat-ap-no/"
                       >
-                        Standard
+                        {localization.menu.standard}
                       </a>
                       <a
                         className="dropdown-item"
@@ -136,7 +136,7 @@ export class Header extends React.Component {
                         rel="noopener noreferrer"
                         href="https://fellesdatakatalog.brreg.no"
                       >
-                        Felles datakatalog
+                        {localization.menu.fdk}
                       </a>
                     </DropdownMenu>
                   </Dropdown>

@@ -45,17 +45,19 @@ export const accessRightsValues = values => {
       accessRights.uri ===
       'http://publications.europa.eu/resource/authority/access-right/RESTRICTED'
     ) {
-      retVal += 'Begrenset tilgang. ';
+      retVal += `${localization.datasets.formValues.accessRights.restricted}. `;
     } else if (
       accessRights.uri ===
       'http://publications.europa.eu/resource/authority/access-right/PUBLIC'
     ) {
-      retVal += 'Offentlig. ';
+      retVal += `${
+        localization.datasets.formValues.accessRights.publicString
+      }. `;
     } else if (
       accessRights.uri ===
-      'http://publications.europa.eu/resource/authority/access-right/NON-PUBLIC'
+      'http://publications.europa.eu/resource/authority/access-right/NON_PUBLIC'
     ) {
-      retVal += 'Unntatt offentlighet. ';
+      retVal += `${localization.datasets.formValues.accessRights.nonPublic}. `;
     }
 
     if (legalBasisForRestriction) {
@@ -332,7 +334,9 @@ export const referenceValues = values => {
       ).length;
     }
     if (countReferences > 0) {
-      return `${countReferences} relasjoner`;
+      return `${countReferences} ${
+        localization.datasets.formValues.references
+      }`;
     }
     return null;
   }
@@ -376,7 +380,9 @@ export const distributionValues = values => {
       ).length;
     }
     if (countDistributions > 0) {
-      return `${countDistributions} distribusjoner`;
+      return `${countDistributions} ${
+        localization.datasets.formValues.distributions
+      }`;
     }
   }
   return null;
@@ -392,7 +398,7 @@ export const sampleValues = values => {
       ).length;
     }
     if (countSamples > 0) {
-      return `${countSamples} eksempeldata`;
+      return `${countSamples} ${localization.datasets.formValues.sample}`;
     }
   }
   return null;

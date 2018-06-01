@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Field, FieldArray } from 'redux-form';
 
+import localization from '../../utils/localization';
 import Helptext from '../reg-form-helptext';
 import InputField from '../reg-form-field-input';
 import InputTagsField from '../reg-form-field-input-tags';
@@ -21,7 +22,7 @@ export const renderDistributionLandingpage = componentProps => {
             key={index}
             name={`${item}.uri`}
             component={InputField}
-            label="Landingsside"
+            label={localization.schema.distribution.landingPageLabel}
           />
         ))}
     </div>
@@ -52,12 +53,12 @@ export const renderDistributions = componentProps => {
                 }}
               >
                 <i className="fa fa-trash mr-2" />
-                Slett distribusjon
+                {localization.schema.distribution.deleteDistributionLabel}
               </button>
             </div>
             <div className="form-group">
               <Helptext
-                title="Type"
+                title={localization.schema.distribution.helptext.type}
                 helptextItems={helptextItems.Dataset_distribution}
               />
               <Field
@@ -66,7 +67,7 @@ export const renderDistributions = componentProps => {
                 component={RadioField}
                 type="radio"
                 value="API"
-                label="API"
+                label={localization.schema.distribution.apiLabel}
               />
               <Field
                 name={`${distribution}.type`}
@@ -74,7 +75,7 @@ export const renderDistributions = componentProps => {
                 component={RadioField}
                 type="radio"
                 value="Feed"
-                label="Feed"
+                label={localization.schema.distribution.feedLabel}
               />
               <Field
                 name={`${distribution}.type`}
@@ -82,36 +83,36 @@ export const renderDistributions = componentProps => {
                 component={RadioField}
                 type="radio"
                 value="Nedlastbar fil"
-                label="Nedlastbar fil"
+                label={localization.schema.distribution.downloadLabel}
               />
             </div>
             <div className="form-group">
               <Helptext
-                title="Tilgangslenke"
+                title={localization.schema.distribution.helptext.accessURL}
                 helptextItems={helptextItems.Distribution_accessURL}
               />
               <Field
                 name={`${distribution}.accessURL.0`}
                 type="text"
                 component={InputField}
-                label="Tilgangslenke"
+                label={localization.schema.distribution.accessURLLabel}
               />
             </div>
             <div className="form-group">
               <Helptext
-                title="Format"
+                title={localization.schema.distribution.helptext.format}
                 helptextItems={helptextItems.Distribution_format}
               />
               <Field
                 name={`${distribution}.format`}
                 type="text"
                 component={InputTagsField}
-                label="Format"
+                label={localization.schema.distribution.formatLabel}
               />
             </div>
             <div className="form-group">
               <Helptext
-                title="Lisens"
+                title={localization.schema.distribution.helptext.license}
                 helptextItems={helptextItems.Distribution_modified}
               />
               <Field
@@ -122,19 +123,19 @@ export const renderDistributions = componentProps => {
             </div>
             <div className="form-group">
               <Helptext
-                title="Beskrivelse"
+                title={localization.schema.distribution.helptext.description}
                 helptextItems={helptextItems.Distribution_description}
               />
               <Field
                 name={`${distribution}.description.nb`}
                 component={TextAreaField}
-                label="Beskrivelse"
+                label={localization.schema.distribution.descriptionLabel}
               />
             </div>
 
             <div className="form-group">
               <Helptext
-                title="Lenke til dokumentasjon av distribusjonen"
+                title={localization.schema.distribution.helptext.documentation}
                 helptextItems={helptextItems.Distribution_documentation}
               />
               <FieldArray
@@ -146,7 +147,7 @@ export const renderDistributions = componentProps => {
 
             <div className="form-group">
               <Helptext
-                title="Standard"
+                title={localization.schema.distribution.helptext.conformsTo}
                 helptextItems={helptextItems.Distribution_conformsTo}
               />
               <div className="d-flex">
@@ -155,7 +156,7 @@ export const renderDistributions = componentProps => {
                     name={`${distribution}.conformsTo[0].prefLabel.nb`}
                     component={InputField}
                     showLabel
-                    label="Tittel"
+                    label={localization.schema.common.titleLabel}
                   />
                 </div>
                 <div className="w-50">
@@ -163,7 +164,7 @@ export const renderDistributions = componentProps => {
                     name={`${distribution}.conformsTo[0].uri`}
                     component={InputField}
                     showLabel
-                    label="Lenke"
+                    label={localization.schema.common.linkLabel}
                   />
                 </div>
               </div>
@@ -188,7 +189,7 @@ export const renderDistributions = componentProps => {
         }
       >
         <i className="fa fa-plus mr-2" />
-        Legg til distribusjon
+        {localization.schema.distribution.addDistributionLabel}
       </button>
     </div>
   );

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 
+import localization from '../../utils/localization';
 import Helptext from '../reg-form-helptext';
 import SelectField from '../reg-form-field-select';
 import TextAreaField from '../reg-form-field-textarea';
@@ -72,7 +73,7 @@ const FormProvenance = props => {
       <form>
         <div className="form-group">
           <Helptext
-            title="Opphav"
+            title={localization.schema.provenance.helptext.provenance}
             helptextItems={helptextItems.Dataset_provenance}
           />
           <Field
@@ -83,7 +84,7 @@ const FormProvenance = props => {
         </div>
         <div className="form-group">
           <Helptext
-            title="Oppdateringsfrekvens"
+            title={localization.schema.provenance.helptext.accruralPeriodicity}
             helptextItems={helptextItems.Dataset_accruralPeriodicity}
           />
           <Field
@@ -94,19 +95,19 @@ const FormProvenance = props => {
         </div>
         <div className="form-group">
           <Helptext
-            title="Sist oppdatert"
+            title={localization.schema.provenance.helptext.modified}
             helptextItems={helptextItems.Dataset_modified}
           />
           <Field
             name="modified"
             type="text"
             component={DatepickerField}
-            label="Sist oppdatert"
+            label={localization.schema.provenance.modifiedLabel}
           />
         </div>
         <div className="form-group">
           <Helptext
-            title="Aktualitet"
+            title={localization.schema.provenance.helptext.currentness}
             helptextItems={
               helptextItems.Dataset_hasQualityAnnotation_currentness
             }
@@ -114,7 +115,7 @@ const FormProvenance = props => {
           <Field
             name="hasCurrentnessAnnotation.hasBody.nb"
             component={TextAreaField}
-            label="Aktualitet"
+            label={localization.schema.provenance.hasCurrentnessAnnotationLabel}
           />
         </div>
       </form>

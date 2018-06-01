@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Field, FieldArray } from 'redux-form';
 
+import localization from '../../utils/localization';
 import Helptext from '../reg-form-helptext';
 import InputField from '../reg-form-field-input';
 import InputTagsField from '../reg-form-field-input-tags';
@@ -20,7 +21,7 @@ export const renderSamples = componentProps => {
               <button
                 className="fdk-btn-no-border"
                 type="button"
-                title="Remove distribution"
+                title={localization.schema.sample.removeSample}
                 onClick={() => {
                   fields.remove(index);
                   asyncValidate(
@@ -32,42 +33,42 @@ export const renderSamples = componentProps => {
                 }}
               >
                 <i className="fa fa-trash mr-2" />
-                Slett eksempeldata
+                {localization.schema.sample.deleteSampleLabel}
               </button>
             </div>
             <div className="form-group">
               <Helptext
-                title="Tilgangslenke"
+                title={localization.schema.sample.helptext.accessURL}
                 helptextItems={helptextItems.Distribution_accessURL}
               />
               <Field
                 name={`${sample}.accessURL.0`}
                 type="text"
                 component={InputField}
-                label="Tilgangslenke"
+                label={localization.schema.sample.accessURLLabel}
               />
             </div>
             <div className="form-group">
               <Helptext
-                title="Format"
+                title={localization.schema.sample.helptext.format}
                 helptextItems={helptextItems.Distribution_format}
               />
               <Field
                 name={`${sample}.format`}
                 type="text"
                 component={InputTagsField}
-                label="Format"
+                label={localization.schema.sample.formatLabel}
               />
             </div>
             <div className="form-group">
               <Helptext
-                title="Beskrivelse"
+                title={localization.schema.sample.helptext.description}
                 helptextItems={helptextItems.Distribution_description}
               />
               <Field
                 name={`${sample}.description.nb`}
                 component={TextAreaField}
-                label="Beskrivelse"
+                label={localization.schema.sample.descriptionLabel}
               />
             </div>
           </div>
@@ -91,7 +92,7 @@ export const renderSamples = componentProps => {
             }
           >
             <i className="fa fa-plus mr-2" />
-            Legg til eksempeldata
+            {localization.schema.sample.addSampleLabel}
           </button>
         )}
     </div>

@@ -16,7 +16,8 @@ beforeEach(() => {
         { key: 'EDUC', doc_count: 11 },
         { key: 'HEAL', doc_count: 8 },
         { key: 'Ukjent', doc_count: 7 },
-        { key: 'AGRI', doc_count: 1 }
+        { key: 'AGRI', doc_count: 1 },
+        { key: 'TEST', doc_count: 1 }
       ]
     },
     onClick,
