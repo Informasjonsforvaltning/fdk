@@ -63,7 +63,7 @@ export default class FilterBox extends React.Component {
       return (
         <div>
           {options(buckets.slice(0, 5))}
-          {bucketsLength > 4 && (
+          {bucketsLength > 5 && (
             <div>
               <Collapse in={open}>
                 <div>{options(buckets.slice(5))}</div>

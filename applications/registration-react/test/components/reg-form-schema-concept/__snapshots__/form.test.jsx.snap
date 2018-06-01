@@ -27,7 +27,7 @@ Et datasett skal lenke til de aktuelle og sentrale begrepene i en begrepskatalog
     <Field
       component={[Function]}
       fieldLabel="no"
-      label="Geografisk avgrensning"
+      label="Begrep"
       name="subject"
       type="text"
     />
@@ -93,7 +93,7 @@ Et datasett skal lenke til de aktuelle og sentrale begrepene i en begrepskatalog
     <Field
       component={[Function]}
       fieldLabel="no"
-      label="Geografisk avgrensning"
+      label="Begrep"
       name="subject"
       type="text"
     />

@@ -190,7 +190,37 @@ exports[`should render FilterBox correctly 1`] = `
               transitionAppear={false}
               unmountOnExit={false}
             >
-              <div />
+              <div>
+                <FilterOption
+                  active={false}
+                  count={1}
+                  displayClass={null}
+                  itemKey={0}
+                  key="0"
+                  label="TEST"
+                  onClick={[MockFunction]}
+                  themesItems={
+                    Object {
+                      "AGRI": Object {
+                        "code": "AGRI",
+                        "conceptSchema": Object {
+                          "id": "http://publications.europa.eu/resource/authority/data-theme",
+                          "title": Object {
+                            "en": "Dataset types Named Authority List",
+                          },
+                        },
+                        "id": "http://publications.europa.eu/resource/authority/data-theme/AGRI",
+                        "startUse": "2015-10-01",
+                        "title": Object {
+                          "bg": "Селско стопанство, рибарство, горско стопанство и храни",
+                          "pt": "Agricultura, pesca, silvicultura e alimentação",
+                        },
+                      },
+                    }
+                  }
+                  value="TEST"
+                />
+              </div>
             </Collapse>
             <button
               className="fdk-toggleList"
@@ -396,7 +426,37 @@ exports[`should render FilterBox correctly with activeFilter 1`] = `
               transitionAppear={false}
               unmountOnExit={false}
             >
-              <div />
+              <div>
+                <FilterOption
+                  active={false}
+                  count={1}
+                  displayClass={null}
+                  itemKey={0}
+                  key="0"
+                  label="TEST"
+                  onClick={[MockFunction]}
+                  themesItems={
+                    Object {
+                      "AGRI": Object {
+                        "code": "AGRI",
+                        "conceptSchema": Object {
+                          "id": "http://publications.europa.eu/resource/authority/data-theme",
+                          "title": Object {
+                            "en": "Dataset types Named Authority List",
+                          },
+                        },
+                        "id": "http://publications.europa.eu/resource/authority/data-theme/AGRI",
+                        "startUse": "2015-10-01",
+                        "title": Object {
+                          "bg": "Селско стопанство, рибарство, горско стопанство и храни",
+                          "pt": "Agricultura, pesca, silvicultura e alimentação",
+                        },
+                      },
+                    }
+                  }
+                  value="TEST"
+                />
+              </div>
             </Collapse>
             <button
               className="fdk-toggleList"

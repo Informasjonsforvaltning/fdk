@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 
+import localization from '../../utils/localization';
 import Helptext from '../reg-form-helptext';
 import InputTagsFieldConcepts from '../reg-form-field-input-tags-concepts';
 import InputTagsFieldArray from '../reg-form-field-input-tags-objects';
@@ -16,27 +17,27 @@ export const FormConcept = props => {
     <form>
       <div className="form-group">
         <Helptext
-          title="Begrep"
+          title={localization.schema.concept.helptext.content}
           helptextItems={helptextItems.Dataset_content}
         />
         <Field
           name="subject"
           type="text"
           component={InputTagsFieldConcepts}
-          label="Geografisk avgrensning"
+          label={localization.schema.concept.conceptLabel}
           fieldLabel="no"
         />
       </div>
       <div className="form-group">
         <Helptext
-          title="Søkeord"
+          title={localization.schema.concept.helptext.keyword}
           helptextItems={helptextItems.Dataset_keyword}
         />
         <Field
           name="keyword"
           type="text"
           component={InputTagsFieldArray}
-          label="Søkeord"
+          label={localization.schema.concept.keywordLabel}
           fieldLabel="nb"
         />
         {keyword && <div className="alert alert-danger mt-3">{keyword.nb}</div>}

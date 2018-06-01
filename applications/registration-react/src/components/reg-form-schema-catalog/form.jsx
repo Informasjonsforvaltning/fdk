@@ -4,6 +4,7 @@ import { Field } from 'redux-form';
 import cx from 'classnames';
 import { Collapse } from 'reactstrap';
 
+import localization from '../../utils/localization';
 import Helptext from '../reg-form-helptext';
 import InputField from '../reg-form-field-input';
 import InputTitleField from '../reg-form-field-input-title';
@@ -60,7 +61,7 @@ export class FormCatalog extends React.Component {
             <Field
               name="title.nb"
               component={InputTitleField}
-              label="Tittel"
+              label={localization.schema.common.titleLabel}
               hideInput={this.state.collapseTitle}
               onToggleTitle={this.toggleTitle}
             />
@@ -70,7 +71,7 @@ export class FormCatalog extends React.Component {
         {publisher &&
           publisher.name && (
             <div className="fdk-reg-datasets-publisher mt-2 mb-4">
-              Eies av {publisher.name}
+              {localization.schema.catalog.ownedByLabel} {publisher.name}
             </div>
           )}
 
@@ -84,20 +85,20 @@ export class FormCatalog extends React.Component {
               }}
             >
               <i className="fa fa-pencil mr-2" />
-              Rediger beskrivelse
+              {localization.schema.catalog.editDescriptionLabel}
             </button>
           </div>
           <Collapse className="mt-3" isOpen={this.state.collapse}>
             <div className="form-group">
               <Helptext
-                title="Beskrivelse"
+                title={localization.schema.catalog.helptext.title}
                 required
                 helptextItems={helptextItems.Catalog_title}
               />
               <Field
                 name="description.nb"
                 component={TextAreaField}
-                label="Beskrivelse"
+                label={localization.schema.common.descriptionLabel}
               />
             </div>
           </Collapse>
