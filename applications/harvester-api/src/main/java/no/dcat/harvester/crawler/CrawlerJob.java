@@ -461,7 +461,7 @@ public class CrawlerJob implements Runnable {
         HttpURLConnection locConnection = (HttpURLConnection) locUrl.openConnection();
         locConnection.setRequestMethod("HEAD");
 
-        return locConnection.getResponseCode() >= 200 && locConnection.getResponseCode() <= 400;
+        return locConnection.getResponseCode() >= 200 && locConnection.getResponseCode() < 400;
     }
 
     /**
