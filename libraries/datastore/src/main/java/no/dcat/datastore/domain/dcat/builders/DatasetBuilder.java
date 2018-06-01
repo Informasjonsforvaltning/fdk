@@ -39,7 +39,7 @@ public class DatasetBuilder extends AbstractBuilder {
     protected final Map<String, SkosCode> locations;
     protected final Map<String, Map<String, SkosCode>> codes;
     protected final Map<String, DataTheme> dataThemes;
-    static Map<String, Subject> subjects;
+    static Map<String, Subject> subjects = new HashMap<>();
     List<Dataset> datasets = new ArrayList<>();
 
     public DatasetBuilder(Model model, Map<String, SkosCode> locations, Map<String, Map<String, SkosCode>> codes,
@@ -51,8 +51,6 @@ public class DatasetBuilder extends AbstractBuilder {
         this.locations = locations;
         this.codes = codes;
         this.dataThemes = dataThemes;
-
-        this.subjects = new HashMap<>();
     }
 
     public DatasetBuilder(Model model) {
@@ -61,8 +59,6 @@ public class DatasetBuilder extends AbstractBuilder {
         this.locations = new HashMap<>();
         this.codes = new HashMap<>();
         this.dataThemes = new HashMap<>();
-
-        this.subjects = new HashMap<>();
     }
 
     public List<Subject> getSubjects() {
