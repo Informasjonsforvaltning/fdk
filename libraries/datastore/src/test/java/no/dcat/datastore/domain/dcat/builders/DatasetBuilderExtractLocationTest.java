@@ -1,15 +1,18 @@
 package no.dcat.datastore.domain.dcat.builders;
 
 import no.dcat.shared.SkosCode;
+import no.dcat.shared.testcategories.UnitTest;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.riot.RDFDataMgr;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;
 
+@Category(UnitTest.class)
 public class DatasetBuilderExtractLocationTest {
 
     @Test

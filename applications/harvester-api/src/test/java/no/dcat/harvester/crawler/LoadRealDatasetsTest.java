@@ -10,6 +10,7 @@ import no.dcat.datastore.domain.dcat.builders.RdfModelLoader;
 import no.dcat.datastore.domain.dcat.client.RetrieveCodes;
 import no.dcat.harvester.crawler.handlers.ElasticSearchResultHandler;
 import no.dcat.shared.SkosCode;
+import no.dcat.shared.testcategories.UnitTest;
 import org.apache.commons.io.IOUtils;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ResIterator;
@@ -18,6 +19,7 @@ import org.apache.jena.rdf.model.StmtIterator;
 import org.apache.jena.riot.RDFDataMgr;
 import org.apache.jena.vocabulary.DCTerms;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
@@ -56,6 +58,7 @@ import static org.hamcrest.Matchers.*;
         "ch.qos.logback.*", "org.slf4j.*",
         "org.apache.jena.*", "org.apache.xerces.*", "com.sun.org.*" })
 @PrepareForTest({RetrieveCodes.class, ElasticSearchResultHandler.class, CrawlerJob.class})
+@Category(UnitTest.class)
 public class LoadRealDatasetsTest {
     private static Logger logger = LoggerFactory.getLogger(LoadRealDatasetsTest.class);
 

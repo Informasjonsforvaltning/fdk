@@ -14,13 +14,7 @@ import no.dcat.shared.PeriodOfTime;
 import no.dcat.shared.SkosCode;
 import no.dcat.shared.Subject;
 import no.dcat.shared.Types;
-<<<<<<< HEAD
-=======
-import no.dcat.datastore.domain.dcat.builders.CatalogBuilder;
-import no.dcat.datastore.domain.dcat.builders.DcatBuilder;
-import no.dcat.datastore.domain.dcat.vocabulary.DCAT;
 import no.dcat.shared.testcategories.UnitTest;
->>>>>>> develop
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.ResIterator;
