@@ -98,13 +98,13 @@ public class LoadRealDatasetsTest {
         PowerMockito.mockStatic(RetrieveCodes.class);
         when(RetrieveCodes.getAllCodes(anyString())).thenReturn(extractLocationCodes(resource, getCodes()));
 
-        ElasticSearchResultHandler esHandler = new ElasticSearchResultHandler("localhost",9300, "elasticsearch", "http://localhost:8100", "user", "password");
+        ElasticSearchResultHandler esHandler = new ElasticSearchResultHandler("localhost", 9300, "elasticsearch", "http://localhost:8100", "user", "password");
 
         AdminDataStore adminDataStore = mock(AdminDataStore.class);
 
         CrawlerJob job = new CrawlerJob(dcatSource, adminDataStore, null, null, esHandler);
         CrawlerJob spyJob = spy(job);
-        doReturn(true).when(spyJob).locationUriDoesExist(anyString());
+        doReturn(true).when(spyJob).locationUriResponds(anyString());
 
         spyJob.testMode();
 
