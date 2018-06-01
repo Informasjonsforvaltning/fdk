@@ -5,10 +5,12 @@ import no.dcat.shared.Dataset;
 import no.dcat.shared.Subject;
 import no.dcat.datastore.domain.dcat.builders.DcatBuilder;
 import no.dcat.datastore.domain.dcat.builders.DcatReader;
+import no.dcat.shared.testcategories.IntegrationTest;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,6 +32,7 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 @ActiveProfiles(value = "unit-integration")
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = RANDOM_PORT)
+@Category(IntegrationTest.class)
 public class SubjectCrawlerIT {
     private static Logger logger = LoggerFactory.getLogger(SubjectCrawlerIT.class);
 

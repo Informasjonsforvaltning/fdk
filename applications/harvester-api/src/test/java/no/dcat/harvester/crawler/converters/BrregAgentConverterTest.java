@@ -1,16 +1,19 @@
 package no.dcat.harvester.crawler.converters;
 
 import no.dcat.harvester.HarvesterApplication;
+import no.dcat.shared.testcategories.UnitTest;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.NodeIterator;
 import org.apache.jena.util.FileManager;
 import org.apache.jena.vocabulary.RDF;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import static org.junit.Assert.assertTrue;
 
 
+@Category(UnitTest.class)
 public class BrregAgentConverterTest {
 
 	@Test

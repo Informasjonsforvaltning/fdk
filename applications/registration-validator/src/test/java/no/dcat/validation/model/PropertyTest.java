@@ -1,6 +1,8 @@
 package no.dcat.validation.model;
 
+import no.dcat.shared.testcategories.UnitTest;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import static org.junit.Assert.*;
 import static org.hamcrest.Matchers.*;
@@ -8,6 +10,7 @@ import static org.hamcrest.Matchers.*;
 /**
  * Created by dask on 05.05.2017.
  */
+@Category(UnitTest.class)
 public class PropertyTest {
 
     @Test

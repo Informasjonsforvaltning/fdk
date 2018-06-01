@@ -1,12 +1,14 @@
 package no.dcat.themes.builders;
 
 import no.dcat.shared.DataTheme;
+import no.dcat.shared.testcategories.UnitTest;
 import no.dcat.themes.database.TDBInferenceService;
 import no.dcat.themes.service.ThemesService;
 import no.dcat.themes.database.TDBConnection;
 import no.dcat.themes.database.TDBService;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.junit.rules.TemporaryFolder;
 
 import java.io.IOException;
@@ -17,6 +19,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * Test class for DataThemeBuilders
  */
+@Category(UnitTest.class)
 public class DataThemeBuildersTest {
 
     @Rule

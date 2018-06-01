@@ -1,6 +1,11 @@
 package no.dcat.themes.builders;
 
 import no.dcat.shared.SkosCode;
+<<<<<<< HEAD:applications/reference-data/src/test/java/no/dcat/themes/builders/LocationIT.java
+=======
+import no.dcat.shared.Types;
+import no.dcat.shared.testcategories.UnitTest;
+>>>>>>> develop:applications/reference-data/src/test/java/no/dcat/themes/builders/LocationTest.java
 import no.dcat.themes.database.TDBConnection;
 import no.dcat.themes.database.TDBInferenceService;
 import no.dcat.themes.database.TDBService;
@@ -9,6 +14,7 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.junit.rules.TemporaryFolder;
 
 import java.io.IOException;
@@ -18,7 +24,12 @@ import static org.junit.Assert.assertEquals;
 /**
  * Test class for CodeBuildersTest
  */
+<<<<<<< HEAD:applications/reference-data/src/test/java/no/dcat/themes/builders/LocationIT.java
 public class LocationIT {
+=======
+@Category(UnitTest.class)
+public class LocationTest {
+>>>>>>> develop:applications/reference-data/src/test/java/no/dcat/themes/builders/LocationTest.java
 
     @Rule
     public TemporaryFolder testFolder = new TemporaryFolder();

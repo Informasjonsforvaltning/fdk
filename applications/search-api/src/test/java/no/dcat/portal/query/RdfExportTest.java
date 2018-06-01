@@ -1,15 +1,18 @@
 package no.dcat.portal.query;
 
+import no.dcat.shared.testcategories.UnitTest;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 
+@Category(UnitTest.class)
 public class RdfExportTest {
     private static Logger logger = LoggerFactory.getLogger(RdfExportTest.class);
 

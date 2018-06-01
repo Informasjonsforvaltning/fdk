@@ -12,6 +12,14 @@
     <artifactId>registration-react</artifactId>
     <description>Registration</description>
 
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
     <build>
         <!-- only filter dist -->
         <plugins>

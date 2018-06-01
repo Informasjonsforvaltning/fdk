@@ -10,6 +10,7 @@ import no.dcat.model.Dataset;
 import no.dcat.service.CatalogRepository;
 import no.dcat.service.DatasetRepository;
 import no.dcat.datastore.domain.dcat.smoke.TestCompleteCatalog;
+import no.dcat.shared.testcategories.IntegrationTest;
 import org.apache.commons.collections.map.HashedMap;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
@@ -17,6 +18,7 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,6 +50,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = RANDOM_PORT)
 @AutoConfigureMockMvc
+@Category(IntegrationTest.class)
 public class DatasetControllerIT {
     private static Logger logger = LoggerFactory.getLogger(DatasetControllerIT.class);
 

@@ -1,13 +1,16 @@
 package no.dcat.datastore.domain.dcat.vocabulary;
 
+import no.dcat.shared.testcategories.UnitTest;
 import org.apache.jena.rdf.model.Resource;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import javax.swing.*;
 
 import static org.junit.Assert.*;
 import static org.hamcrest.Matchers.*;
 
+@Category(UnitTest.class)
 public class DQVTest {
 
     @Test

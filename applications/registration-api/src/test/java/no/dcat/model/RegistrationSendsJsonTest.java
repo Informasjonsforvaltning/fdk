@@ -1,13 +1,16 @@
 package no.dcat.model;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.*;
+import no.dcat.shared.testcategories.UnitTest;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import java.lang.reflect.Type;
 import java.util.Date;
 
+@Category(UnitTest.class)
 public class RegistrationSendsJsonTest {
     String datasetJson = "fail";
 

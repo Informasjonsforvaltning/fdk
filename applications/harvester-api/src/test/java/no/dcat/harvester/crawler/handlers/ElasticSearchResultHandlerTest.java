@@ -12,6 +12,7 @@ import no.dcat.shared.Distribution;
 import no.dcat.shared.HarvestMetadata;
 import no.dcat.shared.Publisher;
 import no.dcat.shared.Subject;
+import no.dcat.shared.testcategories.UnitTest;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.util.FileManager;
 import org.elasticsearch.action.ActionFuture;
@@ -25,6 +26,7 @@ import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.client.Client;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.mockito.Matchers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,6 +51,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
+@Category(UnitTest.class)
 public class ElasticSearchResultHandlerTest {
     private static Logger logger = LoggerFactory.getLogger(ElasticSearchResultHandlerTest.class);
 

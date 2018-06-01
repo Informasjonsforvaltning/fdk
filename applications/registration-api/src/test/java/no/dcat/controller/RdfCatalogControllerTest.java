@@ -5,8 +5,10 @@ import no.dcat.model.Dataset;
 import no.dcat.service.CatalogRepository;
 import no.dcat.service.DatasetRepository;
 import no.dcat.datastore.domain.dcat.smoke.TestCompleteCatalog;
+import no.dcat.shared.testcategories.UnitTest;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.BeanUtils;
@@ -30,6 +32,7 @@ import static org.mockito.Mockito.when;
  * Created by dask on 21.04.2017.
  */
 
+@Category(UnitTest.class)
 public class RdfCatalogControllerTest {
 
     private RdfCatalogController controller;

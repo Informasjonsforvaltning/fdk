@@ -9,6 +9,7 @@ import no.dcat.datastore.domain.dcat.builders.DatasetBuilder;
 import no.dcat.datastore.domain.dcat.builders.DcatBuilder;
 import no.dcat.shared.Publisher;
 import no.dcat.shared.Subject;
+import no.dcat.shared.testcategories.UnitTest;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 import org.apache.jena.rdf.model.Model;
@@ -22,6 +23,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.PathResource;
@@ -43,6 +45,7 @@ import java.util.Locale;
 import java.util.Map;
 
 
+@Category(UnitTest.class)
 public class UploadSubjectsToElastic {
 
     private static final String BEGREP_TTL_URL = "D:\\git\\fdk\\conf\\subjects\\jira@brreg 2018-05-04T15_33_37+0200.html";
