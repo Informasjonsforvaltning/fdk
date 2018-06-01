@@ -456,12 +456,12 @@ public class CrawlerJob implements Runnable {
         return counter;
     }
 
-    boolean locationUriDoesExist(String locUri) throws IOException {
+    boolean locationUriResponds(String locUri) throws IOException {
         URL locUrl = new URL(locUri);
         HttpURLConnection locConnection = (HttpURLConnection) locUrl.openConnection();
         locConnection.setRequestMethod("HEAD");
 
-        return locConnection.getResponseCode() >= 400;
+        return locConnection.getResponseCode() >= 200 && locConnection.getResponseCode() <= 400;
     }
 
     /**
@@ -484,7 +484,7 @@ public class CrawlerJob implements Runnable {
             try {
                 if (!illegalUris.contains(locUri)) {
 
-                    if (!locationUriDoesExist(locUri)) {
+                    if (!locationUriResponds(locUri)) {
                         //Remove non-resolvable location from dataset
                         resultMsg.append(String.format("Dataset %s has non-resolvable property DCTerms.spatial: %s", resource.toString(), locUri));
                         resultMsg.append("\n");
