@@ -37,7 +37,7 @@ The search application is available [here](https://fellesdatakatalog.brreg.no). 
 are only available for registered users. 
 Any questions can be sent to [fellesdatakatalog@brreg.no](mailto:fellesdatakatalog@brreg.no).
 
-The [search api](https://fellesdatakatalog.brreg.no/swagger_ui.html) can also be used.
+The [search api](https://fellesdatakatalog.brreg.no/swagger-ui.html) can also be used.
 
 ## Compile
 The system consists of several modules which can be compiled with `mvn clean install`. 
