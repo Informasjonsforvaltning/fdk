@@ -199,24 +199,23 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
 
         DcatReader dcatReader = getReader(model);
 
-        List<Dataset> validDatasets = dcatReader.getDatasets();
+        List<Dataset> datasets = dcatReader.getDatasets();
         List<Catalog> catalogs = dcatReader.getCatalogs();
 
         Set<String> datasetsInSource = getSourceDatasetUris(model);
 
-        if (validDatasets == null || validDatasets.isEmpty()) {
+        if (datasets == null || datasets.isEmpty()) {
 
-            logger.error("No valid datasets to index. Found {} non valid datasets at url {}",
+            logger.error("No datasets to index. Found {} non valid datasets at url {}",
                     datasetsInSource.size(),
                     dcatSource.getUrl());
         } else {
-            logger.info("Processing {} valid datasets. {} non valid datasets were ignored",
-                    validDatasets.size(), datasetsInSource.size() - validDatasets.size());
+            logger.info("Processing {} datasets", datasets.size());
 
             Gson gson = getGson();
 
-            updateDatasets(dcatSource, model, elasticsearch, validationResults, gson, validDatasets, catalogs);
-            updateSubjects(validDatasets, elasticsearch, gson);
+            updateDatasets(dcatSource, model, elasticsearch, validationResults, gson, datasets, catalogs);
+            updateSubjects(datasets, elasticsearch, gson);
         }
 
         stopHarvestLogAndReport(dcatSource, validationResults);
@@ -347,14 +346,14 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
 
     private void updateDatasets(DcatSource dcatSource, Model model, Elasticsearch elasticsearch,
                                 List<String> validationResults, Gson gson,
-                                List<Dataset> validDatasets, List<Catalog> catalogs) {
+                                List<Dataset> datasetsToImport, List<Catalog> catalogs) {
 
         logger.debug("Preparing bulkRequest");
         BulkRequestBuilder bulkRequest = elasticsearch.getClient().prepareBulk();
 
         Date harvestTime = new Date();
         logger.info("Found {} catalogs in dcat source {}", catalogs.size(), dcatSource.getId());
-        logger.info("Found {} syntactic valid datasets in dcat source {}", validDatasets.size(), dcatSource.getId());
+        logger.info("Found {} datasets that can be imported into the data catalog", datasetsToImport.size());
 
         for (Catalog catalog : catalogs) {
 
@@ -372,7 +371,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
 
             ChangeInformation stats = new ChangeInformation();
             logger.debug("stats: " + stats.toString());
-            for (Dataset dataset : validDatasets.stream().filter(d -> d.getCatalog().getUri().equals(catalog.getUri())).collect(Collectors.toList())) {
+            for (Dataset dataset : datasetsToImport.stream().filter(d -> d.getCatalog().getUri().equals(catalog.getUri())).collect(Collectors.toList())) {
 
                 catalogRecord.getValidDatasetUris().add(dataset.getUri());
 

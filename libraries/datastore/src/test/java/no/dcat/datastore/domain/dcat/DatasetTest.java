@@ -1,13 +1,13 @@
 package no.dcat.datastore.domain.dcat;
 
+import no.dcat.datastore.domain.DcatSource;
 import no.dcat.datastore.domain.dcat.builders.DatasetBuilder;
+import no.dcat.datastore.domain.dcat.vocabulary.DCAT;
 import no.dcat.shared.Contact;
 import no.dcat.shared.Dataset;
 import no.dcat.shared.SkosCode;
 import no.dcat.shared.Subject;
 import no.dcat.shared.Types;
-import no.dcat.datastore.domain.DcatSource;
-import no.dcat.datastore.domain.dcat.vocabulary.DCAT;
 import no.dcat.shared.testcategories.UnitTest;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
@@ -26,7 +26,12 @@ import org.slf4j.LoggerFactory;
 import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by nodavsko on 01.11.2016.

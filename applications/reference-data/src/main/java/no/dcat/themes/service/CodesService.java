@@ -1,6 +1,7 @@
 package no.dcat.themes.service;
 
 import com.google.gson.Gson;
+import no.dcat.datastore.domain.dcat.builders.DatasetBuilder;
 import no.dcat.shared.SkosCode;
 import no.dcat.shared.Types;
 import no.dcat.themes.database.TDBConnection;
@@ -9,7 +10,6 @@ import org.apache.jena.query.Dataset;
 import org.apache.jena.query.DatasetFactory;
 import org.apache.jena.query.ReadWrite;
 import org.apache.jena.rdf.model.Model;
-import org.apache.jena.util.FileManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Scope;
@@ -76,17 +76,20 @@ public class CodesService extends BaseServiceWithFraming {
             return null;
         });
 
-        return getCode(locationUri);
+        return getLocationCode(locationUri);
 
     }
 
-    public SkosCode getCode(String uri){
+    public SkosCode getLocationCode(String uri){
         return tdbConnection.inTransaction(ReadWrite.READ, connection -> {
             Dataset dataset = DatasetFactory.create(connection.describeWithInference(uri));
-            String json = frame(dataset, frame);
+
+            SkosCode locationCode = DatasetBuilder.extractLocation(dataset.getDefaultModel().getResource(uri));
 
             dataset.close();
-            return new Gson().fromJson(json, FramedSkosCode.class).getGraph().get(0);
+
+            return locationCode;
+
         });
     }
 }

@@ -1,5 +1,7 @@
 package no.dcat.datastore.domain.dcat.builders;
 
+import no.dcat.datastore.domain.dcat.vocabulary.AdmEnhet;
+import no.dcat.datastore.domain.dcat.vocabulary.GeoNames;
 import no.dcat.shared.DataTheme;
 import no.dcat.shared.Dataset;
 import no.dcat.shared.Distribution;
@@ -12,6 +14,7 @@ import no.dcat.datastore.domain.dcat.vocabulary.DCAT;
 import no.dcat.datastore.domain.dcat.vocabulary.DCATNO;
 import no.dcat.datastore.domain.dcat.vocabulary.DQV;
 import no.dcat.datastore.domain.dcat.vocabulary.OA;
+import org.apache.jena.rdf.model.Literal;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.ResIterator;
@@ -259,6 +262,64 @@ public class DatasetBuilder extends AbstractBuilder {
 
         return null;
     }
+
+    /**
+     * Extracts the name of a spatial location.
+     * <p>looks up the uri. checks for names. Creates a location based skosCode. Works for Geonorge and Geonames.</p>
+     *
+     * @param locationResource the resource to extract the code from
+     *
+     * @return a SkosCode with the name in prefLabel.
+     */
+    public static SkosCode extractLocation(Resource locationResource) {
+        if (locationResource != null && locationResource.isURIResource()) {
+            SkosCode location = new SkosCode();
+
+            location.setUri(locationResource.getURI());
+            location.setCode(locationResource.getURI());
+
+            final Property[] locationNameProperties = {AdmEnhet.fylkesnavn, AdmEnhet.kommunenavn, AdmEnhet.nasjonnavn, GeoNames.officialName};
+
+            Statement nameStatement = null;
+            Property nameProperty = null;
+
+            for (Property property : locationNameProperties) {
+                nameStatement = locationResource.getProperty(property);
+                if (nameStatement != null) {
+                    nameProperty = property;
+                    break;
+                }
+            }
+
+            if (nameStatement != null && nameProperty != null) {
+
+                StmtIterator nameStatementIterator = locationResource.listProperties(nameProperty);
+
+                location.setPrefLabel(new HashMap<>());
+
+                while (nameStatementIterator.hasNext()) {
+                    Statement stmt = nameStatementIterator.next();
+
+                    String language = stmt.getLanguage();
+                    Literal literal = stmt.getObject().asLiteral();
+                    String name = literal.getString();
+                    if (language.isEmpty()) {
+                        location.getPrefLabel().put("no", name);
+                    } else {
+                        if (!location.getPrefLabel().containsKey(language)) {
+                            location.getPrefLabel().put(language, name);
+                        }
+
+                    }
+                }
+
+            }
+
+            return location;
+        }
+        return null;
+    }
+
 
     public static Subject extractSubject(Resource subjectResource) {
         if (subjectResource != null && subjectResource.isURIResource()) {
