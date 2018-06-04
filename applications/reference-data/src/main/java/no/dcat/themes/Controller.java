@@ -99,11 +99,11 @@ public class Controller {
     @CrossOrigin
     @RequestMapping(value = "/locations", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, method = RequestMethod.POST)
     public SkosCode putLocation(@RequestBody LocationUri resource) throws MalformedURLException {
-        logger.debug(resource.getUri());
+        logger.info("register new location: {}", resource.getUri());
         try {
             return codesService.addLocation(resource.getUri());
         }catch (Exception e){
-            logger.error("Unable to find location with URI <{}>. Reason {}",resource.getUri(), e.getLocalizedMessage());
+            logger.error("Unable to find location with URI <{}>. Reason {}",resource.getUri(), e.getMessage());
             throw e;
         }
     }

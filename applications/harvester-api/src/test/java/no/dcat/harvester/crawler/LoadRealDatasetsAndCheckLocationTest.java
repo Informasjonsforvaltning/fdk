@@ -39,6 +39,7 @@ import java.util.Map;
 
 import static org.mockito.Mockito.anyObject;
 import static org.mockito.Mockito.anyString;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
@@ -63,34 +64,34 @@ public class LoadRealDatasetsAndCheckLocationTest {
     private static Logger logger = LoggerFactory.getLogger(LoadRealDatasetsAndCheckLocationTest.class);
 
     @Test
-    public void loadMiniDataset() throws IOException {
+    public void loadMiniDataset() throws Exception {
 
         CrawlerJob job = loadDatasetFromFile("datasett-mini.ttl");
         assertThat(job.getDatasetsInError().size(), is(0));
     }
 
     @Test
-    public void loadFinishedDataset() throws IOException {
+    public void loadFinishedDataset() throws Exception {
 
         CrawlerJob job = loadDatasetFromFile("finished.ttl");
         assertThat(job.getDatasetsInError().size(), is(1));
     }
 
     @Test
-    public void loadExampleData() throws IOException {
+    public void loadExampleData() throws Exception {
 
         CrawlerJob job = loadDatasetFromFile("dataset-FDK-138-validering.ttl");
         assertThat(job.getDatasetsInError().size(), is(1));
     }
 
     @Test
-    public void loadDatanorgeData() throws IOException {
+    public void loadDatanorgeData() throws Exception {
 
         CrawlerJob job = loadDatasetFromFile("datanorge_2018_05_31.jsonld");
         assertThat(job.getDatasetsInError().size(), is(0));
     }
 
-    public CrawlerJob loadDatasetFromFile(String filename) throws IOException {
+    public CrawlerJob loadDatasetFromFile(String filename) throws Exception {
         Resource resource = new ClassPathResource(filename);
 
         DcatSource dcatSource = new DcatSource("http//dcat.no/test", "Test", resource.getURL().toString(), "admin_user", "123456789");
@@ -102,10 +103,13 @@ public class LoadRealDatasetsAndCheckLocationTest {
         when(RetrieveCodes.getAllCodes(anyString())).thenReturn(extractLocationCodes(resource, getCodes()));
 
         ElasticSearchResultHandler esHandler = new ElasticSearchResultHandler("localhost", 9300, "elasticsearch", "http://localhost:8100", "user", "password");
-
         AdminDataStore adminDataStore = mock(AdminDataStore.class);
+        ElasticSearchResultHandler spyHandler = PowerMockito.spy(esHandler);
+        PowerMockito.doNothing()
+                .when(spyHandler, "updateDatasets", anyObject(), anyObject(), anyObject(), anyObject(), anyObject(), anyObject(), anyObject());
 
-        CrawlerJob job = new CrawlerJob(dcatSource, adminDataStore, null, null, esHandler);
+
+        CrawlerJob job = new CrawlerJob(dcatSource, adminDataStore, null, null, spyHandler);
         CrawlerJob spyJob = spy(job);
         doReturn(true).when(spyJob).locationUriResponds(anyString());
 

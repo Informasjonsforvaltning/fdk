@@ -382,13 +382,6 @@
         "no": "Trondheim"
       }
     },
-    "http://data.geonorge.no/administrativeEnheter/kommune/id/172874": {
-      "uri": "http://data.geonorge.no/administrativeEnheter/kommune/id/172874",
-      "code": "http://data.geonorge.no/administrativeEnheter/kommune/id/172874",
-      "prefLabel": {
-        "no": "Aurland"
-      }
-    },
     "http://sws.geonames.org/3144096/": {
       "uri": "http://sws.geonames.org/3144096/",
       "code": "http://sws.geonames.org/3144096/",
