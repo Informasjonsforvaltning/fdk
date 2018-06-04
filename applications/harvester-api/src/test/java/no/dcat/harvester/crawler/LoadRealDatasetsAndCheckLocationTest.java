@@ -59,8 +59,8 @@ import static org.hamcrest.Matchers.*;
         "org.apache.jena.*", "org.apache.xerces.*", "com.sun.org.*" })
 @PrepareForTest({RetrieveCodes.class, ElasticSearchResultHandler.class, CrawlerJob.class})
 @Category(UnitTest.class)
-public class LoadRealDatasetsTest {
-    private static Logger logger = LoggerFactory.getLogger(LoadRealDatasetsTest.class);
+public class LoadRealDatasetsAndCheckLocationTest {
+    private static Logger logger = LoggerFactory.getLogger(LoadRealDatasetsAndCheckLocationTest.class);
 
     @Test
     public void loadMiniDataset() throws IOException {

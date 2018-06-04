@@ -121,12 +121,8 @@ public class CrawlerJob implements Runnable {
     public Set<String> getOrphanedDatasetUris(Model model) {
         Set<String> orphans = new HashSet<>();
 
-        ResIterator datasetResIterator = model.listResourcesWithProperty(RDF.type, DCAT.Dataset);
-        while (datasetResIterator.hasNext()) {
-            Resource datasetResource = datasetResIterator.next();
-            orphans.add(datasetResource.getURI());
-        }
-
+        orphans.addAll(getTotalDatasets(model));
+        
         ResIterator catalogIterator = model.listResourcesWithProperty(RDF.type, DCAT.Catalog);
 
         while(catalogIterator.hasNext()) {

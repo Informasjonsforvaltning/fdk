@@ -55,7 +55,7 @@ public class LoadLocations {
      * @param model
      * @return
      */
-    public void addLocationsToThemes(Model model) {
+    public void addLocationsToThemes(Model model, Map<String, SkosCode> existingLocationCodes) {
 
         BasicAuthRestTemplate template = new BasicAuthRestTemplate(httpUsername, httpPassword);
 
@@ -63,13 +63,16 @@ public class LoadLocations {
         nodeIterator.forEachRemaining(node -> {
             String uri = AbstractBuilder.removeDefaultBaseUri(model, node.asResource().getURI());
 
-            LocationUri locationUri = new LocationUri(uri);
+            if (existingLocationCodes == null || !existingLocationCodes.containsKey(uri)) {
 
-            try {
-                SkosCode skosCode = template.postForObject(themesHostname + "/locations/", locationUri, SkosCode.class);
-                locations.put(skosCode.getUri(), skosCode);
-            } catch (Exception e) {
-                logger.error("Error posting location [{}] to reference-data service. Reason {}", locationUri.getUri(), e.getLocalizedMessage());
+                LocationUri locationUri = new LocationUri(uri);
+
+                try {
+                    SkosCode skosCode = template.postForObject(themesHostname + "/locations/", locationUri, SkosCode.class);
+                    locations.put(skosCode.getUri(), skosCode);
+                } catch (Exception e) {
+                    logger.error("Error posting location [{}] to reference-data service. Reason {}", locationUri.getUri(), e.getLocalizedMessage());
+                }
             }
         });
 
