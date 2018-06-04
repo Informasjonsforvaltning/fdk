@@ -37,7 +37,7 @@ public class PublisherQueryService extends ElasticsearchService {
      * @return The complete elasticsearch response on Json-format is returned..
      */
     @CrossOrigin
-    @ApiOperation(value = "query a publisher",
+    @ApiOperation(value = "Query for publishers.",
             notes = "Returns the elasticsearch response with matching publishers", response = Publisher.class)
     @RequestMapping(value = QUERY_PUBLISHER, method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity<String> publishers(
@@ -73,7 +73,7 @@ public class PublisherQueryService extends ElasticsearchService {
      * @return orgPath and name of all publisher with children in a tree as Json-format is returned..
      */
     @CrossOrigin
-    @ApiOperation(value = "returns all publisher in a hierary",
+    @ApiOperation(value = "Returns all publishers in a hierarchy.",
             response = PublisherHit.class)
     @RequestMapping(value = QUERY_PUBLISHER_HIERARCHY, method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity<Hits> publisherNames() {

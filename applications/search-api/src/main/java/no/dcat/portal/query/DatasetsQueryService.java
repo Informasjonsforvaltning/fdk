@@ -92,7 +92,7 @@ public class DatasetsQueryService extends ElasticsearchService {
      * @return List of  elasticsearch records.
      */
     @CrossOrigin
-    @ApiOperation(value = "queries the catalog for datasets",
+    @ApiOperation(value = "Queries the catalog for datasets.",
             notes = "Returns a list of matching datasets wrapped in a elasticsearch response. " +
                     "Max number returned by a single query is 100. Size parameters greater than 100 will not return more than 100 datasets. " +
                     "In order to access all datasets, use multiple queries and increment from parameter.", response = Dataset.class)
@@ -438,7 +438,7 @@ public class DatasetsQueryService extends ElasticsearchService {
      * @Exception A http error is returned if no records is found or if any other error occured.
      */
     @CrossOrigin
-    @ApiOperation(value = "gets a specific dataset",
+    @ApiOperation(value = "Get a specific dataset.",
             notes = "You must specify the dataset's identifier", response = Dataset.class)
     @RequestMapping(value = "/datasets/**", method = RequestMethod.GET, produces = {"application/json", "text/turtle", "application/ld+json", "application/rdf+xml"})
     public ResponseEntity<String> detail(HttpServletRequest request) {
@@ -529,7 +529,7 @@ public class DatasetsQueryService extends ElasticsearchService {
      * @return json containing theme code and integer count of number of data sets
      */
     @CrossOrigin
-    @ApiOperation(value = "aggregate dataset count per theme", notes = "Returns a list of themes and the total number of datasets for each of them",
+    @ApiOperation(value = "Aggregate dataset count per theme.", notes = "Returns a list of themes and the total number of datasets for each of them",
             response = SkosConcept.class)
     @RequestMapping(value = QUERY_THEME_COUNT, method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity<String> themecount(@RequestParam(value = "code", defaultValue = "", required = false) String themecode) {
@@ -547,7 +547,7 @@ public class DatasetsQueryService extends ElasticsearchService {
      * @return json containing publishers and integer count of number of data sets
      */
     @CrossOrigin
-    @ApiOperation(value = "aggregate dataset count per publisher",
+    @ApiOperation(value = "Aggregate dataset count per publisher.",
             notes = "Returns a list of publishers and the total number of dataset for each of them")
     @RequestMapping(value = QUERY_PUBLISHER_COUNT, method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity<String> publisherCount(@RequestParam(value = "publisher", defaultValue = "", required = false) String publisher) {
@@ -624,7 +624,7 @@ public class DatasetsQueryService extends ElasticsearchService {
      */
 
     @CrossOrigin
-    @ApiOperation(value = "aggregatds dataset count per organization path")
+    @ApiOperation(value = "Aggregates dataset count per organization path.")
     @RequestMapping(value = AGGREGATE_DATASET, method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity<String> aggregateDatasets(@RequestParam(value = "q", defaultValue = "") String query) {
 
