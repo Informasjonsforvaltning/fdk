@@ -53,7 +53,7 @@ import org.springframework.web.bind.annotation.RestController;
       * @return List of  elasticsearch records.
      */
     @CrossOrigin
-    @ApiOperation(value = "query for terms (concepts)",
+    @ApiOperation(value = "Query for terms (concepts).",
             notes = "Returns the elasticsearch response with matching terms (dct:subject)", response = Subject.class)
     @RequestMapping(value = QUERY_SEARCH, method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity<String> search(

@@ -34,7 +34,7 @@ public class HarvestQueryService extends ElasticsearchService {
      * @return The complete elasticsearch response on Json-format is returned..
      */
     @CrossOrigin
-    @ApiOperation(value = "Finds all harvest catalog records for a given orgpath")
+    @ApiOperation(value = "Finds all harvest catalog records for a given orgpath.")
     @RequestMapping(value = "/harvest/catalog", method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity<String> listCatalogHarvestRecords(
             @ApiParam("The orgpath of the publisher, e.g. /STAT or /FYLKE")
