@@ -143,6 +143,7 @@
     "title": "Dataset",
     "type": "Type",
     "firstHarvested": "Published in The National Data Directory",
+    "lastChanged": "Last changed in The National Data Directory",
     "conformsTo": "Conforms to",
     "informationModel": "Information model",
     "informationModelDefaultText": "Information model",

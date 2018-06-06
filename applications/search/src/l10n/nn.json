@@ -143,6 +143,7 @@
     "title": "Datasett",
     "type": "Type",
     "firstHarvested": "Publisert i Felles datakatalog",
+    "lastChanged": "Sist endret i Felles datakatalog",
     "conformsTo": "Innholdsstandard",
     "informationModel": "Informasjonsmodell",
     "informationModelDefaultText": "Informasjonsmodell",
