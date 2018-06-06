@@ -64,8 +64,7 @@
     "nosearch.descriptions":"datasettbeskrivelser",
     "datasetTab": "Datasett",
     "termTab": "Omgrep",
-    "nosearch.concepts":"omgrep",
-    "nosearch.descriptions":"datasett beskrivelser"
+    "nosearch.concepts":"omgrep"
   },
   "hitstats": {
     "nosearch": {
@@ -100,8 +99,7 @@
       "PRIVAT": "Privat",
       "ANNET": "Annet"
     },
-    "provenance": "Opphav",
-    "spatial": "Geografi"
+    "provenance": "Opphav"
   },
   "result": {
     "dataset":"Datasett",

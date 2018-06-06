@@ -64,8 +64,7 @@
     "nosearch.descriptions":"datasettbeskrivelser",
     "datasetTab": "Dataset",
     "termTab": "Concepts",
-    "nosearch.concepts":"begreper",
-    "nosearch.descriptions":"datasett beskrivelser"
+    "nosearch.concepts":"begreper"
   },
   "hitstats": {
     "nosearch": {
@@ -100,8 +99,7 @@
       "PRIVAT": "Private",
       "ANNET": "Other"
     },
-    "provenance": "Provenance",
-    "spatial": "Spatial"
+    "provenance": "Provenance"
   },
   "result": {
     "dataset":"Dataset",
