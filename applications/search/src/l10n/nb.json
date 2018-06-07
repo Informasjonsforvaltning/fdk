@@ -64,8 +64,7 @@
     "nosearch.descriptions":"datasettbeskrivelser",
     "datasetTab": "Datasett",
     "termTab": "Begrep",
-    "nosearch.concepts":"begreper",
-    "nosearch.descriptions":"datasett beskrivelser"
+    "nosearch.concepts":"begreper"
   },
   "hitstats": {
     "nosearch": {
@@ -100,8 +99,7 @@
       "PRIVAT": "Privat",
       "ANNET": "Annet"
     },
-    "provenance": "Opphav",
-    "spatial": "Geografi"
+    "provenance": "Opphav"
   },
   "result": {
     "dataset":"Datasett",
@@ -143,6 +141,7 @@
     "title": "Datasett",
     "type": "Type",
     "firstHarvested": "Publisert i Felles datakatalog",
+    "lastChanged": "Sist endret i Felles datakatalog",
     "conformsTo": "Innholdsstandard",
     "informationModel": "Informasjonsmodell",
     "informationModelDefaultText": "Informasjonsmodell",
