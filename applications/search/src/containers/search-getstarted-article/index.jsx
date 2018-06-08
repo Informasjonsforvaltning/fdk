@@ -1,4 +1,3 @@
-/* eslint-disable react/no-danger */
 import React from 'react';
 import DocumentMeta from 'react-document-meta';
 
@@ -267,4 +266,3 @@ const Article = () => {
 };
 
 export default Article;
-/* eslint-enable react/no-danger */

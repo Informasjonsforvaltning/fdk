@@ -20,15 +20,9 @@ const About = () => {
             <p className="fdk-ingress">{localization.about.ingress}</p>
           </div>
           <div className="fdk-textregular">
-            {
-              // eslint-disable-next-line react/no-danger
-            }
             <p
               dangerouslySetInnerHTML={{ __html: localization.about.maintext }}
             />
-            {
-              // eslint-disable-next-line react/no-danger
-            }
             <p
               dangerouslySetInnerHTML={{
                 __html: localization.about.dataNorgeText
