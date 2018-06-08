@@ -1,4 +1,6 @@
 {
+  "description": "Beskrivelse",
+  "objective": "Formål",
   "app": {
     "title": "Felles Datakatalog",
     "titleSub": "Oversikt over datasett frå verksemder i Noreg.",
@@ -147,7 +149,6 @@
     "informationModelDefaultText": "Informasjonsmodell",
     "distribution": {
       "title": "Distribusjon",
-      "description": "Beskrivelse",
       "format": "Tilgjengelige format",
       "accessUrl": "TilgangsURL",
       "license": "Forutsetning for bruk av datasettet",
