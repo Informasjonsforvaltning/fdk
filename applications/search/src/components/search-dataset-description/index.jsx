@@ -46,9 +46,7 @@ export default class DatasetDescription extends React.Component {
   _renderHarvestSeparator() {
     const { harvest } = this.props;
     if (harvest && harvest.firstHarvested && harvest.lastChanged) {
-      return (
-        <span>&nbsp;/&nbsp;</span>
-      );
+      return <span>&nbsp;/&nbsp;</span>;
     }
     return null;
   }
@@ -99,7 +97,7 @@ export default class DatasetDescription extends React.Component {
           {this._renderHarvested()}
           {this._renderHarvestSeparator()}
           {this._renderLastChanged()}
-          </div>
+        </div>
 
         <div className="fdk-margin-bottom">
           {this._renderPublisher()}
@@ -107,16 +105,21 @@ export default class DatasetDescription extends React.Component {
         </div>
 
         {this.props.description && (
-          <p
-            className="fdk-ingress"
-            dangerouslySetInnerHTML={{
-              __html: this.props.descriptionFormatted
-            }}
-          />
+          <p className="fdk-ingress">
+            <strong>{localization.description}: </strong>
+            <span
+              dangerouslySetInnerHTML={{
+                __html: this.props.descriptionFormatted
+              }}
+            />
+          </p>
         )}
 
         {this.props.objective && (
-          <p className="fdk-ingress">{this.props.objective}</p>
+          <p className="fdk-ingress">
+            <strong>{localization.objective}: </strong>
+            {this.props.objective}
+          </p>
         )}
       </header>
     );
