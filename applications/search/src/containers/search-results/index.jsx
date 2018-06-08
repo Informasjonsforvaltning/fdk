@@ -12,7 +12,8 @@ import {
   fetchDatasetsIfNeeded,
   fetchTermsIfNeeded,
   fetchThemesIfNeeded,
-  fetchPublishersIfNeeded
+  fetchPublishersIfNeeded,
+  fetchDistributionTypeIfNeeded
 } from '../../actions/index';
 import ResultsDataset from '../../components/search-results-dataset';
 import ResultsConcepts from '../../components/search-concepts-results';
@@ -94,6 +95,7 @@ export class SearchPage extends React.Component {
     }
     this.props.fetchThemesIfNeeded();
     this.props.fetchPublishersIfNeeded();
+    this.props.fetchDistributionTypeIfNeeded();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -474,7 +476,8 @@ export class SearchPage extends React.Component {
       publisherCountTermItems,
       isFetchingTerms,
       themesItems,
-      publisherItems
+      publisherItems,
+      distributionTypeItems
     } = this.props;
     const topSectionClass = cx('top-section-search', 'mb-1-em', {
       'top-section-search--image': !!(browser && browser.name !== 'ie')
@@ -549,6 +552,7 @@ export class SearchPage extends React.Component {
                   hitsPerPage={50}
                   publisherArray={publisherCountItems}
                   publishers={publisherItems}
+                  distributionTypeItems={distributionTypeItems}
                   {...props}
                 />
               )}
@@ -591,7 +595,13 @@ SearchPage.propTypes = {
   selectedLanguageCode: PropTypes.string
 };
 
-const mapStateToProps = ({ datasets, terms, themes, publishers }) => {
+const mapStateToProps = ({
+  datasets,
+  terms,
+  themes,
+  publishers,
+  distributionTypes
+}) => {
   const {
     datasetItems,
     publisherCountItems,
@@ -614,6 +624,10 @@ const mapStateToProps = ({ datasets, terms, themes, publishers }) => {
     publisherItems: null
   };
 
+  const { distributionTypeItems } = distributionTypes || {
+    distributionTypeItems: null
+  };
+
   return {
     datasetItems,
     publisherCountItems,
@@ -624,7 +638,8 @@ const mapStateToProps = ({ datasets, terms, themes, publishers }) => {
     themesItems,
     isFetchingThemes,
     publisherItems,
-    isFetchingPublishers
+    isFetchingPublishers,
+    distributionTypeItems
   };
 };
 
@@ -632,7 +647,8 @@ const mapDispatchToProps = dispatch => ({
   fetchDatasetsIfNeeded: url => dispatch(fetchDatasetsIfNeeded(url)),
   fetchTermsIfNeeded: url => dispatch(fetchTermsIfNeeded(url)),
   fetchThemesIfNeeded: () => dispatch(fetchThemesIfNeeded()),
-  fetchPublishersIfNeeded: () => dispatch(fetchPublishersIfNeeded())
+  fetchPublishersIfNeeded: () => dispatch(fetchPublishersIfNeeded()),
+  fetchDistributionTypeIfNeeded: () => dispatch(fetchDistributionTypeIfNeeded())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchPage);

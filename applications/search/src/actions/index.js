@@ -92,6 +92,18 @@ export function fetchOpenLicensesIfNeeded() {
     );
 }
 
+export function fetchDistributionTypeIfNeeded() {
+  return (dispatch, getState) =>
+    shouldFetchApi(getState().distributionTypes) &&
+    dispatch(
+      fetchApi('/reference-data/codes/distributiontype', [
+        actions.DISTRIBUTIONTYPE_REQUEST,
+        actions.DISTRIBUTIONTYPE_SUCCESS,
+        actions.DISTRIBUTIONTYPE_FAILURE
+      ])
+    );
+}
+
 export function publishDataset(value) {
   return dispatch =>
     dispatch({
