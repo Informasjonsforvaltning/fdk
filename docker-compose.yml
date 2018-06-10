@@ -36,6 +36,18 @@ services:
   elasticsearch:
     image: elasticsearch:2.4.1
 
+  elasticsearch-copy:
+    image: dcatno/elasticsearch-copy:latest
+    networks:
+      platform:
+      logging:
+
+  elasticsearch-copy:
+    image: dcatno/elasticsearch-copy:latest
+    networks:
+      platform:
+      logging:
+
   dev-management:
     image: dcatno/dev-management:latest
     depends_on:
