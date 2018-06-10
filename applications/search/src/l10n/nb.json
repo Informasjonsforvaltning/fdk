@@ -1,6 +1,9 @@
 {
   "description": "Beskrivelse",
+  "showFullDescription": "Vis hele beskrivelsen",
+  "showLess": "Vis mindre",
   "objective": "Formål",
+  "showFullObjective": "Vis hele formålet",
   "app": {
     "title": "Felles Datakatalog",
     "titleSub": "Oversikt over datasett fra virksomheter i Norge.",

@@ -44,19 +44,18 @@ exports[`should render DatasetDescription correctly 1`] = `
       Miljø
     </div>
   </div>
-  <p
-    className="fdk-ingress"
-    dangerouslySetInnerHTML={
-      Object {
-        "__html": null,
-      }
-    }
+  <ShowMore
+    contentHtml={null}
+    label="Beskrivelse"
+    showLessButtonText="Vis mindre"
+    showMoreButtonText="Vis hele beskrivelsen"
   />
-  <p
-    className="fdk-ingress"
-  >
-    Datasettes formål er nullam quis rius eget urna mollis ornare vel eu leo. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Cras mattis consectetur purus sit amet fermentum. Vestibulum id ligula porta felis euismod semper.
-  </p>
+  <ShowMore
+    contentHtml="Datasettes formål er nullam quis rius eget urna mollis ornare vel eu leo. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Cras mattis consectetur purus sit amet fermentum. Vestibulum id ligula porta felis euismod semper."
+    label="Formål"
+    showLessButtonText="Vis mindre"
+    showMoreButtonText="Vis hele formålet"
+  />
 </header>
 `;
 
@@ -104,19 +103,18 @@ exports[`should render DatasetDescription correctly 2`] = `
       Miljø
     </div>
   </div>
-  <p
-    className="fdk-ingress"
-    dangerouslySetInnerHTML={
-      Object {
-        "__html": null,
-      }
-    }
+  <ShowMore
+    contentHtml={null}
+    label="Beskrivelse"
+    showLessButtonText="Vis mindre"
+    showMoreButtonText="Vis hele beskrivelsen"
   />
-  <p
-    className="fdk-ingress"
-  >
-    Datasettes formål er nullam quis rius eget urna mollis ornare vel eu leo. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Cras mattis consectetur purus sit amet fermentum. Vestibulum id ligula porta felis euismod semper.
-  </p>
+  <ShowMore
+    contentHtml="Datasettes formål er nullam quis rius eget urna mollis ornare vel eu leo. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Cras mattis consectetur purus sit amet fermentum. Vestibulum id ligula porta felis euismod semper."
+    label="Formål"
+    showLessButtonText="Vis mindre"
+    showMoreButtonText="Vis hele formålet"
+  />
 </header>
 `;
 

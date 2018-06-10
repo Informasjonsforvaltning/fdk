@@ -48,7 +48,8 @@ h5 {
     margin: 0px 0px .4rem 0px;
 }
 
-p {
+/* React warns against placing div inside a paragraph, so let's create paragraph-like div instead*/
+p, .p {
     margin: 0 0 2.3rem 0;
 }
 
