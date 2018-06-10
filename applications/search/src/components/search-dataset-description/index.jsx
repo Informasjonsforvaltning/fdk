@@ -5,9 +5,21 @@ import Moment from 'react-moment';
 
 import localization from '../../components/localization';
 import { getTranslateText } from '../../utils/translateText';
+import { ShowMore } from "../show-more/show-more";
 
 export default class DatasetDescription extends React.Component {
-  // eslint-disable-line react/prefer-stateless-function
+  constructor(props) {
+    super(props);
+    this.state = {
+      showAll: false
+    };
+    this.toggleShowAll = this.toggleShowAll.bind(this);
+  }
+
+  toggleShowAll() {
+    this.setState({ showAll: !this.state.showAll });
+  }
+
   _renderPublisher() {
     const { publisher } = this.props;
     const ownedBy = localization.search_hit.owned;
@@ -21,7 +33,7 @@ export default class DatasetDescription extends React.Component {
           >
             {publisher
               ? publisher.name.charAt(0) +
-                publisher.name.substring(1).toLowerCase()
+              publisher.name.substring(1).toLowerCase()
               : ''}
           </strong>
         </span>
@@ -99,28 +111,23 @@ export default class DatasetDescription extends React.Component {
           {this._renderLastChanged()}
         </div>
 
+
         <div className="fdk-margin-bottom">
           {this._renderPublisher()}
           {this._renderThemes()}
         </div>
 
-        {this.props.description && (
-          <p className="fdk-ingress">
-            <strong>{localization.description}: </strong>
-            <span
-              dangerouslySetInnerHTML={{
-                __html: this.props.descriptionFormatted
-              }}
-            />
-          </p>
-        )}
+        {this.props.description && (<ShowMore
+          showMoreButtonText={localization.showFullDescription}
+          label={localization.description}
+          contentHtml={this.props.descriptionFormatted}
+        />)}
 
-        {this.props.objective && (
-          <p className="fdk-ingress">
-            <strong>{localization.objective}: </strong>
-            {this.props.objective}
-          </p>
-        )}
+        {this.props.objective && (<ShowMore
+          showMoreButtonText={localization.showFullObjective}
+          label={localization.objective}
+          contentHtml={this.props.objective}
+        />)}
       </header>
     );
   }
