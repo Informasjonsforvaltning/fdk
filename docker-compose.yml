@@ -77,6 +77,12 @@ services:
       platform:
       logging:
 
+  elasticsearch-copy:
+    image: dcatno/elasticsearch-copy:latest
+    networks:
+      platform:
+      logging:
+
   dev-management:
     image: dcatno/dev-management:latest
     depends_on:

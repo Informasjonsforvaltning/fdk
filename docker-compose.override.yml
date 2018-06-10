@@ -94,6 +94,10 @@ services:
     environment:
       - cluster.name=fellesdatakatalog
 
+  elasticsearch-copy:
+    restart: always
+    volumes:
+    - ./data/escopy:/escopydata
 
   dev-management:
     restart: always
