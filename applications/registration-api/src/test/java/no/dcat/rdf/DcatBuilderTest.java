@@ -10,8 +10,10 @@ import no.dcat.model.Catalog;
 import no.dcat.model.Dataset;
 import no.dcat.datastore.domain.dcat.builders.DcatBuilder;
 import no.dcat.datastore.domain.dcat.smoke.TestCompleteCatalog;
+import no.dcat.shared.testcategories.UnitTest;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -31,6 +33,7 @@ import static org.junit.Assert.assertThat;
  * Created by dask on 12.04.2017.
  */
 @ActiveProfiles(value = "develop")
+@Category(UnitTest.class)
 public class DcatBuilderTest {
     static Logger logger = LoggerFactory.getLogger(DcatBuilderTest.class);
 

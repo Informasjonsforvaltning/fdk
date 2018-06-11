@@ -2,12 +2,14 @@ package no.dcat.themes.builders;
 
 import no.dcat.shared.SkosCode;
 import no.dcat.shared.Types;
+import no.dcat.shared.testcategories.UnitTest;
 import no.dcat.themes.database.TDBInferenceService;
 import no.dcat.themes.service.CodesService;
 import no.dcat.themes.database.TDBConnection;
 import no.dcat.themes.database.TDBService;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.junit.rules.TemporaryFolder;
 
 import java.io.IOException;
@@ -18,6 +20,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * Test class for CodeBuildersTest
  */
+@Category(UnitTest.class)
 public class CodeBuildersTest {
 
     @Rule

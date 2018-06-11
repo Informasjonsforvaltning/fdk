@@ -1,5 +1,6 @@
 package no.dcat.portal.query;
 
+import no.dcat.shared.testcategories.UnitTest;
 import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QueryExecutionFactory;
@@ -10,6 +11,7 @@ import org.apache.jena.riot.RDFDataMgr;
 import org.apache.jena.sparql.engine.http.QueryExceptionHTTP;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
@@ -37,6 +39,7 @@ import static org.mockito.Mockito.spy;
 /**
  * Created by dask on 20.03.2017.
  */
+@Category(UnitTest.class)
 public class CatalogServiceTest {
     private static Logger logger = LoggerFactory.getLogger(CatalogServiceTest.class);
 

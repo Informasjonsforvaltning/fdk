@@ -4,7 +4,7 @@ Docker image: [dcatno/reference-data-api](https://hub.docker.com/r/dcatno/regist
 Base image: [frolvlad/alpine-oraclejdk8:slim](https://hub.docker.com/r/frolvlad/alpine-oraclejdk8/)
 Source: [Dockerfile](https://github.com/Altinn/fdk/blob/develop/applications/reference-data/src/main/docker/Dockerfile)
 
-#  Overview
+##  Overview
 Reference-data is a service that provides metadata for the various applications in this ecosystem. It provides code-lists, concepts and helptexts. 
 
 # Technologies/frameworks
@@ -14,7 +14,7 @@ Reference-data is a service that provides metadata for the various applications 
 * JSON-LD framing
 * Apache Jena TDB: To store the codes as RDF.
 
-# API
+## API
 
 The code api provides REST service for:
 
@@ -44,7 +44,7 @@ There are also two internal api's used by the registration application to add ne
 * `GET /subjects` which asks for a subject-uri. If it is not already in the database the service tries to fetch the subjects definition from the uri and 
 stores the definition in the database for furter access.
     
-# Known problems
+## Known problems
 
 We have had some problem with the TDB database. Sometimes it fails to restart due to a lock file. In those cases we have had to delete the lock file.
 

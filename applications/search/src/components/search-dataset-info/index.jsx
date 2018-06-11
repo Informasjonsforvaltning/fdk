@@ -23,6 +23,7 @@ export default class DatasetInfo extends React.Component {
               className="fdk-ingress fdk-margin-bottom-no"
             >
               {`, ${item.prefLabel[this.props.selectedLanguageCode] ||
+                item.prefLabel.no ||
                 item.prefLabel.nb ||
                 item.prefLabel.nn ||
                 item.prefLabel.en}`}
@@ -35,6 +36,7 @@ export default class DatasetInfo extends React.Component {
             className="fdk-ingress fdk-margin-bottom-no"
           >
             {`${item.prefLabel[this.props.selectedLanguageCode] ||
+              item.prefLabel.no ||
               item.prefLabel.nb ||
               item.prefLabel.nn ||
               item.prefLabel.en}`}

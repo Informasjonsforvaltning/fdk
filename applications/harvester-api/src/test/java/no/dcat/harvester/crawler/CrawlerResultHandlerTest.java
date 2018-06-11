@@ -6,6 +6,7 @@ import no.dcat.datastore.AdminDataStore;
 import no.dcat.datastore.DcatDataStore;
 import no.dcat.datastore.domain.DcatSource;
 import no.dcat.datastore.domain.DifiMeta;
+import no.dcat.shared.testcategories.UnitTest;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.Resource;
@@ -14,6 +15,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 
 import java.io.File;
@@ -26,6 +28,7 @@ import static org.springframework.test.util.AssertionErrors.assertTrue;
 /**
  * Created by havardottestad on 04/01/16.
  */
+@Category(UnitTest.class)
 public class CrawlerResultHandlerTest {
 
 	@Before

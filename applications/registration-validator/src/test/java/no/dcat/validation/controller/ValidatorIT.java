@@ -1,8 +1,10 @@
 package no.dcat.validation.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import no.dcat.shared.testcategories.IntegrationTest;
 import no.dcat.validation.ValidatorApplication;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -26,6 +28,7 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 @ActiveProfiles(value = "unit-integration")
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = RANDOM_PORT)
+@Category(IntegrationTest.class)
 public class ValidatorIT {
 
 

@@ -40,24 +40,84 @@
 		<elasticsearch.version>2.4.1</elasticsearch.version>
 		<build.profile.id>dev</build.profile.id>
 
-		<!-- Used for specifying tests as integration tests or end-to-end tests. Override in child pom if different -->
-		<integration.test.pattern>**/*IntegrationTest.java, **/*IT.java</integration.test.pattern>
-		<end2end.test.pattern>**/*E2E.java</end2end.test.pattern>
-
-		<!-- Tells weather we should skipIntegrationTests. Note: If this is overwritten
-            in child pom it will also override setting in profiles -->
-		<skipIntegrationTests>true</skipIntegrationTests>
-        <skipUnitTests>true</skipUnitTests>
+		<unittest.category/>
+		<endtoendtest.category/>
+		<loadtest.category/>
+		<integrationtest.category/>
 
 		<maven.exec.skip>false</maven.exec.skip> <!-- default -->
 	</properties>
+
+	<profiles>
+		<profile>
+			<id>dev</id>
+		</profile>
+
+		<profile>
+			<id>unit-test</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<unittest.category>,no.dcat.shared.testcategories.UnitTest</unittest.category>
+			</properties>
+		</profile>
+		<profile>
+			<id>integration-test</id>
+			<properties>
+				<integrationtest.category>,no.dcat.shared.testcategories.IntegrationTest</integrationtest.category>
+			</properties>
+		</profile>
+		<profile>
+			<id>end-to-end-test</id>
+			<properties>
+				<endtoendtest.category>,no.dcat.shared.testcategories.EndToEndTest</endtoendtest.category>
+			</properties>
+		</profile>
+		<profile>
+			<id>load-test</id>
+			<properties>
+				<loadtest.category>,no.dcat.shared.testcategories.LoadTest</loadtest.category>
+			</properties>
+		</profile>
+	</profiles>
 
 	<dependencyManagement>
 		<dependencies>
 			<!--Warn! Do not put spring boot dependencies in dependency Management, since it overrides version management from parent-->
 			<dependency>
 				<groupId>no.dcat</groupId>
+				<artifactId>shared</artifactId>
+				<version>${fdk.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>no.dcat</groupId>
+				<artifactId>datastore</artifactId>
+				<version>${fdk.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>no.dcat</groupId>
+				<artifactId>harvester</artifactId>
+				<version>${fdk.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>no.dcat</groupId>
 				<artifactId>harvester-api</artifactId>
+				<version>${fdk.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>no.dcat</groupId>
+				<artifactId>migration</artifactId>
+				<version>${fdk.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>no.dcat</groupId>
+				<artifactId>reference-data</artifactId>
+				<version>${fdk.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>no.dcat</groupId>
+				<artifactId>registration-api</artifactId>
 				<version>${fdk.version}</version>
 			</dependency>
 			<dependency>
@@ -311,8 +371,14 @@
 				<artifactId>jna</artifactId>
 				<version>4.2.2</version>
 			</dependency>
-		</dependencies>
 
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>4.12</version>
+				<scope>test</scope>
+			</dependency>
+		</dependencies>
 
 
 	</dependencyManagement>
@@ -329,26 +395,18 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>2.19.1</version>
 				<configuration>
-					<excludes>
-						<exclude>${integration.test.pattern}</exclude>
-						<exclude>${end2end.test.pattern}</exclude>
-					</excludes>
+					<groups>java.lang.Exception ${unittest.category} ${endtoendtest.category} ${loadtest.category}</groups> <!-- java.lang.Exception is a hack to make a valid comma-separated list og category classes -->
 					<argLine>${surefireArgLine} -Dfile.encoding=${java.encoding}</argLine>
-                    <skipTests>false</skipTests>
 				</configuration>
 			</plugin>
 			<plugin>
-                <!-- Integration test runner -->
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-failsafe-plugin</artifactId>
 				<version>2.19.1</version>
 				<configuration>
-					<includes>
-						<include>${integration.test.pattern}</include>
-					</includes>
-					<skipTests>${skipIntegrationTests}</skipTests>
+					<groups>java.lang.Exception ${integrationtest.category}</groups> <!-- java.lang.Exception is a hack to make a valid comma-separated list og category classes -->
 					<encoding>${java.encoding}</encoding>
-                    <argLine>${failsafeArgLine}</argLine>
+					<argLine>${failsafeArgLine}</argLine>
 				</configuration>
 				<executions>
 					<execution>
@@ -359,6 +417,7 @@
 					</execution>
 				</executions>
 			</plugin>
+
 			<plugin>
                 <!-- Aggregates JaCoCo reports to generate Coveralls statistics -->
 				<groupId>org.eluder.coveralls</groupId>
@@ -516,40 +575,5 @@
 			</plugins>
 		</pluginManagement>
 	</build>
-
-	<profiles>
-		<profile>
-			<id>dev</id>
-		</profile>
-		<profile>
-			<id>integration-test</id>
-			<properties>
-				<!-- Used to locate the profile specific configuration file. -->
-				<build.profile.id>integration-test</build.profile.id>
-				<!-- Unit and integration tests are run, to get complete tesstcoverage statistics. -->
-				<integration.test.pattern>**/*IntegrationTest.java, **/*IT.java</integration.test.pattern>
-				<skipIntegrationTests>false</skipIntegrationTests>
-				<skipUnitTests>true</skipUnitTests>
-			</properties>
-		</profile>
-		<profile>
-			<id>end-to-end-test</id>
-			<properties>
-				<!-- Used to locate the profile specific configuration file. -->
-				<build.profile.id>end-to-end-test</build.profile.id>
-
-				<!-- Maven has no distinct phase for end-to-end tests
-				     and Failsafe does not distinguish between integration
-				     and end to end tests by default. Therefore distinguish
-				     with naming convention E2E for end-to-end tests -->
-				<integration.test.pattern>**/*E2E.java</integration.test.pattern>
-				<!-- Only integration tests are run. -->
-				<skipIntegrationTests>false</skipIntegrationTests>
-				<skipUnitTests>true</skipUnitTests>
-			</properties>
-		</profile>
-	</profiles>
-
-
 
 </project>

@@ -3,9 +3,11 @@ package no.dcat.harvester.crawler.handlers;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import no.dcat.datastore.domain.dcat.Publisher;
+import no.dcat.shared.testcategories.UnitTest;
 import org.elasticsearch.action.index.IndexRequest;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,6 +18,7 @@ import static org.junit.Assert.assertThat;
 /**
  * Class for testing ElasticSearchResultPubHandler.
  */
+@Category(UnitTest.class)
 public class ElasticSearchResultPubHandlerTest {
     private static Logger logger = LoggerFactory.getLogger(ElasticSearchResultPubHandlerTest.class);
 

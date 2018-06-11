@@ -1,10 +1,13 @@
 package no.dcat.harvester.clean;
 
+import no.dcat.shared.testcategories.UnitTest;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
+@Category(UnitTest.class)
 public class HtmlCleanerTest {
 
     @Test

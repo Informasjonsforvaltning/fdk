@@ -52,6 +52,12 @@
         </dependency>
 
         <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
             <groupId>org.apache.jena</groupId>
             <artifactId>jena-core</artifactId>
         </dependency>
@@ -75,12 +81,10 @@
         <dependency>
             <groupId>no.dcat</groupId>
             <artifactId>shared</artifactId>
-            <version>0.2.4-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>no.dcat</groupId>
             <artifactId>datastore</artifactId>
-            <version>0.2.4-SNAPSHOT</version>
         </dependency>
 
         <dependency>

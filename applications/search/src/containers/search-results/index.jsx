@@ -12,7 +12,8 @@ import {
   fetchDatasetsIfNeeded,
   fetchTermsIfNeeded,
   fetchThemesIfNeeded,
-  fetchPublishersIfNeeded
+  fetchPublishersIfNeeded,
+  fetchDistributionTypeIfNeeded
 } from '../../actions/index';
 import ResultsDataset from '../../components/search-results-dataset';
 import ResultsConcepts from '../../components/search-concepts-results';
@@ -61,6 +62,9 @@ export class SearchPage extends React.Component {
     this.handleDatasetFilterProvenance = this.handleDatasetFilterProvenance.bind(
       this
     );
+    this.handleDatasetFilterSpatial = this.handleDatasetFilterSpatial.bind(
+      this
+    );
     this.handleDatasetSort = this.handleDatasetSort.bind(this);
     this.handlePageChange = this.handlePageChange.bind(this);
     this.close = this.close.bind(this);
@@ -91,6 +95,7 @@ export class SearchPage extends React.Component {
     }
     this.props.fetchThemesIfNeeded();
     this.props.fetchPublishersIfNeeded();
+    this.props.fetchDistributionTypeIfNeeded();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -346,6 +351,45 @@ export class SearchPage extends React.Component {
     }
   }
 
+  handleDatasetFilterSpatial(event) {
+    const { spatial } = this.state.searchQuery;
+    if (event.target.checked) {
+      ReactGA.event({
+        category: 'Fasett',
+        action: 'Legge til geografi',
+        label: event.target.value
+      });
+      this.setState(
+        {
+          searchQuery: {
+            ...this.state.searchQuery,
+            spatial: addValue(spatial, event.target.value),
+            from: undefined
+          }
+        },
+        () =>
+          this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
+      );
+    } else {
+      ReactGA.event({
+        category: 'Fasett',
+        action: 'Fjerne geografi',
+        label: event.target.value
+      });
+      this.setState(
+        {
+          searchQuery: {
+            ...this.state.searchQuery,
+            spatial: removeValue(spatial, event.target.value),
+            from: undefined
+          }
+        },
+        () =>
+          this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
+      );
+    }
+  }
+
   handleDatasetSort(event) {
     let sortField = event.field;
 
@@ -388,12 +432,6 @@ export class SearchPage extends React.Component {
   handlePageChange(data) {
     const selected = data.selected;
     const offset = Math.ceil(selected * 50);
-
-    ReactGA.event({
-      category: 'Paginering',
-      action: 'Ny side',
-      label: offset
-    });
 
     if (offset === 0) {
       this.setState(
@@ -438,7 +476,8 @@ export class SearchPage extends React.Component {
       publisherCountTermItems,
       isFetchingTerms,
       themesItems,
-      publisherItems
+      publisherItems,
+      distributionTypeItems
     } = this.props;
     const topSectionClass = cx('top-section-search', 'mb-1-em', {
       'top-section-search--image': !!(browser && browser.name !== 'ie')
@@ -494,6 +533,7 @@ export class SearchPage extends React.Component {
                     this.handleDatasetFilterPublisherHierarchy
                   }
                   onFilterProvenance={this.handleDatasetFilterProvenance}
+                  onFilterSpatial={this.handleDatasetFilterSpatial}
                   onSort={this.handleDatasetSort}
                   onPageChange={this.handlePageChange}
                   searchQuery={this.state.searchQuery}
@@ -504,6 +544,7 @@ export class SearchPage extends React.Component {
                       this.state.searchQuery.theme ||
                       this.state.searchQuery.accessrights ||
                       this.state.searchQuery.provenance ||
+                      this.state.searchQuery.spatial ||
                       this.state.searchQuery.orgPath
                     )
                   }
@@ -511,6 +552,7 @@ export class SearchPage extends React.Component {
                   hitsPerPage={50}
                   publisherArray={publisherCountItems}
                   publishers={publisherItems}
+                  distributionTypeItems={distributionTypeItems}
                   {...props}
                 />
               )}
@@ -553,7 +595,13 @@ SearchPage.propTypes = {
   selectedLanguageCode: PropTypes.string
 };
 
-const mapStateToProps = ({ datasets, terms, themes, publishers }) => {
+const mapStateToProps = ({
+  datasets,
+  terms,
+  themes,
+  publishers,
+  distributionTypes
+}) => {
   const {
     datasetItems,
     publisherCountItems,
@@ -576,6 +624,10 @@ const mapStateToProps = ({ datasets, terms, themes, publishers }) => {
     publisherItems: null
   };
 
+  const { distributionTypeItems } = distributionTypes || {
+    distributionTypeItems: null
+  };
+
   return {
     datasetItems,
     publisherCountItems,
@@ -586,7 +638,8 @@ const mapStateToProps = ({ datasets, terms, themes, publishers }) => {
     themesItems,
     isFetchingThemes,
     publisherItems,
-    isFetchingPublishers
+    isFetchingPublishers,
+    distributionTypeItems
   };
 };
 
@@ -594,7 +647,8 @@ const mapDispatchToProps = dispatch => ({
   fetchDatasetsIfNeeded: url => dispatch(fetchDatasetsIfNeeded(url)),
   fetchTermsIfNeeded: url => dispatch(fetchTermsIfNeeded(url)),
   fetchThemesIfNeeded: () => dispatch(fetchThemesIfNeeded()),
-  fetchPublishersIfNeeded: () => dispatch(fetchPublishersIfNeeded())
+  fetchPublishersIfNeeded: () => dispatch(fetchPublishersIfNeeded()),
+  fetchDistributionTypeIfNeeded: () => dispatch(fetchDistributionTypeIfNeeded())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchPage);

@@ -2,6 +2,7 @@ package no.dcat.datastore.domain.dcat;
 
 import no.dcat.datastore.domain.dcat.builders.DatasetBuilder;
 import no.dcat.shared.Subject;
+import no.dcat.shared.testcategories.IntegrationTest;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.ResIterator;
@@ -9,16 +10,19 @@ import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.vocabulary.RDF;
 import org.apache.jena.vocabulary.SKOS;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
 
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.*;
-import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertThat;
 
+@Category(IntegrationTest.class)
 public class SubjectsFromGithubIT {
     private static Logger logger = LoggerFactory.getLogger(SubjectsFromGithubIT.class);
 

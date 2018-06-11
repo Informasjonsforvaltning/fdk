@@ -4,15 +4,15 @@ Docker image: [dcatno/registration-api](https://hub.docker.com/r/dcatno/registra
 Base image: [frolvlad/alpine-oraclejdk8:slim](https://hub.docker.com/r/frolvlad/alpine-oraclejdk8/)
 Source: [Dockerfile](https://github.com/Altinn/fdk/blob/develop/applications/registration-api/src/main/docker/Dockerfile))
 
-#  Overview
+##  Overview
 Registration api provides a REST service for creating, updating and storing DCAT-AP-NO 1.1. dataset descriptions. 
 
-# Technologies/frameworks
+## Technologies/frameworks
 * Java
 * Spring Boot v1.5.9
 * Apache Jena v.3.3.0
 
-# API
+## API
 Registration api exposes several endpoints for CRUD on catalogs and dataset descriptions.
 
 * ```GET /catalogs```
@@ -62,7 +62,7 @@ Registration api exposes several endpoints for CRUD on catalogs and dataset desc
     * Parameter
         - ```uri``` : Uri to which subject(s) in DCAT format to get.
 
-# Dependencies
+## Dependencies
 * reference-data
 * registration-auth
 * elasticsearch

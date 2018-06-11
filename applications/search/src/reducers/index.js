@@ -5,6 +5,7 @@ import themes from './themes';
 import publishers from './publishers';
 import datasetDetails from './datasetDetails';
 import openLicenses, * as fromOpenLicenses from './openLicenses';
+import distributionTypes, * as fromDistributionType from './distributionType';
 
 const rootReducer = combineReducers({
   datasets,
@@ -12,7 +13,8 @@ const rootReducer = combineReducers({
   terms,
   themes,
   publishers,
-  openLicenses
+  openLicenses,
+  distributionTypes
 });
 
 export default rootReducer;
@@ -22,3 +24,6 @@ export const getDatasetById = (datasets, id) =>
 
 export const getOpenLicenseByUri = (openLicenses, uri) =>
   fromOpenLicenses.getOpenLicenseByUri(openLicenses, uri);
+
+export const getDistributionTypeByUri = (distributionTypeItems, uri) =>
+  fromDistributionType.getDistributionTypeByUri(distributionTypeItems, uri);

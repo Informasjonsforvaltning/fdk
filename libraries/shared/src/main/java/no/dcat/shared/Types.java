@@ -5,11 +5,12 @@ public enum Types {
     provenancestatement("rdf/provenance.rdf", "provenancestatement"),
     rightsstatement("rdf/access-right-skos.rdf","rightsstatement"),
     frequency("http://publications.europa.eu/mdr/resource/authority/frequency/skos/frequencies-skos.rdf","frequency"),
-   // To bigfile, contains over 7700 languages, 5 milllion lines og code.
+   // To bigfile, contains over 7700 languages, 5 million lines og code.
    //LINGUISTICSYSTEM("http://publications.europa.eu/mdr/resource/authority/language/skos/languages-skos.rdf", "linguisticsystem");
     linguisticsystem("rdf/languages-skos.rdf", "linguisticsystem"),
     referencetypes("rdf/reference-code-skos.ttl", "referencetypes"),
     openlicenses("rdf/open-licenses-skos.rdf", "openlicenses"),
+    distributiontype("rdf/distribution-type-skos.rdf", "distributiontype"),
 
     location(null, "location"),
     subject(null, "subject");

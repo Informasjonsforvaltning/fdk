@@ -64,8 +64,7 @@
     "nosearch.descriptions":"datasettbeskrivelser",
     "datasetTab": "Datasett",
     "termTab": "Omgrep",
-    "nosearch.concepts":"omgrep",
-    "nosearch.descriptions":"datasett beskrivelser"
+    "nosearch.concepts":"omgrep"
   },
   "hitstats": {
     "nosearch": {
@@ -142,6 +141,7 @@
     "title": "Datasett",
     "type": "Type",
     "firstHarvested": "Publisert i Felles datakatalog",
+    "lastChanged": "Sist endret i Felles datakatalog",
     "conformsTo": "Innholdsstandard",
     "informationModel": "Informasjonsmodell",
     "informationModelDefaultText": "Informasjonsmodell",

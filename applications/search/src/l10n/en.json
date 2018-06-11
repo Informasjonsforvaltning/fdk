@@ -64,8 +64,7 @@
     "nosearch.descriptions":"datasettbeskrivelser",
     "datasetTab": "Dataset",
     "termTab": "Concepts",
-    "nosearch.concepts":"begreper",
-    "nosearch.descriptions":"datasett beskrivelser"
+    "nosearch.concepts":"begreper"
   },
   "hitstats": {
     "nosearch": {
@@ -142,6 +141,7 @@
     "title": "Dataset",
     "type": "Type",
     "firstHarvested": "Published in The National Data Directory",
+    "lastChanged": "Last changed in The National Data Directory",
     "conformsTo": "Conforms to",
     "informationModel": "Information model",
     "informationModelDefaultText": "Information model",

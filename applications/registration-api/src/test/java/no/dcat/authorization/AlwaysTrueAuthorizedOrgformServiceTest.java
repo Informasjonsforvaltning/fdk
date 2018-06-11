@@ -1,10 +1,13 @@
 package no.dcat.authorization;
 
+import no.dcat.shared.testcategories.UnitTest;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
+@Category(UnitTest.class)
 public class AlwaysTrueAuthorizedOrgformServiceTest {
 
     private AuthorizedOrgformService orgformService = new AlwaysTrueAuthorizedOrgformService();

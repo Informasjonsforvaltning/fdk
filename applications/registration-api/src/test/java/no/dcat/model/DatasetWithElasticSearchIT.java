@@ -1,7 +1,9 @@
 package no.dcat.model;
 
 import no.dcat.service.DatasetRepository;
+import no.dcat.shared.testcategories.IntegrationTest;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,6 +24,7 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = RANDOM_PORT)
 @ActiveProfiles("unit-integration")
+@Category(IntegrationTest.class)
 public class DatasetWithElasticSearchIT {
 
     @Value("${spring.data.elasticsearch.clusterNodes}")

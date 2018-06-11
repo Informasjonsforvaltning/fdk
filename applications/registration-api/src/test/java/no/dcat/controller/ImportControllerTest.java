@@ -4,10 +4,12 @@ package no.dcat.controller;
 import no.dcat.model.Dataset;
 import no.dcat.shared.SkosCode;
 import no.dcat.datastore.domain.dcat.builders.DcatReader;
+import no.dcat.shared.testcategories.UnitTest;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.util.FileManager;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,6 +29,7 @@ import static org.mockito.Matchers.anyObject;
 import static org.mockito.Mockito.anyString;
 import static org.mockito.Mockito.doReturn;
 
+@Category(UnitTest.class)
 public class ImportControllerTest {
     static Logger logger = LoggerFactory.getLogger(ImportControllerTest.class);
 

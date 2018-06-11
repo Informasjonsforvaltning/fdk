@@ -9,9 +9,11 @@ import no.dcat.harvester.service.SubjectCrawler;
 import no.dcat.shared.Dataset;
 import no.dcat.shared.Subject;
 import no.dcat.datastore.domain.dcat.builders.DcatReader;
+import no.dcat.shared.testcategories.IntegrationTest;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.util.FileManager;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,6 +34,7 @@ import static org.junit.Assert.assertThat;
 @ActiveProfiles(value = "unit-integration")
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@Category(IntegrationTest.class)
 public class SubjectCrawlerIT {
     private static Logger logger = LoggerFactory.getLogger(SubjectCrawlerIT.class);
     static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");

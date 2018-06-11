@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<rdf:RDF xmlns:cc="http://creativecommons.org/ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:foaf="http://xmlns.com/foaf/0.1/" xmlns:gn="http://www.geonames.org/ontology#" xmlns:owl="http://www.w3.org/2002/07/owl#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:wgs84_pos="http://www.w3.org/2003/01/geo/wgs84_pos#">
+    <gn:Feature rdf:about="http://sws.geonames.org/3143242/">
+        <rdfs:isDefinedBy rdf:resource="http://sws.geonames.org/3143242/about.rdf"/>
+        <gn:name>Oslo County</gn:name>
+        <gn:alternateName xml:lang="de">Oslo</gn:alternateName>
+        <gn:alternateName xml:lang="fr">Oslo</gn:alternateName>
+        <gn:officialName>Oslo</gn:officialName>
+        <gn:officialName xml:lang="no">Oslo Fylke</gn:officialName>
+        <gn:featureClass rdf:resource="http://www.geonames.org/ontology#A"/>
+        <gn:featureCode rdf:resource="http://www.geonames.org/ontology#A.ADM1"/>
+        <gn:countryCode>NO</gn:countryCode>
+        <gn:population>629313</gn:population>
+        <wgs84_pos:lat>59.9119</wgs84_pos:lat>
+        <wgs84_pos:long>10.7336</wgs84_pos:long>
+        <gn:parentFeature rdf:resource="http://sws.geonames.org/3144096/"/>
+        <gn:parentCountry rdf:resource="http://sws.geonames.org/3144096/"/>
+        <gn:childrenFeatures rdf:resource="http://sws.geonames.org/3143242/contains.rdf"/>
+        <gn:locationMap rdf:resource="http://www.geonames.org/3143242/oslo-county.html"/>
+        <gn:wikipediaArticle rdf:resource="http://en.wikipedia.org/wiki/Oslo"/>
+        <rdfs:seeAlso rdf:resource="http://dbpedia.org/resource/Oslo"/>
+    </gn:Feature>
+    <foaf:Document rdf:about="http://sws.geonames.org/3143242/about.rdf">
+        <foaf:primaryTopic rdf:resource="http://sws.geonames.org/3143242/"/>
+        <cc:license rdf:resource="http://creativecommons.org/licenses/by/4.0/"/>
+        <cc:attributionURL rdf:resource="http://www.geonames.org"/>
+        <cc:attributionName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">GeoNames</cc:attributionName>
+        <dcterms:created rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2006-01-15</dcterms:created>
+        <dcterms:modified rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2017-09-21</dcterms:modified>
+    </foaf:Document>
+</rdf:RDF>

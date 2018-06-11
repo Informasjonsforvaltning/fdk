@@ -1,0 +1,39 @@
+@prefix rdf:	<http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ns1:	<http://rdf.kartverket.no/onto/adm_enhet_4.0.owl#> .
+<http://data.geonorge.no/administrativeEnheter/fylke/id/173150>	rdf:type	ns1:Fylke .
+@prefix owl:	<http://www.w3.org/2002/07/owl#> .
+<http://data.geonorge.no/administrativeEnheter/fylke/id/173150>	rdf:type	owl:NamedIndividual .
+@prefix xsd:	<http://www.w3.org/2001/XMLSchema#> .
+<http://data.geonorge.no/administrativeEnheter/fylke/id/173150>	ns1:fylkesnavn	"Sogn og Fjordane"^^xsd:string ;
+	ns1:fylkesnummer	"http://skjema.geonorge.no/SOSI/kodeliste/AdmEnheter/2018/Fylkesnummer/14.rdf"^^xsd:anyURI .
+@prefix ns4:	<http://rdf.kartverket.no/onto/> .
+<http://data.geonorge.no/administrativeEnheter/fylke/id/173150>	ns1:status	ns4:true .
+@prefix ogcgs:	<http://www.opengis.net/ont/geosparql#> .
+<http://data.geonorge.no/administrativeEnheter/fylke/id/173150>	ogcgs:hasGeometry	<http://data.geonorge.no/administrativeEnheter/fylke/id/geometry/173150> ;
+	ogcgs:sfContains	<http://data.geonorge.no/administrativeEnheter/kommune/id/172748> ,
+		<http://data.geonorge.no/administrativeEnheter/kommune/id/172746> ,
+		<http://data.geonorge.no/administrativeEnheter/kommune/id/172936> ,
+		<http://data.geonorge.no/administrativeEnheter/kommune/id/172747> ,
+		<http://data.geonorge.no/administrativeEnheter/kommune/id/172966> ,
+		<http://data.geonorge.no/administrativeEnheter/kommune/id/172773> ,
+		<http://data.geonorge.no/administrativeEnheter/kommune/id/172863> ,
+		<http://data.geonorge.no/administrativeEnheter/kommune/id/172832> ,
+		<http://data.geonorge.no/administrativeEnheter/kommune/id/172964> ,
+		<http://data.geonorge.no/administrativeEnheter/kommune/id/172965> ,
+		<http://data.geonorge.no/administrativeEnheter/kommune/id/173001> ,
+		<http://data.geonorge.no/administrativeEnheter/kommune/id/172785> ,
+		<http://data.geonorge.no/administrativeEnheter/kommune/id/172754> ,
+		<http://data.geonorge.no/administrativeEnheter/kommune/id/172752> ,
+		<http://data.geonorge.no/administrativeEnheter/kommune/id/173025> ,
+		<http://data.geonorge.no/administrativeEnheter/kommune/id/172896> ,
+		<http://data.geonorge.no/administrativeEnheter/kommune/id/172839> ,
+		<http://data.geonorge.no/administrativeEnheter/kommune/id/172753> ,
+		<http://data.geonorge.no/administrativeEnheter/kommune/id/172897> ,
+		<http://data.geonorge.no/administrativeEnheter/kommune/id/172942> ,
+		<http://data.geonorge.no/administrativeEnheter/kommune/id/172895> ,
+		<http://data.geonorge.no/administrativeEnheter/kommune/id/172864> ,
+		<http://data.geonorge.no/administrativeEnheter/kommune/id/172874> ,
+		<http://data.geonorge.no/administrativeEnheter/kommune/id/172769> ,
+		<http://data.geonorge.no/administrativeEnheter/kommune/id/172687> ,
+		<http://data.geonorge.no/administrativeEnheter/kommune/id/173021> ;
+	ogcgs:sfWithin	<http://data.geonorge.no/administrativeEnheter/nasjon/id/173163> .

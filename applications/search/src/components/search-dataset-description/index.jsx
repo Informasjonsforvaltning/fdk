@@ -43,6 +43,29 @@ export default class DatasetDescription extends React.Component {
     return null;
   }
 
+  _renderHarvestSeparator() {
+    const { harvest } = this.props;
+    if (harvest && harvest.firstHarvested && harvest.lastChanged) {
+      return (
+        <span>&nbsp;/&nbsp;</span>
+      );
+    }
+    return null;
+  }
+
+  _renderLastChanged() {
+    const { harvest } = this.props;
+    if (harvest && harvest.lastChanged) {
+      return (
+        <span>
+          {localization.dataset.lastChanged}&nbsp;
+          <Moment format="DD.MM.YYYY">{harvest.lastChanged}</Moment>
+        </span>
+      );
+    }
+    return null;
+  }
+
   _renderThemes() {
     let themeNodes = null;
     const { themes, selectedLanguageCode } = this.props;
@@ -72,7 +95,11 @@ export default class DatasetDescription extends React.Component {
           <h1 className="fdk-margin-bottom">{this.props.title}</h1>
         )}
 
-        <div className="fdk-detail-date">{this._renderHarvested()}</div>
+        <div className="fdk-detail-date">
+          {this._renderHarvested()}
+          {this._renderHarvestSeparator()}
+          {this._renderLastChanged()}
+          </div>
 
         <div className="fdk-margin-bottom">
           {this._renderPublisher()}

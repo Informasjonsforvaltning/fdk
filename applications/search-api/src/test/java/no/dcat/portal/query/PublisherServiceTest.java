@@ -1,9 +1,11 @@
 package no.dcat.portal.query;
 
 
+import no.dcat.shared.testcategories.UnitTest;
 import org.junit.Test;
 
 import no.dcat.portal.query.PublisherQueryService;
+import org.junit.experimental.categories.Category;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
@@ -18,6 +20,7 @@ import static org.mockito.Mockito.*;
 import static org.junit.Assert.*;
 import static org.hamcrest.Matchers.*;
 
+@Category(UnitTest.class)
 public class PublisherServiceTest {
     private static Logger logger = LoggerFactory.getLogger(PublisherServiceTest.class);
 

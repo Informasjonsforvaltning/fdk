@@ -35,13 +35,20 @@ public class DcatReader {
         this.model = model;
 
         // Retrieve all codes from reference-data.
-        logger.debug("reading codes from: {}",codeServiceHost);
+        logger.debug("reading codes from: {}", codeServiceHost);
         dataThemes = RetrieveDataThemes.getAllDataThemes(codeServiceHost);
         codes = RetrieveCodes.getAllCodes(codeServiceHost);
 
+        if (codes.get("location") != null) {
+            locations = codes.get("location");
+        } else {
+            locations = new HashMap<String, SkosCode>();
+        }
+
         LoadLocations loadLocations = new LoadLocations(codeServiceHost, httpUsername, httpPassword);
-        loadLocations.addLocationsToThemes(model);
-        locations = loadLocations.getLocations();
+        loadLocations.addLocationsToThemes(model, codes.get("location"));
+
+        locations.putAll(loadLocations.getLocations());
 
         builder = new DatasetBuilder(model, locations, codes, dataThemes);
     }

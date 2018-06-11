@@ -20,6 +20,7 @@ export default class ResultsDataset extends React.Component {
       onFilterAccessRights,
       onFilterPublisherHierarchy,
       onFilterProvenance,
+      onFilterSpatial,
       searchQuery,
       themesItems,
       publisherArray,
@@ -33,6 +34,7 @@ export default class ResultsDataset extends React.Component {
         <Modal.Body>
           <div className="search-filters">
             <FilterBox
+              htmlKey={1}
               title={localization.facet.theme}
               filter={datasetItems.aggregations.theme_count}
               onClick={onFilterTheme}
@@ -40,16 +42,11 @@ export default class ResultsDataset extends React.Component {
               themesItems={themesItems}
             />
             <FilterBox
+              htmlKey={2}
               title={localization.facet.accessRight}
               filter={datasetItems.aggregations.accessRightsCount}
               onClick={onFilterAccessRights}
               activeFilter={searchQuery.accessrights}
-            />
-            <FilterBox
-              title={localization.facet.provenance}
-              filter={datasetItems.aggregations.provenanceCount}
-              onClick={onFilterProvenance}
-              activeFilter={searchQuery.provenance}
             />
             <FilterBoxPublishers
               title={localization.facet.organisation}
@@ -57,6 +54,20 @@ export default class ResultsDataset extends React.Component {
               onFilterPublisherHierarchy={onFilterPublisherHierarchy}
               activeFilter={searchQuery.orgPath}
               publishers={publishers}
+            />
+            <FilterBox
+              htmlKey={3}
+              title={localization.facet.spatial}
+              filter={datasetItems.aggregations.spatial}
+              onClick={onFilterSpatial}
+              activeFilter={searchQuery.spatial}
+            />
+            <FilterBox
+              htmlKey={4}
+              title={localization.facet.provenance}
+              filter={datasetItems.aggregations.provenanceCount}
+              onClick={onFilterProvenance}
+              activeFilter={searchQuery.provenance}
             />
           </div>
         </Modal.Body>
@@ -73,10 +84,14 @@ export default class ResultsDataset extends React.Component {
   }
 
   _renderHits() {
-    const { datasetItems } = this.props;
+    const { datasetItems, distributionTypeItems } = this.props;
     if (datasetItems && datasetItems.hits && datasetItems.hits.hits) {
       return datasetItems.hits.hits.map(item => (
-        <SearchHitItem key={item._source.id} result={item} />
+        <SearchHitItem
+          key={item._source.id}
+          result={item}
+          distributionTypeItems={distributionTypeItems}
+        />
       ));
     }
     return null;
@@ -90,6 +105,7 @@ export default class ResultsDataset extends React.Component {
       onFilterAccessRights,
       onFilterPublisherHierarchy,
       onFilterProvenance,
+      onFilterSpatial,
       onSort,
       onPageChange,
       showClearFilterButton,
@@ -171,6 +187,7 @@ export default class ResultsDataset extends React.Component {
                   <div>
                     {this._renderFilterModal()}
                     <FilterBox
+                      htmlKey={1}
                       title={localization.facet.theme}
                       filter={datasetItems.aggregations.theme_count}
                       onClick={onFilterTheme}
@@ -178,16 +195,11 @@ export default class ResultsDataset extends React.Component {
                       themesItems={themesItems}
                     />
                     <FilterBox
+                      htmlKey={2}
                       title={localization.facet.accessRight}
                       filter={datasetItems.aggregations.accessRightsCount}
                       onClick={onFilterAccessRights}
                       activeFilter={searchQuery.accessrights}
-                    />
-                    <FilterBox
-                      title={localization.facet.provenance}
-                      filter={datasetItems.aggregations.provenanceCount}
-                      onClick={onFilterProvenance}
-                      activeFilter={searchQuery.provenance}
                     />
                     <FilterBoxPublishers
                       title={localization.facet.organisation}
@@ -195,6 +207,20 @@ export default class ResultsDataset extends React.Component {
                       onFilterPublisherHierarchy={onFilterPublisherHierarchy}
                       activeFilter={searchQuery.orgPath}
                       publishers={publishers}
+                    />
+                    <FilterBox
+                      htmlKey={3}
+                      title={localization.facet.spatial}
+                      filter={datasetItems.aggregations.spatial}
+                      onClick={onFilterSpatial}
+                      activeFilter={searchQuery.spatial}
+                    />
+                    <FilterBox
+                      htmlKey={4}
+                      title={localization.facet.provenance}
+                      filter={datasetItems.aggregations.provenanceCount}
+                      onClick={onFilterProvenance}
+                      activeFilter={searchQuery.provenance}
                     />
                   </div>
                 )}
@@ -239,10 +265,12 @@ ResultsDataset.defaultProps = {
   onFilterAccessRights: null,
   onFilterPublisherHierarchy: null,
   onFilterProvenance: null,
+  onFilterSpatial: null,
   searchQuery: {},
   themesItems: null,
   publisherArray: null,
   publishers: null,
+  distributionTypeItems: null,
   onClearSearch: null,
   onPageChange: null,
   showClearFilterButton: null,
@@ -257,10 +285,12 @@ ResultsDataset.propTypes = {
   onFilterAccessRights: PropTypes.func,
   onFilterPublisherHierarchy: PropTypes.func,
   onFilterProvenance: PropTypes.func,
+  onFilterSpatial: PropTypes.func,
   searchQuery: PropTypes.object,
   themesItems: PropTypes.object,
   publisherArray: PropTypes.array,
   publishers: PropTypes.object,
+  distributionTypeItems: PropTypes.array,
   onClearSearch: PropTypes.func,
   onSort: PropTypes.func.isRequired,
   onPageChange: PropTypes.func,

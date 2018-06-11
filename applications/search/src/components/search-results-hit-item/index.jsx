@@ -10,16 +10,40 @@ import {
   getTranslateText,
   getLanguageFromUrl
 } from '../../utils/translateText';
+import { getDistributionTypeByUri } from '../../reducers/index';
 import './index.scss';
 
-const renderFormats = (source, code) => {
+const renderFormats = (
+  source,
+  code,
+  distributionTypeItems,
+  selectedLanguageCode
+) => {
   const { distribution } = source;
 
   const children = (distributions, code) => {
     const nodes = [];
     distributions.forEach(item => {
-      const { format, type } = item;
+      const { format } = item;
+      let { type } = item;
       if (format && typeof format !== 'undefined') {
+        if (
+          type &&
+          (type !== 'API' && type !== 'Feed' && type !== 'Nedlastbar fil')
+        ) {
+          const distributionType = getDistributionTypeByUri(
+            distributionTypeItems,
+            type
+          );
+          if (distributionType !== null && distributionType.length > 0) {
+            type = getTranslateText(
+              distributionType[0].prefLabel,
+              selectedLanguageCode
+            );
+          } else {
+            type = null;
+          }
+        }
         const formatNodes = Object.keys(format).map(key => (
           <DistributionFormat
             key={`dataset-distribution-format${key}`}
@@ -91,7 +115,7 @@ const renderSample = source => {
 };
 
 const SearchHitItem = props => {
-  const { selectedLanguageCode } = props;
+  const { selectedLanguageCode, distributionTypeItems } = props;
   const langCode = getLanguageFromUrl();
   const langParam = langCode ? `?lang=${langCode}` : '';
   const { _source } = props.result;
@@ -182,7 +206,12 @@ const SearchHitItem = props => {
         </p>
         <div className={distributionClass}>
           <strong>{accessRightsLabel}</strong>
-          {renderFormats(_source, authorityCode)}
+          {renderFormats(
+            _source,
+            authorityCode,
+            distributionTypeItems,
+            selectedLanguageCode
+          )}
           {renderSample(_source)}
         </div>
       </div>
@@ -192,11 +221,13 @@ const SearchHitItem = props => {
 
 SearchHitItem.defaultProps = {
   result: null,
+  distributionTypeItems: null,
   selectedLanguageCode: 'nb'
 };
 
 SearchHitItem.propTypes = {
   result: PropTypes.shape({}),
+  distributionTypeItems: PropTypes.array,
   selectedLanguageCode: PropTypes.string
 };
 

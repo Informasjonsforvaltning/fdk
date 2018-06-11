@@ -72,12 +72,320 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
         >
           Filtrering tilgang
         </span>
+        <div>
+          <Modal
+            animation={true}
+            autoFocus={true}
+            backdrop={true}
+            bsClass="modal"
+            dialogComponentClass={[Function]}
+            enforceFocus={true}
+            keyboard={true}
+            manager={
+              ModalManager {
+                "add": [Function],
+                "containers": Array [],
+                "data": Array [],
+                "handleContainerOverflow": true,
+                "hideSiblingNodes": true,
+                "isTopModal": [Function],
+                "modals": Array [],
+                "remove": [Function],
+              }
+            }
+            onHide={[MockFunction]}
+            renderBackdrop={[Function]}
+            restoreFocus={true}
+            show={true}
+          >
+            <ModalHeader
+              bsClass="modal-header"
+              closeButton={true}
+              closeLabel="Close"
+            >
+              <ModalTitle
+                bsClass="modal-title"
+                componentClass="h4"
+              >
+                Filter
+              </ModalTitle>
+            </ModalHeader>
+            <ModalBody
+              bsClass="modal-body"
+              componentClass="div"
+            >
+              <div
+                className="search-filters"
+              >
+                <FilterBox
+                  activeFilter={null}
+                  filter={
+                    Object {
+                      "buckets": Array [
+                        Object {
+                          "doc_count": 1,
+                          "key": "AGRI",
+                        },
+                        Object {
+                          "doc_count": 1,
+                          "key": "ECON",
+                        },
+                        Object {
+                          "doc_count": 1,
+                          "key": "EDUC",
+                        },
+                        Object {
+                          "doc_count": 1,
+                          "key": "ENER",
+                        },
+                        Object {
+                          "doc_count": 1,
+                          "key": "ENVI",
+                        },
+                        Object {
+                          "doc_count": 1,
+                          "key": "GOVE",
+                        },
+                        Object {
+                          "doc_count": 1,
+                          "key": "HEAL",
+                        },
+                        Object {
+                          "doc_count": 1,
+                          "key": "INTR",
+                        },
+                        Object {
+                          "doc_count": 1,
+                          "key": "JUST",
+                        },
+                        Object {
+                          "doc_count": 1,
+                          "key": "REGI",
+                        },
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0,
+                    }
+                  }
+                  htmlKey={1}
+                  onClick={[MockFunction]}
+                  themesItems={Object {}}
+                  title="Tema"
+                />
+                <FilterBox
+                  activeFilter={null}
+                  filter={
+                    Object {
+                      "buckets": Array [
+                        Object {
+                          "doc_count": 1,
+                          "key": "PUBLIC",
+                        },
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0,
+                    }
+                  }
+                  htmlKey={2}
+                  onClick={[MockFunction]}
+                  themesItems={null}
+                  title="Tilgang"
+                />
+                <SearchPublishersTree
+                  activeFilter={null}
+                  filter={Array []}
+                  onFilterPublisherHierarchy={[MockFunction]}
+                  onSearch={null}
+                  orgPath={null}
+                  publishers={Object {}}
+                  title="Virksomhet"
+                />
+                <FilterBox
+                  activeFilter={null}
+                  filter={
+                    Object {
+                      "buckets": Array [
+                        Object {
+                          "doc_count": 1,
+                          "key": "Ukjent",
+                        },
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0,
+                    }
+                  }
+                  htmlKey={3}
+                  onClick={null}
+                  themesItems={null}
+                  title="Geografi"
+                />
+                <FilterBox
+                  activeFilter={null}
+                  filter={
+                    Object {
+                      "buckets": Array [
+                        Object {
+                          "doc_count": 1,
+                          "key": "VEDTAK",
+                        },
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0,
+                    }
+                  }
+                  htmlKey={4}
+                  onClick={null}
+                  themesItems={null}
+                  title="Opphav"
+                />
+              </div>
+            </ModalBody>
+            <ModalFooter
+              bsClass="modal-footer"
+              componentClass="div"
+            >
+              <Button
+                active={false}
+                block={false}
+                bsClass="btn"
+                bsStyle="default"
+                className="fdk-button-default fdk-button"
+                disabled={false}
+                onClick={[MockFunction]}
+              >
+                Close
+              </Button>
+            </ModalFooter>
+          </Modal>
+          <FilterBox
+            activeFilter={null}
+            filter={
+              Object {
+                "buckets": Array [
+                  Object {
+                    "doc_count": 1,
+                    "key": "AGRI",
+                  },
+                  Object {
+                    "doc_count": 1,
+                    "key": "ECON",
+                  },
+                  Object {
+                    "doc_count": 1,
+                    "key": "EDUC",
+                  },
+                  Object {
+                    "doc_count": 1,
+                    "key": "ENER",
+                  },
+                  Object {
+                    "doc_count": 1,
+                    "key": "ENVI",
+                  },
+                  Object {
+                    "doc_count": 1,
+                    "key": "GOVE",
+                  },
+                  Object {
+                    "doc_count": 1,
+                    "key": "HEAL",
+                  },
+                  Object {
+                    "doc_count": 1,
+                    "key": "INTR",
+                  },
+                  Object {
+                    "doc_count": 1,
+                    "key": "JUST",
+                  },
+                  Object {
+                    "doc_count": 1,
+                    "key": "REGI",
+                  },
+                ],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0,
+              }
+            }
+            htmlKey={1}
+            onClick={[MockFunction]}
+            themesItems={Object {}}
+            title="Tema"
+          />
+          <FilterBox
+            activeFilter={null}
+            filter={
+              Object {
+                "buckets": Array [
+                  Object {
+                    "doc_count": 1,
+                    "key": "PUBLIC",
+                  },
+                ],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0,
+              }
+            }
+            htmlKey={2}
+            onClick={[MockFunction]}
+            themesItems={null}
+            title="Tilgang"
+          />
+          <SearchPublishersTree
+            activeFilter={null}
+            filter={Array []}
+            onFilterPublisherHierarchy={[MockFunction]}
+            onSearch={null}
+            orgPath={null}
+            publishers={Object {}}
+            title="Virksomhet"
+          />
+          <FilterBox
+            activeFilter={null}
+            filter={
+              Object {
+                "buckets": Array [
+                  Object {
+                    "doc_count": 1,
+                    "key": "Ukjent",
+                  },
+                ],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0,
+              }
+            }
+            htmlKey={3}
+            onClick={null}
+            themesItems={null}
+            title="Geografi"
+          />
+          <FilterBox
+            activeFilter={null}
+            filter={
+              Object {
+                "buckets": Array [
+                  Object {
+                    "doc_count": 1,
+                    "key": "VEDTAK",
+                  },
+                ],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0,
+              }
+            }
+            htmlKey={4}
+            onClick={null}
+            themesItems={null}
+            title="Opphav"
+          />
+        </div>
       </div>
       <div
         className="col-xs-12 col-md-8"
         id="datasets"
       >
         <SearchHitItem
+          distributionTypeItems={null}
           key="b12e9e8d-3833-49e2-9f62-0f8fd877be05"
           result={
             Object {

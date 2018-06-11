@@ -3,6 +3,7 @@ package no.dcat.portal.query;
 import com.carrotsearch.hppc.ObjectObjectHashMap;
 import com.carrotsearch.hppc.cursors.ObjectObjectCursor;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import no.dcat.shared.testcategories.UnitTest;
 import org.elasticsearch.action.admin.indices.mapping.get.GetMappingsResponse;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Client;
@@ -12,6 +13,7 @@ import org.elasticsearch.common.collect.ImmutableOpenMap;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
@@ -33,6 +35,7 @@ import static org.hamcrest.Matchers.*;
 /**
  * Created by dask on 06.04.2017.
  */
+@Category(UnitTest.class)
 public class CodeRestCallTests {
 
 //    DatasetsQueryService sqs;

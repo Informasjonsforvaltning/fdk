@@ -4,8 +4,10 @@ import com.github.tomakehurst.wiremock.junit.WireMockRule;
 import no.dcat.shared.admin.DcatSourceDto;
 import no.dcat.model.Catalog;
 
+import no.dcat.shared.testcategories.UnitTest;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 
@@ -20,6 +22,7 @@ import static org.junit.Assert.*;
 /**
  * Created by bjg on 20.02.2018.
  */
+@Category(UnitTest.class)
 public class HarvesterServiceTest {
 
     @Rule
