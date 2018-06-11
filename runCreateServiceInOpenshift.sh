@@ -335,6 +335,7 @@ then
     then
         profile=prod
         createOpenshiftService search
+        oc env dc/search NODE_ENV=production
         exposeService search
         oc expose dc/search --port=3000
     else
