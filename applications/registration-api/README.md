@@ -5,7 +5,7 @@ Base image: [frolvlad/alpine-oraclejdk8:slim](https://hub.docker.com/r/frolvlad/
 Source: [Dockerfile](hhttps://github.com/Informasjonsforvaltning/fdk/blob/develop/applications/registration-api/src/main/docker/Dockerfile))
 
 ##  Overview
-Registration api provides a REST service for creating, updating and storing DCAT-AP-NO 1.1. dataset descriptions. 
+Registration api provides a REST service for creating, updating and storing DCAT-AP-NO 1.1. dataset descriptions.  
 
 ## Technologies/frameworks
 * Java
