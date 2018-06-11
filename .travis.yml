@@ -89,7 +89,27 @@ jobs:
 
     - stage: deploy
       if: branch = develop # only deploy when building develop
-      script: mvn install -DskipTests -Dmaven.javadoc.skip=true -B ;
+      script: ./buildIfNotOnDocker dcatno/dev-mangement applications/dev-mangement &&
+              ./buildIfNotOnDocker dcatno/end2end-test applications/end2end-test &&
+              ./buildIfNotOnDocker dcatno/fuseki applications/fuseki &&
+              ./buildIfNotOnDocker dcatno/harvester applications/dev-mangement &&
+              ./buildIfNotOnDocker dcatno/harvester-api applications/dev-mangement &&
+              ./buildIfNotOnDocker dcatno/kibana applications/dev-mangement &&
+              ./buildIfNotOnDocker dcatno/logstash applications/dev-mangement &&
+              ./buildIfNotOnDocker dcatno/reference-data applications/reference-data &&
+              ./buildIfNotOnDocker dcatno/dev-mangemen applications/dev-mangement &&
+              ./buildIfNotOnDocker dcatno/nginx-search applications/nginx-search &&
+              ./buildIfNotOnDocker dcatno/search-api applications/search-api &&
+              ./buildIfNotOnDocker dcatno/search applications/search &&
+              ./buildIfNotOnDocker dcatno/nginx-registration-ssl applications/nginx-registration-ssl &&
+              ./buildIfNotOnDocker dcatno/registration-api applications/registration-api &&
+              ./buildIfNotOnDocker dcatno/registration-react applications/registration-react &&
+              ./buildIfNotOnDocker dcatno/registration-auth applications/registration-auth &&
+              ./buildIfNotOnDocker dcatno/registration-validator applications/registration-validator &&
+              ./buildIfNotOnDocker dcatno/harvester-apil applications/harvester-api &&
+              ./buildIfNotOnDocker dcatno/dev-management applications/dev-management &&
+              ./buildIfNotOnDocker dcatno/migration applications/migration &&
+              ./buildIfNotOnDocker end2end-test end2end-test
       deploy:
         provider: script
         skip_cleanup: true
