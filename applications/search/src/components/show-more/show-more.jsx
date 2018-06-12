@@ -33,44 +33,46 @@ export class ShowMore extends React.Component {
   render() {
     const textLength = this.props.contentHtml.length;
     const COLLAPSE_THRESHOLD = 300;
-    if (textLength < COLLAPSE_THRESHOLD) {
-      return <p>{this._renderContent()}</p>;
-    }
+    let content;
 
-    if (!this.state.showAll) {
-      return (
-        <div className="p">
-          <p className="show-more__cropped-box">
+    if (textLength < COLLAPSE_THRESHOLD) {
+      content = this._renderContent()
+    } else if (!this.state.showAll) {
+      content = (
+        <React.Fragment>
+          <div className="show-more__cropped-box">
             {this._renderContent()}
-          </p>
+          </div>
           <button className="fdk-button-small" onClick={this.toggleShowAll}>
-            <i className="fa mr-2 fa-angle-double-down" />
+            <i className="fa mr-2 fa-angle-double-down"/>
             <span>{this.props.showMoreButtonText}</span>
           </button>
-        </div>
+        </React.Fragment>
       );
+    } else if (this.state.showAll) {
+      content = (
+        <React.Fragment>
+          <div>{this._renderContent()}</div>
+          <button className="fdk-button-small" onClick={this.toggleShowAll}>
+            <i className="fa mr-2 fa-angle-double-up"/>
+            <span>{this.props.showLessButtonText}</span>
+          </button>
+        </React.Fragment>
+      )
     }
-    return (
-      <div className="p">
-        <div>{this._renderContent()}</div>
-        <button className="fdk-button-small" onClick={this.toggleShowAll}>
-          <i className="fa mr-2 fa-angle-double-up" />
-          <span>{this.props.showLessButtonText}</span>
-        </button>
-      </div>
-    );
+    return (<div className="p">{content}</div>)
   }
 }
 
 ShowMore.defaultProps = {
-  label:'',
+  label: '',
   contentHtml: '',
   showMoreButtonText: localization.showLess,
   showLessButtonText: localization.showLess
 };
 
 ShowMore.propTypes = {
-  label:PropTypes.string,
+  label: PropTypes.string,
   contentHtml: PropTypes.string,
   showMoreButtonText: PropTypes.string,
   showLessButtonText: PropTypes.string
