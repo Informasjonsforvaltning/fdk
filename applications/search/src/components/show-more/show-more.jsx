@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import localization from '../../components/localization';
+import localization from '../../lib/localization';
 import './show-more.scss'
 
 export class ShowMore extends React.Component {
