@@ -2,7 +2,7 @@
 
 Docker image: [dcatno/harvester](https://hub.docker.com/r/dcatno/harvester/)
 Base image: [openjdk:8-jre](https://hub.docker.com/_/openjdk/)
-Source: [Dockerfile](https://github.com/Altinn/fdk/blob/master/applications/harvester/src/main/docker/Dockerfile)
+Source: [Dockerfile](https://github.com/Informasjonsforvaltning/fdk/blob/master/applications/harvester/src/main/docker/Dockerfile)
 
 ## Overview
 The harvester administration application. It allows users to register 
