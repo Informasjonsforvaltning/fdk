@@ -47,42 +47,84 @@ rm /var/log/backup.log
 
 #copy themes index
 /usr/local/bin/elasticdump \
---input=http://elasticsearch:9200/themes \
---output=/escopydata/themes_data.json \
+--input=http://elasticsearch:9200/theme \
+--output=/escopydata/theme_data.json \
 --type=data >> /var/log/backup.log 2>&1
 /usr/local/bin/elasticdump \
---input=http://elasticsearch:9200/themes \
---output=/escopydata/themes_mapping.json \
+--input=http://elasticsearch:9200/theme \
+--output=/escopydata/theme_mapping.json \
 --type=mapping >> /var/log/backup.log 2>&1
 /usr/local/bin/elasticdump \
---input=http://elasticsearch:9200/themes \
---output=/escopydata/themes_analyzer.json \
+--input=http://elasticsearch:9200/theme \
+--output=/escopydata/theme_analyzer.json \
 --type=analyzer >> /var/log/backup.log 2>&1
-tar czf /escopydata/themes-`date +%Y-%m-%dT%H-%M.tgz` /escopydata/themes_* >> /var/log/backup.log 2>&1
-rm /escopydata/themes_data.json
-rm /escopydata/themes_mapping.json
-rm /escopydata/themes_analyzer.json
+tar czf /escopydata/theme-`date +%Y-%m-%dT%H-%M.tgz` /escopydata/theme_* >> /var/log/backup.log 2>&1
+rm /escopydata/theme_data.json
+rm /escopydata/theme_mapping.json
+rm /escopydata/theme_analyzer.json
 echo "Elasticsearch index copy finished" >> /var/log/backup.log 2>&1
-cp /var/log/backup.log /escopydata/themes_`date +%Y-%m-%dT%H-%M.log`
+cp /var/log/backup.log /escopydata/theme_`date +%Y-%m-%dT%H-%M.log`
 rm /var/log/backup.log
 
-#copy registration index
+#copy register index
 /usr/local/bin/elasticdump \
---input=http://elasticsearch:9200/registration \
---output=/escopydata/registration_data.json \
+--input=http://elasticsearch:9200/register \
+--output=/escopydata/register_data.json \
 --type=data >> /var/log/backup.log 2>&1
 /usr/local/bin/elasticdump \
---input=http://elasticsearch:9200/registration \
---output=/escopydata/registration_mapping.json \
+--input=http://elasticsearch:9200/register \
+--output=/escopydata/register_mapping.json \
 --type=mapping >> /var/log/backup.log 2>&1
 /usr/local/bin/elasticdump \
---input=http://elasticsearch:9200/registration \
---output=/escopydata/registration_analyzer.json \
+--input=http://elasticsearch:9200/register \
+--output=/escopydata/register_analyzer.json \
 --type=analyzer >> /var/log/backup.log 2>&1
-tar czf /escopydata/registration-`date +%Y-%m-%dT%H-%M.tgz` /escopydata/registration_* >> /var/log/backup.log 2>&1
-rm /escopydata/registration_data.json
-rm /escopydata/registration_mapping.json
-rm /escopydata/registration_analyzer.json
+tar czf /escopydata/register-`date +%Y-%m-%dT%H-%M.tgz` /escopydata/register* >> /var/log/backup.log 2>&1
+rm /escopydata/register_data.json
+rm /escopydata/register_mapping.json
+rm /escopydata/register_analyzer.json
 echo "Elasticsearch index copy finished" >> /var/log/backup.log 2>&1
-cp /var/log/backup.log /escopydata/registration_`date +%Y-%m-%dT%H-%M.log`
+cp /var/log/backup.log /escopydata/register_`date +%Y-%m-%dT%H-%M.log`
+rm /var/log/backup.log
+
+#copy codes index
+/usr/local/bin/elasticdump \
+--input=http://elasticsearch:9200/codes \
+--output=/escopydata/codes_data.json \
+--type=data >> /var/log/backup.log 2>&1
+/usr/local/bin/elasticdump \
+--input=http://elasticsearch:9200/codes \
+--output=/escopydata/codes_mapping.json \
+--type=mapping >> /var/log/backup.log 2>&1
+/usr/local/bin/elasticdump \
+--input=http://elasticsearch:9200/codes \
+--output=/escopydata/codes_analyzer.json \
+--type=analyzer >> /var/log/backup.log 2>&1
+tar czf /escopydata/codes-`date +%Y-%m-%dT%H-%M.tgz` /escopydata/codes* >> /var/log/backup.log 2>&1
+rm /escopydata/codes_data.json
+rm /escopydata/codes_mapping.json
+rm /escopydata/codes_analyzer.json
+echo "Elasticsearch index copy finished" >> /var/log/backup.log 2>&1
+cp /var/log/backup.log /escopydata/codes_`date +%Y-%m-%dT%H-%M.log`
+rm /var/log/backup.log
+
+#copy harvest index
+/usr/local/bin/elasticdump \
+--input=http://elasticsearch:9200/harvest \
+--output=/escopydata/harvest_data.json \
+--type=data >> /var/log/backup.log 2>&1
+/usr/local/bin/elasticdump \
+--input=http://elasticsearch:9200/harvest \
+--output=/escopydata/harvest_mapping.json \
+--type=mapping >> /var/log/backup.log 2>&1
+/usr/local/bin/elasticdump \
+--input=http://elasticsearch:9200/harvest \
+--output=/escopydata/harvest_analyzer.json \
+--type=analyzer >> /var/log/backup.log 2>&1
+tar czf /escopydata/harvest-`date +%Y-%m-%dT%H-%M.tgz` /escopydata/harvest* >> /var/log/backup.log 2>&1
+rm /escopydata/harvest_data.json
+rm /escopydata/harvest_mapping.json
+rm /escopydata/harvest_analyzer.json
+echo "Elasticsearch index copy finished" >> /var/log/backup.log 2>&1
+cp /var/log/backup.log /escopydata/harvest_`date +%Y-%m-%dT%H-%M.log`
 rm /var/log/backup.log
