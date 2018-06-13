@@ -5,7 +5,7 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import ReactGA from 'react-ga';
 
 import configureStore from './store/configureStore';
-import App from './containers/app';
+import App from './app/app';
 
 if (window.location.hostname.indexOf('fellesdatakatalog.brreg.no') !== -1) {
   ReactGA.initialize('UA-110098477-1'); // prod
