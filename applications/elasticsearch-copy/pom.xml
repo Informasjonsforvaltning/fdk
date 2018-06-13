@@ -11,33 +11,17 @@
 
     <artifactId>elasticsearch-copy</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
     <build>
         <!-- only filter dist -->
         <plugins>
-            <!-- prevent maven from compiling -->
-            <plugin>
-                <artifactId>maven-jar-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>default-jar</id>
-                        <phase>none</phase>
-                        <configuration>
-                            <finalName>unwanted</finalName>
-                            <classifier>unwanted</classifier>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <!-- prevent maven from installing -->
-            <plugin>
-                <artifactId>maven-install-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>default-install</id>
-                        <phase>none</phase>
-                    </execution>
-                </executions>
-            </plugin>
 
 
             <plugin>
