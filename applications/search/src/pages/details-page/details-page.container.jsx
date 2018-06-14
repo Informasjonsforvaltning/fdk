@@ -87,6 +87,7 @@ export class PureDetailsPage extends React.Component {
         themes={datasetItem.theme}
         selectedLanguageCode={this.props.selectedLanguageCode}
         harvest={datasetItem.harvest}
+        provenance={datasetItem.provenance}
       />
     );
   }
