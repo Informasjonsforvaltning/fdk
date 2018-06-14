@@ -55,13 +55,14 @@ export class ResultsDataset extends React.Component {
               activeFilter={searchQuery.orgPath}
               publishers={publishers}
             />
-            <FilterBox
-              htmlKey={3}
-              title={localization.facet.spatial}
-              filter={datasetItems.aggregations.spatial}
-              onClick={onFilterSpatial}
-              activeFilter={searchQuery.spatial}
-            />
+            {/*geography filter section temporarily removed*/}
+            {/*<FilterBox */}
+              {/*htmlKey={3}*/}
+              {/*title={localization.facet.spatial}*/}
+              {/*filter={datasetItems.aggregations.spatial}*/}
+              {/*onClick={onFilterSpatial}*/}
+              {/*activeFilter={searchQuery.spatial}*/}
+            {/*/>*/}
             <FilterBox
               htmlKey={4}
               title={localization.facet.provenance}
@@ -208,13 +209,14 @@ export class ResultsDataset extends React.Component {
                       activeFilter={searchQuery.orgPath}
                       publishers={publishers}
                     />
-                    <FilterBox
-                      htmlKey={3}
-                      title={localization.facet.spatial}
-                      filter={datasetItems.aggregations.spatial}
-                      onClick={onFilterSpatial}
-                      activeFilter={searchQuery.spatial}
-                    />
+                    {/*Temporarily removed geography filter*/}
+                    {/*<FilterBox*/}
+                      {/*htmlKey={3}*/}
+                      {/*title={localization.facet.spatial}*/}
+                      {/*filter={datasetItems.aggregations.spatial}*/}
+                      {/*onClick={onFilterSpatial}*/}
+                      {/*activeFilter={searchQuery.spatial}*/}
+                    {/*/>*/}
                     <FilterBox
                       htmlKey={4}
                       title={localization.facet.provenance}
