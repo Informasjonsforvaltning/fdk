@@ -11,6 +11,7 @@ import {
   getLanguageFromUrl
 } from '../../../../lib/translateText';
 import { getDistributionTypeByUri } from '../../../../redux/reducers/index';
+import { DatasetLabelNational } from '../../../../components/dataset-label-national/dataset-label-national.component'
 import './search-hit-item.scss';
 
 const renderFormats = (
@@ -187,16 +188,14 @@ export const SearchHitItem = props => {
         Søketreff.
       </span>
       <div className="fdk-container-search-hit">
-        {provenance &&
-          provenance.code === 'NASJONAL' && (
-            <div className="fdk-label mb-1-em pull-right">
-              <strong>{localization.search_hit.NationalBuildingBlock}</strong>
-            </div>
-          )}
         <h2>{title}</h2>
         <div className="fdk-dataset-themes">
           {renderPublisher(_source)}
           {renderThemes(_source, selectedLanguageCode)}
+          {provenance &&
+          provenance.code === 'NASJONAL' && (
+            <DatasetLabelNational />
+          )}
         </div>
         <p className="fdk-p-search-hit">
           <span className="uu-invisible" aria-hidden="false">

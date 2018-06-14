@@ -18,6 +18,15 @@ exports[`should render PureDetailsPage correctly with datasetItem 1`] = `
           descriptionFormatted={null}
           harvest={null}
           objective="Datasettes formål er nullam quis rius eget urna mollis ornare vel eu leo. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Cras mattis consectetur purus sit amet fermentum. Vestibulum id ligula porta felis euismod semper."
+          provenance={
+            Object {
+              "code": "vedtak",
+              "prefLabel": Object {
+                "nb": "Vedtak",
+              },
+              "uri": "http://data.brreg.no/datakatalog/provenance/vedtak",
+            }
+          }
           publisher={
             Object {
               "id": "987654321",
