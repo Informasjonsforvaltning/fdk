@@ -14,7 +14,7 @@ WORKDIR /usr/src/app
 COPY package.json /usr/src/app/package.json
 
 # Install app dependencies
-RUN npm install --loglevel=warn
+RUN npm install --only=production --loglevel=warn
 COPY . /usr/src/app/
 
 RUN npm run build
