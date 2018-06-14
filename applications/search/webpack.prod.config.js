@@ -85,7 +85,6 @@ module.exports = {
     new ExtractTextPlugin('styles.css'),
     new CopyWebpackPlugin(
       [
-        { from: './src/static/*', to: './' , flatten: true },
         { from: './src/static/img/*', to: './img' , flatten: true}
       ],
       {
