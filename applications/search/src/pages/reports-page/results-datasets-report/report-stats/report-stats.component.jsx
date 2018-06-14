@@ -1,3 +1,4 @@
+import * as _ from 'lodash';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
@@ -7,7 +8,8 @@ import './report-stats.scss';
 
 export const ReportStats = props => {
   const { aggregateDataset, entity } = props;
-
+  // const { entity } = props;
+  // const aggregateDataset = require('../../../../api-mocks/aggregateDataset_opendata.json')
   const stats = {
     total: aggregateDataset.hits ? aggregateDataset.hits.total : 0,
     public:
@@ -46,7 +48,7 @@ export const ReportStats = props => {
             bucket => bucket.key.toUpperCase() === 'UKJENT'
           ).doc_count
         : 0,
-
+    opendata: _.get(aggregateDataset, 'aggregations.opendata.doc_count',0),
     newLastWeek:
       aggregateDataset.aggregations &&
       aggregateDataset.aggregations.firstHarvested.buckets &&
@@ -202,6 +204,19 @@ export const ReportStats = props => {
     </div>
   );
 
+  const opendata = (
+    <div className="row">
+      <div className="fdk-container-stats fdk-container-stats-concepts-title">
+        <h2>{localization.report.openData}</h2>
+        <div className="fdk-container-stats-concepts">
+            <p>
+              <strong>{stats.opendata}</strong>
+            </p>
+        </div>
+      </div>
+    </div>
+  );
+
   const changes = (
     <div className="row">
       <div className="col-md-4 fdk-container-stats-changes-left">
@@ -319,6 +334,7 @@ export const ReportStats = props => {
       {title}
       {total}
       {accessLevel}
+      {opendata}
       {changes}
       {concepts}
       {distributions}
