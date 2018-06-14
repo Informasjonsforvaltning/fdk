@@ -16,13 +16,12 @@ import {DatasetLandingPage} from './dataset-landing-page/dataset-landing-page.co
 import {DatasetContactInfo} from './dataset-contact-info/dataset-contact-info.component';
 import localization from '../../lib/localization';
 import { getTranslateText } from '../../lib/translateText';
-// import api from '../../utils/api.json';
 
 export class PureDetailsPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      dataset: {}, // api.dataset[0],
+      dataset: {},
       loading: false
     };
     this.loadDatasetFromServer = this.loadDatasetFromServer.bind(this);
