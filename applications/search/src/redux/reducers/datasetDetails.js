@@ -3,7 +3,7 @@ import {
   DATASETDETAILS_SUCCESS,
   DATASETDETAILS_FAILURE,
   DATASETDETAILS_RESET
-} from '../constants/ActionTypes';
+} from '../ActionTypes';
 
 export default function datasetDetails(
   state = {

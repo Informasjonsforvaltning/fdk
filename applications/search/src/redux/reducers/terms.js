@@ -3,7 +3,7 @@ import {
   TERMS_REQUEST,
   TERMS_SUCCESS,
   TERMS_FAILURE
-} from '../constants/ActionTypes';
+} from '../ActionTypes';
 
 export default function terms(
   state = {

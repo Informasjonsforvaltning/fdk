@@ -3,7 +3,7 @@ import {
   DATASETS_REQUEST,
   DATASETS_SUCCESS,
   DATASETS_FAILURE
-} from '../constants/ActionTypes';
+} from '../ActionTypes';
 
 export default function datasets(
   state = {
