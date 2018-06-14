@@ -10,7 +10,7 @@ import {
   getTranslateText,
   getLanguageFromUrl
 } from '../../../../lib/translateText';
-import { getDistributionTypeByUri } from '../../../../reducers/index';
+import { getDistributionTypeByUri } from '../../../../redux/reducers/index';
 import './search-hit-item.scss';
 
 const renderFormats = (

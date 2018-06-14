@@ -2,7 +2,7 @@ import {
   DISTRIBUTIONTYPE_REQUEST,
   DISTRIBUTIONTYPE_SUCCESS,
   DISTRIBUTIONTYPE_FAILURE
-} from '../constants/ActionTypes';
+} from '../ActionTypes';
 
 export default function distributionTypes(
   state = {

@@ -14,7 +14,7 @@ import {
   fetchThemesIfNeeded,
   fetchPublishersIfNeeded,
   fetchDistributionTypeIfNeeded
-} from '../../actions/index';
+} from '../../redux/actions/index';
 import {ResultsDataset} from './results-dataset/results-dataset.component';
 import {ResultsConcepts} from './results-concepts/results-concepts.component';
 import {SearchBox} from './search-box/search-box.component';

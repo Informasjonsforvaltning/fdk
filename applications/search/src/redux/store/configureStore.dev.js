@@ -17,7 +17,7 @@ export default function configureStore() {
   if (module.hot) {
     module.hot.accept('../reducers', () => {
       /* eslint-disable global-require */
-      store.replaceReducer(require('../reducers').default);
+      store.replaceReducer(require('../reducers/index').default);
     });
   }
   return store;

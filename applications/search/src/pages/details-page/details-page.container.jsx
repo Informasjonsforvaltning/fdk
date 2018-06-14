@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import {
   fetchDatasetDetailsIfNeeded,
   resetDatasetDetails
-} from '../../actions/index';
+} from '../../redux/actions/index';
 import {DatasetDescription} from './dataset-description/dataset-description.component';
 import {DatasetKeyInfo} from './dataset-key-info/dataset-key-info.component';
 import {DatasetDistribution} from './dataset-distribution/dataset-distribution.component';

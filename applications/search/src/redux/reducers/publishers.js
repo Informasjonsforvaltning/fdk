@@ -2,7 +2,7 @@ import {
   PUBLISHERS_REQUEST,
   PUBLISHERS_SUCCESS,
   PUBLISHERS_FAILURE
-} from '../constants/ActionTypes';
+} from '../ActionTypes';
 
 export default function publishers(
   state = { isFetchingPublishers: false, publisherItems: null },

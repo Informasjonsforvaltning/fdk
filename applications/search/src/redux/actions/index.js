@@ -1,6 +1,6 @@
 import { CALL_API } from '../middleware/api';
-import * as actions from '../constants/ActionTypes';
-import { addOrReplaceParam } from '../lib/addOrReplaceUrlParam';
+import * as actions from '../ActionTypes';
+import { addOrReplaceParam } from '../../lib/addOrReplaceUrlParam';
 
 function fetchApi(url, types) {
   return {

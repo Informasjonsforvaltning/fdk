@@ -2,7 +2,7 @@ import {
   OPENLICENSES_REQUEST,
   OPENLICENSES_SUCCESS,
   OPENLICENSES_FAILURE
-} from '../constants/ActionTypes';
+} from '../ActionTypes';
 
 export default function openLicenses(
   state = {
