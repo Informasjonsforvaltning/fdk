@@ -135,11 +135,17 @@ exports[`should render ReportStats correctly 1`] = `
       <div
         className="fdk-container-stats-concepts"
       >
-        <p>
-          <strong>
-            0
-          </strong>
-        </p>
+        <Link
+          className="fdk-container-stats-accesslevel"
+          replace={false}
+          to="/?opendata=true"
+        >
+          <p>
+            <strong>
+              0
+            </strong>
+          </p>
+        </Link>
       </div>
     </div>
   </div>

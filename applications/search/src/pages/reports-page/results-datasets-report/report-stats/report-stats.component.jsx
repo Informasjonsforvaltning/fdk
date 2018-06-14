@@ -209,9 +209,14 @@ export const ReportStats = props => {
       <div className="fdk-container-stats fdk-container-stats-concepts-title">
         <h2>{localization.report.openData}</h2>
         <div className="fdk-container-stats-concepts">
+          <Link
+            className="fdk-container-stats-accesslevel"
+            to={`/?opendata=true${orgPathParam}`}
+          >
             <p>
               <strong>{stats.opendata}</strong>
             </p>
+          </Link>
         </div>
       </div>
     </div>
