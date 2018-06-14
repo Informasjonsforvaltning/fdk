@@ -230,7 +230,6 @@ public class DatasetBuilder extends AbstractBuilder {
         while (iterator.hasNext()) {
             Statement statement = iterator.next();
             String themeCode = statement.getObject().toString();
-
             DataTheme dataTheme = dataThemes.get(themeCode);
 
             if (dataTheme == null) {
@@ -255,7 +254,6 @@ public class DatasetBuilder extends AbstractBuilder {
                 subjects.put(subject.getUri(), subject);
             }
         }
-
         if (result.size() > 0) {
             return result;
         }
@@ -294,7 +292,6 @@ public class DatasetBuilder extends AbstractBuilder {
             if (nameStatement != null && nameProperty != null) {
 
                 StmtIterator nameStatementIterator = locationResource.listProperties(nameProperty);
-
                 location.setPrefLabel(new HashMap<>());
 
                 while (nameStatementIterator.hasNext()) {
@@ -309,17 +306,13 @@ public class DatasetBuilder extends AbstractBuilder {
                         if (!location.getPrefLabel().containsKey(language)) {
                             location.getPrefLabel().put(language, name);
                         }
-
                     }
                 }
-
             }
-
             return location;
         }
         return null;
     }
-
 
     public static Subject extractSubject(Resource subjectResource) {
         if (subjectResource != null && subjectResource.isURIResource()) {
@@ -353,6 +346,4 @@ public class DatasetBuilder extends AbstractBuilder {
         }
         return null;
     }
-
-
 }
