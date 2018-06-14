@@ -73,8 +73,8 @@ module.exports = {
     new ExtractTextPlugin('styles.css'),
     new CopyWebpackPlugin(
       [
-        { from: './src/assets/css/bootstrap*', to: './', flatten: true },
-        { from: './src/assets/img/*', to: './img', flatten: true }
+        { from: './src/static/*', to: './' , flatten: true },
+        { from: './src/static/img/*', to: './img' , flatten: true}
       ],
       {
         copyUnmodified: true
