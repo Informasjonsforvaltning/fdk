@@ -22,6 +22,7 @@ public class Distribution {
     private List<String> downloadURL;
     private List<String> accessURL;
     private SkosConcept license;
+    private Boolean openLicense;
     private List<SkosConcept> conformsTo;
     private List<SkosConcept> page;
     private List<String> format;

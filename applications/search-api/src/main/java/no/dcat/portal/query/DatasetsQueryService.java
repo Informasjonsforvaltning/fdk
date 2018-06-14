@@ -133,10 +133,14 @@ public class DatasetsQueryService extends ElasticsearchService {
                                          @RequestParam(value = "provenance", defaultValue = "", required = false) String provenance,
 
                                          @ApiParam("Filters datasets according to their spatial label, e.g. Oslo, Norge")
-                                         @RequestParam(value = "spatial", defaultValue = "", required = false) String spatial) {
+                                         @RequestParam(value = "spatial", defaultValue = "", required = false) String spatial,
+
+                                        @ApiParam("Filters on distribution license and access rights. If true the distribution licence is open and the access rights are public.")
+                                        @RequestParam(value = "opendata", defaultValue = "", required = false) String opendata)
+    {
 
 
-        StringBuilder loggMsg = new StringBuilder()
+           StringBuilder loggMsg = new StringBuilder()
                 .append(" query:").append(query)
                 .append(" theme:").append(theme)
                 .append(" publisher:").append(publisher)
@@ -152,7 +156,8 @@ public class DatasetsQueryService extends ElasticsearchService {
                 .append(" sortdirection:").append(sortdirection)
                 .append(" subject:").append(subject)
                 .append(" provenance:").append(provenance)
-                .append(" spatial:").append(spatial);
+                .append(" spatial:").append(spatial)
+                .append(" opendata: ").append(opendata);
 
         logger.debug(loggMsg.toString());
 
@@ -178,7 +183,8 @@ public class DatasetsQueryService extends ElasticsearchService {
                 isEmpty(orgPath) && isEmpty(publisher) &&
                 isEmpty(sortfield) && isEmpty(sortdirection) &&
                 isEmpty(subject) && firstHarvested == 0 && lastChanged == 0 && lastHarvested == 0 &&
-                isEmpty(provenance) && isEmpty(spatial);
+                isEmpty(provenance) && isEmpty(spatial) &&
+                isEmpty(opendata);
 
         QueryBuilder search;
 
@@ -203,7 +209,13 @@ public class DatasetsQueryService extends ElasticsearchService {
         }
 
         // add filter
-        BoolQueryBuilder boolQuery = addFilter(theme, publisher, accessRights, search, orgPath, firstHarvested, lastHarvested, lastChanged, subject, provenance, spatial);
+        BoolQueryBuilder boolQuery = addFilter(theme, publisher, accessRights, search, orgPath, firstHarvested, lastHarvested, lastChanged, subject, provenance, spatial, opendata);
+
+        AggregationBuilder openDataSets = AggregationBuilders.filter("opendata")
+                .filter(QueryBuilders.boolQuery()
+                        .must(QueryBuilders.termQuery("accessRights.code.raw", "PUBLIC"))
+                        .must(QueryBuilders.termQuery("distribution.openLicense", "true"))
+                );
 
         // set up search query with aggregations
         SearchRequestBuilder searchBuilder = getClient().prepareSearch("dcat")
@@ -221,7 +233,9 @@ public class DatasetsQueryService extends ElasticsearchService {
                 .addAggregation(AggregationBuilders.missing("missingFirstHarvested").field("harvest.firstHarvested"))
                 .addAggregation(temporalAggregation("lastChanged", "harvest.lastChanged"))
                 .addAggregation(AggregationBuilders.missing("missingLastChanged").field("harvest.lastChanged"))
-                .addAggregation(createAggregation("spatial", "spatial.prefLabel.no.raw", UNKNOWN));
+                .addAggregation(createAggregation("spatial", "spatial.prefLabel.no.raw", UNKNOWN))
+                .addAggregation(openDataSets);
+
 
         logger.trace("Query: {}", searchBuilder.toString());
 
@@ -321,7 +335,7 @@ public class DatasetsQueryService extends ElasticsearchService {
 
     /**
      * Adds theme filter to query. Multiple themes can be specified. It should return only those datasets that have
-     * all themes. To get an exact match we ned to use Elasticsearch tag count trick.
+     * all themes. To get an exact match we need to use Elasticsearch tag count trick.
      *
      * @param theme  comma separated list of theme codes
      * @param search the search object
@@ -330,7 +344,7 @@ public class DatasetsQueryService extends ElasticsearchService {
     private BoolQueryBuilder addFilter(String theme, String publisher, String accessRights,
                                        QueryBuilder search, String orgPath,
                                        int firstHarvested, int lastHarvested, int lastChanged,
-                                       String subject, String provenance, String spatial) {
+                                       String subject, String provenance, String spatial, String opendata) {
 
         BoolQueryBuilder boolQuery = QueryBuilders.boolQuery()
                 .must(search);
@@ -372,6 +386,23 @@ public class DatasetsQueryService extends ElasticsearchService {
             }
 
             boolQuery.filter(accessRightsFilter);
+        }
+        if (!StringUtils.isEmpty(opendata)) {
+            BoolQueryBuilder opendataFilter = QueryBuilders.boolQuery();
+            if(opendata.equals("true")){
+                opendataFilter.must(QueryBuilders.termQuery("distribution.openLicense", "true"));
+                opendataFilter.must(QueryBuilders.termQuery("accessRights.code.raw", "PUBLIC"));
+            }
+            //Handle the negative cases
+            else if(opendata.equals("false")){
+                BoolQueryBuilder notOpenLicenseFilter = QueryBuilders.boolQuery();
+                BoolQueryBuilder notOpenDistributionFilter = QueryBuilders.boolQuery();
+                notOpenLicenseFilter.mustNot(QueryBuilders.termQuery("distribution.openLicense", "true"));
+                notOpenDistributionFilter.mustNot(QueryBuilders.termQuery("accessRights.code.raw", "PUBLIC"));
+                opendataFilter.should(notOpenLicenseFilter);
+                opendataFilter.should(notOpenDistributionFilter);
+            }
+            boolQuery.filter(opendataFilter);
         }
 
         if (!StringUtils.isEmpty(orgPath)) {
@@ -442,9 +473,10 @@ public class DatasetsQueryService extends ElasticsearchService {
             boolQuery.filter(spatialFilter);
         }
 
+
+
         return boolQuery;
     }
-
 
     /**
      * Retrieves the dataset record identified by the provided id. The complete dataset, as defined in elasticsearch,
@@ -486,7 +518,7 @@ public class DatasetsQueryService extends ElasticsearchService {
             return jsonError;
         }
 
-        logger.info("request sucess for {}", id);
+        logger.info("request success for {}", id);
 
         String acceptHeader = request.getHeader("Accept");
         if (acceptHeader != null && !acceptHeader.isEmpty() && !acceptHeader.contains("application/json")) {
@@ -663,11 +695,7 @@ public class DatasetsQueryService extends ElasticsearchService {
         AggregationBuilder datasetsWithDistribution = AggregationBuilders.filter("distCount")
                 .filter(QueryBuilders.existsQuery("distribution"));
 
-        AggregationBuilder openDatasetsWithDistribution = AggregationBuilders.filter("distOnPublicAccessCount")
-                .filter(QueryBuilders.boolQuery()
-                        .must(QueryBuilders.existsQuery("distribution"))
-                        .must(QueryBuilders.termQuery("accessRights.code.raw", "PUBLIC"))
-                );
+
 
         AggregationBuilder datasetsWithSubject = AggregationBuilders.filter("subjectCount")
                 .filter(QueryBuilders.existsQuery("subject.prefLabel"));
@@ -686,7 +714,6 @@ public class DatasetsQueryService extends ElasticsearchService {
                 .addAggregation(temporalAggregation("lastChanged", "harvest.lastChanged"))
                 .addAggregation(AggregationBuilders.missing("missingLastChanged").field("harvest.lastChanged"))
                 .addAggregation(datasetsWithDistribution)
-                .addAggregation(openDatasetsWithDistribution)
                 .addAggregation(datasetsWithSubject);
 
         // Execute search

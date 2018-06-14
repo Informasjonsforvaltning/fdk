@@ -1,7 +1,6 @@
 package no.dcat.datastore.domain.dcat.builders;
 
 import no.dcat.datastore.domain.dcat.Distribution;
-import no.dcat.shared.DataTheme;
 import no.dcat.shared.SkosCode;
 import no.dcat.shared.SkosConcept;
 import no.dcat.datastore.domain.dcat.vocabulary.DCAT;
@@ -16,11 +15,12 @@ import org.apache.jena.vocabulary.DCTerms;
 import org.apache.jena.vocabulary.RDF;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.test.context.TestComponent;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class DistributionBuilder extends AbstractBuilder {
     private static Logger logger = LoggerFactory.getLogger(DistributionBuilder.class);
@@ -61,6 +61,16 @@ public class DistributionBuilder extends AbstractBuilder {
         return distributions;
     }
 
+    // Helper method used to compare substrings of two strings starting with first forward slash, intended to be used to compare if URLS are equal when disregarding protocol.
+    static boolean compareURLs(String distributionURL, String openURL) {
+        if (distributionURL == null || openURL == null) {
+            return false;
+        }
+        distributionURL = distributionURL.replaceFirst("^.*//", "");
+        openURL = openURL.replaceFirst("^.*//", "");
+        return distributionURL.startsWith(openURL);
+    }
+
     public static Distribution create(Resource distResource,
                                       Map<String, Map<String, SkosCode>> codes) {
         Distribution dist = new Distribution();
@@ -73,8 +83,10 @@ public class DistributionBuilder extends AbstractBuilder {
             dist.setDescription(extractLanguageLiteral(distResource, DCTerms.description));
             dist.setAccessURL(extractUriList(distResource, DCAT.accessUrl));
             dist.setDownloadURL(extractUriList(distResource, DCAT.downloadUrl));
+            dist.setOpenLicense(false);
 
             List<SkosConcept> licenses = extractSkosConcept(distResource, DCTerms.license);
+
             if (licenses != null && licenses.size() > 0) {
                 SkosConcept firstLicense = licenses.get(0);
 
@@ -83,22 +95,25 @@ public class DistributionBuilder extends AbstractBuilder {
                     Map<String, SkosCode> licenseCodeMap = codes.get(Types.openlicenses.getType());
                     if (licenseCodeMap != null) {
                         licenseCodeMap.forEach((key, code) -> {
-                            if (firstLicense.getUri().startsWith(code.getUri())) {
+                            if(compareURLs(firstLicense.getUri(), code.getUri())) {
                                 firstLicense.setPrefLabel(code.getPrefLabel());
+                                dist.setOpenLicense(true);
                             }
                         });
                     }
                 }
+
                 dist.setLicense(firstLicense);
 
                 if (licenses.size() > 1) {
-                    logger.warn("There are more than one recommended licence in inputdata. Only first will be kept");
+                    logger.warn("There are more than one recommended license in input data. Only first will be kept");
                 }
-            }
+            };
 
             dist.setConformsTo(extractSkosConcept(distResource, DCTerms.conformsTo));
             dist.setPage(extractSkosConcept(distResource, FOAF.page));
             dist.setFormat(extractMultipleStringsExcludeBaseUri(distResource, DCTerms.format));
+
 
             dist.setType(extractAsString(distResource, DCTerms.type));
 
