@@ -127,6 +127,26 @@ exports[`should render ReportStats correctly 1`] = `
     className="row"
   >
     <div
+      className="fdk-container-stats fdk-container-stats-concepts-title"
+    >
+      <h2>
+        Åpne data
+      </h2>
+      <div
+        className="fdk-container-stats-concepts"
+      >
+        <p>
+          <strong>
+            0
+          </strong>
+        </p>
+      </div>
+    </div>
+  </div>
+  <div
+    className="row"
+  >
+    <div
       className="col-md-4 fdk-container-stats-changes-left"
     >
       <div

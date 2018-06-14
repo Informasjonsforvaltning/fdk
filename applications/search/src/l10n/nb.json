@@ -254,7 +254,8 @@
     "withoutDistributions": "Offentlige datasett uten distribusjoner",
     "searchPublisher": "Velg virksomhet",
     "searchPublisherPlaceholder": "Søk på virksomhetsnavn...",
-    "typeToSearch": "Skriv for å søke"
+    "typeToSearch": "Skriv for å søke",
+    "openData":"Åpne data"
   },
   "registration": {
     "title": "Kom i gang med registrering av datasett"
