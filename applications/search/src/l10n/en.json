@@ -254,7 +254,8 @@
     "withoutDistributions": "Public datasets without distributions",
     "searchPublisher": "Choose publisher",
     "searchPublisherPlaceholder": "Search publisher...",
-    "typeToSearch": "Type to search"
+    "typeToSearch": "Type to search",
+    "openData":"Open data"
   },
   "registration": {
     "title": "Registration (only in Norwegian)"
