@@ -88,7 +88,7 @@ jobs:
     #    - comment=Run end-to-end (Cucumber) tests
 
     - stage: deploy
-      if: branch = develop # only deploy when building develop
+      if: branch = develop AND type != pull_request # only deploy when branc is develop and exclude when type is pull_request because in pull request branch means base branch.
       script: mvn install -DskipTests -Dmaven.javadoc.skip=true -B ;
       deploy:
         provider: script
