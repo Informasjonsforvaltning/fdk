@@ -37,7 +37,7 @@ for i in $components
 done
 
 echo "Setting origin to use correct username and password"
-git remote set-url origin https://${githubUsername}:${githubPassword}@github.com/Altinn/fdk.git
+git remote set-url origin https://${githubUsername}:${githubPassword}@github.com/Informasjonsforvaltning/fdk.git
 
 echo "Git deleting remote tag: ${toEnvironment}_latest"
 git push --delete origin ${toEnvironment}_latest || true
