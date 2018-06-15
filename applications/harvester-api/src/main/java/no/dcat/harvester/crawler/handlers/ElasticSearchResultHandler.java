@@ -78,7 +78,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
     public static final String SUBJECT_INDEX = "scat";
     public static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ssZ";
     public static final String DEFAULT_EMAIL_SENDER = "fellesdatakatalog@brreg.no";
-    public static final String VALIDATION_EMAIL_RECEIVER = "fellesdatakatalog@brreg.no"; //temporary
+    public static final String VALIDATION_EMAIL_RECEIVER = "joe@brreg.no"; //temporary
     public static final String VALIDATION_EMAIL_SUBJECT = "Felles datakatalog harvestlogg";
 
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
