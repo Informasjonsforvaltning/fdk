@@ -42,7 +42,7 @@ public class DcatReader {
         if (codes.get("location") != null) {
             locations = codes.get("location");
         } else {
-            locations = new HashMap<String, SkosCode>();
+            locations = new HashMap<>();
         }
 
         LoadLocations loadLocations = new LoadLocations(codeServiceHost, httpUsername, httpPassword);

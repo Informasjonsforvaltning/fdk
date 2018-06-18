@@ -23,4 +23,6 @@ public class AdmEnhet {
 	
 	public static final Property nasjonnavn = model.createProperty(NS, "nasjonnavn");
 
+	public static final Resource NamedIndividual = model.createResource("http://www.w3.org/2002/07/owl#NamedIndividual");
+
 }

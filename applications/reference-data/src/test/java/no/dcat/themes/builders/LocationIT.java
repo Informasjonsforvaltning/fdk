@@ -1,27 +1,34 @@
 package no.dcat.themes.builders;
 
 import no.dcat.shared.SkosCode;
+import no.dcat.shared.Types;
 import no.dcat.shared.testcategories.IntegrationTest;
 import no.dcat.themes.database.TDBConnection;
 import no.dcat.themes.database.TDBInferenceService;
 import no.dcat.themes.database.TDBService;
 import no.dcat.themes.service.CodesService;
+import org.hamcrest.Matchers;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.junit.rules.TemporaryFolder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 
 /**
- * Test class for CodeBuildersTest
+ * Tests to check that location uris can be handled correctly by reference data service.
+ *
  */
 @Category(IntegrationTest.class)
 public class LocationIT {
+    private static Logger logger = LoggerFactory.getLogger(LocationIT.class);
 
     @Rule
     public TemporaryFolder testFolder = new TemporaryFolder();
@@ -76,6 +83,16 @@ public class LocationIT {
         assertEquals("Norge", code.getPrefLabel().get("no"));
     }
 
+    @Test
+    public void testExtractionFromLocation () throws Throwable {
+        testOsloFromGeonames2();
+        testGeonorgeFylke();
+        testGeonorgeKommune();
+        testGeonorgeNasjon();
 
+        List<SkosCode> actual = codesService.getCodes(Types.location);
+
+        assertThat(actual.size(), Matchers.is(4));
+    }
 
 }
