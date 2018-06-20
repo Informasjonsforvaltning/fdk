@@ -8,13 +8,10 @@ import no.dcat.datastore.domain.dcat.builders.DcatBuilder;
 import no.dcat.shared.Dataset;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
-import org.elasticsearch.index.query.BoolQueryBuilder;
-import org.elasticsearch.index.query.QueryBuilder;
-import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.index.query.RangeQueryBuilder;
-import org.elasticsearch.index.query.SimpleQueryStringBuilder;
+import org.elasticsearch.index.query.*;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
+import org.elasticsearch.search.aggregations.bucket.filters.FiltersAggregator;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms.Order;
 import org.elasticsearch.search.sort.SortBuilder;
 import org.elasticsearch.search.sort.SortBuilders;
@@ -212,7 +209,7 @@ public class DatasetsQueryService extends ElasticsearchService {
                     .field("subject.prefLabel." + lang)
                     .field("subject.altLabel." + lang)
                     .field("subject.definition." + lang)
-                    .defaultOperator(SimpleQueryStringBuilder.Operator.OR);
+                    .defaultOperator(Operator.OR);
         }
 
         // add filter
@@ -259,8 +256,8 @@ public class DatasetsQueryService extends ElasticsearchService {
     }
 
     public AggregationBuilder getOpendataAggregation() {
-        return AggregationBuilders.filter("opendata")
-                    .filter(QueryBuilders.boolQuery()
+        return AggregationBuilders.filter("opendata",
+                QueryBuilders.boolQuery()
                             .must(QueryBuilders.termQuery("accessRights.code.raw", "PUBLIC"))
                             .must(QueryBuilders.termQuery("distribution.openLicense", "true"))
                     );
@@ -287,10 +284,10 @@ public class DatasetsQueryService extends ElasticsearchService {
 
     AggregationBuilder temporalAggregation(String name, String dateField) {
 
-        return AggregationBuilders.filters(name)
-                .filter("last7days", temporalRangeFromXdaysToNow(7, dateField))
-                .filter("last30days", temporalRangeFromXdaysToNow(30, dateField))
-                .filter("last365days", temporalRangeFromXdaysToNow(365, dateField));
+        return AggregationBuilders.filters(name,
+                new FiltersAggregator.KeyedFilter("last7days", temporalRangeFromXdaysToNow(7, dateField)),
+                new FiltersAggregator.KeyedFilter("last30days", temporalRangeFromXdaysToNow(30, dateField)),
+                new FiltersAggregator.KeyedFilter("last365days", temporalRangeFromXdaysToNow(365, dateField)));
     }
 
 
@@ -628,17 +625,15 @@ public class DatasetsQueryService extends ElasticsearchService {
 
         logger.trace(search.toString());
 
-        AggregationBuilder datasetsWithDistribution = AggregationBuilders.filter("distCount")
-                .filter(QueryBuilders.existsQuery("distribution"));
+        AggregationBuilder datasetsWithDistribution = AggregationBuilders.filter("distCount", QueryBuilders.existsQuery("distribution"));
 
-        AggregationBuilder openDatasetsWithDistribution = AggregationBuilders.filter("distOnPublicAccessCount")
-                .filter(QueryBuilders.boolQuery()
+        AggregationBuilder openDatasetsWithDistribution = AggregationBuilders.filter("distOnPublicAccessCount",
+                QueryBuilders.boolQuery()
                         .must(QueryBuilders.existsQuery("distribution"))
                         .must(QueryBuilders.termQuery("accessRights.code.raw", "PUBLIC"))
                 );
 
-        AggregationBuilder datasetsWithSubject = AggregationBuilders.filter("subjectCount")
-                .filter(QueryBuilders.existsQuery("subject.prefLabel"));
+        AggregationBuilder datasetsWithSubject = AggregationBuilders.filter("subjectCount", QueryBuilders.existsQuery("subject.prefLabel"));
 
         // set up search query with aggregations
         SearchRequestBuilder searchBuilder = getClient().prepareSearch("dcat")

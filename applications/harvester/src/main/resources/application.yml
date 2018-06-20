@@ -11,7 +11,8 @@ spring:
 server:
   port: 8080
 management:
-  port: 8181
+  server:
+    port: 8181
 fuseki:
   dcatServiceUri: ${fusekiDcatServiceUri:http://fuseki:8080/fuseki/dcat}
   adminServiceUri: ${fusekiAdminServiceUri:http://fuseki:8080/fuseki/admin}
@@ -31,5 +32,5 @@ application:
 server:
   port: 8082
 management:
-  port: 8992
-
+  server:
+    port: 8992

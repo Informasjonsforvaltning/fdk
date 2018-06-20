@@ -14,7 +14,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.5.6.RELEASE</version>
+		<version>2.0.4.RELEASE</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 
@@ -30,14 +30,15 @@
 	</modules>
 
 	<properties>
+		<springframework.version>2.0.4.RELEASE</springframework.version>
         <fdk.version>1.0.0</fdk.version>
 		<java.encoding>UTF-8</java.encoding>
 		<java.version>1.8</java.version>
 		<docker.image.prefix>dcatno</docker.image.prefix>
 		<docker.registry />
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<elasticsearch.version>2.4.1</elasticsearch.version>
 		<build.profile.id>dev</build.profile.id>
+        <jena.version>3.7.0</jena.version>
 
 		<unittest.category/>
 		<endtoendtest.category/>
@@ -96,6 +97,12 @@
 			</dependency>
 			<dependency>
 				<groupId>no.dcat</groupId>
+				<artifactId>datastore-test</artifactId>
+				<version>${fdk.version}</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>no.dcat</groupId>
 				<artifactId>harvester</artifactId>
 				<version>${fdk.version}</version>
 			</dependency>
@@ -130,6 +137,11 @@
 				<version>2.7</version>
 			</dependency>
 			<dependency>
+				<groupId>org.json</groupId>
+				<artifactId>json</artifactId>
+				<version>20180130</version>
+			</dependency>
+			<dependency>
 				<groupId>org.codehaus.castor</groupId>
 				<artifactId>castor-xml</artifactId>
 				<version>1.4.0</version>
@@ -137,7 +149,7 @@
 			<dependency>
 				<groupId>com.google.guava</groupId>
 				<artifactId>guava</artifactId>
-				<version>19.0</version>
+				<version>25.1-jre</version>
 			</dependency>
 			<dependency>
 				<groupId>org.slf4j</groupId>
@@ -163,13 +175,13 @@
 			<dependency>
 				<groupId>org.apache.jena</groupId>
 				<artifactId>jena-tdb</artifactId>
-				<version>3.3.0</version>
+				<version>${jena.version}</version>
 			</dependency>
 
 			<dependency>
 				<groupId>org.apache.jena</groupId>
 				<artifactId>jena-fuseki-core</artifactId>
-				<version>2.6.0</version>
+				<version>${jena.version}</version>
 				<exclusions>
 					<!--
 					<exclusion>
@@ -186,7 +198,7 @@
 			<dependency>
 				<groupId>org.apache.jena</groupId>
 				<artifactId>jena-base</artifactId>
-				<version>3.3.0</version>
+				<version>${jena.version}</version>
 				<type>pom</type>
 				<exclusions>
 					<exclusion>
@@ -202,7 +214,7 @@
 			<dependency>
 				<groupId>org.apache.jena</groupId>
 				<artifactId>apache-jena-libs</artifactId>
-				<version>3.3.0</version>
+				<version>${jena.version}</version>
 				<type>pom</type>
 				<exclusions>
 					<exclusion>
@@ -218,7 +230,7 @@
 			<dependency>
 				<groupId>org.apache.jena</groupId>
 				<artifactId>jena-arq</artifactId>
-				<version>3.3.0</version>
+				<version>${jena.version}</version>
 				<exclusions>
 					<exclusion>
 						<artifactId>log4j</artifactId>
@@ -233,7 +245,7 @@
 			<dependency>
 				<groupId>org.apache.jena</groupId>
 				<artifactId>jena-core</artifactId>
-				<version>3.3.0</version>
+				<version>${jena.version}</version>
 				<exclusions>
 					<exclusion>
 						<artifactId>log4j</artifactId>
@@ -276,6 +288,30 @@
 
 				</exclusions>
 			</dependency>
+
+			<dependency>
+				<groupId>org.springframework.data</groupId>
+				<artifactId>spring-data-elasticsearch</artifactId>
+				<version>3.0.9.RELEASE</version>
+			</dependency>
+			<dependency>
+				<groupId>com.arakelian</groupId>
+				<artifactId>docker-junit-rule</artifactId>
+				<version>2.2.1</version>
+				<scope>test</scope>
+			</dependency>
+
+			<dependency> <!-- Temporary hack to resolve ES5.x hardcoded dependency on Log4J, in conflict with Spring Boot dependency on SLF4J -->
+				<groupId>de.dentrassi.elasticsearch</groupId>
+				<artifactId>log4j2-mock</artifactId>
+				<version>0.0.1</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.logging.log4j</groupId>
+				<artifactId>log4j-to-slf4j</artifactId>
+				<version>2.9.1</version>
+			</dependency>
+
 			<dependency>
 				<groupId>org.webjars</groupId>
 				<artifactId>jasmine</artifactId>
@@ -299,14 +335,6 @@
 				<artifactId>jquery</artifactId>
 				<version>3.1.1</version>
 				<scope>runtime</scope>
-			</dependency>
-			<!-- Necessary for running on RedHat Openshift-->
-			<dependency>
-				<groupId>org.springframework.cloud</groupId>
-				<artifactId>spring-cloud-dependencies</artifactId>
-				<version>Brixton.RELEASE</version>
-				<type>pom</type>
-				<scope>import</scope>
 			</dependency>
 
 			<!-- Cucumber -->
@@ -383,6 +411,56 @@
 				<version>4.12</version>
 				<scope>test</scope>
 			</dependency>
+
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-test</artifactId>
+				<version>${springframework.version}</version>
+				<scope>test</scope>
+				<exclusions>
+					<exclusion>
+						<groupId>com.vaadin.external.google</groupId>
+						<artifactId>android-json</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.mockito</groupId>
+						<artifactId>mockito-core</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>org.mockito</groupId>
+				<artifactId>mockito-core</artifactId>
+				<version>2.19.0</version>
+				<scope>test</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>org.powermock</groupId>
+				<artifactId>powermock-api-mockito2</artifactId>
+				<version>2.0.0-beta.5</version>
+				<scope>test</scope>
+				<exclusions>
+					<exclusion>
+						<groupId>org.mockito</groupId>
+						<artifactId>mockito-core</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+
+			<dependency>
+				<groupId>org.powermock</groupId>
+				<artifactId>powermock-module-junit4</artifactId>
+				<version>2.0.0-beta.5</version>
+				<scope>test</scope>
+				<exclusions>
+					<exclusion>
+						<groupId>junit</groupId>
+						<artifactId>junit</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+
 		</dependencies>
 
 
@@ -428,7 +506,7 @@
                 <!-- Generates coverage reports from unit and integration tests -->
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>0.7.6.201602180812</version>
+				<version>0.8.1</version>
                 <executions>
                     <!--
                         JaCoCo report for unit tests
@@ -509,7 +587,7 @@
 				<plugin>
 					<groupId>com.spotify</groupId>
 					<artifactId>docker-maven-plugin</artifactId>
-					<version>1.0.0</version>
+					<version>1.1.1</version>
 					<executions>
 						<execution>
 							<phase>package</phase>

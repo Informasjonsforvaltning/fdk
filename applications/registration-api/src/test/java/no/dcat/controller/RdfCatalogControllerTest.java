@@ -21,11 +21,13 @@ import org.springframework.http.HttpEntity;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
+import java.util.function.Function;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.anyObject;
-import static org.mockito.Mockito.anyString;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 /**
@@ -50,7 +52,7 @@ public class RdfCatalogControllerTest {
         catalog = new Catalog();
         BeanUtils.copyProperties(TestCompleteCatalog.getCompleteCatalog(), catalog);
 
-        when(mockCR.findOne(anyString())).thenReturn((no.dcat.model.Catalog) catalog);
+        when(mockCR.findById(anyString())).thenReturn(Optional.of(catalog));
 
         //when(controller.getCatalogRepository()).thenReturn(mockCR);
         controller = new RdfCatalogController(mockCR, mockDR);
@@ -63,6 +65,11 @@ public class RdfCatalogControllerTest {
 
         Page<Dataset> pagedDataset = new Page<Dataset>() {
             @Override
+            public Iterator<Dataset> iterator() {
+                return null;
+            }
+
+            @Override
             public int getTotalPages() {
                 return 0;
             }
@@ -70,11 +77,6 @@ public class RdfCatalogControllerTest {
             @Override
             public long getTotalElements() {
                 return 0;
-            }
-
-            @Override
-            public <S> Page<S> map(Converter<? super Dataset, ? extends S> converter) {
-                return null;
             }
 
             @Override
@@ -142,12 +144,12 @@ public class RdfCatalogControllerTest {
             }
 
             @Override
-            public Iterator<Dataset> iterator() {
+            public <U> Page<U> map(Function<? super Dataset, ? extends U> function) {
                 return null;
             }
         };
 
-        when(mockDR.findByCatalogId(anyString(), (Pageable) anyObject())).thenReturn(pagedDataset);
+        when(mockDR.findByCatalogId(anyString(), (Pageable) any())).thenReturn(pagedDataset);
 
         HttpEntity<Catalog> actualEntity = controller.getCatalog(catalogId);
 

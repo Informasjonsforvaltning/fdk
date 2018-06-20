@@ -9,17 +9,15 @@ import org.springframework.context.annotation.Configuration;
 @ConfigurationProperties(prefix="application")
 public class ApplicationSettings {
 	
-	private int crawlerThreadPoolSize;
-	
-	private String elasticSearchHost;
-	private int elasticSearchPort;
-	private String elasticSearchCluster;
 	private String referenceDataUrl;
 
 	private String httpUsername;
 	private String httpPassword;
 
 	private String notificationMailSenderAddress;
+
+	private String openDataEnhet;
+
 
 	public String getHttpUsername() {
 		return httpUsername;
@@ -37,34 +35,6 @@ public class ApplicationSettings {
 		this.httpPassword = httpPassword;
 	}
 
-	public String getElasticSearchHost() {
-		return elasticSearchHost;
-	}
-
-	public void setElasticSearchHost(String elasticSearchHost) {
-		this.elasticSearchHost = elasticSearchHost;
-	}
-
-	public int getElasticSearchPort() {
-		return elasticSearchPort;
-	}
-
-	public void setElasticSearchPort(int elasticSearchPort) {
-		this.elasticSearchPort = elasticSearchPort;
-	}
-
-	public void setElasticSearchCluster(String elasticSearchCluster) {this.elasticSearchCluster = elasticSearchCluster; }
-
-	public String getElasticSearchCluster() { return elasticSearchCluster; }
-
-	public int getCrawlerThreadPoolSize() {
-		return crawlerThreadPoolSize;
-	}
-
-	public void setCrawlerThreadPoolSize(int crawlerThreadPoolSize) {
-		this.crawlerThreadPoolSize = crawlerThreadPoolSize;
-	}
-
 	public String getReferenceDataUrl() {
 		return referenceDataUrl;
 	}
@@ -73,7 +43,27 @@ public class ApplicationSettings {
 		this.referenceDataUrl = referenceDataUrl;
 	}
 
-	public String getNotificationMailSenderAddress() {return notificationMailSenderAddress; }
+	public String getNotificationMailSenderAddress() {
+		return notificationMailSenderAddress;
+	}
 
-	public void setNotificationMailSenderAddress(String mailSenderAddress) {this.notificationMailSenderAddress = mailSenderAddress; }
+	public void setNotificationMailSenderAddress(String mailSenderAddress) {
+		this.notificationMailSenderAddress = mailSenderAddress;
+	}
+
+	public String getOpenDataEnhet() {
+		return openDataEnhet;
+	}
+
+	public void setOpenDataEnhet(String openDataEnhet) {
+		this.openDataEnhet = openDataEnhet;
+	}
+
+    public String getReferenceDataUrl() {
+        return referenceDataUrl;
+    }
+
+    public void setReferenceDataUrl(String referenceDataUrl) {
+        this.referenceDataUrl = referenceDataUrl;
+    }
 }

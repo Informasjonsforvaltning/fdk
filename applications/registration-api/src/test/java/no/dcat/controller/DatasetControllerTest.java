@@ -19,11 +19,12 @@ import org.springframework.http.HttpEntity;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.anyObject;
-import static org.mockito.Mockito.anyString;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 /**
@@ -48,7 +49,7 @@ public class DatasetControllerTest {
         String catalogId = "1234";
         Catalog catalog = new Catalog();
         catalog.setId(catalogId);
-        when(mockCatalogRepository.findOne(anyString())).thenReturn(catalog);
+        when(mockCatalogRepository.findById(anyString())).thenReturn(Optional.of(catalog));
 
 
         datasetController = new DatasetController(mockDatasetRepository, mockCatalogRepository);
@@ -64,7 +65,7 @@ public class DatasetControllerTest {
         title.put("nb", "test");
         copy.setTitle(title);
 
-        when(mockDatasetRepository.save((Dataset) anyObject())).thenReturn(copy);
+        when(mockDatasetRepository.save((Dataset) any())).thenReturn(copy);
 
         HttpEntity<Dataset> actualEntity = datasetController.saveDataset(catalogId, copy);
 

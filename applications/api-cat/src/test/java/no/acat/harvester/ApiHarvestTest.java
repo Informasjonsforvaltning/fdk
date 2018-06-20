@@ -28,7 +28,7 @@ public class ApiHarvestTest {
         ApiHarvester harvester = new ApiHarvester(elasticsearchService, referenceDataService);
 
         ApiHarvester spyHarvester = spy(harvester);
-        doNothing().when(spyHarvester).indexApi(anyObject());
+        doNothing().when(spyHarvester).indexApi(any());
 
         ApiDocumentBuilder mockApiDocumentBuilder = mock(ApiDocumentBuilder.class);
         doReturn(new ApiDocument()).when(mockApiDocumentBuilder).create(anyObject());

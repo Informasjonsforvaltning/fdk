@@ -14,7 +14,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;
 
-import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 
 @Category(UnitTest.class)
@@ -40,7 +39,7 @@ public class SearchControllerTest {
         when(searchResponse.getHits()).thenReturn(searchHits);
 
         doReturn(null).when(spyController).buildSearchRequest(anyString(),anyString(),anyInt(),anyInt());
-        doReturn(searchResponse).when(spyController).doQuery(anyObject());
+        doReturn(searchResponse).when(spyController).doQuery(any());
         // todo this is nonsense, we do not test anything
         doReturn(new QueryResponse()).when(spyController).convertFromElasticResponse(anyObject());
 

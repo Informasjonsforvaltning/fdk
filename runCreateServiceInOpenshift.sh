@@ -274,7 +274,9 @@ then
         themesHttpPassword=themePassword \
         emailUsername=changeme \
         emailPassword=changeme \
-        emailSenderAddress=changeThe@email.address.here
+        emailSenderAddress=changeThe@email.address.here \
+        FDK_ES_CLUSTERNODES=es01-fdk-01-${environment}.regsys-nprd.brreg.no:9300 \
+        FDK_ES_CLUSTERNAME=es01-fdk-${environment}
 
         exposeService harvester-api
     else
@@ -315,7 +317,9 @@ then
             registrationApi_sslKeystoreLocation=$sslKeystoreLocation \
             registrationApi_idportenMetadataFile=$registrationApiIdportenMetadatafile \
             registrationApi_harvesterUsername=$registrationApiHarvesterUserName \
-            registrationApi_harvesterPassword=$registrationApiHarvesterPassword
+            registrationApi_harvesterPassword=$registrationApiHarvesterPassword \
+            FDK_ES_CLUSTERNODES=es01-fdk-01-${environment}.regsys-nprd.brreg.no:9300 \
+            FDK_ES_CLUSTERNAME=es01-fdk-${environment}
 
         echo "Registration-api: Keystore password environment variables must be set manually"
         echo "Registration-api: Remember to mount /conf volume"
@@ -369,7 +373,9 @@ then
         oc create route edge --service=search-api --hostname=search-api-fellesdatakatalog-$environment.$cluster.brreg.no
         oc label route search-api --overwrite=true \
             environmentTag=$environmentTag \
-            environmentDate=$dateTag
+            environmentDate=$dateTag \
+            FDK_ES_CLUSTERNODES=es01-fdk-01-${environment}.regsys-nprd.brreg.no:9300 \
+            FDK_ES_CLUSTERNAME=es01-fdk-${environment}
     else
         # deploymentmode = onlyDeployImages
         deployNewDockerImage search-api

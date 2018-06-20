@@ -22,6 +22,7 @@ spring:
 server:
   port: 8100
 management:
-  port: 8101
+  server:
+    port: 8101
 
 

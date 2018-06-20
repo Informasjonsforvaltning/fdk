@@ -1,5 +1,6 @@
 package no.dcat.testadmin;
 
+import no.dcat.datastore.Elasticsearch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,6 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
 
 /**
  * Created by nodavsko on 02.11.2016.
@@ -34,11 +36,8 @@ public class TestAdminController {
     public static final String FUSEKI_DATASETS = "/fuseki/$/datasets";
     private static Logger logger = LoggerFactory.getLogger(TestAdminController.class);
 
-    @Value("${application.elasticsearchHost}")
-    private String elasticSearchHost;
-
-    @Value("${application.elasticsearchPort}")
-    private int elasticSearchPort;
+    @Value("${application.elasticsearchHosts}")
+    private String elasticSearchHosts;
 
     @Value("${application.elasticsearchCluster}")
     private String elasticSearchCluster;
@@ -52,8 +51,7 @@ public class TestAdminController {
 
     @PostConstruct
     void validate(){
-        assert elasticSearchHost != null;
-        assert elasticSearchPort > 0;
+        assert elasticSearchHosts != null;
         assert elasticSearchCluster != null;
         assert fusekiHost != null;
         assert harvesterHost != null;
@@ -73,7 +71,6 @@ public class TestAdminController {
         //session.setAttribute("versionInformation", buildMetadata.getVersionInformation());
 
         //logger.debug("Requestmapping / : es host: " + elasticSearchHost);
-        //logger.debug("Requestmapping / : es port: " + elasticSearchPort);
         //logger.debug("Requestmapping / : es cluster: " + elasticSearchCluster);
 
         return "test"; // templates/home.html
@@ -168,8 +165,9 @@ public class TestAdminController {
         HttpURLConnection httpCon = null;
 
         try {
+            List<Elasticsearch.ElasticsearchNode> elasticsearchNodes = Elasticsearch.parseHostsString(elasticSearchHosts);
 
-            URL url = new URL("http://" + elasticSearchHost + ":9200/dcat,theme,codes");
+            URL url = new URL("http://" + elasticsearchNodes.get(0).host + ":9200/dcat,theme,codes");
 
             httpCon = (HttpURLConnection) url.openConnection();
             httpCon.addRequestProperty("Content-Type", "application/x-www-form-urlencoded");
@@ -182,7 +180,7 @@ public class TestAdminController {
             if (responseCode == HttpStatus.OK.value()) {
 
                 logger.info("Database deleted");
-                return new ResponseEntity<String>(HttpStatus.OK);
+                return new ResponseEntity<>(HttpStatus.OK);
             }
         } catch (Exception e) {
             logger.error("Failed to delete", e);

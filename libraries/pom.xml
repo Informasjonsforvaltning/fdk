@@ -16,6 +16,7 @@
     <modules>
         <module>shared</module>
         <module>datastore</module>
+        <module>datastore-test</module>
     </modules>
 
 </project>

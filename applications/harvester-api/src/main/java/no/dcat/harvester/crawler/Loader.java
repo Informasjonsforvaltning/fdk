@@ -24,8 +24,7 @@ public class Loader {
 
     private static Logger logger = LoggerFactory.getLogger(Loader.class);
   
-    private final String hostname;
-    private final int port;
+    private final String hosts;
     private final String elasticsearchCluster;
     private final String referenceDataUrl;
 
@@ -34,9 +33,8 @@ public class Loader {
 
 
   
-    public Loader(String hostname, int port, String cluster , String referenceDataUrl, String httpUsername, String httpPassword) {
-        this.hostname = hostname;
-        this.port = port;
+    public Loader(String hosts, String cluster , String referenceDataUrl, String httpUsername, String httpPassword) {
+        this.hosts = hosts;
         this.elasticsearchCluster = cluster;
         this.referenceDataUrl = referenceDataUrl;
         this.httpUsername = httpUsername;
@@ -56,8 +54,7 @@ public class Loader {
         try {
 
             logger.debug("loadDatasetFromFile: filename: " + filename);
-            logger.debug("loadDatasetFromFile: elasticsearch host: " + hostname);
-            logger.debug("loadDatasetFromFile: elasticsearch port: " + port);
+            logger.debug("loadDatasetFromFile: elasticsearch hosts: " + hosts);
             logger.debug("loadDatasetFromFile: elasticsearch cluster: " +elasticsearchCluster);
 
             url = new URL(filename);
@@ -67,12 +64,10 @@ public class Loader {
             //harvestAllCodes(true);
 
             //FusekiResultHandler fshandler = new FusekiResultHandler(dcatDataStore, null);
-            CrawlerResultHandler esHandler = new ElasticSearchResultHandler(hostname, port, elasticsearchCluster, referenceDataUrl, httpUsername, httpPassword);
-            CrawlerResultHandler publisherHandler = new ElasticSearchResultPubHandler(hostname,port, elasticsearchCluster);
+            CrawlerResultHandler esHandler = new ElasticSearchResultHandler(hosts, elasticsearchCluster, referenceDataUrl, httpUsername, httpPassword);
+            CrawlerResultHandler publisherHandler = new ElasticSearchResultPubHandler(hosts, elasticsearchCluster);
 
-            LoadingCache<URL, String> brregCach = HarvesterApplication.getBrregCache();
-            CrawlerJob job = new CrawlerJob(dcatSource, null, brregCach, null, esHandler, publisherHandler);
-
+            CrawlerJob job = new CrawlerJob(dcatSource, null, null, esHandler, publisherHandler);
 
             Thread crawlerThread = new Thread(job);
             crawlerThread.start();

@@ -6,19 +6,16 @@
         "format": "yyyy-MM-dd'T'HH:mm:ssZ"
       },
       "catalogUri": {
-        "type": "string",
-        "index": "not_analyzed"
+        "type": "keyword"
       },
       "harvestUrl": {
-        "type": "string",
-        "index": "not_analyzed"
+        "type": "keyword"
       },
       "publisher": {
         "properties": {
           "orgPath": {
-            "type": "string",
-            "analyzer": "path-analyzer",
-            "search_analyzer": "keyword"
+            "type": "text",
+            "analyzer": "path-analyzer"
           }
         }
       }
