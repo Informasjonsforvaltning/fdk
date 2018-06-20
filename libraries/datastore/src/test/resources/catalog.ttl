@@ -66,3 +66,4 @@
         dct:identifier  "974760673" ;
         foaf:name       "Brønnøysundregistrene" .
 
+
