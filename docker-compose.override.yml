@@ -9,10 +9,6 @@ services:
     volumes:
       -   ./applications/search/src:/usr/src/app/src:rw
     environment:
-     - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
-     - application.queryService=http://search-api:8080
-     - application.queryServiceExternal=http://localhost:8083
-     - application.fusekiService=http://fuseki:8080/fuseki
 
   search-api:
     restart: always
