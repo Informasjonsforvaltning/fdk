@@ -1,1 +1,1 @@
-0 * * * * /scripts/escopy.sh
+* * * * * sh /scripts/escopy.sh

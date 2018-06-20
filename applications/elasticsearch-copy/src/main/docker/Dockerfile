@@ -10,15 +10,24 @@ RUN apk add --no-cache curl
 RUN npm init -y
 RUN npm install -g elasticdump
 
+#install Supercronic - cron job runner specially designed for containers
+ENV SUPERCRONIC_URL=https://github.com/aptible/supercronic/releases/download/v0.1.5/supercronic-linux-amd64 \
+    SUPERCRONIC=supercronic-linux-amd64 \
+    SUPERCRONIC_SHA1SUM=9aeb41e00cc7b71d30d33c57a2333f2c2581a201
+
+RUN curl -fsSLO "$SUPERCRONIC_URL" \
+ && echo "${SUPERCRONIC_SHA1SUM}  ${SUPERCRONIC}" | sha1sum -c - \
+ && chmod +x "$SUPERCRONIC" \
+ && mv "$SUPERCRONIC" "/usr/local/bin/${SUPERCRONIC}" \
+ && ln -s "/usr/local/bin/${SUPERCRONIC}" /usr/local/bin/supercronic
+
 #copy elasticsearch backup script
 RUN mkdir -p /scripts && chmod 777 /scripts
 ADD escopy.sh /scripts/escopy.sh
 RUN chmod +x /scripts/escopy.sh
 
 #set up crontab and log file
-ADD crontab /scripts/es.crontab
-RUN crontab /scripts/es.crontab
+ADD crontab /scripts/crontab
 RUN touch /var/log/backup.log
 
-#NB tail for testing, kan fjernes til slutt
-CMD tail -f /var/log/backup.log
+CMD supercronic /scripts/crontab
