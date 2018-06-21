@@ -4,14 +4,14 @@ import * as _ from 'lodash';
 import cx from 'classnames';
 import { Link } from 'react-router-dom';
 
-import {DistributionFormat} from '../../../../components/distribution-format/distribution-format.component';
+import { DistributionFormat } from '../../../../components/distribution-format/distribution-format.component';
 import localization from '../../../../lib/localization';
 import {
   getTranslateText,
   getLanguageFromUrl
 } from '../../../../lib/translateText';
 import { getDistributionTypeByUri } from '../../../../redux/reducers/index';
-import { DatasetLabelNational } from '../../../../components/dataset-label-national/dataset-label-national.component'
+import { DatasetLabelNational } from '../../../../components/dataset-label-national/dataset-label-national.component';
 import './search-hit-item.scss';
 
 const renderFormats = (
@@ -193,9 +193,7 @@ export const SearchHitItem = props => {
           {renderPublisher(_source)}
           {renderThemes(_source, selectedLanguageCode)}
           {provenance &&
-          provenance.code === 'NASJONAL' && (
-            <DatasetLabelNational />
-          )}
+            provenance.code === 'NASJONAL' && <DatasetLabelNational />}
         </div>
         <p className="fdk-p-search-hit">
           <span className="uu-invisible" aria-hidden="false">

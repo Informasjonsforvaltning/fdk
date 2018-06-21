@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import {FilterBox} from './filter-box.component';
+import { FilterBox } from './filter-box.component';
 
 let onClick;
 let defaultProps;

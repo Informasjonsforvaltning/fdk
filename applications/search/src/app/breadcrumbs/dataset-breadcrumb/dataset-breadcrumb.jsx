@@ -30,4 +30,6 @@ PureDatasetBreadcrumb.propTypes = {
   datasetItem: PropTypes.object
 };
 
-export const DatasetBreadcrumb = connect(mapStateToProps)(PureDatasetBreadcrumb);
+export const DatasetBreadcrumb = connect(mapStateToProps)(
+  PureDatasetBreadcrumb
+);

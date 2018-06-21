@@ -196,4 +196,3 @@ CompareTermModalContent.propTypes = {
   selectedLanguageCode: PropTypes.string,
   cols: PropTypes.string
 };
-

@@ -6,12 +6,12 @@ import { Route, Switch, Link } from 'react-router-dom';
 import localization from '../lib/localization';
 import { addOrReplaceParam } from '../lib/addOrReplaceUrlParam';
 import { getLanguageFromUrl } from '../lib/translateText';
-import {SearchPage} from '../pages/search-page/search-page.container.jsx';
-import {DetailsPage} from '../pages/details-page/details-page.container';
-import {AboutPage} from '../pages/about-page/about-page.component';
-import {ArticlePage} from '../pages/article-page/article-page.component';
-import {ReportsPage} from '../pages/reports-page/reports-page.container';
-import {Breadcrumbs} from './breadcrumbs/breadcrumbs.component';
+import { SearchPage } from '../pages/search-page/search-page.container';
+import { DetailsPage } from '../pages/details-page/details-page.container';
+import { AboutPage } from '../pages/about-page/about-page.component';
+import { ArticlePage } from '../pages/article-page/article-page.component';
+import { ReportsPage } from '../pages/reports-page/reports-page.container';
+import { Breadcrumbs } from './breadcrumbs/breadcrumbs.component';
 import '../assets/css/main.scss';
 
 const getLangUrl = langCode => {
@@ -230,11 +230,7 @@ export default class App extends React.Component {
             <Route exact path="/datasets/:id" component={DetailsPage} />
             <Route exact path="/reports" component={ReportsPage} />
             <Route exact path="/about" component={AboutPage} />
-            <Route
-              exact
-              path="/about-registration"
-              component={ArticlePage}
-            />
+            <Route exact path="/about-registration" component={ArticlePage} />
           </Switch>
         </div>
 

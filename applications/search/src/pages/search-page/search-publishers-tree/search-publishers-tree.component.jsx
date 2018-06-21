@@ -5,7 +5,7 @@ import 'react-treeview/react-treeview.css';
 import cx from 'classnames';
 import { Collapse } from 'react-bootstrap';
 
-import {FilterOption} from '../filter-option/filter-option.component';
+import { FilterOption } from '../filter-option/filter-option.component';
 import localization from '../../../lib/localization';
 import './search-publishers-tree.scss';
 

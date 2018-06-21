@@ -1,9 +1,5 @@
 import _ from 'lodash';
-import {
-  TERMS_REQUEST,
-  TERMS_SUCCESS,
-  TERMS_FAILURE
-} from '../ActionTypes';
+import { TERMS_REQUEST, TERMS_SUCCESS, TERMS_FAILURE } from '../ActionTypes';
 
 export default function terms(
   state = {

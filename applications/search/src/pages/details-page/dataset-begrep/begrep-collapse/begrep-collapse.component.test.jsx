@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import {BegrepCollapse} from './begrep-collapse.component';
+import { BegrepCollapse } from './begrep-collapse.component';
 import datasets from '../../../../../test/fixtures/datasets';
 
 test('should render BegrepCollapse correctly with no props', () => {

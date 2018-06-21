@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import {CompareTerms} from './compare-terms.component';
+import { CompareTerms } from './compare-terms.component';
 
 let defaultProps;
 let wrapper;

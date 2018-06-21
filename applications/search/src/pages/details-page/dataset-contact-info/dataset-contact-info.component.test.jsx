@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import {DatasetContactInfo} from './dataset-contact-info.component';
+import { DatasetContactInfo } from './dataset-contact-info.component';
 import datasets from '../../../../test/fixtures/datasets';
 
 test('should render DatasetContactInfo correctly with no props', () => {

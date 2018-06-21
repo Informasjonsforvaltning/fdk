@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import {ConceptsHitItem} from './concepts-hit-item.component';
+import { ConceptsHitItem } from './concepts-hit-item.component';
 import concepts from '../../../../../test/fixtures/concepts';
 
 let onAddTerm;

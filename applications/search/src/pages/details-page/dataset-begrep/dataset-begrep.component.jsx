@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {BegrepCollapse} from './begrep-collapse/begrep-collapse.component';
+import { BegrepCollapse } from './begrep-collapse/begrep-collapse.component';
 import localization from '../../../lib/localization';
 import { getTranslateText } from '../../../lib/translateText';
 

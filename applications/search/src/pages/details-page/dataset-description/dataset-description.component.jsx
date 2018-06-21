@@ -5,8 +5,8 @@ import Moment from 'react-moment';
 
 import localization from '../../../lib/localization';
 import { getTranslateText } from '../../../lib/translateText';
-import { ShowMore } from "../../../components/show-more/show-more";
-import { DatasetLabelNational } from '../../../components/dataset-label-national/dataset-label-national.component'
+import { ShowMore } from '../../../components/show-more/show-more';
+import { DatasetLabelNational } from '../../../components/dataset-label-national/dataset-label-national.component';
 
 export class DatasetDescription extends React.Component {
   constructor(props) {
@@ -34,7 +34,7 @@ export class DatasetDescription extends React.Component {
           >
             {publisher
               ? publisher.name.charAt(0) +
-              publisher.name.substring(1).toLowerCase()
+                publisher.name.substring(1).toLowerCase()
               : ''}
           </strong>
         </span>
@@ -112,27 +112,30 @@ export class DatasetDescription extends React.Component {
           {this._renderLastChanged()}
         </div>
 
-
         <div className="fdk-margin-bottom">
           {this._renderPublisher()}
           {this._renderThemes()}
           {this.props.provenance &&
-          this.props.provenance.code === 'NASJONAL' && (
-            <DatasetLabelNational />
-          )}
+            this.props.provenance.code === 'NASJONAL' && (
+              <DatasetLabelNational />
+            )}
         </div>
 
-        {this.props.description && (<ShowMore
-          showMoreButtonText={localization.showFullDescription}
-          label={localization.description}
-          contentHtml={this.props.descriptionFormatted}
-        />)}
+        {this.props.description && (
+          <ShowMore
+            showMoreButtonText={localization.showFullDescription}
+            label={localization.description}
+            contentHtml={this.props.descriptionFormatted}
+          />
+        )}
 
-        {this.props.objective && (<ShowMore
-          showMoreButtonText={localization.showFullObjective}
-          label={localization.objective}
-          contentHtml={this.props.objective}
-        />)}
+        {this.props.objective && (
+          <ShowMore
+            showMoreButtonText={localization.showFullObjective}
+            label={localization.objective}
+            contentHtml={this.props.objective}
+          />
+        )}
       </header>
     );
   }

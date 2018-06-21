@@ -37,8 +37,8 @@ export class PureSearchPage extends React.Component {
       props.location && props.location.search
         ? queryString.parse(props.location.search)
         : {
-          searchQuery: {}
-        };
+            searchQuery: {}
+          };
 
     this.state = {
       showConcepts: false,
@@ -105,7 +105,13 @@ export class PureSearchPage extends React.Component {
       const q = getParamFromString(original, 'q');
       const hasSingleWord = q && !q.includes(' ') && !q.includes('*'); // no spaces and no asterix search
 
-      const query = hasSingleWord ? addOrReplaceParamWithoutURL(original, 'q', `${q} ${encodeURIComponent(q)}*`) : original
+      const query = hasSingleWord
+        ? addOrReplaceParamWithoutURL(
+            original,
+            'q',
+            `${q} ${encodeURIComponent(q)}*`
+          )
+        : original;
 
       this.props.fetchDatasetsIfNeeded(`/datasets${query}`);
       this.props.fetchTermsIfNeeded(`/terms${query}`);
@@ -640,4 +646,6 @@ const mapDispatchToProps = dispatch => ({
   fetchDistributionTypeIfNeeded: () => dispatch(fetchDistributionTypeIfNeeded())
 });
 
-export const SearchPage = connect(mapStateToProps, mapDispatchToProps)(PureSearchPage);
+export const SearchPage = connect(mapStateToProps, mapDispatchToProps)(
+  PureSearchPage
+);

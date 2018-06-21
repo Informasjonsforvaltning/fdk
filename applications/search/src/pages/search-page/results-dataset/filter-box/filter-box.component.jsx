@@ -4,7 +4,7 @@ import { Collapse } from 'react-bootstrap';
 import cx from 'classnames';
 
 import localization from '../../../../lib/localization';
-import {FilterOption} from '../../filter-option/filter-option.component';
+import { FilterOption } from '../../filter-option/filter-option.component';
 import './filter-box.scss';
 
 export class FilterBox extends React.Component {

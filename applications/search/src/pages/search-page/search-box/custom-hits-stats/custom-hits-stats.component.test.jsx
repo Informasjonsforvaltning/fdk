@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import {CustomHitsStats} from './custom-hits-stats.component';
+import { CustomHitsStats } from './custom-hits-stats.component';
 
 test('should render CustomHitsStats correctly when no initial search', () => {
   const defaultProps = {

@@ -2,8 +2,8 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import withBreadcrumbs from 'react-router-breadcrumbs-hoc';
 
-import {DatasetBreadcrumb} from './dataset-breadcrumb/dataset-breadcrumb';
-import {PathNameBreadcrumb} from './pathname-breadcrumb/pathname-breadcrumb';
+import { DatasetBreadcrumb } from './dataset-breadcrumb/dataset-breadcrumb';
+import { PathNameBreadcrumb } from './pathname-breadcrumb/pathname-breadcrumb';
 import './breadcrumbs.scss';
 
 // define some custom breadcrumbs for certain routes (optional)
@@ -28,7 +28,7 @@ const options = {
 
 // map & render your breadcrumb components however you want.
 // each `breadcrumb` has the props `key`, `location`, and `match` included!
-const  PureBreadcrumbs= ({ breadcrumbs }) => {
+const PureBreadcrumbs = ({ breadcrumbs }) => {
   if (breadcrumbs && breadcrumbs.length > 1) {
     return (
       <div className="col-xs-12">
@@ -47,6 +47,5 @@ const  PureBreadcrumbs= ({ breadcrumbs }) => {
   }
   return null;
 };
-
 
 export const Breadcrumbs = withBreadcrumbs(routes, options)(PureBreadcrumbs);

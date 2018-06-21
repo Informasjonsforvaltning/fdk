@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import {SearchHitItem} from './search-hit-item.component';
+import { SearchHitItem } from './search-hit-item.component';
 import datasets from '../../../../../test/fixtures/datasets';
 import distributionTypes from '../../../../../test/fixtures/distributionTypes';
 

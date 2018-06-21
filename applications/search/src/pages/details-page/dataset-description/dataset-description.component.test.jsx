@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import {DatasetDescription} from './dataset-description.component';
+import { DatasetDescription } from './dataset-description.component';
 import datasets from '../../../../test/fixtures/datasets';
 
 test('should render DatasetDescription correctly with no props', () => {

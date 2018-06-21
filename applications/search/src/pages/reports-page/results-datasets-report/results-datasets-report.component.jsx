@@ -2,9 +2,9 @@ import React from 'react';
 import * as axios from 'axios';
 
 import localization from '../../../lib/localization';
-import {ReportStats} from './report-stats/report-stats.component';
-import {SearchPublishers} from './search-publishers/search-publishers.component';
-import {SearchPublishersTree} from '../search-publishers-tree/search-publishers-tree.component';
+import { ReportStats } from './report-stats/report-stats.component';
+import { SearchPublishers } from './search-publishers/search-publishers.component';
+import { SearchPublishersTree } from '../search-publishers-tree/search-publishers-tree.component';
 import {
   addOrReplaceParamWithoutEncoding,
   removeParam

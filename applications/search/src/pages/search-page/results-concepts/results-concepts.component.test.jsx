@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import {ResultsConcepts} from './results-concepts.component';
+import { ResultsConcepts } from './results-concepts.component';
 import concepts from '../../../../test/fixtures/concepts';
 
 let onClearSearch;

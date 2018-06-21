@@ -3,7 +3,7 @@ import { Modal, ModalHeader, ModalTitle, ModalBody } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 
 import localization from '../../../../lib/localization';
-import {CompareTermModalContent} from './compare-term-modal-content/compare-term-modal-content.component';
+import { CompareTermModalContent } from './compare-term-modal-content/compare-term-modal-content.component';
 import './compare-term-modal.scss';
 
 const ReactGA = require('react-ga');

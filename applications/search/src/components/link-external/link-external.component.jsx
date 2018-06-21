@@ -17,4 +17,3 @@ LinkExternal.propTypes = {
   uri: PropTypes.string,
   prefLabel: PropTypes.string
 };
-

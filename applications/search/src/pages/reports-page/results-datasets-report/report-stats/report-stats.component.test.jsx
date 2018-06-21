@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import {ReportStats} from './report-stats.component';
+import { ReportStats } from './report-stats.component';
 import aggregateDataset from '../../../../../test/fixtures/aggregateDataset';
 
 let defaultProps;

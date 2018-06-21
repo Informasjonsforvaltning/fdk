@@ -48,7 +48,7 @@ export const ReportStats = props => {
             bucket => bucket.key.toUpperCase() === 'UKJENT'
           ).doc_count
         : 0,
-    opendata: _.get(aggregateDataset, 'aggregations.opendata.doc_count',0),
+    opendata: _.get(aggregateDataset, 'aggregations.opendata.doc_count', 0),
     newLastWeek:
       aggregateDataset.aggregations &&
       aggregateDataset.aggregations.firstHarvested.buckets &&

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { getParamFromUrl } from '../../../lib/addOrReplaceUrlParam';
 
 import localization from '../../../lib/localization';
-import {CustomHitsStats} from './custom-hits-stats/custom-hits-stats.component';
+import { CustomHitsStats } from './custom-hits-stats/custom-hits-stats.component';
 import './search-box.scss';
 
 export const SearchBox = props => {

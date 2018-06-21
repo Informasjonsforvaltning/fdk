@@ -5,10 +5,10 @@ import { Modal, Button } from 'react-bootstrap';
 import cx from 'classnames';
 
 import localization from '../../../lib/localization';
-import {SearchHitItem} from './search-hit-item/search-hit-item.component';
-import {Select} from './select/select.component';
-import {FilterBox} from './filter-box/filter-box.component';
-import {SearchPublishersTree} from '../search-publishers-tree/search-publishers-tree.component';
+import { SearchHitItem } from './search-hit-item/search-hit-item.component';
+import { Select } from './select/select.component';
+import { FilterBox } from './filter-box/filter-box.component';
+import { SearchPublishersTree } from '../search-publishers-tree/search-publishers-tree.component';
 
 export class ResultsDataset extends React.Component {
   _renderFilterModal() {
@@ -55,14 +55,14 @@ export class ResultsDataset extends React.Component {
               activeFilter={searchQuery.orgPath}
               publishers={publishers}
             />
-            {/*geography filter section temporarily removed*/}
-            {/*<FilterBox */}
-              {/*htmlKey={3}*/}
-              {/*title={localization.facet.spatial}*/}
-              {/*filter={datasetItems.aggregations.spatial}*/}
-              {/*onClick={onFilterSpatial}*/}
-              {/*activeFilter={searchQuery.spatial}*/}
-            {/*/>*/}
+            {/* geography filter section temporarily removed */}
+            {/* <FilterBox */}
+            {/* htmlKey={3} */}
+            {/* title={localization.facet.spatial} */}
+            {/* filter={datasetItems.aggregations.spatial} */}
+            {/* onClick={onFilterSpatial} */}
+            {/* activeFilter={searchQuery.spatial} */}
+            {/* /> */}
             <FilterBox
               htmlKey={4}
               title={localization.facet.provenance}
@@ -209,14 +209,14 @@ export class ResultsDataset extends React.Component {
                       activeFilter={searchQuery.orgPath}
                       publishers={publishers}
                     />
-                    {/*Temporarily removed geography filter*/}
-                    {/*<FilterBox*/}
-                      {/*htmlKey={3}*/}
-                      {/*title={localization.facet.spatial}*/}
-                      {/*filter={datasetItems.aggregations.spatial}*/}
-                      {/*onClick={onFilterSpatial}*/}
-                      {/*activeFilter={searchQuery.spatial}*/}
-                    {/*/>*/}
+                    {/* Temporarily removed geography filter */}
+                    {/* <FilterBox */}
+                    {/* htmlKey={3} */}
+                    {/* title={localization.facet.spatial} */}
+                    {/* filter={datasetItems.aggregations.spatial} */}
+                    {/* onClick={onFilterSpatial} */}
+                    {/* activeFilter={searchQuery.spatial} */}
+                    {/* /> */}
                     <FilterBox
                       htmlKey={4}
                       title={localization.facet.provenance}

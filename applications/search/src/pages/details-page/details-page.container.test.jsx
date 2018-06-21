@@ -7,7 +7,10 @@ let wrapper;
 
 beforeEach(() => {
   wrapper = shallow(
-    <PureDetailsPage datasetItem={datasets[0]._source} isFetchingDataset={false} />
+    <PureDetailsPage
+      datasetItem={datasets[0]._source}
+      isFetchingDataset={false}
+    />
   );
 });
 

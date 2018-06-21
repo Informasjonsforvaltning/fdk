@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import {DistributionFormat} from './distribution-format.component';
+import { DistributionFormat } from './distribution-format.component';
 
 test('should render DistributionFormat with "Dataset" correctly', () => {
   const defaultProps = {

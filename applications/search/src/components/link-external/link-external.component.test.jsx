@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import {LinkExternal} from './link-external.component';
+import { LinkExternal } from './link-external.component';
 
 let defaultProps;
 let wrapper;
