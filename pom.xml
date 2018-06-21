@@ -36,7 +36,6 @@
 		<docker.image.prefix>dcatno</docker.image.prefix>
 		<docker.registry />
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<spring.boot.version>1.5.1.RELEASE</spring.boot.version>
 		<elasticsearch.version>2.4.1</elasticsearch.version>
 		<build.profile.id>dev</build.profile.id>
 

@@ -40,7 +40,6 @@ export default class Helptext extends Component {
             </span>
           )}
         </div>
-        {/* eslint-disable react/no-danger */}
         <div className="d-md-flex">
           <p
             className={shortTextClass}
@@ -70,7 +69,6 @@ export default class Helptext extends Component {
             }}
           />
         </Collapse>
-        {/* eslint-enable react/no-danger */}
       </div>
     );
   }

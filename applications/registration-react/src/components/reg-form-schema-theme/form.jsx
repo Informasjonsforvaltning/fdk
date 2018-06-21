@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 
+import localization from '../../utils/localization';
 import Helptext from '../reg-form-helptext';
 import CheckboxFieldTheme from '../reg-form-field-theme-checkbox';
 
@@ -16,7 +17,10 @@ const FormThemes = props => {
     return (
       <form>
         <div className="form-group">
-          <Helptext title="Tema" helptextItems={helptextItems.Dataset_theme} />
+          <Helptext
+            title={localization.schema.theme.helptext.theme}
+            helptextItems={helptextItems.Dataset_theme}
+          />
           <Field
             name="theme"
             component={CheckboxFieldTheme}

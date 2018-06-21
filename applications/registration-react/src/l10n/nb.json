@@ -1,7 +1,8 @@
 {
   "app": {
-    "title": "Felles Datakatalog",
-    "titleSub": "Oversikt over datasett fra virksomheter i Norge.",
+    "skipLink": "Hopp til hovedinnhold",
+    "navigateFrontpage": "Gå til forside",
+    "title": "Registrering",
     "publisher": "Virksomhet",
     "menu": "Meny",
     "readMore": "Les mer om ",
@@ -14,7 +15,8 @@
     "published": "Publisert!",
     "publishedText": "Datasettbeskrivelsen er nå publisert, og vil være søkbar i Felles datakatalog i løpet av 24 timer.",
     "cancel": "Avbryt",
-    "import": "Importer"
+    "import": "Importer",
+    "editTitle": "Rediger tittel"
   },
   "beta": {
     "header": "Dette er en beta-versjon. ",
@@ -31,6 +33,12 @@
     "ENG": "Engelsk",
     "NOR": "Norsk",
     "SMI": "Samisk"
+  },
+  "menu": {
+    "title": "Meny",
+    "guide": "Veileder",
+    "standard": "Standard",
+    "fdk": "Felles datakatalog"
   },
   "footer": {
     "organisation.number": "Organisasjonsnummer:",
@@ -58,7 +66,38 @@
     "more": "Flere anbefalinger"
   },
   "schema": {
+    "common": {
+      "startDateLabel": "Fra",
+      "endDateLabel": "Til",
+      "addTime": "Legg til tidsperiode",
+      "titleLabel": "Tittel",
+      "descriptionLabel": "Beskrivelse",
+      "linkLabel": "Lenke",
+      "add": "Legg til"
+    },
+    "catalog": {
+      "helptext": {
+        "title": "Beskrivelse"
+      },
+      "ownedByLabel": "Eies av",
+      "editDescriptionLabel": "Rediger beskrivelse"
+    },
+    "title": {
+      "helptext": {
+        "title": "Tittel",
+        "description": "Beskrivelse av datasettet",
+        "objective": "Formålet med datasettet",
+        "landingPage": "Lenke til mer informasjon om datasettet"
+      },
+      "titleLabel": "Tittel",
+      "descriptionLabel": "Beskrivelse",
+      "objectiveLabel": "Formål"
+    },
     "accessRights": {
+      "heading": "Tilgangsnivå",
+      "publicLabel": "Offentlig",
+      "restrictedLabel": "Begrenset offentlighet",
+      "nonPublicLabel": "Unntatt offentlighet",
       "legalBasisForRestriction": {
         "heading": "Skjermingshjemmel",
         "titleLabel": "Tittel",
@@ -75,7 +114,43 @@
         "linkLabel": "Lenke"
       }
     },
+    "theme": {
+      "helptext": {
+        "theme": "Tema"
+      }
+    },
+    "type": {
+      "helptext": {
+        "type": "Type"
+      }
+    },
+    "concept": {
+      "helptext": {
+        "content": "Begrep",
+        "keyword": "Søkeord"
+      },
+      "conceptLabel": "Begrep",
+      "keywordLabel": "Søkeord"
+    },
+    "spatial": {
+      "helptext": {
+        "spatial": "Geografisk avgrensning",
+        "temporal": "Tidsmessig avgrenset til",
+        "issued": "Utgivelsesdato",
+        "language": "Språk"
+      },
+      "spatialLabel": "Geografisk avgrensning",
+      "issuedLabel": "Utgivelsesdato"
+    },
     "provenance": {
+      "helptext": {
+        "provenance": "Opphav",
+        "accruralPeriodicity": "Oppdateringsfrekvens",
+        "modified": "Sist oppdatert",
+        "currentness": "Aktualitet"
+      },
+      "modifiedLabel": "Sist oppdatert",
+      "hasCurrentnessAnnotationLabel": "Aktualitet",
       "accrualPeriodicity": {
         "ANNUAL": "årlig",
         "ANNUAL2": "halvårlig",
@@ -102,12 +177,78 @@
       }
     },
     "informationModel": {
+      "helptext": {
+        "informationModel": "Informasjonsmodell"
+      },
       "titleLabel": "Tittel",
       "linkLabel": "Lenke"
+    },
+    "reference": {
+      "helptext": {
+        "reference": "Relasjoner"
+      },
+      "addReferenceLabel": "Legg til relaterte datasett"
     },
     "conformsTo": {
       "titleLabel": "Tittel",
       "linkLabel": "Lenke"
+    },
+    "content": {
+      "helptext": {
+        "conformsTo": "Standard",
+        "relevance": "Relevans",
+        "completeness": "Kompletthet",
+        "accuracy": "Nøyaktighet",
+        "availability": "Tilgjengelighet"
+      },
+      "hasRelevanceAnnotationLabel": "Relevans",
+      "hasCompletenessAnnotationLabel": "Kompletthet",
+      "hasAccuracyAnnotationLabel": "Nøyaktighet",
+      "hasAvailabilityAnnotationLabel": "Tilgjengelighet"
+    },
+    "contactPoint": {
+      "helptext": {
+        "organizationalUnit": "Kontaktpunkt",
+        "hasURL": "Kontaktskjema",
+        "hasEmail": "E-post",
+        "hasTelephone": "Telefon"
+      },
+      "organizationUnitLabel": "Kontaktpunkt",
+      "hasURLLabel": "Kontaktskjema",
+      "emailLabel": "E-post",
+      "hasTelephoneLabel": "Telefon"
+    },
+    "distribution": {
+      "helptext": {
+        "type": "Type",
+        "accessURL": "Tilgangslenke",
+        "format": "Format",
+        "license": "Lisens",
+        "description": "Beskrivelse",
+        "documentation": "Lenke til dokumentasjon av distribusjonen",
+        "conformsTo": "Standard"
+      },
+      "landingPageLabel": "Landingsside",
+      "deleteDistributionLabel": "Slett distribusjon",
+      "addDistributionLabel": "Legg til distribusjon",
+      "apiLabel": "API",
+      "feedLabel": "Feed",
+      "downloadLabel": "Nedlastbar fil",
+      "accessURLLabel": "Tilgangslenke",
+      "formatLabel": "Format",
+      "descriptionLabel": "Beskrivelse"
+    },
+    "sample": {
+      "helptext": {
+        "accessURL": "Tilgangslenke",
+        "format": "Format",
+        "description": "Beskrivelse"
+      },
+      "deleteSampleLabel": "Slett eksempeldata",
+      "addSampleLabel": "Legg til eksempeldata",
+      "accessURLLabel": "Tilgangslenke",
+      "formatLabel": "Format",
+      "descriptionLabel": "Beskrivelse"
     }
   },
   "inactiveSessionWarning": {
@@ -118,6 +259,7 @@
     "buttonLogOut": "Nei, logg ut"
   },
   "datasets": {
+    "backToCatalog": "Tilbake til katalogen",
     "list": {
       "btnNewDataset": "Legg til ny datasettbeskrivelse",
       "btnImportDataset": "Importer datasett",
@@ -131,9 +273,35 @@
       "statusDraft": "Utkast"
     },
     "import": {
+      "notEmpty": "URL kan ikke være tom",
       "title": "Importer datasett fra DCAT RDF ressurs.",
       "body": "DCAT-modellen som blir importert må inneholde en katalog som har samme organisasjonsnr som katalogen du redigerer. Kun datasett som er med i denne katalogen vil bli importert.",
       "setURL": "Angi url til DCAT ressurs:"
+    },
+    "formTemplates": {
+      "title": "Tittel og beskrivelse",
+      "accessRight": "Tilgangsnivå",
+      "theme": "Tema",
+      "type": "Type",
+      "concept": "Begrep og søkeord",
+      "spatial": "Geografi, tid og språk",
+      "provenance": "Opphav og ferskhet",
+      "content": "Innhold",
+      "informationModel": "Informasjonsmodell",
+      "reference": "Relasjoner",
+      "contactInformation": "Kontaktinformasjon",
+      "distribution": "Distribusjoner",
+      "sample": "Eksempeldata"
+    },
+    "formValues": {
+      "accessRights": {
+        "restricted": "Begrenset",
+        "publicString": "Offentlig",
+        "nonPublic": "Unntatt offentlighet"
+      },
+      "references": "relasjoner",
+      "distributions": "distribusjoner",
+      "sample": "eksempeldata"
     }
   },
   "catalogs": {

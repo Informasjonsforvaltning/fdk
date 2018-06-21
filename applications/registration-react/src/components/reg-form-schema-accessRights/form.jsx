@@ -78,7 +78,7 @@ export const renderLegalBasis = customProps => {
         onClick={() => fields.push({})}
       >
         <i className="fa fa-plus mr-2" />
-        Legg til
+        {localization.schema.common.add}
       </button>
     </div>
   );
@@ -92,7 +92,7 @@ export const FormAccessRights = props => {
     <form>
       <div className="form-group">
         <Helptext
-          title="Tilgangsnivå"
+          title={localization.schema.accessRights.heading}
           helptextItems={helptextItems.Dataset_distribution}
         />
         <Field
@@ -101,7 +101,7 @@ export const FormAccessRights = props => {
           component={RadioField}
           type="radio"
           value="http://publications.europa.eu/resource/authority/access-right/PUBLIC"
-          label="Offentlig"
+          label={localization.schema.accessRights.publicLabel}
           onChange={() => resetFields(props)}
         />
         <Field
@@ -110,7 +110,7 @@ export const FormAccessRights = props => {
           component={RadioField}
           type="radio"
           value="http://publications.europa.eu/resource/authority/access-right/RESTRICTED"
-          label="Begrenset offentlighet"
+          label={localization.schema.accessRights.restrictedLabel}
         />
         <Field
           name="accessRights.uri"
@@ -118,7 +118,7 @@ export const FormAccessRights = props => {
           component={RadioField}
           type="radio"
           value="http://publications.europa.eu/resource/authority/access-right/NON_PUBLIC"
-          label="Unntatt offentlighet"
+          label={localization.schema.accessRights.nonPublicLabel}
         />
 
         {accessRight && (

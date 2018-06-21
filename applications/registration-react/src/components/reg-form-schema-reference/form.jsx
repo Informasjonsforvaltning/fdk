@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Field, FieldArray } from 'redux-form';
 
+import localization from '../../utils/localization';
 import Helptext from '../reg-form-helptext';
 import SelectField from '../reg-form-field-select';
 import asyncValidate from '../../utils/asyncValidate';
@@ -82,7 +83,7 @@ export const renderReference = componentProps => {
         onClick={() => fields.push({})}
       >
         <i className="fa fa-plus mr-2" />
-        Legg til relaterte datasett
+        {localization.schema.reference.addReferenceLabel}
       </button>
     </div>
   );
@@ -96,7 +97,7 @@ const FormReference = props => {
       <form>
         <div className="form-group">
           <Helptext
-            title="Relasjoner"
+            title={localization.schema.reference.helptext.reference}
             helptextItems={helptextItems.Dataset_relation}
           />
           <FieldArray

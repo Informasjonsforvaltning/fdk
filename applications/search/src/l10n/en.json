@@ -1,4 +1,9 @@
 {
+  "description": "Description",
+  "showFullDescription": "Show the full description",
+  "showLess": "Show less",
+  "objective": "Objective",
+  "showFullObjective": "Show the full objective",
   "app": {
     "title": "The National Data Directory",
     "titleSub": "Datasets from publishers in Norway.",
@@ -147,7 +152,6 @@
     "informationModelDefaultText": "Information model",
     "distribution": {
       "title": "Distribution",
-      "description": "Description",
       "format": "Format",
       "accessUrl": "AccessURL",
       "license": "License",

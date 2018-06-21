@@ -50,14 +50,14 @@ export const FormContentsComponent = props => {
           <div className="mt-4">
             <div className="form-group">
               <Helptext
-                title="Standard"
+                title={localization.schema.content.helptext.conformsTo}
                 helptextItems={helptextItems.Dataset_conformsTo}
               />
               <FieldArray
                 name="conformsTo"
                 component={renderStandard}
-                titleLabel={localization.schema.conformsTo.titleLabel}
-                linkLabel={localization.schema.conformsTo.linkLabel}
+                titleLabel={localization.schema.common.titleLabel}
+                linkLabel={localization.schema.common.linkLabel}
               />
             </div>
           </div>
@@ -65,18 +65,18 @@ export const FormContentsComponent = props => {
       </div>
       <div className="form-group">
         <Helptext
-          title="Relevans"
+          title={localization.schema.content.helptext.relevance}
           helptextItems={helptextItems.Dataset_hasQualityAnnotation_relevance}
         />
         <Field
           name="hasRelevanceAnnotation.hasBody.nb"
           component={TextAreaField}
-          label="Relevans"
+          label={localization.schema.content.hasRelevanceAnnotationLabel}
         />
       </div>
       <div className="form-group">
         <Helptext
-          title="Kompletthet"
+          title={localization.schema.content.helptext.completeness}
           helptextItems={
             helptextItems.Dataset_hasQualityAnnotation_completeness
           }
@@ -84,23 +84,23 @@ export const FormContentsComponent = props => {
         <Field
           name="hasCompletenessAnnotation.hasBody.nb"
           component={TextAreaField}
-          label="Kompletthet"
+          label={localization.schema.content.hasCompletenessAnnotationLabel}
         />
       </div>
       <div className="form-group">
         <Helptext
-          title="Nøyaktighet"
+          title={localization.schema.content.helptext.accuracy}
           helptextItems={helptextItems.Dataset_hasQualityAnnotation_accuracy}
         />
         <Field
           name="hasAccuracyAnnotation.hasBody.nb"
           component={TextAreaField}
-          label="Nøyaktighet"
+          label={localization.schema.content.hasAccuracyAnnotationLabel}
         />
       </div>
       <div className="form-group">
         <Helptext
-          title="Tilgjengelighet"
+          title={localization.schema.content.helptext.availability}
           helptextItems={
             helptextItems.Dataset_hasQualityAnnotation_availability
           }
@@ -108,7 +108,7 @@ export const FormContentsComponent = props => {
         <Field
           name="hasAvailabilityAnnotation.hasBody.nb"
           component={TextAreaField}
-          label="Tilgjengelighet"
+          label={localization.schema.content.hasAvailabilityAnnotationLabel}
         />
       </div>
     </form>

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
+import localization from '../../utils/localization';
 import {
   fetchUserIfNeeded,
   fetchDatasetIfNeeded,
@@ -119,7 +120,7 @@ export class RegDataset extends React.Component {
               className="fdk-text-size-small fdk-color1 font-weight-light"
               to={catalogURL}
             >
-              Tilbake til katalogen
+              {localization.datasets.backToCatalog}
             </Link>
           </div>
           {!isFetching &&
@@ -130,7 +131,7 @@ export class RegDataset extends React.Component {
             openLicenseItems && (
               <div className="col-md-8">
                 <FormTemplate
-                  title="Tittel og beskrivelse"
+                  title={localization.datasets.formTemplates.title}
                   required
                   values={titleValues(title.values)}
                   syncErrors={title.syncErrors}
@@ -139,7 +140,7 @@ export class RegDataset extends React.Component {
                 </FormTemplate>
 
                 <FormTemplate
-                  title="Tilgangsnivå"
+                  title={localization.datasets.formTemplates.accessRight}
                   required
                   values={accessRightsValues(accessRights.values)}
                   syncErrors={accessRights.syncErrors}
@@ -148,7 +149,7 @@ export class RegDataset extends React.Component {
                 </FormTemplate>
 
                 <FormTemplate
-                  title="Tema"
+                  title={localization.datasets.formTemplates.theme}
                   required
                   values={themesValues(formThemes.values)}
                   syncErrors={formThemes.syncErrors}
@@ -157,7 +158,7 @@ export class RegDataset extends React.Component {
                 </FormTemplate>
 
                 <FormTemplate
-                  title="Type"
+                  title={localization.datasets.formTemplates.type}
                   values={typeValues(type.values)}
                   syncErrors={type.syncErrors}
                 >
@@ -165,7 +166,7 @@ export class RegDataset extends React.Component {
                 </FormTemplate>
 
                 <FormTemplate
-                  title="Begrep og søkeord"
+                  title={localization.datasets.formTemplates.concept}
                   values={conceptValues(concept.values)}
                   syncErrors={concept.syncErrors}
                 >
@@ -173,7 +174,7 @@ export class RegDataset extends React.Component {
                 </FormTemplate>
 
                 <FormTemplate
-                  title="Geografi, tid og språk"
+                  title={localization.datasets.formTemplates.spatial}
                   values={spatialValues(spatial.values)}
                   syncErrors={spatial.syncErrors}
                 >
@@ -181,7 +182,7 @@ export class RegDataset extends React.Component {
                 </FormTemplate>
 
                 <FormTemplate
-                  title="Opphav og ferskhet"
+                  title={localization.datasets.formTemplates.provenance}
                   values={provenanceValues(formProvenance.values)}
                   syncErrors={formProvenance.syncErrors}
                 >
@@ -189,7 +190,7 @@ export class RegDataset extends React.Component {
                 </FormTemplate>
 
                 <FormTemplate
-                  title="Innhold"
+                  title={localization.datasets.formTemplates.content}
                   values={contentsValues(contents.values)}
                   syncErrors={contents.syncErrors}
                 >
@@ -197,7 +198,7 @@ export class RegDataset extends React.Component {
                 </FormTemplate>
 
                 <FormTemplate
-                  title="Informasjonsmodell"
+                  title={localization.datasets.formTemplates.informationModel}
                   values={informationModelValues(informationModel.values)}
                   syncErrors={informationModel.syncErrors}
                 >
@@ -205,14 +206,14 @@ export class RegDataset extends React.Component {
                 </FormTemplate>
 
                 <FormTemplate
-                  title="Relasjoner"
+                  title={localization.datasets.formTemplates.reference}
                   values={referenceValues(reference.values)}
                 >
                   <FormReference helptextItems={helptextItems} />
                 </FormTemplate>
 
                 <FormTemplate
-                  title="Kontaktinformasjon"
+                  title={localization.datasets.formTemplates.contactInformation}
                   values={contactPointValues(contactPoint.values)}
                   syncErrors={contactPoint.syncErrors}
                 >
@@ -220,7 +221,7 @@ export class RegDataset extends React.Component {
                 </FormTemplate>
 
                 <FormTemplate
-                  title="Distribusjoner"
+                  title={localization.datasets.formTemplates.distribution}
                   backgroundBlue
                   values={distributionValues(distribution.values)}
                   syncErrors={
@@ -236,7 +237,7 @@ export class RegDataset extends React.Component {
                 </FormTemplate>
 
                 <FormTemplate
-                  title="Eksempeldata"
+                  title={localization.datasets.formTemplates.sample}
                   backgroundBlue
                   values={sampleValues(sample.values)}
                   syncErrors={
@@ -258,7 +259,6 @@ export class RegDataset extends React.Component {
                       : result.registrationStatus
                   }
                   lastSaved={lastSaved || result._lastModified}
-                  // syncErrors={!!((concept && concept.syncErrors) || (title && title.syncErrors))}
                   syncErrors={
                     !!(
                       (title && title.syncErrors) ||
@@ -388,7 +388,7 @@ function mapStateToProps({
 
   const title = form && form.title ? form.title : {};
 
-  const accessRights = form && form.accessRight ? form.accessRight : {};
+  const accessRights = form && form.accessRights ? form.accessRights : {};
 
   const formThemes = form && form.themes ? form.themes : {};
 

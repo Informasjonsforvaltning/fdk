@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Field, FieldArray } from 'redux-form';
 
+import localization from '../../utils/localization';
 import Helptext from '../reg-form-helptext';
 import InputTagsFieldArray from '../reg-form-field-input-tags-objects';
 import DatepickerField from '../reg-form-field-datepicker';
@@ -15,7 +16,7 @@ export const renderTemporalFields = (item, index, fields, componentProps) => (
         name={`${item}.startDate`}
         type="text"
         component={DatepickerField}
-        label="Fra"
+        label={localization.schema.common.startDateLabel}
         showLabel
       />
     </div>
@@ -24,7 +25,7 @@ export const renderTemporalFields = (item, index, fields, componentProps) => (
         name={`${item}.endDate`}
         type="text"
         component={DatepickerField}
-        label="Til"
+        label={localization.schema.common.endDateLabel}
         showLabel
       />
     </div>
@@ -71,7 +72,7 @@ export const renderTemporal = componentProps => {
         onClick={() => fields.push({})}
       >
         <i className="fa fa-plus mr-2" />
-        Legg til tidsperiode
+        {localization.schema.common.addTime}
       </button>
     </div>
   );
@@ -84,39 +85,39 @@ const FormSpatial = props => {
       <form>
         <div className="form-group">
           <Helptext
-            title="Geografisk avgrensning"
+            title={localization.schema.spatial.helptext.spatial}
             helptextItems={helptextItems.Dataset_spatial}
           />
           <Field
             name="spatial"
             type="text"
             component={InputTagsFieldArray}
-            label="Geografisk avgrensning"
+            label={localization.schema.spatial.spatialLabel}
             fieldLabel="uri"
           />
         </div>
         <div className="form-group">
           <Helptext
-            title="Tidsmessig avgrenset til"
+            title={localization.schema.spatial.helptext.temporal}
             helptextItems={helptextItems.Dataset_temporal}
           />
           <FieldArray name="temporal" component={renderTemporal} />
         </div>
         <div className="form-group">
           <Helptext
-            title="Utgivelsesdato"
+            title={localization.schema.spatial.helptext.issued}
             helptextItems={helptextItems.Dataset_issued}
           />
           <Field
             name="issued"
             type="text"
             component={DatepickerField}
-            label="Utgivelsesdato"
+            label={localization.schema.spatial.issuedLabel}
           />
         </div>
         <div className="form-group">
           <Helptext
-            title="Språk"
+            title={localization.schema.spatial.helptext.language}
             helptextItems={helptextItems.Dataset_language}
           />
           <Field name="language" component={CheckboxField} />

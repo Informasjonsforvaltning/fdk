@@ -2,7 +2,7 @@
 
 Docker image: [dcatno/harvester-api](https://hub.docker.com/r/dcatno/harvester-api/)
 Base image: [openjdk:8-jre](https://hub.docker.com/_/openjdk/)
-Source: [Dockerfile](https://github.com/Altinn/fdk/blob/master/applications/harvester-api/src/main/docker/Dockerfile)
+Source: [Dockerfile](https://github.com/Informasjonsforvaltning/fdk/blob/master/applications/harvester-api/src/main/docker/Dockerfile)
 
 ## Overview
 The harvester api runs harvests of DCAT-AP-NO 1.1 data at regular intervals.

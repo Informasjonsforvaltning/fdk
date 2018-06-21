@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
+import localization from '../../utils/localization';
+
 export default class AppImportModal extends React.Component {
   constructor(props) {
     super(props);
@@ -24,7 +26,7 @@ export default class AppImportModal extends React.Component {
       });
     } else {
       this.setState({
-        errorMsg: 'URL kan ikke være tom'
+        errorMsg: localization.datasets.import.notEmpty
       });
     }
   }

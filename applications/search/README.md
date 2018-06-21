@@ -2,7 +2,7 @@
 
 Docker image: [dcatno/search](https://hub.docker.com/r/dcatno/search/)
 Base image: [node:6.11]()
-Source: [Dockerfile](https://github.com/Altinn/fdk/blob/master/applications/search/Dockerfile)
+Source: [Dockerfile](https://github.com/Informasjonsforvaltning/fdk/blob/master/applications/search/Dockerfile)
 
 Provides query and filtering capabilities for searching a collection of DCAT catalogs and concepts.
 The search application access a search-api and a database cluster (elasticsearch/fuseki) and presents search results to the user in a web ui.

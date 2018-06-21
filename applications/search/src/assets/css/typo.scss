@@ -48,7 +48,8 @@ h5 {
     margin: 0px 0px .4rem 0px;
 }
 
-p {
+/* React warns against placing div inside a paragraph, so let's create paragraph-like div instead*/
+p, .p {
     margin: 0 0 2.3rem 0;
 }
 
@@ -57,6 +58,7 @@ p {
     line-height: 2.8rem;
     font-weight: 400;
     margin: 0 0 2.8rem 0;
+    word-wrap: break-word;
 }
 
 .fdk-ingress-detail {
@@ -144,6 +146,14 @@ a:hover {
     letter-spacing: 0.03rem;
     margin-right: 10px;
     font-size: 1.6rem;
+}
+
+.fdk-national {
+    color: $color-cta2;
+    letter-spacing: 0.03rem;
+    strong {
+        font-size: 1.4rem;
+    }
 }
 
 .fdk-p-path {

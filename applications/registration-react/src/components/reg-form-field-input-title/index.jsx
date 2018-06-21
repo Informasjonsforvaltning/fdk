@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import localization from '../../utils/localization';
 import './index.scss';
 
 export default class InputTitleField extends React.Component {
@@ -46,7 +47,7 @@ export default class InputTitleField extends React.Component {
               }}
             >
               <i className="fa fa-pencil mr-2" />
-              Rediger tittel
+              {localization.app.editTitle}
             </button>
           )}
         </div>

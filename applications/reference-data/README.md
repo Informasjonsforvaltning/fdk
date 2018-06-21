@@ -2,7 +2,7 @@
 
 Docker image: [dcatno/reference-data-api](https://hub.docker.com/r/dcatno/registration-api/)
 Base image: [frolvlad/alpine-oraclejdk8:slim](https://hub.docker.com/r/frolvlad/alpine-oraclejdk8/)
-Source: [Dockerfile](https://github.com/Altinn/fdk/blob/develop/applications/reference-data/src/main/docker/Dockerfile)
+Source: [Dockerfile](https://github.com/Informasjonsforvaltning/fdk/develop/applications/reference-data/src/main/docker/Dockerfile)
 
 ##  Overview
 Reference-data is a service that provides metadata for the various applications in this ecosystem. It provides code-lists, concepts and helptexts. 

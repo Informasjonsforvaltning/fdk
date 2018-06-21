@@ -48,7 +48,9 @@ const FormInformationModel = props => {
           <div className="mt-4">
             <div className="form-group">
               <Helptext
-                title="Informasjonsmodell"
+                title={
+                  localization.schema.informationModel.helptext.informationModel
+                }
                 helptextItems={helptextItems.Dataset_informationModel}
               />
               <FieldArray
