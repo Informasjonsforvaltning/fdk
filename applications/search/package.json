@@ -41,11 +41,13 @@
     "compression": "1.7.0",
     "copy-webpack-plugin": "^4.5.1",
     "css-loader": "^0.28.7",
+    "designsystemet": "git+https://github.com/Informasjonsforvaltning/designsystemet.git#d73ff1f27335095f0e6b3ec365e1382eb803dae3",
     "detect-browser": "^2.1.0",
     "ejs": "^2.3.4",
     "express": "4.15.4",
     "extract-text-webpack-plugin": "^3.0.0",
     "file-loader": "^0.11.2",
+    "font-awesome": "^4.7.0",
     "history": "^4.7.2",
     "imports-loader": "^0.7.1",
     "lodash": "^4.17.4",
@@ -81,9 +83,9 @@
     "ts-loader": "^2.3.7",
     "url-loader": "^0.5.9",
     "webpack": "^3.6.0",
+    "webpack-config": "^7.4.0",
     "webpack-dev-middleware": "^1.2.0",
-    "webpack-hot-middleware": "^2.5.0",
-    "webpack-config": "^7.4.0"
+    "webpack-hot-middleware": "^2.5.0"
   },
   "devDependencies": {
     "chai": "^4.1.2",
