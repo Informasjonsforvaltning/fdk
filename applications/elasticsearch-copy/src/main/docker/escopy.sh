@@ -128,3 +128,7 @@ rm /escopydata/harvest_analyzer.json
 echo "Elasticsearch index copy finished" >> /escopydata/backup.log 2>&1
 cp /escopydata/backup.log /escopydata/harvest_`date +%Y-%m-%dT%H-%M.log`
 rm /escopydata/backup.log
+
+#delete files older than a week
+find /escopydata/ -type f -mtime +7 -name '*.tgz' -exec rm -- '{}' \;
+find /escopydata/ -type f -mtime +7 -name '*.log' -exec rm -- '{}' \;
