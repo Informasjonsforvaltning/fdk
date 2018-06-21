@@ -304,17 +304,19 @@ public class BrregAgentConverter {
                 // merge master data into model. The model will only be updated if model and master have same publisher uri.
                 model.add(masterDataModel);
 
-                // add original organisation name to prefLabel
+                String preferredName = null;
                 if (originalOrganisationName != null) {
-                    model.add(publisherResource, SKOS.prefLabel, model.createLiteral(originalOrganisationName, "no"));
-                } else if (organisationNumber != null && canonicalNames.containsKey(organisationNumber)) {
-                    // Name hack: Organization with no original name is named according to canonical names table
-                    String organizationName = canonicalNames.get(organisationNumber);
+                    // use original organisation name in prefLabel
+                    preferredName = organisationNumber;
+                }
 
-                    if (organizationName != null) {
-                        logger.info("Rename publisher {} to {}", organisationNumber, organizationName);
-                        model.add(publisherResource, SKOS.prefLabel, model.createLiteral(organizationName, "no"));
-                    }
+                if (organisationNumber != null && canonicalNames.containsKey(organisationNumber)) {
+                    // Name hack: use predefined organization name from canonical names table
+                    preferredName = canonicalNames.get(organisationNumber);
+                }
+                
+                if (preferredName != null) {
+                    model.add(publisherResource, SKOS.prefLabel, model.createLiteral(preferredName, "no"));
                 }
 
                 model.addLiteral(publisherResource, DCTerms.valid, true);
