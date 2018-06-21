@@ -12,7 +12,15 @@ import { AboutPage } from '../pages/about-page/about-page.component';
 import { ArticlePage } from '../pages/article-page/article-page.component';
 import { ReportsPage } from '../pages/reports-page/reports-page.container';
 import { Breadcrumbs } from './breadcrumbs/breadcrumbs.component';
-import '../assets/css/main.scss';
+
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/css/bootstrap-theme.css';
+import 'designsystemet/fdk-designsystem-bootstrap3/scss/portal.scss';
+import 'designsystemet/fdk-designsystem-bootstrap3/scss/typo.scss';
+import 'designsystemet/fdk-designsystem-bootstrap3/scss/common.scss';
+import 'designsystemet/fdk-designsystem-bootstrap3/scss/animations.scss';
+import 'font-awesome/scss/font-awesome.scss';
+import '../assets/css/custom.scss'
 
 const getLangUrl = langCode => {
   const href = window.location.search;
