@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import {ResultsDataset} from './results-dataset.component';
+import { ResultsDataset } from './results-dataset.component';
 import datasetItems from '../../../../test/fixtures/datasetItems';
 
 let closeFilterModal;

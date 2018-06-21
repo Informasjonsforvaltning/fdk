@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {ResultsDatasetsReport} from './results-datasets-report/results-datasets-report.component';
+import { ResultsDatasetsReport } from './results-datasets-report/results-datasets-report.component';
 
 export class ReportsPage extends React.Component {
   constructor(props) {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import {DatasetBegrep} from './dataset-begrep.component';
+import { DatasetBegrep } from './dataset-begrep.component';
 import datasets from '../../../../test/fixtures/datasets';
 
 test('should render DatasetBegrep correctly with no props', () => {

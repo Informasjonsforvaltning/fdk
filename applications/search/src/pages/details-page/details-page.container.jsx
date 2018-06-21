@@ -6,14 +6,14 @@ import {
   fetchDatasetDetailsIfNeeded,
   resetDatasetDetails
 } from '../../redux/actions/index';
-import {DatasetDescription} from './dataset-description/dataset-description.component';
-import {DatasetKeyInfo} from './dataset-key-info/dataset-key-info.component';
-import {DatasetDistribution} from './dataset-distribution/dataset-distribution.component';
-import {DatasetInfo} from './dataset-info/dataset-info.component';
-import {DatasetQuality} from './dataset-quality/dataset-quality.component';
-import {DatasetBegrep} from './dataset-begrep/dataset-begrep.component';
-import {DatasetLandingPage} from './dataset-landing-page/dataset-landing-page.component';
-import {DatasetContactInfo} from './dataset-contact-info/dataset-contact-info.component';
+import { DatasetDescription } from './dataset-description/dataset-description.component';
+import { DatasetKeyInfo } from './dataset-key-info/dataset-key-info.component';
+import { DatasetDistribution } from './dataset-distribution/dataset-distribution.component';
+import { DatasetInfo } from './dataset-info/dataset-info.component';
+import { DatasetQuality } from './dataset-quality/dataset-quality.component';
+import { DatasetBegrep } from './dataset-begrep/dataset-begrep.component';
+import { DatasetLandingPage } from './dataset-landing-page/dataset-landing-page.component';
+import { DatasetContactInfo } from './dataset-contact-info/dataset-contact-info.component';
 import localization from '../../lib/localization';
 import { getTranslateText } from '../../lib/translateText';
 
@@ -369,4 +369,6 @@ const mapDispatchToProps = dispatch => ({
   resetDatasetDetails: () => dispatch(resetDatasetDetails())
 });
 
-export const DetailsPage = connect(mapStateToProps, mapDispatchToProps)(PureDetailsPage);
+export const DetailsPage = connect(mapStateToProps, mapDispatchToProps)(
+  PureDetailsPage
+);

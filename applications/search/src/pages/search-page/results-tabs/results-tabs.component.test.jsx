@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import {ResultsTabs} from './results-tabs.component.jsx';
+import { ResultsTabs } from './results-tabs.component';
 
 test('should render ResultsTabs with "Dataset" active correctly', () => {
   const defaultProps = {

@@ -30,7 +30,7 @@ export const AboutPage = () => {
             />
             <p>
               <b>{localization.about.register}</b>
-              <br/>
+              <br />
               <Link to="/about-registration">
                 {localization.about.helpToRegister}
               </Link>
@@ -52,4 +52,4 @@ export const AboutPage = () => {
       </div>
     </div>
   );
-}
+};

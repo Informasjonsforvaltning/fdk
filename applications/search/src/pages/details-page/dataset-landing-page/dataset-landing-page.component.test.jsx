@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import {DatasetLandingPage} from './dataset-landing-page.component';
+import { DatasetLandingPage } from './dataset-landing-page.component';
 
 let defaultProps;
 let wrapper;

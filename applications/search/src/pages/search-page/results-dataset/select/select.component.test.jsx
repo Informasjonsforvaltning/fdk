@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import {Select} from './select.component';
+import { Select } from './select.component';
 
 let onChange;
 let items;

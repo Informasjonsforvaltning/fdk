@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import {FilterOption} from './filter-option.component';
+import { FilterOption } from './filter-option.component';
 import filterOptions from '../../../../test/fixtures/filterOptions';
 
 test('should render FilterOption correctly', () => {

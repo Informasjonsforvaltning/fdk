@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import {SearchPublishersTree} from './search-publishers-tree.component';
+import { SearchPublishersTree } from './search-publishers-tree.component';
 import publishers from '../../../../test/fixtures/publishers';
 import filter from '../../../../test/fixtures/filter';
 

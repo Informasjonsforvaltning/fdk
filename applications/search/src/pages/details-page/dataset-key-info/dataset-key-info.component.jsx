@@ -5,7 +5,7 @@ import './dataset-key-info.scss';
 
 import localization from '../../../lib/localization';
 import { getTranslateText } from '../../../lib/translateText';
-import {LinkExternal} from '../../../components/link-external/link-external.component';
+import { LinkExternal } from '../../../components/link-external/link-external.component';
 
 export class DatasetKeyInfo extends React.Component {
   // eslint-disable-line react/prefer-stateless-function

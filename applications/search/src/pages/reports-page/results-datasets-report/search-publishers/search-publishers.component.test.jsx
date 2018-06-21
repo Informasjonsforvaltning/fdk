@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import {SearchPublishers} from './search-publishers.component';
+import { SearchPublishers } from './search-publishers.component';
 
 let onSearch;
 let defaultProps;

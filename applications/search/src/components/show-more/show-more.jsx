@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import localization from '../../lib/localization';
-import './show-more.scss'
+import './show-more.scss';
 
 export class ShowMore extends React.Component {
   constructor(props) {
@@ -20,7 +20,7 @@ export class ShowMore extends React.Component {
   _renderContent() {
     return (
       <span className="fdk-ingress">
-        {this.props.label && (<strong>{this.props.label}: </strong>)}
+        {this.props.label && <strong>{this.props.label}: </strong>}
         <span
           dangerouslySetInnerHTML={{
             __html: this.props.contentHtml
@@ -36,15 +36,13 @@ export class ShowMore extends React.Component {
     let content;
 
     if (textLength < COLLAPSE_THRESHOLD) {
-      content = this._renderContent()
+      content = this._renderContent();
     } else if (!this.state.showAll) {
       content = (
         <React.Fragment>
-          <div className="show-more__cropped-box">
-            {this._renderContent()}
-          </div>
+          <div className="show-more__cropped-box">{this._renderContent()}</div>
           <button className="fdk-button-small" onClick={this.toggleShowAll}>
-            <i className="fa mr-2 fa-angle-double-down"/>
+            <i className="fa mr-2 fa-angle-double-down" />
             <span>{this.props.showMoreButtonText}</span>
           </button>
         </React.Fragment>
@@ -54,13 +52,13 @@ export class ShowMore extends React.Component {
         <React.Fragment>
           <div>{this._renderContent()}</div>
           <button className="fdk-button-small" onClick={this.toggleShowAll}>
-            <i className="fa mr-2 fa-angle-double-up"/>
+            <i className="fa mr-2 fa-angle-double-up" />
             <span>{this.props.showLessButtonText}</span>
           </button>
         </React.Fragment>
-      )
+      );
     }
-    return (<div className="p">{content}</div>)
+    return <div className="p">{content}</div>;
   }
 }
 

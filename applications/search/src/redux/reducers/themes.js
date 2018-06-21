@@ -1,8 +1,4 @@
-import {
-  THEMES_REQUEST,
-  THEMES_SUCCESS,
-  THEMES_FAILURE
-} from '../ActionTypes';
+import { THEMES_REQUEST, THEMES_SUCCESS, THEMES_FAILURE } from '../ActionTypes';
 
 export default function themes(
   state = { isFetchingThemes: false, themesItems: null },

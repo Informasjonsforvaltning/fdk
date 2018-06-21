@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import {DatasetDistribution} from './dataset-distribution.component';
+import { DatasetDistribution } from './dataset-distribution.component';
 import datasets from '../../../../test/fixtures/datasets';
 // import openLicenses from '../../fixtures/openLicenses';
 

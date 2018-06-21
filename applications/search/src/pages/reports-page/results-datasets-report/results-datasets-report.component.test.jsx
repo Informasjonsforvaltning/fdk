@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import {ResultsDatasetsReport} from './results-datasets-report.component';
+import { ResultsDatasetsReport } from './results-datasets-report.component';
 import aggregateDataset from '../../../../test/fixtures/aggregateDataset';
 
 test('should render ResultsDatasetsReport correctly with props', () => {

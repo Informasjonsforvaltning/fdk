@@ -5,10 +5,10 @@ import { Modal, Button } from 'react-bootstrap';
 import cx from 'classnames';
 
 import localization from '../../../lib/localization';
-import {ConceptsHitItem} from './concepts-hit-item/concepts-hit-item.component';
-import {CompareTerms} from './compare-terms/compare-terms.component';
-import {CompareTermModal} from './compare-term-modal/compare-term-modal.component';
-import {SearchPublishersTree} from '../search-publishers-tree/search-publishers-tree.component';
+import { ConceptsHitItem } from './concepts-hit-item/concepts-hit-item.component';
+import { CompareTerms } from './compare-terms/compare-terms.component';
+import { CompareTermModal } from './compare-term-modal/compare-term-modal.component';
+import { SearchPublishersTree } from '../search-publishers-tree/search-publishers-tree.component';
 
 export class ResultsConcepts extends React.Component {
   constructor(props) {

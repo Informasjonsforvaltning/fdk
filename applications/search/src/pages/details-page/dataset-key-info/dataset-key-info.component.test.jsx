@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import {DatasetKeyInfo} from './dataset-key-info.component';
+import { DatasetKeyInfo } from './dataset-key-info.component';
 import datasets from '../../../../test/fixtures/datasets';
 
 let defaultProps;

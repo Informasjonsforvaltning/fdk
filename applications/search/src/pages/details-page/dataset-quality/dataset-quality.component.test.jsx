@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import {DatasetQuality} from './dataset-quality.component';
+import { DatasetQuality } from './dataset-quality.component';
 
 let defaultProps;
 let wrapper;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import {SearchBox} from './search-box.component';
+import { SearchBox } from './search-box.component';
 
 let onSearchSubmit;
 let onSearchChange;

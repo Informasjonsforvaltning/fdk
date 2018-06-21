@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import {CompareTermModalContent} from './compare-term-modal-content.component';
+import { CompareTermModalContent } from './compare-term-modal-content.component';
 import concepts from '../../../../../../test/fixtures/concepts';
 
 let defaultProps;

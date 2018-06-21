@@ -4,7 +4,7 @@ import cx from 'classnames';
 
 import localization from '../../../lib/localization';
 import { getTranslateText } from '../../../lib/translateText';
-import {DistributionFormat} from '../../../components/distribution-format/distribution-format.component';
+import { DistributionFormat } from '../../../components/distribution-format/distribution-format.component';
 import './dataset-distribution.scss';
 
 export class DatasetDistribution extends React.Component {

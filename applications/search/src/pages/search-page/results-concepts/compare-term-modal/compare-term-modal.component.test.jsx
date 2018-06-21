@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import {CompareTermModal} from './compare-term-modal.component';
+import { CompareTermModal } from './compare-term-modal.component';
 import concepts from '../../../../../test/fixtures/concepts';
 
 let handleDeleteTerm;

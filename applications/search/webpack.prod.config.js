@@ -84,9 +84,7 @@ module.exports = {
     new webpack.optimize.OccurrenceOrderPlugin(true),
     new ExtractTextPlugin('styles.css'),
     new CopyWebpackPlugin(
-      [
-        { from: './src/static/img/*', to: './img' , flatten: true}
-      ],
+      [{ from: './src/static/img/*', to: './img', flatten: true }],
       {
         copyUnmodified: true
       }
