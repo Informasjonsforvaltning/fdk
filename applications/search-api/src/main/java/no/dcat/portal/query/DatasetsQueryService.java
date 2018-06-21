@@ -211,12 +211,6 @@ public class DatasetsQueryService extends ElasticsearchService {
         // add filter
         BoolQueryBuilder boolQuery = addFilter(theme, publisher, accessRights, search, orgPath, firstHarvested, lastHarvested, lastChanged, subject, provenance, spatial, opendata);
 
-        AggregationBuilder openDataSets = AggregationBuilders.filter("opendata")
-                .filter(QueryBuilders.boolQuery()
-                        .must(QueryBuilders.termQuery("accessRights.code.raw", "PUBLIC"))
-                        .must(QueryBuilders.termQuery("distribution.openLicense", "true"))
-                );
-
         // set up search query with aggregations
         SearchRequestBuilder searchBuilder = getClient().prepareSearch("dcat")
                 .setTypes("dataset")
@@ -234,7 +228,7 @@ public class DatasetsQueryService extends ElasticsearchService {
                 .addAggregation(temporalAggregation("lastChanged", "harvest.lastChanged"))
                 .addAggregation(AggregationBuilders.missing("missingLastChanged").field("harvest.lastChanged"))
                 .addAggregation(createAggregation("spatial", "spatial.prefLabel.no.raw", UNKNOWN))
-                .addAggregation(openDataSets);
+                .addAggregation(getOpendataAggregation());
 
 
         logger.trace("Query: {}", searchBuilder.toString());
@@ -255,6 +249,14 @@ public class DatasetsQueryService extends ElasticsearchService {
 
         // return response
         return new ResponseEntity<String>(response.toString(), HttpStatus.OK);
+    }
+
+    public AggregationBuilder getOpendataAggregation() {
+        return AggregationBuilders.filter("opendata")
+                    .filter(QueryBuilders.boolQuery()
+                            .must(QueryBuilders.termQuery("accessRights.code.raw", "PUBLIC"))
+                            .must(QueryBuilders.termQuery("distribution.openLicense", "true"))
+                    );
     }
 
     private void addSortForEmptySearch(SearchRequestBuilder searchBuilder) {
@@ -695,8 +697,6 @@ public class DatasetsQueryService extends ElasticsearchService {
         AggregationBuilder datasetsWithDistribution = AggregationBuilders.filter("distCount")
                 .filter(QueryBuilders.existsQuery("distribution"));
 
-
-
         AggregationBuilder datasetsWithSubject = AggregationBuilders.filter("subjectCount")
                 .filter(QueryBuilders.existsQuery("subject.prefLabel"));
 
@@ -714,7 +714,8 @@ public class DatasetsQueryService extends ElasticsearchService {
                 .addAggregation(temporalAggregation("lastChanged", "harvest.lastChanged"))
                 .addAggregation(AggregationBuilders.missing("missingLastChanged").field("harvest.lastChanged"))
                 .addAggregation(datasetsWithDistribution)
-                .addAggregation(datasetsWithSubject);
+                .addAggregation(datasetsWithSubject)
+                .addAggregation(getOpendataAggregation());
 
         // Execute search
         SearchResponse response = searchBuilder.execute().actionGet();
