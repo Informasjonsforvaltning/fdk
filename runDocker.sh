@@ -6,8 +6,6 @@ set -e
  docker-compose stop $1 || true
  docker-compose up -d $1
 
-docker-compose restart nginx-registration
-
 if [ "$2" == "logs" ]; then
    docker-compose logs -f $1
 fi
