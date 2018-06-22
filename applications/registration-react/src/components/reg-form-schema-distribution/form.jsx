@@ -127,7 +127,7 @@ export const renderDistributions = componentProps => {
                 helptextItems={helptextItems.Distribution_description}
               />
               <Field
-                name={`${distribution}.description.nb`}
+                name={`${distribution}.description.${localization.getLanguage()}`}
                 component={TextAreaField}
                 label={localization.schema.distribution.descriptionLabel}
               />
@@ -153,7 +153,7 @@ export const renderDistributions = componentProps => {
               <div className="d-flex">
                 <div className="w-50">
                   <Field
-                    name={`${distribution}.conformsTo[0].prefLabel.nb`}
+                    name={`${distribution}.conformsTo[0].prefLabel.${localization.getLanguage()}`}
                     component={InputField}
                     showLabel
                     label={localization.schema.common.titleLabel}

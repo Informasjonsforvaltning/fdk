@@ -11,7 +11,7 @@ export const validateRequired = (
 ) => {
   if (!value) {
     errors[`${nameOfObject}`] = useLangField
-      ? { nb: localization.validation.required }
+      ? { [localization.getLanguage()]: localization.validation.required }
       : localization.validation.required;
   }
   return errors;
@@ -21,7 +21,7 @@ export const validateMinTwoChars = (
   nameOfObject,
   value,
   errors,
-  nameOfObjectField = 'nb',
+  nameOfObjectField = localization.getLanguage(),
   useLangField = true
 ) => {
   if (value && value.length < 2) {
@@ -41,7 +41,7 @@ export const validateAtLeastRequired = (
 ) => {
   if (value && value.length <= minRequired) {
     errors[`${nameOfObject}`] = useLangField
-      ? { nb: localization.validation.required }
+      ? { [localization.getLanguage()]: localization.validation.required }
       : localization.validation.required;
   }
   return errors;
@@ -67,7 +67,7 @@ export const validateLinkReturnAsSkosType = (
   nameOfObject,
   value,
   errors,
-  nameOfObjectField = 'nb',
+  nameOfObjectField = localization.getLanguage(),
   useLangField = true
 ) => {
   if (value && !isURL(value)) {

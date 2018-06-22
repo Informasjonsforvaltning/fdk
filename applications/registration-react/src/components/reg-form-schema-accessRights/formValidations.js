@@ -1,15 +1,14 @@
+import _get from 'lodash/get';
 import {
   validateRequired,
   validateMinTwoChars,
   validateURL
 } from '../../validation/validation';
+import localization from '../../utils/localization';
 
 const validate = values => {
   let errors = {};
-  const accessRight =
-    values.accessRights && values.accessRights.uri
-      ? values.accessRights.uri
-      : null;
+  const accessRight = _get(values, ['accessRights', 'uri'], null);
   const {
     legalBasisForRestriction,
     legalBasisForProcessing,
@@ -24,9 +23,12 @@ const validate = values => {
   if (legalBasisForRestriction) {
     legalBasisForRestrictionNodes = legalBasisForRestriction.map(item => {
       let itemErrors = {};
-      const legalBasisForRestrictionPrefLabel =
-        item.prefLabel && item.prefLabel.nb ? item.prefLabel.nb : null;
-      const legalBasisForRestrictionURI = item.uri ? item.uri : null;
+      const legalBasisForRestrictionPrefLabel = _get(
+        item,
+        ['prefLabel', localization.getLanguage()],
+        null
+      );
+      const legalBasisForRestrictionURI = item.uri || null;
 
       itemErrors = validateMinTwoChars(
         'prefLabel',
@@ -50,8 +52,11 @@ const validate = values => {
   if (legalBasisForProcessing) {
     legalBasisForProcessingNodes = legalBasisForProcessing.map(item => {
       let itemErrors = {};
-      const legalBasisForProcessingPrefLabel =
-        item.prefLabel && item.prefLabel.nb ? item.prefLabel.nb : null;
+      const legalBasisForProcessingPrefLabel = _get(
+        item,
+        ['prefLabel', localization.getLanguage()],
+        null
+      );
       const legalBasisForProcessingURI = item.uri ? item.uri : null;
 
       itemErrors = validateMinTwoChars(
@@ -76,8 +81,11 @@ const validate = values => {
   if (legalBasisForAccess) {
     legalBasisForAccessNodes = legalBasisForAccess.map(item => {
       let itemErrors = {};
-      const legalBasisForAccessPrefLabel =
-        item.prefLabel && item.prefLabel.nb ? item.prefLabel.nb : null;
+      const legalBasisForAccessPrefLabel = _get(
+        item,
+        ['prefLabel', localization.getLanguage()],
+        null
+      );
       const legalBasisForAccessURI = item.uri ? item.uri : null;
 
       itemErrors = validateMinTwoChars(

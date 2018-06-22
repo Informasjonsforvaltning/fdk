@@ -4,12 +4,13 @@ import { Link } from 'react-router-dom';
 import cx from 'classnames';
 
 import localization from '../../utils/localization';
+import getTranslateText from '../../utils/translateText';
 import './index.scss';
 
 const DatasetItemsListItem = props => {
   const { catalogId, item } = props;
   const itemClass = cx('w-75', 'fdk-text-size-small', {
-    'fdk-color2': item.title && !item.title.nb
+    'fdk-color2': item && !getTranslateText(item.title)
   });
   return (
     <div className="fdk-datasets-list-item d-flex">
@@ -20,9 +21,8 @@ const DatasetItemsListItem = props => {
         >
           <div className="d-flex justify-content-between">
             <span className={itemClass}>
-              {item.title.nb
-                ? item.title.nb
-                : localization.datasets.list.missingTitle}
+              {getTranslateText(item.title) ||
+                localization.datasets.list.missingTitle}
             </span>
             <span className="d-flex w-25">
               {item.registrationStatus === 'PUBLISH' && (

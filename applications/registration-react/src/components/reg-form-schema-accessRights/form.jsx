@@ -22,7 +22,7 @@ export const renderLegalBasisFields = (item, index, fields, customProps) => (
   <div className="d-flex mb-2" key={index}>
     <div className="w-50">
       <Field
-        name={`${item}.prefLabel.nb`}
+        name={`${item}.prefLabel.${localization.getLanguage()}`}
         component={InputField}
         label={customProps.titleLabel}
         showLabel
@@ -122,7 +122,9 @@ export const FormAccessRights = props => {
         />
 
         {accessRight && (
-          <div className="alert alert-danger mt-3">{accessRight.nb}</div>
+          <div className="alert alert-danger mt-3">
+            {accessRight[localization.getLanguage()]}
+          </div>
         )}
 
         {(hasAccessRightsURI ===

@@ -52,7 +52,8 @@ export const renderProvenance = componentProps => {
             />
             {/* eslint-enable jsx-a11y/label-has-for */}
             <span>
-              {provenanceItems[key].prefLabel.no ||
+              {provenanceItems[key].prefLabel[localization.getLanguage()] ||
+                provenanceItems[key].prefLabel.no ||
                 provenanceItems[key].prefLabel.nb}
             </span>
           </div>
@@ -113,7 +114,7 @@ const FormProvenance = props => {
             }
           />
           <Field
-            name="hasCurrentnessAnnotation.hasBody.nb"
+            name={`hasCurrentnessAnnotation.hasBody.${localization.getLanguage()}`}
             component={TextAreaField}
             label={localization.schema.provenance.hasCurrentnessAnnotationLabel}
           />

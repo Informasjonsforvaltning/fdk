@@ -11,7 +11,7 @@ export const renderStandardFields = (item, index, fields, fieldProps) => (
   <div className="d-flex mb-5" key={index}>
     <div className="w-50">
       <Field
-        name={`${item}.prefLabel.nb`}
+        name={`${item}.prefLabel.${localization.getLanguage()}`}
         component={InputField}
         label={fieldProps.titleLabel}
         showLabel
@@ -69,7 +69,7 @@ export const FormContentsComponent = props => {
           helptextItems={helptextItems.Dataset_hasQualityAnnotation_relevance}
         />
         <Field
-          name="hasRelevanceAnnotation.hasBody.nb"
+          name={`hasRelevanceAnnotation.hasBody.${localization.getLanguage()}`}
           component={TextAreaField}
           label={localization.schema.content.hasRelevanceAnnotationLabel}
         />
@@ -82,7 +82,7 @@ export const FormContentsComponent = props => {
           }
         />
         <Field
-          name="hasCompletenessAnnotation.hasBody.nb"
+          name={`hasCompletenessAnnotation.hasBody.${localization.getLanguage()}`}
           component={TextAreaField}
           label={localization.schema.content.hasCompletenessAnnotationLabel}
         />
@@ -93,7 +93,7 @@ export const FormContentsComponent = props => {
           helptextItems={helptextItems.Dataset_hasQualityAnnotation_accuracy}
         />
         <Field
-          name="hasAccuracyAnnotation.hasBody.nb"
+          name={`hasAccuracyAnnotation.hasBody.${localization.getLanguage()}`}
           component={TextAreaField}
           label={localization.schema.content.hasAccuracyAnnotationLabel}
         />
@@ -106,7 +106,7 @@ export const FormContentsComponent = props => {
           }
         />
         <Field
-          name="hasAvailabilityAnnotation.hasBody.nb"
+          name={`hasAvailabilityAnnotation.hasBody.${localization.getLanguage()}`}
           component={TextAreaField}
           label={localization.schema.content.hasAvailabilityAnnotationLabel}
         />

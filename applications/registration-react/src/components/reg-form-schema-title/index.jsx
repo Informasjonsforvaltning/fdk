@@ -1,6 +1,7 @@
 import { reduxForm, getFormSyncErrors } from 'redux-form';
 import { connect } from 'react-redux';
 
+import localization from '../../utils/localization';
 import Form from './form';
 import validate from './formValidations';
 import asyncValidate from '../../utils/asyncValidate';
@@ -23,20 +24,20 @@ const mapStateToProps = ({ dataset }) => ({
   initialValues: {
     title:
       dataset.result.title &&
-      dataset.result.title.nb &&
-      dataset.result.title.nb.length > 0
+      dataset.result.title[localization.getLanguage()] &&
+      dataset.result.title[localization.getLanguage()].length > 0
         ? dataset.result.title
         : textType,
     description:
       dataset.result.description &&
-      dataset.result.description.nb &&
-      dataset.result.description.nb.length > 0
+      dataset.result.description[localization.getLanguage()] &&
+      dataset.result.description[localization.getLanguage()].length > 0
         ? dataset.result.description
         : textType,
     objective:
       dataset.result.objective &&
-      dataset.result.objective.nb &&
-      dataset.result.objective.nb.length > 0
+      dataset.result.objective[localization.getLanguage()] &&
+      dataset.result.objective[localization.getLanguage()].length > 0
         ? dataset.result.objective
         : textType,
     landingPage: dataset.result.landingPage || emptyArray

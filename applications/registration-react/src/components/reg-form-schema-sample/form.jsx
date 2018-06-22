@@ -66,7 +66,7 @@ export const renderSamples = componentProps => {
                 helptextItems={helptextItems.Distribution_description}
               />
               <Field
-                name={`${sample}.description.nb`}
+                name={`${sample}.description.${localization.getLanguage()}`}
                 component={TextAreaField}
                 label={localization.schema.sample.descriptionLabel}
               />
