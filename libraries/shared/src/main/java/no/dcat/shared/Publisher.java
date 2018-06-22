@@ -15,7 +15,7 @@ public class Publisher {
     private String id;
     private String name;
     private String orgPath;
-    private Map<String,String> prefLabel = new HashMap<>();
+    private Map<String,String> prefLabel;
 
     public Publisher(String orgnr) {
         this.id = orgnr;

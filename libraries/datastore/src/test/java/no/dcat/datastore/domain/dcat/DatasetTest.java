@@ -82,6 +82,7 @@ public class DatasetTest {
         Publisher expected = new Publisher();
         expected.setUri("http://data.brreg.no/enhetsregisteret/enhet/974760673");
         expected.setName("Brønnøysundregistrene");
+        expected.setPrefLabel(new HashMap<>());
         expected.getPrefLabel().put("no", "Brønnøysundregistrene");
 
         logger.debug(actual.getUri());

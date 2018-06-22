@@ -58,7 +58,7 @@ public class BrregAgentConverterEnhetsregIT {
         assertEquals("Official name", "STATENS KARTVERK" , nameAfter);
 
         String prefName = publisherResource.getProperty(SKOS.prefLabel).getObject().asLiteral().getString();
-        assertEquals("Preferred name", "Statens Kartverk" , prefName);
+        assertEquals("Preferred name", "Kartverket" , prefName);
     }
 
     @Test
@@ -78,7 +78,7 @@ public class BrregAgentConverterEnhetsregIT {
 
         logger.info("name after {}", prefName);
 
-        assertThat(prefName, Is.is("Direktoratet for IKT"));
+        assertThat(prefName, Is.is("DIFI"));
     }
 
     @Test
@@ -143,7 +143,7 @@ public class BrregAgentConverterEnhetsregIT {
         logger.info("pref name  {}", prefName);
 
         assertThat(newName, Is.is("STATISTISK SENTRALBYRÅ"));
-        assertThat(prefName, Is.is("Statistisk sentralbyrå"));
+        assertThat(prefName, Is.is("SSB"));
     }
 
     @Test

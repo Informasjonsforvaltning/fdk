@@ -47,7 +47,7 @@ public class ElasticSearchResultPubHandlerTest {
         publisher.setUri(pudlisherUri);
         publisher.setId("983887457");
 
-        final String expected = "index {[dcat][publisher][983887457], source[{\n  \"overordnetEnhet\": \"814716872\",\n  \"organisasjonsform\": \"ORGL\",\n  \"valid\": false,\n  \"uri\": \"http://data.brreg.no/enhetsregisteret/enhet/983887457\",\n  \"id\": \"983887457\",\n  \"name\": \"BR\",\n  \"prefLabel\": {}\n}]}";
+        final String expected = "index {[dcat][publisher][983887457], source[{\n  \"overordnetEnhet\": \"814716872\",\n  \"organisasjonsform\": \"ORGL\",\n  \"valid\": false,\n  \"uri\": \"http://data.brreg.no/enhetsregisteret/enhet/983887457\",\n  \"id\": \"983887457\",\n  \"name\": \"BR\"\n}]}";
 
 
         IndexRequest actual = handler.addPublisherToIndex(gson, publisher);
@@ -61,7 +61,7 @@ public class ElasticSearchResultPubHandlerTest {
         publisher.setOrganisasjonsform("ORGL");
         publisher.setUri("http://data.brreg.no/enhetsregisteret/enhet/983887457");
 
-        final String expected = "index {[dcat][publisher][983887457], source[{\n  \"organisasjonsform\": \"ORGL\",\n  \"valid\": false,\n  \"uri\": \"http://data.brreg.no/enhetsregisteret/enhet/983887457\",\n  \"id\": \"983887457\",\n  \"prefLabel\": {}\n}]}";
+        final String expected = "index {[dcat][publisher][983887457], source[{\n  \"organisasjonsform\": \"ORGL\",\n  \"valid\": false,\n  \"uri\": \"http://data.brreg.no/enhetsregisteret/enhet/983887457\",\n  \"id\": \"983887457\"\n}]}";
 
         assertThat(publisher.getId(), is(nullValue()));
 

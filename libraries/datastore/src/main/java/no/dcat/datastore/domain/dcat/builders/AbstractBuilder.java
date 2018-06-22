@@ -573,8 +573,6 @@ public abstract class AbstractBuilder {
         Map<String, String> preferredName = extractLanguageLiteral(object, SKOS.prefLabel);
         if (preferredName != null && preferredName.size() > 0) {
             publisher.setPrefLabel(preferredName);
-        } else {
-            publisher.getPrefLabel().put(defaultLanguage, publisher.getName());
         }
 
         publisher.setValid(extractAsBoolean(object, DCTerms.valid));

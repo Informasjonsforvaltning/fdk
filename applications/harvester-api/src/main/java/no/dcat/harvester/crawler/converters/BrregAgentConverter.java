@@ -304,20 +304,7 @@ public class BrregAgentConverter {
                 // merge master data into model. The model will only be updated if model and master have same publisher uri.
                 model.add(masterDataModel);
 
-                String preferredName = null;
-                if (originalOrganisationName != null) {
-                    // use original organisation name in prefLabel
-                    preferredName = organisationNumber;
-                }
-
-                if (organisationNumber != null && canonicalNames.containsKey(organisationNumber)) {
-                    // Name hack: use predefined organization name from canonical names table
-                    preferredName = canonicalNames.get(organisationNumber);
-                }
-                
-                if (preferredName != null) {
-                    model.add(publisherResource, SKOS.prefLabel, model.createLiteral(preferredName, "no"));
-                }
+                addPreferredOrganisationName(model, publisherResource, organisationNumber, originalOrganisationName);
 
                 model.addLiteral(publisherResource, DCTerms.valid, true);
 
@@ -329,6 +316,24 @@ public class BrregAgentConverter {
         } catch (Exception e) {
             model.addLiteral(publisherResource, DCTerms.valid, false);
             logger.warn("Failed to lookup publisher: {}. Reason {}", uri, e.getMessage());
+        }
+    }
+
+    void addPreferredOrganisationName(Model model, Resource publisherResource, String organisationNumber, String originalOrganisationName) {
+        String preferredName = null;
+
+        if (originalOrganisationName != null) {
+            // use original organisation name in prefLabel
+            preferredName = originalOrganisationName;
+        }
+
+        if (organisationNumber != null && canonicalNames.containsKey(organisationNumber)) {
+            // Name hack: use predefined organization name from canonical names table
+            preferredName = canonicalNames.get(organisationNumber);
+        }
+
+        if (preferredName != null) {
+            model.add(publisherResource, SKOS.prefLabel, model.createLiteral(preferredName, "no"));
         }
     }
 
