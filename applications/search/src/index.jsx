@@ -6,6 +6,7 @@ import ReactGA from 'react-ga';
 
 import { configureStore } from './redux/configureStore';
 import App from './app/app';
+import { ConnectedFeatureToggleProvider } from './components/connected-feature-toggle-provider';
 
 if (window.location.hostname.indexOf('fellesdatakatalog.brreg.no') !== -1) {
   ReactGA.initialize('UA-110098477-1'); // prod
@@ -39,14 +40,16 @@ const store = configureStore();
 
 ReactDOM.render(
   <Provider store={store}>
-    <BrowserRouter>
-      <div className="d-flex flex-column site">
-        <div className="site-content d-flex flex-column">
-          <Route path="/" component={Analytics} />
-          <Route path="/" component={App} />
+    <ConnectedFeatureToggleProvider>
+      <BrowserRouter>
+        <div className="d-flex flex-column site">
+          <div className="site-content d-flex flex-column">
+            <Route path="/" component={Analytics} />
+            <Route path="/" component={App} />
+          </div>
         </div>
-      </div>
-    </BrowserRouter>
+      </BrowserRouter>
+    </ConnectedFeatureToggleProvider>
   </Provider>,
   document.getElementById('root')
 );
