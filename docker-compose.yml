@@ -3,6 +3,7 @@ version: "2"
 services:
   search:
     image: dcatno/search:latest
+    build: ./applications/search
     depends_on:
       - search-api
       - fuseki
