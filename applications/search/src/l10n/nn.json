@@ -207,7 +207,10 @@
       "authorityCode": {
         "public": "Offentleg",
         "restricted": "Avgrensa offentlegheit",
-        "nonPublic": "Unntatt offentlegheit"
+        "nonPublic": "Unntatt offentlegheit",
+        "publicDetailsLabel": "Datasettet er offentleg",
+        "restrictedDetailsLabel": "Datasettet har avgrensa offentlegheit",
+        "nonPublicDetailsLabel": "Datasettet er unntatt offentlegheit"
       }
     },
     "sample": "Eksempeldata"

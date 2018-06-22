@@ -207,7 +207,10 @@
       "authorityCode": {
         "public": "Public",
         "restricted": "Restricted",
-        "nonPublic": "Non public"
+        "nonPublic": "Non public",
+        "publicDetailsLabel": "Dataset is public",
+        "restrictedDetailsLabel": "Dataset is restricted",
+        "nonPublicDetailsLabel": "Dataset is non public"
       }
     },
     "sample": "Sample data"

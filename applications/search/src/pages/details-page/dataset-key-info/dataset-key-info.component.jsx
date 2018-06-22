@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import cx from 'classnames';
 import './dataset-key-info.scss';
 
 import localization from '../../../lib/localization';
@@ -44,19 +43,36 @@ export class DatasetKeyInfo extends React.Component {
   _renderHeader() {
     const { accessRights } = this.props;
     if (accessRights) {
-      const accessRightClass = cx('fa fdk-fa-left', {
-        'fdk-color-unntatt fa-lock': accessRights.code === 'NON_PUBLIC',
-        'fa-unlock-alt fdk-color-begrenset': accessRights.code === 'RESTRICTED',
-        'fa-unlock fdk-color-offentlig': accessRights.code === 'PUBLIC'
-      });
+      const { code } = accessRights;
       return (
         <div className="fdk-container-detail fdk-container-detail-header fdk-margin-top-double">
-          <i className={accessRightClass} />
-          {localization.dataset.accessRight}{' '}
-          {getTranslateText(
-            accessRights.prefLabel,
-            this.props.selectedLanguageCode
-          ).toLowerCase()}
+          {code === 'NON_PUBLIC' && (
+            <React.Fragment>
+              <i className="fa fdk-fa-left fdk-color-unntatt fa-lock" />
+              {
+                localization.dataset.accessRights.authorityCode
+                  .nonPublicDetailsLabel
+              }
+            </React.Fragment>
+          )}
+          {code === 'RESTRICTED' && (
+            <React.Fragment>
+              <i className="fa fdk-fa-left fa-unlock-alt fdk-color-begrenset" />
+              {
+                localization.dataset.accessRights.authorityCode
+                  .restrictedDetailsLabel
+              }
+            </React.Fragment>
+          )}
+          {code === 'PUBLIC' && (
+            <React.Fragment>
+              <i className="fa fdk-fa-left fa-unlock fdk-color-offentlig" />
+              {
+                localization.dataset.accessRights.authorityCode
+                  .publicDetailsLabel
+              }
+            </React.Fragment>
+          )}
         </div>
       );
     }
