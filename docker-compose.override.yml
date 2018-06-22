@@ -9,6 +9,7 @@ services:
     volumes:
       -   ./applications/search/src:/usr/src/app/src:rw
     environment:
+      - REDUX_LOG=${REDUX_LOG}
 
   search-api:
     restart: always
