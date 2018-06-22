@@ -68,6 +68,7 @@
     "nosearch.summary":"Søk blant",
     "nosearch.descriptions":"datasettbeskrivelser",
     "datasetTab": "Dataset",
+    "apiTab": "Api",
     "termTab": "Concepts",
     "nosearch.concepts":"begreper"
   },

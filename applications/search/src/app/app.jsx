@@ -205,12 +205,21 @@ export default class App extends React.Component {
             />
           </div>
         </div>
-
         <div className="app-routes">
           <Switch>
             <Route
               exact
               path="/"
+              render={props => (
+                <SearchPage
+                  selectedLanguageCode={this.state.selectedLanguageCode}
+                  {...props}
+                />
+              )}
+            />
+            <Route
+              exact
+              path="/api"
               render={props => (
                 <SearchPage
                   selectedLanguageCode={this.state.selectedLanguageCode}

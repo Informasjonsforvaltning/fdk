@@ -1,10 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { FeatureToggle } from 'react-feature-toggles';
 
 import { addOrReplaceParamWithoutURL } from '../../../lib/addOrReplaceUrlParam';
 import localization from '../../../lib/localization';
 import './results-tabs.scss';
+import { FEATURES } from '../../../app/features';
 
 export const ResultsTabs = props => {
   const { location, countDatasets, countTerms } = props;
@@ -23,6 +25,17 @@ export const ResultsTabs = props => {
               <span>&nbsp;({countDatasets})</span>
             </Link>
           </li>
+          <FeatureToggle featureName={FEATURES.API}>
+            <li className={location.pathname === '/api' ? 'li-active' : ''}>
+              <Link
+                to={{ pathname: '/api', search }}
+                aria-label="Link til side for api:"
+              >
+                {localization.page.apiTab}
+                <span>&nbsp;(beta)</span>
+              </Link>
+            </li>
+          </FeatureToggle>
           <li className={location.pathname === '/concepts' ? 'li-active' : ''}>
             <Link
               to={{ pathname: '/concepts', search }}

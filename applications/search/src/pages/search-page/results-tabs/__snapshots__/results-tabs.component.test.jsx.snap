@@ -30,6 +30,30 @@ exports[`should render ResultsTabs with "Concepts" active correctly 1`] = `
           </span>
         </Link>
       </li>
+      <FeatureToggle
+        featureName="api"
+        showOnlyWhenDisabled={false}
+      >
+        <li
+          className=""
+        >
+          <Link
+            aria-label="Link til side for api:"
+            replace={false}
+            to={
+              Object {
+                "pathname": "/api",
+                "search": "?",
+              }
+            }
+          >
+            Api
+            <span>
+               (beta)
+            </span>
+          </Link>
+        </li>
+      </FeatureToggle>
       <li
         className="li-active"
       >
@@ -85,6 +109,30 @@ exports[`should render ResultsTabs with "Dataset" active correctly 1`] = `
           </span>
         </Link>
       </li>
+      <FeatureToggle
+        featureName="api"
+        showOnlyWhenDisabled={false}
+      >
+        <li
+          className=""
+        >
+          <Link
+            aria-label="Link til side for api:"
+            replace={false}
+            to={
+              Object {
+                "pathname": "/api",
+                "search": "?",
+              }
+            }
+          >
+            Api
+            <span>
+               (beta)
+            </span>
+          </Link>
+        </li>
+      </FeatureToggle>
       <li
         className=""
       >

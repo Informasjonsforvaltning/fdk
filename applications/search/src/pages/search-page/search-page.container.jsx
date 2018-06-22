@@ -552,6 +552,7 @@ export class PureSearchPage extends React.Component {
                 />
               )}
             />
+            <Route exact path="/api" render={() => <div>Beta</div>} />
             <Route
               exact
               path="/concepts/:lang?"

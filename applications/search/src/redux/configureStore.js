@@ -1,6 +1,8 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import { createLogger } from 'redux-logger';
+import persistState from 'redux-localstorage';
+
 import api from './middleware/api';
 import rootReducer from './reducers/index';
 import { config } from '../config';
@@ -17,7 +19,10 @@ export function configureStore() {
 
   const selectedCompose = selectCompose();
 
-  const enhancer = selectedCompose(applyMiddleware(...middlewares));
+  const enhancer = selectedCompose(
+    applyMiddleware(...middlewares),
+    persistState(['featureToggle'], { key: 'redux' })
+  );
 
   const store = createStore(rootReducer, /* preloadedState, */ enhancer);
 
