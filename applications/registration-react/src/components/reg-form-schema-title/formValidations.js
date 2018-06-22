@@ -1,16 +1,25 @@
+import _get from 'lodash/get';
+
 import {
   validateRequired,
   validateMinTwoChars,
   validateURL
 } from '../../validation/validation';
+import localization from '../../utils/localization';
 
 const validate = values => {
   let errors = {};
-  const title = values.title && values.title.nb ? values.title.nb : null;
-  const description =
-    values.description && values.description.nb ? values.description.nb : null;
-  const objective =
-    values.objective && values.objective.nb ? values.objective.nb : null;
+  const title = _get(values, ['title', localization.getLanguage()], null);
+  const description = _get(
+    values,
+    ['description', localization.getLanguage()],
+    null
+  );
+  const objective = _get(
+    values,
+    ['objective', localization.getLanguage()],
+    null
+  );
   const landingPage =
     values.landingPage && values.landingPage[0] ? values.landingPage[0] : null;
 

@@ -58,6 +58,7 @@ services:
 
   registration-react:
     image: dcatno/registration-react:latest
+    build: ./applications/registration-react
     depends_on:
       - nginx-registration-ssl
       - registration-api

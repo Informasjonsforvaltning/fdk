@@ -80,7 +80,11 @@ FormTemplate.propTypes = {
   values: PropTypes.string,
   title: PropTypes.string,
   backgroundBlue: PropTypes.bool,
-  syncErrors: PropTypes.bool,
+  syncErrors: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.object,
+    PropTypes.array
+  ]),
   required: PropTypes.bool,
   children: PropTypes.object
 };

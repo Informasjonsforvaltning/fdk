@@ -68,6 +68,11 @@ module.exports = {
     modules: [__dirname, 'node_modules']
   },
   plugins: [
+    new webpack.DefinePlugin({
+      'process.env': {
+        REGISTRATION_LANGUAGE: JSON.stringify(process.env.REGISTRATION_LANGUAGE)
+      }
+    }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
     new ExtractTextPlugin('styles.css'),

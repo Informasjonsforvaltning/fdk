@@ -1,4 +1,7 @@
+import _get from 'lodash/get';
+
 import { validateMinTwoChars, validateURL } from '../../validation/validation';
+import localization from '../../utils/localization';
 
 const validate = values => {
   const errors = {};
@@ -7,9 +10,12 @@ const validate = values => {
   if (informationModel) {
     informationModelNodes = informationModel.map(item => {
       let itemErrors = {};
-      const informationModelPrefLabel =
-        item.prefLabel && item.prefLabel.nb ? item.prefLabel.nb : null;
-      const informationModelURI = item.uri ? item.uri : null;
+      const informationModelPrefLabel = _get(
+        item,
+        ['prefLabel', localization.getLanguage()],
+        null
+      );
+      const informationModelURI = item.uri || null;
       itemErrors = validateMinTwoChars(
         'prefLabel',
         informationModelPrefLabel,

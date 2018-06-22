@@ -10,7 +10,7 @@ const renderInformationModelFields = (item, index, fields, compopnentProps) => (
   <div className="d-flex mb-5" key={index}>
     <div className="w-50">
       <Field
-        name={`${item}.prefLabel.nb`}
+        name={`${item}.prefLabel.${localization.getLanguage()}`}
         component={InputField}
         label={compopnentProps.titleLabel}
         showLabel

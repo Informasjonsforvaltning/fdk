@@ -1,4 +1,7 @@
+import _get from 'lodash/get';
+
 import { validateMinTwoChars, validateURL } from '../../validation/validation';
+import localization from '../../utils/localization';
 
 const validate = values => {
   const errors = {};
@@ -6,10 +9,11 @@ const validate = values => {
   let conformsToNodes = null;
 
   let errorHasRelevanceAnnotation = {};
-  const hasRelevanceAnnotation =
-    values.hasRelevanceAnnotation && values.hasRelevanceAnnotation.hasBody
-      ? values.hasRelevanceAnnotation.hasBody.nb
-      : null;
+  const hasRelevanceAnnotation = _get(
+    values,
+    ['hasRelevanceAnnotation', 'hasBody', localization.getLanguage()],
+    null
+  );
   errorHasRelevanceAnnotation = validateMinTwoChars(
     'hasBody',
     hasRelevanceAnnotation,
@@ -20,10 +24,11 @@ const validate = values => {
   }
 
   let errorHasCompletenessAnnotation = {};
-  const hasCompletenessAnnotation =
-    values.hasCompletenessAnnotation && values.hasCompletenessAnnotation.hasBody
-      ? values.hasCompletenessAnnotation.hasBody.nb
-      : null;
+  const hasCompletenessAnnotation = _get(
+    values,
+    ['hasCompletenessAnnotation', 'hasBody', localization.getLanguage()],
+    null
+  );
   errorHasCompletenessAnnotation = validateMinTwoChars(
     'hasBody',
     hasCompletenessAnnotation,
@@ -34,10 +39,11 @@ const validate = values => {
   }
 
   let errorHasAccuracyAnnotation = {};
-  const hasAccuracyAnnotation =
-    values.hasAccuracyAnnotation && values.hasAccuracyAnnotation.hasBody
-      ? values.hasAccuracyAnnotation.hasBody.nb
-      : null;
+  const hasAccuracyAnnotation = _get(
+    values,
+    ['hasAccuracyAnnotation', 'hasBody', localization.getLanguage()],
+    null
+  );
   errorHasAccuracyAnnotation = validateMinTwoChars(
     'hasBody',
     hasAccuracyAnnotation,
@@ -48,10 +54,11 @@ const validate = values => {
   }
 
   let errorHasAvailabilityAnnotation = {};
-  const hasAvailabilityAnnotation =
-    values.hasAvailabilityAnnotation && values.hasAvailabilityAnnotation.hasBody
-      ? values.hasAvailabilityAnnotation.hasBody.nb
-      : null;
+  const hasAvailabilityAnnotation = _get(
+    values,
+    ['hasAvailabilityAnnotation', 'hasBody', localization.getLanguage()],
+    null
+  );
   errorHasAvailabilityAnnotation = validateMinTwoChars(
     'hasBody',
     hasAvailabilityAnnotation,
@@ -64,9 +71,12 @@ const validate = values => {
   if (conformsTo) {
     conformsToNodes = conformsTo.map(item => {
       let itemErrors = {};
-      const conformsToPrefLabel =
-        item.prefLabel && item.prefLabel.nb ? item.prefLabel.nb : null;
-      const conformsToURI = item.uri ? item.uri : null;
+      const conformsToPrefLabel = _get(
+        item,
+        ['prefLabel', localization.getLanguage()],
+        null
+      );
+      const conformsToURI = item.uri || null;
       itemErrors = validateMinTwoChars(
         'prefLabel',
         conformsToPrefLabel,

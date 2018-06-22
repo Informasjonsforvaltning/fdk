@@ -5,6 +5,7 @@ import cx from 'classnames';
 import { Collapse } from 'reactstrap';
 
 import localization from '../../utils/localization';
+import getTranslateText from '../../utils/translateText';
 import Helptext from '../reg-form-helptext';
 import InputField from '../reg-form-field-input';
 import InputTitleField from '../reg-form-field-input-title';
@@ -55,11 +56,13 @@ export class FormCatalog extends React.Component {
           {title &&
             title.nb &&
             !this.state.collapseTitle && (
-              <h1 className="w-75 fdk-text-strong">{title.nb}</h1>
+              <h1 className="w-75 fdk-text-strong">
+                {getTranslateText(title, localization.getLanguage())}
+              </h1>
             )}
           <div className={fieldClass}>
             <Field
-              name="title.nb"
+              name={`title.${localization.getLanguage()}`}
               component={InputTitleField}
               label={localization.schema.common.titleLabel}
               hideInput={this.state.collapseTitle}
@@ -77,7 +80,9 @@ export class FormCatalog extends React.Component {
 
         <div className={collapseClass}>
           <div className="d-flex justify-content-between w-100">
-            <div className="d-flex fdk-color1">{values.description.nb}</div>
+            <div className="d-flex fdk-color1">
+              {getTranslateText(values.description, localization.getLanguage())}
+            </div>
             <button
               onClick={e => {
                 e.preventDefault();
@@ -96,7 +101,7 @@ export class FormCatalog extends React.Component {
                 helptextItems={helptextItems.Catalog_title}
               />
               <Field
-                name="description.nb"
+                name={`description.${localization.getLanguage()}`}
                 component={TextAreaField}
                 label={localization.schema.common.descriptionLabel}
               />

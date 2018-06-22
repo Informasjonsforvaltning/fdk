@@ -1,8 +1,11 @@
+import _get from 'lodash/get';
+
 import {
   validateMinTwoChars,
   validateLinkReturnAsSkosType,
   validateURL
 } from '../../validation/validation';
+import localization from '../../utils/localization';
 
 const validate = values => {
   const errors = {};
@@ -14,11 +17,13 @@ const validate = values => {
     errorNodes = distribution.map(item => {
       let errors = {};
 
-      const accessURL = item.accessURL ? item.accessURL : null;
-      const license =
-        item.license && item.license.uri ? item.license.uri : null;
-      const description =
-        item.description && item.description.nb ? item.description.nb : null;
+      const accessURL = item.accessURL || null;
+      const license = _get(item, ['license', 'uri'], null);
+      const description = _get(
+        item,
+        ['description', localization.getLanguage()],
+        null
+      );
       const page =
         item.page && item.page[0] && item.page[0].uri ? item.page[0].uri : null;
       const { conformsTo } = item || null;
@@ -31,9 +36,12 @@ const validate = values => {
       if (conformsTo) {
         conformsToNodes = conformsTo.map(item => {
           let itemErrors = {};
-          const conformsToPrefLabel =
-            item.prefLabel && item.prefLabel.nb ? item.prefLabel.nb : null;
-          const conformsToURI = item.uri ? item.uri : null;
+          const conformsToPrefLabel = _get(
+            item,
+            ['prefLabel', localization.getLanguage()],
+            null
+          );
+          const conformsToURI = item.uri || null;
           itemErrors = validateMinTwoChars(
             'prefLabel',
             conformsToPrefLabel,

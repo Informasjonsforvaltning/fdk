@@ -31,7 +31,7 @@ const FormTitle = props => {
           helptextItems={helptextItems.Dataset_title}
         />
         <Field
-          name="title.nb"
+          name={`title.${localization.getLanguage()}`}
           component={InputField}
           label={localization.schema.title.titleLabel}
         />
@@ -43,7 +43,7 @@ const FormTitle = props => {
           helptextItems={helptextItems.Dataset_description}
         />
         <Field
-          name="description.nb"
+          name={`description.${localization.getLanguage()}`}
           component={TextAreaField}
           label={localization.schema.title.descriptionLabel}
         />
@@ -54,7 +54,7 @@ const FormTitle = props => {
           helptextItems={helptextItems.Dataset_objective}
         />
         <Field
-          name="objective.nb"
+          name={`objective.${localization.getLanguage()}`}
           component={TextAreaField}
           label={localization.schema.title.objectiveLabel}
         />

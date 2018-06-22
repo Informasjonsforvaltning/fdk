@@ -1,4 +1,12 @@
-export default function getTranslateText(textObj, selectedLanguage = 'nb') {
+import localization from './localization';
+
+export default function getTranslateText(
+  textObj,
+  selectedLanguage = localization.getLanguage()
+) {
+  if (!textObj) {
+    return null;
+  }
   return (
     textObj[selectedLanguage] ||
     textObj.nb ||

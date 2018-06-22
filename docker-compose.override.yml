@@ -124,6 +124,7 @@ services:
      - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
      - QUERY_SERVICE_URL=/reference-data
      - VALIDATOR_URL=http://localhost:8086
+     - REGISTRATION_LANGUAGE=${REGISTRATION_LANGUAGE}
 
   registration-auth:
       restart: always

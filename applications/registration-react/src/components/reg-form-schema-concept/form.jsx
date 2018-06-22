@@ -38,9 +38,13 @@ export const FormConcept = props => {
           type="text"
           component={InputTagsFieldArray}
           label={localization.schema.concept.keywordLabel}
-          fieldLabel="nb"
+          fieldLabel={localization.getLanguage()}
         />
-        {keyword && <div className="alert alert-danger mt-3">{keyword.nb}</div>}
+        {keyword && (
+          <div className="alert alert-danger mt-3">
+            {keyword[localization.getLanguage()]}
+          </div>
+        )}
       </div>
     </form>
   );
