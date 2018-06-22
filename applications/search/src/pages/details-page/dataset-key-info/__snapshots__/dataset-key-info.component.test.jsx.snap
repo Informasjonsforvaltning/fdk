@@ -5,12 +5,12 @@ exports[`should render DatasetKeyInfo correctly 1`] = `
   <div
     className="fdk-container-detail fdk-container-detail-header fdk-margin-top-double"
   >
-    <i
-      className="fa fdk-fa-left fdk-color-unntatt fa-lock"
-    />
-    Datasettet er
-     
-    begrenset
+    <React.Fragment>
+      <i
+        className="fa fdk-fa-left fdk-color-unntatt fa-lock"
+      />
+      Datasettet er unntatt offentlighet
+    </React.Fragment>
   </div>
   <div
     className="row fdk-row"

@@ -207,7 +207,10 @@
       "authorityCode": {
         "public": "Offentlig",
         "restricted": "Begrenset offentlighet",
-        "nonPublic": "Unntatt offentlighet"
+        "nonPublic": "Unntatt offentlighet",
+        "publicDetailsLabel": "Datasettet er offentlig",
+        "restrictedDetailsLabel": "Datasettet har begrenset offentlighet",
+        "nonPublicDetailsLabel": "Datasettet er unntatt offentlighet"
       }
     },
     "sample": "Eksempeldata"
