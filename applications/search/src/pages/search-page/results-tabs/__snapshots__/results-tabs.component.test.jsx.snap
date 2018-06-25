@@ -31,7 +31,7 @@ exports[`should render ResultsTabs with "Concepts" active correctly 1`] = `
         </Link>
       </li>
       <FeatureToggle
-        featureName="api"
+        featureName="API"
         showOnlyWhenDisabled={false}
       >
         <li
@@ -110,7 +110,7 @@ exports[`should render ResultsTabs with "Dataset" active correctly 1`] = `
         </Link>
       </li>
       <FeatureToggle
-        featureName="api"
+        featureName="API"
         showOnlyWhenDisabled={false}
       >
         <li
