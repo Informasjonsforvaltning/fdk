@@ -4,8 +4,6 @@ services:
 ### external modules
   elasticsearch5:
     restart: always
-    volumes:
-      - ./data/esdata5:/usr/share/elasticsearch/data
     ports:
       - "9200:9200"
       - "9300:9300"
@@ -17,8 +15,6 @@ services:
 
   fuseki:
     restart: always
-    volumes:
-      - ./data/fuseki:/etc/fuseki/databases/
     ports:
       - "3030:8080"
 
@@ -169,3 +165,17 @@ services:
     volumes:
       - ./applications/e2e/test:/usr/src/app/test
       - ./applications/e2e/reports:/usr/src/app/reports
+
+volumes:
+  fuseki-data:
+    driver: local
+    driver_opts:
+      type: none
+      device: ${PWD}/data/fuseki
+      o: bind
+  elasticsearch-data:
+    driver: local
+    driver_opts:
+      type: none
+      device: ${PWD}/data/esdata5
+      o: bind
