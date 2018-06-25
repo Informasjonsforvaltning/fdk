@@ -38,8 +38,6 @@ services:
      - application.elasticSearchHost=elasticsearch
      - application.elasticSearchPort=9300
      - application.elasticSearchCluster=elasticsearch
-    volumes:
-     - ./logs:/usr/local/tomcat/logs:rw
 
   harvester:
     restart: always
@@ -54,8 +52,6 @@ services:
      - application.kibanaLinkSecondHalf="%22')),title:dashboard_template,uiState:())"
      - harvester_adminUsername=test_admin
      - harvester_adminPassword=password
-    volumes:
-     - ./logs:/usr/local/tomcat/logs:rw
 
   elasticsearch:
     restart: always
@@ -127,3 +123,35 @@ services:
     volumes:
       -   ./applications/e2e/test:/usr/src/app/test:rw
     command: tail -F /dev/null
+
+volumes:
+  reference-data-data:
+    driver: local
+    driver_opts:
+      type: none
+      device: ${PWD}/data/reference-data
+      o: bind
+  fuseki-data:
+    driver: local
+    driver_opts:
+      type: none
+      device: ${PWD}/data/fuseki
+      o: bind
+  elasticsearch-data:
+    driver: local
+    driver_opts:
+      type: none
+      device: ${PWD}/data/esdata
+      o: bind
+  harvester-logs:
+    driver: local
+    driver_opts:
+      type: none
+      device: ${PWD}/logs/harvester
+      o: bind
+  harvester-api-logs:
+    driver: local
+    driver_opts:
+      type: none
+      device: ${PWD}/logs/harvester-api
+      o: bind

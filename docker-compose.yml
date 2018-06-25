@@ -24,6 +24,8 @@ services:
 
   fuseki:
     image: dcatno/fuseki:latest
+    volumes:
+      - fuseki-data:/etc/fuseki/databases/
     expose:
      - "8080"
 
@@ -35,6 +37,8 @@ services:
      - fuseki
      - elasticsearch
      - reference-data
+    volumes:
+     - harvester-api-logs:/usr/local/tomcat/logs:rw
 
   harvester:
     image: dcatno/harvester:latest
@@ -44,9 +48,13 @@ services:
      - elasticsearch
      - fuseki
      - harvester-api
+    volumes:
+     - harvester-logs:/usr/local/tomcat/logs:rw
 
   elasticsearch:
     image: elasticsearch:2.4.1
+    volumes:
+      - elasticsearch-data:/usr/share/elasticsearch/data
     expose:
      - "9200"
      - "9300"
@@ -83,6 +91,7 @@ services:
     expose:
      - "4300"
 
+
   registration-auth:
     image: dcatno/registration-auth:latest
     expose:
@@ -90,6 +99,8 @@ services:
 
   reference-data:
     image: dcatno/reference-data:latest
+    volumes:
+      - reference-data-data:/tdb
     expose:
      - "8080"
 
@@ -98,3 +109,10 @@ services:
     volumes:
       - ./applications/e2e/test:/usr/src/app/test:rw
     command: tail -F /dev/null
+
+volumes:
+  reference-data-data:
+  fuseki-data:
+  elasticsearch-data:
+  harvester-logs:
+  harvester-api-logs:
