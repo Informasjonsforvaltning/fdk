@@ -4,10 +4,6 @@ services:
   search:
     image: dcatno/search:latest
     build: ./applications/search
-    depends_on:
-      - search-api
-      - fuseki
-      - reference-data
     networks:
       platform:
 

@@ -5,7 +5,7 @@ services:
     restart: always
     command: npm start
     ports:
-      - 127.0.0.1:3000:3000
+       - "3000:3000"
     volumes:
       -   ./applications/search/src:/usr/src/app/src:rw
     environment:
@@ -14,40 +14,28 @@ services:
   search-api:
     restart: always
     ports:
-      - 127.0.0.1:8083:8080
+      - "8083:8080"
     environment:
      - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
      - application.elasticsearchHost=elasticsearch
      - application.elasticsearchPort=9300
 
   nginx-search:
-    image: dcatno/nginx-search:latest
-    restart: always
-    depends_on:
-      - search
-    ports:
-      - 127.0.0.1:8080:8080
-    networks:
-      platform:
-
-  registration-validator:
     restart: always
     ports:
-      - 127.0.0.1:8086:8080
-    environment:
-     - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
+      - "8080:8080"
 
   fuseki:
     restart: always
     volumes:
       - ./data/fuseki:/etc/fuseki/databases/
     ports:
-     - 127.0.0.1:3030:8080
+     - "3030:8080"
 
   harvester-api:
     restart: always
     ports:
-     - 127.0.0.1:8081:8080
+     - "8081:8080"
     environment:
      - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx1024M -Dspring.profiles.active=docker
      - fuseki.dcatServiceUri=http://fuseki:8080/fuseki/dcat
@@ -62,7 +50,7 @@ services:
   harvester:
     restart: always
     ports:
-     - 127.0.0.1:8082:8080
+     - "8082:8080"
     environment:
      - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
      - fuseki.dcatServiceUri=http://fuseki:8080/fuseki/dcat
@@ -78,18 +66,17 @@ services:
   elasticsearch:
     restart: always
     ports:
-      - 127.0.0.1:9200:9200
-      - 127.0.0.1:9300:9300
+      - "9200:9200"
+      - "9300:9300"
     volumes:
       - ./data/esdata:/usr/share/elasticsearch/data
     environment:
       - cluster.name=fellesdatakatalog
 
-
   dev-management:
     restart: always
     ports:
-      - 127.0.0.1:8085:8080
+      - "8085:8080"
     environment:
      - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
      - application.elasticsearchHost=elasticsearch
@@ -107,14 +94,14 @@ services:
     depends_on:
       - nginx-registration
     ports:
-      - 127.0.0.1:8098:443
+      - "8098:443"
     networks:
       platform:
 
   registration-api:
     restart: always
     ports:
-      - 127.0.0.1:8079:8080
+      - "8079:8080"
     environment:
      - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
      - registrationAPI_clusterName=elasticsearch
@@ -131,9 +118,9 @@ services:
     restart: always
     command: npm start
     ports:
-      - 127.0.0.1:4300:4300
+     - "4300:4300"
     volumes:
-      -   ./applications/registration-react/src:/usr/src/app/src:rw
+     - ./applications/registration-react/src:/usr/src/app/src:rw
     environment:
      - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
      - QUERY_SERVICE_URL=/reference-data
@@ -142,14 +129,21 @@ services:
   registration-auth:
       restart: always
       ports:
-        - 127.0.0.1:8077:8080
+        - "8077:8080"
       environment:
         - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
+
+  registration-validator:
+    restart: always
+    ports:
+      - "8086:8080"
+    environment:
+      - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
 
   reference-data:
     restart: always
     ports:
-      - 127.0.0.1:8100:8080
+      - "8100:8080"
     environment:
      - JAVA_OPTS=-Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
 
@@ -166,7 +160,7 @@ services:
 
   kibana:
     ports:
-      - 127.0.0.1:5601:5601
+      - "5601:5601"
     environment:
       - ELASTICSEARCH_URL=http://elasticsearch:9200
     #volumes:
