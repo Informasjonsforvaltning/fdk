@@ -49,6 +49,9 @@ public class LoadLocations {
         httpUsername = null;
     }
 
+    public SkosCode getLocation(String uri) {
+        return locations.get(uri);
+    }
 
     /**
      * Extracts all location-uris from the model and adds it to the map of locations.
@@ -71,18 +74,23 @@ public class LoadLocations {
                 if (uri != null && uri.startsWith("http")) {
                     if (existingLocationCodes == null || !existingLocationCodes.containsKey(uri)) {
 
-                        LocationUri locationUri = new LocationUri(uri);
-
-                        try {
-                            SkosCode skosCode = template.postForObject(themesHostname + "/locations/", locationUri, SkosCode.class);
-                            locations.put(skosCode.getUri(), skosCode);
-                        } catch (Exception e) {
-                            logger.error("Error posting location [{}] to reference-data service. Reason {}", locationUri.getUri(), e.getLocalizedMessage());
-                        }
+                        postLocationToReferenceData(template, uri);
                     }
                 }
             });
         });
+    }
+
+    public void postLocationToReferenceData(BasicAuthRestTemplate template, String uri) {
+        LocationUri locationUri = new LocationUri(uri);
+
+        try {
+            SkosCode skosCode = template.postForObject(themesHostname + "/locations/", locationUri, SkosCode.class);
+            locations.put(skosCode.getUri(), skosCode);
+            logger.info("Posting location to reference-data: {}", skosCode.toString());
+        } catch (Exception e) {
+            logger.error("Error posting location [{}] to reference-data service. Reason {}", locationUri.getUri(), e.getLocalizedMessage());
+        }
     }
 
 

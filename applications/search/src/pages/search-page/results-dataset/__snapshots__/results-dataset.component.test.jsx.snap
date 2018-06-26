@@ -207,6 +207,25 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
                       "buckets": Array [
                         Object {
                           "doc_count": 1,
+                          "key": "Ukjent",
+                        },
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0,
+                    }
+                  }
+                  htmlKey={3}
+                  onClick={null}
+                  themesItems={null}
+                  title="Geografi"
+                />
+                <FilterBox
+                  activeFilter={null}
+                  filter={
+                    Object {
+                      "buckets": Array [
+                        Object {
+                          "doc_count": 1,
                           "key": "VEDTAK",
                         },
                       ],
@@ -320,6 +339,25 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
             orgPath={null}
             publishers={Object {}}
             title="Virksomhet"
+          />
+          <FilterBox
+            activeFilter={null}
+            filter={
+              Object {
+                "buckets": Array [
+                  Object {
+                    "doc_count": 1,
+                    "key": "Ukjent",
+                  },
+                ],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0,
+              }
+            }
+            htmlKey={3}
+            onClick={null}
+            themesItems={null}
+            title="Geografi"
           />
           <FilterBox
             activeFilter={null}

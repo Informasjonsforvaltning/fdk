@@ -2,6 +2,9 @@ package no.dcat.themes.service;
 
 import com.google.gson.Gson;
 import no.dcat.datastore.domain.dcat.builders.DatasetBuilder;
+import no.dcat.datastore.domain.dcat.client.LoadLocations;
+import no.dcat.datastore.domain.dcat.vocabulary.AdmEnhet;
+import no.dcat.datastore.domain.dcat.vocabulary.GeoNames;
 import no.dcat.shared.SkosCode;
 import no.dcat.shared.Types;
 import no.dcat.themes.database.TDBConnection;
@@ -10,6 +13,10 @@ import org.apache.jena.query.Dataset;
 import org.apache.jena.query.DatasetFactory;
 import org.apache.jena.query.ReadWrite;
 import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ResIterator;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.vocabulary.RDF;
+import org.apache.jena.vocabulary.RDFS;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Scope;
@@ -18,6 +25,7 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -57,13 +65,40 @@ public class CodesService extends BaseServiceWithFraming {
 
         return tdbConnection.inTransaction(ReadWrite.READ, connection -> {
             Dataset dataset = DatasetFactory.create(connection.getModelWithInference(type.toString()));
+            List<SkosCode> result = new ArrayList<>();
 
-            String json = frame(dataset, frame);
-            dataset.close();
+            if (type.equals(Types.location)) {
+                Model model = dataset.getDefaultModel();
 
-            return new Gson().fromJson(json, FramedSkosCode.class).getGraph();
+                result.addAll(extractLocationCodes(model, model.listResourcesWithProperty(GeoNames.officialName)));
+                result.addAll(extractLocationCodes(model, model.listResourcesWithProperty(RDF.type, AdmEnhet.NamedIndividual)));
+
+            } else {
+                String json = frame(dataset, frame);
+                dataset.close();
+
+                result = new Gson().fromJson(json, FramedSkosCode.class).getGraph();
+            }
+
+            return result;
         });
 
+    }
+
+    List<SkosCode> extractLocationCodes(Model model, ResIterator resourceIterator) {
+        if (model == null || resourceIterator == null) {
+            return null;
+        }
+
+
+        List<SkosCode> result = new ArrayList<>();
+
+        while (resourceIterator.hasNext()) {
+            Resource resource = resourceIterator.next();
+            result.add(DatasetBuilder.extractLocation(resource));
+        }
+
+        return result;
     }
 
 
