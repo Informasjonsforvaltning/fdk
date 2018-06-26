@@ -417,6 +417,7 @@ public class DcatBuilder {
                 publisherResource.addProperty(RDF.type, FOAF.Agent);
 
                 addLiteral(publisherResource, FOAF.name, publisher.getName());
+                addLiterals(publisherResource, SKOS.prefLabel, publisher.getPrefLabel());
                 addLiteral(publisherResource, DCTerms.identifier, publisher.getId());
             } catch (Exception e) {
                 logger.error("Unable to export publisher {}. Reason {}", publisherId, e.getLocalizedMessage(), e);

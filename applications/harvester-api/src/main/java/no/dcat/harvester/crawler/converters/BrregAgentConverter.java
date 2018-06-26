@@ -5,6 +5,7 @@ import no.acando.xmltordf.Builder;
 import no.acando.xmltordf.PostProcessingJena;
 import no.acando.xmltordf.XmlToRdfAdvancedJena;
 import no.dcat.datastore.domain.dcat.Publisher;
+import no.dcat.datastore.domain.dcat.builders.DcatBuilder;
 import no.dcat.datastore.domain.dcat.builders.PublisherBuilder;
 import no.dcat.datastore.domain.dcat.vocabulary.DCATNO;
 import no.dcat.harvester.theme.builders.vocabulary.EnhetsregisteretRDF;
@@ -21,6 +22,7 @@ import org.apache.jena.rdf.model.Statement;
 import org.apache.jena.sparql.vocabulary.FOAF;
 import org.apache.jena.util.ResourceUtils;
 import org.apache.jena.vocabulary.DCTerms;
+import org.apache.jena.vocabulary.SKOS;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
@@ -33,6 +35,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
@@ -238,6 +241,7 @@ public class BrregAgentConverter {
             if (brregCache != null) {
 
                 String organisationNumber = getOrgnrFromIdentifier(model, publisherResource);
+                String originalOrganisationName = getOrgName(publisherResource);
 
                 if (organisationNumber == null) {
                     organisationNumber = getOrgnrFromUri(uri);
@@ -249,8 +253,15 @@ public class BrregAgentConverter {
                 if (organisationNumber == null) {
                     logger.warn("Publisher does not have a organisation number [{}]", uri);
                 }
+                String content = null;
+                try {
+                    content = brregCache.get(new URL(uri));
+                } catch (IOException e) {
+                    // hack to not overload data.brreg.no
+                    Thread.sleep(200);
+                    content = brregCache.get(new URL(uri));
+                }
 
-                String content = brregCache.get(new URL(uri));
                 logger.trace("[model_before_conversion] {}", content);
 
                 InputStream inputStream = new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8));
@@ -272,7 +283,7 @@ public class BrregAgentConverter {
                     }
 
                     //add missing attributes to master publisher received from Enhetsregisteret
-                     masterPublisherResource.addProperty(DCTerms.identifier, organisationNumber);
+                    masterPublisherResource.addProperty(DCTerms.identifier, organisationNumber);
 
                     //remove no longer used publisher, since it will not produce a valid orgpath
 
@@ -293,16 +304,7 @@ public class BrregAgentConverter {
                 // merge master data into model. The model will only be updated if model and master have same publisher uri.
                 model.add(masterDataModel);
 
-                // handle name hack. Organisations in canonical names list is renamed
-                if (organisationNumber != null && canonicalNames.containsKey(organisationNumber)) {
-                    String organizationName = canonicalNames.get(organisationNumber);
-
-                    if (organizationName != null) {
-                        logger.info("Rename publisher {} to {}", organisationNumber, organizationName);
-                        model.removeAll(publisherResource, FOAF.name, null);
-                        model.add(publisherResource, FOAF.name, model.createLiteral(organizationName));
-                    }
-                }
+                addPreferredOrganisationName(model, publisherResource, organisationNumber, originalOrganisationName);
 
                 model.addLiteral(publisherResource, DCTerms.valid, true);
 
@@ -314,6 +316,24 @@ public class BrregAgentConverter {
         } catch (Exception e) {
             model.addLiteral(publisherResource, DCTerms.valid, false);
             logger.warn("Failed to lookup publisher: {}. Reason {}", uri, e.getMessage());
+        }
+    }
+
+    void addPreferredOrganisationName(Model model, Resource publisherResource, String organisationNumber, String originalOrganisationName) {
+        String preferredName = null;
+
+        if (originalOrganisationName != null) {
+            // use original organisation name in prefLabel
+            preferredName = originalOrganisationName;
+        }
+
+        if (organisationNumber != null && canonicalNames.containsKey(organisationNumber)) {
+            // Name hack: use predefined organization name from canonical names table
+            preferredName = canonicalNames.get(organisationNumber);
+        }
+
+        if (preferredName != null) {
+            model.add(publisherResource, SKOS.prefLabel, model.createLiteral(preferredName, "no"));
         }
     }
 
@@ -416,6 +436,15 @@ public class BrregAgentConverter {
     private static void applyNamespaces(Model extractedModel) {
 
         extractedModel.setNsPrefix("foaf", FOAF.getURI());
+    }
+
+    private String getOrgName(Resource resource) {
+        Statement nameStatement = resource.getProperty(FOAF.name);
+        if (nameStatement != null) {
+            return nameStatement.getObject().asLiteral().getString();
+        }
+
+        return null;
     }
 
     private String getOrgnrFromIdentifier(Model model, Resource orgresource) {

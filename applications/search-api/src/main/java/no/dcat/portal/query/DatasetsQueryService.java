@@ -6,7 +6,6 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import no.dcat.datastore.domain.dcat.builders.DcatBuilder;
 import no.dcat.shared.Dataset;
-import no.dcat.shared.SkosConcept;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.index.query.BoolQueryBuilder;
@@ -60,7 +59,6 @@ public class DatasetsQueryService extends ElasticsearchService {
     public static final String FIELD_SUBJECTS_PREFLABEL = "subject.prefLabel.no";
 
     public static final String TERMS_THEME_COUNT = "theme_count";
-    public static final String TERMS_PUBLISHER_COUNT = "publisherCount";
     public static final String TERMS_ACCESS_RIGHTS_COUNT = "accessRightsCount";
     public static final String TERMS_SUBJECTS_COUNT = "subjectsCount";
     public static final String AGGREGATE_DATASET = "/aggregateDataset";
@@ -200,6 +198,7 @@ public class DatasetsQueryService extends ElasticsearchService {
                     .field("theme.title" + "." + themeLanguage)
                     .field("description" + "." + lang)
                     .field("publisher.name").boost(3f)
+                    .field("publisher.prefLabel." + lang).boost(3f)
                     .field("accessRights.prefLabel" + "." + lang)
                     .field("accessRights.code")
                     .field("subject.prefLabel." + lang)
@@ -220,7 +219,6 @@ public class DatasetsQueryService extends ElasticsearchService {
                 .addAggregation(createAggregation(TERMS_SUBJECTS_COUNT, FIELD_SUBJECTS_PREFLABEL, UNKNOWN))
                 .addAggregation(createAggregation(TERMS_ACCESS_RIGHTS_COUNT, FIELD_ACCESS_RIGHTS_PREFLABEL, UNKNOWN))
                 .addAggregation(createAggregation(TERMS_THEME_COUNT, FIELD_THEME_CODE, UNKNOWN))
-                .addAggregation(createAggregation(TERMS_PUBLISHER_COUNT, FIELD_PUBLISHER_NAME, UNKNOWN))
                 .addAggregation(createAggregation("provenanceCount", "provenance.code.raw", UNKNOWN))
                 .addAggregation(createAggregation("orgPath", "publisher.orgPath", UNKNOWN))
                 .addAggregation(temporalAggregation("firstHarvested", "harvest.firstHarvested"))
@@ -567,89 +565,6 @@ public class DatasetsQueryService extends ElasticsearchService {
 
 
     /**
-     * Return a count of the number of data sets for each theme code
-     * The query will not return the data sets themselves, only the counts.
-     * If no parameter is specified, the result will be a set of counts for
-     * all used theme codes.
-     * For each theme, the result will include the theme code and an integer
-     * representing the number of data sets with this theme code.
-     * If the optional themecode parameter is specified, only the theme code
-     * and number of data sets for this code is returned
-     *
-     * @param themecode optional parameter specifiying which theme should be counted
-     * @return json containing theme code and integer count of number of data sets
-     */
-    @CrossOrigin
-    @ApiOperation(value = "Aggregate dataset count per theme.", notes = "Returns a list of themes and the total number of datasets for each of them",
-            response = SkosConcept.class)
-    @RequestMapping(value = QUERY_THEME_COUNT, method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<String> themecount(@RequestParam(value = "code", defaultValue = "", required = false) String themecode) {
-        return aggregateOnField(FIELD_THEME_CODE, themecode, TERMS_THEME_COUNT, UNKNOWN);
-    }
-
-    /**
-     * Returns a list of publishers and the total number of dataset for each of them.
-     * <p/>
-     * The returnlist will consist of the defined publisher or for all publishers, registered in
-     * elastic search, if no publisher is defined.
-     * <p/>
-     *
-     * @param publisher optional parameter specifiying which publisher should be counted
-     * @return json containing publishers and integer count of number of data sets
-     */
-    @CrossOrigin
-    @ApiOperation(value = "Aggregate dataset count per publisher.",
-            notes = "Returns a list of publishers and the total number of dataset for each of them")
-    @RequestMapping(value = QUERY_PUBLISHER_COUNT, method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<String> publisherCount(@RequestParam(value = "publisher", defaultValue = "", required = false) String publisher) {
-        return aggregateOnField(FIELD_PUBLISHER_NAME, publisher, TERMS_PUBLISHER_COUNT, UNKNOWN);
-    }
-
-    private ResponseEntity<String> aggregateOnField(String field, String fieldValue, String term, String missing) {
-        ResponseEntity<String> jsonError = initializeElasticsearchTransportClient();
-
-        QueryBuilder search;
-
-        if (StringUtils.isEmpty(fieldValue)) {
-            logger.debug(String.format("Count datasets for all %s", field));
-            search = QueryBuilders.matchAllQuery();
-            /*JSON: {
-                "match_all" : { }
-             }*/
-        } else {
-            logger.debug(String.format("Count datasets for %s of type %s.", fieldValue, field));
-            search = QueryBuilders.simpleQueryStringQuery(fieldValue)
-                    .field(field);
-
-            /*JSON: {
-                "query": {
-                    "match": {"theme.code" : "GOVE"}
-                }
-            }*/
-        }
-
-        //Create the aggregation object that counts the datasets
-        AggregationBuilder aggregation = createAggregation(term, field, missing);
-
-        SearchResponse response = getClient().prepareSearch(INDEX_DCAT)
-                .setQuery(search)
-                .setSize(NO_HITS)  //only the aggregation should be returned
-                .setTypes(TYPE_DATASET)
-                .addAggregation(aggregation)
-                .execute().actionGet();
-
-        logger.debug(aggregation.toString());
-
-        logger.trace(String.format("Dataset count for field %s: %s", field, response.toString()));
-
-        if (jsonError != null) {
-            return jsonError;
-        }
-
-        return new ResponseEntity<>(response.toString(), HttpStatus.OK);
-    }
-
-    /**
      * Create aggregation object that counts the number of
      * datasets for each value of the defined field.
      * <p/>
@@ -707,7 +622,6 @@ public class DatasetsQueryService extends ElasticsearchService {
                 .setSize(0)
                 .addAggregation(createAggregation(TERMS_ACCESS_RIGHTS_COUNT, FIELD_ACCESS_RIGHTS_PREFLABEL, UNKNOWN))
                 .addAggregation(createAggregation(TERMS_THEME_COUNT, FIELD_THEME_CODE, UNKNOWN))
-                .addAggregation(createAggregation(TERMS_PUBLISHER_COUNT, FIELD_PUBLISHER_NAME, UNKNOWN))
                 .addAggregation(createAggregation("orgPath", "publisher.orgPath", UNKNOWN))
                 .addAggregation(temporalAggregation("firstHarvested", "harvest.firstHarvested"))
                 .addAggregation(AggregationBuilders.missing("missingFirstHarvested").field("harvest.firstHarvested"))

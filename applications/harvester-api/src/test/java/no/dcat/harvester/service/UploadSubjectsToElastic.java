@@ -85,7 +85,9 @@ public class UploadSubjectsToElastic {
         // set publisher
         Publisher publisher = new Publisher();
         publisher.setUri("http://data.brreg.no/enhetsregisteret/enhet/974760673");
-        publisher.setName("Brønnøysundregistrene");
+        publisher.setName("Registerenheten i Brønnøysund");
+        publisher.setPrefLabel(new HashMap<>());
+        publisher.getPrefLabel().put("no", "Brønnøysundregistrene");
         publisher.setId("974760673");
         publisher.setOrgPath("/STAT/912660680/974760673");
 

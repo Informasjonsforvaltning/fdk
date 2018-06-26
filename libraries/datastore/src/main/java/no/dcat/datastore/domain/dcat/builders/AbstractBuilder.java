@@ -43,6 +43,8 @@ public abstract class AbstractBuilder {
     static Property schema_startDate = ResourceFactory.createProperty("http://schema.org/startDate");
     static Property schema_endDate = ResourceFactory.createProperty("http://schema.org/endDate");
 
+    public static String defaultLanguage = "no";
+
     private static Logger logger = LoggerFactory.getLogger(AbstractBuilder.class);
     static Map<String, Contact> contactMap = new HashMap<>();
 
@@ -294,7 +296,7 @@ public abstract class AbstractBuilder {
             Statement statement = iterator.next();
             String language = statement.getLanguage();
             if (language == null || language.isEmpty()) {
-                language = "no";
+                language = defaultLanguage;
             }
             if (statement.getString() != null && !statement.getString().isEmpty()) {
                 map.put(language, statement.getString());
@@ -316,7 +318,7 @@ public abstract class AbstractBuilder {
             Statement statement = iterator.next();
             String language = statement.getLanguage();
             if (language == null || language.isEmpty()) {
-                language = "no";
+                language = defaultLanguage;
             }
             if (statement.getString() != null && !statement.getString().isEmpty()) {
                 List<String> x = map.get(language);
@@ -562,7 +564,17 @@ public abstract class AbstractBuilder {
     protected static void extractPublisherFromStmt(Publisher publisher, Resource object) {
         publisher.setUri(object.getURI());
         publisher.setId(extractAsString(object, DCTerms.identifier));
-        publisher.setName(extractAsString(object, FOAF.name));
+
+        String name = extractAsString(object, FOAF.name);
+        if (name != null) {
+            publisher.setName(name);
+        }
+
+        Map<String, String> preferredName = extractLanguageLiteral(object, SKOS.prefLabel);
+        if (preferredName != null && preferredName.size() > 0) {
+            publisher.setPrefLabel(preferredName);
+        }
+
         publisher.setValid(extractAsBoolean(object, DCTerms.valid));
         publisher.setOrgPath(extractAsString(object, DCATNO.organizationPath));
 
@@ -589,7 +601,7 @@ public abstract class AbstractBuilder {
         skosCode.setUri(codeUri + kode);
         skosCode.setCode(kode);
         Map<String, String> languageString = new HashMap<>();
-        languageString.put("no", beskrivelse);
+        languageString.put(defaultLanguage, beskrivelse);
         skosCode.setPrefLabel(languageString);
 
         return skosCode;

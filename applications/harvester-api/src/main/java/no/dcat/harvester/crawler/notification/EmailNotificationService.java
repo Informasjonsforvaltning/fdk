@@ -19,10 +19,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class EmailNotificationService {
     private final Logger logger = LoggerFactory.getLogger(EmailNotificationService.class);
-
-    @Autowired
     private JavaMailSender mailSender;
 
+    @Autowired
+    public EmailNotificationService(JavaMailSender mailSender) {
+        this.mailSender = mailSender;
+    }
 
     public void sendValidationResultNotification(String fromAddress, String toAddress, String subjectText, String messageText) {
         SimpleMailMessage message = new SimpleMailMessage();
@@ -32,15 +34,15 @@ public class EmailNotificationService {
         message.setTo(toAddress);
         message.setText(messageText);
 
+        logger.info("notification mail with size {} from address: {} to address: {}", messageText.length(), fromAddress, toAddress);
+        logger.trace("notification mail contents {} :}", messageText);
 
         try {
             this.mailSender.send(message);
+            logger.info("Send email success!");
         } catch (MailException mx) {
-            logger.error(mx.getMessage());
+            logger.error("Send email failed: {}", mx.getMessage());
         }
 
-
-        logger.info("notification mail with size {} from address: {} to address: {}", messageText.length(), fromAddress, toAddress);
-        logger.trace("notification mail contents {} :}", messageText);
     }
 }
