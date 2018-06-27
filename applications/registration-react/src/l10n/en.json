@@ -1,0 +1,324 @@
+{
+  "app": {
+    "skipLink": "Skip link",
+    "navigateFrontpage": "Navigate to frontpage",
+    "title": "Title",
+    "publisher": "Publisher",
+    "menu": "Menu",
+    "readMore": "Read more ",
+    "lastSaved": "Last saved",
+    "logIn": "Log in",
+    "logOut": "Log out",
+    "autoSave": "Auto save",
+    "notPublished": "Not ready to publish?",
+    "notPublishedText": "Your work is saved as a draft, come back when you are ready to publish!",
+    "published": "Published!",
+    "publishedText": "Your description is now published. It will be searchable in the National Data Directory within 24 hours.",
+    "cancel": "Cancel",
+    "import": "Import",
+    "editTitle": "Edit title"
+  },
+  "beta": {
+    "header": "This is a beta version. ",
+    "first": "Please provide ",
+    "second": "feedback",
+    "last": "of what you think!"
+  },
+  "lang": {
+    "choose": "Choose language",
+    "chosenLanguage": "Language",
+    "norwegian-nb": "Norwegian (bokmål)",
+    "norwegian-nn": "Norwegian (nynorsk)",
+    "english-en": "English",
+    "ENG": "English",
+    "NOR": "Norwegian",
+    "SMI": "Sami"
+  },
+  "menu": {
+    "title": "Menu",
+    "guide": "Guide",
+    "standard": "Standard",
+    "fdk": "National Data Directory"
+  },
+  "footer": {
+    "organisation.number": "Organization number:",
+    "information": "Information",
+    "information_text": "This is a collaborative project between Brønnøysundregistrene, Difi and SKATE government agencies.",
+    "mail": "fellesdatakatalog@brreg.no",
+    "privacy": " and privacy",
+    "contact": "contact:"
+  },
+  "validation": {
+    "required": "Required field.",
+    "minTwoChars": "Minimum two charachters.",
+    "validateDataset": "Invalid dataset!",
+    "validateDatasetBody": "Dataset can't be published. Please look through and correct any errors before publishing.",
+    "validateLink": "Not valid URL",
+    "validateEmail": "Not valid email",
+    "validatePhone": "Not valid phone number"
+  },
+  "deleteDataset": {
+    "title": "Are you sure about deleting the dataset?",
+    "body": "All registered data will be deleted and can't be retrieved. Please confirm deleting."
+  },
+  "helptext": {
+    "required": "Required",
+    "more": "More recommendations"
+  },
+  "schema": {
+    "common": {
+      "startDateLabel": "From",
+      "endDateLabel": "To",
+      "addTime": "Add time",
+      "titleLabel": "Title",
+      "descriptionLabel": "Description",
+      "linkLabel": "Link",
+      "add": "Add"
+    },
+    "catalog": {
+      "helptext": {
+        "title": "Description"
+      },
+      "ownedByLabel": "Owned by",
+      "editDescriptionLabel": "Edit description"
+    },
+    "title": {
+      "helptext": {
+        "title": "Title",
+        "description": "Description of dataset",
+        "objective": "Objective of dataset",
+        "landingPage": "Link to landing page"
+      },
+      "titleLabel": "Title",
+      "descriptionLabel": "Description",
+      "objectiveLabel": "Objective"
+    },
+    "accessRights": {
+      "heading": "Access level",
+      "publicLabel": "Public",
+      "restrictedLabel": "Restricted public access",
+      "nonPublicLabel": "Non-public access",
+      "legalBasisForRestriction": {
+        "heading": "Access rights",
+        "titleLabel": "Title",
+        "linkLabel": "Link"
+      },
+      "legalBasisForProcessing": {
+        "heading": "Basis for processing",
+        "titleLabel": "Title",
+        "linkLabel": "Link"
+      },
+      "legalBasisForAccess": {
+        "heading": "Legal Basis for Access",
+        "titleLabel": "Title",
+        "linkLabel": "Link"
+      }
+    },
+    "theme": {
+      "helptext": {
+        "theme": "Theme"
+      }
+    },
+    "type": {
+      "helptext": {
+        "type": "Type"
+      }
+    },
+    "concept": {
+      "helptext": {
+        "content": "Concept",
+        "keyword": "Keyword"
+      },
+      "conceptLabel": "Concept",
+      "keywordLabel": "Keyword"
+    },
+    "spatial": {
+      "helptext": {
+        "spatial": "Spatial limitation",
+        "temporal": "Temporal limited",
+        "issued": "Issued date",
+        "language": "Language"
+      },
+      "spatialLabel": "Spatial limitation",
+      "issuedLabel": "Issued Date"
+    },
+    "provenance": {
+      "helptext": {
+        "provenance": "Provenance",
+        "accruralPeriodicity": "Accrual periodicity",
+        "modified": "Last modified",
+        "currentness": "currentness"
+      },
+      "modifiedLabel": "Last modified",
+      "hasCurrentnessAnnotationLabel": "currentness",
+      "accrualPeriodicity": {
+        "ANNUAL": "annual",
+        "ANNUAL2": "semiannually",
+        "ANNUAL_3": "three times a Year",
+        "BIENNIAL": "every second Year",
+        "BIMONTHLY": "every second Month",
+        "BIWEEKLY": "every second Week",
+        "CONT": "continuous",
+        "DAILY": "daily",
+        "DAILY_2": "twice per day",
+        "IRREG": "irregularly",
+        "MONTHLY": "monthly",
+        "MONTHLY_2": "twice a month",
+        "MONTHLY_3": "three times a month",
+        "NEVER": "never",
+        "OTHER": "other",
+        "QUARTERLY": "quarterly",
+        "TRIENNIAL": "every third year",
+        "UNKNOWN": "unknown",
+        "UPDATE_CONT": "continuously updated",
+        "WEEKLY": "weekly",
+        "WEEKLY_2": "twice a week",
+        "WEEKLY_3": "three times a week"
+      }
+    },
+    "informationModel": {
+      "helptext": {
+        "informationModel": "information model"
+      },
+      "titleLabel": "Title",
+      "linkLabel": "Link"
+    },
+    "reference": {
+      "helptext": {
+        "reference": "References"
+      },
+      "addReferenceLabel": "Add related dataset"
+    },
+    "conformsTo": {
+      "titleLabel": "Title",
+      "linkLabel": "Link"
+    },
+    "content": {
+      "helptext": {
+        "conformsTo": "Standard",
+        "relevance": "Relevance",
+        "completeness": "Completeness",
+        "accuracy": "Accuracy",
+        "availability": "Availability"
+      },
+      "hasRelevanceAnnotationLabel": "Relevance",
+      "hasCompletenessAnnotationLabel": "Completeness",
+      "hasAccuracyAnnotationLabel": "Accuracy",
+      "hasAvailabilityAnnotationLabel": "Availability"
+    },
+    "contactPoint": {
+      "helptext": {
+        "organizationalUnit": "Organizational unit",
+        "hasURL": "Contact form",
+        "hasEmail": "Email",
+        "hasTelephone": "Telephone"
+      },
+      "organizationUnitLabel": "Organizational unit",
+      "hasURLLabel": "Contact form",
+      "emailLabel": "Email",
+      "hasTelephoneLabel": "Telephone"
+    },
+    "distribution": {
+      "helptext": {
+        "type": "Type",
+        "accessURL": "Access URL",
+        "format": "Format",
+        "license": "License",
+        "description": "Description",
+        "documentation": "Link to documentation of distribution",
+        "conformsTo": "Standard"
+      },
+      "landingPageLabel": "Landing Page",
+      "deleteDistributionLabel": "Delete distribution",
+      "addDistributionLabel": "Add distribution",
+      "apiLabel": "API",
+      "feedLabel": "Feed",
+      "downloadLabel": "Downloadable file",
+      "accessURLLabel": "Access URL",
+      "formatLabel": "Format",
+      "descriptionLabel": "Description"
+    },
+    "sample": {
+      "helptext": {
+        "accessURL": "Access URL",
+        "format": "Format",
+        "description": "Description"
+      },
+      "deleteSampleLabel": "Delete sample data",
+      "addSampleLabel": "Add sample data",
+      "accessURLLabel": "Access URL",
+      "formatLabel": "Format",
+      "descriptionLabel": "Description"
+    }
+  },
+  "inactiveSessionWarning": {
+    "title": "Your session will soon be interrupted",
+    "loggingOut": "You will be logged out as ",
+    "stayLoggedIn": "Do you want to stay logged in?",
+    "buttonStayLoggedIn": "Yes, stay logged in",
+    "buttonLogOut": "No, log out"
+  },
+  "datasets": {
+    "backToCatalog": "Back to catalog",
+    "list": {
+      "btnNewDataset": "Add dataset description",
+      "btnImportDataset": "Import dataset",
+      "header": {
+        "title": "Dataset title",
+        "status": "Status"
+      },
+      "missingItems": "No dataset description registered",
+      "missingTitle": "Missing title",
+      "statusPublished": "Published",
+      "statusDraft": "Draft"
+    },
+    "import": {
+      "notEmpty": "URL can't be empty",
+      "title": "Import dataset from DCAT RDF resource.",
+      "body": "The imported DCAT-model must include a catalog with the same organization number as the catalog you are editing. Only dataset in this catalog will be imported.",
+      "setURL": "Set URL to DCAT resource:"
+    },
+    "formTemplates": {
+      "title": "Title and description",
+      "accessRight": "Access rights",
+      "theme": "Theme",
+      "type": "Type",
+      "concept": "Concept and keyword",
+      "spatial": "Spatial, time and language",
+      "provenance": "Provenance",
+      "content": "Content",
+      "informationModel": "Information model",
+      "reference": "References",
+      "contactInformation": "Contact information",
+      "distribution": "Distribution",
+      "sample": "Sample data"
+    },
+    "formValues": {
+      "accessRights": {
+        "restricted": "Restricted",
+        "publicString": "Public",
+        "nonPublic": "Non public"
+      },
+      "references": "References",
+      "distributions": "Distributions",
+      "sample": "Sample data"
+    }
+  },
+  "catalogs": {
+    "title": "Your catalogs",
+    "missingCatalogs": {
+      "title": "Hello",
+      "ingress": "You do not have access to any catalogs just yet.",
+      "accessTitle": "Do you need access?",
+      "accessText": "Contact your leader to get access to register dataset.",
+      "assignAccessTitle": "Are you assigning access to others?",
+      "assignAccessText": "You can grant other users access to edit datasets through Altinn. Read more on how to do this."
+    }
+  },
+  "loginDialog": {
+    "title": "Welcome to registration for National Data Directory",
+    "ingress": "Here you can register and administrate dataset descriptions for your business. To gain access make sure you are logged in",
+    "loggedOutMsgPart1": "You have been logged out. ",
+    "loggedOutMsgPart2": "Your session has timed out, but all your changes have been saved. Log in to continue working with registration."
+  }
+}
