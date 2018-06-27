@@ -1,7 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import _get from 'lodash/get';
+
 import { getTranslateText } from '../../../../../lib/translateText';
 import localization from '../../../../../lib/localization';
+import { capitalizeFirstLetter } from '../../../../../lib/stringUtils';
 
 export const CompareTermModalContent = props => {
   let { terms, selectedLanguageCode, cols } = props;
@@ -15,27 +18,30 @@ export const CompareTermModalContent = props => {
   cols = cols || CompareTermModalContent.defaultProps.cols;
 
   const title = items =>
-    items.map((item, index) => (
-      <div className={cols} key={`title-${index}${item.uri}`}>
-        <h3>
-          {item.prefLabel &&
-          getTranslateText(item.prefLabel, selectedLanguageCode)
-            ? getTranslateText(item.prefLabel, selectedLanguageCode)
-                .charAt(0)
-                .toUpperCase() +
-              getTranslateText(item.prefLabel, selectedLanguageCode)
-                .substring(1)
-                .toLowerCase()
-            : ''}
-        </h3>
-        <h5>
-          {item.creator && item.creator.name
-            ? item.creator.name.charAt(0).toUpperCase() +
-              item.creator.name.substring(1)
-            : ''}
-        </h5>
-      </div>
-    ));
+    items.map((item, index) => {
+      const { creator } = item;
+
+      const publisherPrefLabel =
+        getTranslateText(_get(creator, ['prefLabel'], null)) ||
+        capitalizeFirstLetter(_get(creator, 'name', ''));
+
+      return (
+        <div className={cols} key={`title-${index}${item.uri}`}>
+          <h3>
+            {item.prefLabel &&
+            getTranslateText(item.prefLabel, selectedLanguageCode)
+              ? getTranslateText(item.prefLabel, selectedLanguageCode)
+                  .charAt(0)
+                  .toUpperCase() +
+                getTranslateText(item.prefLabel, selectedLanguageCode)
+                  .substring(1)
+                  .toLowerCase()
+              : ''}
+          </h3>
+          <h5>{publisherPrefLabel}</h5>
+        </div>
+      );
+    });
 
   const definition = items =>
     items.map((item, index) => (

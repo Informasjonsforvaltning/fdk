@@ -4,9 +4,12 @@ import TreeView from 'react-treeview';
 import 'react-treeview/react-treeview.css';
 import cx from 'classnames';
 import { Collapse } from 'react-bootstrap';
+import _get from 'lodash/get';
 
 import { FilterOption } from '../filter-option/filter-option.component';
 import localization from '../../../lib/localization';
+import { getTranslateText } from '../../../lib/translateText';
+import { capitalizeFirstLetter } from '../../../lib/stringUtils';
 import './search-publishers-tree.scss';
 
 export class SearchPublishersTree extends React.Component {
@@ -68,19 +71,17 @@ export class SearchPublishersTree extends React.Component {
           'tree-item_chosen': node.key === orgPath
         });
 
-        let name = node.key;
-        if (publishers) {
-          const currentPublisher = publishers[name];
-          if (currentPublisher) {
-            name = currentPublisher.name; // .substring(0, 25);
-          }
-        }
+        const currentPublisher = _get(publishers, [node.key], null);
+        const name =
+          getTranslateText(_get(currentPublisher, ['prefLabel'], null)) ||
+          capitalizeFirstLetter(_get(currentPublisher, 'name', ' '));
+
         const label = (
           <FilterOption
             key={`${node.key}|${i}`}
             itemKey={0.5}
             value={node.key}
-            label={name}
+            labelRaw={name}
             count={node.doc_count}
             onClick={onFilterPublisherHierarchy}
             active={active}
@@ -109,7 +110,7 @@ export class SearchPublishersTree extends React.Component {
             key={`${node.key}|${i}`}
             itemKey={0.5}
             value={node.key}
-            label={name}
+            labelRaw={name}
             count={node.doc_count}
             onClick={onFilterPublisherHierarchy}
             active={active}

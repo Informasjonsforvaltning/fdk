@@ -15,3 +15,15 @@ export function addValue(list, value) {
   ret.push(value);
   return ret.join(',');
 }
+
+export function capitalizeFirstLetter(textString) {
+  if (!textString) {
+    return null;
+  }
+  if (textString.length > 0) {
+    return `${textString.charAt(0).toUpperCase()}${textString
+      .substring(1)
+      .toLowerCase()}`;
+  }
+  return textString;
+}
