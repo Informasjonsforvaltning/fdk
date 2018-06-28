@@ -363,8 +363,8 @@ then
         createOpenshiftService harvester
 
         oc env dc/harvester \
-            harvester_adminUsername=changeme \
-            harvester_adminPassword=changeme
+            harvester_adminUsername=test_admin \
+            harvester_adminPassword=password
 
         exposeService harvester
     else
