@@ -3,16 +3,11 @@ version: "3"
 services:
   search:
     image: dcatno/search:latest
-    build: ./applications/search
-    networks:
-      platform:
 
   search-api:
     image: dcatno/search-api:latest
     depends_on:
       - elasticsearch
-    networks:
-      platform:
 
   nginx-search:
     image: dcatno/nginx-search:latest
@@ -20,19 +15,12 @@ services:
       - search
       - search-api
       - harvester-api
-    networks:
-      platform:
 
   fuseki:
     image: dcatno/fuseki:latest
-    networks:
-      platform:
 
   harvester-api:
     image: dcatno/harvester-api:latest
-    networks:
-      platform:
-      logging:
     depends_on:
      - fuseki
      - elasticsearch
@@ -40,35 +28,13 @@ services:
 
   harvester:
     image: dcatno/harvester:latest
-    networks:
-      platform:
-      logging:
     depends_on:
      - elasticsearch
      - fuseki
      - harvester-api
 
- # elasticsearch5:
- #   image: "docker.elastic.co/elasticsearch/elasticsearch:5.2.0"
- #   environment:
- #     - xpack.security.enabled=false
- #     - cluster.name=elasticsearch
- #   ports:
- #     - "920:9200"
- #     - "9300:9300"
- #   networks:
- #     platform:
- #       aliases:
- #         - es
- #     logging:
- #       aliases:
- #         - log_es
-
   elasticsearch:
     image: elasticsearch:2.4.1
-    networks:
-      platform:
-      logging:
 
   dev-management:
     image: dcatno/dev-management:latest
@@ -76,16 +42,12 @@ services:
       - elasticsearch
       - fuseki
       - harvester-api
-    networks:
-      platform:
 
   nginx-registration:
       image: dcatno/nginx-registration:latest
       depends_on:
         - registration-api
         - reference-data
-      networks:
-        platform:
 
   registration-api:
     image: dcatno/registration-api:latest
@@ -93,31 +55,21 @@ services:
       - elasticsearch
       - reference-data
       - registration-auth
-    networks:
-      platform:
 
   registration-react:
     image: dcatno/registration-react:latest
     depends_on:
       - nginx-registration-ssl
       - registration-api
-    networks:
-      platform:
 
   reference-data:
     image: dcatno/reference-data:latest
-    networks:
-      platform:
 
   registration-auth:
     image: dcatno/registration-auth:latest
-    networks:
-      platform:
 
   registration-validator:
     image: dcatno/registration-validator:latest
-    networks:
-      platform:
 
 
 # logstash:
@@ -127,24 +79,9 @@ services:
 #      - ./logs:/usr/local/tomcat/logs:rw
 #    depends_on:
 #      - elasticsearch
-#    networks:
-#      logging:
 
   kibana:
     image: kibana:4.6
     depends_on:
       - elasticsearch
-    networks:
-      platform:
 
-  e2e:
-    build: ./applications/e2e
-    volumes:
-      -   ./applications/e2e/test:/usr/src/app/test:rw
-    networks:
-      platform:
-    command: tail -F /dev/null
-
-networks:
-  platform:
-  logging:
