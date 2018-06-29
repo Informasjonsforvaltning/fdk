@@ -8,7 +8,7 @@ services:
     ports:
        - "3000:3000"
     volumes:
-      -   ./applications/search/src:/usr/src/app/src:rw
+      - ./applications/search/src:/usr/src/app/src:rw
     environment:
       - REDUX_LOG=${REDUX_LOG}
 
@@ -92,10 +92,10 @@ services:
   nginx-registration-ssl:
     image: dcatno/nginx-registration-ssl:latest
     restart: always
-    depends_on:
-      - nginx-registration
     ports:
       - "8098:443"
+    depends_on:
+      - nginx-registration
 
   registration-api:
     restart: always
@@ -114,6 +114,7 @@ services:
      - registrationApi_ipStorePassword=${registrationApi_ipStorePassword}
 
   registration-react:
+    build: ./applications/registration-react
     restart: always
     command: npm start
     ports:

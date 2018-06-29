@@ -3,14 +3,20 @@ version: "3"
 services:
   search:
     image: dcatno/search:latest
+    expose:
+     - "3000"
 
   search-api:
     image: dcatno/search-api:latest
+    expose:
+      - "8080"
     depends_on:
       - elasticsearch
 
   nginx-search:
     image: dcatno/nginx-search:latest
+    expose:
+     - "8080"
     depends_on:
       - search
       - search-api
@@ -18,9 +24,13 @@ services:
 
   fuseki:
     image: dcatno/fuseki:latest
+    expose:
+     - "8080"
 
   harvester-api:
     image: dcatno/harvester-api:latest
+    expose:
+     - "8080"
     depends_on:
      - fuseki
      - elasticsearch
@@ -28,6 +38,8 @@ services:
 
   harvester:
     image: dcatno/harvester:latest
+    expose:
+     - "8080"
     depends_on:
      - elasticsearch
      - fuseki
@@ -35,22 +47,32 @@ services:
 
   elasticsearch:
     image: elasticsearch:2.4.1
+    expose:
+     - "9200"
+     - "9300"
 
   dev-management:
     image: dcatno/dev-management:latest
+    expose:
+     - "8080"
     depends_on:
       - elasticsearch
       - fuseki
       - harvester-api
 
   nginx-registration:
-      image: dcatno/nginx-registration:latest
-      depends_on:
-        - registration-api
-        - reference-data
+    image: dcatno/nginx-registration:latest
+    expose:
+     - "8080"
+    depends_on:
+      - registration-react
+      - registration-api
+      - reference-data
 
   registration-api:
     image: dcatno/registration-api:latest
+    expose:
+     - "8080"
     depends_on:
       - elasticsearch
       - reference-data
@@ -58,16 +80,20 @@ services:
 
   registration-react:
     image: dcatno/registration-react:latest
-    build: ./applications/registration-react
-    depends_on:
-      - nginx-registration-ssl
-      - registration-api
-
-  reference-data:
-    image: dcatno/reference-data:latest
+    expose:
+     - "4300"
 
   registration-auth:
     image: dcatno/registration-auth:latest
+    expose:
+     - "8080"
 
   registration-validator:
     image: dcatno/registration-validator:latest
+    expose:
+     - "8080"
+
+  reference-data:
+    image: dcatno/reference-data:latest
+    expose:
+     - "8080"
