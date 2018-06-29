@@ -5,8 +5,6 @@ services:
     build: ./applications/search
     restart: always
     command: npm start
-    ports:
-       - "3000:3000"
     volumes:
       - ./applications/search/src:/usr/src/app/src:rw
     environment:
@@ -15,8 +13,6 @@ services:
 
   search-api:
     restart: always
-    ports:
-      - "8083:8080"
     environment:
      - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
      - application.elasticsearchHost=elasticsearch
@@ -31,13 +27,9 @@ services:
     restart: always
     volumes:
       - ./data/fuseki:/etc/fuseki/databases/
-    ports:
-     - "3030:8080"
 
   harvester-api:
     restart: always
-    ports:
-     - "8081:8080"
     environment:
      - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx1024M -Dspring.profiles.active=docker
      - fuseki.dcatServiceUri=http://fuseki:8080/fuseki/dcat
@@ -67,9 +59,6 @@ services:
 
   elasticsearch:
     restart: always
-    ports:
-      - "9200:9200"
-      - "9300:9300"
     volumes:
       - ./data/esdata:/usr/share/elasticsearch/data
     environment:
@@ -101,8 +90,6 @@ services:
 
   registration-api:
     restart: always
-    ports:
-      - "8079:8080"
     environment:
      - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
      - registrationAPI_clusterName=elasticsearch
@@ -119,8 +106,6 @@ services:
     build: ./applications/registration-react
     restart: always
     command: npm start
-    ports:
-     - "4300:4300"
     volumes:
      - ./applications/registration-react/src:/usr/src/app/src:rw
     environment:
@@ -129,15 +114,11 @@ services:
 
   registration-auth:
       restart: always
-      ports:
-        - "8077:8080"
       environment:
         - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
 
   reference-data:
     restart: always
-    ports:
-      - "8100:8080"
     environment:
      - JAVA_OPTS=-Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
 
