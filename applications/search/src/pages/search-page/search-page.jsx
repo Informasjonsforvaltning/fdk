@@ -1,3 +1,4 @@
+import _get from 'lodash/get';
 import React from 'react';
 import qs from 'qs';
 import { Route, Switch } from 'react-router-dom';
@@ -10,10 +11,7 @@ import { ResultsConcepts } from './results-concepts/results-concepts.component';
 import { SearchBox } from './search-box/search-box.component';
 import { ResultsTabs } from './results-tabs/results-tabs.component';
 import { removeValue, addValue } from '../../lib/stringUtils';
-import {
-  addOrReplaceParamWithoutURL,
-  getParamFromString
-} from '../../lib/addOrReplaceUrlParam';
+
 import './search-page.scss';
 
 const ReactGA = require('react-ga');
@@ -23,12 +21,9 @@ const browser = detect();
 export class SearchPage extends React.Component {
   constructor(props) {
     super(props);
-    const searchQuery =
-      props.location && props.location.search
-        ? qs.parse(props.location.search.substr(1))
-        : {
-            searchQuery: {}
-          };
+
+    const search = _get(props.location, 'search', '?');
+    const searchQuery = qs.parse(search.substr(1)) || {};
 
     this.state = {
       showFilterModal: false,
@@ -60,49 +55,11 @@ export class SearchPage extends React.Component {
     this.open = this.open.bind(this);
   }
 
-  componentDidMount() {
-    const { location } = this.props;
-    let hasSingleWord = false;
-    const q =
-      location && location.search
-        ? getParamFromString(location.search, 'q')
-        : null;
-    if (q) {
-      hasSingleWord = !q.includes(' ') && !q.includes('*'); // no spaces and no asterix search
-    }
-    if (hasSingleWord) {
-      const modifiedQ = addOrReplaceParamWithoutURL(
-        location.search,
-        'q',
-        `${q} ${encodeURIComponent(q)}*`
-      );
-      this.props.fetchDatasetsIfNeeded(`/datasets/${modifiedQ}`);
-      this.props.fetchTermsIfNeeded(`/terms/${modifiedQ}`);
-    } else {
-      this.props.fetchDatasetsIfNeeded(`/datasets${location.search}`);
-      this.props.fetchTermsIfNeeded(`/terms${location.search}`);
-    }
-    this.props.fetchThemesIfNeeded();
-    this.props.fetchPublishersIfNeeded();
-    this.props.fetchDistributionTypeIfNeeded();
-  }
-
   componentWillReceiveProps(nextProps) {
     if (nextProps.location.search !== this.props.location.search) {
-      const original = nextProps.location.search;
-      const q = getParamFromString(original, 'q');
-      const hasSingleWord = q && !q.includes(' ') && !q.includes('*'); // no spaces and no asterix search
-
-      const query = hasSingleWord
-        ? addOrReplaceParamWithoutURL(
-            original,
-            'q',
-            `${q} ${encodeURIComponent(q)}*`
-          )
-        : original;
-
-      this.props.fetchDatasetsIfNeeded(`/datasets${query}`);
-      this.props.fetchTermsIfNeeded(`/terms${query}`);
+      const search = nextProps.location.search;
+      this.props.fetchDatasetsIfNeeded(`/datasets${search}`);
+      this.props.fetchTermsIfNeeded(`/terms${search}`);
     }
   }
 
