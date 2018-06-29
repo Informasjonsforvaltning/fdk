@@ -147,8 +147,8 @@ services:
     environment:
      - JAVA_OPTS=-Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
 
-  e2e:
-    build: ./applications/e2e
-    volumes:
-      -   ./applications/e2e/test:/usr/src/app/test:rw
-    command: tail -F /dev/null
+#  e2e:
+#    build: ./applications/e2e
+#    volumes:
+#      -   ./applications/e2e/test:/usr/src/app/test:rw
+#    command: tail -F /dev/null
