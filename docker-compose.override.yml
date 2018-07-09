@@ -96,6 +96,7 @@ services:
       - "8098:443"
     depends_on:
       - nginx-registration
+      - registration-react
 
   registration-api:
     restart: always
