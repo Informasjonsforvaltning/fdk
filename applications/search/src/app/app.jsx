@@ -6,7 +6,7 @@ import { Route, Switch, Link } from 'react-router-dom';
 import localization from '../lib/localization';
 import { addOrReplaceParam } from '../lib/addOrReplaceUrlParam';
 import { getLanguageFromUrl } from '../lib/translateText';
-import { SearchPage } from '../pages/search-page/search-page.container';
+import { ConnectedSearchPage } from '../pages/search-page/connected-search-page';
 import { ConnectedDatasetDetailsPage } from '../pages/dataset-details-page/connected-dataset-details-page';
 import { AboutPage } from '../pages/about-page/about-page.component';
 import { ArticlePage } from '../pages/article-page/article-page.component';
@@ -211,7 +211,7 @@ export default class App extends React.Component {
               exact
               path="/"
               render={props => (
-                <SearchPage
+                <ConnectedSearchPage
                   selectedLanguageCode={this.state.selectedLanguageCode}
                   {...props}
                 />
@@ -221,7 +221,7 @@ export default class App extends React.Component {
               exact
               path="/api"
               render={props => (
-                <SearchPage
+                <ConnectedSearchPage
                   selectedLanguageCode={this.state.selectedLanguageCode}
                   {...props}
                 />
@@ -231,7 +231,7 @@ export default class App extends React.Component {
               exact
               path="/concepts"
               render={props => (
-                <SearchPage
+                <ConnectedSearchPage
                   selectedLanguageCode={this.state.selectedLanguageCode}
                   {...props}
                 />
