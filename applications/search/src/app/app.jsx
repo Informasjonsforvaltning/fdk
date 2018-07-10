@@ -7,7 +7,7 @@ import localization from '../lib/localization';
 import { addOrReplaceParam } from '../lib/addOrReplaceUrlParam';
 import { getLanguageFromUrl } from '../lib/translateText';
 import { SearchPage } from '../pages/search-page/search-page.container';
-import { DetailsPage } from '../pages/details-page/details-page.container';
+import { ConnectedDetailsPage } from '../pages/details-page/connected-details-page';
 import { AboutPage } from '../pages/about-page/about-page.component';
 import { ArticlePage } from '../pages/article-page/article-page.component';
 import { ReportsPage } from '../pages/reports-page/reports-page.container';
@@ -237,7 +237,11 @@ export default class App extends React.Component {
                 />
               )}
             />
-            <Route exact path="/datasets/:id" component={DetailsPage} />
+            <Route
+              exact
+              path="/datasets/:id"
+              component={ConnectedDetailsPage}
+            />
             <Route exact path="/reports" component={ReportsPage} />
             <Route exact path="/about" component={AboutPage} />
             <Route exact path="/about-registration" component={ArticlePage} />
