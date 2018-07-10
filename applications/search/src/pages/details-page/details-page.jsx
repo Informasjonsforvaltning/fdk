@@ -94,7 +94,6 @@ export class DetailsPage extends React.Component {
     }
     return distribution.map(distribution => (
       <DatasetDistribution
-        id={encodeURIComponent(distribution.uri)}
         key={encodeURIComponent(distribution.uri)}
         title={localization.dataset.distribution.title}
         description={
@@ -125,7 +124,6 @@ export class DetailsPage extends React.Component {
     }
     return sample.map(sample => (
       <DatasetDistribution
-        id={encodeURIComponent(sample.uri)}
         key={encodeURIComponent(sample.uri)}
         title={localization.dataset.sample}
         description={
@@ -280,10 +278,9 @@ export class DetailsPage extends React.Component {
       ));
 
     const landingPages = items =>
-      items.map((item, index) => (
+      items.map(item => (
         <DatasetLandingPage
           key={`dataset-contactpoint-${item.id}`}
-          id={`dataset-contactpoint-${index}`}
           landingPage={item}
         />
       ));
@@ -316,8 +313,8 @@ export class DetailsPage extends React.Component {
       return (
         <div className="container">
           <div className="row">
-            <div className="col-md-8 col-md-offset-2" id="content" role="main">
-              <article>
+            <div className="col-md-8 col-md-offset-2">
+              <article role="main">
                 {this._renderDatasetDescription()}
                 {this._renderKeyInfo()}
                 {this._renderDistribution()}

@@ -1,9 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`should render DatasetDescription correctly 1`] = `
-<header
-  id="dataset-description"
->
+<header>
   <SideEffect(DocumentMeta)
     description="Datasettet avgrenser område for virkeområdet til lov 6. juni 2009 nr. 35 om naturområder i Oslo og nærliggende kommuner (markaloven) som trådte i kraft 1. september 2009. Markalovens virkeområde er fastsatt i forskrift 4. september 2015 nr. 1032 om justering av markagrensen fastlegger markalovens geografiske virkeområde med tilhørende kart."
     title="AAMarkagrensen Oslo Kommune og nærliggende kommuner"
@@ -24,21 +22,18 @@ exports[`should render DatasetDescription correctly 1`] = `
        
       <strong
         className="fdk-strong-virksomhet"
-        id="dataset-descritption-publisher-text"
       >
         Testetaten
       </strong>
     </span>
     <div
       className="fdk-label fdk-label-on-grey mr-2 mb-2"
-      id="dataset-description-theme-undefined"
       key="dataset-description-theme-undefined"
     >
       Forvaltning og offentlig støtte
     </div>
     <div
       className="fdk-label fdk-label-on-grey mr-2 mb-2"
-      id="dataset-description-theme-undefined"
       key="dataset-description-theme-undefined"
     >
       Miljø
@@ -60,9 +55,7 @@ exports[`should render DatasetDescription correctly 1`] = `
 `;
 
 exports[`should render DatasetDescription correctly 2`] = `
-<header
-  id="dataset-description"
->
+<header>
   <SideEffect(DocumentMeta)
     description="Datasettet avgrenser område for virkeområdet til lov 6. juni 2009 nr. 35 om naturområder i Oslo og nærliggende kommuner (markaloven) som trådte i kraft 1. september 2009. Markalovens virkeområde er fastsatt i forskrift 4. september 2015 nr. 1032 om justering av markagrensen fastlegger markalovens geografiske virkeområde med tilhørende kart."
     title="AAMarkagrensen Oslo Kommune og nærliggende kommuner"
@@ -83,21 +76,18 @@ exports[`should render DatasetDescription correctly 2`] = `
        
       <strong
         className="fdk-strong-virksomhet"
-        id="dataset-descritption-publisher-text"
       >
         Testetaten
       </strong>
     </span>
     <div
       className="fdk-label fdk-label-on-grey mr-2 mb-2"
-      id="dataset-description-theme-undefined"
       key="dataset-description-theme-undefined"
     >
       Forvaltning og offentlig støtte
     </div>
     <div
       className="fdk-label fdk-label-on-grey mr-2 mb-2"
-      id="dataset-description-theme-undefined"
       key="dataset-description-theme-undefined"
     >
       Miljø
@@ -119,9 +109,7 @@ exports[`should render DatasetDescription correctly 2`] = `
 `;
 
 exports[`should render DatasetDescription correctly with no props 1`] = `
-<header
-  id="dataset-description"
->
+<header>
   <SideEffect(DocumentMeta)
     description=""
     title=""
