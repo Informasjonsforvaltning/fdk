@@ -1,0 +1,117 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render Select correctly with active sort 1`] = `
+<UncontrolledDropdown
+  aria-label="Sorter søkeresultat, Sort by title"
+  id="search-result-dropdown-1"
+  title="Sort by title"
+>
+  <DropdownToggle
+    aria-haspopup={true}
+    caret={true}
+    className="fdk-button"
+    color="primary"
+  >
+    Sort by
+     
+    title
+  </DropdownToggle>
+  <DropdownMenu
+    className="fdk-dropdownmenu"
+    flip={true}
+    right={true}
+    tag="div"
+  >
+    <DropdownItem
+      key="0"
+      onClick={[Function]}
+      tag="button"
+      toggle={true}
+    >
+      Sort by relevance
+    </DropdownItem>
+    <DropdownItem
+      key="1"
+      onClick={[Function]}
+      tag="button"
+      toggle={true}
+    >
+      Sort by title
+    </DropdownItem>
+    <DropdownItem
+      key="2"
+      onClick={[Function]}
+      tag="button"
+      toggle={true}
+    >
+      Sort by modified
+    </DropdownItem>
+    <DropdownItem
+      key="3"
+      onClick={[Function]}
+      tag="button"
+      toggle={true}
+    >
+      Sort by publisher
+    </DropdownItem>
+  </DropdownMenu>
+</UncontrolledDropdown>
+`;
+
+exports[`should render Select correctly with no active sort 1`] = `
+<UncontrolledDropdown
+  aria-label="Sorter søkeresultat, Sort by relevance"
+  id="search-result-dropdown-1"
+  title="Sort by relevance"
+>
+  <DropdownToggle
+    aria-haspopup={true}
+    caret={true}
+    className="fdk-button"
+    color="primary"
+  >
+    Sort by
+     
+    relevance
+  </DropdownToggle>
+  <DropdownMenu
+    className="fdk-dropdownmenu"
+    flip={true}
+    right={true}
+    tag="div"
+  >
+    <DropdownItem
+      key="0"
+      onClick={[Function]}
+      tag="button"
+      toggle={true}
+    >
+      Sort by relevance
+    </DropdownItem>
+    <DropdownItem
+      key="1"
+      onClick={[Function]}
+      tag="button"
+      toggle={true}
+    >
+      Sort by title
+    </DropdownItem>
+    <DropdownItem
+      key="2"
+      onClick={[Function]}
+      tag="button"
+      toggle={true}
+    >
+      Sort by modified
+    </DropdownItem>
+    <DropdownItem
+      key="3"
+      onClick={[Function]}
+      tag="button"
+      toggle={true}
+    >
+      Sort by publisher
+    </DropdownItem>
+  </DropdownMenu>
+</UncontrolledDropdown>
+`;
