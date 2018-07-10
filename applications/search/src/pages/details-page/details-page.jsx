@@ -1,11 +1,6 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import {
-  fetchDatasetDetailsIfNeeded,
-  resetDatasetDetails
-} from '../../redux/actions/index';
 import { DatasetDescription } from './dataset-description/dataset-description.component';
 import { DatasetKeyInfo } from './dataset-key-info/dataset-key-info.component';
 import { DatasetDistribution } from './dataset-distribution/dataset-distribution.component';
@@ -17,7 +12,7 @@ import { DatasetContactInfo } from './dataset-contact-info/dataset-contact-info.
 import localization from '../../lib/localization';
 import { getTranslateText } from '../../lib/translateText';
 
-export class PureDetailsPage extends React.Component {
+export class DetailsPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -341,34 +336,12 @@ export class PureDetailsPage extends React.Component {
   }
 }
 
-PureDetailsPage.defaultProps = {
+DetailsPage.defaultProps = {
   selectedLanguageCode: null,
   datasetItem: null,
   isFetchingDataset: false
 };
 
-PureDetailsPage.propTypes = {
+DetailsPage.propTypes = {
   selectedLanguageCode: PropTypes.string
 };
-
-const mapStateToProps = ({ datasetDetails }) => {
-  const { datasetItem, isFetchingDataset } = datasetDetails || {
-    datasetItem: null,
-    isFetchingDataset: null
-  };
-
-  return {
-    datasetItem,
-    isFetchingDataset
-  };
-};
-
-const mapDispatchToProps = dispatch => ({
-  fetchDatasetDetailsIfNeeded: url =>
-    dispatch(fetchDatasetDetailsIfNeeded(url)),
-  resetDatasetDetails: () => dispatch(resetDatasetDetails())
-});
-
-export const DetailsPage = connect(mapStateToProps, mapDispatchToProps)(
-  PureDetailsPage
-);
