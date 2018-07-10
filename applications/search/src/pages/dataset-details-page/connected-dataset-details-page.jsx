@@ -4,7 +4,7 @@ import {
   fetchDatasetDetailsIfNeeded,
   resetDatasetDetails
 } from '../../redux/actions/index';
-import { DetailsPage } from './details-page';
+import { DatasetDetailsPage } from './dataset-details-page';
 
 const mapStateToProps = ({ datasetDetails }) => {
   const { datasetItem, isFetchingDataset } = datasetDetails || {
@@ -24,7 +24,7 @@ const mapDispatchToProps = dispatch => ({
   resetDatasetDetails: () => dispatch(resetDatasetDetails())
 });
 
-export const ConnectedDetailsPage = connect(
+export const ConnectedDatasetDetailsPage = connect(
   mapStateToProps,
   mapDispatchToProps
-)(DetailsPage);
+)(DatasetDetailsPage);

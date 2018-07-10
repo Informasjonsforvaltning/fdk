@@ -12,7 +12,7 @@ import { DatasetContactInfo } from './dataset-contact-info/dataset-contact-info.
 import localization from '../../lib/localization';
 import { getTranslateText } from '../../lib/translateText';
 
-export class DetailsPage extends React.Component {
+export class DatasetDetailsPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -333,12 +333,12 @@ export class DetailsPage extends React.Component {
   }
 }
 
-DetailsPage.defaultProps = {
+DatasetDetailsPage.defaultProps = {
   selectedLanguageCode: null,
   datasetItem: null,
   isFetchingDataset: false
 };
 
-DetailsPage.propTypes = {
+DatasetDetailsPage.propTypes = {
   selectedLanguageCode: PropTypes.string
 };
