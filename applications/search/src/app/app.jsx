@@ -8,6 +8,7 @@ import { addOrReplaceParam } from '../lib/addOrReplaceUrlParam';
 import { getLanguageFromUrl } from '../lib/translateText';
 import { ConnectedSearchPage } from '../pages/search-page/connected-search-page';
 import { ConnectedDatasetDetailsPage } from '../pages/dataset-details-page/connected-dataset-details-page';
+import { ConnectedApiDetailsPage } from '../pages/api-details-page/connected-api-details-page';
 import { AboutPage } from '../pages/about-page/about-page.component';
 import { ArticlePage } from '../pages/article-page/article-page.component';
 import { ReportsPage } from '../pages/reports-page/reports-page.container';
@@ -40,6 +41,7 @@ export default class App extends React.Component {
     };
     this.onChangeLanguage = this.onChangeLanguage.bind(this);
   }
+
 
   componentWillMount() {
     const langCode = getLanguageFromUrl();
@@ -219,7 +221,7 @@ export default class App extends React.Component {
             />
             <Route
               exact
-              path="/api"
+              path="/apis"
               render={props => (
                 <ConnectedSearchPage
                   selectedLanguageCode={this.state.selectedLanguageCode}
@@ -242,6 +244,7 @@ export default class App extends React.Component {
               path="/datasets/:id"
               component={ConnectedDatasetDetailsPage}
             />
+            <Route exact path="/apis/:id" component={ConnectedApiDetailsPage} />
             <Route exact path="/reports" component={ReportsPage} />
             <Route exact path="/about" component={AboutPage} />
             <Route exact path="/about-registration" component={ArticlePage} />

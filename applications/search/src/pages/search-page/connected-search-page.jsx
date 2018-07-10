@@ -7,6 +7,7 @@ import {
   fetchDistributionTypeIfNeeded
 } from '../../redux/actions/index';
 import { SearchPage } from './search-page';
+import { fakeApiItem } from "../api-details-page/fixtures/fake-api-item";
 
 const mapStateToProps = ({
   datasets,
@@ -42,6 +43,7 @@ const mapStateToProps = ({
   };
 
   return {
+    apiItems: {aggregations:{},hits:{hits:[{_source:fakeApiItem}]}},
     datasetItems,
     publisherCountItems,
     isFetchingDatasets,

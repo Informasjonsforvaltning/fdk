@@ -26,9 +26,9 @@ export const ResultsTabs = props => {
             </Link>
           </li>
           <FeatureToggle featureName={FEATURES.API}>
-            <li className={location.pathname === '/api' ? 'li-active' : ''}>
+            <li className={location.pathname === '/apis' ? 'li-active' : ''}>
               <Link
-                to={{ pathname: '/api', search }}
+                to={{ pathname: '/apis', search }}
                 aria-label="Link til side for api:"
               >
                 {localization.page.apiTab}

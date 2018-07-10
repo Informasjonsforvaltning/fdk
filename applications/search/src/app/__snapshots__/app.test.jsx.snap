@@ -217,7 +217,7 @@ exports[`should render App correctly 1`] = `
       />
       <Route
         exact={true}
-        path="/api"
+        path="/apis"
         render={[Function]}
       />
       <Route
@@ -229,6 +229,11 @@ exports[`should render App correctly 1`] = `
         component={[Function]}
         exact={true}
         path="/datasets/:id"
+      />
+      <Route
+        component={[Function]}
+        exact={true}
+        path="/apis/:id"
       />
       <Route
         component={[Function]}

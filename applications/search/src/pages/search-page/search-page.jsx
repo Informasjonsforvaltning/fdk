@@ -17,6 +17,7 @@ import {
   getParamFromString
 } from '../../lib/addOrReplaceUrlParam';
 import './search-page.scss';
+import { ResultsApi } from "./results-api/results-api.component";
 
 const ReactGA = require('react-ga');
 
@@ -544,7 +545,17 @@ export class SearchPage extends React.Component {
                 />
               )}
             />
-            <Route exact path="/api" render={() => <div>Beta</div>} />
+            <Route
+              exact
+              path="/apis"
+              render={props => (
+                <ResultsApi
+                  apiItems={this.props.apiItems}
+                  searchQuery={this.state.searchQuery}
+                  onSort={this.handleDatasetSort}
+                />
+              )}
+            />
             <Route
               exact
               path="/concepts/:lang?"
@@ -574,6 +585,7 @@ export class SearchPage extends React.Component {
     );
   }
 }
+
 
 SearchPage.defaultProps = {
   selectedLanguageCode: null
