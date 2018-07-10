@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import qs from 'qs';
 import queryString from 'query-string';
@@ -8,13 +7,6 @@ import cx from 'classnames';
 import { detect } from 'detect-browser';
 
 import localization from '../../lib/localization';
-import {
-  fetchDatasetsIfNeeded,
-  fetchTermsIfNeeded,
-  fetchThemesIfNeeded,
-  fetchPublishersIfNeeded,
-  fetchDistributionTypeIfNeeded
-} from '../../redux/actions/index';
 import { ResultsDataset } from './results-dataset/results-dataset.component';
 import { ResultsConcepts } from './results-concepts/results-concepts.component';
 import { SearchBox } from './search-box/search-box.component';
@@ -30,7 +22,7 @@ const ReactGA = require('react-ga');
 
 const browser = detect();
 
-export class PureSearchPage extends React.Component {
+export class SearchPage extends React.Component {
   constructor(props) {
     super(props);
     const searchQuery =
@@ -583,70 +575,10 @@ export class PureSearchPage extends React.Component {
   }
 }
 
-PureSearchPage.defaultProps = {
+SearchPage.defaultProps = {
   selectedLanguageCode: null
 };
 
-PureSearchPage.propTypes = {
+SearchPage.propTypes = {
   selectedLanguageCode: PropTypes.string
 };
-
-const mapStateToProps = ({
-  datasets,
-  terms,
-  themes,
-  publishers,
-  distributionTypes
-}) => {
-  const {
-    datasetItems,
-    publisherCountItems,
-    isFetchingDatasets
-  } = datasets || {
-    datasetItems: null,
-    publisherCountItems: null
-  };
-
-  const { termItems, publisherCountTermItems, isFetchingTerms } = terms || {
-    termItems: null,
-    publisherCountTermItems: null
-  };
-
-  const { themesItems, isFetchingThemes } = themes || {
-    themesItems: null
-  };
-
-  const { publisherItems, isFetchingPublishers } = publishers || {
-    publisherItems: null
-  };
-
-  const { distributionTypeItems } = distributionTypes || {
-    distributionTypeItems: null
-  };
-
-  return {
-    datasetItems,
-    publisherCountItems,
-    isFetchingDatasets,
-    termItems,
-    publisherCountTermItems,
-    isFetchingTerms,
-    themesItems,
-    isFetchingThemes,
-    publisherItems,
-    isFetchingPublishers,
-    distributionTypeItems
-  };
-};
-
-const mapDispatchToProps = dispatch => ({
-  fetchDatasetsIfNeeded: url => dispatch(fetchDatasetsIfNeeded(url)),
-  fetchTermsIfNeeded: url => dispatch(fetchTermsIfNeeded(url)),
-  fetchThemesIfNeeded: () => dispatch(fetchThemesIfNeeded()),
-  fetchPublishersIfNeeded: () => dispatch(fetchPublishersIfNeeded()),
-  fetchDistributionTypeIfNeeded: () => dispatch(fetchDistributionTypeIfNeeded())
-});
-
-export const SearchPage = connect(mapStateToProps, mapDispatchToProps)(
-  PureSearchPage
-);
