@@ -3,14 +3,7 @@
 dist: trusty
 sudo: required
 
-matrix:
-  include:
-    - language: java
-      jdk:
-        - oraclejdk8
-    - language: node_js
-      node_js:
-      - "lts/8"
+language: generic
 
 notifications:
   slack: fdk-project:SK6k3zGFlrMDGQBX0jSDSvPy
