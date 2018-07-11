@@ -1,5 +1,5 @@
-[![Build Status](https://travis-ci.org/Altinn/fdk.svg?branch=master)](https://travis-ci.org/Altinn/fdk) 
-[![Coverage Status](https://coveralls.io/repos/github/Altinn/fdk/badge.svg?branch=master)](https://coveralls.io/github/Altinn/fdk?branch=master)
+[![Build Status](https://travis-ci.org/Informasjonsforvaltning/fdk.svg?branch=master)](https://travis-ci.org/Altinn/fdk) 
+[![Coverage Status](https://coveralls.io/repos/github/Informasjonsforvaltning/fdk/badge.svg?branch=master)](https://coveralls.io/github/Altinn/fdk?branch=master)
 
 # The National Data Directory (Felles datakatalog)
 
@@ -127,8 +127,8 @@ repository and [data/fuseki](data/fuseki) for the fuseki repository.
 We use Travis for build and Coveralls for code coverage. Travis is configured in `.travis.yml`. Travis executes the instructions in this file to build, 
 run and test the code.
 
- - Travis: https://travis-ci.org/Altinn/fdk
- - Coveralls: https://coveralls.io/github/Altinn/fdk
+ - Travis: https://travis-ci.org/Informasjonsforvaltning/fdk
+ - Coveralls: https://coveralls.io/github/Informasjonsforvaltning/fdk
 
 Our Travis is set up to use Java jdk8 as the main language. To support javascript we install nodejs 
 version 8. Travis also supports running up docker containers and running
