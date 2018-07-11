@@ -3,14 +3,15 @@
 dist: trusty
 sudo: required
 
-matrix:
-  include:
-    - language: java
-      jdk:
-        - oraclejdk8
-    - language: node_js
-      node_js:
-      - "lts/8"
+language: generic
+#matrix:
+#  include:
+#    - language: java
+#      jdk:
+#        - oraclejdk8
+#    - language: node_js
+#      node_js:
+#      - "lts/8"
 
 notifications:
     slack: fdk-project:SK6k3zGFlrMDGQBX0jSDSvPy
@@ -30,6 +31,7 @@ services:
 #before_install:
 
 install:
+  - echo $TRAVIS_COMMIT_RANGE
   - export COVERALLS_PARALLEL=true # ensure coverage results are merged after all parallell jobs have finished
   - export DOCKER_HOST=unix:///var/run/docker.sock # required by the docker maven plugin for connecting to docker
 # Removed because we don't currently run end to end tests in travis
