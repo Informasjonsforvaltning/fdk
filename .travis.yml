@@ -49,7 +49,16 @@ branches:
 jobs:
   include:
     - stage: Build # First build the project to look for syntax/build problems
-      script: travis_wait mvn install -DskipTests -Dmaven.javadoc.skip=true
+      script:
+       #list of applications is copied from travisPushToDockerHub.sh which defines the containers to build&deploy
+       - BUILD1_APPS="fuseki harvester harvester-api nginx-search nginx-registration reference-data registration-react registration-api registration-auth registration-validator search search-api"
+       - if [ "$TRAVIS_EVENT_TYPE" = "pull_request" ] && ! citools/isApplicationsChangedInCommitRange.sh $TRAVIS_COMMIT_RANGE "$BUILD1_APPS"; then
+            echo "Pull request commit range $TRAVIS_COMMIT_RANGE did not change applications $BUILD1_APPS";
+            BUILD1_SKIP="true";
+          fi;
+       - echo "Skip application group1 1 build? - $BUILD1_SKIP"
+       - [ "$BUILD1_SKIP" = "true" ] || mvn install -DskipTests -Dmaven.javadoc.skip=true
+
       env:
       - comment=First build the project to look for syntax/build problems
 

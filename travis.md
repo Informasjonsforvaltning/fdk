@@ -58,7 +58,7 @@ Implementation plan:
 
 MVP steps, each commit is deployable adds value
 
-1) implement null build (PR-case, diff) case (non-component files are not build) 
+1) [x] implement null build (PR-case, diff) case (non-component files are not build) 
  - condition for build step to run if changes in list of components for build project
 2) skip component rebuild (push develop branch trigger needs it since diff is not available) 
  - push tags of component builds
