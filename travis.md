@@ -20,8 +20,6 @@ Stages:
     - tag all containers with ut1_latest and date
     - git-tag develop branch with moved ut1_latest and date.
 
-
-
 how to build development branch without a PR?
 - we could run through all steps and shortcut them if they are already done.
 - the problem really is that there is no easy way to link commit in develop branch to PR (that was built and tested)
