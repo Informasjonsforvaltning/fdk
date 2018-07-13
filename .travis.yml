@@ -28,7 +28,10 @@ jobs:
   include:
     - stage: Build # First build the project to look for syntax/build problems
       if: type = pull_request
-      script: travis_wait mvn install -DskipTests -Dmaven.javadoc.skip=true
+      script:
+        - . ./buildGroupsEnv.sh
+        - docker login --username ${dockerUsername} --password ${dockerPassword}
+        - ./buildAndPushApplicationGroup.sh "$BUILD1_APPS" "$BUILD1_CMD"
       env:
         - comment=First build the project to look for syntax/build problems
 

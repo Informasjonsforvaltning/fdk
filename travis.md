@@ -78,7 +78,7 @@ MVP steps, each commit is deployable adds value
  NB! Skip this step was later skipped, since it does not work for other pull request base than "develop" and solution 2 is very quick)
  - condition for build step to run if changes in list of components for build project
  - value:(0) null-build (change outside apps) cuts 2*8,5 minutes from Build stage.
-2) skip component rebuild (push develop branch trigger needs it since diff is not available) 
+2) [x] skip component rebuild (push develop branch trigger needs it since diff is not available) 
  - push tags of component builds
  - skip build components if already built
  - value: (15 min) add ~4 min to first build, but short-circuit the develop build and deploy job.

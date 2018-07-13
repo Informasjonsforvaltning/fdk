@@ -1,13 +1,11 @@
 #!/usr/bin/env bash
+set -e
 
+. ./buildGroupsEnv.sh
 
-mvn clean
-mvn install -DskipTests -Dmaven.javadoc.skip=true -Dskip.npm -B -V
+# We will build what is needed and download images that are missing
+./buildOrPullApplicationGroup.sh "$BUILD1_APPS" "$BUILD1_CMD"
 
-docker-compose down
-docker stop $(docker ps -a -q); docker rm $(docker ps -a -q); docker volume rm $(docker volume ls -qf dangling=true)
+docker-compose down --remove-orphans
+
 docker-compose up -d
-
-./waitForDocker.sh
-
-say "Docker is running"
