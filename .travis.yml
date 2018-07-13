@@ -1,35 +1,42 @@
+# sudo-enabled Trusty is used because we use docker https://docs.travis-ci.com/user/docker/
+# Consider skipping docker (build containers without docker or outside of travis), in order to use faster container-based Trusty: https://docs.travis-ci.com/user/reference/trusty/#Container-based-with-sudo%3A-false
+dist: trusty
 sudo: required
 
-matrix:
-  include:
-    - language: java
-      jdk:
-        - oraclejdk8
-    - language: node_js
-      node_js:
-      - "lts/8"
+language: generic
+#matrix:
+#  include:
+#    - language: java
+#      jdk:
+#        - oraclejdk8
+#    - language: node_js
+#      node_js:
+#      - "lts/8"
 
 notifications:
     slack: fdk-project:SK6k3zGFlrMDGQBX0jSDSvPy
     webhooks: https://coveralls.io/webhook?repo_token=COVERALLS_REPO_TOKEN
 
 services:
-  - docker # enable docker support in travis
+  - docker
 
-apt:
-  sources:
-    - google-chrome # we need to install chrome for running the Angular e2e tests
-  packages:
-    - google-chrome-stable
+#removed because we don't currently run end to end tests in travis
+#addons:
+#  apt:
+#    sources:
+#      - google-chrome # we need to install chrome for running the Angular e2e tests
+#    packages:
+#      - google-chrome-stable
 
-before_install:
+#before_install:
 
 install:
   - export COVERALLS_PARALLEL=true # ensure coverage results are merged after all parallell jobs have finished
   - export DOCKER_HOST=unix:///var/run/docker.sock # required by the docker maven plugin for connecting to docker
-  - export CHROME_BIN=chromium-browser # this line and the next two lines are required for running up chrome
-  - export DISPLAY=:99.0
-  - sh -e /etc/init.d/xvfb start
+# Removed because we don't currently run end to end tests in travis
+#  - export CHROME_BIN=chromium-browser # this line and the next two lines are required for running up chrome
+#  - export DISPLAY=:99.0
+#  - sh -e /etc/init.d/xvfb start
 
 branches:
   except:
@@ -38,10 +45,20 @@ branches:
     - /st2_.*/
     - /tt1_.*/
     - /ppe_.*/
+
 jobs:
   include:
     - stage: Build # First build the project to look for syntax/build problems
-      script: travis_wait mvn install -DskipTests -Dmaven.javadoc.skip=true
+      script:
+       #list of applications is copied from travisPushToDockerHub.sh which defines the containers to build&deploy
+       - BUILD1_APPS="fuseki harvester harvester-api nginx-search nginx-registration reference-data registration-react registration-api registration-auth registration-validator search search-api"
+       - if [ "$TRAVIS_EVENT_TYPE" = "pull_request" ] && ! citools/isApplicationsChangedInCommitRange.sh $TRAVIS_COMMIT_RANGE "$BUILD1_APPS"; then
+            echo "Pull request commit range $TRAVIS_COMMIT_RANGE did not change applications $BUILD1_APPS";
+            BUILD1_SKIP="true";
+          fi;
+       - echo "Skip application group1 1 build? - $BUILD1_SKIP"
+       - [ "$BUILD1_SKIP" = "true" ] || mvn install -DskipTests -Dmaven.javadoc.skip=true
+
       env:
       - comment=First build the project to look for syntax/build problems
 
@@ -88,7 +105,8 @@ jobs:
     #    - comment=Run end-to-end (Cucumber) tests
 
     - stage: deploy
-      if: branch = develop AND type != pull_request # only deploy when branc is develop and exclude when type is pull_request because in pull request branch means base branch.
+      # only deploy when branch is develop and exclude when type is pull_request because in case if type=pull_request branch means base branch.
+      if: branch = develop AND type != pull_request
       script: mvn install -DskipTests -Dmaven.javadoc.skip=true -B ;
       deploy:
         provider: script
