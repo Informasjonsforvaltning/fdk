@@ -26,7 +26,7 @@ branches:
 
 jobs:
   include:
-    - stage: Build # First build the project to look for syntax/build problems
+    - stage: Build
       if: type = pull_request
       script:
         - . ./buildGroupsEnv.sh
@@ -34,6 +34,8 @@ jobs:
         - ./buildAndPushApplicationGroup.sh "$BUILD1_APPS" "$BUILD1_CMD"
         - ./buildAndPushApplicationGroup.sh "$BUILD2_APPS" "$BUILD2_CMD"
         - ./buildAndPushApplicationGroup.sh "$BUILD3_APPS" "$BUILD3_CMD"
+      env:
+        - comment=Build all applications
 
     - stage: Tests # Run unit and integration tests + generate test coverage report
       if: type = cron #run only during nightly cron job - time-consuming operation
@@ -43,6 +45,11 @@ jobs:
       env:
         - comment=Run unit and integration tests + generate test coverage report
 
+    - stage: Integration
+      if: type = pull_request
+      script: ./travisIntegration.sh
+      env:
+        - comment="Run integration tests"
 
     #- stage: Tests # Run Angular e2e tests
     #  if: type = cron #run only during nightly cron job - time-consuming operation
