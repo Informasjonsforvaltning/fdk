@@ -69,12 +69,4 @@ jobs:
       # only deploy when branch is develop and exclude when type is pull_request,
       # because in case if type=pull_request branch means base branch.
       if: branch = develop AND type != pull_request
-      script: mvn install -DskipTests -Dmaven.javadoc.skip=true -B ;
-      deploy:
-        provider: script
-        skip_cleanup: true
-        script:
-          - ./travisPushToDockerHub.sh
-        on:
-          branch: develop
-          condition: $TRAVIS_TAG = ''
+      script: ./travisPushToDockerHub.sh

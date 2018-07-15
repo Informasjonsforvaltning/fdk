@@ -82,7 +82,7 @@ MVP steps, each commit is deployable adds value
  - push tags of component builds
  - skip build components if already built
  - value: (15 min) add ~4 min to first build, but short-circuit the develop build and deploy job.
-3) integration step (no need for rebuild on deploy)
+3) [x] integration step (no need for rebuild on deploy)
  - pull latest & built tags and push integration-tested tags.
  - skip test && integration if integration tag exists
  - deploy step pulls integration tags (instead of build) and pushes deploy tags
