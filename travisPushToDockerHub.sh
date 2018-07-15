@@ -2,39 +2,29 @@
 set -e
 
 
-components="fuseki harvester harvester-api nginx-search nginx-registration reference-data registration-react registration-api registration-auth registration-validator search search-api"
+applications=$INTEGRATION_APPS
 toEnvironment=ut1
 DATETIME=`date "+%Y-%m-%dT%H_%M_%S"`
+
+integrationtag=$(./citools/getIntegrationTag.sh)
+
+# pull images of all applications with integration tag (indicates that integration for set is passed)
+# the script will fail if image is not found
+echo "Pulling integration images for all applications with tag $integrationtag"
+./citools/pullApplicationsByTag.sh "$INTEGRATION_APPS" $integrationtag;
 
 echo "Logging in to dockerhub as ${dockerUsername}";
 docker login --username ${dockerUsername} --password ${dockerPassword}
 echo "Logged in to dockerhub"
 
-for i in $components
-  do
-    echo "Tagging and pushing images for ${i}"
+echo "Tag and push all application images as latest"
+./citools/retagApplications.sh "$INTEGRATION_APPS" $integrationtag latest push
 
-    echo "Pushing latests:  ${i}"
-    docker push dcatno/${i}:latest
-    echo "Pushed latests:  ${i}"
+echo "Tag and push all application images for deployment ${toEnvironment}_latest"
+./citools/retagApplications.sh "$INTEGRATION_APPS" $integrationtag ${toEnvironment}_latest push
 
-    echo "Tagging latests  dcatno/${i}:${toEnvironment}_latest"
-    docker tag dcatno/${i}:latest dcatno/${i}:${toEnvironment}_latest
-    echo "Tagged latests  dcatno/${i}:${toEnvironment}_latest"
-
-    echo "Pushing latests  dcatno/${i}:${toEnvironment}_latest"
-    docker push dcatno/${i}:${toEnvironment}_latest
-    echo "Pushed latests  dcatno/${i}:${toEnvironment}_latest"
-
-    echo "Tagging with datatime dcatno/${i}:${toEnvironment}_${DATETIME}"
-    docker tag dcatno/${i}:latest dcatno/${i}:${toEnvironment}_${DATETIME}
-    echo "Tagged with datatime dcatno/${i}:${toEnvironment}_${DATETIME}"
-
-    echo "Pushing  dcatno/${i}:${toEnvironment}_${DATETIME}"
-    docker push dcatno/${i}:${toEnvironment}_${DATETIME}
-    echo "Pushed  dcatno/${i}:${toEnvironment}_${DATETIME}"
-
-done
+echo "Tag and push all application images for deployment timestamp ${toEnvironment}__${DATETIME}"
+./citools/retagApplications.sh "$INTEGRATION_APPS" $integrationtag ${toEnvironment}_${DATETIME} push
 
 echo "Setting origin to use correct username and password"
 git remote set-url origin https://${githubUsername}:${githubPassword}@github.com/Informasjonsforvaltning/fdk.git
