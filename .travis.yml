@@ -32,15 +32,9 @@ jobs:
         - . ./buildGroupsEnv.sh
         - docker login --username ${dockerUsername} --password ${dockerPassword}
         - ./buildAndPushApplicationGroup.sh "$BUILD1_APPS" "$BUILD1_CMD"
+        - ./buildAndPushApplicationGroup.sh "$BUILD2_APPS" "$BUILD2_CMD"
       env:
         - comment=First build the project to look for syntax/build problems
-
-    - stage: Tests # Run regular React unit tests
-      if: type = pull_request
-      script: cd applications/search && npm install && npm test
-      after_success: npm run coverage
-      env:
-        - comment=Run regular React unit tests + generate test coverage report
 
     - stage: Tests # Run regular React unit tests Registration
       if: type = pull_request
