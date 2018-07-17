@@ -33,15 +33,7 @@ jobs:
         - docker login --username ${dockerUsername} --password ${dockerPassword}
         - ./buildAndPushApplicationGroup.sh "$BUILD1_APPS" "$BUILD1_CMD"
         - ./buildAndPushApplicationGroup.sh "$BUILD2_APPS" "$BUILD2_CMD"
-      env:
-        - comment=First build the project to look for syntax/build problems
-
-    - stage: Tests # Run regular React unit tests Registration
-      if: type = pull_request
-      script: cd applications/registration-react && npm install && npm test
-      after_success: npm run coverage
-      env:
-        - comment=Run regular React unit tests Registration + generate test coverage report
+        - ./buildAndPushApplicationGroup.sh "$BUILD3_APPS" "$BUILD3_CMD"
 
     - stage: Tests # Run unit and integration tests + generate test coverage report
       if: type = cron #run only during nightly cron job - time-consuming operation

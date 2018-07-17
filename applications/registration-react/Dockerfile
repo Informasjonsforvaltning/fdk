@@ -15,7 +15,14 @@ COPY package.json /usr/src/app/package.json
 
 # Install app dependencies
 RUN npm install --only=production --loglevel=warn
-COPY . /usr/src/app/
+
+COPY server /usr/src/app/server
+COPY start.js /usr/src/app/
+COPY .babelrc /usr/src/app/
+COPY webpack.* /usr/src/app/
+
+# most volatile directory latest, in order to reuse layers.
+COPY src /usr/src/app/src
 
 RUN npm run build
 

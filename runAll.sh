@@ -6,6 +6,7 @@ set -e
 # We will build what is needed and download images that are missing
 ./buildOrPullApplicationGroup.sh "$BUILD1_APPS" "$BUILD1_CMD"
 ./buildOrPullApplicationGroup.sh "$BUILD2_APPS" "$BUILD2_CMD"
+./buildOrPullApplicationGroup.sh "$BUILD3_APPS" "$BUILD3_CMD"
 
 docker-compose down --remove-orphans
 
