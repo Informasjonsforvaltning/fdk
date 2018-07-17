@@ -22,7 +22,6 @@
         <module>nginx-registration</module>
         <module>nginx-registration-ssl</module>
         <module>registration-api</module>
-        <module>registration-react</module>
         <module>registration-auth</module>
         <module>registration-validator</module>
 
