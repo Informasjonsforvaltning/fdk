@@ -125,12 +125,6 @@
 				<version>${fdk.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>no.dcat</groupId>
-				<artifactId>search</artifactId>
-				<version>${fdk.version}</version>
-			</dependency>
-
-			<dependency>
 				<groupId>com.google.code.gson</groupId>
 				<artifactId>gson</artifactId>
 				<version>2.7</version>

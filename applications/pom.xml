@@ -19,8 +19,6 @@
 
         <module>nginx-search</module>
         <module>search-api</module>
-        <module>search</module>
-
         <module>nginx-registration</module>
         <module>nginx-registration-ssl</module>
         <module>registration-api</module>
