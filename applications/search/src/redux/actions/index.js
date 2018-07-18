@@ -30,7 +30,6 @@ export function fetchDatasetsIfNeeded(datasetsURL) {
 }
 
 export function fetchDatasetDetailsIfNeeded(datasetURL) {
-  // add static size parameter
   return (dispatch, getState) =>
     shouldFetchApi(getState().datasetDetails) &&
     dispatch(
@@ -102,29 +101,6 @@ export function fetchDistributionTypeIfNeeded() {
         actions.DISTRIBUTIONTYPE_FAILURE
       ])
     );
-}
-
-export function publishDataset(value) {
-  return dispatch =>
-    dispatch({
-      type: actions.PUBLISHDATASET,
-      registrationStatus: value
-    });
-}
-
-export function datasetLastSaved(value) {
-  return dispatch =>
-    dispatch({
-      type: actions.DATASET_LAST_SAVED,
-      lastSaved: value
-    });
-}
-
-export function resetUser() {
-  return dispatch =>
-    dispatch({
-      type: actions.USER_FAILURE
-    });
 }
 
 export function resetDatasetDetails() {
