@@ -5,6 +5,9 @@
     "raf/polyfill",
     "<rootDir>/test/jestsetup.js"
   ],
+  "transform": {
+    "^.+\\.(js|jsx)$": "babel-jest"
+  },
   "snapshotSerializers": [
     "enzyme-to-json/serializer"
   ],
