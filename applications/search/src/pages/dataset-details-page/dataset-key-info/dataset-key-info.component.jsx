@@ -82,8 +82,7 @@ export class DatasetKeyInfo extends React.Component {
     const {
       legalBasisForRestriction,
       legalBasisForProcessing,
-      legalBasisForAccess,
-      selectedLanguageCode
+      legalBasisForAccess
     } = this.props;
 
     const childrenLegalBasisForRestriction = items =>
@@ -92,11 +91,7 @@ export class DatasetKeyInfo extends React.Component {
           <LinkExternal
             key={item.uri}
             uri={item.uri}
-            prefLabel={
-              item.prefLabel
-                ? getTranslateText(item.prefLabel, selectedLanguageCode)
-                : localization.dataset.legalBasisForRestrictionDefaultText
-            }
+            prefLabel={getTranslateText(item.prefLabel)}
           />
         </div>
       ));
@@ -107,11 +102,7 @@ export class DatasetKeyInfo extends React.Component {
           <LinkExternal
             key={item.uri}
             uri={item.uri}
-            prefLabel={
-              item.prefLabel
-                ? getTranslateText(item.prefLabel, selectedLanguageCode)
-                : localization.dataset.legalBasisForProcessingDefaultText
-            }
+            prefLabel={getTranslateText(item.prefLabel)}
           />
         </div>
       ));
@@ -121,11 +112,7 @@ export class DatasetKeyInfo extends React.Component {
         <div key={item.uri}>
           <LinkExternal
             uri={item.uri}
-            prefLabel={
-              item.prefLabel
-                ? getTranslateText(item.prefLabel, selectedLanguageCode)
-                : localization.dataset.leagalBasisForAccessDefaultText
-            }
+            prefLabel={getTranslateText(item.prefLabel)}
           />
         </div>
       ));
@@ -186,18 +173,14 @@ export class DatasetKeyInfo extends React.Component {
   }
 
   _renderConformsTo() {
-    const { conformsTo, selectedLanguageCode } = this.props;
+    const { conformsTo } = this.props;
     const header = localization.dataset.conformsTo;
     const children = items =>
       items.map(item => (
         <LinkExternal
           key={item.uri}
           uri={item.uri}
-          prefLabel={
-            item.prefLabel
-              ? getTranslateText(item.prefLabel, selectedLanguageCode)
-              : localization.dataset.distribution.standard
-          }
+          prefLabel={getTranslateText(item.prefLabel)}
         />
       ));
     if (
@@ -218,16 +201,15 @@ export class DatasetKeyInfo extends React.Component {
   }
 
   _renderInformationModel() {
-    const { informationModel, selectedLanguageCode } = this.props;
+    const { informationModel } = this.props;
     const children = items =>
       items.map(item => (
         <LinkExternal
           key={item.uri}
           uri={item.uri}
           prefLabel={
-            item.prefLabel
-              ? getTranslateText(item.prefLabel, selectedLanguageCode)
-              : localization.dataset.informationModelDefaultText
+            getTranslateText(item.prefLabel) ||
+            localization.dataset.informationModelDefaultText
           }
         />
       ));
@@ -266,8 +248,7 @@ DatasetKeyInfo.defaultProps = {
   legalBasisForAccess: null,
   type: null,
   conformsTo: null,
-  informationModel: null,
-  selectedLanguageCode: ''
+  informationModel: null
 };
 
 DatasetKeyInfo.propTypes = {
@@ -277,6 +258,5 @@ DatasetKeyInfo.propTypes = {
   legalBasisForAccess: PropTypes.array,
   type: PropTypes.string,
   conformsTo: PropTypes.array,
-  informationModel: PropTypes.array,
-  selectedLanguageCode: PropTypes.string
+  informationModel: PropTypes.array
 };

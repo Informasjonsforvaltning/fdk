@@ -118,11 +118,7 @@ export class CompareTermModal extends React.Component {
             </ModalTitle>
           </ModalHeader>
           <ModalBody>
-            <CompareTermModalContent
-              terms={this.props.terms}
-              selectedLanguageCode={this.props.selectedLanguageCode}
-              cols={cols}
-            />
+            <CompareTermModalContent terms={this.props.terms} cols={cols} />
             <div className="row">{removeTerms(this.props.terms)}</div>
           </ModalBody>
         </Modal>
@@ -135,12 +131,10 @@ export class CompareTermModal extends React.Component {
 }
 
 CompareTermModal.defaultProps = {
-  terms: null,
-  selectedLanguageCode: null
+  terms: null
 };
 
 CompareTermModal.propTypes = {
   terms: PropTypes.array,
-  handleDeleteTerm: PropTypes.func.isRequired,
-  selectedLanguageCode: PropTypes.string
+  handleDeleteTerm: PropTypes.func.isRequired
 };

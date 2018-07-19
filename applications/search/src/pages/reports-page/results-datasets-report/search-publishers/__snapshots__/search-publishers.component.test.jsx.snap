@@ -7,7 +7,7 @@ exports[`should render SearchPublishers correctly with props 1`] = `
   <div
     className="fdk-report-search-publishers__header mb-2"
   >
-    Velg virksomhet
+    Choose publisher
   </div>
   <Async
     autoload={true}
@@ -20,8 +20,8 @@ exports[`should render SearchPublishers correctly with props 1`] = `
     loadingPlaceholder="Loading..."
     multi={false}
     options={Array []}
-    placeholder="Søk på virksomhetsnavn..."
-    searchPromptText="Skriv for å søke"
+    placeholder="Search publisher..."
+    searchPromptText="Type to search"
     value="STAT"
     valueKey="orgPath"
   />

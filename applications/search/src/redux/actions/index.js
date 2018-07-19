@@ -109,3 +109,10 @@ export function resetDatasetDetails() {
       type: actions.DATASETDETAILS_RESET
     });
 }
+
+export function setLanguage(language) {
+  return {
+    type: actions.SETTINGS_PATCH,
+    settings: { language }
+  };
+}

@@ -15,8 +15,7 @@ beforeEach(() => {
     legalBasisForAccess: _source.legalBasisForAccess,
     type: _source.type,
     conformsTo: _source.conformsTo,
-    informationModel: _source.informationModel,
-    selectedLanguageCode: null
+    informationModel: _source.informationModel
   };
   wrapper = shallow(<DatasetKeyInfo {...defaultProps} />);
 });

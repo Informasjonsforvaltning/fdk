@@ -49,7 +49,6 @@ export class ResultsConcepts extends React.Component {
             creator={creator}
             onDeleteTerm={this.handleDeleteTerm}
             termIndex={index}
-            selectedLanguageCode={this.props.selectedLanguageCode}
           />
         );
       });
@@ -58,7 +57,6 @@ export class ResultsConcepts extends React.Component {
       <CompareTermModal
         terms={terms}
         handleDeleteTerm={this.handleDeleteTerm}
-        selectedLanguageCode={this.props.selectedLanguageCode}
       />
     );
 
@@ -84,7 +82,6 @@ export class ResultsConcepts extends React.Component {
           terms={this.state.terms}
           onAddTerm={this.handleAddTerm}
           onDeleteTerm={this.handleDeleteTerm}
-          selectedLanguageCode={this.props.selectedLanguageCode}
         />
       ));
     }
@@ -224,7 +221,6 @@ export class ResultsConcepts extends React.Component {
 }
 
 ResultsConcepts.defaultProps = {
-  selectedLanguageCode: null,
   termItems: null,
   onClearSearch: null,
   onPageChange: null,
@@ -239,7 +235,6 @@ ResultsConcepts.defaultProps = {
 };
 
 ResultsConcepts.propTypes = {
-  selectedLanguageCode: PropTypes.string,
   termItems: PropTypes.object,
   onClearSearch: PropTypes.func,
   onPageChange: PropTypes.func,

@@ -32,7 +32,7 @@ exports[`should render ResultsDatasetsReport correctly with hits 1`] = `
             onClick={[Function]}
             type="button"
           >
-            Fjern alle filtre
+            Clear
           </button>
           <SearchPublishers
             onChange={[Function]}
@@ -661,7 +661,7 @@ exports[`should render ResultsDatasetsReport correctly with props 1`] = `
             onClick={[Function]}
             type="button"
           >
-            Fjern alle filtre
+            Clear
           </button>
           <SearchPublishers
             onChange={[Function]}

@@ -12,7 +12,7 @@ exports[`should render SearchPublishersTree correctly with props 1`] = `
       <TreeView
         defaultCollapsed={false}
         itemClassName="tree-view_main"
-        key="Stat|0"
+        key="Central authority|0"
         nodeLabel={
           <span
             className="mainTree-btn node"
@@ -21,7 +21,7 @@ exports[`should render SearchPublishersTree correctly with props 1`] = `
             tabIndex="0"
           >
             <strong>
-              Stat
+              Central authority
             </strong>
           </span>
         }
@@ -556,7 +556,7 @@ exports[`should render SearchPublishersTree correctly with props 1`] = `
       <TreeView
         defaultCollapsed={true}
         itemClassName="tree-view_main"
-        key="Fylke|1"
+        key="County|1"
         nodeLabel={
           <span
             className="mainTree-btn node"
@@ -565,7 +565,7 @@ exports[`should render SearchPublishersTree correctly with props 1`] = `
             tabIndex="0"
           >
             <strong>
-              Fylke
+              County
             </strong>
           </span>
         }
@@ -578,7 +578,7 @@ exports[`should render SearchPublishersTree correctly with props 1`] = `
       <TreeView
         defaultCollapsed={true}
         itemClassName="tree-view_main"
-        key="Kommune|2"
+        key="Municipality|2"
         nodeLabel={
           <span
             className="mainTree-btn node"
@@ -587,7 +587,7 @@ exports[`should render SearchPublishersTree correctly with props 1`] = `
             tabIndex="0"
           >
             <strong>
-              Kommune
+              Municipality
             </strong>
           </span>
         }
@@ -694,7 +694,7 @@ exports[`should render SearchPublishersTree correctly with props 1`] = `
       <TreeView
         defaultCollapsed={true}
         itemClassName="tree-view_main"
-        key="Privat|3"
+        key="Private|3"
         nodeLabel={
           <span
             className="mainTree-btn node"
@@ -703,7 +703,7 @@ exports[`should render SearchPublishersTree correctly with props 1`] = `
             tabIndex="0"
           >
             <strong>
-              Privat
+              Private
             </strong>
           </span>
         }
@@ -744,7 +744,7 @@ exports[`should render SearchPublishersTree correctly with props 1`] = `
       <TreeView
         defaultCollapsed={true}
         itemClassName="tree-view_main"
-        key="Annet|4"
+        key="Other|4"
         nodeLabel={
           <span
             className="mainTree-btn node"
@@ -753,7 +753,7 @@ exports[`should render SearchPublishersTree correctly with props 1`] = `
             tabIndex="0"
           >
             <strong>
-              Annet
+              Other
             </strong>
           </span>
         }

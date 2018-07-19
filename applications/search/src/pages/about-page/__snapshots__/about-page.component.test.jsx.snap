@@ -5,8 +5,8 @@ exports[`should render AboutPage correctly 1`] = `
   className="container"
 >
   <SideEffect(DocumentMeta)
-    description="Felles Datakatalog er en oversikt over hvilke data de ulike offentlige virksomhetene har, hvordan de henger sammen og hva de betyr. Datakatalogen gjør det mulig for deg å søke i opplysningene hos offentlige virksomheter og bruke de til for eksempel analyseformål."
-    title="Om Felles datakatalog"
+    description="The National Data Directory is an overview showing which data the various public agencies have registered, how they are connected and what they mean. The National Data Directory makes it possible for you to search in the information registered with the public agencies and use the information for analytic purposes."
+    title="Om The National Data Directory"
   />
   <div
     className="row"
@@ -17,7 +17,7 @@ exports[`should render AboutPage correctly 1`] = `
       <h1
         className="fdk-margin-bottom"
       >
-        Felles datakatalog
+        The National Data Directory
       </h1>
       <div
         className="fdk-margin-bottom"
@@ -31,7 +31,7 @@ exports[`should render AboutPage correctly 1`] = `
         <p
           className="fdk-ingress"
         >
-          Felles Datakatalog er en oversikt over hvilke data de ulike offentlige virksomhetene har, hvordan de henger sammen og hva de betyr. Datakatalogen gjør det mulig for deg å søke i opplysningene hos offentlige virksomheter og bruke de til for eksempel analyseformål.
+          The National Data Directory is an overview showing which data the various public agencies have registered, how they are connected and what they mean. The National Data Directory makes it possible for you to search in the information registered with the public agencies and use the information for analytic purposes.
         </p>
       </div>
       <div
@@ -40,27 +40,27 @@ exports[`should render AboutPage correctly 1`] = `
         <p
           dangerouslySetInnerHTML={
             Object {
-              "__html": "Regjeringen sier i Digital Agenda at brukerne skal levere informasjon til offentlig forvaltning kun en gang, fordi forvaltningen selv skal sørge for å dele nødvendig informasjon med hverandre. Felles datakatalog er første steget for å nå dette målet. Samarbeidsorganet Skate (Styring og koordinering av tjenester i e-forvaltning) har beskrevet ambisjonsnivået for informasjonsforvaltning i tre trinn, og Felles datakatalog skal i første trinn skaffe en felles dataoversikt og en felles forståelse av informasjon i form av begreper. Neste trinn har fokus på tilgjengeliggjøring av informasjon i en felles API-katalog. I tredje trinn ligger alt til rette for at gjenbruk av data er hovedregel og for prinsippet om kun én gang.<br><br><b>Informasjonsforvaltning</b><br> Digitaliseringsrundskrivet påpeker at alle offentlige virksomheter skal ha en oversikt over hvilke data de håndterer, hva dataene betyr, hva de kan brukes til, hvilke prosesser de er en del av og hvem som kan bruke dataene (informasjonsforvaltning). Direktoratet for Forvaltning og IKT (Difi) utarbeider et felles rammeverk med standardiserte metoder og prinsipper som vil gjøre det enklere for virksomhetene som skal i gang med begrepsarbeid.",
+              "__html": "In Digital Agenda, the government states that the users should only have to provide public administration with the same information once. The various agencies within the administration must then share the necessary information with each other. The National Data Directory is the first step in order to reach this goal.<br><br> The cooperative body SKATE (Managing and coordinating services in electronic administration) has described the ambition for information management as a process of three levels. The National Data Directory being the first level, providing a common overview of data and a shared understanding of information in the shape of terms. The next level focuses on the availability of information in a common API catalogue. In the third level, everything should be set for reuse of data being the main rule and for the use of the principle of reporting information only once.<br><br> The Government's circular on digitalisation emphasizes that all public agencies must have an overview of which data they process, what the data mean, what they can be used for, which processes they are included in and who are allowed to use the data (information management). The Agency for Public Management and e-Government (Difi) works out a common framework with standardized methods and principles, which will make it easier for the agencies in the process of getting started with terminology work.",
             }
           }
         />
         <p
           dangerouslySetInnerHTML={
             Object {
-              "__html": "<b>Import fra data.norge.no, geonorge.no m.fl.</b><br>Felles datakatalog importerer data-beskrivelser fra andre kataloger, blant annet <a href='https://data.norge.no' target='blank'>data.norge.no</a> (<a href='https://data.norge.no/data/direktoratet-forvaltning-og-ikt/datanorgeno-nasjonal-katalog-over-åpne-offentlige-datasett' target='blank'>API</a>) og geonorge.no. Dette gjøres ved å bruke DCAT-AP-NO som dataformat for å utveksle data-beskrivelser.",
+              "__html": "<b>Import datasets from data.norge.no, geonorge.no with more</b><br>The National Data Directory imports dataset descriptions from other catalogs, for instance <a href='https://data.norge.no' target='blank'>data.norge.no</a> (<a href='https://data.norge.no/data/direktoratet-forvaltning-og-ikt/datanorgeno-nasjonal-katalog-over-åpne-offentlige-datasett' target='blank'>API</a>) and geonorge.no. This is done by using the DCAT-AP-NO standard as a basis to exchange dataset descriptions.",
             }
           }
         />
         <p>
           <b>
-            Registrere datasett
+            Registration
           </b>
           <br />
           <Link
             replace={false}
             to="/about-registration"
           >
-            Hjelp til å komme i gang med å registrere datasett
+            User manual to start registration (only in Norwegian)
           </Link>
         </p>
         <p>

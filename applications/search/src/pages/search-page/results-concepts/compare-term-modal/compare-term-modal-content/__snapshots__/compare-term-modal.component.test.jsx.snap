@@ -35,7 +35,7 @@ exports[`should render CompareTermModalContent correctly 1`] = `
       key="definition-0https://data-david.github.io/Begrep/begrep/Enhet"
     >
       <h5>
-        Definisjon
+        Definition
       </h5>
       <p>
         Alt som er registrert med et organisasjonsnummer 
@@ -46,7 +46,7 @@ exports[`should render CompareTermModalContent correctly 1`] = `
       key="definition-1https://data-david.github.io/Begrep/begrep/Organisasjonsnummer"
     >
       <h5>
-        Definisjon
+        Definition
       </h5>
       <p>
         Et nisifret nummer som tildeles av Enhetsregisteret for en organisasjon som skal operere som en offentlig aktør
@@ -62,7 +62,7 @@ exports[`should render CompareTermModalContent correctly 1`] = `
       key="inScheme-0undefined"
     >
       <h5>
-        Fagområde / bruksområde
+        Domain / application
       </h5>
       <p>
         Befolkning.
@@ -73,7 +73,7 @@ exports[`should render CompareTermModalContent correctly 1`] = `
       key="inScheme-1undefined"
     >
       <h5>
-        Fagområde / bruksområde
+        Domain / application
       </h5>
       <p />
     </div>
@@ -87,7 +87,7 @@ exports[`should render CompareTermModalContent correctly 1`] = `
       key="source-0https://data-david.github.io/Begrep/begrep/Enhet"
     >
       <h5>
-        Kilde
+        Source
       </h5>
       <p>
         <a
@@ -106,7 +106,7 @@ exports[`should render CompareTermModalContent correctly 1`] = `
       key="source-1https://data-david.github.io/Begrep/begrep/Organisasjonsnummer"
     >
       <h5>
-        Kilde
+        Source
       </h5>
       <p />
     </div>
@@ -120,7 +120,7 @@ exports[`should render CompareTermModalContent correctly 1`] = `
       key="note-0https://data-david.github.io/Begrep/begrep/Enhet"
     >
       <h5>
-        Beskrivelse
+        Description
       </h5>
       <p>
         Alle hovedenheter, underenheter og organisasjonsledd som er identifisert med et organisasjonsnummer.
@@ -131,7 +131,7 @@ exports[`should render CompareTermModalContent correctly 1`] = `
       key="note-1https://data-david.github.io/Begrep/begrep/Organisasjonsnummer"
     >
       <h5>
-        Beskrivelse
+        Description
       </h5>
       <p />
     </div>
@@ -145,7 +145,7 @@ exports[`should render CompareTermModalContent correctly 1`] = `
       key="altLabel-0undefined"
     >
       <h5>
-        Også kjent som:
+        Also known as:
       </h5>
       <p />
     </div>
@@ -154,7 +154,7 @@ exports[`should render CompareTermModalContent correctly 1`] = `
       key="altLabel-1undefined"
     >
       <h5>
-        Også kjent som:
+        Also known as:
       </h5>
       <p>
         Orgid, Orgnr.

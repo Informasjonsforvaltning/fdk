@@ -10,6 +10,4 @@ const localization = new LocalizedStrings({
   nn
 });
 
-localization.setLanguage('nb');
-
 export default localization;

@@ -2,12 +2,12 @@
 
 exports[`should render Select correctly with active sort 1`] = `
 <DropdownButton
-  aria-label="Sorter søkeresultat, Sorter på tittel"
+  aria-label="Sorter søkeresultat, Sort by title"
   bsStyle="default"
   className="fdk-button fdk-button-default"
   id="search-result-dropdown-1"
   onSelect={[Function]}
-  title="Sorter på tittel"
+  title="Sort by title"
 >
   <MenuItem
     bsClass="dropdown"
@@ -24,7 +24,7 @@ exports[`should render Select correctly with active sort 1`] = `
     header={false}
     key="0"
   >
-    Sorter på relevans
+    Sort by relevance
   </MenuItem>
   <MenuItem
     bsClass="dropdown"
@@ -40,7 +40,7 @@ exports[`should render Select correctly with active sort 1`] = `
     header={false}
     key="1"
   >
-    Sorter på tittel
+    Sort by title
   </MenuItem>
   <MenuItem
     bsClass="dropdown"
@@ -56,7 +56,7 @@ exports[`should render Select correctly with active sort 1`] = `
     header={false}
     key="2"
   >
-    Sorter på sist endret
+    Sort by modified
   </MenuItem>
   <MenuItem
     bsClass="dropdown"
@@ -72,19 +72,19 @@ exports[`should render Select correctly with active sort 1`] = `
     header={false}
     key="3"
   >
-    Sorter på utgiver
+    Sort by publisher
   </MenuItem>
 </DropdownButton>
 `;
 
 exports[`should render Select correctly with no active sort 1`] = `
 <DropdownButton
-  aria-label="Sorter søkeresultat, Sorter på relevans"
+  aria-label="Sorter søkeresultat, Sort by relevance"
   bsStyle="default"
   className="fdk-button fdk-button-default"
   id="search-result-dropdown-1"
   onSelect={[Function]}
-  title="Sorter på relevans"
+  title="Sort by relevance"
 >
   <MenuItem
     bsClass="dropdown"
@@ -101,7 +101,7 @@ exports[`should render Select correctly with no active sort 1`] = `
     header={false}
     key="0"
   >
-    Sorter på relevans
+    Sort by relevance
   </MenuItem>
   <MenuItem
     bsClass="dropdown"
@@ -117,7 +117,7 @@ exports[`should render Select correctly with no active sort 1`] = `
     header={false}
     key="1"
   >
-    Sorter på tittel
+    Sort by title
   </MenuItem>
   <MenuItem
     bsClass="dropdown"
@@ -133,7 +133,7 @@ exports[`should render Select correctly with no active sort 1`] = `
     header={false}
     key="2"
   >
-    Sorter på sist endret
+    Sort by modified
   </MenuItem>
   <MenuItem
     bsClass="dropdown"
@@ -149,7 +149,7 @@ exports[`should render Select correctly with no active sort 1`] = `
     header={false}
     key="3"
   >
-    Sorter på utgiver
+    Sort by publisher
   </MenuItem>
 </DropdownButton>
 `;

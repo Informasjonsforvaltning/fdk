@@ -31,9 +31,9 @@ exports[`should render DatasetContactInfo correctly 1`] = `
               href="http://testetaten.no/url"
               rel="noopener noreferrer"
               target="_blank"
-              title="Ta kontakt med Avdeling for digitalisering"
+              title="Contact Avdeling for digitalisering"
             >
-              Ta kontakt med
+              Contact
                
               Avdeling for digitalisering
               <i
@@ -62,7 +62,7 @@ exports[`should render DatasetContactInfo correctly 1`] = `
         className="fdk-detail-text"
       >
         <h5>
-          E-post
+          E-mail
         </h5>
         <p
           className="fdk-ingress fdk-margin-bottom-no"
@@ -92,7 +92,7 @@ exports[`should render DatasetContactInfo correctly 1`] = `
         className="fdk-detail-text"
       >
         <h5>
-          Telefon
+          Telephone
         </h5>
         <p
           className="fdk-ingress fdk-margin-bottom-no text-nowrap"

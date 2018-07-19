@@ -19,8 +19,7 @@ test('should render DatasetDistribution correctly', () => {
     code: _source.distribution[0].code,
     license: _source.distribution[0].license,
     conformsTo: _source.conformsTo,
-    page: _source.page,
-    selectedLanguageCode: null
+    page: _source.page
   };
   const wrapper = shallow(<DatasetDistribution {...defaultProps} />);
   expect(wrapper).toMatchSnapshot();
@@ -37,8 +36,7 @@ test('should render DatasetDistribution correctly', () => {
     license: _source.distribution[0].license,
     conformsTo: _source.conformsTo,
     page: _source.page,
-    type: 'Feed',
-    selectedLanguageCode: null
+    type: 'Feed'
   };
   const wrapper = shallow(<DatasetDistribution {...defaultProps} />);
   expect(wrapper).toMatchSnapshot();

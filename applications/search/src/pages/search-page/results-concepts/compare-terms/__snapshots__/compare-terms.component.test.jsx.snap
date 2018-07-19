@@ -12,7 +12,7 @@ exports[`should render CompareTerms correctly 1`] = `
       className="fa fa-times"
     />
      
-    Fjern
+    Remove
   </button>
   <h4
     className="clearfix"

@@ -2,15 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { getTranslateText } from '../../../lib/translateText';
-import localization from '../../../lib/localization';
 
 export const PureDatasetBreadcrumb = props => {
   const { datasetItem } = props;
-  let title;
-  if (datasetItem && datasetItem.title) {
-    title = getTranslateText(datasetItem.title, localization.getLanguage());
-  }
-  return <span>{title}</span>;
+  return <span>{getTranslateText(datasetItem && datasetItem.title)}</span>;
 };
 
 const mapStateToProps = ({ datasetDetails }) => {

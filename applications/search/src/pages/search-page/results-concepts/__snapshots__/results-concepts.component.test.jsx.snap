@@ -19,7 +19,7 @@ exports[`should render ResultsConcepts correctly with minimum of props 1`] = `
           onClick={null}
           type="button"
         >
-          Fjern alle filtre
+          Clear
         </button>
       </div>
     </div>
@@ -100,7 +100,7 @@ exports[`should render ResultsConcepts correctly with props 1`] = `
           onClick={[MockFunction]}
           type="button"
         >
-          Fjern alle filtre
+          Clear
         </button>
       </div>
     </div>
@@ -171,7 +171,7 @@ exports[`should render ResultsConcepts correctly with props 1`] = `
                     onSearch={null}
                     orgPath={null}
                     publishers={null}
-                    title="Virksomhet"
+                    title="Organization"
                   />
                 </div>
               </ModalBody>
@@ -199,7 +199,7 @@ exports[`should render ResultsConcepts correctly with props 1`] = `
               onSearch={null}
               orgPath={null}
               publishers={null}
-              title="Virksomhet"
+              title="Organization"
             />
           </div>
         </div>
@@ -207,7 +207,7 @@ exports[`should render ResultsConcepts correctly with props 1`] = `
           <h3
             className="mb-2"
           >
-            Sammenlign begrep
+            Compare concepts
           </h3>
           <CompareTerms
             creator="Brønnøysundregistrene"
@@ -218,12 +218,10 @@ exports[`should render ResultsConcepts correctly with props 1`] = `
                 "no": "enhet",
               }
             }
-            selectedLanguageCode={null}
             termIndex={0}
           />
           <CompareTermModal
             handleDeleteTerm={[Function]}
-            selectedLanguageCode={null}
             terms={
               Array [
                 Object {
@@ -357,7 +355,6 @@ exports[`should render ResultsConcepts correctly with props 1`] = `
               "_type": "subject",
             }
           }
-          selectedLanguageCode={null}
           terms={
             Array [
               Object {
@@ -537,7 +534,6 @@ exports[`should render ResultsConcepts correctly with props 1`] = `
               "_type": "subject",
             }
           }
-          selectedLanguageCode={null}
           terms={
             Array [
               Object {

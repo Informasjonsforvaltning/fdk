@@ -7,6 +7,7 @@ import datasetDetails from './datasetDetails';
 import openLicenses, * as fromOpenLicenses from './openLicenses';
 import distributionTypes, * as fromDistributionType from './distributionType';
 import { featureToggleResolver } from './featureToggle';
+import { settingsResolver } from './settings';
 
 const rootReducer = combineReducers({
   datasets,
@@ -16,7 +17,8 @@ const rootReducer = combineReducers({
   publishers,
   openLicenses,
   distributionTypes,
-  featureToggle: featureToggleResolver
+  featureToggle: featureToggleResolver,
+  settings: settingsResolver
 });
 
 export default rootReducer;

@@ -19,7 +19,7 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
           onClick={[MockFunction]}
           type="button"
         >
-          Fjern alle filtre
+          Clear
         </button>
       </div>
       <div
@@ -170,7 +170,7 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
                   htmlKey={1}
                   onClick={[MockFunction]}
                   themesItems={Object {}}
-                  title="Tema"
+                  title="Theme"
                 />
                 <FilterBox
                   activeFilter={null}
@@ -189,7 +189,7 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
                   htmlKey={2}
                   onClick={[MockFunction]}
                   themesItems={null}
-                  title="Tilgang"
+                  title="Access"
                 />
                 <SearchPublishersTree
                   activeFilter={null}
@@ -198,7 +198,7 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
                   onSearch={null}
                   orgPath={null}
                   publishers={Object {}}
-                  title="Virksomhet"
+                  title="Organization"
                 />
                 <FilterBox
                   activeFilter={null}
@@ -217,7 +217,7 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
                   htmlKey={3}
                   onClick={null}
                   themesItems={null}
-                  title="Geografi"
+                  title="Spatial"
                 />
                 <FilterBox
                   activeFilter={null}
@@ -236,7 +236,7 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
                   htmlKey={4}
                   onClick={null}
                   themesItems={null}
-                  title="Opphav"
+                  title="Provenance"
                 />
               </div>
             </ModalBody>
@@ -310,7 +310,7 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
             htmlKey={1}
             onClick={[MockFunction]}
             themesItems={Object {}}
-            title="Tema"
+            title="Theme"
           />
           <FilterBox
             activeFilter={null}
@@ -329,7 +329,7 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
             htmlKey={2}
             onClick={[MockFunction]}
             themesItems={null}
-            title="Tilgang"
+            title="Access"
           />
           <SearchPublishersTree
             activeFilter={null}
@@ -338,7 +338,7 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
             onSearch={null}
             orgPath={null}
             publishers={Object {}}
-            title="Virksomhet"
+            title="Organization"
           />
           <FilterBox
             activeFilter={null}
@@ -357,7 +357,7 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
             htmlKey={3}
             onClick={null}
             themesItems={null}
-            title="Geografi"
+            title="Spatial"
           />
           <FilterBox
             activeFilter={null}
@@ -376,7 +376,7 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
             htmlKey={4}
             onClick={null}
             themesItems={null}
-            title="Opphav"
+            title="Provenance"
           />
         </div>
       </div>
@@ -507,7 +507,6 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
               ],
             }
           }
-          selectedLanguageCode="nb"
         />
       </div>
       <div
@@ -566,7 +565,7 @@ exports[`should render ResultsDataset correctly with minimum of props 1`] = `
           onClick={null}
           type="button"
         >
-          Fjern alle filtre
+          Clear
         </button>
       </div>
       <div
@@ -680,7 +679,7 @@ exports[`should render ResultsDataset correctly with props 1`] = `
           onClick={[MockFunction]}
           type="button"
         >
-          Fjern alle filtre
+          Clear
         </button>
       </div>
       <div

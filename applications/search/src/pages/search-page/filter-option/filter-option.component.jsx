@@ -21,10 +21,7 @@ export const FilterOption = props => {
   // if themes, then choose text from themes array, else choose label from localization-file.
   if (themesItems) {
     if (themesItems[`${label}`]) {
-      textLabel = getTranslateText(
-        themesItems[`${label}`].title,
-        localization.getLanguage()
-      );
+      textLabel = getTranslateText(themesItems[`${label}`].title);
     } else {
       textLabel = localization.search_hit.ukjent;
     }

@@ -28,11 +28,11 @@ exports[`should render SearchBox correctly 1`] = `
           htmlFor="searchBox"
         >
           <input
-            aria-label="Søk etter innhold"
+            aria-label="Search for datasets..."
             className="fdk-search"
             name="searchBox"
             onChange={[Function]}
-            placeholder="Søk etter innhold"
+            placeholder="Search for datasets..."
             type="search"
             value="enhetsregister"
           />
@@ -47,7 +47,7 @@ exports[`should render SearchBox correctly 1`] = `
       <i
         className="fa fa-search mr-2"
       />
-      Søk
+      Search
     </button>
   </div>
   <div

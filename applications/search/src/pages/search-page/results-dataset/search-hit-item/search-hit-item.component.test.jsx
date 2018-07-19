@@ -41,8 +41,7 @@ test('should render SearchHitItem with no title, description, accessRights and d
 test('should render SearchHitItem with distribution type correctly', () => {
   defaultProps = {
     result: datasets[5],
-    distributionTypeItems: distributionTypes.distributionTypeItems,
-    selectedLanguageCode: 'en'
+    distributionTypeItems: distributionTypes.distributionTypeItems
   };
   const wrapper = shallow(<SearchHitItem {...defaultProps} />);
   expect(wrapper).toMatchSnapshot();

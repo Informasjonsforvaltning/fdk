@@ -226,7 +226,7 @@ exports[`should render FilterBox correctly 1`] = `
               className="fdk-toggleList"
               onClick={[Function]}
             >
-              Vis flere
+              Show more
             </button>
           </div>
         </div>
@@ -462,7 +462,7 @@ exports[`should render FilterBox correctly with activeFilter 1`] = `
               className="fdk-toggleList"
               onClick={[Function]}
             >
-              Vis flere
+              Show more
             </button>
           </div>
         </div>
