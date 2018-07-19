@@ -14,8 +14,7 @@ beforeEach(() => {
     },
     creator: 'Creator 1',
     onDeleteTerm,
-    termIndex: 0,
-    selectedLanguageCode: 'nb'
+    termIndex: 0
   };
   wrapper = shallow(<CompareTerms {...defaultProps} />);
 });

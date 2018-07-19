@@ -22,7 +22,7 @@ exports[`should render DatasetInfo correctly 1`] = `
           className="fdk-detail-text"
         >
           <h5>
-            Utgivelsesdato
+            Issue date
           </h5>
           <p
             className="fdk-ingress fdk-margin-bottom-no text-nowrap"
@@ -65,7 +65,7 @@ exports[`should render DatasetInfo correctly 1`] = `
           className="fdk-detail-text"
         >
           <h5>
-            Oppdateringsfrekvens
+            Update frequency
           </h5>
           <p
             className="fdk-ingress fdk-margin-bottom-no"
@@ -93,7 +93,7 @@ exports[`should render DatasetInfo correctly 1`] = `
           className="fdk-detail-text"
         >
           <h5>
-            Opphav
+            Provenance
           </h5>
           <p
             className="fdk-ingress fdk-margin-bottom-no"
@@ -120,7 +120,7 @@ exports[`should render DatasetInfo correctly 1`] = `
           className="fdk-detail-text"
         >
           <h5>
-            Aktualitet
+            Currentness
           </h5>
           <p
             className="fdk-ingress fdk-margin-bottom-no"
@@ -147,7 +147,7 @@ exports[`should render DatasetInfo correctly 1`] = `
           className="fdk-detail-text"
         >
           <h5>
-            Geografisk avgrenset til
+            Spatial
           </h5>
           <p
             className="fdk-ingress fdk-margin-bottom-no"
@@ -198,7 +198,7 @@ exports[`should render DatasetInfo correctly 1`] = `
         className="fdk-detail-text"
       >
         <h5>
-          Språk
+          Language
         </h5>
         <p
           className="fdk-ingress fdk-margin-bottom-no"
@@ -238,7 +238,7 @@ exports[`should render DatasetInfo correctly 1`] = `
             <a
               href="http://referenced/dataset"
             >
-              Relasjon
+              Relation
               <i
                 className="fa fa-external-link fdk-fa-right"
               />
@@ -273,7 +273,7 @@ exports[`should render DatasetInfo correctly 2`] = `
           className="fdk-detail-text"
         >
           <h5>
-            Utgivelsesdato
+            Issue date
           </h5>
           <p
             className="fdk-ingress fdk-margin-bottom-no text-nowrap"
@@ -316,7 +316,7 @@ exports[`should render DatasetInfo correctly 2`] = `
           className="fdk-detail-text"
         >
           <h5>
-            Oppdateringsfrekvens
+            Update frequency
           </h5>
           <p
             className="fdk-ingress fdk-margin-bottom-no"
@@ -344,7 +344,7 @@ exports[`should render DatasetInfo correctly 2`] = `
           className="fdk-detail-text"
         >
           <h5>
-            Opphav
+            Provenance
           </h5>
           <p
             className="fdk-ingress fdk-margin-bottom-no"
@@ -371,7 +371,7 @@ exports[`should render DatasetInfo correctly 2`] = `
           className="fdk-detail-text"
         >
           <h5>
-            Aktualitet
+            Currentness
           </h5>
           <p
             className="fdk-ingress fdk-margin-bottom-no"
@@ -398,7 +398,7 @@ exports[`should render DatasetInfo correctly 2`] = `
           className="fdk-detail-text"
         >
           <h5>
-            Geografisk avgrenset til
+            Spatial
           </h5>
           <p
             className="fdk-ingress fdk-margin-bottom-no"
@@ -456,7 +456,7 @@ exports[`should render DatasetInfo correctly 2`] = `
             className="col-md-6 dataset-temporal-date"
           >
             <h5>
-              Gjelder fra
+              From
             </h5>
             <p
               className="fdk-ingress fdk-margin-bottom-no text-nowrap"
@@ -484,7 +484,7 @@ exports[`should render DatasetInfo correctly 2`] = `
             className="col-md-6 dataset-temporal-date"
           >
             <h5>
-              Gjelder til
+              To
             </h5>
             <p
               className="fdk-ingress fdk-margin-bottom-no text-nowrap"
@@ -525,7 +525,7 @@ exports[`should render DatasetInfo correctly 2`] = `
         className="fdk-detail-text"
       >
         <h5>
-          Språk
+          Language
         </h5>
       </div>
     </div>
@@ -559,7 +559,7 @@ exports[`should render DatasetInfo correctly 2`] = `
             <a
               href="http://referenced/dataset"
             >
-              Relasjon
+              Relation
               <i
                 className="fa fa-external-link fdk-fa-right"
               />

@@ -22,11 +22,7 @@ export class DatasetInfo extends React.Component {
               key={`dataset-info-spatial-${index}`}
               className="fdk-ingress fdk-margin-bottom-no"
             >
-              {`, ${item.prefLabel[this.props.selectedLanguageCode] ||
-                item.prefLabel.no ||
-                item.prefLabel.nb ||
-                item.prefLabel.nn ||
-                item.prefLabel.en}`}
+              {`, ${getTranslateText(item.prefLabel)}`}
             </span>
           );
         }
@@ -35,11 +31,7 @@ export class DatasetInfo extends React.Component {
             key={`dataset-info-spatial-${index}`}
             className="fdk-ingress fdk-margin-bottom-no"
           >
-            {`${item.prefLabel[this.props.selectedLanguageCode] ||
-              item.prefLabel.no ||
-              item.prefLabel.nb ||
-              item.prefLabel.nn ||
-              item.prefLabel.en}`}
+            {getTranslateText(item.prefLabel)}
           </span>
         );
       });
@@ -144,7 +136,7 @@ export class DatasetInfo extends React.Component {
   }
 
   _renderLanguage() {
-    const { language, temporal, selectedLanguageCode } = this.props;
+    const { language, temporal } = this.props;
     const languageClass = cx('fdk-container-detail', {
       'col-md-4': temporal && temporal.length > 0,
       'col-md-12': !(temporal && temporal.length > 0)
@@ -157,7 +149,7 @@ export class DatasetInfo extends React.Component {
               key={`dataset-info-language-${index}`}
               className="fdk-ingress fdk-margin-bottom-no"
             >
-              {getTranslateText(item.prefLabel, selectedLanguageCode)}
+              {getTranslateText(item.prefLabel)}
             </p>
           );
         }
@@ -181,7 +173,7 @@ export class DatasetInfo extends React.Component {
   }
 
   _renderReferences() {
-    const { references, selectedLanguageCode } = this.props;
+    const { references } = this.props;
 
     let referenceTypeCode;
     const children = items =>
@@ -195,19 +187,13 @@ export class DatasetInfo extends React.Component {
             >
               <h5>
                 {item.referenceType.prefLabel
-                  ? getTranslateText(
-                      item.referenceType.prefLabel,
-                      selectedLanguageCode
-                    )
+                  ? getTranslateText(item.referenceType.prefLabel)
                   : localization.dataset.distribution.referenceDefaultCode}
               </h5>
               <p className="fdk-ingress">
                 <a href={item.source.uri}>
                   {item.source.prefLabel
-                    ? getTranslateText(
-                        item.source.prefLabel,
-                        selectedLanguageCode
-                      )
+                    ? getTranslateText(item.source.prefLabel)
                     : localization.dataset.distribution.referenceDefault}
                   <i className="fa fa-external-link fdk-fa-right" />
                 </a>
@@ -223,10 +209,7 @@ export class DatasetInfo extends React.Component {
             <p className="fdk-ingress">
               <a href={item.source.uri}>
                 {item.source.prefLabel
-                  ? getTranslateText(
-                      item.source.prefLabel,
-                      selectedLanguageCode
-                    )
+                  ? getTranslateText(item.source.prefLabel)
                   : localization.dataset.distribution.referenceDefault}
                 <i className="fa fa-external-link fdk-fa-right" />
               </a>
@@ -380,8 +363,7 @@ DatasetInfo.defaultProps = {
   spatial: null,
   temporal: null,
   language: null,
-  references: null,
-  selectedLanguageCode: ''
+  references: null
 };
 
 DatasetInfo.propTypes = {
@@ -393,6 +375,5 @@ DatasetInfo.propTypes = {
   spatial: PropTypes.array,
   temporal: PropTypes.array,
   language: PropTypes.array,
-  references: PropTypes.array,
-  selectedLanguageCode: PropTypes.string
+  references: PropTypes.array
 };

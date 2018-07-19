@@ -4,26 +4,22 @@ import { getTranslateText } from '../../../../../lib/translateText';
 import localization from '../../../../../lib/localization';
 
 export const CompareTermModalContent = props => {
-  let { terms, selectedLanguageCode, cols } = props;
+  let { terms, cols } = props;
   terms =
     terms && terms.length > 0
       ? terms
       : CompareTermModalContent.defaultProps.terms;
-  selectedLanguageCode =
-    selectedLanguageCode ||
-    CompareTermModalContent.defaultProps.selectedLanguageCode;
   cols = cols || CompareTermModalContent.defaultProps.cols;
 
   const title = items =>
     items.map((item, index) => (
       <div className={cols} key={`title-${index}${item.uri}`}>
         <h3>
-          {item.prefLabel &&
-          getTranslateText(item.prefLabel, selectedLanguageCode)
-            ? getTranslateText(item.prefLabel, selectedLanguageCode)
+          {getTranslateText(item.prefLabel)
+            ? getTranslateText(item.prefLabel)
                 .charAt(0)
                 .toUpperCase() +
-              getTranslateText(item.prefLabel, selectedLanguageCode)
+              getTranslateText(item.prefLabel)
                 .substring(1)
                 .toLowerCase()
             : ''}
@@ -42,14 +38,10 @@ export const CompareTermModalContent = props => {
       <div className={cols} key={`definition-${index}${item.uri}`}>
         <h5>{localization.compare.definition}</h5>
         <p>
-          {item.definition &&
-          getTranslateText(item.definition, selectedLanguageCode)
-            ? getTranslateText(item.definition, selectedLanguageCode)
+          {getTranslateText(item.definition)
+            ? getTranslateText(item.definition)
                 .charAt(0)
-                .toUpperCase() +
-              getTranslateText(item.definition, selectedLanguageCode).substring(
-                1
-              )
+                .toUpperCase() + getTranslateText(item.definition).substring(1)
             : ''}
         </p>
       </div>
@@ -102,11 +94,7 @@ export const CompareTermModalContent = props => {
     items.map((item, index) => (
       <div className={cols} key={`note-${index}${item.uri}`}>
         <h5>{localization.compare.note}</h5>
-        <p>
-          {item.note && getTranslateText(item.note, selectedLanguageCode)
-            ? getTranslateText(item.note, selectedLanguageCode)
-            : ''}
-        </p>
+        <p>{getTranslateText(item.note)}</p>
       </div>
     ));
 
@@ -115,11 +103,8 @@ export const CompareTermModalContent = props => {
     let altLabel = '';
     if (terms[i].altLabel) {
       for (let j = 0; j < terms[i].altLabel.length; j += 1) {
-        if (getTranslateText(terms[i].altLabel[j], selectedLanguageCode)) {
-          altLabel += getTranslateText(
-            terms[i].altLabel[j],
-            selectedLanguageCode
-          );
+        if (getTranslateText(terms[i].altLabel[j])) {
+          altLabel += getTranslateText(terms[i].altLabel[j]);
           if (j < terms[i].altLabel.length - 1) {
             altLabel += ', ';
           }
@@ -176,7 +161,6 @@ CompareTermModalContent.defaultProps = {
       inScheme: ['']
     }
   ],
-  selectedLanguageCode: 'nb',
   cols: 'col-md-6'
 };
 
@@ -193,6 +177,5 @@ CompareTermModalContent.propTypes = {
       inScheme: PropTypes.array
     })
   ),
-  selectedLanguageCode: PropTypes.string,
   cols: PropTypes.string
 };

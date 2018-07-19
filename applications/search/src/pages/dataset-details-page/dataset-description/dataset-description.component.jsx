@@ -76,14 +76,14 @@ export class DatasetDescription extends React.Component {
 
   _renderThemes() {
     let themeNodes = null;
-    const { themes, selectedLanguageCode } = this.props;
+    const { themes } = this.props;
     if (themes) {
       themeNodes = themes.map(singleTheme => (
         <div
           key={`dataset-description-theme-${singleTheme.code}`}
           className="fdk-label fdk-label-on-grey mr-2 mb-2"
         >
-          {getTranslateText(singleTheme.title, selectedLanguageCode)}
+          {getTranslateText(singleTheme.title)}
         </div>
       ));
     }
@@ -144,7 +144,6 @@ DatasetDescription.defaultProps = {
   objective: '',
   publisher: null,
   themes: null,
-  selectedLanguageCode: '',
   harvest: null,
   provenance: null
 };
@@ -156,7 +155,6 @@ DatasetDescription.propTypes = {
   objective: PropTypes.string,
   publisher: PropTypes.object,
   themes: PropTypes.array,
-  selectedLanguageCode: PropTypes.string,
   harvest: PropTypes.object,
   provenance: PropTypes.object
 };

@@ -9,7 +9,6 @@ let wrapper;
 beforeEach(() => {
   defaultProps = {
     terms: [concepts.hits.hits[0]._source, concepts.hits.hits[1]._source],
-    selectedLanguageCode: null,
     cols: '6'
   };
   wrapper = shallow(<CompareTermModalContent {...defaultProps} />);

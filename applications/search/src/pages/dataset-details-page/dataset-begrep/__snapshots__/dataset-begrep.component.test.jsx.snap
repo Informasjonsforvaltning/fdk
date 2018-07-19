@@ -9,7 +9,7 @@ exports[`should render DatasetBegrep correctly 1`] = `
       <i
         className="fa fa-book fdk-fa-left fdk-color-cta"
       />
-      Begrep
+      Subject
     </div>
     <BegrepCollapse
       definition="alt som er registrert med et organisasjonsnummer "
@@ -33,7 +33,7 @@ exports[`should render DatasetBegrep correctly 1`] = `
       className="fdk-detail-text"
     >
       <h5>
-        Søkeord
+        Keyword
       </h5>
       <p
         className="fdk-ingress fdk-margin-bottom-no"
@@ -79,7 +79,7 @@ exports[`should render DatasetBegrep correctly with no subject definition 1`] = 
       <i
         className="fa fa-book fdk-fa-left fdk-color-cta"
       />
-      Begrep
+      Subject
     </div>
   </div>
   <div
@@ -96,7 +96,7 @@ exports[`should render DatasetBegrep correctly with no subject definition 1`] = 
       className="fdk-detail-text"
     >
       <h5>
-        Søkeord
+        Keyword
       </h5>
       <p
         className="fdk-ingress fdk-margin-bottom-no"

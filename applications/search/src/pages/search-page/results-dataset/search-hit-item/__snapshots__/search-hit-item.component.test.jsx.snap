@@ -4,7 +4,7 @@ exports[`should render SearchHitItem NON_PUBLIC correctly 1`] = `
 <Link
   className="fdk-a-search-hit"
   replace={false}
-  title="Datasett: AAMarkagrensen Oslo Kommune og nærliggende kommuner"
+  title="Dataset: AAMarkagrensen Oslo Kommune og nærliggende kommuner"
   to="/datasets/3645d5a8-6689-4fc1-8684-d3d6c2d47386"
 >
   <span
@@ -29,7 +29,7 @@ exports[`should render SearchHitItem NON_PUBLIC correctly 1`] = `
         >
           Datasettet
         </span>
-        Eies av
+        Owned by
          
         <span
           className="fdk-strong-virksomhet"
@@ -77,13 +77,13 @@ exports[`should render SearchHitItem NON_PUBLIC correctly 1`] = `
       className="fdk-container-distributions fdk-distributions-red"
     >
       <strong>
-        Unntatt offentlighet
+        Non public
       </strong>
       <div />
       <div
         id="search-hit-sample"
       >
-        Eksempeldata tilgjengelig
+        Sample data are available
       </div>
     </div>
   </div>
@@ -94,7 +94,7 @@ exports[`should render SearchHitItem PUBLIC correctly 1`] = `
 <Link
   className="fdk-a-search-hit"
   replace={false}
-  title="Datasett: AAMarkagrensen Oslo Kommune og nærliggende kommuner"
+  title="Dataset: AAMarkagrensen Oslo Kommune og nærliggende kommuner"
   to="/datasets/3645d5a8-6689-4fc1-8684-d3d6c2d47386"
 >
   <span
@@ -152,7 +152,7 @@ exports[`should render SearchHitItem PUBLIC correctly 1`] = `
       className="fdk-container-distributions fdk-distributions-green"
     >
       <strong>
-        Offentlig
+        Public
       </strong>
     </div>
   </div>
@@ -163,7 +163,7 @@ exports[`should render SearchHitItem RESTRICTED correctly 1`] = `
 <Link
   className="fdk-a-search-hit"
   replace={false}
-  title="Datasett: AAMarkagrensen Oslo Kommune og nærliggende kommuner"
+  title="Dataset: AAMarkagrensen Oslo Kommune og nærliggende kommuner"
   to="/datasets/3645d5a8-6689-4fc1-8684-d3d6c2d47386"
 >
   <span
@@ -188,7 +188,7 @@ exports[`should render SearchHitItem RESTRICTED correctly 1`] = `
         >
           Datasettet
         </span>
-        Eies av
+        Owned by
          
         <span
           className="fdk-strong-virksomhet"
@@ -236,7 +236,7 @@ exports[`should render SearchHitItem RESTRICTED correctly 1`] = `
       className="fdk-container-distributions fdk-distributions-yellow"
     >
       <strong>
-        Begrenset offentlighet
+        Restricted
       </strong>
       <div>
         <DistributionFormat
@@ -255,7 +255,7 @@ exports[`should render SearchHitItem RESTRICTED correctly 1`] = `
       <div
         id="search-hit-sample"
       >
-        Eksempeldata tilgjengelig
+        Sample data are available
       </div>
     </div>
   </div>
@@ -266,7 +266,7 @@ exports[`should render SearchHitItem with distribution type correctly 1`] = `
 <Link
   className="fdk-a-search-hit"
   replace={false}
-  title="Datasett: AAMarkagrensen Oslo Kommune og nærliggende kommuner"
+  title="Dataset: AAMarkagrensen Oslo Kommune og nærliggende kommuner"
   to="/datasets/3645d5a8-6689-4fc1-8684-d3d6c2d47386"
 >
   <span
@@ -324,7 +324,7 @@ exports[`should render SearchHitItem with distribution type correctly 1`] = `
       className="fdk-container-distributions fdk-distributions-green"
     >
       <strong>
-        Offentlig
+        Public
       </strong>
       <div>
         <DistributionFormat
@@ -373,7 +373,7 @@ exports[`should render SearchHitItem with no title, description, accessRights an
 <Link
   className="fdk-a-search-hit"
   replace={false}
-  title="Datasett: undefined"
+  title="Dataset: undefined"
   to="/datasets/3645d5a8-6689-4fc1-8684-d3d6c2d47386"
 >
   <span
@@ -396,7 +396,7 @@ exports[`should render SearchHitItem with no title, description, accessRights an
         >
           Datasettet
         </span>
-        Eies av
+        Owned by
          
         <span
           className="fdk-strong-virksomhet"

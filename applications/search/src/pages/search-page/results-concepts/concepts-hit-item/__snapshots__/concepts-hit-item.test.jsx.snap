@@ -27,7 +27,7 @@ exports[`should render ConceptsHitItem correctly 1`] = `
         +
       </span>
        
-      Legg til i sammenligning
+      Add to compare
     </button>
     <button
       className="fdk-button fdk-button-default fdk-btn-compare visible-xs visible-sm"
@@ -40,7 +40,7 @@ exports[`should render ConceptsHitItem correctly 1`] = `
         +
       </span>
        
-      Legg til i sammenligning
+      Add to compare
     </button>
     <span
       aria-hidden="false"
@@ -127,11 +127,11 @@ exports[`should render ConceptsHitItem correctly 1`] = `
         href="/?subject=enhet"
         title="Link til datasett med begrep"
       >
-        Brukt i
+        Used in
          
         1
          
-        datasett
+        dataset
       </a>
     </p>
   </div>
@@ -239,11 +239,11 @@ exports[`should render ConceptsHitItem correctly with compare button not showing
         href="/?subject=enhet"
         title="Link til datasett med begrep"
       >
-        Brukt i
+        Used in
          
         1
          
-        datasett
+        dataset
       </a>
     </p>
   </div>
@@ -277,7 +277,7 @@ exports[`should render ConceptsHitItem correctly with no alt label, no source an
         +
       </span>
        
-      Legg til i sammenligning
+      Add to compare
     </button>
     <button
       className="fdk-button fdk-button-default fdk-btn-compare visible-xs visible-sm"
@@ -290,7 +290,7 @@ exports[`should render ConceptsHitItem correctly with no alt label, no source an
         +
       </span>
        
-      Legg til i sammenligning
+      Add to compare
     </button>
     <span
       aria-hidden="false"
@@ -343,11 +343,11 @@ exports[`should render ConceptsHitItem correctly with no alt label, no source an
         href="/?subject=organisasjonsnummer"
         title="Link til datasett med begrep"
       >
-        Brukt i
+        Used in
          
         8
          
-        datasett
+        dataset
       </a>
     </p>
   </div>

@@ -88,7 +88,7 @@ export class DatasetDistribution extends React.Component {
   }
 
   _renderLicense() {
-    const { license, selectedLanguageCode } = this.props;
+    const { license } = this.props;
     if (license && license.uri) {
       return (
         <div>
@@ -100,7 +100,7 @@ export class DatasetDistribution extends React.Component {
               license.uri &&
               license.prefLabel && (
                 <a href={license.uri}>
-                  {getTranslateText(license.prefLabel, selectedLanguageCode)}
+                  {getTranslateText(license.prefLabel)}
                   <i className="fa fa-external-link fdk-fa-right" />
                 </a>
               )}
@@ -120,13 +120,13 @@ export class DatasetDistribution extends React.Component {
   }
 
   _renderConformsTo() {
-    const { conformsTo, selectedLanguageCode } = this.props;
+    const { conformsTo } = this.props;
 
     const children = items =>
       items.map(item => (
         <a key={item.uri} href={item.uri}>
           {item.prefLabel
-            ? getTranslateText(item.prefLabel, selectedLanguageCode)
+            ? getTranslateText(item.prefLabel)
             : localization.dataset.distribution.standard}
           <i className="fa fa-external-link fdk-fa-right" />
         </a>
@@ -146,15 +146,13 @@ export class DatasetDistribution extends React.Component {
   }
 
   _renderDistributionPage() {
-    const { page, selectedLanguageCode } = this.props;
+    const { page } = this.props;
     const children = items =>
       items.map(page => {
         if (page && page.uri) {
           return (
             <a key={page.uri} href={page.uri}>
-              {page.prefLabel
-                ? getTranslateText(page.prefLabel, selectedLanguageCode)
-                : page.uri}
+              {page.prefLabel ? getTranslateText(page.prefLabel) : page.uri}
             </a>
           );
         }
@@ -208,8 +206,7 @@ DatasetDistribution.defaultProps = {
   license: null,
   conformsTo: null,
   page: null,
-  type: null,
-  selectedLanguageCode: null
+  type: null
 };
 
 DatasetDistribution.propTypes = {
@@ -221,6 +218,5 @@ DatasetDistribution.propTypes = {
   license: PropTypes.object,
   conformsTo: PropTypes.array,
   page: PropTypes.array,
-  type: PropTypes.string,
-  selectedLanguageCode: PropTypes.string
+  type: PropTypes.string
 };

@@ -39,171 +39,14 @@ exports[`should render App correctly 1`] = `
      
     om hva du synes!
   </div>
-  <div
-    className="fdk-header"
-  >
-    <div
-      className="container"
-    >
-      <div
-        className="row"
-      >
-        <div
-          className="col-xs-6 col-md-4"
-        >
-          <a
-            href="/"
-            title="Link til Felles datakatalog"
-          >
-            <span
-              aria-hidden="false"
-              className="uu-invisible"
-            >
-              Gå til forside
-            </span>
-            <img
-              alt="Logo for Felles datakatalog"
-              className="fdk-logo"
-              src="/static/img/fdk-logo@2x.png"
-            />
-          </a>
-        </div>
-        <div
-          className="col-xs-6 col-md-offset-5 col-md-3 fdk-header-flex"
-        >
-          <DropdownButton
-            bsStyle="default"
-            className="fdk-button-language visible-md visible-lg"
-            id="search-language-dropdown-1"
-            onSelect={[Function]}
-            tabIndex="0"
-            title="Language"
-          >
-            <MenuItem
-              bsClass="dropdown"
-              disabled={false}
-              divider={false}
-              eventKey="nb"
-              header={false}
-              key="1"
-            >
-              Norsk (bokmål)
-            </MenuItem>
-            <MenuItem
-              bsClass="dropdown"
-              disabled={false}
-              divider={false}
-              eventKey="nn"
-              header={false}
-              key="2"
-            >
-              Norsk (nynorsk)
-            </MenuItem>
-            <MenuItem
-              bsClass="dropdown"
-              disabled={false}
-              divider={false}
-              eventKey="en"
-              header={false}
-              key="3"
-            >
-              Engelsk
-            </MenuItem>
-          </DropdownButton>
-          <div
-            className="fdk-header-menu"
-          >
-            <DropdownButton
-              bsStyle="default"
-              className="fdk-button fdk-button-default fdk-button-menu"
-              id="search-menu-dropdown-1"
-              tabIndex="0"
-              title="Meny"
-            >
-              <li
-                role="presentation"
-              >
-                <Link
-                  replace={false}
-                  tabIndex="-1"
-                  to="/about"
-                >
-                  Om Felles Datakatalog
-                </Link>
-              </li>
-              <li
-                role="presentation"
-              >
-                <Link
-                  replace={false}
-                  tabIndex="-1"
-                  to="/about-registration"
-                >
-                  Registrere datasett
-                </Link>
-              </li>
-              <li
-                role="presentation"
-              >
-                <Link
-                  replace={false}
-                  tabIndex="-1"
-                  to="/reports"
-                >
-                  Rapporter
-                </Link>
-              </li>
-              <MenuItem
-                bsClass="dropdown"
-                className="visible-xs visible-sm"
-                disabled={false}
-                divider={false}
-                eventKey="nb"
-                header={false}
-                key="1"
-                onSelect={[Function]}
-              >
-                Norsk (bokmål)
-              </MenuItem>
-              <MenuItem
-                bsClass="dropdown"
-                className="visible-xs visible-sm"
-                disabled={false}
-                divider={false}
-                eventKey="nn"
-                header={false}
-                key="2"
-                onSelect={[Function]}
-              >
-                Norsk (nynorsk)
-              </MenuItem>
-              <MenuItem
-                bsClass="dropdown"
-                className="visible-xs visible-sm"
-                disabled={false}
-                divider={false}
-                eventKey="en"
-                header={false}
-                key="3"
-                onSelect={[Function]}
-              >
-                Engelsk
-              </MenuItem>
-            </DropdownButton>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <Connect(AppNavBar) />
   <div
     className="container"
   >
     <div
       className="row"
     >
-      <withRouter()
-        selectedLanguageCode="nb"
-      />
+      <withRouter() />
     </div>
   </div>
   <div
@@ -211,19 +54,19 @@ exports[`should render App correctly 1`] = `
   >
     <Switch>
       <Route
+        component={[Function]}
         exact={true}
         path="/"
-        render={[Function]}
       />
       <Route
+        component={[Function]}
         exact={true}
         path="/api"
-        render={[Function]}
       />
       <Route
+        component={[Function]}
         exact={true}
         path="/concepts"
-        render={[Function]}
       />
       <Route
         component={[Function]}

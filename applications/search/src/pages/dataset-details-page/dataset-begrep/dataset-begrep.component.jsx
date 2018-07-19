@@ -20,28 +20,16 @@ export class DatasetBegrep extends React.Component {
   }
 
   _renderBegrep() {
-    const { subject, selectedLanguageCode } = this.props;
+    const { subject } = this.props;
     const children = items =>
       items.map(item => {
         if (item.prefLabel && item.definition) {
           return (
             <BegrepCollapse
               key={item.uri}
-              prefLabel={
-                item.prefLabel
-                  ? getTranslateText(item.prefLabel, selectedLanguageCode)
-                  : null
-              }
-              definition={
-                item.definition
-                  ? getTranslateText(item.definition, selectedLanguageCode)
-                  : null
-              }
-              note={
-                item.note
-                  ? getTranslateText(item.note, selectedLanguageCode)
-                  : null
-              }
+              prefLabel={getTranslateText(item.prefLabel)}
+              definition={getTranslateText(item.definition)}
+              note={getTranslateText(item.note)}
               source={item.source}
             />
           );
@@ -63,19 +51,19 @@ export class DatasetBegrep extends React.Component {
   }
 
   _renderKeyword() {
-    const { keyword, selectedLanguageCode } = this.props;
+    const { keyword } = this.props;
     const children = items =>
       items.map((item, index) => {
         if (index > 0) {
           return (
             <span key={`dataset-begrep-search-${index}`} className="keyword">
-              {`, ${getTranslateText(item, selectedLanguageCode)}`}
+              {`, ${getTranslateText(item)}`}
             </span>
           );
         }
         return (
           <span key={`dataset-begrep-search-${index}`} className="keyword">
-            {getTranslateText(item, selectedLanguageCode)}
+            {getTranslateText(item)}
           </span>
         );
       });
@@ -109,12 +97,10 @@ export class DatasetBegrep extends React.Component {
 
 DatasetBegrep.defaultProps = {
   subject: null,
-  keyword: null,
-  selectedLanguageCode: ''
+  keyword: null
 };
 
 DatasetBegrep.propTypes = {
   subject: PropTypes.array,
-  keyword: PropTypes.array,
-  selectedLanguageCode: PropTypes.string
+  keyword: PropTypes.array
 };

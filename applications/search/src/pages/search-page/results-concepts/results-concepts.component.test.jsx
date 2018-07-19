@@ -17,7 +17,6 @@ beforeEach(() => {
   closeFilterModal = jest.fn();
 
   defaultProps = {
-    selectedLanguageCode: null,
     termItems: concepts,
     onClearSearch,
     onPageChange,

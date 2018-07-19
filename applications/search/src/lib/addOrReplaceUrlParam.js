@@ -77,7 +77,7 @@ export function addOrReplaceParamWithoutURL(uri, key, value) {
 }
 
 /**
- * Returns language code from url parameter "lang", if exists.
+ * Returns param from url, if exists.
  * @returns {null}
  */
 export function getParamFromUrl(param) {
@@ -89,11 +89,11 @@ export function getParamFromUrl(param) {
 }
 
 /**
- * Returns language code from url parameter "lang", if exists.
+ * Returns param from the url search part as string "?a=b".
  * @returns {null}
  */
-export function getParamFromString(url, param) {
-  const queryObj = qs.parse(url.substr(1));
+export function getParamFromString(urlSearchPart, param) {
+  const queryObj = qs.parse(urlSearchPart.substr(1));
   if (queryObj && queryObj[param]) {
     return queryObj[param];
   }

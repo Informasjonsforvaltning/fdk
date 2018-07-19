@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import { DatasetDescription } from './dataset-description/dataset-description.component';
 import { DatasetKeyInfo } from './dataset-key-info/dataset-key-info.component';
@@ -45,41 +44,14 @@ export class DatasetDetailsPage extends React.Component {
     const { datasetItem } = this.props;
     return (
       <DatasetDescription
-        title={
-          datasetItem.title
-            ? getTranslateText(
-                datasetItem.title,
-                this.props.selectedLanguageCode
-              )
-            : null
-        }
-        description={
-          datasetItem.description
-            ? getTranslateText(
-                datasetItem.description,
-                this.props.selectedLanguageCode
-              )
-            : null
-        }
-        descriptionFormatted={
+        title={getTranslateText(datasetItem.title)}
+        description={getTranslateText(datasetItem.description)}
+        descriptionFormatted={getTranslateText(
           datasetItem.descriptionFormatted
-            ? getTranslateText(
-                datasetItem.descriptionFormatted,
-                this.props.selectedLanguageCode
-              )
-            : null
-        }
-        objective={
-          datasetItem.objective
-            ? getTranslateText(
-                datasetItem.objective,
-                this.props.selectedLanguageCode
-              )
-            : null
-        }
+        )}
+        objective={getTranslateText(datasetItem.objective)}
         publisher={datasetItem.publisher}
         themes={datasetItem.theme}
-        selectedLanguageCode={this.props.selectedLanguageCode}
         harvest={datasetItem.harvest}
         provenance={datasetItem.provenance}
       />
@@ -96,14 +68,7 @@ export class DatasetDetailsPage extends React.Component {
       <DatasetDistribution
         key={encodeURIComponent(distribution.uri)}
         title={localization.dataset.distribution.title}
-        description={
-          distribution.description
-            ? getTranslateText(
-                distribution.description,
-                this.props.selectedLanguageCode
-              )
-            : null
-        }
+        description={getTranslateText(distribution.description)}
         accessUrl={distribution.accessURL}
         format={distribution.format}
         code={accessRights ? accessRights.code : null}
@@ -112,7 +77,6 @@ export class DatasetDetailsPage extends React.Component {
         page={distribution.page}
         type={distribution.type}
         openLicenseItems={openLicenseItems}
-        selectedLanguageCode={this.props.selectedLanguageCode}
       />
     ));
   }
@@ -126,18 +90,10 @@ export class DatasetDetailsPage extends React.Component {
       <DatasetDistribution
         key={encodeURIComponent(sample.uri)}
         title={localization.dataset.sample}
-        description={
-          sample.description
-            ? getTranslateText(
-                sample.description,
-                this.props.selectedLanguageCode
-              )
-            : null
-        }
+        description={getTranslateText(sample.description)}
         accessUrl={sample.accessURL}
         format={sample.format}
         code="SAMPLE"
-        selectedLanguageCode={this.props.selectedLanguageCode}
       />
     ));
   }
@@ -153,7 +109,6 @@ export class DatasetDetailsPage extends React.Component {
         type={datasetItem.type}
         conformsTo={datasetItem.conformsTo}
         informationModel={datasetItem.informationModel}
-        selectedLanguageCode={this.props.selectedLanguageCode}
       />
     );
   }
@@ -175,37 +130,19 @@ export class DatasetDetailsPage extends React.Component {
     return (
       <DatasetInfo
         issued={issued || null}
-        accrualPeriodicity={
-          accrualPeriodicity
-            ? getTranslateText(
-                accrualPeriodicity.prefLabel,
-                this.props.selectedLanguageCode
-              )
-            : null
-        }
+        accrualPeriodicity={getTranslateText(
+          accrualPeriodicity && accrualPeriodicity.prefLabel
+        )}
         modified={modified}
-        provenance={
-          provenance
-            ? getTranslateText(
-                provenance.prefLabel,
-                this.props.selectedLanguageCode
-              )
-            : null
-        }
-        hasCurrentnessAnnotation={
-          hasCurrentnessAnnotation
-            ? getTranslateText(
-                hasCurrentnessAnnotation.hasBody,
-                this.props.selectedLanguageCode
-              )
-            : null
-        }
+        provenance={getTranslateText(provenance && provenance.prefLabel)}
+        hasCurrentnessAnnotation={getTranslateText(
+          hasCurrentnessAnnotation && hasCurrentnessAnnotation.hasBody
+        )}
         spatial={spatial}
         temporal={temporal}
         language={language}
         isPartOf={isPartOf}
         references={references}
-        selectedLanguageCode={this.props.selectedLanguageCode}
       />
     );
   }
@@ -225,38 +162,18 @@ export class DatasetDetailsPage extends React.Component {
     ) {
       return (
         <DatasetQuality
-          relevanceAnnotation={
-            hasRelevanceAnnotation
-              ? getTranslateText(
-                  hasRelevanceAnnotation.hasBody,
-                  this.props.selectedLanguageCode
-                )
-              : null
-          }
-          completenessAnnotation={
-            hasCompletenessAnnotation
-              ? getTranslateText(
-                  hasCompletenessAnnotation.hasBody,
-                  this.props.selectedLanguageCode
-                )
-              : null
-          }
-          accuracyAnnotation={
-            hasAccuracyAnnotation
-              ? getTranslateText(
-                  hasAccuracyAnnotation.hasBody,
-                  this.props.selectedLanguageCode
-                )
-              : null
-          }
-          availabilityAnnotations={
-            hasAvailabilityAnnotation
-              ? getTranslateText(
-                  hasAvailabilityAnnotation.hasBody,
-                  this.props.selectedLanguageCode
-                )
-              : null
-          }
+          relevanceAnnotation={getTranslateText(
+            hasRelevanceAnnotation && hasRelevanceAnnotation.hasBody
+          )}
+          completenessAnnotation={getTranslateText(
+            hasCompletenessAnnotation && hasCompletenessAnnotation.hasBody
+          )}
+          accuracyAnnotation={getTranslateText(
+            hasAccuracyAnnotation && hasAccuracyAnnotation.hasBody
+          )}
+          availabilityAnnotations={getTranslateText(
+            hasAvailabilityAnnotation && hasAvailabilityAnnotation.hasBody
+          )}
         />
       );
     }
@@ -296,13 +213,7 @@ export class DatasetDetailsPage extends React.Component {
   _renderBegrep() {
     const { keyword, subject } = this.props.datasetItem;
     if (keyword || subject) {
-      return (
-        <DatasetBegrep
-          keyword={keyword}
-          subject={subject}
-          selectedLanguageCode={this.props.selectedLanguageCode}
-        />
-      );
+      return <DatasetBegrep keyword={keyword} subject={subject} />;
     }
     return null;
   }
@@ -334,11 +245,8 @@ export class DatasetDetailsPage extends React.Component {
 }
 
 DatasetDetailsPage.defaultProps = {
-  selectedLanguageCode: null,
   datasetItem: null,
   isFetchingDataset: false
 };
 
-DatasetDetailsPage.propTypes = {
-  selectedLanguageCode: PropTypes.string
-};
+DatasetDetailsPage.propTypes = {};

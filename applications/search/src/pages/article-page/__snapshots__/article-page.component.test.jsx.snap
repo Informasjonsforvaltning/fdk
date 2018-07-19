@@ -16,7 +16,7 @@ exports[`should render ArticlePage correctly 1`] = `
       <h1
         className="fdk-margin-bottom"
       >
-        Kom i gang med registrering av datasett
+        Registration (only in Norwegian)
       </h1>
       <div
         className="fdk-margin-bottom"

@@ -23,7 +23,7 @@ exports[`should render FilterOption correctly 1`] = `
     <span
       className="checkbox-replacement"
     />
-    Jordbruk, fiskeri, skogbruk og mat
+    Agriculture, fisheries, forestry and food
      (
     18
     )
@@ -54,7 +54,7 @@ exports[`should render FilterOption correctly with no corresponding theme 1`] = 
     <span
       className="checkbox-replacement"
     />
-    Ukjent
+    Unknown
      (
     18
     )
@@ -85,7 +85,7 @@ exports[`should render FilterOption correctly with no theme 1`] = `
     <span
       className="checkbox-replacement"
     />
-    Offentlig
+    Public
      (
     463
     )

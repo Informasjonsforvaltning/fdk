@@ -18,8 +18,7 @@ test('should render DatasetInfo correctly', () => {
     spatial: _source.spatial,
     temporal: _source.temporal,
     language: _source.language,
-    references: _source.references,
-    selectedLanguageCode: null
+    references: _source.references
   };
   const wrapper = shallow(<DatasetInfo {...defaultProps} />);
   expect(wrapper).toMatchSnapshot();
@@ -35,8 +34,7 @@ test('should render DatasetInfo correctly', () => {
     spatial: _source.spatial,
     temporal: _source.temporal,
     language: _source.language,
-    references: _source.references,
-    selectedLanguageCode: null
+    references: _source.references
   };
   const wrapper = shallow(<DatasetInfo {...defaultProps} />);
   expect(wrapper).toMatchSnapshot();

@@ -16,7 +16,6 @@ test('should render DatasetDescription correctly', () => {
     objective: _source.objective.nb,
     publisher: _source.publisher,
     themes: _source.theme,
-    selectedLanguageCode: null,
     harvest: _source.harvest
   };
   const wrapper = shallow(<DatasetDescription {...defaultProps} />);
@@ -31,7 +30,6 @@ test('should render DatasetDescription correctly', () => {
     objective: _source.objective.nb,
     publisher: _source.publisher,
     themes: _source.theme,
-    selectedLanguageCode: null,
     harvest: _source.harvest
   };
   const wrapper = shallow(<DatasetDescription {...defaultProps} />);

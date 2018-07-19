@@ -8,14 +8,14 @@ exports[`should render DatasetQuality correctly 1`] = `
     <i
       className="fa fa-star fdk-fa-left fdk-color-cta"
     />
-    Kvalitet på innhold
+    Quality
   </div>
   <div
     className="fdk-container-detail"
   >
     <div>
       <h5>
-        Relevans
+        Relevance
       </h5>
       <p
         className="fdk-ingress fdk-margin-bottom-double"
@@ -25,7 +25,7 @@ exports[`should render DatasetQuality correctly 1`] = `
     </div>
     <div>
       <h5>
-        Kompletthet
+        Completeness
       </h5>
       <p
         className="fdk-ingress fdk-margin-bottom-double"
@@ -35,7 +35,7 @@ exports[`should render DatasetQuality correctly 1`] = `
     </div>
     <div>
       <h5>
-        Nøyaktighet
+        Accuracy
       </h5>
       <p
         className="fdk-ingress fdk-margin-bottom-double"
@@ -45,7 +45,7 @@ exports[`should render DatasetQuality correctly 1`] = `
     </div>
     <div>
       <h5>
-        Tilgjengelighet
+        Availability
       </h5>
       <p
         className="fdk-ingress fdk-margin-bottom-double"

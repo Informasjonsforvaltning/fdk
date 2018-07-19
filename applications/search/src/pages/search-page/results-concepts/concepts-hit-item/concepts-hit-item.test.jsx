@@ -12,8 +12,7 @@ beforeEach(() => {
   defaultProps = {
     result: concepts.hits.hits[0],
     terms: null,
-    onAddTerm,
-    selectedLanguageCode: null
+    onAddTerm
   };
   wrapper = shallow(<ConceptsHitItem {...defaultProps} />);
 });
@@ -38,8 +37,7 @@ test('should render ConceptsHitItem correctly with compare button not showing', 
   const props = {
     result: concepts.hits.hits[0],
     terms: [concepts.hits.hits[0]._source],
-    onAddTerm,
-    selectedLanguageCode: null
+    onAddTerm
   };
   const shallowWrapper = shallow(<ConceptsHitItem {...props} />);
   expect(shallowWrapper).toMatchSnapshot();
@@ -49,8 +47,7 @@ test('should render ConceptsHitItem correctly with no alt label, no source and n
   const props = {
     result: concepts.hits.hits[1],
     terms: null,
-    onAddTerm,
-    selectedLanguageCode: null
+    onAddTerm
   };
   const shallowWrapper = shallow(<ConceptsHitItem {...props} />);
   expect(shallowWrapper).toMatchSnapshot();

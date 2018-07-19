@@ -10,7 +10,7 @@ exports[`should render CustomHitsStats correctly when no hits 1`] = `
     data-qa="info"
   >
     <span>
-      Søket ga dessverre ingen treff
+      Sorry, no hits
     </span>
   </div>
 </div>
@@ -27,19 +27,19 @@ exports[`should render CustomHitsStats correctly when no initial search 1`] = `
   >
     <div>
       <span>
-        Søk blant
+        Search among
          
         100
          
-        datasettbeskrivelser
+        dataset descriptions
       </span>
       <span>
          
-        og
+        and
          
         100
          
-        begrep
+        concepts
       </span>
     </div>
   </div>
@@ -57,22 +57,22 @@ exports[`should render CustomHitsStats correctly when search performed  1`] = `
   >
     <div>
       <span>
-        Søket ga
+        Search gave
          
       </span>
       <span>
         100
          
-        treff i datasett
+        hits among datasets
       </span>
       <span>
          
-        og
+        and
          
       </span>
       100
        
-      treff i begrep
+      hits among concepts
     </div>
   </div>
 </div>

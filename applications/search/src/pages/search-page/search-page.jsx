@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import qs from 'qs';
 import queryString from 'query-string';
 import { Route, Switch } from 'react-router-dom';
@@ -91,7 +90,6 @@ export class SearchPage extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { selectedLanguageCode } = nextProps;
     if (nextProps.location.search !== this.props.location.search) {
       const original = nextProps.location.search;
       const q = getParamFromString(original, 'q');
@@ -108,31 +106,12 @@ export class SearchPage extends React.Component {
       this.props.fetchDatasetsIfNeeded(`/datasets${query}`);
       this.props.fetchTermsIfNeeded(`/terms${query}`);
     }
-    if (selectedLanguageCode !== this.props.selectedLanguageCode) {
-      if (selectedLanguageCode === 'nb') {
-        this.setState({
-          searchQuery: {
-            ...this.state.searchQuery,
-            lang: undefined
-          }
-        });
-      } else {
-        this.setState({
-          searchQuery: {
-            ...this.state.searchQuery,
-            lang: selectedLanguageCode
-          }
-        });
-      }
-    }
   }
 
   handleClearSearch() {
     this.setState(
       {
-        searchQuery: {
-          lang: this.state.searchQuery.lang
-        }
+        searchQuery: {}
       },
       () => this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
     );
@@ -455,7 +434,6 @@ export class SearchPage extends React.Component {
 
   render() {
     const {
-      selectedLanguageCode,
       datasetItems,
       publisherCountItems,
       isFetchingDatasets,
@@ -499,7 +477,6 @@ export class SearchPage extends React.Component {
               countTerms={
                 termItems && termItems.hits ? termItems.hits.total : 0
               }
-              selectedLanguageCode={selectedLanguageCode}
             />
           </div>
         </section>
@@ -510,7 +487,6 @@ export class SearchPage extends React.Component {
               path="/"
               render={props => (
                 <ResultsDataset
-                  selectedLanguageCode={this.props.selectedLanguageCode}
                   datasetItems={datasetItems}
                   onClearSearch={this.handleClearSearch}
                   onFilterTheme={this.handleDatasetFilterThemes}
@@ -547,10 +523,9 @@ export class SearchPage extends React.Component {
             <Route exact path="/api" render={() => <div>Beta</div>} />
             <Route
               exact
-              path="/concepts/:lang?"
+              path="/concepts"
               render={props => (
                 <ResultsConcepts
-                  selectedLanguageCode={this.props.selectedLanguageCode}
                   termItems={termItems}
                   onClearSearch={this.handleClearSearch}
                   onPageChange={this.handlePageChange}
@@ -574,11 +549,3 @@ export class SearchPage extends React.Component {
     );
   }
 }
-
-SearchPage.defaultProps = {
-  selectedLanguageCode: null
-};
-
-SearchPage.propTypes = {
-  selectedLanguageCode: PropTypes.string
-};

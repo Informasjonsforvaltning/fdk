@@ -18,7 +18,7 @@ exports[`should render DatasetDistribution correctly 1`] = `
     <h5
       className="fdk-margin-top-double"
     >
-      TilgangsURL
+      AccessURL
     </h5>
     <p
       className="fdk-ingress"
@@ -61,7 +61,7 @@ exports[`should render DatasetDistribution correctly 1`] = `
     <h5
       className="fdk-margin-top-double"
     >
-      Forutsetning for bruk av datasettet
+      License
     </h5>
     <p
       className="fdk-ingress"
@@ -80,7 +80,7 @@ exports[`should render DatasetDistribution correctly 1`] = `
     <h5
       className="fdk-margin-top-double"
     >
-      Innholdsstandard
+      Conforms to
     </h5>
     <p
       className="fdk-ingress"
@@ -100,7 +100,7 @@ exports[`should render DatasetDistribution correctly 1`] = `
     <h5
       className="fdk-margin-top-double"
     >
-      Mer informasjon om denne distribusjonen
+      More information about this distribution
     </h5>
     <p
       className="fdk-ingress"
@@ -139,7 +139,7 @@ exports[`should render DatasetDistribution correctly 2`] = `
     <h5
       className="fdk-space-above"
     >
-      Tilgjengelige format
+      Format
     </h5>
     <DistributionFormat
       code=""
@@ -158,7 +158,7 @@ exports[`should render DatasetDistribution correctly 2`] = `
     <h5
       className="fdk-margin-top-double"
     >
-      Forutsetning for bruk av datasettet
+      License
     </h5>
     <p
       className="fdk-ingress"
@@ -177,7 +177,7 @@ exports[`should render DatasetDistribution correctly 2`] = `
     <h5
       className="fdk-margin-top-double"
     >
-      Innholdsstandard
+      Conforms to
     </h5>
     <p
       className="fdk-ingress"
@@ -197,7 +197,7 @@ exports[`should render DatasetDistribution correctly 2`] = `
     <h5
       className="fdk-margin-top-double"
     >
-      Mer informasjon om denne distribusjonen
+      More information about this distribution
     </h5>
     <p
       className="fdk-ingress"

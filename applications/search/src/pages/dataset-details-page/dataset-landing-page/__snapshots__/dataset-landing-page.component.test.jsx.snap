@@ -31,9 +31,9 @@ exports[`should render DatasetLandingPage correctly 1`] = `
               href="landingpage"
               rel="noopener noreferrer"
               target="_blank"
-              title="Bakgrunnsinformasjon om datasettet"
+              title="Background"
             >
-              Bakgrunnsinformasjon om datasettet
+              Background
               <i
                 className="fa fa-external-link fdk-fa-right"
               />

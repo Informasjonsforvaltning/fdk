@@ -18,7 +18,7 @@ exports[`should render DatasetDescription correctly 1`] = `
     className="fdk-margin-bottom"
   >
     <span>
-      Eies av
+      Owned by
        
       <strong
         className="fdk-strong-virksomhet"
@@ -41,15 +41,15 @@ exports[`should render DatasetDescription correctly 1`] = `
   </div>
   <ShowMore
     contentHtml={null}
-    label="Beskrivelse"
-    showLessButtonText="Vis mindre"
-    showMoreButtonText="Vis hele beskrivelsen"
+    label="Description"
+    showLessButtonText="Show less"
+    showMoreButtonText="Show the full description"
   />
   <ShowMore
     contentHtml="Datasettes formål er nullam quis rius eget urna mollis ornare vel eu leo. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Cras mattis consectetur purus sit amet fermentum. Vestibulum id ligula porta felis euismod semper."
-    label="Formål"
-    showLessButtonText="Vis mindre"
-    showMoreButtonText="Vis hele formålet"
+    label="Objective"
+    showLessButtonText="Show less"
+    showMoreButtonText="Show the full objective"
   />
 </header>
 `;
@@ -72,7 +72,7 @@ exports[`should render DatasetDescription correctly 2`] = `
     className="fdk-margin-bottom"
   >
     <span>
-      Eies av
+      Owned by
        
       <strong
         className="fdk-strong-virksomhet"
@@ -95,15 +95,15 @@ exports[`should render DatasetDescription correctly 2`] = `
   </div>
   <ShowMore
     contentHtml={null}
-    label="Beskrivelse"
-    showLessButtonText="Vis mindre"
-    showMoreButtonText="Vis hele beskrivelsen"
+    label="Description"
+    showLessButtonText="Show less"
+    showMoreButtonText="Show the full description"
   />
   <ShowMore
     contentHtml="Datasettes formål er nullam quis rius eget urna mollis ornare vel eu leo. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Cras mattis consectetur purus sit amet fermentum. Vestibulum id ligula porta felis euismod semper."
-    label="Formål"
-    showLessButtonText="Vis mindre"
-    showMoreButtonText="Vis hele formålet"
+    label="Objective"
+    showLessButtonText="Show less"
+    showMoreButtonText="Show the full objective"
   />
 </header>
 `;

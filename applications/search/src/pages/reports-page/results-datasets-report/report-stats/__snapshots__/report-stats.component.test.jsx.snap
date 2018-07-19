@@ -9,7 +9,7 @@ exports[`should render ReportStats correctly 1`] = `
       className="fdk-container-stats"
     >
       <h2>
-        Viser tall for 
+        Showing numbers for 
         <strong>
           test entity
         </strong>
@@ -33,7 +33,7 @@ exports[`should render ReportStats correctly 1`] = `
         </strong>
       </h1>
       <h1>
-        datasett totalt
+        datasets in total
       </h1>
     </div>
   </div>
@@ -44,7 +44,7 @@ exports[`should render ReportStats correctly 1`] = `
       className="fdk-container-stats fdk-container-stats-accesslevel-title"
     >
       <h2>
-        Tilgangsnivå
+        Accesslevel
       </h2>
       <div
         className="row"
@@ -52,7 +52,7 @@ exports[`should render ReportStats correctly 1`] = `
         <Link
           className="col-md-3 fdk-container-stats-accesslevel fdk-container-stats-vr fdk-padding-no"
           replace={false}
-          title="Datasett som er offentlig"
+          title="Datasets that are public"
           to="/?accessrights=PUBLIC"
         >
           <p>
@@ -64,13 +64,13 @@ exports[`should render ReportStats correctly 1`] = `
             </strong>
           </p>
           <p>
-            Datasett som er offentlig
+            Datasets that are public
           </p>
         </Link>
         <Link
           className="col-md-3 fdk-container-stats-accesslevel fdk-container-stats-vr fdk-padding-no"
           replace={false}
-          title="Datasett med begrenset offentlighet"
+          title="Datasets with restricted access"
           to="/?accessrights=RESTRICTED"
         >
           <p>
@@ -83,7 +83,7 @@ exports[`should render ReportStats correctly 1`] = `
             </strong>
           </p>
           <p>
-            Datasett med begrenset offentlighet
+            Datasets with restricted access
           </p>
         </Link>
         <Link
@@ -100,7 +100,7 @@ exports[`should render ReportStats correctly 1`] = `
             </strong>
           </p>
           <p>
-            Datasett som er unntatt offentlighet
+            Datasets that are not public
           </p>
         </Link>
         <Link
@@ -117,7 +117,7 @@ exports[`should render ReportStats correctly 1`] = `
             </strong>
           </p>
           <p>
-            Datasett med ukjent tilgangsnivå
+            Datasets with unknown accesslevel
           </p>
         </Link>
       </div>
@@ -130,7 +130,7 @@ exports[`should render ReportStats correctly 1`] = `
       className="fdk-container-stats fdk-container-stats-concepts-title"
     >
       <h2>
-        Åpne data
+        Open data
       </h2>
       <div
         className="fdk-container-stats-concepts"
@@ -159,7 +159,7 @@ exports[`should render ReportStats correctly 1`] = `
         className="fdk-container-stats fdk-container-stats-changes"
       >
         <h2>
-          Endring siste 7 dager
+          Changes last 7 days
         </h2>
         <div
           className="row"
@@ -170,7 +170,7 @@ exports[`should render ReportStats correctly 1`] = `
                 <Link
                   className="fdk-plain-label"
                   replace={false}
-                  title="Nye datasett"
+                  title="New datasets"
                   to="/?firstHarvested=7"
                 >
                   547
@@ -178,7 +178,7 @@ exports[`should render ReportStats correctly 1`] = `
               </strong>
             </p>
             <p>
-              Nye datasett
+              New datasets
             </p>
           </div>
         </div>
@@ -191,7 +191,7 @@ exports[`should render ReportStats correctly 1`] = `
         className="fdk-container-stats fdk-container-stats-changes"
       >
         <h2>
-          Endring siste 30 dager
+          Changes last 30 days
         </h2>
         <div
           className="row"
@@ -209,7 +209,7 @@ exports[`should render ReportStats correctly 1`] = `
               </strong>
             </p>
             <p>
-              Nye datasett
+              New datasets
             </p>
           </div>
         </div>
@@ -222,7 +222,7 @@ exports[`should render ReportStats correctly 1`] = `
         className="fdk-container-stats fdk-container-stats-changes"
       >
         <h2>
-          Endring siste 365 dager
+          Changes last 365 days
         </h2>
         <div
           className="row"
@@ -233,7 +233,7 @@ exports[`should render ReportStats correctly 1`] = `
                 <Link
                   className="fdk-plain-label"
                   replace={false}
-                  title="Nye datasett"
+                  title="New datasets"
                   to="/?firstHarvested=365"
                 >
                   547
@@ -241,7 +241,7 @@ exports[`should render ReportStats correctly 1`] = `
               </strong>
             </p>
             <p>
-              Nye datasett
+              New datasets
             </p>
           </div>
         </div>
@@ -255,7 +255,7 @@ exports[`should render ReportStats correctly 1`] = `
       className="fdk-container-stats fdk-container-stats-concepts-title"
     >
       <h2>
-        Bruk av begrep
+        Use of concepts
       </h2>
       <div
         className="row fdk-container-stats-concepts"
@@ -269,7 +269,7 @@ exports[`should render ReportStats correctly 1`] = `
             </strong>
           </p>
           <p>
-            Datasett som benytter begrep
+            Datasets that use concepts
           </p>
         </div>
         <div
@@ -281,7 +281,7 @@ exports[`should render ReportStats correctly 1`] = `
             </strong>
           </p>
           <p>
-            Datasett som ikke benytter begrep
+            Datasets without concepts
           </p>
         </div>
       </div>
@@ -294,7 +294,7 @@ exports[`should render ReportStats correctly 1`] = `
       className="fdk-container-stats fdk-container-stats-concepts-title"
     >
       <h2>
-        Distribusjoner
+        Distributions
       </h2>
       <div
         className="row fdk-container-stats-concepts"
@@ -308,7 +308,7 @@ exports[`should render ReportStats correctly 1`] = `
             </strong>
           </p>
           <p>
-            Offentlige datasett med distribusjoner
+            Public datasets with distributions
           </p>
         </div>
         <div
@@ -320,7 +320,7 @@ exports[`should render ReportStats correctly 1`] = `
             </strong>
           </p>
           <p>
-            Offentlige datasett uten distribusjoner
+            Public datasets without distributions
           </p>
         </div>
       </div>

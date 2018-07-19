@@ -1,11 +1,12 @@
-import qs from 'qs';
+import localization from './localization';
 
-/**
- * Add a URL parameter (or modify if already exists)
- * @param {textObj}   object  with translated texts
- * * @param {selectedLanguage}   preferred translate
- */
-export function getTranslateText(textObj, selectedLanguage) {
+export function getTranslateText(textObj, language) {
+  const selectedLanguage = language || localization.getLanguage();
+
+  if (textObj === null || typeof textObj !== 'object') {
+    return null;
+  }
+
   return (
     textObj[selectedLanguage] ||
     textObj.nb ||
@@ -14,16 +15,4 @@ export function getTranslateText(textObj, selectedLanguage) {
     textObj.en ||
     null
   );
-}
-
-/**
- * Returns language code from url parameter "lang", if exists.
- * @returns {null}
- */
-export function getLanguageFromUrl() {
-  const queryObj = qs.parse(window.location.search.substr(1));
-  if (queryObj && queryObj.lang) {
-    return queryObj.lang;
-  }
-  return null;
 }

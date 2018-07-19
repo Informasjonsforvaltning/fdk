@@ -2,8 +2,6 @@
 
 exports[`should render ReportsPage correctly 1`] = `
 <div>
-  <ResultsDatasetsReport
-    selectedLanguageCode={null}
-  />
+  <ResultsDatasetsReport />
 </div>
 `;
