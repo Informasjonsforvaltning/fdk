@@ -30,15 +30,12 @@ exports[`should render DatasetInfo correctly 1`] = `
             <t
               ago={false}
               calendar={false}
-              decimal={false}
               element="time"
-              filter={[Function]}
               format="DD.MM.YYYY"
               fromNow={false}
               interval={60000}
               onChange={[Function]}
               toNow={false}
-              unit={null}
               unix={false}
               utc={false}
             >
@@ -281,15 +278,12 @@ exports[`should render DatasetInfo correctly 2`] = `
             <t
               ago={false}
               calendar={false}
-              decimal={false}
               element="time"
-              filter={[Function]}
               format="DD.MM.YYYY"
               fromNow={false}
               interval={60000}
               onChange={[Function]}
               toNow={false}
-              unit={null}
               unix={false}
               utc={false}
             >
@@ -464,15 +458,12 @@ exports[`should render DatasetInfo correctly 2`] = `
               <t
                 ago={false}
                 calendar={false}
-                decimal={false}
                 element="time"
-                filter={[Function]}
                 format="DD.MM.YYYY"
                 fromNow={false}
                 interval={60000}
                 onChange={[Function]}
                 toNow={false}
-                unit={null}
                 unix={false}
                 utc={false}
               >
@@ -492,15 +483,12 @@ exports[`should render DatasetInfo correctly 2`] = `
               <t
                 ago={false}
                 calendar={false}
-                decimal={false}
                 element="time"
-                filter={[Function]}
                 format="DD.MM.YYYY"
                 fromNow={false}
                 interval={60000}
                 onChange={[Function]}
                 toNow={false}
-                unit={null}
                 unix={false}
                 utc={false}
               >

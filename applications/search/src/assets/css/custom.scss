@@ -7,6 +7,10 @@
   right: 0;
 }
 
+.fdk-dropdown-menu button{
+  font-size:1.5rem
+}
+
 /* TODO move to designsystemet*/
 
 
@@ -38,13 +42,12 @@
 .nav a {
   text-decoration: none;
   color: $color1;
-  font-size
   &:focus, &:active, &:hover {
     color: $color1 !important;
   }
 }
 
-.btn-group .fdk-button-language {
+.fdk-button-language {
   background-color: transparent !important;
   border-color: transparent;
   text-shadow: none;
@@ -53,6 +56,7 @@
   text-decoration: none;
   margin-right: .5em;
   color: $color1 !important;
+  font-size: 1.6rem;
   &:focus, &:active, &:hover {
     color: $color1 !important;
     background-color: transparent !important;
