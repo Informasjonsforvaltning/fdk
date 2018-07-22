@@ -45,7 +45,7 @@ exports[`should render ResultsConcepts correctly with minimum of props 1`] = `
         id="concepts"
       />
       <div
-        className="col-xs-12 col-md-8 col-md-offset-4 text-center"
+        className="col-xs-12 col-md-8 offset-md-4 text-center"
       >
         <span
           aria-hidden="false"
@@ -596,7 +596,7 @@ exports[`should render ResultsConcepts correctly with props 1`] = `
         />
       </div>
       <div
-        className="col-xs-12 col-md-8 col-md-offset-4 text-center"
+        className="col-xs-12 col-md-8 offset-md-4 text-center"
       >
         <span
           aria-hidden="false"

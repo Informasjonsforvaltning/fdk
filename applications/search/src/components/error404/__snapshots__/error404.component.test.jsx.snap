@@ -5,7 +5,7 @@ exports[`should render Error404 correctly 1`] = `
   className="container error-container"
 >
   <div
-    className="error mt-6 text-center"
+    className="error pt-5 text-center"
   >
     <h1>
       404

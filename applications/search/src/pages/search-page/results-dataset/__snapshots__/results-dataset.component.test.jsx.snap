@@ -23,10 +23,10 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
         </button>
       </div>
       <div
-        className="col-xs-6 col-md-4 col-md-offset-4"
+        className="col-xs-6 col-md-4 offset-md-4"
       >
         <div
-          className="pull-right"
+          className="float-right"
         >
           <Select
             activeSort={null}
@@ -510,7 +510,7 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
         />
       </div>
       <div
-        className="col-xs-12 col-md-8 col-md-offset-4 text-center"
+        className="col-xs-12 col-md-8 offset-md-4 text-center"
       >
         <span
           aria-hidden="false"
@@ -569,10 +569,10 @@ exports[`should render ResultsDataset correctly with minimum of props 1`] = `
         </button>
       </div>
       <div
-        className="col-xs-6 col-md-4 col-md-offset-4"
+        className="col-xs-6 col-md-4 offset-md-4"
       >
         <div
-          className="pull-right"
+          className="float-right"
         >
           <Select
             activeSort={null}
@@ -624,7 +624,7 @@ exports[`should render ResultsDataset correctly with minimum of props 1`] = `
         id="datasets"
       />
       <div
-        className="col-xs-12 col-md-8 col-md-offset-4 text-center"
+        className="col-xs-12 col-md-8 offset-md-4 text-center"
       >
         <span
           aria-hidden="false"
@@ -683,10 +683,10 @@ exports[`should render ResultsDataset correctly with props 1`] = `
         </button>
       </div>
       <div
-        className="col-xs-6 col-md-4 col-md-offset-4"
+        className="col-xs-6 col-md-4 offset-md-4"
       >
         <div
-          className="pull-right"
+          className="float-right"
         >
           <Select
             activeSort={null}
@@ -738,7 +738,7 @@ exports[`should render ResultsDataset correctly with props 1`] = `
         id="datasets"
       />
       <div
-        className="col-xs-12 col-md-8 col-md-offset-4 text-center"
+        className="col-xs-12 col-md-8 offset-md-4 text-center"
       >
         <span
           aria-hidden="false"

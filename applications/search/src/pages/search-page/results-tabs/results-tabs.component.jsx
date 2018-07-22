@@ -14,7 +14,7 @@ export const ResultsTabs = props => {
   search = addOrReplaceParamWithoutURL(search, 'from', '');
   return (
     <div className="row">
-      <div className="col-sm-12 col-md-8 col-md-offset-4">
+      <div className="col-12 col-lg-8 offset-lg-4">
         <ul className="search-results-tabs">
           <li className={location.pathname === '/' ? 'li-active' : ''}>
             <Link

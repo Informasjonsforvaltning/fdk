@@ -84,7 +84,7 @@ export function AppNavBar(props) {
                   </Link>
                 </li>
                 <MenuItem
-                  className="visible-xs visible-sm"
+                  className="d-md-none"
                   key="1"
                   eventKey="nb"
                   onSelect={props.onChangeLanguage}
@@ -92,7 +92,7 @@ export function AppNavBar(props) {
                   {localization.lang['norwegian-nb']}
                 </MenuItem>
                 <MenuItem
-                  className="visible-xs visible-sm"
+                  className="d-md-none"
                   key="2"
                   eventKey="nn"
                   onSelect={props.onChangeLanguage}
@@ -100,7 +100,7 @@ export function AppNavBar(props) {
                   {localization.lang['norwegian-nn']}
                 </MenuItem>
                 <MenuItem
-                  className="visible-xs visible-sm"
+                  className="d-md-none"
                   key="3"
                   eventKey="en"
                   onSelect={props.onChangeLanguage}

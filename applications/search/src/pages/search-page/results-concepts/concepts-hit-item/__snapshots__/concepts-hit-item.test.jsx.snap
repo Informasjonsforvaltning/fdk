@@ -17,7 +17,7 @@ exports[`should render ConceptsHitItem correctly 1`] = `
     className="fdk-container-search-hit "
   >
     <button
-      className="fdk-button fdk-button-default pull-right mt-3 visible-md visible-lg"
+      className="fdk-button fdk-button-default float-right mt-3 visible-md visible-lg"
       onClick={[Function]}
       type="button"
     >
@@ -267,7 +267,7 @@ exports[`should render ConceptsHitItem correctly with no alt label, no source an
     className="fdk-container-search-hit "
   >
     <button
-      className="fdk-button fdk-button-default pull-right mt-3 visible-md visible-lg"
+      className="fdk-button fdk-button-default float-right mt-3 visible-md visible-lg"
       onClick={[Function]}
       type="button"
     >

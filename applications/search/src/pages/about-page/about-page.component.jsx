@@ -13,7 +13,7 @@ export const AboutPage = () => {
     <div className="container">
       <DocumentMeta {...meta} />
       <div className="row">
-        <div className="col-md-8 col-md-offset-2">
+        <div className="col-lg-8 offset-lg-2">
           <h1 className="fdk-margin-bottom">{localization.about.title}</h1>
           <div className="fdk-margin-bottom">
             <p className="fdk-ingress">{localization.about.titleSub}</p>

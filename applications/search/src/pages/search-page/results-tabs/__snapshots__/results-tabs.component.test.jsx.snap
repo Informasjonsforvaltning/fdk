@@ -5,7 +5,7 @@ exports[`should render ResultsTabs with "Concepts" active correctly 1`] = `
   className="row"
 >
   <div
-    className="col-sm-12 col-md-8 col-md-offset-4"
+    className="col-sm-12 col-md-8 offset-md-4"
   >
     <ul
       className="search-results-tabs"
@@ -84,7 +84,7 @@ exports[`should render ResultsTabs with "Dataset" active correctly 1`] = `
   className="row"
 >
   <div
-    className="col-sm-12 col-md-8 col-md-offset-4"
+    className="col-sm-12 col-md-8 offset-md-4"
   >
     <ul
       className="search-results-tabs"

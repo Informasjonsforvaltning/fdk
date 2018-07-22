@@ -71,7 +71,7 @@ export class DatasetsReportPage extends React.Component {
     return (
       <section className="container">
         <div className="row">
-          <div className="col-sm-4">
+          <div className="col-md-4">
             <button
               className="fdk-button fdk-button-default-no-hover"
               onClick={this.clearSearch}
@@ -89,7 +89,7 @@ export class DatasetsReportPage extends React.Component {
               value={selectedPublisher}
             />
           </div>
-          <div className="col-sm-8">
+          <div className="col-md-8">
             <ReportStats
               aggregateDataset={this.state.aggregateDataset}
               entityName={

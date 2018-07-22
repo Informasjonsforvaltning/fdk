@@ -12,13 +12,13 @@ exports[`should render BegrepCollapse correctly 1`] = `
     tabIndex={0}
   >
     <strong
-      className="pull-left"
+      className="float-left"
     >
       enhet
       : 
     </strong>
     <i
-      className="fa fa-chevron-down fdk-fa-right pull-right"
+      className="fa fa-chevron-down fdk-fa-right float-right"
     />
     <div>
       alt som er registrert med et organisasjonsnummer 
@@ -52,7 +52,7 @@ exports[`should render BegrepCollapse correctly with no props 1`] = `
     tabIndex={0}
   >
     <strong
-      className="pull-left"
+      className="float-left"
     >
       : 
     </strong>

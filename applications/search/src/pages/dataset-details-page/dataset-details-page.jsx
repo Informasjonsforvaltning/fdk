@@ -223,7 +223,7 @@ export class DatasetDetailsPage extends React.Component {
       return (
         <div className="container">
           <div className="row">
-            <div className="col-md-8 col-md-offset-2" id="content" role="main">
+            <div className="col-lg-8 offset-lg-2" id="content" role="main">
               <article>
                 {this._renderDatasetDescription()}
                 {this._renderKeyInfo()}
