@@ -1,13 +1,20 @@
 #!/usr/bin/env bash
 
-BUILD_APPS[0]="fuseki harvester harvester-api nginx-search nginx-registration reference-data registration-api registration-auth registration-validator search-api"
-BUILD_CMD[0]="mvn install -Dmaven.javadoc.skip=true -B"
+i=0
+BUILD_APPS[$i]="search"
+BUILD_CMD[$i]="( cd applications/search && ./travisBuild.sh )"
 
-BUILD_APPS[1]="search"
-BUILD_CMD[1]="( cd applications/search && ./travisBuild.sh )"
+i=$((i+1))
+BUILD_APPS[$i]="registration-react"
+BUILD_CMD[$i]="( cd applications/registration-react && ./travisBuild.sh )"
 
-BUILD_APPS[2]="registration-react"
-BUILD_CMD[2]="( cd applications/registration-react && ./travisBuild.sh )"
+maven_apps="fuseki harvester harvester-api nginx-search nginx-registration reference-data registration-api registration-auth registration-validator search-api"
+
+for maven_app in $maven_apps; do
+    i=$((i+1))
+    BUILD_APPS[$i]=$maven_app
+    BUILD_CMD[$i]="mvn clean install -T 2C -pl applications/$maven_app -am"
+done
 
 export BUILD_APPS
 export BUILD_CMD
