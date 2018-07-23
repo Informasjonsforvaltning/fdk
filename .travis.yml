@@ -27,11 +27,13 @@ branches:
 jobs:
   include:
     - stage: Build # First build the project to look for syntax/build problems
+      if: type = pull_request
       script: travis_wait mvn install -DskipTests -Dmaven.javadoc.skip=true
       env:
         - comment=First build the project to look for syntax/build problems
 
     - stage: Tests # Run regular unit tests
+      if: type = pull_request
       script: mvn install -DskipTests -DskipDockerBuild -Dmaven.javadoc.skip=true -Dmaven.exec.skip=true -B > /dev/null && mvn test -B
       after_success:
         - mvn org.eluder.coveralls:coveralls-maven-plugin:report
@@ -39,12 +41,14 @@ jobs:
         - comment=Run regular unit tests
 
     - stage: Tests # Run regular React unit tests
+      if: type = pull_request
       script: cd applications/search && npm install && npm test
       after_success: npm run coverage
       env:
         - comment=Run regular React unit tests + generate test coverage report
 
     - stage: Tests # Run regular React unit tests Registration
+      if: type = pull_request
       script: cd applications/registration-react && npm install && npm test
       after_success: npm run coverage
       env:
