@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
+source ./buildGroupsEnv.sh
 
 applications=$INTEGRATION_APPS
 toEnvironment=ut1
@@ -13,9 +14,12 @@ integrationtag=$(./citools/getIntegrationTag.sh)
 echo "Pulling integration images for all applications with tag $integrationtag"
 ./citools/pullApplicationsByTag.sh "$INTEGRATION_APPS" $integrationtag;
 
-echo "Logging in to dockerhub as ${dockerUsername}";
-docker login --username ${dockerUsername} --password ${dockerPassword}
-echo "Logged in to dockerhub"
+if [ "$dockerUsername" ]
+then
+    echo "Logging in to dockerhub as ${dockerUsername}";
+    docker login --username ${dockerUsername} --password ${dockerPassword}
+    echo "Logged in to dockerhub"
+fi
 
 echo "Tag and push all application images as latest"
 ./citools/retagApplications.sh "$INTEGRATION_APPS" $integrationtag latest push

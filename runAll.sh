@@ -4,9 +4,9 @@ set -e
 . ./buildGroupsEnv.sh
 
 # We will build what is needed and download images that are missing
-./buildOrPullApplicationGroup.sh "$BUILD1_APPS" "$BUILD1_CMD"
-./buildOrPullApplicationGroup.sh "$BUILD2_APPS" "$BUILD2_CMD"
-./buildOrPullApplicationGroup.sh "$BUILD3_APPS" "$BUILD3_CMD"
+for i in "${!BUILD_APPS[@]}"; do
+    ./buildOrPullApplicationGroup.sh "${BUILD_APPS[$i]}" "${BUILD_CMD[$i]}"
+done
 
 docker-compose down --remove-orphans
 

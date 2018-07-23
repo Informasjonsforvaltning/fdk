@@ -28,12 +28,7 @@ jobs:
   include:
     - stage: Build
       if: type = pull_request
-      script:
-        - . ./buildGroupsEnv.sh
-        - docker login --username ${dockerUsername} --password ${dockerPassword}
-        - ./buildAndPushApplicationGroup.sh "$BUILD1_APPS" "$BUILD1_CMD"
-        - ./buildAndPushApplicationGroup.sh "$BUILD2_APPS" "$BUILD2_CMD"
-        - ./buildAndPushApplicationGroup.sh "$BUILD3_APPS" "$BUILD3_CMD"
+      script: ./travisBuild.sh
       env:
         - comment=Build all applications
 
