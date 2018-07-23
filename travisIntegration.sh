@@ -2,7 +2,6 @@
 set -e
 
 SECONDS=0 # start timer
-
 source ./buildGroupsEnv.sh
 
 integrationtag=$(./citools/getIntegrationTag.sh)
@@ -23,18 +22,18 @@ fi
 echo "SECONDS"
 echo $SECONDS
 
-echo "Getting build tags for all build groups"
-BUILD1_buildtag=$(./citools/getBuildTag.sh "$BUILD1_APPS")
-BUILD2_buildtag=$(./citools/getBuildTag.sh "$BUILD2_APPS")
-BUILD3_buildtag=$(./citools/getBuildTag.sh "$BUILD3_APPS")
+echo "Get build tags for all build groups"
+for i in "${!BUILD_APPS[@]}"; do
+    buildtag[$i]=$(./citools/getBuildTag.sh "${BUILD_APPS[$i]}")
+done
 
 echo "SECONDS"
 echo $SECONDS
 
 echo "Pull images of all build groups - exit with error when any build image is missing"
-./citools/pullApplicationsByTag.sh "$BUILD1_APPS" $BUILD1_buildtag
-./citools/pullApplicationsByTag.sh "$BUILD2_APPS" $BUILD2_buildtag
-./citools/pullApplicationsByTag.sh "$BUILD3_APPS" $BUILD3_buildtag
+for i in "${!BUILD_APPS[@]}"; do
+    ./citools/pullApplicationsByTag.sh "${BUILD_APPS[$i]}" ${buildtag[$i]}
+done
 
 echo "SECONDS"
 echo $SECONDS
@@ -48,9 +47,9 @@ fi
 
 echo "Integration tests passed, tag images with $integrationtag"
 
-./citools/retagApplications.sh "$BUILD1_APPS" $BUILD1_buildtag $integrationtag push
-./citools/retagApplications.sh "$BUILD2_APPS" $BUILD2_buildtag $integrationtag push
-./citools/retagApplications.sh "$BUILD3_APPS" $BUILD3_buildtag $integrationtag push
+for i in "${!BUILD_APPS[@]}"; do
+    ./citools/retagApplications.sh "${BUILD_APPS[$i]}" ${buildtag[$i]} $integrationtag push
+done
 
 echo "SECONDS"
 echo $SECONDS
