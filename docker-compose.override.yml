@@ -147,26 +147,6 @@ services:
     environment:
      - JAVA_OPTS=-Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
 
-
-#  logstash:
-#    image: "dcatno/logstash:${TAG}"
-#    entrypoint: /opt/logstash/bin/logstash -f /etc/logstash/conf.d/logstash.conf
-#    volumes:
-#      - ./logs:/usr/local/tomcat/logs:rw
-#    depends_on:
-#      - elasticsearch
-
-  kibana:
-    ports:
-      - "5601:5601"
-    environment:
-      - ELASTICSEARCH_URL=http://elasticsearch:9200
-    #volumes:
-    #      - ./data/kibana/config/:/opt/kibana/config/
-    depends_on:
-      - elasticsearch
-
-
   e2e:
     build: ./applications/e2e
     volumes:

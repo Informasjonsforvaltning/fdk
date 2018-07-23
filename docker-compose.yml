@@ -71,18 +71,3 @@ services:
 
   registration-validator:
     image: dcatno/registration-validator:latest
-
-
-# logstash:
-#   image: dcatno/logstash:latest
-#   entrypoint: /opt/logstash/bin/logstash -f /etc/logstash/conf.d/logstash.conf
-#    volumes:
-#      - ./logs:/usr/local/tomcat/logs:rw
-#    depends_on:
-#      - elasticsearch
-
-  kibana:
-    image: kibana:4.6
-    depends_on:
-      - elasticsearch
-

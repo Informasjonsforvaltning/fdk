@@ -14,8 +14,6 @@
 
     <modules>
         <module>fuseki</module>
-        <module>kibana</module>
-        <module>logstash</module>
 
         <module>reference-data</module>
 
