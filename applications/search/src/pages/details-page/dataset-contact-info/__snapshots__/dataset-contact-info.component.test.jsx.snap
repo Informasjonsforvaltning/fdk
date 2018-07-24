@@ -69,7 +69,6 @@ exports[`should render DatasetContactInfo correctly 1`] = `
         >
           <a
             href="mailto:digitalisering@kartverket.no"
-            id="dataset-contact-email"
             rel="noopener noreferrer"
             target="_blank"
             title="digitalisering@kartverket.no"

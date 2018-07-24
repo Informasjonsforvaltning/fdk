@@ -32,7 +32,6 @@ const renderThemes = source => {
       return (
         <span
           key={`dataset-description-inScheme-${index}`}
-          id={`dataset-description-inScheme-${index}`}
           className="fdk-label"
         >
           <span className="uu-invisible" aria-hidden="false">

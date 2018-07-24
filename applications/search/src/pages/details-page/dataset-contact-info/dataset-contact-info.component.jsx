@@ -72,7 +72,6 @@ export const DatasetContactInfo = props => {
               <h5>{localization.dataset.contactPoint.email}</h5>
               <p className="fdk-ingress fdk-margin-bottom-no">
                 <a
-                  id="dataset-contact-email"
                   title={email}
                   href={`mailto:${email}`}
                   target="_blank"
