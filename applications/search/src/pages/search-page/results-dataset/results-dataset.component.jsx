@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ReactPaginate from 'react-paginate';
-import { Modal, Button } from 'react-bootstrap';
+import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import cx from 'classnames';
 
 import localization from '../../../lib/localization';
@@ -27,11 +27,9 @@ export class ResultsDataset extends React.Component {
       publishers
     } = this.props;
     return (
-      <Modal show={showFilterModal} onHide={closeFilterModal}>
-        <Modal.Header closeButton>
-          <Modal.Title>Filter</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
+      <Modal isOpen={showFilterModal} toggle={closeFilterModal}>
+        <ModalHeader toggle={closeFilterModal}>Filter</ModalHeader>
+        <ModalBody>
           <div className="search-filters">
             <FilterBox
               htmlKey={1}
@@ -70,15 +68,15 @@ export class ResultsDataset extends React.Component {
               activeFilter={searchQuery.provenance}
             />
           </div>
-        </Modal.Body>
-        <Modal.Footer>
+        </ModalBody>
+        <ModalFooter>
           <Button
             className="fdk-button-default fdk-button"
             onClick={closeFilterModal}
           >
             Close
           </Button>
-        </Modal.Footer>
+        </ModalFooter>
       </Modal>
     );
   }
