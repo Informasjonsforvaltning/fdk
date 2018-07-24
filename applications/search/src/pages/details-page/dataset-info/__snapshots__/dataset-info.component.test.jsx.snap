@@ -1,9 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`should render DatasetInfo correctly 1`] = `
-<section
-  id="dataset-info"
->
+<section>
   <div
     className="row fdk-row"
   >
@@ -28,7 +26,6 @@ exports[`should render DatasetInfo correctly 1`] = `
           </h5>
           <p
             className="fdk-ingress fdk-margin-bottom-no text-nowrap"
-            id="dataset-info-issued"
           >
             <t
               ago={false}
@@ -69,7 +66,6 @@ exports[`should render DatasetInfo correctly 1`] = `
           </h5>
           <p
             className="fdk-ingress fdk-margin-bottom-no"
-            id="dataset-info-accrualPeriodicity"
           >
             Å
             rlig
@@ -98,7 +94,6 @@ exports[`should render DatasetInfo correctly 1`] = `
           </h5>
           <p
             className="fdk-ingress fdk-margin-bottom-no"
-            id="dataset-info-provenance"
           >
             Vedtak
           </p>
@@ -126,7 +121,6 @@ exports[`should render DatasetInfo correctly 1`] = `
           </h5>
           <p
             className="fdk-ingress fdk-margin-bottom-no"
-            id="dataset-info-currentnessAnnotation"
           >
             Denne teksten sier noe om aktualiteten. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras mattis consectetur purus sit amet fermentum. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
           </p>
@@ -154,7 +148,6 @@ exports[`should render DatasetInfo correctly 1`] = `
           </h5>
           <p
             className="fdk-ingress fdk-margin-bottom-no"
-            id="dataset-info-spatial"
           >
             <span
               className="fdk-ingress fdk-margin-bottom-no"
@@ -200,14 +193,12 @@ exports[`should render DatasetInfo correctly 1`] = `
       </div>
       <div
         className="fdk-detail-text"
-        id="dataset-info-language"
       >
         <h5>
           Språk
         </h5>
         <p
           className="fdk-ingress fdk-margin-bottom-no"
-          id="dataset-info-language-0"
           key="dataset-info-language-0"
         >
           Norsk
@@ -258,9 +249,7 @@ exports[`should render DatasetInfo correctly 1`] = `
 `;
 
 exports[`should render DatasetInfo correctly 2`] = `
-<section
-  id="dataset-info"
->
+<section>
   <div
     className="row fdk-row"
   >
@@ -285,7 +274,6 @@ exports[`should render DatasetInfo correctly 2`] = `
           </h5>
           <p
             className="fdk-ingress fdk-margin-bottom-no text-nowrap"
-            id="dataset-info-issued"
           >
             <t
               ago={false}
@@ -326,7 +314,6 @@ exports[`should render DatasetInfo correctly 2`] = `
           </h5>
           <p
             className="fdk-ingress fdk-margin-bottom-no"
-            id="dataset-info-accrualPeriodicity"
           >
             Å
             rlig
@@ -355,7 +342,6 @@ exports[`should render DatasetInfo correctly 2`] = `
           </h5>
           <p
             className="fdk-ingress fdk-margin-bottom-no"
-            id="dataset-info-provenance"
           >
             Vedtak
           </p>
@@ -383,7 +369,6 @@ exports[`should render DatasetInfo correctly 2`] = `
           </h5>
           <p
             className="fdk-ingress fdk-margin-bottom-no"
-            id="dataset-info-currentnessAnnotation"
           >
             Denne teksten sier noe om aktualiteten. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras mattis consectetur purus sit amet fermentum. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
           </p>
@@ -411,7 +396,6 @@ exports[`should render DatasetInfo correctly 2`] = `
           </h5>
           <p
             className="fdk-ingress fdk-margin-bottom-no"
-            id="dataset-info-spatial"
           >
             <span
               className="fdk-ingress fdk-margin-bottom-no"
@@ -457,11 +441,9 @@ exports[`should render DatasetInfo correctly 2`] = `
       </div>
       <div
         className="fdk-detail-text"
-        id="dataset-info-temporal"
       >
         <div
           className="clearfix mb-1-em"
-          id="dataset-info-temporal-0"
           key="dataset-info-temporal-0"
         >
           <div
@@ -529,7 +511,6 @@ exports[`should render DatasetInfo correctly 2`] = `
       </div>
       <div
         className="fdk-detail-text"
-        id="dataset-info-language"
       >
         <h5>
           Språk
@@ -580,9 +561,7 @@ exports[`should render DatasetInfo correctly 2`] = `
 `;
 
 exports[`should render DatasetInfo correctly with no props 1`] = `
-<section
-  id="dataset-info"
->
+<section>
   <div
     className="row fdk-row"
   />

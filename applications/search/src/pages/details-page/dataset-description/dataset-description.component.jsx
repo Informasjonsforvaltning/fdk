@@ -28,10 +28,7 @@ export class DatasetDescription extends React.Component {
       return (
         <span>
           {ownedBy}&nbsp;
-          <strong
-            id="dataset-descritption-publisher-text"
-            className="fdk-strong-virksomhet"
-          >
+          <strong className="fdk-strong-virksomhet">
             {publisher
               ? publisher.name.charAt(0) +
                 publisher.name.substring(1).toLowerCase()
@@ -84,7 +81,6 @@ export class DatasetDescription extends React.Component {
       themeNodes = themes.map(singleTheme => (
         <div
           key={`dataset-description-theme-${singleTheme.code}`}
-          id={`dataset-description-theme-${singleTheme.code}`}
           className="fdk-label fdk-label-on-grey mr-2 mb-2"
         >
           {getTranslateText(singleTheme.title, selectedLanguageCode)}
@@ -100,7 +96,7 @@ export class DatasetDescription extends React.Component {
       description: this.props.description
     };
     return (
-      <header id="dataset-description">
+      <header>
         <DocumentMeta {...meta} />
         {this.props.title && (
           <h1 className="fdk-margin-bottom">{this.props.title}</h1>

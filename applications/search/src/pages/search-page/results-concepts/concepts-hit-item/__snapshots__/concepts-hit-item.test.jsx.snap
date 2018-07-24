@@ -69,7 +69,6 @@ exports[`should render ConceptsHitItem correctly 1`] = `
     >
       <span
         className="fdk-label"
-        id="dataset-description-inScheme-0"
         key="dataset-description-inScheme-0"
       >
         <span
@@ -182,7 +181,6 @@ exports[`should render ConceptsHitItem correctly with compare button not showing
     >
       <span
         className="fdk-label"
-        id="dataset-description-inScheme-0"
         key="dataset-description-inScheme-0"
       >
         <span
