@@ -88,11 +88,6 @@ services:
     expose:
      - "8080"
 
-  registration-validator:
-    image: dcatno/registration-validator:latest
-    expose:
-     - "8080"
-
   reference-data:
     image: dcatno/reference-data:latest
     expose:

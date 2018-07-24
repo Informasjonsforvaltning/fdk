@@ -437,8 +437,6 @@
 						<jacocoReport>applications/registration-api/target/site/jacoco-ut/jacoco.xml</jacocoReport>
 						<jacocoReport>applications/registration-auth/target/site/jacoco-it/jacoco.xml</jacocoReport>
 						<jacocoReport>applications/registration-auth/target/site/jacoco-ut/jacoco.xml</jacocoReport>
-						<jacocoReport>applications/registration-validator/target/site/jacoco-it/jacoco.xml</jacocoReport>
-						<jacocoReport>applications/registration-validator/target/site/jacoco-ut/jacoco.xml</jacocoReport>
 						<jacocoReport>applications/search-api/target/site/jacoco-it/jacoco.xml</jacocoReport>
 						<jacocoReport>applications/search-api/target/site/jacoco-ut/jacoco.xml</jacocoReport>
 						<jacocoReport>libraries/datastore/target/site/jacoco-it/jacoco.xml</jacocoReport>
