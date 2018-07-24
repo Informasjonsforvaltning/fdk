@@ -18,5 +18,3 @@ done
 
 export BUILD_APPS
 export BUILD_CMD
-
-export INTEGRATION_APPS=${BUILD_APPS[@]}

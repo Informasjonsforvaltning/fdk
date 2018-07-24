@@ -1,9 +1,6 @@
 #!/usr/bin/env bash
 set -e
 
-# example
-# echo $(INTEGRATION_APPS="search" ./citools/getIntegrationTag.sh)
-
-hash=$(${BASH_SOURCE%/*}/calculateApplicationsHash.sh "$INTEGRATION_APPS")
+hash=$(${BASH_SOURCE%/*}/calculateApplicationHash.sh)
 
 echo "integration-$hash"

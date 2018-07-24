@@ -23,5 +23,6 @@ fi
 
 for application in "${applications[@]}"
 do
+    echo "Checking tag dcatno/$application $tag"
     $(${BASH_SOURCE%/*}/tagExistsInDockerHub.sh dcatno/$application $tag)
 done

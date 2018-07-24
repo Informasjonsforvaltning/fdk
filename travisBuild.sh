@@ -10,10 +10,10 @@ then
     docker login --username ${dockerUsername} --password ${dockerPassword}
 fi
 
-
 for i in "${!BUILD_APPS[@]}"; do
+    echo "Checking ${BUILD_APPS[$i]}"
     # error does not exit script because it is in condition
-    if ! ./buildAndPushApplicationGroup.sh "${BUILD_APPS[$i]}" "${BUILD_CMD[$i]}"
+    if ! ./buildAndPushApplication.sh "${BUILD_APPS[$i]}" "${BUILD_CMD[$i]}"
     then
         errors=$((errors+1))
     fi
