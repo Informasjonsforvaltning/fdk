@@ -251,17 +251,6 @@ then
         deployNewDockerImage registration-auth
     fi
 
-elif [ $service = registration-validator ]
-then
-    if [ $deploymode = recreateServices ]
-    then
-        profile=prod
-        createOpenshiftService registration-validator
-    else
-        # deploymentmode = onlyDeployImages
-        deployNewDockerImage registration-validator
-    fi
-
 elif [ $service = harvester-api ]
 then
     if [ $deploymode = recreateServices ]

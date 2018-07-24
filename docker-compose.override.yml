@@ -125,7 +125,6 @@ services:
     environment:
      - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
      - QUERY_SERVICE_URL=/reference-data
-     - VALIDATOR_URL=http://localhost:8086
      - REGISTRATION_LANGUAGE=${REGISTRATION_LANGUAGE}
 
   registration-auth:
@@ -134,13 +133,6 @@ services:
         - "8077:8080"
       environment:
         - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
-
-  registration-validator:
-    restart: always
-    ports:
-      - "8086:8080"
-    environment:
-      - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
 
   reference-data:
     restart: always

@@ -39,7 +39,7 @@ if [ "${GIT_STATUS}" != "Your branch is up-to-date with 'origin/develop'." ] ; t
   exit;
 fi
 
-components="fuseki harvester harvester-api nginx-registration nginx-search reference-data registration-react registration-api registration-auth registration-validator search search-api"
+components="fuseki harvester harvester-api nginx-registration nginx-search reference-data registration-react registration-api registration-auth search search-api"
 
 
 # remove all local tags
