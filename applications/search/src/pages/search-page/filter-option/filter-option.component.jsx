@@ -36,12 +36,23 @@ export const FilterOption = props => {
   const id = encodeURIComponent(itemKey + value);
 
   let inputRef;
-
   return (
-    <div className={`checkbox ${displayClass}`}>
+    <div className={`form-check checkbox ${displayClass}`}>
+      <input
+        ref={input => {
+          inputRef = input;
+        }}
+        type="checkbox"
+        id={id}
+        tabIndex="-1"
+        checked={active}
+        onChange={e => onClick(e)}
+        value={value}
+        className="form-check-input"
+      />
       {/* eslint-disable jsx-a11y/no-noninteractive-element-to-interactive-role */}
       <label
-        className="checkbox_label"
+        className="form-check-label"
         onKeyPress={() => {
           inputRef.click();
         }}
@@ -49,20 +60,7 @@ export const FilterOption = props => {
         role="button"
         htmlFor={id}
       >
-        <input
-          ref={input => {
-            inputRef = input;
-          }}
-          type="checkbox"
-          id={id}
-          tabIndex="-1"
-          checked={active}
-          onChange={e => onClick(e)}
-          className="list-group-item fdk-label fdk-label-default"
-          value={value}
-        />
-        <span className="checkbox-replacement" />
-        {textLabel} ({count})
+        &nbsp;{textLabel} ({count})
       </label>
       {/* eslint-enable jsx-a11y/no-noninteractive-element-to-interactive-role */}
     </div>
