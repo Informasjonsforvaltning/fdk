@@ -193,20 +193,17 @@ then
         if [ $environment = ppe ]
         then
             oc env dc/registration-react REG_API_URL=https://$registrationGuiExternalAddress/ \
-            QUERY_SERVICE_URL=/reference-data \
             PORT=4300 \
             NODE_ENV=production
 
         elif [ $environment = tt1 ]
         then
             oc env dc/registration-react REG_API_URL=https://$registrationGuiExternalAddress/ \
-            QUERY_SERVICE_URL=/reference-data \
             PORT=4300 \
             NODE_ENV=production
 
         else
             oc env dc/registration-react REG_API_URL=https://reg-gui-new-fellesdatakatalog-$environment.$cluster.brreg.no/ \
-            QUERY_SERVICE_URL=/reference-data \
             PORT=4300 \
             NODE_ENV=production
         fi
