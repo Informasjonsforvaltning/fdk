@@ -8,6 +8,8 @@ prefix owl: <http://www.w3.org/2002/07/owl#>
 prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 prefix vcard: <http://www.w3.org/2006/vcard/ns#>
 prefix er: <http://data.brreg.no/meta/>
+prefix xsd: <http://www.w3.org/2001/XMLSchema#>
+prefix schema: <http://schema.org/>
 
 DESCRIBE ?publisher ?dataset ?distribution ?catalog ?contact ?temporal ?spatial
 WHERE {

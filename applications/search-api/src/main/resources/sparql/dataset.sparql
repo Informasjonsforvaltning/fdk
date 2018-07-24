@@ -7,18 +7,24 @@ PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
 PREFIX dcatno: <http://difi.no/dcatno#>
 prefix vcard: <http://www.w3.org/2006/vcard/ns#>
 PREFIX er: <http://data.brreg.no/meta/>
+prefix xsd: <http://www.w3.org/2001/XMLSchema#>
+prefix schema: <http://schema.org/>
 
-DESCRIBE ?dataset ?publisher ?contact ?distribution ?nace ?fadr ?padr ?sektor
+DESCRIBE ?dataset ?publisher ?contact ?distribution ?temporal ?spatial ?nace ?fadr ?padr ?sektor
 WHERE {
     ?dataset a dcat:Dataset;
     dct:publisher ?publisher.
+
+    OPTIONAL {?dataset dcat:contactPoint ?contact}
+    OPTIONAL {?dataset dcat:distribution ?distribution }
+    OPTIONAL {?dataset dcat:contactPoint ?contact}
+    OPTIONAL {?dataset dct:temporal ?temporal}
+    OPTIONAL {?dataset dct:spatial ?spatial}
 
     OPTIONAL {?publisher er:naeringskode1 ?nace}
     OPTIONAL {?publisher er:forretningsadresse ?fadr}
     OPTIONAL {?publisher er:postadresse ?padr}
     OPTIONAL {?publisher er:institusjonellSektorkode ?sektor}
-    OPTIONAL {?dataset dcat:contactPoint ?contact}
-    OPTIONAL {?dataset dcat:distribution ?distribution }
 
     FILTER (?dataset = <%s> )
 }
