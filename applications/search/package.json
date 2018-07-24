@@ -54,7 +54,6 @@
     "prop-types": "^15.6.2",
     "qs": "^6.3.0",
     "react": "^16.2.0",
-    "react-bootstrap": "0.31.3",
     "react-document-meta": "^2.1.2",
     "react-dom": "^16.2.0",
     "react-feature-toggles": "^3.0.3",
