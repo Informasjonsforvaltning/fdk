@@ -1,16 +1,16 @@
 #!/usr/bin/env bash
 set -e
 
-applications=$1
+application=$1
 
 # example
-# echo $(./citools/getBuildTag.sh "search")
+# echo $(./citools/getBuildTag.sh search)
 
-if [[ -z $applications ]]; then
-    echo "Applications cannot be empty"
+if [[ -z $application ]]; then
+    echo "Application cannot be empty"
     exit 1
 fi
 
-hash=$(${BASH_SOURCE%/*}/calculateApplicationsHash.sh "$applications")
+hash=$(${BASH_SOURCE%/*}/calculateApplicationHash.sh $application)
 
 echo "build-$hash"
