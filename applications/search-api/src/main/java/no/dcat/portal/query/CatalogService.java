@@ -165,20 +165,20 @@ public class CatalogService {
     /**
      * API to find dataset based on id from .../dataset?id={id}
      *
-     * @param id           of dataset to find
+     * @param uri           of dataset to find
      * @param acceptHeader accepted format
      * @return Formatted response based on acceptHeader {@link SupportedFormat}
      */
     @CrossOrigin
-    @ApiOperation(value = "Returns a specific dataset in accordance with the DCAT-AP-NO standard in one out of the three supported RDF formats.",
+    @ApiOperation(value = "Returns a dataset description as it was imported into the RDF-database (before indexing in Elasticsearch). Follows DCAT-AP-NO standard in one out of the three supported RDF formats.",
             notes = "The three formats are: text/turtle, application/ld+json and application/rdf+xml", response = Dataset.class)
-    @RequestMapping(value = "/dataset",
+    @RequestMapping(value = "/catalogs/datasets",
             method = GET,
             consumes = MediaType.ALL_VALUE,
             produces = {"text/turtle", "application/ld+json", "application/rdf+xml"})
     public ResponseEntity<String> getDatasetDcat(
-            @ApiParam("The id of the dataset. The id is a uuid given by the harvester application.")
-            @RequestParam(value = "id") String id,
+            @ApiParam("The uri of the dataset. The uri is given in the DCAT description.")
+            @RequestParam(value = "uri") String uri,
 
             @ApiParam("The result's format. An alternative to Accept header: json for json-ld, ttl -for turtle, xml or rdf for rdf-xml")
             @RequestParam(value = "format", required = false) String format,
@@ -186,7 +186,7 @@ public class CatalogService {
             @ApiParam("The result's format. Alternative to format query string: text/turtle, application/ld+json, application/rdf+xml")
             @RequestHeader(value = "Accept", defaultValue = "*/*", required = false) String acceptHeader) {
 
-        ResponseEntity<String> responseBody = invokeFusekiQuery(id, format, acceptHeader, DATASET_QUERY_FILENAME);
+        ResponseEntity<String> responseBody = invokeFusekiQuery(uri, format, acceptHeader, DATASET_QUERY_FILENAME);
 
         if (responseBody != null) {
             return responseBody;
