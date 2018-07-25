@@ -51,6 +51,24 @@ services:
      - "9200"
      - "9300"
 
+  elasticsearch-copy:
+    image: dcatno/elasticsearch-copy:latest
+    networks:
+      platform:
+      logging:
+
+  elasticsearch-copy:
+    image: dcatno/elasticsearch-copy:latest
+    networks:
+      platform:
+      logging:
+
+  elasticsearch-copy:
+    image: dcatno/elasticsearch-copy:latest
+    networks:
+      platform:
+      logging:
+
   dev-management:
     image: dcatno/dev-management:latest
     expose:
