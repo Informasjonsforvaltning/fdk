@@ -92,3 +92,9 @@ services:
     image: dcatno/reference-data:latest
     expose:
      - "8080"
+
+  e2e:
+    image: dcatno/e2e:latest
+    volumes:
+      - ./applications/e2e/test:/usr/src/app/test:rw
+    command: tail -F /dev/null
