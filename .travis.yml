@@ -15,6 +15,7 @@ services:
 install:
   - export COVERALLS_PARALLEL=true # ensure coverage results are merged after all parallell jobs have finished
   - export DOCKER_HOST=unix:///var/run/docker.sock # required by the docker maven plugin for connecting to docker
+  - git config --global core.autocrlf input # this allows to match source code hash with what is calculated on Mac and Windows
 
 branches:
   except:
