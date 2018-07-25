@@ -51,6 +51,9 @@ services:
      - "9200"
      - "9300"
 
+  elasticsearch-copy:
+    image: dcatno/elasticsearch-copy:latest
+
   dev-management:
     image: dcatno/dev-management:latest
     expose:
