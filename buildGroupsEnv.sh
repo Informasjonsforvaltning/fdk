@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 
 i=0
+BUILD_APPS[$i]="e2e"
+BUILD_CMD[$i]="( cd applications/e2e && docker build -t dcatno/e2e:latest . )"
+
+i=$((i+1))
 BUILD_APPS[$i]="search"
 BUILD_CMD[$i]="( cd applications/search && ./travisBuild.sh )"
 

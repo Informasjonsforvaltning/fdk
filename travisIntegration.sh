@@ -34,12 +34,29 @@ echo $SECONDS
 echo "Pull images of all build groups - exit with error when any build image is missing"
 for i in "${!BUILD_APPS[@]}"; do
     ./citools/pullApplicationsByTag.sh "${BUILD_APPS[$i]}" "${buildtag[$i]}"
+    # tag the downloaded images as latest to allow docker-compose to use them
+    ./citools/retagApplications.sh "${BUILD_APPS[$i]}" "${buildtag[$i]}" latest
 done
 
 echo "SECONDS"
 echo $SECONDS
 
 # TODO Run integration tests on the pulled images
+
+docker-compose up -d
+
+echo "SECONDS"
+echo $SECONDS
+
+# TODO find a better way to ensure that services are up and running
+./waitForDocker.sh
+echo "SECONDS"
+echo $SECONDS
+
+docker exec -it fdk_e2e_1 sh -c "npm run test:smoke_dev"
+
+echo "SECONDS"
+echo $SECONDS
 
 if [ "$dockerUsername" ]
 then
