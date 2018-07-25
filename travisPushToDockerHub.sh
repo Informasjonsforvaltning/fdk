@@ -14,7 +14,6 @@ integrationtag=$(./citools/getIntegrationTag.sh)
 echo "Pulling integration images for all applications with tag $integrationtag"
 for i in "${!BUILD_APPS[@]}"; do
     ./citools/pullApplicationsByTag.sh "${BUILD_APPS[$i]}" $integrationtag;
-    ./buildOrPullApplication.sh "${BUILD_APPS[$i]}" "${BUILD_CMD[$i]}"
 done
 
 
