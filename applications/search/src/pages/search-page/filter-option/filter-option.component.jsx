@@ -2,11 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import localization from '../../../lib/localization';
 import { getTranslateText } from '../../../lib/translateText';
+import { capitalizeFirstLetter } from '../../../lib/stringUtils';
 
 export const FilterOption = props => {
   const {
     itemKey,
     value,
+    labelRaw,
     label,
     count,
     onClick,
@@ -15,7 +17,7 @@ export const FilterOption = props => {
     displayClass
   } = props;
 
-  const optionLabel = `${label.charAt(0)}${label.substring(1).toLowerCase()}`;
+  const optionLabel = labelRaw || `${capitalizeFirstLetter(label)}`;
 
   let textLabel;
   // if themes, then choose text from themes array, else choose label from localization-file.
@@ -29,9 +31,8 @@ export const FilterOption = props => {
       textLabel = localization.search_hit.ukjent;
     }
   } else {
-    textLabel = localization.search_hit[optionLabel.toLowerCase()]
-      ? localization.search_hit[optionLabel.toLowerCase()]
-      : optionLabel;
+    textLabel =
+      localization.search_hit[optionLabel.toLowerCase()] || optionLabel;
   }
 
   const id = encodeURIComponent(itemKey + value);
@@ -72,6 +73,7 @@ export const FilterOption = props => {
 
 FilterOption.defaultProps = {
   value: null,
+  labelRaw: null,
   label: null,
   count: null,
   onClick: null,
@@ -83,6 +85,7 @@ FilterOption.defaultProps = {
 FilterOption.propTypes = {
   itemKey: PropTypes.number.isRequired,
   value: PropTypes.string,
+  labelRaw: PropTypes.string,
   label: PropTypes.string,
   count: PropTypes.number,
   onClick: PropTypes.func.isRequired,

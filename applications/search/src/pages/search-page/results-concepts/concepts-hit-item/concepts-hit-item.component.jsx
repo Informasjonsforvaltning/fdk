@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import * as _ from 'lodash';
+import _get from 'lodash/get';
 
 import localization from '../../../../lib/localization';
 import {
@@ -8,16 +9,22 @@ import {
   getLanguageFromUrl
 } from '../../../../lib/translateText';
 import './concepts-hit-item.scss';
+import { capitalizeFirstLetter } from '../../../../lib/stringUtils';
 
 const renderPublisher = source => {
   const { creator } = source;
-  if (creator && creator.name) {
+
+  const publisherPrefLabel =
+    getTranslateText(_get(creator, ['prefLabel'], null)) ||
+    capitalizeFirstLetter(_get(creator, 'name', ''));
+
+  if (publisherPrefLabel) {
     return (
       <span className="inline-block fdk-strong-virksomhet">
         <span className="uu-invisible" aria-hidden="false">
           Utgiver.
         </span>
-        {creator.name}
+        {publisherPrefLabel}
       </span>
     );
   }

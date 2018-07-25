@@ -2,11 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import DocumentMeta from 'react-document-meta';
 import Moment from 'react-moment';
+import _get from 'lodash/get';
 
 import localization from '../../../lib/localization';
 import { getTranslateText } from '../../../lib/translateText';
 import { ShowMore } from '../../../components/show-more/show-more';
 import { DatasetLabelNational } from '../../../components/dataset-label-national/dataset-label-national.component';
+import { capitalizeFirstLetter } from '../../../lib/stringUtils';
 
 export class DatasetDescription extends React.Component {
   constructor(props) {
@@ -24,7 +26,12 @@ export class DatasetDescription extends React.Component {
   _renderPublisher() {
     const { publisher } = this.props;
     const ownedBy = localization.search_hit.owned;
-    if (publisher && publisher.name) {
+
+    const publisherPrefLabel =
+      getTranslateText(_get(publisher, ['prefLabel'], null)) ||
+      capitalizeFirstLetter(_get(publisher, 'name', ''));
+
+    if (publisherPrefLabel) {
       return (
         <span>
           {ownedBy}&nbsp;
@@ -32,10 +39,7 @@ export class DatasetDescription extends React.Component {
             id="dataset-descritption-publisher-text"
             className="fdk-strong-virksomhet"
           >
-            {publisher
-              ? publisher.name.charAt(0) +
-                publisher.name.substring(1).toLowerCase()
-              : ''}
+            {publisherPrefLabel}
           </strong>
         </span>
       );
