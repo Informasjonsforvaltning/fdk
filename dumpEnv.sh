@@ -8,10 +8,10 @@ function startDump {
     echo "Start"
 
     environment=$1
-    sourceElasticUrl=http://elasticsearch-fellesdatakatalog-${environment}.ose-npc.brreg.no
+    sourceElasticUrl=http://elasticsearch-fellesdatakatalog-${environment}.paas-nprd.brreg.no
     if [ "$environment" == "ppe" ]
     then
-        sourceElasticUrl=http://elasticsearch-fellesdatakatalog-${environment}.ose-pc.brreg.no
+        sourceElasticUrl=http://elasticsearch-fellesdatakatalog-${environment}.paas.brreg.no
     fi
 
     DATETIME=`date "+%Y-%m-%dT%H_%M_%S"`
