@@ -90,6 +90,7 @@ There is a couple of scripts that automates build and run the various models ond
 ## Search application:
 >`docker-compose up -d search`
 
+
 This starts DCAT repositories, fuseki and elasticsearch, as well as the search-api service. 
 To access the search application start a browser on [http://localhost:8080](http://localhost:8080). Be aware that 
 there is no data registered in the repositories (see the harvester application)
