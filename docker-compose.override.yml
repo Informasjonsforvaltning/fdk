@@ -11,6 +11,7 @@ services:
       - ./applications/search/src:/usr/src/app/src:rw
     environment:
       - REDUX_LOG=${REDUX_LOG}
+      - NODE_ENV=${NODE_ENV}
 
   search-api:
     restart: always
@@ -124,6 +125,7 @@ services:
      - ./applications/registration-react/src:/usr/src/app/src:rw
     environment:
      - REGISTRATION_LANGUAGE=${REGISTRATION_LANGUAGE}
+     - NODE_ENV=${NODE_ENV}
 
   registration-auth:
       restart: always

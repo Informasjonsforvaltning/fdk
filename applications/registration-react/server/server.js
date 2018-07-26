@@ -53,6 +53,7 @@ module.exports = {
 
     app.listen(app.get('port'), () => {
       console.log('FDK-registration-react lytter på', app.get('port')); // eslint-disable-line no-console
+      console.log('env:', env.production ? 'production' : 'development'); // eslint-disable-line no-console
     });
   }
 };

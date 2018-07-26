@@ -26,10 +26,6 @@ COPY src /usr/src/app/src
 
 RUN npm run build
 
-#RUN npm test
-
-#ENV NODE_ENV production
-
 EXPOSE 4300
 
 CMD [ "pm2-docker", "start.js" ]
