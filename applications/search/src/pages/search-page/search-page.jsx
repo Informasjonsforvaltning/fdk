@@ -1,6 +1,5 @@
 import React from 'react';
 import qs from 'qs';
-import queryString from 'query-string';
 import { Route, Switch } from 'react-router-dom';
 import cx from 'classnames';
 import { detect } from 'detect-browser';
@@ -26,7 +25,7 @@ export class SearchPage extends React.Component {
     super(props);
     const searchQuery =
       props.location && props.location.search
-        ? queryString.parse(props.location.search)
+        ? qs.parse(props.location.search.substr(1))
         : {
             searchQuery: {}
           };
