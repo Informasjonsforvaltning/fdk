@@ -2,11 +2,11 @@ const path = require('path');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
   context: path.join(__dirname),
-  entry: ['babel-polyfill', './src/index.jsx'],
+  entry: ['@babel/polyfill', './src/index.jsx'],
   output: {
     path: path.join(__dirname, 'dist'),
     filename: 'bundle.js',
@@ -21,11 +21,7 @@ module.exports = {
       },
       {
         test: /\.s?css$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          'css-loader',
-          'sass-loader'
-        ]
+        use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']
       },
       {
         test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
@@ -75,7 +71,8 @@ module.exports = {
             comments: false
           }
         }
-      })]
+      })
+    ]
   },
   plugins: [
     new webpack.DefinePlugin({
@@ -91,7 +88,7 @@ module.exports = {
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     new webpack.optimize.OccurrenceOrderPlugin(true),
     new MiniCssExtractPlugin({
-      filename: "styles.css",
+      filename: 'styles.css'
     }),
     new CopyWebpackPlugin(
       [{ from: './src/static/img/*', to: './img', flatten: true }],

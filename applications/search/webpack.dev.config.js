@@ -6,7 +6,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 module.exports = {
   devtool: 'cheap-module-eval-source-map',
   context: path.join(__dirname),
-  entry: ['babel-polyfill', './src/index.jsx'],
+  entry: ['@babel/polyfill', './src/index.jsx'],
   output: {
     path: path.join(__dirname, 'dist'),
     filename: 'bundle.js',
@@ -21,11 +21,7 @@ module.exports = {
       },
       {
         test: /\.s?css$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          'css-loader',
-          'sass-loader'
-        ]
+        use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']
       },
       {
         test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
@@ -65,7 +61,7 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
     new MiniCssExtractPlugin({
-      filename: "styles.css",
+      filename: 'styles.css'
     }),
     new CopyWebpackPlugin(
       [{ from: './src/static/img/*', to: './img', flatten: true }],
