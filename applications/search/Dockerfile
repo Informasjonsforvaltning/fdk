@@ -27,9 +27,6 @@ COPY src /usr/src/app/src
 
 RUN npm run build
 
-# use for local test purpose, variable set by OpenShift
-# ENV NODE_ENV production
-
 EXPOSE 3000
 
 CMD [ "pm2-docker", "start.js" ]
