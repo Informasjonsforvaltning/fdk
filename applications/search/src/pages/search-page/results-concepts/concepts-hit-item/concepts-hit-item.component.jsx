@@ -159,9 +159,9 @@ export const ConceptsHitItem = props => {
         Søketreff begrep.
       </span>
       <div
-        className={`fdk-container-search-hit ${toBeCompared
-          ? 'toBeCompared'
-          : ''}`}
+        className={`fdk-container-search-hit ${
+          toBeCompared ? 'toBeCompared' : ''
+        }`}
       >
         {!toBeCompared && (
           <button

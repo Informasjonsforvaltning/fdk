@@ -42,8 +42,9 @@ export const DatasetContactInfo = props => {
                   {hasURL && (
                     <a
                       className="dataset-contact-url"
-                      title={`${localization.dataset.contactPoint
-                        .organizationUnit} ${organizationUnit}`}
+                      title={`${
+                        localization.dataset.contactPoint.organizationUnit
+                      } ${organizationUnit}`}
                       href={hasURL || null}
                       target="_blank"
                       rel="noopener noreferrer"
@@ -54,8 +55,9 @@ export const DatasetContactInfo = props => {
                     </a>
                   )}
                   {!hasURL &&
-                    `${localization.dataset.contactPoint
-                      .organizationUnit} ${organizationUnit}`}
+                    `${
+                      localization.dataset.contactPoint.organizationUnit
+                    } ${organizationUnit}`}
                 </p>
               </div>
             </div>
