@@ -118,9 +118,9 @@ export class SearchPublishersTree extends React.Component {
         return (
           <div
             key={`${name}|${i}`}
-            className={`node tree-view_item ${node.orgPath === orgPath
-              ? 'tree-item_chosen'
-              : ''}`}
+            className={`node tree-view_item ${
+              node.orgPath === orgPath ? 'tree-item_chosen' : ''
+            }`}
             onClick={() => {
               this.onChange(node);
             }}

@@ -32,12 +32,13 @@ export class Select extends React.Component {
         bsStyle="default"
         id="search-result-dropdown-1"
         className="fdk-button fdk-button-default"
-        title={`${localization.sort.by} ${localization.sort[
-          this.state.selectedValue
-        ]}`}
+        title={`${localization.sort.by} ${
+          localization.sort[this.state.selectedValue]
+        }`}
         onSelect={this.onChange}
-        aria-label={`Sorter søkeresultat, ${localization.sort.by} ${localization
-          .sort[this.state.selectedValue]}`}
+        aria-label={`Sorter søkeresultat, ${localization.sort.by} ${
+          localization.sort[this.state.selectedValue]
+        }`}
       >
         {map(items, (item, idx) => {
           const { label } = item;

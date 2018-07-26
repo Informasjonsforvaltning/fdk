@@ -126,10 +126,9 @@ export const SearchHitItem = props => {
   } else if (description && description.length < 150 && objective) {
     const freeLength = 200 - description.length;
     const objectiveLength = objective.length;
-    description = `${description} ${objective.substr(
-      0,
-      200 - freeLength
-    )} ${objectiveLength > freeLength ? '...' : ''}`;
+    description = `${description} ${objective.substr(0, 200 - freeLength)} ${
+      objectiveLength > freeLength ? '...' : ''
+    }`;
   }
   const link = `/datasets/${hitId}`;
 

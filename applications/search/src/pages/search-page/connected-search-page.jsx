@@ -64,6 +64,7 @@ const mapDispatchToProps = dispatch => ({
   fetchDistributionTypeIfNeeded: () => dispatch(fetchDistributionTypeIfNeeded())
 });
 
-export const ConnectedSearchPage = connect(mapStateToProps, mapDispatchToProps)(
-  SearchPage
-);
+export const ConnectedSearchPage = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SearchPage);

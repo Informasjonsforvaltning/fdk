@@ -20,11 +20,11 @@ export function removeParam(key, sourceURL) {
 }
 
 /**
-* Add a URL parameter (or modify if already exists)
-* @param {url}   string  url
-* @param {param} string  the key to set
-* @param {value} string  value
-*/
+ * Add a URL parameter (or modify if already exists)
+ * @param {url}   string  url
+ * @param {param} string  the key to set
+ * @param {value} string  value
+ */
 export function addOrReplaceParam(url, param, value) {
   const encodedParam = encodeURIComponent(param);
   const r = `([&?]|&amp;)${encodedParam}\\b(?:=(?:[^&#]*))*`;

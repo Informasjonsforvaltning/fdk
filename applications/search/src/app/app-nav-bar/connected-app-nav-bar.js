@@ -10,6 +10,7 @@ const mapDispatchToProps = dispatch => ({
   onChangeLanguage: language => dispatch(setLanguage(language))
 });
 
-export const ConnectedAppNavBar = connect(mapStateToProps, mapDispatchToProps)(
-  AppNavBar
-);
+export const ConnectedAppNavBar = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AppNavBar);
