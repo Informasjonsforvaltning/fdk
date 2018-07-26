@@ -7,7 +7,7 @@ import {
 
 export default function datasets(
   state = {
-    isFetchingDatasets: false,
+    isFetching: false,
     datasetItems: null,
     publisherCountItems: null
   },
@@ -17,7 +17,7 @@ export default function datasets(
     case DATASETS_REQUEST: {
       return {
         ...state,
-        isFetchingDatasets: true
+        isFetching: true
       };
     }
     case DATASETS_SUCCESS: {
@@ -48,7 +48,7 @@ export default function datasets(
       );
       return {
         ...state,
-        isFetchingDatasets: false,
+        isFetching: false,
         datasetItems: action.response.data,
         publisherCountItems: resultArray,
         subjectsCountItems: objFromArray
@@ -57,7 +57,7 @@ export default function datasets(
     case DATASETS_FAILURE: {
       return {
         ...state,
-        isFetchingDatasets: false,
+        isFetching: false,
         datasetItems: null,
         publisherCountItems: null
       };

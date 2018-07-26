@@ -7,7 +7,7 @@ import {
 
 export default function datasetDetails(
   state = {
-    isFetchingDataset: false,
+    isFetching: false,
     datasetItem: null
   },
   action
@@ -16,27 +16,27 @@ export default function datasetDetails(
     case DATASETDETAILS_REQUEST: {
       return {
         ...state,
-        isFetchingDataset: true
+        isFetching: true
       };
     }
     case DATASETDETAILS_SUCCESS: {
       return {
         ...state,
-        isFetchingDataset: false,
+        isFetching: false,
         datasetItem: action.response.data.hits.hits[0]._source
       };
     }
     case DATASETDETAILS_FAILURE: {
       return {
         ...state,
-        isFetchingDataset: false,
+        isFetching: false,
         datasetItem: null
       };
     }
     case DATASETDETAILS_RESET: {
       return {
         ...state,
-        isFetchingDataset: false,
+        isFetching: false,
         datasetItem: null
       };
     }
