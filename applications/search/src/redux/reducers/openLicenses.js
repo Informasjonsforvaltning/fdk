@@ -6,7 +6,7 @@ import {
 
 export default function openLicenses(
   state = {
-    isFetchingOpenLicenses: false,
+    isFetching: false,
     openLicenseItems: null
   },
   action
@@ -15,20 +15,20 @@ export default function openLicenses(
     case OPENLICENSES_REQUEST: {
       return {
         ...state,
-        isFetchingOpenLicenses: true
+        isFetching: true
       };
     }
     case OPENLICENSES_SUCCESS: {
       return {
         ...state,
-        isFetchingOpenLicenses: false,
+        isFetching: false,
         openLicenseItems: action.response.data
       };
     }
     case OPENLICENSES_FAILURE: {
       return {
         ...state,
-        isFetchingOpenLicenses: false,
+        isFetching: false,
         openLicenseItems: null
       };
     }

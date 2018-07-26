@@ -3,7 +3,7 @@ import { TERMS_REQUEST, TERMS_SUCCESS, TERMS_FAILURE } from '../ActionTypes';
 
 export default function terms(
   state = {
-    isFetchingTerms: false,
+    isFetching: false,
     termItems: null,
     publisherCountTermItems: null
   },
@@ -13,7 +13,7 @@ export default function terms(
     case TERMS_REQUEST: {
       return {
         ...state,
-        isFetchingTerms: true
+        isFetching: true
       };
     }
     case TERMS_SUCCESS: {
@@ -36,7 +36,7 @@ export default function terms(
         .value();
       return {
         ...state,
-        isFetchingTerms: false,
+        isFetching: false,
         termItems: action.response.data,
         publisherCountTermItems: resultArray
       };
@@ -44,7 +44,7 @@ export default function terms(
     case TERMS_FAILURE: {
       return {
         ...state,
-        isFetchingTerms: false,
+        isFetching: false,
         termItems: null,
         publisherCountTermItems: null
       };

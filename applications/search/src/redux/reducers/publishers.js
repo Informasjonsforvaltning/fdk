@@ -5,14 +5,14 @@ import {
 } from '../ActionTypes';
 
 export default function publishers(
-  state = { isFetchingPublishers: false, publisherItems: null },
+  state = { isFetching: false, publisherItems: null },
   action
 ) {
   switch (action.type) {
     case PUBLISHERS_REQUEST: {
       return {
         ...state,
-        isFetchingPublishers: true
+        isFetching: true
       };
     }
     case PUBLISHERS_SUCCESS: {
@@ -25,14 +25,14 @@ export default function publishers(
       );
       return {
         ...state,
-        isFetchingPublishers: false,
+        isFetching: false,
         publisherItems: objFromArray // action.response.data.hits.hits // action.response.data
       };
     }
     case PUBLISHERS_FAILURE: {
       return {
         ...state,
-        isFetchingPublishers: false,
+        isFetching: false,
         publisherItems: null
       };
     }
