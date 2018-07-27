@@ -44,13 +44,11 @@
     "file-loader": "^1.1.6",
     "extract-text-webpack-plugin": "^3.0.2",
     "font-awesome": "^4.7.0",
-    "imports-loader": "^0.7.1",
     "is-url": "^1.2.2",
     "lodash": "^4.17.5",
     "method-override": "^2.3.10",
     "moment": "^2.20.1",
     "node-sass": "^4.9.0",
-    "normalizr": "^3.2.4",
     "prop-types": "^15.6.0",
     "react": "^16.2.0",
     "react-datepicker": "^1.0.4",
@@ -74,11 +72,9 @@
     "url-loader": "^0.6.2",
     "webpack-dev-middleware": "^2.0.4",
     "webpack-hot-middleware": "^2.21.0",
-    "webpack": "^3.10.0",
-    "yup": "^0.23.0"
+    "webpack": "^3.10.0"
   },
   "devDependencies": {
-    "chai": "^4.1.2",
     "coveralls": "^3.0.1",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
@@ -93,13 +89,10 @@
     "eslint-plugin-react": "^7.5.1",
     "husky": "^0.14.3",
     "identity-obj-proxy": "^3.0.0",
-    "ignore-styles": "^5.0.1",
     "jest": "^22.4.3",
     "lint-staged": "^6.0.1",
-    "mocha": "^5.0.0",
     "prettier": "^1.12.1",
     "redux-test-utils": "^0.2.2",
-    "sinon": "^4.2.2",
     "webpack-dev-server": "^2.10.1"
   }
 }
