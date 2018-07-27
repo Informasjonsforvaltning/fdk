@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import TreeView from 'react-treeview';
@@ -33,9 +34,6 @@ export class SearchPublishersTree extends React.Component {
   }
 
   onChange(value) {
-    this.setState({
-      value
-    });
     if (!value) {
       this.props.onSearch(null, '');
     } else {
@@ -68,13 +66,8 @@ export class SearchPublishersTree extends React.Component {
           'tree-item_chosen': node.key === orgPath
         });
 
-        let name = node.key;
-        if (publishers) {
-          const currentPublisher = publishers[name];
-          if (currentPublisher) {
-            name = currentPublisher.name; // .substring(0, 25);
-          }
-        }
+        const name = _.get(publishers, [node.key, 'name'], node.key);
+
         const label = (
           <FilterOption
             key={`${node.key}|${i}`}

@@ -52,17 +52,17 @@ export function AppNavBar(props) {
                 title={localization.app.menu}
               >
                 <li role="presentation">
-                  <Link tabIndex="-1" to={`/about`}>
+                  <Link tabIndex="-1" to="/about">
                     {localization.about.about}
                   </Link>
                 </li>
                 <li role="presentation">
-                  <Link tabIndex="-1" to={`/about-registration`}>
+                  <Link tabIndex="-1" to="/about-registration">
                     {localization.menu.aboutRegistration}
                   </Link>
                 </li>
                 <li role="presentation">
-                  <Link tabIndex="-1" to={`/reports`}>
+                  <Link tabIndex="-1" to="/reports">
                     {localization.menu.reports}
                   </Link>
                 </li>

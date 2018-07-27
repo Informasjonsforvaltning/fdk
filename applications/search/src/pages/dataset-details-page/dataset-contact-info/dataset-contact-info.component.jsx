@@ -5,18 +5,8 @@ import cx from 'classnames';
 import localization from '../../../lib/localization';
 
 export const DatasetContactInfo = props => {
-  const { contactPoint = null } = props;
-  let email;
-  let organizationUnit;
-  let hasURL;
-  let hasTelephone = null;
-
-  if (contactPoint) {
-    email = contactPoint.email;
-    organizationUnit = contactPoint.organizationUnit;
-    hasURL = contactPoint.hasURL;
-    hasTelephone = contactPoint.hasTelephone;
-  }
+  const { contactPoint } = props;
+  const { email, organizationUnit, hasURL, hasTelephone } = contactPoint || {};
 
   const emailClass = cx('fdk-container-detail', {
     'col-md-8': hasTelephone,

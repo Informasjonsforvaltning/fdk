@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { DatasetDescription } from './dataset-description/dataset-description.component';
 import { DatasetKeyInfo } from './dataset-key-info/dataset-key-info.component';
@@ -14,10 +15,6 @@ import { getTranslateText } from '../../lib/translateText';
 export class DatasetDetailsPage extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      dataset: {},
-      loading: false
-    };
     this.loadDatasetFromServer = this.loadDatasetFromServer.bind(this);
   }
 
@@ -245,8 +242,9 @@ export class DatasetDetailsPage extends React.Component {
 }
 
 DatasetDetailsPage.defaultProps = {
-  datasetItem: null,
-  isFetchingDataset: false
+  datasetItem: null
 };
 
-DatasetDetailsPage.propTypes = {};
+DatasetDetailsPage.propTypes = {
+  datasetItem: PropTypes.object
+};

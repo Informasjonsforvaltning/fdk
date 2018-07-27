@@ -7,6 +7,7 @@ exports[`should render BegrepCollapse correctly 1`] = `
   <div
     className="fdk-ingress fdk-margin-bottom-no fdk-container-begrep"
     onClick={[Function]}
+    onKeyPress={[Function]}
     role="button"
     tabIndex={0}
   >
@@ -46,6 +47,7 @@ exports[`should render BegrepCollapse correctly with no props 1`] = `
   <div
     className="fdk-ingress fdk-margin-bottom-no fdk-container-begrep"
     onClick={[Function]}
+    onKeyPress={[Function]}
     role="button"
     tabIndex={0}
   >

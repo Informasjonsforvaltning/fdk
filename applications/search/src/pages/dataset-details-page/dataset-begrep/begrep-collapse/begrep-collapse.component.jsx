@@ -25,6 +25,7 @@ export class BegrepCollapse extends React.Component {
           role="button"
           tabIndex={0}
           onClick={this.toggle}
+          onKeyPress={this.toggle}
         >
           <strong className="pull-left">{this.props.prefLabel}:&nbsp;</strong>
           {this.props.note && (

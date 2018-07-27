@@ -56,7 +56,7 @@ export const FilterOption = props => {
           tabIndex="-1"
           checked={active}
           onChange={e => onClick(e)}
-          className={`list-group-item fdk-label fdk-label-default`}
+          className="list-group-item fdk-label fdk-label-default"
           value={value}
         />
         <span className="checkbox-replacement" />
@@ -71,7 +71,6 @@ FilterOption.defaultProps = {
   value: null,
   label: null,
   count: null,
-  onClick: null,
   active: null,
   themesItems: null,
   displayClass: null

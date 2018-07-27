@@ -11,6 +11,22 @@ import {
 } from '../../../lib/addOrReplaceUrlParam';
 
 export class ResultsDatasetsReport extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      entity: '',
+      aggregateDataset: {},
+      publishers: [],
+      selectedOrgPath: null
+    };
+    this.handleOnPublisherSearch = this.handleOnPublisherSearch.bind(this);
+    this.handleOnChangeSearchField = this.handleOnChangeSearchField.bind(this);
+    this.handleOnTreeChange = this.handleOnTreeChange.bind(this);
+    this.handleOnClearSearch = this.handleOnClearSearch.bind(this);
+    this.getPublishers();
+    this.handleOnPublisherSearch();
+  }
+
   static getOrgPath() {
     const orgPath = window.location.search
       .substring(1)
@@ -22,23 +38,6 @@ export class ResultsDatasetsReport extends React.Component {
       )
       .get('orgPath[0]');
     return orgPath || '';
-  }
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      entity: '',
-      aggregateDataset: {},
-      publishers: [],
-      searchValue: '',
-      selectedOrgPath: null
-    };
-    this.handleOnPublisherSearch = this.handleOnPublisherSearch.bind(this);
-    this.handleOnChangeSearchField = this.handleOnChangeSearchField.bind(this);
-    this.handleOnTreeChange = this.handleOnTreeChange.bind(this);
-    this.handleOnClearSearch = this.handleOnClearSearch.bind(this);
-    this.getPublishers();
-    this.handleOnPublisherSearch();
   }
 
   getPublishers() {
@@ -122,10 +121,9 @@ export class ResultsDatasetsReport extends React.Component {
     axios
       .get(`/aggregateDataset?q=${query}`)
       .then(response => {
-        const data = response.data;
         this.setState({
           entity,
-          aggregateDataset: data
+          aggregateDataset: response.data
         });
       })
       .catch(error => {
