@@ -91,7 +91,7 @@
     "identity-obj-proxy": "^3.0.0",
     "jest": "^22.4.3",
     "lint-staged": "^6.0.1",
-    "prettier": "^1.12.1",
+    "prettier": "1.13.7",
     "redux-test-utils": "^0.2.2",
     "webpack-dev-server": "^2.10.1"
   }

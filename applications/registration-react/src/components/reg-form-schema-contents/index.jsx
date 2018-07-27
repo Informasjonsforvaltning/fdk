@@ -39,4 +39,8 @@ const mapStateToProps = ({ dataset }) => ({
 const mergeProps = (stateProps, dispatchProps, ownProps) =>
   Object.assign({}, stateProps, dispatchProps, ownProps);
 
-export default connect(mapStateToProps, null, mergeProps)(FormContents);
+export default connect(
+  mapStateToProps,
+  null,
+  mergeProps
+)(FormContents);
