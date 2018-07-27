@@ -16,7 +16,7 @@ exports[`should render CatalogItem correctly 1`] = `
         tag="div"
       >
         <CardTitle
-          tag="h4"
+          tag="h5"
         >
           Datakatalog for RAMSUND OG ROGNAN REVISJON
         </CardTitle>
