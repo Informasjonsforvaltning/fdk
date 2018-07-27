@@ -12,6 +12,7 @@ RUN mkdir /.pm2 && chmod 777 /.pm2
 WORKDIR /usr/src/app
 
 COPY package.json /usr/src/app/package.json
+COPY package-lock.json /usr/src/app/package-lock.json
 
 # Install app dependencies
 RUN npm install --only=production --loglevel=warn
