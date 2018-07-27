@@ -133,8 +133,11 @@ public class DatasetsQueryService extends ElasticsearchService {
                                          @ApiParam("Filters datasets according to their spatial label, e.g. Oslo, Norge")
                                          @RequestParam(value = "spatial", defaultValue = "", required = false) String spatial,
 
-                                        @ApiParam("Filters on distribution license and access rights. If true the distribution licence is open and the access rights are public.")
-                                        @RequestParam(value = "opendata", defaultValue = "", required = false) String opendata)
+                                         @ApiParam("Filters on distribution license and access rights. If true the distribution licence is open and the access rights are public.")
+                                         @RequestParam(value = "opendata", defaultValue = "", required = false) String opendata,
+
+                                         @ApiParam("Filters on catalog. ")
+                                         @RequestParam(value = "catalog", defaultValue = "", required = false) String catalog)
     {
 
 
@@ -208,7 +211,7 @@ public class DatasetsQueryService extends ElasticsearchService {
         }
 
         // add filter
-        BoolQueryBuilder boolQuery = addFilter(theme, publisher, accessRights, search, orgPath, firstHarvested, lastHarvested, lastChanged, subject, provenance, spatial, opendata);
+        BoolQueryBuilder boolQuery = addFilter(theme, publisher, accessRights, search, orgPath, firstHarvested, lastHarvested, lastChanged, subject, provenance, spatial, opendata, catalog);
 
         // set up search query with aggregations
         SearchRequestBuilder searchBuilder = getClient().prepareSearch("dcat")
@@ -219,6 +222,7 @@ public class DatasetsQueryService extends ElasticsearchService {
                 .addAggregation(createAggregation(TERMS_SUBJECTS_COUNT, FIELD_SUBJECTS_PREFLABEL, UNKNOWN))
                 .addAggregation(createAggregation(TERMS_ACCESS_RIGHTS_COUNT, FIELD_ACCESS_RIGHTS_PREFLABEL, UNKNOWN))
                 .addAggregation(createAggregation(TERMS_THEME_COUNT, FIELD_THEME_CODE, UNKNOWN))
+                .addAggregation(createAggregation("catalogs", "catalog.uri", UNKNOWN))
                 .addAggregation(createAggregation("provenanceCount", "provenance.code.raw", UNKNOWN))
                 .addAggregation(createAggregation("orgPath", "publisher.orgPath", UNKNOWN))
                 .addAggregation(temporalAggregation("firstHarvested", "harvest.firstHarvested"))
@@ -246,7 +250,7 @@ public class DatasetsQueryService extends ElasticsearchService {
         logger.trace("Search response: " + response.toString());
 
         // return response
-        return new ResponseEntity<String>(response.toString(), HttpStatus.OK);
+        return new ResponseEntity<>(response.toString(), HttpStatus.OK);
     }
 
     public AggregationBuilder getOpendataAggregation() {
@@ -334,21 +338,19 @@ public class DatasetsQueryService extends ElasticsearchService {
 
 
     /**
-     * Adds theme filter to query. Multiple themes can be specified. It should return only those datasets that have
-     * all themes. To get an exact match we need to use Elasticsearch tag count trick.
+     * Adds filters to query.
      *
-     * @param theme  comma separated list of theme codes
      * @param search the search object
      * @return a new bool query with the added filter.
      */
     private BoolQueryBuilder addFilter(String theme, String publisher, String accessRights,
                                        QueryBuilder search, String orgPath,
                                        int firstHarvested, int lastHarvested, int lastChanged,
-                                       String subject, String provenance, String spatial, String opendata) {
+                                       String subject, String provenance, String spatial, String opendata,
+                                       String catalog) {
 
         BoolQueryBuilder boolQuery = QueryBuilders.boolQuery()
                 .must(search);
-
 
         // theme can contain multiple themes, example: AGRI,HEAL
         if (!StringUtils.isEmpty(theme)) {
@@ -376,6 +378,19 @@ public class DatasetsQueryService extends ElasticsearchService {
 
             boolQuery.filter(publisherFilter);
         }
+
+        if (!StringUtils.isEmpty(catalog)) {
+            BoolQueryBuilder catalogFilter = QueryBuilders.boolQuery();
+
+            if (catalog.startsWith("http")) {
+                catalogFilter.must(QueryBuilders.termQuery("catalog.uri", catalog));
+            } else {
+                catalogFilter.must(QueryBuilders.multiMatchQuery(catalog, "catalog.title.*"));
+            }
+
+            boolQuery.filter(catalogFilter);
+        }
+
 
         if (!StringUtils.isEmpty(accessRights)) {
             BoolQueryBuilder accessRightsFilter = QueryBuilders.boolQuery();
@@ -484,7 +499,6 @@ public class DatasetsQueryService extends ElasticsearchService {
      * <p/>
      *
      * @return the record (JSON) of the retrieved dataset. The complete elasticsearch response on Json-fornat is returned.
-     * @Exception A http error is returned if no records is found or if any other error occured.
      */
     @CrossOrigin
     @ApiOperation(value = "Get a specific dataset.",
@@ -623,6 +637,7 @@ public class DatasetsQueryService extends ElasticsearchService {
                 .addAggregation(createAggregation(TERMS_ACCESS_RIGHTS_COUNT, FIELD_ACCESS_RIGHTS_PREFLABEL, UNKNOWN))
                 .addAggregation(createAggregation(TERMS_THEME_COUNT, FIELD_THEME_CODE, UNKNOWN))
                 .addAggregation(createAggregation("orgPath", "publisher.orgPath", UNKNOWN))
+                .addAggregation(createAggregation("catalogs", "catalog.uri", UNKNOWN))
                 .addAggregation(temporalAggregation("firstHarvested", "harvest.firstHarvested"))
                 .addAggregation(AggregationBuilders.missing("missingFirstHarvested").field("harvest.firstHarvested"))
                 .addAggregation(temporalAggregation("lastChanged", "harvest.lastChanged"))
@@ -637,7 +652,7 @@ public class DatasetsQueryService extends ElasticsearchService {
         logger.trace("Search response: " + response.toString());
 
         // return response
-        return new ResponseEntity<String>(response.toString(), HttpStatus.OK);
+        return new ResponseEntity<>(response.toString(), HttpStatus.OK);
     }
 
 }

@@ -3,6 +3,10 @@
     "properties": {
       "catalog": {
         "properties": {
+          "uri": {
+            "type": "string",
+            "index": "not_analyzed"
+          },
           "description": {
             "properties": {
               "nb": {
