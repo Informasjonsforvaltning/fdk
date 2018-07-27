@@ -7,18 +7,6 @@ import localization from '../../../../lib/localization';
 import './search-publishers.scss';
 
 export class SearchPublishers extends React.Component {
-  static getPublishers(input) {
-    if (!input) {
-      return Promise.resolve({ options: [] });
-    }
-
-    return axios.get(`/publisher?q=${input}`).then(response => {
-      const hits = response.data.hits.hits;
-      const nodes = hits.map(item => item._source);
-      return { options: nodes };
-    });
-  }
-
   constructor(props) {
     super(props);
     this.state = {
@@ -37,14 +25,22 @@ export class SearchPublishers extends React.Component {
   }
 
   onChange(value) {
-    this.setState({
-      value
-    });
     if (!value) {
       this.props.onSearch(null, '');
     } else {
       this.props.onSearch(value.name, value.orgPath);
     }
+  }
+
+  static getPublishers(input) {
+    if (!input) {
+      return Promise.resolve({ options: [] });
+    }
+
+    return axios.get(`/publisher?q=${input}`).then(response => {
+      const nodes = response.data.hits.hits.map(item => item._source);
+      return { options: nodes };
+    });
   }
 
   render() {

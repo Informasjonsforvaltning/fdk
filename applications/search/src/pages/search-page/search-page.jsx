@@ -31,7 +31,6 @@ export class SearchPage extends React.Component {
           };
 
     this.state = {
-      showConcepts: false,
       showFilterModal: false,
       searchQuery
     };
@@ -395,7 +394,7 @@ export class SearchPage extends React.Component {
   }
 
   handlePageChange(data) {
-    const selected = data.selected;
+    const { selected } = data;
     const offset = Math.ceil(selected * 50);
 
     if (offset === 0) {

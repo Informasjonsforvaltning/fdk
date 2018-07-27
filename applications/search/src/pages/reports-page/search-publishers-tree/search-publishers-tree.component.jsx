@@ -26,9 +26,7 @@ export class SearchPublishersTree extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      source: {},
-      backspaceRemoves: true,
-      multi: false
+      source: {}
     };
     this.options = defaults({
       headers: {},
@@ -47,9 +45,6 @@ export class SearchPublishersTree extends React.Component {
   }
 
   onChange(value) {
-    this.setState({
-      value
-    });
     if (!value) {
       this.props.onSearch(null, '');
     } else {
@@ -64,8 +59,7 @@ export class SearchPublishersTree extends React.Component {
     axios
       .get(url)
       .then(res => {
-        const data = res.data;
-        const source = data;
+        const source = res.data;
         this.setState({
           source
         });
@@ -91,6 +85,9 @@ export class SearchPublishersTree extends React.Component {
           <span
             className="node"
             onClick={() => {
+              this.onChange(node);
+            }}
+            onKeyPress={() => {
               this.onChange(node);
             }}
             role="button"
@@ -124,6 +121,9 @@ export class SearchPublishersTree extends React.Component {
             onClick={() => {
               this.onChange(node);
             }}
+            onKeyPress={() => {
+              this.onChange(node);
+            }}
             role="button"
             tabIndex="0"
           >
@@ -155,6 +155,9 @@ export class SearchPublishersTree extends React.Component {
           <span
             className="mainTree-btn node"
             onClick={() => {
+              this.onChange(node);
+            }}
+            onKeyPress={() => {
               this.onChange(node);
             }}
             role="button"

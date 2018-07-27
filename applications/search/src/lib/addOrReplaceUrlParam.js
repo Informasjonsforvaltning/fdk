@@ -9,7 +9,7 @@ export function removeParam(key, sourceURL) {
   if (queryString !== '') {
     paramsArray = queryString.split('&');
     for (let i = paramsArray.length - 1; i >= 0; i -= 1) {
-      param = paramsArray[i].split('=')[0];
+      [param] = paramsArray[i].split('=');
       if (param === key) {
         paramsArray.splice(i, 1);
       }
