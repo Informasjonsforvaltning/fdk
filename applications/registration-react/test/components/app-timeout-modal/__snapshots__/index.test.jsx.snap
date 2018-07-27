@@ -11,6 +11,7 @@ exports[`should render TimeoutModal correctly 1`] = `
         "timeout": 150,
       }
     }
+    centered={false}
     fade={true}
     isOpen={true}
     keyboard={true}
@@ -27,7 +28,7 @@ exports[`should render TimeoutModal correctly 1`] = `
   >
     <ModalHeader
       closeAriaLabel="Close"
-      tag="h4"
+      tag="h5"
       toggle={[MockFunction]}
       wrapTag="div"
     >
