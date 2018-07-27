@@ -1,5 +1,6 @@
 package no.dcat.portal.query;
 
+import no.dcat.shared.Catalog;
 import no.dcat.shared.testcategories.UnitTest;
 import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryExecution;
@@ -23,11 +24,13 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.anyObject;
@@ -72,6 +75,30 @@ public class CatalogServiceTest {
         assertThat(response.getBody().contains("/catalogs?id="), is(true));
 
     }
+
+    @Test
+    public void getAllCatalogsOK() throws  Throwable {
+        CatalogService spy = spy(catalogService);
+
+        // Load testdatasett in model
+        Resource mResource = new ClassPathResource("data.ttl");
+        org.apache.jena.query.Dataset dataset = RDFDataMgr.loadDataset(mResource.getURL().toString());
+        Model model = ModelFactory.createUnion(ModelFactory.createDefaultModel(), dataset.getDefaultModel());
+
+        // trick controller to set up query without talking to fuseki
+        Resource queryResource = new ClassPathResource("sparql/allcatalogs.sparql");
+        String queryString = read(queryResource.getInputStream());
+        QueryExecution qe = QueryExecutionFactory.create(QueryFactory.create(queryString), model);
+
+        doReturn(qe).when(spy).getQueryExecution(anyObject());
+
+        List<Catalog> response = spy.allCatalogs();
+
+        assertThat(response, is(notNullValue()));
+        assertThat(response.size(), is(1));
+
+    }
+
 
     @Test
     public void getCatalogsFailsOnIOError() throws Throwable {
@@ -281,8 +308,9 @@ public class CatalogServiceTest {
 
         ResponseEntity<String> response = spy.getCatalogs();
 
-        assertThat(response.getStatusCode(), is(HttpStatus.NOT_FOUND));
+        assertThat(response.getStatusCode(), is(HttpStatus.INTERNAL_SERVER_ERROR));
     }
+
 
     private static String read(InputStream input) throws IOException {
         try (BufferedReader buffer = new BufferedReader(new InputStreamReader(input))) {
