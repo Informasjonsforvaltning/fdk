@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import { DistributionFormat } from '../../../../components/distribution-format/distribution-format.component';
 import localization from '../../../../lib/localization';
 import { getTranslateText } from '../../../../lib/translateText';
-import { getDistributionTypeByUri } from '../../../../redux/reducers/index';
+import { getDistributionTypeByUri } from '../../../../redux/modules/distributionType';
 import { DatasetLabelNational } from '../../../../components/dataset-label-national/dataset-label-national.component';
 import './search-hit-item.scss';
 

@@ -4,8 +4,8 @@ import { createLogger } from 'redux-logger';
 import persistState from 'redux-localstorage';
 import { apiMiddleware } from 'redux-api-middleware';
 
-import rootReducer from './reducers/index';
 import { config } from '../config';
+import { rootReducer } from './rootReducer';
 
 function selectCompose() {
   return window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -27,9 +27,9 @@ export function configureStore() {
   const store = createStore(rootReducer, /* preloadedState, */ enhancer);
 
   if (module.hot) {
-    module.hot.accept('./reducers/index', () => {
+    module.hot.accept('./rootReducer', () => {
       /* eslint-disable global-require */
-      store.replaceReducer(require('./reducers/index').default);
+      store.replaceReducer(require('./rootReducer').rootReducer);
     });
   }
 

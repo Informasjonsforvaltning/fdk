@@ -1,18 +1,34 @@
 import _ from 'lodash';
-import {
-  DATASETS_REQUEST,
-  DATASETS_SUCCESS,
-  DATASETS_FAILURE
-} from '../ActionTypes';
+import { addOrReplaceParam } from '../../lib/addOrReplaceUrlParam';
+import { fetchActions } from '../fetchActions';
 
-export default function datasets(
-  state = {
-    isFetching: false,
-    datasetItems: null,
-    publisherCountItems: null
-  },
-  action
-) {
+export const DATASETS_REQUEST = 'DATASETS_REQUEST';
+export const DATASETS_SUCCESS = 'DATASETS_SUCCESS';
+export const DATASETS_FAILURE = 'DATASETS_FAILURE';
+
+export function fetchDatasetsIfNeededAction(datasetsURL) {
+  // add static size parameter
+  const url = addOrReplaceParam(datasetsURL, 'size', '50');
+  return (dispatch, getState) => {
+    if (!getState().datasets.isFetching) {
+      dispatch(
+        fetchActions(url, [
+          DATASETS_REQUEST,
+          DATASETS_SUCCESS,
+          DATASETS_FAILURE
+        ])
+      );
+    }
+  };
+}
+
+const initialState = {
+  isFetching: false,
+  datasetItems: null,
+  publisherCountItems: null
+};
+
+export function datasetsReducer(state = initialState, action) {
   switch (action.type) {
     case DATASETS_REQUEST: {
       return {

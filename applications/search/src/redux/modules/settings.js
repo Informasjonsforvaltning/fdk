@@ -1,4 +1,11 @@
-import { SETTINGS_PATCH } from '../ActionTypes';
+export const SETTINGS_PATCH = 'SETTINGS_PATCH';
+
+export function setLanguageAction(language) {
+  return {
+    type: SETTINGS_PATCH,
+    settings: { language }
+  };
+}
 
 const initialState = {
   language: 'nb'

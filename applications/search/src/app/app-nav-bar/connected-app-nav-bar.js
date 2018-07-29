@@ -1,13 +1,13 @@
 import { connect } from 'react-redux';
 import { AppNavBar } from './app-nav-bar';
-import { setLanguage } from '../../redux/actions';
+import { setLanguageAction } from '../../redux/modules/settings';
 
 const mapStateToProps = state => ({
   language: state.settings.language
 });
 
 const mapDispatchToProps = dispatch => ({
-  onChangeLanguage: language => dispatch(setLanguage(language))
+  onChangeLanguage: language => dispatch(setLanguageAction(language))
 });
 
 export const ConnectedAppNavBar = connect(
