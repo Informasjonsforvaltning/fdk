@@ -23,7 +23,7 @@ export default function datasetDetails(
       return {
         ...state,
         isFetching: false,
-        datasetItem: action.response.data.hits.hits[0]._source
+        datasetItem: action.payload.hits.hits[0]._source
       };
     }
     case DATASETDETAILS_FAILURE: {

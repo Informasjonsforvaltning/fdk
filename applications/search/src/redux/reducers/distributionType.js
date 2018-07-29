@@ -22,7 +22,7 @@ export default function distributionTypes(
       return {
         ...state,
         isFetchingDistributionType: false,
-        distributionTypeItems: action.response.data
+        distributionTypeItems: action.payload
       };
     }
     case DISTRIBUTIONTYPE_FAILURE: {

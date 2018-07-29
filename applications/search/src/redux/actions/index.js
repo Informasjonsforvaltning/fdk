@@ -1,12 +1,17 @@
-import { CALL_API } from '../middleware/api';
+import { RSAA } from 'redux-api-middleware';
+
 import * as actions from '../ActionTypes';
 import { addOrReplaceParam } from '../../lib/addOrReplaceUrlParam';
 
 function fetchApi(url, types) {
   return {
-    [CALL_API]: {
-      types,
-      url
+    [RSAA]: {
+      endpoint: url,
+      method: 'GET',
+      headers: {
+        Accept: 'application/json'
+      },
+      types
     }
   };
 }

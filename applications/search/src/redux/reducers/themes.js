@@ -11,13 +11,10 @@ export default function themes(
         isFetching: true
       };
     case THEMES_SUCCESS: {
-      const objFromArray = action.response.data.reduce(
-        (accumulator, current) => {
-          accumulator[current.code] = current;
-          return accumulator;
-        },
-        {}
-      );
+      const objFromArray = action.payload.reduce((accumulator, current) => {
+        accumulator[current.code] = current;
+        return accumulator;
+      }, {});
       return {
         ...state,
         isFetching: false,

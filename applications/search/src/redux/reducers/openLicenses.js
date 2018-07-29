@@ -22,7 +22,7 @@ export default function openLicenses(
       return {
         ...state,
         isFetching: false,
-        openLicenseItems: action.response.data
+        openLicenseItems: action.payload
       };
     }
     case OPENLICENSES_FAILURE: {
