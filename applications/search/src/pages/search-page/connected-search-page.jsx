@@ -1,12 +1,10 @@
 import { connect } from 'react-redux';
-import {
-  fetchDatasetsIfNeeded,
-  fetchTermsIfNeeded,
-  fetchThemesIfNeeded,
-  fetchPublishersIfNeeded,
-  fetchDistributionTypeIfNeeded
-} from '../../redux/actions/index';
 import { SearchPage } from './search-page';
+import { fetchDistributionTypeIfNeededAction } from '../../redux/modules/distributionType';
+import { fetchPublishersIfNeededAction } from '../../redux/modules/publishers';
+import { fetchTermsIfNeededAction } from '../../redux/modules/terms';
+import { fetchDatasetsIfNeededAction } from '../../redux/modules/datasets';
+import { fetchThemesIfNeededAction } from '../../redux/modules/themes';
 
 const mapStateToProps = ({
   datasets,
@@ -57,11 +55,12 @@ const mapStateToProps = ({
 };
 
 const mapDispatchToProps = dispatch => ({
-  fetchDatasetsIfNeeded: url => dispatch(fetchDatasetsIfNeeded(url)),
-  fetchTermsIfNeeded: url => dispatch(fetchTermsIfNeeded(url)),
-  fetchThemesIfNeeded: () => dispatch(fetchThemesIfNeeded()),
-  fetchPublishersIfNeeded: () => dispatch(fetchPublishersIfNeeded()),
-  fetchDistributionTypeIfNeeded: () => dispatch(fetchDistributionTypeIfNeeded())
+  fetchDatasetsIfNeeded: url => dispatch(fetchDatasetsIfNeededAction(url)),
+  fetchTermsIfNeeded: url => dispatch(fetchTermsIfNeededAction(url)),
+  fetchThemesIfNeeded: () => dispatch(fetchThemesIfNeededAction()),
+  fetchPublishersIfNeeded: () => dispatch(fetchPublishersIfNeededAction()),
+  fetchDistributionTypeIfNeeded: () =>
+    dispatch(fetchDistributionTypeIfNeededAction())
 });
 
 export const ConnectedSearchPage = connect(

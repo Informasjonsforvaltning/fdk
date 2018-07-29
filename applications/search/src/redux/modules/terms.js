@@ -1,14 +1,30 @@
 import _ from 'lodash';
-import { TERMS_REQUEST, TERMS_SUCCESS, TERMS_FAILURE } from '../ActionTypes';
+import { addOrReplaceParam } from '../../lib/addOrReplaceUrlParam';
+import { fetchActions } from '../fetchActions';
 
-export default function terms(
-  state = {
-    isFetching: false,
-    termItems: null,
-    publisherCountTermItems: null
-  },
-  action
-) {
+export const TERMS_REQUEST = 'TERMS_REQUEST';
+export const TERMS_SUCCESS = 'TERMS_SUCCESS';
+export const TERMS_FAILURE = 'TERMS_FAILURE';
+
+export function fetchTermsIfNeededAction(termsURL) {
+  // add static size parameter
+  const url = addOrReplaceParam(termsURL, 'size', '50');
+  return (dispatch, getState) => {
+    if (!getState().terms.isFetching) {
+      dispatch(
+        fetchActions(url, [TERMS_REQUEST, TERMS_SUCCESS, TERMS_FAILURE])
+      );
+    }
+  };
+}
+
+const initialState = {
+  isFetching: false,
+  termItems: null,
+  publisherCountTermItems: null
+};
+
+export function termsReducer(state = initialState, action) {
   switch (action.type) {
     case TERMS_REQUEST: {
       return {

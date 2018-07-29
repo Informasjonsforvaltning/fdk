@@ -1,10 +1,24 @@
-import {
-  PUBLISHERS_REQUEST,
-  PUBLISHERS_SUCCESS,
-  PUBLISHERS_FAILURE
-} from '../ActionTypes';
+import { fetchActions } from '../fetchActions';
 
-export default function publishers(
+export const PUBLISHERS_REQUEST = 'PUBLISHERS_REQUEST';
+export const PUBLISHERS_SUCCESS = 'PUBLISHERS_SUCCESS';
+export const PUBLISHERS_FAILURE = 'PUBLISHERS_FAILURE';
+
+export function fetchPublishersIfNeededAction() {
+  return (dispatch, getState) => {
+    if (!getState().publishers.isFetching) {
+      dispatch(
+        fetchActions('/publisher', [
+          PUBLISHERS_REQUEST,
+          PUBLISHERS_SUCCESS,
+          PUBLISHERS_FAILURE
+        ])
+      );
+    }
+  };
+}
+
+export function publishersReducer(
   state = { isFetching: false, publisherItems: null },
   action
 ) {

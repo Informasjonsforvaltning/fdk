@@ -1,10 +1,9 @@
 import { connect } from 'react-redux';
-
-import {
-  fetchDatasetDetailsIfNeeded,
-  resetDatasetDetails
-} from '../../redux/actions/index';
 import { DatasetDetailsPage } from './dataset-details-page';
+import {
+  fetchDatasetDetailsIfNeededAction,
+  resetDatasetDetailsAction
+} from '../../redux/modules/datasetDetails';
 
 const mapStateToProps = ({ datasetDetails }) => {
   const { datasetItem, isFetchingDataset } = datasetDetails || {
@@ -20,8 +19,8 @@ const mapStateToProps = ({ datasetDetails }) => {
 
 const mapDispatchToProps = dispatch => ({
   fetchDatasetDetailsIfNeeded: url =>
-    dispatch(fetchDatasetDetailsIfNeeded(url)),
-  resetDatasetDetails: () => dispatch(resetDatasetDetails())
+    dispatch(fetchDatasetDetailsIfNeededAction(url)),
+  resetDatasetDetails: () => dispatch(resetDatasetDetailsAction())
 });
 
 export const ConnectedDatasetDetailsPage = connect(
