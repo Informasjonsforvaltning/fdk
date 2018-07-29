@@ -16,7 +16,7 @@ export default function publishers(
       };
     }
     case PUBLISHERS_SUCCESS: {
-      const objFromArray = action.response.data.hits.hits.reduce(
+      const objFromArray = action.payload.hits.hits.reduce(
         (accumulator, current) => {
           accumulator[current._source.orgPath] = current._source;
           return accumulator;
@@ -26,7 +26,7 @@ export default function publishers(
       return {
         ...state,
         isFetching: false,
-        publisherItems: objFromArray // action.response.data.hits.hits // action.response.data
+        publisherItems: objFromArray
       };
     }
     case PUBLISHERS_FAILURE: {

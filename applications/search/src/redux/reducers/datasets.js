@@ -21,7 +21,7 @@ export default function datasets(
       };
     }
     case DATASETS_SUCCESS: {
-      const orgs = action.response.data.aggregations.orgPath.buckets;
+      const orgs = action.payload.aggregations.orgPath.buckets;
       const flat = _(orgs).forEach(f => {
         const filteredOrgs = _(orgs)
           .filter(g => g.key.substring(0, g.key.lastIndexOf('/')) === f.key)
@@ -39,7 +39,7 @@ export default function datasets(
         .filter(f => !f.hasParent)
         .value();
 
-      const objFromArray = action.response.data.aggregations.subjectsCount.buckets.reduce(
+      const objFromArray = action.payload.aggregations.subjectsCount.buckets.reduce(
         (accumulator, current) => {
           accumulator[current.key] = current; // eslint-disable-line no-param-reassign
           return accumulator;
@@ -49,7 +49,7 @@ export default function datasets(
       return {
         ...state,
         isFetching: false,
-        datasetItems: action.response.data,
+        datasetItems: action.payload,
         publisherCountItems: resultArray,
         subjectsCountItems: objFromArray
       };

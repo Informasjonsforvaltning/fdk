@@ -17,7 +17,7 @@ export default function terms(
       };
     }
     case TERMS_SUCCESS: {
-      const orgs = action.response.data.aggregations.orgPath.buckets;
+      const orgs = action.payload.aggregations.orgPath.buckets;
       const flat = _(orgs).forEach(f => {
         const filteredOrgs = _(orgs)
           .filter(g => g.key.substring(0, g.key.lastIndexOf('/')) === f.key)
@@ -37,7 +37,7 @@ export default function terms(
       return {
         ...state,
         isFetching: false,
-        termItems: action.response.data,
+        termItems: action.payload,
         publisherCountTermItems: resultArray
       };
     }
