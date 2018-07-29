@@ -6,7 +6,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 module.exports = {
   devtool: 'cheap-module-eval-source-map',
   context: path.join(__dirname),
-  entry: ['@babel/polyfill', './src/index.jsx'],
+  entry: ['@babel/polyfill', 'whatwg-fetch', './src/index.jsx'],
   output: {
     path: path.join(__dirname, 'dist'),
     filename: 'bundle.js',
