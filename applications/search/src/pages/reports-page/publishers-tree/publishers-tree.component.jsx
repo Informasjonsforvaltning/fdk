@@ -7,9 +7,9 @@ import 'react-treeview/react-treeview.css';
 import cx from 'classnames';
 
 import localization from '../../../lib/localization';
-import './search-publishers-tree.scss';
+import './publishers-tree.scss';
 
-export class SearchPublishersTree extends React.Component {
+export class PublishersTree extends React.Component {
   static isItemCollapsed(itemOrgPath, chosenOrgPath) {
     if (chosenOrgPath && chosenOrgPath !== undefined) {
       const parentOrgPath = chosenOrgPath.substr(
@@ -96,10 +96,7 @@ export class SearchPublishersTree extends React.Component {
             {name}
           </span>
         );
-        const collapsed = SearchPublishersTree.isItemCollapsed(
-          node.orgPath,
-          orgPath
-        );
+        const collapsed = PublishersTree.isItemCollapsed(node.orgPath, orgPath);
         if (node.children && node.children.length > 0) {
           return (
             <TreeView
@@ -138,10 +135,7 @@ export class SearchPublishersTree extends React.Component {
         const chosenClass = cx('tree-view_main', {
           'tree-item_chosen': node.orgPath === orgPath
         });
-        const collapsed = SearchPublishersTree.isItemCollapsed(
-          node.orgPath,
-          orgPath
-        );
+        const collapsed = PublishersTree.isItemCollapsed(node.orgPath, orgPath);
         const name =
           node.name === 'STAT' ||
           node.name === 'FYLKE' ||
@@ -193,12 +187,12 @@ export class SearchPublishersTree extends React.Component {
   }
 }
 
-SearchPublishersTree.defaultProps = {
+PublishersTree.defaultProps = {
   onSearch: null,
   orgPath: null
 };
 
-SearchPublishersTree.propTypes = {
+PublishersTree.propTypes = {
   onSearch: PropTypes.func,
   orgPath: PropTypes.string
 };

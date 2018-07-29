@@ -4,7 +4,7 @@ import * as axios from 'axios';
 import localization from '../../../lib/localization';
 import { ReportStats } from './report-stats/report-stats.component';
 import { SearchPublishers } from './search-publishers/search-publishers.component';
-import { SearchPublishersTree } from '../search-publishers-tree/search-publishers-tree.component';
+import { PublishersTree } from '../publishers-tree/publishers-tree.component';
 import {
   addOrReplaceParamWithoutEncoding,
   removeParam
@@ -60,7 +60,7 @@ export class ResultsDatasetsReport extends React.Component {
         });
       })
       .catch(error => {
-        console.error(error.response);
+        console.error(error);
       });
   }
 
@@ -127,7 +127,7 @@ export class ResultsDatasetsReport extends React.Component {
         });
       })
       .catch(error => {
-        console.error(error.response);
+        console.error(error);
       });
   }
 
@@ -186,7 +186,7 @@ export class ResultsDatasetsReport extends React.Component {
                   onChange={this.handleOnChangeSearchField}
                   value={this.state.value}
                 />
-                <SearchPublishersTree
+                <PublishersTree
                   key={this.state.selectedOrgPath}
                   onSearch={this.handleOnTreeChange}
                   orgPath={ResultsDatasetsReport.getOrgPath()}

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`should render SearchPublishersTree correctly with props 1`] = `
+exports[`should render PublishersTree correctly with props 1`] = `
 <div
   className="pre-scrollable"
 >

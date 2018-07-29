@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { SearchPublishersTree } from './search-publishers-tree.component';
+import { PublishersTree } from './publishers-tree.component';
 import publisherHierarchy from '../../../../test/fixtures/publisherHierarchy';
 
 let onSearch;
@@ -14,12 +14,12 @@ beforeEach(() => {
     onSearch,
     orgPath: '/STAT/872417842/960885406'
   };
-  wrapper = shallow(<SearchPublishersTree {...defaultProps} />);
+  wrapper = shallow(<PublishersTree {...defaultProps} />);
   wrapper.setState({
     source: publisherHierarchy
   });
 });
 
-test('should render SearchPublishersTree correctly with props', () => {
+test('should render PublishersTree correctly with props', () => {
   expect(wrapper).toMatchSnapshot();
 });
