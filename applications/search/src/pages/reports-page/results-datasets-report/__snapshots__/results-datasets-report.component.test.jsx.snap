@@ -38,7 +38,7 @@ exports[`should render ResultsDatasetsReport correctly with hits 1`] = `
             onChange={[Function]}
             onSearch={[Function]}
           />
-          <SearchPublishersTree
+          <PublishersTree
             key="null"
             onSearch={[Function]}
             orgPath=""
@@ -667,7 +667,7 @@ exports[`should render ResultsDatasetsReport correctly with props 1`] = `
             onChange={[Function]}
             onSearch={[Function]}
           />
-          <SearchPublishersTree
+          <PublishersTree
             key="null"
             onSearch={[Function]}
             orgPath=""
