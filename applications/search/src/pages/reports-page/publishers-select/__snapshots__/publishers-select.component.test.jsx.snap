@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`should render SearchPublishers correctly with props 1`] = `
+exports[`should render PublishersSelect correctly with props 1`] = `
 <div
   className="section fdk-report-search-publishers"
 >

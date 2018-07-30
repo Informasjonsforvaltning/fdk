@@ -3,10 +3,10 @@ import Select from 'react-select';
 import * as axios from 'axios';
 import defaults from 'lodash/defaults';
 
-import localization from '../../../../lib/localization';
-import './search-publishers.scss';
+import localization from '../../../lib/localization';
+import './publishers-select.scss';
 
-export class SearchPublishers extends React.Component {
+export class PublishersSelect extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -58,7 +58,7 @@ export class SearchPublishers extends React.Component {
           onChange={this.props.onChange}
           valueKey="orgPath"
           labelKey="name"
-          loadOptions={SearchPublishers.getPublishers}
+          loadOptions={PublishersSelect.getPublishers}
           backspaceRemoves={this.state.backspaceRemoves}
         />
       </div>
@@ -66,6 +66,6 @@ export class SearchPublishers extends React.Component {
   }
 }
 
-SearchPublishers.defaultProps = {};
+PublishersSelect.defaultProps = {};
 
-SearchPublishers.propTypes = {};
+PublishersSelect.propTypes = {};

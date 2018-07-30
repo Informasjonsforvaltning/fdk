@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { SearchPublishers } from './search-publishers.component';
+import { PublishersSelect } from './publishers-select.component';
 
 let onSearch;
 let defaultProps;
@@ -12,9 +12,9 @@ beforeEach(() => {
     onSearch,
     value: 'STAT'
   };
-  wrapper = shallow(<SearchPublishers {...defaultProps} />);
+  wrapper = shallow(<PublishersSelect {...defaultProps} />);
 });
 
-test('should render SearchPublishers correctly with props', () => {
+test('should render PublishersSelect correctly with props', () => {
   expect(wrapper).toMatchSnapshot();
 });

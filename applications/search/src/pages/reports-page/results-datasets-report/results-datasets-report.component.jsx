@@ -3,7 +3,7 @@ import * as axios from 'axios';
 
 import localization from '../../../lib/localization';
 import { ReportStats } from './report-stats/report-stats.component';
-import { SearchPublishers } from './search-publishers/search-publishers.component';
+import { PublishersSelect } from '../publishers-select/publishers-select.component';
 import { PublishersTree } from '../publishers-tree/publishers-tree.component';
 import {
   addOrReplaceParamWithoutEncoding,
@@ -181,7 +181,7 @@ export class ResultsDatasetsReport extends React.Component {
                 >
                   {localization.query.clear}
                 </button>
-                <SearchPublishers
+                <PublishersSelect
                   onSearch={this.handleOnPublisherSearch}
                   onChange={this.handleOnChangeSearchField}
                   value={this.state.value}
