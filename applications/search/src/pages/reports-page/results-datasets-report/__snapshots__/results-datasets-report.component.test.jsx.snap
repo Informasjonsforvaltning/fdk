@@ -34,7 +34,7 @@ exports[`should render ResultsDatasetsReport correctly with hits 1`] = `
           >
             Clear
           </button>
-          <SearchPublishers
+          <PublishersSelect
             onChange={[Function]}
             onSearch={[Function]}
           />
@@ -663,7 +663,7 @@ exports[`should render ResultsDatasetsReport correctly with props 1`] = `
           >
             Clear
           </button>
-          <SearchPublishers
+          <PublishersSelect
             onChange={[Function]}
             onSearch={[Function]}
           />
