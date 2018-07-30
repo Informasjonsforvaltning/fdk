@@ -136,8 +136,8 @@ public class CatalogService {
 
 
         } catch (Exception e) {
-            logger.error("No catalogs found", e);
-            throw new RuntimeException("No catalogs found: ", e);
+            logger.error("Query to find catalogs failed: ", e);
+            throw new RuntimeException("Query to find catalogs failed: " + e.getMessage());
         }
 
         return result;
@@ -157,7 +157,6 @@ public class CatalogService {
     public ResponseEntity<String> getCatalogs() {
 
         List<Catalog> catalogs;
-        String queryString;
 
         // fail early
         try {
