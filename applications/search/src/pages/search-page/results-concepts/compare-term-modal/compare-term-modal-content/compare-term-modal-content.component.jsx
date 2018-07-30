@@ -1,5 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import _get from 'lodash/get';
+import _capitalize from 'lodash/capitalize';
+
 import { getTranslateText } from '../../../../../lib/translateText';
 import localization from '../../../../../lib/localization';
 
@@ -12,10 +15,18 @@ export const CompareTermModalContent = props => {
   cols = cols || CompareTermModalContent.defaultProps.cols;
 
   const title = items =>
-    items.map((item, index) => (
+    items.map((item, index) => {
+      const { creator } = item;
+
+      const publisherPrefLabel =
+        getTranslateText(_get(creator, ['prefLabel'])) ||
+        _capitalize(_get(creator, 'name', ''));
+
+      return (
       <div className={cols} key={`title-${index}${item.uri}`}>
         <h3>
-          {getTranslateText(item.prefLabel)
+          {item &&
+          getTranslateText(item.prefLabel)
             ? getTranslateText(item.prefLabel)
                 .charAt(0)
                 .toUpperCase() +
@@ -25,13 +36,11 @@ export const CompareTermModalContent = props => {
             : ''}
         </h3>
         <h5>
-          {item.creator && item.creator.name
-            ? item.creator.name.charAt(0).toUpperCase() +
-              item.creator.name.substring(1)
-            : ''}
+          {publisherPrefLabel}
         </h5>
       </div>
-    ));
+      )
+  });
 
   const definition = items =>
     items.map((item, index) => (

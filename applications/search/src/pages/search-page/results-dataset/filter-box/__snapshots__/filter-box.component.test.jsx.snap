@@ -42,6 +42,7 @@ exports[`should render FilterBox correctly 1`] = `
             itemKey={0}
             key="0"
             label="GOVE"
+            labelRaw={null}
             onClick={[MockFunction]}
             themesItems={
               Object {
@@ -71,6 +72,7 @@ exports[`should render FilterBox correctly 1`] = `
             itemKey={0}
             key="0"
             label="EDUC"
+            labelRaw={null}
             onClick={[MockFunction]}
             themesItems={
               Object {
@@ -100,6 +102,7 @@ exports[`should render FilterBox correctly 1`] = `
             itemKey={0}
             key="0"
             label="HEAL"
+            labelRaw={null}
             onClick={[MockFunction]}
             themesItems={
               Object {
@@ -129,6 +132,7 @@ exports[`should render FilterBox correctly 1`] = `
             itemKey={0}
             key="0"
             label="Ukjent"
+            labelRaw={null}
             onClick={[MockFunction]}
             themesItems={
               Object {
@@ -158,6 +162,7 @@ exports[`should render FilterBox correctly 1`] = `
             itemKey={0}
             key="0"
             label="AGRI"
+            labelRaw={null}
             onClick={[MockFunction]}
             themesItems={
               Object {
@@ -198,6 +203,7 @@ exports[`should render FilterBox correctly 1`] = `
                   itemKey={0}
                   key="0"
                   label="TEST"
+                  labelRaw={null}
                   onClick={[MockFunction]}
                   themesItems={
                     Object {
@@ -278,6 +284,7 @@ exports[`should render FilterBox correctly with activeFilter 1`] = `
             itemKey={0}
             key="0"
             label="GOVE"
+            labelRaw={null}
             onClick={[MockFunction]}
             themesItems={
               Object {
@@ -307,6 +314,7 @@ exports[`should render FilterBox correctly with activeFilter 1`] = `
             itemKey={0}
             key="0"
             label="EDUC"
+            labelRaw={null}
             onClick={[MockFunction]}
             themesItems={
               Object {
@@ -336,6 +344,7 @@ exports[`should render FilterBox correctly with activeFilter 1`] = `
             itemKey={0}
             key="0"
             label="HEAL"
+            labelRaw={null}
             onClick={[MockFunction]}
             themesItems={
               Object {
@@ -365,6 +374,7 @@ exports[`should render FilterBox correctly with activeFilter 1`] = `
             itemKey={0}
             key="0"
             label="Ukjent"
+            labelRaw={null}
             onClick={[MockFunction]}
             themesItems={
               Object {
@@ -394,6 +404,7 @@ exports[`should render FilterBox correctly with activeFilter 1`] = `
             itemKey={0}
             key="0"
             label="AGRI"
+            labelRaw={null}
             onClick={[MockFunction]}
             themesItems={
               Object {
@@ -434,6 +445,7 @@ exports[`should render FilterBox correctly with activeFilter 1`] = `
                   itemKey={0}
                   key="0"
                   label="TEST"
+                  labelRaw={null}
                   onClick={[MockFunction]}
                   themesItems={
                     Object {

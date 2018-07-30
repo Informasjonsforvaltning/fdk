@@ -3,12 +3,15 @@ import PropTypes from 'prop-types';
 import ReactPaginate from 'react-paginate';
 import { Modal, Button } from 'react-bootstrap';
 import cx from 'classnames';
+import _get from 'lodash/get';
+import _capitalize from 'lodash/capitalize';
 
 import localization from '../../../lib/localization';
 import { ConceptsHitItem } from './concepts-hit-item/concepts-hit-item.component';
 import { CompareTerms } from './compare-terms/compare-terms.component';
 import { CompareTermModal } from './compare-term-modal/compare-term-modal.component';
 import { SearchPublishersTree } from '../search-publishers-tree/search-publishers-tree.component';
+import { getTranslateText } from '../../../lib/translateText';
 
 export class ResultsConcepts extends React.Component {
   constructor(props) {
@@ -38,15 +41,17 @@ export class ResultsConcepts extends React.Component {
     const { terms } = this.state;
     const children = items =>
       items.map((item, index) => {
-        let creator;
-        if (item.creator && item.creator.name) {
-          creator = item.creator.name;
-        }
+        const { creator } = item;
+
+        const publisherPrefLabel =
+          getTranslateText(_get(creator, ['prefLabel'])) ||
+          _capitalize(_get(creator, 'name', ''));
+
         return (
           <CompareTerms
             key={item.uri}
             prefLabel={item.prefLabel}
-            creator={creator}
+            creator={publisherPrefLabel}
             onDeleteTerm={this.handleDeleteTerm}
             termIndex={index}
           />

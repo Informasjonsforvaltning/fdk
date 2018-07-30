@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import DocumentMeta from 'react-document-meta';
 import Moment from 'react-moment';
+import _get from 'lodash/get';
+import _capitalize from 'lodash/capitalize';
 
 import localization from '../../../lib/localization';
 import { getTranslateText } from '../../../lib/translateText';
@@ -24,15 +26,17 @@ export class DatasetDescription extends React.Component {
   _renderPublisher() {
     const { publisher } = this.props;
     const ownedBy = localization.search_hit.owned;
-    if (publisher && publisher.name) {
+
+    const publisherPrefLabel =
+      getTranslateText(_get(publisher, ['prefLabel'])) ||
+      _capitalize(_get(publisher, 'name', ''));
+
+    if (publisherPrefLabel) {
       return (
         <span>
           {ownedBy}&nbsp;
           <strong className="fdk-strong-virksomhet">
-            {publisher
-              ? publisher.name.charAt(0) +
-                publisher.name.substring(1).toLowerCase()
-              : ''}
+            {publisherPrefLabel}
           </strong>
         </span>
       );
