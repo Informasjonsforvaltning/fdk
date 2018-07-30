@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.org/Informasjonsforvaltning/fdk.svg?branch=master)](https://travis-ci.org/Altinn/fdk) 
 [![Coverage Status](https://coveralls.io/repos/github/Informasjonsforvaltning/fdk/badge.svg?branch=master)](https://coveralls.io/github/Altinn/fdk?branch=master)
+[![codecov](https://codecov.io/gh/Informasjonsforvaltning/fdk/branch/develop/graph/badge.svg)](https://codecov.io/gh/Informasjonsforvaltning/fdk)
 
 # The National Data Directory (Felles datakatalog)
 
