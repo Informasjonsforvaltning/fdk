@@ -6,12 +6,12 @@
     <parent>
         <groupId>no.dcat</groupId>
         <artifactId>applications</artifactId>
-        <version>0.2.4-SNAPSHOT</version>
+        <version>1.0</version>
     </parent>
 
     <artifactId>registration-react</artifactId>
     <description>Registration</description>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0</version>
 
     <dependencies>
         <dependency>

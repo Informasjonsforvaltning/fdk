@@ -3,13 +3,13 @@
     <parent>
         <artifactId>applications</artifactId>
         <groupId>no.dcat</groupId>
-        <version>0.2.4-SNAPSHOT</version>
+        <version>1.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>search-api</artifactId>
     <packaging>jar</packaging>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0</version>
 
     <dependencies>
         <!-- må være med for å kjøre i intellij -->
