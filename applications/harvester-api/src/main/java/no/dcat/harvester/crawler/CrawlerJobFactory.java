@@ -60,7 +60,7 @@ public class CrawlerJobFactory {
 		logger.debug("application.elasticSearchHost: " + applicationSettings.getElasticSearchHost());
 		logger.debug("application.elasticSearchPort: " + applicationSettings.getElasticSearchPort());
 		logger.debug("application.elasticSearchCluster: " + applicationSettings.getElasticSearchCluster());
-		logger.debug("application.themesHostname: " + applicationSettings.getThemesHostname());
+		logger.debug("application.referenceDataUrl: " + applicationSettings.getReferenceDataUrl());
 		logger.debug("application.httpUsername: " + applicationSettings.getHttpUsername());
 		logger.debug("application.httpPassword: " + applicationSettings.getHttpPassword());
 		logger.debug("application.notificationMailSenderAddress" + applicationSettings.getNotificationMailSenderAddress());
@@ -70,7 +70,7 @@ public class CrawlerJobFactory {
 				applicationSettings.getElasticSearchHost(),
 				applicationSettings.getElasticSearchPort(),
 				applicationSettings.getElasticSearchCluster(),
-				applicationSettings.getThemesHostname(),
+				applicationSettings.getReferenceDataUrl(),
 				applicationSettings.getHttpUsername(),
 				applicationSettings.getHttpPassword(),
 				applicationSettings.getNotificationMailSenderAddress(),

@@ -14,13 +14,14 @@ application:
   httpUsername: ${themesHttpUsername:user}
   httpPassword: ${themesHttpPassword:password}
   crawlerThreadPoolSize: 2
-  elasticSearchHost: elasticsearch
+  elasticSearchHost: ${elasticSearchHost:elasticsearch}
   elasticSearchPort: 9300
   elasticSearchCluster: elasticsearch
-  themesHostname: http://reference-data:8080
+  referenceDataUrl: ${referenceDataUrl:http://reference-data:8080}
+  notificationMailSenderAddress: fdksystembjg@gmail.com
 fuseki:
-  dcatServiceUri: http://fuseki:8080/fuseki/dcat
-  adminServiceUri: http://fuseki:8080/fuseki/admin
+  dcatServiceUri: ${fusekiDcatServiceUri:http://fuseki:8080/fuseki/dcat}
+  adminServiceUri: ${fusekiAdminServiceUri:http://fuseki:8080/fuseki/admin}
 
 ---
 spring:
@@ -53,11 +54,8 @@ fuseki:
   dcatServiceUri: http://localhost:3030/fuseki/dcat
   adminServiceUri: http://localhost:3030/fuseki/admin
 application:
-  crawlerThreadPoolSize: 2
   elasticSearchHost: localhost
-  elasticSearchPort: 9300
-  elasticSearchCluster: elasticsearch
-  themesHostname: http://localhost:8100
+  referenceDataUrl: http://localhost:8100
   notificationMailSenderAddress: fdksystembjg@gmail.com
 server:
   port: 8081
