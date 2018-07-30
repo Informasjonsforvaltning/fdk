@@ -19,7 +19,7 @@ echo $SECONDS
 if [ "$COVERALLS_REPO_TOKEN" ]
 then
     echo "Report coverage"
-    npm run coverage
+    codecov
 fi
 
 
