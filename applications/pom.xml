@@ -5,9 +5,10 @@
     <parent>
         <artifactId>fdk</artifactId>
         <groupId>no.dcat</groupId>
-        <version>0.2.4-SNAPSHOT</version>
+        <version>1.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
+    <version>1.0</version>
 
     <artifactId>applications</artifactId>
     <packaging>pom</packaging>

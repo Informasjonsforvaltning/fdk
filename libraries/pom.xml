@@ -5,11 +5,12 @@
     <parent>
         <artifactId>fdk</artifactId>
         <groupId>no.dcat</groupId>
-        <version>0.2.4-SNAPSHOT</version>
+        <version>1.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>libraries</artifactId>
+    <version>1.0</version>
     <packaging>pom</packaging>
 
     <modules>

@@ -7,11 +7,12 @@
     <parent>
         <groupId>no.dcat</groupId>
         <artifactId>applications</artifactId>
-        <version>0.2.4-SNAPSHOT</version>
+        <version>1.0</version>
         <relativePath>..</relativePath>
     </parent>
 
     <artifactId>nginx-registration</artifactId>
+    <version>1.0.0</version>
     <description>nginx router for registration application</description>
 
     <dependencies>
