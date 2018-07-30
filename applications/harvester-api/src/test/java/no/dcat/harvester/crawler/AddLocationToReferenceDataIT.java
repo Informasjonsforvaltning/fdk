@@ -4,13 +4,10 @@ import no.dcat.datastore.domain.dcat.client.BasicAuthRestTemplate;
 import no.dcat.datastore.domain.dcat.client.LoadLocations;
 import no.dcat.shared.SkosCode;
 import no.dcat.shared.testcategories.IntegrationTest;
-import org.apache.http.util.Args;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
@@ -25,8 +22,8 @@ import static org.junit.Assert.*;
 @Category(IntegrationTest.class)
 public class AddLocationToReferenceDataIT {
 
-    @Value("${application.themesHostname}")
-    private String themesHostName;
+    @Value("${application.referenceDataUrl}")
+    private String referenceDataUrl;
 
     @Value("${application.httpUsername}")
     private String httpUsername;
@@ -39,7 +36,7 @@ public class AddLocationToReferenceDataIT {
 
     @Before
     public void setup() {
-        loadLocations = new LoadLocations(themesHostName, httpUsername, httpPassword);
+        loadLocations = new LoadLocations(referenceDataUrl, httpUsername, httpPassword);
         template = new BasicAuthRestTemplate(httpUsername, httpPassword);
     }
 

@@ -92,7 +92,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
     String hostename;
     int port;
     String clustername;
-    private final String themesHostname;
+    private final String referenceDataUrl;
     String httpUsername;
     String httpPassword;
     String notificationEmailSender;
@@ -108,17 +108,17 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
      * @param hostname               host name where elasticsearch cluster is found
      * @param port                   port for connection to elasticserach cluster. Usually 9300
      * @param clustername            Name of elasticsearch cluster
-     * @param themesHostname         hostname for reference-data service whitch provides themes service
+     * @param referenceDataUrl         hostname for reference-data service whitch provides themes service
      * @param httpUsername           username used for posting data to reference-data service
      * @param httpPassword           password used for posting data to reference-data service
      * @param notifactionEmailSender email address used as from: address in emails with validation results
      */
-    public ElasticSearchResultHandler(String hostname, int port, String clustername, String themesHostname, String httpUsername, String httpPassword,
+    public ElasticSearchResultHandler(String hostname, int port, String clustername, String referenceDataUrl, String httpUsername, String httpPassword,
                                       String notifactionEmailSender, EmailNotificationService emailNotificationService) {
         this.hostename = hostname;
         this.port = port;
         this.clustername = clustername;
-        this.themesHostname = themesHostname;
+        this.referenceDataUrl = referenceDataUrl;
         this.httpUsername = httpUsername;
         this.httpPassword = httpPassword;
         this.notificationEmailSender = notifactionEmailSender;
@@ -128,8 +128,8 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
     }
 
 
-    public ElasticSearchResultHandler(String hostname, int port, String clustername, String themesHostname, String httpUsername, String httpPassword) {
-        this(hostname, port, clustername, themesHostname, httpUsername, httpPassword, DEFAULT_EMAIL_SENDER, null);
+    public ElasticSearchResultHandler(String hostname, int port, String clustername, String referenceDataUrl, String httpUsername, String httpPassword) {
+        this(hostname, port, clustername, referenceDataUrl, httpUsername, httpPassword, DEFAULT_EMAIL_SENDER, null);
     }
 
     Elasticsearch createElasticsearch() {
@@ -177,7 +177,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
     }
 
     DcatReader getReader(Model model) {
-        return new DcatReader(model, themesHostname, httpUsername, httpPassword);
+        return new DcatReader(model, referenceDataUrl, httpUsername, httpPassword);
     }
 
 
