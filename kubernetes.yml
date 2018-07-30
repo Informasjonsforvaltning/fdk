@@ -293,7 +293,15 @@ spec:
           name: harvester-api
         env:
         - name: SPRING_PROFILES_ACTIVE
-          value: azurepoc
+          value: prod
+        - name: fusekiDcatServiceUri
+          value: http://fuseki-poc.westeurope.azurecontainer.io:8080/fuseki/dcat
+        - name: fusekiAdminServiceUri
+          value: http://fuseki-poc.westeurope.azurecontainer.io:8080/fuseki/admin
+        - name: referenceDataUrl
+          value: http://reference-data-poc.westeurope.azurecontainer.io:8080
+        - name: elasticsearchHost
+          value: localhost
         - name: JVM_OPTIONS
           value: '-Xms128m -Xmx2048m'
         - name: themesHttpPassword
@@ -350,6 +358,12 @@ spec:
           value: test_admin
         - name: harvester_adminPassword
           value: password
+        - name: harvesterUrl
+          value: http://harvester-api-poc.westeurope.azurecontainer.io:8080
+        - name: fusekiDcatServcieUri
+          value: http://fuseki-poc.westeurope.azurecontainer.io:8080/fuseki/dcat
+        - name: fusekiAdminServiceUri
+          value: http://fuseki-poc.westeurope.azurecontainer.io:8080/fuseki/admin
         volumeMounts:
         - name: registration-api-config
           mountPath: /conf
