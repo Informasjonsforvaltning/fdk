@@ -11,6 +11,7 @@
 
     <artifactId>registration-react</artifactId>
     <description>Registration</description>
+    <version>1.0.0-SNAPSHOT</version>
 
     <dependencies>
         <dependency>
