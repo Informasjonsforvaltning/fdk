@@ -15,6 +15,7 @@ for i in "${!BUILD_APPS[@]}"; do
     # error does not exit script because it is in condition
     if ! ./buildAndPushApplication.sh "${BUILD_APPS[$i]}" "${BUILD_CMD[$i]}"
     then
+        echo "ERROR buildAndPush ${BUILD_APPS[$i]}"
         errors=$((errors+1))
     fi
     echo "SECONDS"
