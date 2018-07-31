@@ -1,9 +1,11 @@
 package no.dcat.portal.query;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.Data;
@@ -18,8 +20,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
@@ -89,12 +94,19 @@ public class PublisherQueryService extends ElasticsearchService {
         /**
          * Build flat list of PublisherHit from jsonArray.
          */
+
+        Type type = new TypeToken<Map<String,String>>(){}.getType();
+
         for (JsonElement element : jsonArray) {
             JsonObject jsonObject = element.getAsJsonObject().get("_source").getAsJsonObject();
+
             PublisherHit publisherHit = new PublisherHit();
             publisherHit.children = new ArrayList<>();
             publisherHit.name = jsonObject.get("name").getAsString();
             publisherHit.orgPath = jsonObject.get("orgPath").getAsString();
+            if (jsonObject.get("prefLabel") != null) {
+                publisherHit.prefLabel = gson.fromJson(jsonObject.get("prefLabel").toString(), type);
+            }
             publisherHitList.add(publisherHit);
         }
 
@@ -204,8 +216,10 @@ public class PublisherQueryService extends ElasticsearchService {
      * Represents a publisher and its children.
      */
     @Data
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public class PublisherHit implements Comparable<PublisherHit> {
         String name, orgPath;
+        Map<String,String> prefLabel;
         List<PublisherHit> children;
 
         /**
