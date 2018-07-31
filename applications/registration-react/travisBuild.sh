@@ -16,7 +16,7 @@ echo "SECONDS"
 echo $SECONDS
 
 
-if [ "$COVERALLS_REPO_TOKEN" ]
+if [ "$TRAVIS" ]
 then
     echo "Report coverage"
     codecov

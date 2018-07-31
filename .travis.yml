@@ -12,7 +12,6 @@ services:
   - docker
 
 install:
-  - export COVERALLS_PARALLEL=true # ensure coverage results are merged after all parallell jobs have finished
   - export DOCKER_HOST=unix:///var/run/docker.sock # required by the docker maven plugin for connecting to docker
   - git config --global core.autocrlf input # this allows to match source code hash with what is calculated on Mac and Windows
   - npm install -g codecov
@@ -61,4 +60,6 @@ jobs:
       # only deploy when branch is develop and exclude when type is pull_request,
       # because in case if type=pull_request branch means base branch.
       if: branch = develop AND type != pull_request
-      script: ./travisPushToDockerHub.sh
+      script:
+       - ./travisBuild.sh
+       - ./travisPushToDockerHub.sh
