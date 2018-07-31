@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 import localization from '../../../lib/localization';
+import { getDistributionTypeByUri } from '../../../redux/modules/distributionType';
 import { getTranslateText } from '../../../lib/translateText';
 import { DistributionFormat } from '../../../components/distribution-format/distribution-format.component';
 import './dataset-distribution.scss';
@@ -11,8 +12,20 @@ export class DatasetDistribution extends React.Component {
   // eslint-disable-line react/prefer-stateless-function
 
   _renderType() {
-    const { type } = this.props;
+    const { distributionTypeItems } = this.props;
+    let { type } = this.props;
     if (type) {
+      if (type !== 'API' && type !== 'Feed' && type !== 'Nedlastbar fil') {
+        const distributionType = getDistributionTypeByUri(
+          distributionTypeItems,
+          type
+        );
+        if (distributionType !== null && distributionType.length > 0) {
+          type = getTranslateText(distributionType[0].prefLabel);
+        } else {
+          type = null;
+        }
+      }
       return (
         <div>
           <h5 className="fdk-margin-top-double">
@@ -206,7 +219,8 @@ DatasetDistribution.defaultProps = {
   license: null,
   conformsTo: null,
   page: null,
-  type: null
+  type: null,
+  distributionTypeItems: null
 };
 
 DatasetDistribution.propTypes = {
@@ -218,5 +232,6 @@ DatasetDistribution.propTypes = {
   license: PropTypes.object,
   conformsTo: PropTypes.array,
   page: PropTypes.array,
-  type: PropTypes.string
+  type: PropTypes.string,
+  distributionTypeItems: PropTypes.array
 };

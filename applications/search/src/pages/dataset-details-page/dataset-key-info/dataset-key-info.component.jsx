@@ -86,10 +86,9 @@ export class DatasetKeyInfo extends React.Component {
     } = this.props;
 
     const childrenLegalBasisForRestriction = items =>
-      items.map(item => (
-        <div key={item.uri}>
+      items.map((item, index) => (
+        <div key={`restriction-${item.uri}-${index}`}>
           <LinkExternal
-            key={item.uri}
             uri={item.uri}
             prefLabel={getTranslateText(item.prefLabel)}
           />
@@ -97,10 +96,9 @@ export class DatasetKeyInfo extends React.Component {
       ));
 
     const childrenLegalBasisForProcessing = items =>
-      items.map(item => (
-        <div key={item.uri}>
+      items.map((item, index) => (
+        <div key={`processing-${item.uri}-${index}`}>
           <LinkExternal
-            key={item.uri}
             uri={item.uri}
             prefLabel={getTranslateText(item.prefLabel)}
           />
@@ -108,8 +106,8 @@ export class DatasetKeyInfo extends React.Component {
       ));
 
     const childrenLegalBasisForAccess = items =>
-      items.map(item => (
-        <div key={item.uri}>
+      items.map((item, index) => (
+        <div key={`access-${item.uri}-${index}`}>
           <LinkExternal
             uri={item.uri}
             prefLabel={getTranslateText(item.prefLabel)}

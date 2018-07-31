@@ -139,6 +139,7 @@ exports[`should render DatasetDetailsPage correctly with datasetItem 1`] = `
           code="NON_PUBLIC"
           conformsTo={null}
           description="Dette er beskrivelsen av distribusjonen. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Vestibulum id ligula porta felis euismod semper con desbit arum. Se dokumentasjon for denne distribusjonen."
+          distributionTypeItems={null}
           format={null}
           key="http%3A%2F%2Fbrreg.no%2Fcatalogs%2F987654321%2Fdatasets%2F3645d5a8-6689-4fc1-8684-d3d6c2d47386%2Fdistributions%2F96d63bba-e624-4f39-ad26-26b8c6a68880"
           license={
@@ -175,6 +176,7 @@ exports[`should render DatasetDetailsPage correctly with datasetItem 1`] = `
           code="NON_PUBLIC"
           conformsTo={null}
           description="Dette er beskrivelsen av distribusjonen. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Vestibulum id ligula porta felis euismod semper con desbit arum. Se dokumentasjon for denne distribusjonen."
+          distributionTypeItems={null}
           format={null}
           key="http%3A%2F%2Fbrreg.no%2Fcatalogs%2F987654321%2Fdatasets%2F3645d5a8-6689-4fc1-8684-d3d6c2d47386%2Fdistributions%2F96d63bba-e624-4f39-ad26-26b8c6a68880"
           license={
@@ -205,6 +207,7 @@ exports[`should render DatasetDetailsPage correctly with datasetItem 1`] = `
           code="SAMPLE"
           conformsTo={null}
           description="Dette er beskrivelsen av eksempeldataene. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor."
+          distributionTypeItems={null}
           format={
             Array [
               "application/rdf+xml",
