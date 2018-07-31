@@ -29,28 +29,25 @@ exports[`should render DatasetKeyInfo correctly 1`] = `
             className="fdk-ingress"
           >
             <div
-              key="https://lovdata.no/dokument/NL/lov/1992-12-04-126"
+              key="restriction-https://lovdata.no/dokument/NL/lov/1992-12-04-126-0"
             >
               <LinkExternal
-                key="https://lovdata.no/dokument/NL/lov/1992-12-04-126"
                 prefLabel="Lov om arkiv [arkivlova]"
                 uri="https://lovdata.no/dokument/NL/lov/1992-12-04-126"
               />
             </div>
             <div
-              key="http://lovdata/paragraph/20"
+              key="restriction-http://lovdata/paragraph/20-1"
             >
               <LinkExternal
-                key="http://lovdata/paragraph/20"
                 prefLabel="Den spesifikke loven § 20"
                 uri="http://lovdata/paragraph/20"
               />
             </div>
             <div
-              key="http://lovdata/paragraph/26"
+              key="restriction-http://lovdata/paragraph/26-2"
             >
               <LinkExternal
-                key="http://lovdata/paragraph/26"
                 prefLabel="Den mindre spesifikke loven § 26"
                 uri="http://lovdata/paragraph/26"
               />
@@ -65,10 +62,9 @@ exports[`should render DatasetKeyInfo correctly 1`] = `
             className="fdk-ingress"
           >
             <div
-              key="http://lovdata/paragraph/2"
+              key="processing-http://lovdata/paragraph/2-0"
             >
               <LinkExternal
-                key="http://lovdata/paragraph/2"
                 prefLabel="Den andre loven med lenger tittel § 2"
                 uri="http://lovdata/paragraph/2"
               />
@@ -83,7 +79,7 @@ exports[`should render DatasetKeyInfo correctly 1`] = `
             className="fdk-ingress"
           >
             <div
-              key="http://lovdata/paragraph/10"
+              key="access-http://lovdata/paragraph/10-0"
             >
               <LinkExternal
                 prefLabel="Den siste loven med den lengste tittelen § 10"

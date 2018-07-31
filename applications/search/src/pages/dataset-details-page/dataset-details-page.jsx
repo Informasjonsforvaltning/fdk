@@ -35,6 +35,7 @@ export class DatasetDetailsPage extends React.Component {
   loadDatasetFromServer(match) {
     const url = `/datasets/${match.params.id}`;
     this.props.fetchDatasetDetailsIfNeeded(url);
+    this.props.fetchDistributionTypeIfNeeded();
   }
 
   _renderDatasetDescription() {
@@ -57,7 +58,7 @@ export class DatasetDetailsPage extends React.Component {
 
   _renderDistribution() {
     const { distribution, accessRights } = this.props.datasetItem;
-    const { openLicenseItems } = this.props;
+    const { openLicenseItems, distributionTypeItems } = this.props;
     if (!distribution) {
       return null;
     }
@@ -74,6 +75,7 @@ export class DatasetDetailsPage extends React.Component {
         page={distribution.page}
         type={distribution.type}
         openLicenseItems={openLicenseItems}
+        distributionTypeItems={distributionTypeItems}
       />
     ));
   }
@@ -242,9 +244,11 @@ export class DatasetDetailsPage extends React.Component {
 }
 
 DatasetDetailsPage.defaultProps = {
-  datasetItem: null
+  datasetItem: null,
+  distributionTypeItems: null
 };
 
 DatasetDetailsPage.propTypes = {
-  datasetItem: PropTypes.object
+  datasetItem: PropTypes.object,
+  distributionTypeItems: PropTypes.array
 };
