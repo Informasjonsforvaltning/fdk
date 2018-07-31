@@ -7,7 +7,7 @@ import { ConnectedSearchPage } from '../pages/search-page/connected-search-page'
 import { ConnectedDatasetDetailsPage } from '../pages/dataset-details-page/connected-dataset-details-page';
 import { AboutPage } from '../pages/about-page/about-page.component';
 import { ArticlePage } from '../pages/article-page/article-page.component';
-import { ReportsPage } from '../pages/reports-page/reports-page.container';
+import { DatasetsReportPage } from "../pages/datasets-report-page/datasets-report-page";
 import { Breadcrumbs } from './breadcrumbs/breadcrumbs.component';
 
 import './styles';
@@ -62,7 +62,7 @@ export function App(props) {
             path="/datasets/:id"
             component={ConnectedDatasetDetailsPage}
           />
-          <Route exact path="/reports" component={ReportsPage} />
+          <Route exact path="/reports" component={DatasetsReportPage} />
           <Route exact path="/about" component={AboutPage} />
           <Route exact path="/about-registration" component={ArticlePage} />
         </Switch>

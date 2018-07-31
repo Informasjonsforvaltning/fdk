@@ -2,8 +2,8 @@ import * as _ from 'lodash';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import localization from '../../../../lib/localization';
-import { getParamFromString } from '../../../../lib/addOrReplaceUrlParam';
+import localization from '../../../lib/localization';
+import { getParamFromString } from '../../../lib/addOrReplaceUrlParam';
 import './report-stats.scss';
 
 export const ReportStats = props => {
