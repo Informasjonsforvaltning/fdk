@@ -1,16 +1,16 @@
 import React from 'react';
 import * as axios from 'axios';
 
-import localization from '../../../lib/localization';
+import localization from '../../lib/localization';
 import { ReportStats } from './report-stats/report-stats.component';
-import { PublishersSelect } from '../publishers-select/publishers-select.component';
-import { PublishersTree } from '../publishers-tree/publishers-tree.component';
+import { PublishersSelect } from './publishers-select/publishers-select.component';
+import { PublishersTree } from './publishers-tree/publishers-tree.component';
 import {
   addOrReplaceParamWithoutEncoding,
   removeParam
-} from '../../../lib/addOrReplaceUrlParam';
+} from '../../lib/addOrReplaceUrlParam';
 
-export class ResultsDatasetsReport extends React.Component {
+export class DatasetsReportPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -51,7 +51,7 @@ export class ResultsDatasetsReport extends React.Component {
             orgPath: hit.orgPath
           }));
         const entity = this.getName(
-          ResultsDatasetsReport.getOrgPath(),
+          DatasetsReportPage.getOrgPath(),
           publishers
         );
         this.setState({
@@ -87,7 +87,7 @@ export class ResultsDatasetsReport extends React.Component {
     const query =
       orgPath !== null && orgPath !== undefined
         ? orgPath
-        : ResultsDatasetsReport.getOrgPath();
+        : DatasetsReportPage.getOrgPath();
 
     const paramWithRemovedOrgPath = removeParam(
       'orgPath[0]',
@@ -160,48 +160,35 @@ export class ResultsDatasetsReport extends React.Component {
 
   render() {
     return (
-      <div>
-        <div className="container">
-          <section id="resultPanel">
-            <div className="row">
-              <div
-                className="col-md-4 col-md-offset-8"
-                id="content"
-                role="main"
-              >
-                <div className="pull-right" />
-              </div>
-            </div>
-            <div className="row">
-              <div className="search-filters col-sm-4 flex-move-first-item-to-bottom">
-                <button
-                  className="fdk-button fdk-button-default-no-hover"
-                  onClick={this.handleOnClearSearch}
-                  type="button"
-                >
-                  {localization.query.clear}
-                </button>
-                <PublishersSelect
-                  onSearch={this.handleOnPublisherSearch}
-                  onChange={this.handleOnChangeSearchField}
-                  value={this.state.value}
-                />
-                <PublishersTree
-                  key={this.state.selectedOrgPath}
-                  onSearch={this.handleOnTreeChange}
-                  orgPath={ResultsDatasetsReport.getOrgPath()}
-                />
-              </div>
-              <div id="datasets" className="col-sm-8">
-                <ReportStats
-                  aggregateDataset={this.state.aggregateDataset}
-                  entity={this.state.entity}
-                />
-              </div>
-            </div>
-          </section>
+      <section className="container">
+        <div className="row">
+          <div className="col-sm-4">
+            <button
+              className="fdk-button fdk-button-default-no-hover"
+              onClick={this.handleOnClearSearch}
+              type="button"
+            >
+              {localization.query.clear}
+            </button>
+            <PublishersSelect
+              onSearch={this.handleOnPublisherSearch}
+              onChange={this.handleOnChangeSearchField}
+              value={this.state.value}
+            />
+            <PublishersTree
+              key={this.state.selectedOrgPath}
+              onSearch={this.handleOnTreeChange}
+              orgPath={DatasetsReportPage.getOrgPath()}
+            />
+          </div>
+          <div className="col-sm-8">
+            <ReportStats
+              aggregateDataset={this.state.aggregateDataset}
+              entity={this.state.entity}
+            />
+          </div>
         </div>
-      </div>
+      </section>
     );
   }
 }

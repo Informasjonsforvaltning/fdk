@@ -69,7 +69,7 @@ export class PublishersTree extends React.Component {
       });
   }
 
-  _renderTree() {
+  render() {
     const { hits } = this.state.source;
 
     const subTree = hits =>
@@ -180,10 +180,6 @@ export class PublishersTree extends React.Component {
       return <div>{mainTree(hits)}</div>;
     }
     return null;
-  }
-
-  render() {
-    return <div className="pre-scrollable">{this._renderTree()}</div>;
   }
 }
 
