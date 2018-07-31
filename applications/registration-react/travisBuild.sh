@@ -16,7 +16,7 @@ echo "SECONDS"
 echo $SECONDS
 
 
-if [ "$TRAVIS" ]
+if [[ -v TRAVIS ]]
 then
     echo "Report coverage"
     codecov

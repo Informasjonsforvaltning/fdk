@@ -15,13 +15,16 @@ buildtag=$(./citools/getBuildTag.sh $BUILD_APP)
 echo "Checking if applications image is already built and tagged with $buildtag"
 if ./citools/applicationsTagExistInDockerHub.sh $BUILD_APP $buildtag
 then
-    echo "----------------------------------"
-    echo "Skipping build of application"
-    echo "Build image with tag $buildtag is already in dockerhub for application $BUILD_APP"
-    echo "----------------------------------"
-    echo "SECONDS"
-    echo $SECONDS
-#    exit 0
+  if [ "$FORCE_BUILD" != "true" ]
+    then
+      echo "----------------------------------"
+      echo "Skipping build of application"
+      echo "Build image with tag $buildtag is already in dockerhub for application $BUILD_APP"
+      echo "----------------------------------"
+      echo "SECONDS"
+      echo $SECONDS
+      exit 0
+    fi
 fi
 
 #build
