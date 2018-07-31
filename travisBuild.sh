@@ -17,6 +17,7 @@ for i in "${!BUILD_APPS[@]}"; do
     then
         echo "ERROR buildAndPush ${BUILD_APPS[$i]}"
         errors=$((errors+1))
+        echo "ERROR IN buildAndPushApplication ${BUILD_APPS[$i]}"
     fi
     echo "SECONDS"
     echo $SECONDS
