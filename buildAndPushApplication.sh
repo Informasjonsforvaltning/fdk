@@ -21,7 +21,7 @@ then
     echo "----------------------------------"
     echo "SECONDS"
     echo $SECONDS
-# force build    exit 0
+# force build xx    exit 0
 fi
 
 #build
