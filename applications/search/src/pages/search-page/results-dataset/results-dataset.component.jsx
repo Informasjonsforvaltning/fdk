@@ -228,7 +228,7 @@ export class ResultsDataset extends React.Component {
               {this._renderHits()}
             </div>
 
-            <div className="col-12 col-lg-8 offset-lg-4 text-center">
+            <div className="col-12 col-lg-8 offset-lg-4 d-flex justify-content-center">
               <span className="uu-invisible" aria-hidden="false">
                 Sidepaginering.
               </span>
