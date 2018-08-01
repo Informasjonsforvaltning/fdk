@@ -90,7 +90,7 @@
     "eslint-plugin-react": "^7.5.1",
     "husky": "^0.14.3",
     "identity-obj-proxy": "^3.0.0",
-    "jest": "^22.4.3",
+    "jest": "^22.4.4",
     "lint-staged": "^6.0.1",
     "prettier": "1.13.7",
     "redux-test-utils": "^0.2.2",
