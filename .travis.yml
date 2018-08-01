@@ -30,7 +30,7 @@ branches:
 jobs:
   include:
     - stage: Build
-      if: type = pull_request
+      if: type = pull_request OR ( type = push AND branch = develop )
       script: ./travisBuild.sh
       env:
         - comment=Build all applications
@@ -44,7 +44,7 @@ jobs:
         - comment=Run unit and integration tests + generate test coverage report
 
     - stage: Integration
-      if: type = pull_request
+      if: type = pull_request OR ( type = push AND branch = develop )
       script: ./travisIntegration.sh
       env:
         - comment="Run integration tests"
@@ -60,6 +60,6 @@ jobs:
     - stage: deploy
       # only deploy when branch is develop and exclude when type is pull_request,
       # because in case if type=pull_request branch means base branch.
-      if: branch = develop AND type != pull_request
+      if: branch = develop AND type = push
       script:
         - ./travisPushToDockerHub.sh
