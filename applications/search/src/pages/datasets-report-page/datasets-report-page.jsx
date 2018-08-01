@@ -14,7 +14,7 @@ export class DatasetsReportPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      entity: '',
+      entityName: '',
       aggregateDataset: {},
       publishers: []
     };
@@ -49,13 +49,13 @@ export class DatasetsReportPage extends React.Component {
             name: hit.name,
             orgPath: hit.orgPath
           }));
-        const entity = this.getName(
+        const entityName = this.getName(
           DatasetsReportPage.getOrgPath(),
           publishers
         );
         this.setState({
           publishers,
-          entity
+          entityName
         });
       })
       .catch(error => {
@@ -114,14 +114,14 @@ export class DatasetsReportPage extends React.Component {
       window.history.pushState(queryParam, queryParam.title, queryParam.url);
     }
 
-    // Get entity from input or try to find from publishers using orgPath.
-    const entity = name || this.getName(query);
+    // Get entityName from input or try to find from publishers using orgPath.
+    const entityName = name || this.getName(query);
 
     axios
       .get(`/aggregateDataset?q=${query}`)
       .then(response => {
         this.setState({
-          entity,
+          entityName,
           aggregateDataset: response.data
         });
       })
@@ -179,7 +179,7 @@ export class DatasetsReportPage extends React.Component {
           <div className="col-sm-8">
             <ReportStats
               aggregateDataset={this.state.aggregateDataset}
-              entity={this.state.entity}
+              entityName={this.state.entityName}
             />
           </div>
         </div>

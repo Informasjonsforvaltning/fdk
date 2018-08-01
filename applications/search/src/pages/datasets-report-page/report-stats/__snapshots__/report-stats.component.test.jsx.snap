@@ -11,7 +11,7 @@ exports[`should render ReportStats correctly 1`] = `
       <h2>
         Showing numbers for 
         <strong>
-          test entity
+          Test entity
         </strong>
       </h2>
     </div>

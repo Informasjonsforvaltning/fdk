@@ -9,7 +9,7 @@ let wrapper;
 beforeEach(() => {
   defaultProps = {
     aggregateDataset,
-    entity: 'test entity'
+    entityName: 'test entity'
   };
   wrapper = shallow(<ReportStats {...defaultProps} />);
 });
