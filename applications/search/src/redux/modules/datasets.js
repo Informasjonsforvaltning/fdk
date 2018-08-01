@@ -49,7 +49,7 @@ export function datasetsReducer(state = initialState, action) {
         isFetching: false,
         datasetItems: action.payload,
         publisherCountItems: createNestedListOfPublishers(
-          action.response.data.aggregations.orgPath.buckets
+          action.payload.aggregations.orgPath.buckets
         ),
         subjectsCountItems: objFromArray
       };
