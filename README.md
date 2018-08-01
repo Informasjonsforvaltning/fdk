@@ -1,5 +1,4 @@
-[![Build Status](https://travis-ci.org/Informasjonsforvaltning/fdk.svg?branch=master)](https://travis-ci.org/Altinn/fdk) 
-[![Coverage Status](https://coveralls.io/repos/github/Informasjonsforvaltning/fdk/badge.svg?branch=master)](https://coveralls.io/github/Altinn/fdk?branch=master)
+[![Build Status](https://travis-ci.org/Informasjonsforvaltning/fdk.svg?branch=master)](https://travis-ci.org/Informasjonsforvaltning/fdk) 
 [![codecov](https://codecov.io/gh/Informasjonsforvaltning/fdk/branch/develop/graph/badge.svg)](https://codecov.io/gh/Informasjonsforvaltning/fdk)
 
 # The National Data Directory (Felles datakatalog)
@@ -84,7 +83,8 @@ External Integrations
 # Start individual applications
 There is a couple of scripts that automates build and run the various models ondocker. The scripts are:
   * `./runDocker.sh search-api` to compile, build and run the search-api module on docker
-  * `./runAll.sh` to run compile, build and run all the modules on docker
+  * `./runAll.sh` to run all the modules on docker, it actually downloads images from docker hub or builds them if
+   you have made changes to the code.
   
 
 ## Search application:
@@ -122,21 +122,21 @@ repository and [data/fuseki](data/fuseki) for the fuseki repository.
 
 ![Indexes in elasticsearch](/images/elastic-index.png)
 
-## Travis and Coveralls
+## Continuous Integration (Travis, Codecov and Docker Hub)
 
-We use Travis for build and Coveralls for code coverage. Travis is configured in `.travis.yml`. Travis executes the instructions in this file to build, 
-run and test the code.
+We use [Travis](https://travis-ci.org) for CI (Continous Integration), 
+[Codecov](https://codecov.io) for code coverage and 
+[DockerHub](https://hub.docker.org) for image repository. 
+
+Travis is configured in `.travis.yml`. Travis executes the instructions in this file to build, 
+run and test the code. We have created a number of scripts that only builds the apps that have changed.
 
  - Travis: https://travis-ci.org/Informasjonsforvaltning/fdk
- - Coveralls: https://coveralls.io/github/Informasjonsforvaltning/fdk
+ - CodeCov: https://codecov.io/gh/Informasjonsforvaltning/fdk
+ - DockerHub: https://hub.docker.com/u/dcatno/
 
-Our Travis is set up to use Java jdk8 as the main language. To support javascript we install nodejs 
-version 8. Travis also supports running up docker containers and running
-Chrome for automated e2e tests. 
-
-Coveralls is enabled by having the `org.eluder.coveralls` plugin for maven in the root `pom.xml`. 
-Travis automatically injects the api key for Coveralls. Coveralls will comment on a pull request with the 
-coverage % for every successful build in Travis. 
+Travis checks out the code from GitHub and builds docker images. It reports code coverage to Codecov and tags 
+and pushes new images to DockerHub. Travis also downloads the images and runs integration tests.  
 
  
 ## Common Docker Problems
