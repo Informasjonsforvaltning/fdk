@@ -76,7 +76,6 @@
     "webpack-hot-middleware": "^2.22.3"
   },
   "devDependencies": {
-    "coveralls": "^3.0.1",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
     "enzyme-to-json": "^3.3.3",
