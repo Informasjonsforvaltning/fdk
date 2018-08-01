@@ -81,7 +81,9 @@ export function addOrReplaceParamWithoutURL(uri, key, value) {
  * @returns {null}
  */
 export function getParamFromUrl(param) {
-  const queryObj = qs.parse(window.location.search.substr(1));
+  const queryObj = qs.parse(window.location.search, {
+    ignoreQueryPrefix: true
+  });
   if (queryObj && queryObj[param]) {
     return queryObj[param];
   }
@@ -93,7 +95,7 @@ export function getParamFromUrl(param) {
  * @returns {null}
  */
 export function getParamFromString(urlSearchPart, param) {
-  const queryObj = qs.parse(urlSearchPart.substr(1));
+  const queryObj = qs.parse(urlSearchPart, { ignoreQueryPrefix: true });
   if (queryObj && queryObj[param]) {
     return queryObj[param];
   }
