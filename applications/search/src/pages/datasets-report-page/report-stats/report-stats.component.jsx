@@ -8,8 +8,8 @@ import './report-stats.scss';
 import _capitalize from 'lodash/capitalize';
 
 export const ReportStats = props => {
-  const { aggregateDataset, entity } = props;
-  // const { entity } = props;
+  const { aggregateDataset, entityName } = props;
+  // const { entityName } = props;
   // const aggregateDataset = require('../../../../api-mocks/aggregateDataset_opendata.json')
   const stats = {
     total: aggregateDataset.hits ? aggregateDataset.hits.total : 0,
@@ -106,15 +106,15 @@ export const ReportStats = props => {
     encodedOrgPath !== null ? `&orgPath=${encodedOrgPath}` : '';
 
   let name;
-  if (entity) {
+  if (entityName) {
     name =
-      entity === 'STAT' ||
-      entity === 'FYLKE' ||
-      entity === 'KOMMUNE' ||
-      entity === 'PRIVAT' ||
-      entity === 'ANNET'
-        ? localization.facet.publishers[entity]
-        : _capitalize(entity);
+      entityName === 'STAT' ||
+      entityName === 'FYLKE' ||
+      entityName === 'KOMMUNE' ||
+      entityName === 'PRIVAT' ||
+      entityName === 'ANNET'
+        ? localization.facet.publishers[entityName]
+        : _capitalize(entityName);
   } else {
     name = localization.report.allEntities;
   }
