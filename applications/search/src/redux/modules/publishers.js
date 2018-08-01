@@ -18,10 +18,9 @@ export function fetchPublishersIfNeededAction() {
   };
 }
 
-export function publishersReducer(
-  state = { isFetching: false, publisherItems: null },
-  action
-) {
+const initialState = { isFetching: false, publisherItems: {} };
+
+export function publishersReducer(state = initialState, action) {
   switch (action.type) {
     case PUBLISHERS_REQUEST: {
       return {

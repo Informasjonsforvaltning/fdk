@@ -1,11 +1,11 @@
 import * as _ from 'lodash';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import _capitalize from 'lodash/capitalize';
 
 import localization from '../../../lib/localization';
 import { getParamFromString } from '../../../lib/addOrReplaceUrlParam';
 import './report-stats.scss';
-import _capitalize from 'lodash/capitalize';
 
 export const ReportStats = props => {
   const { aggregateDataset, entityName } = props;
