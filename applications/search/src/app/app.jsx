@@ -7,17 +7,17 @@ import { ConnectedSearchPage } from '../pages/search-page/connected-search-page'
 import { ConnectedDatasetDetailsPage } from '../pages/dataset-details-page/connected-dataset-details-page';
 import { AboutPage } from '../pages/about-page/about-page.component';
 import { ArticlePage } from '../pages/article-page/article-page.component';
-import { DatasetsReportPage } from '../pages/datasets-report-page/datasets-report-page';
 import { Breadcrumbs } from './breadcrumbs/breadcrumbs.component';
+import { ConnectedAppNavBar } from './app-nav-bar/connected-app-nav-bar';
+import { ConnectedDatasetsReportPage } from '../pages/datasets-report-page/connected-datasets-report-page';
 
 import './styles';
-import { ConnectedAppNavBar } from './app-nav-bar/connected-app-nav-bar';
 
 export function App(props) {
   // react-localization is a stateful library, so we set the required language on each full-app render
   // and full-render app each time when the language is changed
-
   localization.setLanguage(props.language);
+
   return (
     <div>
       <div>
@@ -62,7 +62,11 @@ export function App(props) {
             path="/datasets/:id"
             component={ConnectedDatasetDetailsPage}
           />
-          <Route exact path="/reports" component={DatasetsReportPage} />
+          <Route
+            exact
+            path="/reports"
+            component={ConnectedDatasetsReportPage}
+          />
           <Route exact path="/about" component={AboutPage} />
           <Route exact path="/about-registration" component={ArticlePage} />
         </Switch>

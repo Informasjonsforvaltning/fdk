@@ -1,5 +1,7 @@
+import _ from 'lodash';
 import React from 'react';
-import * as axios from 'axios';
+import PropTypes from 'prop-types';
+import axios from 'axios';
 
 import localization from '../../lib/localization';
 import { ReportStats } from './report-stats/report-stats.component';
@@ -15,15 +17,14 @@ export class DatasetsReportPage extends React.Component {
     super(props);
     this.state = {
       entityName: '',
-      aggregateDataset: {},
-      publishers: []
+      aggregateDataset: {}
     };
     this.handleOnPublisherSearch = this.handleOnPublisherSearch.bind(this);
     this.handleOnChangeSearchField = this.handleOnChangeSearchField.bind(this);
     this.handleOnTreeChange = this.handleOnTreeChange.bind(this);
     this.handleOnClearSearch = this.handleOnClearSearch.bind(this);
-    this.getPublishers();
     this.handleOnPublisherSearch();
+    this.props.fetchPublishersIfNeeded();
   }
 
   static getOrgPath() {
@@ -39,46 +40,12 @@ export class DatasetsReportPage extends React.Component {
     return orgPath || '';
   }
 
-  getPublishers() {
-    axios
-      .get('/publisher?q=')
-      .then(response => {
-        const publishers = response.data.hits.hits
-          .map(item => item._source)
-          .map(hit => ({
-            name: hit.name,
-            orgPath: hit.orgPath
-          }));
-        const entityName = this.getName(
-          DatasetsReportPage.getOrgPath(),
-          publishers
-        );
-        this.setState({
-          publishers,
-          entityName
-        });
-      })
-      .catch(error => {
-        console.error(error);
-      });
-  }
-
-  getName(orgPath, publishersIn) {
-    // Set publishers from state if exists, or input if exists.
-    const publishers =
-      this.state.publishers.length > 0
-        ? this.state.publishers
-        : publishersIn || null;
-    if (publishers) {
-      const result = publishers.find(
-        publisher => publisher.orgPath === orgPath
-      );
-      const paramEntity = result
-        ? result.name
-        : localization.report.allEntities;
-      return paramEntity;
+  getName(orgPath) {
+    if (!orgPath) {
+      return localization.report.allEntities;
     }
-    return orgPath;
+    const publisher = this.props.publishers[orgPath];
+    return publisher ? publisher.name : orgPath;
   }
 
   handleOnPublisherSearch(name, orgPath) {
@@ -115,7 +82,7 @@ export class DatasetsReportPage extends React.Component {
     }
 
     // Get entityName from input or try to find from publishers using orgPath.
-    const entityName = name || this.getName(query);
+    const entityName = this.getName(query);
 
     axios
       .get(`/aggregateDataset?q=${query}`)
@@ -187,3 +154,11 @@ export class DatasetsReportPage extends React.Component {
     );
   }
 }
+
+DatasetsReportPage.defaultProps = {
+  fetchPublishersIfNeeded: _.noop
+};
+
+DatasetsReportPage.propTypes = {
+  fetchPublishersIfNeeded: PropTypes.func
+};
