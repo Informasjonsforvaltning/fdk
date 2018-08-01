@@ -187,6 +187,11 @@ public class DatasetsQueryService extends ElasticsearchService {
                 isEmpty(provenance) && isEmpty(spatial) &&
                 isEmpty(opendata);
 
+        // add * if query only contains one word
+        if (!query.isEmpty() && !query.contains(" ")) {
+            query = query + " " + query + "*";
+        }
+
         QueryBuilder search;
 
         if (emptySearch) {
