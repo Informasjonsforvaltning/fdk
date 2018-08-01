@@ -72,7 +72,7 @@ export function App(props) {
         </Switch>
       </div>
 
-      <div className="fdk-footer visible-xs visible-sm">
+      <div className="fdk-footer d-md-none">
         <div className="container">
           <div className="row">
             <div className="col-sm-12 text-center mb-2">
@@ -101,7 +101,7 @@ export function App(props) {
         </div>
       </div>
 
-      <div className="fdk-footer visible-md visible-lg">
+      <div className="fdk-footer d-none d-md-block">
         <div className="container">
           <div className="row">
             <div className="col-md-3">
