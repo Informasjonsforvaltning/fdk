@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import localization from '../../../lib/localization';
 import { getParamFromString } from '../../../lib/addOrReplaceUrlParam';
 import './report-stats.scss';
+import _capitalize from 'lodash/capitalize';
 
 export const ReportStats = props => {
   const { aggregateDataset, entity } = props;
@@ -105,7 +106,7 @@ export const ReportStats = props => {
     encodedOrgPath !== null ? `&orgPath=${encodedOrgPath}` : '';
 
   let name;
-  if (entity && entity.length > 0) {
+  if (entity) {
     name =
       entity === 'STAT' ||
       entity === 'FYLKE' ||
@@ -113,7 +114,7 @@ export const ReportStats = props => {
       entity === 'PRIVAT' ||
       entity === 'ANNET'
         ? localization.facet.publishers[entity]
-        : `${entity.charAt(0)}${entity.substring(1).toLowerCase()}`;
+        : _capitalize(entity);
   } else {
     name = localization.report.allEntities;
   }
