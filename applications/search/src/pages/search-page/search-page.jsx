@@ -60,7 +60,7 @@ export class SearchPage extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.location.search !== this.props.location.search) {
-      const search = this.props.location.search;
+      const { search } = this.props.location;
       this.props.fetchDatasetsIfNeeded(`/datasets${search}`);
       this.props.fetchTermsIfNeeded(`/terms${search}`);
     }
