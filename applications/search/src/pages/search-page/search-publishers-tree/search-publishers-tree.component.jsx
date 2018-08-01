@@ -68,7 +68,8 @@ export class SearchPublishersTree extends React.Component {
           'tree-item_chosen': node.key === orgPath
         });
 
-        const name = getTranslateText(_get(publishers, [node.key, 'prefLabel'])) ||
+        const name =
+          getTranslateText(_get(publishers, [node.key, 'prefLabel'])) ||
           _capitalize(_get(publishers, [node.key, 'name'], node.key));
 
         const label = (

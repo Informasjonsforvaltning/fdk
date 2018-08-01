@@ -6,6 +6,32 @@ export const DATASETS_REQUEST = 'DATASETS_REQUEST';
 export const DATASETS_SUCCESS = 'DATASETS_SUCCESS';
 export const DATASETS_FAILURE = 'DATASETS_FAILURE';
 
+function createNestedListOfPublishers(listOfPublishers) {
+  const nestedListOfPublishers = _(listOfPublishers).forEach(publisherItem => {
+    const filteredChildrenOfParentPublishers = _(listOfPublishers)
+      .filter(
+        g => g.key.substring(0, g.key.lastIndexOf('/')) === publisherItem.key
+      )
+      .value();
+
+    filteredChildrenOfParentPublishers.forEach(item => {
+      const retVal = item;
+      retVal.hasParent = true;
+      return retVal;
+    });
+
+    const retVal = publisherItem;
+    retVal.children = filteredChildrenOfParentPublishers;
+    return retVal;
+  });
+
+  const resultArray = _(nestedListOfPublishers)
+    .filter(f => !f.hasParent)
+    .value();
+
+  return resultArray;
+}
+
 export function fetchDatasetsIfNeededAction(datasetsURL) {
   // add static size parameter
   const url = addOrReplaceParam(datasetsURL, 'size', '50');
@@ -74,30 +100,4 @@ export const getDatasetById = (datasets, id) => {
     );
   }
   return null;
-};
-
-const createNestedListOfPublishers = listOfPublishers => {
-  const nestedListOfPublishers = _(listOfPublishers).forEach(publisherItem => {
-    const filteredChildrenOfParentPublishers = _(listOfPublishers)
-      .filter(
-        g => g.key.substring(0, g.key.lastIndexOf('/')) === publisherItem.key
-      )
-      .value();
-
-    filteredChildrenOfParentPublishers.forEach(item => {
-      const retVal = item;
-      retVal.hasParent = true;
-      return retVal;
-    });
-
-    const retVal = publisherItem;
-    retVal.children = filteredChildrenOfParentPublishers;
-    return retVal;
-  });
-
-  const resultArray = _(nestedListOfPublishers)
-    .filter(f => !f.hasParent)
-    .value();
-
-  return resultArray;
 };

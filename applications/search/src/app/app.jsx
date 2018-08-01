@@ -7,7 +7,7 @@ import { ConnectedSearchPage } from '../pages/search-page/connected-search-page'
 import { ConnectedDatasetDetailsPage } from '../pages/dataset-details-page/connected-dataset-details-page';
 import { AboutPage } from '../pages/about-page/about-page.component';
 import { ArticlePage } from '../pages/article-page/article-page.component';
-import { DatasetsReportPage } from "../pages/datasets-report-page/datasets-report-page";
+import { DatasetsReportPage } from '../pages/datasets-report-page/datasets-report-page';
 import { Breadcrumbs } from './breadcrumbs/breadcrumbs.component';
 
 import './styles';

@@ -23,24 +23,21 @@ export const CompareTermModalContent = props => {
         _capitalize(_get(creator, 'name', ''));
 
       return (
-      <div className={cols} key={`title-${index}${item.uri}`}>
-        <h3>
-          {item &&
-          getTranslateText(item.prefLabel)
-            ? getTranslateText(item.prefLabel)
-                .charAt(0)
-                .toUpperCase() +
-              getTranslateText(item.prefLabel)
-                .substring(1)
-                .toLowerCase()
-            : ''}
-        </h3>
-        <h5>
-          {publisherPrefLabel}
-        </h5>
-      </div>
-      )
-  });
+        <div className={cols} key={`title-${index}${item.uri}`}>
+          <h3>
+            {item && getTranslateText(item.prefLabel)
+              ? getTranslateText(item.prefLabel)
+                  .charAt(0)
+                  .toUpperCase() +
+                getTranslateText(item.prefLabel)
+                  .substring(1)
+                  .toLowerCase()
+              : ''}
+          </h3>
+          <h5>{publisherPrefLabel}</h5>
+        </div>
+      );
+    });
 
   const definition = items =>
     items.map((item, index) => (
