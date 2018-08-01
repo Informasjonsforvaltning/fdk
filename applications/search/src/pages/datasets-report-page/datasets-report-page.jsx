@@ -2,6 +2,7 @@ import _ from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import qs from 'qs';
 
 import localization from '../../lib/localization';
 import { ReportStats } from './report-stats/report-stats.component';
@@ -28,16 +29,10 @@ export class DatasetsReportPage extends React.Component {
   }
 
   static getOrgPath() {
-    const orgPath = window.location.search
-      .substring(1)
-      .split('&')
-      .map(v => v.split('='))
-      .reduce(
-        (map, [key, value]) => map.set(key, decodeURIComponent(value)),
-        new Map()
-      )
-      .get('orgPath[0]');
-    return orgPath || '';
+    const parsed = qs.parse(window.location.search, {
+      ignoreQueryPrefix: true
+    });
+    return (parsed && parsed.orgPath) || '';
   }
 
   getName(orgPath) {
@@ -56,12 +51,12 @@ export class DatasetsReportPage extends React.Component {
         : DatasetsReportPage.getOrgPath();
 
     const paramWithRemovedOrgPath = removeParam(
-      'orgPath[0]',
+      'orgPath',
       window.location.href
     );
     const replacedUrl = addOrReplaceParamWithoutEncoding(
       paramWithRemovedOrgPath,
-      'orgPath[0]',
+      'orgPath',
       query
     );
 
