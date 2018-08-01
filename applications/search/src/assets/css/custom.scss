@@ -89,3 +89,15 @@
     color: $color1 !important;
   }
 }
+
+.modal-header {
+  h5 {
+    color: $color0;
+  }
+  button {
+    span {
+      font-size: 2rem;
+      color: $color-red;
+    }
+  }
+}
