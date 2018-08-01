@@ -5,7 +5,9 @@ import {
   DropdownToggle,
   DropdownItem,
   DropdownMenu,
-  UncontrolledDropdown, Nav, NavItem, NavLink
+  UncontrolledDropdown,
+  Nav,
+  NavItem
 } from 'reactstrap';
 
 import localization from '../../lib/localization';
@@ -14,7 +16,7 @@ export function AppNavBar(props) {
   return (
     <div className="fdk-header">
       <div className="container">
-        <div className="container-fluid d-flex align-items-center">
+        <div className="row d-flex justify-content-between align-items-center">
           <div>
             <a title="Link til Felles datakatalog" href="/">
               <span className="uu-invisible" aria-hidden="false">
@@ -27,100 +29,75 @@ export function AppNavBar(props) {
               />
             </a>
           </div>
-          <div
-            className="fdk-header-flex"
-            style={{ 'flexGrow': '1', 'alignItems': 'center' }}
-          >
+          <div>
             <Nav className="d-none d-lg-inline-flex">
               <NavItem>
-                <NavLink href="/about">
+                <Link className="nav-link" to="/about">
                   {localization.about.about}
-                </NavLink>
+                </Link>
               </NavItem>
               <NavItem>
-                <NavLink href="/about-registration">
+                <Link className="nav-link" to="/about-registration">
                   {localization.menu.aboutRegistration}
-                </NavLink>
+                </Link>
               </NavItem>
               <NavItem>
-                <NavLink href="/reports">
+                <Link className="nav-link" to="/reports">
                   {localization.menu.reports}
-                </NavLink>
+                </Link>
               </NavItem>
             </Nav>
 
-            <UncontrolledDropdown
-              tabIndex="0"
-              className="d-none d-lg-inline"
-              >
-              <DropdownToggle className="fdk-button-language"
-                caret
-              >
+            <UncontrolledDropdown className="d-none d-lg-inline">
+              <DropdownToggle className="fdk-button-language" caret>
                 {localization.lang.chosenLanguage}
               </DropdownToggle>
-              <DropdownMenu right>
-
-              <DropdownItem onClick={() => props.onChangeLanguage('nb')}
-                >
-                {localization.lang['norwegian-nb']}
-              </DropdownItem>
-              <DropdownItem onClick={() => props.onChangeLanguage('nn')}
-              >
-
-                {localization.lang['norwegian-nn']}
-              </DropdownItem>
-              <DropdownItem onClick={() => props.onChangeLanguage('en')}
-              >
-                {localization.lang['english-en']}
-              </DropdownItem>
+              <DropdownMenu right className="fdk-button-language-dropdownmenu">
+                <DropdownItem onClick={() => props.onChangeLanguage('nb')}>
+                  {localization.lang['norwegian-nb']}
+                </DropdownItem>
+                <DropdownItem onClick={() => props.onChangeLanguage('nn')}>
+                  {localization.lang['norwegian-nn']}
+                </DropdownItem>
+                <DropdownItem onClick={() => props.onChangeLanguage('en')}>
+                  {localization.lang['english-en']}
+                </DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>
 
-          <UncontrolledDropdown
-            tabIndex="0"
-            className="fdk-dropdown-menu d-inline d-lg-none"
-          >
-            <DropdownToggle
-              className="fdk-button fdk-button-default fdk-button-menu"
-              caret
+            <UncontrolledDropdown
+              tabIndex="0"
+              className="fdk-dropdown-menu d-inline d-lg-none"
             >
-              {localization.app.menu}
-            </DropdownToggle>
-            <DropdownMenu right>
-              <DropdownItem>
-                <Link tabIndex="-1" to="/about">
+              <DropdownToggle
+                className="fdk-button fdk-button-default fdk-button-menu"
+                caret
+              >
+                {localization.app.menu}
+              </DropdownToggle>
+              <DropdownMenu right className="fdk-button-language-dropdownmenu">
+                <Link className="dropdown-item" to="/about">
                   {localization.about.about}
                 </Link>
-              </DropdownItem>
-              <DropdownItem>
-                <Link tabIndex="-1" to="/about-registration">
+                <Link className="dropdown-item" to="/about-registration">
                   {localization.menu.aboutRegistration}
                 </Link>
-              </DropdownItem>
-              <DropdownItem>
-                <Link tabIndex="-1" to="/reports">
+                <Link className="dropdown-item" to="/reports">
                   {localization.menu.reports}
                 </Link>
-              </DropdownItem>
-              <DropdownItem
-                onClick={() => props.onChangeLanguage('nb')}
-              >
-                {localization.lang['norwegian-nb']}
-              </DropdownItem>
-              <DropdownItem
-                onClick={() => props.onChangeLanguage('nn')}
-              >
-                {localization.lang['norwegian-nn']}
-              </DropdownItem>
-              <DropdownItem
-                onClick={() => props.onChangeLanguage('en')}
-              >
-                {localization.lang['english-en']}
-              </DropdownItem>
-            </DropdownMenu>
-          </UncontrolledDropdown>
+                <DropdownItem onClick={() => props.onChangeLanguage('nb')}>
+                  {localization.lang['norwegian-nb']}
+                </DropdownItem>
+                <DropdownItem onClick={() => props.onChangeLanguage('nn')}>
+                  {localization.lang['norwegian-nn']}
+                </DropdownItem>
+                <DropdownItem onClick={() => props.onChangeLanguage('en')}>
+                  {localization.lang['english-en']}
+                </DropdownItem>
+              </DropdownMenu>
+            </UncontrolledDropdown>
+          </div>
         </div>
-      </div>
       </div>
     </div>
   );
@@ -129,6 +106,5 @@ export function AppNavBar(props) {
 AppNavBar.defaultProps = {};
 
 AppNavBar.propTypes = {
-  onChangeLanguage: PropTypes.func.isRequired,
-  language: PropTypes.string.isRequired
+  onChangeLanguage: PropTypes.func.isRequired
 };
