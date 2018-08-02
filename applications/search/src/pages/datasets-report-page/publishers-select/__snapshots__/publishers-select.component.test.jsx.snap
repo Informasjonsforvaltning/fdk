@@ -9,21 +9,53 @@ exports[`should render PublishersSelect correctly with props 1`] = `
   >
     Choose publisher
   </div>
-  <Async
-    autoload={true}
+  <Select
+    arrowRenderer={[Function]}
+    autosize={true}
     backspaceRemoves={true}
-    cache={Object {}}
-    ignoreAccents={false}
+    backspaceToRemoveMessage="Press backspace to remove {label}"
+    clearAllText="Clear all"
+    clearRenderer={[Function]}
+    clearValueText="Clear value"
+    clearable={true}
+    closeOnSelect={true}
+    deleteRemoves={true}
+    delimiter=","
+    disabled={false}
+    escapeClearsValue={true}
+    filterOptions={[Function]}
+    ignoreAccents={true}
     ignoreCase={true}
+    inputProps={Object {}}
+    isLoading={false}
+    joinValues={false}
     labelKey="name"
-    loadOptions={[Function]}
-    loadingPlaceholder="Loading..."
+    matchPos="any"
+    matchProp="any"
+    menuBuffer={0}
+    menuRenderer={[Function]}
     multi={false}
+    noResultsText="No results found"
+    onBlurResetsInput={true}
     onChange={null}
+    onCloseResetsInput={true}
+    onSelectResetsInput={true}
+    openOnClick={true}
+    optionComponent={[Function]}
     options={Array []}
+    pageSize={5}
     placeholder="Search publisher..."
+    removeSelected={true}
+    required={false}
+    rtl={false}
+    scrollMenuIntoView={true}
     searchPromptText="Type to search"
+    searchable={true}
+    simpleValue={false}
+    tabSelectsValue={true}
+    trimFilter={true}
     value="STAT"
+    valueComponent={[Function]}
     valueKey="orgPath"
   />
 </div>
