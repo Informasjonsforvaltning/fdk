@@ -45,7 +45,7 @@ export class Select extends React.Component {
         <DropdownToggle className="fdk-button fdk-button-default" caret>
           {localization.sort.by} {localization.sort[this.state.selectedValue]}
         </DropdownToggle>
-        <DropdownMenu right>
+        <DropdownMenu right className="fdk-dropdownmenu">
           {map(items, (item, idx) => {
             const { label } = item;
             const text = `${localization.sort.by} ${localization.sort[label]}`;

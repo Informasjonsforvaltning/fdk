@@ -52,7 +52,7 @@ export function AppNavBar(props) {
               <DropdownToggle className="fdk-button-language" caret>
                 {localization.lang.chosenLanguage}
               </DropdownToggle>
-              <DropdownMenu right className="fdk-button-language-dropdownmenu">
+              <DropdownMenu right className="fdk-dropdownmenu">
                 <DropdownItem onClick={() => props.onChangeLanguage('nb')}>
                   {localization.lang['norwegian-nb']}
                 </DropdownItem>
@@ -75,7 +75,7 @@ export function AppNavBar(props) {
               >
                 {localization.app.menu}
               </DropdownToggle>
-              <DropdownMenu right className="fdk-button-language-dropdownmenu">
+              <DropdownMenu right className="fdk-dropdownmenu">
                 <Link className="dropdown-item" to="/about">
                   {localization.about.about}
                 </Link>
