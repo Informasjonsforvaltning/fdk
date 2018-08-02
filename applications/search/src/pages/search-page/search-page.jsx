@@ -1,4 +1,3 @@
-import _get from 'lodash/get';
 import React from 'react';
 import qs from 'qs';
 import { Route, Switch } from 'react-router-dom';
@@ -22,8 +21,8 @@ export class SearchPage extends React.Component {
   constructor(props) {
     super(props);
 
-    const search = this.props.location.search;
-    const searchQuery = qs.parse(search, {ignoreQueryPrefix:true}) || {};
+    const { search } = this.props.location;
+    const searchQuery = qs.parse(search, { ignoreQueryPrefix: true }) || {};
 
     this.state = {
       showFilterModal: false,
