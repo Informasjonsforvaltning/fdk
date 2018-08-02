@@ -34,7 +34,7 @@ export function PublishersSelect(props) {
         valueKey="orgPath"
         labelKey="name"
         loadOptions={getPublishers}
-        backspaceRemoves={true}
+        backspaceRemoves
       />
     </div>
   );
