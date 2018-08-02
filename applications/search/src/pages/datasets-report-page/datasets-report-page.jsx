@@ -16,8 +16,7 @@ export class DatasetsReportPage extends React.Component {
     this.state = {
       entity: '',
       aggregateDataset: {},
-      publishers: [],
-      selectedOrgPath: null
+      publishers: []
     };
     this.handleOnPublisherSearch = this.handleOnPublisherSearch.bind(this);
     this.handleOnChangeSearchField = this.handleOnChangeSearchField.bind(this);
@@ -133,8 +132,7 @@ export class DatasetsReportPage extends React.Component {
 
   handleOnChangeSearchField(value) {
     this.setState({
-      value: value || null,
-      selectedOrgPath: value ? value.orgPath : null
+      value: value || null
     });
     if (!value) {
       this.handleOnPublisherSearch(null, '');
@@ -152,8 +150,7 @@ export class DatasetsReportPage extends React.Component {
 
   handleOnClearSearch() {
     this.setState({
-      value: '',
-      selectedOrgPath: Math.random()
+      value: ''
     });
     this.handleOnPublisherSearch(null, '');
   }
@@ -176,7 +173,6 @@ export class DatasetsReportPage extends React.Component {
               value={this.state.value}
             />
             <PublishersTree
-              key={this.state.selectedOrgPath}
               onSearch={this.handleOnTreeChange}
               orgPath={DatasetsReportPage.getOrgPath()}
             />
