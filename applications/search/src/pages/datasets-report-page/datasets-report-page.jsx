@@ -43,7 +43,9 @@ export class DatasetsReportPage extends React.Component {
     return publisher ? publisher.name : orgPath;
   }
 
-  handleOnPublisherSearch(name, orgPath) {
+  handleOnPublisherSearch(value) {
+    const orgPath = value && value.orgPath;
+
     // Get orgPath from input or try to find from query params.
     const query =
       orgPath !== null && orgPath !== undefined
@@ -94,27 +96,23 @@ export class DatasetsReportPage extends React.Component {
 
   handleOnChangeSearchField(value) {
     this.setState({
-      value: value || null
+      value
     });
-    if (!value) {
-      this.handleOnPublisherSearch(null, '');
-    } else {
-      this.handleOnPublisherSearch(value.name, value.orgPath);
-    }
+    this.handleOnPublisherSearch(value);
   }
 
-  handleOnTreeChange(name, orgPath) {
+  handleOnTreeChange(value) {
     this.setState({
-      value: null
+      value
     });
-    this.handleOnPublisherSearch(name, orgPath);
+    this.handleOnPublisherSearch(value);
   }
 
   handleOnClearSearch() {
     this.setState({
       value: null
     });
-    this.handleOnPublisherSearch(null, '');
+    this.handleOnPublisherSearch(null);
   }
 
   render() {
@@ -134,8 +132,8 @@ export class DatasetsReportPage extends React.Component {
               value={this.state.value}
             />
             <PublishersTree
-              onSearch={this.handleOnTreeChange}
-              orgPath={DatasetsReportPage.getOrgPath()}
+              onChange={this.handleOnTreeChange}
+              value={this.state.value}
             />
           </div>
           <div className="col-sm-8">

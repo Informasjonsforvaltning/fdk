@@ -45,11 +45,7 @@ export class PublishersTree extends React.Component {
   }
 
   onChange(value) {
-    if (!value) {
-      this.props.onSearch(null, '');
-    } else {
-      this.props.onSearch(value.name, value.orgPath);
-    }
+    this.props.onChange(value);
   }
 
   // @params: the function has no param but the query need dataset id from prop
@@ -71,7 +67,7 @@ export class PublishersTree extends React.Component {
 
   render() {
     const { hits } = this.state.source;
-    const { orgPath } = this.props;
+    const orgPath = this.props.value && this.props.value.orgPath;
 
     const subTree = hits =>
       hits.map((node, i) => {
@@ -183,11 +179,11 @@ export class PublishersTree extends React.Component {
 }
 
 PublishersTree.defaultProps = {
-  onSearch: null,
-  orgPath: null
+  onChange: null,
+  value: null
 };
 
 PublishersTree.propTypes = {
-  onSearch: PropTypes.func,
-  orgPath: PropTypes.string
+  onChange: PropTypes.func,
+  value: PropTypes.object
 };

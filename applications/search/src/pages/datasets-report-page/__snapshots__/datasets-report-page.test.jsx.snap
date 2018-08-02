@@ -22,8 +22,8 @@ exports[`should render DatasetsReportPage correctly with hits 1`] = `
         value={null}
       />
       <PublishersTree
-        onSearch={[Function]}
-        orgPath=""
+        onChange={[Function]}
+        value={null}
       />
     </div>
     <div
@@ -630,8 +630,8 @@ exports[`should render DatasetsReportPage correctly with props 1`] = `
         value={null}
       />
       <PublishersTree
-        onSearch={[Function]}
-        orgPath=""
+        onChange={[Function]}
+        value={null}
       />
     </div>
     <div
