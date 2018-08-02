@@ -152,7 +152,7 @@ export class ResultsConcepts extends React.Component {
       'fdk-button',
       'fade-in-500',
       {
-        hidden: !showClearFilterButton
+        'd-none': !showClearFilterButton
       }
     );
 
