@@ -128,6 +128,7 @@ export class DatasetsReportPage extends React.Component {
               {localization.query.clear}
             </button>
             <PublishersSelect
+              publishers={this.props.publishers}
               onChange={this.handleOnChangeSearchField}
               value={this.state.value}
             />
