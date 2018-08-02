@@ -40,7 +40,7 @@
     "compression": "^1.7.3",
     "copy-webpack-plugin": "^4.5.1",
     "css-loader": "^1.0.0",
-    "designsystemet": "git+https://github.com/Informasjonsforvaltning/designsystemet.git#6cc8cc750b5a7af2127fdf213dcbeb664f859966",
+    "designsystemet": "git+https://github.com/Informasjonsforvaltning/designsystemet.git#6348fa0b3ae226a35f3b4f8435408ae2df5f40b7",
     "detect-browser": "^2.1.0",
     "ejs": "^2.3.4",
     "express": "^4.16.3",
