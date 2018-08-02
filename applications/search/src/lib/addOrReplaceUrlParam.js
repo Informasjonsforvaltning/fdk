@@ -43,23 +43,6 @@ export function addOrReplaceParam(url, param, value) {
   }
   return a.href;
 }
-export function addOrReplaceParamWithoutEncoding(url, param, value) {
-  const r = `([&?]|&amp;)${param}\\b(?:=(?:[^&#]*))*`;
-  const a = document.createElement('a');
-  const regex = new RegExp(r);
-  const str = param + (value ? `=${encodeURIComponent(value)}` : '');
-  a.href = url;
-  const q = a.search.replace(regex, `$1${str}`);
-  if (q === a.search) {
-    a.search += (a.search ? '&' : '') + str;
-  } else {
-    a.search = q;
-  }
-  if (value === '') {
-    return removeParam(param, url);
-  }
-  return a.href;
-}
 
 export function addOrReplaceParamWithoutURL(uri, key, value) {
   let modifiedUri = uri;
@@ -90,14 +73,10 @@ export function getParamFromUrl(param) {
   return null;
 }
 
-/**
- * Returns param from the url search part as string "?a=b".
- * @returns {null}
- */
-export function getParamFromString(urlSearchPart, param) {
-  const queryObj = qs.parse(urlSearchPart, { ignoreQueryPrefix: true });
-  if (queryObj && queryObj[param]) {
-    return queryObj[param];
-  }
-  return null;
+export function getParamFromLocation(location, param) {
+  const queryObj = qs.parse(location && location.search, {
+    ignoreQueryPrefix: true
+  });
+
+  return queryObj && queryObj[param];
 }
