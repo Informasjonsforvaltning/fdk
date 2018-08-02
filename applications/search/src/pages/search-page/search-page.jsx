@@ -22,8 +22,8 @@ export class SearchPage extends React.Component {
   constructor(props) {
     super(props);
 
-    const search = _get(props.location, 'search', '?');
-    const searchQuery = qs.parse(search.substr(1)) || {};
+    const search = this.props.location.search;
+    const searchQuery = qs.parse(search, {ignoreQueryPrefix:true}) || {};
 
     this.state = {
       showFilterModal: false,
@@ -53,11 +53,14 @@ export class SearchPage extends React.Component {
     this.handlePageChange = this.handlePageChange.bind(this);
     this.close = this.close.bind(this);
     this.open = this.open.bind(this);
+
+    this.props.fetchDatasetsIfNeeded(`/datasets${search}`);
+    this.props.fetchTermsIfNeeded(`/terms${search}`);
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.location.search !== this.props.location.search) {
-      const search = nextProps.location.search;
+  componentDidUpdate(prevProps) {
+    if (prevProps.location.search !== this.props.location.search) {
+      const search = this.props.location.search;
       this.props.fetchDatasetsIfNeeded(`/datasets${search}`);
       this.props.fetchTermsIfNeeded(`/terms${search}`);
     }
