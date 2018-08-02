@@ -2,14 +2,14 @@
 
 exports[`should render PublishersTree correctly with props 1`] = `
 <div
-  key="/STAT/872417842/960885406"
+  key="null"
 >
   <div
     className="section tree-panel"
     key="panel0"
   >
     <TreeView
-      defaultCollapsed={false}
+      defaultCollapsed={true}
       itemClassName="tree-view_main"
       key="Central authority|0"
       nodeLabel={
@@ -320,7 +320,7 @@ exports[`should render PublishersTree correctly with props 1`] = `
         </div>
       </TreeView>
       <TreeView
-        defaultCollapsed={false}
+        defaultCollapsed={true}
         itemClassName=""
         key="Kunnskapsdepartementet|8"
         nodeLabel={
@@ -356,7 +356,7 @@ exports[`should render PublishersTree correctly with props 1`] = `
           Norges teknisk-naturvitenskapelige universitet ntnu
         </div>
         <div
-          className="node tree-view_item tree-item_chosen"
+          className="node tree-view_item "
           key="Statens lånekasse for utdanning|2"
           onClick={[Function]}
           onKeyPress={[Function]}
