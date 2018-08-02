@@ -143,14 +143,14 @@ export class DatasetsReportPage extends React.Component {
 
   handleOnTreeChange(name, orgPath) {
     this.setState({
-      value: ''
+      value: null
     });
     this.handleOnPublisherSearch(name, orgPath);
   }
 
   handleOnClearSearch() {
     this.setState({
-      value: ''
+      value: null
     });
     this.handleOnPublisherSearch(null, '');
   }
@@ -168,7 +168,6 @@ export class DatasetsReportPage extends React.Component {
               {localization.query.clear}
             </button>
             <PublishersSelect
-              onSearch={this.handleOnPublisherSearch}
               onChange={this.handleOnChangeSearchField}
               value={this.state.value}
             />

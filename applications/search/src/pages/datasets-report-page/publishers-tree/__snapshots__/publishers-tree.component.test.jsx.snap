@@ -1,7 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`should render PublishersTree correctly with props 1`] = `
-<div>
+<div
+  key="/STAT/872417842/960885406"
+>
   <div
     className="section tree-panel"
     key="panel0"

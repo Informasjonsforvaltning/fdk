@@ -19,6 +19,7 @@ exports[`should render PublishersSelect correctly with props 1`] = `
     loadOptions={[Function]}
     loadingPlaceholder="Loading..."
     multi={false}
+    onChange={null}
     options={Array []}
     placeholder="Search publisher..."
     searchPromptText="Type to search"

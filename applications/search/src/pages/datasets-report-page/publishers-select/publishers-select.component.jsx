@@ -40,8 +40,12 @@ export function PublishersSelect(props) {
   );
 }
 
+PublishersSelect.defaultProps = {
+  onChange: null,
+  value: null
+};
+
 PublishersSelect.propTypes = {
-  onSearch: PropTypes.func,
   onChange: PropTypes.func,
-  value: PropTypes.string
+  value: PropTypes.object
 };
