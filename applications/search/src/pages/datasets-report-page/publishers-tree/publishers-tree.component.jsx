@@ -71,10 +71,10 @@ export class PublishersTree extends React.Component {
 
   render() {
     const { hits } = this.state.source;
+    const { orgPath } = this.props;
 
     const subTree = hits =>
       hits.map((node, i) => {
-        const { orgPath } = this.props;
         const chosenClass = cx({
           'tree-item_chosen': node.orgPath === orgPath
         });
@@ -131,7 +131,6 @@ export class PublishersTree extends React.Component {
 
     const mainTree = hits =>
       hits.map((node, i) => {
-        const { orgPath } = this.props;
         const chosenClass = cx('tree-view_main', {
           'tree-item_chosen': node.orgPath === orgPath
         });
@@ -177,7 +176,7 @@ export class PublishersTree extends React.Component {
       });
 
     if (hits && typeof hits !== 'undefined' && hits.length > 0) {
-      return <div>{mainTree(hits)}</div>;
+      return <div key={orgPath}>{mainTree(hits)}</div>;
     }
     return null;
   }
