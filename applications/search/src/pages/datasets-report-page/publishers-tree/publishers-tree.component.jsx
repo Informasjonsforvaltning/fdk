@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import * as axios from 'axios';
@@ -179,7 +180,7 @@ export class PublishersTree extends React.Component {
 }
 
 PublishersTree.defaultProps = {
-  onChange: null,
+  onChange: _.noop,
   value: null
 };
 

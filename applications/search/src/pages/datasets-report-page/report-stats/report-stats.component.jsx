@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import _capitalize from 'lodash/capitalize';
 
 import localization from '../../../lib/localization';
-import { getParamFromString } from '../../../lib/addOrReplaceUrlParam';
+import { getParamFromLocation } from '../../../lib/addOrReplaceUrlParam';
 import './report-stats.scss';
 
 export const ReportStats = props => {
@@ -100,7 +100,7 @@ export const ReportStats = props => {
         : 0
   };
 
-  const orgPath = getParamFromString(window.location.search, 'orgPath');
+  const orgPath = getParamFromLocation(window.location, 'orgPath');
   const encodedOrgPath = orgPath ? encodeURIComponent(orgPath) : null;
   const orgPathParam =
     encodedOrgPath !== null ? `&orgPath=${encodedOrgPath}` : '';

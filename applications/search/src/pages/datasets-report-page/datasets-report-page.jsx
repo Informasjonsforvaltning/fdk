@@ -8,139 +8,94 @@ import localization from '../../lib/localization';
 import { ReportStats } from './report-stats/report-stats.component';
 import { PublishersSelect } from './publishers-select/publishers-select.component';
 import { PublishersTree } from './publishers-tree/publishers-tree.component';
-import {
-  addOrReplaceParamWithoutEncoding,
-  removeParam
-} from '../../lib/addOrReplaceUrlParam';
+import { getParamFromLocation } from '../../lib/addOrReplaceUrlParam';
 
 export class DatasetsReportPage extends React.Component {
   constructor(props) {
     super(props);
+
+    this.clearSearch = this.clearSearch.bind(this);
+    this.selectPublisher = this.selectPublisher.bind(this);
+
     this.state = {
-      entityName: '',
       aggregateDataset: {}
     };
-    this.handleOnPublisherSearch = this.handleOnPublisherSearch.bind(this);
-    this.handleOnChangeSearchField = this.handleOnChangeSearchField.bind(this);
-    this.handleOnTreeChange = this.handleOnTreeChange.bind(this);
-    this.handleOnClearSearch = this.handleOnClearSearch.bind(this);
-    this.handleOnPublisherSearch();
+    const orgPath = getParamFromLocation(props.location, 'orgPath');
+    this.getData(orgPath);
     this.props.fetchPublishersIfNeeded();
   }
 
-  static getOrgPath() {
-    const parsed = qs.parse(window.location.search, {
-      ignoreQueryPrefix: true
-    });
-    return (parsed && parsed.orgPath) || '';
+  componentDidUpdate(prevProps) {
+    const newOrgPath = getParamFromLocation(this.props.location, 'orgPath');
+    const prevOrgPath = getParamFromLocation(prevProps.location, 'orgPath');
+
+    if (newOrgPath !== prevOrgPath) {
+      this.getData(newOrgPath);
+    }
   }
 
-  getName(orgPath) {
-    if (!orgPath) {
-      return localization.report.allEntities;
-    }
-    const publisher = this.props.publishers[orgPath];
-    return publisher ? publisher.name : orgPath;
-  }
-
-  handleOnPublisherSearch(value) {
-    const orgPath = value && value.orgPath;
-
-    // Get orgPath from input or try to find from query params.
-    const query =
-      orgPath !== null && orgPath !== undefined
-        ? orgPath
-        : DatasetsReportPage.getOrgPath();
-
-    const paramWithRemovedOrgPath = removeParam(
-      'orgPath',
-      window.location.href
-    );
-    const replacedUrl = addOrReplaceParamWithoutEncoding(
-      paramWithRemovedOrgPath,
-      'orgPath',
-      query
-    );
-
-    // Empty query params.
-    const emptyParam = {
-      title: document.title,
-      url: paramWithRemovedOrgPath
-    };
-    window.history.pushState(emptyParam, emptyParam.title, emptyParam.url);
-
-    // Set new query param if necessary.
-    if (query && orgPath !== '') {
-      const queryParam = {
-        title: document.title,
-        url: replacedUrl
-      };
-      window.history.pushState(queryParam, queryParam.title, queryParam.url);
-    }
-
-    // Get entityName from input or try to find from publishers using orgPath.
-    const entityName = this.getName(query);
+  getData(orgPath) {
+    const query = orgPath || '';
 
     axios
       .get(`/aggregateDataset?q=${query}`)
-      .then(response => {
-        this.setState({
-          entityName,
-          aggregateDataset: response.data
-        });
-      })
-      .catch(error => {
-        console.error(error);
-      });
+      .then(response => this.setState({ aggregateDataset: response.data }))
+      .catch(error => console.error(error));
   }
 
-  handleOnChangeSearchField(value) {
-    this.setState({
-      value
+  selectPublisher(publisher) {
+    const orgPath = publisher && publisher.orgPath;
+    const currentSearch = qs.parse(this.props.location.search, {
+      ignoreQueryPrefix: true
     });
-    this.handleOnPublisherSearch(value);
+    const newSearch = { ...currentSearch, orgPath };
+    const newSearchStr = qs.stringify(newSearch, {
+      addQueryPrefix: true,
+      skipNulls: true,
+      encode: false
+    });
+
+    // This is react-router browserHistory object
+    // https://github.com/ReactTraining/history
+    this.props.history.push({ search: newSearchStr });
   }
 
-  handleOnTreeChange(value) {
-    this.setState({
-      value
-    });
-    this.handleOnPublisherSearch(value);
-  }
-
-  handleOnClearSearch() {
-    this.setState({
-      value: null
-    });
-    this.handleOnPublisherSearch(null);
+  clearSearch() {
+    this.selectPublisher(null);
   }
 
   render() {
+    const orgPath = getParamFromLocation(this.props.location, 'orgPath');
+    const selectedPublisher = _.get(this.props.publishers, [orgPath], null);
+
     return (
       <section className="container">
         <div className="row">
           <div className="col-sm-4">
             <button
               className="fdk-button fdk-button-default-no-hover"
-              onClick={this.handleOnClearSearch}
+              onClick={this.clearSearch}
               type="button"
             >
               {localization.query.clear}
             </button>
             <PublishersSelect
               publishers={this.props.publishers}
-              onChange={this.handleOnChangeSearchField}
-              value={this.state.value}
+              onChange={this.selectPublisher}
+              value={selectedPublisher}
             />
             <PublishersTree
-              onChange={this.handleOnTreeChange}
-              value={this.state.value}
+              onChange={this.selectPublisher}
+              value={selectedPublisher}
             />
           </div>
           <div className="col-sm-8">
             <ReportStats
               aggregateDataset={this.state.aggregateDataset}
-              entityName={this.state.entityName}
+              entityName={
+                (selectedPublisher && selectedPublisher.name) ||
+                localization.report.allEntities
+              }
             />
           </div>
         </div>
@@ -154,5 +109,7 @@ DatasetsReportPage.defaultProps = {
 };
 
 DatasetsReportPage.propTypes = {
-  fetchPublishersIfNeeded: PropTypes.func
+  fetchPublishersIfNeeded: PropTypes.func,
+  location: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired
 };

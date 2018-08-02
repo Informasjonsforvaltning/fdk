@@ -601,7 +601,7 @@ exports[`should render DatasetsReportPage correctly with hits 1`] = `
             "took": 10,
           }
         }
-        entityName=""
+        entityName="all entities"
       />
     </div>
   </div>
@@ -639,7 +639,7 @@ exports[`should render DatasetsReportPage correctly with props 1`] = `
     >
       <ReportStats
         aggregateDataset={Object {}}
-        entityName=""
+        entityName="all entities"
       />
     </div>
   </div>
