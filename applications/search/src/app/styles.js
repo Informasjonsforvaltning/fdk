@@ -1,4 +1,4 @@
-import 'bootstrap/dist/css/bootstrap.css';
+import '../assets/css/bootstrap-override.scss';
 import 'designsystemet/fdk-designsystem-bootstrap4/scss/helper.scss';
 import 'designsystemet/fdk-designsystem-bootstrap4/scss/portal.scss';
 import 'designsystemet/fdk-designsystem-bootstrap4/scss/typo.scss';

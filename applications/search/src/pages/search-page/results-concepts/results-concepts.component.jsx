@@ -147,8 +147,9 @@ export class ResultsConcepts extends React.Component {
     );
 
     const clearButtonClass = cx(
+      'btn',
+      'btn-primary',
       'fdk-button',
-      'fdk-button-default-no-hover',
       'fade-in-500',
       {
         hidden: !showClearFilterButton

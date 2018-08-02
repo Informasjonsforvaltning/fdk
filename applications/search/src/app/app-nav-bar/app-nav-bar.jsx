@@ -70,8 +70,9 @@ export function AppNavBar(props) {
               className="fdk-dropdown-menu d-inline d-lg-none"
             >
               <DropdownToggle
-                className="fdk-button fdk-button-default fdk-button-menu"
+                className="fdk-button fdk-button-menu"
                 caret
+                color="primary"
               >
                 {localization.app.menu}
               </DropdownToggle>

@@ -42,7 +42,7 @@ export class Select extends React.Component {
           localization.sort[this.state.selectedValue]
         }`}
       >
-        <DropdownToggle className="fdk-button fdk-button-default" caret>
+        <DropdownToggle className="fdk-button" caret color="primary">
           {localization.sort.by} {localization.sort[this.state.selectedValue]}
         </DropdownToggle>
         <DropdownMenu right className="fdk-dropdownmenu">

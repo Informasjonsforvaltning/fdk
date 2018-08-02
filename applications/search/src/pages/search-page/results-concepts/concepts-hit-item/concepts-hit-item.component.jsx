@@ -172,7 +172,7 @@ export const ConceptsHitItem = props => {
       >
         {!toBeCompared && (
           <button
-            className="fdk-button fdk-button-default float-right mt-3 d-none d-lg-inline"
+            className="btn btn-primary fdk-button float-right mt-3 d-none d-lg-inline"
             onClick={() => {
               onAddTerm(_source);
             }}
