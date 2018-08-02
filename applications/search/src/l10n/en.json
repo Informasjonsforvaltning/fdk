@@ -228,6 +228,7 @@
     "inScheme": "Domain / application",
     "source": "Source",
     "note": "Description",
+    "compare": "Comparison",
     "hideCompare": "Hide comparison",
     "openCompare": "Show comparison",
     "remove": "Remove concept",

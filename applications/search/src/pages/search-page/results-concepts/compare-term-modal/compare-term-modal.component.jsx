@@ -107,12 +107,12 @@ export class CompareTermModal extends React.Component {
         <Modal
           isOpen={this.state.showModal}
           toggle={this.close}
-          className="fdk-modal"
+          className="fdk-modal modal-lg"
         >
           <ModalHeader toggle={this.close}>
             <i className="fa fa-chevron-down fdk-fa-left fa-lg fdk-color0" />
             &nbsp;
-            {localization.compare.hideCompare}
+            {localization.compare.compare}
           </ModalHeader>
           <ModalBody>
             <CompareTermModalContent terms={this.props.terms} cols={cols} />
