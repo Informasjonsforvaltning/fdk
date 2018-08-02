@@ -19,10 +19,9 @@ exports[`should render DatasetsReportPage correctly with hits 1`] = `
       </button>
       <PublishersSelect
         onChange={[Function]}
-        onSearch={[Function]}
+        value={null}
       />
       <PublishersTree
-        key="null"
         onSearch={[Function]}
         orgPath=""
       />
@@ -628,10 +627,9 @@ exports[`should render DatasetsReportPage correctly with props 1`] = `
       </button>
       <PublishersSelect
         onChange={[Function]}
-        onSearch={[Function]}
+        value={null}
       />
       <PublishersTree
-        key="null"
         onSearch={[Function]}
         orgPath=""
       />
