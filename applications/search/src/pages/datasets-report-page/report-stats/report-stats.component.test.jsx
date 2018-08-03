@@ -2,13 +2,14 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { ReportStats } from './report-stats.component';
 import aggregateDataset from '../../../../test/fixtures/aggregateDataset';
+import { extractStats } from './resolved-report-stats';
 
 let defaultProps;
 let wrapper;
 
 beforeEach(() => {
   defaultProps = {
-    aggregateDataset,
+    stats: extractStats(aggregateDataset),
     entityName: 'test entity'
   };
   wrapper = shallow(<ReportStats {...defaultProps} />);
