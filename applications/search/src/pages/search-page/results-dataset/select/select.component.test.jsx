@@ -46,6 +46,6 @@ test('should render Select correctly with active sort', () => {
 
 test('should handle onChange', () => {
   const wrapper = shallow(<Select onChange={onChange} items={items} />);
-  wrapper.find('DropdownButton').prop('onSelect')(items[1]);
-  expect(onChange).toHaveBeenLastCalledWith(items[1]);
+  wrapper.find('DropdownItem').first().prop('onClick')(items[0]);
+  expect(onChange).toHaveBeenLastCalledWith(items[0]);
 });

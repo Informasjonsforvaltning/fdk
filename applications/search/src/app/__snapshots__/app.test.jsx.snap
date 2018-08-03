@@ -91,7 +91,7 @@ exports[`should render App correctly 1`] = `
     </Switch>
   </div>
   <div
-    className="fdk-footer visible-xs visible-sm"
+    className="fdk-footer d-md-none"
   >
     <div
       className="container"
@@ -142,7 +142,7 @@ exports[`should render App correctly 1`] = `
     </div>
   </div>
   <div
-    className="fdk-footer visible-md visible-lg"
+    className="fdk-footer d-none d-md-block"
   >
     <div
       className="container"

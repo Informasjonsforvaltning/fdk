@@ -12,10 +12,10 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
       className="row mt-1 mb-1-em"
     >
       <div
-        className="col-xs-6 col-md-4"
+        className="col-6 col-lg-4"
       >
         <button
-          className="fdk-button fdk-button-default-no-hover fade-in-500 hidden"
+          className="btn btn-primary fdk-button fade-in-500 d-none"
           onClick={[MockFunction]}
           type="button"
         >
@@ -23,7 +23,7 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
         </button>
       </div>
       <div
-        className="col-xs-6 col-md-4 offset-md-4"
+        className="col-6 col-lg-4 offset-lg-4"
       >
         <div
           className="float-right"
@@ -64,7 +64,7 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
       className="row"
     >
       <div
-        className="search-filters col-md-4 flex-move-first-item-to-bottom visible-sm visible-md visible-lg"
+        className="search-filters col-lg-4 d-none d-lg-block"
       >
         <span
           aria-hidden="false"
@@ -74,45 +74,39 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
         </span>
         <div>
           <Modal
-            animation={true}
             autoFocus={true}
             backdrop={true}
-            bsClass="modal"
-            dialogComponentClass={[Function]}
-            enforceFocus={true}
-            keyboard={true}
-            manager={
-              ModalManager {
-                "add": [Function],
-                "containers": Array [],
-                "data": Array [],
-                "handleContainerOverflow": true,
-                "hideSiblingNodes": true,
-                "isTopModal": [Function],
-                "modals": Array [],
-                "remove": [Function],
+            backdropTransition={
+              Object {
+                "mountOnEnter": true,
+                "timeout": 150,
               }
             }
-            onHide={[MockFunction]}
-            renderBackdrop={[Function]}
-            restoreFocus={true}
-            show={true}
+            centered={false}
+            fade={true}
+            isOpen={true}
+            keyboard={true}
+            modalTransition={
+              Object {
+                "timeout": 300,
+              }
+            }
+            onClosed={[Function]}
+            onOpened={[Function]}
+            role="dialog"
+            toggle={[MockFunction]}
+            zIndex={1050}
           >
             <ModalHeader
-              bsClass="modal-header"
-              closeButton={true}
-              closeLabel="Close"
+              closeAriaLabel="Close"
+              tag="h5"
+              toggle={[MockFunction]}
+              wrapTag="div"
             >
-              <ModalTitle
-                bsClass="modal-title"
-                componentClass="h4"
-              >
-                Filter
-              </ModalTitle>
+              Filter
             </ModalHeader>
             <ModalBody
-              bsClass="modal-body"
-              componentClass="div"
+              tag="div"
             >
               <div
                 className="search-filters"
@@ -241,17 +235,13 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
               </div>
             </ModalBody>
             <ModalFooter
-              bsClass="modal-footer"
-              componentClass="div"
+              tag="div"
             >
               <Button
-                active={false}
-                block={false}
-                bsClass="btn"
-                bsStyle="default"
-                className="fdk-button-default fdk-button"
-                disabled={false}
+                className="fdk-button"
+                color="primary"
                 onClick={[MockFunction]}
+                tag="button"
               >
                 Close
               </Button>
@@ -381,7 +371,7 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
         </div>
       </div>
       <div
-        className="col-xs-12 col-md-8"
+        className="col-12 col-lg-8"
         id="datasets"
       >
         <SearchHitItem
@@ -510,7 +500,7 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
         />
       </div>
       <div
-        className="col-xs-12 col-md-8 offset-md-4 text-center"
+        className="col-12 col-lg-8 offset-lg-4 d-flex justify-content-center"
       >
         <span
           aria-hidden="false"
@@ -558,10 +548,10 @@ exports[`should render ResultsDataset correctly with minimum of props 1`] = `
       className="row mt-1 mb-1-em"
     >
       <div
-        className="col-xs-6 col-md-4"
+        className="col-6 col-lg-4"
       >
         <button
-          className="fdk-button fdk-button-default-no-hover fade-in-500 hidden"
+          className="btn btn-primary fdk-button fade-in-500 d-none"
           onClick={null}
           type="button"
         >
@@ -569,7 +559,7 @@ exports[`should render ResultsDataset correctly with minimum of props 1`] = `
         </button>
       </div>
       <div
-        className="col-xs-6 col-md-4 offset-md-4"
+        className="col-6 col-lg-4 offset-lg-4"
       >
         <div
           className="float-right"
@@ -610,7 +600,7 @@ exports[`should render ResultsDataset correctly with minimum of props 1`] = `
       className="row"
     >
       <div
-        className="search-filters col-md-4 flex-move-first-item-to-bottom visible-sm visible-md visible-lg"
+        className="search-filters col-lg-4 d-none d-lg-block"
       >
         <span
           aria-hidden="false"
@@ -620,11 +610,11 @@ exports[`should render ResultsDataset correctly with minimum of props 1`] = `
         </span>
       </div>
       <div
-        className="col-xs-12 col-md-8"
+        className="col-12 col-lg-8"
         id="datasets"
       />
       <div
-        className="col-xs-12 col-md-8 offset-md-4 text-center"
+        className="col-12 col-lg-8 offset-lg-4 d-flex justify-content-center"
       >
         <span
           aria-hidden="false"
@@ -672,10 +662,10 @@ exports[`should render ResultsDataset correctly with props 1`] = `
       className="row mt-1 mb-1-em"
     >
       <div
-        className="col-xs-6 col-md-4"
+        className="col-6 col-lg-4"
       >
         <button
-          className="fdk-button fdk-button-default-no-hover fade-in-500 hidden"
+          className="btn btn-primary fdk-button fade-in-500 d-none"
           onClick={[MockFunction]}
           type="button"
         >
@@ -683,7 +673,7 @@ exports[`should render ResultsDataset correctly with props 1`] = `
         </button>
       </div>
       <div
-        className="col-xs-6 col-md-4 offset-md-4"
+        className="col-6 col-lg-4 offset-lg-4"
       >
         <div
           className="float-right"
@@ -724,7 +714,7 @@ exports[`should render ResultsDataset correctly with props 1`] = `
       className="row"
     >
       <div
-        className="search-filters col-md-4 flex-move-first-item-to-bottom visible-sm visible-md visible-lg"
+        className="search-filters col-lg-4 d-none d-lg-block"
       >
         <span
           aria-hidden="false"
@@ -734,11 +724,11 @@ exports[`should render ResultsDataset correctly with props 1`] = `
         </span>
       </div>
       <div
-        className="col-xs-12 col-md-8"
+        className="col-12 col-lg-8"
         id="datasets"
       />
       <div
-        className="col-xs-12 col-md-8 offset-md-4 text-center"
+        className="col-12 col-lg-8 offset-lg-4 d-flex justify-content-center"
       >
         <span
           aria-hidden="false"

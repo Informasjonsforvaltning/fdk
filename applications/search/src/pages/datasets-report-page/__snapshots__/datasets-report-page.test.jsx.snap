@@ -8,15 +8,16 @@ exports[`should render DatasetsReportPage correctly with hits 1`] = `
     className="row"
   >
     <div
-      className="col-sm-4"
+      className="col-md-4"
     >
-      <button
-        className="fdk-button fdk-button-default-no-hover"
+      <Button
+        className="fdk-button"
+        color="primary"
         onClick={[Function]}
-        type="button"
+        tag="button"
       >
         Clear
-      </button>
+      </Button>
       <PublishersSelect
         onChange={[Function]}
         value={null}
@@ -27,7 +28,7 @@ exports[`should render DatasetsReportPage correctly with hits 1`] = `
       />
     </div>
     <div
-      className="col-sm-8"
+      className="col-md-8"
     >
       <ReportStats
         aggregateDataset={
@@ -616,15 +617,16 @@ exports[`should render DatasetsReportPage correctly with props 1`] = `
     className="row"
   >
     <div
-      className="col-sm-4"
+      className="col-md-4"
     >
-      <button
-        className="fdk-button fdk-button-default-no-hover"
+      <Button
+        className="fdk-button"
+        color="primary"
         onClick={[Function]}
-        type="button"
+        tag="button"
       >
         Clear
-      </button>
+      </Button>
       <PublishersSelect
         onChange={[Function]}
         value={null}
@@ -635,7 +637,7 @@ exports[`should render DatasetsReportPage correctly with props 1`] = `
       />
     </div>
     <div
-      className="col-sm-8"
+      className="col-md-8"
     >
       <ReportStats
         aggregateDataset={Object {}}

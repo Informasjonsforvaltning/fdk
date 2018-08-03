@@ -17,7 +17,7 @@ exports[`should render ConceptsHitItem correctly 1`] = `
     className="fdk-container-search-hit "
   >
     <button
-      className="fdk-button fdk-button-default float-right mt-3 visible-md visible-lg"
+      className="btn btn-primary fdk-button float-right mt-3 d-none d-lg-inline"
       onClick={[Function]}
       type="button"
     >
@@ -26,11 +26,10 @@ exports[`should render ConceptsHitItem correctly 1`] = `
       >
         +
       </span>
-       
       Add to compare
     </button>
     <button
-      className="fdk-button fdk-button-default fdk-btn-compare visible-xs visible-sm"
+      className="fdk-button fdk-button-default fdk-btn-compare d-block d-lg-none"
       onClick={[Function]}
       type="button"
     >
@@ -39,7 +38,6 @@ exports[`should render ConceptsHitItem correctly 1`] = `
       >
         +
       </span>
-       
       Add to compare
     </button>
     <span
@@ -267,7 +265,7 @@ exports[`should render ConceptsHitItem correctly with no alt label, no source an
     className="fdk-container-search-hit "
   >
     <button
-      className="fdk-button fdk-button-default float-right mt-3 visible-md visible-lg"
+      className="btn btn-primary fdk-button float-right mt-3 d-none d-lg-inline"
       onClick={[Function]}
       type="button"
     >
@@ -276,11 +274,10 @@ exports[`should render ConceptsHitItem correctly with no alt label, no source an
       >
         +
       </span>
-       
       Add to compare
     </button>
     <button
-      className="fdk-button fdk-button-default fdk-btn-compare visible-xs visible-sm"
+      className="fdk-button fdk-button-default fdk-btn-compare d-block d-lg-none"
       onClick={[Function]}
       type="button"
     >
@@ -289,7 +286,6 @@ exports[`should render ConceptsHitItem correctly with no alt label, no source an
       >
         +
       </span>
-       
       Add to compare
     </button>
     <span
