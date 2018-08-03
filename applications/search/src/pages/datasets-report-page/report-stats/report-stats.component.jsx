@@ -2,6 +2,7 @@ import * as _ from 'lodash';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import _capitalize from 'lodash/capitalize';
+import { CardDeck, Card, CardText, CardBody } from 'reactstrap';
 
 import localization from '../../../lib/localization';
 import { getParamFromLocation } from '../../../lib/addOrReplaceUrlParam';
@@ -224,13 +225,16 @@ export const ReportStats = props => {
   );
 
   const changes = (
-    <div className="row">
-      <div className="col-lg-4 fdk-container-stats-changes-left">
-        <div className="fdk-container-stats fdk-container-stats-changes">
-          <h2>{localization.report.changesLastWeek}</h2>
-          <div className="row">
-            <div>
-              <p>
+    <div className="row mb-3">
+      <div className="col-12 p-0">
+        <CardDeck>
+          <Card
+            className="fdk-container-stats fdk-container-stats-changes"
+            style={{ borderColor: 'transparent' }}
+          >
+            <CardBody>
+              <h2>{localization.report.changesLastWeek}</h2>
+              <CardText>
                 <strong>
                   <Link
                     title={localization.report.newDatasets}
@@ -240,18 +244,17 @@ export const ReportStats = props => {
                     {stats.newLastWeek}
                   </Link>
                 </strong>
-              </p>
-              <p>{localization.report.newDatasets}</p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="col-lg-4 fdk-container-stats-changes-middle">
-        <div className="fdk-container-stats fdk-container-stats-changes">
-          <h2>{localization.report.changesLastMonth}</h2>
-          <div className="row">
-            <div>
-              <p>
+                <div>{localization.report.newDatasets}</div>
+              </CardText>
+            </CardBody>
+          </Card>
+          <Card
+            className="fdk-container-stats fdk-container-stats-changes"
+            style={{ borderColor: 'transparent' }}
+          >
+            <CardBody>
+              <h2>{localization.report.changesLastMonth}</h2>
+              <CardText>
                 <strong>
                   <Link
                     title={localization.report.deletedLastMonth}
@@ -261,18 +264,17 @@ export const ReportStats = props => {
                     {stats.newLastMonth}
                   </Link>
                 </strong>
-              </p>
-              <p>{localization.report.newDatasets}</p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="col-lg-4 fdk-container-stats-changes-right">
-        <div className="fdk-container-stats fdk-container-stats-changes">
-          <h2>{localization.report.changesLastYear}</h2>
-          <div className="row">
-            <div>
-              <p>
+                <div>{localization.report.newDatasets}</div>
+              </CardText>
+            </CardBody>
+          </Card>
+          <Card
+            className="fdk-container-stats fdk-container-stats-changes"
+            style={{ borderColor: 'transparent' }}
+          >
+            <CardBody>
+              <h2>{localization.report.changesLastYear}</h2>
+              <CardText>
                 <strong>
                   <Link
                     title={localization.report.newDatasets}
@@ -282,11 +284,11 @@ export const ReportStats = props => {
                     {stats.newLastYear}
                   </Link>
                 </strong>
-              </p>
-              <p>{localization.report.newDatasets}</p>
-            </div>
-          </div>
-        </div>
+                <div>{localization.report.newDatasets}</div>
+              </CardText>
+            </CardBody>
+          </Card>
+        </CardDeck>
       </div>
     </div>
   );
