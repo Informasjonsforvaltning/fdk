@@ -4,9 +4,14 @@ export const PUBLISHERS_REQUEST = 'PUBLISHERS_REQUEST';
 export const PUBLISHERS_SUCCESS = 'PUBLISHERS_SUCCESS';
 export const PUBLISHERS_FAILURE = 'PUBLISHERS_FAILURE';
 
+function shouldFetch(state) {
+  const threshold = 60 * 1000; // seconds
+  return !state.isFetching && (state.lastFetch || 0) < Date.now() - threshold;
+}
+
 export function fetchPublishersIfNeededAction() {
   return (dispatch, getState) => {
-    if (!getState().publishers.isFetching) {
+    if (shouldFetch(getState().publishers)) {
       dispatch(
         fetchActions('/publisher', [
           PUBLISHERS_REQUEST,
@@ -18,14 +23,15 @@ export function fetchPublishersIfNeededAction() {
   };
 }
 
-const initialState = { isFetching: false, publisherItems: {} };
+const initialState = { isFetching: false, lastFetch: null, publisherItems: {} };
 
 export function publishersReducer(state = initialState, action) {
   switch (action.type) {
     case PUBLISHERS_REQUEST: {
       return {
         ...state,
-        isFetching: true
+        isFetching: true,
+        lastFetch: null
       };
     }
     case PUBLISHERS_SUCCESS: {
@@ -39,6 +45,7 @@ export function publishersReducer(state = initialState, action) {
       return {
         ...state,
         isFetching: false,
+        lastFetch: Date.now(),
         publisherItems: objFromArray
       };
     }
@@ -46,6 +53,7 @@ export function publishersReducer(state = initialState, action) {
       return {
         ...state,
         isFetching: false,
+        lastFetch: null,
         publisherItems: null
       };
     }

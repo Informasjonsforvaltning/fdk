@@ -10,19 +10,11 @@ import { PublishersTree } from './publishers-tree/publishers-tree.component';
 import { getParamFromLocation } from '../../lib/addOrReplaceUrlParam';
 import { ResolvedReportStats } from './report-stats/resolved-report-stats';
 
-export class DatasetsReportPage extends React.Component {
-  constructor(props) {
-    super(props);
+export function DatasetsReportPage(props) {
 
-    this.clearSearch = this.clearSearch.bind(this);
-    this.selectPublisher = this.selectPublisher.bind(this);
-
-    this.props.fetchPublishersIfNeeded();
-  }
-
-  selectPublisher(publisher) {
+  function selectPublisher(publisher) {
     const orgPath = publisher && publisher.orgPath;
-    const currentSearch = qs.parse(this.props.location.search, {
+    const currentSearch = qs.parse(props.location.search, {
       ignoreQueryPrefix: true
     });
     const newSearch = { ...currentSearch, orgPath };
@@ -34,51 +26,47 @@ export class DatasetsReportPage extends React.Component {
 
     // This is react-router browserHistory object
     // https://github.com/ReactTraining/history
-    this.props.history.push({ search: newSearchStr });
+    props.history.push({ search: newSearchStr });
   }
 
-  clearSearch() {
-    this.selectPublisher(null);
+  function clearSearch() {
+    selectPublisher(null);
   }
 
-  render() {
-    const orgPath = getParamFromLocation(this.props.location, 'orgPath');
-    const selectedPublisher = _.get(this.props.publishers, [orgPath], null);
+  props.fetchPublishersIfNeeded();
 
-    return (
-      <section className="container">
-        <div className="row">
-          <div className="col-md-4">
-            <Button
-              className="fdk-button"
-              onClick={this.clearSearch}
-              color="primary"
-            >
-              {localization.query.clear}
-            </Button>
-            <PublishersSelect
-              publishers={this.props.publishers}
-              onChange={this.selectPublisher}
-              value={selectedPublisher}
-            />
-            <PublishersTree
-              onChange={this.selectPublisher}
-              value={selectedPublisher}
-            />
-          </div>
-          <div className="col-md-8">
-            <ResolvedReportStats
-              orgPath={selectedPublisher && selectedPublisher.orgPath}
-              entityName={
-                (selectedPublisher && selectedPublisher.name) ||
-                localization.report.allEntities
-              }
-            />
-          </div>
+  const orgPath = getParamFromLocation(props.location, 'orgPath');
+  const selectedPublisher = _.get(props.publishers, [orgPath], null);
+
+  return (
+    <section className="container">
+      <div className="row">
+        <div className="col-md-4">
+          <Button className="fdk-button" onClick={clearSearch} color="primary">
+            {localization.query.clear}
+          </Button>
+          <PublishersSelect
+            publishers={props.publishers}
+            onChange={selectPublisher}
+            value={selectedPublisher}
+          />
+          <PublishersTree
+            onChange={selectPublisher}
+            value={selectedPublisher}
+          />
         </div>
-      </section>
-    );
-  }
+        <div className="col-md-8">
+          <ResolvedReportStats
+            orgPath={selectedPublisher && selectedPublisher.orgPath}
+            entityName={
+              (selectedPublisher && selectedPublisher.name) ||
+              localization.report.allEntities
+            }
+          />
+        </div>
+      </div>
+    </section>
+  );
 }
 
 DatasetsReportPage.defaultProps = {
