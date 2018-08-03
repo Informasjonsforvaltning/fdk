@@ -1,15 +1,14 @@
 import _ from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
-import axios from 'axios';
 import qs from 'qs';
 import { Button } from 'reactstrap';
 
 import localization from '../../lib/localization';
-import { ReportStats } from './report-stats/report-stats.component';
 import { PublishersSelect } from './publishers-select/publishers-select.component';
 import { PublishersTree } from './publishers-tree/publishers-tree.component';
 import { getParamFromLocation } from '../../lib/addOrReplaceUrlParam';
+import { ResolvedReportStats } from './report-stats/resolved-report-stats';
 
 export class DatasetsReportPage extends React.Component {
   constructor(props) {
@@ -18,30 +17,7 @@ export class DatasetsReportPage extends React.Component {
     this.clearSearch = this.clearSearch.bind(this);
     this.selectPublisher = this.selectPublisher.bind(this);
 
-    this.state = {
-      aggregateDataset: {}
-    };
-    const orgPath = getParamFromLocation(props.location, 'orgPath');
-    this.getData(orgPath);
     this.props.fetchPublishersIfNeeded();
-  }
-
-  componentDidUpdate(prevProps) {
-    const newOrgPath = getParamFromLocation(this.props.location, 'orgPath');
-    const prevOrgPath = getParamFromLocation(prevProps.location, 'orgPath');
-
-    if (newOrgPath !== prevOrgPath) {
-      this.getData(newOrgPath);
-    }
-  }
-
-  getData(orgPath) {
-    const query = orgPath || '';
-
-    axios
-      .get(`/aggregateDataset?q=${query}`)
-      .then(response => this.setState({ aggregateDataset: response.data }))
-      .catch(error => console.error(error));
   }
 
   selectPublisher(publisher) {
@@ -91,8 +67,8 @@ export class DatasetsReportPage extends React.Component {
             />
           </div>
           <div className="col-md-8">
-            <ReportStats
-              aggregateDataset={this.state.aggregateDataset}
+            <ResolvedReportStats
+              orgPath={selectedPublisher && selectedPublisher.orgPath}
               entityName={
                 (selectedPublisher && selectedPublisher.name) ||
                 localization.report.allEntities
