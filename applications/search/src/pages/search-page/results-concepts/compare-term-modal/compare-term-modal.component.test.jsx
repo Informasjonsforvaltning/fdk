@@ -37,7 +37,7 @@ test('should handle open correctly', () => {
 });
 
 test('should handle modal onClick', () => {
-  wrapper.find('ModalTitle').prop('onClick');
+  wrapper.find('ModalHeader').prop('onClick');
   expect(wrapper.state('showModal')).toBe(false);
   expect(wrapper.state('showBar')).toBe(true);
 });

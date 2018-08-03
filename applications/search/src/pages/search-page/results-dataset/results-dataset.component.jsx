@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ReactPaginate from 'react-paginate';
-import { Modal, Button } from 'react-bootstrap';
+import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import cx from 'classnames';
 
 import localization from '../../../lib/localization';
@@ -27,11 +27,9 @@ export class ResultsDataset extends React.Component {
       publishers
     } = this.props;
     return (
-      <Modal show={showFilterModal} onHide={closeFilterModal}>
-        <Modal.Header closeButton>
-          <Modal.Title>Filter</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
+      <Modal isOpen={showFilterModal} toggle={closeFilterModal}>
+        <ModalHeader toggle={closeFilterModal}>Filter</ModalHeader>
+        <ModalBody>
           <div className="search-filters">
             <FilterBox
               htmlKey={1}
@@ -70,15 +68,16 @@ export class ResultsDataset extends React.Component {
               activeFilter={searchQuery.provenance}
             />
           </div>
-        </Modal.Body>
-        <Modal.Footer>
+        </ModalBody>
+        <ModalFooter>
           <Button
-            className="fdk-button-default fdk-button"
+            className="fdk-button"
             onClick={closeFilterModal}
+            color="primary"
           >
             Close
           </Button>
-        </Modal.Footer>
+        </ModalFooter>
       </Modal>
     );
   }
@@ -123,11 +122,12 @@ export class ResultsDataset extends React.Component {
     );
 
     const clearButtonClass = cx(
+      'btn',
+      'btn-primary',
       'fdk-button',
-      'fdk-button-default-no-hover',
       'fade-in-500',
       {
-        hidden: !showClearFilterButton
+        'd-none': !showClearFilterButton
       }
     );
 
@@ -135,7 +135,7 @@ export class ResultsDataset extends React.Component {
       <div id="content" role="main">
         <div id="resultPanel">
           <div className="row mt-1 mb-1-em">
-            <div className="col-xs-6 col-md-4">
+            <div className="col-6 col-lg-4">
               <button
                 className={clearButtonClass}
                 onClick={onClearSearch}
@@ -144,8 +144,8 @@ export class ResultsDataset extends React.Component {
                 {localization.query.clear}
               </button>
             </div>
-            <div className="col-xs-6 col-md-4 col-md-offset-4">
-              <div className="pull-right">
+            <div className="col-6 col-lg-4 offset-lg-4">
+              <div className="float-right">
                 <Select
                   items={[
                     {
@@ -178,7 +178,7 @@ export class ResultsDataset extends React.Component {
           </div>
 
           <div className="row">
-            <div className="search-filters col-md-4 flex-move-first-item-to-bottom visible-sm visible-md visible-lg">
+            <div className="search-filters col-lg-4 d-none d-lg-block">
               <span className="uu-invisible" aria-hidden="false">
                 Filtrering tilgang
               </span>
@@ -226,11 +226,11 @@ export class ResultsDataset extends React.Component {
                 )}
             </div>
 
-            <div id="datasets" className="col-xs-12 col-md-8">
+            <div id="datasets" className="col-12 col-lg-8">
               {this._renderHits()}
             </div>
 
-            <div className="col-xs-12 col-md-8 col-md-offset-4 text-center">
+            <div className="col-12 col-lg-8 offset-lg-4 d-flex justify-content-center">
               <span className="uu-invisible" aria-hidden="false">
                 Sidepaginering.
               </span>

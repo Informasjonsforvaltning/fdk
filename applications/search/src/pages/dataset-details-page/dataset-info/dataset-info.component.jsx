@@ -61,13 +61,8 @@ export class DatasetInfo extends React.Component {
     const headerFrom = localization.dataset.periodFrom;
     const headerTo = localization.dataset.periodTo;
     const temporalClass = cx('fdk-container-detail', {
-      'col-md-8':
-        language && typeof language !== 'undefined' && language.length > 0,
-      'col-md-12': !(
-        language &&
-        typeof language !== 'undefined' &&
-        language.length > 0
-      )
+      'col-lg-8':
+        language && typeof language !== 'undefined' && language.length > 0
     });
 
     const children = items =>
@@ -78,13 +73,13 @@ export class DatasetInfo extends React.Component {
               key={`dataset-info-temporal-${index}`}
               className="clearfix mb-1-em"
             >
-              <div className="col-md-6 dataset-temporal-date">
+              <div className="col-12 col-lg-6 dataset-temporal-date">
                 <h5>{headerFrom}</h5>
                 <p className="fdk-ingress fdk-margin-bottom-no text-nowrap">
                   <Moment format="DD.MM.YYYY">{item.startDate}</Moment>
                 </p>
               </div>
-              <div className="col-md-6 dataset-temporal-date">
+              <div className="col-12 col-lg-6 dataset-temporal-date">
                 <h5>{headerTo}</h5>
                 <p className="fdk-ingress fdk-margin-bottom-no text-nowrap">
                   <Moment format="DD.MM.YYYY">{item.endDate}</Moment>
@@ -98,7 +93,7 @@ export class DatasetInfo extends React.Component {
               key={`dataset-info-temporal-${index}`}
               className="clearfix mb-1-em"
             >
-              <div className="col-md-6 dataset-temporal-date">
+              <div className="col-12 col-lg-6 dataset-temporal-date">
                 <h5>{headerFrom}</h5>
                 <p className="fdk-ingress fdk-margin-bottom-no text-nowrap">
                   <Moment format="DD.MM.YYYY">{item.startDate}</Moment>
@@ -109,7 +104,7 @@ export class DatasetInfo extends React.Component {
         } else if (item.endDate) {
           return (
             <div key={`dataset-info-temporal-${index}`} className="clearfix">
-              <div className="col-md-6 col-md-offset-6 dataset-temporal-date">
+              <div className="col-12 col-lg-6 offset-lg-6 dataset-temporal-date">
                 <h5>{headerTo}</h5>
                 <p className="fdk-ingress fdk-margin-bottom-no text-nowrap">
                   <Moment format="DD.MM.YYYY">{item.endDate}</Moment>
@@ -137,9 +132,8 @@ export class DatasetInfo extends React.Component {
 
   _renderLanguage() {
     const { language, temporal } = this.props;
-    const languageClass = cx('fdk-container-detail', {
-      'col-md-4': temporal && temporal.length > 0,
-      'col-md-12': !(temporal && temporal.length > 0)
+    const languageClass = cx('fdk-container-detail col-12', {
+      'col-lg-4': temporal && temporal.length > 0
     });
     const children = items =>
       items.map((item, index) => {
@@ -225,7 +219,7 @@ export class DatasetInfo extends React.Component {
     ) {
       const groupReferences = _sortBy(references, o => o.referenceType.code); // sort array by referenceType.code
       return (
-        <div className="col-md-12 fdk-padding-no">
+        <div className="col-12 fdk-padding-no">
           <div className="fdk-container-detail">
             <div className="fdk-detail-icon">
               <i className="fa fa-link" />
@@ -251,13 +245,13 @@ export class DatasetInfo extends React.Component {
     const isAccrualPeriodicity = !!accrualPeriodicity;
 
     const issuedClass = cx('fdk-padding-no', {
-      'col-md-4': isAccrualPeriodicity,
-      'col-md-12': !isAccrualPeriodicity
+      'col-lg-4': isAccrualPeriodicity,
+      'col-lg-12': !isAccrualPeriodicity
     });
 
     const accrualPeriodicityClass = cx('fdk-padding-no', {
-      'col-md-8': isIssued,
-      'col-md-12': !isIssued
+      'col-lg-8': isIssued,
+      'col-lg-12': !isIssued
     });
 
     return (
@@ -297,7 +291,7 @@ export class DatasetInfo extends React.Component {
           )}
 
           {modified && (
-            <div className="col-xs-12 fdk-padding-no">
+            <div className="fdk-padding-no">
               <div className="fdk-container-detail">
                 <div>
                   <h5>{localization.dataset.modified}</h5>
@@ -312,7 +306,7 @@ export class DatasetInfo extends React.Component {
           )}
 
           {provenance && (
-            <div className="col-md-12 fdk-padding-no">
+            <div className="fdk-padding-no">
               <div className="fdk-container-detail">
                 <div className="fdk-detail-icon">
                   <i className="fa fa-user" />
@@ -328,7 +322,7 @@ export class DatasetInfo extends React.Component {
           )}
 
           {hasCurrentnessAnnotation && (
-            <div className="col-md-12 fdk-padding-no">
+            <div className="fdk-padding-no">
               <div className="fdk-container-detail">
                 <div className="fdk-detail-icon">
                   <i className="fa fa-certificate" />
@@ -345,8 +339,10 @@ export class DatasetInfo extends React.Component {
           {this._renderSpatial()}
         </div>
         <div className="row fdk-row row-eq-height">
-          {this._renderTemporal()}
-          {this._renderLanguage()}
+          <div className="col-12 fdk-padding-no">
+            {this._renderTemporal()}
+            {this._renderLanguage()}
+          </div>
         </div>
         <div className="row fdk-row">{this._renderReferences()}</div>
       </section>

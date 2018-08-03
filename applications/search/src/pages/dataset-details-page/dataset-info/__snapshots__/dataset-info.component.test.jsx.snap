@@ -6,7 +6,7 @@ exports[`should render DatasetInfo correctly 1`] = `
     className="row fdk-row"
   >
     <div
-      className="fdk-padding-no col-md-4"
+      className="fdk-padding-no col-lg-4"
     >
       <div
         className="fdk-container-detail"
@@ -49,7 +49,7 @@ exports[`should render DatasetInfo correctly 1`] = `
       </div>
     </div>
     <div
-      className="fdk-padding-no col-md-8"
+      className="fdk-padding-no col-lg-8"
     >
       <div
         className="fdk-container-detail"
@@ -77,7 +77,7 @@ exports[`should render DatasetInfo correctly 1`] = `
       </div>
     </div>
     <div
-      className="col-md-12 fdk-padding-no"
+      className="fdk-padding-no"
     >
       <div
         className="fdk-container-detail"
@@ -104,7 +104,7 @@ exports[`should render DatasetInfo correctly 1`] = `
       </div>
     </div>
     <div
-      className="col-md-12 fdk-padding-no"
+      className="fdk-padding-no"
     >
       <div
         className="fdk-container-detail"
@@ -185,27 +185,31 @@ exports[`should render DatasetInfo correctly 1`] = `
     className="row fdk-row row-eq-height"
   >
     <div
-      className="fdk-container-detail col-md-12"
+      className="col-12 fdk-padding-no"
     >
       <div
-        className="fdk-detail-icon"
+        className="fdk-container-detail col-12"
       >
-        <i
-          className="fa fa-flag"
-        />
-      </div>
-      <div
-        className="fdk-detail-text"
-      >
-        <h5>
-          Language
-        </h5>
-        <p
-          className="fdk-ingress fdk-margin-bottom-no"
-          key="dataset-info-language-0"
+        <div
+          className="fdk-detail-icon"
         >
-          Norsk
-        </p>
+          <i
+            className="fa fa-flag"
+          />
+        </div>
+        <div
+          className="fdk-detail-text"
+        >
+          <h5>
+            Language
+          </h5>
+          <p
+            className="fdk-ingress fdk-margin-bottom-no"
+            key="dataset-info-language-0"
+          >
+            Norsk
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -213,7 +217,7 @@ exports[`should render DatasetInfo correctly 1`] = `
     className="row fdk-row"
   >
     <div
-      className="col-md-12 fdk-padding-no"
+      className="col-12 fdk-padding-no"
     >
       <div
         className="fdk-container-detail"
@@ -257,7 +261,7 @@ exports[`should render DatasetInfo correctly 2`] = `
     className="row fdk-row"
   >
     <div
-      className="fdk-padding-no col-md-4"
+      className="fdk-padding-no col-lg-4"
     >
       <div
         className="fdk-container-detail"
@@ -300,7 +304,7 @@ exports[`should render DatasetInfo correctly 2`] = `
       </div>
     </div>
     <div
-      className="fdk-padding-no col-md-8"
+      className="fdk-padding-no col-lg-8"
     >
       <div
         className="fdk-container-detail"
@@ -328,7 +332,7 @@ exports[`should render DatasetInfo correctly 2`] = `
       </div>
     </div>
     <div
-      className="col-md-12 fdk-padding-no"
+      className="fdk-padding-no"
     >
       <div
         className="fdk-container-detail"
@@ -355,7 +359,7 @@ exports[`should render DatasetInfo correctly 2`] = `
       </div>
     </div>
     <div
-      className="col-md-12 fdk-padding-no"
+      className="fdk-padding-no"
     >
       <div
         className="fdk-container-detail"
@@ -436,97 +440,101 @@ exports[`should render DatasetInfo correctly 2`] = `
     className="row fdk-row row-eq-height"
   >
     <div
-      className="fdk-container-detail col-md-8"
+      className="col-12 fdk-padding-no"
     >
       <div
-        className="fdk-detail-icon"
-      >
-        <i
-          className="fa fa-calendar"
-        />
-      </div>
-      <div
-        className="fdk-detail-text"
+        className="fdk-container-detail col-lg-8"
       >
         <div
-          className="clearfix mb-1-em"
-          key="dataset-info-temporal-0"
+          className="fdk-detail-icon"
+        >
+          <i
+            className="fa fa-calendar"
+          />
+        </div>
+        <div
+          className="fdk-detail-text"
         >
           <div
-            className="col-md-6 dataset-temporal-date"
+            className="clearfix mb-1-em"
+            key="dataset-info-temporal-0"
           >
-            <h5>
-              From
-            </h5>
-            <p
-              className="fdk-ingress fdk-margin-bottom-no text-nowrap"
+            <div
+              className="col-12 col-lg-6 dataset-temporal-date"
             >
-              <t
-                ago={false}
-                calendar={false}
-                decimal={false}
-                element="time"
-                filter={[Function]}
-                format="DD.MM.YYYY"
-                fromNow={false}
-                interval={60000}
-                onChange={[Function]}
-                toNow={false}
-                unit={null}
-                unix={false}
-                utc={false}
+              <h5>
+                From
+              </h5>
+              <p
+                className="fdk-ingress fdk-margin-bottom-no text-nowrap"
               >
-                1483228800000
-              </t>
-            </p>
-          </div>
-          <div
-            className="col-md-6 dataset-temporal-date"
-          >
-            <h5>
-              To
-            </h5>
-            <p
-              className="fdk-ingress fdk-margin-bottom-no text-nowrap"
+                <t
+                  ago={false}
+                  calendar={false}
+                  decimal={false}
+                  element="time"
+                  filter={[Function]}
+                  format="DD.MM.YYYY"
+                  fromNow={false}
+                  interval={60000}
+                  onChange={[Function]}
+                  toNow={false}
+                  unit={null}
+                  unix={false}
+                  utc={false}
+                >
+                  1483228800000
+                </t>
+              </p>
+            </div>
+            <div
+              className="col-12 col-lg-6 dataset-temporal-date"
             >
-              <t
-                ago={false}
-                calendar={false}
-                decimal={false}
-                element="time"
-                filter={[Function]}
-                format="DD.MM.YYYY"
-                fromNow={false}
-                interval={60000}
-                onChange={[Function]}
-                toNow={false}
-                unit={null}
-                unix={false}
-                utc={false}
+              <h5>
+                To
+              </h5>
+              <p
+                className="fdk-ingress fdk-margin-bottom-no text-nowrap"
               >
-                1514764799000
-              </t>
-            </p>
+                <t
+                  ago={false}
+                  calendar={false}
+                  decimal={false}
+                  element="time"
+                  filter={[Function]}
+                  format="DD.MM.YYYY"
+                  fromNow={false}
+                  interval={60000}
+                  onChange={[Function]}
+                  toNow={false}
+                  unit={null}
+                  unix={false}
+                  utc={false}
+                >
+                  1514764799000
+                </t>
+              </p>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div
-      className="fdk-container-detail col-md-4"
-    >
       <div
-        className="fdk-detail-icon"
+        className="fdk-container-detail col-12 col-lg-4"
       >
-        <i
-          className="fa fa-flag"
-        />
-      </div>
-      <div
-        className="fdk-detail-text"
-      >
-        <h5>
-          Language
-        </h5>
+        <div
+          className="fdk-detail-icon"
+        >
+          <i
+            className="fa fa-flag"
+          />
+        </div>
+        <div
+          className="fdk-detail-text"
+        >
+          <h5>
+            Language
+          </h5>
+        </div>
       </div>
     </div>
   </div>
@@ -534,7 +542,7 @@ exports[`should render DatasetInfo correctly 2`] = `
     className="row fdk-row"
   >
     <div
-      className="col-md-12 fdk-padding-no"
+      className="col-12 fdk-padding-no"
     >
       <div
         className="fdk-container-detail"
@@ -579,7 +587,11 @@ exports[`should render DatasetInfo correctly with no props 1`] = `
   />
   <div
     className="row fdk-row row-eq-height"
-  />
+  >
+    <div
+      className="col-12 fdk-padding-no"
+    />
+  </div>
   <div
     className="row fdk-row"
   />

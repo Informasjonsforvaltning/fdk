@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ReactPaginate from 'react-paginate';
-import { Modal, Button } from 'react-bootstrap';
+import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import cx from 'classnames';
 import _get from 'lodash/get';
 import _capitalize from 'lodash/capitalize';
@@ -103,11 +103,9 @@ export class ResultsConcepts extends React.Component {
       publishers
     } = this.props;
     return (
-      <Modal show={showFilterModal} onHide={closeFilterModal}>
-        <Modal.Header closeButton>
-          <Modal.Title>Filter</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
+      <Modal isOpen={showFilterModal} toggle={closeFilterModal}>
+        <ModalHeader toggle={closeFilterModal}>Filter</ModalHeader>
+        <ModalBody>
           <div className="search-filters">
             <SearchPublishersTree
               title={localization.facet.organisation}
@@ -117,15 +115,15 @@ export class ResultsConcepts extends React.Component {
               publishers={publishers}
             />
           </div>
-        </Modal.Body>
-        <Modal.Footer>
+        </ModalBody>
+        <ModalFooter>
           <Button
             className="fdk-button-default fdk-button"
             onClick={closeFilterModal}
           >
             Close
           </Button>
-        </Modal.Footer>
+        </ModalFooter>
       </Modal>
     );
   }
@@ -149,11 +147,12 @@ export class ResultsConcepts extends React.Component {
     );
 
     const clearButtonClass = cx(
+      'btn',
+      'btn-primary',
       'fdk-button',
-      'fdk-button-default-no-hover',
       'fade-in-500',
       {
-        hidden: !showClearFilterButton
+        'd-none': !showClearFilterButton
       }
     );
 
@@ -161,7 +160,7 @@ export class ResultsConcepts extends React.Component {
       <div id="content" role="main">
         <div id="conceptsPanel">
           <div className="row mt-1 mb-1-em fdk-button-row">
-            <div className="col-md-4">
+            <div className="col-lg-4">
               <button
                 className={clearButtonClass}
                 onClick={onClearSearch}
@@ -173,8 +172,8 @@ export class ResultsConcepts extends React.Component {
           </div>
 
           <div className="row">
-            <div className="search-filters col-sm-4 col-md-4 flex-move-first-item-to-bottom">
-              <div className="visible-sm visible-md visible-lg">
+            <div className="search-filters col-lg-4">
+              <div className="d-none d-lg-block">
                 <span className="uu-invisible" aria-hidden="false">
                   Filtrering tilgang
                 </span>
@@ -195,10 +194,10 @@ export class ResultsConcepts extends React.Component {
               {this._renderCompareTerms()}
             </div>
 
-            <div id="concepts" className="col-sm-8">
+            <div id="concepts" className="col-lg-8">
               {this._renderTerms()}
             </div>
-            <div className="col-xs-12 col-md-8 col-md-offset-4 text-center">
+            <div className="col-lg-8 offset-lg-4 d-flex justify-content-center">
               <span className="uu-invisible" aria-hidden="false">
                 Sidepaginering.
               </span>

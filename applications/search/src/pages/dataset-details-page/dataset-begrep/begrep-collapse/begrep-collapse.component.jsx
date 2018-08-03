@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Collapse } from 'react-bootstrap';
+import { Collapse } from 'reactstrap';
 
 import './begrep-collapse.scss';
 
@@ -27,12 +27,12 @@ export class BegrepCollapse extends React.Component {
           onClick={this.toggle}
           onKeyPress={this.toggle}
         >
-          <strong className="pull-left">{this.props.prefLabel}:&nbsp;</strong>
+          <strong className="float-left">{this.props.prefLabel}:&nbsp;</strong>
           {this.props.note && (
-            <i className="fa fa-chevron-down fdk-fa-right pull-right" />
+            <i className="fa fa-chevron-down fdk-fa-right float-right" />
           )}
           <div>{this.props.definition}</div>
-          <Collapse in={this.state.detailed}>
+          <Collapse isOpen={this.state.detailed}>
             <div>{this.props.note}</div>
           </Collapse>
         </div>

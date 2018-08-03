@@ -1,155 +1,117 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`should render Select correctly with active sort 1`] = `
-<DropdownButton
+<UncontrolledDropdown
   aria-label="Sorter søkeresultat, Sort by title"
-  bsStyle="default"
-  className="fdk-button fdk-button-default"
   id="search-result-dropdown-1"
-  onSelect={[Function]}
   title="Sort by title"
 >
-  <MenuItem
-    bsClass="dropdown"
-    disabled={false}
-    divider={false}
-    eventKey={
-      Object {
-        "defaultOption": true,
-        "field": "_score",
-        "label": "relevance",
-        "order": "asc",
-      }
-    }
-    header={false}
-    key="0"
+  <DropdownToggle
+    aria-haspopup={true}
+    caret={true}
+    className="fdk-button"
+    color="primary"
   >
-    Sort by relevance
-  </MenuItem>
-  <MenuItem
-    bsClass="dropdown"
-    disabled={false}
-    divider={false}
-    eventKey={
-      Object {
-        "field": "title",
-        "label": "title",
-        "order": "asc",
-      }
-    }
-    header={false}
-    key="1"
+    Sort by
+     
+    title
+  </DropdownToggle>
+  <DropdownMenu
+    className="fdk-dropdownmenu"
+    flip={true}
+    right={true}
+    tag="div"
   >
-    Sort by title
-  </MenuItem>
-  <MenuItem
-    bsClass="dropdown"
-    disabled={false}
-    divider={false}
-    eventKey={
-      Object {
-        "field": "modified",
-        "label": "modified",
-        "order": "desc",
-      }
-    }
-    header={false}
-    key="2"
-  >
-    Sort by modified
-  </MenuItem>
-  <MenuItem
-    bsClass="dropdown"
-    disabled={false}
-    divider={false}
-    eventKey={
-      Object {
-        "field": "publisher.name",
-        "label": "publisher",
-        "order": "asc",
-      }
-    }
-    header={false}
-    key="3"
-  >
-    Sort by publisher
-  </MenuItem>
-</DropdownButton>
+    <DropdownItem
+      key="0"
+      onClick={[Function]}
+      tag="button"
+      toggle={true}
+    >
+      Sort by relevance
+    </DropdownItem>
+    <DropdownItem
+      key="1"
+      onClick={[Function]}
+      tag="button"
+      toggle={true}
+    >
+      Sort by title
+    </DropdownItem>
+    <DropdownItem
+      key="2"
+      onClick={[Function]}
+      tag="button"
+      toggle={true}
+    >
+      Sort by modified
+    </DropdownItem>
+    <DropdownItem
+      key="3"
+      onClick={[Function]}
+      tag="button"
+      toggle={true}
+    >
+      Sort by publisher
+    </DropdownItem>
+  </DropdownMenu>
+</UncontrolledDropdown>
 `;
 
 exports[`should render Select correctly with no active sort 1`] = `
-<DropdownButton
+<UncontrolledDropdown
   aria-label="Sorter søkeresultat, Sort by relevance"
-  bsStyle="default"
-  className="fdk-button fdk-button-default"
   id="search-result-dropdown-1"
-  onSelect={[Function]}
   title="Sort by relevance"
 >
-  <MenuItem
-    bsClass="dropdown"
-    disabled={false}
-    divider={false}
-    eventKey={
-      Object {
-        "defaultOption": true,
-        "field": "_score",
-        "label": "relevance",
-        "order": "asc",
-      }
-    }
-    header={false}
-    key="0"
+  <DropdownToggle
+    aria-haspopup={true}
+    caret={true}
+    className="fdk-button"
+    color="primary"
   >
-    Sort by relevance
-  </MenuItem>
-  <MenuItem
-    bsClass="dropdown"
-    disabled={false}
-    divider={false}
-    eventKey={
-      Object {
-        "field": "title",
-        "label": "title",
-        "order": "asc",
-      }
-    }
-    header={false}
-    key="1"
+    Sort by
+     
+    relevance
+  </DropdownToggle>
+  <DropdownMenu
+    className="fdk-dropdownmenu"
+    flip={true}
+    right={true}
+    tag="div"
   >
-    Sort by title
-  </MenuItem>
-  <MenuItem
-    bsClass="dropdown"
-    disabled={false}
-    divider={false}
-    eventKey={
-      Object {
-        "field": "modified",
-        "label": "modified",
-        "order": "desc",
-      }
-    }
-    header={false}
-    key="2"
-  >
-    Sort by modified
-  </MenuItem>
-  <MenuItem
-    bsClass="dropdown"
-    disabled={false}
-    divider={false}
-    eventKey={
-      Object {
-        "field": "publisher.name",
-        "label": "publisher",
-        "order": "asc",
-      }
-    }
-    header={false}
-    key="3"
-  >
-    Sort by publisher
-  </MenuItem>
-</DropdownButton>
+    <DropdownItem
+      key="0"
+      onClick={[Function]}
+      tag="button"
+      toggle={true}
+    >
+      Sort by relevance
+    </DropdownItem>
+    <DropdownItem
+      key="1"
+      onClick={[Function]}
+      tag="button"
+      toggle={true}
+    >
+      Sort by title
+    </DropdownItem>
+    <DropdownItem
+      key="2"
+      onClick={[Function]}
+      tag="button"
+      toggle={true}
+    >
+      Sort by modified
+    </DropdownItem>
+    <DropdownItem
+      key="3"
+      onClick={[Function]}
+      tag="button"
+      toggle={true}
+    >
+      Sort by publisher
+    </DropdownItem>
+  </DropdownMenu>
+</UncontrolledDropdown>
 `;

@@ -1,0 +1,17 @@
+@import './node_modules/designsystemet/fdk-designsystem-bootstrap4/scss/colors.scss';
+
+/***************  **************************/
+/*********** Bootstrap overrides **********/
+/*****************************************/
+$primary:       $color-cta4 !default;
+$secondary:     $color3 !default;
+$success:       $color-green !default;
+$info:          $color-cta4 !default;
+$warning:       $color-yellow !default;
+$danger:        $color-red !default;
+
+@import './node_modules/bootstrap/scss/bootstrap';
+
+/*****************************************/
+/*********** End Bootstrap overrides **********/
+/*****************************************/

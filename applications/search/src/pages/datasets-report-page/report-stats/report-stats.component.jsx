@@ -2,6 +2,7 @@ import * as _ from 'lodash';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import _capitalize from 'lodash/capitalize';
+import { CardDeck, Card, CardText, CardBody } from 'reactstrap';
 
 import localization from '../../../lib/localization';
 import { getParamFromLocation } from '../../../lib/addOrReplaceUrlParam';
@@ -120,7 +121,7 @@ export const ReportStats = props => {
   }
   const title = (
     <div className="row">
-      <div className="fdk-container-stats">
+      <div className="col-12 fdk-container-stats">
         <h2>
           {localization.report.title}
           <strong>{name}</strong>
@@ -131,7 +132,7 @@ export const ReportStats = props => {
 
   const total = (
     <div className="row">
-      <div className="fdk-container-stats fdk-container-stats-total">
+      <div className="col-12 fdk-container-stats fdk-container-stats-total">
         <h1>
           <strong>
             <Link to={orgPath ? `/?orgPath=${encodedOrgPath}` : '/'}>
@@ -146,12 +147,12 @@ export const ReportStats = props => {
 
   const accessLevel = (
     <div className="row">
-      <div className="fdk-container-stats fdk-container-stats-accesslevel-title">
+      <div className="col-12 fdk-container-stats fdk-container-stats-accesslevel-title">
         <h2>{localization.report.accessLevel}</h2>
         <div className="row">
           <Link
             title={localization.report.public}
-            className="col-md-3 fdk-container-stats-accesslevel fdk-container-stats-vr fdk-padding-no"
+            className="col-lg-3 fdk-container-stats-accesslevel fdk-container-stats-vr fdk-padding-no"
             to={`/?accessrights=PUBLIC${orgPathParam}`}
           >
             <p>
@@ -164,7 +165,7 @@ export const ReportStats = props => {
           </Link>
           <Link
             title={localization.report.restricted}
-            className="col-md-3 fdk-container-stats-accesslevel fdk-container-stats-vr fdk-padding-no"
+            className="col-lg-3 fdk-container-stats-accesslevel fdk-container-stats-vr fdk-padding-no"
             to={`/?accessrights=RESTRICTED${orgPathParam}`}
           >
             <p>
@@ -177,7 +178,7 @@ export const ReportStats = props => {
             <p>{localization.report.restricted}</p>
           </Link>
           <Link
-            className="col-md-3 fdk-container-stats-accesslevel fdk-container-stats-vr fdk-padding-no"
+            className="col-lg-3 fdk-container-stats-accesslevel fdk-container-stats-vr fdk-padding-no"
             to={`/?accessrights=NON_PUBLIC${orgPathParam}`}
           >
             <p>
@@ -189,7 +190,7 @@ export const ReportStats = props => {
             <p>{localization.report.nonPublic}</p>
           </Link>
           <Link
-            className="col-md-3 fdk-container-stats-accesslevel fdk-padding-no"
+            className="col-lg-3 fdk-container-stats-accesslevel fdk-padding-no"
             to={`/?accessrights=Ukjent${orgPathParam}`}
           >
             <p>
@@ -207,7 +208,7 @@ export const ReportStats = props => {
 
   const opendata = (
     <div className="row">
-      <div className="fdk-container-stats fdk-container-stats-concepts-title">
+      <div className="col-12 fdk-container-stats fdk-container-stats-concepts-title">
         <h2>{localization.report.openData}</h2>
         <div className="fdk-container-stats-concepts">
           <Link
@@ -224,13 +225,16 @@ export const ReportStats = props => {
   );
 
   const changes = (
-    <div className="row">
-      <div className="col-md-4 fdk-container-stats-changes-left">
-        <div className="fdk-container-stats fdk-container-stats-changes">
-          <h2>{localization.report.changesLastWeek}</h2>
-          <div className="row">
-            <div>
-              <p>
+    <div className="row mb-3">
+      <div className="col-12 p-0">
+        <CardDeck>
+          <Card
+            className="fdk-container-stats fdk-container-stats-changes"
+            style={{ borderColor: 'transparent' }}
+          >
+            <CardBody>
+              <h2>{localization.report.changesLastWeek}</h2>
+              <CardText>
                 <strong>
                   <Link
                     title={localization.report.newDatasets}
@@ -240,18 +244,17 @@ export const ReportStats = props => {
                     {stats.newLastWeek}
                   </Link>
                 </strong>
-              </p>
-              <p>{localization.report.newDatasets}</p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="col-md-4 fdk-container-stats-changes-middle">
-        <div className="fdk-container-stats fdk-container-stats-changes">
-          <h2>{localization.report.changesLastMonth}</h2>
-          <div className="row">
-            <div>
-              <p>
+                <div>{localization.report.newDatasets}</div>
+              </CardText>
+            </CardBody>
+          </Card>
+          <Card
+            className="fdk-container-stats fdk-container-stats-changes"
+            style={{ borderColor: 'transparent' }}
+          >
+            <CardBody>
+              <h2>{localization.report.changesLastMonth}</h2>
+              <CardText>
                 <strong>
                   <Link
                     title={localization.report.deletedLastMonth}
@@ -261,18 +264,17 @@ export const ReportStats = props => {
                     {stats.newLastMonth}
                   </Link>
                 </strong>
-              </p>
-              <p>{localization.report.newDatasets}</p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="col-md-4 fdk-container-stats-changes-right">
-        <div className="fdk-container-stats fdk-container-stats-changes">
-          <h2>{localization.report.changesLastYear}</h2>
-          <div className="row">
-            <div>
-              <p>
+                <div>{localization.report.newDatasets}</div>
+              </CardText>
+            </CardBody>
+          </Card>
+          <Card
+            className="fdk-container-stats fdk-container-stats-changes"
+            style={{ borderColor: 'transparent' }}
+          >
+            <CardBody>
+              <h2>{localization.report.changesLastYear}</h2>
+              <CardText>
                 <strong>
                   <Link
                     title={localization.report.newDatasets}
@@ -282,27 +284,27 @@ export const ReportStats = props => {
                     {stats.newLastYear}
                   </Link>
                 </strong>
-              </p>
-              <p>{localization.report.newDatasets}</p>
-            </div>
-          </div>
-        </div>
+                <div>{localization.report.newDatasets}</div>
+              </CardText>
+            </CardBody>
+          </Card>
+        </CardDeck>
       </div>
     </div>
   );
 
   const concepts = (
     <div className="row">
-      <div className="fdk-container-stats fdk-container-stats-concepts-title">
+      <div className="col-12 fdk-container-stats fdk-container-stats-concepts-title">
         <h2>{localization.report.concepts}</h2>
         <div className="row fdk-container-stats-concepts">
-          <div className="col-md-6 fdk-container-stats-vr">
+          <div className="col-lg-6 fdk-container-stats-vr">
             <p>
               <strong>{stats.subjectCount}</strong>
             </p>
             <p>{localization.report.withConcepts}</p>
           </div>
-          <div className="col-md-6">
+          <div className="col-lg-6">
             <p>
               <strong>{stats.total - stats.subjectCount}</strong>
             </p>
@@ -315,16 +317,16 @@ export const ReportStats = props => {
 
   const distributions = (
     <div className="row">
-      <div className="fdk-container-stats fdk-container-stats-concepts-title">
+      <div className="col-12 fdk-container-stats fdk-container-stats-concepts-title">
         <h2>{localization.report.distributions}</h2>
         <div className="row fdk-container-stats-concepts">
-          <div className="col-md-6 fdk-container-stats-vr">
+          <div className="col-lg-6 fdk-container-stats-vr">
             <p>
               <strong>{stats.distOnPublicAccessCount}</strong>
             </p>
             <p>{localization.report.withDistributions}</p>
           </div>
-          <div className="col-md-6">
+          <div className="col-lg-6">
             <p>
               <strong>{stats.public - stats.distOnPublicAccessCount}</strong>
             </p>
@@ -336,7 +338,7 @@ export const ReportStats = props => {
   );
 
   return (
-    <div>
+    <div className="container">
       {title}
       {total}
       {accessLevel}

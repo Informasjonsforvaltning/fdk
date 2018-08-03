@@ -3,6 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import qs from 'qs';
+import { Button } from 'reactstrap';
 
 import localization from '../../lib/localization';
 import { ReportStats } from './report-stats/report-stats.component';
@@ -71,14 +72,14 @@ export class DatasetsReportPage extends React.Component {
     return (
       <section className="container">
         <div className="row">
-          <div className="col-sm-4">
-            <button
-              className="fdk-button fdk-button-default-no-hover"
+          <div className="col-md-4">
+            <Button
+              className="fdk-button"
               onClick={this.clearSearch}
-              type="button"
+              color="primary"
             >
               {localization.query.clear}
-            </button>
+            </Button>
             <PublishersSelect
               publishers={this.props.publishers}
               onChange={this.selectPublisher}
@@ -89,7 +90,7 @@ export class DatasetsReportPage extends React.Component {
               value={selectedPublisher}
             />
           </div>
-          <div className="col-sm-8">
+          <div className="col-md-8">
             <ReportStats
               aggregateDataset={this.state.aggregateDataset}
               entityName={

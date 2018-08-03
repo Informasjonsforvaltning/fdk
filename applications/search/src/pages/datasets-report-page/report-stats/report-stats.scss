@@ -1,9 +1,9 @@
-@import '../../../../node_modules/designsystemet/fdk-designsystem-bootstrap3/scss/colors';
+@import '../../../../node_modules/designsystemet/fdk-designsystem-bootstrap4/scss/colors';
 
 .fdk-container-stats {
   background-color: $color0;
   border: 1px solid $color6;
-  margin: 0 .9em .9em 0;
+  margin-bottom: .9em;
   padding: .9em 2em;
   border-radius: 5px;
   h2 {    

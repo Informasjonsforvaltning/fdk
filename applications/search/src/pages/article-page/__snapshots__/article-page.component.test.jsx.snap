@@ -11,7 +11,7 @@ exports[`should render ArticlePage correctly 1`] = `
     className="row"
   >
     <div
-      className="col-sm-12 col-md-10 col-md-offset-1"
+      className="col-lg-10 offset-lg-1"
     >
       <h1
         className="fdk-margin-bottom"

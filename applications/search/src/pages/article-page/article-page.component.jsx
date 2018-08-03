@@ -12,7 +12,7 @@ export const ArticlePage = () => {
     <div className="container">
       <DocumentMeta {...meta} />
       <div className="row">
-        <div className="col-sm-12 col-md-10 col-md-offset-1">
+        <div className="col-lg-10 offset-lg-1">
           <h1 className="fdk-margin-bottom">
             {localization.registration.title}
           </h1>

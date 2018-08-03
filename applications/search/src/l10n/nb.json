@@ -228,6 +228,7 @@
     "inScheme": "Fagområde / bruksområde",
     "source": "Kilde",
     "note": "Beskrivelse",
+    "compare": "Sammenligning",
     "hideCompare": "Skjul sammenligning",
     "openCompare": "Vis sammenligning",
     "remove": "Fjern begrep",

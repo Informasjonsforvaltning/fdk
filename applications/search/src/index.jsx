@@ -43,12 +43,10 @@ ReactDOM.render(
   <Provider store={store}>
     <ConnectedFeatureToggleProvider>
       <BrowserRouter>
-        <div className="d-flex flex-column site">
-          <div className="site-content d-flex flex-column">
-            <Route path="/" component={Analytics} />
-            <Route path="/" component={ConnectedApp} />
-          </div>
-        </div>
+        <React.Fragment>
+          <Route path="/" component={Analytics} />
+          <Route path="/" component={ConnectedApp} />
+        </React.Fragment>
       </BrowserRouter>
     </ConnectedFeatureToggleProvider>
   </Provider>,

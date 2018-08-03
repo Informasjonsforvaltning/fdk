@@ -12,24 +12,32 @@ exports[`should render BegrepCollapse correctly 1`] = `
     tabIndex={0}
   >
     <strong
-      className="pull-left"
+      className="float-left"
     >
       enhet
       : 
     </strong>
     <i
-      className="fa fa-chevron-down fdk-fa-right pull-right"
+      className="fa fa-chevron-down fdk-fa-right float-right"
     />
     <div>
       alt som er registrert med et organisasjonsnummer 
     </div>
     <Collapse
-      dimension="height"
-      getDimensionValue={[Function]}
-      in={true}
+      appear={false}
+      enter={true}
+      exit={true}
+      in={false}
+      isOpen={true}
       mountOnEnter={false}
-      timeout={300}
-      transitionAppear={false}
+      onEnter={[Function]}
+      onEntered={[Function]}
+      onEntering={[Function]}
+      onExit={[Function]}
+      onExited={[Function]}
+      onExiting={[Function]}
+      tag="div"
+      timeout={350}
       unmountOnExit={false}
     >
       <div>
@@ -52,18 +60,26 @@ exports[`should render BegrepCollapse correctly with no props 1`] = `
     tabIndex={0}
   >
     <strong
-      className="pull-left"
+      className="float-left"
     >
       : 
     </strong>
     <div />
     <Collapse
-      dimension="height"
-      getDimensionValue={[Function]}
+      appear={false}
+      enter={true}
+      exit={true}
       in={false}
+      isOpen={false}
       mountOnEnter={false}
-      timeout={300}
-      transitionAppear={false}
+      onEnter={[Function]}
+      onEntered={[Function]}
+      onEntering={[Function]}
+      onExit={[Function]}
+      onExited={[Function]}
+      onExiting={[Function]}
+      tag="div"
+      timeout={350}
       unmountOnExit={false}
     >
       <div />

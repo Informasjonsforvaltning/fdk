@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import TreeView from 'react-treeview';
 import 'react-treeview/react-treeview.css';
 import cx from 'classnames';
-import { Collapse } from 'react-bootstrap';
+import { Collapse } from 'reactstrap';
 import _get from 'lodash/get';
 import _capitalize from 'lodash/capitalize';
 
@@ -212,7 +212,7 @@ export class SearchPublishersTree extends React.Component {
             <span>{title}</span>
           </button>
         </div>
-        <Collapse in={openFilter}>
+        <Collapse isOpen={openFilter}>
           <div className="fdk-panel__content">
             <div className="fdk-items-list">{this._renderTree()}</div>
           </div>

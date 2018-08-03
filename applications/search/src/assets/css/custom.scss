@@ -1,5 +1,5 @@
 // this link is invalid for IDE, but works for webpack
-@import './node_modules/designsystemet/fdk-designsystem-bootstrap3/scss/colors.scss';
+@import './node_modules/designsystemet/fdk-designsystem-bootstrap4/scss/colors.scss';
 
 .publisher {
   position: absolute;
@@ -7,44 +7,22 @@
   right: 0;
 }
 
+.fdk-dropdown-menu button{
+  font-size:1.5rem
+}
+
 /* TODO move to designsystemet*/
 
-
-/*
-.fdk-header {
-  background-color: $color0;
-  border-bottom: 1px solid $color5;
-  padding: 1.2em 0;
-  margin: 0;
-}
-.fdk-logo {
-  width: 201px;
-  height: 60px;
-  margin: -8px 0px; }
-*/
-
-.fdk-header {
-  background-color: $color0;
-  border-bottom: 1px solid $color5;
-  padding: 1.2em 1.2em;
-  margin: 0;
-}
-
-.fdk-logo {
-  width: 15.6rem;
-  height: 5.2rem;
-}
-
 .nav a {
+  font-size: 1.5rem;
   text-decoration: none;
   color: $color1;
-  font-size
   &:focus, &:active, &:hover {
     color: $color1 !important;
   }
 }
 
-.btn-group .fdk-button-language {
+.fdk-button-language {
   background-color: transparent !important;
   border-color: transparent;
   text-shadow: none;
@@ -53,11 +31,17 @@
   text-decoration: none;
   margin-right: .5em;
   color: $color1 !important;
+  font-size: 1.5rem;
   &:focus, &:active, &:hover {
     color: $color1 !important;
     background-color: transparent !important;
     border-color: transparent !important;
   }
+}
+
+.fdk-dropdownmenu {
+  font-size: .88em;
+  margin-top: .5em;
 }
 
 .btn-group .fdk-button-menu {
@@ -73,10 +57,14 @@
   }
 }
 
-.fdk-header-menu a {
-  text-decoration: none;
-  color: $color1;
-  &:focus, &:active, &:hover {
-    color: $color1 !important;
+.modal-header {
+  h5 {
+    color: $color0;
+  }
+  button {
+    span {
+      font-size: 2rem;
+      color: $color-red;
+    }
   }
 }

@@ -8,7 +8,7 @@ exports[`should render DatasetDetailsPage correctly with datasetItem 1`] = `
     className="row"
   >
     <div
-      className="col-md-8 col-md-offset-2"
+      className="col-lg-8 offset-lg-2"
       id="content"
       role="main"
     >

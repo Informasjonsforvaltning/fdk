@@ -172,25 +172,27 @@ export const ConceptsHitItem = props => {
       >
         {!toBeCompared && (
           <button
-            className="fdk-button fdk-button-default pull-right mt-3 visible-md visible-lg"
+            className="btn btn-primary fdk-button float-right mt-3 d-none d-lg-inline"
             onClick={() => {
               onAddTerm(_source);
             }}
             type="button"
           >
-            <span aria-hidden="true">+</span> {localization.compare.addCompare}
+            <span aria-hidden="true">+</span>
+            {localization.compare.addCompare}
           </button>
         )}
 
         {!toBeCompared && (
           <button
-            className="fdk-button fdk-button-default fdk-btn-compare visible-xs visible-sm"
+            className="fdk-button fdk-button-default fdk-btn-compare d-block d-lg-none"
             onClick={() => {
               onAddTerm(_source);
             }}
             type="button"
           >
-            <span aria-hidden="true">+</span> {localization.compare.addCompare}
+            <span aria-hidden="true">+</span>
+            {localization.compare.addCompare}
           </button>
         )}
 

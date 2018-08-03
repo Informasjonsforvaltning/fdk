@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Collapse } from 'react-bootstrap';
+import { Collapse } from 'reactstrap';
 import cx from 'classnames';
 
 import localization from '../../../../lib/localization';
@@ -65,7 +65,7 @@ export class FilterBox extends React.Component {
           {options(buckets.slice(0, 5))}
           {bucketsLength > 5 && (
             <div>
-              <Collapse in={open}>
+              <Collapse isOpen={open}>
                 <div>{options(buckets.slice(5))}</div>
               </Collapse>
               <button className="fdk-toggleList" onClick={this.toggleList}>
@@ -99,7 +99,7 @@ export class FilterBox extends React.Component {
             <span>{title}</span>
           </button>
         </div>
-        <Collapse in={openFilter}>
+        <Collapse isOpen={openFilter}>
           <div className="fdk-panel__content">
             <div className="fdk-items-list">
               {this._renderOptions(filter, onClick, activeFilter)}
