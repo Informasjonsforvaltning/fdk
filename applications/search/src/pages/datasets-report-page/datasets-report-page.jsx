@@ -3,6 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import qs from 'qs';
+import { Button } from 'reactstrap';
 
 import localization from '../../lib/localization';
 import { ReportStats } from './report-stats/report-stats.component';
@@ -72,13 +73,13 @@ export class DatasetsReportPage extends React.Component {
       <section className="container">
         <div className="row">
           <div className="col-md-4">
-            <button
-              className="fdk-button fdk-button-default-no-hover"
+            <Button
+              className="fdk-button"
               onClick={this.clearSearch}
-              type="button"
+              color="primary"
             >
               {localization.query.clear}
-            </button>
+            </Button>
             <PublishersSelect
               publishers={this.props.publishers}
               onChange={this.selectPublisher}
