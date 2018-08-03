@@ -8,6 +8,7 @@ import { openLicensesReducer } from './modules/openLicenses';
 import { distributionTypesReducer } from './modules/distributionType';
 import { featureToggleResolver } from './modules/featureToggle';
 import { settingsResolver } from './modules/settings';
+import { catalogsReducer } from './modules/catalogs';
 
 export const rootReducer = combineReducers({
   datasets: datasetsReducer,
@@ -18,5 +19,6 @@ export const rootReducer = combineReducers({
   openLicenses: openLicensesReducer,
   distributionTypes: distributionTypesReducer,
   featureToggle: featureToggleResolver,
-  settings: settingsResolver
+  settings: settingsResolver,
+  catalogs: catalogsReducer
 });

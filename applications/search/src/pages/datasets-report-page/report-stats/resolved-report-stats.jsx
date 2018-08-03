@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import { resolve } from 'react-resolver';
 import axios from 'axios';
-import { ReportStats } from './report-stats.component';
+import { ConnectedReportStats } from './connected-report-stats';
 
 function getFromBucketArray(data, aggregation, key) {
   const buckets = _.get(data, ['aggregations', aggregation, 'buckets'], []);
@@ -52,4 +52,4 @@ const mapProps = {
   }
 };
 
-export const ResolvedReportStats = resolve(mapProps)(ReportStats);
+export const ResolvedReportStats = resolve(mapProps)(ConnectedReportStats);
