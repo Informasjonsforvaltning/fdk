@@ -11,6 +11,7 @@ import { Breadcrumbs } from './breadcrumbs/breadcrumbs.component';
 import { ConnectedAppNavBar } from './app-nav-bar/connected-app-nav-bar';
 import { ConnectedDatasetsReportPage } from '../pages/datasets-report-page/connected-datasets-report-page';
 
+import '../assets/css/bootstrap-override.scss';
 import './styles';
 
 export function App(props) {
