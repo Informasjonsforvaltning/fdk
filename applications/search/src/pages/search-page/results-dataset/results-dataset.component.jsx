@@ -71,8 +71,9 @@ export class ResultsDataset extends React.Component {
         </ModalBody>
         <ModalFooter>
           <Button
-            className="fdk-button-default fdk-button"
+            className="fdk-button"
             onClick={closeFilterModal}
+            color="primary"
           >
             Close
           </Button>
