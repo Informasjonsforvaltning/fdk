@@ -14,6 +14,7 @@
 /* TODO move to designsystemet*/
 
 .nav a {
+  font-size: 1.5rem;
   text-decoration: none;
   color: $color1;
   &:focus, &:active, &:hover {
@@ -30,7 +31,7 @@
   text-decoration: none;
   margin-right: .5em;
   color: $color1 !important;
-  font-size: 1.6rem;
+  font-size: 1.5rem;
   &:focus, &:active, &:hover {
     color: $color1 !important;
     background-color: transparent !important;
@@ -53,14 +54,6 @@
     -webkit-font-smoothing: antialiased;
     content: "\f0c9";
     margin-right: .2em;
-  }
-}
-
-.fdk-header-menu a {
-  text-decoration: none;
-  color: $color1;
-  &:focus, &:active, &:hover {
-    color: $color1 !important;
   }
 }
 
