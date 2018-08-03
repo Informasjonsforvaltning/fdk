@@ -1,5 +1,5 @@
-import * as _ from 'lodash';
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import _capitalize from 'lodash/capitalize';
 import { CardDeck, Card, CardText, CardBody } from 'reactstrap';
@@ -9,97 +9,7 @@ import { getParamFromLocation } from '../../../lib/addOrReplaceUrlParam';
 import './report-stats.scss';
 
 export const ReportStats = props => {
-  const { aggregateDataset, entityName } = props;
-  // const { entityName } = props;
-  // const aggregateDataset = require('../../../../api-mocks/aggregateDataset_opendata.json')
-  const stats = {
-    total: aggregateDataset.hits ? aggregateDataset.hits.total : 0,
-    public:
-      aggregateDataset.aggregations &&
-      aggregateDataset.aggregations.accessRightsCount.buckets.find(
-        bucket => bucket.key.toUpperCase() === 'PUBLIC'
-      )
-        ? aggregateDataset.aggregations.accessRightsCount.buckets.find(
-            bucket => bucket.key.toUpperCase() === 'PUBLIC'
-          ).doc_count
-        : 0,
-    restricted:
-      aggregateDataset.aggregations &&
-      aggregateDataset.aggregations.accessRightsCount.buckets.find(
-        bucket => bucket.key.toUpperCase() === 'RESTRICTED'
-      )
-        ? aggregateDataset.aggregations.accessRightsCount.buckets.find(
-            bucket => bucket.key.toUpperCase() === 'RESTRICTED'
-          ).doc_count
-        : 0,
-    nonPublic:
-      aggregateDataset.aggregations &&
-      aggregateDataset.aggregations.accessRightsCount.buckets.find(
-        bucket => bucket.key.toUpperCase() === 'NON_PUBLIC'
-      )
-        ? aggregateDataset.aggregations.accessRightsCount.buckets.find(
-            bucket => bucket.key.toUpperCase() === 'NON_PUBLIC'
-          ).doc_count
-        : 0,
-    unknown:
-      aggregateDataset.aggregations &&
-      aggregateDataset.aggregations.accessRightsCount.buckets.find(
-        bucket => bucket.key.toUpperCase() === 'UKJENT'
-      )
-        ? aggregateDataset.aggregations.accessRightsCount.buckets.find(
-            bucket => bucket.key.toUpperCase() === 'UKJENT'
-          ).doc_count
-        : 0,
-    opendata: _.get(aggregateDataset, 'aggregations.opendata.doc_count', 0),
-    newLastWeek:
-      aggregateDataset.aggregations &&
-      aggregateDataset.aggregations.firstHarvested.buckets &&
-      aggregateDataset.aggregations.firstHarvested.buckets.last7days
-        ? aggregateDataset.aggregations.firstHarvested.buckets.last7days
-            .doc_count
-        : 0,
-
-    newLastMonth:
-      aggregateDataset.aggregations &&
-      aggregateDataset.aggregations.firstHarvested.buckets &&
-      aggregateDataset.aggregations.firstHarvested.buckets.last30days
-        ? aggregateDataset.aggregations.firstHarvested.buckets.last30days
-            .doc_count
-        : 0,
-
-    newLastYear:
-      aggregateDataset.aggregations &&
-      aggregateDataset.aggregations.firstHarvested.buckets &&
-      aggregateDataset.aggregations.firstHarvested.buckets.last365days
-        ? aggregateDataset.aggregations.firstHarvested.buckets.last365days
-            .doc_count
-        : 0,
-
-    withoutConcepts:
-      aggregateDataset.aggregations &&
-      aggregateDataset.aggregations.subjectsCount &&
-      aggregateDataset.aggregations.subjectCount.doc_count
-        ? aggregateDataset.aggregations.subjectCount.doc_count
-        : 0,
-    distributions:
-      aggregateDataset.aggregations &&
-      aggregateDataset.aggregations.distCount &&
-      aggregateDataset.aggregations.distCount.doc_count
-        ? aggregateDataset.aggregations.distCount.doc_count
-        : 0,
-    distOnPublicAccessCount:
-      aggregateDataset.aggregations &&
-      aggregateDataset.aggregations.distOnPublicAccessCount &&
-      aggregateDataset.aggregations.distOnPublicAccessCount.doc_count
-        ? aggregateDataset.aggregations.distOnPublicAccessCount.doc_count
-        : 0,
-    subjectCount:
-      aggregateDataset.aggregations &&
-      aggregateDataset.aggregations.subjectCount &&
-      aggregateDataset.aggregations.subjectCount.doc_count
-        ? aggregateDataset.aggregations.subjectCount.doc_count
-        : 0
-  };
+  const { stats, entityName } = props;
 
   const orgPath = getParamFromLocation(window.location, 'orgPath');
   const encodedOrgPath = orgPath ? encodeURIComponent(orgPath) : null;
@@ -348,4 +258,8 @@ export const ReportStats = props => {
       {distributions}
     </div>
   );
+};
+
+ReportStats.propTypes = {
+  stats: PropTypes.object.isRequired
 };

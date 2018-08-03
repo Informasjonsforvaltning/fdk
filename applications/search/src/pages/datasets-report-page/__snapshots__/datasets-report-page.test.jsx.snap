@@ -30,8 +30,8 @@ exports[`should render DatasetsReportPage correctly 1`] = `
     <div
       className="col-md-8"
     >
-      <AggregateDatasetResolver
-        entityName="all entities"
+      <StatsResolver
+        entityName={null}
         orgPath={null}
       />
     </div>

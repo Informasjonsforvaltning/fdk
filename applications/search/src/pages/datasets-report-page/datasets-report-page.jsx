@@ -57,10 +57,7 @@ export function DatasetsReportPage(props) {
         <div className="col-md-8">
           <ResolvedReportStats
             orgPath={selectedPublisher && selectedPublisher.orgPath}
-            entityName={
-              (selectedPublisher && selectedPublisher.name) ||
-              localization.report.allEntities
-            }
+            entityName={selectedPublisher && selectedPublisher.name}
           />
         </div>
       </div>
