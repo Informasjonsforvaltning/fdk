@@ -1,7 +1,7 @@
+import _ from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import _capitalize from 'lodash/capitalize';
 import { CardDeck, Card, CardText, CardBody } from 'reactstrap';
 
 import localization from '../../../lib/localization';
@@ -9,6 +9,8 @@ import { getParamFromLocation } from '../../../lib/addOrReplaceUrlParam';
 import './report-stats.scss';
 
 export const ReportStats = props => {
+  props.fetchCatalogsIfNeeded();
+
   const { stats, entityName } = props;
 
   const orgPath = getParamFromLocation(window.location, 'orgPath');
@@ -25,7 +27,7 @@ export const ReportStats = props => {
       entityName === 'PRIVAT' ||
       entityName === 'ANNET'
         ? localization.facet.publishers[entityName]
-        : _capitalize(entityName);
+        : _.capitalize(entityName);
   } else {
     name = localization.report.allEntities;
   }
@@ -260,6 +262,11 @@ export const ReportStats = props => {
   );
 };
 
+ReportStats.defaultProps = {
+  fetchCatalogsIfNeeded: _.noop
+};
+
 ReportStats.propTypes = {
+  fetchCatalogsIfNeeded: PropTypes.func,
   stats: PropTypes.object.isRequired
 };
