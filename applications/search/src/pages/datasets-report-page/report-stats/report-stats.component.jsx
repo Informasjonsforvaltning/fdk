@@ -244,8 +244,8 @@ export const ReportStats = props => {
                     {stats.newLastWeek}
                   </Link>
                 </strong>
-                <div>{localization.report.newDatasets}</div>
               </CardText>
+              <CardText>{localization.report.newDatasets}</CardText>
             </CardBody>
           </Card>
           <Card
@@ -264,8 +264,8 @@ export const ReportStats = props => {
                     {stats.newLastMonth}
                   </Link>
                 </strong>
-                <div>{localization.report.newDatasets}</div>
               </CardText>
+              <CardText>{localization.report.newDatasets}</CardText>
             </CardBody>
           </Card>
           <Card
@@ -284,8 +284,8 @@ export const ReportStats = props => {
                     {stats.newLastYear}
                   </Link>
                 </strong>
-                <div>{localization.report.newDatasets}</div>
               </CardText>
+              <CardText>{localization.report.newDatasets}</CardText>
             </CardBody>
           </Card>
         </CardDeck>

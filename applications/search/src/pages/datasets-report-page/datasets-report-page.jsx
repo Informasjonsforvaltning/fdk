@@ -11,7 +11,6 @@ import { getParamFromLocation } from '../../lib/addOrReplaceUrlParam';
 import { ResolvedReportStats } from './report-stats/resolved-report-stats';
 
 export function DatasetsReportPage(props) {
-
   function selectPublisher(publisher) {
     const orgPath = publisher && publisher.orgPath;
     const currentSearch = qs.parse(props.location.search, {
