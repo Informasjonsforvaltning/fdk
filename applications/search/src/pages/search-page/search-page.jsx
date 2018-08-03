@@ -55,6 +55,9 @@ export class SearchPage extends React.Component {
 
     this.props.fetchDatasetsIfNeeded(`/datasets${search}`);
     this.props.fetchTermsIfNeeded(`/terms${search}`);
+    this.props.fetchThemesIfNeeded();
+    this.props.fetchPublishersIfNeeded();
+    this.props.fetchDistributionTypeIfNeeded();
   }
 
   componentDidUpdate(prevProps) {
