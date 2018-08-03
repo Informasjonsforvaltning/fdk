@@ -188,9 +188,11 @@ exports[`should render ReportStats correctly 1`] = `
                   547
                 </Link>
               </strong>
-              <div>
-                New datasets
-              </div>
+            </CardText>
+            <CardText
+              tag="p"
+            >
+              New datasets
             </CardText>
           </CardBody>
         </Card>
@@ -221,9 +223,11 @@ exports[`should render ReportStats correctly 1`] = `
                   547
                 </Link>
               </strong>
-              <div>
-                New datasets
-              </div>
+            </CardText>
+            <CardText
+              tag="p"
+            >
+              New datasets
             </CardText>
           </CardBody>
         </Card>
@@ -255,9 +259,11 @@ exports[`should render ReportStats correctly 1`] = `
                   547
                 </Link>
               </strong>
-              <div>
-                New datasets
-              </div>
+            </CardText>
+            <CardText
+              tag="p"
+            >
+              New datasets
             </CardText>
           </CardBody>
         </Card>
