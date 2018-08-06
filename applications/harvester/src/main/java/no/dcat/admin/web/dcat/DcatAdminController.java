@@ -87,7 +87,6 @@ public class DcatAdminController {
 
         ModelAndView model = new ModelAndView("dcatSource");
         model.addObject("dcatSource", dcatSourceById.get());
-        model.addObject("kibanaLink", new KibanaLink(applicationSettings));
 
         return model;
     }

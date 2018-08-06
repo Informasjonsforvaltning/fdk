@@ -2,16 +2,15 @@ version: "3"
 
 services:
   search:
-    build: ./applications/search
     restart: always
     command: npm start
     ports:
-       - "3000:3000"
-    volumes:
-      - ./applications/search/src:/usr/src/app/src:rw
+      - "3000:3000"
     environment:
-      - REDUX_LOG=${REDUX_LOG}
-      - NODE_ENV=${NODE_ENV}
+     - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
+     - application.queryService=http://search-api:8080
+     - application.queryServiceExternal=http://localhost:8083
+     - application.fusekiService=http://fuseki:8080/fuseki
 
   search-api:
     restart: always
@@ -23,14 +22,32 @@ services:
      - application.elasticsearchPort=9300
 
   nginx-search:
+    image: dcatno/nginx-search:latest
     restart: always
+    depends_on:
+      - search
     ports:
       - "8080:8080"
+    networks:
+      platform:
+
+  gdoc:
+    ports:
+      - "8084:8080"
+    environment:
+     - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
+
+  registration-validator:
+    restart: always
+    ports:
+      - "8086:8080"
+    environment:
+     - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
 
   fuseki:
     restart: always
     volumes:
-      - ./data/fuseki:/etc/fuseki/databases/
+      - fuseki-data:/etc/fuseki/databases/
     ports:
      - "3030:8080"
 
@@ -47,7 +64,7 @@ services:
      - application.elasticSearchPort=9300
      - application.elasticSearchCluster=elasticsearch
     volumes:
-     - ./logs:/usr/local/tomcat/logs:rw
+     - harvester-api-logs:/usr/local/tomcat/logs:rw
 
   harvester:
     restart: always
@@ -61,7 +78,7 @@ services:
      - harvester_adminUsername=test_admin
      - harvester_adminPassword=password
     volumes:
-     - ./logs:/usr/local/tomcat/logs:rw
+     - harvester-logs:/usr/local/tomcat/logs:rw
 
   elasticsearch:
     restart: always
@@ -69,14 +86,10 @@ services:
       - "9200:9200"
       - "9300:9300"
     volumes:
-      - ./data/esdata:/usr/share/elasticsearch/data
+      - elasticsearch-data:/usr/share/elasticsearch/data
     environment:
       - cluster.name=fellesdatakatalog
 
-  elasticsearch-copy:
-    restart: always
-    volumes:
-    - ./data/escopy:/escopydata
 
   dev-management:
     restart: always
@@ -96,11 +109,12 @@ services:
   nginx-registration-ssl:
     image: dcatno/nginx-registration-ssl:latest
     restart: always
-    ports:
-      - "8098:443"
     depends_on:
       - nginx-registration
-      - registration-react
+    ports:
+      - "8098:443"
+    networks:
+      platform:
 
   registration-api:
     restart: always
@@ -119,21 +133,19 @@ services:
      - registrationApi_ipStorePassword=${registrationApi_ipStorePassword}
 
   registration-react:
-    build: ./applications/registration-react
     restart: always
     command: npm start
     ports:
-     - "4300:4300"
-    volumes:
-     - ./applications/registration-react/src:/usr/src/app/src:rw
+      - 127.0.0.1:4300:4300
     environment:
-     - REGISTRATION_LANGUAGE=${REGISTRATION_LANGUAGE}
-     - NODE_ENV=${NODE_ENV}
+     - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
+     - QUERY_SERVICE_URL=/reference-data
+     - VALIDATOR_URL=http://localhost:8086
 
   registration-auth:
       restart: always
       ports:
-        - "8077:8080"
+        - 127.0.0.1:8077:8080
       environment:
         - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
 
@@ -141,11 +153,26 @@ services:
     restart: always
     ports:
       - "8100:8080"
+    volumes:
+      - reference-data-tdb:/tdb
     environment:
      - JAVA_OPTS=-Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
 
-  e2e:
-    build: ./applications/e2e
-    volumes:
-      -   ./applications/e2e/test:/usr/src/app/test:rw
-    command: tail -F /dev/null
+
+#  logstash:
+#    image: "dcatno/logstash:${TAG}"
+#    entrypoint: /opt/logstash/bin/logstash -f /etc/logstash/conf.d/logstash.conf
+#    volumes:
+#      - ./logs:/usr/local/tomcat/logs:rw
+#    depends_on:
+#      - elasticsearch
+#    networks:
+#      logging:
+
+
+volumes:
+  reference-data-tdb:
+  fuseki-data:
+  elasticsearch-data:
+  harvester-logs:
+  harvester-api-logs:

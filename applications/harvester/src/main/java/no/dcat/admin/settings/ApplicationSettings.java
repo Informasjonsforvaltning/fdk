@@ -10,8 +10,6 @@ import org.springframework.context.annotation.Configuration;
 public class ApplicationSettings {
 
     private String harvesterUrl;
-    private String kibanaLinkFirstHalf;
-    private String kibanaLinkSecondHalf;
 
     //username/pwd for new admin user. It is created if it does not already exist in Fuseki
     private String adminUsername;
@@ -23,22 +21,6 @@ public class ApplicationSettings {
 
     public void setHarvesterUrl(String harvesterUrl) {
         this.harvesterUrl = harvesterUrl;
-    }
-
-    public String getKibanaLinkFirstHalf() {
-        return kibanaLinkFirstHalf;
-    }
-
-    public void setKibanaLinkFirstHalf(String kibanaLinkFirstHalf) {
-        this.kibanaLinkFirstHalf = kibanaLinkFirstHalf;
-    }
-
-    public String getKibanaLinkSecondHalf() {
-        return kibanaLinkSecondHalf;
-    }
-
-    public void setKibanaLinkSecondHalf(String kibanaLinkSecondHalf) {
-        this.kibanaLinkSecondHalf = kibanaLinkSecondHalf;
     }
 
     public String getAdminUsername()  { return adminUsername; }

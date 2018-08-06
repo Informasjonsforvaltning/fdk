@@ -14,7 +14,7 @@ public class ApplicationSettings {
 	private String elasticSearchHost;
 	private int elasticSearchPort;
 	private String elasticSearchCluster;
-	private String themesHostname;
+	private String referenceDataUrl;
 
 	private String httpUsername;
 	private String httpPassword;
@@ -65,12 +65,12 @@ public class ApplicationSettings {
 		this.crawlerThreadPoolSize = crawlerThreadPoolSize;
 	}
 
-	public String getThemesHostname() {
-		return themesHostname;
+	public String getReferenceDataUrl() {
+		return referenceDataUrl;
 	}
 
-	public void setThemesHostname(String themesHostname) {
-		this.themesHostname = themesHostname;
+	public void setReferenceDataUrl(String referenceDataUrl) {
+		this.referenceDataUrl = referenceDataUrl;
 	}
 
 	public String getNotificationMailSenderAddress() {return notificationMailSenderAddress; }

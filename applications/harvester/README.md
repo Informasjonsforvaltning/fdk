@@ -43,8 +43,6 @@ The harvester module is dependent on the following other modules:
     * Information about users and data catalogs are stored in Fuseki database admin
     * Log information about harvests are retrieved from Fuseki database admin
 * Elasticsearch (api)
-* Kibana (optional) (REST api)
-    * Visualisation for harvest log information
 * Library: no.dcat.datastore
     * Provides Java interfaces for communicating with Elasticsearch and Fuseki
 

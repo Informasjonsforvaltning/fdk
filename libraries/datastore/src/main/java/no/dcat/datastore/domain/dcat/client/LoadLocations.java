@@ -4,12 +4,8 @@ import no.dcat.shared.LocationUri;
 import no.dcat.shared.SkosCode;
 import no.dcat.datastore.domain.dcat.builders.AbstractBuilder;
 import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.NodeIterator;
 import org.apache.jena.rdf.model.ResIterator;
-import org.apache.jena.rdf.model.Resource;
-import org.apache.jena.vocabulary.DCAT;
 import org.apache.jena.vocabulary.DCTerms;
-import org.apache.jena.vocabulary.DCTypes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,14 +19,14 @@ import java.util.stream.Collectors;
  */
 public class LoadLocations {
 
-    private final String themesHostname;
+    private final String referenceDataUrl;
     private final String httpUsername;
     private final String httpPassword;
 
     Map<String, SkosCode> locations = new HashMap<>();
 
-    public LoadLocations(String themesHostname, String httpUsername, String httpPassword) {
-        this.themesHostname = themesHostname;
+    public LoadLocations(String referenceDataUrl, String httpUsername, String httpPassword) {
+        this.referenceDataUrl = referenceDataUrl;
         this.httpUsername = httpUsername;
         this.httpPassword = httpPassword;
     }
@@ -44,7 +40,7 @@ public class LoadLocations {
     // for testing
     public LoadLocations(Map<String, SkosCode> locations) {
         this.locations = locations;
-        themesHostname = null;
+        referenceDataUrl = null;
         httpPassword = null;
         httpUsername = null;
     }
@@ -85,7 +81,7 @@ public class LoadLocations {
         LocationUri locationUri = new LocationUri(uri);
 
         try {
-            SkosCode skosCode = template.postForObject(themesHostname + "/locations/", locationUri, SkosCode.class);
+            SkosCode skosCode = template.postForObject(referenceDataUrl + "/locations/", locationUri, SkosCode.class);
             locations.put(skosCode.getUri(), skosCode);
             logger.info("Posting location to reference-data: {}", skosCode.toString());
         } catch (Exception e) {
