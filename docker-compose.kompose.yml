@@ -5,14 +5,18 @@ services:
     build: ./applications/search
     restart: always
     command: npm start
-    volumes:
-      - ./applications/search/src:/usr/src/app/src:rw
+    #volumes:
+    # -  ./applications/search/src:/usr/src/app/src:rw
+    ports:
+      - "3000:3000"
     environment:
       - REDUX_LOG=${REDUX_LOG}
-      - NODE_ENV=${NODE_ENV}
+      - NODE_ENV=production
 
   search-api:
     restart: always
+    ports:
+      - "8080:8080"
     environment:
      - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
      - application.elasticsearchHost=elasticsearch
@@ -22,14 +26,20 @@ services:
     restart: always
     ports:
       - "8080:8080"
+    labels:
+      kompose.service.type: nodeport
 
   fuseki:
     restart: always
+    ports:
+      - "8080:8080"
     volumes:
       - ./data/fuseki:/etc/fuseki/databases/
 
   harvester-api:
     restart: always
+    ports:
+      - "8080:8080"
     environment:
      - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx1024M -Dspring.profiles.active=docker
      - fuseki.dcatServiceUri=http://fuseki:8080/fuseki/dcat
@@ -42,7 +52,7 @@ services:
   harvester:
     restart: always
     ports:
-     - "8082:8080"
+     - "8080:8080"
     environment:
      - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
      - fuseki.dcatServiceUri=http://fuseki:8080/fuseki/dcat
@@ -52,23 +62,23 @@ services:
      - application.kibanaLinkSecondHalf="%22')),title:dashboard_template,uiState:())"
      - harvester_adminUsername=test_admin
      - harvester_adminPassword=password
+    labels:
+      kompose.service.type: nodeport
 
   elasticsearch:
     restart: always
+    ports:
+      - "9200:9200"
+      - "9300:9300"
     volumes:
       - ./data/esdata:/usr/share/elasticsearch/data
     environment:
       - cluster.name=fellesdatakatalog
 
-  elasticsearch-copy:
-    restart: always
-    volumes:
-    - ./data/escopy:/escopydata
-
   dev-management:
     restart: always
     ports:
-      - "8085:8080"
+      - "8080:8080"
     environment:
      - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
      - application.elasticsearchHost=elasticsearch
@@ -79,18 +89,26 @@ services:
 
   nginx-registration:
     restart: always
+    ports:
+      - "8080:8080"
 
   nginx-registration-ssl:
     image: dcatno/nginx-registration-ssl:latest
     restart: always
-    ports:
-      - "8098:443"
     depends_on:
       - nginx-registration
       - registration-react
+    ports:
+      - "443:443"
+    depends_on:
+      - nginx-registration
+    labels:
+      kompose.service.type: nodeport
 
   registration-api:
     restart: always
+    ports:
+     - "8080:8080"
     environment:
      - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
      - registrationAPI_clusterName=elasticsearch
@@ -107,56 +125,56 @@ services:
     build: ./applications/registration-react
     restart: always
     command: npm start
-    volumes:
-     - ./applications/registration-react/src:/usr/src/app/src:rw
+#    volumes:
+#     - ./applications/registration-react/src:/usr/src/app/src:rw
+    ports:
+     - "4300:4300"
     environment:
+     - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
+     - QUERY_SERVICE_URL=/reference-data
+     - VALIDATOR_URL=http://localhost:8086
      - REGISTRATION_LANGUAGE=${REGISTRATION_LANGUAGE}
-     - NODE_ENV=${NODE_ENV}
 
   registration-auth:
-      restart: always
-      environment:
-        - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
+
+  registration-validator:
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
 
   reference-data:
     restart: always
+    ports:
+      - "8080:8080"
     environment:
      - JAVA_OPTS=-Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
 
-  e2e:
-    build: ./applications/e2e
-    volumes:
-      -   ./applications/e2e/test:/usr/src/app/test:rw
-    command: tail -F /dev/null
 
-volumes:
-  reference-data-data:
-    driver: local
-    driver_opts:
-      type: none
-      device: ${PWD}/data/reference-data
-      o: bind
-  fuseki-data:
-    driver: local
-    driver_opts:
-      type: none
-      device: ${PWD}/data/fuseki
-      o: bind
-  elasticsearch-data:
-    driver: local
-    driver_opts:
-      type: none
-      device: ${PWD}/data/esdata
-      o: bind
-  harvester-logs:
-    driver: local
-    driver_opts:
-      type: none
-      device: ${PWD}/logs/harvester
-      o: bind
-  harvester-api-logs:
-    driver: local
-    driver_opts:
-      type: none
-      device: ${PWD}/logs/harvester-api
-      o: bind
+#  logstash:
+#    image: "dcatno/logstash:${TAG}"
+#    entrypoint: /opt/logstash/bin/logstash -f /etc/logstash/conf.d/logstash.conf
+#    volumes:
+#      - ./logs:/usr/local/tomcat/logs:rw
+#    depends_on:
+#      - elasticsearch
+
+#  kibana:
+#    ports:
+#      - "5601:5601"
+#    #volumes:
+#    #      - ./data/kibana/config/:/opt/kibana/config/
+#    depends_on:
+#      - elasticsearch
+
+#  e2e:
+#    build: ./applications/e2e
+#    volumes:
+#      -   ./applications/e2e/test:/usr/src/app/test:rw
+#    command: tail -F /dev/null

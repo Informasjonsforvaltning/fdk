@@ -1,0 +1,948 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kompose.cmd: kompose -f docker-compose.yml -f docker-compose.kompose.yml -o
+        kubernetes.local.yml convert
+      kompose.version: 1.14.0 ()
+    creationTimestamp: null
+    labels:
+      io.kompose.service: dev-management
+    name: dev-management
+  spec:
+    ports:
+    - name: "8080"
+      port: 8080
+      targetPort: 8080
+    selector:
+      io.kompose.service: dev-management
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kompose.cmd: kompose -f docker-compose.yml -f docker-compose.kompose.yml -o
+        kubernetes.local.yml convert
+      kompose.version: 1.14.0 ()
+    creationTimestamp: null
+    labels:
+      io.kompose.service: elasticsearch
+    name: elasticsearch
+  spec:
+    ports:
+    - name: "9200"
+      port: 9200
+      targetPort: 9200
+    - name: "9300"
+      port: 9300
+      targetPort: 9300
+    selector:
+      io.kompose.service: elasticsearch
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kompose.cmd: kompose -f docker-compose.yml -f docker-compose.kompose.yml -o
+        kubernetes.local.yml convert
+      kompose.version: 1.14.0 ()
+    creationTimestamp: null
+    labels:
+      io.kompose.service: fuseki
+    name: fuseki
+  spec:
+    ports:
+    - name: "8080"
+      port: 8080
+      targetPort: 8080
+    selector:
+      io.kompose.service: fuseki
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kompose.cmd: kompose -f docker-compose.yml -f docker-compose.kompose.yml -o
+        kubernetes.local.yml convert
+      kompose.service.type: nodeport
+      kompose.version: 1.14.0 ()
+    creationTimestamp: null
+    labels:
+      io.kompose.service: harvester
+    name: harvester
+  spec:
+    ports:
+    - name: "8080"
+      port: 8080
+      targetPort: 8080
+    selector:
+      io.kompose.service: harvester
+    type: NodePort
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kompose.cmd: kompose -f docker-compose.yml -f docker-compose.kompose.yml -o
+        kubernetes.local.yml convert
+      kompose.version: 1.14.0 ()
+    creationTimestamp: null
+    labels:
+      io.kompose.service: harvester-api
+    name: harvester-api
+  spec:
+    ports:
+    - name: "8080"
+      port: 8080
+      targetPort: 8080
+    selector:
+      io.kompose.service: harvester-api
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kompose.cmd: kompose -f docker-compose.yml -f docker-compose.kompose.yml -o
+        kubernetes.local.yml convert
+      kompose.version: 1.14.0 ()
+    creationTimestamp: null
+    labels:
+      io.kompose.service: nginx-registration
+    name: nginx-registration
+  spec:
+    ports:
+    - name: "8080"
+      port: 8080
+      targetPort: 8080
+    selector:
+      io.kompose.service: nginx-registration
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kompose.cmd: kompose -f docker-compose.yml -f docker-compose.kompose.yml -o
+        kubernetes.local.yml convert
+      kompose.service.type: nodeport
+      kompose.version: 1.14.0 ()
+    creationTimestamp: null
+    labels:
+      io.kompose.service: nginx-registration-ssl
+    name: nginx-registration-ssl
+  spec:
+    ports:
+    - name: "443"
+      port: 443
+      targetPort: 443
+    selector:
+      io.kompose.service: nginx-registration-ssl
+    type: NodePort
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kompose.cmd: kompose -f docker-compose.yml -f docker-compose.kompose.yml -o
+        kubernetes.local.yml convert
+      kompose.service.type: nodeport
+      kompose.version: 1.14.0 ()
+    creationTimestamp: null
+    labels:
+      io.kompose.service: nginx-search
+    name: nginx-search
+  spec:
+    ports:
+    - name: "8080"
+      port: 8080
+      targetPort: 8080
+    selector:
+      io.kompose.service: nginx-search
+    type: NodePort
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kompose.cmd: kompose -f docker-compose.yml -f docker-compose.kompose.yml -o
+        kubernetes.local.yml convert
+      kompose.version: 1.14.0 ()
+    creationTimestamp: null
+    labels:
+      io.kompose.service: reference-data
+    name: reference-data
+  spec:
+    ports:
+    - name: "8080"
+      port: 8080
+      targetPort: 8080
+    selector:
+      io.kompose.service: reference-data
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kompose.cmd: kompose -f docker-compose.yml -f docker-compose.kompose.yml -o
+        kubernetes.local.yml convert
+      kompose.version: 1.14.0 ()
+    creationTimestamp: null
+    labels:
+      io.kompose.service: registration-api
+    name: registration-api
+  spec:
+    ports:
+    - name: "8080"
+      port: 8080
+      targetPort: 8080
+    selector:
+      io.kompose.service: registration-api
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kompose.cmd: kompose -f docker-compose.yml -f docker-compose.kompose.yml -o
+        kubernetes.local.yml convert
+      kompose.version: 1.14.0 ()
+    creationTimestamp: null
+    labels:
+      io.kompose.service: registration-auth
+    name: registration-auth
+  spec:
+    ports:
+    - name: "8080"
+      port: 8080
+      targetPort: 8080
+    selector:
+      io.kompose.service: registration-auth
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kompose.cmd: kompose -f docker-compose.yml -f docker-compose.kompose.yml -o
+        kubernetes.local.yml convert
+      kompose.version: 1.14.0 ()
+    creationTimestamp: null
+    labels:
+      io.kompose.service: registration-react
+    name: registration-react
+  spec:
+    ports:
+    - name: "4300"
+      port: 4300
+      targetPort: 4300
+    selector:
+      io.kompose.service: registration-react
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kompose.cmd: kompose -f docker-compose.yml -f docker-compose.kompose.yml -o
+        kubernetes.local.yml convert
+      kompose.version: 1.14.0 ()
+    creationTimestamp: null
+    labels:
+      io.kompose.service: registration-validator
+    name: registration-validator
+  spec:
+    ports:
+    - name: "8080"
+      port: 8080
+      targetPort: 8080
+    selector:
+      io.kompose.service: registration-validator
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kompose.cmd: kompose -f docker-compose.yml -f docker-compose.kompose.yml -o
+        kubernetes.local.yml convert
+      kompose.version: 1.14.0 ()
+    creationTimestamp: null
+    labels:
+      io.kompose.service: search
+    name: search
+  spec:
+    ports:
+    - name: "3000"
+      port: 3000
+      targetPort: 3000
+    selector:
+      io.kompose.service: search
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kompose.cmd: kompose -f docker-compose.yml -f docker-compose.kompose.yml -o
+        kubernetes.local.yml convert
+      kompose.version: 1.14.0 ()
+    creationTimestamp: null
+    labels:
+      io.kompose.service: search-api
+    name: search-api
+  spec:
+    ports:
+    - name: "8080"
+      port: 8080
+      targetPort: 8080
+    selector:
+      io.kompose.service: search-api
+  status:
+    loadBalancer: {}
+- apiVersion: extensions/v1beta1
+  kind: Deployment
+  metadata:
+    annotations:
+      kompose.cmd: kompose -f docker-compose.yml -f docker-compose.kompose.yml -o
+        kubernetes.local.yml convert
+      kompose.version: 1.14.0 ()
+    creationTimestamp: null
+    labels:
+      io.kompose.service: dev-management
+    name: dev-management
+  spec:
+    replicas: 1
+    strategy: {}
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          io.kompose.service: dev-management
+      spec:
+        containers:
+        - env:
+          - name: JAVA_OPTS
+            value: ' -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker'
+          - name: application.elasticsearchCluster
+            value: elasticsearch
+          - name: application.elasticsearchHost
+            value: elasticsearch
+          - name: application.elasticsearchPort
+            value: "9300"
+          - name: application.fusekiHost
+            value: http://fuseki:8080
+          - name: application.harvesterHost
+            value: http://harvester-api:8080
+          image: dcatno/dev-management:latest
+          name: dev-management
+          ports:
+          - containerPort: 8080
+          resources: {}
+        restartPolicy: Always
+  status: {}
+- apiVersion: extensions/v1beta1
+  kind: Deployment
+  metadata:
+    annotations:
+      kompose.cmd: kompose -f docker-compose.yml -f docker-compose.kompose.yml -o
+        kubernetes.local.yml convert
+      kompose.version: 1.14.0 ()
+    creationTimestamp: null
+    labels:
+      io.kompose.service: elasticsearch
+    name: elasticsearch
+  spec:
+    replicas: 1
+    strategy:
+      type: Recreate
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          io.kompose.service: elasticsearch
+      spec:
+        containers:
+        - env:
+          - name: cluster.name
+            value: fellesdatakatalog
+          image: elasticsearch:2.4.1
+          name: elasticsearch
+          ports:
+          - containerPort: 9200
+          - containerPort: 9300
+          resources: {}
+          volumeMounts:
+          - mountPath: /usr/share/elasticsearch/data
+            name: elasticsearch-claim0
+        restartPolicy: Always
+        volumes:
+        - name: elasticsearch-claim0
+          persistentVolumeClaim:
+            claimName: elasticsearch-claim0
+  status: {}
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    creationTimestamp: null
+    labels:
+      io.kompose.service: elasticsearch-claim0
+    name: elasticsearch-claim0
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 100Mi
+  status: {}
+- apiVersion: extensions/v1beta1
+  kind: Deployment
+  metadata:
+    annotations:
+      kompose.cmd: kompose -f docker-compose.yml -f docker-compose.kompose.yml -o
+        kubernetes.local.yml convert
+      kompose.version: 1.14.0 ()
+    creationTimestamp: null
+    labels:
+      io.kompose.service: fuseki
+    name: fuseki
+  spec:
+    replicas: 1
+    strategy:
+      type: Recreate
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          io.kompose.service: fuseki
+      spec:
+        containers:
+        - image: dcatno/fuseki:latest
+          name: fuseki
+          ports:
+          - containerPort: 8080
+          resources: {}
+          volumeMounts:
+          - mountPath: /etc/fuseki/databases/
+            name: fuseki-claim0
+        restartPolicy: Always
+        volumes:
+        - name: fuseki-claim0
+          persistentVolumeClaim:
+            claimName: fuseki-claim0
+  status: {}
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    creationTimestamp: null
+    labels:
+      io.kompose.service: fuseki-claim0
+    name: fuseki-claim0
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 100Mi
+  status: {}
+- apiVersion: extensions/v1beta1
+  kind: Deployment
+  metadata:
+    annotations:
+      kompose.cmd: kompose -f docker-compose.yml -f docker-compose.kompose.yml -o
+        kubernetes.local.yml convert
+      kompose.service.type: nodeport
+      kompose.version: 1.14.0 ()
+    creationTimestamp: null
+    labels:
+      io.kompose.service: harvester
+    name: harvester
+  spec:
+    replicas: 1
+    strategy:
+      type: Recreate
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          io.kompose.service: harvester
+      spec:
+        containers:
+        - env:
+          - name: JAVA_OPTS
+            value: ' -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker'
+          - name: application.harvesterUrl
+            value: http://harvester-api:8080
+          - name: application.kibanaLinkFirstHalf
+            value: '"/app/kibana/#/dashboard/dashboard_template?_g=(refreshInterval:(display:Off,pause:!f,value:0),time:(from:now-24h,mode:quick,to:now))&_a=(filters:!(),options:(darkTheme:!f),panels:!((col:4,id:Crawler-Operations,panelIndex:1,row:3,size_x:9,size_y:3,type:visualization),(col:1,id:Crawler-Results,panelIndex:2,row:3,size_x:3,size_y:3,type:visualization),(col:1,id:Crawler-Metadata,panelIndex:4,row:1,size_x:12,size_y:2,type:visualization),(col:7,id:Validation-RuleId,panelIndex:6,row:6,size_x:6,size_y:4,type:visualization),(col:1,columns:!(ruleSeverity,event,cause,ruleId),id:validation_ruleId,panelIndex:7,row:6,size_x:6,size_y:4,sort:!(timestamp,desc),type:search)),query:(query_string:(analyze_wildcard:!t,query:''%22"'
+          - name: application.kibanaLinkSecondHalf
+            value: '"%22'')),title:dashboard_template,uiState:())"'
+          - name: fuseki.adminServiceUri
+            value: http://fuseki:8080/fuseki/admin
+          - name: fuseki.dcatServiceUri
+            value: http://fuseki:8080/fuseki/dcat
+          - name: harvester_adminPassword
+            value: password
+          - name: harvester_adminUsername
+            value: test_admin
+          image: dcatno/harvester:latest
+          name: harvester
+          ports:
+          - containerPort: 8080
+          resources: {}
+          volumeMounts:
+          - mountPath: /usr/local/tomcat/logs
+            name: harvester-logs
+        restartPolicy: Always
+        volumes:
+        - name: harvester-logs
+          persistentVolumeClaim:
+            claimName: harvester-logs
+  status: {}
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    creationTimestamp: null
+    labels:
+      io.kompose.service: harvester-logs
+    name: harvester-logs
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 100Mi
+  status: {}
+- apiVersion: extensions/v1beta1
+  kind: Deployment
+  metadata:
+    annotations:
+      kompose.cmd: kompose -f docker-compose.yml -f docker-compose.kompose.yml -o
+        kubernetes.local.yml convert
+      kompose.version: 1.14.0 ()
+    creationTimestamp: null
+    labels:
+      io.kompose.service: harvester-api
+    name: harvester-api
+  spec:
+    replicas: 1
+    strategy:
+      type: Recreate
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          io.kompose.service: harvester-api
+      spec:
+        containers:
+        - env:
+          - name: JAVA_OPTS
+            value: ' -ea -Djava.security.egd=file:/dev/./urandom -Xmx1024M -Dspring.profiles.active=docker'
+          - name: application.crawlerThreadPoolSize
+            value: "2"
+          - name: application.elasticSearchCluster
+            value: elasticsearch
+          - name: application.elasticSearchHost
+            value: elasticsearch
+          - name: application.elasticSearchPort
+            value: "9300"
+          - name: fuseki.adminServiceUri
+            value: http://fuseki:8080/fuseki/admin
+          - name: fuseki.dcatServiceUri
+            value: http://fuseki:8080/fuseki/dcat
+          image: dcatno/harvester-api:latest
+          name: harvester-api
+          ports:
+          - containerPort: 8080
+          resources: {}
+          volumeMounts:
+          - mountPath: /usr/local/tomcat/logs
+            name: harvester-api-logs
+        restartPolicy: Always
+        volumes:
+        - name: harvester-api-logs
+          persistentVolumeClaim:
+            claimName: harvester-api-logs
+  status: {}
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    creationTimestamp: null
+    labels:
+      io.kompose.service: harvester-api-logs
+    name: harvester-api-logs
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 100Mi
+  status: {}
+- apiVersion: extensions/v1beta1
+  kind: Deployment
+  metadata:
+    annotations:
+      kompose.cmd: kompose -f docker-compose.yml -f docker-compose.kompose.yml -o
+        kubernetes.local.yml convert
+      kompose.version: 1.14.0 ()
+    creationTimestamp: null
+    labels:
+      io.kompose.service: nginx-registration
+    name: nginx-registration
+  spec:
+    replicas: 1
+    strategy: {}
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          io.kompose.service: nginx-registration
+      spec:
+        containers:
+        - image: dcatno/nginx-registration:latest
+          name: nginx-registration
+          ports:
+          - containerPort: 8080
+          resources: {}
+        restartPolicy: Always
+  status: {}
+- apiVersion: extensions/v1beta1
+  kind: Deployment
+  metadata:
+    annotations:
+      kompose.cmd: kompose -f docker-compose.yml -f docker-compose.kompose.yml -o
+        kubernetes.local.yml convert
+      kompose.service.type: nodeport
+      kompose.version: 1.14.0 ()
+    creationTimestamp: null
+    labels:
+      io.kompose.service: nginx-registration-ssl
+    name: nginx-registration-ssl
+  spec:
+    replicas: 1
+    strategy: {}
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          io.kompose.service: nginx-registration-ssl
+      spec:
+        containers:
+        - image: dcatno/nginx-registration-ssl:latest
+          name: nginx-registration-ssl
+          ports:
+          - containerPort: 443
+          resources: {}
+        restartPolicy: Always
+  status: {}
+- apiVersion: extensions/v1beta1
+  kind: Deployment
+  metadata:
+    annotations:
+      kompose.cmd: kompose -f docker-compose.yml -f docker-compose.kompose.yml -o
+        kubernetes.local.yml convert
+      kompose.service.type: nodeport
+      kompose.version: 1.14.0 ()
+    creationTimestamp: null
+    labels:
+      io.kompose.service: nginx-search
+    name: nginx-search
+  spec:
+    replicas: 1
+    strategy: {}
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          io.kompose.service: nginx-search
+      spec:
+        containers:
+        - image: dcatno/nginx-search:latest
+          name: nginx-search
+          ports:
+          - containerPort: 8080
+          resources: {}
+        restartPolicy: Always
+  status: {}
+- apiVersion: extensions/v1beta1
+  kind: Deployment
+  metadata:
+    annotations:
+      kompose.cmd: kompose -f docker-compose.yml -f docker-compose.kompose.yml -o
+        kubernetes.local.yml convert
+      kompose.version: 1.14.0 ()
+    creationTimestamp: null
+    labels:
+      io.kompose.service: reference-data
+    name: reference-data
+  spec:
+    replicas: 1
+    strategy:
+      type: Recreate
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          io.kompose.service: reference-data
+      spec:
+        containers:
+        - env:
+          - name: JAVA_OPTS
+            value: -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
+          image: dcatno/reference-data:latest
+          name: reference-data
+          ports:
+          - containerPort: 8080
+          resources: {}
+          volumeMounts:
+          - mountPath: /tdb
+            name: reference-data-data
+        restartPolicy: Always
+        volumes:
+        - name: reference-data-data
+          persistentVolumeClaim:
+            claimName: reference-data-data
+  status: {}
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    creationTimestamp: null
+    labels:
+      io.kompose.service: reference-data-data
+    name: reference-data-data
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 100Mi
+  status: {}
+- apiVersion: extensions/v1beta1
+  kind: Deployment
+  metadata:
+    annotations:
+      kompose.cmd: kompose -f docker-compose.yml -f docker-compose.kompose.yml -o
+        kubernetes.local.yml convert
+      kompose.version: 1.14.0 ()
+    creationTimestamp: null
+    labels:
+      io.kompose.service: registration-api
+    name: registration-api
+  spec:
+    replicas: 1
+    strategy: {}
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          io.kompose.service: registration-api
+      spec:
+        containers:
+        - env:
+          - name: JAVA_OPTS
+            value: ' -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker'
+          - name: registrationAPI_clusterName
+            value: elasticsearch
+          - name: registrationApi_altinnServiceUrl
+            value: http://registration-auth:8080
+          - name: registrationApi_apikey
+          - name: registrationApi_clientSSLCertificateKeystoreLocation
+            value: conf/dummy-client-SSL-cert.p12
+          - name: registrationApi_clientSSLCertificateKeystorePassword
+            value: password
+          - name: registrationApi_harvesterPassword
+            value: password
+          - name: registrationApi_harvesterUsername
+            value: test_admin
+          - name: registrationApi_ipKeyPassword
+          - name: registrationApi_ipStorePassword
+          image: dcatno/registration-api:latest
+          name: registration-api
+          ports:
+          - containerPort: 8080
+          resources: {}
+        restartPolicy: Always
+  status: {}
+- apiVersion: extensions/v1beta1
+  kind: Deployment
+  metadata:
+    annotations:
+      kompose.cmd: kompose -f docker-compose.yml -f docker-compose.kompose.yml -o
+        kubernetes.local.yml convert
+      kompose.version: 1.14.0 ()
+    creationTimestamp: null
+    labels:
+      io.kompose.service: registration-auth
+    name: registration-auth
+  spec:
+    replicas: 1
+    strategy: {}
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          io.kompose.service: registration-auth
+      spec:
+        containers:
+        - env:
+          - name: JAVA_OPTS
+            value: ' -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker'
+          image: dcatno/registration-auth:latest
+          name: registration-auth
+          ports:
+          - containerPort: 8080
+          resources: {}
+        restartPolicy: Always
+  status: {}
+- apiVersion: extensions/v1beta1
+  kind: Deployment
+  metadata:
+    annotations:
+      kompose.cmd: kompose -f docker-compose.yml -f docker-compose.kompose.yml -o
+        kubernetes.local.yml convert
+      kompose.version: 1.14.0 ()
+    creationTimestamp: null
+    labels:
+      io.kompose.service: registration-react
+    name: registration-react
+  spec:
+    replicas: 1
+    strategy: {}
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          io.kompose.service: registration-react
+      spec:
+        containers:
+        - args:
+          - npm
+          - start
+          env:
+          - name: JAVA_OPTS
+            value: ' -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker'
+          - name: QUERY_SERVICE_URL
+            value: /reference-data
+          - name: REGISTRATION_LANGUAGE
+          - name: VALIDATOR_URL
+            value: http://localhost:8086
+          image: dcatno/registration-react:latest
+          name: registration-react
+          ports:
+          - containerPort: 4300
+          resources: {}
+        restartPolicy: Always
+  status: {}
+- apiVersion: extensions/v1beta1
+  kind: Deployment
+  metadata:
+    annotations:
+      kompose.cmd: kompose -f docker-compose.yml -f docker-compose.kompose.yml -o
+        kubernetes.local.yml convert
+      kompose.version: 1.14.0 ()
+    creationTimestamp: null
+    labels:
+      io.kompose.service: registration-validator
+    name: registration-validator
+  spec:
+    replicas: 1
+    strategy: {}
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          io.kompose.service: registration-validator
+      spec:
+        containers:
+        - env:
+          - name: JAVA_OPTS
+            value: ' -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker'
+          image: dcatno/registration-validator:latest
+          name: registration-validator
+          ports:
+          - containerPort: 8080
+          resources: {}
+        restartPolicy: Always
+  status: {}
+- apiVersion: extensions/v1beta1
+  kind: Deployment
+  metadata:
+    annotations:
+      kompose.cmd: kompose -f docker-compose.yml -f docker-compose.kompose.yml -o
+        kubernetes.local.yml convert
+      kompose.version: 1.14.0 ()
+    creationTimestamp: null
+    labels:
+      io.kompose.service: search
+    name: search
+  spec:
+    replicas: 1
+    strategy: {}
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          io.kompose.service: search
+      spec:
+        containers:
+        - args:
+          - npm
+          - start
+          env:
+          - name: NODE_ENV
+            value: production
+          - name: REDUX_LOG
+          image: dcatno/search:latest
+          name: search
+          ports:
+          - containerPort: 3000
+          resources: {}
+        restartPolicy: Always
+  status: {}
+- apiVersion: extensions/v1beta1
+  kind: Deployment
+  metadata:
+    annotations:
+      kompose.cmd: kompose -f docker-compose.yml -f docker-compose.kompose.yml -o
+        kubernetes.local.yml convert
+      kompose.version: 1.14.0 ()
+    creationTimestamp: null
+    labels:
+      io.kompose.service: search-api
+    name: search-api
+  spec:
+    replicas: 1
+    strategy: {}
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          io.kompose.service: search-api
+      spec:
+        containers:
+        - env:
+          - name: JAVA_OPTS
+            value: ' -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker'
+          - name: application.elasticsearchHost
+            value: elasticsearch
+          - name: application.elasticsearchPort
+            value: "9300"
+          image: dcatno/search-api:latest
+          name: search-api
+          ports:
+          - containerPort: 8080
+          resources: {}
+        restartPolicy: Always
+  status: {}
+kind: List
+metadata: {}
+
