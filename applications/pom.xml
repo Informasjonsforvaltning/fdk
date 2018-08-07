@@ -33,6 +33,7 @@
 
         <module>end2end-test</module>
         <module>elasticsearch-copy</module>
+        <module>acat-api</module>
     </modules>
 
 
