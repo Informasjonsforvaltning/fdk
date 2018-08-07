@@ -122,111 +122,102 @@ export class ResultsApi extends React.Component {
       'fdk-button',
       'fade-in-500',
       {
-        'd-none': !showClearFilterButton
+        'd-none': showClearFilterButton
       }
     );
 
     return (
-      <div id="content" role="main">
-        <div id="resultPanel">
-          <div className="row mt-1 mb-1-em">
-            <div className="col-6 col-lg-4">
-              <button
-                className={clearButtonClass}
-                onClick={onClearSearch}
-                type="button"
-              >
-                {localization.query.clear}
-              </button>
-            </div>
-            <div className="col-6 col-lg-4 offset-lg-4">
-              <div className="float-right">
-                <Select
-                  items={[
-                    {
-                      label: 'relevance',
-                      field: '_score',
-                      order: 'asc',
-                      defaultOption: true
-                    },
-                    {
-                      label: 'title',
-                      field: 'title',
-                      order: 'asc'
-                    },
-                    {
-                      label: 'modified',
-                      field: 'modified',
-                      order: 'desc'
-                    },
-                    {
-                      label: 'publisher',
-                      field: 'publisher.name',
-                      order: 'asc'
-                    }
-                  ]}
-                  onChange={onSort}
-                  activeSort={searchQuery.sortfield}
-                />
-              </div>
-            </div>
+      <main id="content">
+        <section className="row mb-3">
+          <div className="col-12 d-flex justify-content-between">
+            <button
+              className={clearButtonClass}
+              onClick={onClearSearch}
+              type="button"
+            >
+              {localization.query.clear}
+            </button>
+            <Select
+              items={[
+                {
+                  label: 'relevance',
+                  field: '_score',
+                  order: 'asc',
+                  defaultOption: true
+                },
+                {
+                  label: 'title',
+                  field: 'title',
+                  order: 'asc'
+                },
+                {
+                  label: 'modified',
+                  field: 'modified',
+                  order: 'desc'
+                },
+                {
+                  label: 'publisher',
+                  field: 'publisher.name',
+                  order: 'asc'
+                }
+              ]}
+              onChange={onSort}
+              activeSort={searchQuery.sortfield}
+            />
           </div>
-
-          <div className="row">
-            <div className="search-filters col-lg-4 d-none d-lg-block">
-              <span className="uu-invisible" aria-hidden="false">
-                Filtrering tilgang
-              </span>
-              <div>[filterbox]</div>
-              {false &&
-                apiItems && (
-                  <div>
-                    {this._renderFilterModal()}
-                    <FilterBox
-                      htmlKey={1}
-                      title={localization.facet.theme}
-                      filter={apiItems.aggregations.theme_count}
-                      onClick={onFilterTheme}
-                      activeFilter={searchQuery.theme}
-                      themesItems={themesItems}
-                    />
-                    <FilterBox
-                      htmlKey={2}
-                      title={localization.facet.accessRight}
-                      filter={apiItems.aggregations.accessRightsCount}
-                      onClick={onFilterAccessRights}
-                      activeFilter={searchQuery.accessrights}
-                    />
-                    <SearchPublishersTree
-                      title={localization.facet.organisation}
-                      filter={publisherArray}
-                      onFilterPublisherHierarchy={onFilterPublisherHierarchy}
-                      activeFilter={searchQuery.orgPath}
-                      publishers={publishers}
-                    />
-                    <FilterBox
-                      htmlKey={3}
-                      title={localization.facet.spatial}
-                      filter={apiItems.aggregations.spatial}
-                      onClick={onFilterSpatial}
-                      activeFilter={searchQuery.spatial}
-                    />
-                    <FilterBox
-                      htmlKey={4}
-                      title={localization.facet.provenance}
-                      filter={apiItems.aggregations.provenanceCount}
-                      onClick={onFilterProvenance}
-                      activeFilter={searchQuery.provenance}
-                    />
-                  </div>
-                )}
-            </div>
-
-            <div id="datasets" className="col-12 col-lg-8">
-              {this._renderHits()}
-            </div>
-
-            <div className="col-12 col-lg-8 offset-lg-4 d-flex justify-content-center">
+        </section>
+        <section className="row">
+          <aside className="search-filters col-lg-4 d-none d-lg-block">
+            <span className="uu-invisible" aria-hidden="false">
+              Filtrering tilgang
+            </span>
+            <div>[filterbox]</div>
+            {false &&
+              apiItems && (
+                <div>
+                  {this._renderFilterModal()}
+                  <FilterBox
+                    htmlKey={1}
+                    title={localization.facet.theme}
+                    filter={apiItems.aggregations.theme_count}
+                    onClick={onFilterTheme}
+                    activeFilter={searchQuery.theme}
+                    themesItems={themesItems}
+                  />
+                  <FilterBox
+                    htmlKey={2}
+                    title={localization.facet.accessRight}
+                    filter={apiItems.aggregations.accessRightsCount}
+                    onClick={onFilterAccessRights}
+                    activeFilter={searchQuery.accessrights}
+                  />
+                  <SearchPublishersTree
+                    title={localization.facet.organisation}
+                    filter={publisherArray}
+                    onFilterPublisherHierarchy={onFilterPublisherHierarchy}
+                    activeFilter={searchQuery.orgPath}
+                    publishers={publishers}
+                  />
+                  <FilterBox
+                    htmlKey={3}
+                    title={localization.facet.spatial}
+                    filter={apiItems.aggregations.spatial}
+                    onClick={onFilterSpatial}
+                    activeFilter={searchQuery.spatial}
+                  />
+                  <FilterBox
+                    htmlKey={4}
+                    title={localization.facet.provenance}
+                    filter={apiItems.aggregations.provenanceCount}
+                    onClick={onFilterProvenance}
+                    activeFilter={searchQuery.provenance}
+                  />
+                </div>
+              )}
+          </aside>
+          <article id="apis" className="col-12 col-lg-8">
+            {this._renderHits()}
+            <section className="col-12 d-flex justify-content-center">
               <span className="uu-invisible" aria-hidden="false">
                 Sidepaginering.
               </span>
@@ -245,10 +236,10 @@ export class ResultsApi extends React.Component {
                 initialPage={page}
                 disableInitialCallback
               />
-            </div>
-          </div>
-        </div>
-      </div>
+            </section>
+          </article>
+        </section>
+      </main>
     );
   }
 }

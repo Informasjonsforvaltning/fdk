@@ -1,87 +1,75 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`should render ResultsApi correctly with hits 1`] = `
-<div
+<main
   id="content"
-  role="main"
 >
-  <div
-    id="resultPanel"
+  <section
+    className="row mb-3"
   >
     <div
-      className="row mt-1 mb-1-em"
+      className="col-12 d-flex justify-content-between"
     >
-      <div
-        className="col-6 col-lg-4"
+      <button
+        className="btn btn-primary fdk-button fade-in-500"
+        onClick={[MockFunction]}
+        type="button"
       >
-        <button
-          className="btn btn-primary fdk-button fade-in-500 d-none"
-          onClick={[MockFunction]}
-          type="button"
-        >
-          Clear
-        </button>
-      </div>
-      <div
-        className="col-6 col-lg-4 offset-lg-4"
-      >
-        <div
-          className="float-right"
-        >
-          <Select
-            activeSort={null}
-            items={
-              Array [
-                Object {
-                  "defaultOption": true,
-                  "field": "_score",
-                  "label": "relevance",
-                  "order": "asc",
-                },
-                Object {
-                  "field": "title",
-                  "label": "title",
-                  "order": "asc",
-                },
-                Object {
-                  "field": "modified",
-                  "label": "modified",
-                  "order": "desc",
-                },
-                Object {
-                  "field": "publisher.name",
-                  "label": "publisher",
-                  "order": "asc",
-                },
-              ]
-            }
-            onChange={[MockFunction]}
-          />
-        </div>
-      </div>
-    </div>
-    <div
-      className="row"
-    >
-      <div
-        className="search-filters col-lg-4 d-none d-lg-block"
-      >
-        <span
-          aria-hidden="false"
-          className="uu-invisible"
-        >
-          Filtrering tilgang
-        </span>
-        <div>
-          [filterbox]
-        </div>
-      </div>
-      <div
-        className="col-12 col-lg-8"
-        id="datasets"
+        Clear
+      </button>
+      <Select
+        activeSort={null}
+        items={
+          Array [
+            Object {
+              "defaultOption": true,
+              "field": "_score",
+              "label": "relevance",
+              "order": "asc",
+            },
+            Object {
+              "field": "title",
+              "label": "title",
+              "order": "asc",
+            },
+            Object {
+              "field": "modified",
+              "label": "modified",
+              "order": "desc",
+            },
+            Object {
+              "field": "publisher.name",
+              "label": "publisher",
+              "order": "asc",
+            },
+          ]
+        }
+        onChange={[MockFunction]}
       />
-      <div
-        className="col-12 col-lg-8 offset-lg-4 d-flex justify-content-center"
+    </div>
+  </section>
+  <section
+    className="row"
+  >
+    <aside
+      className="search-filters col-lg-4 d-none d-lg-block"
+    >
+      <span
+        aria-hidden="false"
+        className="uu-invisible"
+      >
+        Filtrering tilgang
+      </span>
+      <div>
+        [filterbox]
+      </div>
+    </aside>
+    <article
+      className="col-12 col-lg-8"
+      id="apis"
+    >
+      <section
+        className="col-12 d-flex justify-content-center"
       >
         <span
           aria-hidden="false"
@@ -111,93 +99,81 @@ exports[`should render ResultsApi correctly with hits 1`] = `
           previousLabel="Forrige side"
           subContainerClassName="pages pagination"
         />
-      </div>
-    </div>
-  </div>
-</div>
+      </section>
+    </article>
+  </section>
+</main>
 `;
 
 exports[`should render ResultsApi correctly with minimum of props 1`] = `
-<div
+<main
   id="content"
-  role="main"
 >
-  <div
-    id="resultPanel"
+  <section
+    className="row mb-3"
   >
     <div
-      className="row mt-1 mb-1-em"
+      className="col-12 d-flex justify-content-between"
     >
-      <div
-        className="col-6 col-lg-4"
+      <button
+        className="btn btn-primary fdk-button fade-in-500"
+        type="button"
       >
-        <button
-          className="btn btn-primary fdk-button fade-in-500 d-none"
-          type="button"
-        >
-          Clear
-        </button>
-      </div>
-      <div
-        className="col-6 col-lg-4 offset-lg-4"
-      >
-        <div
-          className="float-right"
-        >
-          <Select
-            activeSort={null}
-            items={
-              Array [
-                Object {
-                  "defaultOption": true,
-                  "field": "_score",
-                  "label": "relevance",
-                  "order": "asc",
-                },
-                Object {
-                  "field": "title",
-                  "label": "title",
-                  "order": "asc",
-                },
-                Object {
-                  "field": "modified",
-                  "label": "modified",
-                  "order": "desc",
-                },
-                Object {
-                  "field": "publisher.name",
-                  "label": "publisher",
-                  "order": "asc",
-                },
-              ]
-            }
-            onChange={[MockFunction]}
-          />
-        </div>
-      </div>
-    </div>
-    <div
-      className="row"
-    >
-      <div
-        className="search-filters col-lg-4 d-none d-lg-block"
-      >
-        <span
-          aria-hidden="false"
-          className="uu-invisible"
-        >
-          Filtrering tilgang
-        </span>
-        <div>
-          [filterbox]
-        </div>
-      </div>
-      <div
-        className="col-12 col-lg-8"
-        id="datasets"
+        Clear
+      </button>
+      <Select
+        activeSort={null}
+        items={
+          Array [
+            Object {
+              "defaultOption": true,
+              "field": "_score",
+              "label": "relevance",
+              "order": "asc",
+            },
+            Object {
+              "field": "title",
+              "label": "title",
+              "order": "asc",
+            },
+            Object {
+              "field": "modified",
+              "label": "modified",
+              "order": "desc",
+            },
+            Object {
+              "field": "publisher.name",
+              "label": "publisher",
+              "order": "asc",
+            },
+          ]
+        }
+        onChange={[MockFunction]}
       />
-      <div
-        className="col-12 col-lg-8 offset-lg-4 d-flex justify-content-center"
+    </div>
+  </section>
+  <section
+    className="row"
+  >
+    <aside
+      className="search-filters col-lg-4 d-none d-lg-block"
+    >
+      <span
+        aria-hidden="false"
+        className="uu-invisible"
+      >
+        Filtrering tilgang
+      </span>
+      <div>
+        [filterbox]
+      </div>
+    </aside>
+    <article
+      className="col-12 col-lg-8"
+      id="apis"
+    >
+      <section
+        className="col-12 d-flex justify-content-center"
       >
         <span
           aria-hidden="false"
@@ -226,94 +202,82 @@ exports[`should render ResultsApi correctly with minimum of props 1`] = `
           previousLabel="Forrige side"
           subContainerClassName="pages pagination"
         />
-      </div>
-    </div>
-  </div>
-</div>
+      </section>
+    </article>
+  </section>
+</main>
 `;
 
 exports[`should render ResultsApi correctly with props 1`] = `
-<div
+<main
   id="content"
-  role="main"
 >
-  <div
-    id="resultPanel"
+  <section
+    className="row mb-3"
   >
     <div
-      className="row mt-1 mb-1-em"
+      className="col-12 d-flex justify-content-between"
     >
-      <div
-        className="col-6 col-lg-4"
+      <button
+        className="btn btn-primary fdk-button fade-in-500"
+        onClick={[MockFunction]}
+        type="button"
       >
-        <button
-          className="btn btn-primary fdk-button fade-in-500 d-none"
-          onClick={[MockFunction]}
-          type="button"
-        >
-          Clear
-        </button>
-      </div>
-      <div
-        className="col-6 col-lg-4 offset-lg-4"
-      >
-        <div
-          className="float-right"
-        >
-          <Select
-            activeSort={null}
-            items={
-              Array [
-                Object {
-                  "defaultOption": true,
-                  "field": "_score",
-                  "label": "relevance",
-                  "order": "asc",
-                },
-                Object {
-                  "field": "title",
-                  "label": "title",
-                  "order": "asc",
-                },
-                Object {
-                  "field": "modified",
-                  "label": "modified",
-                  "order": "desc",
-                },
-                Object {
-                  "field": "publisher.name",
-                  "label": "publisher",
-                  "order": "asc",
-                },
-              ]
-            }
-            onChange={[MockFunction]}
-          />
-        </div>
-      </div>
-    </div>
-    <div
-      className="row"
-    >
-      <div
-        className="search-filters col-lg-4 d-none d-lg-block"
-      >
-        <span
-          aria-hidden="false"
-          className="uu-invisible"
-        >
-          Filtrering tilgang
-        </span>
-        <div>
-          [filterbox]
-        </div>
-      </div>
-      <div
-        className="col-12 col-lg-8"
-        id="datasets"
+        Clear
+      </button>
+      <Select
+        activeSort={null}
+        items={
+          Array [
+            Object {
+              "defaultOption": true,
+              "field": "_score",
+              "label": "relevance",
+              "order": "asc",
+            },
+            Object {
+              "field": "title",
+              "label": "title",
+              "order": "asc",
+            },
+            Object {
+              "field": "modified",
+              "label": "modified",
+              "order": "desc",
+            },
+            Object {
+              "field": "publisher.name",
+              "label": "publisher",
+              "order": "asc",
+            },
+          ]
+        }
+        onChange={[MockFunction]}
       />
-      <div
-        className="col-12 col-lg-8 offset-lg-4 d-flex justify-content-center"
+    </div>
+  </section>
+  <section
+    className="row"
+  >
+    <aside
+      className="search-filters col-lg-4 d-none d-lg-block"
+    >
+      <span
+        aria-hidden="false"
+        className="uu-invisible"
+      >
+        Filtrering tilgang
+      </span>
+      <div>
+        [filterbox]
+      </div>
+    </aside>
+    <article
+      className="col-12 col-lg-8"
+      id="apis"
+    >
+      <section
+        className="col-12 d-flex justify-content-center"
       >
         <span
           aria-hidden="false"
@@ -343,8 +307,8 @@ exports[`should render ResultsApi correctly with props 1`] = `
           previousLabel="Forrige side"
           subContainerClassName="pages pagination"
         />
-      </div>
-    </div>
-  </div>
-</div>
+      </section>
+    </article>
+  </section>
+</main>
 `;

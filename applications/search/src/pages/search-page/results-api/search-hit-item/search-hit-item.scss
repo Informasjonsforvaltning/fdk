@@ -1,4 +1,17 @@
+@import '../../../../../node_modules/designsystemet/fdk-designsystem-bootstrap4/scss/colors.scss';
 
-.fdk-a-search-hit {
-  text-decoration: none;
+.search-hit {
+  background-color: $color0;
+  border-radius: 5px;
+  color: $color1;
+  font-size: 1.5rem;
+  padding: 1.5em;
+  margin-bottom: 1em;
+  .search-hit__title-link {
+    text-decoration: none;
+  }
+  .search-hit__version {
+    background-color: $color-cta4;
+    border-radius: 2px;
+  }
 }
