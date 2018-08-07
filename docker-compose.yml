@@ -13,6 +13,14 @@ services:
     depends_on:
       - elasticsearch
 
+  acat-api:
+    image: dcatno/acat-api:latest
+    expose:
+      - "8080"
+      - "8181"
+    depends_on:
+      - elasticsearch
+
   nginx-search:
     image: dcatno/nginx-search:latest
     expose:

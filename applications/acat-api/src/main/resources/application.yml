@@ -1,0 +1,35 @@
+logging:
+  level.: WARN
+  level.no.acat: INFO
+  level.org.springframework: WARN
+  level.org.springframework.web: WARN
+application:
+  elasticsearchHost: elasticsearch
+  elasticsearchPort: 9300
+  clusterName: elasticsearch
+server:
+  port: 8080
+management:
+  port: 8181
+endpoints:
+  metrics:
+    sensitive: false
+
+---
+spring:
+  profiles: prod
+application:
+  clusterName: fellesdatakatalog
+
+---
+#Utv-miljø lokalt på egen PC
+spring:
+  profiles: develop, unit-integration
+application:
+  elasticsearchHost: localhost
+  elasticsearchPort: 9300
+  clusterName: elasticsearch
+server:
+  port: 8087
+management:
+  port: 8997
