@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import localization from '../../lib/localization';
 import { ApiDescription } from './api-description/api-description.component';
 import { ApiKeyInfo } from './api-key-info/api-key-info.component';
 import { ApiEndpoints } from './api-endpoints/api-endpoints.component';
+import { ShowMore } from '../../components/show-more/show-more';
 
 export function ApiDetailsPage(props) {
   function _renderApiDescription() {
@@ -98,21 +100,35 @@ export function ApiDetailsPage(props) {
   }
 
   const { apiItem } = props;
+  const { info } = apiItem;
   if (!apiItem) {
     return null;
   }
   return (
-    <div className="container">
-      <div className="row">
-        <div className="col-md-8 col-md-offset-2">
-          <article role="main">
+    <main id="content" className="container">
+      <article>
+        <div className="row">
+          <div className="col-12 col-lg-8 offset-lg-4">
             {_renderApiDescription()}
+          </div>
+        </div>
+        <hr />
+        <div className="row">
+          <nav className="col-12 col-lg-4">[Sticky menu here]</nav>
+          <section className="col-12 col-lg-8">
+            {info.description && (
+              <ShowMore
+                showMoreButtonText={localization.showFullDescription}
+                label={localization.description}
+                contentHtml={info.description}
+              />
+            )}
             {_renderKeyInfo()}
             {_renderApiEndpoints()}
-          </article>
+          </section>
         </div>
-      </div>
-    </div>
+      </article>
+    </main>
   );
 }
 

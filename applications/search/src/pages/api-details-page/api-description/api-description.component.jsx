@@ -5,20 +5,11 @@ import Moment from 'react-moment';
 
 import localization from '../../../lib/localization';
 import { getTranslateText } from '../../../lib/translateText';
-import { ShowMore } from '../../../components/show-more/show-more';
 import { DatasetLabelNational } from '../../../components/dataset-label-national/dataset-label-national.component';
 
 export class ApiDescription extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      showAll: false
-    };
-    this.toggleShowAll = this.toggleShowAll.bind(this);
-  }
-
-  toggleShowAll() {
-    this.setState({ showAll: !this.state.showAll });
   }
 
   _renderPublisher() {
@@ -74,22 +65,6 @@ export class ApiDescription extends React.Component {
     return null;
   }
 
-  _renderThemes() {
-    let themeNodes = null;
-    const { themes, selectedLanguageCode } = this.props;
-    if (themes) {
-      themeNodes = themes.map(singleTheme => (
-        <div
-          key={`dataset-description-theme-${singleTheme.code}`}
-          className="fdk-label fdk-label-on-grey mr-2 mb-2"
-        >
-          {getTranslateText(singleTheme.title, selectedLanguageCode)}
-        </div>
-      ));
-    }
-    return themeNodes;
-  }
-
   render() {
     const meta = {
       title: this.props.title,
@@ -98,32 +73,21 @@ export class ApiDescription extends React.Component {
     return (
       <header>
         <DocumentMeta {...meta} />
-        {this.props.title && (
-          <h1 className="fdk-margin-bottom">{this.props.title}</h1>
-        )}
 
-        <div className="fdk-detail-date">
+        <div className="fdk-detail-date mb-4">
           {this._renderHarvested()}
           {this._renderHarvestSeparator()}
           {this._renderLastChanged()}
         </div>
 
-        <div className="fdk-margin-bottom">
-          {this._renderPublisher()}
-          {this._renderThemes()}
-          {this.props.provenance &&
-            this.props.provenance.code === 'NASJONAL' && (
-              <DatasetLabelNational />
-            )}
-        </div>
-
-        {this.props.description && (
-          <ShowMore
-            showMoreButtonText={localization.showFullDescription}
-            label={localization.description}
-            contentHtml={this.props.description}
-          />
+        {this.props.title && (
+          <div className="mb-4 d-flex flex-wrap align-items-baseline">
+            <h1 className="mr-3">{this.props.title}</h1>
+            <DatasetLabelNational />
+          </div>
         )}
+
+        <div className="mb-4">{this._renderPublisher()}</div>
       </header>
     );
   }
