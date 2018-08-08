@@ -36,7 +36,6 @@ export class ApiEndpoints extends React.Component {
   }
 
   render() {
-    const { paths } = this.props;
     return (
       <section>
         <div>Endepunkt</div>

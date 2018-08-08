@@ -34,8 +34,8 @@ const renderPublisher = source => {
 export const SearchHitItem = props => {
   const { _source } = props.result;
   const hitId = encodeURIComponent(_source.id);
-  let { title, description } = _source.info;
-  const { provenance } = _source;
+  const { title } = _source.info;
+  let { description } = _source.info;
   if (description && description.length > 220) {
     description = `${description.substr(0, 220)}...`;
   }
@@ -61,7 +61,7 @@ export const SearchHitItem = props => {
         <span>
           Denne versjonen av API-et er utgått og vil fases ut i 2019.{' '}
         </span>
-        <Link to="#">Versjon 2 er dokumentert her.</Link>
+        <Link to="/TODO">Versjon 2 er dokumentert her.</Link>
       </div>
       <p>
         <span className="uu-invisible" aria-hidden="false">
@@ -74,11 +74,9 @@ export const SearchHitItem = props => {
 };
 
 SearchHitItem.defaultProps = {
-  result: null,
-  distributionTypeItems: null
+  result: null
 };
 
 SearchHitItem.propTypes = {
-  result: PropTypes.shape({}),
-  distributionTypeItems: PropTypes.array
+  result: PropTypes.shape({})
 };
