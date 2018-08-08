@@ -2,11 +2,11 @@ package no.dcat.harvester.crawler.handlers;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import no.dcat.harvester.crawler.CrawlerResultHandler;
 import no.dcat.datastore.Elasticsearch;
 import no.dcat.datastore.domain.DcatSource;
 import no.dcat.datastore.domain.dcat.Publisher;
 import no.dcat.datastore.domain.dcat.builders.PublisherBuilder;
+import no.dcat.harvester.crawler.CrawlerResultHandler;
 import org.apache.jena.rdf.model.Model;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.action.bulk.BulkResponse;
@@ -114,8 +114,7 @@ public class ElasticSearchResultPubHandler implements CrawlerResultHandler {
         GetResponse response = client.prepareGet("dcat", "publisher", id).get();
 
         if (response.isExists()) {
-            Publisher lookup = gson.fromJson(response.getSourceAsString(), Publisher.class);
-            return lookup;
+            return gson.fromJson(response.getSourceAsString(), Publisher.class);
         }
 
         return null;

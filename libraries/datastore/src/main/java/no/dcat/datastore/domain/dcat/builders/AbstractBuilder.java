@@ -1,16 +1,16 @@
 package no.dcat.datastore.domain.dcat.builders;
 
+import no.dcat.datastore.domain.dcat.Publisher;
+import no.dcat.datastore.domain.dcat.vocabulary.DCAT;
 import no.dcat.datastore.domain.dcat.vocabulary.DCATCrawler;
 import no.dcat.datastore.domain.dcat.vocabulary.DCATNO;
+import no.dcat.datastore.domain.dcat.vocabulary.EnhetsregisteretRDF;
 import no.dcat.datastore.domain.dcat.vocabulary.Vcard;
 import no.dcat.shared.Contact;
 import no.dcat.shared.PeriodOfTime;
 import no.dcat.shared.Reference;
 import no.dcat.shared.SkosCode;
 import no.dcat.shared.SkosConcept;
-import no.dcat.datastore.domain.dcat.Publisher;
-import no.dcat.datastore.domain.dcat.vocabulary.DCAT;
-import no.dcat.datastore.domain.dcat.vocabulary.EnhetsregisteretRDF;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.Resource;
@@ -31,7 +31,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 public abstract class AbstractBuilder {
 

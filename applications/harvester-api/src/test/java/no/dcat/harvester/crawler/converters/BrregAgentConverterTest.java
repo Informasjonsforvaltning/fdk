@@ -59,7 +59,7 @@ public class BrregAgentConverterTest {
 		Statement prefLabelStmt = publisher.getProperty(SKOS.prefLabel);
 		String actualLabel = prefLabelStmt.getObject().asLiteral().getString();
 
-		assertThat(actualLabel, Matchers.is("NAV"));
+		assertThat(actualLabel, Matchers.is("Arbeids og velferdsetaten"));
 
 	}
 

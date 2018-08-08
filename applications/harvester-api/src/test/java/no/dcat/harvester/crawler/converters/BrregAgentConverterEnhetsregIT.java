@@ -8,6 +8,7 @@ import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.NodeIterator;
 import org.apache.jena.rdf.model.ResIterator;
 import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.Statement;
 import org.apache.jena.sparql.vocabulary.FOAF;
 import org.apache.jena.util.FileManager;
 import org.apache.jena.vocabulary.DCTerms;
@@ -20,6 +21,7 @@ import org.junit.experimental.categories.Category;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.net.MalformedURLException;
 import java.net.URL;
 
 import static org.junit.Assert.assertEquals;
@@ -58,7 +60,7 @@ public class BrregAgentConverterEnhetsregIT {
         assertEquals("Official name", "STATENS KARTVERK" , nameAfter);
 
         String prefName = publisherResource.getProperty(SKOS.prefLabel).getObject().asLiteral().getString();
-        assertEquals("Preferred name", "Kartverket" , prefName);
+        assertEquals("Preferred name", "Statens Kartverk" , prefName);
     }
 
     @Test
@@ -78,7 +80,7 @@ public class BrregAgentConverterEnhetsregIT {
 
         logger.info("name after {}", prefName);
 
-        assertThat(prefName, Is.is("DIFI"));
+        assertThat(prefName, Is.is("Direktoratet for IKT"));
     }
 
     @Test
@@ -143,7 +145,7 @@ public class BrregAgentConverterEnhetsregIT {
         logger.info("pref name  {}", prefName);
 
         assertThat(newName, Is.is("STATISTISK SENTRALBYRÅ"));
-        assertThat(prefName, Is.is("SSB"));
+        assertThat(prefName, Is.is("Statistisk sentralbyrå"));
     }
 
     @Test
@@ -230,7 +232,57 @@ public class BrregAgentConverterEnhetsregIT {
         assertEquals("Expected model to contain one resource.", "http://data.brreg.no/enhetsregisteret/enhet/972417874", iterator.nextResource().getURI());
         assertEquals("Expected model to contain one resource.", enhetsUri, iterator.nextResource().getURI());
 
-        model.write(System.out, "TURTLE");
+    }
+
+    @Test
+    public void testBrregHasSuperiorOrgUnitWithoutPrefLabel() throws Exception {
+        BrregAgentConverter converter = new BrregAgentConverter(HarvesterApplication.getBrregCache());
+
+        String brregUri = "http://data.brreg.no/enhetsregisteret/enhet/974760673";
+
+        URL uri = new URL(brregUri);
+
+        Model model = ModelFactory.createDefaultModel();
+
+        converter.collectFromUri(uri.toString(), model, model.createResource(brregUri));
+
+        String romsenterUri = "http://data.brreg.no/enhetsregisteret/enhet/886028482";
+
+        uri = new URL(romsenterUri);
+        converter.collectFromUri(uri.toString(), model, model.createResource(romsenterUri));
+
+        String superiorOrg = "http://data.brreg.no/enhetsregisteret/enhet/912660680";
+
+        Resource superiorOrgResource = model.getResource(superiorOrg);
+
+        Statement property = superiorOrgResource.getProperty(SKOS.prefLabel);
+
+        assertEquals("Superior org should not have prefLabel property", null, property);
+
+    }
+
+    @Test
+    public void testOljedepShouldNotHaveCapitalLetters() throws Exception {
+        BrregAgentConverter converter = new BrregAgentConverter(HarvesterApplication.getBrregCache());
+
+        String oljeDEP = "http://data.brreg.no/enhetsregisteret/enhet/977161630",
+                oljedir = "http://data.brreg.no/enhetsregisteret/enhet/970205039",
+                nve = "http://data.brreg.no/enhetsregisteret/enhet/870917732";
+
+        Model model = ModelFactory.createDefaultModel();
+
+        converter.collectFromUri(oljedir, model, model.createResource(oljedir));
+
+        converter.collectFromUri(nve, model, model.createResource(nve));
+
+        converter.collectFromUri(oljeDEP, model, model.createResource(oljeDEP));
+
+        Resource superiorOrgResource = model.getResource(oljeDEP);
+
+        Statement property = superiorOrgResource.getProperty(SKOS.prefLabel);
+
+        assertEquals("Superior org should not have prefLabel property",  null, property);
+
     }
 
 }
