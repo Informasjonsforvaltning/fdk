@@ -2,17 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import localization from '../../lib/localization';
-import { ApiDescription } from './api-description/api-description.component';
+import { ApiHeader } from './api-header/api-header.component';
 import { ApiKeyInfo } from './api-key-info/api-key-info.component';
 import { ApiEndpoints } from './api-endpoints/api-endpoints.component';
 import { ShowMore } from '../../components/show-more/show-more';
 
 export function ApiDetailsPage(props) {
-  function _renderApiDescription() {
+  function _renderApiHeader() {
     const { apiItem } = props;
     const apiItemInfo = apiItem.info;
     return (
-      <ApiDescription
+      <ApiHeader
         title={apiItemInfo.title}
         description={apiItemInfo.description}
         publisher={apiItem.publisher}
@@ -109,7 +109,7 @@ export function ApiDetailsPage(props) {
       <article>
         <div className="row">
           <div className="col-12 col-lg-8 offset-lg-4">
-            {_renderApiDescription()}
+            {_renderApiHeader()}
           </div>
         </div>
         <hr />

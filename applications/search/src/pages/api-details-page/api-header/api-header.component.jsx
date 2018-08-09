@@ -4,10 +4,9 @@ import DocumentMeta from 'react-document-meta';
 import Moment from 'react-moment';
 
 import localization from '../../../lib/localization';
-import { getTranslateText } from '../../../lib/translateText';
 import { DatasetLabelNational } from '../../../components/dataset-label-national/dataset-label-national.component';
 
-export class ApiDescription extends React.Component {
+export class ApiHeader extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -93,14 +92,14 @@ export class ApiDescription extends React.Component {
   }
 }
 
-ApiDescription.defaultProps = {
+ApiHeader.defaultProps = {
   title: '',
   description: '',
   publisher: null,
   harvest: null
 };
 
-ApiDescription.propTypes = {
+ApiHeader.propTypes = {
   title: PropTypes.string,
   description: PropTypes.string,
   publisher: PropTypes.object,
