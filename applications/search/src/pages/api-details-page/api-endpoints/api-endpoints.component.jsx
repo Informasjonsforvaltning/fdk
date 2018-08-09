@@ -5,9 +5,15 @@ export class ApiEndpoints extends React.Component {
   // eslint-disable-line react/prefer-stateless-function
   _renderPathMethod(path, method, methodDeclaration) {
     return (
-      <div key={`${method}-${path}`}>
-        {method} {path} {methodDeclaration.description}
-      </div>
+      <React.Fragment key={`${method}-${path}`}>
+        <div className="row">
+          <div className="col-5">
+            {method} {path}
+          </div>
+          <div className="col-7">{methodDeclaration.description}</div>
+        </div>
+        <hr />
+      </React.Fragment>
     );
   }
 
@@ -27,18 +33,22 @@ export class ApiEndpoints extends React.Component {
         this._renderPath(path, this.props.paths[path])
       );
 
-    return (
-      <div>
-        <div>Endepunkt Beskrivelse</div>
-        {renderedMethods}
-      </div>
-    );
+    return <div>{renderedMethods}</div>;
   }
 
   render() {
     return (
-      <section>
-        <div>Endepunkt</div>
+      <section className="detailBox">
+        <div className="row">
+          <div className="col-5">
+            <h3 className="">Endepunkt</h3>
+          </div>
+          <div className="col-7">
+            <h3 className="">Beskrivelse</h3>
+          </div>
+        </div>
+        <hr />
+
         {this._renderPaths()}
       </section>
     );

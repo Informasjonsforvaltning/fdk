@@ -6,6 +6,7 @@ import { ApiHeader } from './api-header/api-header.component';
 import { ApiKeyInfo } from './api-key-info/api-key-info.component';
 import { ApiEndpoints } from './api-endpoints/api-endpoints.component';
 import { ShowMore } from '../../components/show-more/show-more';
+import './api-details-page.scss';
 
 export function ApiDetailsPage(props) {
   function _renderApiHeader() {
