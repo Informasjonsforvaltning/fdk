@@ -2,6 +2,7 @@ package no.acat.model;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
@@ -11,7 +12,8 @@ import java.util.Map;
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Paths {
-    Map<String, PathItem> pathItems;
+    @JsonIgnore
+    private Map<String, PathItem> pathItems;
 
     @JsonAnySetter
     public void setPathItem(String key, PathItem value) {
