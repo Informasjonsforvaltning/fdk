@@ -81,7 +81,7 @@ export class ApiDescription extends React.Component {
         </div>
 
         {this.props.title && (
-          <div className="mb-4 d-flex flex-wrap align-items-baseline">
+          <div className="mb-2 d-flex flex-wrap align-items-baseline">
             <h1 className="mr-3">{this.props.title}</h1>
             <DatasetLabelNational />
           </div>

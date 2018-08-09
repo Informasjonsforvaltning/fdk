@@ -114,8 +114,8 @@ export function ApiDetailsPage(props) {
         </div>
         <hr />
         <div className="row">
-          <nav className="col-12 col-lg-4">[Sticky menu here]</nav>
-          <section className="col-12 col-lg-8">
+          <nav className="col-12 col-lg-4 mt-3">[Sticky menu here]</nav>
+          <section className="col-12 col-lg-8 mt-3">
             {info.description && (
               <ShowMore
                 showMoreButtonText={localization.showFullDescription}
