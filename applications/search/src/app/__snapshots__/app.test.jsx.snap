@@ -22,23 +22,6 @@ exports[`should render App correctly 1`] = `
       Hopp til hovedinnhold
     </a>
   </div>
-  <div
-    className="fdk-header-beta"
-  >
-    Dette er en beta-versjon. 
-    <br
-      className="visible-xs visible-sm"
-    />
-    Gi oss gjerne 
-    <a
-      className="white-link"
-      href="mailto:fellesdatakatalog@brreg.no"
-    >
-      tilbakemeldinger
-    </a>
-     
-    om hva du synes!
-  </div>
   <Connect(AppNavBar) />
   <div
     className="container"
