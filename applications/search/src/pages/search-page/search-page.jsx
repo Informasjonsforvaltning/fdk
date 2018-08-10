@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React from 'react';
 import qs from 'qs';
 import { Route, Switch } from 'react-router-dom';
@@ -73,8 +74,12 @@ export class SearchPage extends React.Component {
       {
         searchQuery: {}
       },
-      () => this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
+      this.handleSearchSubmit
     );
+  }
+
+  isFilterNotEmpty() {
+    return _.some(_.values(this.state.searchQuery));
   }
 
   handleSearchSubmit() {
@@ -462,15 +467,7 @@ export class SearchPage extends React.Component {
                   searchQuery={this.state.searchQuery}
                   themesItems={themesItems}
                   showFilterModal={this.state.showFilterModal}
-                  showClearFilterButton={
-                    !!(
-                      this.state.searchQuery.theme ||
-                      this.state.searchQuery.accessrights ||
-                      this.state.searchQuery.provenance ||
-                      this.state.searchQuery.spatial ||
-                      this.state.searchQuery.orgPath
-                    )
-                  }
+                  showClearFilterButton={this.isFilterNotEmpty()}
                   closeFilterModal={this.close}
                   hitsPerPage={50}
                   publisherArray={publisherCountItems}
