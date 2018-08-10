@@ -66,8 +66,7 @@ export class ApiHeader extends React.Component {
 
   render() {
     const meta = {
-      title: this.props.title,
-      description: this.props.description
+      title: this.props.title
     };
     return (
       <header>
@@ -94,14 +93,12 @@ export class ApiHeader extends React.Component {
 
 ApiHeader.defaultProps = {
   title: '',
-  description: '',
   publisher: null,
   harvest: null
 };
 
 ApiHeader.propTypes = {
   title: PropTypes.string,
-  description: PropTypes.string,
   publisher: PropTypes.object,
   harvest: PropTypes.object
 };

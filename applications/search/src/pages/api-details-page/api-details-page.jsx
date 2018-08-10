@@ -15,7 +15,6 @@ export function ApiDetailsPage(props) {
     return (
       <ApiHeader
         title={apiItemInfo.title}
-        description={apiItemInfo.description}
         publisher={apiItem.publisher}
         harvest={apiItem.harvest}
       />
