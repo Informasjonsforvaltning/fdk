@@ -23,23 +23,6 @@ exports[`should render Header correctly 1`] = `
     </a>
   </div>
   <div
-    className="fdk-header-beta"
-  >
-    Dette er en beta-versjon. 
-    <br
-      className="d-md-none"
-    />
-    Gi oss gjerne 
-    <a
-      className="white-link"
-      href="mailto:fellesdatakatalog@brreg.no"
-    >
-      tilbakemeldinger
-    </a>
-     
-    om hva du synes!
-  </div>
-  <div
     className="fdk-header"
   >
     <div

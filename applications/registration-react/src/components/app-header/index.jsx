@@ -43,15 +43,6 @@ export class Header extends React.Component {
             {localization.app.skipLink}
           </a>
         </div>
-        <div className="fdk-header-beta">
-          {localization.beta.header}
-          <br className="d-md-none" />
-          {localization.beta.first}
-          <a className="white-link" href="mailto:fellesdatakatalog@brreg.no">
-            {localization.beta.second}
-          </a>{' '}
-          {localization.beta.last}
-        </div>
         <div className="fdk-header">
           <div className="container">
             <div className="row">
