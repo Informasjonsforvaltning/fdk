@@ -4,11 +4,10 @@ import { Link } from 'react-router-dom';
 
 import localization from '../../../../lib/localization';
 import { DatasetLabelNational } from '../../../../components/dataset-label-national/dataset-label-national.component';
-
 import './search-hit-item.scss';
 
-const renderPublisher = info => {
-  const { publisher } = info;
+const renderPublisher = source => {
+  const { publisher } = source;
   if (publisher && publisher.name) {
     return (
       <span>
@@ -32,10 +31,10 @@ const renderPublisher = info => {
 };
 
 export const SearchHitItem = props => {
-  const { info } = props.result;
-  const hitId = encodeURIComponent(props.result.uri);
-  const { title } = info;
-  let { description } = info;
+  const { result } = props;
+  const hitId = encodeURIComponent(result.uri);
+  const { title } = result.info;
+  let { description } = result.info;
   if (description && description.length > 220) {
     description = `${description.substr(0, 220)}...`;
   }
@@ -51,12 +50,12 @@ export const SearchHitItem = props => {
         title={`${localization.result.dataset}: ${title}`}
         to={link}
       >
-        <div className="mb-4 d-flex flex-wrap align-items-baseline">
+        <div className="mb-2 d-flex flex-wrap align-items-baseline">
           <h2 className="mr-3">{title}</h2>
           <DatasetLabelNational />
         </div>
       </Link>
-      <div className="mb-4">{renderPublisher(info)}</div>
+      <div className="mb-4">{renderPublisher(result)}</div>
       <div className="search-hit__version mb-4 p-4">
         <span>
           Denne versjonen av API-et er utgått og vil fases ut i 2019.{' '}

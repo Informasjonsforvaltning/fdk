@@ -8,6 +8,7 @@ import { detect } from 'detect-browser';
 import localization from '../../lib/localization';
 import { ResultsDataset } from './results-dataset/results-dataset.component';
 import { ResultsConcepts } from './results-concepts/results-concepts.component';
+import { ResultsApi } from './results-api/results-api.component';
 import { SearchBox } from './search-box/search-box.component';
 import { ResultsTabs } from './results-tabs/results-tabs.component';
 import { removeValue, addValue } from '../../lib/stringUtils';
@@ -15,7 +16,6 @@ import { removeValue, addValue } from '../../lib/stringUtils';
 import './search-page.scss';
 import { extractPublisherCounts } from '../../api/get-datasets';
 import { extractPublisherTermsCounts } from '../../api/get-terms';
-import { ResultsApi } from './results-api/results-api.component';
 
 const ReactGA = require('react-ga');
 
