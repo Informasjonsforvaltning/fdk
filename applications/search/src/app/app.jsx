@@ -36,15 +36,6 @@ export function App(props) {
           Hopp til hovedinnhold
         </a>
       </div>
-      <div className="fdk-header-beta">
-        {localization.beta.header}
-        <br className="visible-xs visible-sm" />
-        {localization.beta.first}
-        <a className="white-link" href="mailto:fellesdatakatalog@brreg.no">
-          {localization.beta.second}
-        </a>{' '}
-        {localization.beta.last}
-      </div>
 
       <ConnectedAppNavBar />
 
