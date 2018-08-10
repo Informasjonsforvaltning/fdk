@@ -375,6 +375,23 @@ then
         deployNewDockerImage search-api
     fi
 
+elif [ $service = api-cat ]
+then
+    if [ $deploymode = recreateServices ]
+    then
+        profile=prod
+        createOpenshiftService api-cat
+
+        #create secure route for search api
+        oc create route edge --service=api-cat --hostname=api-cat-fellesdatakatalog-$environment.$cluster.brreg.no
+        oc label route api-cat --overwrite=true \
+            environmentTag=$environmentTag \
+            environmentDate=$dateTag
+    else
+        # deploymentmode = onlyDeployImages
+        deployNewDockerImage api-cat
+    fi
+
 elif [ $service = nginx-registration ]
 then
     if [ $deploymode = recreateServices ]
