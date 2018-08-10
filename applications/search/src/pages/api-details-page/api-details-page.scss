@@ -7,3 +7,28 @@
   padding: 2em;
   word-break: break-word;
 }
+
+.sticky-menu {
+  ul {
+    list-style: none;
+    li a.active {
+      &:after {
+        content: "\f105";
+        font: normal normal normal 14px/1 FontAwesome;
+        font-size: inherit;
+        text-rendering: auto;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        margin-right: 2.5em;
+      }
+    }
+  }
+  a.smoothScroll {
+    &:hover,&:active,&:focus {
+      font-weight: 500;
+    }
+  }
+  a.smoothScroll.active {
+    font-weight: 500;
+  }
+}

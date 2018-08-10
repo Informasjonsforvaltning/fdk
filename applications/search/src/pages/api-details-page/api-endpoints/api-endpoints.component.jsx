@@ -37,8 +37,9 @@ export class ApiEndpoints extends React.Component {
   }
 
   render() {
+    const { name } = this.props;
     return (
-      <section className="detailBox">
+      <section className="detailBox" name={name}>
         <div className="row">
           <div className="col-5">
             <h3 className="">Endepunkt</h3>
@@ -56,9 +57,11 @@ export class ApiEndpoints extends React.Component {
 }
 
 ApiEndpoints.defaultProps = {
+  name: null,
   paths: null
 };
 
 ApiEndpoints.propTypes = {
+  name: PropTypes.string,
   paths: PropTypes.object
 };
