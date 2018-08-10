@@ -7,6 +7,7 @@ import { CardDeck, Card, CardText, CardBody } from 'reactstrap';
 import localization from '../../../lib/localization';
 import { getParamFromLocation } from '../../../lib/addOrReplaceUrlParam';
 import './report-stats.scss';
+import { getTranslateText } from '../../../lib/translateText';
 
 export const ReportStats = props => {
   props.fetchCatalogsIfNeeded();
@@ -249,6 +250,34 @@ export const ReportStats = props => {
     </div>
   );
 
+  const catalogs = (
+    <div className="row">
+      <div className="col-12 fdk-container-stats fdk-container-stats-concepts-title">
+        <h2>Catalogs</h2>
+        {stats.catalogCounts.map(catalogRecord => (
+          <div className="row" key={catalogRecord.key}>
+            <div className="col-10">
+              {getTranslateText(
+                _.get(props.catalogs, [catalogRecord.key, 'title'])
+              )}
+            </div>
+            <div className="col-2 text-right">
+              <strong>
+                <Link
+                  title={localization.report.newDatasets}
+                  className="fdk-plain-label"
+                  to={`/?catalog=${catalogRecord.key}${orgPathParam}`}
+                >
+                  {catalogRecord.doc_count}
+                </Link>
+              </strong>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+
   return (
     <div className="container">
       {title}
@@ -258,6 +287,7 @@ export const ReportStats = props => {
       {changes}
       {concepts}
       {distributions}
+      {catalogs}
     </div>
   );
 };

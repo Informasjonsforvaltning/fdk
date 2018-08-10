@@ -39,7 +39,8 @@ export function extractStats(data) {
       data,
       'distOnPublicAccessCount'
     ),
-    subjectCount: getFromAggregation(data, 'subjectCount')
+    subjectCount: getFromAggregation(data, 'subjectCount'),
+    catalogCounts: _.get(data, ['aggregations', 'catalogs', 'buckets'], [])
   };
 }
 
