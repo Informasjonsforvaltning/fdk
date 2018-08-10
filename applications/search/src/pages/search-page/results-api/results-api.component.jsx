@@ -85,9 +85,10 @@ export class ResultsApi extends React.Component {
   _renderHits() {
     const { apiItems } = this.props;
     if (apiItems && apiItems.hits) {
-      return apiItems.hits.map(item => (
-        <SearchHitItem key={item.uri} result={item} />
-      ));
+      return apiItems.hits.map((item, index) => (
+          <SearchHitItem key={item.uri} result={item} fadeInCounter={(index < 3) ? index : null} />
+        )
+      );
     }
     return null;
   }

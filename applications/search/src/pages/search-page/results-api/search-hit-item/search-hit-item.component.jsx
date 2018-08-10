@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import cx from 'classnames';
 
 import localization from '../../../../lib/localization';
 import { DatasetLabelNational } from '../../../../components/dataset-label-national/dataset-label-national.component';
@@ -31,7 +32,7 @@ const renderPublisher = source => {
 };
 
 export const SearchHitItem = props => {
-  const { result } = props;
+  const { result, fadeInCounter } = props;
   const hitId = encodeURIComponent(result.uri);
   const { title } = result.info;
   let { description } = result.info;
@@ -40,8 +41,17 @@ export const SearchHitItem = props => {
   }
   const link = `/apis/${hitId}`;
 
+  const searchHitClass = cx(
+    'search-hit',
+    {
+      'fade-in-200': fadeInCounter == 0,
+      'fade-in-300': fadeInCounter == 1,
+      'fade-in-400': fadeInCounter == 2,
+    }
+  );
+
   return (
-    <section className="search-hit">
+    <section className={searchHitClass}>
       <span className="uu-invisible" aria-hidden="false">
         Søketreff.
       </span>
@@ -73,9 +83,11 @@ export const SearchHitItem = props => {
 };
 
 SearchHitItem.defaultProps = {
+  fadeInCounter: null,
   result: null
 };
 
 SearchHitItem.propTypes = {
+  fadeInCounter: PropTypes.number,
   result: PropTypes.shape({})
 };
