@@ -631,6 +631,12 @@ public class DatasetsQueryService extends ElasticsearchService {
         AggregationBuilder datasetsWithDistribution = AggregationBuilders.filter("distCount")
                 .filter(QueryBuilders.existsQuery("distribution"));
 
+        AggregationBuilder openDatasetsWithDistribution = AggregationBuilders.filter("distOnPublicAccessCount")
+                .filter(QueryBuilders.boolQuery()
+                        .must(QueryBuilders.existsQuery("distribution"))
+                        .must(QueryBuilders.termQuery("accessRights.code.raw", "PUBLIC"))
+                );
+
         AggregationBuilder datasetsWithSubject = AggregationBuilders.filter("subjectCount")
                 .filter(QueryBuilders.existsQuery("subject.prefLabel"));
 
@@ -648,6 +654,7 @@ public class DatasetsQueryService extends ElasticsearchService {
                 .addAggregation(temporalAggregation("lastChanged", "harvest.lastChanged"))
                 .addAggregation(AggregationBuilders.missing("missingLastChanged").field("harvest.lastChanged"))
                 .addAggregation(datasetsWithDistribution)
+                .addAggregation(openDatasetsWithDistribution)
                 .addAggregation(datasetsWithSubject)
                 .addAggregation(getOpendataAggregation());
 
