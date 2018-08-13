@@ -4,9 +4,7 @@ exports[`should render DatasetDistribution correctly 1`] = `
 <section
   className="fdk-container-detail"
 >
-  <h4
-    className="fdk-margin-bottom"
-  >
+  <h4>
     AAMarkagrensen Oslo Kommune og nærliggende kommuner
   </h4>
   <p
@@ -113,9 +111,7 @@ exports[`should render DatasetDistribution correctly 2`] = `
 <section
   className="fdk-container-detail"
 >
-  <h4
-    className="fdk-margin-bottom"
-  >
+  <h4>
     AAMarkagrensen Oslo Kommune og nærliggende kommuner
   </h4>
   <p
@@ -210,8 +206,6 @@ exports[`should render DatasetDistribution correctly with no props 1`] = `
 <section
   className="fdk-container-detail"
 >
-  <h4
-    className="fdk-margin-bottom"
-  />
+  <h4 />
 </section>
 `;
