@@ -15,7 +15,7 @@ install:
   - export DOCKER_HOST=unix:///var/run/docker.sock # required by the docker maven plugin for connecting to docker
   - git config --global core.autocrlf input # this allows to match source code hash with what is calculated on Mac and Windows
   - export FORCE_BUILD=false # if true the buildAndPushApplication.sh script forces a build for all apps
-  - npm install -g codecov
+  - travis_wait npm install -g codecov
   - node -v
   - npm -v
 
@@ -31,7 +31,7 @@ jobs:
   include:
     - stage: Build
       if: type = pull_request OR ( type = push AND branch = develop )
-      script: ./travisBuild.sh
+      script: source ./travisBuild.sh
       env:
         - comment=Build all applications
 
@@ -45,7 +45,7 @@ jobs:
 
     - stage: Integration
       if: type = pull_request OR ( type = push AND branch = develop )
-      script: ./travisIntegration.sh
+      script: source ./travisIntegration.sh
       env:
         - comment="Run integration tests"
 
