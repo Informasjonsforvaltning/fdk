@@ -260,7 +260,8 @@
     "searchPublisher": "Choose publisher",
     "searchPublisherPlaceholder": "Search publisher...",
     "typeToSearch": "Type to search",
-    "openData":"Open data"
+    "openData":"Open data",
+    "catalogs":"Catalogs"
   },
   "registration": {
     "title": "Registration (only in Norwegian)"

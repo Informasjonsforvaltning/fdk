@@ -260,7 +260,8 @@
     "searchPublisher": "Velg virksomhet",
     "searchPublisherPlaceholder": "Søk på virksomhetsnavn...",
     "typeToSearch": "Skriv for å søke",
-    "openData":"Åpne data"
+    "openData":"Åpne data",
+    "catalogs":"Kataloger"
   },
   "registration": {
     "title": "Hvordan komme i gang med registrering av datasett"
