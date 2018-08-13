@@ -195,7 +195,7 @@ export class DatasetDistribution extends React.Component {
     });
     return (
       <section className={distributionClass}>
-        <h4 className="fdk-margin-bottom">{title}</h4>
+        <h4>{title}</h4>
         {this.props.description && (
           <p className="fdk-ingress">{this.props.description}</p>
         )}
