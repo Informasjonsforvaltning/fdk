@@ -44,9 +44,9 @@ export const SearchHitItem = props => {
   const searchHitClass = cx(
     'search-hit',
     {
-      'fade-in-200': fadeInCounter == 0,
-      'fade-in-300': fadeInCounter == 1,
-      'fade-in-400': fadeInCounter == 2,
+      'fade-in-200': fadeInCounter === 0,
+      'fade-in-300': fadeInCounter === 1,
+      'fade-in-400': fadeInCounter === 2,
     }
   );
 
