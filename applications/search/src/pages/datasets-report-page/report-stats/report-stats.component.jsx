@@ -253,7 +253,7 @@ export const ReportStats = props => {
   const catalogs = (
     <div className="row">
       <div className="col-12 fdk-container-stats fdk-container-stats-concepts-title">
-        <h2>Catalogs</h2>
+        <h2>{localization.report.catalogs}</h2>
         {stats.catalogCounts.map(catalogRecord => (
           <div className="row" key={catalogRecord.key}>
             <div className="col-10">
