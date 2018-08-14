@@ -1,10 +1,10 @@
 import { connect } from 'react-redux';
-import { SearchPage } from './search-page';
 import { fetchDistributionTypeIfNeededAction } from '../../redux/modules/distributionType';
 import { fetchPublishersIfNeededAction } from '../../redux/modules/publishers';
 import { fetchTermsIfNeededAction } from '../../redux/modules/terms';
 import { fetchDatasetsIfNeededAction } from '../../redux/modules/datasets';
 import { fetchThemesIfNeededAction } from '../../redux/modules/themes';
+import { ResolvedSearchPage } from './resolved-search-page';
 
 const mapStateToProps = ({
   datasets,
@@ -13,12 +13,7 @@ const mapStateToProps = ({
   publishers,
   distributionTypes
 }) => {
-  const {
-    datasetItems,
-    publisherCountItems,
-    isFetchingDatasets
-  } = datasets || {
-    datasetItems: null,
+  const { publisherCountItems, isFetchingDatasets } = datasets || {
     publisherCountItems: null
   };
 
@@ -40,7 +35,6 @@ const mapStateToProps = ({
   };
 
   return {
-    datasetItems,
     publisherCountItems,
     isFetchingDatasets,
     termItems,
@@ -66,4 +60,4 @@ const mapDispatchToProps = dispatch => ({
 export const ConnectedSearchPage = connect(
   mapStateToProps,
   mapDispatchToProps
-)(SearchPage);
+)(ResolvedSearchPage);
