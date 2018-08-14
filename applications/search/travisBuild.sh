@@ -15,7 +15,7 @@ npm test
 echo "SECONDS"
 echo $SECONDS
 
-if [[ -v TRAVIS ]]
+if [[ ! -z "$TRAVIS" ]]
 then
     echo "Report coverage"
     codecov
