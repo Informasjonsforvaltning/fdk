@@ -1,9 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`should render ConceptsHitItem correctly 1`] = `
-<div
+<article
   className="fdk-a-search-hit"
-  id="concepts-hit-https%3A%2F%2Fdata-david.github.io%2FBegrep%2Fbegrep%2FEnhet"
   tabIndex="0"
   title="Begrep: Enhet"
 >
@@ -133,13 +132,12 @@ exports[`should render ConceptsHitItem correctly 1`] = `
       </a>
     </p>
   </div>
-</div>
+</article>
 `;
 
 exports[`should render ConceptsHitItem correctly with compare button not showing 1`] = `
-<div
+<article
   className="fdk-a-search-hit"
-  id="concepts-hit-https%3A%2F%2Fdata-david.github.io%2FBegrep%2Fbegrep%2FEnhet"
   tabIndex="0"
   title="Begrep: Enhet"
 >
@@ -245,13 +243,12 @@ exports[`should render ConceptsHitItem correctly with compare button not showing
       </a>
     </p>
   </div>
-</div>
+</article>
 `;
 
 exports[`should render ConceptsHitItem correctly with no alt label, no source and no note 1`] = `
-<div
+<article
   className="fdk-a-search-hit"
-  id="concepts-hit-https%3A%2F%2Fdata-david.github.io%2FBegrep%2Fbegrep%2FOrganisasjonsnummer"
   tabIndex="0"
   title="Begrep: Organisasjonsnummer"
 >
@@ -347,5 +344,5 @@ exports[`should render ConceptsHitItem correctly with no alt label, no source an
       </a>
     </p>
   </div>
-</div>
+</article>
 `;

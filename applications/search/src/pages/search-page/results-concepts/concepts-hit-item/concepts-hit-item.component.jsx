@@ -136,7 +136,6 @@ export const ConceptsHitItem = props => {
   const { onAddTerm } = props;
   const { _source } = props.result;
   const { prefLabel, definition, uri } = _source;
-  const hitElementId = `concepts-hit-${encodeURIComponent(uri)}`;
 
   let termTitle;
   let termDescription;
@@ -156,8 +155,7 @@ export const ConceptsHitItem = props => {
   }
 
   return (
-    <div
-      id={hitElementId}
+    <article
       className="fdk-a-search-hit"
       title={`Begrep: ${termTitle}`}
       tabIndex="0" // eslint-disable-line jsx-a11y/no-noninteractive-tabindex
@@ -222,7 +220,7 @@ export const ConceptsHitItem = props => {
 
         {renderDocCount(props.result)}
       </div>
-    </div>
+    </article>
   );
 };
 
