@@ -1,7 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { ResultsApi } from './results-api.component';
-import datasetItems from '../../../../test/fixtures/datasetItems';
+//import datasetItems from '../../../../test/fixtures/datasetItems';
+import apis from '../../../../test/fixtures/apis';
 
 let closeFilterModal;
 let onFilterTheme;
@@ -27,7 +28,7 @@ beforeEach(() => {
   };
   defaultProps = {
     showFilterModal: true,
-    datasetItems: {},
+    apiItems: {},
     searchQuery: {},
     themesItems: {},
     publisherArray: [],
@@ -56,7 +57,7 @@ test('should render ResultsApi correctly with props', () => {
 
 test('should render ResultsApi correctly with hits', () => {
   wrapper.setProps({
-    datasetItems: datasetItems[0]
+    apiItems: { aggregations: {}, hits: apis[0] }
   });
   expect(wrapper).toMatchSnapshot();
 });
