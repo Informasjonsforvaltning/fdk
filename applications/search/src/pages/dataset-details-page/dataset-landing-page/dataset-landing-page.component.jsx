@@ -8,13 +8,13 @@ export const DatasetLandingPage = props => (
     <div className="row fdk-row">
       {props.landingPage &&
         props.landingPage[0] && (
-          <div className="col-md-12 fdk-padding-no">
+          <div className="col-md-12 p-0">
             <div className="fdk-container-detail">
-              <div className="fdk-detail-icon fdk-padding-no">
+              <div className="fdk-detail-icon p-0">
                 <i className="fa fa-info fdk-detail-icon-oneline" />
               </div>
               <div className="fdk-detail-text">
-                <p className="fdk-ingress fdk-margin-bottom-no">
+                <p className="fdk-ingress mb-0">
                   <a
                     className="dataset-landingpage-uri"
                     title={localization.dataset.contactPoint.background}

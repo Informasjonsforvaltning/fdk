@@ -65,7 +65,7 @@ export class CompareTermModal extends React.Component {
       items.map((item, index) => (
         <div className={cols} key={`remove-${index}${item.uri}`}>
           <button
-            className="fdk-concepts-compare-rm-term fdk-button-small fdk-fullwidth fdk-margin-top-double fdk-modal-button"
+            className="fdk-concepts-compare-rm-term fdk-button-small fdk-fullwidth mt-5 fdk-modal-button"
             onClick={() => {
               this.props.handleDeleteTerm(index);
             }}

@@ -21,7 +21,7 @@ export class BegrepCollapse extends React.Component {
     return (
       <div className="fdk-container-detail fdk-container-detail-begrep">
         <div
-          className="fdk-ingress fdk-margin-bottom-no fdk-container-begrep"
+          className="fdk-ingress mb-0 fdk-container-begrep"
           role="button"
           tabIndex={0}
           onClick={this.toggle}

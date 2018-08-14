@@ -75,7 +75,7 @@ export class DatasetBegrep extends React.Component {
           </div>
           <div className="fdk-detail-text">
             <h5>{localization.dataset.keyword}</h5>
-            <p className="fdk-ingress fdk-margin-bottom-no">
+            <p className="fdk-ingress mb-0">
               {children(keyword)}
             </p>
           </div>

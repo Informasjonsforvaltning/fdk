@@ -22,13 +22,13 @@ export const DatasetContactInfo = props => {
     <div className="dataset-contactinfo">
       <div className="row fdk-row">
         {organizationUnit && (
-          <div className="col-md-12 fdk-padding-no">
+          <div className="col-md-12 p-0">
             <div className="fdk-container-detail">
-              <div className="fdk-detail-icon fdk-padding-no">
+              <div className="fdk-detail-icon p-0">
                 <i className="fa fa-address-card fdk-detail-icon-oneline" />
               </div>
               <div className="fdk-detail-text">
-                <p className="fdk-ingress fdk-margin-bottom-no">
+                <p className="fdk-ingress mb-0">
                   {hasURL && (
                     <a
                       className="dataset-contact-url"
@@ -62,7 +62,7 @@ export const DatasetContactInfo = props => {
             </div>
             <div className="fdk-detail-text">
               <h5>{localization.dataset.contactPoint.email}</h5>
-              <p className="fdk-ingress fdk-margin-bottom-no">
+              <p className="fdk-ingress mb-0">
                 <a
                   title={email}
                   href={`mailto:${email}`}
@@ -83,7 +83,7 @@ export const DatasetContactInfo = props => {
             </div>
             <div className="fdk-detail-text">
               <h5>{localization.dataset.contactPoint.telephone}</h5>
-              <p className="fdk-ingress fdk-margin-bottom-no text-nowrap">
+              <p className="fdk-ingress mb-0 text-nowrap">
                 {hasTelephone}
               </p>
             </div>
