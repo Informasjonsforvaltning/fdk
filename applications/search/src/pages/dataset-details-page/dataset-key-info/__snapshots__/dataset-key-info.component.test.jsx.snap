@@ -3,7 +3,7 @@
 exports[`should render DatasetKeyInfo correctly 1`] = `
 <section>
   <div
-    className="fdk-container-detail fdk-container-detail-header fdk-margin-top-double"
+    className="fdk-container-detail fdk-container-detail-header mt-5"
   >
     <React.Fragment>
       <i
@@ -16,7 +16,7 @@ exports[`should render DatasetKeyInfo correctly 1`] = `
     className="row fdk-row"
   >
     <div
-      className="col-xs-12 fdk-padding-no"
+      className="col-xs-12 p-0"
     >
       <div
         className="fdk-container-detail"
@@ -101,7 +101,7 @@ exports[`should render DatasetKeyInfo correctly 1`] = `
         Type
       </h5>
       <p
-        className="fdk-ingress fdk-margin-bottom-no"
+        className="fdk-ingress mb-0"
       >
         Kodeliste
       </p>
@@ -113,7 +113,7 @@ exports[`should render DatasetKeyInfo correctly 1`] = `
         Information model
       </h5>
       <p
-        className="fdk-ingress fdk-margin-bottom-no"
+        className="fdk-ingress mb-0"
       >
         <LinkExternal
           key="https://www.w3.org/2004/02/skos/"
@@ -129,7 +129,7 @@ exports[`should render DatasetKeyInfo correctly 1`] = `
         Conforms to
       </h5>
       <p
-        className="fdk-ingress fdk-margin-bottom-no"
+        className="fdk-ingress mb-0"
       >
         <LinkExternal
           key="https://www.kartverket.no/geodataarbeid/standarder/sosi/"

@@ -122,7 +122,7 @@ exports[`should render CompareTermModal correctly with one term 1`] = `
           key="remove-0https://data-david.github.io/Begrep/begrep/Enhet"
         >
           <button
-            className="fdk-concepts-compare-rm-term fdk-button-small fdk-fullwidth fdk-margin-top-double fdk-modal-button"
+            className="fdk-concepts-compare-rm-term fdk-button-small fdk-fullwidth mt-5 fdk-modal-button"
             onClick={[Function]}
           >
             <i
@@ -379,7 +379,7 @@ exports[`should render CompareTermModal correctly with props 1`] = `
           key="remove-0https://data-david.github.io/Begrep/begrep/Enhet"
         >
           <button
-            className="fdk-concepts-compare-rm-term fdk-button-small fdk-fullwidth fdk-margin-top-double fdk-modal-button"
+            className="fdk-concepts-compare-rm-term fdk-button-small fdk-fullwidth mt-5 fdk-modal-button"
             onClick={[Function]}
           >
             <i
@@ -394,7 +394,7 @@ exports[`should render CompareTermModal correctly with props 1`] = `
           key="remove-1https://data-david.github.io/Begrep/begrep/Organisasjonsnummer"
         >
           <button
-            className="fdk-concepts-compare-rm-term fdk-button-small fdk-fullwidth fdk-margin-top-double fdk-modal-button"
+            className="fdk-concepts-compare-rm-term fdk-button-small fdk-fullwidth mt-5 fdk-modal-button"
             onClick={[Function]}
           >
             <i

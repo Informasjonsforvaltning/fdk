@@ -5,7 +5,7 @@ exports[`should render BegrepCollapse correctly 1`] = `
   className="fdk-container-detail fdk-container-detail-begrep"
 >
   <div
-    className="fdk-ingress fdk-margin-bottom-no fdk-container-begrep"
+    className="fdk-ingress mb-0 fdk-container-begrep"
     onClick={[Function]}
     onKeyPress={[Function]}
     role="button"
@@ -53,7 +53,7 @@ exports[`should render BegrepCollapse correctly with no props 1`] = `
   className="fdk-container-detail fdk-container-detail-begrep"
 >
   <div
-    className="fdk-ingress fdk-margin-bottom-no fdk-container-begrep"
+    className="fdk-ingress mb-0 fdk-container-begrep"
     onClick={[Function]}
     onKeyPress={[Function]}
     role="button"

@@ -52,7 +52,7 @@ exports[`should render ReportStats correctly 1`] = `
         className="row"
       >
         <Link
-          className="col-lg-3 fdk-container-stats-accesslevel fdk-container-stats-vr fdk-padding-no"
+          className="col-lg-3 fdk-container-stats-accesslevel fdk-container-stats-vr p-0"
           replace={false}
           title="Datasets that are public"
           to="/?accessrights=PUBLIC"
@@ -70,7 +70,7 @@ exports[`should render ReportStats correctly 1`] = `
           </p>
         </Link>
         <Link
-          className="col-lg-3 fdk-container-stats-accesslevel fdk-container-stats-vr fdk-padding-no"
+          className="col-lg-3 fdk-container-stats-accesslevel fdk-container-stats-vr p-0"
           replace={false}
           title="Datasets with restricted access"
           to="/?accessrights=RESTRICTED"
@@ -89,7 +89,7 @@ exports[`should render ReportStats correctly 1`] = `
           </p>
         </Link>
         <Link
-          className="col-lg-3 fdk-container-stats-accesslevel fdk-container-stats-vr fdk-padding-no"
+          className="col-lg-3 fdk-container-stats-accesslevel fdk-container-stats-vr p-0"
           replace={false}
           to="/?accessrights=NON_PUBLIC"
         >
@@ -106,7 +106,7 @@ exports[`should render ReportStats correctly 1`] = `
           </p>
         </Link>
         <Link
-          className="col-lg-3 fdk-container-stats-accesslevel fdk-padding-no"
+          className="col-lg-3 fdk-container-stats-accesslevel p-0"
           replace={false}
           to="/?accessrights=Ukjent"
         >

@@ -45,9 +45,7 @@ export class DatasetInfo extends React.Component {
             </div>
             <div className="fdk-detail-text">
               <h5>{header}</h5>
-              <p className="fdk-ingress mb-0">
-                {children(spatial)}
-              </p>
+              <p className="fdk-ingress mb-0">{children(spatial)}</p>
             </div>
           </div>
         </div>
@@ -313,9 +311,7 @@ export class DatasetInfo extends React.Component {
                 </div>
                 <div className="fdk-detail-text">
                   <h5>{localization.dataset.provenance}</h5>
-                  <p className="fdk-ingress mb-0">
-                    {provenance}
-                  </p>
+                  <p className="fdk-ingress mb-0">{provenance}</p>
                 </div>
               </div>
             </div>
@@ -329,9 +325,7 @@ export class DatasetInfo extends React.Component {
                 </div>
                 <div className="fdk-detail-text">
                   <h5>{localization.dataset.currentness}</h5>
-                  <p className="fdk-ingress mb-0">
-                    {hasCurrentnessAnnotation}
-                  </p>
+                  <p className="fdk-ingress mb-0">{hasCurrentnessAnnotation}</p>
                 </div>
               </div>
             </div>
