@@ -24,14 +24,17 @@ afterAll(() => {
 describe('App', () => {
 
   test ('search page opens', async () => {
-    await page.goto(APP)
-      const title=await page.title()
-      expect(title).toBe('Felles datakatalog')
-      const searchBox = await page.$eval('.fdk-search-box', el => (el ? true : false))
-      expect (searchBox).toBe(true)
-      const resultPanel = await page.$eval('#resultPanel', el => (el ? true : false))
-      expect (resultPanel).toBe(true);
+      await page.goto(APP)
+
+      expect.assertions(3);
+      await expect(page.title()).resolves.toBe('Felles datakatalog')
+      await expect(page.$('input[name="searchBox"]')).resolves.toBeTruthy()
+      await expect(page.$('#content')).resolves.toBeTruthy()
   }, 16000)
+
+    // todo - test that some results are coming, currently the dabaase is unpopulated, so no results
+    // const hits = await page.$$('.fdk-container-search-hit')
+    // expect(hits.length).toBeGreaterThan(10);
 
   /*
   test('user can submit a search request and get a resultpage', async () => {
