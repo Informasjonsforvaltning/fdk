@@ -6,7 +6,7 @@ exports[`should render DatasetInfo correctly 1`] = `
     className="row fdk-row"
   >
     <div
-      className="fdk-padding-no col-lg-4"
+      className="p-0 col-lg-4"
     >
       <div
         className="fdk-container-detail"
@@ -25,7 +25,7 @@ exports[`should render DatasetInfo correctly 1`] = `
             Issue date
           </h5>
           <p
-            className="fdk-ingress fdk-margin-bottom-no text-nowrap"
+            className="fdk-ingress mb-0 text-nowrap"
           >
             <t
               ago={false}
@@ -49,7 +49,7 @@ exports[`should render DatasetInfo correctly 1`] = `
       </div>
     </div>
     <div
-      className="fdk-padding-no col-lg-8"
+      className="p-0 col-lg-8"
     >
       <div
         className="fdk-container-detail"
@@ -68,7 +68,7 @@ exports[`should render DatasetInfo correctly 1`] = `
             Update frequency
           </h5>
           <p
-            className="fdk-ingress fdk-margin-bottom-no"
+            className="fdk-ingress mb-0"
           >
             Å
             rlig
@@ -77,7 +77,7 @@ exports[`should render DatasetInfo correctly 1`] = `
       </div>
     </div>
     <div
-      className="fdk-padding-no"
+      className="p-0"
     >
       <div
         className="fdk-container-detail"
@@ -96,7 +96,7 @@ exports[`should render DatasetInfo correctly 1`] = `
             Provenance
           </h5>
           <p
-            className="fdk-ingress fdk-margin-bottom-no"
+            className="fdk-ingress mb-0"
           >
             Vedtak
           </p>
@@ -104,7 +104,7 @@ exports[`should render DatasetInfo correctly 1`] = `
       </div>
     </div>
     <div
-      className="fdk-padding-no"
+      className="p-0"
     >
       <div
         className="fdk-container-detail"
@@ -123,7 +123,7 @@ exports[`should render DatasetInfo correctly 1`] = `
             Currentness
           </h5>
           <p
-            className="fdk-ingress fdk-margin-bottom-no"
+            className="fdk-ingress mb-0"
           >
             Denne teksten sier noe om aktualiteten. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras mattis consectetur purus sit amet fermentum. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
           </p>
@@ -131,7 +131,7 @@ exports[`should render DatasetInfo correctly 1`] = `
       </div>
     </div>
     <div
-      className="col-md-12 fdk-padding-no"
+      className="col-md-12 p-0"
     >
       <div
         className="fdk-container-detail"
@@ -150,28 +150,28 @@ exports[`should render DatasetInfo correctly 1`] = `
             Spatial
           </h5>
           <p
-            className="fdk-ingress fdk-margin-bottom-no"
+            className="fdk-ingress mb-0"
           >
             <span
-              className="fdk-ingress fdk-margin-bottom-no"
+              className="fdk-ingress mb-0"
               key="dataset-info-spatial-0"
             >
               Asker
             </span>
             <span
-              className="fdk-ingress fdk-margin-bottom-no"
+              className="fdk-ingress mb-0"
               key="dataset-info-spatial-1"
             >
               , Bærum
             </span>
             <span
-              className="fdk-ingress fdk-margin-bottom-no"
+              className="fdk-ingress mb-0"
               key="dataset-info-spatial-2"
             >
               , Hurum
             </span>
             <span
-              className="fdk-ingress fdk-margin-bottom-no"
+              className="fdk-ingress mb-0"
               key="dataset-info-spatial-3"
             >
               , Røyken
@@ -185,7 +185,7 @@ exports[`should render DatasetInfo correctly 1`] = `
     className="row fdk-row row-eq-height"
   >
     <div
-      className="col-12 fdk-padding-no"
+      className="col-12 p-0"
     >
       <div
         className="fdk-container-detail col-12"
@@ -204,7 +204,7 @@ exports[`should render DatasetInfo correctly 1`] = `
             Language
           </h5>
           <p
-            className="fdk-ingress fdk-margin-bottom-no"
+            className="fdk-ingress mb-0"
             key="dataset-info-language-0"
           >
             Norsk
@@ -217,7 +217,7 @@ exports[`should render DatasetInfo correctly 1`] = `
     className="row fdk-row"
   >
     <div
-      className="col-12 fdk-padding-no"
+      className="col-12 p-0"
     >
       <div
         className="fdk-container-detail"
@@ -261,7 +261,7 @@ exports[`should render DatasetInfo correctly 2`] = `
     className="row fdk-row"
   >
     <div
-      className="fdk-padding-no col-lg-4"
+      className="p-0 col-lg-4"
     >
       <div
         className="fdk-container-detail"
@@ -280,7 +280,7 @@ exports[`should render DatasetInfo correctly 2`] = `
             Issue date
           </h5>
           <p
-            className="fdk-ingress fdk-margin-bottom-no text-nowrap"
+            className="fdk-ingress mb-0 text-nowrap"
           >
             <t
               ago={false}
@@ -304,7 +304,7 @@ exports[`should render DatasetInfo correctly 2`] = `
       </div>
     </div>
     <div
-      className="fdk-padding-no col-lg-8"
+      className="p-0 col-lg-8"
     >
       <div
         className="fdk-container-detail"
@@ -323,7 +323,7 @@ exports[`should render DatasetInfo correctly 2`] = `
             Update frequency
           </h5>
           <p
-            className="fdk-ingress fdk-margin-bottom-no"
+            className="fdk-ingress mb-0"
           >
             Å
             rlig
@@ -332,7 +332,7 @@ exports[`should render DatasetInfo correctly 2`] = `
       </div>
     </div>
     <div
-      className="fdk-padding-no"
+      className="p-0"
     >
       <div
         className="fdk-container-detail"
@@ -351,7 +351,7 @@ exports[`should render DatasetInfo correctly 2`] = `
             Provenance
           </h5>
           <p
-            className="fdk-ingress fdk-margin-bottom-no"
+            className="fdk-ingress mb-0"
           >
             Vedtak
           </p>
@@ -359,7 +359,7 @@ exports[`should render DatasetInfo correctly 2`] = `
       </div>
     </div>
     <div
-      className="fdk-padding-no"
+      className="p-0"
     >
       <div
         className="fdk-container-detail"
@@ -378,7 +378,7 @@ exports[`should render DatasetInfo correctly 2`] = `
             Currentness
           </h5>
           <p
-            className="fdk-ingress fdk-margin-bottom-no"
+            className="fdk-ingress mb-0"
           >
             Denne teksten sier noe om aktualiteten. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras mattis consectetur purus sit amet fermentum. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
           </p>
@@ -386,7 +386,7 @@ exports[`should render DatasetInfo correctly 2`] = `
       </div>
     </div>
     <div
-      className="col-md-12 fdk-padding-no"
+      className="col-md-12 p-0"
     >
       <div
         className="fdk-container-detail"
@@ -405,28 +405,28 @@ exports[`should render DatasetInfo correctly 2`] = `
             Spatial
           </h5>
           <p
-            className="fdk-ingress fdk-margin-bottom-no"
+            className="fdk-ingress mb-0"
           >
             <span
-              className="fdk-ingress fdk-margin-bottom-no"
+              className="fdk-ingress mb-0"
               key="dataset-info-spatial-0"
             >
               Asker
             </span>
             <span
-              className="fdk-ingress fdk-margin-bottom-no"
+              className="fdk-ingress mb-0"
               key="dataset-info-spatial-1"
             >
               , Bærum
             </span>
             <span
-              className="fdk-ingress fdk-margin-bottom-no"
+              className="fdk-ingress mb-0"
               key="dataset-info-spatial-2"
             >
               , Hurum
             </span>
             <span
-              className="fdk-ingress fdk-margin-bottom-no"
+              className="fdk-ingress mb-0"
               key="dataset-info-spatial-3"
             >
               , Røyken
@@ -440,7 +440,7 @@ exports[`should render DatasetInfo correctly 2`] = `
     className="row fdk-row row-eq-height"
   >
     <div
-      className="col-12 fdk-padding-no"
+      className="col-12 p-0"
     >
       <div
         className="fdk-container-detail col-lg-8"
@@ -466,7 +466,7 @@ exports[`should render DatasetInfo correctly 2`] = `
                 From
               </h5>
               <p
-                className="fdk-ingress fdk-margin-bottom-no text-nowrap"
+                className="fdk-ingress mb-0 text-nowrap"
               >
                 <t
                   ago={false}
@@ -494,7 +494,7 @@ exports[`should render DatasetInfo correctly 2`] = `
                 To
               </h5>
               <p
-                className="fdk-ingress fdk-margin-bottom-no text-nowrap"
+                className="fdk-ingress mb-0 text-nowrap"
               >
                 <t
                   ago={false}
@@ -542,7 +542,7 @@ exports[`should render DatasetInfo correctly 2`] = `
     className="row fdk-row"
   >
     <div
-      className="col-12 fdk-padding-no"
+      className="col-12 p-0"
     >
       <div
         className="fdk-container-detail"
@@ -589,7 +589,7 @@ exports[`should render DatasetInfo correctly with no props 1`] = `
     className="row fdk-row row-eq-height"
   >
     <div
-      className="col-12 fdk-padding-no"
+      className="col-12 p-0"
     />
   </div>
   <div

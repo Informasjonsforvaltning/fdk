@@ -15,12 +15,12 @@ exports[`should render AboutPage correctly 1`] = `
       className="col-lg-8 offset-lg-2"
     >
       <h1
-        className="fdk-margin-bottom"
+        className="title"
       >
         The National Data Directory
       </h1>
       <div
-        className="fdk-margin-bottom"
+        className="mb-2"
       >
         <p
           className="fdk-ingress"

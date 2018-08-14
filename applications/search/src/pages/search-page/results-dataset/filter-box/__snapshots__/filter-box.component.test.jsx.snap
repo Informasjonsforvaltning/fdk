@@ -8,7 +8,7 @@ exports[`should render FilterBox correctly 1`] = `
     className="fdk-panel__header"
   >
     <button
-      className="fdk-toggleFilter fdk-p-0"
+      className="fdk-toggleFilter p-0"
       onClick={[Function]}
     >
       <i
@@ -266,7 +266,7 @@ exports[`should render FilterBox correctly with activeFilter 1`] = `
     className="fdk-panel__header"
   >
     <button
-      className="fdk-toggleFilter fdk-p-0"
+      className="fdk-toggleFilter p-0"
       onClick={[Function]}
     >
       <i
@@ -524,7 +524,7 @@ exports[`should render FilterBox correctly with activeFilter 2`] = `
     className="fdk-panel__header"
   >
     <button
-      className="fdk-toggleFilter fdk-p-0"
+      className="fdk-toggleFilter p-0"
       onClick={[Function]}
     >
       <i

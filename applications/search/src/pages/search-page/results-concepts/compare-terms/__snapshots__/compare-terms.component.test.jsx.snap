@@ -2,7 +2,7 @@
 
 exports[`should render CompareTerms correctly 1`] = `
 <div
-  className="fdk-container fdk-p-3"
+  className="fdk-container p-3"
 >
   <button
     className="float-right fdk-button-small"

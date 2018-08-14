@@ -14,13 +14,10 @@ exports[`should render ArticlePage correctly 1`] = `
       className="col-lg-10 offset-lg-1"
     >
       <h1
-        className="fdk-margin-bottom"
+        className="title"
       >
         Registration (only in Norwegian)
       </h1>
-      <div
-        className="fdk-margin-bottom"
-      />
       <div
         className="fdk-subtitle"
       >

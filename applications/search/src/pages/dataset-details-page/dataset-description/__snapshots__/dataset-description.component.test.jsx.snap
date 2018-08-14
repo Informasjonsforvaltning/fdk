@@ -6,16 +6,14 @@ exports[`should render DatasetDescription correctly 1`] = `
     description="Datasettet avgrenser område for virkeområdet til lov 6. juni 2009 nr. 35 om naturområder i Oslo og nærliggende kommuner (markaloven) som trådte i kraft 1. september 2009. Markalovens virkeområde er fastsatt i forskrift 4. september 2015 nr. 1032 om justering av markagrensen fastlegger markalovens geografiske virkeområde med tilhørende kart."
     title="AAMarkagrensen Oslo Kommune og nærliggende kommuner"
   />
-  <h1
-    className="fdk-margin-bottom"
-  >
+  <h1>
     AAMarkagrensen Oslo Kommune og nærliggende kommuner
   </h1>
   <div
     className="fdk-detail-date"
   />
   <div
-    className="fdk-margin-bottom"
+    className="mb-2"
   >
     <span>
       Owned by
@@ -60,16 +58,14 @@ exports[`should render DatasetDescription correctly 2`] = `
     description="Datasettet avgrenser område for virkeområdet til lov 6. juni 2009 nr. 35 om naturområder i Oslo og nærliggende kommuner (markaloven) som trådte i kraft 1. september 2009. Markalovens virkeområde er fastsatt i forskrift 4. september 2015 nr. 1032 om justering av markagrensen fastlegger markalovens geografiske virkeområde med tilhørende kart."
     title="AAMarkagrensen Oslo Kommune og nærliggende kommuner"
   />
-  <h1
-    className="fdk-margin-bottom"
-  >
+  <h1>
     AAMarkagrensen Oslo Kommune og nærliggende kommuner
   </h1>
   <div
     className="fdk-detail-date"
   />
   <div
-    className="fdk-margin-bottom"
+    className="mb-2"
   >
     <span>
       Owned by
@@ -118,7 +114,7 @@ exports[`should render DatasetDescription correctly with no props 1`] = `
     className="fdk-detail-date"
   />
   <div
-    className="fdk-margin-bottom"
+    className="mb-2"
   />
 </header>
 `;

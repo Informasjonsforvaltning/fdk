@@ -102,9 +102,7 @@ export class DatasetDescription extends React.Component {
     return (
       <header>
         <DocumentMeta {...meta} />
-        {this.props.title && (
-          <h1>{this.props.title}</h1>
-        )}
+        {this.props.title && <h1>{this.props.title}</h1>}
 
         <div className="fdk-detail-date">
           {this._renderHarvested()}

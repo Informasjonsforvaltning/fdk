@@ -83,9 +83,7 @@ export const DatasetContactInfo = props => {
             </div>
             <div className="fdk-detail-text">
               <h5>{localization.dataset.contactPoint.telephone}</h5>
-              <p className="fdk-ingress mb-0 text-nowrap">
-                {hasTelephone}
-              </p>
+              <p className="fdk-ingress mb-0 text-nowrap">{hasTelephone}</p>
             </div>
           </div>
         )}

@@ -333,7 +333,7 @@ exports[`should render DatasetDetailsPage correctly with datasetItem 1`] = `
           }
         />
         <section
-          className="fdk-margin-top-triple"
+          className="mt-5"
         >
           <DatasetLandingPage
             key="dataset-contactpoint-undefined"

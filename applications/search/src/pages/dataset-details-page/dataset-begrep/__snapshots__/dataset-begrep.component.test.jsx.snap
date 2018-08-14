@@ -36,7 +36,7 @@ exports[`should render DatasetBegrep correctly 1`] = `
         Keyword
       </h5>
       <p
-        className="fdk-ingress fdk-margin-bottom-no"
+        className="fdk-ingress mb-0"
       >
         <span
           className="keyword"
@@ -99,7 +99,7 @@ exports[`should render DatasetBegrep correctly with no subject definition 1`] = 
         Keyword
       </h5>
       <p
-        className="fdk-ingress fdk-margin-bottom-no"
+        className="fdk-ingress mb-0"
       >
         <span
           className="keyword"

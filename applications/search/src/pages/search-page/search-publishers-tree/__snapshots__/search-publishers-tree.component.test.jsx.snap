@@ -8,7 +8,7 @@ exports[`should render SearchPublishersTree correctly with active filter 1`] = `
     className="fdk-panel__header"
   >
     <button
-      className="fdk-publisher-toggle fdk-p-0"
+      className="fdk-publisher-toggle p-0"
       onClick={[Function]}
     >
       <i
@@ -579,7 +579,7 @@ exports[`should render SearchPublishersTree correctly with active sub filter 1`]
     className="fdk-panel__header"
   >
     <button
-      className="fdk-publisher-toggle fdk-p-0"
+      className="fdk-publisher-toggle p-0"
       onClick={[Function]}
     >
       <i
@@ -1150,7 +1150,7 @@ exports[`should render SearchPublishersTree correctly with minimum of props 1`] 
     className="fdk-panel__header"
   >
     <button
-      className="fdk-publisher-toggle fdk-p-0"
+      className="fdk-publisher-toggle p-0"
       onClick={[Function]}
     >
       <i
@@ -1195,7 +1195,7 @@ exports[`should render SearchPublishersTree correctly with props 1`] = `
     className="fdk-panel__header"
   >
     <button
-      className="fdk-publisher-toggle fdk-p-0"
+      className="fdk-publisher-toggle p-0"
       onClick={[Function]}
     >
       <i

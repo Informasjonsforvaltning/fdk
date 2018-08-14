@@ -8,13 +8,13 @@ exports[`should render DatasetContactInfo correctly 1`] = `
     className="row fdk-row"
   >
     <div
-      className="col-md-12 fdk-padding-no"
+      className="col-md-12 p-0"
     >
       <div
         className="fdk-container-detail"
       >
         <div
-          className="fdk-detail-icon fdk-padding-no"
+          className="fdk-detail-icon p-0"
         >
           <i
             className="fa fa-address-card fdk-detail-icon-oneline"
@@ -24,7 +24,7 @@ exports[`should render DatasetContactInfo correctly 1`] = `
           className="fdk-detail-text"
         >
           <p
-            className="fdk-ingress fdk-margin-bottom-no"
+            className="fdk-ingress mb-0"
           >
             <a
               className="dataset-contact-url"
@@ -65,7 +65,7 @@ exports[`should render DatasetContactInfo correctly 1`] = `
           E-mail
         </h5>
         <p
-          className="fdk-ingress fdk-margin-bottom-no"
+          className="fdk-ingress mb-0"
         >
           <a
             href="mailto:digitalisering@kartverket.no"
@@ -95,7 +95,7 @@ exports[`should render DatasetContactInfo correctly 1`] = `
           Telephone
         </h5>
         <p
-          className="fdk-ingress fdk-margin-bottom-no text-nowrap"
+          className="fdk-ingress mb-0 text-nowrap"
         >
           22306022
         </p>
