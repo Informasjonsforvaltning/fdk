@@ -57,9 +57,8 @@ export function ApiDetailsPage(props) {
             {_renderApiHeader()}
           </div>
         </div>
-        <hr />
         <div className="row">
-          <div className="col-12 col-lg-4 sticky-top">
+          <div className="col-12 col-lg-4 ">
                 <StickyMenu />
               </div>
           <section className="col-12 col-lg-8 mt-3">

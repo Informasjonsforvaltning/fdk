@@ -17,6 +17,7 @@ export const StickyMenu = props => {
           >
             <span className="read-more">Endepunkter</span>
           </ScrollLink>
+          <hr />
         </li>
         <li className="mb-5">
           <ScrollLink
@@ -25,6 +26,7 @@ export const StickyMenu = props => {
           >
             <span className="read-more">Lorem ipsum</span>
           </ScrollLink>
+          <hr />
         </li>
         <li className="mb-5">
           <ScrollLink
@@ -33,6 +35,7 @@ export const StickyMenu = props => {
           >
             <span className="read-more">Lorem ipsum</span>
           </ScrollLink>
+          <hr />
         </li>
       </ul>
     </nav>
