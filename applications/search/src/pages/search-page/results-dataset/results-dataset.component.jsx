@@ -6,8 +6,8 @@ import cx from 'classnames';
 
 import localization from '../../../lib/localization';
 import { SearchHitItem } from './search-hit-item/search-hit-item.component';
-import { Select } from './select/select.component';
-import { FilterBox } from './filter-box/filter-box.component';
+import { Select } from '../../../components/select/select.component';
+import { FilterBox } from '../../../components/filter-box/filter-box.component';
 import { SearchPublishersTree } from '../search-publishers-tree/search-publishers-tree.component';
 
 export class ResultsDataset extends React.Component {
