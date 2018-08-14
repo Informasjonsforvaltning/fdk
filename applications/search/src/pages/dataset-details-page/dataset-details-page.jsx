@@ -202,7 +202,7 @@ export class DatasetDetailsPage extends React.Component {
       ));
 
     return (
-      <section className="fdk-margin-top-triple">
+      <section className="mt-5">
         {landingPage && landingPages(landingPage)}
         {contactPoint && contactPoints(contactPoint)}
       </section>

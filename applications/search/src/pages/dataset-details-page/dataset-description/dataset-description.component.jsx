@@ -103,7 +103,7 @@ export class DatasetDescription extends React.Component {
       <header>
         <DocumentMeta {...meta} />
         {this.props.title && (
-          <h1 className="fdk-margin-bottom">{this.props.title}</h1>
+          <h1>{this.props.title}</h1>
         )}
 
         <div className="fdk-detail-date">
@@ -112,7 +112,7 @@ export class DatasetDescription extends React.Component {
           {this._renderLastChanged()}
         </div>
 
-        <div className="fdk-margin-bottom">
+        <div className="mb-2">
           {this._renderPublisher()}
           {this._renderThemes()}
           {this.props.provenance &&

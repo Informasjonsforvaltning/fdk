@@ -62,7 +62,7 @@ export const ReportStats = props => {
         <div className="row">
           <Link
             title={localization.report.public}
-            className="col-lg-3 fdk-container-stats-accesslevel fdk-container-stats-vr fdk-padding-no"
+            className="col-lg-3 fdk-container-stats-accesslevel fdk-container-stats-vr p-0"
             to={`/?accessrights=PUBLIC${orgPathParam}`}
           >
             <p>
@@ -75,7 +75,7 @@ export const ReportStats = props => {
           </Link>
           <Link
             title={localization.report.restricted}
-            className="col-lg-3 fdk-container-stats-accesslevel fdk-container-stats-vr fdk-padding-no"
+            className="col-lg-3 fdk-container-stats-accesslevel fdk-container-stats-vr p-0"
             to={`/?accessrights=RESTRICTED${orgPathParam}`}
           >
             <p>
@@ -88,7 +88,7 @@ export const ReportStats = props => {
             <p>{localization.report.restricted}</p>
           </Link>
           <Link
-            className="col-lg-3 fdk-container-stats-accesslevel fdk-container-stats-vr fdk-padding-no"
+            className="col-lg-3 fdk-container-stats-accesslevel fdk-container-stats-vr p-0"
             to={`/?accessrights=NON_PUBLIC${orgPathParam}`}
           >
             <p>
@@ -100,7 +100,7 @@ export const ReportStats = props => {
             <p>{localization.report.nonPublic}</p>
           </Link>
           <Link
-            className="col-lg-3 fdk-container-stats-accesslevel fdk-padding-no"
+            className="col-lg-3 fdk-container-stats-accesslevel p-0"
             to={`/?accessrights=Ukjent${orgPathParam}`}
           >
             <p>

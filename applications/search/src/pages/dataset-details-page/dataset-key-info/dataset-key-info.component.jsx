@@ -45,7 +45,7 @@ export class DatasetKeyInfo extends React.Component {
     if (accessRights) {
       const { code } = accessRights;
       return (
-        <div className="fdk-container-detail fdk-container-detail-header fdk-margin-top-double">
+        <div className="fdk-container-detail fdk-container-detail-header mt-5">
           {code === 'NON_PUBLIC' && (
             <React.Fragment>
               <i className="fa fdk-fa-left fdk-color-unntatt fa-lock" />
@@ -121,7 +121,7 @@ export class DatasetKeyInfo extends React.Component {
       legalBasisForAccess
     ) {
       return (
-        <div className="col-xs-12 fdk-padding-no">
+        <div className="col-xs-12 p-0">
           <div className="fdk-container-detail">
             {legalBasisForRestriction && (
               <div>
@@ -165,7 +165,7 @@ export class DatasetKeyInfo extends React.Component {
     return (
       <div className={`${this.state.colClass} fdk-container-detail`}>
         <h5>{heading}</h5>
-        <p className="fdk-ingress fdk-margin-bottom-no">{type}</p>
+        <p className="fdk-ingress mb-0">{type}</p>
       </div>
     );
   }
@@ -189,7 +189,7 @@ export class DatasetKeyInfo extends React.Component {
       return (
         <div className={`${this.state.colClass} fdk-container-detail`}>
           <h5>{header}</h5>
-          <p className="fdk-ingress fdk-margin-bottom-no">
+          <p className="fdk-ingress mb-0">
             {children(conformsTo)}
           </p>
         </div>
@@ -215,7 +215,7 @@ export class DatasetKeyInfo extends React.Component {
       return (
         <div className={`${this.state.colClass} fdk-container-detail`}>
           <h5>{localization.dataset.informationModel}</h5>
-          <p className="fdk-ingress fdk-margin-bottom-no">
+          <p className="fdk-ingress mb-0">
             {children(informationModel)}
           </p>
         </div>

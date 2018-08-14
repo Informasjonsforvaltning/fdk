@@ -21,7 +21,7 @@ export const DatasetQuality = props => {
         {relevanceAnnotation && (
           <div>
             <h5>{localization.dataset.relevanceAnnotation}</h5>
-            <p className="fdk-ingress fdk-margin-bottom-double">
+            <p className="fdk-ingress mb-5">
               {relevanceAnnotation}
             </p>
           </div>
@@ -30,7 +30,7 @@ export const DatasetQuality = props => {
         {completenessAnnotation && (
           <div>
             <h5>{localization.dataset.completenessAnnotation}</h5>
-            <p className="fdk-ingress fdk-margin-bottom-double">
+            <p className="fdk-ingress mb-5">
               {completenessAnnotation}
             </p>
           </div>
@@ -39,7 +39,7 @@ export const DatasetQuality = props => {
         {accuracyAnnotation && (
           <div>
             <h5>{localization.dataset.accuracyAnnotation}</h5>
-            <p className="fdk-ingress fdk-margin-bottom-double">
+            <p className="fdk-ingress mb-5">
               {accuracyAnnotation}
             </p>
           </div>
@@ -48,7 +48,7 @@ export const DatasetQuality = props => {
         {availabilityAnnotations && (
           <div>
             <h5>{localization.dataset.availabilityAnnotations}</h5>
-            <p className="fdk-ingress fdk-margin-bottom-double">
+            <p className="fdk-ingress mb-5">
               {availabilityAnnotations}
             </p>
           </div>

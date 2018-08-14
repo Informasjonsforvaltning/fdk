@@ -92,7 +92,7 @@ export class FilterBox extends React.Component {
       <div className="fdk-panel--filter">
         <div className="fdk-panel__header">
           <button
-            className="fdk-toggleFilter fdk-p-0"
+            className="fdk-toggleFilter p-0"
             onClick={this.toggleFilter}
           >
             <i className={collapseIconClass} />

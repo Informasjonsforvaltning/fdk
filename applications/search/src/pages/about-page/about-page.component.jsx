@@ -14,8 +14,8 @@ export const AboutPage = () => {
       <DocumentMeta {...meta} />
       <div className="row">
         <div className="col-lg-8 offset-lg-2">
-          <h1 className="fdk-margin-bottom">{localization.about.title}</h1>
-          <div className="fdk-margin-bottom">
+          <h1 className="title">{localization.about.title}</h1>
+          <div className="mb-2">
             <p className="fdk-ingress">{localization.about.titleSub}</p>
             <p className="fdk-ingress">{localization.about.ingress}</p>
           </div>
