@@ -7,7 +7,7 @@ const ScrollLink = Scroll.Link;
 
 export const StickyMenu = props => {
   return (
-    <nav className="sticky-menu sticky-top pt-4" aria-hidden="true">
+    <nav className="sticky-menu sticky-top py-5 py-md-4" aria-hidden="true">
       <span className="uu-invisible" aria-hidden="false">Sidemeny for api beskrivelse:</span>
       <ul className="p-0">
         <li className="mb-5">
