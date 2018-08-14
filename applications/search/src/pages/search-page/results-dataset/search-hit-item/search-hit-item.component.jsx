@@ -165,35 +165,37 @@ export const SearchHitItem = props => {
   });
 
   return (
-    <Link
-      className="fdk-a-search-hit"
-      title={`${localization.result.dataset}: ${title}`}
-      to={link}
-    >
-      <span className="uu-invisible" aria-hidden="false">
-        Søketreff.
-      </span>
-      <div className="fdk-container-search-hit">
-        <h2>{title}</h2>
-        <div className="fdk-dataset-themes">
-          {renderPublisher(_source)}
-          {renderThemes(_source)}
-          {provenance &&
-            provenance.code === 'NASJONAL' && <DatasetLabelNational />}
+    <article>
+      <Link
+        className="fdk-a-search-hit"
+        title={`${localization.result.dataset}: ${title}`}
+        to={link}
+      >
+        <span className="uu-invisible" aria-hidden="false">
+          Søketreff.
+        </span>
+        <div className="fdk-container-search-hit">
+          <h2>{title}</h2>
+          <div className="fdk-dataset-themes">
+            {renderPublisher(_source)}
+            {renderThemes(_source)}
+            {provenance &&
+              provenance.code === 'NASJONAL' && <DatasetLabelNational />}
+          </div>
+          <p className="fdk-p-search-hit">
+            <span className="uu-invisible" aria-hidden="false">
+              Beskrivelse av datasettet,
+            </span>
+            {description}
+          </p>
+          <div className={distributionClass}>
+            <strong>{accessRightsLabel}</strong>
+            {renderFormats(_source, authorityCode, distributionTypeItems)}
+            {renderSample(_source)}
+          </div>
         </div>
-        <p className="fdk-p-search-hit">
-          <span className="uu-invisible" aria-hidden="false">
-            Beskrivelse av datasettet,
-          </span>
-          {description}
-        </p>
-        <div className={distributionClass}>
-          <strong>{accessRightsLabel}</strong>
-          {renderFormats(_source, authorityCode, distributionTypeItems)}
-          {renderSample(_source)}
-        </div>
-      </div>
-    </Link>
+      </Link>
+    </article>
   );
 };
 

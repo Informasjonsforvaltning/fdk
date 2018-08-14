@@ -1,438 +1,394 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`should render ResultsDataset correctly with hits 1`] = `
-<div
+<main
   id="content"
-  role="main"
 >
-  <div
-    id="resultPanel"
+  <section
+    className="row mt-1 mb-1-em"
   >
     <div
-      className="row mt-1 mb-1-em"
+      className="col-6 col-lg-4"
     >
-      <div
-        className="col-6 col-lg-4"
+      <button
+        className="btn btn-primary fdk-button fade-in-500 d-none"
+        onClick={[MockFunction]}
+        type="button"
       >
-        <button
-          className="btn btn-primary fdk-button fade-in-500 d-none"
-          onClick={[MockFunction]}
-          type="button"
-        >
-          Clear
-        </button>
-      </div>
-      <div
-        className="col-6 col-lg-4 offset-lg-4"
-      >
-        <div
-          className="float-right"
-        >
-          <Select
-            activeSort={null}
-            items={
-              Array [
-                Object {
-                  "defaultOption": true,
-                  "field": "_score",
-                  "label": "relevance",
-                  "order": "asc",
-                },
-                Object {
-                  "field": "title",
-                  "label": "title",
-                  "order": "asc",
-                },
-                Object {
-                  "field": "modified",
-                  "label": "modified",
-                  "order": "desc",
-                },
-                Object {
-                  "field": "publisher.name",
-                  "label": "publisher",
-                  "order": "asc",
-                },
-              ]
-            }
-            onChange={[MockFunction]}
-          />
-        </div>
-      </div>
+        Clear
+      </button>
     </div>
     <div
-      className="row"
+      className="col-6 col-lg-4 offset-lg-4"
     >
       <div
-        className="search-filters col-lg-4 d-none d-lg-block"
+        className="float-right"
       >
-        <span
-          aria-hidden="false"
-          className="uu-invisible"
-        >
-          Filtrering tilgang
-        </span>
-        <div>
-          <Modal
-            autoFocus={true}
-            backdrop={true}
-            backdropTransition={
+        <Select
+          activeSort={null}
+          items={
+            Array [
               Object {
-                "mountOnEnter": true,
-                "timeout": 150,
-              }
-            }
-            centered={false}
-            fade={true}
-            isOpen={true}
-            keyboard={true}
-            modalTransition={
+                "defaultOption": true,
+                "field": "_score",
+                "label": "relevance",
+                "order": "asc",
+              },
               Object {
-                "timeout": 300,
-              }
-            }
-            onClosed={[Function]}
-            onOpened={[Function]}
-            role="dialog"
-            toggle={[MockFunction]}
-            zIndex={1050}
-          >
-            <ModalHeader
-              closeAriaLabel="Close"
-              tag="h5"
-              toggle={[MockFunction]}
-              wrapTag="div"
-            >
-              Filter
-            </ModalHeader>
-            <ModalBody
-              tag="div"
-            >
-              <div
-                className="search-filters"
-              >
-                <FilterBox
-                  activeFilter={null}
-                  filter={
-                    Object {
-                      "buckets": Array [
-                        Object {
-                          "doc_count": 1,
-                          "key": "AGRI",
-                        },
-                        Object {
-                          "doc_count": 1,
-                          "key": "ECON",
-                        },
-                        Object {
-                          "doc_count": 1,
-                          "key": "EDUC",
-                        },
-                        Object {
-                          "doc_count": 1,
-                          "key": "ENER",
-                        },
-                        Object {
-                          "doc_count": 1,
-                          "key": "ENVI",
-                        },
-                        Object {
-                          "doc_count": 1,
-                          "key": "GOVE",
-                        },
-                        Object {
-                          "doc_count": 1,
-                          "key": "HEAL",
-                        },
-                        Object {
-                          "doc_count": 1,
-                          "key": "INTR",
-                        },
-                        Object {
-                          "doc_count": 1,
-                          "key": "JUST",
-                        },
-                        Object {
-                          "doc_count": 1,
-                          "key": "REGI",
-                        },
-                      ],
-                      "doc_count_error_upper_bound": 0,
-                      "sum_other_doc_count": 0,
-                    }
-                  }
-                  htmlKey={1}
-                  onClick={[MockFunction]}
-                  themesItems={Object {}}
-                  title="Theme"
-                />
-                <FilterBox
-                  activeFilter={null}
-                  filter={
-                    Object {
-                      "buckets": Array [
-                        Object {
-                          "doc_count": 1,
-                          "key": "PUBLIC",
-                        },
-                      ],
-                      "doc_count_error_upper_bound": 0,
-                      "sum_other_doc_count": 0,
-                    }
-                  }
-                  htmlKey={2}
-                  onClick={[MockFunction]}
-                  themesItems={null}
-                  title="Access"
-                />
-                <SearchPublishersTree
-                  activeFilter={null}
-                  filter={Array []}
-                  onFilterPublisherHierarchy={[MockFunction]}
-                  onSearch={null}
-                  orgPath={null}
-                  publishers={Object {}}
-                  title="Organization"
-                />
-                <FilterBox
-                  activeFilter={null}
-                  filter={
-                    Object {
-                      "buckets": Array [
-                        Object {
-                          "doc_count": 1,
-                          "key": "Ukjent",
-                        },
-                      ],
-                      "doc_count_error_upper_bound": 0,
-                      "sum_other_doc_count": 0,
-                    }
-                  }
-                  htmlKey={3}
-                  onClick={null}
-                  themesItems={null}
-                  title="Spatial"
-                />
-                <FilterBox
-                  activeFilter={null}
-                  filter={
-                    Object {
-                      "buckets": Array [
-                        Object {
-                          "doc_count": 1,
-                          "key": "VEDTAK",
-                        },
-                      ],
-                      "doc_count_error_upper_bound": 0,
-                      "sum_other_doc_count": 0,
-                    }
-                  }
-                  htmlKey={4}
-                  onClick={null}
-                  themesItems={null}
-                  title="Provenance"
-                />
-              </div>
-            </ModalBody>
-            <ModalFooter
-              tag="div"
-            >
-              <Button
-                className="fdk-button"
-                color="primary"
-                onClick={[MockFunction]}
-                tag="button"
-              >
-                Close
-              </Button>
-            </ModalFooter>
-          </Modal>
-          <FilterBox
-            activeFilter={null}
-            filter={
+                "field": "title",
+                "label": "title",
+                "order": "asc",
+              },
               Object {
-                "buckets": Array [
-                  Object {
-                    "doc_count": 1,
-                    "key": "AGRI",
-                  },
-                  Object {
-                    "doc_count": 1,
-                    "key": "ECON",
-                  },
-                  Object {
-                    "doc_count": 1,
-                    "key": "EDUC",
-                  },
-                  Object {
-                    "doc_count": 1,
-                    "key": "ENER",
-                  },
-                  Object {
-                    "doc_count": 1,
-                    "key": "ENVI",
-                  },
-                  Object {
-                    "doc_count": 1,
-                    "key": "GOVE",
-                  },
-                  Object {
-                    "doc_count": 1,
-                    "key": "HEAL",
-                  },
-                  Object {
-                    "doc_count": 1,
-                    "key": "INTR",
-                  },
-                  Object {
-                    "doc_count": 1,
-                    "key": "JUST",
-                  },
-                  Object {
-                    "doc_count": 1,
-                    "key": "REGI",
-                  },
-                ],
-                "doc_count_error_upper_bound": 0,
-                "sum_other_doc_count": 0,
-              }
-            }
-            htmlKey={1}
-            onClick={[MockFunction]}
-            themesItems={Object {}}
-            title="Theme"
-          />
-          <FilterBox
-            activeFilter={null}
-            filter={
+                "field": "modified",
+                "label": "modified",
+                "order": "desc",
+              },
               Object {
-                "buckets": Array [
-                  Object {
-                    "doc_count": 1,
-                    "key": "PUBLIC",
-                  },
-                ],
-                "doc_count_error_upper_bound": 0,
-                "sum_other_doc_count": 0,
-              }
-            }
-            htmlKey={2}
-            onClick={[MockFunction]}
-            themesItems={null}
-            title="Access"
-          />
-          <SearchPublishersTree
-            activeFilter={null}
-            filter={Array []}
-            onFilterPublisherHierarchy={[MockFunction]}
-            onSearch={null}
-            orgPath={null}
-            publishers={Object {}}
-            title="Organization"
-          />
-          <FilterBox
-            activeFilter={null}
-            filter={
-              Object {
-                "buckets": Array [
-                  Object {
-                    "doc_count": 1,
-                    "key": "Ukjent",
-                  },
-                ],
-                "doc_count_error_upper_bound": 0,
-                "sum_other_doc_count": 0,
-              }
-            }
-            htmlKey={3}
-            onClick={null}
-            themesItems={null}
-            title="Spatial"
-          />
-          <FilterBox
-            activeFilter={null}
-            filter={
-              Object {
-                "buckets": Array [
-                  Object {
-                    "doc_count": 1,
-                    "key": "VEDTAK",
-                  },
-                ],
-                "doc_count_error_upper_bound": 0,
-                "sum_other_doc_count": 0,
-              }
-            }
-            htmlKey={4}
-            onClick={null}
-            themesItems={null}
-            title="Provenance"
-          />
-        </div>
+                "field": "publisher.name",
+                "label": "publisher",
+                "order": "asc",
+              },
+            ]
+          }
+          onChange={[MockFunction]}
+        />
       </div>
-      <div
-        className="col-12 col-lg-8"
-        id="datasets"
+    </div>
+  </section>
+  <section
+    className="row"
+  >
+    <aside
+      className="search-filters col-lg-4 d-none d-lg-block"
+    >
+      <span
+        aria-hidden="false"
+        className="uu-invisible"
       >
-        <SearchHitItem
-          distributionTypeItems={null}
-          key="b12e9e8d-3833-49e2-9f62-0f8fd877be05"
-          result={
+        Filtrering tilgang
+      </span>
+      <div>
+        <Modal
+          autoFocus={true}
+          backdrop={true}
+          backdropTransition={
             Object {
-              "_id": "b12e9e8d-3833-49e2-9f62-0f8fd877be05",
-              "_index": "dcat",
-              "_score": null,
-              "_source": Object {
-                "accessRights": Object {
-                  "code": "PUBLIC",
-                  "prefLabel": Object {
-                    "en": "Public",
-                    "nb": "Offentlig",
-                    "nn": "Offentlig",
-                  },
-                  "uri": "http://publications.europa.eu/resource/authority/access-right/PUBLIC",
+              "mountOnEnter": true,
+              "timeout": 150,
+            }
+          }
+          centered={false}
+          fade={true}
+          isOpen={true}
+          keyboard={true}
+          modalTransition={
+            Object {
+              "timeout": 300,
+            }
+          }
+          onClosed={[Function]}
+          onOpened={[Function]}
+          role="dialog"
+          toggle={[MockFunction]}
+          zIndex={1050}
+        >
+          <ModalHeader
+            closeAriaLabel="Close"
+            tag="h5"
+            toggle={[MockFunction]}
+            wrapTag="div"
+          >
+            Filter
+          </ModalHeader>
+          <ModalBody
+            tag="div"
+          >
+            <div
+              className="search-filters"
+            >
+              <FilterBox
+                activeFilter={null}
+                filter={
+                  Object {
+                    "buckets": Array [
+                      Object {
+                        "doc_count": 1,
+                        "key": "AGRI",
+                      },
+                      Object {
+                        "doc_count": 1,
+                        "key": "ECON",
+                      },
+                      Object {
+                        "doc_count": 1,
+                        "key": "EDUC",
+                      },
+                      Object {
+                        "doc_count": 1,
+                        "key": "ENER",
+                      },
+                      Object {
+                        "doc_count": 1,
+                        "key": "ENVI",
+                      },
+                      Object {
+                        "doc_count": 1,
+                        "key": "GOVE",
+                      },
+                      Object {
+                        "doc_count": 1,
+                        "key": "HEAL",
+                      },
+                      Object {
+                        "doc_count": 1,
+                        "key": "INTR",
+                      },
+                      Object {
+                        "doc_count": 1,
+                        "key": "JUST",
+                      },
+                      Object {
+                        "doc_count": 1,
+                        "key": "REGI",
+                      },
+                    ],
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                  }
+                }
+                htmlKey={1}
+                onClick={[MockFunction]}
+                themesItems={Object {}}
+                title="Theme"
+              />
+              <FilterBox
+                activeFilter={null}
+                filter={
+                  Object {
+                    "buckets": Array [
+                      Object {
+                        "doc_count": 1,
+                        "key": "PUBLIC",
+                      },
+                    ],
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                  }
+                }
+                htmlKey={2}
+                onClick={[MockFunction]}
+                themesItems={null}
+                title="Access"
+              />
+              <SearchPublishersTree
+                activeFilter={null}
+                filter={Array []}
+                onFilterPublisherHierarchy={[MockFunction]}
+                onSearch={null}
+                orgPath={null}
+                publishers={Object {}}
+                title="Organization"
+              />
+              <FilterBox
+                activeFilter={null}
+                filter={
+                  Object {
+                    "buckets": Array [
+                      Object {
+                        "doc_count": 1,
+                        "key": "Ukjent",
+                      },
+                    ],
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                  }
+                }
+                htmlKey={3}
+                onClick={null}
+                themesItems={null}
+                title="Spatial"
+              />
+              <FilterBox
+                activeFilter={null}
+                filter={
+                  Object {
+                    "buckets": Array [
+                      Object {
+                        "doc_count": 1,
+                        "key": "VEDTAK",
+                      },
+                    ],
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                  }
+                }
+                htmlKey={4}
+                onClick={null}
+                themesItems={null}
+                title="Provenance"
+              />
+            </div>
+          </ModalBody>
+          <ModalFooter
+            tag="div"
+          >
+            <Button
+              className="fdk-button"
+              color="primary"
+              onClick={[MockFunction]}
+              tag="button"
+            >
+              Close
+            </Button>
+          </ModalFooter>
+        </Modal>
+        <FilterBox
+          activeFilter={null}
+          filter={
+            Object {
+              "buckets": Array [
+                Object {
+                  "doc_count": 1,
+                  "key": "AGRI",
                 },
-                "catalog": Object {
-                  "id": "910244132",
-                  "publisher": Object {
-                    "id": "910244132",
-                    "name": "RAMSUND OG ROGNAN REVISJON",
-                    "orgPath": "/ANNET/910244132",
-                    "type": "no.dcat.datastore.domain.dcat.Publisher",
-                    "uri": "http://data.brreg.no/enhetsregisteret/enhet/910244132",
-                    "valid": false,
-                  },
-                  "title": Object {
-                    "nb": "Datakatalog for RAMSUND OG ROGNAN REVISJON",
-                  },
-                  "uri": "http://brreg.no/catalogs/910244132",
+                Object {
+                  "doc_count": 1,
+                  "key": "ECON",
                 },
-                "contactPoint": Array [],
-                "description": Object {
-                  "nb": "test",
+                Object {
+                  "doc_count": 1,
+                  "key": "EDUC",
                 },
-                "descriptionFormatted": Object {
-                  "nb": "test",
+                Object {
+                  "doc_count": 1,
+                  "key": "ENER",
                 },
-                "harvest": Object {
-                  "changed": Array [
-                    "2018-04-13T08:26:27+0200",
-                  ],
-                  "firstHarvested": "2018-04-12T17:18:30+0200",
-                  "lastChanged": "2018-04-13T08:26:27+0200",
-                  "lastHarvested": "2018-04-13T08:26:27+0200",
+                Object {
+                  "doc_count": 1,
+                  "key": "ENVI",
                 },
-                "id": "b12e9e8d-3833-49e2-9f62-0f8fd877be05",
-                "landingPage": Array [],
-                "provenance": Object {
-                  "code": "NASJONAL",
-                  "prefLabel": Object {
-                    "en": "National Building Block",
-                    "nb": "Nasjonal felleskomponent",
-                    "nn": "Nasjonal felleskomponent",
-                  },
-                  "uri": "http://data.brreg.no/datakatalog/provinens/nasjonal",
+                Object {
+                  "doc_count": 1,
+                  "key": "GOVE",
                 },
+                Object {
+                  "doc_count": 1,
+                  "key": "HEAL",
+                },
+                Object {
+                  "doc_count": 1,
+                  "key": "INTR",
+                },
+                Object {
+                  "doc_count": 1,
+                  "key": "JUST",
+                },
+                Object {
+                  "doc_count": 1,
+                  "key": "REGI",
+                },
+              ],
+              "doc_count_error_upper_bound": 0,
+              "sum_other_doc_count": 0,
+            }
+          }
+          htmlKey={1}
+          onClick={[MockFunction]}
+          themesItems={Object {}}
+          title="Theme"
+        />
+        <FilterBox
+          activeFilter={null}
+          filter={
+            Object {
+              "buckets": Array [
+                Object {
+                  "doc_count": 1,
+                  "key": "PUBLIC",
+                },
+              ],
+              "doc_count_error_upper_bound": 0,
+              "sum_other_doc_count": 0,
+            }
+          }
+          htmlKey={2}
+          onClick={[MockFunction]}
+          themesItems={null}
+          title="Access"
+        />
+        <SearchPublishersTree
+          activeFilter={null}
+          filter={Array []}
+          onFilterPublisherHierarchy={[MockFunction]}
+          onSearch={null}
+          orgPath={null}
+          publishers={Object {}}
+          title="Organization"
+        />
+        <FilterBox
+          activeFilter={null}
+          filter={
+            Object {
+              "buckets": Array [
+                Object {
+                  "doc_count": 1,
+                  "key": "Ukjent",
+                },
+              ],
+              "doc_count_error_upper_bound": 0,
+              "sum_other_doc_count": 0,
+            }
+          }
+          htmlKey={3}
+          onClick={null}
+          themesItems={null}
+          title="Spatial"
+        />
+        <FilterBox
+          activeFilter={null}
+          filter={
+            Object {
+              "buckets": Array [
+                Object {
+                  "doc_count": 1,
+                  "key": "VEDTAK",
+                },
+              ],
+              "doc_count_error_upper_bound": 0,
+              "sum_other_doc_count": 0,
+            }
+          }
+          htmlKey={4}
+          onClick={null}
+          themesItems={null}
+          title="Provenance"
+        />
+      </div>
+    </aside>
+    <section
+      className="col-12 col-lg-8"
+    >
+      <SearchHitItem
+        distributionTypeItems={null}
+        key="b12e9e8d-3833-49e2-9f62-0f8fd877be05"
+        result={
+          Object {
+            "_id": "b12e9e8d-3833-49e2-9f62-0f8fd877be05",
+            "_index": "dcat",
+            "_score": null,
+            "_source": Object {
+              "accessRights": Object {
+                "code": "PUBLIC",
+                "prefLabel": Object {
+                  "en": "Public",
+                  "nb": "Offentlig",
+                  "nn": "Offentlig",
+                },
+                "uri": "http://publications.europa.eu/resource/authority/access-right/PUBLIC",
+              },
+              "catalog": Object {
+                "id": "910244132",
                 "publisher": Object {
                   "id": "910244132",
                   "name": "RAMSUND OG ROGNAN REVISJON",
@@ -441,325 +397,351 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
                   "uri": "http://data.brreg.no/enhetsregisteret/enhet/910244132",
                   "valid": false,
                 },
-                "source": "A",
-                "theme": Array [
-                  Object {
-                    "code": "EDUC",
-                    "conceptSchema": Object {
-                      "id": "http://publications.europa.eu/resource/authority/data-theme",
-                      "title": Object {
-                        "en": "Dataset types Named Authority List",
-                      },
-                      "versioninfo": "20160921-0",
-                      "versionnumber": "20160921-0",
-                    },
-                    "id": "http://publications.europa.eu/resource/authority/data-theme/EDUC",
-                    "startUse": "2015-10-01",
-                    "title": Object {
-                      "bg": "Образование, култура и спорт",
-                      "cs": "Vzdělávání, kultura a sport",
-                      "da": "Uddannelse, kultur og sport",
-                      "de": "Bildung, Kultur und Sport",
-                      "el": "Παιδεία, πολιτιστικά θέματα και αθλητισμός",
-                      "en": "Education, culture and sport",
-                      "es": "Educación, cultura y deportes",
-                      "et": "Haridus, kultuur ja sport",
-                      "fi": "Koulutus, kulttuuri ja urheilu",
-                      "fr": "Éducation, culture et sport",
-                      "ga": "Oideachas, cultúr agus spórt",
-                      "hr": "Obrazovanje, kultura i sport",
-                      "hu": "Oktatás, kultúra és sport",
-                      "it": "Istruzione, cultura e sport",
-                      "lt": "Švietimas, kultūra ir sportas",
-                      "lv": "Izglītība, kultūra un sports",
-                      "mt": "Edukazzjoni, kultura u sport",
-                      "nb": "Utdanning, kultur og sport",
-                      "nl": "Onderwijs, cultuur en sport",
-                      "pl": "Edukacja, kultura i sport",
-                      "pt": "Educação, cultura e desporto",
-                      "ro": "Educaţie, cultură şi sport",
-                      "sk": "Vzdelávanie, kultúra a šport",
-                      "sl": "Izobraževanje, kultura in šport",
-                      "sv": "Utbildning, kultur och sport",
-                    },
-                  },
-                ],
                 "title": Object {
-                  "nb": "test ois",
+                  "nb": "Datakatalog for RAMSUND OG ROGNAN REVISJON",
                 },
-                "uri": "http://brreg.no/catalogs/910244132/datasets/633a0af6-5c88-4027-9f58-79f487a80642",
+                "uri": "http://brreg.no/catalogs/910244132",
               },
-              "_type": "dataset",
-              "sort": Array [
-                "nasjonal",
-                "a",
-                1523600787000,
+              "contactPoint": Array [],
+              "description": Object {
+                "nb": "test",
+              },
+              "descriptionFormatted": Object {
+                "nb": "test",
+              },
+              "harvest": Object {
+                "changed": Array [
+                  "2018-04-13T08:26:27+0200",
+                ],
+                "firstHarvested": "2018-04-12T17:18:30+0200",
+                "lastChanged": "2018-04-13T08:26:27+0200",
+                "lastHarvested": "2018-04-13T08:26:27+0200",
+              },
+              "id": "b12e9e8d-3833-49e2-9f62-0f8fd877be05",
+              "landingPage": Array [],
+              "provenance": Object {
+                "code": "NASJONAL",
+                "prefLabel": Object {
+                  "en": "National Building Block",
+                  "nb": "Nasjonal felleskomponent",
+                  "nn": "Nasjonal felleskomponent",
+                },
+                "uri": "http://data.brreg.no/datakatalog/provinens/nasjonal",
+              },
+              "publisher": Object {
+                "id": "910244132",
+                "name": "RAMSUND OG ROGNAN REVISJON",
+                "orgPath": "/ANNET/910244132",
+                "type": "no.dcat.datastore.domain.dcat.Publisher",
+                "uri": "http://data.brreg.no/enhetsregisteret/enhet/910244132",
+                "valid": false,
+              },
+              "source": "A",
+              "theme": Array [
+                Object {
+                  "code": "EDUC",
+                  "conceptSchema": Object {
+                    "id": "http://publications.europa.eu/resource/authority/data-theme",
+                    "title": Object {
+                      "en": "Dataset types Named Authority List",
+                    },
+                    "versioninfo": "20160921-0",
+                    "versionnumber": "20160921-0",
+                  },
+                  "id": "http://publications.europa.eu/resource/authority/data-theme/EDUC",
+                  "startUse": "2015-10-01",
+                  "title": Object {
+                    "bg": "Образование, култура и спорт",
+                    "cs": "Vzdělávání, kultura a sport",
+                    "da": "Uddannelse, kultur og sport",
+                    "de": "Bildung, Kultur und Sport",
+                    "el": "Παιδεία, πολιτιστικά θέματα και αθλητισμός",
+                    "en": "Education, culture and sport",
+                    "es": "Educación, cultura y deportes",
+                    "et": "Haridus, kultuur ja sport",
+                    "fi": "Koulutus, kulttuuri ja urheilu",
+                    "fr": "Éducation, culture et sport",
+                    "ga": "Oideachas, cultúr agus spórt",
+                    "hr": "Obrazovanje, kultura i sport",
+                    "hu": "Oktatás, kultúra és sport",
+                    "it": "Istruzione, cultura e sport",
+                    "lt": "Švietimas, kultūra ir sportas",
+                    "lv": "Izglītība, kultūra un sports",
+                    "mt": "Edukazzjoni, kultura u sport",
+                    "nb": "Utdanning, kultur og sport",
+                    "nl": "Onderwijs, cultuur en sport",
+                    "pl": "Edukacja, kultura i sport",
+                    "pt": "Educação, cultura e desporto",
+                    "ro": "Educaţie, cultură şi sport",
+                    "sk": "Vzdelávanie, kultúra a šport",
+                    "sl": "Izobraževanje, kultura in šport",
+                    "sv": "Utbildning, kultur och sport",
+                  },
+                },
               ],
-            }
+              "title": Object {
+                "nb": "test ois",
+              },
+              "uri": "http://brreg.no/catalogs/910244132/datasets/633a0af6-5c88-4027-9f58-79f487a80642",
+            },
+            "_type": "dataset",
+            "sort": Array [
+              "nasjonal",
+              "a",
+              1523600787000,
+            ],
           }
-        />
-      </div>
-      <div
-        className="col-12 col-lg-8 offset-lg-4 d-flex justify-content-center"
+        }
+      />
+    </section>
+    <section
+      className="col-12 col-lg-8 offset-lg-4 d-flex justify-content-center"
+    >
+      <span
+        aria-hidden="false"
+        className="uu-invisible"
       >
-        <span
-          aria-hidden="false"
-          className="uu-invisible"
-        >
-          Sidepaginering.
-        </span>
-        <PaginationBoxView
-          activeClassName="active"
-          breakClassName="break-me"
-          breakLabel={
-            <span>
-              ...
-            </span>
-          }
-          containerClassName="pagination"
-          disableInitialCallback={true}
-          disabledClassName="disabled"
-          initialPage={0}
-          marginPagesDisplayed={1}
-          nextClassName="next"
-          nextLabel="Neste side"
-          onPageChange={[MockFunction]}
-          pageCount={14}
-          pageRangeDisplayed={2}
-          previousClassName="previous"
-          previousLabel="Forrige side"
-          subContainerClassName="pages pagination"
-        />
-      </div>
-    </div>
-  </div>
-</div>
+        Sidepaginering.
+      </span>
+      <PaginationBoxView
+        activeClassName="active"
+        breakClassName="break-me"
+        breakLabel={
+          <span>
+            ...
+          </span>
+        }
+        containerClassName="pagination"
+        disableInitialCallback={true}
+        disabledClassName="disabled"
+        initialPage={0}
+        marginPagesDisplayed={1}
+        nextClassName="next"
+        nextLabel="Neste side"
+        onPageChange={[MockFunction]}
+        pageCount={14}
+        pageRangeDisplayed={2}
+        previousClassName="previous"
+        previousLabel="Forrige side"
+        subContainerClassName="pages pagination"
+      />
+    </section>
+  </section>
+</main>
 `;
 
 exports[`should render ResultsDataset correctly with minimum of props 1`] = `
-<div
+<main
   id="content"
-  role="main"
 >
-  <div
-    id="resultPanel"
+  <section
+    className="row mt-1 mb-1-em"
   >
     <div
-      className="row mt-1 mb-1-em"
+      className="col-6 col-lg-4"
     >
-      <div
-        className="col-6 col-lg-4"
+      <button
+        className="btn btn-primary fdk-button fade-in-500 d-none"
+        onClick={null}
+        type="button"
       >
-        <button
-          className="btn btn-primary fdk-button fade-in-500 d-none"
-          onClick={null}
-          type="button"
-        >
-          Clear
-        </button>
-      </div>
-      <div
-        className="col-6 col-lg-4 offset-lg-4"
-      >
-        <div
-          className="float-right"
-        >
-          <Select
-            activeSort={null}
-            items={
-              Array [
-                Object {
-                  "defaultOption": true,
-                  "field": "_score",
-                  "label": "relevance",
-                  "order": "asc",
-                },
-                Object {
-                  "field": "title",
-                  "label": "title",
-                  "order": "asc",
-                },
-                Object {
-                  "field": "modified",
-                  "label": "modified",
-                  "order": "desc",
-                },
-                Object {
-                  "field": "publisher.name",
-                  "label": "publisher",
-                  "order": "asc",
-                },
-              ]
-            }
-            onChange={[MockFunction]}
-          />
-        </div>
-      </div>
+        Clear
+      </button>
     </div>
     <div
-      className="row"
+      className="col-6 col-lg-4 offset-lg-4"
     >
       <div
-        className="search-filters col-lg-4 d-none d-lg-block"
+        className="float-right"
       >
-        <span
-          aria-hidden="false"
-          className="uu-invisible"
-        >
-          Filtrering tilgang
-        </span>
-      </div>
-      <div
-        className="col-12 col-lg-8"
-        id="datasets"
-      />
-      <div
-        className="col-12 col-lg-8 offset-lg-4 d-flex justify-content-center"
-      >
-        <span
-          aria-hidden="false"
-          className="uu-invisible"
-        >
-          Sidepaginering.
-        </span>
-        <PaginationBoxView
-          activeClassName="active"
-          breakClassName="break-me"
-          breakLabel={
-            <span>
-              ...
-            </span>
+        <Select
+          activeSort={null}
+          items={
+            Array [
+              Object {
+                "defaultOption": true,
+                "field": "_score",
+                "label": "relevance",
+                "order": "asc",
+              },
+              Object {
+                "field": "title",
+                "label": "title",
+                "order": "asc",
+              },
+              Object {
+                "field": "modified",
+                "label": "modified",
+                "order": "desc",
+              },
+              Object {
+                "field": "publisher.name",
+                "label": "publisher",
+                "order": "asc",
+              },
+            ]
           }
-          containerClassName="pagination"
-          disableInitialCallback={true}
-          disabledClassName="disabled"
-          initialPage={0}
-          marginPagesDisplayed={1}
-          nextClassName="next"
-          nextLabel="Neste side"
-          onPageChange={null}
-          pageCount={Infinity}
-          pageRangeDisplayed={2}
-          previousClassName="previous"
-          previousLabel="Forrige side"
-          subContainerClassName="pages pagination"
+          onChange={[MockFunction]}
         />
       </div>
     </div>
-  </div>
-</div>
+  </section>
+  <section
+    className="row"
+  >
+    <aside
+      className="search-filters col-lg-4 d-none d-lg-block"
+    >
+      <span
+        aria-hidden="false"
+        className="uu-invisible"
+      >
+        Filtrering tilgang
+      </span>
+    </aside>
+    <section
+      className="col-12 col-lg-8"
+    />
+    <section
+      className="col-12 col-lg-8 offset-lg-4 d-flex justify-content-center"
+    >
+      <span
+        aria-hidden="false"
+        className="uu-invisible"
+      >
+        Sidepaginering.
+      </span>
+      <PaginationBoxView
+        activeClassName="active"
+        breakClassName="break-me"
+        breakLabel={
+          <span>
+            ...
+          </span>
+        }
+        containerClassName="pagination"
+        disableInitialCallback={true}
+        disabledClassName="disabled"
+        initialPage={0}
+        marginPagesDisplayed={1}
+        nextClassName="next"
+        nextLabel="Neste side"
+        onPageChange={null}
+        pageCount={Infinity}
+        pageRangeDisplayed={2}
+        previousClassName="previous"
+        previousLabel="Forrige side"
+        subContainerClassName="pages pagination"
+      />
+    </section>
+  </section>
+</main>
 `;
 
 exports[`should render ResultsDataset correctly with props 1`] = `
-<div
+<main
   id="content"
-  role="main"
 >
-  <div
-    id="resultPanel"
+  <section
+    className="row mt-1 mb-1-em"
   >
     <div
-      className="row mt-1 mb-1-em"
+      className="col-6 col-lg-4"
     >
-      <div
-        className="col-6 col-lg-4"
+      <button
+        className="btn btn-primary fdk-button fade-in-500 d-none"
+        onClick={[MockFunction]}
+        type="button"
       >
-        <button
-          className="btn btn-primary fdk-button fade-in-500 d-none"
-          onClick={[MockFunction]}
-          type="button"
-        >
-          Clear
-        </button>
-      </div>
-      <div
-        className="col-6 col-lg-4 offset-lg-4"
-      >
-        <div
-          className="float-right"
-        >
-          <Select
-            activeSort={null}
-            items={
-              Array [
-                Object {
-                  "defaultOption": true,
-                  "field": "_score",
-                  "label": "relevance",
-                  "order": "asc",
-                },
-                Object {
-                  "field": "title",
-                  "label": "title",
-                  "order": "asc",
-                },
-                Object {
-                  "field": "modified",
-                  "label": "modified",
-                  "order": "desc",
-                },
-                Object {
-                  "field": "publisher.name",
-                  "label": "publisher",
-                  "order": "asc",
-                },
-              ]
-            }
-            onChange={[MockFunction]}
-          />
-        </div>
-      </div>
+        Clear
+      </button>
     </div>
     <div
-      className="row"
+      className="col-6 col-lg-4 offset-lg-4"
     >
       <div
-        className="search-filters col-lg-4 d-none d-lg-block"
+        className="float-right"
       >
-        <span
-          aria-hidden="false"
-          className="uu-invisible"
-        >
-          Filtrering tilgang
-        </span>
-      </div>
-      <div
-        className="col-12 col-lg-8"
-        id="datasets"
-      />
-      <div
-        className="col-12 col-lg-8 offset-lg-4 d-flex justify-content-center"
-      >
-        <span
-          aria-hidden="false"
-          className="uu-invisible"
-        >
-          Sidepaginering.
-        </span>
-        <PaginationBoxView
-          activeClassName="active"
-          breakClassName="break-me"
-          breakLabel={
-            <span>
-              ...
-            </span>
+        <Select
+          activeSort={null}
+          items={
+            Array [
+              Object {
+                "defaultOption": true,
+                "field": "_score",
+                "label": "relevance",
+                "order": "asc",
+              },
+              Object {
+                "field": "title",
+                "label": "title",
+                "order": "asc",
+              },
+              Object {
+                "field": "modified",
+                "label": "modified",
+                "order": "desc",
+              },
+              Object {
+                "field": "publisher.name",
+                "label": "publisher",
+                "order": "asc",
+              },
+            ]
           }
-          containerClassName="pagination"
-          disableInitialCallback={true}
-          disabledClassName="disabled"
-          initialPage={0}
-          marginPagesDisplayed={1}
-          nextClassName="next"
-          nextLabel="Neste side"
-          onPageChange={[MockFunction]}
-          pageCount={1}
-          pageRangeDisplayed={2}
-          previousClassName="previous"
-          previousLabel="Forrige side"
-          subContainerClassName="pages pagination"
+          onChange={[MockFunction]}
         />
       </div>
     </div>
-  </div>
-</div>
+  </section>
+  <section
+    className="row"
+  >
+    <aside
+      className="search-filters col-lg-4 d-none d-lg-block"
+    >
+      <span
+        aria-hidden="false"
+        className="uu-invisible"
+      >
+        Filtrering tilgang
+      </span>
+    </aside>
+    <section
+      className="col-12 col-lg-8"
+    />
+    <section
+      className="col-12 col-lg-8 offset-lg-4 d-flex justify-content-center"
+    >
+      <span
+        aria-hidden="false"
+        className="uu-invisible"
+      >
+        Sidepaginering.
+      </span>
+      <PaginationBoxView
+        activeClassName="active"
+        breakClassName="break-me"
+        breakLabel={
+          <span>
+            ...
+          </span>
+        }
+        containerClassName="pagination"
+        disableInitialCallback={true}
+        disabledClassName="disabled"
+        initialPage={0}
+        marginPagesDisplayed={1}
+        nextClassName="next"
+        nextLabel="Neste side"
+        onPageChange={[MockFunction]}
+        pageCount={1}
+        pageRangeDisplayed={2}
+        previousClassName="previous"
+        previousLabel="Forrige side"
+        subContainerClassName="pages pagination"
+      />
+    </section>
+  </section>
+</main>
 `;

@@ -157,69 +157,66 @@ export class ResultsConcepts extends React.Component {
     );
 
     return (
-      <div id="content" role="main">
-        <div id="conceptsPanel">
-          <div className="row mt-1 mb-1-em fdk-button-row">
-            <div className="col-lg-4">
-              <button
-                className={clearButtonClass}
-                onClick={onClearSearch}
-                type="button"
-              >
-                {localization.query.clear}
-              </button>
-            </div>
+      <main id="content">
+        <section className="row mt-1 mb-1-em fdk-button-row">
+          <div className="col-lg-4">
+            <button
+              className={clearButtonClass}
+              onClick={onClearSearch}
+              type="button"
+            >
+              {localization.query.clear}
+            </button>
           </div>
+        </section>
 
-          <div className="row">
-            <div className="search-filters col-lg-4">
-              <div className="d-none d-lg-block">
-                <span className="uu-invisible" aria-hidden="false">
-                  Filtrering tilgang
-                </span>
-                {termItems &&
-                  termItems.aggregations && (
-                    <div>
-                      {this._renderFilterModal()}
-                      <SearchPublishersTree
-                        title={localization.facet.organisation}
-                        filter={publisherArray}
-                        onFilterPublisherHierarchy={onFilterPublisherHierarchy}
-                        activeFilter={searchQuery.orgPath}
-                        publishers={publishers}
-                      />
-                    </div>
-                  )}
-              </div>
-              {this._renderCompareTerms()}
-            </div>
-
-            <div id="concepts" className="col-lg-8">
-              {this._renderTerms()}
-            </div>
-            <div className="col-lg-8 offset-lg-4 d-flex justify-content-center">
+        <section className="row">
+          <aside className="search-filters col-lg-4">
+            <div className="d-none d-lg-block">
               <span className="uu-invisible" aria-hidden="false">
-                Sidepaginering.
+                Filtrering tilgang
               </span>
-              <ReactPaginate
-                pageCount={pageCount}
-                pageRangeDisplayed={2}
-                marginPagesDisplayed={1}
-                previousLabel={localization.page.prev}
-                nextLabel={localization.page.next}
-                breakLabel={<span>...</span>}
-                breakClassName="break-me"
-                containerClassName="pagination"
-                onPageChange={onPageChange}
-                subContainerClassName="pages pagination"
-                activeClassName="active"
-                initialPage={page}
-                disableInitialCallback
-              />
+              {termItems &&
+                termItems.aggregations && (
+                  <div>
+                    {this._renderFilterModal()}
+                    <SearchPublishersTree
+                      title={localization.facet.organisation}
+                      filter={publisherArray}
+                      onFilterPublisherHierarchy={onFilterPublisherHierarchy}
+                      activeFilter={searchQuery.orgPath}
+                      publishers={publishers}
+                    />
+                  </div>
+                )}
             </div>
-          </div>
-        </div>
-      </div>
+            {this._renderCompareTerms()}
+          </aside>
+
+          <section className="col-lg-8">{this._renderTerms()}</section>
+
+          <section className="col-lg-8 offset-lg-4 d-flex justify-content-center">
+            <span className="uu-invisible" aria-hidden="false">
+              Sidepaginering.
+            </span>
+            <ReactPaginate
+              pageCount={pageCount}
+              pageRangeDisplayed={2}
+              marginPagesDisplayed={1}
+              previousLabel={localization.page.prev}
+              nextLabel={localization.page.next}
+              breakLabel={<span>...</span>}
+              breakClassName="break-me"
+              containerClassName="pagination"
+              onPageChange={onPageChange}
+              subContainerClassName="pages pagination"
+              activeClassName="active"
+              initialPage={page}
+              disableInitialCallback
+            />
+          </section>
+        </section>
+      </main>
     );
   }
 }
