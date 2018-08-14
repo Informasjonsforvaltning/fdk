@@ -52,7 +52,7 @@ dateTag=$3
 deploymentmode=$4
 
 
-services="elasticsearch elasticsearch-copy fuseki reference-data registration-react registration-auth registration-api harvester harvester-api search search-api nginx-registration nginx-search"
+services="elasticsearch elasticsearch-copy fuseki reference-data registration-react registration-auth registration-api harvester harvester-api search api-cat search-api nginx-registration nginx-search"
 
 for i in $services
 do
