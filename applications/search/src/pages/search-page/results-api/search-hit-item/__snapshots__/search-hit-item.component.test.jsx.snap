@@ -1,0 +1,57 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render api-SearchHitItem correctly 1`] = `
+<section
+  className="search-hit"
+>
+  <span
+    aria-hidden="false"
+    className="uu-invisible"
+  >
+    Søketreff.
+  </span>
+  <Link
+    className="search-hit__title-link"
+    replace={false}
+    title="Dataset: National Data Directory Search API"
+    to="/apis/jar%3Afile%3A%2Fapp.jar!%2FBOOT-INF%2Fclasses!%2Fdatakatalog-api.json"
+  >
+    <div
+      className="mb-2 d-flex flex-wrap align-items-baseline"
+    >
+      <h2
+        className="mr-3"
+      >
+        National Data Directory Search API
+      </h2>
+      <DatasetLabelNational />
+    </div>
+  </Link>
+  <div
+    className="mb-4"
+  />
+  <div
+    className="search-hit__version mb-4 p-4"
+  >
+    <span>
+      Denne versjonen av API-et er utgått og vil fases ut i 2019.
+       
+    </span>
+    <Link
+      replace={false}
+      to="/TODO"
+    >
+      Versjon 2 er dokumentert her.
+    </Link>
+  </div>
+  <p>
+    <span
+      aria-hidden="false"
+      className="uu-invisible"
+    >
+      Beskrivelse av datasettet,
+    </span>
+    Provides a basic search api against the National Data Directory of Norway
+  </p>
+</section>
+`;
