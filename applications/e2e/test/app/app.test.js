@@ -11,6 +11,10 @@ beforeAll(async () => {
   try {
       browser = await puppeteer.launch(isDebugging().puppeteer);
       page = await browser.newPage();
+      page.on('console', msg => {
+          for (let i = 0; i < msg.args().length; ++i)
+              console.log(`CONSOLE ${i}: ${msg.args()[i]}`);
+      });
       await page.setViewport({ width, height });
   }catch(e){
     console.error('got error',e)
