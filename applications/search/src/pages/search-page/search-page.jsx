@@ -401,7 +401,6 @@ export class SearchPage extends React.Component {
       datasetItems,
       termItems,
       publisherCountTermItems,
-      isFetchingTerms,
       themesItems,
       publisherItems,
       distributionTypeItems
@@ -425,7 +424,6 @@ export class SearchPage extends React.Component {
               countTerms={
                 termItems && termItems.hits ? termItems.hits.total : 0
               }
-              isFetchingTerms={isFetchingTerms}
               open={this.open}
             />
             <ResultsTabs
