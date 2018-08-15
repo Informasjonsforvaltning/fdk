@@ -44,7 +44,9 @@ export function extractStats(data) {
 
 export const getDatasetStats = async query => {
   const q = query || '';
-  const response = await axios.get(`/aggregateDataset?q=${q}`);
+  const response = await axios
+    .get(`/aggregateDataset?q=${q}`)
+    .catch(e => console.error(JSON.stringify(e))); // eslint-disable-line no-console
 
-  return extractStats(response.data);
+  return response && extractStats(response.data);
 };
