@@ -14,6 +14,7 @@ import { removeValue, addValue } from '../../lib/stringUtils';
 
 import './search-page.scss';
 import { extractPublisherCounts } from '../../api/get-datasets';
+import { extractPublisherTermsCounts } from '../../api/get-terms';
 
 const ReactGA = require('react-ga');
 
@@ -400,7 +401,6 @@ export class SearchPage extends React.Component {
     const {
       datasetItems,
       termItems,
-      publisherCountTermItems,
       themesItems,
       publisherItems,
       distributionTypeItems
@@ -488,7 +488,7 @@ export class SearchPage extends React.Component {
                   showFilterModal={this.state.showFilterModal}
                   closeFilterModal={this.close}
                   showClearFilterButton={!!this.state.searchQuery.orgPath}
-                  publisherArray={publisherCountTermItems}
+                  publisherArray={extractPublisherTermsCounts(termItems)}
                   publishers={publisherItems}
                   {...props}
                 />

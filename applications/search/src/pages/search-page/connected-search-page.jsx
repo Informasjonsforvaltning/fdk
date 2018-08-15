@@ -5,11 +5,7 @@ import { fetchTermsIfNeededAction } from '../../redux/modules/terms';
 import { fetchThemesIfNeededAction } from '../../redux/modules/themes';
 import { ResolvedSearchPage } from './resolved-search-page';
 
-const mapStateToProps = ({ terms, themes, publishers, distributionTypes }) => {
-  const { publisherCountTermItems } = terms || {
-    publisherCountTermItems: null
-  };
-
+const mapStateToProps = ({ themes, publishers, distributionTypes }) => {
   const { themesItems, isFetchingThemes } = themes || {
     themesItems: null
   };
@@ -23,7 +19,6 @@ const mapStateToProps = ({ terms, themes, publishers, distributionTypes }) => {
   };
 
   return {
-    publisherCountTermItems,
     themesItems,
     isFetchingThemes,
     publisherItems,
