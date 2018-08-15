@@ -56,17 +56,9 @@ export class SearchPage extends React.Component {
     this.close = this.close.bind(this);
     this.open = this.open.bind(this);
 
-    this.props.fetchTermsIfNeeded(`/terms${search}`);
     this.props.fetchThemesIfNeeded();
     this.props.fetchPublishersIfNeeded();
     this.props.fetchDistributionTypeIfNeeded();
-  }
-
-  componentDidUpdate(prevProps) {
-    if (prevProps.location.search !== this.props.location.search) {
-      const { search } = this.props.location;
-      this.props.fetchTermsIfNeeded(`/terms${search}`);
-    }
   }
 
   handleClearSearch() {

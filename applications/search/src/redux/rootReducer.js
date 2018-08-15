@@ -1,5 +1,4 @@
 import { combineReducers } from 'redux';
-import { termsReducer } from './modules/terms';
 import { themesReducer } from './modules/themes';
 import { publishersReducer } from './modules/publishers';
 import { datasetDetailsReducer } from './modules/datasetDetails';
@@ -11,7 +10,6 @@ import { catalogsReducer } from './modules/catalogs';
 
 export const rootReducer = combineReducers({
   datasetDetails: datasetDetailsReducer,
-  terms: termsReducer,
   themes: themesReducer,
   publishers: publishersReducer,
   openLicenses: openLicensesReducer,

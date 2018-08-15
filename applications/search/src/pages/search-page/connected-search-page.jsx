@@ -1,7 +1,6 @@
 import { connect } from 'react-redux';
 import { fetchDistributionTypeIfNeededAction } from '../../redux/modules/distributionType';
 import { fetchPublishersIfNeededAction } from '../../redux/modules/publishers';
-import { fetchTermsIfNeededAction } from '../../redux/modules/terms';
 import { fetchThemesIfNeededAction } from '../../redux/modules/themes';
 import { ResolvedSearchPage } from './resolved-search-page';
 
@@ -28,7 +27,6 @@ const mapStateToProps = ({ themes, publishers, distributionTypes }) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  fetchTermsIfNeeded: url => dispatch(fetchTermsIfNeededAction(url)),
   fetchThemesIfNeeded: () => dispatch(fetchThemesIfNeededAction()),
   fetchPublishersIfNeeded: () => dispatch(fetchPublishersIfNeededAction()),
   fetchDistributionTypeIfNeeded: () =>
