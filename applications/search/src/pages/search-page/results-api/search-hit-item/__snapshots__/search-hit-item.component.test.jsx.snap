@@ -53,5 +53,25 @@ exports[`should render api-SearchHitItem correctly 1`] = `
     </span>
     Provides a basic search api against the National Data Directory of Norway
   </p>
+  <div
+    className="mb-2"
+  >
+    <strong>
+      API is public
+    </strong>
+    <i
+      className="fa fa-info-circle ml-2 fdk-color-cta2"
+    />
+  </div>
+  <div
+    className="mb-2"
+  >
+    <strong>
+      Format: 
+    </strong>
+    <span>
+      applicatoin/rfd+xml, JSON
+    </span>
+  </div>
 </section>
 `;
