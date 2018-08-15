@@ -6,17 +6,12 @@ import {
 import { fetchDistributionTypeIfNeededAction } from '../../redux/modules/distributionType';
 import { ResolvedDatasetDetailsPage } from './resolved-dataset-details-page';
 
-const mapStateToProps = ({ datasetDetails, distributionTypes }) => {
-  const { isFetchingDataset } = datasetDetails || {
-    isFetchingDataset: null
-  };
-
+const mapStateToProps = ({ distributionTypes }) => {
   const { distributionTypeItems } = distributionTypes || {
     distributionTypeItems: null
   };
 
   return {
-    isFetchingDataset,
     distributionTypeItems
   };
 };
