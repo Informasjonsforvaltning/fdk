@@ -26,11 +26,10 @@ describe('App', () => {
   test ('search page opens', async () => {
       await page.goto(APP)
 
-      expect.assertions(3);
       await expect(page.title()).resolves.toBe('Felles datakatalog')
       await expect(page.$('input[name="searchBox"]')).resolves.toBeTruthy()
       await expect(page.$('#content')).resolves.toBeTruthy()
-  }, 16000)
+  }, 10000)
 
     // todo - test that some results are coming, currently the dabaase is unpopulated, so no results
     // const hits = await page.$$('.fdk-container-search-hit')
