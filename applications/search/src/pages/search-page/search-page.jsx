@@ -13,6 +13,7 @@ import { ResultsTabs } from './results-tabs/results-tabs.component';
 import { removeValue, addValue } from '../../lib/stringUtils';
 
 import './search-page.scss';
+import { extractPublisherCounts } from '../../api/get-datasets';
 
 const ReactGA = require('react-ga');
 
@@ -400,7 +401,6 @@ export class SearchPage extends React.Component {
   render() {
     const {
       datasetItems,
-      publisherCountItems,
       termItems,
       publisherCountTermItems,
       isFetchingTerms,
@@ -468,7 +468,7 @@ export class SearchPage extends React.Component {
                   showClearFilterButton={this.isFilterNotEmpty()}
                   closeFilterModal={this.close}
                   hitsPerPage={50}
-                  publisherArray={publisherCountItems}
+                  publisherArray={extractPublisherCounts(datasetItems)}
                   publishers={publisherItems}
                   distributionTypeItems={distributionTypeItems}
                   {...props}
