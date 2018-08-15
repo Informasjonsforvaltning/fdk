@@ -5,7 +5,9 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import no.acat.config.Utils;
 import no.acat.model.ApiDocument;
+import no.acat.model.openapi3.OpenApi;
 import no.acat.query.ElasticsearchService;
+import no.dcat.shared.Contact;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
@@ -22,6 +24,7 @@ import java.io.File;
 import java.net.URL;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -39,7 +42,9 @@ public class ApiHarvester {
     public ApiDocument harvestApi(String url) {
         try {
 
-            ApiDocument doc = mapper.readValue(new URL(url), ApiDocument.class);
+            OpenApi openapi = mapper.readValue(new URL(url), OpenApi.class);
+
+            ApiDocument doc = parseOpenApi(openapi, url);
             indexApi(url, doc);
 
             return doc;
@@ -49,6 +54,46 @@ public class ApiHarvester {
         }
 
         return null;
+    }
+
+    ApiDocument parseOpenApi(OpenApi api, String uri) {
+
+        ApiDocument document = new ApiDocument();
+
+        document.setUri(uri);
+
+        if (api.getInfo() != null ) {
+            if ( api.getInfo().getTitle() != null ) {
+                document.setTitle(new HashMap<>());
+                document.getTitle().put("no", api.getInfo().getTitle());
+            }
+
+            if (api.getInfo().getDescription() != null) {
+                document.setDescription(new HashMap<>());
+                document.getTitle().put("no", api.getInfo().getDescription());
+            }
+
+            if (api.getInfo().getContact() != null) {
+                document.setContactPoint(new ArrayList<>());
+                Contact contact = new Contact();
+                if (api.getInfo().getContact().getEmail() != null) {
+                    contact.setEmail(api.getInfo().getContact().getEmail());
+                }
+                if (api.getInfo().getContact().getName() != null) {
+                    contact.setOrganizationName(api.getInfo().getContact().getName());
+                }
+                if (api.getInfo().getContact().getUrl() != null) {
+                    contact.setUri(api.getInfo().getContact().getUrl());
+                }
+                document.getContactPoint().add(contact);
+            }
+        }
+
+
+        document.setOpenApi(api);
+
+
+        return document;
     }
 
     void indexApi(String url, ApiDocument document) throws JsonProcessingException {

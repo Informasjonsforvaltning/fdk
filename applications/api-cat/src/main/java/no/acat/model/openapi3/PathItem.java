@@ -1,4 +1,4 @@
-package no.acat.model;
+package no.acat.model.openapi3;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;

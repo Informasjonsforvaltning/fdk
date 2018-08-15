@@ -1,4 +1,4 @@
-package no.acat.model;
+package no.acat.model.openapi3;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
