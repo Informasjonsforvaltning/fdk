@@ -2,7 +2,6 @@ import { connect } from 'react-redux';
 import { fetchDistributionTypeIfNeededAction } from '../../redux/modules/distributionType';
 import { fetchPublishersIfNeededAction } from '../../redux/modules/publishers';
 import { fetchThemesIfNeededAction } from '../../redux/modules/themes';
-import { fetchApisIfNeededAction } from '../../redux/modules/apis';
 import { ResolvedSearchPage } from './resolved-search-page';
 
 const mapStateToProps = ({ themes, publishers, distributionTypes }) => {
@@ -31,8 +30,7 @@ const mapDispatchToProps = dispatch => ({
   fetchThemesIfNeeded: () => dispatch(fetchThemesIfNeededAction()),
   fetchPublishersIfNeeded: () => dispatch(fetchPublishersIfNeededAction()),
   fetchDistributionTypeIfNeeded: () =>
-    dispatch(fetchDistributionTypeIfNeededAction()),
-  fetchApisIfNeededAction: url => dispatch(fetchApisIfNeededAction(url))
+    dispatch(fetchDistributionTypeIfNeededAction())
 });
 
 export const ConnectedSearchPage = connect(

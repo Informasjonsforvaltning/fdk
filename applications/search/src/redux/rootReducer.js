@@ -6,7 +6,6 @@ import { distributionTypesReducer } from './modules/distributionType';
 import { featureToggleResolver } from './modules/featureToggle';
 import { settingsResolver } from './modules/settings';
 import { catalogsReducer } from './modules/catalogs';
-import { apisReducer } from './modules/apis';
 
 export const rootReducer = combineReducers({
   themes: themesReducer,
@@ -15,6 +14,5 @@ export const rootReducer = combineReducers({
   distributionTypes: distributionTypesReducer,
   featureToggle: featureToggleResolver,
   settings: settingsResolver,
-  catalogs: catalogsReducer,
-  apis: apisReducer
+  catalogs: catalogsReducer
 });

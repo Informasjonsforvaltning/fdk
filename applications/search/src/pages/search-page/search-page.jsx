@@ -57,7 +57,6 @@ export class SearchPage extends React.Component {
     this.close = this.close.bind(this);
     this.open = this.open.bind(this);
 
-    this.props.fetchApisIfNeededAction(`http://localhost:8087/acat`);
     this.props.fetchThemesIfNeeded();
     this.props.fetchPublishersIfNeeded();
     this.props.fetchDistributionTypeIfNeeded();
