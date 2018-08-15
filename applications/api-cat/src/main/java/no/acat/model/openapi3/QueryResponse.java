@@ -1,6 +1,7 @@
-package no.acat.model;
+package no.acat.model.openapi3;
 
 import lombok.Data;
+import no.acat.model.ApiDocument;
 
 import java.util.List;
 

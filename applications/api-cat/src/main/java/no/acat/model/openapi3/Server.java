@@ -1,4 +1,4 @@
-package no.acat.model;
+package no.acat.model.openapi3;
 
 import lombok.Data;
 

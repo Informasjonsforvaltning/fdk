@@ -17,7 +17,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http
             .authorizeRequests()
-                .antMatchers("/acat").permitAll()
+                .antMatchers("/api").permitAll()
                 .antMatchers(HttpMethod.GET, SWAGGER_WHITELIST).permitAll();
 
     }

@@ -1,13 +1,10 @@
-package no.acat.model;
+package no.acat.model.openapi3;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Operation {
-
+public class Response {
     String description;
-    Responses responses;
-
 }

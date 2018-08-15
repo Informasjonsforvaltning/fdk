@@ -1,6 +1,6 @@
 package no.acat.query;
 
-import no.acat.model.QueryResponse;
+import no.acat.model.openapi3.QueryResponse;
 import no.dcat.shared.testcategories.UnitTest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.search.SearchHit;
@@ -8,8 +8,6 @@ import org.elasticsearch.search.SearchHits;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.hamcrest.Matchers.notNullValue;
@@ -33,7 +31,7 @@ public class AcatQueryControllerTest {
         doReturn(searchResponse).when(spyController).doQuery(anyString(), anyString(),anyObject(),anyInt(), anyInt());
         SearchHits searchHits = mock(SearchHits.class);
         when(searchResponse.getHits()).thenReturn(searchHits);
-        when(searchHits.getTotalHits()).thenReturn(1l);
+        when(searchHits.getTotalHits()).thenReturn(1L);
         SearchHit hit = mock(SearchHit.class);
         SearchHit[] hits = { hit };
         when(searchHits.getHits()).thenReturn(hits);
