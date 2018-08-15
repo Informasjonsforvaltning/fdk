@@ -10,32 +10,29 @@ export const StickyMenu = props => {
     <nav className="sticky-menu sticky-top py-5 py-md-4" aria-hidden="true">
       <span className="uu-invisible" aria-hidden="false">Sidemeny for api beskrivelse:</span>
       <ul className="p-0">
-        <li className="mb-5">
+        <li className="border-top py-3">
           <ScrollLink
             className="smoothScroll d-flex justify-content-between"
             to="endpoints" spy smooth isDynamic offset={0} duration={1500}
           >
             <span className="read-more">Endepunkter</span>
           </ScrollLink>
-          <hr />
         </li>
-        <li className="mb-5">
+        <li className="border-top py-3">
           <ScrollLink
             className="smoothScroll d-flex justify-content-between"
             to="lorem" spy smooth isDynamic offset={0} duration={1500}
           >
             <span className="read-more">Lorem ipsum</span>
           </ScrollLink>
-          <hr />
         </li>
-        <li className="mb-5">
+        <li className="border-top py-3">
           <ScrollLink
             className="smoothScroll d-flex justify-content-between"
             to="lorem" spy smooth isDynamic offset={0} duration={1500}
           >
             <span className="read-more">Lorem ipsum</span>
           </ScrollLink>
-          <hr />
         </li>
       </ul>
     </nav>

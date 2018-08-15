@@ -12,24 +12,25 @@
   background-color: $color6;
   ul {
     list-style: none;
-    li a.active {
-      &:after {
-        content: "\f105";
-        font: normal normal normal 14px/1 FontAwesome;
-        font-size: inherit;
-        text-rendering: auto;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        margin-right: 2.5em;
+    li {
+      color: $color-cta2;
+      a {
+        font-weight: 500;
+        &.active {
+          color: $color1;
+          font-weight: 600;
+          &:after {
+            content: "\f105";
+            font: normal 14px/1 FontAwesome;
+            font-size: 1.2em;
+            font-weight: 600;
+            text-rendering: auto;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            margin-right: 2.5em;
+          }
+        }
       }
     }
-  }
-  a.smoothScroll {
-    &:hover,&:active,&:focus {
-      font-weight: 500;
-    }
-  }
-  a.smoothScroll.active {
-    font-weight: 500;
   }
 }
