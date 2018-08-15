@@ -7,9 +7,11 @@ export const getDatasets = async search => {
   const datasetsUrl = `/datasets${search}`;
   const url = addOrReplaceParam(datasetsUrl, 'size', '50');
 
-  const response = await axios.get(url);
+  const response = await axios
+    .get(url)
+    .catch(e => console.error(JSON.stringify(e))); // eslint-disable-line no-console
 
-  return response.data;
+  return response && response.data;
 };
 
 function createNestedListOfPublishers(listOfPublishers) {
