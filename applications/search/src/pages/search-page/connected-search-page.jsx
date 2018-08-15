@@ -13,7 +13,7 @@ const mapStateToProps = ({
   publishers,
   distributionTypes
 }) => {
-  const { publisherCountItems, isFetchingDatasets } = datasets || {
+  const { publisherCountItems } = datasets || {
     publisherCountItems: null
   };
 
@@ -36,7 +36,6 @@ const mapStateToProps = ({
 
   return {
     publisherCountItems,
-    isFetchingDatasets,
     termItems,
     publisherCountTermItems,
     isFetchingTerms,

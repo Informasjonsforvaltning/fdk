@@ -57,7 +57,6 @@ exports[`should render SearchBox correctly 1`] = `
       countDatasets={100}
       countTerms={10}
       filteringOrTextSearchPerformed={false}
-      isFetchingDatasets={false}
       isFetchingTerms={false}
     />
   </div>

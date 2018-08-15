@@ -401,7 +401,6 @@ export class SearchPage extends React.Component {
     const {
       datasetItems,
       publisherCountItems,
-      isFetchingDatasets,
       termItems,
       publisherCountTermItems,
       isFetchingTerms,
@@ -425,7 +424,6 @@ export class SearchPage extends React.Component {
                   ? datasetItems.hits.total
                   : null
               }
-              isFetchingDatasets={isFetchingDatasets}
               countTerms={
                 termItems && termItems.hits ? termItems.hits.total : 0
               }
