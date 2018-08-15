@@ -18,9 +18,7 @@ beforeEach(() => {
     onSearchChange,
     searchQuery: 'enhetsregister',
     countDatasets: 100,
-    isFetchingDatasets: false,
     countTerms: 10,
-    isFetchingTerms: false,
     open
   };
 });
