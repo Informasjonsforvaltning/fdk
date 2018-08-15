@@ -6,12 +6,7 @@ import datasets from '../../../test/fixtures/datasets';
 let wrapper;
 
 beforeEach(() => {
-  wrapper = shallow(
-    <DatasetDetailsPage
-      datasetItem={datasets[0]._source}
-      isFetchingDataset={false}
-    />
-  );
+  wrapper = shallow(<DatasetDetailsPage datasetItem={datasets[0]._source} />);
 });
 
 test('should render DatasetDetailsPage correctly with no datasetItem', () => {

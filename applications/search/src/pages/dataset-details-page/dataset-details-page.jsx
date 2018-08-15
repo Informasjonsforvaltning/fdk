@@ -15,27 +15,8 @@ import { getTranslateText } from '../../lib/translateText';
 export class DatasetDetailsPage extends React.Component {
   constructor(props) {
     super(props);
-    this.loadDatasetFromServer = this.loadDatasetFromServer.bind(this);
-  }
 
-  componentDidMount() {
-    const { match } = this.props;
-    if (match) {
-      window.scrollTo(0, 0);
-      this.loadDatasetFromServer(match);
-    }
-  }
-
-  componentWillUnmount() {
-    this.props.resetDatasetDetails();
-  }
-
-  // @params: the function has no param but the query need dataset id from prop
-  // loads all the info for this dataset
-  loadDatasetFromServer(match) {
-    const url = `/datasets/${match.params.id}`;
-    this.props.fetchDatasetDetailsIfNeeded(url);
-    this.props.fetchDistributionTypeIfNeeded();
+    props.fetchDistributionTypeIfNeeded();
   }
 
   _renderDatasetDescription() {
@@ -245,10 +226,12 @@ export class DatasetDetailsPage extends React.Component {
 
 DatasetDetailsPage.defaultProps = {
   datasetItem: null,
-  distributionTypeItems: null
+  distributionTypeItems: null,
+  fetchDistributionTypeIfNeeded: () => {}
 };
 
 DatasetDetailsPage.propTypes = {
   datasetItem: PropTypes.object,
-  distributionTypeItems: PropTypes.array
+  distributionTypeItems: PropTypes.array,
+  fetchDistributionTypeIfNeeded: PropTypes.func
 };
