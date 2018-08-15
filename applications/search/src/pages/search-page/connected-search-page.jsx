@@ -6,8 +6,7 @@ import { fetchThemesIfNeededAction } from '../../redux/modules/themes';
 import { ResolvedSearchPage } from './resolved-search-page';
 
 const mapStateToProps = ({ terms, themes, publishers, distributionTypes }) => {
-  const { termItems, publisherCountTermItems, isFetchingTerms } = terms || {
-    termItems: null,
+  const { publisherCountTermItems, isFetchingTerms } = terms || {
     publisherCountTermItems: null
   };
 
@@ -24,7 +23,6 @@ const mapStateToProps = ({ terms, themes, publishers, distributionTypes }) => {
   };
 
   return {
-    termItems,
     publisherCountTermItems,
     isFetchingTerms,
     themesItems,
