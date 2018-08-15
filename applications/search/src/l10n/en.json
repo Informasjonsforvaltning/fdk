@@ -265,5 +265,12 @@
   },
   "registration": {
     "title": "Registration (only in Norwegian)"
+  },
+  "api": {
+    "searchHit": {
+      "accessRight": {
+        "public": "API is public"
+      }
+    }
   }
 }

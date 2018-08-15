@@ -265,5 +265,12 @@
   },
   "registration": {
     "title": "Kom i gang med registrering av datasett"
+  },
+  "api": {
+    "searchHit": {
+      "accessRight": {
+        "public": "API-et er åpent"
+      }
+    }
   }
 }

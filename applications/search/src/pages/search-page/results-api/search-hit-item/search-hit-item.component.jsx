@@ -31,6 +31,32 @@ const renderPublisher = source => {
   return null;
 };
 
+const renderAccessRights = props => {
+  // TODO check props
+  return (
+    <div className="mb-2">
+      <strong>
+        {localization.api.searchHit.accessRight.public}
+      </strong>
+      <i className="fa fa-info-circle ml-2 fdk-color-cta2"/>
+    </div>
+  )
+}
+
+const renderFormat = props => {
+  // TODO check props
+  return (
+    <div className="mb-2">
+      <strong>
+        Format:&nbsp;
+      </strong>
+      <span>
+        applicatoin/rfd+xml, JSON
+      </span>
+    </div>
+  )
+}
+
 export const SearchHitItem = props => {
   const { result, fadeInCounter } = props;
   const hitId = encodeURIComponent(result.uri);
@@ -78,6 +104,8 @@ export const SearchHitItem = props => {
         </span>
         {description}
       </p>
+      {renderAccessRights(props)}
+      {renderFormat(props)}
     </section>
   );
 };
