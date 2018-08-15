@@ -4,9 +4,15 @@ export const DISTRIBUTIONTYPE_REQUEST = 'DISTRIBUTIONTYPE_REQUEST';
 export const DISTRIBUTIONTYPE_SUCCESS = 'DISTRIBUTIONTYPE_SUCCESS';
 export const DISTRIBUTIONTYPE_FAILURE = 'DISTRIBUTIONTYPE_FAILURE';
 
+function shouldFetch(state) {
+  const STALE_THRESHOLD = 60 * 1000; // Stale after 1 minute
+  const isFresh = (state.lastFetch || 0) > Date.now() - STALE_THRESHOLD;
+  return !state.isFetching && !isFresh;
+}
+
 export function fetchDistributionTypeIfNeededAction() {
   return (dispatch, getState) => {
-    if (!getState().distributionTypes.isFetching) {
+    if (shouldFetch(getState().distributionTypes)) {
       dispatch(
         fetchActions('/reference-data/codes/distributiontype', [
           DISTRIBUTIONTYPE_REQUEST,
@@ -28,20 +34,23 @@ export function distributionTypesReducer(state = initialState, action) {
     case DISTRIBUTIONTYPE_REQUEST: {
       return {
         ...state,
-        isFetchingDistributionType: true
+        isFetching: true,
+        lastFetch: null
       };
     }
     case DISTRIBUTIONTYPE_SUCCESS: {
       return {
         ...state,
-        isFetchingDistributionType: false,
+        isFetching: false,
+        lastFetch: Date.now(),
         distributionTypeItems: action.payload
       };
     }
     case DISTRIBUTIONTYPE_FAILURE: {
       return {
         ...state,
-        isFetchingDistributionType: false,
+        isFetching: false,
+        lastFetch: null,
         distributionTypeItems: null
       };
     }
