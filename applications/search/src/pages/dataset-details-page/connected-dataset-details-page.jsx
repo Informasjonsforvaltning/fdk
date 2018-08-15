@@ -1,14 +1,13 @@
 import { connect } from 'react-redux';
-import { DatasetDetailsPage } from './dataset-details-page';
 import {
   fetchDatasetDetailsIfNeededAction,
   resetDatasetDetailsAction
 } from '../../redux/modules/datasetDetails';
 import { fetchDistributionTypeIfNeededAction } from '../../redux/modules/distributionType';
+import { ResolvedDatasetDetailsPage } from './resolved-dataset-details-page';
 
 const mapStateToProps = ({ datasetDetails, distributionTypes }) => {
-  const { datasetItem, isFetchingDataset } = datasetDetails || {
-    datasetItem: null,
+  const { isFetchingDataset } = datasetDetails || {
     isFetchingDataset: null
   };
 
@@ -17,7 +16,6 @@ const mapStateToProps = ({ datasetDetails, distributionTypes }) => {
   };
 
   return {
-    datasetItem,
     isFetchingDataset,
     distributionTypeItems
   };
@@ -34,4 +32,4 @@ const mapDispatchToProps = dispatch => ({
 export const ConnectedDatasetDetailsPage = connect(
   mapStateToProps,
   mapDispatchToProps
-)(DatasetDetailsPage);
+)(ResolvedDatasetDetailsPage);
