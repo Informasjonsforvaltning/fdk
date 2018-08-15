@@ -84,9 +84,9 @@ export class ResultsApi extends React.Component {
 
   _renderHits() {
     const { apiItems } = this.props;
-    if (apiItems && apiItems.hits && apiItems.hits.hits) {
-      return apiItems.hits.hits.map(item => (
-        <SearchHitItem key={item._source.id} result={item} />
+    if (apiItems && apiItems.hits) {
+      return apiItems.hits.map(item => (
+        <SearchHitItem key={item.uri} result={item} />
       ));
     }
     return null;
@@ -110,6 +110,7 @@ export class ResultsApi extends React.Component {
       publisherArray,
       publishers
     } = this.props;
+
     const page =
       searchQuery && searchQuery.from ? searchQuery.from / hitsPerPage : 0;
     const pageCount = Math.ceil(

@@ -7,8 +7,8 @@ import { DatasetLabelNational } from '../../../../components/dataset-label-natio
 
 import './search-hit-item.scss';
 
-const renderPublisher = source => {
-  const { publisher } = source;
+const renderPublisher = info => {
+  const { publisher } = info;
   if (publisher && publisher.name) {
     return (
       <span>
@@ -32,10 +32,10 @@ const renderPublisher = source => {
 };
 
 export const SearchHitItem = props => {
-  const { _source } = props.result;
-  const hitId = encodeURIComponent(_source.id);
-  const { title } = _source.info;
-  let { description } = _source.info;
+  const { info } = props.result;
+  const hitId = encodeURIComponent(props.result.uri);
+  const { title } = info;
+  let { description } = info;
   if (description && description.length > 220) {
     description = `${description.substr(0, 220)}...`;
   }
@@ -56,7 +56,7 @@ export const SearchHitItem = props => {
           <DatasetLabelNational />
         </div>
       </Link>
-      <div className="mb-4">{renderPublisher(_source)}</div>
+      <div className="mb-4">{renderPublisher(info)}</div>
       <div className="search-hit__version mb-4 p-4">
         <span>
           Denne versjonen av API-et er utgått og vil fases ut i 2019.{' '}
