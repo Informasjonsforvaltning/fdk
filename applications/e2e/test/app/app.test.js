@@ -13,9 +13,12 @@ beforeAll(async () => {
     try {
         browser = await puppeteer.launch(isDebugging().puppeteer);
         page = await browser.newPage();
-        page.on('console', msg => {
-            for (let i = 0; i < msg.args().length; ++i)
-                console.log(`CONSOLE ${i}: ${msg.args()[i]}`);
+        page.on('console', consoleMessage => {
+            console.log('CONSOLE MESSAGE TYPE:', consoleMessage.type())
+            console.log('CONSOLE MESSAGE TEXT:', consoleMessage.text())
+            consoleMessage.args().forEach(msgArgJSHandle => {
+                console.log('CONSOLE MESSAGE ARG:', msgArgJSHandle.jsonValue())
+            })
         });
         await page.setViewport({ width, height });
     } catch (e) {
