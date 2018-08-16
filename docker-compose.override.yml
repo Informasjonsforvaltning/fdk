@@ -123,7 +123,7 @@ services:
     environment:
      - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
      - registrationAPI_clusterName=elasticsearch
-     - registrationApi_altinnServiceUrl=http://registration-auth:8080
+     - registrationApi_altinnServiceUrl=http://registration-auth:8080/
      - registrationApi_apikey=${registrationApi_apikey}
      - registrationApi_clientSSLCertificateKeystoreLocation=conf/dummy-client-SSL-cert.p12
      - registrationApi_clientSSLCertificateKeystorePassword=password
