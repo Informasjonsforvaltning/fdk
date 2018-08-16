@@ -6,7 +6,7 @@ export const getDataset = async id => {
 
   const response = await axios
     .get(url)
-    .catch(e => console.error(JSON.stringify(e))); // eslint-disable-line no-console
+    .catch(e => console.log(JSON.stringify(e))); // eslint-disable-line no-console
 
   return _.get(response, 'data.hits.hits[0]._source');
 };
