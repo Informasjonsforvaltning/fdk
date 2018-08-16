@@ -1,21 +1,19 @@
 package no.acat.harvester;
 
-import no.acat.harvester.ApiHarvester;
 import no.acat.model.ApiDocument;
 import no.acat.query.ElasticsearchService;
 import no.dcat.shared.testcategories.UnitTest;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.*;
+import static org.mockito.Matchers.anyObject;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
 
 @Category(UnitTest.class)
