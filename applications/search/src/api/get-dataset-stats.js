@@ -46,7 +46,7 @@ export const getDatasetStats = async query => {
   const q = query || '';
   const response = await axios
     .get(`/aggregateDataset?q=${q}`)
-    .catch(e => console.error(JSON.stringify(e))); // eslint-disable-line no-console
+    .catch(e => console.log(JSON.stringify(e))); // eslint-disable-line no-console
 
   return response && extractStats(response.data);
 };
