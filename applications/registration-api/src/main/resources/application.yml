@@ -70,7 +70,7 @@ application:
   authentication:
     includedOrgforms: ADOS,FKF,FYLK,IKS,KF,KIRK,KOMM,ORGL,SF,STAT,SÆR
     includedOrgnr: 974760673
-  openDataEnhet: http://data.brreg.no/enhetsregisteret/enhet/
+  openDataEnhet: https://data.brreg.no/enhetsregisteret/enhet/
 management:
   port: 8181
 server:
@@ -172,6 +172,8 @@ spring:
     elasticsearch:
       clusterNodes: elasticsearch:9300
       clusterName: elasticsearch
+logging:
+  level.no.dcat: DEBUG
 
 
 

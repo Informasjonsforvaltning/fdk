@@ -170,8 +170,13 @@ public class AuthorizationService {
         try {
             logger.info("Authorization request for {}", ssn);
 
+            logger.debug("altinn-auth-request-url    : {}", getReporteesUrl(ssn));
+            logger.debug("altinn-auth-request-headers: {}", entity.toString());
+
             ResponseEntity<List<Entity>> response = restTemplate.exchange(getReporteesUrl(ssn),
                     HttpMethod.GET, entity, new ParameterizedTypeReference<List<Entity>>() {});
+
+            logger.debug("altinn-auth-response: {}", response.toString());
 
             if (response.getStatusCode() == HttpStatus.OK) {
                 return response.getBody();
