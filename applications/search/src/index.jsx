@@ -23,11 +23,7 @@ if (window.location.hostname.indexOf('fellesdatakatalog.brreg.no') !== -1) {
 }
 
 window.addEventListener('unhandledrejection', event => {
-  console.warn(
-    `WARNING: Unhandled promise rejection. Reason: ${
-      event.reason
-    }`
-  );
+  console.warn(`WARNING: Unhandled promise rejection. Reason: ${event.reason}`);
 });
 
 /**

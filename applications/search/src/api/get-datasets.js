@@ -38,7 +38,11 @@ function createNestedListOfPublishers(listOfPublishers) {
     .value();
 }
 
-export const extractPublisherCounts = datasetsSearchResponse =>
-  createNestedListOfPublishers(
-    datasetsSearchResponse.aggregations.orgPath.buckets
+export const extractPublisherCounts = datasetsSearchResponse => {
+  const publisherBuckets = _.get(
+    datasetsSearchResponse,
+    'aggregations.orgPath.buckets',
+    []
   );
+  return createNestedListOfPublishers(publisherBuckets);
+};
