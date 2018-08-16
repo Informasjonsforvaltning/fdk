@@ -1,7 +1,6 @@
 import puppeteer from "puppeteer";
 import { isDebugging } from './../testingInit';
-
-// const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+import delay from 'delay'
 
 const APP = process.env.HOST_SEARCH;
 let page;
@@ -37,13 +36,11 @@ describe('App', () => {
 
         // Search page component now waits for resolving API request before rendering.
         // If some other solution is implemented with initial rendering, delay can be removed
-        // await delay(5000);
+        await delay(5000);
 
         await expect(page.title()).resolves.toBe('Felles datakatalog')
-        // we get "org.elasticsearch.index.IndexNotFoundException" on API calls, and
-        // Our current logic does not render on error, so test
-        // await expect(page.$('input[name=searchBox]')).resolves.toBeTruthy()
-        // await expect(page.$('#content')).resolves.toBeTruthy()
+        await expect(page.$('input[name=searchBox]')).resolves.toBeTruthy()
+        await expect(page.$('#content')).resolves.toBeTruthy()
     }, 10000)
 
     // todo - test that some results are coming, currently the dabaase is unpopulated, so no results
