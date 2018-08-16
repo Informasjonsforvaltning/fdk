@@ -8,7 +8,7 @@ import {
   UncontrolledDropdown
 } from 'reactstrap';
 
-import localization from '../../../../lib/localization';
+import localization from '../../lib/localization';
 
 export class Select extends React.Component {
   constructor(props) {

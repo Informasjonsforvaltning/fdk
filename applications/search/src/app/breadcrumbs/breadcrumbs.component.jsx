@@ -10,6 +10,7 @@ import './breadcrumbs.scss';
 const routes = [
   { path: '/', breadcrumb: <PathNameBreadcrumb pathName="home" /> },
   { path: '/datasets/:id', breadcrumb: DatasetBreadcrumb },
+  { path: '/apis/:id', breadcrumb: DatasetBreadcrumb },
   { path: '/about', breadcrumb: <PathNameBreadcrumb pathName="about" /> },
   {
     path: '/about-registration',

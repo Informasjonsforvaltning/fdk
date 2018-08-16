@@ -42,7 +42,7 @@ exports[`should render ResultsTabs with "Concepts" active correctly 1`] = `
             replace={false}
             to={
               Object {
-                "pathname": "/api",
+                "pathname": "/apis",
                 "search": "?",
               }
             }
@@ -121,7 +121,7 @@ exports[`should render ResultsTabs with "Dataset" active correctly 1`] = `
             replace={false}
             to={
               Object {
-                "pathname": "/api",
+                "pathname": "/apis",
                 "search": "?",
               }
             }

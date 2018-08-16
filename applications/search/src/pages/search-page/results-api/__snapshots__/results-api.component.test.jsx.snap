@@ -1,0 +1,359 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render ResultsApi correctly with hits 1`] = `
+<main
+  id="content"
+>
+  <section
+    className="row mb-3"
+  >
+    <div
+      className="col-12 d-flex justify-content-between"
+    >
+      <button
+        className="btn btn-primary fdk-button fade-in-500"
+        onClick={[MockFunction]}
+        type="button"
+      >
+        Clear
+      </button>
+      <Select
+        activeSort={null}
+        items={
+          Array [
+            Object {
+              "defaultOption": true,
+              "field": "_score",
+              "label": "relevance",
+              "order": "asc",
+            },
+            Object {
+              "field": "title",
+              "label": "title",
+              "order": "asc",
+            },
+            Object {
+              "field": "modified",
+              "label": "modified",
+              "order": "desc",
+            },
+            Object {
+              "field": "publisher.name",
+              "label": "publisher",
+              "order": "asc",
+            },
+          ]
+        }
+        onChange={[MockFunction]}
+      />
+    </div>
+  </section>
+  <section
+    className="row"
+  >
+    <aside
+      className="search-filters col-lg-4 d-none d-lg-block"
+    >
+      <span
+        aria-hidden="false"
+        className="uu-invisible"
+      >
+        Filtrering tilgang
+      </span>
+      <div>
+        [filterbox]
+      </div>
+    </aside>
+    <article
+      className="col-12 col-lg-8"
+      id="apis"
+    >
+      <SearchHitItem
+        fadeInCounter={0}
+        key="jar:file:/app.jar!/BOOT-INF/classes!/datakatalog-api.json"
+        result={
+          Object {
+            "info": Object {
+              "contact": Object {
+                "email": "fellesdatakatalog@brreg.no",
+                "name": "Brønnøysundregistrene",
+                "url": "https://fellesdatakatalog.brreg.no",
+              },
+              "description": "Provides a basic search api against the National Data Directory of Norway",
+              "license": Object {
+                "name": "License of API",
+                "url": "http://data.norge.no/nlod/no/2.0",
+              },
+              "termsOfService": "https://fellesdatakatalog.brreg.no/about",
+              "title": "National Data Directory Search API",
+              "version": "1.0",
+            },
+            "paths": Object {
+              "terms": Object {
+                "get": Object {
+                  "description": "Returns the elasticsearch response with matching terms (dct:subject)",
+                  "responses": Object {
+                    "200": Object {
+                      "description": "OK",
+                    },
+                    "401": Object {
+                      "description": "Unauthorized",
+                    },
+                    "403": Object {
+                      "description": "Forbidden",
+                    },
+                    "404": Object {
+                      "description": "Not Found",
+                    },
+                  },
+                },
+              },
+            },
+            "uri": "jar:file:/app.jar!/BOOT-INF/classes!/datakatalog-api.json",
+          }
+        }
+      />
+      <section
+        className="col-12 d-flex justify-content-center"
+      >
+        <span
+          aria-hidden="false"
+          className="uu-invisible"
+        >
+          Sidepaginering.
+        </span>
+        <PaginationBoxView
+          activeClassName="active"
+          breakClassName="break-me"
+          breakLabel={
+            <span>
+              ...
+            </span>
+          }
+          containerClassName="pagination"
+          disableInitialCallback={true}
+          disabledClassName="disabled"
+          initialPage={0}
+          marginPagesDisplayed={1}
+          nextClassName="next"
+          nextLabel="Neste side"
+          onPageChange={[MockFunction]}
+          pageCount={1}
+          pageRangeDisplayed={2}
+          previousClassName="previous"
+          previousLabel="Forrige side"
+          subContainerClassName="pages pagination"
+        />
+      </section>
+    </article>
+  </section>
+</main>
+`;
+
+exports[`should render ResultsApi correctly with minimum of props 1`] = `
+<main
+  id="content"
+>
+  <section
+    className="row mb-3"
+  >
+    <div
+      className="col-12 d-flex justify-content-between"
+    >
+      <button
+        className="btn btn-primary fdk-button fade-in-500"
+        type="button"
+      >
+        Clear
+      </button>
+      <Select
+        activeSort={null}
+        items={
+          Array [
+            Object {
+              "defaultOption": true,
+              "field": "_score",
+              "label": "relevance",
+              "order": "asc",
+            },
+            Object {
+              "field": "title",
+              "label": "title",
+              "order": "asc",
+            },
+            Object {
+              "field": "modified",
+              "label": "modified",
+              "order": "desc",
+            },
+            Object {
+              "field": "publisher.name",
+              "label": "publisher",
+              "order": "asc",
+            },
+          ]
+        }
+        onChange={[MockFunction]}
+      />
+    </div>
+  </section>
+  <section
+    className="row"
+  >
+    <aside
+      className="search-filters col-lg-4 d-none d-lg-block"
+    >
+      <span
+        aria-hidden="false"
+        className="uu-invisible"
+      >
+        Filtrering tilgang
+      </span>
+      <div>
+        [filterbox]
+      </div>
+    </aside>
+    <article
+      className="col-12 col-lg-8"
+      id="apis"
+    >
+      <section
+        className="col-12 d-flex justify-content-center"
+      >
+        <span
+          aria-hidden="false"
+          className="uu-invisible"
+        >
+          Sidepaginering.
+        </span>
+        <PaginationBoxView
+          activeClassName="active"
+          breakClassName="break-me"
+          breakLabel={
+            <span>
+              ...
+            </span>
+          }
+          containerClassName="pagination"
+          disableInitialCallback={true}
+          disabledClassName="disabled"
+          initialPage={0}
+          marginPagesDisplayed={1}
+          nextClassName="next"
+          nextLabel="Neste side"
+          pageCount={NaN}
+          pageRangeDisplayed={2}
+          previousClassName="previous"
+          previousLabel="Forrige side"
+          subContainerClassName="pages pagination"
+        />
+      </section>
+    </article>
+  </section>
+</main>
+`;
+
+exports[`should render ResultsApi correctly with props 1`] = `
+<main
+  id="content"
+>
+  <section
+    className="row mb-3"
+  >
+    <div
+      className="col-12 d-flex justify-content-between"
+    >
+      <button
+        className="btn btn-primary fdk-button fade-in-500"
+        onClick={[MockFunction]}
+        type="button"
+      >
+        Clear
+      </button>
+      <Select
+        activeSort={null}
+        items={
+          Array [
+            Object {
+              "defaultOption": true,
+              "field": "_score",
+              "label": "relevance",
+              "order": "asc",
+            },
+            Object {
+              "field": "title",
+              "label": "title",
+              "order": "asc",
+            },
+            Object {
+              "field": "modified",
+              "label": "modified",
+              "order": "desc",
+            },
+            Object {
+              "field": "publisher.name",
+              "label": "publisher",
+              "order": "asc",
+            },
+          ]
+        }
+        onChange={[MockFunction]}
+      />
+    </div>
+  </section>
+  <section
+    className="row"
+  >
+    <aside
+      className="search-filters col-lg-4 d-none d-lg-block"
+    >
+      <span
+        aria-hidden="false"
+        className="uu-invisible"
+      >
+        Filtrering tilgang
+      </span>
+      <div>
+        [filterbox]
+      </div>
+    </aside>
+    <article
+      className="col-12 col-lg-8"
+      id="apis"
+    >
+      <section
+        className="col-12 d-flex justify-content-center"
+      >
+        <span
+          aria-hidden="false"
+          className="uu-invisible"
+        >
+          Sidepaginering.
+        </span>
+        <PaginationBoxView
+          activeClassName="active"
+          breakClassName="break-me"
+          breakLabel={
+            <span>
+              ...
+            </span>
+          }
+          containerClassName="pagination"
+          disableInitialCallback={true}
+          disabledClassName="disabled"
+          initialPage={0}
+          marginPagesDisplayed={1}
+          nextClassName="next"
+          nextLabel="Neste side"
+          onPageChange={[MockFunction]}
+          pageCount={1}
+          pageRangeDisplayed={2}
+          previousClassName="previous"
+          previousLabel="Forrige side"
+          subContainerClassName="pages pagination"
+        />
+      </section>
+    </article>
+  </section>
+</main>
+`;
