@@ -70,7 +70,7 @@ public class ApiHarvester {
 
             if (api.getInfo().getDescription() != null) {
                 document.setDescription(new HashMap<>());
-                document.getTitle().put("no", api.getInfo().getDescription());
+                document.getDescription().put("no", api.getInfo().getDescription());
             }
 
             if (api.getInfo().getContact() != null) {
