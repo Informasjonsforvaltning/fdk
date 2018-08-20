@@ -32,7 +32,7 @@ public class ApiHarvestTest {
 
         List<ApiDocument> response = spyHarvester.harvestAll();
 
-        assertThat(response.size(), is(3));
+        assertThat(response.size(), is(2));
 
     }
 }
