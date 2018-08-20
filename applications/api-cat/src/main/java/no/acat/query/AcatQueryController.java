@@ -62,7 +62,6 @@ public class AcatQueryController {
 
             for (SearchHit hit : response.getHits().getHits()) {
                 ApiDocument document = mapper.readValue(hit.getSourceAsString(), ApiDocument.class);
-                document.setUri(hit.getId());
                 queryResponse.getHits().add(document);
             }
 
