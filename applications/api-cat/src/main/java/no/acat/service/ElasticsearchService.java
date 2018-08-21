@@ -1,4 +1,4 @@
-package no.acat.query;
+package no.acat.service;
 
 import org.elasticsearch.client.Client;
 import org.elasticsearch.client.transport.TransportClient;
