@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import './listType1.scss';
 
 export const ListType1 = props => {
   const { title } = props;

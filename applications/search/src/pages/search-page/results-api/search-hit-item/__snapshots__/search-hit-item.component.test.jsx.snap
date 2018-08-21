@@ -1,0 +1,94 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render api-SearchHitItem correctly 1`] = `
+<article
+  className="search-hit"
+>
+  <span
+    aria-hidden="false"
+    className="uu-invisible"
+  >
+    Søketreff.
+  </span>
+  <header>
+    <Link
+      className="search-hit__title-link"
+      replace={false}
+      title="[object Object]: National Data Directory Search API"
+      to="/apis/jar%3Afile%3A%2Fapp.jar!%2FBOOT-INF%2Fclasses!%2Fdatakatalog-api.json"
+    >
+      <SearchHitHeader
+        headerTag="h2"
+        provenance={null}
+        publisher={null}
+        publisherItems={null}
+        publisherLabel="Provider"
+        theme={null}
+        title="National Data Directory Search API"
+      />
+    </Link>
+  </header>
+  <p>
+    <span
+      aria-hidden="false"
+      className="uu-invisible"
+    >
+      Beskrivelse av api,
+    </span>
+    Provides a basic search api against the National Data Directory of Norway
+  </p>
+</article>
+`;
+
+exports[`should render api-SearchHitItem correctly with no props 1`] = `
+<article
+  className="search-hit"
+>
+  <span
+    aria-hidden="false"
+    className="uu-invisible"
+  >
+    Søketreff.
+  </span>
+</article>
+`;
+
+exports[`should render api-SearchHitItem with long description 1`] = `
+<article
+  className="search-hit"
+>
+  <span
+    aria-hidden="false"
+    className="uu-invisible"
+  >
+    Søketreff.
+  </span>
+  <header>
+    <Link
+      className="search-hit__title-link"
+      replace={false}
+      title="[object Object]: National Data Directory Search API"
+      to="/apis/jar%3Afile%3A%2Fapp.jar!%2FBOOT-INF%2Fclasses!%2Fdatakatalog-api.json"
+    >
+      <SearchHitHeader
+        headerTag="h2"
+        provenance={null}
+        publisher={null}
+        publisherItems={null}
+        publisherLabel="Provider"
+        theme={null}
+        title="National Data Directory Search API"
+      />
+    </Link>
+  </header>
+  <p>
+    <span
+      aria-hidden="false"
+      className="uu-invisible"
+    >
+      Beskrivelse av api,
+    </span>
+    It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as...
+  </p>
+</article>
+`;

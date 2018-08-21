@@ -1,9 +1,16 @@
 {
+  "api": "API",
   "description": "Description",
   "showFullDescription": "Show the full description",
   "showLess": "Show less",
   "objective": "Objective",
   "showFullObjective": "Show the full objective",
+  "format": "Format",
+  "datasetReferences": "Dataset references",
+  "contactInfo": "Contact information",
+  "contactPoint": "Contact point",
+  "email": "Email",
+  "phone": "Phone",
   "app": {
     "title": "The National Data Directory",
     "titleSub": "Datasets from publishers in Norway.",
@@ -265,5 +272,19 @@
   },
   "registration": {
     "title": "Registration (only in Norwegian)"
+  },
+  "api": {
+    "accessRight": {
+      "public": "API that are public",
+      "restricted": "API with restricted access",
+      "nonPublic": "API that are not public",
+      "unknown": "Unknown accesslevel"
+    },
+    "endpoints": {
+      "response": "Response",
+      "description": "Description"
+    },
+    "provider": "Provider",
+    "linkDatasetReference": "Link to dataset reference"
   }
 }

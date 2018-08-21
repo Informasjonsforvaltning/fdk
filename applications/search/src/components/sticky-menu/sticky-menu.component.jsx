@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Scroll from 'react-scroll';
+import './sticky-menu.scss';
 
 const ScrollLink = Scroll.Link;
 
@@ -44,8 +45,10 @@ StickyMenu.defaultProps = {
 };
 
 StickyMenu.propTypes = {
-  menuItems: PropTypes.arrayOf(PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    prefLabel: PropTypes.string.isRequired
-  }))
+  menuItems: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      prefLabel: PropTypes.string.isRequired
+    })
+  )
 };

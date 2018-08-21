@@ -1,9 +1,16 @@
 {
+  "api": "API",
   "description": "Beskrivelse",
   "showFullDescription": "Vis hele beskrivelsen",
   "showLess": "Vis mindre",
   "objective": "Formål",
   "showFullObjective": "Vis hele formålet",
+  "format": "Format",
+  "datasetReferences": "Tilknyttede datasettbeskrivelser",
+  "contactInfo": "Kontaktinformasjon",
+  "contactPoint": "Kontaktpunkt",
+  "email": "E-mail",
+  "phone": "Telefon",
   "app": {
     "title": "Felles Datakatalog",
     "titleSub": "Oversikt over datasett frå verksemder i Noreg.",
@@ -265,5 +272,19 @@
   },
   "registration": {
     "title": "Korleis komme i gong med registrering av datasett"
+  },
+  "api": {
+    "accessRight": {
+      "public": "API-et er åpent",
+      "restricted": "API med avgrensa offentlegheit",
+      "nonPublic": "API-et er unntatt offentlegheit",
+      "unknown": "Ukjent tilgang"
+    },
+    "endpoints": {
+      "response": "Respons",
+      "description": "Beskrivelse"
+    },
+    "provider": "Tilbys av",
+    "linkDatasetReference": "Lenke til datasettreferanse"
   }
 }
