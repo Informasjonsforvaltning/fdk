@@ -29,10 +29,11 @@ public class ApiHarvestTest {
 
         ApiHarvester spyHarvester = spy(harvester);
         doNothing().when(spyHarvester).indexApi(anyString(), anyObject());
+        doReturn(null).when(spyHarvester).lookupApiDocumentId(anyObject());
 
         List<ApiDocument> response = spyHarvester.harvestAll();
 
-        assertThat(response.size(), is(2));
+        assertThat(response.size(), is(5));
 
     }
 }

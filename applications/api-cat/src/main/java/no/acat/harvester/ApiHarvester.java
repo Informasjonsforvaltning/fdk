@@ -53,6 +53,11 @@ public class ApiHarvester {
 
             String openApiUrl = apiCatalogRecord.getOpenApiUrl();
 
+            if (openApiUrl.isEmpty()) {
+                logger.info("Skip harvest, missing uri.");
+                return null;
+            }
+
             ApiDocument apiDocument = new ApiDocument();
 
             apiDocument.setUri(openApiUrl);
@@ -62,9 +67,14 @@ public class ApiHarvester {
             populateApiDocumentOpenApi(apiDocument, openApi);
 
             String id = lookupApiDocumentId(apiCatalogRecord);
+            if (id == null) {
+                id= UUID.randomUUID().toString();
+            }
             apiDocument.setId(id);
 
             indexApi(id, apiDocument);
+
+            logger.info("Harvest api: {}", apiDocument.getUri());
 
             return apiDocument;
 
@@ -88,7 +98,7 @@ public class ApiHarvester {
         if (hits.length > 0) {
             return hits[0].getId();
         } else {
-            return UUID.randomUUID().toString();
+            return null;
         }
     }
 
@@ -160,13 +170,7 @@ public class ApiHarvester {
             } catch (Exception e) {
                 logger.error("Unable get resource url", e.getMessage(), e);
             }
-            //            not in use right now
-//            catalogRecord.setOrgName();
-
-
-//            metaRecord={url=classPathResource.getURL()}
-//            result.add(harvestApi(metarecord classPathResource.getURL().toString()));
-//
+            result.add(catalogRecord);
         }
 
         Iterable<CSVRecord> records;
@@ -174,7 +178,7 @@ public class ApiHarvester {
                 Reader input =
                         new BufferedReader(new InputStreamReader(canonicalNamesFile.getInputStream()))
         ) {
-            records = CSVFormat.EXCEL.withHeader().withRecordSeparator(';').parse(input);
+            records = CSVFormat.EXCEL.withHeader().withDelimiter(';').parse(input);
 
             for (CSVRecord line : records) {
                 ApiCatalogRecord catalogRecord = new ApiCatalogRecord();
@@ -192,7 +196,7 @@ public class ApiHarvester {
                 result.add(catalogRecord);
             }
 
-            logger.debug("Read {} api catalog records.", result.size());
+            logger.info("Read {} api catalog records.", result.size());
 
         } catch (
                 IOException e) {
@@ -208,7 +212,10 @@ public class ApiHarvester {
         List<ApiCatalogRecord> apiCatalog = getApiCatalog();
 
         for (ApiCatalogRecord apiCatalogRecord : apiCatalog) {
-            result.add(harvestApi(apiCatalogRecord));
+            ApiDocument apiDocument = harvestApi(apiCatalogRecord);
+            if (apiDocument != null) {
+                result.add(apiDocument);
+            }
         }
         return result;
     }
