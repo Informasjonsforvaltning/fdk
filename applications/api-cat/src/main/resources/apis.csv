@@ -1,3 +1,5 @@
-OrgNr,OrgName,OpenApiUrl,DocUrl,AccessRights,Provenance,DatasetRefs
-974760673,Brønnøysundregistrene,,https://data.brreg.no/enhetsregisteret/api/docs/index.html,RESTRICTED,NASJONAL,https://fellesdatakatalog.brreg.no/datasets/ae335ad2-0f3d-4eb1-98ce-87882776a123
-974760673,Brønnøysundregistrene,https://fellesdatakatalog.brreg.no/api-docs/search-api,https://fellesdatakatalog.brreg.no/swagger-ui.html,OPEN,,https://fellesdatakatalog.brreg.no/datasets/ea9e2aa7-880c-4387-888e-77446acab279
+OrgNr;OrgName;OpenApiUrl;DocUrl;AccessRights;Provenance;DatasetRefs
+974760673;Brønnøysundregistrene;;https://data.brreg.no/enhetsregisteret/api/docs/index.html;RESTRICTED;NASJONAL;https://fellesdatakatalog.brreg.no/datasets/ae335ad2-0f3d-4eb1-98ce-87882776a123
+974760673;Brønnøysundregistrene;https://fellesdatakatalog.brreg.no/api-docs/search-api;https://fellesdatakatalog.brreg.no/swagger-ui.html;OPEN;;https://fellesdatakatalog.brreg.no/datasets/ea9e2aa7-880c-4387-888e-77446acab279
+974760673;;https://docker-demo.fsat.no/fsapi/swagger.json;https://docker-demo.fsat.no/fsapi/swagger.html#!/person/get_personer_id;;;
+974760673;;https://ks-no.github.io/api/innsyn-sok-api-v1.json;https://editor.swagger.io/?url=https://ks-no.github.io/api/innsyn-sok-api-v1.json;;;
