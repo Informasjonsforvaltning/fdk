@@ -1,6 +1,7 @@
 package no.acat.query;
 
 import no.acat.model.openapi3.QueryResponse;
+import no.acat.service.ElasticsearchService;
 import no.dcat.shared.testcategories.UnitTest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.search.SearchHit;

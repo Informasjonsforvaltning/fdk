@@ -1,15 +1,12 @@
 package no.acat.harvester;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import no.acat.config.Utils;
 import no.acat.model.ApiDocument;
 import no.acat.model.openapi3.OpenApi;
-import no.acat.query.ElasticsearchService;
+import no.acat.service.ElasticsearchService;
 import no.dcat.shared.Contact;
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.action.index.IndexRequest;
@@ -20,9 +17,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
-import java.io.File;
 import java.net.URL;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

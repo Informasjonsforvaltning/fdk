@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiParam;
 import no.acat.config.Utils;
 import no.acat.model.ApiDocument;
 import no.acat.model.openapi3.QueryResponse;
+import no.acat.service.ElasticsearchService;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.index.query.QueryBuilder;
