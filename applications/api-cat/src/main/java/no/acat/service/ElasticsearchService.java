@@ -1,5 +1,6 @@
 package no.acat.service;
 
+import org.apache.commons.io.IOUtils;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.Settings;
@@ -7,9 +8,12 @@ import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
@@ -27,12 +31,13 @@ public class ElasticsearchService {
     private String clusterName;
 
     @PostConstruct
-    void validate(){
+    void validate() {
         assert elasticsearchHost != null;
         assert elasticsearchPort > 0;
         assert clusterName != null;
 
         initializeElasticsearchTransportClient();
+        createIndexIfNotExists();
     }
 
     private Client client;
@@ -56,13 +61,36 @@ public class ElasticsearchService {
                 Settings settings = Settings.builder()
                         .put("cluster.name", clusterName).build();
 
-                this.client = TransportClient.builder().settings(settings).build()
+                client = TransportClient.builder().settings(settings).build()
                         .addTransportAddress(address);
 
                 logger.debug("Client returns! " + address.toString());
             } catch (UnknownHostException e) {
-                logger.error("Unable to connect to Elasticsearch: {}",e.toString(), e);
+                logger.error("Unable to connect to Elasticsearch: {}", e.toString(), e);
             }
+        }
+    }
+
+    public boolean indexExists(String index) {
+        return client.admin().indices().prepareExists(index).execute().actionGet().isExists();
+    }
+
+    public void createIndexIfNotExists() {
+        final String indexName = "acat";
+        if (indexExists(indexName)) {
+            logger.info("Index exists: " + indexName);
+            return;
+        }
+        logger.info("Creating index: " + indexName);
+
+        try {
+            Resource apispecMappingResource = new ClassPathResource("apispec.mapping.json");
+            String apispecMapping = IOUtils.toString(apispecMappingResource.getInputStream(), "UTF-8");
+            client.admin().indices().prepareCreate(indexName)
+                    .addMapping("apispec", apispecMapping)
+                    .execute().actionGet();
+        } catch (IOException e) {
+            logger.error("Unable to connect to Elasticsearch: {}", e.toString(), e);
         }
     }
 }
