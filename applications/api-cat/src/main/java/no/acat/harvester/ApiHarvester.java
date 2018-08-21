@@ -14,6 +14,11 @@ import org.apache.commons.csv.CSVRecord;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.action.index.IndexRequest;
+import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.action.search.SearchType;
+import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.SearchHit;
+import org.elasticsearch.search.SearchHits;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,8 +61,7 @@ public class ApiHarvester {
             OpenApi openApi = mapper.readValue(new URL(openApiUrl), OpenApi.class);
             populateApiDocumentOpenApi(apiDocument, openApi);
 
-            // todo lookup id
-            String id = UUID.randomUUID().toString();
+            String id = lookupApiDocumentId(apiCatalogRecord);
             apiDocument.setId(id);
 
             indexApi(id, apiDocument);
@@ -69,6 +73,23 @@ public class ApiHarvester {
         }
 
         return null;
+    }
+
+    String lookupApiDocumentId(ApiCatalogRecord apiCatalogRecord) {
+        String openApiUrl = apiCatalogRecord.getOpenApiUrl();
+        SearchResponse response = elasticsearchService.getClient().prepareSearch("acat")
+                .setTypes("apispec")
+                .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
+                .setQuery(QueryBuilders.termQuery("uri", openApiUrl))
+                .get();
+
+
+        SearchHit[] hits = response.getHits().getHits();
+        if (hits.length > 0) {
+            return hits[0].getId();
+        } else {
+            return UUID.randomUUID().toString();
+        }
     }
 
     // this populates ApiDocument from openApi spec
@@ -99,6 +120,8 @@ public class ApiHarvester {
                 document.getContactPoint().add(contact);
             }
         }
+
+        //todo format
 
         document.setOpenApi(openApi);
     }
