@@ -1,9 +1,16 @@
 {
+  "api": "API",
   "description": "Beskrivelse",
   "showFullDescription": "Vis hele beskrivelsen",
   "showLess": "Vis mindre",
   "objective": "Formål",
   "showFullObjective": "Vis hele formålet",
+  "format": "Format",
+  "datasetReferences": "Tilknyttede datasettbeskrivelser",
+  "contactInfo": "Kontaktinformasjon",
+  "contactPoint": "Kontaktpunkt",
+  "email": "E-post",
+  "phone": "Telefon",
   "app": {
     "title": "Felles Datakatalog",
     "titleSub": "Oversikt over datasett fra virksomheter i Norge.",
@@ -265,5 +272,19 @@
   },
   "registration": {
     "title": "Kom i gang med registrering av datasett"
+  },
+  "api": {
+    "accessRight": {
+      "public": "API-et er åpent",
+      "restricted": "API-et har begrenset offentlighet",
+      "nonPublic": "API-et er unntatt offentlighet",
+      "unknown": "Ukjent tilgang"
+    },
+    "endpoints": {
+      "response": "Respons",
+      "description": "Beskrivelse"
+    },
+    "provider": "Tilbys av",
+    "linkDatasetReference": "Lenke til datasettreferanse"
   }
 }

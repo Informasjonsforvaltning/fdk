@@ -1,0 +1,421 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render ResultsApi correctly with hits 1`] = `
+<main
+  id="content"
+>
+  <div
+    className="row mb-3"
+  >
+    <div
+      className="col-12 d-flex justify-content-between"
+    >
+      <button
+        className="btn btn-primary fdk-button fade-in-500"
+        onClick={[MockFunction]}
+        type="button"
+      >
+        Clear
+      </button>
+      <Select
+        activeSort={null}
+        items={
+          Array [
+            Object {
+              "defaultOption": true,
+              "field": "_score",
+              "label": "relevance",
+              "order": "asc",
+            },
+            Object {
+              "field": "title",
+              "label": "title",
+              "order": "asc",
+            },
+            Object {
+              "field": "modified",
+              "label": "modified",
+              "order": "desc",
+            },
+            Object {
+              "field": "publisher.name",
+              "label": "publisher",
+              "order": "asc",
+            },
+          ]
+        }
+        onChange={[MockFunction]}
+      />
+    </div>
+  </div>
+  <div
+    className="row"
+  >
+    <aside
+      className="search-filters col-lg-4 d-none d-lg-block"
+    >
+      <span
+        aria-hidden="false"
+        className="uu-invisible"
+      >
+        Filtrering tilgang
+      </span>
+      <div>
+        [filterbox]
+      </div>
+    </aside>
+    <div
+      className="col-12 col-lg-8"
+      id="apis"
+    >
+      <SearchHitItem
+        fadeInCounter={0}
+        item={
+          Object {
+            "contactPoint": Array [
+              Object {
+                "email": "fellesdatakatalog@brreg.no",
+                "organizationName": "Brønnøysundregistrene",
+                "uri": "https://fellesdatakatalog.brreg.no",
+              },
+            ],
+            "description": Object {
+              "no": "Provides a basic search api against the National Data Directory of Norway",
+            },
+            "openApi": Object {
+              "info": Object {
+                "contact": Object {
+                  "email": "fellesdatakatalog@brreg.no",
+                  "name": "Brønnøysundregistrene",
+                  "url": "https://fellesdatakatalog.brreg.no",
+                },
+                "description": "Provides a basic search api against the National Data Directory of Norway",
+                "license": Object {
+                  "name": "License of API",
+                  "url": "http://data.norge.no/nlod/no/2.0",
+                },
+                "termsOfService": "https://fellesdatakatalog.brreg.no/about",
+                "title": "National Data Directory Search API",
+                "version": "1.0",
+              },
+              "openapi": null,
+              "paths": Object {
+                "/aggregateDataset": Object {
+                  "get": Object {
+                    "responses": Object {
+                      "200": Object {
+                        "description": "OK",
+                      },
+                      "401": Object {
+                        "description": "Unauthorized",
+                      },
+                      "403": Object {
+                        "description": "Forbidden",
+                      },
+                      "404": Object {
+                        "description": "Not Found",
+                      },
+                    },
+                  },
+                },
+                "/catalogs": Object {
+                  "get": Object {
+                    "description": "The three formats are: text/turtle, application/ld+json and application/rdf+xml",
+                    "responses": Object {
+                      "200": Object {
+                        "description": "OK",
+                      },
+                      "401": Object {
+                        "description": "Unauthorized",
+                      },
+                      "403": Object {
+                        "description": "Forbidden",
+                      },
+                      "404": Object {
+                        "description": "Not Found",
+                      },
+                    },
+                  },
+                },
+                "/catalogs/datasets": Object {
+                  "get": Object {
+                    "description": "The three formats are: text/turtle, application/ld+json and application/rdf+xml",
+                    "responses": Object {
+                      "200": Object {
+                        "description": "OK",
+                      },
+                      "401": Object {
+                        "description": "Unauthorized",
+                      },
+                      "403": Object {
+                        "description": "Forbidden",
+                      },
+                      "404": Object {
+                        "description": "Not Found",
+                      },
+                    },
+                  },
+                },
+                "/datasets": Object {
+                  "get": Object {
+                    "description": "Returns a list of matching datasets wrapped in a elasticsearch response. Max number returned by a single query is 100. Size parameters greater than 100 will not return more than 100 datasets. In order to access all datasets, use multiple queries and increment from parameter.",
+                    "responses": Object {
+                      "200": Object {
+                        "description": "OK",
+                      },
+                      "401": Object {
+                        "description": "Unauthorized",
+                      },
+                      "403": Object {
+                        "description": "Forbidden",
+                      },
+                      "404": Object {
+                        "description": "Not Found",
+                      },
+                    },
+                  },
+                },
+                "/datasets/**": Object {
+                  "get": Object {
+                    "description": "You must specify the dataset's identifier",
+                    "responses": Object {
+                      "200": Object {
+                        "description": "OK",
+                      },
+                      "401": Object {
+                        "description": "Unauthorized",
+                      },
+                      "403": Object {
+                        "description": "Forbidden",
+                      },
+                      "404": Object {
+                        "description": "Not Found",
+                      },
+                    },
+                  },
+                },
+                "/harvest/catalog": Object {
+                  "get": Object {
+                    "responses": Object {
+                      "200": Object {
+                        "description": "OK",
+                      },
+                      "401": Object {
+                        "description": "Unauthorized",
+                      },
+                      "403": Object {
+                        "description": "Forbidden",
+                      },
+                      "404": Object {
+                        "description": "Not Found",
+                      },
+                    },
+                  },
+                },
+                "/publisher": Object {
+                  "get": Object {
+                    "description": "Returns the elasticsearch response with matching publishers",
+                    "responses": Object {
+                      "200": Object {
+                        "description": "OK",
+                      },
+                      "401": Object {
+                        "description": "Unauthorized",
+                      },
+                      "403": Object {
+                        "description": "Forbidden",
+                      },
+                      "404": Object {
+                        "description": "Not Found",
+                      },
+                    },
+                  },
+                },
+                "/publisher/hierarchy": Object {
+                  "get": Object {
+                    "responses": Object {
+                      "200": Object {
+                        "description": "OK",
+                      },
+                      "401": Object {
+                        "description": "Unauthorized",
+                      },
+                      "403": Object {
+                        "description": "Forbidden",
+                      },
+                      "404": Object {
+                        "description": "Not Found",
+                      },
+                    },
+                  },
+                },
+                "/terms": Object {
+                  "get": Object {
+                    "description": "Returns the elasticsearch response with matching terms (dct:subject)",
+                    "responses": Object {
+                      "200": Object {
+                        "description": "OK",
+                      },
+                      "401": Object {
+                        "description": "Unauthorized",
+                      },
+                      "403": Object {
+                        "description": "Forbidden",
+                      },
+                      "404": Object {
+                        "description": "Not Found",
+                      },
+                    },
+                  },
+                },
+              },
+              "servers": null,
+            },
+            "title": Object {
+              "no": "National Data Directory Search API",
+            },
+            "uri": "jar:file:/app.jar!/BOOT-INF/classes!/datakatalog-api.json",
+          }
+        }
+        key="jar:file:/app.jar!/BOOT-INF/classes!/datakatalog-api.json"
+        publishers={Object {}}
+      />
+      <div
+        className="col-12 d-flex justify-content-center"
+      >
+        <span
+          aria-hidden="false"
+          className="uu-invisible"
+        >
+          Sidepaginering.
+        </span>
+        <PaginationBoxView
+          activeClassName="active"
+          breakClassName="break-me"
+          breakLabel={
+            <span>
+              ...
+            </span>
+          }
+          containerClassName="pagination"
+          disableInitialCallback={true}
+          disabledClassName="disabled"
+          initialPage={0}
+          marginPagesDisplayed={1}
+          nextClassName="next"
+          nextLabel="Neste side"
+          onPageChange={[MockFunction]}
+          pageCount={NaN}
+          pageRangeDisplayed={2}
+          previousClassName="previous"
+          previousLabel="Forrige side"
+          subContainerClassName="pages pagination"
+        />
+      </div>
+    </div>
+  </div>
+</main>
+`;
+
+exports[`should render ResultsApi correctly with minimum of props and no hits 1`] = `
+<main
+  id="content"
+>
+  <div
+    className="row mb-3"
+  >
+    <div
+      className="col-12 d-flex justify-content-between"
+    >
+      <button
+        className="btn btn-primary fdk-button fade-in-500"
+        type="button"
+      >
+        Clear
+      </button>
+      <Select
+        activeSort={null}
+        items={
+          Array [
+            Object {
+              "defaultOption": true,
+              "field": "_score",
+              "label": "relevance",
+              "order": "asc",
+            },
+            Object {
+              "field": "title",
+              "label": "title",
+              "order": "asc",
+            },
+            Object {
+              "field": "modified",
+              "label": "modified",
+              "order": "desc",
+            },
+            Object {
+              "field": "publisher.name",
+              "label": "publisher",
+              "order": "asc",
+            },
+          ]
+        }
+        onChange={[MockFunction]}
+      />
+    </div>
+  </div>
+  <div
+    className="row"
+  >
+    <aside
+      className="search-filters col-lg-4 d-none d-lg-block"
+    >
+      <span
+        aria-hidden="false"
+        className="uu-invisible"
+      >
+        Filtrering tilgang
+      </span>
+      <div>
+        [filterbox]
+      </div>
+    </aside>
+    <div
+      className="col-12 col-lg-8"
+      id="apis"
+    >
+      <div
+        className="col-12 d-flex justify-content-center"
+      >
+        <span
+          aria-hidden="false"
+          className="uu-invisible"
+        >
+          Sidepaginering.
+        </span>
+        <PaginationBoxView
+          activeClassName="active"
+          breakClassName="break-me"
+          breakLabel={
+            <span>
+              ...
+            </span>
+          }
+          containerClassName="pagination"
+          disableInitialCallback={true}
+          disabledClassName="disabled"
+          initialPage={0}
+          marginPagesDisplayed={1}
+          nextClassName="next"
+          nextLabel="Neste side"
+          pageCount={NaN}
+          pageRangeDisplayed={2}
+          previousClassName="previous"
+          previousLabel="Forrige side"
+          subContainerClassName="pages pagination"
+        />
+      </div>
+    </div>
+  </div>
+</main>
+`;

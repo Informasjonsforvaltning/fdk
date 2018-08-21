@@ -8,6 +8,7 @@ import { detect } from 'detect-browser';
 import localization from '../../lib/localization';
 import { ResultsDataset } from './results-dataset/results-dataset.component';
 import { ResultsConcepts } from './results-concepts/results-concepts.component';
+import { ResultsApi } from './results-api/results-api.component';
 import { SearchBox } from './search-box/search-box.component';
 import { ResultsTabs } from './results-tabs/results-tabs.component';
 import { removeValue, addValue } from '../../lib/stringUtils';
@@ -464,7 +465,19 @@ export class SearchPage extends React.Component {
                 />
               )}
             />
-            <Route exact path={PATHNAME_APIS} render={() => <div>Beta</div>} />
+            <Route
+              exact
+              path={PATHNAME_APIS}
+              render={props => (
+                <ResultsApi
+                  apiItems={this.props.apiItems}
+                  searchQuery={this.state.searchQuery}
+                  onSort={this.handleDatasetSort}
+                  publishers={publisherItems}
+                  {...props}
+                />
+              )}
+            />
             <Route
               exact
               path={PATHNAME_CONCEPTS}
