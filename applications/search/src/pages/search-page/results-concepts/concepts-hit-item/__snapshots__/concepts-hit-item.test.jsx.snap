@@ -50,17 +50,35 @@ exports[`should render ConceptsHitItem correctly 1`] = `
     >
       Enhet
     </h2>
-    <span
-      className="inline-block fdk-strong-virksomhet"
-    >
-      <span
-        aria-hidden="false"
-        className="uu-invisible"
-      >
-        Utgiver.
-      </span>
-      Brønnøysundregistrene
-    </span>
+    <PublisherLabel
+      label={null}
+      publisherItem={
+        Object {
+          "id": "974760673",
+          "naeringskode": Object {
+            "code": "84.110",
+            "prefLabel": Object {
+              "no": "Generell offentlig administrasjon",
+            },
+            "uri": "http://www.ssb.no/nace/sn2007/84.110",
+          },
+          "name": "Brønnøysundregistrene",
+          "orgPath": "/STAT/912660680/974760673",
+          "organisasjonsform": "ORGL",
+          "overordnetEnhet": "912660680",
+          "sektorkode": Object {
+            "code": "6100",
+            "prefLabel": Object {
+              "no": "Statsforvaltningen",
+            },
+            "uri": "http://www.brreg.no/sektorkode/6100",
+          },
+          "type": "no.dcat.datastore.domain.dcat.Publisher",
+          "uri": "http://data.brreg.no/enhetsregisteret/enhet/974760673",
+          "valid": true,
+        }
+      }
+    />
     <div
       className="mt-3"
     >
@@ -161,17 +179,35 @@ exports[`should render ConceptsHitItem correctly with compare button not showing
     >
       Enhet
     </h2>
-    <span
-      className="inline-block fdk-strong-virksomhet"
-    >
-      <span
-        aria-hidden="false"
-        className="uu-invisible"
-      >
-        Utgiver.
-      </span>
-      Brønnøysundregistrene
-    </span>
+    <PublisherLabel
+      label={null}
+      publisherItem={
+        Object {
+          "id": "974760673",
+          "naeringskode": Object {
+            "code": "84.110",
+            "prefLabel": Object {
+              "no": "Generell offentlig administrasjon",
+            },
+            "uri": "http://www.ssb.no/nace/sn2007/84.110",
+          },
+          "name": "Brønnøysundregistrene",
+          "orgPath": "/STAT/912660680/974760673",
+          "organisasjonsform": "ORGL",
+          "overordnetEnhet": "912660680",
+          "sektorkode": Object {
+            "code": "6100",
+            "prefLabel": Object {
+              "no": "Statsforvaltningen",
+            },
+            "uri": "http://www.brreg.no/sektorkode/6100",
+          },
+          "type": "no.dcat.datastore.domain.dcat.Publisher",
+          "uri": "http://data.brreg.no/enhetsregisteret/enhet/974760673",
+          "valid": true,
+        }
+      }
+    />
     <div
       className="mt-3"
     >

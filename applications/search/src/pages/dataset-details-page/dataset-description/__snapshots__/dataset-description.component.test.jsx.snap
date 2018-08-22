@@ -15,15 +15,16 @@ exports[`should render DatasetDescription correctly 1`] = `
   <div
     className="mb-2"
   >
-    <span>
-      Owned by
-       
-      <strong
-        className="fdk-strong-virksomhet"
-      >
-        Testetaten
-      </strong>
-    </span>
+    <PublisherLabel
+      label="Owned by"
+      publisherItem={
+        Object {
+          "id": "987654321",
+          "name": "TESTETATEN",
+          "uri": "http://data.brreg.no/enhetsregisteret/enhet/987654321",
+        }
+      }
+    />
     <div
       className="fdk-label fdk-label-on-grey mr-2 mb-2"
       key="dataset-description-theme-undefined"
@@ -67,15 +68,16 @@ exports[`should render DatasetDescription correctly 2`] = `
   <div
     className="mb-2"
   >
-    <span>
-      Owned by
-       
-      <strong
-        className="fdk-strong-virksomhet"
-      >
-        Testetaten
-      </strong>
-    </span>
+    <PublisherLabel
+      label="Owned by"
+      publisherItem={
+        Object {
+          "id": "987654321",
+          "name": "TESTETATEN",
+          "uri": "http://data.brreg.no/enhetsregisteret/enhet/987654321",
+        }
+      }
+    />
     <div
       className="fdk-label fdk-label-on-grey mr-2 mb-2"
       key="dataset-description-theme-undefined"

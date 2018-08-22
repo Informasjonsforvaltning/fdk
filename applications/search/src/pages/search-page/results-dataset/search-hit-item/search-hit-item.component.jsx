@@ -3,14 +3,13 @@ import PropTypes from 'prop-types';
 import * as _ from 'lodash';
 import cx from 'classnames';
 import { Link } from 'react-router-dom';
-import _get from 'lodash/get';
-import _capitalize from 'lodash/capitalize';
 
 import { DistributionFormat } from '../../../../components/distribution-format/distribution-format.component';
 import localization from '../../../../lib/localization';
 import { getTranslateText } from '../../../../lib/translateText';
 import { getDistributionTypeByUri } from '../../../../redux/modules/distributionType';
 import { DatasetLabelNational } from '../../../../components/dataset-label-national/dataset-label-national.component';
+import { PublisherLabel } from '../../../../components/publisher-label/publisher-label.component';
 import './search-hit-item.scss';
 
 const renderFormats = (source, code, distributionTypeItems) => {
@@ -58,22 +57,15 @@ const renderFormats = (source, code, distributionTypeItems) => {
 
 const renderPublisher = source => {
   const { publisher } = source;
-  const publisherPrefLabel =
-    getTranslateText(_get(publisher, ['prefLabel'])) ||
-    _capitalize(_get(publisher, 'name', ''));
-
-  if (publisherPrefLabel) {
-    return (
-      <span>
-        <span className="uu-invisible" aria-hidden="false">
-          Datasettet
-        </span>
-        {localization.search_hit.owned}&nbsp;
-        <span className="fdk-strong-virksomhet">{publisherPrefLabel}</span>
-      </span>
-    );
+  if (!publisher) {
+    return null;
   }
-  return null;
+  return (
+    <PublisherLabel
+      label={localization.search_hit.owned}
+      publisherItem={publisher}
+    />
+  );
 };
 
 const renderThemes = source => {

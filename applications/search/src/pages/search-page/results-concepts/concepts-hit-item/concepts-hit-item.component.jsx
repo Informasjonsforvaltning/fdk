@@ -1,31 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import * as _ from 'lodash';
-import _get from 'lodash/get';
-import _capitalize from 'lodash/capitalize';
 
 import localization from '../../../../lib/localization';
 import { getTranslateText } from '../../../../lib/translateText';
+import { PublisherLabel } from '../../../../components/publisher-label/publisher-label.component';
 import './concepts-hit-item.scss';
 
 const renderPublisher = source => {
   const { creator } = source;
 
-  const publisherPrefLabel =
-    getTranslateText(_get(creator, ['prefLabel'])) ||
-    _capitalize(_get(creator, 'name', ''));
-
-  if (publisherPrefLabel) {
-    return (
-      <span className="inline-block fdk-strong-virksomhet">
-        <span className="uu-invisible" aria-hidden="false">
-          Utgiver.
-        </span>
-        {publisherPrefLabel}
-      </span>
-    );
+  if (!creator) {
+    return null;
   }
-  return null;
+  return <PublisherLabel publisherItem={creator} />;
 };
 
 const renderThemes = source => {
