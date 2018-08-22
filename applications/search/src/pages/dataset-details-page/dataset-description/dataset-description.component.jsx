@@ -2,13 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import DocumentMeta from 'react-document-meta';
 import Moment from 'react-moment';
-import _get from 'lodash/get';
-import _capitalize from 'lodash/capitalize';
 
 import localization from '../../../lib/localization';
 import { getTranslateText } from '../../../lib/translateText';
 import { ShowMore } from '../../../components/show-more/show-more';
 import { DatasetLabelNational } from '../../../components/dataset-label-national/dataset-label-national.component';
+import { PublisherLabel } from '../../../components/publisher-label/publisher-label.component';
 
 export class DatasetDescription extends React.Component {
   constructor(props) {
@@ -25,23 +24,16 @@ export class DatasetDescription extends React.Component {
 
   _renderPublisher() {
     const { publisher } = this.props;
-    const ownedBy = localization.search_hit.owned;
 
-    const publisherPrefLabel =
-      getTranslateText(_get(publisher, ['prefLabel'])) ||
-      _capitalize(_get(publisher, 'name', ''));
-
-    if (publisherPrefLabel) {
-      return (
-        <span>
-          {ownedBy}&nbsp;
-          <strong className="fdk-strong-virksomhet">
-            {publisherPrefLabel}
-          </strong>
-        </span>
-      );
+    if (!publisher) {
+      return null;
     }
-    return null;
+    return (
+      <PublisherLabel
+        label={localization.search_hit.owned}
+        publisherItem={publisher}
+      />
+    );
   }
 
   _renderHarvested() {

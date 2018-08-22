@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import { fetchActions } from '../fetchActions';
 
 export const PUBLISHERS_REQUEST = 'PUBLISHERS_REQUEST';
@@ -61,3 +62,10 @@ export function publishersReducer(state = initialState, action) {
       return state;
   }
 }
+
+export const getPublisherByOrgNr = (publisherItems, id) => {
+  if (publisherItems) {
+    return _.find(publisherItems, ['id', id]);
+  }
+  return null;
+};

@@ -23,21 +23,16 @@ exports[`should render SearchHitItem NON_PUBLIC correctly 1`] = `
       <div
         className="fdk-dataset-themes"
       >
-        <span>
-          <span
-            aria-hidden="false"
-            className="uu-invisible"
-          >
-            Datasettet
-          </span>
-          Owned by
-           
-          <span
-            className="fdk-strong-virksomhet"
-          >
-            Testetaten
-          </span>
-        </span>
+        <PublisherLabel
+          label="Owned by"
+          publisherItem={
+            Object {
+              "id": "987654321",
+              "name": "TESTETATEN",
+              "uri": "http://data.brreg.no/enhetsregisteret/enhet/987654321",
+            }
+          }
+        />
         <div
           className="fdk-label mr-2 mb-2"
           key="dataset-description-theme-0"
@@ -186,21 +181,16 @@ exports[`should render SearchHitItem RESTRICTED correctly 1`] = `
       <div
         className="fdk-dataset-themes"
       >
-        <span>
-          <span
-            aria-hidden="false"
-            className="uu-invisible"
-          >
-            Datasettet
-          </span>
-          Owned by
-           
-          <span
-            className="fdk-strong-virksomhet"
-          >
-            Testetaten
-          </span>
-        </span>
+        <PublisherLabel
+          label="Owned by"
+          publisherItem={
+            Object {
+              "id": "987654321",
+              "name": "TESTETATEN",
+              "uri": "http://data.brreg.no/enhetsregisteret/enhet/987654321",
+            }
+          }
+        />
         <div
           className="fdk-label mr-2 mb-2"
           key="dataset-description-theme-0"
@@ -398,21 +388,16 @@ exports[`should render SearchHitItem with no title, description, accessRights an
       <div
         className="fdk-dataset-themes"
       >
-        <span>
-          <span
-            aria-hidden="false"
-            className="uu-invisible"
-          >
-            Datasettet
-          </span>
-          Owned by
-           
-          <span
-            className="fdk-strong-virksomhet"
-          >
-            Testetaten
-          </span>
-        </span>
+        <PublisherLabel
+          label="Owned by"
+          publisherItem={
+            Object {
+              "id": "987654321",
+              "name": "TESTETATEN",
+              "uri": "http://data.brreg.no/enhetsregisteret/enhet/987654321",
+            }
+          }
+        />
       </div>
       <p
         className="fdk-p-search-hit"
