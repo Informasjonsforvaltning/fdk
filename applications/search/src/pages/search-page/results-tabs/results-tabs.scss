@@ -7,17 +7,13 @@
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
     border-color: $color3;
-    vertical-align: bottom;
-    float: none;
-    display: inline-block;
-    margin-right: 1em;
-    line-height: 3em;
+    list-style-type: none;
     button, a {
       background: none;
       border: 0;
       box-sizing: border-box;
       color: $color1;
-      padding: .8em 1.5em;
+      padding: .8em 1em;
       font-weight: 500;
       text-decoration: none;
     }
@@ -33,6 +29,7 @@
 @media only screen and (min-width : 992px) {
   .search-results-tabs {
     li {
+      line-height: 1em;
       min-width: 10em;
       button, a {
         padding: 1em 2em;

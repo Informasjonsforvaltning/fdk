@@ -8,10 +8,10 @@ exports[`should render ResultsTabs with "Concepts" active correctly 1`] = `
     className="col-12 col-lg-8 offset-lg-4"
   >
     <ul
-      className="search-results-tabs"
+      className="search-results-tabs d-flex align-items-center justify-content-between"
     >
       <li
-        className=""
+        className="d-flex justify-content-center"
       >
         <Link
           aria-label="Link til side for datasett:"
@@ -35,14 +35,14 @@ exports[`should render ResultsTabs with "Concepts" active correctly 1`] = `
         showOnlyWhenDisabled={false}
       >
         <li
-          className=""
+          className="d-flex justify-content-center"
         >
           <Link
             aria-label="Link til side for api:"
             replace={false}
             to={
               Object {
-                "pathname": "/api",
+                "pathname": "/apis",
                 "search": "?",
               }
             }
@@ -55,7 +55,7 @@ exports[`should render ResultsTabs with "Concepts" active correctly 1`] = `
         </li>
       </FeatureToggle>
       <li
-        className="li-active"
+        className="d-flex justify-content-center li-active"
       >
         <Link
           aria-label="Link til side for begrep:"
@@ -87,10 +87,10 @@ exports[`should render ResultsTabs with "Dataset" active correctly 1`] = `
     className="col-12 col-lg-8 offset-lg-4"
   >
     <ul
-      className="search-results-tabs"
+      className="search-results-tabs d-flex align-items-center justify-content-between"
     >
       <li
-        className="li-active"
+        className="d-flex justify-content-center li-active"
       >
         <Link
           aria-label="Link til side for datasett:"
@@ -114,14 +114,14 @@ exports[`should render ResultsTabs with "Dataset" active correctly 1`] = `
         showOnlyWhenDisabled={false}
       >
         <li
-          className=""
+          className="d-flex justify-content-center"
         >
           <Link
             aria-label="Link til side for api:"
             replace={false}
             to={
               Object {
-                "pathname": "/api",
+                "pathname": "/apis",
                 "search": "?",
               }
             }
@@ -134,7 +134,7 @@ exports[`should render ResultsTabs with "Dataset" active correctly 1`] = `
         </li>
       </FeatureToggle>
       <li
-        className=""
+        className="d-flex justify-content-center"
       >
         <Link
           aria-label="Link til side for begrep:"

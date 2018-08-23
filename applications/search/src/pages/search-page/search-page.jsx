@@ -400,7 +400,8 @@ export class SearchPage extends React.Component {
       termItems,
       themesItems,
       publisherItems,
-      distributionTypeItems
+      distributionTypeItems,
+      location
     } = this.props;
     const topSectionClass = cx('top-section-search', 'mb-1-em', {
       'top-section-search--image': !!(browser && browser.name !== 'ie')
@@ -424,15 +425,10 @@ export class SearchPage extends React.Component {
               open={this.open}
             />
             <ResultsTabs
-              location={this.props.location}
-              countDatasets={
-                datasetItems && datasetItems.hits
-                  ? datasetItems.hits.total
-                  : null
-              }
-              countTerms={
-                termItems && termItems.hits ? termItems.hits.total : 0
-              }
+              activePath={location.pathname}
+              searchParam={location.search}
+              countDatasets={_.get(datasetItems, ['hits', 'total'], '0')}
+              countTerms={_.get(termItems, ['hits', 'total'], '0')}
             />
           </div>
         </section>
