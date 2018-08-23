@@ -4,6 +4,7 @@ logging:
   level.org.springframework: WARN
   level.org.springframework.web: WARN
 application:
+  referenceDataUrl: http://reference-data:8080
   elasticsearchHost: elasticsearch
   elasticsearchPort: 9300
   clusterName: elasticsearch
@@ -26,6 +27,7 @@ application:
 spring:
   profiles: develop, unit-integration
 application:
+  referenceDataUrl: http://localhost:8100
   elasticsearchHost: localhost
   elasticsearchPort: 9300
   clusterName: elasticsearch
