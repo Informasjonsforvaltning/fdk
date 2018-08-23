@@ -7,7 +7,7 @@ import { Collapse } from 'reactstrap';
 import _get from 'lodash/get';
 import _capitalize from 'lodash/capitalize';
 
-import { FilterOption } from '../filter-option/filter-option.component';
+import { FilterOption } from '../../../components/filter-option/filter-option.component';
 import localization from '../../../lib/localization';
 import { getTranslateText } from '../../../lib/translateText';
 import './search-publishers-tree.scss';
