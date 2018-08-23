@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import DocumentMeta from 'react-document-meta';
-import Moment from 'react-moment';
 
 import localization from '../../../lib/localization';
 import { getTranslateText } from '../../../lib/translateText';
 import { ShowMore } from '../../../components/show-more/show-more';
 import { DatasetLabelNational } from '../../../components/dataset-label-national/dataset-label-national.component';
 import { PublisherLabel } from '../../../components/publisher-label/publisher-label.component';
+import { HarvestDate } from '../../../components/harvest-date/harvest-date.component';
 
 export class DatasetDescription extends React.Component {
   constructor(props) {
@@ -36,40 +36,6 @@ export class DatasetDescription extends React.Component {
     );
   }
 
-  _renderHarvested() {
-    const { harvest } = this.props;
-    if (harvest && harvest.firstHarvested) {
-      return (
-        <span>
-          {localization.dataset.firstHarvested}&nbsp;
-          <Moment format="DD.MM.YYYY">{harvest.firstHarvested}</Moment>
-        </span>
-      );
-    }
-    return null;
-  }
-
-  _renderHarvestSeparator() {
-    const { harvest } = this.props;
-    if (harvest && harvest.firstHarvested && harvest.lastChanged) {
-      return <span>&nbsp;/&nbsp;</span>;
-    }
-    return null;
-  }
-
-  _renderLastChanged() {
-    const { harvest } = this.props;
-    if (harvest && harvest.lastChanged) {
-      return (
-        <span>
-          {localization.dataset.lastChanged}&nbsp;
-          <Moment format="DD.MM.YYYY">{harvest.lastChanged}</Moment>
-        </span>
-      );
-    }
-    return null;
-  }
-
   _renderThemes() {
     let themeNodes = null;
     const { themes } = this.props;
@@ -87,6 +53,7 @@ export class DatasetDescription extends React.Component {
   }
 
   render() {
+    const { harvest } = this.props;
     const meta = {
       title: this.props.title,
       description: this.props.description
@@ -97,9 +64,7 @@ export class DatasetDescription extends React.Component {
         {this.props.title && <h1>{this.props.title}</h1>}
 
         <div className="fdk-detail-date">
-          {this._renderHarvested()}
-          {this._renderHarvestSeparator()}
-          {this._renderLastChanged()}
+          <HarvestDate harvest={harvest}/>
         </div>
 
         <div className="mb-2">
