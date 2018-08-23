@@ -17,7 +17,7 @@ maven_apps="fuseki harvester harvester-api nginx-search nginx-registration refer
 for maven_app in $maven_apps; do
     i=$((i+1))
     BUILD_APPS[$i]=$maven_app
-    BUILD_CMD[$i]="mvn clean install -B -T 2C -pl applications/$maven_app -am && bash <(curl -s https://codecov.io/bash)"
+    BUILD_CMD[$i]="mvn clean install -B -T 2C --projects applications/$maven_app --also-make && bash <(curl -s https://codecov.io/bash)"
 done
 
 export BUILD_APPS
