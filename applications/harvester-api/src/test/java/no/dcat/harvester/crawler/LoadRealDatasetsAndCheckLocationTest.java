@@ -7,9 +7,9 @@ import no.dcat.datastore.DcatDataStore;
 import no.dcat.datastore.domain.DcatSource;
 import no.dcat.datastore.domain.dcat.builders.DatasetBuilder;
 import no.dcat.datastore.domain.dcat.builders.RdfModelLoader;
-import no.dcat.datastore.domain.dcat.client.RetrieveCodes;
 import no.dcat.harvester.crawler.handlers.ElasticSearchResultHandler;
 import no.dcat.shared.SkosCode;
+import no.dcat.shared.client.referenceData.ReferenceDataClient;
 import no.dcat.shared.testcategories.UnitTest;
 import org.apache.commons.io.IOUtils;
 import org.apache.jena.rdf.model.Model;
@@ -39,7 +39,6 @@ import java.util.Map;
 
 import static org.mockito.Mockito.anyObject;
 import static org.mockito.Mockito.anyString;
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
@@ -58,7 +57,7 @@ import static org.hamcrest.Matchers.*;
         "org.apache.xerces.*",
         "ch.qos.logback.*", "org.slf4j.*",
         "org.apache.jena.*", "org.apache.xerces.*", "com.sun.org.*" })
-@PrepareForTest({RetrieveCodes.class, ElasticSearchResultHandler.class, CrawlerJob.class})
+@PrepareForTest({ReferenceDataClient.class, ElasticSearchResultHandler.class, CrawlerJob.class})
 @Category(UnitTest.class)
 public class LoadRealDatasetsAndCheckLocationTest {
     private static Logger logger = LoggerFactory.getLogger(LoadRealDatasetsAndCheckLocationTest.class);
@@ -99,8 +98,8 @@ public class LoadRealDatasetsAndCheckLocationTest {
         DcatDataStore dcatDataStore = mock(DcatDataStore.class);
         doThrow(Exception.class).when(dcatDataStore).saveDataCatalogue(anyObject(), anyObject());
 
-        PowerMockito.mockStatic(RetrieveCodes.class);
-        when(RetrieveCodes.getAllCodes(anyString())).thenReturn(extractLocationCodes(resource, getCodes()));
+        PowerMockito.mockStatic(ReferenceDataClient.class);
+        when(ReferenceDataClient.getAllCodesByUri(anyString())).thenReturn(extractLocationCodes(resource, getCodes()));
 
         ElasticSearchResultHandler esHandler = new ElasticSearchResultHandler("localhost", 9300, "elasticsearch", "http://localhost:8100", "user", "password");
         AdminDataStore adminDataStore = mock(AdminDataStore.class);
