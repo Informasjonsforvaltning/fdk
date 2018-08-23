@@ -65,6 +65,7 @@ public class ApiHarvester {
             apiDocument.setUri(openApiUrl);
             apiDocument.setPublisher(new Publisher(apiCatalogRecord.getOrgNr()));
             apiDocument.setAccessRights(apiCatalogRecord.getAccessRights());
+            apiDocument.setProvenance(apiCatalogRecord.getProvenance());
 
             OpenApi openApi = mapper.readValue(new URL(openApiUrl), OpenApi.class);
             populateApiDocumentOpenApi(apiDocument, openApi);
@@ -200,8 +201,13 @@ public class ApiHarvester {
                         accessRights.add(rightStatement);
                     }
                 }
+
                 catalogRecord.setAccessRights(accessRights);
-//                catalogRecord.setProvenance();
+
+                String provenanceCode = line.get("Provenance");
+                SkosCode provenance = referenceDataClient.getCodes("provenancestatement").get(provenanceCode);
+
+                catalogRecord.setProvenance(provenance);
 //                todo dataset reference
 //                todo lookup publisher data
 
