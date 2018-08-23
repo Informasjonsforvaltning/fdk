@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import DocumentMeta from 'react-document-meta';
 import _ from 'lodash';
 
-import { DatasetLabelNational } from '../dataset-label-national/dataset-label-national.component';
+import { LabelNational } from '../label-national/label-national.component';
 import { PublisherLabel } from '../publisher-label/publisher-label.component';
 import { getPublisherByOrgNr } from '../../redux/modules/publishers';
 import { getTranslateText } from '../../lib/translateText';
@@ -59,7 +59,7 @@ export const SearchHitHeader = props => {
         <div className="mb-2 d-flex flex-wrap align-items-baseline">
           {headerTag === 'h1' && <h1 className="mr-3">{title}</h1>}
           {headerTag === 'h2' && <h2 className="mr-3">{title}</h2>}
-          {_.get(provenance, 'code') === 'NASJONAL' && <DatasetLabelNational />}
+          {_.get(provenance, 'code') === 'NASJONAL' && <LabelNational />}
         </div>
       )}
 
