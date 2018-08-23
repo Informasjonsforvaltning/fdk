@@ -58,7 +58,11 @@ export class ShowMore extends React.Component {
         </React.Fragment>
       );
     }
-    return <div className="p">{content}</div>;
+    return (
+      <div className="mb-5" name={this.props.label}>
+        {content}
+      </div>
+    );
   }
 }
 
