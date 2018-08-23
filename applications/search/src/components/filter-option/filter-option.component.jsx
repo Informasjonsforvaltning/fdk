@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import _capitalize from 'lodash/capitalize';
 
-import localization from '../../../lib/localization';
-import { getTranslateText } from '../../../lib/translateText';
+import localization from '../../lib/localization';
+import { getTranslateText } from '../../lib/translateText';
 
 export const FilterOption = props => {
   const {
