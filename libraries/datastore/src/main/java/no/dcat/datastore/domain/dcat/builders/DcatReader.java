@@ -4,12 +4,12 @@ import no.dcat.datastore.domain.dcat.Distribution;
 import no.dcat.datastore.domain.dcat.client.LoadLocations;
 import no.dcat.shared.Catalog;
 import no.dcat.shared.Subject;
-import no.dcat.datastore.domain.dcat.client.RetrieveCodes;
 import no.dcat.datastore.domain.dcat.client.RetrieveDataThemes;
 import no.dcat.shared.DataTheme;
 import no.dcat.shared.Dataset;
 import no.dcat.shared.SkosCode;
 import no.dcat.datastore.domain.dcat.vocabulary.DCAT;
+import no.dcat.shared.client.referenceData.ReferenceDataClient;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ResIterator;
 import org.apache.jena.rdf.model.Resource;
@@ -37,7 +37,7 @@ public class DcatReader {
         // Retrieve all codes from reference-data.
         logger.debug("reading codes from: {}", codeServiceHost);
         dataThemes = RetrieveDataThemes.getAllDataThemes(codeServiceHost);
-        codes = RetrieveCodes.getAllCodes(codeServiceHost);
+        codes = ReferenceDataClient.getAllCodesByUri(codeServiceHost);
 
         if (codes.get("location") != null) {
             locations = codes.get("location");
