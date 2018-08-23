@@ -7,8 +7,11 @@ import no.acat.model.ApiCatalogRecord;
 import no.acat.model.ApiDocument;
 import no.acat.model.openapi3.OpenApi;
 import no.acat.service.ElasticsearchService;
+import no.acat.service.ReferenceDataService;
 import no.dcat.shared.Contact;
 import no.dcat.shared.Publisher;
+import no.dcat.shared.SkosCode;
+import no.dcat.shared.client.referenceData.ReferenceDataClient;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
@@ -16,9 +19,9 @@ import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.search.SearchType;
+import org.elasticsearch.client.Client;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
-import org.elasticsearch.search.SearchHits;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,21 +34,20 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class ApiHarvester {
     private static final Logger logger = LoggerFactory.getLogger(ApiHarvester.class);
 
-    private ElasticsearchService elasticsearchService;
+    private Client elasticsearchClient;
+    private ReferenceDataClient referenceDataClient;
     private ObjectMapper mapper = Utils.jsonMapper();
 
     @Autowired
-    public ApiHarvester(ElasticsearchService elasticsearchService) {
-        this.elasticsearchService = elasticsearchService;
+    public ApiHarvester(ElasticsearchService elasticsearchService, ReferenceDataService referenceDataService) {
+        this.elasticsearchClient = elasticsearchService.getClient();
+        this.referenceDataClient = referenceDataService.getClient();
     }
 
     public ApiDocument harvestApi(ApiCatalogRecord apiCatalogRecord) {
@@ -62,13 +64,14 @@ public class ApiHarvester {
 
             apiDocument.setUri(openApiUrl);
             apiDocument.setPublisher(new Publisher(apiCatalogRecord.getOrgNr()));
+            apiDocument.setAccessRights(apiCatalogRecord.getAccessRights());
 
             OpenApi openApi = mapper.readValue(new URL(openApiUrl), OpenApi.class);
             populateApiDocumentOpenApi(apiDocument, openApi);
 
             String id = lookupApiDocumentId(apiCatalogRecord);
             if (id == null) {
-                id= UUID.randomUUID().toString();
+                id = UUID.randomUUID().toString();
             }
             apiDocument.setId(id);
 
@@ -87,7 +90,7 @@ public class ApiHarvester {
 
     String lookupApiDocumentId(ApiCatalogRecord apiCatalogRecord) {
         String openApiUrl = apiCatalogRecord.getOpenApiUrl();
-        SearchResponse response = elasticsearchService.getClient().prepareSearch("acat")
+        SearchResponse response = elasticsearchClient.prepareSearch("acat")
                 .setTypes("apispec")
                 .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
                 .setQuery(QueryBuilders.termQuery("uri", openApiUrl))
@@ -137,7 +140,7 @@ public class ApiHarvester {
     }
 
     void indexApi(String id, ApiDocument document) throws JsonProcessingException {
-        BulkRequestBuilder bulkRequest = elasticsearchService.getClient().prepareBulk();
+        BulkRequestBuilder bulkRequest = elasticsearchClient.prepareBulk();
         IndexRequest request = new IndexRequest("acat", "apispec", id);
 
         request.source(mapper.writeValueAsString(document));
@@ -187,8 +190,17 @@ public class ApiHarvester {
 //                catalogRecord.setOrgName(line.get("OrgName"));
                 catalogRecord.setOpenApiUrl(line.get("OpenApiUrl"));
 
-//                todo expand list and lookup codes
-//                catalogRecord.setAccessRights(new ArrayList<SkosCode>()[1]{new SkosCode()} line.get("AccessRights"));
+                Map<String, SkosCode> rightsStatements = referenceDataClient.getCodes("rightsstatement");
+                String[] accessRightCodes = line.get("AccessRights").split(",");
+                List<SkosCode> accessRights = new ArrayList();
+
+                for (String accessRightCode : accessRightCodes) {
+                    SkosCode rightStatement = rightsStatements.get(accessRightCode);
+                    if (rightStatement != null) {
+                        accessRights.add(rightStatement);
+                    }
+                }
+                catalogRecord.setAccessRights(accessRights);
 //                catalogRecord.setProvenance();
 //                todo dataset reference
 //                todo lookup publisher data

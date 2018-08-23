@@ -13,6 +13,6 @@ public class ApiCatalogRecord {
     private String openApiUrl;
     private String docUrl;
     private List<SkosCode> accessRights;
-    private List<SkosCode> provenance;
+    private SkosCode provenance;
     private List<Reference> datasetReferences;
 }

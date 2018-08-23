@@ -45,7 +45,7 @@ public class ApiDocument  {
     private SkosCode provenance;
 
     @ApiModelProperty("A code to identify if the api is open or restricted in some way [dct:accessRights]")
-    private SkosCode accessRights;
+    private List<SkosCode> accessRights;
 
     @ApiModelProperty("The publisher of the api [dct:publisher]")
     private Publisher publisher;
