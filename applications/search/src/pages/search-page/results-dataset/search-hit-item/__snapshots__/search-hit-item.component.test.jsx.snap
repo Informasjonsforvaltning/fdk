@@ -17,47 +17,51 @@ exports[`should render SearchHitItem NON_PUBLIC correctly 1`] = `
     <div
       className="fdk-container-search-hit"
     >
-      <h2>
-        AAMarkagrensen Oslo Kommune og nærliggende kommuner
-      </h2>
-      <div
-        className="fdk-dataset-themes"
-      >
-        <PublisherLabel
-          label="Owned by"
-          publisherItem={
+      <header>
+        <SearchHitHeader
+          headerTag="h2"
+          meta={
+            Object {
+              "title": "AAMarkagrensen Oslo Kommune og nærliggende kommuner",
+            }
+          }
+          provenance={
+            Object {
+              "code": "vedtak",
+              "prefLabel": Object {
+                "nb": "Vedtak",
+              },
+              "uri": "http://data.brreg.no/datakatalog/provenance/vedtak",
+            }
+          }
+          publisher={
             Object {
               "id": "987654321",
               "name": "TESTETATEN",
               "uri": "http://data.brreg.no/enhetsregisteret/enhet/987654321",
             }
           }
+          publisherItems={null}
+          publisherLabel="Owned by"
+          theme={
+            Array [
+              Object {
+                "title": Object {
+                  "nb": "Forvaltning og offentlig støtte",
+                },
+                "uri": "http://publications.europa.eu/resource/authority/data-theme/GOVE",
+              },
+              Object {
+                "title": Object {
+                  "nb": "Miljø",
+                },
+                "uri": "http://publications.europa.eu/resource/authority/data-theme/ENVI",
+              },
+            ]
+          }
+          title="AAMarkagrensen Oslo Kommune og nærliggende kommuner"
         />
-        <div
-          className="fdk-label mr-2 mb-2"
-          key="dataset-description-theme-0"
-        >
-          <span
-            aria-hidden="false"
-            className="uu-invisible"
-          >
-            Datasettets tema.
-          </span>
-          Forvaltning og offentlig støtte
-        </div>
-        <div
-          className="fdk-label mr-2 mb-2"
-          key="dataset-description-theme-1"
-        >
-          <span
-            aria-hidden="false"
-            className="uu-invisible"
-          >
-            Datasettets tema.
-          </span>
-          Miljø
-        </div>
-      </div>
+      </header>
       <p
         className="fdk-p-search-hit"
       >
@@ -104,37 +108,45 @@ exports[`should render SearchHitItem PUBLIC correctly 1`] = `
     <div
       className="fdk-container-search-hit"
     >
-      <h2>
-        AAMarkagrensen Oslo Kommune og nærliggende kommuner
-      </h2>
-      <div
-        className="fdk-dataset-themes"
-      >
-        <div
-          className="fdk-label mr-2 mb-2"
-          key="dataset-description-theme-0"
-        >
-          <span
-            aria-hidden="false"
-            className="uu-invisible"
-          >
-            Datasettets tema.
-          </span>
-          Forvaltning og offentlig støtte
-        </div>
-        <div
-          className="fdk-label mr-2 mb-2"
-          key="dataset-description-theme-1"
-        >
-          <span
-            aria-hidden="false"
-            className="uu-invisible"
-          >
-            Datasettets tema.
-          </span>
-          Miljø
-        </div>
-      </div>
+      <header>
+        <SearchHitHeader
+          headerTag="h2"
+          meta={
+            Object {
+              "title": "AAMarkagrensen Oslo Kommune og nærliggende kommuner",
+            }
+          }
+          provenance={
+            Object {
+              "code": "vedtak",
+              "prefLabel": Object {
+                "nb": "Vedtak",
+              },
+              "uri": "http://data.brreg.no/datakatalog/provenance/vedtak",
+            }
+          }
+          publisher={null}
+          publisherItems={null}
+          publisherLabel="Owned by"
+          theme={
+            Array [
+              Object {
+                "title": Object {
+                  "nb": "Forvaltning og offentlig støtte",
+                },
+                "uri": "http://publications.europa.eu/resource/authority/data-theme/GOVE",
+              },
+              Object {
+                "title": Object {
+                  "nb": "Miljø",
+                },
+                "uri": "http://publications.europa.eu/resource/authority/data-theme/ENVI",
+              },
+            ]
+          }
+          title="AAMarkagrensen Oslo Kommune og nærliggende kommuner"
+        />
+      </header>
       <p
         className="fdk-p-search-hit"
       >
@@ -175,47 +187,51 @@ exports[`should render SearchHitItem RESTRICTED correctly 1`] = `
     <div
       className="fdk-container-search-hit"
     >
-      <h2>
-        AAMarkagrensen Oslo Kommune og nærliggende kommuner
-      </h2>
-      <div
-        className="fdk-dataset-themes"
-      >
-        <PublisherLabel
-          label="Owned by"
-          publisherItem={
+      <header>
+        <SearchHitHeader
+          headerTag="h2"
+          meta={
+            Object {
+              "title": "AAMarkagrensen Oslo Kommune og nærliggende kommuner",
+            }
+          }
+          provenance={
+            Object {
+              "code": "vedtak",
+              "prefLabel": Object {
+                "nb": "Vedtak",
+              },
+              "uri": "http://data.brreg.no/datakatalog/provenance/vedtak",
+            }
+          }
+          publisher={
             Object {
               "id": "987654321",
               "name": "TESTETATEN",
               "uri": "http://data.brreg.no/enhetsregisteret/enhet/987654321",
             }
           }
+          publisherItems={null}
+          publisherLabel="Owned by"
+          theme={
+            Array [
+              Object {
+                "title": Object {
+                  "nb": "Forvaltning og offentlig støtte",
+                },
+                "uri": "http://publications.europa.eu/resource/authority/data-theme/GOVE",
+              },
+              Object {
+                "title": Object {
+                  "nb": "Miljø",
+                },
+                "uri": "http://publications.europa.eu/resource/authority/data-theme/ENVI",
+              },
+            ]
+          }
+          title="AAMarkagrensen Oslo Kommune og nærliggende kommuner"
         />
-        <div
-          className="fdk-label mr-2 mb-2"
-          key="dataset-description-theme-0"
-        >
-          <span
-            aria-hidden="false"
-            className="uu-invisible"
-          >
-            Datasettets tema.
-          </span>
-          Forvaltning og offentlig støtte
-        </div>
-        <div
-          className="fdk-label mr-2 mb-2"
-          key="dataset-description-theme-1"
-        >
-          <span
-            aria-hidden="false"
-            className="uu-invisible"
-          >
-            Datasettets tema.
-          </span>
-          Miljø
-        </div>
-      </div>
+      </header>
       <p
         className="fdk-p-search-hit"
       >
@@ -275,37 +291,45 @@ exports[`should render SearchHitItem with distribution type correctly 1`] = `
     <div
       className="fdk-container-search-hit"
     >
-      <h2>
-        AAMarkagrensen Oslo Kommune og nærliggende kommuner
-      </h2>
-      <div
-        className="fdk-dataset-themes"
-      >
-        <div
-          className="fdk-label mr-2 mb-2"
-          key="dataset-description-theme-0"
-        >
-          <span
-            aria-hidden="false"
-            className="uu-invisible"
-          >
-            Datasettets tema.
-          </span>
-          Forvaltning og offentlig støtte
-        </div>
-        <div
-          className="fdk-label mr-2 mb-2"
-          key="dataset-description-theme-1"
-        >
-          <span
-            aria-hidden="false"
-            className="uu-invisible"
-          >
-            Datasettets tema.
-          </span>
-          Miljø
-        </div>
-      </div>
+      <header>
+        <SearchHitHeader
+          headerTag="h2"
+          meta={
+            Object {
+              "title": "AAMarkagrensen Oslo Kommune og nærliggende kommuner",
+            }
+          }
+          provenance={
+            Object {
+              "code": "vedtak",
+              "prefLabel": Object {
+                "nb": "Vedtak",
+              },
+              "uri": "http://data.brreg.no/datakatalog/provenance/vedtak",
+            }
+          }
+          publisher={null}
+          publisherItems={null}
+          publisherLabel="Owned by"
+          theme={
+            Array [
+              Object {
+                "title": Object {
+                  "nb": "Forvaltning og offentlig støtte",
+                },
+                "uri": "http://publications.europa.eu/resource/authority/data-theme/GOVE",
+              },
+              Object {
+                "title": Object {
+                  "nb": "Miljø",
+                },
+                "uri": "http://publications.europa.eu/resource/authority/data-theme/ENVI",
+              },
+            ]
+          }
+          title="AAMarkagrensen Oslo Kommune og nærliggende kommuner"
+        />
+      </header>
       <p
         className="fdk-p-search-hit"
       >
@@ -384,21 +408,36 @@ exports[`should render SearchHitItem with no title, description, accessRights an
     <div
       className="fdk-container-search-hit"
     >
-      <h2 />
-      <div
-        className="fdk-dataset-themes"
-      >
-        <PublisherLabel
-          label="Owned by"
-          publisherItem={
+      <header>
+        <SearchHitHeader
+          headerTag="h2"
+          meta={
+            Object {
+              "title": undefined,
+            }
+          }
+          provenance={
+            Object {
+              "code": "vedtak",
+              "prefLabel": Object {
+                "nb": "Vedtak",
+              },
+              "uri": "http://data.brreg.no/datakatalog/provenance/vedtak",
+            }
+          }
+          publisher={
             Object {
               "id": "987654321",
               "name": "TESTETATEN",
               "uri": "http://data.brreg.no/enhetsregisteret/enhet/987654321",
             }
           }
+          publisherItems={null}
+          publisherLabel="Owned by"
+          theme={null}
+          title={null}
         />
-      </div>
+      </header>
       <p
         className="fdk-p-search-hit"
       >
