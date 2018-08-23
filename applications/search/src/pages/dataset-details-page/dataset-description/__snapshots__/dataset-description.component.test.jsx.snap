@@ -2,42 +2,49 @@
 
 exports[`should render DatasetDescription correctly 1`] = `
 <header>
-  <SideEffect(DocumentMeta)
-    description="Datasettet avgrenser område for virkeområdet til lov 6. juni 2009 nr. 35 om naturområder i Oslo og nærliggende kommuner (markaloven) som trådte i kraft 1. september 2009. Markalovens virkeområde er fastsatt i forskrift 4. september 2015 nr. 1032 om justering av markagrensen fastlegger markalovens geografiske virkeområde med tilhørende kart."
+  <div
+    className="fdk-detail-date mb-5"
+  >
+    <HarvestDate
+      harvest={null}
+    />
+  </div>
+  <SearchHitHeader
+    headerTag="h1"
+    meta={
+      Object {
+        "description": "Datasettet avgrenser område for virkeområdet til lov 6. juni 2009 nr. 35 om naturområder i Oslo og nærliggende kommuner (markaloven) som trådte i kraft 1. september 2009. Markalovens virkeområde er fastsatt i forskrift 4. september 2015 nr. 1032 om justering av markagrensen fastlegger markalovens geografiske virkeområde med tilhørende kart.",
+        "title": "AAMarkagrensen Oslo Kommune og nærliggende kommuner",
+      }
+    }
+    provenance={null}
+    publisher={
+      Object {
+        "id": "987654321",
+        "name": "TESTETATEN",
+        "uri": "http://data.brreg.no/enhetsregisteret/enhet/987654321",
+      }
+    }
+    publisherItems={null}
+    publisherLabel="Owned by"
+    theme={
+      Array [
+        Object {
+          "title": Object {
+            "nb": "Forvaltning og offentlig støtte",
+          },
+          "uri": "http://publications.europa.eu/resource/authority/data-theme/GOVE",
+        },
+        Object {
+          "title": Object {
+            "nb": "Miljø",
+          },
+          "uri": "http://publications.europa.eu/resource/authority/data-theme/ENVI",
+        },
+      ]
+    }
     title="AAMarkagrensen Oslo Kommune og nærliggende kommuner"
   />
-  <h1>
-    AAMarkagrensen Oslo Kommune og nærliggende kommuner
-  </h1>
-  <div
-    className="fdk-detail-date"
-  />
-  <div
-    className="mb-2"
-  >
-    <PublisherLabel
-      label="Owned by"
-      publisherItem={
-        Object {
-          "id": "987654321",
-          "name": "TESTETATEN",
-          "uri": "http://data.brreg.no/enhetsregisteret/enhet/987654321",
-        }
-      }
-    />
-    <div
-      className="fdk-label fdk-label-on-grey mr-2 mb-2"
-      key="dataset-description-theme-undefined"
-    >
-      Forvaltning og offentlig støtte
-    </div>
-    <div
-      className="fdk-label fdk-label-on-grey mr-2 mb-2"
-      key="dataset-description-theme-undefined"
-    >
-      Miljø
-    </div>
-  </div>
   <ShowMore
     contentHtml={null}
     label="Description"
@@ -55,42 +62,49 @@ exports[`should render DatasetDescription correctly 1`] = `
 
 exports[`should render DatasetDescription correctly 2`] = `
 <header>
-  <SideEffect(DocumentMeta)
-    description="Datasettet avgrenser område for virkeområdet til lov 6. juni 2009 nr. 35 om naturområder i Oslo og nærliggende kommuner (markaloven) som trådte i kraft 1. september 2009. Markalovens virkeområde er fastsatt i forskrift 4. september 2015 nr. 1032 om justering av markagrensen fastlegger markalovens geografiske virkeområde med tilhørende kart."
+  <div
+    className="fdk-detail-date mb-5"
+  >
+    <HarvestDate
+      harvest={null}
+    />
+  </div>
+  <SearchHitHeader
+    headerTag="h1"
+    meta={
+      Object {
+        "description": "Datasettet avgrenser område for virkeområdet til lov 6. juni 2009 nr. 35 om naturområder i Oslo og nærliggende kommuner (markaloven) som trådte i kraft 1. september 2009. Markalovens virkeområde er fastsatt i forskrift 4. september 2015 nr. 1032 om justering av markagrensen fastlegger markalovens geografiske virkeområde med tilhørende kart.",
+        "title": "AAMarkagrensen Oslo Kommune og nærliggende kommuner",
+      }
+    }
+    provenance={null}
+    publisher={
+      Object {
+        "id": "987654321",
+        "name": "TESTETATEN",
+        "uri": "http://data.brreg.no/enhetsregisteret/enhet/987654321",
+      }
+    }
+    publisherItems={null}
+    publisherLabel="Owned by"
+    theme={
+      Array [
+        Object {
+          "title": Object {
+            "nb": "Forvaltning og offentlig støtte",
+          },
+          "uri": "http://publications.europa.eu/resource/authority/data-theme/GOVE",
+        },
+        Object {
+          "title": Object {
+            "nb": "Miljø",
+          },
+          "uri": "http://publications.europa.eu/resource/authority/data-theme/ENVI",
+        },
+      ]
+    }
     title="AAMarkagrensen Oslo Kommune og nærliggende kommuner"
   />
-  <h1>
-    AAMarkagrensen Oslo Kommune og nærliggende kommuner
-  </h1>
-  <div
-    className="fdk-detail-date"
-  />
-  <div
-    className="mb-2"
-  >
-    <PublisherLabel
-      label="Owned by"
-      publisherItem={
-        Object {
-          "id": "987654321",
-          "name": "TESTETATEN",
-          "uri": "http://data.brreg.no/enhetsregisteret/enhet/987654321",
-        }
-      }
-    />
-    <div
-      className="fdk-label fdk-label-on-grey mr-2 mb-2"
-      key="dataset-description-theme-undefined"
-    >
-      Forvaltning og offentlig støtte
-    </div>
-    <div
-      className="fdk-label fdk-label-on-grey mr-2 mb-2"
-      key="dataset-description-theme-undefined"
-    >
-      Miljø
-    </div>
-  </div>
   <ShowMore
     contentHtml={null}
     label="Description"
@@ -108,15 +122,27 @@ exports[`should render DatasetDescription correctly 2`] = `
 
 exports[`should render DatasetDescription correctly with no props 1`] = `
 <header>
-  <SideEffect(DocumentMeta)
-    description=""
+  <div
+    className="fdk-detail-date mb-5"
+  >
+    <HarvestDate
+      harvest={null}
+    />
+  </div>
+  <SearchHitHeader
+    headerTag="h1"
+    meta={
+      Object {
+        "description": "",
+        "title": "",
+      }
+    }
+    provenance={null}
+    publisher={null}
+    publisherItems={null}
+    publisherLabel="Owned by"
+    theme={null}
     title=""
-  />
-  <div
-    className="fdk-detail-date"
-  />
-  <div
-    className="mb-2"
   />
 </header>
 `;

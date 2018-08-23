@@ -8,8 +8,7 @@ import { DistributionFormat } from '../../../../components/distribution-format/d
 import localization from '../../../../lib/localization';
 import { getTranslateText } from '../../../../lib/translateText';
 import { getDistributionTypeByUri } from '../../../../redux/modules/distributionType';
-import { DatasetLabelNational } from '../../../../components/dataset-label-national/dataset-label-national.component';
-import { PublisherLabel } from '../../../../components/publisher-label/publisher-label.component';
+import { SearchHitHeader } from '../../../../components/search-hit-header/search-hit-header.component';
 import './search-hit-item.scss';
 
 const renderFormats = (source, code, distributionTypeItems) => {
@@ -55,38 +54,6 @@ const renderFormats = (source, code, distributionTypeItems) => {
   return null;
 };
 
-const renderPublisher = source => {
-  const { publisher } = source;
-  if (!publisher) {
-    return null;
-  }
-  return (
-    <PublisherLabel
-      label={localization.search_hit.owned}
-      publisherItem={publisher}
-    />
-  );
-};
-
-const renderThemes = source => {
-  let themeNodes;
-  const { theme } = source;
-  if (theme) {
-    themeNodes = theme.map((singleTheme, index) => (
-      <div
-        key={`dataset-description-theme-${index}`}
-        className="fdk-label mr-2 mb-2"
-      >
-        <span className="uu-invisible" aria-hidden="false">
-          Datasettets tema.
-        </span>
-        {getTranslateText(singleTheme.title)}
-      </div>
-    ));
-  }
-  return themeNodes;
-};
-
 const renderSample = source => {
   const { sample } = source;
   if (sample) {
@@ -102,8 +69,8 @@ export const SearchHitItem = props => {
   const { _source } = props.result;
 
   const hitId = encodeURIComponent(_source.id);
+  const { publisher, theme, provenance } = _source;
   let { title, description, objective } = _source;
-  const { provenance } = _source;
   if (title) {
     title = getTranslateText(_source.title);
   }
@@ -148,6 +115,10 @@ export const SearchHitItem = props => {
     accessRightsLabel = localization.dataset.accessRights.authorityCode.public;
   }
 
+  const meta = {
+    title
+  };
+
   const distributionClass = cx({
     'fdk-container-distributions':
       distributionNonPublic || distributionRestricted || distributionPublic,
@@ -167,13 +138,17 @@ export const SearchHitItem = props => {
           Søketreff.
         </span>
         <div className="fdk-container-search-hit">
-          <h2>{title}</h2>
-          <div className="fdk-dataset-themes">
-            {renderPublisher(_source)}
-            {renderThemes(_source)}
-            {provenance &&
-              provenance.code === 'NASJONAL' && <DatasetLabelNational />}
-          </div>
+          <header>
+            <SearchHitHeader
+              meta={meta}
+              headerTag="h2"
+              title={title}
+              publisherLabel={localization.search_hit.owned}
+              publisher={publisher}
+              theme={theme}
+              provenance={provenance}
+            />
+          </header>
           <p className="fdk-p-search-hit">
             <span className="uu-invisible" aria-hidden="false">
               Beskrivelse av datasettet,

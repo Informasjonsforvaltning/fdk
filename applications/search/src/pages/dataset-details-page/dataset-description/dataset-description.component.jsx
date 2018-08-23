@@ -1,13 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import DocumentMeta from 'react-document-meta';
 
 import localization from '../../../lib/localization';
-import { getTranslateText } from '../../../lib/translateText';
 import { ShowMore } from '../../../components/show-more/show-more';
-import { DatasetLabelNational } from '../../../components/dataset-label-national/dataset-label-national.component';
 import { PublisherLabel } from '../../../components/publisher-label/publisher-label.component';
 import { HarvestDate } from '../../../components/harvest-date/harvest-date.component';
+import { SearchHitHeader } from '../../../components/search-hit-header/search-hit-header.component';
 
 export class DatasetDescription extends React.Component {
   constructor(props) {
@@ -36,45 +34,26 @@ export class DatasetDescription extends React.Component {
     );
   }
 
-  _renderThemes() {
-    let themeNodes = null;
-    const { themes } = this.props;
-    if (themes) {
-      themeNodes = themes.map(singleTheme => (
-        <div
-          key={`dataset-description-theme-${singleTheme.code}`}
-          className="fdk-label fdk-label-on-grey mr-2 mb-2"
-        >
-          {getTranslateText(singleTheme.title)}
-        </div>
-      ));
-    }
-    return themeNodes;
-  }
-
   render() {
-    const { harvest } = this.props;
+    const { harvest, title, publisher, themes, provenance } = this.props;
     const meta = {
       title: this.props.title,
       description: this.props.description
     };
     return (
       <header>
-        <DocumentMeta {...meta} />
-        {this.props.title && <h1>{this.props.title}</h1>}
-
-        <div className="fdk-detail-date">
-          <HarvestDate harvest={harvest}/>
+        <div className="fdk-detail-date mb-5">
+          <HarvestDate harvest={harvest} />
         </div>
 
-        <div className="mb-2">
-          {this._renderPublisher()}
-          {this._renderThemes()}
-          {this.props.provenance &&
-            this.props.provenance.code === 'NASJONAL' && (
-              <DatasetLabelNational />
-            )}
-        </div>
+        <SearchHitHeader
+          meta={meta}
+          title={title}
+          publisherLabel={localization.search_hit.owned}
+          publisher={publisher}
+          theme={themes}
+          provenance={provenance}
+        />
 
         {this.props.description && (
           <ShowMore
