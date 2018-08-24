@@ -8,9 +8,7 @@ import no.acat.model.ApiDocument;
 import no.acat.model.openapi3.OpenApi;
 import no.acat.service.ElasticsearchService;
 import no.acat.service.ReferenceDataService;
-import no.dcat.shared.Contact;
-import no.dcat.shared.Publisher;
-import no.dcat.shared.SkosCode;
+import no.dcat.shared.*;
 import no.dcat.shared.client.referenceData.ReferenceDataClient;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
@@ -66,6 +64,7 @@ public class ApiHarvester {
             apiDocument.setPublisher(new Publisher(apiCatalogRecord.getOrgNr()));
             apiDocument.setAccessRights(apiCatalogRecord.getAccessRights());
             apiDocument.setProvenance(apiCatalogRecord.getProvenance());
+            apiDocument.setDatasetReferences(apiCatalogRecord.getDatasetReferences());
 
             OpenApi openApi = mapper.readValue(new URL(openApiUrl), OpenApi.class);
             populateApiDocumentOpenApi(apiDocument, openApi);
@@ -208,8 +207,19 @@ public class ApiHarvester {
                 SkosCode provenance = referenceDataClient.getCodes("provenancestatement").get(provenanceCode);
 
                 catalogRecord.setProvenance(provenance);
-//                todo dataset reference
-//                todo lookup publisher data
+
+                String[] datasetRefUrls = line.get("DatasetRefs").split(",");
+                List<Reference> datasetReferences = new ArrayList();
+                SkosCode referenceTypeCode = referenceDataClient.getCodes("referencetypes").get("references");
+
+                for (String datasetRefUrl : datasetRefUrls) {
+                    Reference reference = new Reference(referenceTypeCode, SkosConcept.getInstance(datasetRefUrl));
+                    if (reference != null) {
+                        datasetReferences.add(reference);
+                    }
+                }
+
+                catalogRecord.setDatasetReferences(datasetReferences);
 
                 result.add(catalogRecord);
             }
