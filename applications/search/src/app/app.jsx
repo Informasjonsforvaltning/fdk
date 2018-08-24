@@ -10,7 +10,15 @@ import { ArticlePage } from '../pages/article-page/article-page.component';
 import { Breadcrumbs } from './breadcrumbs/breadcrumbs.component';
 import { ConnectedAppNavBar } from './app-nav-bar/connected-app-nav-bar';
 import { ConnectedDatasetsReportPage } from '../pages/datasets-report-page/connected-datasets-report-page';
-
+import {
+  PATHNAME_DATASETS,
+  PATHNAME_DATASET_DETAILS,
+  PATHNAME_APIS,
+  PATHNAME_CONCEPTS,
+  PATHNAME_REPORTS,
+  PATHNAME_ABOUT,
+  PATHNAME_ABOUT_REGISTRATION
+} from '../constants/constants';
 import '../assets/css/bootstrap-override.scss';
 import './styles';
 
@@ -46,21 +54,33 @@ export function App(props) {
       </div>
       <div className="app-routes">
         <Switch>
-          <Route exact path="/" component={ConnectedSearchPage} />
-          <Route exact path="/api" component={ConnectedSearchPage} />
-          <Route exact path="/concepts" component={ConnectedSearchPage} />
           <Route
             exact
-            path="/datasets/:id"
+            path={PATHNAME_DATASETS}
+            component={ConnectedSearchPage}
+          />
+          <Route exact path={PATHNAME_APIS} component={ConnectedSearchPage} />
+          <Route
+            exact
+            path={PATHNAME_CONCEPTS}
+            component={ConnectedSearchPage}
+          />
+          <Route
+            exact
+            path={`${PATHNAME_DATASET_DETAILS}/:id`}
             component={ConnectedDatasetDetailsPage}
           />
           <Route
             exact
-            path="/reports"
+            path={PATHNAME_REPORTS}
             component={ConnectedDatasetsReportPage}
           />
-          <Route exact path="/about" component={AboutPage} />
-          <Route exact path="/about-registration" component={ArticlePage} />
+          <Route exact path={PATHNAME_ABOUT} component={AboutPage} />
+          <Route
+            exact
+            path={PATHNAME_ABOUT_REGISTRATION}
+            component={ArticlePage}
+          />
         </Switch>
       </div>
 

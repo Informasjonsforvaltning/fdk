@@ -11,6 +11,11 @@ import {
 } from 'reactstrap';
 
 import localization from '../../lib/localization';
+import {
+  PATHNAME_REPORTS,
+  PATHNAME_ABOUT,
+  PATHNAME_ABOUT_REGISTRATION
+} from '../../constants/constants';
 
 export function AppNavBar(props) {
   return (
@@ -32,17 +37,17 @@ export function AppNavBar(props) {
           <div>
             <Nav className="d-none d-lg-inline-flex">
               <NavItem>
-                <Link className="nav-link" to="/about">
+                <Link className="nav-link" to={PATHNAME_ABOUT}>
                   {localization.about.about}
                 </Link>
               </NavItem>
               <NavItem>
-                <Link className="nav-link" to="/about-registration">
+                <Link className="nav-link" to={PATHNAME_ABOUT_REGISTRATION}>
                   {localization.menu.aboutRegistration}
                 </Link>
               </NavItem>
               <NavItem>
-                <Link className="nav-link" to="/reports">
+                <Link className="nav-link" to={PATHNAME_REPORTS}>
                   {localization.menu.reports}
                 </Link>
               </NavItem>
@@ -77,13 +82,16 @@ export function AppNavBar(props) {
                 {localization.app.menu}
               </DropdownToggle>
               <DropdownMenu right className="fdk-dropdownmenu">
-                <Link className="dropdown-item" to="/about">
+                <Link className="dropdown-item" to={PATHNAME_ABOUT}>
                   {localization.about.about}
                 </Link>
-                <Link className="dropdown-item" to="/about-registration">
+                <Link
+                  className="dropdown-item"
+                  to={PATHNAME_ABOUT_REGISTRATION}
+                >
                   {localization.menu.aboutRegistration}
                 </Link>
-                <Link className="dropdown-item" to="/reports">
+                <Link className="dropdown-item" to={PATHNAME_REPORTS}>
                   {localization.menu.reports}
                 </Link>
                 <DropdownItem onClick={() => props.onChangeLanguage('nb')}>
