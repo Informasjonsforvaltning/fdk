@@ -20,11 +20,6 @@ exports[`should render SearchHitItem NON_PUBLIC correctly 1`] = `
       <header>
         <SearchHitHeader
           headerTag="h2"
-          meta={
-            Object {
-              "title": "AAMarkagrensen Oslo Kommune og nærliggende kommuner",
-            }
-          }
           provenance={
             Object {
               "code": "vedtak",
@@ -111,11 +106,6 @@ exports[`should render SearchHitItem PUBLIC correctly 1`] = `
       <header>
         <SearchHitHeader
           headerTag="h2"
-          meta={
-            Object {
-              "title": "AAMarkagrensen Oslo Kommune og nærliggende kommuner",
-            }
-          }
           provenance={
             Object {
               "code": "vedtak",
@@ -190,11 +180,6 @@ exports[`should render SearchHitItem RESTRICTED correctly 1`] = `
       <header>
         <SearchHitHeader
           headerTag="h2"
-          meta={
-            Object {
-              "title": "AAMarkagrensen Oslo Kommune og nærliggende kommuner",
-            }
-          }
           provenance={
             Object {
               "code": "vedtak",
@@ -294,11 +279,6 @@ exports[`should render SearchHitItem with distribution type correctly 1`] = `
       <header>
         <SearchHitHeader
           headerTag="h2"
-          meta={
-            Object {
-              "title": "AAMarkagrensen Oslo Kommune og nærliggende kommuner",
-            }
-          }
           provenance={
             Object {
               "code": "vedtak",
@@ -411,11 +391,6 @@ exports[`should render SearchHitItem with no title, description, accessRights an
       <header>
         <SearchHitHeader
           headerTag="h2"
-          meta={
-            Object {
-              "title": undefined,
-            }
-          }
           provenance={
             Object {
               "code": "vedtak",

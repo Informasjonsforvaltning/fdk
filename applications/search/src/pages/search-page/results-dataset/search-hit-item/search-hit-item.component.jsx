@@ -115,10 +115,6 @@ export const SearchHitItem = props => {
     accessRightsLabel = localization.dataset.accessRights.authorityCode.public;
   }
 
-  const meta = {
-    title
-  };
-
   const distributionClass = cx({
     'fdk-container-distributions':
       distributionNonPublic || distributionRestricted || distributionPublic,
@@ -140,7 +136,6 @@ export const SearchHitItem = props => {
         <div className="fdk-container-search-hit">
           <header>
             <SearchHitHeader
-              meta={meta}
               headerTag="h2"
               title={title}
               publisherLabel={localization.search_hit.owned}

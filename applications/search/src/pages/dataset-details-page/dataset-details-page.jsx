@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import _ from 'lodash';
+import DocumentMeta from 'react-document-meta';
 
 import { DatasetDescription } from './dataset-description/dataset-description.component';
 import { DatasetKeyInfo } from './dataset-key-info/dataset-key-info.component';
@@ -198,11 +200,17 @@ export function DatasetDetailsPage(props) {
   if (!datasetItem) {
     return null;
   }
+
+  const meta = {
+    title: getTranslateText(_.get(datasetItem, 'title')),
+    description: getTranslateText(_.get(datasetItem, 'description'))
+  };
   return (
     <div className="container">
       <div className="row">
         <div className="col-lg-8 offset-lg-2" id="content" role="main">
           <article>
+            <DocumentMeta {...meta} />
             {_renderDatasetDescription()}
             {_renderKeyInfo()}
             {_renderDistribution()}
