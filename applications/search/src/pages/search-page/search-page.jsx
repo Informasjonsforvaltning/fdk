@@ -15,6 +15,11 @@ import { removeValue, addValue } from '../../lib/stringUtils';
 import './search-page.scss';
 import { extractPublisherCounts } from '../../api/get-datasets';
 import { extractPublisherTermsCounts } from '../../api/get-terms';
+import {
+  PATHNAME_DATASETS,
+  PATHNAME_APIS,
+  PATHNAME_CONCEPTS
+} from '../../constants/constants';
 
 const ReactGA = require('react-ga');
 
@@ -435,7 +440,7 @@ export class SearchPage extends React.Component {
           <Switch>
             <Route
               exact
-              path="/"
+              path={PATHNAME_DATASETS}
               render={props => (
                 <ResultsDataset
                   datasetItems={datasetItems}
@@ -463,10 +468,10 @@ export class SearchPage extends React.Component {
                 />
               )}
             />
-            <Route exact path="/api" render={() => <div>Beta</div>} />
+            <Route exact path={PATHNAME_APIS} render={() => <div>Beta</div>} />
             <Route
               exact
-              path="/concepts"
+              path={PATHNAME_CONCEPTS}
               render={props => (
                 <ResultsConcepts
                   termItems={termItems}
