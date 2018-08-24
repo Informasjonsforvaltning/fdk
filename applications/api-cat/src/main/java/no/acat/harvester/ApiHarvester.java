@@ -5,21 +5,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import no.acat.config.Utils;
 import no.acat.model.ApiCatalogRecord;
 import no.acat.model.ApiDocument;
-import no.acat.model.openapi3.OpenApi;
 import no.acat.service.ElasticsearchService;
 import no.acat.service.ReferenceDataService;
-import no.dcat.shared.*;
 import no.dcat.shared.client.referenceData.ReferenceDataClient;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.action.index.IndexRequest;
-import org.elasticsearch.action.search.SearchResponse;
-import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.client.Client;
-import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.search.SearchHit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +25,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.net.URL;
 import java.util.*;
 
 @Service
@@ -48,99 +41,35 @@ public class ApiHarvester {
         this.referenceDataClient = referenceDataService.getClient();
     }
 
-    public ApiDocument harvestApi(ApiCatalogRecord apiCatalogRecord) {
-        try {
+    @PostConstruct
+    public List<ApiDocument> harvestAll() {
+        List<ApiDocument> result = new ArrayList<>();
 
-            String openApiUrl = apiCatalogRecord.getOpenApiUrl();
+        List<ApiCatalogRecord> apiCatalog = getApiCatalog();
+        ApiDocumentBuilder apiDocumentBuilder = createApiDocumentBuilder();
 
-            if (openApiUrl.isEmpty()) {
-                logger.info("Skip harvest, missing uri.");
-                return null;
+        for (ApiCatalogRecord apiCatalogRecord : apiCatalog) {
+            try {
+
+                ApiDocument apiDocument = apiDocumentBuilder.create(apiCatalogRecord);
+                indexApi(apiDocument);
+                result.add(apiDocument);
+            } catch (Exception e) {
+                logger.error(e.getMessage());
             }
 
-            ApiDocument apiDocument = new ApiDocument();
-
-            apiDocument.setUri(openApiUrl);
-            apiDocument.setPublisher(new Publisher(apiCatalogRecord.getOrgNr()));
-            apiDocument.setAccessRights(apiCatalogRecord.getAccessRights());
-            apiDocument.setProvenance(apiCatalogRecord.getProvenance());
-            apiDocument.setDatasetReferences(apiCatalogRecord.getDatasetReferences());
-
-            OpenApi openApi = mapper.readValue(new URL(openApiUrl), OpenApi.class);
-            populateApiDocumentOpenApi(apiDocument, openApi);
-
-            String id = lookupApiDocumentId(apiCatalogRecord);
-            if (id == null) {
-                id = UUID.randomUUID().toString();
-            }
-            apiDocument.setId(id);
-
-            indexApi(id, apiDocument);
-
-            logger.info("Harvest api: {}", apiDocument.getUri());
-
-            return apiDocument;
-
-        } catch (Exception e) {
-            logger.error("Unable to harvest api: {}", e.getMessage(), e);
         }
-
-        return null;
+        return result;
     }
 
-    String lookupApiDocumentId(ApiCatalogRecord apiCatalogRecord) {
-        String openApiUrl = apiCatalogRecord.getOpenApiUrl();
-        SearchResponse response = elasticsearchClient.prepareSearch("acat")
-                .setTypes("apispec")
-                .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
-                .setQuery(QueryBuilders.termQuery("uri", openApiUrl))
-                .get();
 
-
-        SearchHit[] hits = response.getHits().getHits();
-        if (hits.length > 0) {
-            return hits[0].getId();
-        } else {
-            return null;
-        }
+    ApiDocumentBuilder createApiDocumentBuilder() {
+        return new ApiDocumentBuilder(elasticsearchClient, referenceDataClient);
     }
 
-    // this populates ApiDocument from openApi spec
-    void populateApiDocumentOpenApi(ApiDocument document, OpenApi openApi) {
-        if (openApi.getInfo() != null) {
-            if (openApi.getInfo().getTitle() != null) {
-                document.setTitle(new HashMap<>());
-                document.getTitle().put("no", openApi.getInfo().getTitle());
-            }
-
-            if (openApi.getInfo().getDescription() != null) {
-                document.setDescription(new HashMap<>());
-                document.getDescription().put("no", openApi.getInfo().getDescription());
-            }
-
-            if (openApi.getInfo().getContact() != null) {
-                document.setContactPoint(new ArrayList<>());
-                Contact contact = new Contact();
-                if (openApi.getInfo().getContact().getEmail() != null) {
-                    contact.setEmail(openApi.getInfo().getContact().getEmail());
-                }
-                if (openApi.getInfo().getContact().getName() != null) {
-                    contact.setOrganizationName(openApi.getInfo().getContact().getName());
-                }
-                if (openApi.getInfo().getContact().getUrl() != null) {
-                    contact.setUri(openApi.getInfo().getContact().getUrl());
-                }
-                document.getContactPoint().add(contact);
-            }
-        }
-
-        //todo format
-
-        document.setOpenApi(openApi);
-    }
-
-    void indexApi(String id, ApiDocument document) throws JsonProcessingException {
+    void indexApi(ApiDocument document) throws JsonProcessingException {
         BulkRequestBuilder bulkRequest = elasticsearchClient.prepareBulk();
+        String id = document.getId();
         IndexRequest request = new IndexRequest("acat", "apispec", id);
 
         request.source(mapper.writeValueAsString(document));
@@ -149,21 +78,16 @@ public class ApiHarvester {
         BulkResponse bulkResponse = bulkRequest.execute().actionGet();
         if (bulkResponse.hasFailures()) {
             final String msg = String.format("Failed index of %s. Reason %s", id, bulkResponse.buildFailureMessage());
-            logger.error(msg);
             throw new RuntimeException(msg);
         }
     }
 
-    //
     List<ApiCatalogRecord> getApiCatalog() {
-        org.springframework.core.io.Resource canonicalNamesFile = new ClassPathResource("apis.csv");
+        org.springframework.core.io.Resource apiCatalogCsvFile = new ClassPathResource("apis.csv");
         List<ApiCatalogRecord> result = new ArrayList<>();
 
-        // todo add hardcoded spec files as hardcoded catalog records
-        String[] apiFiles = {"enhetsreg-static.json", "seres-api.json"
-                // datakatalog comes via table now
-//                , "datakatalog-api.json"
-        };
+        String[] apiFiles = {"enhetsreg-static.json", "seres-api.json"};
+
         for (String apiFileName : apiFiles) {
             ApiCatalogRecord catalogRecord = new ApiCatalogRecord();
             catalogRecord.setOrgNr("974760673");
@@ -177,50 +101,20 @@ public class ApiHarvester {
         }
 
         Iterable<CSVRecord> records;
+
         try (
                 Reader input =
-                        new BufferedReader(new InputStreamReader(canonicalNamesFile.getInputStream()))
+                        new BufferedReader(new InputStreamReader(apiCatalogCsvFile.getInputStream()))
         ) {
             records = CSVFormat.EXCEL.withHeader().withDelimiter(';').parse(input);
 
             for (CSVRecord line : records) {
                 ApiCatalogRecord catalogRecord = new ApiCatalogRecord();
                 catalogRecord.setOrgNr(line.get("OrgNr"));
-//                not in use right now
-//                catalogRecord.setOrgName(line.get("OrgName"));
                 catalogRecord.setOpenApiUrl(line.get("OpenApiUrl"));
-
-                Map<String, SkosCode> rightsStatements = referenceDataClient.getCodes("rightsstatement");
-                String[] accessRightCodes = line.get("AccessRights").split(",");
-                List<SkosCode> accessRights = new ArrayList();
-
-                for (String accessRightCode : accessRightCodes) {
-                    SkosCode rightStatement = rightsStatements.get(accessRightCode);
-                    if (rightStatement != null) {
-                        accessRights.add(rightStatement);
-                    }
-                }
-
-                catalogRecord.setAccessRights(accessRights);
-
-                String provenanceCode = line.get("Provenance");
-                SkosCode provenance = referenceDataClient.getCodes("provenancestatement").get(provenanceCode);
-
-                catalogRecord.setProvenance(provenance);
-
-                String[] datasetRefUrls = line.get("DatasetRefs").split(",");
-                List<Reference> datasetReferences = new ArrayList();
-                SkosCode referenceTypeCode = referenceDataClient.getCodes("referencetypes").get("references");
-
-                for (String datasetRefUrl : datasetRefUrls) {
-                    Reference reference = new Reference(referenceTypeCode, SkosConcept.getInstance(datasetRefUrl));
-                    if (reference != null) {
-                        datasetReferences.add(reference);
-                    }
-                }
-
-                catalogRecord.setDatasetReferences(datasetReferences);
-
+                catalogRecord.setAccessRightsCodes(Arrays.asList(line.get("AccessRights").split(",")));
+                catalogRecord.setProvenanceCode(line.get("Provenance"));
+                catalogRecord.setDatasetReferences(Arrays.asList(line.get("DatasetRefs").split(",")));
                 result.add(catalogRecord);
             }
 
@@ -233,18 +127,5 @@ public class ApiHarvester {
         return result;
     }
 
-    @PostConstruct
-    public List<ApiDocument> harvestAll() {
-        List<ApiDocument> result = new ArrayList<>();
 
-        List<ApiCatalogRecord> apiCatalog = getApiCatalog();
-
-        for (ApiCatalogRecord apiCatalogRecord : apiCatalog) {
-            ApiDocument apiDocument = harvestApi(apiCatalogRecord);
-            if (apiDocument != null) {
-                result.add(apiDocument);
-            }
-        }
-        return result;
-    }
 }
