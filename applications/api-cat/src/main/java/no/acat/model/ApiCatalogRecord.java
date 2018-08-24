@@ -1,8 +1,6 @@
 package no.acat.model;
 
 import lombok.Data;
-import no.dcat.shared.SkosCode;
-import no.dcat.shared.Reference;
 
 import java.util.List;
 
@@ -12,7 +10,7 @@ public class ApiCatalogRecord {
     private String orgName;
     private String openApiUrl;
     private String docUrl;
-    private List<SkosCode> accessRights;
-    private SkosCode provenance;
-    private List<Reference> datasetReferences;
+    private List<String> accessRightsCodes;
+    private String provenanceCode;
+    private List<String> datasetReferences;
 }
