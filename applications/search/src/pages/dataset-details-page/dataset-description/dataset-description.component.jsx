@@ -36,10 +36,6 @@ export class DatasetDescription extends React.Component {
 
   render() {
     const { harvest, title, publisher, themes, provenance } = this.props;
-    const meta = {
-      title: this.props.title,
-      description: this.props.description
-    };
     return (
       <header>
         <div className="fdk-detail-date mb-5">
@@ -47,7 +43,6 @@ export class DatasetDescription extends React.Component {
         </div>
 
         <SearchHitHeader
-          meta={meta}
           title={title}
           publisherLabel={localization.search_hit.owned}
           publisher={publisher}

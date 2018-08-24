@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import DocumentMeta from 'react-document-meta';
 import _ from 'lodash';
 
 import { LabelNational } from '../label-national/label-national.component';
@@ -42,7 +41,6 @@ const renderThemes = theme => {
 
 export const SearchHitHeader = props => {
   const {
-    meta,
     headerTag,
     title,
     publisherLabel,
@@ -54,7 +52,6 @@ export const SearchHitHeader = props => {
 
   return (
     <React.Fragment>
-      <DocumentMeta {...meta} />
       {title && (
         <div className="mb-2 d-flex flex-wrap align-items-baseline">
           {headerTag === 'h1' && <h1 className="mr-3">{title}</h1>}
@@ -82,7 +79,6 @@ export const SearchHitHeader = props => {
 };
 
 SearchHitHeader.defaultProps = {
-  meta: null,
   headerTag: 'h1',
   title: null,
   publisherLabel: null,
@@ -93,7 +89,6 @@ SearchHitHeader.defaultProps = {
 };
 
 SearchHitHeader.propTypes = {
-  meta: PropTypes.object,
   headerTag: PropTypes.string,
   title: PropTypes.string,
   publisherLabel: PropTypes.string,
