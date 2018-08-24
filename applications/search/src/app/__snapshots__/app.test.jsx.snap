@@ -44,7 +44,7 @@ exports[`should render App correctly 1`] = `
       <Route
         component={[Function]}
         exact={true}
-        path="/api"
+        path="/apis"
       />
       <Route
         component={[Function]}
