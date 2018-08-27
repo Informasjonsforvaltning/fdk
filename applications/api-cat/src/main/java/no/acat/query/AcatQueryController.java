@@ -1,11 +1,9 @@
 package no.acat.query;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import no.acat.config.Utils;
 import no.acat.model.ApiDocument;
-import no.acat.model.openapi3.QueryResponse;
+import no.acat.model.QueryResponse;
 import no.acat.service.ElasticsearchService;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
@@ -21,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
+import static no.acat.query.ResponseAdapter.convertFromElasticResponse;
 
 @CrossOrigin
 @RestController
@@ -53,19 +51,7 @@ public class AcatQueryController {
 
             SearchResponse response = doQuery("acat", "apispec", search, 0, 50);
 
-            logger.info("hits {}", response.getHits().getTotalHits());
-
-            ObjectMapper mapper = Utils.jsonMapper();
-            QueryResponse queryResponse = new QueryResponse();
-            queryResponse.setHits(new ArrayList<>());
-            queryResponse.setTotal(response.getHits().getTotalHits());
-
-            for (SearchHit hit : response.getHits().getHits()) {
-                ApiDocument document = mapper.readValue(hit.getSourceAsString(), ApiDocument.class);
-                queryResponse.getHits().add(document);
-            }
-
-            return queryResponse;
+            return convertFromElasticResponse(response);
         } catch (Exception e) {
             logger.error("error {}", e.getMessage(), e);
         }
