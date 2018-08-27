@@ -20,7 +20,7 @@ export const ResultsTabs = props => {
   return (
     <div className="row">
       <div className="col-12 col-lg-8 offset-lg-4">
-        <ul className="search-results-tabs d-flex align-items-center justify-content-between">
+        <ul className="search-results-tabs d-flex align-items-center">
           <li
             className={cx('d-flex justify-content-center', {
               'li-active': activePath === PATHNAME_DATASETS
