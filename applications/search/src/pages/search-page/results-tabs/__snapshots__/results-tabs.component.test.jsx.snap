@@ -8,7 +8,7 @@ exports[`should render ResultsTabs with "Concepts" active correctly 1`] = `
     className="col-12 col-lg-8 offset-lg-4"
   >
     <ul
-      className="search-results-tabs d-flex align-items-center justify-content-between"
+      className="search-results-tabs d-flex align-items-center"
     >
       <li
         className="d-flex justify-content-center"
@@ -87,7 +87,7 @@ exports[`should render ResultsTabs with "Dataset" active correctly 1`] = `
     className="col-12 col-lg-8 offset-lg-4"
   >
     <ul
-      className="search-results-tabs d-flex align-items-center justify-content-between"
+      className="search-results-tabs d-flex align-items-center"
     >
       <li
         className="d-flex justify-content-center li-active"
