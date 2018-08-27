@@ -18,25 +18,25 @@ class ResponseAdapter {
 
     }
 
-    static QueryResponse convertFromElasticResponse(SearchResponse elasticResponse){
-        try{
-        ObjectMapper mapper = Utils.jsonMapper();
-            QueryResponse queryResponse = new QueryResponse();
-            queryResponse.setHits(new ArrayList<>());
-            queryResponse.setTotal(elasticResponse.getHits().getTotalHits());
-
-            for (SearchHit hit : elasticResponse.getHits().getHits()) {
-                ApiDocument document = mapper.readValue(hit.getSourceAsString(), ApiDocument.class);
-                queryResponse.getHits().add(document);
-            }
-
-            return queryResponse;
-        } catch (Exception e) {
-            logger.error("error {}", e.getMessage(), e);
-        }
-
-        return null;
-
+    static QueryResponse convertFromElasticResponse(SearchResponse elasticResponse) {
+        QueryResponse queryResponse = new QueryResponse();
+        convertHits(queryResponse, elasticResponse);
+        return queryResponse;
     }
 
+    static void convertHits(QueryResponse queryResponse, SearchResponse elasticResponse) {
+        ObjectMapper mapper = Utils.jsonMapper();
+
+        queryResponse.setTotal(elasticResponse.getHits().getTotalHits());
+
+        queryResponse.setHits(new ArrayList<>());
+        for (SearchHit hit : elasticResponse.getHits().getHits()) {
+            try {
+                ApiDocument document = mapper.readValue(hit.getSourceAsString(), ApiDocument.class);
+                queryResponse.getHits().add(document);
+            } catch (Exception e) {
+                logger.error("error {}", e.getMessage(), e);
+            }
+        }
+    }
 }
