@@ -2,6 +2,7 @@ import _ from 'lodash';
 import axios from 'axios';
 
 import { addOrReplaceParam } from '../lib/addOrReplaceUrlParam';
+import { normalizeAggregations } from './normalizeAggregations';
 
 export const getTerms = async search => {
   const datasetsUrl = `/terms${search}`;
@@ -11,7 +12,7 @@ export const getTerms = async search => {
     .get(url)
     .catch(e => console.log(JSON.stringify(e))); // eslint-disable-line no-console
 
-  return response && response.data;
+  return response && normalizeAggregations(response.data);
 };
 
 function createNestedListOfPublishers(listOfPublishers) {

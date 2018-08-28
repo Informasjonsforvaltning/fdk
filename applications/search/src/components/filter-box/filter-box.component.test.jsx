@@ -1,6 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { FilterBox } from './filter-box.component';
+import { themeAggregation } from './__fixtures/themeAggregation';
+import { themeItems } from './__fixtures/themeItems';
 
 let onClick;
 let defaultProps;
@@ -10,33 +12,10 @@ beforeEach(() => {
   onClick = jest.fn();
   defaultProps = {
     title: 'Testbox',
-    filter: {
-      buckets: [
-        { key: 'GOVE', doc_count: 104 },
-        { key: 'EDUC', doc_count: 11 },
-        { key: 'HEAL', doc_count: 8 },
-        { key: 'Ukjent', doc_count: 7 },
-        { key: 'AGRI', doc_count: 1 },
-        { key: 'TEST', doc_count: 1 }
-      ]
-    },
+    filter: themeAggregation,
     onClick,
     activeFilter: null,
-    themesItems: {
-      AGRI: {
-        id: 'http://publications.europa.eu/resource/authority/data-theme/AGRI',
-        code: 'AGRI',
-        startUse: '2015-10-01',
-        title: {
-          pt: 'Agricultura, pesca, silvicultura e alimentação',
-          bg: 'Селско стопанство, рибарство, горско стопанство и храни'
-        },
-        conceptSchema: {
-          id: 'http://publications.europa.eu/resource/authority/data-theme',
-          title: { en: 'Dataset types Named Authority List' }
-        }
-      }
-    }
+    themesItems: themeItems
   };
   wrapper = shallow(<FilterBox {...defaultProps} />);
 });

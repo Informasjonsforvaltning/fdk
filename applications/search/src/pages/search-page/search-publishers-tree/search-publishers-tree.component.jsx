@@ -78,7 +78,7 @@ export class SearchPublishersTree extends React.Component {
             itemKey={0.5}
             value={node.key}
             labelRaw={name}
-            count={node.doc_count}
+            count={node.count}
             onClick={onFilterPublisherHierarchy}
             active={active}
             displayClass="inline-block"
@@ -107,7 +107,7 @@ export class SearchPublishersTree extends React.Component {
             itemKey={0.5}
             value={node.key}
             labelRaw={name}
-            count={node.doc_count}
+            count={node.count}
             onClick={onFilterPublisherHierarchy}
             active={active}
             displayClass={nodeOnSameLevelHasChildren ? 'indent' : ''}
@@ -152,7 +152,7 @@ export class SearchPublishersTree extends React.Component {
             itemKey={0.5}
             value={node.key}
             label={name}
-            count={node.doc_count}
+            count={node.count}
             onClick={onFilterPublisherHierarchy}
             active={active}
             displayClass="inline-block"
@@ -180,7 +180,7 @@ export class SearchPublishersTree extends React.Component {
             itemKey={0.5}
             value={node.key}
             label={name}
-            count={node.doc_count}
+            count={node.count}
             onClick={onFilterPublisherHierarchy}
             active={active}
             displayClass="indent"

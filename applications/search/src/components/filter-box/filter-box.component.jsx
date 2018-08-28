@@ -50,7 +50,7 @@ export class FilterBox extends React.Component {
             itemKey={itemKey}
             value={item.key}
             label={item.key}
-            count={item.doc_count}
+            count={item.count}
             onClick={onClick}
             active={active}
             themesItems={themesItems}

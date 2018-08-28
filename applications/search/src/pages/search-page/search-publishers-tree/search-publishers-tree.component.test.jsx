@@ -2,7 +2,9 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { SearchPublishersTree } from './search-publishers-tree.component';
 import publishers from '../../../../test/fixtures/publishers';
-import filter from '../../../../test/fixtures/filter';
+import { normalizeAggregations } from '../../../api/normalizeAggregations';
+import { extractPublisherCounts } from '../../../api/get-datasets';
+import datasetsApiResponse from './__fixtures/datasetsApiResponse.json';
 
 let onFilterPublisherHierarchy;
 let onSearch;
@@ -15,7 +17,7 @@ beforeEach(() => {
 
   defaultProps = {
     title: 'title',
-    filter,
+    filter: extractPublisherCounts(normalizeAggregations(datasetsApiResponse)),
     onFilterPublisherHierarchy,
     activeFilter: null,
     publishers,

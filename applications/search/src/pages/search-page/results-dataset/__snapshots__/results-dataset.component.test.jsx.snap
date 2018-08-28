@@ -113,43 +113,43 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
                   Object {
                     "buckets": Array [
                       Object {
-                        "doc_count": 1,
+                        "count": 1,
                         "key": "AGRI",
                       },
                       Object {
-                        "doc_count": 1,
+                        "count": 1,
                         "key": "ECON",
                       },
                       Object {
-                        "doc_count": 1,
+                        "count": 1,
                         "key": "EDUC",
                       },
                       Object {
-                        "doc_count": 1,
+                        "count": 1,
                         "key": "ENER",
                       },
                       Object {
-                        "doc_count": 1,
+                        "count": 1,
                         "key": "ENVI",
                       },
                       Object {
-                        "doc_count": 1,
+                        "count": 1,
                         "key": "GOVE",
                       },
                       Object {
-                        "doc_count": 1,
+                        "count": 1,
                         "key": "HEAL",
                       },
                       Object {
-                        "doc_count": 1,
+                        "count": 1,
                         "key": "INTR",
                       },
                       Object {
-                        "doc_count": 1,
+                        "count": 1,
                         "key": "JUST",
                       },
                       Object {
-                        "doc_count": 1,
+                        "count": 1,
                         "key": "REGI",
                       },
                     ],
@@ -168,7 +168,7 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
                   Object {
                     "buckets": Array [
                       Object {
-                        "doc_count": 1,
+                        "count": 1,
                         "key": "PUBLIC",
                       },
                     ],
@@ -196,7 +196,7 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
                   Object {
                     "buckets": Array [
                       Object {
-                        "doc_count": 1,
+                        "count": 1,
                         "key": "Ukjent",
                       },
                     ],
@@ -215,7 +215,7 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
                   Object {
                     "buckets": Array [
                       Object {
-                        "doc_count": 1,
+                        "count": 1,
                         "key": "VEDTAK",
                       },
                     ],
@@ -249,43 +249,43 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
             Object {
               "buckets": Array [
                 Object {
-                  "doc_count": 1,
+                  "count": 1,
                   "key": "AGRI",
                 },
                 Object {
-                  "doc_count": 1,
+                  "count": 1,
                   "key": "ECON",
                 },
                 Object {
-                  "doc_count": 1,
+                  "count": 1,
                   "key": "EDUC",
                 },
                 Object {
-                  "doc_count": 1,
+                  "count": 1,
                   "key": "ENER",
                 },
                 Object {
-                  "doc_count": 1,
+                  "count": 1,
                   "key": "ENVI",
                 },
                 Object {
-                  "doc_count": 1,
+                  "count": 1,
                   "key": "GOVE",
                 },
                 Object {
-                  "doc_count": 1,
+                  "count": 1,
                   "key": "HEAL",
                 },
                 Object {
-                  "doc_count": 1,
+                  "count": 1,
                   "key": "INTR",
                 },
                 Object {
-                  "doc_count": 1,
+                  "count": 1,
                   "key": "JUST",
                 },
                 Object {
-                  "doc_count": 1,
+                  "count": 1,
                   "key": "REGI",
                 },
               ],
@@ -304,7 +304,7 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
             Object {
               "buckets": Array [
                 Object {
-                  "doc_count": 1,
+                  "count": 1,
                   "key": "PUBLIC",
                 },
               ],
@@ -332,7 +332,7 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
             Object {
               "buckets": Array [
                 Object {
-                  "doc_count": 1,
+                  "count": 1,
                   "key": "Ukjent",
                 },
               ],
@@ -351,7 +351,7 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
             Object {
               "buckets": Array [
                 Object {
-                  "doc_count": 1,
+                  "count": 1,
                   "key": "VEDTAK",
                 },
               ],
