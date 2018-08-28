@@ -1,6 +1,7 @@
-package no.acat.model;
+package no.acat.model.queryresponse;
 
 import lombok.Data;
+import no.acat.model.ApiDocument;
 
 import java.util.List;
 
