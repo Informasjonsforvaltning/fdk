@@ -14,7 +14,7 @@ const renderHeaderLink = (item, publisher, publishers, provenance) => {
     return null;
   }
   const { title } = item;
-  const link = `/apis/${encodeURIComponent(item.uri)}`;
+  const link = `/apis/${encodeURIComponent(item.id)}`;
 
   return (
     <header>

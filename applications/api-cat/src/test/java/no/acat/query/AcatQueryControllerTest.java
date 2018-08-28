@@ -39,7 +39,7 @@ public class AcatQueryControllerTest {
         SearchResponse searchResponse = mock(SearchResponse.class);
         when(searchResponse.getHits()).thenReturn(searchHits);
 
-        doReturn(null).when(spyController).buildRequest(anyString(),anyString(),anyInt(),anyInt());
+        doReturn(null).when(spyController).buildSearchRequest(anyString(),anyString(),anyInt(),anyInt());
         doReturn(searchResponse).when(spyController).doQuery(anyObject());
         // todo this is nonsense, we do not test anything
         doReturn(new QueryResponse()).when(spyController).convertFromElasticResponse(anyObject());
