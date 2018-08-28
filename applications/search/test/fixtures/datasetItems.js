@@ -131,7 +131,7 @@ export default [
     },
     aggregations: {
       missingFirstHarvested: {
-        doc_count: 0
+        count: 0
       },
       subjectsCount: {
         doc_count_error_upper_bound: 0,
@@ -139,7 +139,7 @@ export default [
         buckets: [
           {
             key: 'Ukjent',
-            doc_count: 1
+            count: 1
           }
         ]
       },
@@ -149,7 +149,7 @@ export default [
         buckets: [
           {
             key: 'RAMSUND OG ROGNAN REVISJON',
-            doc_count: 1
+            count: 1
           }
         ]
       },
@@ -159,11 +159,11 @@ export default [
         buckets: [
           {
             key: '/ANNET',
-            doc_count: 1,
+            count: 1,
             children: [
               {
                 key: '/ANNET/910244132',
-                doc_count: 1,
+                count: 1,
                 hasParent: true,
                 children: []
               }
@@ -171,7 +171,7 @@ export default [
           },
           {
             key: '/ANNET/910244132',
-            doc_count: 1,
+            count: 1,
             hasParent: true,
             children: []
           }
@@ -183,7 +183,7 @@ export default [
         buckets: [
           {
             key: 'PUBLIC',
-            doc_count: 1
+            count: 1
           }
         ]
       },
@@ -193,72 +193,72 @@ export default [
         buckets: [
           {
             key: 'AGRI',
-            doc_count: 1
+            count: 1
           },
           {
             key: 'ECON',
-            doc_count: 1
+            count: 1
           },
           {
             key: 'EDUC',
-            doc_count: 1
+            count: 1
           },
           {
             key: 'ENER',
-            doc_count: 1
+            count: 1
           },
           {
             key: 'ENVI',
-            doc_count: 1
+            count: 1
           },
           {
             key: 'GOVE',
-            doc_count: 1
+            count: 1
           },
           {
             key: 'HEAL',
-            doc_count: 1
+            count: 1
           },
           {
             key: 'INTR',
-            doc_count: 1
+            count: 1
           },
           {
             key: 'JUST',
-            doc_count: 1
+            count: 1
           },
           {
             key: 'REGI',
-            doc_count: 1
+            count: 1
           }
         ]
       },
       lastChanged: {
         buckets: {
           last7days: {
-            doc_count: 1
+            count: 1
           },
           last30days: {
-            doc_count: 1
+            count: 1
           },
           last365days: {
-            doc_count: 1
+            count: 1
           }
         }
       },
       missingLastChanged: {
-        doc_count: 0
+        count: 0
       },
       firstHarvested: {
         buckets: {
           last7days: {
-            doc_count: 1
+            count: 1
           },
           last30days: {
-            doc_count: 1
+            count: 1
           },
           last365days: {
-            doc_count: 1
+            count: 1
           }
         }
       },
@@ -268,7 +268,7 @@ export default [
         buckets: [
           {
             key: 'Ukjent',
-            doc_count: 1
+            count: 1
           }
         ]
       },
@@ -278,7 +278,7 @@ export default [
         buckets: [
           {
             key: 'VEDTAK',
-            doc_count: 1
+            count: 1
           }
         ]
       }

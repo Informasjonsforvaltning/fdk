@@ -1,24 +1,22 @@
 import _ from 'lodash';
 import axios from 'axios';
 
+import { normalizeAggregations } from './normalizeAggregations';
+
 function getFromBucketArray(data, aggregation, key) {
   const buckets = _.get(data, ['aggregations', aggregation, 'buckets'], []);
   const bucket = buckets.find(
     bucket => bucket.key.toUpperCase() === key.toUpperCase()
   );
-  return _.get(bucket, 'doc_count', 0);
+  return _.get(bucket, 'count', 0);
 }
 
 function getFromBucketKeyed(data, aggregation, key) {
-  return _.get(
-    data,
-    ['aggregations', aggregation, 'buckets', key, 'doc_count'],
-    0
-  );
+  return _.get(data, ['aggregations', aggregation, 'buckets', key, 'count'], 0);
 }
 
 function getFromAggregation(data, aggregation) {
-  return _.get(data, ['aggregations', aggregation, 'doc_count'], 0);
+  return _.get(data, ['aggregations', aggregation, 'count'], 0);
 }
 
 export function extractStats(data) {
@@ -48,5 +46,5 @@ export const getDatasetStats = async query => {
     .get(`/aggregateDataset?q=${q}`)
     .catch(e => console.log(JSON.stringify(e))); // eslint-disable-line no-console
 
-  return response && extractStats(response.data);
+  return response && extractStats(normalizeAggregations(response.data));
 };

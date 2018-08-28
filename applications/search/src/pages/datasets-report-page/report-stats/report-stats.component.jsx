@@ -268,7 +268,7 @@ export const ReportStats = props => {
                   className="fdk-plain-label"
                   to={`/?catalog=${catalogRecord.key}${orgPathParam}`}
                 >
-                  {catalogRecord.doc_count}
+                  {catalogRecord.count}
                 </Link>
               </strong>
             </div>
