@@ -1,10 +1,13 @@
 package no.acat.query;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import no.acat.config.Utils;
 import no.acat.model.ApiDocument;
 import no.acat.model.queryresponse.QueryResponse;
 import no.acat.service.ElasticsearchService;
+import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.index.query.BoolQueryBuilder;
@@ -17,13 +20,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import static no.acat.query.ResponseAdapter.convertFromElasticResponse;
+import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin
 @RestController
@@ -42,7 +39,7 @@ public class AcatQueryController {
 
 
     @ApiOperation(value = "Queries the api catalog for api specifications",
-            notes = "So far only simple queries is supported", response = ApiDocument.class)
+            notes = "So far only simple queries is supported", response = QueryResponse.class)
     @RequestMapping(value = "/search", method = RequestMethod.GET, produces = "application/json")
     public QueryResponse search(
             @ApiParam("the query string")
@@ -62,7 +59,7 @@ public class AcatQueryController {
                     int size
     ) {
         try {
-            SearchRequestBuilder searchRequest = buildRequest(query, accessRights, from, size);
+            SearchRequestBuilder searchRequest = buildSearchRequest(query, accessRights, from, size);
             SearchResponse elasticResponse = doQuery(searchRequest);
             return convertFromElasticResponse(elasticResponse);
         } catch (Exception e) {
@@ -72,11 +69,27 @@ public class AcatQueryController {
         return null;
     }
 
+    @ApiOperation(value = "Get a specific api", response = ApiDocument.class)
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = "application/json")
+    public ApiDocument getApiDocument(@PathVariable String id) {
+        logger.info("request for {}", id);
+
+        GetResponse response = elasticsearch.getClient().prepareGet("acat", "apispec", id).get();
+        ObjectMapper mapper = Utils.jsonMapper();
+        try {
+            ApiDocument apiDocument = mapper.readValue(response.getSourceAsString(), ApiDocument.class);
+            return apiDocument;
+        } catch (Exception e) {
+            logger.error("error {}", e.getMessage(), e);
+        }
+        return null;
+    }
+
     QueryResponse convertFromElasticResponse(SearchResponse elasticResponse) {
         return ResponseAdapter.convertFromElasticResponse(elasticResponse);
     }
 
-    SearchRequestBuilder buildRequest(String query, String accessRights, int from, int size) {
+    SearchRequestBuilder buildSearchRequest(String query, String accessRights, int from, int size) {
 
         QueryBuilder search;
 

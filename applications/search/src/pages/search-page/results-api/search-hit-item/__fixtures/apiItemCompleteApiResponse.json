@@ -1,0 +1,185 @@
+{
+  "id": "32690443-e926-4e52-9988-dbac45085102",
+  "uri": "https://fellesdatakatalog.brreg.no/api-docs/search-api",
+  "title": { "no": "National Data Directory Search API" },
+  "description": { "no": "Provides a basic search api against the National Data Directory of Norway" },
+  "provenance": {
+    "uri": "http://data.brreg.no/datakatalog/provinens/nasjonal",
+    "code": "NASJONAL",
+    "prefLabel": { "en": "National Building Block", "nb": "Nasjonal felleskomponent", "nn": "Nasjonal felleskomponent" }
+  },
+  "accessRights": [{
+    "uri": "http://publications.europa.eu/resource/authority/access-right/NON_PUBLIC",
+    "code": "NON_PUBLIC",
+    "prefLabel": { "nn": "Ikke-offentlig", "nb": "Ikke-offentlig", "en": "Non-public" }
+  }, {
+    "uri": "http://publications.europa.eu/resource/authority/access-right/RESTRICTED",
+    "code": "RESTRICTED",
+    "prefLabel": { "nb": "Begrenset", "nn": "Begrenset", "en": "Restricted" }
+  }],
+  "publisher": { "id": "974760673" },
+  "contactPoint": [{
+    "uri": "https://fellesdatakatalog.brreg.no",
+    "email": "fellesdatakatalog@brreg.no",
+    "organizationName": "Brønnøysundregistrene"
+  }],
+  "datasetReferences": [{
+    "referenceType": {
+      "uri": "dct:references",
+      "code": "references",
+      "prefLabel": { "en": "References", "nn": "Refererar", "nb": "Refererer" }
+    },
+    "source": {
+      "uri": "https://fellesdatakatalog.brreg.no/datasets/ea9e2aa7-880c-4387-888e-77446acab279",
+      "prefLabel": null,
+      "extraType": null
+    }
+  }, {
+    "referenceType": {
+      "uri": "dct:references",
+      "code": "references",
+      "prefLabel": { "en": "References", "nn": "Refererar", "nb": "Refererer" }
+    },
+    "source": {
+      "uri": "https://fellesdatakatalog.brreg.no/datasets/ea9e2aa7-880c-4387-888e-77446acab278",
+      "prefLabel": null,
+      "extraType": null
+    }
+  }],
+  "openApi": {
+    "openapi": null,
+    "info": {
+      "description": "Provides a basic search api against the National Data Directory of Norway",
+      "version": "1.0",
+      "title": "National Data Directory Search API",
+      "termsOfService": "https://fellesdatakatalog.brreg.no/about",
+      "contact": {
+        "name": "Brønnøysundregistrene",
+        "url": "https://fellesdatakatalog.brreg.no",
+        "email": "fellesdatakatalog@brreg.no"
+      },
+      "license": { "name": "License of API", "url": "http://data.norge.no/nlod/no/2.0" }
+    },
+    "servers": null,
+    "paths": {
+      "/catalogs": {
+        "get": {
+          "description": "The three formats are: text/turtle, application/ld+json and application/rdf+xml",
+          "responses": {
+            "200": { "description": "OK" },
+            "401": { "description": "Unauthorized" },
+            "403": { "description": "Forbidden" },
+            "404": { "description": "Not Found" }
+          }
+        }
+      },
+      "/harvest/catalog": {
+        "get": {
+          "responses": {
+            "200": { "description": "OK" },
+            "401": { "description": "Unauthorized" },
+            "403": { "description": "Forbidden" },
+            "404": { "description": "Not Found" }
+          }
+        }
+      },
+      "/dataset": {
+        "get": {
+          "description": "The three formats are: text/turtle, application/ld+json and application/rdf+xml",
+          "responses": {
+            "200": { "description": "OK" },
+            "401": { "description": "Unauthorized" },
+            "403": { "description": "Forbidden" },
+            "404": { "description": "Not Found" }
+          }
+        }
+      },
+      "/publisher/hierarchy": {
+        "get": {
+          "responses": {
+            "200": { "description": "OK" },
+            "401": { "description": "Unauthorized" },
+            "403": { "description": "Forbidden" },
+            "404": { "description": "Not Found" }
+          }
+        }
+      },
+      "/themecount": {
+        "get": {
+          "description": "Returns a list of themes and the total number of datasets for each of them",
+          "responses": {
+            "200": { "description": "OK" },
+            "401": { "description": "Unauthorized" },
+            "403": { "description": "Forbidden" },
+            "404": { "description": "Not Found" }
+          }
+        }
+      },
+      "/datasets": {
+        "get": {
+          "description": "Returns a list of matching datasets wrapped in a elasticsearch response. Max number returned by a single query is 100. Size parameters greater than 100 will not return more than 100 datasets. In order to access all datasets, use multiple queries and increment from parameter.",
+          "responses": {
+            "200": { "description": "OK" },
+            "401": { "description": "Unauthorized" },
+            "403": { "description": "Forbidden" },
+            "404": { "description": "Not Found" }
+          }
+        }
+      },
+      "/datasets/**": {
+        "get": {
+          "description": "You must specify the dataset's identifier",
+          "responses": {
+            "200": { "description": "OK" },
+            "401": { "description": "Unauthorized" },
+            "403": { "description": "Forbidden" },
+            "404": { "description": "Not Found" }
+          }
+        }
+      },
+      "/publisher": {
+        "get": {
+          "description": "Returns the elasticsearch response with matching publishers",
+          "responses": {
+            "200": { "description": "OK" },
+            "401": { "description": "Unauthorized" },
+            "403": { "description": "Forbidden" },
+            "404": { "description": "Not Found" }
+          }
+        }
+      },
+      "/aggregateDataset": {
+        "get": {
+          "responses": {
+            "200": { "description": "OK" },
+            "401": { "description": "Unauthorized" },
+            "403": { "description": "Forbidden" },
+            "404": { "description": "Not Found" }
+          }
+        }
+      },
+      "/publishercount": {
+        "get": {
+          "description": "Returns a list of publishers and the total number of dataset for each of them",
+          "responses": {
+            "200": { "description": "OK" },
+            "401": { "description": "Unauthorized" },
+            "403": { "description": "Forbidden" },
+            "404": { "description": "Not Found" }
+          }
+        }
+      },
+      "/terms": {
+        "get": {
+          "description": "Returns the elasticsearch response with matching terms (dct:subject)",
+          "responses": {
+            "200": { "description": "OK" },
+            "401": { "description": "Unauthorized" },
+            "403": { "description": "Forbidden" },
+            "404": { "description": "Not Found" }
+          }
+        }
+      }
+    }
+  }
+}

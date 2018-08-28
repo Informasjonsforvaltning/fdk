@@ -1,4 +1,5 @@
 export const apiItemLongDescription = {
+  id: '32690443-e926-4e52-9988-dbac45085102',
   uri: 'jar:file:/app.jar!/BOOT-INF/classes!/datakatalog-api.json',
   title: {
     no: 'National Data Directory Search API'

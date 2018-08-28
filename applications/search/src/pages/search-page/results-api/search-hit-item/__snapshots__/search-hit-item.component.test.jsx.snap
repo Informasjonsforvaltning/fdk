@@ -15,12 +15,26 @@ exports[`should render api-SearchHitItem correctly 1`] = `
       className="search-hit__title-link"
       replace={false}
       title="[object Object]: National Data Directory Search API"
-      to="/apis/jar%3Afile%3A%2Fapp.jar!%2FBOOT-INF%2Fclasses!%2Fdatakatalog-api.json"
+      to="/apis/32690443-e926-4e52-9988-dbac45085102"
     >
       <SearchHitHeader
         headerTag="h2"
-        provenance={null}
-        publisher={null}
+        provenance={
+          Object {
+            "code": "NASJONAL",
+            "prefLabel": Object {
+              "en": "National Building Block",
+              "nb": "Nasjonal felleskomponent",
+              "nn": "Nasjonal felleskomponent",
+            },
+            "uri": "http://data.brreg.no/datakatalog/provinens/nasjonal",
+          }
+        }
+        publisher={
+          Object {
+            "id": "974760673",
+          }
+        }
         publisherItems={null}
         publisherLabel="Provider"
         theme={null}
@@ -37,6 +51,16 @@ exports[`should render api-SearchHitItem correctly 1`] = `
     </span>
     Provides a basic search api against the National Data Directory of Norway
   </p>
+  <div
+    className="mb-2"
+  >
+    <strong>
+      API that are not public
+    </strong>
+    <i
+      className="fa fa-info-circle ml-2 fdk-color-cta2"
+    />
+  </div>
 </article>
 `;
 
@@ -68,7 +92,7 @@ exports[`should render api-SearchHitItem with long description 1`] = `
       className="search-hit__title-link"
       replace={false}
       title="[object Object]: National Data Directory Search API"
-      to="/apis/jar%3Afile%3A%2Fapp.jar!%2FBOOT-INF%2Fclasses!%2Fdatakatalog-api.json"
+      to="/apis/32690443-e926-4e52-9988-dbac45085102"
     >
       <SearchHitHeader
         headerTag="h2"
