@@ -3,7 +3,7 @@ package no.acat.query;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import no.acat.config.Utils;
 import no.acat.model.ApiDocument;
-import no.acat.model.QueryResponse;
+import no.acat.model.queryresponse.QueryResponse;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.search.SearchHit;
 import org.slf4j.Logger;
