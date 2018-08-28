@@ -11,7 +11,7 @@ exports[`should render ResultsApi correctly with hits 1`] = `
       className="col-12 d-flex justify-content-between"
     >
       <button
-        className="btn btn-primary fdk-button fade-in-500"
+        className="btn btn-primary fdk-button fade-in-500 d-none"
         onClick={[MockFunction]}
         type="button"
       >
@@ -58,10 +58,112 @@ exports[`should render ResultsApi correctly with hits 1`] = `
         aria-hidden="false"
         className="uu-invisible"
       >
-        Filtrering tilgang
+        Filtrering
       </span>
       <div>
-        [filterbox]
+        <Modal
+          autoFocus={true}
+          backdrop={true}
+          backdropTransition={
+            Object {
+              "mountOnEnter": true,
+              "timeout": 150,
+            }
+          }
+          centered={false}
+          fade={true}
+          isOpen={true}
+          keyboard={true}
+          modalTransition={
+            Object {
+              "timeout": 300,
+            }
+          }
+          onClosed={[Function]}
+          onOpened={[Function]}
+          role="dialog"
+          toggle={[MockFunction]}
+          zIndex={1050}
+        >
+          <ModalHeader
+            closeAriaLabel="Close"
+            tag="h5"
+            toggle={[MockFunction]}
+            wrapTag="div"
+          >
+            Filter
+          </ModalHeader>
+          <ModalBody
+            tag="div"
+          >
+            <div
+              className="search-filters"
+            >
+              <FilterBox
+                activeFilter={null}
+                filter={
+                  Object {
+                    "buckets": Array [
+                      Object {
+                        "count": 5,
+                        "key": "MISSING",
+                      },
+                      Object {
+                        "count": 1,
+                        "key": "NON_PUBLIC",
+                      },
+                      Object {
+                        "count": 1,
+                        "key": "RESTRICTED",
+                      },
+                    ],
+                  }
+                }
+                htmlKey={2}
+                onClick={[MockFunction]}
+                themesItems={null}
+                title="Access"
+              />
+            </div>
+          </ModalBody>
+          <ModalFooter
+            tag="div"
+          >
+            <Button
+              className="fdk-button"
+              color="primary"
+              onClick={[MockFunction]}
+              tag="button"
+            >
+              Close
+            </Button>
+          </ModalFooter>
+        </Modal>
+        <FilterBox
+          activeFilter={null}
+          filter={
+            Object {
+              "buckets": Array [
+                Object {
+                  "count": 5,
+                  "key": "MISSING",
+                },
+                Object {
+                  "count": 1,
+                  "key": "NON_PUBLIC",
+                },
+                Object {
+                  "count": 1,
+                  "key": "RESTRICTED",
+                },
+              ],
+            }
+          }
+          htmlKey={2}
+          onClick={[MockFunction]}
+          themesItems={null}
+          title="Access"
+        />
       </div>
     </aside>
     <div
@@ -72,6 +174,1514 @@ exports[`should render ResultsApi correctly with hits 1`] = `
         fadeInCounter={0}
         item={
           Object {
+            "description": Object {
+              "no": "Dette er eit REST-API for å tilby funksjonalitet tilsvarende dagens SOAP-baserte oppslagstjeneste for KRR.
+
+Tilgang til API-et styres med OAuth2-baserte access_tokens. Desse vert utstedt frå ID-porten si OAuth2-teneste.
+
+Les meir på https://difi.github.io/idporten-oidc-dokumentasjon/oidc_api_krr_user.html
+",
+            },
+            "id": "6ee14b1b-6417-425d-9c13-0a9c7f008223",
+            "openApi": Object {
+              "info": Object {
+                "contact": null,
+                "description": "Dette er eit REST-API for å tilby funksjonalitet tilsvarende dagens SOAP-baserte oppslagstjeneste for KRR.
+
+Tilgang til API-et styres med OAuth2-baserte access_tokens. Desse vert utstedt frå ID-porten si OAuth2-teneste.
+
+Les meir på https://difi.github.io/idporten-oidc-dokumentasjon/oidc_api_krr_user.html
+",
+                "license": null,
+                "termsOfService": null,
+                "title": "REST-API for Kontakt- og reserversjonsregisteret (KRR)",
+                "version": null,
+              },
+              "openapi": null,
+              "paths": Object {
+                "/v1/person": Object {
+                  "get": Object {
+                    "description": "Minimumskrav til scope: user/kontaktinformasjon.read, user/spraak.read eller user/spraak.write. For å sjå kva data som blir gjeve ut basert på ulike scope, sjå https://difi.github.io/idporten-oidc-dokumentasjon/oidc_api_krr_user.html#bruk-av-oauth2",
+                    "responses": Object {
+                      "200": Object {
+                        "description": "Ok",
+                      },
+                      "401": Object {
+                        "description": "Invalid authorization token provided",
+                      },
+                      "403": Object {
+                        "description": "Forbidden, required scopes not associated with provided token",
+                      },
+                    },
+                  },
+                  "patch": Object {
+                    "description": "Krev scope user/spraak.write. Kun for å endre språkpreferanse.",
+                    "responses": Object {
+                      "204": Object {
+                        "description": "Query ok, no content in response",
+                      },
+                      "400": Object {
+                        "description": "Malformed patch document. Example: empty request body, if unrecognized properties exists in JSON request body, missing spraak-parameter, invalid person-identificator.",
+                      },
+                      "401": Object {
+                        "description": "Invalid authorization token provided",
+                      },
+                      "403": Object {
+                        "description": "Forbidden, required scopes not associated with provided token",
+                      },
+                      "415": Object {
+                        "description": "Unsupported patch document. Request has the wrong content type.",
+                      },
+                      "422": Object {
+                        "description": "Unprocessable request. For example wrong value for preferredLanguage",
+                      },
+                      "500": Object {
+                        "description": "Internal error.",
+                      },
+                    },
+                  },
+                },
+                "/v1/personer": Object {
+                  "post": Object {
+                    "description": "Minimumskrav til scope: global/kontaktinformasjon.read, global/spraak.read eller global/spraak.write. For å sjå kva data som blir gjeve ut basert på ulike scope, sjå https://difi.github.io/idporten-oidc-dokumentasjon/oidc_api_krr.html#tilgjenglige-scopes",
+                    "responses": Object {
+                      "200": Object {
+                        "description": "Ok",
+                      },
+                      "401": Object {
+                        "description": "Invalid authorization token provided",
+                      },
+                      "403": Object {
+                        "description": "Forbidden, required scopes not associated with provided token",
+                      },
+                    },
+                  },
+                },
+              },
+              "servers": null,
+            },
+            "publisher": Object {
+              "id": "974760673",
+            },
+            "title": Object {
+              "no": "REST-API for Kontakt- og reserversjonsregisteret (KRR)",
+            },
+            "uri": "https://oidc-ver2.difi.no/kontaktinfo-oauth2-server/rest/apis",
+          }
+        }
+        key="https://oidc-ver2.difi.no/kontaktinfo-oauth2-server/rest/apis"
+        publishers={Object {}}
+      />
+      <SearchHitItem
+        fadeInCounter={1}
+        item={
+          Object {
+            "contactPoint": Array [
+              Object {
+                "email": "opendata@brreg.no",
+                "organizationName": "Brønnøysundregistrene",
+                "uri": "http://www.brreg.no",
+              },
+            ],
+            "description": Object {
+              "no": "Tilbyr et utvalg av opplysninger om alle registrerte enheter i Enhetsregisteret",
+            },
+            "id": "5f0fdfeb-f99a-4497-9234-b1fd53af1f87",
+            "openApi": Object {
+              "info": Object {
+                "contact": Object {
+                  "email": "opendata@brreg.no",
+                  "name": "Brønnøysundregistrene",
+                  "url": "http://www.brreg.no",
+                },
+                "description": "Tilbyr et utvalg av opplysninger om alle registrerte enheter i Enhetsregisteret",
+                "license": Object {
+                  "name": "Norsk lisens for offentlige data (NLOD) 2.0",
+                  "url": "http://data.norge.no/nlod/no/2.0",
+                },
+                "termsOfService": "https://fellesdatakatalog.brreg.no/about",
+                "title": "Åpne data - Enhetsregisteret",
+                "version": "0.1",
+              },
+              "openapi": "3.0.1",
+              "paths": Object {
+                "/": Object {
+                  "get": Object {
+                    "description": "Rot. lister lenker til øvrige objekter",
+                    "responses": Object {
+                      "200": Object {
+                        "description": "En liste med lenker til øvrige tjenester",
+                      },
+                    },
+                  },
+                },
+                "/enheter": Object {
+                  "get": Object {
+                    "description": "Søk etter enheter",
+                    "responses": Object {
+                      "200": Object {
+                        "description": "En liste med enheter",
+                      },
+                    },
+                  },
+                },
+                "/enheter/lastned": Object {
+                  "get": Object {
+                    "description": "Last ned enheter",
+                    "responses": Object {
+                      "200": Object {
+                        "description": "Zip-fil lastes ned",
+                      },
+                    },
+                  },
+                },
+                "/enheter/{orgnr}": Object {
+                  "get": Object {
+                    "description": "Hent en spesifikk enhet",
+                    "responses": Object {
+                      "200": Object {
+                        "description": "En enhet",
+                      },
+                    },
+                  },
+                },
+                "/organisasjonsformer": Object {
+                  "get": Object {
+                    "description": "Hent alle organisasjonsformer",
+                    "responses": Object {
+                      "200": Object {
+                        "description": "En liste med organisasjonsformer",
+                      },
+                    },
+                  },
+                },
+                "/organisasjonsformer/enheter": Object {
+                  "get": Object {
+                    "description": "Hent alle organisasjonsformer for enheter",
+                    "responses": Object {
+                      "200": Object {
+                        "description": "En liste med organisasjonsformer",
+                      },
+                    },
+                  },
+                },
+                "/organisasjonsformer/underenheter": Object {
+                  "get": Object {
+                    "description": "Hent alle organisasjonsformer for underenheter",
+                    "responses": Object {
+                      "200": Object {
+                        "description": "En liste med organisasjonsformer",
+                      },
+                    },
+                  },
+                },
+                "/organisasjonsformer/{orgkode}": Object {
+                  "get": Object {
+                    "description": "Hent en gitt organisasjonsform",
+                    "responses": Object {
+                      "200": Object {
+                        "description": "Beskrivelse av organisasjonsform",
+                      },
+                    },
+                  },
+                },
+                "/underenheter": Object {
+                  "get": Object {
+                    "description": "Søk etter underenheter",
+                    "responses": Object {
+                      "200": Object {
+                        "description": "En liste med underenheter",
+                      },
+                    },
+                  },
+                },
+                "/underenheter/lastned": Object {
+                  "get": Object {
+                    "description": "Last ned underenheter",
+                    "responses": Object {
+                      "200": Object {
+                        "description": "En liste med underenheter",
+                      },
+                    },
+                  },
+                },
+                "/underenheter/{orgnr}": Object {
+                  "get": Object {
+                    "description": "Hent en spesifikk underenhet",
+                    "responses": Object {
+                      "200": Object {
+                        "description": "En underenhete",
+                      },
+                    },
+                  },
+                },
+              },
+              "servers": Array [
+                Object {
+                  "description": "Produksjonsserver",
+                  "url": "https://data.brreg.no/enhetsregisteret/api",
+                },
+              ],
+            },
+            "provenance": Object {
+              "prefLabel": Object {
+                "en": "Provinens",
+                "no": "Opphav",
+              },
+              "uri": "http://data.brreg.no/datakatalog/provinens",
+            },
+            "publisher": Object {
+              "id": "974760673",
+            },
+            "title": Object {
+              "no": "Åpne data - Enhetsregisteret",
+            },
+            "uri": "jar:file:/app.jar!/BOOT-INF/classes!/enhetsreg-static.json",
+          }
+        }
+        key="jar:file:/app.jar!/BOOT-INF/classes!/enhetsreg-static.json"
+        publishers={Object {}}
+      />
+      <SearchHitItem
+        fadeInCounter={2}
+        item={
+          Object {
+            "description": Object {
+              "no": "FS-API'et er et generelt grensesnitt mot FS. Det bruker Basic Auth (brukernavn og passord) for å hente et token (JWT). Tokenet brukes til autentisering og autorisering i resten av tjenestene. Noen generelle prinsipper: Internasjonale standarder for feltnavn og verdier er i engelsk lowercase (f.eks. meta, href, limit, sortBy, fields, true, false osv). FS-spesifikke feltnavn og verdier er på norsk, og kodeverdier er i tillegg i uppercase (f.eks. fornavn, etternavn, rolle, studieprogram, AKTIV, SLUTTET osv). Feltutvalg (fields) og sortering (sortBy) angis som kommaseparerte lister, der minus angir omvendt sortering (f.eks. sortBy=felt1,felt2-,felt3). Paginering angis ved start og limit, med default hhv. 1 og 10 (limit=0 gir alt). Filtre er separate felt, der man normalt angir søkeverdi direkte (felt=verdi) - med wildcard-notasjon (.*) i tekstfelt lengre enn 1 tegn. Noen felt har også andre muligheter å teste på: 1. Ulikhet (felt=!verdi angir at feltet er forskjellig fra verdien). 2. Større/mindre (felt=<verdi og felt=>verdi angir at feltet er hhv. <= eller >= verdien). 3. Om et felt har verdi i det hele tatt (felt=! og felt=_ angir hhv. at feltet har verdi/er tomt). Fritekstsøk er generelt samlet i et eget fritekstfelt (NB inntil videre er det case-sensitivt og krever wildcard for annet enn eksakt søk). For strukturerte felt (dvs. med underfelt) brukes dot-notasjon (f.eks. emne.kode). Alle GET-operasjoner forekommer i individ- og collection-form, hhv. med og uten ID til slutt. For individkall er default feltutvalg (fields) alle felt, mens for collection-kall er default kun ID.",
+            },
+            "id": "ae3897a1-8a60-454c-a3c5-7cbb0cf57f7a",
+            "openApi": Object {
+              "info": Object {
+                "contact": null,
+                "description": "FS-API'et er et generelt grensesnitt mot FS. Det bruker Basic Auth (brukernavn og passord) for å hente et token (JWT). Tokenet brukes til autentisering og autorisering i resten av tjenestene. Noen generelle prinsipper: Internasjonale standarder for feltnavn og verdier er i engelsk lowercase (f.eks. meta, href, limit, sortBy, fields, true, false osv). FS-spesifikke feltnavn og verdier er på norsk, og kodeverdier er i tillegg i uppercase (f.eks. fornavn, etternavn, rolle, studieprogram, AKTIV, SLUTTET osv). Feltutvalg (fields) og sortering (sortBy) angis som kommaseparerte lister, der minus angir omvendt sortering (f.eks. sortBy=felt1,felt2-,felt3). Paginering angis ved start og limit, med default hhv. 1 og 10 (limit=0 gir alt). Filtre er separate felt, der man normalt angir søkeverdi direkte (felt=verdi) - med wildcard-notasjon (.*) i tekstfelt lengre enn 1 tegn. Noen felt har også andre muligheter å teste på: 1. Ulikhet (felt=!verdi angir at feltet er forskjellig fra verdien). 2. Større/mindre (felt=<verdi og felt=>verdi angir at feltet er hhv. <= eller >= verdien). 3. Om et felt har verdi i det hele tatt (felt=! og felt=_ angir hhv. at feltet har verdi/er tomt). Fritekstsøk er generelt samlet i et eget fritekstfelt (NB inntil videre er det case-sensitivt og krever wildcard for annet enn eksakt søk). For strukturerte felt (dvs. med underfelt) brukes dot-notasjon (f.eks. emne.kode). Alle GET-operasjoner forekommer i individ- og collection-form, hhv. med og uten ID til slutt. For individkall er default feltutvalg (fields) alle felt, mens for collection-kall er default kun ID.",
+                "license": null,
+                "termsOfService": null,
+                "title": "FS-API",
+                "version": "1.0",
+              },
+              "openapi": null,
+              "paths": Object {
+                "/deltakere": Object {
+                  "get": Object {
+                    "responses": Object {
+                      "200": Object {
+                        "description": "Henter \`Deltakere\`",
+                      },
+                      "400": Object {
+                        "description": "Token ugyldig",
+                      },
+                      "403": Object {
+                        "description": "Bruker har ikke rolle som gir tilgang til denne ressursen",
+                      },
+                    },
+                  },
+                },
+                "/deltakere/{id}": Object {
+                  "get": Object {
+                    "responses": Object {
+                      "200": Object {
+                        "description": "Henter \`Deltaker\`",
+                      },
+                      "400": Object {
+                        "description": "Token ugyldig",
+                      },
+                      "403": Object {
+                        "description": "Bruker har ikke rolle som gir tilgang til denne ressursen",
+                      },
+                    },
+                  },
+                },
+                "/emner": Object {
+                  "get": Object {
+                    "responses": Object {
+                      "200": Object {
+                        "description": "Henter \`Emner\`",
+                      },
+                      "400": Object {
+                        "description": "Token ugyldig",
+                      },
+                      "403": Object {
+                        "description": "Bruker har ikke rolle som gir tilgang til denne ressursen",
+                      },
+                    },
+                  },
+                },
+                "/emner/{id}": Object {
+                  "get": Object {
+                    "responses": Object {
+                      "200": Object {
+                        "description": "Henter \`Emne\`",
+                      },
+                      "400": Object {
+                        "description": "Token ugyldig",
+                      },
+                      "403": Object {
+                        "description": "Bruker har ikke rolle som gir tilgang til denne ressursen",
+                      },
+                    },
+                  },
+                },
+                "/evukurs": Object {
+                  "get": Object {
+                    "responses": Object {
+                      "200": Object {
+                        "description": "Henter \`evukurs\`",
+                      },
+                      "400": Object {
+                        "description": "Token ugyldig",
+                      },
+                      "403": Object {
+                        "description": "Bruker har ikke rolle som gir tilgang til denne ressursen",
+                      },
+                    },
+                  },
+                },
+                "/evukurs/{id}": Object {
+                  "get": Object {
+                    "responses": Object {
+                      "200": Object {
+                        "description": "Henter \`EvuKurs\`",
+                      },
+                      "400": Object {
+                        "description": "Token ugyldig",
+                      },
+                      "403": Object {
+                        "description": "Bruker har ikke rolle som gir tilgang til denne ressursen",
+                      },
+                    },
+                  },
+                },
+                "/evukursdeltakere": Object {
+                  "get": Object {
+                    "responses": Object {
+                      "200": Object {
+                        "description": "Henter \`evukursdeltakere\`",
+                      },
+                      "400": Object {
+                        "description": "Token ugyldig",
+                      },
+                      "403": Object {
+                        "description": "Bruker har ikke rolle som gir tilgang til denne ressursen",
+                      },
+                    },
+                  },
+                },
+                "/evukursdeltakere/{id}": Object {
+                  "get": Object {
+                    "responses": Object {
+                      "200": Object {
+                        "description": "Henter \`Evukursdeltakere\`",
+                      },
+                      "400": Object {
+                        "description": "Token ugyldig",
+                      },
+                      "403": Object {
+                        "description": "Bruker har ikke rolle som gir tilgang til denne ressursen",
+                      },
+                    },
+                  },
+                },
+                "/fnrendringer": Object {
+                  "get": Object {
+                    "responses": Object {
+                      "200": Object {
+                        "description": "Henter \`fnrendringer\`",
+                      },
+                      "400": Object {
+                        "description": "Token ugyldig",
+                      },
+                      "403": Object {
+                        "description": "Bruker har ikke rolle som gir tilgang til denne ressursen",
+                      },
+                    },
+                  },
+                },
+                "/fnrendringer/{id}": Object {
+                  "get": Object {
+                    "responses": Object {
+                      "200": Object {
+                        "description": "Henter \`fnrendring\`",
+                      },
+                      "400": Object {
+                        "description": "Token ugyldig",
+                      },
+                      "403": Object {
+                        "description": "Bruker har ikke rolle som gir tilgang til denne ressursen",
+                      },
+                    },
+                  },
+                },
+                "/kull": Object {
+                  "get": Object {
+                    "description": "En gruppe studenter med samtidig start på samme studieprogram",
+                    "responses": Object {
+                      "200": Object {
+                        "description": "Henter \`Kull\` liste",
+                      },
+                      "400": Object {
+                        "description": "Token ugyldig",
+                      },
+                      "403": Object {
+                        "description": "Bruker har ikke rolle som gir tilgang til denne ressursen",
+                      },
+                    },
+                  },
+                },
+                "/kull/{id}": Object {
+                  "get": Object {
+                    "description": "En gruppe studenter med samtidig start på samme studieprogram. Henter \`Kull\` med gitt id",
+                    "responses": Object {
+                      "200": Object {
+                        "description": "Vellykket kall",
+                      },
+                      "400": Object {
+                        "description": "Token ugyldig",
+                      },
+                      "403": Object {
+                        "description": "Bruker har ikke rolle som gir tilgang til denne ressursen",
+                      },
+                      "404": Object {
+                        "description": "Kull med gitt id finns ikke",
+                      },
+                    },
+                  },
+                },
+                "/personer": Object {
+                  "get": Object {
+                    "description": "",
+                    "responses": Object {
+                      "200": Object {
+                        "description": "Vellykket kall",
+                      },
+                      "400": Object {
+                        "description": "Token ugyldig",
+                      },
+                      "403": Object {
+                        "description": "Bruker har ikke rolle som gir tilgang til denne ressursen",
+                      },
+                      "500": Object {
+                        "description": "Server error",
+                      },
+                    },
+                  },
+                  "post": Object {
+                    "description": "Fødselsdato og personnr er obligatorisk
+",
+                    "responses": Object {
+                      "200": Object {
+                        "description": "Person oppdatert",
+                      },
+                      "201": Object {
+                        "description": "Person opprettet",
+                      },
+                      "400": Object {
+                        "description": "Token ugyldig",
+                      },
+                      "403": Object {
+                        "description": "Bruker har ikke rolle som gir tilgang til denne ressursen",
+                      },
+                      "500": Object {
+                        "description": "Server error",
+                      },
+                    },
+                  },
+                },
+                "/personer/{id}": Object {
+                  "get": Object {
+                    "description": "",
+                    "responses": Object {
+                      "200": Object {
+                        "description": "Vellykket kall",
+                      },
+                      "400": Object {
+                        "description": "Token ugyldig",
+                      },
+                      "403": Object {
+                        "description": "Bruker har ikke rolle som gir tilgang til denne ressursen",
+                      },
+                      "404": Object {
+                        "description": "Person ikke funnet",
+                      },
+                    },
+                  },
+                  "post": Object {
+                    "description": "Oppdaterer person med gitt løpenr
+",
+                    "responses": Object {
+                      "200": Object {
+                        "description": "Person oppdatert",
+                      },
+                      "400": Object {
+                        "description": "Token ugyldig",
+                      },
+                      "403": Object {
+                        "description": "Bruker har ikke rolle som gir tilgang til denne ressursen",
+                      },
+                      "500": Object {
+                        "description": "Server error",
+                      },
+                    },
+                  },
+                },
+                "/personroller": Object {
+                  "get": Object {
+                    "responses": Object {
+                      "200": Object {
+                        "description": "Vellykket kall",
+                      },
+                      "400": Object {
+                        "description": "Token ugyldig",
+                      },
+                      "403": Object {
+                        "description": "Bruker har ikke rolle som gir tilgang til denne ressursen",
+                      },
+                    },
+                  },
+                },
+                "/personroller/{id}": Object {
+                  "get": Object {
+                    "responses": Object {
+                      "200": Object {
+                        "description": "Vellykket kall",
+                      },
+                      "400": Object {
+                        "description": "Token ugyldig",
+                      },
+                      "403": Object {
+                        "description": "Bruker har ikke rolle som gir tilgang til denne ressursen",
+                      },
+                      "404": Object {
+                        "description": "Personrolle ikke funnet",
+                      },
+                    },
+                  },
+                },
+                "/roller": Object {
+                  "get": Object {
+                    "responses": Object {
+                      "200": Object {
+                        "description": "Henter \`Roller\`",
+                      },
+                      "400": Object {
+                        "description": "Token ugyldig",
+                      },
+                      "403": Object {
+                        "description": "Bruker har ikke rolle som gir tilgang til denne ressursen",
+                      },
+                    },
+                  },
+                },
+                "/roller/{id}": Object {
+                  "get": Object {
+                    "responses": Object {
+                      "200": Object {
+                        "description": "Henter \`Rolle\`",
+                      },
+                      "400": Object {
+                        "description": "Token ugyldig",
+                      },
+                      "403": Object {
+                        "description": "Bruker har ikke rolle som gir tilgang til denne ressursen",
+                      },
+                    },
+                  },
+                },
+                "/semesterregistreringer": Object {
+                  "get": Object {
+                    "responses": Object {
+                      "200": Object {
+                        "description": "Henter \`SemesterRegistrering\`",
+                      },
+                      "400": Object {
+                        "description": "Token ugyldig",
+                      },
+                      "403": Object {
+                        "description": "Bruker har ikke rolle som gir tilgang til denne ressursen",
+                      },
+                    },
+                  },
+                },
+                "/semesterregistreringer/{id}": Object {
+                  "get": Object {
+                    "responses": Object {
+                      "200": Object {
+                        "description": "Henter \`SemesterRegistrering\`",
+                      },
+                      "400": Object {
+                        "description": "Token ugyldig",
+                      },
+                      "403": Object {
+                        "description": "Bruker har ikke rolle som gir tilgang til denne ressursen",
+                      },
+                    },
+                  },
+                },
+                "/studentundervisning": Object {
+                  "get": Object {
+                    "responses": Object {
+                      "200": Object {
+                        "description": "Henter \`StudentUndervisning\`",
+                      },
+                      "400": Object {
+                        "description": "Token ugyldig",
+                      },
+                      "403": Object {
+                        "description": "Bruker har ikke rolle som gir tilgang til denne ressursen",
+                      },
+                    },
+                  },
+                },
+                "/studentundervisning/{id}": Object {
+                  "get": Object {
+                    "responses": Object {
+                      "200": Object {
+                        "description": "Henter \`StudentUndervisning\`",
+                      },
+                      "400": Object {
+                        "description": "Token ugyldig",
+                      },
+                      "403": Object {
+                        "description": "Bruker har ikke rolle som gir tilgang til denne ressursen",
+                      },
+                    },
+                  },
+                },
+                "/studentundervisningsaktiviteter": Object {
+                  "get": Object {
+                    "responses": Object {
+                      "200": Object {
+                        "description": "Henter \`StudentUndervisningsAktivitet\`",
+                      },
+                      "400": Object {
+                        "description": "Token ugyldig",
+                      },
+                      "403": Object {
+                        "description": "Bruker har ikke rolle som gir tilgang til denne ressursen",
+                      },
+                    },
+                  },
+                },
+                "/studentundervisningsaktiviteter/{id}": Object {
+                  "get": Object {
+                    "responses": Object {
+                      "200": Object {
+                        "description": "Henter \`StudentUndervisningsAktivitet\`",
+                      },
+                      "400": Object {
+                        "description": "Token ugyldig",
+                      },
+                      "403": Object {
+                        "description": "Bruker har ikke rolle som gir tilgang til denne ressursen",
+                      },
+                    },
+                  },
+                },
+                "/studienivaer": Object {
+                  "get": Object {
+                    "responses": Object {
+                      "200": Object {
+                        "description": "Henter \`Studienivaer\`",
+                      },
+                      "400": Object {
+                        "description": "Token ugyldig",
+                      },
+                      "403": Object {
+                        "description": "Bruker har ikke rolle som gir tilgang til denne ressursen",
+                      },
+                    },
+                  },
+                },
+                "/studienivaer/{id}": Object {
+                  "get": Object {
+                    "description": "Henter ut 'Studieniva' object",
+                    "responses": Object {
+                      "200": Object {
+                        "description": "Vellykket kall",
+                      },
+                      "400": Object {
+                        "description": "Token ugyldig",
+                      },
+                      "403": Object {
+                        "description": "Bruker har ikke rolle som gir tilgang til denne ressursen",
+                      },
+                      "404": Object {
+                        "description": "Studierett finns ikke",
+                      },
+                    },
+                  },
+                },
+                "/studieprogrammer": Object {
+                  "get": Object {
+                    "description": "Enhet man kan tas opp til (få studierett på).",
+                    "responses": Object {
+                      "200": Object {
+                        "description": "Henter \`Studieprogrammer\`",
+                      },
+                      "400": Object {
+                        "description": "Token ugyldig",
+                      },
+                      "403": Object {
+                        "description": "Bruker har ikke rolle som gir tilgang til denne ressursen",
+                      },
+                    },
+                  },
+                },
+                "/studieprogrammer/{id}": Object {
+                  "get": Object {
+                    "description": "Enhet man kan tas opp til (få studierett på). Henter \`Studieprogram\` med gitt id",
+                    "responses": Object {
+                      "200": Object {
+                        "description": "Vellykket kall",
+                      },
+                      "400": Object {
+                        "description": "Token ugyldig",
+                      },
+                      "403": Object {
+                        "description": "Bruker har ikke rolle som gir tilgang til denne ressursen",
+                      },
+                      "404": Object {
+                        "description": "Studieprogram med gitt id finns ikke",
+                      },
+                    },
+                  },
+                },
+                "/studieretter": Object {
+                  "get": Object {
+                    "description": "Rett til å studere på et studieprogram. Henter \`Studieretter\` med forskjelige filtere.
+
+*Eksepler*
+
+__/studieretter?aktiv=true__ _studieretter som er aktive; vises kun lenker til første 10 (paginering)_
+
+__/studieretter?aktiv=true&expand=items&limit=5__ _studieretter som er aktive med data; første 5
+
+__/studieretter?aktiv=true&expand=items&limit=0__ _alle studieretter som er aktive med data_
+",
+                    "responses": Object {
+                      "200": Object {
+                        "description": "Henter \`Studieretter\`",
+                      },
+                      "400": Object {
+                        "description": "Token ugyldig",
+                      },
+                      "403": Object {
+                        "description": "Bruker har ikke rolle som gir tilgang til denne ressursen",
+                      },
+                    },
+                  },
+                },
+                "/studieretter/{id}": Object {
+                  "get": Object {
+                    "description": "Rett til å studere på et studieprogram. Henter \`Studierett\` object som er knyttet til person, studieprogram og semester",
+                    "responses": Object {
+                      "200": Object {
+                        "description": "Vellykket kall",
+                      },
+                      "400": Object {
+                        "description": "Token ugyldig",
+                      },
+                      "403": Object {
+                        "description": "Bruker har ikke rolle som gir tilgang til denne ressursen",
+                      },
+                      "404": Object {
+                        "description": "Studierett finns ikke",
+                      },
+                    },
+                  },
+                },
+                "/token": Object {
+                  "get": Object {
+                    "description": "Henter ut et JWT som brukes til autentisering på andre tjenester.",
+                    "responses": Object {
+                      "200": Object {
+                        "description": "Vellykket kall",
+                      },
+                      "401": Object {
+                        "description": "Brukernavn/passord stemmer ikke",
+                      },
+                    },
+                  },
+                },
+                "/undervisning": Object {
+                  "get": Object {
+                    "responses": Object {
+                      "200": Object {
+                        "description": "Henter \`Undervisning\`",
+                      },
+                      "400": Object {
+                        "description": "Token ugyldig",
+                      },
+                      "403": Object {
+                        "description": "Bruker har ikke rolle som gir tilgang til denne ressursen",
+                      },
+                    },
+                  },
+                },
+                "/undervisning/{id}": Object {
+                  "get": Object {
+                    "responses": Object {
+                      "200": Object {
+                        "description": "Henter \`Undervisning\`",
+                      },
+                      "400": Object {
+                        "description": "Token ugyldig",
+                      },
+                      "403": Object {
+                        "description": "Bruker har ikke rolle som gir tilgang til denne ressursen",
+                      },
+                    },
+                  },
+                },
+                "/undervisningsaktiviteter": Object {
+                  "get": Object {
+                    "responses": Object {
+                      "200": Object {
+                        "description": "Henter \`Undervisningsaktiviteter\`",
+                      },
+                      "400": Object {
+                        "description": "Token ugyldig",
+                      },
+                      "403": Object {
+                        "description": "Bruker har ikke rolle som gir tilgang til denne ressursen",
+                      },
+                    },
+                  },
+                },
+                "/undervisningsaktiviteter/{id}": Object {
+                  "get": Object {
+                    "responses": Object {
+                      "200": Object {
+                        "description": "Henter \`Undervisningsaktivitet\`",
+                      },
+                      "400": Object {
+                        "description": "Token ugyldig",
+                      },
+                      "403": Object {
+                        "description": "Bruker har ikke rolle som gir tilgang til denne ressursen",
+                      },
+                    },
+                  },
+                },
+              },
+              "servers": null,
+            },
+            "publisher": Object {
+              "id": "974760673",
+            },
+            "title": Object {
+              "no": "FS-API",
+            },
+            "uri": "https://docker-demo.fsat.no/fsapi/swagger.json",
+          }
+        }
+        key="https://docker-demo.fsat.no/fsapi/swagger.json"
+        publishers={Object {}}
+      />
+      <SearchHitItem
+        fadeInCounter={null}
+        item={
+          Object {
+            "contactPoint": Array [
+              Object {
+                "email": "fiks@ks.no",
+                "organizationName": "Fiks brukerstøtte",
+                "uri": "http://www.ks.no/fagomrader/utvikling/digitalisering/digitaliseringsstrategien/fiks/",
+              },
+            ],
+            "id": "785c9a14-8209-4906-8a05-7b8ea513d21d",
+            "openApi": Object {
+              "info": Object {
+                "contact": Object {
+                  "email": "fiks@ks.no",
+                  "name": "Fiks brukerstøtte",
+                  "url": "http://www.ks.no/fagomrader/utvikling/digitalisering/digitaliseringsstrategien/fiks/",
+                },
+                "description": null,
+                "license": null,
+                "termsOfService": null,
+                "title": "KS Fiks: Innsyn Søk Service",
+                "version": "v1",
+              },
+              "openapi": null,
+              "paths": Object {
+                "/innsyn-sok/api/v1/oppslag/forelder": Object {
+                  "get": Object {
+                    "description": "",
+                    "responses": Object {
+                      "200": Object {
+                        "description": "successful operation",
+                      },
+                    },
+                  },
+                },
+                "/innsyn-sok/api/v1/oppslag/korrelasjon": Object {
+                  "get": Object {
+                    "description": "",
+                    "responses": Object {
+                      "200": Object {
+                        "description": "successful operation",
+                      },
+                    },
+                  },
+                },
+                "/innsyn-sok/api/v1/sok": Object {
+                  "post": Object {
+                    "description": "",
+                    "responses": Object {
+                      "200": Object {
+                        "description": "successful operation",
+                      },
+                    },
+                  },
+                },
+              },
+              "servers": null,
+            },
+            "publisher": Object {
+              "id": "974760673",
+            },
+            "title": Object {
+              "no": "KS Fiks: Innsyn Søk Service",
+            },
+            "uri": "https://ks-no.github.io/api/innsyn-sok-api-v1.json",
+          }
+        }
+        key="https://ks-no.github.io/api/innsyn-sok-api-v1.json"
+        publishers={Object {}}
+      />
+      <SearchHitItem
+        fadeInCounter={null}
+        item={
+          Object {
+            "contactPoint": Array [
+              Object {
+                "email": "seres@brreg.no",
+                "organizationName": "SERES brukerstøtte",
+                "uri": "http://www.brreg.no/",
+              },
+            ],
+            "description": Object {
+              "no": "Modellkatalogtjeneste for SERES - domeneklient",
+            },
+            "id": "500ccb5f-a809-4b76-91d6-3362a8d41e0e",
+            "openApi": Object {
+              "info": Object {
+                "contact": Object {
+                  "email": "seres@brreg.no",
+                  "name": "SERES brukerstøtte",
+                  "url": "http://www.brreg.no/",
+                },
+                "description": "Modellkatalogtjeneste for SERES - domeneklient",
+                "license": Object {
+                  "name": "License of API",
+                  "url": "API license URL",
+                },
+                "termsOfService": "Terms of service",
+                "title": "SERES3 REPOSITORY",
+                "version": "1.0",
+              },
+              "openapi": null,
+              "paths": Object {
+                "/seres/v1/repository/catalogs": Object {
+                  "get": Object {
+                    "description": "Returns a list of all catalogs stored by the repository (currently restriced to 1000 catalogs)",
+                    "responses": Object {
+                      "200": Object {
+                        "description": "OK",
+                      },
+                      "401": Object {
+                        "description": "Unauthorized",
+                      },
+                      "403": Object {
+                        "description": "Forbidden",
+                      },
+                      "404": Object {
+                        "description": "Not Found",
+                      },
+                    },
+                  },
+                  "post": Object {
+                    "description": "Returns the created catalog",
+                    "responses": Object {
+                      "200": Object {
+                        "description": "OK",
+                      },
+                      "201": Object {
+                        "description": "Created",
+                      },
+                      "401": Object {
+                        "description": "Unauthorized",
+                      },
+                      "403": Object {
+                        "description": "Forbidden",
+                      },
+                      "404": Object {
+                        "description": "Not Found",
+                      },
+                    },
+                  },
+                },
+                "/seres/v1/repository/catalogs/{catalog}": Object {
+                  "get": Object {
+                    "description": "Returns the catalog",
+                    "responses": Object {
+                      "200": Object {
+                        "description": "OK",
+                      },
+                      "401": Object {
+                        "description": "Unauthorized",
+                      },
+                      "403": Object {
+                        "description": "Forbidden",
+                      },
+                      "404": Object {
+                        "description": "Not Found",
+                      },
+                    },
+                  },
+                  "put": Object {
+                    "description": "returns the updated catalog",
+                    "responses": Object {
+                      "200": Object {
+                        "description": "OK",
+                      },
+                      "201": Object {
+                        "description": "Created",
+                      },
+                      "401": Object {
+                        "description": "Unauthorized",
+                      },
+                      "403": Object {
+                        "description": "Forbidden",
+                      },
+                      "404": Object {
+                        "description": "Not Found",
+                      },
+                    },
+                  },
+                },
+                "/seres/v1/repository/catalogs/{catalog}/domains": Object {
+                  "get": Object {
+                    "description": "Returns a list of all domains under a specific catalog",
+                    "responses": Object {
+                      "200": Object {
+                        "description": "OK",
+                      },
+                      "401": Object {
+                        "description": "Unauthorized",
+                      },
+                      "403": Object {
+                        "description": "Forbidden",
+                      },
+                      "404": Object {
+                        "description": "Not Found",
+                      },
+                    },
+                  },
+                  "post": Object {
+                    "description": "Returns the created domain",
+                    "responses": Object {
+                      "200": Object {
+                        "description": "OK",
+                      },
+                      "201": Object {
+                        "description": "Created",
+                      },
+                      "401": Object {
+                        "description": "Unauthorized",
+                      },
+                      "403": Object {
+                        "description": "Forbidden",
+                      },
+                      "404": Object {
+                        "description": "Not Found",
+                      },
+                    },
+                  },
+                },
+                "/seres/v1/repository/catalogs/{catalog}/{domain}": Object {
+                  "get": Object {
+                    "description": "Returns the domain object requested",
+                    "responses": Object {
+                      "200": Object {
+                        "description": "OK",
+                      },
+                      "401": Object {
+                        "description": "Unauthorized",
+                      },
+                      "403": Object {
+                        "description": "Forbidden",
+                      },
+                      "404": Object {
+                        "description": "Not Found",
+                      },
+                    },
+                  },
+                  "put": Object {
+                    "description": "Updates the domain object",
+                    "responses": Object {
+                      "200": Object {
+                        "description": "OK",
+                      },
+                      "201": Object {
+                        "description": "Created",
+                      },
+                      "401": Object {
+                        "description": "Unauthorized",
+                      },
+                      "403": Object {
+                        "description": "Forbidden",
+                      },
+                      "404": Object {
+                        "description": "Not Found",
+                      },
+                    },
+                  },
+                },
+                "/seres/v1/repository/catalogs/{catalog}/{domain}/models": Object {
+                  "get": Object {
+                    "description": "Returns a the list of model objects in a domain",
+                    "responses": Object {
+                      "200": Object {
+                        "description": "OK",
+                      },
+                      "401": Object {
+                        "description": "Unauthorized",
+                      },
+                      "403": Object {
+                        "description": "Forbidden",
+                      },
+                      "404": Object {
+                        "description": "Not Found",
+                      },
+                    },
+                  },
+                  "post": Object {
+                    "description": "Returns the created model object",
+                    "responses": Object {
+                      "200": Object {
+                        "description": "OK",
+                      },
+                      "201": Object {
+                        "description": "Created",
+                      },
+                      "401": Object {
+                        "description": "Unauthorized",
+                      },
+                      "403": Object {
+                        "description": "Forbidden",
+                      },
+                      "404": Object {
+                        "description": "Not Found",
+                      },
+                    },
+                  },
+                },
+                "/seres/v1/repository/catalogs/{catalog}/{domain}/{model}": Object {
+                  "get": Object {
+                    "description": "Returns a model object",
+                    "responses": Object {
+                      "200": Object {
+                        "description": "OK",
+                      },
+                      "401": Object {
+                        "description": "Unauthorized",
+                      },
+                      "403": Object {
+                        "description": "Forbidden",
+                      },
+                      "404": Object {
+                        "description": "Not Found",
+                      },
+                    },
+                  },
+                  "put": Object {
+                    "description": "Updated the values of the model object",
+                    "responses": Object {
+                      "200": Object {
+                        "description": "OK",
+                      },
+                      "201": Object {
+                        "description": "Created",
+                      },
+                      "401": Object {
+                        "description": "Unauthorized",
+                      },
+                      "403": Object {
+                        "description": "Forbidden",
+                      },
+                      "404": Object {
+                        "description": "Not Found",
+                      },
+                    },
+                  },
+                },
+                "/seres/v1/repository/catalogs/{catalog}/{domain}/{model}/versions": Object {
+                  "get": Object {
+                    "description": "Returns a list of version objects",
+                    "responses": Object {
+                      "200": Object {
+                        "description": "OK",
+                      },
+                      "401": Object {
+                        "description": "Unauthorized",
+                      },
+                      "403": Object {
+                        "description": "Forbidden",
+                      },
+                      "404": Object {
+                        "description": "Not Found",
+                      },
+                    },
+                  },
+                  "post": Object {
+                    "description": "Create the model version from scratch",
+                    "responses": Object {
+                      "200": Object {
+                        "description": "OK",
+                      },
+                      "201": Object {
+                        "description": "Created",
+                      },
+                      "401": Object {
+                        "description": "Unauthorized",
+                      },
+                      "403": Object {
+                        "description": "Forbidden",
+                      },
+                      "404": Object {
+                        "description": "Not Found",
+                      },
+                    },
+                  },
+                },
+                "/seres/v1/repository/catalogs/{catalog}/{domain}/{model}/{version}": Object {
+                  "delete": Object {
+                    "description": "deletes the refered version",
+                    "responses": Object {
+                      "200": Object {
+                        "description": "OK",
+                      },
+                      "204": Object {
+                        "description": "No Content",
+                      },
+                      "401": Object {
+                        "description": "Unauthorized",
+                      },
+                      "403": Object {
+                        "description": "Forbidden",
+                      },
+                    },
+                  },
+                  "get": Object {
+                    "description": "get a specific version object",
+                    "responses": Object {
+                      "200": Object {
+                        "description": "OK",
+                      },
+                      "401": Object {
+                        "description": "Unauthorized",
+                      },
+                      "403": Object {
+                        "description": "Forbidden",
+                      },
+                      "404": Object {
+                        "description": "Not Found",
+                      },
+                    },
+                  },
+                  "put": Object {
+                    "description": "creates a new version object by copying it from another version",
+                    "responses": Object {
+                      "200": Object {
+                        "description": "OK",
+                      },
+                      "201": Object {
+                        "description": "Created",
+                      },
+                      "401": Object {
+                        "description": "Unauthorized",
+                      },
+                      "403": Object {
+                        "description": "Forbidden",
+                      },
+                      "404": Object {
+                        "description": "Not Found",
+                      },
+                    },
+                  },
+                },
+                "/seres/v1/repository/catalogs/{catalog}/{domain}/{model}/{version}/approve": Object {
+                  "put": Object {
+                    "description": "changes the version state attribute to approved",
+                    "responses": Object {
+                      "200": Object {
+                        "description": "OK",
+                      },
+                      "201": Object {
+                        "description": "Created",
+                      },
+                      "401": Object {
+                        "description": "Unauthorized",
+                      },
+                      "403": Object {
+                        "description": "Forbidden",
+                      },
+                      "404": Object {
+                        "description": "Not Found",
+                      },
+                    },
+                  },
+                },
+                "/seres/v1/repository/catalogs/{catalog}/{domain}/{model}/{version}/copy": Object {
+                  "post": Object {
+                    "description": "creates a new version object by copying it from another version",
+                    "responses": Object {
+                      "200": Object {
+                        "description": "OK",
+                      },
+                      "201": Object {
+                        "description": "Created",
+                      },
+                      "401": Object {
+                        "description": "Unauthorized",
+                      },
+                      "403": Object {
+                        "description": "Forbidden",
+                      },
+                      "404": Object {
+                        "description": "Not Found",
+                      },
+                    },
+                  },
+                },
+                "/seres/v1/repository/catalogs/{catalog}/{domain}/{model}/{version}/data": Object {
+                  "get": Object {
+                    "responses": Object {
+                      "200": Object {
+                        "description": "OK",
+                      },
+                      "401": Object {
+                        "description": "Unauthorized",
+                      },
+                      "403": Object {
+                        "description": "Forbidden",
+                      },
+                      "404": Object {
+                        "description": "Not Found",
+                      },
+                    },
+                  },
+                },
+                "/seres/v1/repository/catalogs/{catalog}/{domain}/{model}/{version}/history": Object {
+                  "put": Object {
+                    "description": "changes the version state attribute to historic",
+                    "responses": Object {
+                      "200": Object {
+                        "description": "OK",
+                      },
+                      "201": Object {
+                        "description": "Created",
+                      },
+                      "401": Object {
+                        "description": "Unauthorized",
+                      },
+                      "403": Object {
+                        "description": "Forbidden",
+                      },
+                      "404": Object {
+                        "description": "Not Found",
+                      },
+                    },
+                  },
+                },
+                "/seres/v1/repository/catalogs/{catalog}/{domain}/{model}/{version}/reject": Object {
+                  "put": Object {
+                    "description": "changes the version state attribute to rejected",
+                    "responses": Object {
+                      "200": Object {
+                        "description": "OK",
+                      },
+                      "201": Object {
+                        "description": "Created",
+                      },
+                      "401": Object {
+                        "description": "Unauthorized",
+                      },
+                      "403": Object {
+                        "description": "Forbidden",
+                      },
+                      "404": Object {
+                        "description": "Not Found",
+                      },
+                    },
+                  },
+                },
+                "/seres/v1/repository/versions/{versionReference}/changelog": Object {
+                  "get": Object {
+                    "description": "Returns the change events that has occured to a specific model-version. Pagination is required: ?page=0&size=20",
+                    "responses": Object {
+                      "200": Object {
+                        "description": "OK",
+                      },
+                      "401": Object {
+                        "description": "Unauthorized",
+                      },
+                      "403": Object {
+                        "description": "Forbidden",
+                      },
+                      "404": Object {
+                        "description": "Not Found",
+                      },
+                    },
+                  },
+                },
+              },
+              "servers": null,
+            },
+            "provenance": Object {
+              "prefLabel": Object {
+                "en": "Provinens",
+                "no": "Opphav",
+              },
+              "uri": "http://data.brreg.no/datakatalog/provinens",
+            },
+            "publisher": Object {
+              "id": "974760673",
+            },
+            "title": Object {
+              "no": "SERES3 REPOSITORY",
+            },
+            "uri": "jar:file:/app.jar!/BOOT-INF/classes!/seres-api.json",
+          }
+        }
+        key="jar:file:/app.jar!/BOOT-INF/classes!/seres-api.json"
+        publishers={Object {}}
+      />
+      <SearchHitItem
+        fadeInCounter={null}
+        item={
+          Object {
+            "accessRights": Array [
+              Object {
+                "code": "NON_PUBLIC",
+                "prefLabel": Object {
+                  "en": "Non-public",
+                  "nb": "Ikke-offentlig",
+                  "nn": "Ikke-offentlig",
+                },
+                "uri": "http://publications.europa.eu/resource/authority/access-right/NON_PUBLIC",
+              },
+              Object {
+                "code": "RESTRICTED",
+                "prefLabel": Object {
+                  "en": "Restricted",
+                  "nb": "Begrenset",
+                  "nn": "Begrenset",
+                },
+                "uri": "http://publications.europa.eu/resource/authority/access-right/RESTRICTED",
+              },
+            ],
             "contactPoint": Array [
               Object {
                 "email": "fellesdatakatalog@brreg.no",
@@ -79,9 +1689,44 @@ exports[`should render ResultsApi correctly with hits 1`] = `
                 "uri": "https://fellesdatakatalog.brreg.no",
               },
             ],
+            "datasetReferences": Array [
+              Object {
+                "referenceType": Object {
+                  "code": "references",
+                  "prefLabel": Object {
+                    "en": "References",
+                    "nb": "Refererer",
+                    "nn": "Refererar",
+                  },
+                  "uri": "dct:references",
+                },
+                "source": Object {
+                  "extraType": null,
+                  "prefLabel": null,
+                  "uri": "https://fellesdatakatalog.brreg.no/datasets/ea9e2aa7-880c-4387-888e-77446acab279",
+                },
+              },
+              Object {
+                "referenceType": Object {
+                  "code": "references",
+                  "prefLabel": Object {
+                    "en": "References",
+                    "nb": "Refererer",
+                    "nn": "Refererar",
+                  },
+                  "uri": "dct:references",
+                },
+                "source": Object {
+                  "extraType": null,
+                  "prefLabel": null,
+                  "uri": "https://fellesdatakatalog.brreg.no/datasets/ea9e2aa7-880c-4387-888e-77446acab278",
+                },
+              },
+            ],
             "description": Object {
               "no": "Provides a basic search api against the National Data Directory of Norway",
             },
+            "id": "9ad7ac51-d6fd-4a6f-add9-3582865ec678",
             "openApi": Object {
               "info": Object {
                 "contact": Object {
@@ -137,7 +1782,7 @@ exports[`should render ResultsApi correctly with hits 1`] = `
                     },
                   },
                 },
-                "/catalogs/datasets": Object {
+                "/dataset": Object {
                   "get": Object {
                     "description": "The three formats are: text/turtle, application/ld+json and application/rdf+xml",
                     "responses": Object {
@@ -249,6 +1894,25 @@ exports[`should render ResultsApi correctly with hits 1`] = `
                     },
                   },
                 },
+                "/publishercount": Object {
+                  "get": Object {
+                    "description": "Returns a list of publishers and the total number of dataset for each of them",
+                    "responses": Object {
+                      "200": Object {
+                        "description": "OK",
+                      },
+                      "401": Object {
+                        "description": "Unauthorized",
+                      },
+                      "403": Object {
+                        "description": "Forbidden",
+                      },
+                      "404": Object {
+                        "description": "Not Found",
+                      },
+                    },
+                  },
+                },
                 "/terms": Object {
                   "get": Object {
                     "description": "Returns the elasticsearch response with matching terms (dct:subject)",
@@ -268,16 +1932,47 @@ exports[`should render ResultsApi correctly with hits 1`] = `
                     },
                   },
                 },
+                "/themecount": Object {
+                  "get": Object {
+                    "description": "Returns a list of themes and the total number of datasets for each of them",
+                    "responses": Object {
+                      "200": Object {
+                        "description": "OK",
+                      },
+                      "401": Object {
+                        "description": "Unauthorized",
+                      },
+                      "403": Object {
+                        "description": "Forbidden",
+                      },
+                      "404": Object {
+                        "description": "Not Found",
+                      },
+                    },
+                  },
+                },
               },
               "servers": null,
+            },
+            "provenance": Object {
+              "code": "NASJONAL",
+              "prefLabel": Object {
+                "en": "National Building Block",
+                "nb": "Nasjonal felleskomponent",
+                "nn": "Nasjonal felleskomponent",
+              },
+              "uri": "http://data.brreg.no/datakatalog/provinens/nasjonal",
+            },
+            "publisher": Object {
+              "id": "974760673",
             },
             "title": Object {
               "no": "National Data Directory Search API",
             },
-            "uri": "jar:file:/app.jar!/BOOT-INF/classes!/datakatalog-api.json",
+            "uri": "https://fellesdatakatalog.brreg.no/api-docs/search-api",
           }
         }
-        key="jar:file:/app.jar!/BOOT-INF/classes!/datakatalog-api.json"
+        key="https://fellesdatakatalog.brreg.no/api-docs/search-api"
         publishers={Object {}}
       />
       <div
@@ -328,7 +2023,8 @@ exports[`should render ResultsApi correctly with minimum of props and no hits 1`
       className="col-12 d-flex justify-content-between"
     >
       <button
-        className="btn btn-primary fdk-button fade-in-500"
+        className="btn btn-primary fdk-button fade-in-500 d-none"
+        onClick={null}
         type="button"
       >
         Clear
@@ -374,11 +2070,8 @@ exports[`should render ResultsApi correctly with minimum of props and no hits 1`
         aria-hidden="false"
         className="uu-invisible"
       >
-        Filtrering tilgang
+        Filtrering
       </span>
-      <div>
-        [filterbox]
-      </div>
     </aside>
     <div
       className="col-12 col-lg-8"
@@ -408,7 +2101,8 @@ exports[`should render ResultsApi correctly with minimum of props and no hits 1`
           marginPagesDisplayed={1}
           nextClassName="next"
           nextLabel="Neste side"
-          pageCount={NaN}
+          onPageChange={null}
+          pageCount={Infinity}
           pageRangeDisplayed={2}
           previousClassName="previous"
           previousLabel="Forrige side"

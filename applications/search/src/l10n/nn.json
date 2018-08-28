@@ -11,6 +11,8 @@
   "contactPoint": "Kontaktpunkt",
   "email": "E-mail",
   "phone": "Telefon",
+  "close": "Lukk",
+  "filter": "Filter",
   "app": {
     "title": "Felles Datakatalog",
     "titleSub": "Oversikt over datasett frå verksemder i Noreg.",

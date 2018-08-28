@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { SearchHitItem } from './search-hit-item.component';
-import apiItemComplete from './__fixtures/apiItemCompleteApiResponse';
+import apiItemComplete from './__fixtures/apiItemCompleteApiResponse.json';
 import { apiItemLongDescription } from './__fixtures/apiItemLongDescription';
 
 let defaultProps;

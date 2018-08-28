@@ -471,9 +471,26 @@ export class SearchPage extends React.Component {
               render={props => (
                 <ResultsApi
                   apiItems={this.props.apiItems}
-                  searchQuery={this.state.searchQuery}
+                  onClearSearch={this.handleClearSearch}
+                  onFilterTheme={this.handleDatasetFilterThemes}
+                  onFilterAccessRights={this.handleDatasetFilterAccessRights}
+                  onFilterPublisher={this.handleDatasetFilterPublisher}
+                  onFilterPublisherHierarchy={
+                    this.handleDatasetFilterPublisherHierarchy
+                  }
+                  onFilterProvenance={this.handleDatasetFilterProvenance}
+                  onFilterSpatial={this.handleDatasetFilterSpatial}
                   onSort={this.handleDatasetSort}
+                  onPageChange={this.handlePageChange}
+                  searchQuery={this.state.searchQuery}
+                  themesItems={themesItems}
+                  showFilterModal={this.state.showFilterModal}
+                  showClearFilterButton={this.isFilterNotEmpty()}
+                  closeFilterModal={this.close}
+                  hitsPerPage={50}
+                  publisherArray={extractPublisherCounts(datasetItems)}
                   publishers={publisherItems}
+                  distributionTypeItems={distributionTypeItems}
                   {...props}
                 />
               )}
