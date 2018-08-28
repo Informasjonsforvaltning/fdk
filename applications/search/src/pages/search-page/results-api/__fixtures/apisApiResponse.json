@@ -1,0 +1,1765 @@
+{
+  "total": 6,
+  "hits": [
+    {
+      "id": "6ee14b1b-6417-425d-9c13-0a9c7f008223",
+      "uri": "https://oidc-ver2.difi.no/kontaktinfo-oauth2-server/rest/apis",
+      "title": {
+        "no": "REST-API for Kontakt- og reserversjonsregisteret (KRR)"
+      },
+      "description": {
+        "no": "Dette er eit REST-API for å tilby funksjonalitet tilsvarende dagens SOAP-baserte oppslagstjeneste for KRR.\n\nTilgang til API-et styres med OAuth2-baserte access_tokens. Desse vert utstedt frå ID-porten si OAuth2-teneste.\n\nLes meir på https://difi.github.io/idporten-oidc-dokumentasjon/oidc_api_krr_user.html\n"
+      },
+      "publisher": {
+        "id": "974760673"
+      },
+      "openApi": {
+        "openapi": null,
+        "info": {
+          "description": "Dette er eit REST-API for å tilby funksjonalitet tilsvarende dagens SOAP-baserte oppslagstjeneste for KRR.\n\nTilgang til API-et styres med OAuth2-baserte access_tokens. Desse vert utstedt frå ID-porten si OAuth2-teneste.\n\nLes meir på https://difi.github.io/idporten-oidc-dokumentasjon/oidc_api_krr_user.html\n",
+          "version": null,
+          "title": "REST-API for Kontakt- og reserversjonsregisteret (KRR)",
+          "termsOfService": null,
+          "contact": null,
+          "license": null
+        },
+        "servers": null,
+        "paths": {
+          "/v1/person": {
+            "get": {
+              "description": "Minimumskrav til scope: user/kontaktinformasjon.read, user/spraak.read eller user/spraak.write. For å sjå kva data som blir gjeve ut basert på ulike scope, sjå https://difi.github.io/idporten-oidc-dokumentasjon/oidc_api_krr_user.html#bruk-av-oauth2",
+              "responses": {
+                "200": {
+                  "description": "Ok"
+                },
+                "401": {
+                  "description": "Invalid authorization token provided"
+                },
+                "403": {
+                  "description": "Forbidden, required scopes not associated with provided token"
+                }
+              }
+            },
+            "patch": {
+              "description": "Krev scope user/spraak.write. Kun for å endre språkpreferanse.",
+              "responses": {
+                "400": {
+                  "description": "Malformed patch document. Example: empty request body, if unrecognized properties exists in JSON request body, missing spraak-parameter, invalid person-identificator."
+                },
+                "422": {
+                  "description": "Unprocessable request. For example wrong value for preferredLanguage"
+                },
+                "401": {
+                  "description": "Invalid authorization token provided"
+                },
+                "500": {
+                  "description": "Internal error."
+                },
+                "204": {
+                  "description": "Query ok, no content in response"
+                },
+                "403": {
+                  "description": "Forbidden, required scopes not associated with provided token"
+                },
+                "415": {
+                  "description": "Unsupported patch document. Request has the wrong content type."
+                }
+              }
+            }
+          },
+          "/v1/personer": {
+            "post": {
+              "description": "Minimumskrav til scope: global/kontaktinformasjon.read, global/spraak.read eller global/spraak.write. For å sjå kva data som blir gjeve ut basert på ulike scope, sjå https://difi.github.io/idporten-oidc-dokumentasjon/oidc_api_krr.html#tilgjenglige-scopes",
+              "responses": {
+                "200": {
+                  "description": "Ok"
+                },
+                "401": {
+                  "description": "Invalid authorization token provided"
+                },
+                "403": {
+                  "description": "Forbidden, required scopes not associated with provided token"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "5f0fdfeb-f99a-4497-9234-b1fd53af1f87",
+      "uri": "jar:file:/app.jar!/BOOT-INF/classes!/enhetsreg-static.json",
+      "title": {
+        "no": "Åpne data - Enhetsregisteret"
+      },
+      "description": {
+        "no": "Tilbyr et utvalg av opplysninger om alle registrerte enheter i Enhetsregisteret"
+      },
+      "provenance": {
+        "uri": "http://data.brreg.no/datakatalog/provinens",
+        "prefLabel": {
+          "no": "Opphav",
+          "en": "Provinens"
+        }
+      },
+      "publisher": {
+        "id": "974760673"
+      },
+      "contactPoint": [
+        {
+          "uri": "http://www.brreg.no",
+          "email": "opendata@brreg.no",
+          "organizationName": "Brønnøysundregistrene"
+        }
+      ],
+      "openApi": {
+        "openapi": "3.0.1",
+        "info": {
+          "description": "Tilbyr et utvalg av opplysninger om alle registrerte enheter i Enhetsregisteret",
+          "version": "0.1",
+          "title": "Åpne data - Enhetsregisteret",
+          "termsOfService": "https://fellesdatakatalog.brreg.no/about",
+          "contact": {
+            "name": "Brønnøysundregistrene",
+            "url": "http://www.brreg.no",
+            "email": "opendata@brreg.no"
+          },
+          "license": {
+            "name": "Norsk lisens for offentlige data (NLOD) 2.0",
+            "url": "http://data.norge.no/nlod/no/2.0"
+          }
+        },
+        "servers": [
+          {
+            "url": "https://data.brreg.no/enhetsregisteret/api",
+            "description": "Produksjonsserver"
+          }
+        ],
+        "paths": {
+          "/organisasjonsformer/underenheter": {
+            "get": {
+              "description": "Hent alle organisasjonsformer for underenheter",
+              "responses": {
+                "200": {
+                  "description": "En liste med organisasjonsformer"
+                }
+              }
+            }
+          },
+          "/organisasjonsformer/enheter": {
+            "get": {
+              "description": "Hent alle organisasjonsformer for enheter",
+              "responses": {
+                "200": {
+                  "description": "En liste med organisasjonsformer"
+                }
+              }
+            }
+          },
+          "/underenheter/{orgnr}": {
+            "get": {
+              "description": "Hent en spesifikk underenhet",
+              "responses": {
+                "200": {
+                  "description": "En underenhete"
+                }
+              }
+            }
+          },
+          "/enheter": {
+            "get": {
+              "description": "Søk etter enheter",
+              "responses": {
+                "200": {
+                  "description": "En liste med enheter"
+                }
+              }
+            }
+          },
+          "/enheter/lastned": {
+            "get": {
+              "description": "Last ned enheter",
+              "responses": {
+                "200": {
+                  "description": "Zip-fil lastes ned"
+                }
+              }
+            }
+          },
+          "/underenheter/lastned": {
+            "get": {
+              "description": "Last ned underenheter",
+              "responses": {
+                "200": {
+                  "description": "En liste med underenheter"
+                }
+              }
+            }
+          },
+          "/organisasjonsformer/{orgkode}": {
+            "get": {
+              "description": "Hent en gitt organisasjonsform",
+              "responses": {
+                "200": {
+                  "description": "Beskrivelse av organisasjonsform"
+                }
+              }
+            }
+          },
+          "/enheter/{orgnr}": {
+            "get": {
+              "description": "Hent en spesifikk enhet",
+              "responses": {
+                "200": {
+                  "description": "En enhet"
+                }
+              }
+            }
+          },
+          "/organisasjonsformer": {
+            "get": {
+              "description": "Hent alle organisasjonsformer",
+              "responses": {
+                "200": {
+                  "description": "En liste med organisasjonsformer"
+                }
+              }
+            }
+          },
+          "/": {
+            "get": {
+              "description": "Rot. lister lenker til øvrige objekter",
+              "responses": {
+                "200": {
+                  "description": "En liste med lenker til øvrige tjenester"
+                }
+              }
+            }
+          },
+          "/underenheter": {
+            "get": {
+              "description": "Søk etter underenheter",
+              "responses": {
+                "200": {
+                  "description": "En liste med underenheter"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "ae3897a1-8a60-454c-a3c5-7cbb0cf57f7a",
+      "uri": "https://docker-demo.fsat.no/fsapi/swagger.json",
+      "title": {
+        "no": "FS-API"
+      },
+      "description": {
+        "no": "FS-API'et er et generelt grensesnitt mot FS. Det bruker Basic Auth (brukernavn og passord) for å hente et token (JWT). Tokenet brukes til autentisering og autorisering i resten av tjenestene. Noen generelle prinsipper: Internasjonale standarder for feltnavn og verdier er i engelsk lowercase (f.eks. meta, href, limit, sortBy, fields, true, false osv). FS-spesifikke feltnavn og verdier er på norsk, og kodeverdier er i tillegg i uppercase (f.eks. fornavn, etternavn, rolle, studieprogram, AKTIV, SLUTTET osv). Feltutvalg (fields) og sortering (sortBy) angis som kommaseparerte lister, der minus angir omvendt sortering (f.eks. sortBy=felt1,felt2-,felt3). Paginering angis ved start og limit, med default hhv. 1 og 10 (limit=0 gir alt). Filtre er separate felt, der man normalt angir søkeverdi direkte (felt=verdi) - med wildcard-notasjon (.*) i tekstfelt lengre enn 1 tegn. Noen felt har også andre muligheter å teste på: 1. Ulikhet (felt=!verdi angir at feltet er forskjellig fra verdien). 2. Større/mindre (felt=<verdi og felt=>verdi angir at feltet er hhv. <= eller >= verdien). 3. Om et felt har verdi i det hele tatt (felt=! og felt=_ angir hhv. at feltet har verdi/er tomt). Fritekstsøk er generelt samlet i et eget fritekstfelt (NB inntil videre er det case-sensitivt og krever wildcard for annet enn eksakt søk). For strukturerte felt (dvs. med underfelt) brukes dot-notasjon (f.eks. emne.kode). Alle GET-operasjoner forekommer i individ- og collection-form, hhv. med og uten ID til slutt. For individkall er default feltutvalg (fields) alle felt, mens for collection-kall er default kun ID."
+      },
+      "publisher": {
+        "id": "974760673"
+      },
+      "openApi": {
+        "openapi": null,
+        "info": {
+          "description": "FS-API'et er et generelt grensesnitt mot FS. Det bruker Basic Auth (brukernavn og passord) for å hente et token (JWT). Tokenet brukes til autentisering og autorisering i resten av tjenestene. Noen generelle prinsipper: Internasjonale standarder for feltnavn og verdier er i engelsk lowercase (f.eks. meta, href, limit, sortBy, fields, true, false osv). FS-spesifikke feltnavn og verdier er på norsk, og kodeverdier er i tillegg i uppercase (f.eks. fornavn, etternavn, rolle, studieprogram, AKTIV, SLUTTET osv). Feltutvalg (fields) og sortering (sortBy) angis som kommaseparerte lister, der minus angir omvendt sortering (f.eks. sortBy=felt1,felt2-,felt3). Paginering angis ved start og limit, med default hhv. 1 og 10 (limit=0 gir alt). Filtre er separate felt, der man normalt angir søkeverdi direkte (felt=verdi) - med wildcard-notasjon (.*) i tekstfelt lengre enn 1 tegn. Noen felt har også andre muligheter å teste på: 1. Ulikhet (felt=!verdi angir at feltet er forskjellig fra verdien). 2. Større/mindre (felt=<verdi og felt=>verdi angir at feltet er hhv. <= eller >= verdien). 3. Om et felt har verdi i det hele tatt (felt=! og felt=_ angir hhv. at feltet har verdi/er tomt). Fritekstsøk er generelt samlet i et eget fritekstfelt (NB inntil videre er det case-sensitivt og krever wildcard for annet enn eksakt søk). For strukturerte felt (dvs. med underfelt) brukes dot-notasjon (f.eks. emne.kode). Alle GET-operasjoner forekommer i individ- og collection-form, hhv. med og uten ID til slutt. For individkall er default feltutvalg (fields) alle felt, mens for collection-kall er default kun ID.",
+          "version": "1.0",
+          "title": "FS-API",
+          "termsOfService": null,
+          "contact": null,
+          "license": null
+        },
+        "servers": null,
+        "paths": {
+          "/deltakere/{id}": {
+            "get": {
+              "responses": {
+                "200": {
+                  "description": "Henter `Deltaker`"
+                },
+                "400": {
+                  "description": "Token ugyldig"
+                },
+                "403": {
+                  "description": "Bruker har ikke rolle som gir tilgang til denne ressursen"
+                }
+              }
+            }
+          },
+          "/roller": {
+            "get": {
+              "responses": {
+                "200": {
+                  "description": "Henter `Roller`"
+                },
+                "400": {
+                  "description": "Token ugyldig"
+                },
+                "403": {
+                  "description": "Bruker har ikke rolle som gir tilgang til denne ressursen"
+                }
+              }
+            }
+          },
+          "/roller/{id}": {
+            "get": {
+              "responses": {
+                "200": {
+                  "description": "Henter `Rolle`"
+                },
+                "400": {
+                  "description": "Token ugyldig"
+                },
+                "403": {
+                  "description": "Bruker har ikke rolle som gir tilgang til denne ressursen"
+                }
+              }
+            }
+          },
+          "/fnrendringer/{id}": {
+            "get": {
+              "responses": {
+                "200": {
+                  "description": "Henter `fnrendring`"
+                },
+                "400": {
+                  "description": "Token ugyldig"
+                },
+                "403": {
+                  "description": "Bruker har ikke rolle som gir tilgang til denne ressursen"
+                }
+              }
+            }
+          },
+          "/semesterregistreringer/{id}": {
+            "get": {
+              "responses": {
+                "200": {
+                  "description": "Henter `SemesterRegistrering`"
+                },
+                "400": {
+                  "description": "Token ugyldig"
+                },
+                "403": {
+                  "description": "Bruker har ikke rolle som gir tilgang til denne ressursen"
+                }
+              }
+            }
+          },
+          "/undervisningsaktiviteter/{id}": {
+            "get": {
+              "responses": {
+                "200": {
+                  "description": "Henter `Undervisningsaktivitet`"
+                },
+                "400": {
+                  "description": "Token ugyldig"
+                },
+                "403": {
+                  "description": "Bruker har ikke rolle som gir tilgang til denne ressursen"
+                }
+              }
+            }
+          },
+          "/personer": {
+            "get": {
+              "description": "",
+              "responses": {
+                "200": {
+                  "description": "Vellykket kall"
+                },
+                "400": {
+                  "description": "Token ugyldig"
+                },
+                "500": {
+                  "description": "Server error"
+                },
+                "403": {
+                  "description": "Bruker har ikke rolle som gir tilgang til denne ressursen"
+                }
+              }
+            },
+            "post": {
+              "description": "Fødselsdato og personnr er obligatorisk\n",
+              "responses": {
+                "200": {
+                  "description": "Person oppdatert"
+                },
+                "201": {
+                  "description": "Person opprettet"
+                },
+                "400": {
+                  "description": "Token ugyldig"
+                },
+                "500": {
+                  "description": "Server error"
+                },
+                "403": {
+                  "description": "Bruker har ikke rolle som gir tilgang til denne ressursen"
+                }
+              }
+            }
+          },
+          "/studentundervisning/{id}": {
+            "get": {
+              "responses": {
+                "200": {
+                  "description": "Henter `StudentUndervisning`"
+                },
+                "400": {
+                  "description": "Token ugyldig"
+                },
+                "403": {
+                  "description": "Bruker har ikke rolle som gir tilgang til denne ressursen"
+                }
+              }
+            }
+          },
+          "/kull": {
+            "get": {
+              "description": "En gruppe studenter med samtidig start på samme studieprogram",
+              "responses": {
+                "200": {
+                  "description": "Henter `Kull` liste"
+                },
+                "400": {
+                  "description": "Token ugyldig"
+                },
+                "403": {
+                  "description": "Bruker har ikke rolle som gir tilgang til denne ressursen"
+                }
+              }
+            }
+          },
+          "/emner": {
+            "get": {
+              "responses": {
+                "200": {
+                  "description": "Henter `Emner`"
+                },
+                "400": {
+                  "description": "Token ugyldig"
+                },
+                "403": {
+                  "description": "Bruker har ikke rolle som gir tilgang til denne ressursen"
+                }
+              }
+            }
+          },
+          "/undervisning/{id}": {
+            "get": {
+              "responses": {
+                "200": {
+                  "description": "Henter `Undervisning`"
+                },
+                "400": {
+                  "description": "Token ugyldig"
+                },
+                "403": {
+                  "description": "Bruker har ikke rolle som gir tilgang til denne ressursen"
+                }
+              }
+            }
+          },
+          "/personer/{id}": {
+            "get": {
+              "description": "",
+              "responses": {
+                "200": {
+                  "description": "Vellykket kall"
+                },
+                "400": {
+                  "description": "Token ugyldig"
+                },
+                "403": {
+                  "description": "Bruker har ikke rolle som gir tilgang til denne ressursen"
+                },
+                "404": {
+                  "description": "Person ikke funnet"
+                }
+              }
+            },
+            "post": {
+              "description": "Oppdaterer person med gitt løpenr\n",
+              "responses": {
+                "200": {
+                  "description": "Person oppdatert"
+                },
+                "400": {
+                  "description": "Token ugyldig"
+                },
+                "500": {
+                  "description": "Server error"
+                },
+                "403": {
+                  "description": "Bruker har ikke rolle som gir tilgang til denne ressursen"
+                }
+              }
+            }
+          },
+          "/studienivaer/{id}": {
+            "get": {
+              "description": "Henter ut 'Studieniva' object",
+              "responses": {
+                "200": {
+                  "description": "Vellykket kall"
+                },
+                "400": {
+                  "description": "Token ugyldig"
+                },
+                "403": {
+                  "description": "Bruker har ikke rolle som gir tilgang til denne ressursen"
+                },
+                "404": {
+                  "description": "Studierett finns ikke"
+                }
+              }
+            }
+          },
+          "/studentundervisningsaktiviteter": {
+            "get": {
+              "responses": {
+                "200": {
+                  "description": "Henter `StudentUndervisningsAktivitet`"
+                },
+                "400": {
+                  "description": "Token ugyldig"
+                },
+                "403": {
+                  "description": "Bruker har ikke rolle som gir tilgang til denne ressursen"
+                }
+              }
+            }
+          },
+          "/undervisningsaktiviteter": {
+            "get": {
+              "responses": {
+                "200": {
+                  "description": "Henter `Undervisningsaktiviteter`"
+                },
+                "400": {
+                  "description": "Token ugyldig"
+                },
+                "403": {
+                  "description": "Bruker har ikke rolle som gir tilgang til denne ressursen"
+                }
+              }
+            }
+          },
+          "/deltakere": {
+            "get": {
+              "responses": {
+                "200": {
+                  "description": "Henter `Deltakere`"
+                },
+                "400": {
+                  "description": "Token ugyldig"
+                },
+                "403": {
+                  "description": "Bruker har ikke rolle som gir tilgang til denne ressursen"
+                }
+              }
+            }
+          },
+          "/studieretter": {
+            "get": {
+              "description": "Rett til å studere på et studieprogram. Henter `Studieretter` med forskjelige filtere.\n\n*Eksepler*\n\n__/studieretter?aktiv=true__ _studieretter som er aktive; vises kun lenker til første 10 (paginering)_\n\n__/studieretter?aktiv=true&expand=items&limit=5__ _studieretter som er aktive med data; første 5\n\n__/studieretter?aktiv=true&expand=items&limit=0__ _alle studieretter som er aktive med data_\n",
+              "responses": {
+                "200": {
+                  "description": "Henter `Studieretter`"
+                },
+                "400": {
+                  "description": "Token ugyldig"
+                },
+                "403": {
+                  "description": "Bruker har ikke rolle som gir tilgang til denne ressursen"
+                }
+              }
+            }
+          },
+          "/studentundervisning": {
+            "get": {
+              "responses": {
+                "200": {
+                  "description": "Henter `StudentUndervisning`"
+                },
+                "400": {
+                  "description": "Token ugyldig"
+                },
+                "403": {
+                  "description": "Bruker har ikke rolle som gir tilgang til denne ressursen"
+                }
+              }
+            }
+          },
+          "/token": {
+            "get": {
+              "description": "Henter ut et JWT som brukes til autentisering på andre tjenester.",
+              "responses": {
+                "200": {
+                  "description": "Vellykket kall"
+                },
+                "401": {
+                  "description": "Brukernavn/passord stemmer ikke"
+                }
+              }
+            }
+          },
+          "/evukurs/{id}": {
+            "get": {
+              "responses": {
+                "200": {
+                  "description": "Henter `EvuKurs`"
+                },
+                "400": {
+                  "description": "Token ugyldig"
+                },
+                "403": {
+                  "description": "Bruker har ikke rolle som gir tilgang til denne ressursen"
+                }
+              }
+            }
+          },
+          "/studienivaer": {
+            "get": {
+              "responses": {
+                "200": {
+                  "description": "Henter `Studienivaer`"
+                },
+                "400": {
+                  "description": "Token ugyldig"
+                },
+                "403": {
+                  "description": "Bruker har ikke rolle som gir tilgang til denne ressursen"
+                }
+              }
+            }
+          },
+          "/studieprogrammer": {
+            "get": {
+              "description": "Enhet man kan tas opp til (få studierett på).",
+              "responses": {
+                "200": {
+                  "description": "Henter `Studieprogrammer`"
+                },
+                "400": {
+                  "description": "Token ugyldig"
+                },
+                "403": {
+                  "description": "Bruker har ikke rolle som gir tilgang til denne ressursen"
+                }
+              }
+            }
+          },
+          "/kull/{id}": {
+            "get": {
+              "description": "En gruppe studenter med samtidig start på samme studieprogram. Henter `Kull` med gitt id",
+              "responses": {
+                "200": {
+                  "description": "Vellykket kall"
+                },
+                "400": {
+                  "description": "Token ugyldig"
+                },
+                "403": {
+                  "description": "Bruker har ikke rolle som gir tilgang til denne ressursen"
+                },
+                "404": {
+                  "description": "Kull med gitt id finns ikke"
+                }
+              }
+            }
+          },
+          "/undervisning": {
+            "get": {
+              "responses": {
+                "200": {
+                  "description": "Henter `Undervisning`"
+                },
+                "400": {
+                  "description": "Token ugyldig"
+                },
+                "403": {
+                  "description": "Bruker har ikke rolle som gir tilgang til denne ressursen"
+                }
+              }
+            }
+          },
+          "/semesterregistreringer": {
+            "get": {
+              "responses": {
+                "200": {
+                  "description": "Henter `SemesterRegistrering`"
+                },
+                "400": {
+                  "description": "Token ugyldig"
+                },
+                "403": {
+                  "description": "Bruker har ikke rolle som gir tilgang til denne ressursen"
+                }
+              }
+            }
+          },
+          "/evukurs": {
+            "get": {
+              "responses": {
+                "200": {
+                  "description": "Henter `evukurs`"
+                },
+                "400": {
+                  "description": "Token ugyldig"
+                },
+                "403": {
+                  "description": "Bruker har ikke rolle som gir tilgang til denne ressursen"
+                }
+              }
+            }
+          },
+          "/evukursdeltakere/{id}": {
+            "get": {
+              "responses": {
+                "200": {
+                  "description": "Henter `Evukursdeltakere`"
+                },
+                "400": {
+                  "description": "Token ugyldig"
+                },
+                "403": {
+                  "description": "Bruker har ikke rolle som gir tilgang til denne ressursen"
+                }
+              }
+            }
+          },
+          "/studieretter/{id}": {
+            "get": {
+              "description": "Rett til å studere på et studieprogram. Henter `Studierett` object som er knyttet til person, studieprogram og semester",
+              "responses": {
+                "200": {
+                  "description": "Vellykket kall"
+                },
+                "400": {
+                  "description": "Token ugyldig"
+                },
+                "403": {
+                  "description": "Bruker har ikke rolle som gir tilgang til denne ressursen"
+                },
+                "404": {
+                  "description": "Studierett finns ikke"
+                }
+              }
+            }
+          },
+          "/studieprogrammer/{id}": {
+            "get": {
+              "description": "Enhet man kan tas opp til (få studierett på). Henter `Studieprogram` med gitt id",
+              "responses": {
+                "200": {
+                  "description": "Vellykket kall"
+                },
+                "400": {
+                  "description": "Token ugyldig"
+                },
+                "403": {
+                  "description": "Bruker har ikke rolle som gir tilgang til denne ressursen"
+                },
+                "404": {
+                  "description": "Studieprogram med gitt id finns ikke"
+                }
+              }
+            }
+          },
+          "/evukursdeltakere": {
+            "get": {
+              "responses": {
+                "200": {
+                  "description": "Henter `evukursdeltakere`"
+                },
+                "400": {
+                  "description": "Token ugyldig"
+                },
+                "403": {
+                  "description": "Bruker har ikke rolle som gir tilgang til denne ressursen"
+                }
+              }
+            }
+          },
+          "/personroller": {
+            "get": {
+              "responses": {
+                "200": {
+                  "description": "Vellykket kall"
+                },
+                "400": {
+                  "description": "Token ugyldig"
+                },
+                "403": {
+                  "description": "Bruker har ikke rolle som gir tilgang til denne ressursen"
+                }
+              }
+            }
+          },
+          "/personroller/{id}": {
+            "get": {
+              "responses": {
+                "200": {
+                  "description": "Vellykket kall"
+                },
+                "400": {
+                  "description": "Token ugyldig"
+                },
+                "403": {
+                  "description": "Bruker har ikke rolle som gir tilgang til denne ressursen"
+                },
+                "404": {
+                  "description": "Personrolle ikke funnet"
+                }
+              }
+            }
+          },
+          "/studentundervisningsaktiviteter/{id}": {
+            "get": {
+              "responses": {
+                "200": {
+                  "description": "Henter `StudentUndervisningsAktivitet`"
+                },
+                "400": {
+                  "description": "Token ugyldig"
+                },
+                "403": {
+                  "description": "Bruker har ikke rolle som gir tilgang til denne ressursen"
+                }
+              }
+            }
+          },
+          "/emner/{id}": {
+            "get": {
+              "responses": {
+                "200": {
+                  "description": "Henter `Emne`"
+                },
+                "400": {
+                  "description": "Token ugyldig"
+                },
+                "403": {
+                  "description": "Bruker har ikke rolle som gir tilgang til denne ressursen"
+                }
+              }
+            }
+          },
+          "/fnrendringer": {
+            "get": {
+              "responses": {
+                "200": {
+                  "description": "Henter `fnrendringer`"
+                },
+                "400": {
+                  "description": "Token ugyldig"
+                },
+                "403": {
+                  "description": "Bruker har ikke rolle som gir tilgang til denne ressursen"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "785c9a14-8209-4906-8a05-7b8ea513d21d",
+      "uri": "https://ks-no.github.io/api/innsyn-sok-api-v1.json",
+      "title": {
+        "no": "KS Fiks: Innsyn Søk Service"
+      },
+      "publisher": {
+        "id": "974760673"
+      },
+      "contactPoint": [
+        {
+          "uri": "http://www.ks.no/fagomrader/utvikling/digitalisering/digitaliseringsstrategien/fiks/",
+          "email": "fiks@ks.no",
+          "organizationName": "Fiks brukerstøtte"
+        }
+      ],
+      "openApi": {
+        "openapi": null,
+        "info": {
+          "description": null,
+          "version": "v1",
+          "title": "KS Fiks: Innsyn Søk Service",
+          "termsOfService": null,
+          "contact": {
+            "name": "Fiks brukerstøtte",
+            "url": "http://www.ks.no/fagomrader/utvikling/digitalisering/digitaliseringsstrategien/fiks/",
+            "email": "fiks@ks.no"
+          },
+          "license": null
+        },
+        "servers": null,
+        "paths": {
+          "/innsyn-sok/api/v1/oppslag/forelder": {
+            "get": {
+              "description": "",
+              "responses": {
+                "200": {
+                  "description": "successful operation"
+                }
+              }
+            }
+          },
+          "/innsyn-sok/api/v1/sok": {
+            "post": {
+              "description": "",
+              "responses": {
+                "200": {
+                  "description": "successful operation"
+                }
+              }
+            }
+          },
+          "/innsyn-sok/api/v1/oppslag/korrelasjon": {
+            "get": {
+              "description": "",
+              "responses": {
+                "200": {
+                  "description": "successful operation"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "500ccb5f-a809-4b76-91d6-3362a8d41e0e",
+      "uri": "jar:file:/app.jar!/BOOT-INF/classes!/seres-api.json",
+      "title": {
+        "no": "SERES3 REPOSITORY"
+      },
+      "description": {
+        "no": "Modellkatalogtjeneste for SERES - domeneklient"
+      },
+      "provenance": {
+        "uri": "http://data.brreg.no/datakatalog/provinens",
+        "prefLabel": {
+          "no": "Opphav",
+          "en": "Provinens"
+        }
+      },
+      "publisher": {
+        "id": "974760673"
+      },
+      "contactPoint": [
+        {
+          "uri": "http://www.brreg.no/",
+          "email": "seres@brreg.no",
+          "organizationName": "SERES brukerstøtte"
+        }
+      ],
+      "openApi": {
+        "openapi": null,
+        "info": {
+          "description": "Modellkatalogtjeneste for SERES - domeneklient",
+          "version": "1.0",
+          "title": "SERES3 REPOSITORY",
+          "termsOfService": "Terms of service",
+          "contact": {
+            "name": "SERES brukerstøtte",
+            "url": "http://www.brreg.no/",
+            "email": "seres@brreg.no"
+          },
+          "license": {
+            "name": "License of API",
+            "url": "API license URL"
+          }
+        },
+        "servers": null,
+        "paths": {
+          "/seres/v1/repository/catalogs/{catalog}/{domain}/{model}": {
+            "get": {
+              "description": "Returns a model object",
+              "responses": {
+                "200": {
+                  "description": "OK"
+                },
+                "401": {
+                  "description": "Unauthorized"
+                },
+                "403": {
+                  "description": "Forbidden"
+                },
+                "404": {
+                  "description": "Not Found"
+                }
+              }
+            },
+            "put": {
+              "description": "Updated the values of the model object",
+              "responses": {
+                "200": {
+                  "description": "OK"
+                },
+                "201": {
+                  "description": "Created"
+                },
+                "401": {
+                  "description": "Unauthorized"
+                },
+                "403": {
+                  "description": "Forbidden"
+                },
+                "404": {
+                  "description": "Not Found"
+                }
+              }
+            }
+          },
+          "/seres/v1/repository/catalogs/{catalog}/{domain}/{model}/versions": {
+            "get": {
+              "description": "Returns a list of version objects",
+              "responses": {
+                "200": {
+                  "description": "OK"
+                },
+                "401": {
+                  "description": "Unauthorized"
+                },
+                "403": {
+                  "description": "Forbidden"
+                },
+                "404": {
+                  "description": "Not Found"
+                }
+              }
+            },
+            "post": {
+              "description": "Create the model version from scratch",
+              "responses": {
+                "200": {
+                  "description": "OK"
+                },
+                "201": {
+                  "description": "Created"
+                },
+                "401": {
+                  "description": "Unauthorized"
+                },
+                "403": {
+                  "description": "Forbidden"
+                },
+                "404": {
+                  "description": "Not Found"
+                }
+              }
+            }
+          },
+          "/seres/v1/repository/catalogs/{catalog}/{domain}/{model}/{version}": {
+            "get": {
+              "description": "get a specific version object",
+              "responses": {
+                "200": {
+                  "description": "OK"
+                },
+                "401": {
+                  "description": "Unauthorized"
+                },
+                "403": {
+                  "description": "Forbidden"
+                },
+                "404": {
+                  "description": "Not Found"
+                }
+              }
+            },
+            "put": {
+              "description": "creates a new version object by copying it from another version",
+              "responses": {
+                "200": {
+                  "description": "OK"
+                },
+                "201": {
+                  "description": "Created"
+                },
+                "401": {
+                  "description": "Unauthorized"
+                },
+                "403": {
+                  "description": "Forbidden"
+                },
+                "404": {
+                  "description": "Not Found"
+                }
+              }
+            },
+            "delete": {
+              "description": "deletes the refered version",
+              "responses": {
+                "200": {
+                  "description": "OK"
+                },
+                "401": {
+                  "description": "Unauthorized"
+                },
+                "204": {
+                  "description": "No Content"
+                },
+                "403": {
+                  "description": "Forbidden"
+                }
+              }
+            }
+          },
+          "/seres/v1/repository/catalogs/{catalog}/{domain}/models": {
+            "get": {
+              "description": "Returns a the list of model objects in a domain",
+              "responses": {
+                "200": {
+                  "description": "OK"
+                },
+                "401": {
+                  "description": "Unauthorized"
+                },
+                "403": {
+                  "description": "Forbidden"
+                },
+                "404": {
+                  "description": "Not Found"
+                }
+              }
+            },
+            "post": {
+              "description": "Returns the created model object",
+              "responses": {
+                "200": {
+                  "description": "OK"
+                },
+                "201": {
+                  "description": "Created"
+                },
+                "401": {
+                  "description": "Unauthorized"
+                },
+                "403": {
+                  "description": "Forbidden"
+                },
+                "404": {
+                  "description": "Not Found"
+                }
+              }
+            }
+          },
+          "/seres/v1/repository/catalogs/{catalog}/{domain}/{model}/{version}/copy": {
+            "post": {
+              "description": "creates a new version object by copying it from another version",
+              "responses": {
+                "200": {
+                  "description": "OK"
+                },
+                "201": {
+                  "description": "Created"
+                },
+                "401": {
+                  "description": "Unauthorized"
+                },
+                "403": {
+                  "description": "Forbidden"
+                },
+                "404": {
+                  "description": "Not Found"
+                }
+              }
+            }
+          },
+          "/seres/v1/repository/catalogs/{catalog}/domains": {
+            "get": {
+              "description": "Returns a list of all domains under a specific catalog",
+              "responses": {
+                "200": {
+                  "description": "OK"
+                },
+                "401": {
+                  "description": "Unauthorized"
+                },
+                "403": {
+                  "description": "Forbidden"
+                },
+                "404": {
+                  "description": "Not Found"
+                }
+              }
+            },
+            "post": {
+              "description": "Returns the created domain",
+              "responses": {
+                "200": {
+                  "description": "OK"
+                },
+                "201": {
+                  "description": "Created"
+                },
+                "401": {
+                  "description": "Unauthorized"
+                },
+                "403": {
+                  "description": "Forbidden"
+                },
+                "404": {
+                  "description": "Not Found"
+                }
+              }
+            }
+          },
+          "/seres/v1/repository/catalogs/{catalog}": {
+            "get": {
+              "description": "Returns the catalog",
+              "responses": {
+                "200": {
+                  "description": "OK"
+                },
+                "401": {
+                  "description": "Unauthorized"
+                },
+                "403": {
+                  "description": "Forbidden"
+                },
+                "404": {
+                  "description": "Not Found"
+                }
+              }
+            },
+            "put": {
+              "description": "returns the updated catalog",
+              "responses": {
+                "200": {
+                  "description": "OK"
+                },
+                "201": {
+                  "description": "Created"
+                },
+                "401": {
+                  "description": "Unauthorized"
+                },
+                "403": {
+                  "description": "Forbidden"
+                },
+                "404": {
+                  "description": "Not Found"
+                }
+              }
+            }
+          },
+          "/seres/v1/repository/catalogs/{catalog}/{domain}/{model}/{version}/history": {
+            "put": {
+              "description": "changes the version state attribute to historic",
+              "responses": {
+                "200": {
+                  "description": "OK"
+                },
+                "201": {
+                  "description": "Created"
+                },
+                "401": {
+                  "description": "Unauthorized"
+                },
+                "403": {
+                  "description": "Forbidden"
+                },
+                "404": {
+                  "description": "Not Found"
+                }
+              }
+            }
+          },
+          "/seres/v1/repository/catalogs": {
+            "get": {
+              "description": "Returns a list of all catalogs stored by the repository (currently restriced to 1000 catalogs)",
+              "responses": {
+                "200": {
+                  "description": "OK"
+                },
+                "401": {
+                  "description": "Unauthorized"
+                },
+                "403": {
+                  "description": "Forbidden"
+                },
+                "404": {
+                  "description": "Not Found"
+                }
+              }
+            },
+            "post": {
+              "description": "Returns the created catalog",
+              "responses": {
+                "200": {
+                  "description": "OK"
+                },
+                "201": {
+                  "description": "Created"
+                },
+                "401": {
+                  "description": "Unauthorized"
+                },
+                "403": {
+                  "description": "Forbidden"
+                },
+                "404": {
+                  "description": "Not Found"
+                }
+              }
+            }
+          },
+          "/seres/v1/repository/catalogs/{catalog}/{domain}/{model}/{version}/approve": {
+            "put": {
+              "description": "changes the version state attribute to approved",
+              "responses": {
+                "200": {
+                  "description": "OK"
+                },
+                "201": {
+                  "description": "Created"
+                },
+                "401": {
+                  "description": "Unauthorized"
+                },
+                "403": {
+                  "description": "Forbidden"
+                },
+                "404": {
+                  "description": "Not Found"
+                }
+              }
+            }
+          },
+          "/seres/v1/repository/catalogs/{catalog}/{domain}/{model}/{version}/reject": {
+            "put": {
+              "description": "changes the version state attribute to rejected",
+              "responses": {
+                "200": {
+                  "description": "OK"
+                },
+                "201": {
+                  "description": "Created"
+                },
+                "401": {
+                  "description": "Unauthorized"
+                },
+                "403": {
+                  "description": "Forbidden"
+                },
+                "404": {
+                  "description": "Not Found"
+                }
+              }
+            }
+          },
+          "/seres/v1/repository/versions/{versionReference}/changelog": {
+            "get": {
+              "description": "Returns the change events that has occured to a specific model-version. Pagination is required: ?page=0&size=20",
+              "responses": {
+                "200": {
+                  "description": "OK"
+                },
+                "401": {
+                  "description": "Unauthorized"
+                },
+                "403": {
+                  "description": "Forbidden"
+                },
+                "404": {
+                  "description": "Not Found"
+                }
+              }
+            }
+          },
+          "/seres/v1/repository/catalogs/{catalog}/{domain}": {
+            "get": {
+              "description": "Returns the domain object requested",
+              "responses": {
+                "200": {
+                  "description": "OK"
+                },
+                "401": {
+                  "description": "Unauthorized"
+                },
+                "403": {
+                  "description": "Forbidden"
+                },
+                "404": {
+                  "description": "Not Found"
+                }
+              }
+            },
+            "put": {
+              "description": "Updates the domain object",
+              "responses": {
+                "200": {
+                  "description": "OK"
+                },
+                "201": {
+                  "description": "Created"
+                },
+                "401": {
+                  "description": "Unauthorized"
+                },
+                "403": {
+                  "description": "Forbidden"
+                },
+                "404": {
+                  "description": "Not Found"
+                }
+              }
+            }
+          },
+          "/seres/v1/repository/catalogs/{catalog}/{domain}/{model}/{version}/data": {
+            "get": {
+              "responses": {
+                "200": {
+                  "description": "OK"
+                },
+                "401": {
+                  "description": "Unauthorized"
+                },
+                "403": {
+                  "description": "Forbidden"
+                },
+                "404": {
+                  "description": "Not Found"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "9ad7ac51-d6fd-4a6f-add9-3582865ec678",
+      "uri": "https://fellesdatakatalog.brreg.no/api-docs/search-api",
+      "title": {
+        "no": "National Data Directory Search API"
+      },
+      "description": {
+        "no": "Provides a basic search api against the National Data Directory of Norway"
+      },
+      "provenance": {
+        "uri": "http://data.brreg.no/datakatalog/provinens/nasjonal",
+        "code": "NASJONAL",
+        "prefLabel": {
+          "en": "National Building Block",
+          "nb": "Nasjonal felleskomponent",
+          "nn": "Nasjonal felleskomponent"
+        }
+      },
+      "accessRights": [
+        {
+          "uri": "http://publications.europa.eu/resource/authority/access-right/NON_PUBLIC",
+          "code": "NON_PUBLIC",
+          "prefLabel": {
+            "nn": "Ikke-offentlig",
+            "nb": "Ikke-offentlig",
+            "en": "Non-public"
+          }
+        },
+        {
+          "uri": "http://publications.europa.eu/resource/authority/access-right/RESTRICTED",
+          "code": "RESTRICTED",
+          "prefLabel": {
+            "nb": "Begrenset",
+            "nn": "Begrenset",
+            "en": "Restricted"
+          }
+        }
+      ],
+      "publisher": {
+        "id": "974760673"
+      },
+      "contactPoint": [
+        {
+          "uri": "https://fellesdatakatalog.brreg.no",
+          "email": "fellesdatakatalog@brreg.no",
+          "organizationName": "Brønnøysundregistrene"
+        }
+      ],
+      "datasetReferences": [
+        {
+          "referenceType": {
+            "uri": "dct:references",
+            "code": "references",
+            "prefLabel": {
+              "en": "References",
+              "nn": "Refererar",
+              "nb": "Refererer"
+            }
+          },
+          "source": {
+            "uri": "https://fellesdatakatalog.brreg.no/datasets/ea9e2aa7-880c-4387-888e-77446acab279",
+            "prefLabel": null,
+            "extraType": null
+          }
+        },
+        {
+          "referenceType": {
+            "uri": "dct:references",
+            "code": "references",
+            "prefLabel": {
+              "en": "References",
+              "nn": "Refererar",
+              "nb": "Refererer"
+            }
+          },
+          "source": {
+            "uri": "https://fellesdatakatalog.brreg.no/datasets/ea9e2aa7-880c-4387-888e-77446acab278",
+            "prefLabel": null,
+            "extraType": null
+          }
+        }
+      ],
+      "openApi": {
+        "openapi": null,
+        "info": {
+          "description": "Provides a basic search api against the National Data Directory of Norway",
+          "version": "1.0",
+          "title": "National Data Directory Search API",
+          "termsOfService": "https://fellesdatakatalog.brreg.no/about",
+          "contact": {
+            "name": "Brønnøysundregistrene",
+            "url": "https://fellesdatakatalog.brreg.no",
+            "email": "fellesdatakatalog@brreg.no"
+          },
+          "license": {
+            "name": "License of API",
+            "url": "http://data.norge.no/nlod/no/2.0"
+          }
+        },
+        "servers": null,
+        "paths": {
+          "/catalogs": {
+            "get": {
+              "description": "The three formats are: text/turtle, application/ld+json and application/rdf+xml",
+              "responses": {
+                "200": {
+                  "description": "OK"
+                },
+                "401": {
+                  "description": "Unauthorized"
+                },
+                "403": {
+                  "description": "Forbidden"
+                },
+                "404": {
+                  "description": "Not Found"
+                }
+              }
+            }
+          },
+          "/harvest/catalog": {
+            "get": {
+              "responses": {
+                "200": {
+                  "description": "OK"
+                },
+                "401": {
+                  "description": "Unauthorized"
+                },
+                "403": {
+                  "description": "Forbidden"
+                },
+                "404": {
+                  "description": "Not Found"
+                }
+              }
+            }
+          },
+          "/dataset": {
+            "get": {
+              "description": "The three formats are: text/turtle, application/ld+json and application/rdf+xml",
+              "responses": {
+                "200": {
+                  "description": "OK"
+                },
+                "401": {
+                  "description": "Unauthorized"
+                },
+                "403": {
+                  "description": "Forbidden"
+                },
+                "404": {
+                  "description": "Not Found"
+                }
+              }
+            }
+          },
+          "/publisher/hierarchy": {
+            "get": {
+              "responses": {
+                "200": {
+                  "description": "OK"
+                },
+                "401": {
+                  "description": "Unauthorized"
+                },
+                "403": {
+                  "description": "Forbidden"
+                },
+                "404": {
+                  "description": "Not Found"
+                }
+              }
+            }
+          },
+          "/themecount": {
+            "get": {
+              "description": "Returns a list of themes and the total number of datasets for each of them",
+              "responses": {
+                "200": {
+                  "description": "OK"
+                },
+                "401": {
+                  "description": "Unauthorized"
+                },
+                "403": {
+                  "description": "Forbidden"
+                },
+                "404": {
+                  "description": "Not Found"
+                }
+              }
+            }
+          },
+          "/datasets": {
+            "get": {
+              "description": "Returns a list of matching datasets wrapped in a elasticsearch response. Max number returned by a single query is 100. Size parameters greater than 100 will not return more than 100 datasets. In order to access all datasets, use multiple queries and increment from parameter.",
+              "responses": {
+                "200": {
+                  "description": "OK"
+                },
+                "401": {
+                  "description": "Unauthorized"
+                },
+                "403": {
+                  "description": "Forbidden"
+                },
+                "404": {
+                  "description": "Not Found"
+                }
+              }
+            }
+          },
+          "/datasets/**": {
+            "get": {
+              "description": "You must specify the dataset's identifier",
+              "responses": {
+                "200": {
+                  "description": "OK"
+                },
+                "401": {
+                  "description": "Unauthorized"
+                },
+                "403": {
+                  "description": "Forbidden"
+                },
+                "404": {
+                  "description": "Not Found"
+                }
+              }
+            }
+          },
+          "/publisher": {
+            "get": {
+              "description": "Returns the elasticsearch response with matching publishers",
+              "responses": {
+                "200": {
+                  "description": "OK"
+                },
+                "401": {
+                  "description": "Unauthorized"
+                },
+                "403": {
+                  "description": "Forbidden"
+                },
+                "404": {
+                  "description": "Not Found"
+                }
+              }
+            }
+          },
+          "/aggregateDataset": {
+            "get": {
+              "responses": {
+                "200": {
+                  "description": "OK"
+                },
+                "401": {
+                  "description": "Unauthorized"
+                },
+                "403": {
+                  "description": "Forbidden"
+                },
+                "404": {
+                  "description": "Not Found"
+                }
+              }
+            }
+          },
+          "/publishercount": {
+            "get": {
+              "description": "Returns a list of publishers and the total number of dataset for each of them",
+              "responses": {
+                "200": {
+                  "description": "OK"
+                },
+                "401": {
+                  "description": "Unauthorized"
+                },
+                "403": {
+                  "description": "Forbidden"
+                },
+                "404": {
+                  "description": "Not Found"
+                }
+              }
+            }
+          },
+          "/terms": {
+            "get": {
+              "description": "Returns the elasticsearch response with matching terms (dct:subject)",
+              "responses": {
+                "200": {
+                  "description": "OK"
+                },
+                "401": {
+                  "description": "Unauthorized"
+                },
+                "403": {
+                  "description": "Forbidden"
+                },
+                "404": {
+                  "description": "Not Found"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "aggregations": {
+    "accessRights": {
+      "buckets": [
+        {
+          "key": "MISSING",
+          "count": 5
+        },
+        {
+          "key": "NON_PUBLIC",
+          "count": 1
+        },
+        {
+          "key": "RESTRICTED",
+          "count": 1
+        }
+      ]
+    }
+  }
+}

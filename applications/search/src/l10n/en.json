@@ -11,6 +11,8 @@
   "contactPoint": "Contact point",
   "email": "Email",
   "phone": "Phone",
+  "close": "Close",
+  "filter": "Filter",
   "app": {
     "title": "The National Data Directory",
     "titleSub": "Datasets from publishers in Norway.",

@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { ResultsApi } from './results-api.component';
-import { apis } from './__fixtures/apis';
+import apisApiResponse from './__fixtures/apisApiResponse.json';
 
 let closeFilterModal;
 let onFilterTheme;
@@ -49,7 +49,7 @@ test('should render ResultsApi correctly with minimum of props and no hits', () 
 
 test('should render ResultsApi correctly with hits', () => {
   wrapper.setProps({
-    apiItems: apis
+    apiItems: apisApiResponse
   });
   expect(wrapper).toMatchSnapshot();
 });
