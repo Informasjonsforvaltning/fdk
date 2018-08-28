@@ -37,37 +37,69 @@ public class AcatQueryController {
     @ApiOperation(value = "Queries the api catalog for api specifications",
             notes = "So far only simple queries is supported", response = ApiDocument.class)
     @RequestMapping(value = "/search", method = RequestMethod.GET, produces = "application/json")
-    public QueryResponse search(@ApiParam("the query string") @RequestParam(value = "q", defaultValue = "", required = false) String query) {
+    public QueryResponse search(
+            @ApiParam("the query string")
+            @RequestParam(value = "q", defaultValue = "", required = false)
+                    String query,
 
+            @ApiParam("Returns datatasets from position x in the result set, 0 is the default value. A value of 150 will return the 150th dataset in the resultset")
+            @RequestParam(value = "from", defaultValue = "0", required = false)
+                    int from,
+
+            @ApiParam("Specifies the size, i.e. the number of datasets to return in one request. The default is 10, the maximum number of datasets returned is 100")
+            @RequestParam(value = "size", defaultValue = "10", required = false)
+                    int size
+    ) {
         try {
-            QueryBuilder search;
-
-            if (query.isEmpty()) {
-                search = QueryBuilders.matchAllQuery();
-            } else {
-                search = QueryBuilders.simpleQueryStringQuery(query);
-            }
-
-            SearchResponse response = doQuery("acat", "apispec", search, 0, 50);
-
+            SearchRequestBuilder searchRequest = buildRequest(query, from, size);
+            SearchResponse response = doQuery(searchRequest);
             return convertFromElasticResponse(response);
         } catch (Exception e) {
             logger.error("error {}", e.getMessage(), e);
         }
 
         return null;
-
     }
 
-    SearchResponse doQuery(String index, String type, QueryBuilder search, int from, int size) {
-        SearchRequestBuilder searchBuilder = elasticsearch.getClient()
-                .prepareSearch(index)
-                .setTypes(type)
-                .setQuery(search)
-                .setFrom(from)
-                .setSize(size);
+    SearchRequestBuilder buildRequest(String query, int from, int size) {
+        QueryBuilder search;
 
+        if (query.isEmpty()) {
+            search = QueryBuilders.matchAllQuery();
+        } else {
+            search = QueryBuilders.simpleQueryStringQuery(query);
+        }
+
+        return elasticsearch.getClient()
+                .prepareSearch("acat")
+                .setTypes("apispec")
+                .setQuery(search)
+                .setFrom(checkAndAdjustFrom(from))
+                .setSize(checkAndAdjustSize(size));
+    }
+
+    SearchResponse doQuery(SearchRequestBuilder searchBuilder) {
         return searchBuilder.execute().actionGet();
+    }
+
+    private int checkAndAdjustFrom(int from) {
+        if (from < 0) {
+            return 0;
+        } else {
+            return from;
+        }
+    }
+
+    private int checkAndAdjustSize(int size) {
+        if (size > 100) {
+            return 100;
+        }
+
+        if (size < 0) {
+            return 0;
+        }
+
+        return size;
     }
 
 }

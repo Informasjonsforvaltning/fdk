@@ -6,6 +6,7 @@ import no.dcat.shared.testcategories.UnitTest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
@@ -21,25 +22,30 @@ import static org.mockito.Mockito.*;
 @RunWith(SpringRunner.class)
 public class AcatQueryControllerTest {
 
-    @Test
+@Test
     public void checkOne() {
 
         ElasticsearchService elasticsearchService = mock(ElasticsearchService.class);
         AcatQueryController controller = new AcatQueryController(elasticsearchService);
         AcatQueryController spyController = spy(controller);
 
-        SearchResponse searchResponse = mock(SearchResponse.class);
-        doReturn(searchResponse).when(spyController).doQuery(anyString(), anyString(),anyObject(),anyInt(), anyInt());
-        SearchHits searchHits = mock(SearchHits.class);
-        when(searchResponse.getHits()).thenReturn(searchHits);
-        when(searchHits.getTotalHits()).thenReturn(1L);
         SearchHit hit = mock(SearchHit.class);
         SearchHit[] hits = { hit };
+
+        SearchHits searchHits = mock(SearchHits.class);
+        when(searchHits.getTotalHits()).thenReturn(1L);
         when(searchHits.getHits()).thenReturn(hits);
+
+        SearchResponse searchResponse = mock(SearchResponse.class);
+        when(searchResponse.getHits()).thenReturn(searchHits);
+
+        doReturn(null).when(spyController).buildRequest(anyString(),anyInt(),anyInt());
+        doReturn(searchResponse).when(spyController).doQuery(anyObject());
+
         when(hit.getSourceAsString()).thenReturn(apiSpecExample);
         when(hit.getId()).thenReturn("http://testtesttset");
 
-        QueryResponse response = spyController.search("");
+        QueryResponse response = spyController.search("",0,0 );
 
         assertThat(response, notNullValue());
 
