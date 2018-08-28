@@ -7,6 +7,7 @@ import no.acat.model.queryresponse.QueryResponse;
 import no.acat.service.ElasticsearchService;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
@@ -15,6 +16,7 @@ import org.elasticsearch.search.aggregations.bucket.terms.Terms;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,6 +30,8 @@ import static no.acat.query.ResponseAdapter.convertFromElasticResponse;
 @RequestMapping(value = "/api")
 public class AcatQueryController {
     private static final Logger logger = LoggerFactory.getLogger(AcatQueryController.class);
+
+    public static final String MISSING = "MISSING";
 
     private ElasticsearchService elasticsearch;
 
@@ -45,6 +49,10 @@ public class AcatQueryController {
             @RequestParam(value = "q", defaultValue = "", required = false)
                     String query,
 
+            @ApiParam("Filters on accessrights, codes are PUBLIC, RESTRICTED or NON_PUBLIC ")
+            @RequestParam(value = "accessrights", defaultValue = "", required = false)
+                    String accessRights,
+
             @ApiParam("Returns datatasets from position x in the result set, 0 is the default value. A value of 150 will return the 150th dataset in the resultset")
             @RequestParam(value = "from", defaultValue = "0", required = false)
                     int from,
@@ -54,7 +62,7 @@ public class AcatQueryController {
                     int size
     ) {
         try {
-            SearchRequestBuilder searchRequest = buildRequest(query, from, size);
+            SearchRequestBuilder searchRequest = buildRequest(query, accessRights, from, size);
             SearchResponse elasticResponse = doQuery(searchRequest);
             return convertFromElasticResponse(elasticResponse);
         } catch (Exception e) {
@@ -64,11 +72,12 @@ public class AcatQueryController {
         return null;
     }
 
-    QueryResponse convertFromElasticResponse(SearchResponse elasticResponse){
+    QueryResponse convertFromElasticResponse(SearchResponse elasticResponse) {
         return ResponseAdapter.convertFromElasticResponse(elasticResponse);
     }
 
-    SearchRequestBuilder buildRequest(String query, int from, int size) {
+    SearchRequestBuilder buildRequest(String query, String accessRights, int from, int size) {
+
         QueryBuilder search;
 
         if (query.isEmpty()) {
@@ -77,13 +86,27 @@ public class AcatQueryController {
             search = QueryBuilders.simpleQueryStringQuery(query);
         }
 
+        BoolQueryBuilder boolQuery = QueryBuilders.boolQuery()
+                .must(search);
+
+        if (!StringUtils.isEmpty(accessRights)) {
+            BoolQueryBuilder accessRightsFilter = QueryBuilders.boolQuery();
+            if (accessRights.equals(MISSING)) {
+                accessRightsFilter.mustNot(QueryBuilders.existsQuery("accessRights"));
+            } else {
+                accessRightsFilter.must(QueryBuilders.termQuery("accessRights.code", accessRights));
+            }
+
+            boolQuery.filter(accessRightsFilter);
+        }
+
         return elasticsearch.getClient()
                 .prepareSearch("acat")
                 .setTypes("apispec")
-                .setQuery(search)
+                .setQuery(boolQuery)
                 .setFrom(checkAndAdjustFrom(from))
                 .setSize(checkAndAdjustSize(size))
-                .addAggregation(createTermsAggregation("accessRights", "accessRights.code", "MISSING"));
+                .addAggregation(createTermsAggregation("accessRights", "accessRights.code"));
     }
 
     SearchResponse doQuery(SearchRequestBuilder searchBuilder) {
@@ -110,10 +133,10 @@ public class AcatQueryController {
         return size;
     }
 
-    private AggregationBuilder createTermsAggregation(String aggregationName, String field, String missing) {
+    private AggregationBuilder createTermsAggregation(String aggregationName, String field) {
         return AggregationBuilders
                 .terms(aggregationName)
-                .missing(missing)
+                .missing(MISSING)
                 .field(field)
                 .size(10000)
                 .order(Terms.Order.count(false));
