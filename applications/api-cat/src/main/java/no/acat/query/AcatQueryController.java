@@ -9,6 +9,9 @@ import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.aggregations.AggregationBuilder;
+import org.elasticsearch.search.aggregations.AggregationBuilders;
+import org.elasticsearch.search.aggregations.bucket.terms.Terms;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,13 +55,17 @@ public class AcatQueryController {
     ) {
         try {
             SearchRequestBuilder searchRequest = buildRequest(query, from, size);
-            SearchResponse response = doQuery(searchRequest);
-            return convertFromElasticResponse(response);
+            SearchResponse elasticResponse = doQuery(searchRequest);
+            return convertFromElasticResponse(elasticResponse);
         } catch (Exception e) {
             logger.error("error {}", e.getMessage(), e);
         }
 
         return null;
+    }
+
+    QueryResponse convertFromElasticResponse(SearchResponse elasticResponse){
+        return ResponseAdapter.convertFromElasticResponse(elasticResponse);
     }
 
     SearchRequestBuilder buildRequest(String query, int from, int size) {
@@ -75,7 +82,8 @@ public class AcatQueryController {
                 .setTypes("apispec")
                 .setQuery(search)
                 .setFrom(checkAndAdjustFrom(from))
-                .setSize(checkAndAdjustSize(size));
+                .setSize(checkAndAdjustSize(size))
+                .addAggregation(createTermsAggregation("accessRights", "accessRights.code", "MISSING"));
     }
 
     SearchResponse doQuery(SearchRequestBuilder searchBuilder) {
@@ -102,4 +110,12 @@ public class AcatQueryController {
         return size;
     }
 
+    private AggregationBuilder createTermsAggregation(String aggregationName, String field, String missing) {
+        return AggregationBuilders
+                .terms(aggregationName)
+                .missing(missing)
+                .field(field)
+                .size(10000)
+                .order(Terms.Order.count(false));
+    }
 }

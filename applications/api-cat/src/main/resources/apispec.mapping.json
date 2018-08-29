@@ -4,6 +4,14 @@
       "uri": {
         "type": "string",
         "index": "not_analyzed"
+      },
+      "accessRights": {
+        "properties": {
+          "code": {
+            "type": "string",
+            "index": "not_analyzed"
+          }
+        }
       }
     }
   }

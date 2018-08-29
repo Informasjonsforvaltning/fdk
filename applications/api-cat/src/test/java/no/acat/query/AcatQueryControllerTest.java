@@ -6,7 +6,6 @@ import no.dcat.shared.testcategories.UnitTest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
@@ -24,7 +23,8 @@ public class AcatQueryControllerTest {
 
 @Test
     public void checkOne() {
-
+        // todo meaningful test would be to allow elastic client to build a query and process sample response,
+        // instead of mocking entire elastic client here
         ElasticsearchService elasticsearchService = mock(ElasticsearchService.class);
         AcatQueryController controller = new AcatQueryController(elasticsearchService);
         AcatQueryController spyController = spy(controller);
@@ -41,6 +41,8 @@ public class AcatQueryControllerTest {
 
         doReturn(null).when(spyController).buildRequest(anyString(),anyInt(),anyInt());
         doReturn(searchResponse).when(spyController).doQuery(anyObject());
+        // todo this is nonsense, we do not test anything
+        doReturn(new QueryResponse()).when(spyController).convertFromElasticResponse(anyObject());
 
         when(hit.getSourceAsString()).thenReturn(apiSpecExample);
         when(hit.getId()).thenReturn("http://testtesttset");
