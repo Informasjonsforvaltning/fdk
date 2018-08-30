@@ -90,11 +90,16 @@ public class ApiHarvester {
         String[] apiFiles = {"enhetsreg-static.json", "seres-api.json"};
 
         for (String apiFileName : apiFiles) {
-            ApiCatalogRecord catalogRecord = new ApiCatalogRecord();
-            catalogRecord.setOrgNr("974760673");
-            ClassPathResource classPathResource = new ClassPathResource(apiFileName);
             try {
-                catalogRecord.setApiSpecUrl(classPathResource.getURL().toString());
+                ClassPathResource classPathResource = new ClassPathResource(apiFileName);
+                String apiSpecUrl = classPathResource.getURL().toString();
+
+                ApiCatalogRecord catalogRecord = new ApiCatalogRecord().builder()
+                        .orgNr("974760673")
+                        .apiSpecUrl(apiSpecUrl)
+                        .build();
+
+                result.add(catalogRecord);
             } catch (Exception e) {
                 logger.error("Unable get resource url", e.getMessage(), e);
             }
@@ -109,12 +114,14 @@ public class ApiHarvester {
             records = CSVFormat.EXCEL.withHeader().withDelimiter(';').parse(input);
 
             for (CSVRecord line : records) {
-                ApiCatalogRecord catalogRecord = new ApiCatalogRecord();
-                catalogRecord.setOrgNr(line.get("OrgNr"));
-                catalogRecord.setApiSpecUrl(line.get("ApiSpecUrl"));
-                catalogRecord.setAccessRightsCodes(Arrays.asList(line.get("AccessRights").split(",")));
-                catalogRecord.setProvenanceCode(line.get("Provenance"));
-                catalogRecord.setDatasetReferences(Arrays.asList(line.get("DatasetRefs").split(",")));
+                ApiCatalogRecord catalogRecord = new ApiCatalogRecord().builder()
+                        .orgNr(line.get("OrgNr"))
+                        .apiSpecUrl(line.get("ApiSpecUrl"))
+                        .accessRightsCodes(Arrays.asList(line.get("AccessRights").split(",")))
+                        .provenanceCode(line.get("Provenance"))
+                        .datasetReferences(Arrays.asList(line.get("DatasetRefs").split(",")))
+                        .build();
+
                 result.add(catalogRecord);
             }
 

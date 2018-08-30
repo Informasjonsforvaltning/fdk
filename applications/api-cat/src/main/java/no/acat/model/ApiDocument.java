@@ -2,8 +2,7 @@ package no.acat.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
-import lombok.ToString;
+import lombok.*;
 import io.swagger.v3.oas.models.OpenAPI;
 import no.dcat.shared.Contact;
 import no.dcat.shared.HarvestMetadata;
@@ -16,6 +15,9 @@ import java.util.List;
 import java.util.Map;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @ToString(includeFieldNames = false)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ApiDocument  {
