@@ -8,7 +8,7 @@ import java.util.List;
 public class ApiCatalogRecord {
     private String orgNr;
     private String orgName;
-    private String openApiUrl;
+    private String apiSpecUrl;
     private String docUrl;
     private List<String> accessRightsCodes;
     private String provenanceCode;

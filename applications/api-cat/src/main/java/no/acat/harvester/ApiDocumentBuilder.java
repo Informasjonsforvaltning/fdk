@@ -30,30 +30,30 @@ public class ApiDocumentBuilder {
 
     public ApiDocument create(ApiCatalogRecord apiCatalogRecord) {
         ApiDocument apiDocument = new ApiDocument();
-        String openApiUrl = apiCatalogRecord.getOpenApiUrl();
+        String apiSpecUrl = apiCatalogRecord.getApiSpecUrl();
 
-        if (openApiUrl.isEmpty()) {
-            throw new IllegalArgumentException("Missing OpenApiUrl");
+        if (apiSpecUrl.isEmpty()) {
+            throw new IllegalArgumentException("Missing ApiSpecUrl");
         }
 
         apiDocument.setId(lookupOrGenerateId(apiCatalogRecord));
-        apiDocument.setUri(openApiUrl);
+        apiDocument.setUri(apiSpecUrl);
         apiDocument.setPublisher(createPublisher(apiCatalogRecord));
         apiDocument.setAccessRights(extractAccessRights(apiCatalogRecord));
         apiDocument.setProvenance(extractProvenance(apiCatalogRecord));
         apiDocument.setDatasetReferences(extractDatasetReferences(apiCatalogRecord));
-        importFromOpenApi(apiDocument, openApiUrl);
+        importFromOpenApi(apiDocument, apiSpecUrl);
         return apiDocument;
     }
 
     String lookupOrGenerateId(ApiCatalogRecord apiCatalogRecord) {
         String id = null;
 
-        String openApiUrl = apiCatalogRecord.getOpenApiUrl();
+        String apiSpecUrl = apiCatalogRecord.getApiSpecUrl();
         SearchResponse response = elasticsearchClient.prepareSearch("acat")
                 .setTypes("apispec")
                 .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
-                .setQuery(QueryBuilders.termQuery("uri", openApiUrl))
+                .setQuery(QueryBuilders.termQuery("uri", apiSpecUrl))
                 .get();
 
 
@@ -108,13 +108,13 @@ public class ApiDocumentBuilder {
         return datasetReferences.isEmpty() ? null : datasetReferences;
     }
 
-    static void importFromOpenApi(ApiDocument apiDocument, String openApiUrl) {
+    static void importFromOpenApi(ApiDocument apiDocument, String apiSpecUrl) {
         ObjectMapper mapper = Utils.jsonMapper();
         OpenAPI openApi;
         String apiSpec;
 
         try {
-            apiSpec = IOUtils.toString(new URL(openApiUrl).openStream(), Charsets.UTF_8);
+            apiSpec = IOUtils.toString(new URL(apiSpecUrl).openStream(), Charsets.UTF_8);
             apiDocument.setApiSpec(apiSpec);
             openApi = mapper.readValue(apiSpec, OpenAPI.class);
             apiDocument.setOpenApi(openApi);
