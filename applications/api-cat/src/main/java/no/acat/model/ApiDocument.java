@@ -61,6 +61,10 @@ public class ApiDocument  {
     @ApiModelProperty("A list of references to the datasets that can be returned by the api")
     private List<Reference> datasetReferences;
 
-    @ApiModelProperty("The open api specification (swagger)")
+    @ApiModelProperty("Spec converted to openAPI v3")
     private OpenAPI openApi;
+
+    @ApiModelProperty("Original api spec")
+    private String apiSpec;
+
 }
