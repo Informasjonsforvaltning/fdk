@@ -7,6 +7,8 @@ import no.acat.model.ApiCatalogRecord;
 import no.acat.model.ApiDocument;
 import no.dcat.shared.*;
 import no.dcat.shared.client.referenceData.ReferenceDataClient;
+import org.apache.commons.io.Charsets;
+import org.apache.commons.io.IOUtils;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.client.Client;
@@ -109,8 +111,13 @@ public class ApiDocumentBuilder {
     static void importFromOpenApi(ApiDocument apiDocument, String openApiUrl) {
         ObjectMapper mapper = Utils.jsonMapper();
         OpenAPI openApi;
+        String apiSpec;
+
         try {
-            openApi = mapper.readValue(new URL(openApiUrl), OpenAPI.class);
+            apiSpec = IOUtils.toString(new URL(openApiUrl).openStream(), Charsets.UTF_8);
+            apiDocument.setApiSpec(apiSpec);
+            openApi = mapper.readValue(apiSpec, OpenAPI.class);
+            apiDocument.setOpenApi(openApi);
         } catch (IOException e) {
             throw new IllegalArgumentException("Invalid OpenApi Url");
         }
@@ -144,7 +151,6 @@ public class ApiDocumentBuilder {
 
         //todo format
 
-        apiDocument.setOpenApi(openApi);
     }
 
 }
