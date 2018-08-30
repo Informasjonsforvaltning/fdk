@@ -1760,6 +1760,375 @@
           "count": 1
         }
       ]
+    },
+    "orgPath" : {
+      "doc_count_error_upper_bound" : 0,
+      "sum_other_doc_count" : 0,
+      "buckets" : [ {
+        "key" : "/STAT",
+        "doc_count" : 716
+      }, {
+        "key" : "/KOMMUNE",
+        "doc_count" : 236
+      }, {
+        "key" : "/STAT/972417858",
+        "doc_count" : 175
+      }, {
+        "key" : "/STAT/972417874",
+        "doc_count" : 152
+      }, {
+        "key" : "/KOMMUNE/964965226",
+        "doc_count" : 147
+      }, {
+        "key" : "/STAT/972417858/971040238",
+        "doc_count" : 124
+      }, {
+        "key" : "/STAT/977161630",
+        "doc_count" : 76
+      }, {
+        "key" : "/STAT/972417874/988983837",
+        "doc_count" : 75
+      }, {
+        "key" : "/STAT/972417882",
+        "doc_count" : 73
+      }, {
+        "key" : "/STAT/972417874/981544315",
+        "doc_count" : 62
+      }, {
+        "key" : "/STAT/912660680",
+        "doc_count" : 53
+      }, {
+        "key" : "/STAT/972417904",
+        "doc_count" : 47
+      }, {
+        "key" : "/STAT/977161630/970205039",
+        "doc_count" : 43
+      }, {
+        "key" : "/STAT/972417858/991825827",
+        "doc_count" : 36
+      }, {
+        "key" : "/STAT/872417842",
+        "doc_count" : 35
+      }, {
+        "key" : "/STAT/972417807",
+        "doc_count" : 34
+      }, {
+        "key" : "/STAT/972417882/999601391",
+        "doc_count" : 28
+      }, {
+        "key" : "/STAT/983887457",
+        "doc_count" : 28
+      }, {
+        "key" : "/STAT/972417807/971526920",
+        "doc_count" : 27
+      }, {
+        "key" : "/STAT/972417904/971032081",
+        "doc_count" : 27
+      }, {
+        "key" : "/STAT/977161630/870917732",
+        "doc_count" : 27
+      }, {
+        "key" : "/STAT/912660680/970188290",
+        "doc_count" : 26
+      }, {
+        "key" : "/STAT/983887457/889640782",
+        "doc_count" : 26
+      }, {
+        "key" : "/STAT/972417882/971022264",
+        "doc_count" : 25
+      }, {
+        "key" : "/KOMMUNE/958935420",
+        "doc_count" : 22
+      }, {
+        "key" : "/PRIVAT",
+        "doc_count" : 19
+      }, {
+        "key" : "/STAT/972417874/985399077",
+        "doc_count" : 15
+      }, {
+        "key" : "/STAT/972417904/874783242",
+        "doc_count" : 13
+      }, {
+        "key" : "/KOMMUNE/940101808",
+        "doc_count" : 12
+      }, {
+        "key" : "/STAT/972417882/974760819",
+        "doc_count" : 12
+      }, {
+        "key" : "/STAT/872417842/971274042",
+        "doc_count" : 11
+      }, {
+        "key" : "/STAT/872417842/986339523",
+        "doc_count" : 11
+      }, {
+        "key" : "/ANNET",
+        "doc_count" : 10
+      }, {
+        "key" : "/KOMMUNE/964338531",
+        "doc_count" : 10
+      }, {
+        "key" : "/STAT/872417842/970018131",
+        "doc_count" : 10
+      }, {
+        "key" : "/STAT/912660680/971203420",
+        "doc_count" : 10
+      }, {
+        "key" : "/KOMMUNE/988913898",
+        "doc_count" : 9
+      }, {
+        "key" : "/PRIVAT/985198292",
+        "doc_count" : 9
+      }, {
+        "key" : "/STAT/912660680/974760673",
+        "doc_count" : 9
+      }, {
+        "key" : "/STAT/972417866",
+        "doc_count" : 9
+      }, {
+        "key" : "/STAT/983887406",
+        "doc_count" : 9
+      }, {
+        "key" : "/KOMMUNE/964978573",
+        "doc_count" : 8
+      }, {
+        "key" : "/STAT/972417882/919666102",
+        "doc_count" : 8
+      }, {
+        "key" : "/STAT/972417904/974446871",
+        "doc_count" : 7
+      }, {
+        "key" : "/STAT/912660680/971349077",
+        "doc_count" : 6
+      }, {
+        "key" : "/STAT/972417831",
+        "doc_count" : 6
+      }, {
+        "key" : "/STAT/972417831/974760983",
+        "doc_count" : 6
+      }, {
+        "key" : "/STAT/972417858/974763907",
+        "doc_count" : 5
+      }, {
+        "key" : "/STAT/972417920",
+        "doc_count" : 5
+      }, {
+        "key" : "/STAT/972417920/971277882",
+        "doc_count" : 5
+      }, {
+        "key" : "/FYLKE",
+        "doc_count" : 4
+      }, {
+        "key" : "/KOMMUNE/964968063",
+        "doc_count" : 4
+      }, {
+        "key" : "/STAT/972417823",
+        "doc_count" : 4
+      }, {
+        "key" : "/STAT/972417866/971527412",
+        "doc_count" : 4
+      }, {
+        "key" : "/ANNET/9747678801",
+        "doc_count" : 3
+      }, {
+        "key" : "/KOMMUNE/840029212",
+        "doc_count" : 3
+      }, {
+        "key" : "/STAT/917082308",
+        "doc_count" : 3
+      }, {
+        "key" : "/STAT/972417793",
+        "doc_count" : 3
+      }, {
+        "key" : "/STAT/972417823/975950662",
+        "doc_count" : 3
+      }, {
+        "key" : "/STAT/983887406/983544622",
+        "doc_count" : 3
+      }, {
+        "key" : "/STAT/983887406/983744516",
+        "doc_count" : 3
+      }, {
+        "key" : "/ANNET/Fylkeskommunene",
+        "doc_count" : 2
+      }, {
+        "key" : "/FYLKE/941388841",
+        "doc_count" : 2
+      }, {
+        "key" : "/FYLKE/941388841/974783231",
+        "doc_count" : 2
+      }, {
+        "key" : "/KOMMUNE/936401651",
+        "doc_count" : 2
+      }, {
+        "key" : "/KOMMUNE/942953119",
+        "doc_count" : 2
+      }, {
+        "key" : "/KOMMUNE/944020977",
+        "doc_count" : 2
+      }, {
+        "key" : "/KOMMUNE/964967725",
+        "doc_count" : 2
+      }, {
+        "key" : "/KOMMUNE/964968896",
+        "doc_count" : 2
+      }, {
+        "key" : "/PRIVAT/914749360",
+        "doc_count" : 2
+      }, {
+        "key" : "/STAT/872417842/874789542",
+        "doc_count" : 2
+      }, {
+        "key" : "/STAT/972417793/987879696",
+        "doc_count" : 2
+      }, {
+        "key" : "/STAT/972417866/961181399",
+        "doc_count" : 2
+      }, {
+        "key" : "/STAT/972417866/982391490",
+        "doc_count" : 2
+      }, {
+        "key" : "/STAT/983887406/915933149",
+        "doc_count" : 2
+      }, {
+        "key" : "/STAT/983887406/983544622/867668292",
+        "doc_count" : 2
+      }, {
+        "key" : "/STAT/983887457/974761211",
+        "doc_count" : 2
+      }, {
+        "key" : "/ANNET/910244132",
+        "doc_count" : 1
+      }, {
+        "key" : "/ANNET/916285515",
+        "doc_count" : 1
+      }, {
+        "key" : "/ANNET/971036028",
+        "doc_count" : 1
+      }, {
+        "key" : "/ANNET/974652366",
+        "doc_count" : 1
+      }, {
+        "key" : "/ANNET/991467645",
+        "doc_count" : 1
+      }, {
+        "key" : "/FYLKE/938626367",
+        "doc_count" : 1
+      }, {
+        "key" : "/FYLKE/958381492",
+        "doc_count" : 1
+      }, {
+        "key" : "/KOMMUNE/840894312",
+        "doc_count" : 1
+      }, {
+        "key" : "/KOMMUNE/842566142",
+        "doc_count" : 1
+      }, {
+        "key" : "/KOMMUNE/844458312",
+        "doc_count" : 1
+      }, {
+        "key" : "/KOMMUNE/934945514",
+        "doc_count" : 1
+      }, {
+        "key" : "/KOMMUNE/938772924",
+        "doc_count" : 1
+      }, {
+        "key" : "/KOMMUNE/942110286",
+        "doc_count" : 1
+      }, {
+        "key" : "/KOMMUNE/942110464",
+        "doc_count" : 1
+      }, {
+        "key" : "/KOMMUNE/945578564",
+        "doc_count" : 1
+      }, {
+        "key" : "/KOMMUNE/963923511",
+        "doc_count" : 1
+      }, {
+        "key" : "/KOMMUNE/964979367",
+        "doc_count" : 1
+      }, {
+        "key" : "/KOMMUNE/972417971",
+        "doc_count" : 1
+      }, {
+        "key" : "/PRIVAT/917422575",
+        "doc_count" : 1
+      }, {
+        "key" : "/PRIVAT/971273003",
+        "doc_count" : 1
+      }, {
+        "key" : "/PRIVAT/974442167",
+        "doc_count" : 1
+      }, {
+        "key" : "/PRIVAT/976390512",
+        "doc_count" : 1
+      }, {
+        "key" : "/PRIVAT/979469241",
+        "doc_count" : 1
+      }, {
+        "key" : "/PRIVAT/984661185",
+        "doc_count" : 1
+      }, {
+        "key" : "/PRIVAT/991609407",
+        "doc_count" : 1
+      }, {
+        "key" : "/PRIVAT/994686011",
+        "doc_count" : 1
+      }, {
+        "key" : "/STAT/872417842/974767880",
+        "doc_count" : 1
+      }, {
+        "key" : "/STAT/912660680/886028482",
+        "doc_count" : 1
+      }, {
+        "key" : "/STAT/912660680/974760282",
+        "doc_count" : 1
+      }, {
+        "key" : "/STAT/937884117",
+        "doc_count" : 1
+      }, {
+        "key" : "/STAT/966056258",
+        "doc_count" : 1
+      }, {
+        "key" : "/STAT/971524960",
+        "doc_count" : 1
+      }, {
+        "key" : "/STAT/972417793/986128433",
+        "doc_count" : 1
+      }, {
+        "key" : "/STAT/972417807/986252932",
+        "doc_count" : 1
+      }, {
+        "key" : "/STAT/972417823/986105174",
+        "doc_count" : 1
+      }, {
+        "key" : "/STAT/972417858/916132727",
+        "doc_count" : 1
+      }, {
+        "key" : "/STAT/972417858/942114184",
+        "doc_count" : 1
+      }, {
+        "key" : "/STAT/983609155",
+        "doc_count" : 1
+      }, {
+        "key" : "/STAT/983887406/974761122",
+        "doc_count" : 1
+      } ]
+    },
+    "format" : {
+      "buckets": [
+        {
+          "key": "XML",
+          "count": 5
+        },
+        {
+          "key": "JSON",
+          "count": 1
+        },
+        {
+          "key": "TEXT",
+          "count": 1
+        }
+      ]
     }
   }
 }

@@ -4,7 +4,6 @@ import qs from 'qs';
 import { Route, Switch } from 'react-router-dom';
 import cx from 'classnames';
 import { detect } from 'detect-browser';
-
 import localization from '../../lib/localization';
 import { ResultsDataset } from './results-dataset/results-dataset.component';
 import { ResultsConcepts } from './results-concepts/results-concepts.component';
@@ -57,6 +56,8 @@ export class SearchPage extends React.Component {
     this.handleDatasetFilterSpatial = this.handleDatasetFilterSpatial.bind(
       this
     );
+    this.handleFilterFormat = this.handleFilterFormat.bind(this);
+
     this.handleDatasetSort = this.handleDatasetSort.bind(this);
     this.handlePageChange = this.handlePageChange.bind(this);
     this.close = this.close.bind(this);
@@ -319,6 +320,45 @@ export class SearchPage extends React.Component {
     }
   }
 
+  handleFilterFormat(event) {
+    const { format } = this.state.searchQuery;
+    if (event.target.checked) {
+      ReactGA.event({
+        category: 'Fasett',
+        action: 'Legge til format',
+        label: event.target.value
+      });
+      this.setState(
+        {
+          searchQuery: {
+            ...this.state.searchQuery,
+            format: addValue(format, event.target.value),
+            from: undefined
+          }
+        },
+        () =>
+          this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
+      );
+    } else {
+      ReactGA.event({
+        category: 'Fasett',
+        action: 'Fjerne format',
+        label: event.target.value
+      });
+      this.setState(
+        {
+          searchQuery: {
+            ...this.state.searchQuery,
+            format: removeValue(format, event.target.value),
+            from: undefined
+          }
+        },
+        () =>
+          this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
+      );
+    }
+  }
+
   handleDatasetSort(event) {
     let sortField = event.field;
 
@@ -399,6 +439,7 @@ export class SearchPage extends React.Component {
     const {
       datasetItems,
       termItems,
+      apiItems,
       themesItems,
       publisherItems,
       distributionTypeItems,
@@ -478,6 +519,7 @@ export class SearchPage extends React.Component {
                   onFilterPublisherHierarchy={
                     this.handleDatasetFilterPublisherHierarchy
                   }
+                  onFilterFormat={this.handleFilterFormat}
                   onFilterProvenance={this.handleDatasetFilterProvenance}
                   onFilterSpatial={this.handleDatasetFilterSpatial}
                   onSort={this.handleDatasetSort}
@@ -488,7 +530,7 @@ export class SearchPage extends React.Component {
                   showClearFilterButton={this.isFilterNotEmpty()}
                   closeFilterModal={this.close}
                   hitsPerPage={50}
-                  publisherArray={extractPublisherCounts(datasetItems)}
+                  publisherArray={extractPublisherCounts(apiItems)}
                   publishers={publisherItems}
                   distributionTypeItems={distributionTypeItems}
                   {...props}

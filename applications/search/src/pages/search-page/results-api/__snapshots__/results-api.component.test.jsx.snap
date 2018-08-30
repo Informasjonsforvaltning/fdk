@@ -159,10 +159,26 @@ exports[`should render ResultsApi correctly with hits 1`] = `
               ],
             }
           }
-          htmlKey={2}
+          htmlKey={1}
           onClick={[MockFunction]}
           themesItems={null}
           title="Access"
+        />
+        <SearchPublishersTree
+          activeFilter={null}
+          filter={Array []}
+          onFilterPublisherHierarchy={[MockFunction]}
+          onSearch={null}
+          orgPath={null}
+          publishers={Object {}}
+          title="Organization"
+        />
+        <FilterBox
+          activeFilter={null}
+          htmlKey={2}
+          onClick={null}
+          themesItems={null}
+          title="Format"
         />
       </div>
     </aside>
