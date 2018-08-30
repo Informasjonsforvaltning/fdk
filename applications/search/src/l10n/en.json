@@ -115,6 +115,9 @@
       "ANNET": "Other"
     },
     "provenance": "Provenance"
+  ,
+    "provider": "Provider",
+    "format": "Format"
   },
   "result": {
     "dataset":"Dataset",

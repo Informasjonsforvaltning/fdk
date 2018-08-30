@@ -114,7 +114,9 @@
       "PRIVAT": "Privat",
       "ANNET": "Annet"
     },
-    "provenance": "Opphav"
+    "provenance": "Opphav",
+    "provider": "Tilbyder",
+    "format": "Format"
   },
   "result": {
     "dataset":"Datasett",
