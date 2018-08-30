@@ -1,0 +1,24 @@
+
+.error-message {
+  border: 1px solid red;
+  border-radius: 5px;
+  display: block;
+  margin:  1rem auto;
+  padding: 15px;
+  width: 50%;
+}
+
+.error-message--label {
+  color: red;
+  text-align: center;
+}
+
+.error-message--msg {
+  color: red;
+  text-align: center;
+}
+
+.error-message--details {
+  color: darkgray;
+  white-space: pre-wrap;
+}
