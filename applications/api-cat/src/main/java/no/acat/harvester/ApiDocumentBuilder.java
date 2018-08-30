@@ -46,11 +46,11 @@ public class ApiDocumentBuilder {
             throw new IllegalArgumentException("Error downloading api spec from url '" + apiSpecUrl + "'");
         }
 
-        ApiDocument apiDocument = new ApiDocument();
-
-        apiDocument.setId(lookupOrGenerateId(apiCatalogRecord));
-        apiDocument.setUri(apiSpecUrl);
-        apiDocument.setApiSpec(apiSpec);
+        ApiDocument apiDocument = new ApiDocument().builder()
+                .id(lookupOrGenerateId(apiCatalogRecord))
+                .uri(apiSpecUrl)
+                .apiSpec(apiSpec)
+                .build();
 
         populateFromApiCatalogRecord(apiDocument, apiCatalogRecord);
         populateFromOpenApi(apiDocument, openApi);
