@@ -94,11 +94,10 @@ public class ApiHarvester {
             catalogRecord.setOrgNr("974760673");
             ClassPathResource classPathResource = new ClassPathResource(apiFileName);
             try {
-                catalogRecord.setOpenApiUrl(classPathResource.getURL().toString());
+                catalogRecord.setApiSpecUrl(classPathResource.getURL().toString());
             } catch (Exception e) {
                 logger.error("Unable get resource url", e.getMessage(), e);
             }
-            result.add(catalogRecord);
         }
 
         Iterable<CSVRecord> records;
@@ -112,7 +111,7 @@ public class ApiHarvester {
             for (CSVRecord line : records) {
                 ApiCatalogRecord catalogRecord = new ApiCatalogRecord();
                 catalogRecord.setOrgNr(line.get("OrgNr"));
-                catalogRecord.setOpenApiUrl(line.get("OpenApiUrl"));
+                catalogRecord.setApiSpecUrl(line.get("ApiSpecUrl"));
                 catalogRecord.setAccessRightsCodes(Arrays.asList(line.get("AccessRights").split(",")));
                 catalogRecord.setProvenanceCode(line.get("Provenance"));
                 catalogRecord.setDatasetReferences(Arrays.asList(line.get("DatasetRefs").split(",")));
