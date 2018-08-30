@@ -8,6 +8,7 @@ import ReactGA from 'react-ga';
 import { configureStore } from './redux/configureStore';
 import { ConnectedFeatureToggleProvider } from './components/connected-feature-toggle-provider';
 import { ConnectedApp } from './app/connected-app';
+import { ErrorBoundary } from './components/error-boundary/error-boundary';
 
 if (window.location.hostname.indexOf('fellesdatakatalog.brreg.no') !== -1) {
   ReactGA.initialize('UA-110098477-1'); // prod
@@ -53,15 +54,17 @@ function Analytics(props) {
 const store = configureStore();
 
 ReactDOM.render(
-  <Provider store={store}>
-    <ConnectedFeatureToggleProvider>
-      <BrowserRouter>
-        <React.Fragment>
-          <Route path="/" component={Analytics} />
-          <Route path="/" component={ConnectedApp} />
-        </React.Fragment>
-      </BrowserRouter>
-    </ConnectedFeatureToggleProvider>
-  </Provider>,
+  <ErrorBoundary>
+    <Provider store={store}>
+      <ConnectedFeatureToggleProvider>
+        <BrowserRouter>
+          <React.Fragment>
+            <Route path="/" component={Analytics} />
+            <Route path="/" component={ConnectedApp} />
+          </React.Fragment>
+        </BrowserRouter>
+      </ConnectedFeatureToggleProvider>
+    </Provider>
+  </ErrorBoundary>,
   document.getElementById('root')
 );

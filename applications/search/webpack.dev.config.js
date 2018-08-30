@@ -4,7 +4,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
-  devtool: 'cheap-module-eval-source-map',
+  devtool: 'cheap-module-source-map',
   context: path.join(__dirname),
   entry: ['@babel/polyfill', 'whatwg-fetch', './src/index.jsx'],
   output: {

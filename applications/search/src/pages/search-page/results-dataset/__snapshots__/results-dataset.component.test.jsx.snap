@@ -369,26 +369,67 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
     <section
       className="col-12 col-lg-8"
     >
-      <SearchHitItem
-        distributionTypeItems={null}
+      <ErrorBoundary
         key="b12e9e8d-3833-49e2-9f62-0f8fd877be05"
-        result={
-          Object {
-            "_id": "b12e9e8d-3833-49e2-9f62-0f8fd877be05",
-            "_index": "dcat",
-            "_score": null,
-            "_source": Object {
-              "accessRights": Object {
-                "code": "PUBLIC",
-                "prefLabel": Object {
-                  "en": "Public",
-                  "nb": "Offentlig",
-                  "nn": "Offentlig",
+      >
+        <SearchHitItem
+          distributionTypeItems={null}
+          result={
+            Object {
+              "_id": "b12e9e8d-3833-49e2-9f62-0f8fd877be05",
+              "_index": "dcat",
+              "_score": null,
+              "_source": Object {
+                "accessRights": Object {
+                  "code": "PUBLIC",
+                  "prefLabel": Object {
+                    "en": "Public",
+                    "nb": "Offentlig",
+                    "nn": "Offentlig",
+                  },
+                  "uri": "http://publications.europa.eu/resource/authority/access-right/PUBLIC",
                 },
-                "uri": "http://publications.europa.eu/resource/authority/access-right/PUBLIC",
-              },
-              "catalog": Object {
-                "id": "910244132",
+                "catalog": Object {
+                  "id": "910244132",
+                  "publisher": Object {
+                    "id": "910244132",
+                    "name": "RAMSUND OG ROGNAN REVISJON",
+                    "orgPath": "/ANNET/910244132",
+                    "type": "no.dcat.datastore.domain.dcat.Publisher",
+                    "uri": "http://data.brreg.no/enhetsregisteret/enhet/910244132",
+                    "valid": false,
+                  },
+                  "title": Object {
+                    "nb": "Datakatalog for RAMSUND OG ROGNAN REVISJON",
+                  },
+                  "uri": "http://brreg.no/catalogs/910244132",
+                },
+                "contactPoint": Array [],
+                "description": Object {
+                  "nb": "test",
+                },
+                "descriptionFormatted": Object {
+                  "nb": "test",
+                },
+                "harvest": Object {
+                  "changed": Array [
+                    "2018-04-13T08:26:27+0200",
+                  ],
+                  "firstHarvested": "2018-04-12T17:18:30+0200",
+                  "lastChanged": "2018-04-13T08:26:27+0200",
+                  "lastHarvested": "2018-04-13T08:26:27+0200",
+                },
+                "id": "b12e9e8d-3833-49e2-9f62-0f8fd877be05",
+                "landingPage": Array [],
+                "provenance": Object {
+                  "code": "NASJONAL",
+                  "prefLabel": Object {
+                    "en": "National Building Block",
+                    "nb": "Nasjonal felleskomponent",
+                    "nn": "Nasjonal felleskomponent",
+                  },
+                  "uri": "http://data.brreg.no/datakatalog/provinens/nasjonal",
+                },
                 "publisher": Object {
                   "id": "910244132",
                   "name": "RAMSUND OG ROGNAN REVISJON",
@@ -397,102 +438,64 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
                   "uri": "http://data.brreg.no/enhetsregisteret/enhet/910244132",
                   "valid": false,
                 },
-                "title": Object {
-                  "nb": "Datakatalog for RAMSUND OG ROGNAN REVISJON",
-                },
-                "uri": "http://brreg.no/catalogs/910244132",
-              },
-              "contactPoint": Array [],
-              "description": Object {
-                "nb": "test",
-              },
-              "descriptionFormatted": Object {
-                "nb": "test",
-              },
-              "harvest": Object {
-                "changed": Array [
-                  "2018-04-13T08:26:27+0200",
-                ],
-                "firstHarvested": "2018-04-12T17:18:30+0200",
-                "lastChanged": "2018-04-13T08:26:27+0200",
-                "lastHarvested": "2018-04-13T08:26:27+0200",
-              },
-              "id": "b12e9e8d-3833-49e2-9f62-0f8fd877be05",
-              "landingPage": Array [],
-              "provenance": Object {
-                "code": "NASJONAL",
-                "prefLabel": Object {
-                  "en": "National Building Block",
-                  "nb": "Nasjonal felleskomponent",
-                  "nn": "Nasjonal felleskomponent",
-                },
-                "uri": "http://data.brreg.no/datakatalog/provinens/nasjonal",
-              },
-              "publisher": Object {
-                "id": "910244132",
-                "name": "RAMSUND OG ROGNAN REVISJON",
-                "orgPath": "/ANNET/910244132",
-                "type": "no.dcat.datastore.domain.dcat.Publisher",
-                "uri": "http://data.brreg.no/enhetsregisteret/enhet/910244132",
-                "valid": false,
-              },
-              "source": "A",
-              "theme": Array [
-                Object {
-                  "code": "EDUC",
-                  "conceptSchema": Object {
-                    "id": "http://publications.europa.eu/resource/authority/data-theme",
-                    "title": Object {
-                      "en": "Dataset types Named Authority List",
+                "source": "A",
+                "theme": Array [
+                  Object {
+                    "code": "EDUC",
+                    "conceptSchema": Object {
+                      "id": "http://publications.europa.eu/resource/authority/data-theme",
+                      "title": Object {
+                        "en": "Dataset types Named Authority List",
+                      },
+                      "versioninfo": "20160921-0",
+                      "versionnumber": "20160921-0",
                     },
-                    "versioninfo": "20160921-0",
-                    "versionnumber": "20160921-0",
+                    "id": "http://publications.europa.eu/resource/authority/data-theme/EDUC",
+                    "startUse": "2015-10-01",
+                    "title": Object {
+                      "bg": "Образование, култура и спорт",
+                      "cs": "Vzdělávání, kultura a sport",
+                      "da": "Uddannelse, kultur og sport",
+                      "de": "Bildung, Kultur und Sport",
+                      "el": "Παιδεία, πολιτιστικά θέματα και αθλητισμός",
+                      "en": "Education, culture and sport",
+                      "es": "Educación, cultura y deportes",
+                      "et": "Haridus, kultuur ja sport",
+                      "fi": "Koulutus, kulttuuri ja urheilu",
+                      "fr": "Éducation, culture et sport",
+                      "ga": "Oideachas, cultúr agus spórt",
+                      "hr": "Obrazovanje, kultura i sport",
+                      "hu": "Oktatás, kultúra és sport",
+                      "it": "Istruzione, cultura e sport",
+                      "lt": "Švietimas, kultūra ir sportas",
+                      "lv": "Izglītība, kultūra un sports",
+                      "mt": "Edukazzjoni, kultura u sport",
+                      "nb": "Utdanning, kultur og sport",
+                      "nl": "Onderwijs, cultuur en sport",
+                      "pl": "Edukacja, kultura i sport",
+                      "pt": "Educação, cultura e desporto",
+                      "ro": "Educaţie, cultură şi sport",
+                      "sk": "Vzdelávanie, kultúra a šport",
+                      "sl": "Izobraževanje, kultura in šport",
+                      "sv": "Utbildning, kultur och sport",
+                    },
                   },
-                  "id": "http://publications.europa.eu/resource/authority/data-theme/EDUC",
-                  "startUse": "2015-10-01",
-                  "title": Object {
-                    "bg": "Образование, култура и спорт",
-                    "cs": "Vzdělávání, kultura a sport",
-                    "da": "Uddannelse, kultur og sport",
-                    "de": "Bildung, Kultur und Sport",
-                    "el": "Παιδεία, πολιτιστικά θέματα και αθλητισμός",
-                    "en": "Education, culture and sport",
-                    "es": "Educación, cultura y deportes",
-                    "et": "Haridus, kultuur ja sport",
-                    "fi": "Koulutus, kulttuuri ja urheilu",
-                    "fr": "Éducation, culture et sport",
-                    "ga": "Oideachas, cultúr agus spórt",
-                    "hr": "Obrazovanje, kultura i sport",
-                    "hu": "Oktatás, kultúra és sport",
-                    "it": "Istruzione, cultura e sport",
-                    "lt": "Švietimas, kultūra ir sportas",
-                    "lv": "Izglītība, kultūra un sports",
-                    "mt": "Edukazzjoni, kultura u sport",
-                    "nb": "Utdanning, kultur og sport",
-                    "nl": "Onderwijs, cultuur en sport",
-                    "pl": "Edukacja, kultura i sport",
-                    "pt": "Educação, cultura e desporto",
-                    "ro": "Educaţie, cultură şi sport",
-                    "sk": "Vzdelávanie, kultúra a šport",
-                    "sl": "Izobraževanje, kultura in šport",
-                    "sv": "Utbildning, kultur och sport",
-                  },
+                ],
+                "title": Object {
+                  "nb": "test ois",
                 },
-              ],
-              "title": Object {
-                "nb": "test ois",
+                "uri": "http://brreg.no/catalogs/910244132/datasets/633a0af6-5c88-4027-9f58-79f487a80642",
               },
-              "uri": "http://brreg.no/catalogs/910244132/datasets/633a0af6-5c88-4027-9f58-79f487a80642",
-            },
-            "_type": "dataset",
-            "sort": Array [
-              "nasjonal",
-              "a",
-              1523600787000,
-            ],
+              "_type": "dataset",
+              "sort": Array [
+                "nasjonal",
+                "a",
+                1523600787000,
+              ],
+            }
           }
-        }
-      />
+        />
+      </ErrorBoundary>
     </section>
     <section
       className="col-12 col-lg-8 offset-lg-4 d-flex justify-content-center"

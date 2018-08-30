@@ -9,6 +9,7 @@ import { SearchHitItem } from './search-hit-item/search-hit-item.component';
 import { Select } from '../../../components/select/select.component';
 import { FilterBox } from '../../../components/filter-box/filter-box.component';
 import { SearchPublishersTree } from '../search-publishers-tree/search-publishers-tree.component';
+import { ErrorBoundary } from '../../../components/error-boundary/error-boundary';
 
 export class ResultsDataset extends React.Component {
   _renderFilterModal() {
@@ -86,11 +87,12 @@ export class ResultsDataset extends React.Component {
     const { datasetItems, distributionTypeItems } = this.props;
     if (datasetItems && datasetItems.hits && datasetItems.hits.hits) {
       return datasetItems.hits.hits.map(item => (
-        <SearchHitItem
-          key={item._source.id}
-          result={item}
-          distributionTypeItems={distributionTypeItems}
-        />
+        <ErrorBoundary key={item._source.id}>
+          <SearchHitItem
+            result={item}
+            distributionTypeItems={distributionTypeItems}
+          />
+        </ErrorBoundary>
       ));
     }
     return null;
