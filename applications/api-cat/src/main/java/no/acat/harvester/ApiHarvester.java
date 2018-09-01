@@ -72,7 +72,8 @@ public class ApiHarvester {
         String id = document.getId();
         IndexRequest request = new IndexRequest("acat", "apispec", id);
 
-        request.source(mapper.writeValueAsString(document));
+        String json = mapper.writeValueAsString(document);
+        request.source(json);
         bulkRequest.add(request);
 
         BulkResponse bulkResponse = bulkRequest.execute().actionGet();

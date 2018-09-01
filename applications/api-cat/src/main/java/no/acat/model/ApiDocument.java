@@ -1,11 +1,10 @@
 package no.acat.model;
 
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.ToString;
-import no.acat.model.openapi3.OpenApi;
+import io.swagger.v3.oas.models.OpenAPI;
 import no.dcat.shared.Contact;
 import no.dcat.shared.HarvestMetadata;
 import no.dcat.shared.PeriodOfTime;
@@ -63,6 +62,5 @@ public class ApiDocument  {
     private List<Reference> datasetReferences;
 
     @ApiModelProperty("The open api specification (swagger)")
-    private OpenApi openApi;
-
+    private OpenAPI openApi;
 }

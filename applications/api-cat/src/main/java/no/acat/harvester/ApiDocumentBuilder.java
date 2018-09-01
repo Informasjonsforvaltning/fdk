@@ -1,10 +1,10 @@
 package no.acat.harvester;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.swagger.v3.oas.models.OpenAPI;
 import no.acat.config.Utils;
 import no.acat.model.ApiCatalogRecord;
 import no.acat.model.ApiDocument;
-import no.acat.model.openapi3.OpenApi;
 import no.dcat.shared.*;
 import no.dcat.shared.client.referenceData.ReferenceDataClient;
 import org.elasticsearch.action.search.SearchResponse;
@@ -108,9 +108,9 @@ public class ApiDocumentBuilder {
 
     static void importFromOpenApi(ApiDocument apiDocument, String openApiUrl) {
         ObjectMapper mapper = Utils.jsonMapper();
-        OpenApi openApi;
+        OpenAPI openApi;
         try {
-            openApi = mapper.readValue(new URL(openApiUrl), OpenApi.class);
+            openApi = mapper.readValue(new URL(openApiUrl), OpenAPI.class);
         } catch (IOException e) {
             throw new IllegalArgumentException("Invalid OpenApi Url");
         }
