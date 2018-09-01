@@ -1,10 +1,9 @@
 package no.acat.harvester;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.models.OpenAPI;
-import no.acat.config.Utils;
 import no.acat.model.ApiCatalogRecord;
 import no.acat.model.ApiDocument;
+import no.acat.spec.converters.OpenApiV3JsonSpecConverter;
 import no.dcat.shared.*;
 import no.dcat.shared.client.referenceData.ReferenceDataClient;
 import org.apache.commons.io.Charsets;
@@ -30,21 +29,16 @@ public class ApiDocumentBuilder {
 
     public ApiDocument create(ApiCatalogRecord apiCatalogRecord) {
         String apiSpecUrl = apiCatalogRecord.getApiSpecUrl();
-        ObjectMapper mapper = Utils.jsonMapper();
-
-        if (apiSpecUrl.isEmpty()) {
-            throw new IllegalArgumentException("Missing apiSpecUrl");
-        }
-
         OpenAPI openApi;
         String apiSpec;
 
         try {
             apiSpec = IOUtils.toString(new URL(apiSpecUrl).openStream(), Charsets.UTF_8);
-            openApi = mapper.readValue(apiSpec, OpenAPI.class);
         } catch (IOException e) {
             throw new IllegalArgumentException("Error downloading api spec from url '" + apiSpecUrl + "'");
         }
+
+        openApi = OpenApiV3JsonSpecConverter.convert(apiSpec);
 
         ApiDocument apiDocument = new ApiDocument().builder()
                 .id(lookupOrGenerateId(apiCatalogRecord))
