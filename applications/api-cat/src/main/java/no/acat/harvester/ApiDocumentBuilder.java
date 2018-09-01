@@ -44,7 +44,7 @@ public class ApiDocumentBuilder {
         return apiDocument;
     }
 
-    private String lookupOrGenerateId(ApiCatalogRecord apiCatalogRecord) {
+    String lookupOrGenerateId(ApiCatalogRecord apiCatalogRecord) {
         String id = null;
 
         String openApiUrl = apiCatalogRecord.getOpenApiUrl();
@@ -67,7 +67,7 @@ public class ApiDocumentBuilder {
         return new Publisher(apiCatalogRecord.getOrgNr());
     }
 
-    private List<SkosCode> extractAccessRights(ApiCatalogRecord apiCatalogRecord) {
+    List<SkosCode> extractAccessRights(ApiCatalogRecord apiCatalogRecord) {
         Map<String, SkosCode> rightsStatements = referenceDataClient.getCodes("rightsstatement");
         List<String> accessRightCodes = apiCatalogRecord.getAccessRightsCodes();
         List<SkosCode> accessRights = new ArrayList();
@@ -86,16 +86,16 @@ public class ApiDocumentBuilder {
         return accessRights.isEmpty() ? null : accessRights;
     }
 
-    private SkosCode extractProvenance(ApiCatalogRecord apiCatalogRecord) {
+    SkosCode extractProvenance(ApiCatalogRecord apiCatalogRecord) {
         String provenanceCode = apiCatalogRecord.getProvenanceCode();
         return referenceDataClient.getCodes("provenancestatement").get(provenanceCode);
     }
 
-    private List<Reference> extractDatasetReferences(ApiCatalogRecord apiCatalogRecord) {
+    List<Reference> extractDatasetReferences(ApiCatalogRecord apiCatalogRecord) {
         List<Reference> datasetReferences = new ArrayList();
         SkosCode referenceTypeCode = referenceDataClient.getCodes("referencetypes").get("references");
         List<String> datasetReferenceSources = apiCatalogRecord.getDatasetReferences();
-        if(datasetReferenceSources!=null) {
+        if (datasetReferenceSources != null) {
             for (String datasetRefUrl : datasetReferenceSources) {
                 if (!datasetRefUrl.isEmpty()) {
                     Reference reference = new Reference(referenceTypeCode, SkosConcept.getInstance(datasetRefUrl));
@@ -106,12 +106,12 @@ public class ApiDocumentBuilder {
         return datasetReferences.isEmpty() ? null : datasetReferences;
     }
 
-    private static void importFromOpenApi(ApiDocument apiDocument, String openApiUrl) {
+    static void importFromOpenApi(ApiDocument apiDocument, String openApiUrl) {
         ObjectMapper mapper = Utils.jsonMapper();
         OpenApi openApi;
         try {
             openApi = mapper.readValue(new URL(openApiUrl), OpenApi.class);
-        } catch ( IOException e) {
+        } catch (IOException e) {
             throw new IllegalArgumentException("Invalid OpenApi Url");
         }
 
