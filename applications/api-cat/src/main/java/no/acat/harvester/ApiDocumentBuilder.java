@@ -29,21 +29,40 @@ public class ApiDocumentBuilder {
     }
 
     public ApiDocument create(ApiCatalogRecord apiCatalogRecord) {
-        ApiDocument apiDocument = new ApiDocument();
         String apiSpecUrl = apiCatalogRecord.getApiSpecUrl();
+        ObjectMapper mapper = Utils.jsonMapper();
 
         if (apiSpecUrl.isEmpty()) {
-            throw new IllegalArgumentException("Missing ApiSpecUrl");
+            throw new IllegalArgumentException("Missing apiSpecUrl");
         }
+
+        OpenAPI openApi;
+        String apiSpec;
+
+        try {
+            apiSpec = IOUtils.toString(new URL(apiSpecUrl).openStream(), Charsets.UTF_8);
+            openApi = mapper.readValue(apiSpec, OpenAPI.class);
+        } catch (IOException e) {
+            throw new IllegalArgumentException("Error downloading api spec from url '" + apiSpecUrl + "'");
+        }
+
+        ApiDocument apiDocument = new ApiDocument();
 
         apiDocument.setId(lookupOrGenerateId(apiCatalogRecord));
         apiDocument.setUri(apiSpecUrl);
-        apiDocument.setPublisher(createPublisher(apiCatalogRecord));
+        apiDocument.setApiSpec(apiSpec);
+
+        populateFromApiCatalogRecord(apiDocument, apiCatalogRecord);
+        populateFromOpenApi(apiDocument, openApi);
+
+        return apiDocument;
+    }
+
+    void populateFromApiCatalogRecord(ApiDocument apiDocument, ApiCatalogRecord apiCatalogRecord) {
+        apiDocument.setPublisher(lookupPublisher(apiCatalogRecord));
         apiDocument.setAccessRights(extractAccessRights(apiCatalogRecord));
         apiDocument.setProvenance(extractProvenance(apiCatalogRecord));
         apiDocument.setDatasetReferences(extractDatasetReferences(apiCatalogRecord));
-        importFromOpenApi(apiDocument, apiSpecUrl);
-        return apiDocument;
     }
 
     String lookupOrGenerateId(ApiCatalogRecord apiCatalogRecord) {
@@ -65,7 +84,8 @@ public class ApiDocumentBuilder {
         return (id == null || id.isEmpty()) ? UUID.randomUUID().toString() : id;
     }
 
-    private static Publisher createPublisher(ApiCatalogRecord apiCatalogRecord) {
+    Publisher lookupPublisher(ApiCatalogRecord apiCatalogRecord) {
+        //todo do actual lookup from publishers index
         return new Publisher(apiCatalogRecord.getOrgNr());
     }
 
@@ -108,19 +128,9 @@ public class ApiDocumentBuilder {
         return datasetReferences.isEmpty() ? null : datasetReferences;
     }
 
-    static void importFromOpenApi(ApiDocument apiDocument, String apiSpecUrl) {
-        ObjectMapper mapper = Utils.jsonMapper();
-        OpenAPI openApi;
-        String apiSpec;
+    void populateFromOpenApi(ApiDocument apiDocument, OpenAPI openApi) {
 
-        try {
-            apiSpec = IOUtils.toString(new URL(apiSpecUrl).openStream(), Charsets.UTF_8);
-            apiDocument.setApiSpec(apiSpec);
-            openApi = mapper.readValue(apiSpec, OpenAPI.class);
-            apiDocument.setOpenApi(openApi);
-        } catch (IOException e) {
-            throw new IllegalArgumentException("Invalid OpenApi Url");
-        }
+        apiDocument.setOpenApi(openApi);
 
         if (openApi.getInfo() != null) {
             if (openApi.getInfo().getTitle() != null) {
