@@ -1,3 +1,4 @@
+spring.jackson.default-property-inclusion: non_null
 logging:
   level.: WARN
   level.no.acat: INFO
