@@ -55,7 +55,7 @@ public class ApiHarvester {
                 indexApi(apiDocument);
                 result.add(apiDocument);
             } catch (Exception e) {
-                logger.error(e.getMessage());
+                logger.error(e.getMessage(),e);
             }
 
         }

@@ -4,6 +4,7 @@ import io.swagger.v3.oas.models.OpenAPI;
 import no.acat.model.ApiCatalogRecord;
 import no.acat.model.ApiDocument;
 import no.acat.spec.converters.OpenApiV3JsonSpecConverter;
+import no.acat.spec.converters.SwaggerJsonSpecConverter;
 import no.dcat.shared.*;
 import no.dcat.shared.client.referenceData.ReferenceDataClient;
 import org.apache.commons.io.Charsets;
@@ -38,7 +39,13 @@ public class ApiDocumentBuilder {
             throw new IllegalArgumentException("Error downloading api spec from url '" + apiSpecUrl + "'");
         }
 
-        openApi = OpenApiV3JsonSpecConverter.convert(apiSpec);
+        if (OpenApiV3JsonSpecConverter.canConvert(apiSpec)) {
+            openApi = OpenApiV3JsonSpecConverter.convert(apiSpec);
+        } else if (SwaggerJsonSpecConverter.canConvert(apiSpec)) {
+            openApi = SwaggerJsonSpecConverter.convert(apiSpec);
+        } else {
+            throw new IllegalArgumentException("Unsupported api spec format");
+        }
 
         ApiDocument apiDocument = new ApiDocument().builder()
                 .id(lookupOrGenerateId(apiCatalogRecord))
@@ -126,7 +133,7 @@ public class ApiDocumentBuilder {
 
         apiDocument.setOpenApi(openApi);
 
-        if (openApi.getInfo() != null) {
+        if (openApi!=null && openApi.getInfo() != null) {
             if (openApi.getInfo().getTitle() != null) {
                 apiDocument.setTitle(new HashMap<>());
                 apiDocument.getTitle().put("no", openApi.getInfo().getTitle());
