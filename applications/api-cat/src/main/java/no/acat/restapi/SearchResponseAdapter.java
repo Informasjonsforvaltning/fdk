@@ -1,4 +1,4 @@
-package no.acat.query;
+package no.acat.restapi;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import no.acat.config.Utils;
@@ -16,8 +16,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-class ResponseAdapter {
-    private static final Logger logger = LoggerFactory.getLogger(ResponseAdapter.class);
+class SearchResponseAdapter {
+    private static final Logger logger = LoggerFactory.getLogger(SearchResponseAdapter.class);
 
     static QueryResponse convertFromElasticResponse(SearchResponse elasticResponse) {
         logger.debug("converting response");

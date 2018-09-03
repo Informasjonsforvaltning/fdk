@@ -1,4 +1,4 @@
-package no.acat.query;
+package no.acat.restapi;
 
 import no.acat.model.queryresponse.QueryResponse;
 import no.acat.service.ElasticsearchService;
@@ -19,15 +19,15 @@ import static org.mockito.Mockito.*;
 
 @Category(UnitTest.class)
 @RunWith(SpringRunner.class)
-public class AcatQueryControllerTest {
+public class SearchControllerTest {
 
 @Test
     public void checkOne() {
         // todo meaningful test would be to allow elastic client to build a query and process sample response,
         // instead of mocking entire elastic client here
         ElasticsearchService elasticsearchService = mock(ElasticsearchService.class);
-        AcatQueryController controller = new AcatQueryController(elasticsearchService);
-        AcatQueryController spyController = spy(controller);
+        SearchController controller = new SearchController(elasticsearchService);
+        SearchController spyController = spy(controller);
 
         SearchHit hit = mock(SearchHit.class);
         SearchHit[] hits = { hit };

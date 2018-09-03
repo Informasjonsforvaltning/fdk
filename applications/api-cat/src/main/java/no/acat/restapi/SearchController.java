@@ -1,13 +1,9 @@
-package no.acat.query;
+package no.acat.restapi;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import no.acat.config.Utils;
-import no.acat.model.ApiDocument;
 import no.acat.model.queryresponse.QueryResponse;
 import no.acat.service.ElasticsearchService;
-import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.index.query.BoolQueryBuilder;
@@ -25,15 +21,15 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin
 @RestController
 @RequestMapping(value = "/api")
-public class AcatQueryController {
-    private static final Logger logger = LoggerFactory.getLogger(AcatQueryController.class);
+public class SearchController {
+    private static final Logger logger = LoggerFactory.getLogger(SearchController.class);
 
     public static final String MISSING = "MISSING";
 
     private ElasticsearchService elasticsearch;
 
     @Autowired
-    public AcatQueryController(ElasticsearchService elasticsearchService) {
+    public SearchController(ElasticsearchService elasticsearchService) {
         this.elasticsearch = elasticsearchService;
     }
 
@@ -69,24 +65,8 @@ public class AcatQueryController {
         return null;
     }
 
-    @ApiOperation(value = "Get a specific api", response = ApiDocument.class)
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = "application/json")
-    public ApiDocument getApiDocument(@PathVariable String id) {
-        logger.info("request for {}", id);
-
-        GetResponse response = elasticsearch.getClient().prepareGet("acat", "apispec", id).get();
-        ObjectMapper mapper = Utils.jsonMapper();
-        try {
-            ApiDocument apiDocument = mapper.readValue(response.getSourceAsString(), ApiDocument.class);
-            return apiDocument;
-        } catch (Exception e) {
-            logger.error("error {}", e.getMessage(), e);
-        }
-        return null;
-    }
-
     QueryResponse convertFromElasticResponse(SearchResponse elasticResponse) {
-        return ResponseAdapter.convertFromElasticResponse(elasticResponse);
+        return SearchResponseAdapter.convertFromElasticResponse(elasticResponse);
     }
 
     SearchRequestBuilder buildSearchRequest(String query, String accessRights, int from, int size) {
