@@ -1,11 +1,13 @@
 package no.acat.harvester;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.Paths;
 import io.swagger.v3.oas.models.media.Content;
 import io.swagger.v3.oas.models.responses.ApiResponse;
 import io.swagger.v3.oas.models.responses.ApiResponses;
+import no.acat.config.Utils;
 import no.acat.model.ApiCatalogRecord;
 import no.acat.model.ApiDocument;
 import no.acat.spec.converters.OpenApiV3JsonSpecConverter;
@@ -14,6 +16,7 @@ import no.dcat.shared.*;
 import no.dcat.shared.client.referenceData.ReferenceDataClient;
 import org.apache.commons.io.Charsets;
 import org.apache.commons.io.IOUtils;
+import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.client.Client;
@@ -27,6 +30,8 @@ import java.util.*;
 public class ApiDocumentBuilder {
     Client elasticsearchClient;
     ReferenceDataClient referenceDataClient;
+    private ObjectMapper mapper = Utils.jsonMapper();
+
 
     public ApiDocumentBuilder(Client elasticsearchClient, ReferenceDataClient referenceDataClient) {
         this.elasticsearchClient = elasticsearchClient;
@@ -91,8 +96,18 @@ public class ApiDocumentBuilder {
     }
 
     Publisher lookupPublisher(ApiCatalogRecord apiCatalogRecord) {
-        //todo do actual lookup from publishers index
-        return new Publisher(apiCatalogRecord.getOrgNr());
+        String id = apiCatalogRecord.getOrgNr();
+        GetResponse response = elasticsearchClient.prepareGet("dcat", "publisher", id).get();
+
+        try {
+            if (response.isExists()) {
+                return mapper.readValue(response.getSourceAsString(), Publisher.class);
+            }
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Cannot parse publisher");
+        }
+
+        return null;
     }
 
     List<SkosCode> extractAccessRights(ApiCatalogRecord apiCatalogRecord) {
