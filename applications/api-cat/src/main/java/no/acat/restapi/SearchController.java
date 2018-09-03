@@ -46,6 +46,9 @@ public class SearchController {
             @RequestParam(value = "accessrights", defaultValue = "", required = false)
                     String accessRights,
 
+            @ApiParam("Filters on publisher's organization path (orgPath), e.g. /STAT/972417858/971040238")
+            @RequestParam(value = "orgPath", defaultValue = "", required = false) String orgPath,
+
             @ApiParam("Filters on format")
             @RequestParam(value = "format", defaultValue = "", required = false)
                     String format,
@@ -59,7 +62,7 @@ public class SearchController {
                     int size
     ) {
         try {
-            SearchRequestBuilder searchRequest = buildSearchRequest(query, accessRights,format, from, size);
+            SearchRequestBuilder searchRequest = buildSearchRequest(query, accessRights, orgPath, format, from, size);
             SearchResponse elasticResponse = doQuery(searchRequest);
             return convertFromElasticResponse(elasticResponse);
         } catch (Exception e) {
@@ -73,7 +76,7 @@ public class SearchController {
         return SearchResponseAdapter.convertFromElasticResponse(elasticResponse);
     }
 
-    SearchRequestBuilder buildSearchRequest(String query, String accessRights,String format, int from, int size) {
+    SearchRequestBuilder buildSearchRequest(String query, String accessRights, String orgPath, String format, int from, int size) {
 
         QueryBuilder search;
 
@@ -83,16 +86,11 @@ public class SearchController {
             search = QueryBuilders.simpleQueryStringQuery(query);
         }
 
-        BoolQueryBuilder boolQuery = QueryBuilders.boolQuery()
-                .must(search);
+        BoolQueryBuilder boolQuery = QueryBuilders.boolQuery().must(search);
 
-        if (!StringUtils.isEmpty(accessRights)) {
-            addTermFilter(boolQuery,"accessRights.code", accessRights);
-        }
-
-        if (!StringUtils.isEmpty(format)) {
-            addTermFilter(boolQuery,"formats", format);
-        }
+        addTermFilter(boolQuery, "accessRights.code", accessRights);
+        addTermFilter(boolQuery, "publisher.orgPath", orgPath);
+        addTermFilter(boolQuery, "formats", format);
 
         return elasticsearch.getClient()
                 .prepareSearch("acat")
@@ -110,8 +108,8 @@ public class SearchController {
         return searchBuilder.execute().actionGet();
     }
 
-    static void addTermFilter(BoolQueryBuilder boolQuery,String term, String value) {
-
+    static void addTermFilter(BoolQueryBuilder boolQuery, String term, String value) {
+        if (value.isEmpty()) return;
         BoolQueryBuilder accessRightsFilter = QueryBuilders.boolQuery();
         if (value.equals(MISSING)) {
             boolQuery.filter(QueryBuilders.boolQuery().mustNot(QueryBuilders.existsQuery(term)));
@@ -121,6 +119,7 @@ public class SearchController {
 
         boolQuery.filter(accessRightsFilter);
     }
+
     private int checkAndAdjustFrom(int from) {
         if (from < 0) {
             return 0;
