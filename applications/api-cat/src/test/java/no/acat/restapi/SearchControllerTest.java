@@ -39,7 +39,7 @@ public class SearchControllerTest {
         SearchResponse searchResponse = mock(SearchResponse.class);
         when(searchResponse.getHits()).thenReturn(searchHits);
 
-        doReturn(null).when(spyController).buildSearchRequest(anyString(),anyString(),anyInt(),anyInt());
+        doReturn(null).when(spyController).buildSearchRequest(anyString(),anyString(),anyString(),anyInt(),anyInt());
         doReturn(searchResponse).when(spyController).doQuery(anyObject());
         // todo this is nonsense, we do not test anything
         doReturn(new QueryResponse()).when(spyController).convertFromElasticResponse(anyObject());
@@ -47,7 +47,7 @@ public class SearchControllerTest {
         when(hit.getSourceAsString()).thenReturn(apiSpecExample);
         when(hit.getId()).thenReturn("http://testtesttset");
 
-        QueryResponse response = spyController.search("","",0,0);
+        QueryResponse response = spyController.search("","","",0,0);
 
         assertThat(response, notNullValue());
 
