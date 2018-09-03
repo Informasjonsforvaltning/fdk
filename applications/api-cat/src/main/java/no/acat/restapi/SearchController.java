@@ -99,7 +99,8 @@ public class SearchController {
                 .setQuery(boolQuery)
                 .setFrom(checkAndAdjustFrom(from))
                 .setSize(checkAndAdjustSize(size))
-                .addAggregation(createTermsAggregation("accessRights", "accessRights.code"));
+                .addAggregation(createTermsAggregation("accessRights", "accessRights.code"))
+                .addAggregation(createTermsAggregation("formats", "formats"));
     }
 
     SearchResponse doQuery(SearchRequestBuilder searchBuilder) {
