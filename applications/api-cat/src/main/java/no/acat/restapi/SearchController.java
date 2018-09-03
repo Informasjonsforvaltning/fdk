@@ -101,7 +101,9 @@ public class SearchController {
                 .setFrom(checkAndAdjustFrom(from))
                 .setSize(checkAndAdjustSize(size))
                 .addAggregation(createTermsAggregation("accessRights", "accessRights.code"))
-                .addAggregation(createTermsAggregation("formats", "formats"));
+                .addAggregation(createTermsAggregation("formats", "formats"))
+                .addAggregation(createTermsAggregation("orgPath", "publisher.orgPath"));
+
     }
 
     SearchResponse doQuery(SearchRequestBuilder searchBuilder) {
