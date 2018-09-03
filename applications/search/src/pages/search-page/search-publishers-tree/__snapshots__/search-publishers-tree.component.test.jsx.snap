@@ -3242,50 +3242,7 @@ exports[`should render SearchPublishersTree correctly with active sub filter 1`]
 </div>
 `;
 
-exports[`should render SearchPublishersTree correctly with minimum of props 1`] = `
-<div
-  className="search-filter-publisher"
->
-  <div
-    className="fdk-panel__header"
-  >
-    <button
-      className="fdk-publisher-toggle p-0"
-      onClick={[Function]}
-    >
-      <i
-        className="fa mr-2 fa-angle-up"
-      />
-      <span />
-    </button>
-  </div>
-  <Collapse
-    appear={false}
-    enter={true}
-    exit={true}
-    in={false}
-    isOpen={true}
-    mountOnEnter={false}
-    onEnter={[Function]}
-    onEntered={[Function]}
-    onEntering={[Function]}
-    onExit={[Function]}
-    onExited={[Function]}
-    onExiting={[Function]}
-    tag="div"
-    timeout={350}
-    unmountOnExit={false}
-  >
-    <div
-      className="fdk-panel__content"
-    >
-      <div
-        className="fdk-items-list"
-      />
-    </div>
-  </Collapse>
-</div>
-`;
+exports[`should render SearchPublishersTree correctly with minimum of props 1`] = `""`;
 
 exports[`should render SearchPublishersTree correctly with props 1`] = `
 <div
