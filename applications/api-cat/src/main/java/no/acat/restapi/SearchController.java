@@ -42,7 +42,7 @@ public class SearchController {
             @RequestParam(value = "q", defaultValue = "", required = false)
                     String query,
 
-            @ApiParam("Filters on accessrights, codes are PUBLIC, RESTRICTED or NON_PUBLIC ")
+            @ApiParam("Filters on accessrights, codes are PUBLIC, RESTRICTED or NON_PUBLIC")
             @RequestParam(value = "accessrights", defaultValue = "", required = false)
                     String accessRights,
 
@@ -83,14 +83,7 @@ public class SearchController {
                 .must(search);
 
         if (!StringUtils.isEmpty(accessRights)) {
-            BoolQueryBuilder accessRightsFilter = QueryBuilders.boolQuery();
-            if (accessRights.equals(MISSING)) {
-                accessRightsFilter.mustNot(QueryBuilders.existsQuery("accessRights"));
-            } else {
-                accessRightsFilter.must(QueryBuilders.termQuery("accessRights.code", accessRights));
-            }
-
-            boolQuery.filter(accessRightsFilter);
+            addTermFilter(boolQuery,"accessRights.code", accessRights);
         }
 
         return elasticsearch.getClient()
@@ -107,6 +100,17 @@ public class SearchController {
         return searchBuilder.execute().actionGet();
     }
 
+    static void addTermFilter(BoolQueryBuilder boolQuery,String term, String value) {
+
+        BoolQueryBuilder accessRightsFilter = QueryBuilders.boolQuery();
+        if (value.equals(MISSING)) {
+            boolQuery.filter(QueryBuilders.boolQuery().mustNot(QueryBuilders.existsQuery(term)));
+        } else {
+            boolQuery.filter(QueryBuilders.boolQuery().must(QueryBuilders.termQuery(term, value)));
+        }
+
+        boolQuery.filter(accessRightsFilter);
+    }
     private int checkAndAdjustFrom(int from) {
         if (from < 0) {
             return 0;
