@@ -46,6 +46,10 @@ public class SearchController {
             @RequestParam(value = "accessrights", defaultValue = "", required = false)
                     String accessRights,
 
+            @ApiParam("Filters on format")
+            @RequestParam(value = "format", defaultValue = "", required = false)
+                    String format,
+
             @ApiParam("Returns datatasets from position x in the result set, 0 is the default value. A value of 150 will return the 150th dataset in the resultset")
             @RequestParam(value = "from", defaultValue = "0", required = false)
                     int from,
@@ -55,7 +59,7 @@ public class SearchController {
                     int size
     ) {
         try {
-            SearchRequestBuilder searchRequest = buildSearchRequest(query, accessRights, from, size);
+            SearchRequestBuilder searchRequest = buildSearchRequest(query, accessRights,format, from, size);
             SearchResponse elasticResponse = doQuery(searchRequest);
             return convertFromElasticResponse(elasticResponse);
         } catch (Exception e) {
@@ -69,7 +73,7 @@ public class SearchController {
         return SearchResponseAdapter.convertFromElasticResponse(elasticResponse);
     }
 
-    SearchRequestBuilder buildSearchRequest(String query, String accessRights, int from, int size) {
+    SearchRequestBuilder buildSearchRequest(String query, String accessRights,String format, int from, int size) {
 
         QueryBuilder search;
 
@@ -84,6 +88,10 @@ public class SearchController {
 
         if (!StringUtils.isEmpty(accessRights)) {
             addTermFilter(boolQuery,"accessRights.code", accessRights);
+        }
+
+        if (!StringUtils.isEmpty(format)) {
+            addTermFilter(boolQuery,"formats", format);
         }
 
         return elasticsearch.getClient()
