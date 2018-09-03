@@ -13,6 +13,7 @@ import no.dcat.shared.SkosCode;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -55,7 +56,7 @@ public class ApiDocument  {
     private List<Contact> contactPoint ;
 
     @ApiModelProperty("An overview of the formats returned by the api")
-    private List<String> format;
+    private Set<String> formats;
 
     @ApiModelProperty("A code to specify how often the data is updated (the frequency) [dct:accrualPeriodicity]")
     private SkosCode accrualPeriodicity;

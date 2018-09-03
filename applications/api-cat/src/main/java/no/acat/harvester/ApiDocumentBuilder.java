@@ -1,6 +1,11 @@
 package no.acat.harvester;
 
 import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.Operation;
+import io.swagger.v3.oas.models.Paths;
+import io.swagger.v3.oas.models.media.Content;
+import io.swagger.v3.oas.models.responses.ApiResponse;
+import io.swagger.v3.oas.models.responses.ApiResponses;
 import no.acat.model.ApiCatalogRecord;
 import no.acat.model.ApiDocument;
 import no.acat.spec.converters.OpenApiV3JsonSpecConverter;
@@ -131,9 +136,13 @@ public class ApiDocumentBuilder {
 
     void populateFromOpenApi(ApiDocument apiDocument, OpenAPI openApi) {
 
+        if (openApi == null) {
+            return;
+        }
+
         apiDocument.setOpenApi(openApi);
 
-        if (openApi!=null && openApi.getInfo() != null) {
+        if (openApi.getInfo() != null) {
             if (openApi.getInfo().getTitle() != null) {
                 apiDocument.setTitle(new HashMap<>());
                 apiDocument.getTitle().put("no", openApi.getInfo().getTitle());
@@ -160,8 +169,35 @@ public class ApiDocumentBuilder {
             }
         }
 
-        //todo format
+        apiDocument.setFormats(getFormatsFromOpenApi(openApi));
+    }
 
+    Set<String> getFormatsFromOpenApi(OpenAPI openAPI) {
+        Set<String> formats = new HashSet<>();
+        Paths paths = openAPI.getPaths();
+        paths.forEach((path, pathItem) -> {
+            List<Operation> operations = pathItem.readOperations();
+            operations.forEach((operation -> {
+                if (operation == null) return;
+
+                /*as of now, request body formats are not included
+                RequestBody requestBody = operation.getRequestBody();
+                if (requestBody == null) return;
+                Content requestBodyContent = requestBody.getContent();
+                if (requestBodyContent==null) return;
+                formats.addAll(requestBodyContent.keySet());
+                */
+                ApiResponses apiResponses = operation.getResponses();
+                if (apiResponses == null) return;
+                List<ApiResponse> apiResponseList = new ArrayList<>(apiResponses.values());
+                apiResponseList.forEach(apiResponse -> {
+                    Content responseContent = apiResponse.getContent();
+                    if (responseContent == null) return;
+                    formats.addAll(responseContent.keySet());
+                });
+            }));
+        });
+        return formats;
     }
 
 }
