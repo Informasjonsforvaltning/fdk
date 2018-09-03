@@ -5,6 +5,14 @@
         "type": "string",
         "index": "not_analyzed"
       },
+      "publisher": {
+        "properties": {
+          "orgPath": {
+            "type": "string",
+            "index": "not_analyzed"
+          }
+        }
+      },
       "accessRights": {
         "properties": {
           "code": {
