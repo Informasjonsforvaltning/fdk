@@ -15,7 +15,14 @@ import {
 } from '../../../constants/constants';
 
 export const ResultsTabs = props => {
-  const { activePath, searchParam, countDatasets, countTerms } = props;
+  const {
+    activePath,
+    searchParam,
+    countDatasets,
+    countTerms,
+    countApis
+  } = props;
+
   const search = addOrReplaceParamWithoutURL(searchParam, 'from', '');
   return (
     <div className="row">
@@ -45,7 +52,7 @@ export const ResultsTabs = props => {
                 aria-label="Link til side for api:"
               >
                 {localization.page.apiTab}
-                <span>&nbsp;(beta)</span>
+                <span>&nbsp;({countApis})</span>
               </Link>
             </li>
           </FeatureToggle>
@@ -72,12 +79,14 @@ ResultsTabs.defaultProps = {
   activePath: null,
   searchParam: '',
   countDatasets: null,
-  countTerms: null
+  countTerms: null,
+  countApis: null
 };
 
 ResultsTabs.propTypes = {
   activePath: PropTypes.string,
   searchParam: PropTypes.string,
   countDatasets: PropTypes.number,
-  countTerms: PropTypes.number
+  countTerms: PropTypes.number,
+  countApis: PropTypes.number
 };

@@ -469,8 +469,9 @@ export class SearchPage extends React.Component {
             <ResultsTabs
               activePath={location.pathname}
               searchParam={location.search}
-              countDatasets={_.get(datasetItems, ['hits', 'total'], '0')}
-              countTerms={_.get(termItems, ['hits', 'total'], '0')}
+              countDatasets={_.get(datasetItems, ['hits', 'total'], 0)}
+              countTerms={_.get(termItems, ['hits', 'total'], 0)}
+              countApis={_.get(apiItems, 'total', 0)}
             />
           </div>
         </section>
