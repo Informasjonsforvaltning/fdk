@@ -20,6 +20,7 @@ import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.client.Client;
+import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 
@@ -112,6 +113,27 @@ public class ApiDocumentBuilder {
         return null;
     }
 
+    Dataset lookupDataset(String uri) {
+        SearchResponse response = elasticsearchClient.prepareSearch("dcat")
+                .setTypes("dataset")
+                .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
+                .setQuery(QueryBuilders.termQuery("uri", uri))
+                .execute()
+                .actionGet();
+
+        SearchHit[] hits = response.getHits().getHits();
+
+        try {
+            if (hits.length > 0) {
+                return mapper.readValue(hits[0].getSourceAsString(), Dataset.class);
+            }
+
+            throw new IllegalArgumentException("No datasets found");
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Dataset lookup failed for uri" + uri, e);
+        }
+    }
+
     List<SkosCode> extractAccessRights(ApiCatalogRecord apiCatalogRecord) {
         Map<String, SkosCode> rightsStatements = referenceDataClient.getCodes("rightsstatement");
         List<String> accessRightCodes = apiCatalogRecord.getAccessRightsCodes();
@@ -143,7 +165,8 @@ public class ApiDocumentBuilder {
         if (datasetReferenceSources != null) {
             for (String datasetRefUrl : datasetReferenceSources) {
                 if (!datasetRefUrl.isEmpty()) {
-                    Reference reference = new Reference(referenceTypeCode, SkosConcept.getInstance(datasetRefUrl));
+                    Dataset dataset = lookupDataset(datasetRefUrl);
+                    Reference reference = new Reference(referenceTypeCode, SkosConcept.getInstance(datasetRefUrl, dataset.getTitle()));
                     datasetReferences.add(reference);
                 }
             }
