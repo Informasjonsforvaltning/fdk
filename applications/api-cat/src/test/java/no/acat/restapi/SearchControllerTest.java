@@ -13,8 +13,13 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;
-
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.anyInt;
+import static org.mockito.Mockito.anyString;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.when;
 
 @Category(UnitTest.class)
 @RunWith(SpringRunner.class)
@@ -41,7 +46,7 @@ public class SearchControllerTest {
         doReturn(null).when(spyController).buildSearchRequest(anyString(),anyString(),anyInt(),anyInt());
         doReturn(searchResponse).when(spyController).doQuery(any());
         // todo this is nonsense, we do not test anything
-        doReturn(new QueryResponse()).when(spyController).convertFromElasticResponse(anyObject());
+        doReturn(new QueryResponse()).when(spyController).convertFromElasticResponse(any());
 
         when(hit.getSourceAsString()).thenReturn(apiSpecExample);
         when(hit.getId()).thenReturn("http://testtesttset");

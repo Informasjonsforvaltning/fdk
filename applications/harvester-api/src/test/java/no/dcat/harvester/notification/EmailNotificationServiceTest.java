@@ -18,7 +18,7 @@ public class EmailNotificationServiceTest {
     @Test
     public void sendMailOK() {
         JavaMailSender javaMailSender = mock(JavaMailSender.class);
-        doNothing().when(javaMailSender).send((SimpleMailMessage) anyObject());
+        doNothing().when(javaMailSender).send((SimpleMailMessage) any());
 
         EmailNotificationService emailService = new EmailNotificationService(javaMailSender);
 
@@ -28,7 +28,7 @@ public class EmailNotificationServiceTest {
     @Test
     public void sendMailHandlesSendMailException() {
         JavaMailSender javaMailSender = mock(JavaMailSender.class);
-        doThrow(new MailSendException("error")).when(javaMailSender).send((SimpleMailMessage) anyObject());
+        doThrow(new MailSendException("error")).when(javaMailSender).send((SimpleMailMessage) any());
 
         EmailNotificationService emailService = new EmailNotificationService(javaMailSender);
         emailService.sendValidationResultNotification("fromAdress", "toaddress", "subject", "messageText");

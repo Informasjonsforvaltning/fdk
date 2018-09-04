@@ -2,14 +2,12 @@
   "apispec": {
     "properties": {
       "uri": {
-        "type": "string",
-        "index": "not_analyzed"
+        "type": "keyword"
       },
       "accessRights": {
         "properties": {
           "code": {
-            "type": "string",
-            "index": "not_analyzed"
+            "type": "keyword"
           }
         }
       }

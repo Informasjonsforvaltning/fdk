@@ -22,7 +22,7 @@ import java.util.Set;
 @SpringBootApplication
 @PropertySource("classpath:swagger.properties")
 @EnableSwagger2
-public class AcatApiApplication extends WebMvcConfigurerAdapter {
+public class AcatApiApplication {
     @Value("${springfox.documentation.swagger.v2.path}")
     private String swagger2Endpoint;
 
