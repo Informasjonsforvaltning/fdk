@@ -1,4 +1,4 @@
-@import './node_modules/designsystemet/fdk-designsystem-bootstrap4/scss/colors.scss';
+@import '../../../node_modules/designsystemet/fdk-designsystem-bootstrap4/scss/colors.scss';
 
 /***************  **************************/
 /*********** Bootstrap overrides **********/
@@ -10,7 +10,7 @@ $info:          $color-cta4 !default;
 $warning:       $color-yellow !default;
 $danger:        $color-red !default;
 
-@import './node_modules/bootstrap/scss/bootstrap';
+@import '../../../node_modules/bootstrap/scss/bootstrap.scss';
 
 /*****************************************/
 /*********** End Bootstrap overrides **********/
