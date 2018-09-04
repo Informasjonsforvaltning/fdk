@@ -54,6 +54,7 @@ exports[`should render SearchBox correctly 1`] = `
     className="col-md-12 text-center"
   >
     <CustomHitsStats
+      countApis={null}
       countDatasets={100}
       countTerms={10}
       filteringOrTextSearchPerformed={false}

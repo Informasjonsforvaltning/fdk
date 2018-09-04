@@ -94,7 +94,9 @@
     "noHits": "dessverre ingen treff",
     "concepts": "begrep",
     "and": "og",
-    "but": "men"
+    "but": "men",
+    "apis": "API-er",
+    "apiHits": "treff i API-er"
   },
   "facet": {
     "organisation":"Verksemd",
