@@ -196,29 +196,32 @@ export class SearchPublishersTree extends React.Component {
 
   render() {
     const { openFilter } = this.state;
-    const { title } = this.props;
+    const { title, filter } = this.props;
     const collapseIconClass = cx('fa', 'mr-2', {
       'fa-angle-down': !this.state.openFilter,
       'fa-angle-up': this.state.openFilter
     });
-    return (
-      <div className="search-filter-publisher">
-        <div className="fdk-panel__header">
-          <button
-            className="fdk-publisher-toggle p-0"
-            onClick={this.toggleFilter}
-          >
-            <i className={collapseIconClass} />
-            <span>{title}</span>
-          </button>
-        </div>
-        <Collapse isOpen={openFilter}>
-          <div className="fdk-panel__content">
-            <div className="fdk-items-list">{this._renderTree()}</div>
+    if (filter && filter.length > 0) {
+      return (
+        <div className="search-filter-publisher">
+          <div className="fdk-panel__header">
+            <button
+              className="fdk-publisher-toggle p-0"
+              onClick={this.toggleFilter}
+            >
+              <i className={collapseIconClass} />
+              <span>{title}</span>
+            </button>
           </div>
-        </Collapse>
-      </div>
-    );
+          <Collapse isOpen={openFilter}>
+            <div className="fdk-panel__content">
+              <div className="fdk-items-list">{this._renderTree()}</div>
+            </div>
+          </Collapse>
+        </div>
+      );
+    }
+    return null;
   }
 }
 

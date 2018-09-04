@@ -1,14 +1,13 @@
-@import '../../assets/style/colors';
+@import '../../../node_modules/designsystemet/fdk-designsystem-bootstrap4/scss/colors.scss';
 
 .fdk-header-text_items {
-  font-size: 0.9rem;
   white-space: nowrap;
 }
 
 .fdk-auth-link {
   a {
     color: $color1;
-    font-size: .9rem;
+    font-size: 1.4rem;
   }
 }
 
@@ -27,7 +26,7 @@
 
 .fdk-breadcrumb {
   color: $color1;
-  font-size: .9rem;
-  padding: 0.75rem 1rem;
-  margin-bottom: 1rem;
+  font-size: 1.4rem;
+  padding: 2em 2.4em;
+  margin-bottom: 2.4em;
 }

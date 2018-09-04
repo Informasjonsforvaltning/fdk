@@ -67,10 +67,14 @@ public class ElasticsearchService {
 
         try {
             Resource apispecMappingResource = new ClassPathResource("apispec.mapping.json");
+            Resource settingsResource = new ClassPathResource("acat.settings.json");
+
             String apispecMapping = IOUtils.toString(apispecMappingResource.getInputStream(), "UTF-8");
+
             getClient().admin().indices().prepareCreate(indexName)
                         .addMapping("apispec", apispecMapping)
                         .execute().actionGet();
+
         } catch (IOException e) {
             logger.error("Unable to connect to Elasticsearch: {}", e.toString(), e);
         }

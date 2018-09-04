@@ -1,16 +1,16 @@
-@import '../../assets/style/colors';
+@import '../../../node_modules/designsystemet/fdk-designsystem-bootstrap4/scss/colors.scss';
 
 .fdk-reg-input-tags {
   display: block;
   width: 100%;
   padding: .05rem .75rem;
-  font-size: 1rem;
+  font-size: 1.6rem;
   line-height: 1.5;
   color: #495057;
   background-color: #fff;
   background-clip: padding-box;
   border: 1px solid #ced4da;
-  border-radius: .25rem;
+  border-radius: .5em;
   transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 
   .react-tagsinput--focused {

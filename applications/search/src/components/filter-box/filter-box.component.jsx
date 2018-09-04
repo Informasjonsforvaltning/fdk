@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Collapse } from 'reactstrap';
 import cx from 'classnames';
+import _ from 'lodash';
 
 import localization from '../../lib/localization';
 import { FilterOption } from '../filter-option/filter-option.component';
@@ -88,23 +89,29 @@ export class FilterBox extends React.Component {
       'fa-angle-down': !openFilter,
       'fa-angle-up': openFilter
     });
-    return (
-      <div className="fdk-panel--filter">
-        <div className="fdk-panel__header">
-          <button className="fdk-toggleFilter p-0" onClick={this.toggleFilter}>
-            <i className={collapseIconClass} />
-            <span>{title}</span>
-          </button>
-        </div>
-        <Collapse isOpen={openFilter}>
-          <div className="fdk-panel__content">
-            <div className="fdk-items-list">
-              {this._renderOptions(filter, onClick, activeFilter)}
-            </div>
+    if (_.get(filter, 'buckets', []).length > 0) {
+      return (
+        <div className="fdk-panel--filter">
+          <div className="fdk-panel__header">
+            <button
+              className="fdk-toggleFilter p-0"
+              onClick={this.toggleFilter}
+            >
+              <i className={collapseIconClass} />
+              <span>{title}</span>
+            </button>
           </div>
-        </Collapse>
-      </div>
-    );
+          <Collapse isOpen={openFilter}>
+            <div className="fdk-panel__content">
+              <div className="fdk-items-list">
+                {this._renderOptions(filter, onClick, activeFilter)}
+              </div>
+            </div>
+          </Collapse>
+        </div>
+      );
+    }
+    return null;
   }
 }
 

@@ -94,7 +94,9 @@
     "noHits": "Søket ga dessverre ingen treff",
     "concepts": "begrep",
     "and": "og",
-    "but": "men"
+    "but": "men",
+    "apis": "API-er",
+    "apiHits": "treff i API-er"
   },
   "facet": {
     "organisation":"Virksomhet",
@@ -114,7 +116,9 @@
       "PRIVAT": "Privat",
       "ANNET": "Annet"
     },
-    "provenance": "Opphav"
+    "provenance": "Opphav",
+    "provider": "Tilbyder",
+    "format": "Format"
   },
   "result": {
     "dataset":"Datasett",

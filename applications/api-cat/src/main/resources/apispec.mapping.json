@@ -4,12 +4,25 @@
       "uri": {
         "type": "keyword"
       },
+      "publisher": {
+        "properties": {
+          "orgPath": {
+            "type": "string",
+            "analyzer": "path-analyzer",
+            "search_analyzer": "keyword"
+          }
+        }
+      },
       "accessRights": {
         "properties": {
           "code": {
             "type": "keyword"
           }
         }
+      },
+      "formats": {
+        "type": "string",
+        "index": "not_analyzed"
       }
     }
   }

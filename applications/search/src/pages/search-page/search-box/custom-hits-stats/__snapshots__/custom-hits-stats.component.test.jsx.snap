@@ -8,11 +8,7 @@ exports[`should render CustomHitsStats correctly when no hits 1`] = `
   <div
     className="sk-hits-stats__info"
     data-qa="info"
-  >
-    <span>
-      Sorry, no hits
-    </span>
-  </div>
+  />
 </div>
 `;
 
@@ -54,26 +50,6 @@ exports[`should render CustomHitsStats correctly when search performed  1`] = `
   <div
     className="sk-hits-stats__info"
     data-qa="info"
-  >
-    <div>
-      <span>
-        Search gave
-         
-      </span>
-      <span>
-        100
-         
-        hits among datasets
-      </span>
-      <span>
-         
-        and
-         
-      </span>
-      100
-       
-      hits among concepts
-    </div>
-  </div>
+  />
 </div>
 `;

@@ -52,12 +52,11 @@ export class LoginDialog extends React.Component {
                     </div>
                   </div>
                 )}
-                <a
-                  className="fdk-button fdk-button-cta mb-2 mb-md-5"
-                  href="/login"
-                >
-                  {localization.app.logIn}
-                </a>
+                <div className="mt-5 mb-5">
+                  <a className="fdk-button fdk-button-cta" href="/login">
+                    {localization.app.logIn}
+                  </a>
+                </div>
                 <div className="fdk-text-size-small fdk-text-line-medium">
                   <strong>
                     {localization.catalogs.missingCatalogs.accessTitle}

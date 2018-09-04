@@ -29,12 +29,16 @@ exports[`should render LoginDialog correctly 1`] = `
               Sesjonen ble tidsavbrutt, men vi har tatt vare på alle endringene du har gjort. Logg inn på nytt for å fortsette å jobbe med registreringen.
             </span>
           </div>
-          <a
-            className="fdk-button fdk-button-cta mb-2 mb-md-5"
-            href="/login"
+          <div
+            className="mt-5 mb-5"
           >
-            Logg inn
-          </a>
+            <a
+              className="fdk-button fdk-button-cta"
+              href="/login"
+            >
+              Logg inn
+            </a>
+          </div>
           <div
             className="fdk-text-size-small fdk-text-line-medium"
           >
