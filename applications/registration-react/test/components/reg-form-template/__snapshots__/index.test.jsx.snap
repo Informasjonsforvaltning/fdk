@@ -5,7 +5,7 @@ exports[`should render FormTemplate correctly 1`] = `
   className="fdk-reg_collapse fdk-reg_backgroundDefault"
 >
   <button
-    className="fdk-collapseButton fdk-btn-no-border w-100 no-padding"
+    className="fdk-collapseButton fdk-btn-no-border w-100 p-0"
     onClick={[Function]}
   >
     <div

@@ -31,7 +31,7 @@ export default class Helptext extends Component {
     const { shortdesc, description } = helptextItems;
 
     return (
-      <div className="fdk-reg-helptext mb-2 p-2">
+      <div className="fdk-reg-helptext mb-3 p-3">
         <div className="d-flex align-items-center">
           <h3>{title}</h3>
           {required && (
@@ -52,7 +52,7 @@ export default class Helptext extends Component {
           />
 
           <button
-            className="fdk-btn-no-border text-left no-padding ml-1 fdk-reg-helptext-more align-self-start"
+            className="fdk-btn-no-border text-left p-0 ml-1 fdk-reg-helptext-more align-self-start"
             onClick={e => this.toggle(e)}
           >
             <i className={collapseClass} />

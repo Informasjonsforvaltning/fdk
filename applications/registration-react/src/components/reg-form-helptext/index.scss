@@ -1,11 +1,11 @@
-@import '../../assets/style/colors';
+@import '../../../node_modules/designsystemet/fdk-designsystem-bootstrap4/scss/colors.scss';
 
 .fdk-reg-helptext {
   background-color: $color6;
   border-radius: 5px;
-  font-size: .9rem;
+  font-size: 1.4rem;
   strong {
-    font-size: 1.1rem;
+    font-size: 1.8rem;
   }
   .fdk-reg-helptext-more {
     text-decoration: underline;
@@ -14,7 +14,7 @@
 }
 
 .fdk-obligatorisk {
-  font-size: .7rem;
+  font-size: 1.1rem;
   color: #ffffff;
   background-color: #4B555F;
   padding: .1em .6em;

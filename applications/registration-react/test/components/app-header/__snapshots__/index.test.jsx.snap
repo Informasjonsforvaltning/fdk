@@ -64,7 +64,7 @@ exports[`should render Header correctly 1`] = `
           className="col-md-4 d-flex align-items-center fdk-header-text_items justify-content-end"
         >
           <div
-            className="fdk-margin-right-double fdk-auth-link"
+            className="mr-4 fdk-auth-link"
           >
             <a
               href="http://localhost/login"
@@ -87,17 +87,15 @@ exports[`should render Header correctly 1`] = `
               <DropdownToggle
                 aria-haspopup={true}
                 caret={true}
-                className="fdk-button fdk-button-default fdk-button-menu dropdown-toggle btn-default"
-                color="secondary"
+                className="fdk-button fdk-button-menu"
+                color="primary"
               >
-                <i
-                  className="fa fa-bars fdk-fa-dark fdk-fa-left"
-                />
                 <span>
                   Meny
                 </span>
               </DropdownToggle>
               <DropdownMenu
+                className="fdk-dropdownmenu"
                 flip={true}
                 tag="div"
               >

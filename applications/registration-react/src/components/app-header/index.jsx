@@ -5,7 +5,8 @@ import { Dropdown, DropdownToggle, DropdownMenu } from 'reactstrap';
 
 import { fetchUserIfNeeded } from '../../actions/index';
 import localization from '../../utils/localization';
-import '../../assets/style/main.scss';
+import '../../assets/style/bootstrap-override.scss';
+import './styles';
 import './index.scss';
 
 export class Header extends React.Component {
@@ -67,20 +68,20 @@ export class Header extends React.Component {
               <div className="col-md-4 d-flex align-items-center fdk-header-text_items justify-content-end">
                 {userItem &&
                   userItem.name && (
-                    <div className="fdk-margin-right-double">
+                    <div className="mr-4">
                       <i className="fa fa-user fdk-fa-left fdk-color-cta3" />
                       {userItem.name}
                     </div>
                   )}
                 {userItem && (
-                  <div className="fdk-margin-right-double fdk-auth-link">
+                  <div className="mr-4 fdk-auth-link">
                     <a href={`${window.location.origin}/logout`}>
                       {localization.app.logOut}
                     </a>
                   </div>
                 )}
                 {!userItem && (
-                  <div className="fdk-margin-right-double fdk-auth-link">
+                  <div className="mr-4 fdk-auth-link">
                     <a href={`${window.location.origin}/login`}>
                       {localization.app.logIn}
                     </a>
@@ -94,13 +95,13 @@ export class Header extends React.Component {
                     toggle={this.toggle}
                   >
                     <DropdownToggle
-                      className="fdk-button fdk-button-default fdk-button-menu dropdown-toggle btn-default"
+                      className="fdk-button fdk-button-menu"
                       caret
+                      color="primary"
                     >
-                      <i className="fa fa-bars fdk-fa-dark fdk-fa-left" />
                       <span>{localization.menu.title}</span>
                     </DropdownToggle>
-                    <DropdownMenu>
+                    <DropdownMenu className="fdk-dropdownmenu">
                       <a
                         className="dropdown-item"
                         title="Veileder"

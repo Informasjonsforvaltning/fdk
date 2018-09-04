@@ -2,7 +2,7 @@
 
 exports[`should render Helptext correctly 1`] = `
 <div
-  className="fdk-reg-helptext mb-2 p-2"
+  className="fdk-reg-helptext mb-3 p-3"
 >
   <div
     className="d-flex align-items-center"
@@ -23,7 +23,7 @@ exports[`should render Helptext correctly 1`] = `
       }
     />
     <button
-      className="fdk-btn-no-border text-left no-padding ml-1 fdk-reg-helptext-more align-self-start"
+      className="fdk-btn-no-border text-left p-0 ml-1 fdk-reg-helptext-more align-self-start"
       onClick={[Function]}
     >
       <i

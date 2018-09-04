@@ -1,7 +1,7 @@
-@import '../../assets/style/colors';
+@import '../../../node_modules/designsystemet/fdk-designsystem-bootstrap4/scss/colors.scss';
 
 .fdk-reg_collapse {
-  margin: .5rem;
+  margin: .8rem;
   border-radius: 5px;
   display: block;
   button.fdk-btn-no-border {
@@ -12,16 +12,16 @@
 
 .fdk-reg_backgroundDefault {
   background-color: $color0;
-  padding: 1rem 2rem;
+  padding: 1.6rem 3.2rem;
 }
 
 .fdk-reg_backgroundBlue {
   background-color: $color-cta4;
   button.fdk-collapseButton {
-    padding: 1rem 2rem;
+    padding: 1.6rem 3.2rem;
   }
   .fdk-collapseContent {
-    padding: 0.5rem 2rem;
+    padding: 1.2rem 3.2rem;
     background-color: $color0;
   }
 }
@@ -31,7 +31,7 @@
 }
 
 .form-group {
-  margin-bottom: 3rem;
+  margin-bottom: 4.8rem;
   .fdk-form-label {
     font-weight: 500;
     margin-bottom: 0;

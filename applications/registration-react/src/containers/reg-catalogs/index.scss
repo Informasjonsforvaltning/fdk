@@ -8,6 +8,9 @@ a.card-link {
     border: none;
     margin-bottom: 2em;
     min-height: 20em;
+    .card-body {
+      padding: 2rem;
+    }
   }
 }
 
