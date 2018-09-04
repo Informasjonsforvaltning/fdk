@@ -26,6 +26,7 @@ exports[`should render ResultsTabs with "Concepts" active correctly 1`] = `
           Dataset
           <span>
              (
+            985
             )
           </span>
         </Link>
@@ -49,7 +50,9 @@ exports[`should render ResultsTabs with "Concepts" active correctly 1`] = `
           >
             Api
             <span>
-               (beta)
+               (
+              4
+              )
             </span>
           </Link>
         </li>
@@ -70,6 +73,7 @@ exports[`should render ResultsTabs with "Concepts" active correctly 1`] = `
           Concepts
           <span>
              (
+            1
             )
           </span>
         </Link>
@@ -105,6 +109,7 @@ exports[`should render ResultsTabs with "Dataset" active correctly 1`] = `
           Dataset
           <span>
              (
+            985
             )
           </span>
         </Link>
@@ -128,7 +133,9 @@ exports[`should render ResultsTabs with "Dataset" active correctly 1`] = `
           >
             Api
             <span>
-               (beta)
+               (
+              4
+              )
             </span>
           </Link>
         </li>
@@ -149,6 +156,7 @@ exports[`should render ResultsTabs with "Dataset" active correctly 1`] = `
           Concepts
           <span>
              (
+            1
             )
           </span>
         </Link>
