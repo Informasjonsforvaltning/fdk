@@ -112,7 +112,9 @@
         <dependency>
             <groupId>no.dcat</groupId>
             <artifactId>datastore</artifactId>
+            <version>1.0.2</version>
         </dependency>
+
 
         <dependency>
             <groupId>no.dcat</groupId>
