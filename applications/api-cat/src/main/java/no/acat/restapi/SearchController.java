@@ -25,6 +25,7 @@ public class SearchController {
     private static final Logger logger = LoggerFactory.getLogger(SearchController.class);
 
     public static final String MISSING = "MISSING";
+    public static final int MAX_AGGREGATIONS = 10000;
 
     private ElasticsearchService elasticsearch;
 
@@ -145,7 +146,7 @@ public class SearchController {
                 .terms(aggregationName)
                 .missing(MISSING)
                 .field(field)
-                .size(10000)
+                .size(MAX_AGGREGATIONS)
                 .order(Terms.Order.count(false));
     }
 }
