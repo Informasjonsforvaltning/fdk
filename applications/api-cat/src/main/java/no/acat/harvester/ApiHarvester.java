@@ -53,6 +53,7 @@ public class ApiHarvester {
 
                 ApiDocument apiDocument = apiDocumentBuilder.create(apiCatalogRecord);
                 indexApi(apiDocument);
+                // todo This is here only for test. We should find another way to test without polluting interface
                 result.add(apiDocument);
             } catch (Exception e) {
                 logger.error(e.getMessage(),e);
