@@ -456,14 +456,9 @@ export class SearchPage extends React.Component {
               onSearchSubmit={this.handleSearchSubmit}
               onSearchChange={this.handleSearchChange}
               searchQuery={this.state.searchQuery.q}
-              countDatasets={
-                datasetItems && datasetItems.hits
-                  ? datasetItems.hits.total
-                  : null
-              }
-              countTerms={
-                termItems && termItems.hits ? termItems.hits.total : 0
-              }
+              countDatasets={_.get(datasetItems, ['hits', 'total'])}
+              countTerms={_.get(termItems, ['hits', 'total'])}
+              countApis={_.get(apiItems, 'total')}
               open={this.open}
             />
             <ResultsTabs
