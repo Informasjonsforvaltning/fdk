@@ -91,11 +91,6 @@
 			</dependency>
 			<dependency>
 				<groupId>no.dcat</groupId>
-				<artifactId>datastore</artifactId>
-				<version>1.0.1-SNAPSHOT</version>
-			</dependency>
-			<dependency>
-				<groupId>no.dcat</groupId>
 				<artifactId>harvester</artifactId>
 				<version>${fdk.version}</version>
 			</dependency>

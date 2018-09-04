@@ -1,6 +1,10 @@
 {
   "dataset": {
     "properties": {
+      "uri": {
+        "type": "string",
+        "index": "not_analyzed"
+      },
       "catalog": {
         "properties": {
           "uri": {
