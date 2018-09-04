@@ -89,7 +89,7 @@ export class FilterBox extends React.Component {
       'fa-angle-down': !openFilter,
       'fa-angle-up': openFilter
     });
-    if (_.get(filter, 'buckets') && _.get(filter, 'buckets').length > 0) {
+    if (_.get(filter, 'buckets', []).length > 0) {
       return (
         <div className="fdk-panel--filter">
           <div className="fdk-panel__header">
