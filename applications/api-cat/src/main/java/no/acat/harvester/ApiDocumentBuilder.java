@@ -70,7 +70,7 @@ public class ApiDocumentBuilder {
     }
 
     void populateFromApiCatalogRecord(ApiDocument apiDocument, ApiCatalogRecord apiCatalogRecord) {
-        apiDocument.setPublisher(lookupPublisher(apiCatalogRecord));
+        apiDocument.setPublisher(lookupPublisher(apiCatalogRecord.getOrgNr()));
         apiDocument.setAccessRights(extractAccessRights(apiCatalogRecord));
         apiDocument.setProvenance(extractProvenance(apiCatalogRecord));
         apiDocument.setDatasetReferences(extractDatasetReferences(apiCatalogRecord));
@@ -92,11 +92,13 @@ public class ApiDocumentBuilder {
             id = hits[0].getId();
         }
 
-        return (id == null || id.isEmpty()) ? UUID.randomUUID().toString() : id;
+        if (id != null && !id.isEmpty()) {
+            return id;
+        }
+        return UUID.randomUUID().toString();
     }
 
-    Publisher lookupPublisher(ApiCatalogRecord apiCatalogRecord) {
-        String id = apiCatalogRecord.getOrgNr();
+    Publisher lookupPublisher(String id) {
         GetResponse response = elasticsearchClient.prepareGet("dcat", "publisher", id).get();
 
         try {
