@@ -140,8 +140,8 @@ public class EnhetsregisterResolverIT {
         logger.info("name after {}",newName);
         logger.info("pref name  {}", prefName);
 
-        assertThat(newName, Is.is("STATISTISK SENTRALBYR\u00C5"));
-        assertThat(prefName, Is.is("Statistisk sentralbyr\u00E5"));
+        assertThat(newName, Is.is("STATISTISK SENTRALBYRÅ"));
+        assertThat(prefName, Is.is("Statistisk sentralbyrå"));
     }
 
     @Test
