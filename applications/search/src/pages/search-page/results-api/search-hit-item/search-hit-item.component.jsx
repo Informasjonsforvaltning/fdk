@@ -18,20 +18,15 @@ const renderHeaderLink = (item, publisher, publishers, provenance) => {
 
   return (
     <header>
-      <Link
-        className="search-hit__title-link"
-        title={`${localization.api}: ${getTranslateText(title)}`}
-        to={link}
-      >
-        <SearchHitHeader
-          headerTag="h2"
-          title={getTranslateText(title)}
-          publisherLabel={localization.api.provider}
-          publisher={publisher}
-          publisherItems={publishers}
-          provenance={provenance}
-        />
-      </Link>
+      <SearchHitHeader
+        headerTag="h2"
+        title={getTranslateText(title)}
+        titleLink={link}
+        publisherLabel={localization.api.provider}
+        publisher={publisher}
+        publisherItems={publishers}
+        provenance={provenance}
+      />
     </header>
   );
 };

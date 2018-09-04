@@ -38,6 +38,7 @@ exports[`should render DatasetDescription correctly 1`] = `
       ]
     }
     title="AAMarkagrensen Oslo Kommune og nærliggende kommuner"
+    titleLink={null}
   />
   <ShowMore
     contentHtml={null}
@@ -92,6 +93,7 @@ exports[`should render DatasetDescription correctly 2`] = `
       ]
     }
     title="AAMarkagrensen Oslo Kommune og nærliggende kommuner"
+    titleLink={null}
   />
   <ShowMore
     contentHtml={null}
@@ -125,6 +127,7 @@ exports[`should render DatasetDescription correctly with no props 1`] = `
     publisherLabel="Owned by"
     theme={null}
     title=""
+    titleLink={null}
   />
 </header>
 `;

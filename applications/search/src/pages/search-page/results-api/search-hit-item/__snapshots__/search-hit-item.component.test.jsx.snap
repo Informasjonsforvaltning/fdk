@@ -11,36 +11,30 @@ exports[`should render api-SearchHitItem correctly 1`] = `
     Søketreff.
   </span>
   <header>
-    <Link
-      className="search-hit__title-link"
-      replace={false}
-      title="[object Object]: National Data Directory Search API"
-      to="/apis/32690443-e926-4e52-9988-dbac45085102"
-    >
-      <SearchHitHeader
-        headerTag="h2"
-        provenance={
-          Object {
-            "code": "NASJONAL",
-            "prefLabel": Object {
-              "en": "National Building Block",
-              "nb": "Nasjonal felleskomponent",
-              "nn": "Nasjonal felleskomponent",
-            },
-            "uri": "http://data.brreg.no/datakatalog/provinens/nasjonal",
-          }
+    <SearchHitHeader
+      headerTag="h2"
+      provenance={
+        Object {
+          "code": "NASJONAL",
+          "prefLabel": Object {
+            "en": "National Building Block",
+            "nb": "Nasjonal felleskomponent",
+            "nn": "Nasjonal felleskomponent",
+          },
+          "uri": "http://data.brreg.no/datakatalog/provinens/nasjonal",
         }
-        publisher={
-          Object {
-            "id": "974760673",
-          }
+      }
+      publisher={
+        Object {
+          "id": "974760673",
         }
-        publisherItems={null}
-        publisherLabel="Provider"
-        theme={null}
-        title="National Data Directory Search API"
-      />
-    </Link>
+      }
+      publisherItems={null}
+      publisherLabel="Provider"
+      theme={null}
+      title="National Data Directory Search API"
+      titleLink="/apis/32690443-e926-4e52-9988-dbac45085102"
+    />
   </header>
   <p>
     <span
@@ -88,22 +82,16 @@ exports[`should render api-SearchHitItem with long description 1`] = `
     Søketreff.
   </span>
   <header>
-    <Link
-      className="search-hit__title-link"
-      replace={false}
-      title="[object Object]: National Data Directory Search API"
-      to="/apis/32690443-e926-4e52-9988-dbac45085102"
-    >
-      <SearchHitHeader
-        headerTag="h2"
-        provenance={null}
-        publisher={null}
-        publisherItems={null}
-        publisherLabel="Provider"
-        theme={null}
-        title="National Data Directory Search API"
-      />
-    </Link>
+    <SearchHitHeader
+      headerTag="h2"
+      provenance={null}
+      publisher={null}
+      publisherItems={null}
+      publisherLabel="Provider"
+      theme={null}
+      title="National Data Directory Search API"
+      titleLink="/apis/32690443-e926-4e52-9988-dbac45085102"
+    />
   </header>
   <p>
     <span

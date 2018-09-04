@@ -5,11 +5,13 @@ exports[`should render SearchHitHeader with harvest dates 1`] = `
   <div
     className="mb-2 d-flex flex-wrap align-items-baseline"
   >
-    <h1
-      className="mr-3"
-    >
-      Test tittel
-    </h1>
+    <React.Fragment>
+      <h1
+        className="mr-3"
+      >
+        Test tittel
+      </h1>
+    </React.Fragment>
   </div>
   <div
     className="mb-4"
