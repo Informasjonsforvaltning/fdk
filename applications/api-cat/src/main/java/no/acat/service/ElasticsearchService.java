@@ -85,8 +85,12 @@ public class ElasticsearchService {
 
         try {
             Resource apispecMappingResource = new ClassPathResource("apispec.mapping.json");
+            Resource settingsResource = new ClassPathResource("acat.settings.json");
+
             String apispecMapping = IOUtils.toString(apispecMappingResource.getInputStream(), "UTF-8");
+            String indexSettings = IOUtils.toString(settingsResource.getInputStream(), "UTF-8");
             client.admin().indices().prepareCreate(indexName)
+                    .setSettings(indexSettings)
                     .addMapping("apispec", apispecMapping)
                     .execute().actionGet();
         } catch (IOException e) {
