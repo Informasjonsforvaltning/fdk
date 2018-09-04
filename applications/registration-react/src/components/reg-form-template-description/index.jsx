@@ -26,7 +26,7 @@ export default class FormTemplateDescription extends Component {
     return (
       <div className={collapseClass}>
         <button
-          className="d-flex justify-content-between no-padding w-100"
+          className="d-flex justify-content-between p-0 w-100"
           onClick={this.toggle}
         >
           <div>

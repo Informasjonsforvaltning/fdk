@@ -5,7 +5,7 @@ exports[`should render FormTemplateDescription correctly 1`] = `
   className="fdk-reg_collapse"
 >
   <button
-    className="d-flex justify-content-between no-padding w-100"
+    className="d-flex justify-content-between p-0 w-100"
     onClick={[Function]}
   >
     <div>

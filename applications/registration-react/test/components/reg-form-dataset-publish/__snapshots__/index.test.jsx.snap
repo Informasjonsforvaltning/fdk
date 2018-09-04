@@ -6,8 +6,8 @@ exports[`should render DatasetPublish correctly 1`] = `
     className="d-flex align-items-center ml-2 mt-5"
   >
     <Button
-      className="fdk-button fdk-button-default w-25 mr-3"
-      color="secondary"
+      className="fdk-button w-25 mr-3"
+      color="primary"
       id="dataset-setPublish-button"
       onClick={[Function]}
       tag="button"
@@ -63,7 +63,7 @@ exports[`should render DatasetPublish correctly 1`] = `
       className="mt-2 "
     >
       <button
-        className="fdk-dataset-delete text-left no-padding"
+        className="fdk-dataset-delete text-left p-0"
         onClick={[Function]}
       >
         <i
