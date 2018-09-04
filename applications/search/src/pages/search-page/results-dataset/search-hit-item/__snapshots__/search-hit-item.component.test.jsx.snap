@@ -55,6 +55,7 @@ exports[`should render SearchHitItem NON_PUBLIC correctly 1`] = `
             ]
           }
           title="AAMarkagrensen Oslo Kommune og nærliggende kommuner"
+          titleLink={null}
         />
       </header>
       <p
@@ -135,6 +136,7 @@ exports[`should render SearchHitItem PUBLIC correctly 1`] = `
             ]
           }
           title="AAMarkagrensen Oslo Kommune og nærliggende kommuner"
+          titleLink={null}
         />
       </header>
       <p
@@ -215,6 +217,7 @@ exports[`should render SearchHitItem RESTRICTED correctly 1`] = `
             ]
           }
           title="AAMarkagrensen Oslo Kommune og nærliggende kommuner"
+          titleLink={null}
         />
       </header>
       <p
@@ -308,6 +311,7 @@ exports[`should render SearchHitItem with distribution type correctly 1`] = `
             ]
           }
           title="AAMarkagrensen Oslo Kommune og nærliggende kommuner"
+          titleLink={null}
         />
       </header>
       <p
@@ -411,6 +415,7 @@ exports[`should render SearchHitItem with no title, description, accessRights an
           publisherLabel="Owned by"
           theme={null}
           title={null}
+          titleLink={null}
         />
       </header>
       <p

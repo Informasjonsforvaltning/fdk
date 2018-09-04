@@ -1,11 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
+import { Link } from 'react-router-dom';
 
 import { LabelNational } from '../label-national/label-national.component';
 import { PublisherLabel } from '../publisher-label/publisher-label.component';
 import { getPublisherByOrgNr } from '../../redux/modules/publishers';
 import { getTranslateText } from '../../lib/translateText';
+import localization from '../../lib/localization';
 
 const renderPublisher = (publisherLabel, publisher, publisherItems) => {
   if (!publisher) {
@@ -39,10 +41,32 @@ const renderThemes = theme => {
   return themeNodes;
 };
 
+const renderTitle = (headerTag, title, titleLink) => {
+  const titleTag = (headerTag, title) => (
+    <React.Fragment>
+      {headerTag === 'h1' && <h1 className="mr-3">{title}</h1>}
+      {headerTag === 'h2' && <h2 className="mr-3">{title}</h2>}
+    </React.Fragment>
+  );
+  if (title && titleLink) {
+    return (
+      <Link
+        className="search-hit__title-link"
+        title={`${localization.api}: ${getTranslateText(title)}`}
+        to={titleLink}
+      >
+        {titleTag(headerTag, title)}
+      </Link>
+    );
+  }
+  return titleTag(headerTag, title);
+};
+
 export const SearchHitHeader = props => {
   const {
     headerTag,
     title,
+    titleLink,
     publisherLabel,
     publisher,
     publisherItems,
@@ -54,8 +78,7 @@ export const SearchHitHeader = props => {
     <React.Fragment>
       {title && (
         <div className="mb-2 d-flex flex-wrap align-items-baseline">
-          {headerTag === 'h1' && <h1 className="mr-3">{title}</h1>}
-          {headerTag === 'h2' && <h2 className="mr-3">{title}</h2>}
+          {renderTitle(headerTag, title, titleLink)}
           {_.get(provenance, 'code') === 'NASJONAL' && <LabelNational />}
         </div>
       )}
@@ -81,6 +104,7 @@ export const SearchHitHeader = props => {
 SearchHitHeader.defaultProps = {
   headerTag: 'h1',
   title: null,
+  titleLink: null,
   publisherLabel: null,
   publisher: null,
   publisherItems: null,
@@ -91,6 +115,7 @@ SearchHitHeader.defaultProps = {
 SearchHitHeader.propTypes = {
   headerTag: PropTypes.string,
   title: PropTypes.string,
+  titleLink: PropTypes.string,
   publisherLabel: PropTypes.string,
   publisher: PropTypes.object,
   publisherItems: PropTypes.object,
