@@ -1,9 +1,9 @@
 package no.dcat.datastore.domain.dcat.builders;
 
 import no.dcat.datastore.domain.dcat.Distribution;
+import no.dcat.datastore.domain.dcat.vocabulary.DCAT;
 import no.dcat.shared.SkosCode;
 import no.dcat.shared.SkosConcept;
-import no.dcat.datastore.domain.dcat.vocabulary.DCAT;
 import no.dcat.shared.Types;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ResIterator;
@@ -15,12 +15,10 @@ import org.apache.jena.vocabulary.DCTerms;
 import org.apache.jena.vocabulary.RDF;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.test.context.TestComponent;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 
 public class DistributionBuilder extends AbstractBuilder {

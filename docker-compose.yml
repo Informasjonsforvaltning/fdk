@@ -7,8 +7,6 @@ services:
       - search-api
       - fuseki
       - reference-data
-    networks:
-      platform:
 
   search-api:
     image: dcatno/search-api:latest

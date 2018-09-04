@@ -15,7 +15,10 @@
 
     <dependencies>
         <!-- repeat transitive dependencies as explicitly-->
-
+        <dependency>
+            <groupId>no.dcat</groupId>
+            <artifactId>datastore</artifactId>
+        </dependency>
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-spi</artifactId>
@@ -242,39 +245,7 @@
                 </configuration>
             </plugin>
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <version>3.1.1</version>
-                <executions>
-                    <execution>
-                        <id>analyze</id>
-                        <goals>
-                            <goal>analyze-only</goal>
-                        </goals>
-                        <configuration>
-                            <failOnWarning>true</failOnWarning>
 
-                            <!-- ignore annotations for "used but undeclared" warnings -->
-                            <ignoredUsedUndeclaredDependencies>
-                                <!--<ignoredUsedUndeclaredDependency>com.google.code.findbugs:annotations</ignoredUsedUndeclaredDependency>-->
-                            </ignoredUsedUndeclaredDependencies>
-
-                            <!-- ignore annotations for "unused but declared" warnings -->
-                            <ignoredUnusedDeclaredDependencies>
-                                <ignoredUnusedDeclaredDependency>org.springframework.boot:spring-boot-starter-web
-                                </ignoredUnusedDeclaredDependency>
-                                <ignoredUnusedDeclaredDependency>org.springframework.boot:spring-boot-starter-security
-                                </ignoredUnusedDeclaredDependency>
-                                <ignoredUnusedDeclaredDependency>org.springframework.boot:spring-boot-starter-test
-                                </ignoredUnusedDeclaredDependency>
-                                <ignoredUnusedDeclaredDependency>io.swagger:swagger-models
-                                </ignoredUnusedDeclaredDependency>
-                            </ignoredUnusedDeclaredDependencies>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
 
         </plugins>
     </build>

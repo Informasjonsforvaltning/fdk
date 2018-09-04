@@ -59,11 +59,4 @@ public class ApplicationSettings {
 		this.openDataEnhet = openDataEnhet;
 	}
 
-    public String getReferenceDataUrl() {
-        return referenceDataUrl;
-    }
-
-    public void setReferenceDataUrl(String referenceDataUrl) {
-        this.referenceDataUrl = referenceDataUrl;
-    }
 }

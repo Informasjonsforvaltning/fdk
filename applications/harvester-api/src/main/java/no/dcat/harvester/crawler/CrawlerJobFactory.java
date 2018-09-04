@@ -1,5 +1,9 @@
 package no.dcat.harvester.crawler;
 
+import no.dcat.datastore.AdminDataStore;
+import no.dcat.datastore.DcatDataStore;
+import no.dcat.datastore.Fuseki;
+import no.dcat.datastore.domain.DcatSource;
 import no.dcat.harvester.crawler.handlers.ElasticSearchResultHandler;
 import no.dcat.harvester.crawler.handlers.ElasticSearchResultPubHandler;
 import no.dcat.harvester.crawler.handlers.FusekiResultHandler;
@@ -8,10 +12,6 @@ import no.dcat.harvester.service.SubjectCrawler;
 import no.dcat.harvester.settings.ApplicationSettings;
 import no.dcat.harvester.settings.ElasticSettings;
 import no.dcat.harvester.settings.FusekiSettings;
-import no.dcat.datastore.AdminDataStore;
-import no.dcat.datastore.DcatDataStore;
-import no.dcat.datastore.Fuseki;
-import no.dcat.datastore.domain.DcatSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
