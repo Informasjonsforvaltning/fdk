@@ -25,6 +25,9 @@
       "formats": {
         "type": "string",
         "index": "not_analyzed"
+      },
+      "openApi": {
+        "enabled": "false"
       }
     }
   }
