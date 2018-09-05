@@ -43,7 +43,7 @@ public class SearchControllerTest {
         SearchResponse searchResponse = mock(SearchResponse.class);
         when(searchResponse.getHits()).thenReturn(searchHits);
 
-        doReturn(null).when(spyController).buildSearchRequest(anyString(),anyString(),anyInt(),anyInt());
+        doReturn(null).when(spyController).buildSearchRequest(anyString(),anyString(),anyString(),anyString(),anyInt(),anyInt());
         doReturn(searchResponse).when(spyController).doQuery(any());
 
         // todo this is nonsense, we do not test anything
