@@ -45,8 +45,8 @@ exports[`should render ApiDetailsPage correctly with apiItem 1`] = `
                 "prefLabel": "Description",
               },
               Object {
-                "name": "Response",
-                "prefLabel": "Response",
+                "name": "Operations",
+                "prefLabel": "Operations",
               },
               Object {
                 "name": "Contact information",
@@ -66,7 +66,7 @@ exports[`should render ApiDetailsPage correctly with apiItem 1`] = `
           showMoreButtonText="Show the full description"
         />
         <ApiEndpoints
-          name="Response"
+          name="Operations"
           paths={
             Object {
               "/aggregateDataset": Object {

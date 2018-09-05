@@ -287,10 +287,10 @@
       "unknown": "Ukjent tilgang"
     },
     "endpoints": {
-      "response": "Respons",
+      "response": "Operasjoner",
       "description": "Beskrivelse"
     },
-    "provider": "Tilbys av",
+    "provider": "Tilbyder:",
     "linkDatasetReference": "Lenke til datasettreferanse"
   }
 }

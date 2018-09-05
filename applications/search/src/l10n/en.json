@@ -288,10 +288,10 @@
       "unknown": "Unknown accesslevel"
     },
     "endpoints": {
-      "response": "Response",
+      "response": "Operations",
       "description": "Description"
     },
-    "provider": "Provider",
+    "provider": "Provider:",
     "linkDatasetReference": "Link to dataset reference"
   }
 }
