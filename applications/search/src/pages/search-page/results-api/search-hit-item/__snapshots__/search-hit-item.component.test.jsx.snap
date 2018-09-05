@@ -12,7 +12,6 @@ exports[`should render api-SearchHitItem correctly 1`] = `
   </span>
   <header>
     <SearchHitHeader
-      headerTag="h2"
       provenance={null}
       publisher={
         Object {
@@ -27,6 +26,7 @@ exports[`should render api-SearchHitItem correctly 1`] = `
       }
       publisherItems={null}
       publisherLabel="Provider:"
+      tag="h2"
       theme={null}
       title="REST-API for Kontakt- og reserversjonsregisteret (KRR)"
       titleLink="/apis/24fa3668-6ada-4a50-804e-1396f8470a24"
@@ -97,11 +97,11 @@ exports[`should render api-SearchHitItem with long description 1`] = `
   </span>
   <header>
     <SearchHitHeader
-      headerTag="h2"
       provenance={null}
       publisher={null}
       publisherItems={null}
       publisherLabel="Provider:"
+      tag="h2"
       theme={null}
       title="National Data Directory Search API"
       titleLink="/apis/32690443-e926-4e52-9988-dbac45085102"

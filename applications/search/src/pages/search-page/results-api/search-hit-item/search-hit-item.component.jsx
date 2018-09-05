@@ -19,7 +19,7 @@ const renderHeaderLink = (item, publisher, publishers, provenance) => {
   return (
     <header>
       <SearchHitHeader
-        headerTag="h2"
+        tag="h2"
         title={getTranslateText(title)}
         titleLink={link}
         publisherLabel={localization.api.provider}

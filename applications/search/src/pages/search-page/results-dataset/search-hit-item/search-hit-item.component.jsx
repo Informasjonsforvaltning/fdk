@@ -136,7 +136,7 @@ export const SearchHitItem = props => {
         <div className="fdk-container-search-hit">
           <header>
             <SearchHitHeader
-              headerTag="h2"
+              tag="h2"
               title={title}
               publisherLabel={localization.search_hit.owned}
               publisher={publisher}
