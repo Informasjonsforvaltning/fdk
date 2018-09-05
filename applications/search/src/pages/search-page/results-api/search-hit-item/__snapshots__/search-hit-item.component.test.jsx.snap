@@ -13,27 +13,23 @@ exports[`should render api-SearchHitItem correctly 1`] = `
   <header>
     <SearchHitHeader
       headerTag="h2"
-      provenance={
-        Object {
-          "code": "NASJONAL",
-          "prefLabel": Object {
-            "en": "National Building Block",
-            "nb": "Nasjonal felleskomponent",
-            "nn": "Nasjonal felleskomponent",
-          },
-          "uri": "http://data.brreg.no/datakatalog/provinens/nasjonal",
-        }
-      }
+      provenance={null}
       publisher={
         Object {
           "id": "974760673",
+          "name": "REGISTERENHETEN I BRØNNØYSUND",
+          "orgPath": "/STAT/912660680/974760673",
+          "prefLabel": Object {
+            "no": "Brønnøysundregistrene",
+          },
+          "uri": "http://data.brreg.no/enhetsregisteret/enhet/974760673",
         }
       }
       publisherItems={null}
-      publisherLabel="Provider"
+      publisherLabel="Provider:"
       theme={null}
-      title="National Data Directory Search API"
-      titleLink="/apis/32690443-e926-4e52-9988-dbac45085102"
+      title="REST-API for Kontakt- og reserversjonsregisteret (KRR)"
+      titleLink="/apis/24fa3668-6ada-4a50-804e-1396f8470a24"
     />
   </header>
   <p>
@@ -43,17 +39,35 @@ exports[`should render api-SearchHitItem correctly 1`] = `
     >
       Beskrivelse av api,
     </span>
-    Provides a basic search api against the National Data Directory of Norway
+    Dette er eit REST-API for å tilby funksjonalitet tilsvarende dagens SOAP-baserte oppslagstjeneste for KRR.
+
+Tilgang til API-et styres med OAuth2-baserte access_tokens. Desse vert utstedt frå ID-porten si OAuth2-teneste.
+...
   </p>
   <div
     className="mb-2"
   >
     <strong>
-      API that are not public
+      Format
+      : 
     </strong>
-    <i
-      className="fa fa-info-circle ml-2 fdk-color-cta2"
-    />
+    <span
+      key="0"
+    >
+      application/json
+    </span>
+    <span
+      key="1"
+    >
+      , 
+      application/jose
+    </span>
+    <span
+      key="2"
+    >
+      , 
+      */*
+    </span>
   </div>
 </article>
 `;
@@ -87,7 +101,7 @@ exports[`should render api-SearchHitItem with long description 1`] = `
       provenance={null}
       publisher={null}
       publisherItems={null}
-      publisherLabel="Provider"
+      publisherLabel="Provider:"
       theme={null}
       title="National Data Directory Search API"
       titleLink="/apis/32690443-e926-4e52-9988-dbac45085102"

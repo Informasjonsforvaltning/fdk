@@ -94,14 +94,22 @@ const renderAccessRights = accessRights => {
 };
 
 const renderFormat = formats => {
-  // TODO check props
-  if (!formats) {
+  if (!formats || formats.length === 0) {
     return null;
   }
+
+  const formatItems = formats =>
+    formats.map((item, index) => (
+      <span key={index}>
+        {index > 0 ? ', ' : ''}
+        {item}
+      </span>
+    ));
+
   return (
     <div className="mb-2">
-      <strong>Format:&nbsp;</strong>
-      <span>applicatoin/rfd+xml, JSON</span>
+      <strong>{localization.format}:&nbsp;</strong>
+      {formatItems(formats)}
     </div>
   );
 };

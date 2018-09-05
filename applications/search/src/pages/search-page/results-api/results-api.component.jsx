@@ -149,7 +149,7 @@ export const ResultsApi = props => {
                 activeFilter={searchQuery.accessrights}
               />
               <SearchPublishersTree
-                title={localization.facet.organisation}
+                title={localization.facet.provider}
                 filter={publisherArray}
                 onFilterPublisherHierarchy={onFilterPublisherHierarchy}
                 activeFilter={searchQuery.orgPath}
