@@ -45,13 +45,14 @@ public class SearchControllerTest {
 
         doReturn(null).when(spyController).buildSearchRequest(anyString(),anyString(),anyInt(),anyInt());
         doReturn(searchResponse).when(spyController).doQuery(any());
+
         // todo this is nonsense, we do not test anything
         doReturn(new QueryResponse()).when(spyController).convertFromElasticResponse(any());
 
         when(hit.getSourceAsString()).thenReturn(apiSpecExample);
         when(hit.getId()).thenReturn("http://testtesttset");
 
-        QueryResponse response = spyController.search("","",0,0);
+        QueryResponse response = spyController.search("","","","",0,0);
 
         assertThat(response, notNullValue());
 

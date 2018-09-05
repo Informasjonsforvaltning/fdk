@@ -135,8 +135,8 @@ export default class DatasetPublish extends Component {
           {registrationStatus === 'DRAFT' && (
             <Button
               id="dataset-setPublish-button"
-              className="fdk-button fdk-button-default w-25 mr-3"
-              color="secondary"
+              className="fdk-button w-25 mr-3"
+              color="primary"
               onClick={() => this.handleDatasetStatus('PUBLISH')}
             >
               Publiser
@@ -145,7 +145,7 @@ export default class DatasetPublish extends Component {
           {registrationStatus === 'PUBLISH' && (
             <Button
               id="dataset-setDraft-button"
-              className="fdk-button fdk-button-default w-25 mr-3"
+              className="fdk-button w-25 mr-3"
               color="info"
               onClick={() => this.handleDatasetStatus('DRAFT')}
             >
@@ -182,7 +182,7 @@ export default class DatasetPublish extends Component {
 
           <div className="mt-2 ">
             <button
-              className="fdk-dataset-delete text-left no-padding"
+              className="fdk-dataset-delete text-left p-0"
               onClick={this.showDeleteModal}
             >
               <i className="mr-1 fa fa-trash fdk-color-red" />

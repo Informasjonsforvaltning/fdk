@@ -94,7 +94,9 @@
     "noHits": "Sorry, no hits",
     "concepts": "concepts",
     "and": "and",
-    "but": "but"
+    "but": "but",
+    "apis": "APIs",
+    "apiHits": "hits among APIs"
   },
   "facet": {
     "organisation":"Organization",
@@ -115,6 +117,9 @@
       "ANNET": "Other"
     },
     "provenance": "Provenance"
+  ,
+    "provider": "Provider",
+    "format": "Format"
   },
   "result": {
     "dataset":"Dataset",

@@ -25,7 +25,7 @@ export default class FormTemplate extends Component {
       'fdk-reg_collapse_open': this.state.collapse
     });
     const buttonClass = cx('fdk-collapseButton', 'fdk-btn-no-border', 'w-100', {
-      'no-padding': !backgroundBlue
+      'p-0': !backgroundBlue
     });
     const collapseIconClass = cx('fa', 'fa-2x', 'mr-2', {
       'fa-angle-down': !this.state.collapse,
@@ -41,7 +41,7 @@ export default class FormTemplate extends Component {
             <i className={collapseIconClass} />
             <h2 className="mb-0 text-ellipsis">{title}</h2>
             {required && (
-              <span className="fdk-badge badge badge-secondary ml-2">
+              <span className="fdk-badge badge badge-secondary ml-2 fdk-text-size-small">
                 {localization.helptext.required}
               </span>
             )}

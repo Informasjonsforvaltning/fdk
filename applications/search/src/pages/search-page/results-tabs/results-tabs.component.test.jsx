@@ -5,13 +5,24 @@ import {
   PATHNAME_DATASETS,
   PATHNAME_CONCEPTS
 } from '../../../constants/constants';
+import defaultProps from './__fixtures/defaultProps.json';
+
+let wrapper;
+
+beforeEach(() => {
+  wrapper = shallow(<ResultsTabs {...defaultProps} />);
+});
 
 test('should render ResultsTabs with "Dataset" active correctly', () => {
-  const wrapper = shallow(<ResultsTabs activePath={PATHNAME_DATASETS} />);
+  wrapper.setProps({
+    activePath: PATHNAME_DATASETS
+  });
   expect(wrapper).toMatchSnapshot();
 });
 
 test('should render ResultsTabs with "Concepts" active correctly', () => {
-  const wrapper = shallow(<ResultsTabs activePath={PATHNAME_CONCEPTS} />);
+  wrapper.setProps({
+    activePath: PATHNAME_CONCEPTS
+  });
   expect(wrapper).toMatchSnapshot();
 });

@@ -1,12 +1,6 @@
-@import '../../assets/style/colors';
+@import '../../../node_modules/designsystemet/fdk-designsystem-bootstrap4/scss/colors.scss';
 
 .fdk-reg-catalogs {
-  h1 {
-    margin: 0 !important;
-    label {
-      margin-bottom: 0;
-    }
-  }
   button {
     background-color: transparent;
     border: none;
@@ -15,7 +9,7 @@
     input {
       border: none;
       border-radius: 5px;
-      padding: .5rem;
+      padding: 1em;
       width: 100%;
     }
   }
@@ -24,7 +18,7 @@
   }
 
   .fdk-reg-datasets-publisher {
-    font-size: 1.2rem;
+    font-size: 1.8rem;
   }
 
   .fdk-datasets-description {

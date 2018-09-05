@@ -1,5 +1,7 @@
 FROM node:8-alpine
 
+#the only reason why we need git here, is that we have designsystem in another github repo
+RUN apk add --no-cache git
 # to run localhost docker
 
 RUN npm init -y

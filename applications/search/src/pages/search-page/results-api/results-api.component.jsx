@@ -9,6 +9,7 @@ import localization from '../../../lib/localization';
 import { SearchHitItem } from './search-hit-item/search-hit-item.component';
 import { Select } from '../../../components/select/select.component';
 import { FilterBox } from '../../../components/filter-box/filter-box.component';
+import { SearchPublishersTree } from '../search-publishers-tree/search-publishers-tree.component';
 
 const renderFilterModal = (
   showFilterModal,
@@ -58,7 +59,10 @@ export const ResultsApi = props => {
     closeFilterModal,
     apiItems,
     onFilterAccessRights,
+    onFilterPublisherHierarchy,
+    onFilterFormat,
     searchQuery,
+    publisherArray,
     publishers,
     onClearSearch,
     onSort,
@@ -138,11 +142,25 @@ export const ResultsApi = props => {
                 searchQuery
               )}
               <FilterBox
-                htmlKey={2}
+                htmlKey={1}
                 title={localization.facet.accessRight}
                 filter={_.get(apiItems, ['aggregations', 'accessRights'])}
                 onClick={onFilterAccessRights}
                 activeFilter={searchQuery.accessrights}
+              />
+              <SearchPublishersTree
+                title={localization.facet.organisation}
+                filter={publisherArray}
+                onFilterPublisherHierarchy={onFilterPublisherHierarchy}
+                activeFilter={searchQuery.orgPath}
+                publishers={publishers}
+              />
+              <FilterBox
+                htmlKey={2}
+                title={localization.facet.format}
+                filter={_.get(apiItems, ['aggregations', 'formats'])}
+                onClick={onFilterFormat}
+                activeFilter={searchQuery.format}
               />
             </div>
           )}
@@ -180,7 +198,10 @@ ResultsApi.defaultProps = {
   closeFilterModal: null,
   apiItems: [],
   onFilterAccessRights: null,
+  onFilterPublisherHierarchy: null,
+  onFilterFormat: null,
   searchQuery: {},
+  publisherArray: null,
   publishers: null,
   onClearSearch: null,
   onPageChange: null,
@@ -193,7 +214,10 @@ ResultsApi.propTypes = {
   closeFilterModal: PropTypes.func,
   apiItems: PropTypes.object,
   onFilterAccessRights: PropTypes.func,
+  onFilterPublisherHierarchy: PropTypes.func,
+  onFilterFormat: PropTypes.func,
   searchQuery: PropTypes.object,
+  publisherArray: PropTypes.array,
   publishers: PropTypes.object,
   onClearSearch: PropTypes.func,
   onSort: PropTypes.func.isRequired,

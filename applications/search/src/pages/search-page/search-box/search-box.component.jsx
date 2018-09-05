@@ -13,6 +13,7 @@ export const SearchBox = props => {
     searchQuery,
     countDatasets,
     countTerms,
+    countApis,
     open
   } = props;
   let refSearchBox; // eslint-disable-line no-unused-vars
@@ -69,6 +70,7 @@ export const SearchBox = props => {
         <CustomHitsStats
           countDatasets={countDatasets}
           countTerms={countTerms}
+          countApis={countApis}
           filteringOrTextSearchPerformed={
             !!(
               getParamFromUrl('q') ||
@@ -86,7 +88,8 @@ export const SearchBox = props => {
 SearchBox.defaultProps = {
   searchQuery: null,
   countDatasets: null,
-  countTerms: null
+  countTerms: null,
+  countApis: null
 };
 
 SearchBox.propTypes = {
@@ -95,5 +98,6 @@ SearchBox.propTypes = {
   searchQuery: PropTypes.string,
   countDatasets: PropTypes.number,
   countTerms: PropTypes.number,
+  countApis: PropTypes.number,
   open: PropTypes.func.isRequired
 };
