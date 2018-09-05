@@ -25,8 +25,8 @@ public class ApiDocument  {
     @ApiModelProperty("The id given to the object by the harvest system")
     private String id;
 
-    @ApiModelProperty("The uri (url) of the specification which are used to harvest the specification ")
-    private String uri;
+    @ApiModelProperty("The url of the specification which are used to harvest the specification ")
+    private String apiSpecUrl;
 
     @ApiModelProperty("information about when the api was first and last harvested by the system")
     private HarvestMetadata harvest;

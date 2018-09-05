@@ -1,7 +1,7 @@
 {
   "apispec": {
     "properties": {
-      "uri": {
+      "apiSpecUrl": {
         "type": "string",
         "index": "not_analyzed"
       },

@@ -43,7 +43,7 @@ const renderHits = (hits, publishers) => {
   if (hits) {
     return hits.map((item, index) => (
       <SearchHitItem
-        key={item.uri}
+        key={item.id}
         item={item}
         fadeInCounter={index < 3 ? index : null}
         publishers={publishers}

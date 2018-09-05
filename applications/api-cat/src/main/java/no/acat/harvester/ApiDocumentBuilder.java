@@ -20,7 +20,6 @@ import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.client.Client;
-import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 
@@ -60,7 +59,7 @@ public class ApiDocumentBuilder {
 
         ApiDocument apiDocument = new ApiDocument().builder()
                 .id(lookupOrGenerateId(apiCatalogRecord))
-                .uri(apiSpecUrl)
+                .apiSpecUrl(apiSpecUrl)
                 .apiSpec(apiSpec)
                 .build();
 
@@ -84,7 +83,7 @@ public class ApiDocumentBuilder {
         SearchResponse response = elasticsearchClient.prepareSearch("acat")
                 .setTypes("apispec")
                 .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
-                .setQuery(QueryBuilders.termQuery("uri", apiSpecUrl))
+                .setQuery(QueryBuilders.termQuery("apiSpecUrl", apiSpecUrl))
                 .get();
 
 
