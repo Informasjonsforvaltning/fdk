@@ -1,12 +1,12 @@
 {
   "api": "API",
-  "description": "Beskrivelse",
-  "showFullDescription": "Vis hele beskrivelsen",
+  "description": "Skildring",
+  "showFullDescription": "Vis heile skildringa",
   "showLess": "Vis mindre",
   "objective": "Formål",
   "showFullObjective": "Vis hele formålet",
   "format": "Format",
-  "datasetReferences": "Tilknyttede datasettbeskrivelser",
+  "datasetReferences": "Tilknyttede datasettskildringar",
   "contactInfo": "Kontaktinformasjon",
   "contactPoint": "Kontaktpunkt",
   "email": "E-mail",
@@ -75,7 +75,7 @@
     "result.summary": "Søket gav ",
     "dataset":"treff",
     "nosearch.summary":"Søk blant",
-    "nosearch.descriptions":"datasettbeskrivelser",
+    "nosearch.descriptions":"datasettskildringar",
     "datasetTab": "Datasett",
     "apiTab": "Api",
     "termTab": "Omgrep",
@@ -84,19 +84,19 @@
   "hitstats": {
     "nosearch": {
       "search": "Søk blant",
-      "descriptions": "datasettbeskrivelser"
+      "descriptions": "datasettskildringar"
     },
-    "search": "Søket ga",
+    "search": "Søket gav",
     "datasetHits": "treff i datasett",
     "datasetNoHits": "ingen treff i datasett",
-    "conceptHits": "treff i begrep",
-    "conceptNoHits": "ingen treff i begrep",
+    "conceptHits": "treff i omgrep",
+    "conceptNoHits": "ingen treff i omgrep",
     "noHits": "dessverre ingen treff",
-    "concepts": "begrep",
+    "concepts": "omgrep",
     "and": "og",
     "but": "men",
-    "apis": "API-er",
-    "apiHits": "treff i API-er"
+    "apis": "API",
+    "apiHits": "treff i API"
   },
   "facet": {
     "organisation":"Verksemd",
@@ -117,7 +117,7 @@
       "ANNET": "Anna"
     },
     "provenance": "Opphav",
-    "provider": "Tilbyder",
+    "provider": "Tilbydar",
     "format": "Format"
   },
   "result": {
@@ -287,10 +287,10 @@
       "unknown": "Ukjent tilgang"
     },
     "endpoints": {
-      "response": "Respons",
-      "description": "Beskrivelse"
+      "response": "Operasjonar",
+      "description": "Skildring"
     },
-    "provider": "Tilbys av",
+    "provider": "Tilbydar:",
     "linkDatasetReference": "Lenke til datasettreferanse"
   }
 }

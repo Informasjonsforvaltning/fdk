@@ -14,7 +14,7 @@ exports[`should render api-ApiEndpoints correctly 1`] = `
       <h3
         className=""
       >
-        Response
+        Operations
       </h3>
     </div>
     <div
@@ -68,7 +68,7 @@ exports[`should render api-ApiEndpoints correctly with no props 1`] = `
       <h3
         className=""
       >
-        Response
+        Operations
       </h3>
     </div>
     <div
