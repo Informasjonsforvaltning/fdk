@@ -19,6 +19,11 @@ function startLoad {
         targetElasticUrl=http://localhost:9200
     fi
 
+    if [ "$environment" == "ut2" ]
+    then
+      targetElasticUrl=http://es01-fdk-01-ut1.regsys-nprd.brreg.no:9200
+    fi
+
     if [ "$environment" == "st1" ]
     then
         targetElasticUrl=http://es01-fdk-02-st1.regsys-nprd.brreg.no:9200
@@ -36,6 +41,7 @@ function startLoad {
     loadDcat
     loadScat
     loadRegister
+    loadAcat
     loadHarvest
 
     ENDTIME=`date "+%Y-%m-%dT%H_%M_%S"`
@@ -67,6 +73,19 @@ function loadRegister {
     elasticdump --bulk=true --input=${source}_register.json --output=${targetElasticUrl}/register --type=data
 
 }
+
+function loadAcat {
+
+    curl -XDELETE ${targetElasticUrl}/acat
+
+    acatMapping=`cat applications/api-cat/src/main/resources/apispec.mapping.json`
+    acatMetadata="{ \"mappings\": ${acatMapping} }"
+
+    curl -XPUT ${targetElasticUrl}/acat -d "${acatMetadata}"
+    elasticdump --bulk=true --input=${source}_acat.json --output=${targetElasticUrl}/acat --type=data
+
+}
+
 
 function loadScat {
 
