@@ -10,7 +10,6 @@ import { SearchHitHeader } from '../../components/search-hit-header/search-hit-h
 import { ApiEndpoints } from './api-endpoints/api-endpoints.component';
 import { ShowMore } from '../../components/show-more/show-more';
 import { StickyMenu } from '../../components/sticky-menu/sticky-menu.component';
-import { SingleColGrid } from '../../components/singleColGrid/singleColGrid';
 import { ListType1 } from '../../components/listType1/listType1';
 import { TwoColRow } from '../../components/listType1/twoColRow/twoColRow';
 
@@ -30,10 +29,23 @@ const renderDescription = description => {
 };
 
 const renderFormats = formats => {
-  if (!formats) {
+  if (!formats || formats.length === 0) {
     return null;
   }
-  return <SingleColGrid title={localization.format} items={[formats]} />;
+  const formatItems = formats =>
+    formats.map((item, index) => (
+      <span key={index}>
+        {index > 0 ? ', ' : ''}
+        {item}
+      </span>
+    ));
+  return (
+    <section className="mb-5 list-type1" name={localization.format}>
+      <h3>{localization.format}</h3>
+      <hr />
+      {formatItems(formats)}
+    </section>
+  );
 };
 
 const renderApiEndpoints = paths => {
