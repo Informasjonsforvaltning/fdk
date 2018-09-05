@@ -118,6 +118,7 @@ public class ApiHarvester {
                 ApiCatalogRecord catalogRecord = new ApiCatalogRecord().builder()
                         .orgNr(line.get("OrgNr"))
                         .apiSpecUrl(line.get("ApiSpecUrl"))
+                        .apiDocUrl(line.get("ApiDocUrl"))
                         .accessRightsCodes(Arrays.asList(line.get("AccessRights").split(",")))
                         .provenanceCode(line.get("Provenance"))
                         .datasetReferences(Arrays.asList(line.get("DatasetRefs").split(",")))
