@@ -1,6 +1,6 @@
 OrgNr;OrgName;ApiSpecUrl;DocUrl;AccessRights;Provenance;DatasetRefs
-974760673;Brønnøysundregistrene;;https://data.brreg.no/enhetsregisteret/api/docs/index.html;NON_PUBLIC,RESTRICTED;NASJONAL;https://fellesdatakatalog.brreg.no/datasets/ae335ad2-0f3d-4eb1-98ce-87882776a123,https://fellesdatakatalog.brreg.no/datasets/ae335ad2-0f3d-4eb1-98ce-87882776a124
-974760673;Brønnøysundregistrene;https://fellesdatakatalog.brreg.no/api-docs/search-api;https://fellesdatakatalog.brreg.no/swagger-ui.html;NON_PUBLIC,RESTRICTED;NASJONAL;https://fellesdatakatalog.brreg.no/datasets/ea9e2aa7-880c-4387-888e-77446acab279,https://fellesdatakatalog.brreg.no/datasets/ea9e2aa7-880c-4387-888e-77446acab278
-974760673;;https://docker-demo.fsat.no/fsapi/swagger.json;https://docker-demo.fsat.no/fsapi/swagger.html#!/person/get_personer_id;;;
-974760673;;https://ks-no.github.io/api/innsyn-sok-api-v1.json;https://editor.swagger.io/?url=https://ks-no.github.io/api/innsyn-sok-api-v1.json;;;https://data.norge.no/node/78,https://data.norge.no/node/78
+974760673;Brønnøysundregistrene;;https://data.brreg.no/enhetsregisteret/api/docs/index.html;NON_PUBLIC,RESTRICTED;NASJONAL;https://data.norge.no/node/78
+974760673;Brønnøysundregistrene;https://fellesdatakatalog.brreg.no/api-docs/search-api;https://fellesdatakatalog.brreg.no/swagger-ui.html;NON_PUBLIC,RESTRICTED;NASJONAL;https://data.norge.no/node/78,https://data.norge.no/node/78
+974760673;;https://docker-demo.fsat.no/fsapi/swagger.json;https://docker-demo.fsat.no/fsapi/swagger.html#!/person/get_personer_id;NON_PUBLIC,RESTRICTED;;https://data.norge.no/node/78,https://data.norge.no/node/78
+974760673;;https://ks-no.github.io/api/innsyn-sok-api-v1.json;https://editor.swagger.io/?url=https://ks-no.github.io/api/innsyn-sok-api-v1.json;NON_PUBLIC,RESTRICTED;;https://data.norge.no/node/78,https://data.norge.no/node/78
 974760673;;https://oidc-ver2.difi.no/kontaktinfo-oauth2-server/rest/apis;https://oidc-ver2.difi.no/kontaktinfo-oauth2-server/rest/swagger-ui.html;;;https://data.norge.no/node/78
