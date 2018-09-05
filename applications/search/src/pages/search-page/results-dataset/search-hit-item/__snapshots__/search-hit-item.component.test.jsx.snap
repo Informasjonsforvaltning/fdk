@@ -19,7 +19,6 @@ exports[`should render SearchHitItem NON_PUBLIC correctly 1`] = `
     >
       <header>
         <SearchHitHeader
-          headerTag="h2"
           provenance={
             Object {
               "code": "vedtak",
@@ -38,6 +37,7 @@ exports[`should render SearchHitItem NON_PUBLIC correctly 1`] = `
           }
           publisherItems={null}
           publisherLabel="Owned by"
+          tag="h2"
           theme={
             Array [
               Object {
@@ -106,7 +106,6 @@ exports[`should render SearchHitItem PUBLIC correctly 1`] = `
     >
       <header>
         <SearchHitHeader
-          headerTag="h2"
           provenance={
             Object {
               "code": "vedtak",
@@ -119,6 +118,7 @@ exports[`should render SearchHitItem PUBLIC correctly 1`] = `
           publisher={null}
           publisherItems={null}
           publisherLabel="Owned by"
+          tag="h2"
           theme={
             Array [
               Object {
@@ -181,7 +181,6 @@ exports[`should render SearchHitItem RESTRICTED correctly 1`] = `
     >
       <header>
         <SearchHitHeader
-          headerTag="h2"
           provenance={
             Object {
               "code": "vedtak",
@@ -200,6 +199,7 @@ exports[`should render SearchHitItem RESTRICTED correctly 1`] = `
           }
           publisherItems={null}
           publisherLabel="Owned by"
+          tag="h2"
           theme={
             Array [
               Object {
@@ -281,7 +281,6 @@ exports[`should render SearchHitItem with distribution type correctly 1`] = `
     >
       <header>
         <SearchHitHeader
-          headerTag="h2"
           provenance={
             Object {
               "code": "vedtak",
@@ -294,6 +293,7 @@ exports[`should render SearchHitItem with distribution type correctly 1`] = `
           publisher={null}
           publisherItems={null}
           publisherLabel="Owned by"
+          tag="h2"
           theme={
             Array [
               Object {
@@ -394,7 +394,6 @@ exports[`should render SearchHitItem with no title, description, accessRights an
     >
       <header>
         <SearchHitHeader
-          headerTag="h2"
           provenance={
             Object {
               "code": "vedtak",
@@ -413,6 +412,7 @@ exports[`should render SearchHitItem with no title, description, accessRights an
           }
           publisherItems={null}
           publisherLabel="Owned by"
+          tag="h2"
           theme={null}
           title={null}
           titleLink={null}

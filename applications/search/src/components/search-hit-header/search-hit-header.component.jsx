@@ -41,30 +41,29 @@ const renderThemes = theme => {
   return themeNodes;
 };
 
-const renderTitle = (headerTag, title, titleLink) => {
-  const titleTag = (headerTag, title) => (
+const renderTitle = (Tag, title, titleLink) => {
+  const titleTag = (Tag, title) => (
     <React.Fragment>
-      {headerTag === 'h1' && <h1 className="mr-3">{title}</h1>}
-      {headerTag === 'h2' && <h2 className="mr-3">{title}</h2>}
+      <Tag className="mr-3">{title}</Tag>
     </React.Fragment>
   );
-  if (title && titleLink) {
+  if (titleLink) {
     return (
       <Link
         className="search-hit__title-link"
         title={`${localization.api}: ${getTranslateText(title)}`}
         to={titleLink}
       >
-        {titleTag(headerTag, title)}
+        {titleTag(Tag, title)}
       </Link>
     );
   }
-  return titleTag(headerTag, title);
+  return titleTag(Tag, title);
 };
 
 export const SearchHitHeader = props => {
   const {
-    headerTag,
+    tag: Tag,
     title,
     titleLink,
     publisherLabel,
@@ -78,7 +77,7 @@ export const SearchHitHeader = props => {
     <React.Fragment>
       {title && (
         <div className="mb-2 d-flex flex-wrap align-items-baseline">
-          {renderTitle(headerTag, title, titleLink)}
+          {renderTitle(Tag, title, titleLink)}
           {_.get(provenance, 'code') === 'NASJONAL' && <LabelNational />}
         </div>
       )}
@@ -102,7 +101,7 @@ export const SearchHitHeader = props => {
 };
 
 SearchHitHeader.defaultProps = {
-  headerTag: 'h1',
+  tag: 'h1',
   title: null,
   titleLink: null,
   publisherLabel: null,
@@ -113,7 +112,7 @@ SearchHitHeader.defaultProps = {
 };
 
 SearchHitHeader.propTypes = {
-  headerTag: PropTypes.string,
+  tag: PropTypes.string,
   title: PropTypes.string,
   titleLink: PropTypes.string,
   publisherLabel: PropTypes.string,

@@ -20,11 +20,11 @@ exports[`should render ApiDetailsPage correctly with apiItem 1`] = `
           harvest={null}
         />
         <SearchHitHeader
-          headerTag="h1"
           provenance={null}
           publisher={null}
           publisherItems={null}
           publisherLabel="Provider:"
+          tag="h1"
           theme={null}
           title="National Data Directory Search API"
           titleLink={null}
@@ -288,11 +288,11 @@ exports[`should render ApiDetailsPage correctly with missing api-properties 1`] 
           harvest={null}
         />
         <SearchHitHeader
-          headerTag="h1"
           provenance={null}
           publisher={null}
           publisherItems={null}
           publisherLabel="Provider:"
+          tag="h1"
           theme={null}
           title={null}
           titleLink={null}

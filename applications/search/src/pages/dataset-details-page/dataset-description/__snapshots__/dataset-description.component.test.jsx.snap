@@ -10,7 +10,6 @@ exports[`should render DatasetDescription correctly 1`] = `
     />
   </div>
   <SearchHitHeader
-    headerTag="h1"
     provenance={null}
     publisher={
       Object {
@@ -21,6 +20,7 @@ exports[`should render DatasetDescription correctly 1`] = `
     }
     publisherItems={null}
     publisherLabel="Owned by"
+    tag="h1"
     theme={
       Array [
         Object {
@@ -65,7 +65,6 @@ exports[`should render DatasetDescription correctly 2`] = `
     />
   </div>
   <SearchHitHeader
-    headerTag="h1"
     provenance={null}
     publisher={
       Object {
@@ -76,6 +75,7 @@ exports[`should render DatasetDescription correctly 2`] = `
     }
     publisherItems={null}
     publisherLabel="Owned by"
+    tag="h1"
     theme={
       Array [
         Object {
@@ -120,11 +120,11 @@ exports[`should render DatasetDescription correctly with no props 1`] = `
     />
   </div>
   <SearchHitHeader
-    headerTag="h1"
     provenance={null}
     publisher={null}
     publisherItems={null}
     publisherLabel="Owned by"
+    tag="h1"
     theme={null}
     title=""
     titleLink={null}
