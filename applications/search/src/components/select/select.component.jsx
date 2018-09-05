@@ -35,6 +35,7 @@ export class Select extends React.Component {
     return (
       <UncontrolledDropdown
         id="search-result-dropdown-1"
+        className="ml-auto"
         title={`${localization.sort.by} ${
           localization.sort[this.state.selectedValue]
         }`}

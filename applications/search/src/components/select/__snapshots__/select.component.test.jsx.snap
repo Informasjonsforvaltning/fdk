@@ -3,6 +3,7 @@
 exports[`should render Select correctly with active sort 1`] = `
 <UncontrolledDropdown
   aria-label="Sorter søkeresultat, Sort by title"
+  className="ml-auto"
   id="search-result-dropdown-1"
   title="Sort by title"
 >
@@ -61,6 +62,7 @@ exports[`should render Select correctly with active sort 1`] = `
 exports[`should render Select correctly with no active sort 1`] = `
 <UncontrolledDropdown
   aria-label="Sorter søkeresultat, Sort by relevance"
+  className="ml-auto"
   id="search-result-dropdown-1"
   title="Sort by relevance"
 >
