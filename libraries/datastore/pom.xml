@@ -16,10 +16,24 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter</artifactId>
 		</dependency>
+
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-elasticsearch</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.elasticsearch.plugin</groupId>
+			<artifactId>transport-netty3-client</artifactId> <!-- spring-data-elasticsearch insists on using both netty4 and netty3 -->
+			<version>5.6.10</version>
+			<scope>compile</scope>
+		</dependency>
+
 		<dependency>
 			<groupId>org.apache.jena</groupId>
 			<artifactId>jena-fuseki-core</artifactId>
@@ -44,12 +58,14 @@
 			<artifactId>guava</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.elasticsearch</groupId>
-			<artifactId>elasticsearch</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<scope>test</scope>
 		</dependency>
 
 		<dependency>

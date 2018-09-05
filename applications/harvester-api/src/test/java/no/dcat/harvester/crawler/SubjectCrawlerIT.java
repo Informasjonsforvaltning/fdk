@@ -51,7 +51,7 @@ public class SubjectCrawlerIT {
     @Test
     public void readDcatWithSubjectReference() throws Throwable {
         Resource r = new ClassPathResource("begrepHarvest.ttl");
-        Model model = new CrawlerJob(null,null,null,subjectCrawler).loadModelAndValidate(r.getURL());
+        Model model = new CrawlerJob(null,null,subjectCrawler).loadModelAndValidate(r.getURL());
 
         //model.write(System.out, "TURTLE");
 
@@ -70,7 +70,7 @@ public class SubjectCrawlerIT {
     public void readCompleteDifiData() throws Throwable {
 
         Resource r = new ClassPathResource("difi-complete-2017-10-25.jsonld");
-        Model model = new CrawlerJob(null,null,null, subjectCrawler).loadModelAndValidate(r.getURL());
+        Model model = new CrawlerJob(null,null,subjectCrawler).loadModelAndValidate(r.getURL());
 
         DcatReader reader = setupReader(model);
         List<Dataset> datasets = reader.getDatasets();

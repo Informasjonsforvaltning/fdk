@@ -6,22 +6,14 @@ logging:
   level.org.springframework.web: WARN
 application:
   referenceDataUrl: http://reference-data:8080
-  elasticsearchHost: elasticsearch
-  elasticsearchPort: 9300
-  clusterName: elasticsearch
+elastic:
+  clusterNodes: ${FDK_ES_CLUSTERNODES:elasticsearch:9300}
+  clusterName: ${FDK_ES_CLUSTERNAME:elasticsearch}
 server:
   port: 8080
 management:
-  port: 8181
-endpoints:
-  metrics:
-    sensitive: false
-
----
-spring:
-  profiles: prod
-application:
-  clusterName: fellesdatakatalog
+  server:
+    port: 8181
 
 ---
 #Utv-miljø lokalt på egen PC
@@ -29,10 +21,11 @@ spring:
   profiles: develop, unit-integration
 application:
   referenceDataUrl: http://localhost:8100
-  elasticsearchHost: localhost
-  elasticsearchPort: 9300
+elastic:
+  clusterNodes: localhost:9300
   clusterName: elasticsearch
 server:
   port: 8087
 management:
-  port: 8997
+  server:
+    port: 8997

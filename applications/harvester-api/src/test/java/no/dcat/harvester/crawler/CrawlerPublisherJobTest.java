@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import java.net.URL;
 
-import static org.mockito.Matchers.anyObject;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 
 /**
@@ -28,16 +28,16 @@ public class CrawlerPublisherJobTest {
 
 
         CrawlerResultHandler handler = Mockito.mock(CrawlerResultHandler.class);
-        Mockito.doNothing().when(handler).process(anyObject(), anyObject(), anyObject());
+        Mockito.doNothing().when(handler).process(any(), any(), any());
 
         URL url = getClass().getClassLoader().getResource("datasett-mini.ttl");
         DcatSource dcatSource = new DcatSource("http//dcat.no/test", "Test", url.toString(), "admin_user", "123456789");
 
-        CrawlerPublisherJob j = new CrawlerPublisherJob(dcatSource, null, HarvesterApplication.getBrregCache(), handler);
+        CrawlerPublisherJob j = new CrawlerPublisherJob(dcatSource, null, handler);
 
         j.run();
 
-        verify(handler).process(anyObject(), anyObject(), anyObject());
+        verify(handler).process(any(), any(), any());
     }
 
 }

@@ -2,8 +2,7 @@
   "apispec": {
     "properties": {
       "uri": {
-        "type": "string",
-        "index": "not_analyzed"
+        "type": "keyword"
       },
       "publisher": {
         "properties": {
@@ -17,8 +16,7 @@
       "accessRights": {
         "properties": {
           "code": {
-            "type": "string",
-            "index": "not_analyzed"
+            "type": "keyword"
           }
         }
       },

@@ -1,10 +1,8 @@
 package no.acat.service;
 
+import no.dcat.datastore.Elasticsearch;
 import org.apache.commons.io.IOUtils;
 import org.elasticsearch.client.Client;
-import org.elasticsearch.client.transport.TransportClient;
-import org.elasticsearch.common.settings.Settings;
-import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,65 +12,49 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 
 @Service
 public class ElasticsearchService {
     private static Logger logger = LoggerFactory.getLogger(ElasticsearchService.class);
 
-    @Value("${application.elasticsearchHost}")
-    private String elasticsearchHost;
+    @Value("${elastic.clusterNodes}")
+    private String clusterNodes;
 
-    @Value("${application.elasticsearchPort}")
-    private int elasticsearchPort;
-
-    @Value("${application.clusterName}")
+    @Value("${elastic.clusterName}")
     private String clusterName;
 
     @PostConstruct
     void validate() {
-        assert elasticsearchHost != null;
-        assert elasticsearchPort > 0;
+        assert clusterNodes != null;
         assert clusterName != null;
 
         initializeElasticsearchTransportClient();
         createIndexIfNotExists();
     }
 
-    private Client client;
+
+    private Elasticsearch elasticsearch;
 
     public Client getClient() {
-        return client;
+        if (elasticsearch == null) {
+            initializeElasticsearchTransportClient();
+        }
+        return elasticsearch==null ? null : elasticsearch.getClient();
     }
 
     private void initializeElasticsearchTransportClient() {
-
-        logger.debug("elasticsearch: " + elasticsearchHost + ":" + elasticsearchPort);
-        if (client == null) {
-            if (elasticsearchHost == null) {
-                logger.error("Configuration property application.elasticsearchHost is not initialized. Unable to connect to Elasticsearch");
+        logger.debug("elasticsearch: " + clusterNodes);
+        if (elasticsearch == null) {
+            if (clusterNodes == null) {
+                logger.error("Configuration property elastic.clusterNodes is not initialized. Unable to connect to Elasticsearch");
             }
 
-            try {
-                InetAddress inetaddress = InetAddress.getByName(elasticsearchHost);
-                InetSocketTransportAddress address = new InetSocketTransportAddress(inetaddress, elasticsearchPort);
-
-                Settings settings = Settings.builder()
-                        .put("cluster.name", clusterName).build();
-
-                client = TransportClient.builder().settings(settings).build()
-                        .addTransportAddress(address);
-
-                logger.debug("Client returns! " + address.toString());
-            } catch (UnknownHostException e) {
-                logger.error("Unable to connect to Elasticsearch: {}", e.toString(), e);
-            }
+            elasticsearch = new Elasticsearch(clusterNodes, clusterName);
         }
     }
 
     public boolean indexExists(String index) {
-        return client.admin().indices().prepareExists(index).execute().actionGet().isExists();
+        return getClient().admin().indices().prepareExists(index).execute().actionGet().isExists();
     }
 
     public void createIndexIfNotExists() {
@@ -88,13 +70,14 @@ public class ElasticsearchService {
             Resource settingsResource = new ClassPathResource("acat.settings.json");
 
             String apispecMapping = IOUtils.toString(apispecMappingResource.getInputStream(), "UTF-8");
-            String indexSettings = IOUtils.toString(settingsResource.getInputStream(), "UTF-8");
-            client.admin().indices().prepareCreate(indexName)
-                    .setSettings(indexSettings)
-                    .addMapping("apispec", apispecMapping)
-                    .execute().actionGet();
+
+            getClient().admin().indices().prepareCreate(indexName)
+                        .addMapping("apispec", apispecMapping)
+                        .execute().actionGet();
+
         } catch (IOException e) {
             logger.error("Unable to connect to Elasticsearch: {}", e.toString(), e);
         }
     }
+
 }

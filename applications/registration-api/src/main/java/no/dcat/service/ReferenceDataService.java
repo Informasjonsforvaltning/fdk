@@ -1,7 +1,5 @@
 package no.dcat.service;
 
-import no.dcat.shared.SkosCode;
-import no.dcat.shared.SkosConcept;
 import no.dcat.shared.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

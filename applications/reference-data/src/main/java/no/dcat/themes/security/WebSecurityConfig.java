@@ -8,6 +8,8 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
@@ -33,9 +35,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        PasswordEncoder passwordEncoder = NoOpPasswordEncoder.getInstance();
+
         auth
                 .inMemoryAuthentication()
-                .withUser(applicationSettings.getHttpUsername()).password(applicationSettings.getHttpPassword()).authorities(Authorities.INTERNAL_CALL);
+                .passwordEncoder(passwordEncoder)
+                .withUser(
+                        applicationSettings.getHttpUsername())
+                        .password(passwordEncoder.encode(applicationSettings.getHttpPassword()))
+                        .authorities(Authorities.INTERNAL_CALL);
     }
 
 

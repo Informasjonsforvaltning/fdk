@@ -59,7 +59,7 @@ public class DcatBuilderRobustnessTest {
 
         DcatBuilder builderSpy = spy(builder);
 
-        doThrow(NullPointerException.class).when(builderSpy).addSubjects(anyObject(), anyObject(), anyObject());
+        doThrow(NullPointerException.class).when(builderSpy).addSubjects(any(), any(), any());
 
         String actual = builderSpy.addCatalog(catalog).getDcatOutput("TURTLE");
 
@@ -70,7 +70,7 @@ public class DcatBuilderRobustnessTest {
     public void exceptionInAddPublisher() throws Throwable {
         DcatBuilder builderSpy = spy(builder);
 
-        doThrow(NullPointerException.class).when(builderSpy).addLiteral(anyObject(), eq(FOAF.name), anyObject());
+        doThrow(NullPointerException.class).when(builderSpy).addLiteral(any(), eq(FOAF.name), any());
 
         String actual = builderSpy.addCatalog(catalog).getDcatOutput("TURTLE");
 
@@ -83,7 +83,7 @@ public class DcatBuilderRobustnessTest {
     public void exceptionInAddDistribution() throws Throwable {
         DcatBuilder builderSpy = spy(builder);
 
-        doThrow(NullPointerException.class).when(builderSpy).addSkosConcept(anyObject(), eq(DCTerms.license), anyObject(), anyObject());
+        doThrow(NullPointerException.class).when(builderSpy).addSkosConcept(any(), eq(DCTerms.license), any(), any());
 
         String actual = builderSpy.addCatalog(catalog).getDcatOutput("TURTLE");
 

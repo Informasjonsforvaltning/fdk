@@ -20,8 +20,8 @@ services:
       - "9087:8181"
     environment:
       - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
-      - application.elasticsearchHost=elasticsearch
-      - application.elasticsearchPort=9300
+      - elastic.clusterNodes=elasticsearch:9300
+      - elastic.clusterName=elasticsearch
 
   search-api:
     restart: always
@@ -30,8 +30,8 @@ services:
       - "9083:8181"
     environment:
      - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
-     - application.elasticsearchHost=elasticsearch
-     - application.elasticsearchPort=9300
+     - elastic.clusterNodes=elasticsearch:9300
+     - elastic.clusterName=elasticsearch
 
   nginx-search:
     restart: always
@@ -52,12 +52,11 @@ services:
      - "9081:8181"
     environment:
      - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx1024M -Dspring.profiles.active=docker
+     - crawler.threadPoolSize=2
+     - elastic.clusterNodes=elasticsearch:9300
+     - elastic.clusterName=elasticsearch
      - fuseki.dcatServiceUri=http://fuseki:8080/fuseki/dcat
      - fuseki.adminServiceUri=http://fuseki:8080/fuseki/admin
-     - application.crawlerThreadPoolSize=2
-     - application.elasticSearchHost=elasticsearch
-     - application.elasticSearchPort=9300
-     - application.elasticSearchCluster=elasticsearch
     volumes:
      - ./logs:/usr/local/tomcat/logs:rw
 
@@ -83,7 +82,8 @@ services:
     volumes:
       - ./data/esdata:/usr/share/elasticsearch/data
     environment:
-      - cluster.name=fellesdatakatalog
+      - cluster.name=elasticsearch
+      - xpack.security.enabled=false
 
   elasticsearch-copy:
     restart: always
@@ -96,11 +96,10 @@ services:
       - "8085:8080"
     environment:
      - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
-     - application.elasticsearchHost=elasticsearch
-     - application.elasticsearchPort=9300
-     - application.elasticsearchCluster=elasticsearch
      - application.fusekiHost=http://fuseki:8080
      - application.harvesterHost=http://harvester-api:8080
+     - elastic.clusterNodes=elasticsearch:9300
+     - elastic.clusterNames=elasticsearch
 
   nginx-registration:
     restart: always

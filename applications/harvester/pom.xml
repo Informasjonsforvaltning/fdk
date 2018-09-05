@@ -17,6 +17,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter</artifactId>
 		</dependency>
+
 		<!-- Denne var ikke her opprinnelig. Måtte inkluidere den for å støtte konfigurasjonsannoteringer i ApplicationSettings -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -31,11 +32,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
-		<!-- Nødvendig for å bruke configserver på openshift -->
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-config</artifactId>
-		</dependency>
 		<!-- må ha actuator for å kjøre på openshift. kreves av readyness probe -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -78,23 +74,21 @@
 		</dependency>
 
 		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
 			<groupId>no.dcat</groupId>
 			<artifactId>datastore</artifactId>
 		</dependency>
 	</dependencies>
-
-	<!-- Nødvendig for å brukes på openshift-->
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>org.springframework.cloud</groupId>
-				<artifactId>spring-cloud-dependencies</artifactId>
-				<version>Brixton.RELEASE</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
 
 	<build>
 		<plugins>

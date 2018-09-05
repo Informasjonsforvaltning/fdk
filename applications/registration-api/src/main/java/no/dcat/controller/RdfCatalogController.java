@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.springframework.http.HttpStatus.OK;
 
@@ -48,11 +49,13 @@ public class RdfCatalogController {
 
         logger.info("Export rdf catalog {} ",id);
 
-        Catalog catalog = catalogRepository.findOne(id);
+        Optional<Catalog> catalogOptional = catalogRepository.findById(id);
 
-        if (catalog == null) {
+        if (!catalogOptional.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+
+        Catalog catalog = catalogOptional.get();
 
         // TODO fix limitation in more than 1000 datasets
         Page<Dataset> datasets = datasetRepository

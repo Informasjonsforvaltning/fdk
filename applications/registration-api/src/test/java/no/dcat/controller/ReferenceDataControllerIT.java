@@ -34,6 +34,7 @@ public class ReferenceDataControllerIT {
 
         mockMvc
                 .perform(MockMvcRequestBuilders.get("/referenceData/subjects", String.class).param("uri", "https://data-david.github.io/Begrep/begrep/Hovedenhet"))
+                .andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
                 .andExpect(MockMvcResultMatchers.content().json("{\"uri\":\"https://data-david.github.io/Begrep/begrep/Hovedenhet\",\"prefLabel\":{\"no\":\"hovedenhet\"}}"));
     }
 

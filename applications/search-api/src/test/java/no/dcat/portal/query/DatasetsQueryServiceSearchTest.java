@@ -7,12 +7,8 @@ import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.index.query.QueryBuilder;
-import org.elasticsearch.search.SearchHit;
-import org.elasticsearch.search.SearchHits;
 import org.elasticsearch.search.aggregations.AbstractAggregationBuilder;
-import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.sort.SortOrder;
-import org.hamcrest.core.Is;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -22,9 +18,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyInt;
-import static org.mockito.Matchers.anyString;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
 /**
@@ -42,7 +38,7 @@ public class DatasetsQueryServiceSearchTest {
         sqs = new DatasetsQueryService();
         client = mock(Client.class);
         populateMock();
-        sqs.client = client;
+        sqs.setClient(client);
     }
 
     /**
@@ -218,25 +214,18 @@ public class DatasetsQueryServiceSearchTest {
     }
 
     private void populateMock() {
-        SearchHit[] hits = null;
-
-        SearchHits searchHits = mock(SearchHits.class);
-        when(searchHits.getHits()).thenReturn(hits);
-
         SearchResponse response = mock(SearchResponse.class);
-        when(response.getHits()).thenReturn(searchHits);
 
         ListenableActionFuture<SearchResponse> action = mock(ListenableActionFuture.class);
         when(action.actionGet()).thenReturn(response);
 
         SearchRequestBuilder builder = mock(SearchRequestBuilder.class);
         when(builder.setTypes("dataset")).thenReturn(builder);
-        when(builder.setQuery(any(QueryBuilder.class))).thenReturn(builder);
+        when(builder.setQuery((QueryBuilder)any())).thenReturn(builder);
         when(builder.setFrom(anyInt())).thenReturn(builder);
         when(builder.setSize(anyInt())).thenReturn(builder);
-        when(builder.addAggregation(any(AbstractAggregationBuilder.class))).thenReturn(builder);
         when(builder.addSort(anyString(), any(SortOrder.class))).thenReturn(builder);
-        when(builder.addSort(anyObject())).thenReturn(builder);
+        when(builder.addSort(any())).thenReturn(builder);
         when(builder.addAggregation(any(AbstractAggregationBuilder.class))).thenReturn(builder);
         when(builder.execute()).thenReturn(action);
 

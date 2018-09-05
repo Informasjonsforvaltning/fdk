@@ -47,10 +47,9 @@ public class BackgroundPage extends CommonPage {
 
     @Given("^I start with empty elasticsearch index\\.$")
     public void cleanElasticSearch() throws Throwable {
-        String hostname = "localhost";
-        int port = 9300;
+        String hosts = "localhost:9300";
 
-        new DeleteIndex(hostname, port).deleteIndex(index);
+        new DeleteIndex(hosts).deleteIndex(index);
     }
 
 
@@ -109,13 +108,12 @@ public class BackgroundPage extends CommonPage {
 
     private void deleteAndLoad(String datasett) throws IOException {
 
-        String hostname = "localhost";
-        int port = 9300;
+        String hosts = "localhost:9300";
 
-        new DeleteIndex(hostname, port).deleteIndex(index);
+        new DeleteIndex(hosts).deleteIndex(index);
 
 
-        Loader loader = new Loader(hostname, port, "elasticsearch", "http://localhost:8100", "user", "password");
+        Loader loader = new Loader(hosts, "elasticsearch", "http://localhost:8100", "user", "password");
 
         waitForHarvesterToComplete();
 
@@ -124,7 +122,7 @@ public class BackgroundPage extends CommonPage {
         loader.loadDatasetFromFile(resource.getURL().toString());
         waitForHarvesterToComplete();
 
-        refreshElasticsearch(hostname, port, "elasticsearch");
+        refreshElasticsearch(hosts, "elasticsearch");
     }
 
 }

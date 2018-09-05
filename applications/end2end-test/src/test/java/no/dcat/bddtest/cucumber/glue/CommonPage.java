@@ -1,8 +1,6 @@
 package no.dcat.bddtest.cucumber.glue;
 
-import com.google.common.base.Predicate;
-import io.github.bonigarcia.wdm.ChromeDriverManager;
-import io.github.bonigarcia.wdm.PhantomJsDriverManager;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import no.dcat.bddtest.cucumber.SpringIntegrationTestConfigE2E;
 import no.dcat.datastore.Elasticsearch;
 import org.apache.commons.lang3.StringUtils;
@@ -19,6 +17,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.client.RestTemplate;
 import java.util.Map;
+import java.util.function.Function;
+
 
 import static org.junit.Assert.assertTrue;
 
@@ -41,7 +41,7 @@ public abstract class CommonPage extends SpringIntegrationTestConfigE2E {
         return openPageWaitRetry(page, d -> driver.findElement(By.id(idToFind)).isDisplayed(), waitTimes);
     }
 
-    public boolean openPageWaitRetry(String page, Predicate<WebDriver> waitCondition, int waitTimes) {
+    public boolean openPageWaitRetry(String page, Function<? super WebDriver, Boolean> waitCondition, int waitTimes) {
         logger.info(String.format("Waiting for page %s %d times", page, waitTimes));
 
             openPage(page);
@@ -69,7 +69,7 @@ public abstract class CommonPage extends SpringIntegrationTestConfigE2E {
     }
 
     protected void setupDriverChrome() {
-        ChromeDriverManager.getInstance().setup();
+        WebDriverManager.chromedriver().setup();
 
         DesiredCapabilities dcap = new DesiredCapabilities();
         String[] chromeArgs = new  String[] {
@@ -83,25 +83,25 @@ public abstract class CommonPage extends SpringIntegrationTestConfigE2E {
     }
 
     protected void setupDriver() {
-        PhantomJsDriverManager.getInstance().setup();
+        WebDriverManager.config().setTimeout(30);
+        WebDriverManager.config().setTargetPath(".");
+        WebDriverManager.config().setDriverExport("fdk");
+
+        WebDriverManager.phantomjs().setup();
         DesiredCapabilities dcap = new DesiredCapabilities();
         String[] phantomArgs = new  String[] {
                 "--webdriver-loglevel=NONE"
         };
         dcap.setCapability(PhantomJSDriverService.PHANTOMJS_CLI_ARGS, phantomArgs);
+        dcap.setCapability(PhantomJSDriverService.PHANTOMJS_EXECUTABLE_PATH_PROPERTY, ".\\phantomjs\\windows\\");
 
-       driver = new PhantomJSDriver(dcap);
+        driver = new PhantomJSDriver(dcap);
     }
 
 
     protected void stopDriver() {
-        try {
-            logger.info("Current URL: " + driver.getCurrentUrl());
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-
         if (driver != null) {
+            logger.info("Current URL: " + driver.getCurrentUrl());
             driver.quit();
         }
     }
@@ -148,11 +148,9 @@ public abstract class CommonPage extends SpringIntegrationTestConfigE2E {
     }
 
 
-    void refreshElasticsearch(String hostname, int port, String clustername){
-        try (Elasticsearch elasticsearch = new Elasticsearch(hostname, port, clustername)) {
-
+    void refreshElasticsearch(String clusterNodes, String clusterName){
+        try (Elasticsearch elasticsearch = new Elasticsearch(clusterNodes, clusterName)) {
             elasticsearch.getClient().admin().indices().prepareRefresh().get();
-
         }
     }
 

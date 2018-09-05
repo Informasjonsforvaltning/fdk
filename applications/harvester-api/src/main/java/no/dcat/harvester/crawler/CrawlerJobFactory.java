@@ -1,24 +1,23 @@
 package no.dcat.harvester.crawler;
 
-import com.google.common.cache.LoadingCache;
+import no.dcat.datastore.AdminDataStore;
+import no.dcat.datastore.DcatDataStore;
+import no.dcat.datastore.Fuseki;
+import no.dcat.datastore.domain.DcatSource;
 import no.dcat.harvester.crawler.handlers.ElasticSearchResultHandler;
 import no.dcat.harvester.crawler.handlers.ElasticSearchResultPubHandler;
 import no.dcat.harvester.crawler.handlers.FusekiResultHandler;
 import no.dcat.harvester.crawler.notification.EmailNotificationService;
 import no.dcat.harvester.service.SubjectCrawler;
 import no.dcat.harvester.settings.ApplicationSettings;
+import no.dcat.harvester.settings.ElasticSettings;
 import no.dcat.harvester.settings.FusekiSettings;
-import no.dcat.datastore.AdminDataStore;
-import no.dcat.datastore.DcatDataStore;
-import no.dcat.datastore.Fuseki;
-import no.dcat.datastore.domain.DcatSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.net.URL;
 
 @Component
 public class CrawlerJobFactory {
@@ -28,9 +27,9 @@ public class CrawlerJobFactory {
 
 	@Autowired
 	private ApplicationSettings applicationSettings;
-	
+
 	@Autowired
-	private LoadingCache<URL, String> brregCache;
+	private ElasticSettings elasticSettings;
 
 	@Autowired
 	private SubjectCrawler subjectCrawler;
@@ -57,26 +56,24 @@ public class CrawlerJobFactory {
 	
 	public CrawlerJob createCrawlerJob(DcatSource dcatSource) {
 
-		logger.debug("application.elasticSearchHost: " + applicationSettings.getElasticSearchHost());
-		logger.debug("application.elasticSearchPort: " + applicationSettings.getElasticSearchPort());
-		logger.debug("application.elasticSearchCluster: " + applicationSettings.getElasticSearchCluster());
+		logger.debug("elastic.clusterNodes: " + elasticSettings.getClusterNodes());
+		logger.debug("elastic.clusterName: " + elasticSettings.getClusterName());
 		logger.debug("application.referenceDataUrl: " + applicationSettings.getReferenceDataUrl());
 		logger.debug("application.httpUsername: " + applicationSettings.getHttpUsername());
 		logger.debug("application.httpPassword: " + applicationSettings.getHttpPassword());
 		logger.debug("application.notificationMailSenderAddress" + applicationSettings.getNotificationMailSenderAddress());
 
-		publisherHandler = new ElasticSearchResultPubHandler(applicationSettings.getElasticSearchHost(),applicationSettings.getElasticSearchPort(), applicationSettings.getElasticSearchCluster());
+		publisherHandler = new ElasticSearchResultPubHandler(elasticSettings.getClusterNodes(), elasticSettings.getClusterName());
 		elasticSearchResultHandler = new ElasticSearchResultHandler(
-				applicationSettings.getElasticSearchHost(),
-				applicationSettings.getElasticSearchPort(),
-				applicationSettings.getElasticSearchCluster(),
+				elasticSettings.getClusterNodes(),
+				elasticSettings.getClusterName(),
 				applicationSettings.getReferenceDataUrl(),
 				applicationSettings.getHttpUsername(),
 				applicationSettings.getHttpPassword(),
 				applicationSettings.getNotificationMailSenderAddress(),
 				emailNotificationService);
 
-		return new CrawlerJob(dcatSource, adminDataStore, brregCache, subjectCrawler, fusekiResultHandler, elasticSearchResultHandler, publisherHandler);
+		return new CrawlerJob(dcatSource, adminDataStore, subjectCrawler, fusekiResultHandler, elasticSearchResultHandler, publisherHandler);
 	}
 
 }

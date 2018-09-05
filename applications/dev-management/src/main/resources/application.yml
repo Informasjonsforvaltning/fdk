@@ -7,31 +7,27 @@ logging:
 server:
   port: 8080
 management:
-  port: 8181
+  server:
+    port: 8181
 application:
-  elasticsearchHost: elasticsearch
-  elasticsearchPort: 9300
-  elasticsearchCluster: elasticsearch
   fusekiHost: http://fuseki:8080
   harvesterHost: http://harvester-api:8080
-
----
-spring:
-  profiles: prod
-application:
-  elasticsearchCluster: fellesdatakatalog
+elastic:
+  clusterNodes: ${FDK_ES_CLUSTERNODES:elasticsearch:9300}
+  clusterName: ${FDK_ES_CLUSTERNAME:elasticsearch}
 
 ---
 #Utv-miljø lokalt på egen PC
 spring:
   profiles: develop
 application:
-  elasticsearchHost: localhost
-  elasticsearchPort: 9300
-  elasticsearchCluster: elasticsearch
   fusekiHost: http://localhost:3030
   harvesterHost: http://localhost:8081
+elastic:
+  clusterNodes: localhost:9300
+  clusterName: elasticsearch
 server:
   port: 8074
 management:
-  port: 8994
+  server:
+    port: 8994

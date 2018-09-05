@@ -4,7 +4,11 @@ services:
   search:
     image: dcatno/search:latest
     expose:
-     - "3000"
+      - "3000"
+    depends_on:
+      - search-api
+      - fuseki
+      - reference-data
 
   search-api:
     image: dcatno/search-api:latest
@@ -41,8 +45,8 @@ services:
     expose:
      - "8080"
     depends_on:
-     - fuseki
      - elasticsearch
+     - fuseki
      - reference-data
 
   harvester:
@@ -50,12 +54,11 @@ services:
     expose:
      - "8080"
     depends_on:
-     - elasticsearch
      - fuseki
      - harvester-api
 
   elasticsearch:
-    image: elasticsearch:2.4.1
+    image: docker.elastic.co/elasticsearch/elasticsearch:5.6.9
     expose:
      - "9200"
      - "9300"
@@ -68,9 +71,9 @@ services:
     expose:
      - "8080"
     depends_on:
-      - elasticsearch
-      - fuseki
-      - harvester-api
+     - elasticsearch
+     - fuseki
+     - harvester-api
 
   nginx-registration:
     image: dcatno/nginx-registration:latest

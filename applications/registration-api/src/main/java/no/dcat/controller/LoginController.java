@@ -3,7 +3,6 @@ package no.dcat.controller;
 import no.dcat.authorization.EntityNameService;
 import no.dcat.config.FdkSamlUserDetails;
 import no.dcat.configuration.SpringSecurityContextBean;
-import no.dcat.model.Catalog;
 import no.dcat.model.user.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,18 +11,10 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
-
-import static java.util.stream.Collectors.toList;
 import static no.dcat.config.Roles.ROLE_USER;
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
@@ -33,14 +24,12 @@ public class LoginController {
 
     private static Logger logger = LoggerFactory.getLogger(LoginController.class);
 
-    private CatalogController catalogController;
-    private SpringSecurityContextBean springSecurityContextBean;
+     private SpringSecurityContextBean springSecurityContextBean;
 
     private final EntityNameService entityNameService;
 
     @Autowired
-    public LoginController(CatalogController catalogController, SpringSecurityContextBean springSecurityContextBean, EntityNameService entityNameService) {
-        this.catalogController = catalogController;
+    public LoginController(SpringSecurityContextBean springSecurityContextBean, EntityNameService entityNameService) {
         this.springSecurityContextBean = springSecurityContextBean;
         this.entityNameService = entityNameService;
     }
@@ -101,8 +90,5 @@ public class LoginController {
 
         return "Brukerinfo: " + userinfo.toString();
     }
-
-
-
 
 }

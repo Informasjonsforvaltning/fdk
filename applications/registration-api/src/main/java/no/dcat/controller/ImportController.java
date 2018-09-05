@@ -117,13 +117,13 @@ public class ImportController {
             throw new IOException(String.format("Cannot open import url %s",url));
         }
 
-        Catalog existingCatalog = catalogRepository.findOne(catalogId);
+        Optional<Catalog> existingCatalogOptional = catalogRepository.findById(catalogId);
 
-        if (existingCatalog == null) {
+        if (!existingCatalogOptional.isPresent()) {
             throw new CatalogNotFoundException(String.format("Catalog %s does not exist in registration database", catalogId));
         }
 
-        Catalog catalogToImportTo = parseCatalog(model, existingCatalog, catalogId);
+        Catalog catalogToImportTo = parseCatalog(model, existingCatalogOptional.get(), catalogId);
 
         if (catalogToImportTo == null) {
             throw new CatalogNotFoundException(String.format("Catalog %s is not found in imported data", catalogId));

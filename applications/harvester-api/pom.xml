@@ -18,11 +18,8 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-        <!-- Nødvendig for å bruke configserver på openshift -->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-config</artifactId>
-        </dependency>
+
+
         <!-- må ha actuator for å kjøre på openshift. kreves av readyness probe -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -38,12 +35,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
-
-
-        <!--dependency>
-            <groupId>no.dcat</groupId>
-            <artifactId>datastore</artifactId>
-        </dependency -->
 
         <dependency>
             <groupId>com.google.code.gson</groupId>
@@ -78,19 +69,32 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <scope>test</scope>
+        </dependency>
 
         <dependency>
             <groupId>org.powermock</groupId>
-            <artifactId>powermock-api-mockito</artifactId>
-            <version>1.7.3</version>
+            <artifactId>powermock-api-mockito2</artifactId>
             <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>org.powermock</groupId>
             <artifactId>powermock-module-junit4</artifactId>
-            <version>1.7.3</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
         </dependency>
 
         <dependency>
@@ -118,6 +122,11 @@
             <groupId>no.dcat</groupId>
             <artifactId>datastore</artifactId>
         </dependency>
+        <dependency>
+            <groupId>no.dcat</groupId>
+            <artifactId>datastore-test</artifactId>
+            <scope>test</scope>
+        </dependency>
 
         <dependency>
             <groupId>org.jsoup</groupId>
@@ -132,20 +141,6 @@
         </dependency>
 
     </dependencies>
-
-    <!-- Nødvendig for å brukes på openshift-->
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-dependencies</artifactId>
-                <version>Brixton.RELEASE</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
-
 
     <build>
         <plugins>

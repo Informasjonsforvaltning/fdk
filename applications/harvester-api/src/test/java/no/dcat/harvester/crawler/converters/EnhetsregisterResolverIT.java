@@ -1,7 +1,6 @@
 package no.dcat.harvester.crawler.converters;
 
 import no.dcat.datastore.domain.dcat.vocabulary.DCATNO;
-import no.dcat.harvester.HarvesterApplication;
 import no.dcat.shared.testcategories.IntegrationTest;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
@@ -21,23 +20,20 @@ import org.junit.experimental.categories.Category;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
 @Category(IntegrationTest.class)
-public class BrregAgentConverterEnhetsregIT {
-    private static Logger logger = LoggerFactory.getLogger(BrregAgentConverter.class);
+public class EnhetsregisterResolverIT {
+    private static Logger logger = LoggerFactory.getLogger(EnhetsregisterResolverIT.class);
 
-    BrregAgentConverter converter = new BrregAgentConverter(HarvesterApplication.getBrregCache());
+    EnhetsregisterResolver enhetsregisterResolver = new EnhetsregisterResolver();
 
     @Test
     public void testConvertOnRDFWithIdentifier() throws Exception {
-        BrregAgentConverter converter = new BrregAgentConverter(HarvesterApplication.getBrregCache());
+        EnhetsregisterResolver enhetsregisterResolver = new EnhetsregisterResolver();
         Model model = FileManager.get().loadModel("rdf/virksomheter.ttl");
-        converter.collectFromModel(model);
+        enhetsregisterResolver.resolveModel(model);
         NodeIterator countryiter = model.listObjectsOfProperty(
                 model.createResource("http://data.brreg.no/enhetsregisteret/enhet/991825827/forretningsadresse"),
                 model.createProperty("http://data.brreg.no/meta/land"));
@@ -46,7 +42,7 @@ public class BrregAgentConverterEnhetsregIT {
 
     @Test
     public void testConvertOnRDFReplaceCanonicalName() throws Exception {
-        BrregAgentConverter converter = new BrregAgentConverter(HarvesterApplication.getBrregCache());
+        EnhetsregisterResolver enhetsregisterResolver = new EnhetsregisterResolver();
         Model model = FileManager.get().loadModel("rdf/virksomheter.ttl");
 
         Resource publisherResource = model.getResource("http://data.brreg.no/enhetsregisteret/enhet/971040238");
@@ -54,7 +50,7 @@ public class BrregAgentConverterEnhetsregIT {
         String previousName = publisherResource.getProperty(FOAF.name).getString();
         logger.info("name before {}",previousName);
 
-        converter.collectFromModel(model);
+        enhetsregisterResolver.resolveModel(model);
 
         String nameAfter = publisherResource.getProperty(FOAF.name).getObject().asLiteral().toString();
         assertEquals("Official name", "STATENS KARTVERK" , nameAfter);
@@ -72,7 +68,7 @@ public class BrregAgentConverterEnhetsregIT {
         String previousName = publisherResource.getProperty(FOAF.name).getString();
         logger.info("name before {}",previousName);
 
-        converter.collectFromModel(model);
+        enhetsregisterResolver.resolveModel(model);
 
         Resource newPublisherResource = model.getResource("http://data.brreg.no/enhetsregisteret/enhet/991825827");
 
@@ -92,7 +88,7 @@ public class BrregAgentConverterEnhetsregIT {
         String previousName = publisherResource.getProperty(FOAF.name).getString();
         logger.info("name before {}",previousName);
 
-        converter.collectFromModel(model);
+        enhetsregisterResolver.resolveModel(model);
 
         Resource newPublisherResource = model.getResource("http://data.brreg.no/enhetsregisteret/enhet/971032081");
 
@@ -115,7 +111,7 @@ public class BrregAgentConverterEnhetsregIT {
         String previousName = publisherResource.getProperty(FOAF.name).getString();
         logger.info("name before {}",previousName);
 
-        converter.collectFromModel(model);
+        enhetsregisterResolver.resolveModel(model);
         Resource newPublisherResource = model.getResource("http://data.brreg.no/enhetsregisteret/enhet/870917732");
 
         String newName = newPublisherResource.getProperty(FOAF.name).getString();
@@ -136,7 +132,7 @@ public class BrregAgentConverterEnhetsregIT {
         String previousName = publisherResource.getProperty(FOAF.name).getString();
         logger.info("name before {}",previousName);
 
-        converter.collectFromModel(model);
+        enhetsregisterResolver.resolveModel(model);
 
         String newName = publisherResource.getProperty(FOAF.name).getString();
         String prefName = publisherResource.getProperty(SKOS.prefLabel).getString();
@@ -153,7 +149,7 @@ public class BrregAgentConverterEnhetsregIT {
 
         Model model = FileManager.get().loadModel("duplicatedPublisher.ttl");
 
-        converter.collectFromModel(model);
+        enhetsregisterResolver.resolveModel(model);
 
         Resource datasetWithCorrectedPublisher = model.getResource("http://data.brreg.no/datakatalog/dataset/42");
         String publisherUri = datasetWithCorrectedPublisher.getProperty(DCTerms.publisher).getObject().toString();
@@ -167,7 +163,7 @@ public class BrregAgentConverterEnhetsregIT {
 
         Model model = FileManager.get().loadModel("duplicatedPublisher.ttl");
 
-        converter.collectFromModel(model);
+        enhetsregisterResolver.resolveModel(model);
 
         Resource hitraKommune = model.getResource("http://data.brreg.no/enhetsregisteret/enhet/938772924");
         String publisherUri = hitraKommune.getProperty(DCATNO.organizationPath).getString();
@@ -181,7 +177,7 @@ public class BrregAgentConverterEnhetsregIT {
 
         Model model = FileManager.get().loadModel("duplicatedPublisher.ttl");
 
-        converter.collectFromModel(model);
+        enhetsregisterResolver.resolveModel(model);
 
         Resource landbruksdirektoratet = model.getResource("http://data.brreg.no/enhetsregisteret/enhet/981544315");
         String publisherUri = landbruksdirektoratet.getProperty(DCATNO.organizationPath).getString();
@@ -194,7 +190,7 @@ public class BrregAgentConverterEnhetsregIT {
 
         Model model = FileManager.get().loadModel("publisherFromGeonorge.ttl");
 
-        converter.collectFromModel(model);
+        enhetsregisterResolver.resolveModel(model);
 
         Resource landbruksdirektoratet = model.getResource("http://data.brreg.no/enhetsregisteret/enhet/981544315");
         String publisherUri = landbruksdirektoratet.getProperty(DCATNO.organizationPath).getString();
@@ -207,7 +203,7 @@ public class BrregAgentConverterEnhetsregIT {
 
         Model model = FileManager.get().loadModel("publisherFromGeonorge.ttl");
 
-        converter.collectFromModel(model);
+        enhetsregisterResolver.resolveModel(model);
 
         Resource hitraKommune = model.getResource("http://data.brreg.no/enhetsregisteret/enhet/938772924");
         String publisherUri = hitraKommune.getProperty(DCATNO.organizationPath).getString();
@@ -217,15 +213,13 @@ public class BrregAgentConverterEnhetsregIT {
 
     @Test
     public void testConvertUrl() throws Exception {
-        BrregAgentConverter converter = new BrregAgentConverter(HarvesterApplication.getBrregCache());
+        EnhetsregisterResolver enhetsregisterResolver = new EnhetsregisterResolver();
 
         Model model = ModelFactory.createDefaultModel();
 
         String enhetsUri = "http://data.brreg.no/enhetsregisteret/enhet/981544315";
 
-        URL uri = new URL(enhetsUri);
-
-        converter.collectFromUri(uri.toString(), model, model.createResource(enhetsUri));
+        enhetsregisterResolver.collectEnhetsregisterInfoFromResource(model, model.createResource(enhetsUri));
 
         ResIterator iterator = model.listResourcesWithProperty(RDF.type);
 
@@ -236,20 +230,17 @@ public class BrregAgentConverterEnhetsregIT {
 
     @Test
     public void testBrregHasSuperiorOrgUnitWithoutPrefLabel() throws Exception {
-        BrregAgentConverter converter = new BrregAgentConverter(HarvesterApplication.getBrregCache());
+        EnhetsregisterResolver enhetsregisterResolver = new EnhetsregisterResolver();
 
         String brregUri = "http://data.brreg.no/enhetsregisteret/enhet/974760673";
 
-        URL uri = new URL(brregUri);
-
         Model model = ModelFactory.createDefaultModel();
 
-        converter.collectFromUri(uri.toString(), model, model.createResource(brregUri));
+        enhetsregisterResolver.collectEnhetsregisterInfoFromResource(model, model.createResource(brregUri));
 
         String romsenterUri = "http://data.brreg.no/enhetsregisteret/enhet/886028482";
 
-        uri = new URL(romsenterUri);
-        converter.collectFromUri(uri.toString(), model, model.createResource(romsenterUri));
+        enhetsregisterResolver.collectEnhetsregisterInfoFromResource(model, model.createResource(romsenterUri));
 
         String superiorOrg = "http://data.brreg.no/enhetsregisteret/enhet/912660680";
 
@@ -263,7 +254,7 @@ public class BrregAgentConverterEnhetsregIT {
 
     @Test
     public void testOljedepShouldNotHaveCapitalLetters() throws Exception {
-        BrregAgentConverter converter = new BrregAgentConverter(HarvesterApplication.getBrregCache());
+        EnhetsregisterResolver enhetsregisterResolver = new EnhetsregisterResolver();
 
         String oljeDEP = "http://data.brreg.no/enhetsregisteret/enhet/977161630",
                 oljedir = "http://data.brreg.no/enhetsregisteret/enhet/970205039",
@@ -271,11 +262,11 @@ public class BrregAgentConverterEnhetsregIT {
 
         Model model = ModelFactory.createDefaultModel();
 
-        converter.collectFromUri(oljedir, model, model.createResource(oljedir));
+        enhetsregisterResolver.collectEnhetsregisterInfoFromResource(model, model.createResource(oljedir));
 
-        converter.collectFromUri(nve, model, model.createResource(nve));
+        enhetsregisterResolver.collectEnhetsregisterInfoFromResource(model, model.createResource(nve));
 
-        converter.collectFromUri(oljeDEP, model, model.createResource(oljeDEP));
+        enhetsregisterResolver.collectEnhetsregisterInfoFromResource(model, model.createResource(oljeDEP));
 
         Resource superiorOrgResource = model.getResource(oljeDEP);
 

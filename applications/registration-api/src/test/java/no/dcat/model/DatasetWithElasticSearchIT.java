@@ -1,7 +1,9 @@
 package no.dcat.model;
 
+import no.dcat.datastore.ElasticDockerRule;
 import no.dcat.service.DatasetRepository;
 import no.dcat.shared.testcategories.IntegrationTest;
+import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
@@ -30,9 +32,11 @@ public class DatasetWithElasticSearchIT {
     @Value("${spring.data.elasticsearch.clusterNodes}")
     private String clusterNodes;
 
-
     @Value("${spring.data.elasticsearch.clusterName}")
     private String clusterName;
+
+    @Autowired
+    private DatasetRepository datasetRepository;
 
     @PostConstruct
     void validate(){
@@ -40,12 +44,12 @@ public class DatasetWithElasticSearchIT {
         assert clusterName != null;
     }
 
-    @Autowired
-    private DatasetRepository datasetRepository;
+    @ClassRule
+    public static ElasticDockerRule elasticRule = new ElasticDockerRule();
+
 
     @Test
     public void elasticsearchCanStoreData_usingTemplate() throws Exception {
-
         Dataset dataset = new Dataset("1");
         Map<String,String> languangeDescription = new HashMap<>();
         languangeDescription.put("no","test");
@@ -53,7 +57,7 @@ public class DatasetWithElasticSearchIT {
 
         datasetRepository.save(dataset);
 
-        Dataset actual = datasetRepository.findOne("1");
+        Dataset actual = datasetRepository.findById("1").get();
         assertThat(actual, is(dataset));
 
         datasetRepository.delete(dataset);
@@ -80,6 +84,5 @@ public class DatasetWithElasticSearchIT {
         Page<Dataset> all = datasetRepository.findByCatalogId("cat1", new PageRequest(0, 20));
 
         assertThat(all.getTotalElements(), is(2L));
-
     }
 }

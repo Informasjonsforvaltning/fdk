@@ -32,14 +32,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.Calendar;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.PATCH;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import static org.springframework.web.bind.annotation.RequestMethod.PUT;
-import static org.springframework.web.bind.annotation.RequestMethod.PATCH;
 
 @Controller
 @RequestMapping("/catalogs/{catalogId}/datasets")
@@ -66,7 +67,8 @@ public class DatasetController {
     @CrossOrigin
     @RequestMapping(value = "/{id}", method = GET, produces = APPLICATION_JSON_UTF8_VALUE)
     public HttpEntity<Dataset> getDataset(@PathVariable("catalogId") String catalogId, @PathVariable("id") String id) {
-        Dataset dataset = datasetRepository.findOne(id);
+        Optional<Dataset> datasetOptional = datasetRepository.findById(id);
+        Dataset dataset = datasetOptional.isPresent() ? datasetOptional.get() : null;
 
         if (dataset == null || !Objects.equals(catalogId, dataset.getCatalogId())) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -85,13 +87,13 @@ public class DatasetController {
     @RequestMapping(value = "/", method = POST, consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_UTF8_VALUE)
     public HttpEntity<Dataset> saveDataset(@PathVariable("catalogId") String catalogId, @RequestBody Dataset dataset) throws CatalogNotFoundException {
 
-        Catalog catalog = catalogRepository.findOne(catalogId);
+        Optional<Catalog> catalogOptional = catalogRepository.findById(catalogId);
 
-        if (catalog == null) {
+        if (!catalogOptional.isPresent()) {
             throw new CatalogNotFoundException(String.format("Unable to create dataset, catalog with id %s not found", catalogId));
         }
 
-        Dataset savedDataset = createAndSaveDataset(catalogId, dataset, catalog);
+        Dataset savedDataset = createAndSaveDataset(catalogId, dataset, catalogOptional.get());
 
 
         return new ResponseEntity<>(savedDataset, HttpStatus.OK);
@@ -147,11 +149,9 @@ public class DatasetController {
         dataset.setId(datasetId);
         dataset.setCatalogId(catalogId);
 
-        Dataset datasetFromDatabase = datasetRepository.findOne(dataset.getId());
-        if(datasetFromDatabase == null ){
+        if(!datasetRepository.findById(dataset.getId()).isPresent()){
             return ResponseEntity.notFound().build();
         }
-
 
         //Add metainformation about editing
         dataset.set_lastModified(Calendar.getInstance().getTime());
@@ -177,12 +177,14 @@ public class DatasetController {
         Gson gson = new Gson();
 
         //get already saved dataset
-        Dataset oldDataset = datasetRepository.findOne(datasetId);
-        logger.info("found old dataset: {}" + oldDataset.getTitle().get("nb"));
+        Optional<Dataset> oldDatasetOptional = datasetRepository.findById(datasetId);
+        Dataset oldDataset = oldDatasetOptional.isPresent() ? oldDatasetOptional.get() : null;
 
         if (oldDataset == null || !Objects.equals(catalogId, oldDataset.getCatalogId())) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+
+        logger.info("found old dataset: {}" + oldDataset.getTitle().get("nb"));
 
         JsonObject oldDatasetJson = gson.toJsonTree(oldDataset).getAsJsonObject();
 
@@ -235,7 +237,8 @@ public class DatasetController {
     @CrossOrigin
     @RequestMapping(value = "/{id}", method = DELETE, produces = APPLICATION_JSON_UTF8_VALUE)
     public HttpEntity<Dataset> deleteDataset(@PathVariable("catalogId") String catalogId, @PathVariable("id") String id) {
-        Dataset dataset = datasetRepository.findOne(id);
+        Optional<Dataset> datasetOptional = datasetRepository.findById(id);
+        Dataset dataset = datasetOptional.isPresent() ? datasetOptional.get() : null;
 
         if (dataset == null || !Objects.equals(catalogId, dataset.getCatalogId())) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
