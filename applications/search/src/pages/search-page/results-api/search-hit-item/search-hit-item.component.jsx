@@ -88,7 +88,6 @@ const renderAccessRights = accessRights => {
   return (
     <div className="mb-2">
       <strong>{accessRightsLabel}</strong>
-      <i className="fa fa-info-circle ml-2 fdk-color-cta2" />
     </div>
   );
 };
