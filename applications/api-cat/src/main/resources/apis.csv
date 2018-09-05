@@ -1,4 +1,4 @@
-OrgNr;OrgName;ApiSpecUrl;DocUrl;AccessRights;Provenance;DatasetRefs
+OrgNr;OrgName;ApiSpecUrl;ApiDocUrl;AccessRights;Provenance;DatasetRefs
 974760673;Brønnøysundregistrene;;https://data.brreg.no/enhetsregisteret/api/docs/index.html;NON_PUBLIC,RESTRICTED;NASJONAL;https://data.norge.no/node/78
 974760673;Brønnøysundregistrene;https://fellesdatakatalog.brreg.no/api-docs/search-api;https://fellesdatakatalog.brreg.no/swagger-ui.html;NON_PUBLIC,RESTRICTED;NASJONAL;https://data.norge.no/node/78,https://data.norge.no/node/78
 974760673;;https://docker-demo.fsat.no/fsapi/swagger.json;https://docker-demo.fsat.no/fsapi/swagger.html#!/person/get_personer_id;NON_PUBLIC,RESTRICTED;;https://data.norge.no/node/78,https://data.norge.no/node/78

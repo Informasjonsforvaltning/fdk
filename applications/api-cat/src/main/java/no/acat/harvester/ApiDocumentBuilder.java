@@ -74,6 +74,7 @@ public class ApiDocumentBuilder {
         apiDocument.setAccessRights(extractAccessRights(apiCatalogRecord));
         apiDocument.setProvenance(extractProvenance(apiCatalogRecord));
         apiDocument.setDatasetReferences(extractDatasetReferences(apiCatalogRecord));
+        apiDocument.setApiDocUrl(apiCatalogRecord.getApiDocUrl());
     }
 
     String lookupOrGenerateId(ApiCatalogRecord apiCatalogRecord) {

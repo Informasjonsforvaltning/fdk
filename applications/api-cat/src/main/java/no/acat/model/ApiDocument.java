@@ -67,7 +67,9 @@ public class ApiDocument  {
     @ApiModelProperty("Spec converted to openAPI v3")
     private OpenAPI openApi;
 
-    @ApiModelProperty("Original api spec")
+    @ApiModelProperty("Original API spec")
     private String apiSpec;
 
+    @ApiModelProperty("The url of the API documentation")
+    private String apiDocUrl;
 }
