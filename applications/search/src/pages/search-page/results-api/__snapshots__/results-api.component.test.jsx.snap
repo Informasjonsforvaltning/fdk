@@ -171,7 +171,7 @@ exports[`should render ResultsApi correctly with hits 1`] = `
           onSearch={null}
           orgPath={null}
           publishers={Object {}}
-          title="Organization"
+          title="Provider"
         />
         <FilterBox
           activeFilter={null}
