@@ -1,6 +1,6 @@
 OrgNr;OrgName;ApiSpecUrl;ApiDocUrl;AccessRights;Provenance;DatasetRefs
-974760673;Brønnøysundregistrene;;https://data.brreg.no/enhetsregisteret/api/docs/index.html;NON_PUBLIC,RESTRICTED;NASJONAL;https://data.norge.no/node/78
-974760673;Brønnøysundregistrene;https://fellesdatakatalog.brreg.no/api-docs/search-api;https://fellesdatakatalog.brreg.no/swagger-ui.html;NON_PUBLIC,RESTRICTED;NASJONAL;https://data.norge.no/node/78,https://data.norge.no/node/78
-974760673;;https://docker-demo.fsat.no/fsapi/swagger.json;https://docker-demo.fsat.no/fsapi/swagger.html#!/person/get_personer_id;NON_PUBLIC,RESTRICTED;;https://data.norge.no/node/78,https://data.norge.no/node/78
-974760673;;https://ks-no.github.io/api/innsyn-sok-api-v1.json;https://editor.swagger.io/?url=https://ks-no.github.io/api/innsyn-sok-api-v1.json;NON_PUBLIC,RESTRICTED;;https://data.norge.no/node/78,https://data.norge.no/node/78
+974760673;Brønnøysundregistrene;;https://data.brreg.no/enhetsregisteret/api/docs/index.html;RESTRICTED;NASJONAL;https://data.norge.no/node/78
+974760673;Brønnøysundregistrene;https://fellesdatakatalog.brreg.no/api-docs/search-api;https://fellesdatakatalog.brreg.no/swagger-ui.html;NON_PUBLIC;NASJONAL;https://data.norge.no/node/78,https://data.norge.no/node/78
+974760673;;https://docker-demo.fsat.no/fsapi/swagger.json;https://docker-demo.fsat.no/fsapi/swagger.html#!/person/get_personer_id;RESTRICTED;;https://data.norge.no/node/78,https://data.norge.no/node/78
+974760673;;https://ks-no.github.io/api/innsyn-sok-api-v1.json;https://editor.swagger.io/?url=https://ks-no.github.io/api/innsyn-sok-api-v1.json;RESTRICTED;;https://data.norge.no/node/78,https://data.norge.no/node/78
 974760673;;https://oidc-ver2.difi.no/kontaktinfo-oauth2-server/rest/apis;https://oidc-ver2.difi.no/kontaktinfo-oauth2-server/rest/swagger-ui.html;;;https://data.norge.no/node/78
