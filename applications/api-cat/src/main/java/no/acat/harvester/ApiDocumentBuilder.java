@@ -22,15 +22,18 @@ import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
 public class ApiDocumentBuilder {
-    Client elasticsearchClient;
-    ReferenceDataClient referenceDataClient;
-    private ObjectMapper mapper = Utils.jsonMapper();
+    private Client elasticsearchClient;
+    private ReferenceDataClient referenceDataClient;
+    private static final ObjectMapper mapper = Utils.jsonMapper();
+    private static final Logger logger = LoggerFactory.getLogger(ApiHarvester.class);
 
 
     public ApiDocumentBuilder(Client elasticsearchClient, ReferenceDataClient referenceDataClient) {
@@ -66,6 +69,8 @@ public class ApiDocumentBuilder {
         populateFromApiCatalogRecord(apiDocument, apiCatalogRecord);
         populateFromOpenApi(apiDocument, openApi);
 
+        logger.info("ApiDocument is created. id={}, url={}", apiDocument.getId(), apiDocument.getApiSpecUrl());
+
         return apiDocument;
     }
 
@@ -87,51 +92,55 @@ public class ApiDocumentBuilder {
                 .setQuery(QueryBuilders.termQuery("apiSpecUrl", apiSpecUrl))
                 .get();
 
-
         SearchHit[] hits = response.getHits().getHits();
         if (hits.length > 0) {
             id = hits[0].getId();
         }
 
         if (id != null && !id.isEmpty()) {
+            logger.info("ApiDocument exists in index, looked up id={}", id);
             return id;
         }
-        return UUID.randomUUID().toString();
+
+        id = UUID.randomUUID().toString();
+        logger.info("ApiDocument does not exist in index, generated id={}", id);
+        return id;
     }
 
     Publisher lookupPublisher(String id) {
-        GetResponse response = elasticsearchClient.prepareGet("dcat", "publisher", id).get();
-
         try {
+            GetResponse response = elasticsearchClient.prepareGet("dcat", "publisher", id).get();
             if (response.isExists()) {
                 return mapper.readValue(response.getSourceAsString(), Publisher.class);
             }
         } catch (Exception e) {
-            throw new IllegalArgumentException("Cannot parse publisher");
+            logger.warn("Publisher lookup failed for OrgNr={}", id);
         }
 
         return null;
     }
 
     Dataset lookupDataset(String uri) {
-        SearchResponse response = elasticsearchClient.prepareSearch("dcat")
-                .setTypes("dataset")
-                .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
-                .setQuery(QueryBuilders.termQuery("uri", uri))
-                .execute()
-                .actionGet();
-
-        SearchHit[] hits = response.getHits().getHits();
-
         try {
-            if (hits.length > 0) {
+            SearchResponse response = elasticsearchClient.prepareSearch("dcat")
+                    .setTypes("dataset")
+                    .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
+                    .setQuery(QueryBuilders.termQuery("uri", uri))
+                    .execute()
+                    .actionGet();
+
+            SearchHit[] hits = response.getHits().getHits();
+
+
+            if (hits.length == 1) {
                 return mapper.readValue(hits[0].getSourceAsString(), Dataset.class);
             }
 
-            throw new IllegalArgumentException("No datasets found");
+            throw new Exception("No exact dataset match found, count=" + hits.length);
         } catch (Exception e) {
-            throw new IllegalArgumentException("Dataset lookup failed for uri" + uri, e);
+            logger.warn("Dataset lookup failed for uri={}. Error: {}", uri, e.getMessage());
         }
+        return null;
     }
 
     List<SkosCode> extractAccessRights(ApiCatalogRecord apiCatalogRecord) {
@@ -166,8 +175,11 @@ public class ApiDocumentBuilder {
             for (String datasetRefUrl : datasetReferenceSources) {
                 if (!datasetRefUrl.isEmpty()) {
                     Dataset dataset = lookupDataset(datasetRefUrl);
-                    Reference reference = new Reference(referenceTypeCode, SkosConcept.getInstance(datasetRefUrl, dataset.getTitle()));
-                    datasetReferences.add(reference);
+                    if (dataset != null) {
+                        SkosConcept source = SkosConcept.getInstance(datasetRefUrl, dataset.getTitle());
+                        Reference reference = new Reference(referenceTypeCode, source);
+                        datasetReferences.add(reference);
+                    }
                 }
             }
         }
