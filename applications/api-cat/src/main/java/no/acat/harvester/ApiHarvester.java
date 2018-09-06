@@ -50,19 +50,15 @@ public class ApiHarvester {
 
         for (ApiCatalogRecord apiCatalogRecord : apiCatalog) {
             try {
-
                 ApiDocument apiDocument = apiDocumentBuilder.create(apiCatalogRecord);
                 indexApi(apiDocument);
-                // todo This is here only for test. We should find another way to test without polluting interface
                 result.add(apiDocument);
             } catch (Exception e) {
-                logger.error(e.getMessage(),e);
+                logger.error("Error importing API record: {}",e.getMessage());
             }
-
         }
         return result;
     }
-
 
     ApiDocumentBuilder createApiDocumentBuilder() {
         return new ApiDocumentBuilder(elasticsearchClient, referenceDataClient);
@@ -82,10 +78,11 @@ public class ApiHarvester {
             final String msg = String.format("Failed index of %s. Reason %s", id, bulkResponse.buildFailureMessage());
             throw new RuntimeException(msg);
         }
+
+        logger.info("ApiDocument is indexed. id={}, url={}",document.getId(),document.getApiSpecUrl());
     }
 
     List<ApiCatalogRecord> getApiCatalog() {
-        org.springframework.core.io.Resource apiCatalogCsvFile = new ClassPathResource("apis.csv");
         List<ApiCatalogRecord> result = new ArrayList<>();
 
         String[] apiFiles = {"enhetsreg-static.json", "seres-api.json"};
@@ -102,10 +99,11 @@ public class ApiHarvester {
 
                 result.add(catalogRecord);
             } catch (Exception e) {
-                logger.error("Unable get resource url", e.getMessage(), e);
+                logger.error("Unable get resource url: {}", e.getMessage());
             }
         }
 
+        org.springframework.core.io.Resource apiCatalogCsvFile = new ClassPathResource("apis.csv");
         Iterable<CSVRecord> records;
 
         try (
