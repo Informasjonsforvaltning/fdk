@@ -6,7 +6,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
@@ -22,7 +21,7 @@ import java.util.Set;
 @SpringBootApplication
 @PropertySource("classpath:swagger.properties")
 @EnableSwagger2
-public class AcatApiApplication extends WebMvcConfigurerAdapter {
+public class AcatApiApplication {
     @Value("${springfox.documentation.swagger.v2.path}")
     private String swagger2Endpoint;
 

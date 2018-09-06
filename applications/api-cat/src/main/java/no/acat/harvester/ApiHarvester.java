@@ -7,7 +7,7 @@ import no.acat.model.ApiCatalogRecord;
 import no.acat.model.ApiDocument;
 import no.acat.service.ElasticsearchService;
 import no.acat.service.ReferenceDataService;
-import no.dcat.shared.client.referenceData.ReferenceDataClient;
+import no.dcat.client.referencedata.ReferenceDataClient;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;

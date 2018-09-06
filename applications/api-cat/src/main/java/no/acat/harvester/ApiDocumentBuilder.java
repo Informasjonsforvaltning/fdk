@@ -12,8 +12,13 @@ import no.acat.model.ApiCatalogRecord;
 import no.acat.model.ApiDocument;
 import no.acat.spec.converters.OpenApiV3JsonSpecConverter;
 import no.acat.spec.converters.SwaggerJsonSpecConverter;
-import no.dcat.shared.*;
-import no.dcat.shared.client.referenceData.ReferenceDataClient;
+import no.dcat.client.referencedata.ReferenceDataClient;
+import no.dcat.shared.Contact;
+import no.dcat.shared.Dataset;
+import no.dcat.shared.Publisher;
+import no.dcat.shared.Reference;
+import no.dcat.shared.SkosCode;
+import no.dcat.shared.SkosConcept;
 import org.apache.commons.io.Charsets;
 import org.apache.commons.io.IOUtils;
 import org.elasticsearch.action.get.GetResponse;
@@ -27,7 +32,13 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
 
 public class ApiDocumentBuilder {
     private Client elasticsearchClient;

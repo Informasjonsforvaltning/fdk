@@ -14,7 +14,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;
 
-import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 
 @Category(UnitTest.class)
