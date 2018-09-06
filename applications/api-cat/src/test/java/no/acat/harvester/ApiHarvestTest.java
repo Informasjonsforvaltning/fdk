@@ -13,7 +13,6 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.anyObject;
 import static org.mockito.Mockito.*;
 
 @Category(UnitTest.class)
@@ -28,10 +27,10 @@ public class ApiHarvestTest {
         ApiHarvester harvester = new ApiHarvester(elasticsearchService, referenceDataService);
 
         ApiHarvester spyHarvester = spy(harvester);
-        doNothing().when(spyHarvester).indexApi(anyObject());
+        doNothing().when(spyHarvester).indexApi(any());
 
         ApiDocumentBuilder mockApiDocumentBuilder = mock(ApiDocumentBuilder.class);
-        doReturn(new ApiDocument()).when(mockApiDocumentBuilder).create(anyObject());
+        doReturn(new ApiDocument()).when(mockApiDocumentBuilder).create(any());
 
         doReturn(mockApiDocumentBuilder).when(spyHarvester).createApiDocumentBuilder();
 

@@ -20,8 +20,8 @@ services:
       - "9087:8181"
     environment:
       - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
-      - application.elasticsearchHost=elasticsearch
-      - application.elasticsearchPort=9300
+      - FDK_ES_CLUSTERNODES=elasticsearch5:9300
+      - FDK_ES_CLUSTERNAME=elasticsearch
 
   search-api:
     restart: always
@@ -83,7 +83,18 @@ services:
     volumes:
       - ./data/esdata:/usr/share/elasticsearch/data
     environment:
-      - cluster.name=fellesdatakatalog
+      - cluster.name=elasticsearch
+
+  elasticsearch5:
+    restart: always
+    ports:
+    - "9201:9200"
+    - "9301:9300"
+    volumes:
+    - ./data/esdata5:/usr/share/elasticsearch/data
+    environment:
+    - cluster.name=elasticsearch
+    - xpack.security.enabled=false
 
   elasticsearch-copy:
     restart: always

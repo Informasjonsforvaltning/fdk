@@ -1,6 +1,6 @@
 package no.acat.service;
 
-import no.dcat.shared.client.referenceData.ReferenceDataClient;
+import no.dcat.client.referencedata.ReferenceDataClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 

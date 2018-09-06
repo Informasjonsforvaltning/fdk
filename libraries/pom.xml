@@ -16,6 +16,8 @@
     <modules>
         <module>shared</module>
         <module>datastore</module>
+        <module>elasticsearch5-client</module>
+        <module>referencedata-client</module>
     </modules>
 
 </project>
