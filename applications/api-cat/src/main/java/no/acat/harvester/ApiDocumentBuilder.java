@@ -49,7 +49,7 @@ public class ApiDocumentBuilder {
         try {
             apiSpec = IOUtils.toString(new URL(apiSpecUrl).openStream(), Charsets.UTF_8);
         } catch (IOException e) {
-            throw new IllegalArgumentException("Error downloading api spec from url '" + apiSpecUrl + "'");
+            throw new IllegalArgumentException("Error downloading api spec from url: " + apiSpecUrl);
         }
 
         if (OpenApiV3JsonSpecConverter.canConvert(apiSpec)) {
@@ -57,7 +57,16 @@ public class ApiDocumentBuilder {
         } else if (SwaggerJsonSpecConverter.canConvert(apiSpec)) {
             openApi = SwaggerJsonSpecConverter.convert(apiSpec);
         } else {
-            throw new IllegalArgumentException("Unsupported api spec format");
+            throw new IllegalArgumentException("Unsupported api spec format: " + apiSpecUrl);
+        }
+
+        try {
+            // todo there is something wrong with the converter and openApi model implementation
+            // in some case the serialized version does not unserialize
+            String json = mapper.writeValueAsString(openApi);
+            mapper.readValue(json, OpenAPI.class);
+        } catch (IOException e) {
+            throw new IllegalArgumentException("Error verifying OpenAPI deserialization for: " + apiSpecUrl);
         }
 
         ApiDocument apiDocument = new ApiDocument().builder()
