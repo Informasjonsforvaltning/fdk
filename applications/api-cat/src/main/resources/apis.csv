@@ -1,11 +1,11 @@
 OrgNr;OrgName;ApiSpecUrl;ApiDocUrl;AccessRights;Provenance;DatasetRefs
-974760673;Brønnøysundregistrene;https://raw.githubusercontent.com/brreg/openAPI/master/specs/enhetsregisteret.yml;https://data.brreg.no/enhetsregisteret/api/docs/index.html;;NASJONAL;https://data.norge.no/node/78,https://data.norge.no/node/78
+974760673;Brønnøysundregistrene;https://raw.githubusercontent.com/brreg/openAPI/master/specs/enhetsregisteret.yml;https://data.brreg.no/enhetsregisteret/api/docs/index.html;PUBLIC;NASJONAL;https://data.norge.no/node/78,https://data.norge.no/node/78
 974760673;Brønnøysundregistrene;https://fellesdatakatalog.brreg.no/api-docs/search-api;https://fellesdatakatalog.brreg.no/swagger-ui.html;RESTRICTED;NASJONAL;https://data.norge.no/node/78,https://data.norge.no/node/78
 971035854;Universitetet i Oslo;https://docker-demo.fsat.no/fsapi/swagger.json;https://docker-demo.fsat.no/fsapi/swagger.html#!/person/get_personer_id;NON_PUBLIC;NASJONAL;
 971032146;KS;https://ks-no.github.io/api/innsyn-sok-api-v1.json;https://editor.swagger.io/?url=https://ks-no.github.io/api/innsyn-sok-api-v1.json;RESTRICTED;NASJONAL;
 991825827;Difi;https://oidc-ver2.difi.no/kontaktinfo-oauth2-server/rest/apis;https://oidc-ver2.difi.no/kontaktinfo-oauth2-server/rest/swagger-ui.html;NON_PUBLIC;NASJONAL;https://data.norge.no/node/78
-970018131;Utdanningsdirektoratet;https://data-nor.udir.no/swagger/docs/v1.0;https://data.norge.no/data/utdanningsdirektoratet/nasjonalt-register-opplæringskontorer-nor;;;
-970018131;Utdanningsdirektoratet;https://data-nbr.udir.no/swagger/docs/v1.0;https://data.norge.no/data/utdanningsdirektoratet/nasjonalt-barnehageregister-nbr;;;
-970018131;Utdanningsdirektoratet;https://data-nsr.udir.no/swagger/docs/v1.0;https://data.norge.no/data/utdanningsdirektoratet/nasjonalt-skoleregister-nsr-0;;;
-970018131;Utdanningsdirektoratet;https://data-nxr-fellestjeneste.udir.no/swagger/docs/v1;https://data.norge.no/data/utdanningsdirektoratet/nxr-fellestjeneste-0;;;
-970018131;Utdanningsdirektoratet;http://www.barnehagefakta.no:80/swagger/docs/v1;https://data.norge.no/data/utdanningsdirektoratet/barnehagefakta-baf;;;
+970018131;Utdanningsdirektoratet;https://data-nor.udir.no/swagger/docs/v1.0;https://data.norge.no/data/utdanningsdirektoratet/nasjonalt-register-opplæringskontorer-nor;PUBLIC;;
+970018131;Utdanningsdirektoratet;https://data-nbr.udir.no/swagger/docs/v1.0;https://data.norge.no/data/utdanningsdirektoratet/nasjonalt-barnehageregister-nbr;PUBLIC;;
+970018131;Utdanningsdirektoratet;https://data-nsr.udir.no/swagger/docs/v1.0;https://data.norge.no/data/utdanningsdirektoratet/nasjonalt-skoleregister-nsr-0;PUBLIC;;
+970018131;Utdanningsdirektoratet;https://data-nxr-fellestjeneste.udir.no/swagger/docs/v1;https://data.norge.no/data/utdanningsdirektoratet/nxr-fellestjeneste-0;PUBLIC;;
+970018131;Utdanningsdirektoratet;http://www.barnehagefakta.no:80/swagger/docs/v1;https://data.norge.no/data/utdanningsdirektoratet/barnehagefakta-baf;PUBLIC;;
