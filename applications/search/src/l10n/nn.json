@@ -4,9 +4,9 @@
   "showFullDescription": "Vis heile skildringa",
   "showLess": "Vis mindre",
   "objective": "Formål",
-  "showFullObjective": "Vis hele formålet",
+  "showFullObjective": "Vis heile formålet",
   "format": "Format",
-  "datasetReferences": "Tilknyttede datasettskildringar",
+  "datasetReferences": "Tilknytta datasettskildringar",
   "contactInfo": "Kontaktinformasjon",
   "contactPoint": "Kontaktpunkt",
   "email": "E-mail",
@@ -18,13 +18,13 @@
     "titleSub": "Oversikt over datasett frå verksemder i Noreg.",
     "publisher": "Velg ut frå verksemd",
     "menu": "Meny",
-    "readMore": "Les mer om "
+    "readMore": "Les meir om "
   },
   "beta": {
     "header": "Dette er ein beta-versjon. ",
     "first": "Gi oss gjerne ",
-    "second": "tilbakemeldinger",
-    "last": "om kva du synast!"
+    "second": "tilbakemeldingar",
+    "last": "om kva du synes!"
   },
   "lang": {
     "choose": "Velg språk",
@@ -43,7 +43,7 @@
     "title": "Tilbakemelding"
   },
   "query": {
-    "intro": "Søk etter innhold",
+    "intro": "Søk etter innhald",
     "do": "Søk",
     "clear": "Nullstille søk"
   },
@@ -54,18 +54,18 @@
     "about": "Om felles Datakatalog",
     "title": "Felles datakatalog",
     "titleSub": "Oversikt over datasett frå verksemder i Noreg.",
-    "ingress": "Felles Datakatalog er ei oversikt over kva data dei ulike offentlege verksemdene har, korleis dei heng saman og kva dei betyr. Datakatalogen gjer det mogleg for deg å søke i opplysningane hos offentlege verksemder og bruke dei til for eksempel analyseformål.",
-    "maintext": "Regjeringa seier i Digital Agenda at brukarane skal levere informasjon til offentleg forvaltning berre ein gong, fordi forvaltninga sjølv skal sørge for å dele nødvendig informasjon med kvarandre. Felles datakatalog er første steget for å nå dette målet. Samarbeidsorganet Skate (Styring og koordinering av tenester i e-forvaltning) har beskrive ambisjonsnivået for informasjonsforvaltning i tre trinn, og Felles datakatalog skal i første trinn skaffe ei felles dataoversikt og ei felles forståing av informasjon i form av omgrep. Neste trinn har fokus på tilgjengeleggjering av informasjon i ein felles API-katalog. I tredje trinn ligg alt til rette for at gjenbruk av data er hovudregel og for prinsippet om berre ein gong.<br><br><b>Informasjonsforvaltning</b><br> Digitaliseringsrundskrivet peiker på at alle offentlege verksemder skal ha ei oversikt over kva data dei handterer, kva dataa betyr, kva dei kan brukast til, kva prosessar dei er ein del av  og kven som kan bruke dataa (informasjonsforvaltning). Direktoratet for Forvaltning og IKT (Difi) utarbeider eit felles rammeverk med standardiserte metodar og prinsipp som vil gjere det enklare for verksemdene som skal i gang med omgrepsarbeid.",
+    "ingress": "Felles Datakatalog er ei oversikt over kva data dei ulike offentlege verksemdene har, korleis dei heng saman og kva dei betyr. Datakatalogen gjer det mogleg for deg å søke i opplysningane hos offentlege verksemder og bruke dei for til dømes analyseformål.",
+    "maintext": "Regjeringa seier i Digital Agenda at brukarane skal levere informasjon til offentleg forvaltning berre ein gong, fordi forvaltninga sjølv skal sørge for å dele nødvendig informasjon med kvarandre. Felles datakatalog er første steget for å nå dette målet. Samarbeidsorganet Skate (Styring og koordinering av tenester i e-forvaltning) har beskrive ambisjonsnivået for informasjonsforvaltning i tre trinn, og Felles datakatalog skal i første trinn skaffe ei felles dataoversikt og ei felles forståing av informasjon i form av omgrep. Neste trinn har fokus på tilgjengeleggjering av informasjon i ein felles API-katalog. I tredje trinn ligg alt til rette for at gjenbruk av data er hovudregel og for prinsippet om berre ein gong.<br><br><b>Informasjonsforvaltning</b><br> Digitaliseringsrundskrivet peiker på at alle offentlege verksemder skal ha ei oversikt over kva data dei handterar, kva dataa betyr, kva dei kan brukast til, kva prosessar dei er ein del av og kven som kan bruke dataa (informasjonsforvaltning). Direktoratet for Forvaltning og IKT (Difi) utarbeider eit felles rammeverk med standardiserte metodar og prinsipp som vil gjere det enklare for verksemdene som skal i gang med omgrepsarbeid.",
     "dataNorgeHeader": "Import fra data.norge.no, geonorge.no m.fl.",
-    "dataNorgeText": "<b>Import fra data.norge.no, geonorge.no m.fl.</b><br>Felles datakatalog importerer data-beskrivelser fra andre kataloger, blant annet <a href='https://data.norge.no' target='blank'>data.norge.no</a> (<a href='https://data.norge.no/data/direktoratet-forvaltning-og-ikt/datanorgeno-nasjonal-katalog-over-åpne-offentlige-datasett' target='blank'>API</a>) og geonorge.no. Dette gjøres ved å bruke DCAT-AP-NO som dataformat for å utveksle data-beskrivelser.",
+    "dataNorgeText": "<b>Import fra data.norge.no, geonorge.no m.fl.</b><br>Felles datakatalog importerar dataskildringar fra andre katalogar, blant anna <a href='https://data.norge.no' target='blank'>data.norge.no</a> (<a href='https://data.norge.no/data/direktoratet-forvaltning-og-ikt/datanorgeno-nasjonal-katalog-over-åpne-offentlige-datasett' target='blank'>API</a>) og geonorge.no. Dette vert gjort ved å bruke DCAT-AP-NO som dataformat for å utveksle dataskildringar.",
     "register": "Registrere datasett",
-    "helpToRegister": "Hjelp til å komme i gang med å registrere datasett",
+    "helpToRegister": "Hjelp til å komme i gong med å registrere datasett",
     "help": "Hjelp",
     "status":"Status implementasjon",
     "standard":"DCAT-AP-NO 1.1 standarden",
     "guide":"Rettleiar",
-    "fordataowners": "For dataeigare",
-    "fordatausers": "For databrukare",
+    "fordataowners": "For dataeigarar",
+    "fordatausers": "For databrukarar",
     "technical": "Teknisk"
   },
   "page": {
@@ -130,7 +130,7 @@
   "footer": {
     "organisation.number": "Organisasjonsnummer:",
     "information": "Informasjonskapslar - personvern",
-    "information_text": "Dette er eit samarbeidsprosjekt mellom Brønnøysundregistrene, Difi og andre SKATE-etater.",
+    "information_text": "Dette er eit samarbeidsprosjekt mellom Brønnøysundregistrene, Difi og andre SKATE-etatar.",
     "mail": "fellesdatakatalog@brreg.no",
     "privacy": " og personvern",
     "contact": "Kontakt:"
