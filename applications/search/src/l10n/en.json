@@ -87,16 +87,16 @@
       "descriptions": "dataset descriptions"
     },
     "search": "Search gave",
-    "datasetHits": "hits among datasets",
-    "datasetNoHits": "no hits among datasets",
-    "conceptHits": "hits among concepts",
-    "conceptNoHits": "no hits among concepts",
-    "noHits": "Sorry, no hits",
+    "datasetHits": "hit(s) among datasets",
+    "datasetNoHits": "no hit(s) among datasets",
+    "conceptHits": "hit(s) among concepts",
+    "conceptNoHits": "no hit(s) among concepts",
+    "noHits": "Sorry, no hit(s)",
     "concepts": "concepts",
     "and": "and",
     "but": "but",
     "apis": "APIs",
-    "apiHits": "hits among APIs"
+    "apiHits": "hit(s) among APIs"
   },
   "facet": {
     "organisation":"Organization",
