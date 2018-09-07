@@ -53,7 +53,7 @@ const renderApiEndpoints = paths => {
     return null;
   }
   return (
-    <ApiEndpoints name={localization.api.endpoints.response} paths={paths} />
+    <ApiEndpoints name={localization.api.endpoints.operations} paths={paths} />
   );
 };
 
@@ -138,8 +138,8 @@ const renderStickyMenu = apiItem => {
   }
   if (_.get(apiItem, ['openApi', 'paths'])) {
     menuItems.push({
-      name: localization.api.endpoints.response,
-      prefLabel: localization.api.endpoints.response
+      name: localization.api.endpoints.operations,
+      prefLabel: localization.api.endpoints.operations
     });
   }
   if (_.get(apiItem, 'datasetReferences')) {

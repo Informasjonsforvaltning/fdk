@@ -33,7 +33,7 @@ export const ApiEndpoints = props => {
     <section className="mb-5 list-type1" name={name}>
       <div className="row">
         <div className="col-5">
-          <h3 className="">{localization.api.endpoints.response}</h3>
+          <h3 className="">{localization.api.endpoints.operation}</h3>
         </div>
         <div className="col-7">
           <h3 className="">{localization.api.endpoints.description}</h3>

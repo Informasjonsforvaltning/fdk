@@ -287,7 +287,8 @@
       "unknown": "Ukjent tilgang"
     },
     "endpoints": {
-      "response": "Operasjonar",
+      "operations": "Operasjonar",
+      "operation": "Operasjon",
       "description": "Skildring"
     },
     "provider": "Tilbydar:",
