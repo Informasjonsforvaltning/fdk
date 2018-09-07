@@ -6,8 +6,8 @@ import localization from '../../../lib/localization';
 export const renderPathMethod = (path, method, methodDeclaration) => (
   <React.Fragment key={`${method}-${path}`}>
     <div className="row">
-      <div className="col-5">
-        {method} {path}
+      <div className="col-5 fdk-text-strong">
+        {method.toUpperCase()} {path}
       </div>
       <div className="col-7">{methodDeclaration.description}</div>
     </div>

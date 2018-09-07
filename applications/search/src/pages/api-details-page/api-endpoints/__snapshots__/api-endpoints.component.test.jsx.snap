@@ -36,9 +36,9 @@ exports[`should render api-ApiEndpoints correctly 1`] = `
         className="row"
       >
         <div
-          className="col-5"
+          className="col-5 fdk-text-strong"
         >
-          get
+          GET
            
           /catalogs
         </div>
