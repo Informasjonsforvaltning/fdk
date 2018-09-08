@@ -15,7 +15,6 @@ import org.elasticsearch.search.aggregations.bucket.terms.Terms;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin
@@ -52,7 +51,7 @@ public class SearchController {
 
             @ApiParam("Filters on format")
             @RequestParam(value = "format", defaultValue = "", required = false)
-                    String format,
+                    String[] formats,
 
             @ApiParam("Returns datatasets from position x in the result set, 0 is the default value. A value of 150 will return the 150th dataset in the resultset")
             @RequestParam(value = "from", defaultValue = "0", required = false)
@@ -63,7 +62,7 @@ public class SearchController {
                     int size
     ) {
         try {
-            SearchRequestBuilder searchRequest = buildSearchRequest(query, accessRights, orgPath, format, from, size);
+            SearchRequestBuilder searchRequest = buildSearchRequest(query, accessRights, orgPath, formats, from, size);
             SearchResponse elasticResponse = doQuery(searchRequest);
             return convertFromElasticResponse(elasticResponse);
         } catch (Exception e) {
@@ -77,7 +76,7 @@ public class SearchController {
         return SearchResponseAdapter.convertFromElasticResponse(elasticResponse);
     }
 
-    SearchRequestBuilder buildSearchRequest(String query, String accessRights, String orgPath, String format, int from, int size) {
+    SearchRequestBuilder buildSearchRequest(String query, String accessRights, String orgPath, String[] formats, int from, int size) {
 
         QueryBuilder search;
 
@@ -91,7 +90,9 @@ public class SearchController {
 
         addTermFilter(boolQuery, "accessRights.code", accessRights);
         addTermFilter(boolQuery, "publisher.orgPath", orgPath);
-        addTermFilter(boolQuery, "formats", format);
+        addAllTermsFilter(boolQuery, "formats", formats);
+
+        logger.debug("Built query:{}",boolQuery);
 
         return elasticsearch.getClient()
                 .prepareSearch("acat")
@@ -115,6 +116,14 @@ public class SearchController {
         if (value.equals(MISSING)) {
             boolQuery.filter(QueryBuilders.boolQuery().mustNot(QueryBuilders.existsQuery(term)));
         } else {
+            boolQuery.filter(QueryBuilders.termQuery(term, value));
+        }
+    }
+
+    static void addAllTermsFilter(BoolQueryBuilder boolQuery, String term, String[] values) {
+        if (values==null || values.length==0) return;
+
+        for(String value:values) {
             boolQuery.filter(QueryBuilders.termQuery(term, value));
         }
     }
