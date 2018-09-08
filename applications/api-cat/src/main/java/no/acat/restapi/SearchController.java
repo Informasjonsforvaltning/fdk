@@ -111,14 +111,12 @@ public class SearchController {
 
     static void addTermFilter(BoolQueryBuilder boolQuery, String term, String value) {
         if (value.isEmpty()) return;
-        BoolQueryBuilder accessRightsFilter = QueryBuilders.boolQuery();
+
         if (value.equals(MISSING)) {
             boolQuery.filter(QueryBuilders.boolQuery().mustNot(QueryBuilders.existsQuery(term)));
         } else {
-            boolQuery.filter(QueryBuilders.boolQuery().must(QueryBuilders.termQuery(term, value)));
+            boolQuery.filter(QueryBuilders.termQuery(term, value));
         }
-
-        boolQuery.filter(accessRightsFilter);
     }
 
     private int checkAndAdjustFrom(int from) {
