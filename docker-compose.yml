@@ -19,7 +19,7 @@ services:
       - "8080"
       - "8181"
     depends_on:
-      - elasticsearch
+      - elasticsearch5
       - reference-data
 
   nginx-search:

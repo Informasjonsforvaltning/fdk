@@ -7,8 +7,8 @@ logging:
 application:
   referenceDataUrl: http://reference-data:8080
 elastic:
-  clusterNodes: ${FDK_ES_CLUSTERNODES:elasticsearch:9300}
-  clusterName: ${FDK_ES_CLUSTERNAME:elasticsearch}
+  clusterNodes: ${FDK_ES_CLUSTERNODES}
+  clusterName: ${FDK_ES_CLUSTERNAME}
 server:
   port: 8080
 management:
@@ -22,7 +22,7 @@ spring:
 application:
   referenceDataUrl: http://localhost:8100
 elastic:
-  clusterNodes: localhost:9300
+  clusterNodes: localhost:9301
   clusterName: elasticsearch
 server:
   port: 8088
