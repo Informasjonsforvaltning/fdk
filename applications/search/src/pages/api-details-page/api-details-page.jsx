@@ -48,12 +48,17 @@ const renderFormats = formats => {
   );
 };
 
-const renderApiEndpoints = paths => {
+const renderApiEndpoints = (paths, apiSpecUrl, apiDocUrl) => {
   if (!paths) {
     return null;
   }
   return (
-    <ApiEndpoints name={localization.api.endpoints.operations} paths={paths} />
+    <ApiEndpoints
+      name={localization.api.endpoints.operations}
+      paths={paths}
+      apiSpecUrl={apiSpecUrl}
+      apiDocUrl={apiDocUrl}
+    />
   );
 };
 
@@ -255,7 +260,11 @@ export const ApiDetailsPage = props => {
 
             {renderFormats(_.get(apiItem, 'formats'))}
 
-            {renderApiEndpoints(_.get(apiItem, ['openApi', 'paths']))}
+            {renderApiEndpoints(
+              _.get(apiItem, ['openApi', 'paths']),
+              _.get(apiItem, 'apiSpecUrl'),
+              _.get(apiItem, 'apiDocUrl')
+            )}
 
             {renderAPIInfo(_.get(apiItem, ['accessRights']))}
 

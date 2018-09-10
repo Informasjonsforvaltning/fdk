@@ -27,8 +27,32 @@ export const renderPaths = paths => {
   return <div>{renderedMethods}</div>;
 };
 
+const renderLinks = (apiSpecUrl, apiDocUrl) => {
+  if (apiSpecUrl || apiDocUrl) {
+    return (
+      <div className="row">
+        <div className="col-12">
+          {apiDocUrl && (
+            <a href={apiDocUrl} className="mr-5">
+              {localization.documentation}
+              <i className="fa fa-external-link fdk-fa-right" />
+            </a>
+          )}
+          {apiSpecUrl && (
+            <a href={apiSpecUrl} className="mr-5">
+              {localization.specification}
+              <i className="fa fa-external-link fdk-fa-right" />
+            </a>
+          )}
+        </div>
+      </div>
+    );
+  }
+  return null;
+};
+
 export const ApiEndpoints = props => {
-  const { name, paths } = props;
+  const { name, paths, apiSpecUrl, apiDocUrl } = props;
   return (
     <section className="mb-5 list-type1" name={name}>
       <div className="row">
@@ -41,16 +65,21 @@ export const ApiEndpoints = props => {
       </div>
       <hr />
       {renderPaths(paths)}
+      {renderLinks(apiSpecUrl, apiDocUrl)}
     </section>
   );
 };
 
 ApiEndpoints.defaultProps = {
   name: null,
-  paths: null
+  paths: null,
+  apiSpecUrl: null,
+  apiDocUrl: null
 };
 
 ApiEndpoints.propTypes = {
   name: PropTypes.string,
-  paths: PropTypes.object
+  paths: PropTypes.object,
+  apiSpecUrl: PropTypes.string,
+  apiDocUrl: PropTypes.string
 };

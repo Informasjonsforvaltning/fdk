@@ -11,6 +11,8 @@
   "accessLevel": "Accesslevel",
   "contactInfo": "Contact information",
   "contactPoint": "Contact point",
+  "documentation": "Documentation",
+  "specification": "Specification",
   "email": "Email",
   "phone": "Phone",
   "close": "Close",
