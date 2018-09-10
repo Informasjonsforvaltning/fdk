@@ -180,7 +180,7 @@ const renderStickyMenu = apiItem => {
       prefLabel: localization.description
     });
   }
-  if (_.get(apiItem, 'formats')) {
+  if (_.get(apiItem, 'formats', []).length > 0) {
     menuItems.push({
       name: localization.format,
       prefLabel: localization.format
@@ -255,7 +255,10 @@ export const ApiDetailsPage = props => {
         <div className="row">
           <div className="col-12 col-lg-4 ">{renderStickyMenu(apiItem)}</div>
 
-          <section className="col-12 col-lg-8 mt-3">
+          <section
+            className="col-12 col-lg-8 mt-3"
+            style={{ marginBottom: '400px' }}
+          >
             {renderDescription(description)}
 
             {renderFormats(_.get(apiItem, 'formats'))}
