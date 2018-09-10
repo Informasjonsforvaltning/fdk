@@ -66,6 +66,8 @@ exports[`should render ApiDetailsPage correctly with apiItem 1`] = `
           showMoreButtonText="Show the full description"
         />
         <ApiEndpoints
+          apiDocUrl={null}
+          apiSpecUrl={null}
           name="Operations"
           paths={
             Object {
