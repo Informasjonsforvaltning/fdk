@@ -45,7 +45,7 @@
   "query": {
     "intro": "Søk etter innhald",
     "do": "Søk",
-    "clear": "Nullstille søk"
+    "clear": "Fjern alle filter"
   },
   "login": {
     "title": "Logg inn"
