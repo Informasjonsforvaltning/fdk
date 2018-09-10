@@ -14,9 +14,11 @@ import no.acat.spec.converters.OpenApiV3JsonSpecConverter;
 import no.acat.spec.converters.SwaggerJsonSpecConverter;
 import no.dcat.client.referencedata.ReferenceDataClient;
 import no.dcat.shared.Contact;
-import no.dcat.shared.DatasetReference;
+import no.dcat.shared.Dataset;
 import no.dcat.shared.Publisher;
+import no.dcat.shared.Reference;
 import no.dcat.shared.SkosCode;
+import no.dcat.shared.SkosConcept;
 import org.apache.commons.io.Charsets;
 import org.apache.commons.io.IOUtils;
 import org.elasticsearch.action.get.GetResponse;
@@ -138,7 +140,7 @@ public class ApiDocumentBuilder {
         return null;
     }
 
-    DatasetReference lookupDatasetReference(String uri) {
+    Dataset lookupDataset(String uri) {
         try {
             SearchResponse response = elasticsearchClient.prepareSearch("dcat")
                     .setTypes("dataset")
@@ -151,7 +153,7 @@ public class ApiDocumentBuilder {
 
 
             if (hits.length == 1) {
-                return mapper.readValue(hits[0].getSourceAsString(), DatasetReference.class);
+                return mapper.readValue(hits[0].getSourceAsString(), Dataset.class);
             }
 
             throw new Exception("No exact dataset match found, count=" + hits.length);
@@ -185,15 +187,18 @@ public class ApiDocumentBuilder {
         return referenceDataClient.getCodes("provenancestatement").get(provenanceCode);
     }
 
-    Set<DatasetReference> extractDatasetReferences(ApiCatalogRecord apiCatalogRecord) {
-        Set<DatasetReference> datasetReferences = new HashSet<>();
+    List<Reference> extractDatasetReferences(ApiCatalogRecord apiCatalogRecord) {
+        List<Reference> datasetReferences = new ArrayList();
+        SkosCode referenceTypeCode = referenceDataClient.getCodes("referencetypes").get("references");
         List<String> datasetReferenceSources = apiCatalogRecord.getDatasetReferences();
         if (datasetReferenceSources != null) {
             for (String datasetRefUrl : datasetReferenceSources) {
                 if (!datasetRefUrl.isEmpty()) {
-                    DatasetReference datasetReference = lookupDatasetReference(datasetRefUrl);
-                    if (datasetReference != null) {
-                        datasetReferences.add(datasetReference);
+                    Dataset dataset = lookupDataset(datasetRefUrl);
+                    if (dataset != null) {
+                        SkosConcept source = SkosConcept.getInstance(datasetRefUrl, dataset.getTitle());
+                        Reference reference = new Reference(referenceTypeCode, source);
+                        datasetReferences.add(reference);
                     }
                 }
             }

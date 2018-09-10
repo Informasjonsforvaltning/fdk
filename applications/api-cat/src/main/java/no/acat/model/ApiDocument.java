@@ -4,7 +4,12 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import io.swagger.v3.oas.models.OpenAPI;
-import no.dcat.shared.*;
+import no.dcat.shared.Contact;
+import no.dcat.shared.HarvestMetadata;
+import no.dcat.shared.PeriodOfTime;
+import no.dcat.shared.Publisher;
+import no.dcat.shared.Reference;
+import no.dcat.shared.SkosCode;
 
 import java.util.List;
 import java.util.Map;
@@ -57,7 +62,7 @@ public class ApiDocument  {
     private SkosCode accrualPeriodicity;
 
     @ApiModelProperty("A list of references to the datasets that can be returned by the api")
-    private Set<DatasetReference> datasetReferences;
+    private List<Reference> datasetReferences;
 
     @ApiModelProperty("Spec converted to openAPI v3")
     private OpenAPI openApi;

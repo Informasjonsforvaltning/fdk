@@ -102,17 +102,13 @@ const renderAPIInfo = accessRights => {
 };
 
 const renderDatasetReference = (reference, index) => {
-  const id = _.get(datasetReference, ['id']);
-  const prefLabel = _.get(datasetReference, ['title']);
-
+  const uri = _.get(reference, ['source', 'uri']);
+  const prefLabel = _.get(reference, ['source', 'prefLabel']);
   return (
-    <React.Fragment key={`${index}-${id}`}>
+    <React.Fragment key={`${index}-${uri}`}>
       <div className="mb-4">
-        <a
-          title={localization.api.linkDatasetReference}
-          href={`/datasets/${id}`}
-        >
-          {prefLabel ? getTranslateText(prefLabel) : id}
+        <a title={localization.api.linkDatasetReference} href={uri}>
+          {prefLabel ? getTranslateText(prefLabel) : uri}
         </a>
       </div>
     </React.Fragment>
