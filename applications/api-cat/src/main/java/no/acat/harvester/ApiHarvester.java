@@ -85,24 +85,6 @@ public class ApiHarvester {
     List<ApiCatalogRecord> getApiCatalog() {
         List<ApiCatalogRecord> result = new ArrayList<>();
 
-        String[] apiFiles = {"enhetsreg-static.json", "seres-api.json"};
-
-        for (String apiFileName : apiFiles) {
-            try {
-                ClassPathResource classPathResource = new ClassPathResource(apiFileName);
-                String apiSpecUrl = classPathResource.getURL().toString();
-
-                ApiCatalogRecord catalogRecord = new ApiCatalogRecord().builder()
-                        .orgNr("974760673")
-                        .apiSpecUrl(apiSpecUrl)
-                        .build();
-
-                result.add(catalogRecord);
-            } catch (Exception e) {
-                logger.error("Unable get resource url: {}", e.getMessage());
-            }
-        }
-
         org.springframework.core.io.Resource apiCatalogCsvFile = new ClassPathResource("apis.csv");
         Iterable<CSVRecord> records;
 
