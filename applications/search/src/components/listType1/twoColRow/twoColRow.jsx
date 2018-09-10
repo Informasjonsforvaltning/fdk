@@ -5,7 +5,7 @@ export const TwoColRow = props => {
   const { col1, col2 } = props;
   return (
     <div className="row">
-      <div className="col-4">{col1}</div>
+      <div className="col-4 fdk-text-strong">{col1}</div>
       <div className="col-8">{col2}</div>
     </div>
   );
