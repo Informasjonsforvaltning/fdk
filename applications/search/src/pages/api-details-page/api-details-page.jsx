@@ -57,11 +57,55 @@ const renderApiEndpoints = paths => {
   );
 };
 
-const renderDatasetReference = reference => {
+const renderAccessRights = accessRight => {
+  if (!accessRight) {
+    return null;
+  }
+
+  const { code } = accessRight || {
+    code: null
+  };
+  let accessRightsLabel;
+
+  switch (code) {
+    case 'NON_PUBLIC':
+      accessRightsLabel = localization.api.accessRight.nonPublic;
+      break;
+    case 'RESTRICTED':
+      accessRightsLabel = localization.api.accessRight.restricted;
+      break;
+    case 'PUBLIC':
+      accessRightsLabel = localization.api.accessRight.public;
+      break;
+    default:
+      accessRightsLabel = localization.api.accessRight.unknown;
+  }
+
+  return (
+    <React.Fragment>
+      <TwoColRow col1={localization.accessLevel} col2={accessRightsLabel} />
+      <hr />
+    </React.Fragment>
+  );
+};
+
+const renderAPIInfo = accessRights => {
+  if (!accessRights) {
+    return null;
+  }
+
+  return (
+    <ListType1 title={localization.apiInfo}>
+      {renderAccessRights(accessRights[0])}
+    </ListType1>
+  );
+};
+
+const renderDatasetReference = (reference, index) => {
   const uri = _.get(reference, ['source', 'uri']);
   const prefLabel = _.get(reference, ['source', 'prefLabel']);
   return (
-    <React.Fragment key={uri}>
+    <React.Fragment key={`${index}-${uri}`}>
       <div className="mb-4">
         <a title={localization.api.linkDatasetReference} href={uri}>
           {prefLabel ? getTranslateText(prefLabel) : uri}
@@ -75,7 +119,8 @@ const renderDatasetReferences = references => {
   if (!references) {
     return null;
   }
-  const children = items => items.map(item => renderDatasetReference(item));
+  const children = items =>
+    items.map((item, index) => renderDatasetReference(item, index));
 
   return (
     <ListType1 title={localization.datasetReferences}>
@@ -142,6 +187,12 @@ const renderStickyMenu = apiItem => {
       prefLabel: localization.api.endpoints.operations
     });
   }
+  if (_.get(apiItem, 'accessRights')) {
+    menuItems.push({
+      name: localization.apiInfo,
+      prefLabel: localization.apiInfo
+    });
+  }
   if (_.get(apiItem, 'datasetReferences')) {
     menuItems.push({
       name: localization.datasetReferences,
@@ -205,6 +256,8 @@ export const ApiDetailsPage = props => {
             {renderFormats(_.get(apiItem, 'formats'))}
 
             {renderApiEndpoints(_.get(apiItem, ['openApi', 'paths']))}
+
+            {renderAPIInfo(_.get(apiItem, ['accessRights']))}
 
             {renderDatasetReferences(_.get(apiItem, 'datasetReferences'))}
 
