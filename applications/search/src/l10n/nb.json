@@ -7,6 +7,8 @@
   "showFullObjective": "Vis hele formålet",
   "format": "Format",
   "datasetReferences": "Tilknyttede datasettbeskrivelser",
+  "apiInfo": "Bruk av API-et",
+  "accessLevel": "Tilgangsnivå",
   "contactInfo": "Kontaktinformasjon",
   "contactPoint": "Kontaktpunkt",
   "email": "E-post",

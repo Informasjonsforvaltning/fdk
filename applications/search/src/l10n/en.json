@@ -7,6 +7,8 @@
   "showFullObjective": "Show the full objective",
   "format": "Format",
   "datasetReferences": "Dataset references",
+  "apiInfo": "Use of API",
+  "accessLevel": "Accesslevel",
   "contactInfo": "Contact information",
   "contactPoint": "Contact point",
   "email": "Email",
