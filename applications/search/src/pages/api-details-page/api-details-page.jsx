@@ -106,7 +106,7 @@ const renderAPIInfo = accessRights => {
   );
 };
 
-const renderDatasetReference = (reference, index) => {
+const renderDatasetReference = (datasetReference, index) => {
   const id = _.get(datasetReference, ['id']);
   const prefLabel = _.get(datasetReference, ['title']);
 
