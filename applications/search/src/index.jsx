@@ -4,6 +4,7 @@ import * as ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter, Route } from 'react-router-dom';
 import ReactGA from 'react-ga';
+import { hotjar } from 'react-hotjar';
 
 import { configureStore } from './redux/configureStore';
 import { ConnectedFeatureToggleProvider } from './components/connected-feature-toggle-provider';
@@ -14,6 +15,7 @@ import ScrollToTop from './components/scroll-to-top/scrollToTop.component';
 if (window.location.hostname.indexOf('fellesdatakatalog.brreg.no') !== -1) {
   ReactGA.initialize('UA-110098477-1'); // prod
   ReactGA.set({ anonymizeIp: true });
+  hotjar.initialize(995327, 6);
 } else if (
   window.location.hostname.indexOf('fellesdatakatalog.tt1.brreg.no') !== -1
 ) {
