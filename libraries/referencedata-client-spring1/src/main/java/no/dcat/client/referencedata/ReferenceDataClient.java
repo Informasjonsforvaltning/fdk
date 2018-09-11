@@ -1,4 +1,4 @@
-package no.dcat.shared.client.referenceData;
+package no.dcat.client.referencedata;
 
 import no.dcat.shared.SkosCode;
 import org.springframework.core.ParameterizedTypeReference;

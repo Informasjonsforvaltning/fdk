@@ -2,6 +2,7 @@ package no.dcat.harvester.crawler;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import no.dcat.client.referencedata.ReferenceDataClient;
 import no.dcat.datastore.AdminDataStore;
 import no.dcat.datastore.DcatDataStore;
 import no.dcat.datastore.domain.DcatSource;
@@ -9,7 +10,6 @@ import no.dcat.datastore.domain.dcat.builders.DatasetBuilder;
 import no.dcat.datastore.domain.dcat.builders.RdfModelLoader;
 import no.dcat.harvester.crawler.handlers.ElasticSearchResultHandler;
 import no.dcat.shared.SkosCode;
-import no.dcat.shared.client.referenceData.ReferenceDataClient;
 import no.dcat.shared.testcategories.UnitTest;
 import org.apache.commons.io.IOUtils;
 import org.apache.jena.rdf.model.Model;

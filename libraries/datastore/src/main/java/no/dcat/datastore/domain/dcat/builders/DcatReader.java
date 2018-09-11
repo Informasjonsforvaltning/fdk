@@ -1,5 +1,6 @@
 package no.dcat.datastore.domain.dcat.builders;
 
+import no.dcat.client.referencedata.ReferenceDataClient;
 import no.dcat.datastore.domain.dcat.Distribution;
 import no.dcat.datastore.domain.dcat.client.LoadLocations;
 import no.dcat.shared.Catalog;
@@ -9,7 +10,6 @@ import no.dcat.shared.DataTheme;
 import no.dcat.shared.Dataset;
 import no.dcat.shared.SkosCode;
 import no.dcat.datastore.domain.dcat.vocabulary.DCAT;
-import no.dcat.shared.client.referenceData.ReferenceDataClient;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ResIterator;
 import org.apache.jena.rdf.model.Resource;

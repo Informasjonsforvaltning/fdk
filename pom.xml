@@ -86,11 +86,6 @@
 			<!--Warn! Do not put spring boot dependencies in dependency Management, since it overrides version management from parent-->
 			<dependency>
 				<groupId>no.dcat</groupId>
-				<artifactId>shared</artifactId>
-				<version>1.1.0</version>
-			</dependency>
-			<dependency>
-				<groupId>no.dcat</groupId>
 				<artifactId>harvester</artifactId>
 				<version>${fdk.version}</version>
 			</dependency>
