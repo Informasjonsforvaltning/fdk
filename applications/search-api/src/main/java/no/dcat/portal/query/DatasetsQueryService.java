@@ -9,11 +9,13 @@ import no.dcat.webutils.exceptions.NotFoundException;
 import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.query.RangeQueryBuilder;
 import org.elasticsearch.index.query.SimpleQueryStringBuilder;
+import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms.Order;
@@ -60,6 +62,7 @@ public class DatasetsQueryService extends ElasticsearchService {
     /* api names */
     public static final String QUERY_SEARCH = "/datasets";
     public static final String QUERY_GET_BY_ID = "/datasets/{id}";
+    public static final String QUERY_GET_BY_URI = "/datasets/byuri";
 
     /**
      * Compose and execute an elasticsearch query on dcat based on the input parameters.
@@ -534,6 +537,31 @@ public class DatasetsQueryService extends ElasticsearchService {
         return transformResponse(dataset, contentType);
     }
 
+    @CrossOrigin
+    @ApiOperation(
+            value = "Get a specific dataset by its uri",
+            response = Dataset.class)
+    @RequestMapping(
+            value = QUERY_GET_BY_URI,
+            method = RequestMethod.GET,
+            produces = {"application/json", "text/turtle", "application/ld+json", "application/rdf+xml"})
+    public ResponseEntity<String> getDatasetByUriHandler(
+            HttpServletRequest request,
+            @ApiParam("Dataset uri")
+            @RequestParam("uri") String uri) throws Exception {
+        logger.info(String.format("Get dataset with uri: %s", uri));
+
+        Dataset dataset = getDatasetByUri(uri);
+        if (dataset == null) {
+            throw new NotFoundException();
+        }
+
+        String acceptHeader = request.getHeader("Accept");
+        String contentType = acceptHeader != null ? acceptHeader : "";
+
+        return transformResponse(dataset, contentType);
+    }
+
     Dataset getDatasetById(String id) {
         initializeElasticsearchTransportClient();
         GetResponse elasticGetResponse = getClient().prepareGet(INDEX_DCAT, "dataset", id).get();
@@ -545,6 +573,28 @@ public class DatasetsQueryService extends ElasticsearchService {
         logger.trace(String.format("Found dataset: %s", datasetAsJson));
 
         return new Gson().fromJson(datasetAsJson, Dataset.class);
+    }
+
+    Dataset getDatasetByUri(String uri) throws Exception {
+        initializeElasticsearchTransportClient();
+        SearchResponse response = getClient().prepareSearch("dcat")
+                .setTypes("dataset")
+                .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
+                .setQuery(QueryBuilders.termQuery("uri", uri))
+                .execute()
+                .actionGet();
+
+        SearchHit[] hits = response.getHits().getHits();
+
+        if (hits.length == 0) {
+            return null;
+        } 
+
+        if (hits.length == 1) {
+            return new Gson().fromJson(hits[0].getSourceAsString(), Dataset.class);
+        }
+
+        throw new Exception("More than one dataset match found, count=" + hits.length + " uri=" + uri);
     }
 
     ResponseEntity<String> transformResponse(Dataset d, String contentType) {
