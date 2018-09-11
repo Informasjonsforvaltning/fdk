@@ -17,6 +17,7 @@
   "phone": "Telefon",
   "close": "Lukk",
   "filter": "Filter",
+  "unknown": "Ukjend",
   "app": {
     "title": "Felles Datakatalog",
     "titleSub": "Oversikt over datasett frå verksemder i Noreg.",
@@ -150,7 +151,7 @@
     "owned": "Eigd av",
     "public": "Offentleg",
     "restricted": "Begrensa offentlegheit",
-    "ukjent": "Ukjent",
+    "ukjent": "Ukjend",
     "non_public": "Unntatt offentlegheit",
     "sample": "Eksempeldata tilgjengeleg",
     "NationalBuildingBlock": "Nasjonal felleskomponent",
@@ -288,7 +289,7 @@
       "public": "API-et er åpent",
       "restricted": "API med avgrensa offentlegheit",
       "nonPublic": "API-et er unntatt offentlegheit",
-      "unknown": "Ukjent tilgang"
+      "unknown": "Ukjend tilgang"
     },
     "endpoints": {
       "operations": "Operasjonar",

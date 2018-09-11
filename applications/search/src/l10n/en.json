@@ -17,6 +17,7 @@
   "phone": "Phone",
   "close": "Close",
   "filter": "Filter",
+  "unknown": "Unknown",
   "app": {
     "title": "The National Data Directory",
     "titleSub": "Datasets from publishers in Norway.",
