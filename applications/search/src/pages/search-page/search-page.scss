@@ -19,13 +19,6 @@
 /*  SEARCHPAGE PAGINATION  */
 .pagination {
   li {
-    &.break-me {
-      cursor: default;
-      &:hover {
-        background-color: transparent;
-      }
-    }
-    cursor: pointer;
     a, span {
       background-color: transparent !important;
       border: none !important;
@@ -77,12 +70,6 @@
 @media only screen and (min-width : 992px) {
   .pagination {
     li {
-      &.break-me {
-        cursor: default;
-        &:hover {
-          background-color: transparent;
-        }
-      }
       a, span {
         background-color: transparent !important;
         border: none !important;
