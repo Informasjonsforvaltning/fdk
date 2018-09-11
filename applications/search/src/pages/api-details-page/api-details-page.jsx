@@ -138,30 +138,53 @@ const renderDatasetReferences = references => {
   );
 };
 
-const renderContactPoint = contactPoint => (
-  <React.Fragment key={contactPoint.uri}>
-    {contactPoint.organizationName && (
-      <React.Fragment>
-        <TwoColRow
-          col1={localization.contactPoint}
-          col2={contactPoint.organizationName}
-        />
-        <hr />
-      </React.Fragment>
-    )}
-    {contactPoint.email && (
-      <React.Fragment>
-        <TwoColRow col1={localization.email} col2={contactPoint.email} />
-        <hr />
-      </React.Fragment>
-    )}
-    {contactPoint.phone && (
-      <React.Fragment>
-        <TwoColRow col1={localization.phone} col2={contactPoint.phone} />
-      </React.Fragment>
-    )}
-  </React.Fragment>
-);
+const renderContactPoint = contactPoint => {
+  const { uri, organizationName, email, phone } = contactPoint;
+  return (
+    <React.Fragment key={uri || organizationName}>
+      {uri && (
+        <React.Fragment>
+          <TwoColRow
+            col1={localization.contactPoint}
+            col2={
+              uri ? (
+                <a href={uri}>
+                  {organizationName || uri}
+                  <i className="fa fa-external-link fdk-fa-right" />
+                </a>
+              ) : (
+                { organizationName }
+              )
+            }
+          />
+          <hr />
+        </React.Fragment>
+      )}
+      {email && (
+        <React.Fragment>
+          <TwoColRow
+            col1={localization.email}
+            col2={
+              <a
+                title={email}
+                href={`mailto:${email}`}
+                rel="noopener noreferrer"
+              >
+                {email}
+              </a>
+            }
+          />
+          <hr />
+        </React.Fragment>
+      )}
+      {phone && (
+        <React.Fragment>
+          <TwoColRow col1={localization.phone} col2={phone} />
+        </React.Fragment>
+      )}
+    </React.Fragment>
+  );
+};
 
 const renderContactPoints = contactPoints => {
   if (!contactPoints) {

@@ -256,14 +256,31 @@ exports[`should render ApiDetailsPage correctly with apiItem 1`] = `
             <React.Fragment>
               <TwoColRow
                 col1="Contact point"
-                col2="Brønnøysundregistrene"
+                col2={
+                  <a
+                    href="https://fellesdatakatalog.brreg.no"
+                  >
+                    Brønnøysundregistrene
+                    <i
+                      className="fa fa-external-link fdk-fa-right"
+                    />
+                  </a>
+                }
               />
               <hr />
             </React.Fragment>
             <React.Fragment>
               <TwoColRow
                 col1="Email"
-                col2="fellesdatakatalog@brreg.no"
+                col2={
+                  <a
+                    href="mailto:fellesdatakatalog@brreg.no"
+                    rel="noopener noreferrer"
+                    title="fellesdatakatalog@brreg.no"
+                  >
+                    fellesdatakatalog@brreg.no
+                  </a>
+                }
               />
               <hr />
             </React.Fragment>
