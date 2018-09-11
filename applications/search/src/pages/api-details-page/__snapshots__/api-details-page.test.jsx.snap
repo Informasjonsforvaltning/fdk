@@ -58,11 +58,6 @@ exports[`should render ApiDetailsPage correctly with apiItem 1`] = `
       </div>
       <section
         className="col-12 col-lg-8 mt-3"
-        style={
-          Object {
-            "marginBottom": "400px",
-          }
-        }
       >
         <ShowMore
           contentHtml="Provides a basic search api against the National Data Directory of Norway"
@@ -286,6 +281,13 @@ exports[`should render ApiDetailsPage correctly with apiItem 1`] = `
             </React.Fragment>
           </React.Fragment>
         </ListType1>
+        <div
+          style={
+            Object {
+              "height": "75vh",
+            }
+          }
+        />
       </section>
     </div>
   </article>
@@ -335,12 +337,15 @@ exports[`should render ApiDetailsPage correctly with missing api-properties 1`] 
       </div>
       <section
         className="col-12 col-lg-8 mt-3"
-        style={
-          Object {
-            "marginBottom": "400px",
+      >
+        <div
+          style={
+            Object {
+              "height": "75vh",
+            }
           }
-        }
-      />
+        />
+      </section>
     </div>
   </article>
 </main>
