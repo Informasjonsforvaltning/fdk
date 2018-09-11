@@ -281,10 +281,7 @@ export const ApiDetailsPage = props => {
         <div className="row">
           <div className="col-12 col-lg-4 ">{renderStickyMenu(apiItem)}</div>
 
-          <section
-            className="col-12 col-lg-8 mt-3"
-            style={{ marginBottom: '400px' }}
-          >
+          <section className="col-12 col-lg-8 mt-3">
             {renderDescription(description)}
 
             {renderFormats(_.get(apiItem, 'formats'))}
@@ -300,6 +297,8 @@ export const ApiDetailsPage = props => {
             {renderDatasetReferences(_.get(apiItem, 'datasetReferences'))}
 
             {renderContactPoints(_.get(apiItem, 'contactPoint'))}
+
+            <div style={{ height: '75vh' }} />
           </section>
         </div>
       </article>
