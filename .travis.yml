@@ -14,7 +14,7 @@ services:
 install:
   - export DOCKER_HOST=unix:///var/run/docker.sock # required by the docker maven plugin for connecting to docker
   - git config --global core.autocrlf input # this allows to match source code hash with what is calculated on Mac and Windows
-  - export FORCE_BUILD=false # if true the buildAndPushApplication.sh script forces a build for all apps
+  - export FORCE_BUILD=true # if true the buildAndPushApplication.sh script forces a build for all apps
   - travis_wait npm install -g codecov
   - node -v
   - npm -v
