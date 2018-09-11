@@ -7981,6 +7981,38 @@ Les meir på https://difi.github.io/idporten-oidc-dokumentasjon/oidc_api_krr_use
         key="05b3e72e-4579-4b64-a7b7-a80a9b2af85c"
         publishers={Object {}}
       />
+      <div
+        className="col-12 d-flex justify-content-center"
+      >
+        <span
+          aria-hidden="false"
+          className="uu-invisible"
+        >
+          Sidepaginering.
+        </span>
+        <PaginationBoxView
+          activeClassName="active"
+          breakClassName="break-me"
+          breakLabel={
+            <span>
+              ...
+            </span>
+          }
+          containerClassName="pagination"
+          disableInitialCallback={true}
+          disabledClassName="disabled"
+          initialPage={0}
+          marginPagesDisplayed={1}
+          nextClassName="next"
+          nextLabel="Neste side"
+          onPageChange={[MockFunction]}
+          pageCount={NaN}
+          pageRangeDisplayed={2}
+          previousClassName="previous"
+          previousLabel="Forrige side"
+          subContainerClassName="pages pagination"
+        />
+      </div>
     </div>
   </div>
 </main>
@@ -8050,7 +8082,40 @@ exports[`should render ResultsApi correctly with minimum of props and no hits 1`
     <div
       className="col-12 col-lg-8"
       id="apis"
-    />
+    >
+      <div
+        className="col-12 d-flex justify-content-center"
+      >
+        <span
+          aria-hidden="false"
+          className="uu-invisible"
+        >
+          Sidepaginering.
+        </span>
+        <PaginationBoxView
+          activeClassName="active"
+          breakClassName="break-me"
+          breakLabel={
+            <span>
+              ...
+            </span>
+          }
+          containerClassName="pagination"
+          disableInitialCallback={true}
+          disabledClassName="disabled"
+          initialPage={0}
+          marginPagesDisplayed={1}
+          nextClassName="next"
+          nextLabel="Neste side"
+          onPageChange={null}
+          pageCount={Infinity}
+          pageRangeDisplayed={2}
+          previousClassName="previous"
+          previousLabel="Forrige side"
+          subContainerClassName="pages pagination"
+        />
+      </div>
+    </div>
   </div>
 </main>
 `;
