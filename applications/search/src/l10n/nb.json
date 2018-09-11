@@ -17,6 +17,9 @@
   "phone": "Telefon",
   "close": "Lukk",
   "filter": "Filter",
+  "public": "Offentlig",
+  "restricted": "Begrenset offentlighet",
+  "non_public": "Unntatt offentlighet",
   "unknown": "Ukjent",
   "app": {
     "title": "Felles Datakatalog",
@@ -149,10 +152,6 @@
   },
   "search_hit": {
     "owned": "Eies av",
-    "public": "Offentlig",
-    "restricted": "Begrenset offentlighet",
-    "ukjent": "Ukjent",
-    "non_public": "Unntatt offentlighet",
     "sample": "Eksempeldata tilgjengelig",
     "NationalBuildingBlock": "Nasjonal felleskomponent",
     "bruker": "Brukerinnsamlede data",
