@@ -51,7 +51,7 @@ const renderTitle = (Tag, title, titleLink) => {
     return (
       <Link
         className="search-hit__title-link"
-        title={`${localization.api}: ${getTranslateText(title)}`}
+        title={`${localization.apiLabel}: ${title}`}
         to={titleLink}
       >
         {titleTag(Tag, title)}
