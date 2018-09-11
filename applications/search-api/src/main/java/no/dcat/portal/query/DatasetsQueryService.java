@@ -1,6 +1,5 @@
 package no.dcat.portal.query;
 
-
 import com.google.gson.Gson;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -47,14 +46,9 @@ public class DatasetsQueryService extends ElasticsearchService {
     public static final String UNKNOWN = "Ukjent";
     private static Logger logger = LoggerFactory.getLogger(DatasetsQueryService.class);
 
-    public static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ssZ";
-
     public static final String INDEX_DCAT = "dcat";
 
-    public static final String TYPE_DATASET = "dataset";
-
     public static final String FIELD_THEME_CODE = "theme.code";
-    public static final String FIELD_PUBLISHER_NAME = "publisher.name.raw";
     public static final String FIELD_ACCESS_RIGHTS_PREFLABEL = "accessRights.code.raw";
     public static final String FIELD_SUBJECTS_PREFLABEL = "subject.prefLabel.no";
 
@@ -63,15 +57,11 @@ public class DatasetsQueryService extends ElasticsearchService {
     public static final String TERMS_SUBJECTS_COUNT = "subjectsCount";
     public static final String AGGREGATE_DATASET = "/aggregateDataset";
 
-    private static final int NO_HITS = 0;
     private static final int AGGREGATION_NUMBER_OF_COUNTS = 10000; //be sure all theme counts are returned
+    public static final long DAY_IN_MS = 1000 * 3600 * 24;
 
     /* api names */
     public static final String QUERY_SEARCH = "/datasets";
-    public static final String QUERY_THEME_COUNT = "/themecount";
-
-    public static final String QUERY_PUBLISHER_COUNT = "/publishercount";
-    public static final long DAY_IN_MS = 1000 * 3600 * 24;
 
 
     /**
@@ -86,62 +76,81 @@ public class DatasetsQueryService extends ElasticsearchService {
                     "Max number returned by a single query is 100. Size parameters greater than 100 will not return more than 100 datasets. " +
                     "In order to access all datasets, use multiple queries and increment from parameter.", response = Dataset.class)
     @RequestMapping(value = QUERY_SEARCH, method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<String> search(@ApiParam("the query string") @RequestParam(value = "q", defaultValue = "", required = false) String query,
+    public ResponseEntity<String> search(
+            @ApiParam("the query string")
+            @RequestParam(value = "q", defaultValue = "", required = false)
+                    String query,
 
-                                         @ApiParam("Filters on specified theme(s). ex. GOVE, or GOVE,SOCI")
-                                         @RequestParam(value = "theme", defaultValue = "", required = false) String theme,
+            @ApiParam("Filters on specified theme(s). ex. GOVE, or GOVE,SOCI")
+            @RequestParam(value = "theme", defaultValue = "", required = false)
+                    String theme,
 
-                                         @ApiParam("Filters on publisher name")
-                                         @RequestParam(value = "publisher", defaultValue = "", required = false) String publisher,
+            @ApiParam("Filters on publisher name")
+            @RequestParam(value = "publisher", defaultValue = "", required = false)
+                    String publisher,
 
-                                         @ApiParam("Filters on accessrights, codes are PUBLIC, RESTRICTED or NON_PUBLIC ")
-                                         @RequestParam(value = "accessrights", defaultValue = "", required = false) String accessRights,
+            @ApiParam("Filters on accessrights, codes are PUBLIC, RESTRICTED or NON_PUBLIC ")
+            @RequestParam(value = "accessrights", defaultValue = "", required = false)
+                    String accessRights,
 
-                                         @ApiParam("Filters on publisher's organization path (orgPath), e.g. /STAT/972417858/971040238")
-                                         @RequestParam(value = "orgPath", defaultValue = "", required = false) String orgPath,
+            @ApiParam("Filters on publisher's organization path (orgPath), e.g. /STAT/972417858/971040238")
+            @RequestParam(value = "orgPath", defaultValue = "", required = false)
+                    String orgPath,
 
-                                         @ApiParam("Filters datasets that were first harvested x-days ago, e.g. a value of 100 will result in datasets that were harvested more than 100 days ago")
-                                         @RequestParam(value = "firstHarvested", defaultValue = "0", required = false) int firstHarvested,
+            @ApiParam("Filters datasets that were first harvested x-days ago, e.g. a value of 100 will result in datasets that were harvested more than 100 days ago")
+            @RequestParam(value = "firstHarvested", defaultValue = "0", required = false)
+                    int firstHarvested,
 
-                                         @ApiParam("Filters datasets that were last harvested x-days ago, e.g. 10 will result in datasets that have not been harvested for the last 10 days.")
-                                         @RequestParam(value = "lastHarvested", defaultValue = "0", required = false) int lastHarvested,
+            @ApiParam("Filters datasets that were last harvested x-days ago, e.g. 10 will result in datasets that have not been harvested for the last 10 days.")
+            @RequestParam(value = "lastHarvested", defaultValue = "0", required = false)
+                    int lastHarvested,
 
-                                         @ApiParam("Filters datasets that has changed within the last x-days, e.g. a value of 10 will result in datasets that were changed during 10 days, i.e. its values have changed within the last 10 days")
-                                         @RequestParam(value = "lastChanged", defaultValue = "0", required = false) int lastChanged,
+            @ApiParam("Filters datasets that has changed within the last x-days, e.g. a value of 10 will result in datasets that were changed during 10 days, i.e. its values have changed within the last 10 days")
+            @RequestParam(value = "lastChanged", defaultValue = "0", required = false)
+                    int lastChanged,
 
-                                         @ApiParam("Returns datatasets from position x in the result set, 0 is the default value. A value of 150 will return the 150th dataset in the resultset")
-                                         @RequestParam(value = "from", defaultValue = "0", required = false) int from,
+            @ApiParam("Returns datatasets from position x in the result set, 0 is the default value. A value of 150 will return the 150th dataset in the resultset")
+            @RequestParam(value = "from", defaultValue = "0", required = false)
+                    int from,
 
-                                         @ApiParam("Specifies the size, i.e. the number of datasets to return in one request. The default is 10, the maximum number of datasets returned is 100")
-                                         @RequestParam(value = "size", defaultValue = "10", required = false) int size,
+            @ApiParam("Specifies the size, i.e. the number of datasets to return in one request. The default is 10, the maximum number of datasets returned is 100")
+            @RequestParam(value = "size", defaultValue = "10", required = false)
+                    int size,
 
-                                         @ApiParam("Specifies the language elements of the datasets to search in, default is nb")
-                                         @RequestParam(value = "lang", defaultValue = "nb", required = false) String lang,
+            @ApiParam("Specifies the language elements of the datasets to search in, default is nb")
+            @RequestParam(value = "lang", defaultValue = "nb", required = false)
+                    String lang,
 
-                                         @ApiParam("Specifies the sort field, at the present we support title, modified and publisher. Default is no value")
-                                         @RequestParam(value = "sortfield", defaultValue = "", required = false) String sortfield,
+            @ApiParam("Specifies the sort field, at the present we support title, modified and publisher. Default is no value")
+            @RequestParam(value = "sortfield", defaultValue = "", required = false)
+                    String sortfield,
 
-                                         @ApiParam("Specifies the sort direction of the sorted result. The directions are: asc for ascending and desc for descending")
-                                         @RequestParam(value = "sortdirection", defaultValue = "", required = false) String sortdirection,
+            @ApiParam("Specifies the sort direction of the sorted result. The directions are: asc for ascending and desc for descending")
+            @RequestParam(value = "sortdirection", defaultValue = "", required = false)
+                    String sortdirection,
 
-                                         @ApiParam("Filters datasets according their referred subjects")
-                                         @RequestParam(value = "subject", defaultValue = "", required = false) String subject,
+            @ApiParam("Filters datasets according their referred subjects")
+            @RequestParam(value = "subject", defaultValue = "", required = false)
+                    String subject,
 
-                                         @ApiParam("Filters datasets according to their provenance code, e.g. NASJONAL - nasjonal building block, VEDTAK - governmental decisions, BRUKER - user collected data and TREDJEPART - third party data")
-                                         @RequestParam(value = "provenance", defaultValue = "", required = false) String provenance,
+            @ApiParam("Filters datasets according to their provenance code, e.g. NASJONAL - nasjonal building block, VEDTAK - governmental decisions, BRUKER - user collected data and TREDJEPART - third party data")
+            @RequestParam(value = "provenance", defaultValue = "", required = false)
+                    String provenance,
 
-                                         @ApiParam("Filters datasets according to their spatial label, e.g. Oslo, Norge")
-                                         @RequestParam(value = "spatial", defaultValue = "", required = false) String spatial,
+            @ApiParam("Filters datasets according to their spatial label, e.g. Oslo, Norge")
+            @RequestParam(value = "spatial", defaultValue = "", required = false)
+                    String spatial,
 
-                                         @ApiParam("Filters on distribution license and access rights. If true the distribution licence is open and the access rights are public.")
-                                         @RequestParam(value = "opendata", defaultValue = "", required = false) String opendata,
+            @ApiParam("Filters on distribution license and access rights. If true the distribution licence is open and the access rights are public.")
+            @RequestParam(value = "opendata", defaultValue = "", required = false)
+                    String opendata,
 
-                                         @ApiParam("Filters on catalog. ")
-                                         @RequestParam(value = "catalog", defaultValue = "", required = false) String catalog)
-    {
+            @ApiParam("Filters on catalog. ")
+            @RequestParam(value = "catalog", defaultValue = "", required = false)
+                    String catalog) {
 
 
-           StringBuilder loggMsg = new StringBuilder()
+        StringBuilder loggMsg = new StringBuilder()
                 .append(" query:").append(query)
                 .append(" theme:").append(theme)
                 .append(" publisher:").append(publisher)
@@ -261,10 +270,10 @@ public class DatasetsQueryService extends ElasticsearchService {
 
     public AggregationBuilder getOpendataAggregation() {
         return AggregationBuilders.filter("opendata")
-                    .filter(QueryBuilders.boolQuery()
-                            .must(QueryBuilders.termQuery("accessRights.code.raw", "PUBLIC"))
-                            .must(QueryBuilders.termQuery("distribution.openLicense", "true"))
-                    );
+                .filter(QueryBuilders.boolQuery()
+                        .must(QueryBuilders.termQuery("accessRights.code.raw", "PUBLIC"))
+                        .must(QueryBuilders.termQuery("distribution.openLicense", "true"))
+                );
     }
 
     private void addSortForEmptySearch(SearchRequestBuilder searchBuilder) {
@@ -306,7 +315,7 @@ public class DatasetsQueryService extends ElasticsearchService {
     }
 
 
-    private void addSort(@RequestParam(value = "sortfield", defaultValue = "source") String sortfield, @RequestParam(value = "sortdirection", defaultValue = "asc") String sortdirection, SearchRequestBuilder searchBuilder) {
+    private void addSort(String sortfield, String sortdirection, SearchRequestBuilder searchBuilder) {
         if (!sortfield.trim().isEmpty()) {
 
             SortOrder sortOrder = sortdirection.toLowerCase().contains("asc".toLowerCase()) ? SortOrder.ASC : SortOrder.DESC;
@@ -349,11 +358,12 @@ public class DatasetsQueryService extends ElasticsearchService {
      * @param search the search object
      * @return a new bool query with the added filter.
      */
-    private BoolQueryBuilder addFilter(String theme, String publisher, String accessRights,
-                                       QueryBuilder search, String orgPath,
-                                       int firstHarvested, int lastHarvested, int lastChanged,
-                                       String subject, String provenance, String spatial, String opendata,
-                                       String catalog) {
+    private BoolQueryBuilder addFilter(
+            String theme, String publisher, String accessRights,
+            QueryBuilder search, String orgPath,
+            int firstHarvested, int lastHarvested, int lastChanged,
+            String subject, String provenance, String spatial, String opendata,
+            String catalog) {
 
         BoolQueryBuilder boolQuery = QueryBuilders.boolQuery()
                 .must(search);
@@ -410,12 +420,12 @@ public class DatasetsQueryService extends ElasticsearchService {
         }
         if (!StringUtils.isEmpty(opendata)) {
             BoolQueryBuilder opendataFilter = QueryBuilders.boolQuery();
-            if(opendata.equals("true")){
+            if (opendata.equals("true")) {
                 opendataFilter.must(QueryBuilders.termQuery("distribution.openLicense", "true"));
                 opendataFilter.must(QueryBuilders.termQuery("accessRights.code.raw", "PUBLIC"));
             }
             //Handle the negative cases
-            else if(opendata.equals("false")){
+            else if (opendata.equals("false")) {
                 BoolQueryBuilder notOpenLicenseFilter = QueryBuilders.boolQuery();
                 BoolQueryBuilder notOpenDistributionFilter = QueryBuilders.boolQuery();
                 notOpenLicenseFilter.mustNot(QueryBuilders.termQuery("distribution.openLicense", "true"));
@@ -454,8 +464,8 @@ public class DatasetsQueryService extends ElasticsearchService {
         if (!StringUtils.isEmpty(subject)) {
             BoolQueryBuilder subjectFilter = QueryBuilders.boolQuery();
 
-            Arrays.stream(subject.split(",")).forEach( subj -> {
-                if (subj.equals(UNKNOWN)){
+            Arrays.stream(subject.split(",")).forEach(subj -> {
+                if (subj.equals(UNKNOWN)) {
                     subjectFilter.mustNot(QueryBuilders.existsQuery("subject"));
                 } else if (subj.startsWith("http")) {
                     subjectFilter.must(QueryBuilders.matchQuery("subject.uri", subj));
@@ -495,7 +505,6 @@ public class DatasetsQueryService extends ElasticsearchService {
         }
 
 
-
         return boolQuery;
     }
 
@@ -509,7 +518,10 @@ public class DatasetsQueryService extends ElasticsearchService {
     @CrossOrigin
     @ApiOperation(value = "Get a specific dataset.",
             notes = "You must specify the dataset's identifier", response = Dataset.class)
-    @RequestMapping(value = "/datasets/**", method = RequestMethod.GET, produces = {"application/json", "text/turtle", "application/ld+json", "application/rdf+xml"})
+    @RequestMapping(
+            value = "/datasets/**",
+            method = RequestMethod.GET,
+            produces = {"application/json", "text/turtle", "application/ld+json", "application/rdf+xml"})
     public ResponseEntity<String> detail(HttpServletRequest request) {
         ResponseEntity<String> jsonError = initializeElasticsearchTransportClient();
 
