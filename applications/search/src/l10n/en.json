@@ -17,6 +17,9 @@
   "phone": "Phone",
   "close": "Close",
   "filter": "Filter",
+  "public": "Public",
+  "restricted": "Restricted",
+  "non_public": "Non public",
   "unknown": "Unknown",
   "app": {
     "title": "The National Data Directory",
@@ -150,10 +153,6 @@
   },
   "search_hit": {
     "owned": "Owned by",
-    "public": "Public",
-    "restricted": "Restricted",
-    "ukjent": "Unknown",
-    "non_public": "Non public",
     "sample": "Sample data are available",
     "NationalBuildingBlock": "National Building Block",
     "bruker": "User collected data",

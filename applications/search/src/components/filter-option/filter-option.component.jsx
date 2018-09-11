@@ -26,11 +26,15 @@ export const FilterOption = props => {
     if (themesItems[`${label}`]) {
       textLabel = getTranslateText(themesItems[`${label}`].title);
     } else {
-      textLabel = localization.search_hit.ukjent;
+      textLabel = localization.unknown;
     }
+  } else if (
+    optionLabel.toUpperCase() === 'UKJENT' ||
+    optionLabel.toUpperCase() === 'MISSING'
+  ) {
+    textLabel = localization.unknown;
   } else {
-    textLabel =
-      localization.search_hit[optionLabel.toLowerCase()] || optionLabel;
+    textLabel = localization[optionLabel.toLowerCase()] || optionLabel;
   }
 
   const id = encodeURIComponent(itemKey + value);
