@@ -158,7 +158,7 @@ export class SearchPublishersTree extends React.Component {
             displayClass="inline-block"
           />
         );
-        if (node.key !== 'ukjent') {
+        if (node.key !== 'ukjent' && node.key !== 'MISSING') {
           return (
             <div key={`panel${i}`} className="section">
               <TreeView
@@ -174,6 +174,7 @@ export class SearchPublishersTree extends React.Component {
             </div>
           );
         }
+        name = localization.unknown;
         return (
           <FilterOption
             key={`${node.key}|${i}`}
@@ -183,7 +184,6 @@ export class SearchPublishersTree extends React.Component {
             count={node.count}
             onClick={onFilterPublisherHierarchy}
             active={active}
-            displayClass="indent"
           />
         );
       });

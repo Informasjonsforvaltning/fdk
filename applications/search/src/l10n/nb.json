@@ -17,6 +17,7 @@
   "phone": "Telefon",
   "close": "Lukk",
   "filter": "Filter",
+  "unknown": "Ukjent",
   "app": {
     "title": "Felles Datakatalog",
     "titleSub": "Oversikt over datasett fra virksomheter i Norge.",
