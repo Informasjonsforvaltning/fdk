@@ -42,8 +42,8 @@ The [search api](https://fellesdatakatalog.brreg.no/swagger-ui.html) can also be
 
 ## Set up developement environnement
   1) Clone this repo
-  2) Install Java8 and Maven. 
-  If you have a Mac, running this script will do it automatically: 
+  2) Install Java8, Maven and Docker. 
+  If you have a Mac, running this script will install Java8 and Maven automatically: 
 
          ./install-dependencies-mac.sh
   3) Running the following will (re)compile the entire project: 
