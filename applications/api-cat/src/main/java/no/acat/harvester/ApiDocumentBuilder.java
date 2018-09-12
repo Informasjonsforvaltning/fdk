@@ -128,16 +128,14 @@ public class ApiDocumentBuilder {
         return id;
     }
 
-    Publisher lookupPublisher(String id) {
+    Publisher lookupPublisher(String orgNr) {
+        String lookupUri = searchApiUrl + "/publishers/{orgNr}";
         try {
-            GetResponse response = elasticsearchClient.prepareGet("dcat", "publisher", id).get();
-            if (response.isExists()) {
-                return mapper.readValue(response.getSourceAsString(), Publisher.class);
-            }
+            RestTemplate restTemplate = new RestTemplate();
+            return restTemplate.getForObject(lookupUri, Publisher.class, orgNr);
         } catch (Exception e) {
-            logger.warn("Publisher lookup failed for OrgNr={}", id);
+            logger.warn("Publisher lookup failed for uri={}. Error: {}", lookupUri, e.getMessage());
         }
-
         return null;
     }
 
