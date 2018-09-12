@@ -285,7 +285,7 @@
   },
   "api": {
     "accessRight": {
-      "public": "API-et er åpent",
+      "public": "API-et er opent",
       "restricted": "API med avgrensa offentlegheit",
       "nonPublic": "API-et er unntatt offentlegheit",
       "unknown": "Ukjend tilgang"
