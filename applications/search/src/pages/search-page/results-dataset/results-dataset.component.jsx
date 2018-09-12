@@ -135,7 +135,7 @@ export class ResultsDataset extends React.Component {
 
     return (
       <main id="content">
-        <section className="row mt-1 mb-1-em">
+        <section className="row mb-3">
           <div className="col-6 col-lg-4">
             <button
               className={clearButtonClass}

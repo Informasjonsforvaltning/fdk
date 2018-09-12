@@ -445,7 +445,7 @@ export class SearchPage extends React.Component {
       distributionTypeItems,
       location
     } = this.props;
-    const topSectionClass = cx('top-section-search', 'mb-1-em', {
+    const topSectionClass = cx('top-section-search', 'mb-4', {
       'top-section-search--image': !!(browser && browser.name !== 'ie')
     });
     return (
