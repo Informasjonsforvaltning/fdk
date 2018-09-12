@@ -89,7 +89,6 @@ const renderAccessRights = accessRight => {
   return (
     <React.Fragment>
       <TwoColRow col1={localization.accessLevel} col2={accessRightsLabel} />
-      <hr />
     </React.Fragment>
   );
 };
@@ -157,11 +156,11 @@ const renderContactPoint = contactPoint => {
               )
             }
           />
-          <hr />
         </React.Fragment>
       )}
       {email && (
         <React.Fragment>
+          <hr />
           <TwoColRow
             col1={localization.email}
             col2={
@@ -174,11 +173,11 @@ const renderContactPoint = contactPoint => {
               </a>
             }
           />
-          <hr />
         </React.Fragment>
       )}
       {phone && (
         <React.Fragment>
+          <hr />
           <TwoColRow col1={localization.phone} col2={phone} />
         </React.Fragment>
       )}
