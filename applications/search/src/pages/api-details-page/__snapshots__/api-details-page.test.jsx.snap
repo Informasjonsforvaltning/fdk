@@ -267,9 +267,9 @@ exports[`should render ApiDetailsPage correctly with apiItem 1`] = `
                   </a>
                 }
               />
-              <hr />
             </React.Fragment>
             <React.Fragment>
+              <hr />
               <TwoColRow
                 col1="Email"
                 col2={
@@ -282,7 +282,6 @@ exports[`should render ApiDetailsPage correctly with apiItem 1`] = `
                   </a>
                 }
               />
-              <hr />
             </React.Fragment>
           </React.Fragment>
         </ListType1>

@@ -158,7 +158,7 @@ export class ResultsConcepts extends React.Component {
 
     return (
       <main id="content">
-        <section className="row mt-1 mb-1-em fdk-button-row">
+        <section className="row mb-3 fdk-button-row">
           <div className="col-lg-4">
             <button
               className={clearButtonClass}

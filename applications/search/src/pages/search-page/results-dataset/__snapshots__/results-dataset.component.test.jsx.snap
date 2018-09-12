@@ -5,7 +5,7 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
   id="content"
 >
   <section
-    className="row mt-1 mb-1-em"
+    className="row mb-3"
   >
     <div
       className="col-6 col-lg-4"
@@ -538,7 +538,7 @@ exports[`should render ResultsDataset correctly with minimum of props 1`] = `
   id="content"
 >
   <section
-    className="row mt-1 mb-1-em"
+    className="row mb-3"
   >
     <div
       className="col-6 col-lg-4"
@@ -646,7 +646,7 @@ exports[`should render ResultsDataset correctly with props 1`] = `
   id="content"
 >
   <section
-    className="row mt-1 mb-1-em"
+    className="row mb-3"
   >
     <div
       className="col-6 col-lg-4"
