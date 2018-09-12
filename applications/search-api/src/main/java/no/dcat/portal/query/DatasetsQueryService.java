@@ -240,13 +240,14 @@ public class DatasetsQueryService extends ElasticsearchService {
 
         logger.trace("Query: {}", searchBuilder.toString());
 
-        if (emptySearch) {
-            addSortForEmptySearch(searchBuilder);
-        }
 
         // Handle attempting to sort on score, because any sorting removes score i.e. relevance from the search.
         if (sortfield.compareTo("score") != 0) {
             addSort(sortfield, sortdirection, searchBuilder);
+        }
+
+        if (emptySearch) {
+            addSortForEmptySearch(searchBuilder);
         }
 
         // Execute search
