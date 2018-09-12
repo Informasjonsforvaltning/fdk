@@ -21,7 +21,7 @@ export function configureStore() {
 
   const enhancer = selectedCompose(
     applyMiddleware(...middlewares),
-    persistState(['featureToggle', 'settings'], { key: 'redux' })
+    persistState([/* 'featureToggle', */ 'settings'], { key: 'redux' })
   );
 
   const store = createStore(rootReducer, /* preloadedState, */ enhancer);

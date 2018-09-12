@@ -1,7 +1,7 @@
 import { FEATURES } from '../../app/features';
 
 const initialState = {
-  toggles: { [FEATURES.API]: false }
+  toggles: { [FEATURES.API]: true }
 };
 
 export function featureToggleResolver(state = initialState, action) {
