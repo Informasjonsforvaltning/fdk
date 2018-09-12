@@ -43,10 +43,8 @@ fi
 components="fuseki harvester harvester-api nginx-registration nginx-search reference-data registration-react registration-api registration-auth search api-cat search-api"
 
 
-# remove all local tags
-git tag -d $(git tag -l)
 # fetch all tags from github
-git fetch --tags
+git fetch --prune --tags
 
 DATETIME=`date "+%Y-%m-%dT%H_%M_%S"`
 
@@ -75,25 +73,34 @@ function gitTag {
   fromEnvironment=$2
   toEnvironment=$3
 
-  # checkout commit for tag that we are using as the base to tag on top of
+  echo "Checkout tags/${fromEnvironment}_latest"
   git checkout tags/${fromEnvironment}_latest
 
-  git fetch --prune --tags
-
   # tag checked-out commit with ***_latest tag
+  echo "delete origin tag ${toEnvironment}_latest"
+  git push --delete origin ${toEnvironment}_latest
+  echo "tag ${toEnvironment}_latest"
+
   git tag -f ${toEnvironment}_latest
+
+  echo "tag ${toEnvironment}_${DATETIME}"
   git tag -f ${toEnvironment}_${DATETIME}
+
   if [ "$component" != "all" ] ; then
     # if only one component is deployed, also label it with component name
+    git push --delete origin ${toEnvironment}_latest_${component}
     git tag -f ${toEnvironment}_latest_${component}
+
     git tag -f ${toEnvironment}_${DATETIME}_${component}
   fi
 
-  # don't forget to checkout develop again, don't want any surprises later
-  git checkout develop
-
   # push all tags to github
+  echo "push tags"
   git push origin --tags
+
+  # don't forget to checkout develop again, don't want any surprises later
+  echo "checkout develop"
+  git checkout develop
 
 }
 
