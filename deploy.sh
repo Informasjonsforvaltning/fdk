@@ -78,22 +78,15 @@ function gitTag {
   # checkout commit for tag that we are using as the base to tag on top of
   git checkout tags/${fromEnvironment}_latest
 
-  # remove ***_latest tag from github and locally
-  git push --delete origin ${toEnvironment}_latest || true
-  git tag --delete ${toEnvironment}_latest || true
-  #if only one component is deployed, also remove latest label for that component
-  if [ "$component" != "all" ] ; then
-    git push --delete origin ${toEnvironment}_latest_${component} || true
-    git tag --delete ${toEnvironment}_latest_${component} || true
-  fi
+  git fetch --prune --tags
 
   # tag checked-out commit with ***_latest tag
-  git tag ${toEnvironment}_latest
-  git tag ${toEnvironment}_${DATETIME}
+  git tag -f ${toEnvironment}_latest
+  git tag -f ${toEnvironment}_${DATETIME}
   if [ "$component" != "all" ] ; then
     # if only one component is deployed, also label it with component name
-    git tag ${toEnvironment}_latest_${component}
-    git tag ${toEnvironment}_${DATETIME}_${component}
+    git tag -f ${toEnvironment}_latest_${component}
+    git tag -f ${toEnvironment}_${DATETIME}_${component}
   fi
 
   # don't forget to checkout develop again, don't want any surprises later
