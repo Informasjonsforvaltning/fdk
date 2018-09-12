@@ -1,5 +1,3 @@
-#You need Maven and Java in order to build this project
-read -p "Please install Docker while this script runs. Press ENTER to continue"
 echo "Install Homebrew? Type 1 or 2"
 select yn in "Yes" "No"; do
     case $yn in
@@ -21,8 +19,8 @@ select yn in "Yes" "No"; do
         No ) exit;;
     esac
 done
-echo "Cloning project from https://github.com/Informasjonsforvaltning/fdk"
-git clone https://github.com/Informasjonsforvaltning/fdk
-echo 'DOCKER_HOST=tcp://localhost:2375' >>~/.bash_profile
-source ~/.bash_profile
-mvn clean install
+read -p "Please install Docker if you haven't already. Press ENTER to continue"
+open https://docs.docker.com/docker-for-mac/install/
+
+# could be needed: echo 'DOCKER_HOST=tcp://localhost:2375' >>~/.bash_profile
+# source ~/.bash_profile
