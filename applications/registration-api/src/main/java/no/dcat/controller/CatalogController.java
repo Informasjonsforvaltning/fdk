@@ -82,7 +82,6 @@ public class CatalogController {
                                                             PagedResourcesAssembler assembler) {
 
         Authentication auth = springSecurityContextBean.getAuthentication();
-
         Set<String> validCatalogs = new HashSet<>();
 
         for (GrantedAuthority authority : auth.getAuthorities()) {

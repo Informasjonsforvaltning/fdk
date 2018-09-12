@@ -19,6 +19,7 @@
         <module>elasticsearch5-client</module>
         <module>referencedata-client</module>
         <module>referencedata-client-spring1</module>
+        <module>webutils-spring1</module>
     </modules>
 
 </project>

@@ -127,6 +127,11 @@
         </dependency>
 
         <dependency>
+            <groupId>no.dcat</groupId>
+            <artifactId>webutils-spring1</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
             <version>2.7.0</version>
