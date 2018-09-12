@@ -10,6 +10,8 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.Data;
 import no.dcat.shared.Publisher;
+import no.dcat.webutils.exceptions.NotFoundException;
+import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.index.query.QueryBuilder;
@@ -34,6 +36,8 @@ public class PublisherQueryService extends ElasticsearchService {
     public static final String TYPE_DATA_PUBLISHER = "publisher";
     public static final String QUERY_PUBLISHER = "/publisher";
     public static final String QUERY_PUBLISHER_HIERARCHY = "/publisher/hierarchy";
+    public static final String QUERY_GET_BY_ORGNR = "/publishers/{orgNr}";
+
 
     /**
      * Finds all publisher loaded into elasticsearch.
@@ -71,6 +75,41 @@ public class PublisherQueryService extends ElasticsearchService {
         logger.debug("Found publisher: {}", responsePublisher);
 
         return new ResponseEntity<>(responsePublisher.toString(), HttpStatus.OK);
+    }
+
+    /**
+     * Retrieves the publisher record identified by the provided orgnr.
+     *
+     * @return the record (JSON) of the retrieved publisher.
+     */
+    @CrossOrigin
+    @ApiOperation(
+            value = "Get a specific publisher by OrgNr",
+            response = Publisher.class)
+    @RequestMapping(
+            value = QUERY_GET_BY_ORGNR,
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public Publisher getPublisherByOrgNrHandler(
+            @ApiParam("Organization number") @PathVariable String orgNr)
+            throws NotFoundException {
+        logger.info(String.format("Get publisher with OrgNr: %s", orgNr));
+
+        return getPublisherByOrgNr(orgNr);
+    }
+
+    Publisher getPublisherByOrgNr(String orgNr) throws NotFoundException {
+        initializeElasticsearchTransportClient();
+        GetResponse elasticGetResponse = getClient().prepareGet(INDEX_DCAT, TYPE_DATA_PUBLISHER, orgNr).get();
+
+        if (!elasticGetResponse.isExists()) {
+            throw new NotFoundException();
+        }
+
+        String publisherAsJson = elasticGetResponse.getSourceAsString();
+        logger.trace(String.format("Found publisher: %s", publisherAsJson));
+
+        return new Gson().fromJson(publisherAsJson, Publisher.class);
     }
 
     /**
