@@ -1,9 +1,9 @@
 OrgNr;OrgName;ApiSpecUrl;ApiDocUrl;AccessRights;Provenance;DatasetRefs
-974760673;Brønnøysundregistrene;https://raw.githubusercontent.com/brreg/openAPI/master/specs/enhetsregisteret.json;https://data.brreg.no/enhetsregisteret/api/docs/index.html;PUBLIC;NASJONAL;https://data.norge.no/node/197
-974760673;Brønnøysundregistrene;https://fellesdatakatalog.brreg.no/api-docs/search-api;https://fellesdatakatalog.brreg.no/swagger-ui.html;RESTRICTED;NASJONAL;
-971035854;Universitetet i Oslo;https://docker-demo.fsat.no/fsapi/swagger.json;https://docker-demo.fsat.no/fsapi/swagger.html#!/person/get_personer_id;NON_PUBLIC;NASJONAL;
-971032146;KS;https://ks-no.github.io/api/innsyn-sok-api-v1.json;https://editor.swagger.io/?url=https://ks-no.github.io/api/innsyn-sok-api-v1.json;RESTRICTED;NASJONAL;
-991825827;Difi;https://oidc-ver2.difi.no/kontaktinfo-oauth2-server/rest/apis;https://oidc-ver2.difi.no/kontaktinfo-oauth2-server/rest/swagger-ui.html;NON_PUBLIC;NASJONAL;
+974760673;Brønnøysundregistrene;https://raw.githubusercontent.com/brreg/openAPI/master/specs/enhetsregisteret.json;https://data.brreg.no/enhetsregisteret/api/docs/index.html;PUBLIC;NASJONAL;http://brreg.no/catalogs/974760673/datasets/63086dda-9b72-43f0-bbc2-3ced4bc2edd6
+974760673;Brønnøysundregistrene;https://fellesdatakatalog.brreg.no/api-docs/search-api;https://fellesdatakatalog.brreg.no/swagger-ui.html;PUBLIC;;http://brreg.no/catalogs/974760673/datasets/ed6510da-01cf-4905-82fb-72e3cda08789
+971035854;Universitetet i Oslo;https://docker-demo.fsat.no/fsapi/swagger.json;https://docker-demo.fsat.no/fsapi/swagger.html#!/person/get_personer_id;PUBLIC;;
+971032146;KS;https://ks-no.github.io/api/innsyn-sok-api-v1.json;https://editor.swagger.io/?url=https://ks-no.github.io/api/innsyn-sok-api-v1.json;PUBLIC;;
+991825827;Difi;https://oidc-ver2.difi.no/kontaktinfo-oauth2-server/rest/apis;https://oidc-ver2.difi.no/kontaktinfo-oauth2-server/rest/swagger-ui.html;PUBLIC;NASJONAL;http://brreg.no/catalogs/991825827/datasets/4aee4ef0-e112-4675-acc7-08a9a4559ce8
 970018131;Utdanningsdirektoratet;https://data-nor.udir.no/swagger/docs/v1.0;https://data.norge.no/data/utdanningsdirektoratet/nasjonalt-register-opplæringskontorer-nor;PUBLIC;;
 970018131;Utdanningsdirektoratet;https://data-nbr.udir.no/swagger/docs/v1.0;https://data.norge.no/data/utdanningsdirektoratet/nasjonalt-barnehageregister-nbr;PUBLIC;;
 970018131;Utdanningsdirektoratet;https://data-nsr.udir.no/swagger/docs/v1.0;https://data.norge.no/data/utdanningsdirektoratet/nasjonalt-skoleregister-nsr-0;PUBLIC;;
