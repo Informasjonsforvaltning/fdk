@@ -2,14 +2,9 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <parent>
-        <groupId>no.dcat</groupId>
-        <artifactId>applications</artifactId>
-        <version>1.0</version>
-    </parent>
-
     <modelVersion>4.0.0</modelVersion>
 
+    <groupId>no.dcat</groupId>
     <artifactId>end2end-test</artifactId>
     <version>1.0.0</version>
 
@@ -26,32 +21,53 @@
 
     <dependencies>
         <dependency>
+            <groupId>no.dcat</groupId>
+            <artifactId>shared</artifactId>
+            <version>1.2.0</version>
+        </dependency>
+        <dependency>
+            <groupId>no.dcat</groupId>
+            <artifactId>datastore</artifactId>
+            <version>1.0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>no.dcat</groupId>
+            <artifactId>harvester-api</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
+            <version>1.5.6.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
+            <version>1.7.21</version>
         </dependency>
 
         <dependency>
             <groupId>info.cukes</groupId>
             <artifactId>cucumber-java</artifactId>
+            <version>1.2.5</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>info.cukes</groupId>
             <artifactId>cucumber-spring</artifactId>
+            <version>1.2.5</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>info.cukes</groupId>
             <artifactId>cucumber-junit</artifactId>
+            <version>1.2.5</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>info.cukes</groupId>
             <artifactId>cucumber-core</artifactId>
+            <version>1.2.5</version>
             <scope>test</scope>
         </dependency>
 
@@ -68,11 +84,7 @@
             <scope>test</scope>
         </dependency>
 
-        <dependency>
-            <groupId>no.dcat</groupId>
-            <artifactId>harvester-api</artifactId>
-            <scope>test</scope>
-        </dependency>
+
 
         <dependency>
             <groupId>org.awaitility</groupId>
@@ -84,25 +96,35 @@
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
+            <version>3.5</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
+            <version>1.5.6.RELEASE</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-elasticsearch</artifactId>
+            <version>1.5.6.RELEASE</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.elasticsearch</groupId>
             <artifactId>elasticsearch</artifactId>
+            <version>2.4.1</version>
             <scope>test</scope>
         </dependency>
-    </dependencies>
 
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>21.0</version>
+        </dependency>
+
+    </dependencies>
 
 
 </project>
