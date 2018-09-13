@@ -35,7 +35,7 @@ public class ApiHarvestTest {
         doReturn(mockApiDocumentBuilder).when(spyHarvester).createApiDocumentBuilder();
 
         List<ApiDocument> response = spyHarvester.harvestAll();
-        final int FROM_CSV = 10;
+        final int FROM_CSV = 9;
         assertThat(response.size(), is(FROM_CSV));
 
     }
