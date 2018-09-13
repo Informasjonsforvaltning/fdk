@@ -2,12 +2,12 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>no.dcat</groupId>
-		<artifactId>applications</artifactId>
-		<version>1.0</version>
-		<relativePath>..</relativePath>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>1.5.6.RELEASE</version>
 	</parent>
 
+    <groupId>no.dcat</groupId>
 	<artifactId>harvester</artifactId>
 	<version>1.0.0</version>
 	<packaging>jar</packaging>
@@ -24,6 +24,11 @@
 
         <docker.image.prefix>dcatno</docker.image.prefix>
 		<docker.registry/>
+
+		<unittest.category/>
+		<endtoendtest.category/>
+		<loadtest.category/>
+		<integrationtest.category/>
 	</properties>
 
 	<dependencies>
@@ -79,11 +84,13 @@
 		<dependency>
 			<groupId>org.apache.jena</groupId>
 			<artifactId>jena-base</artifactId>
+			<version>3.3.0</version>
 			<type>pom</type>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.jena</groupId>
 			<artifactId>apache-jena-libs</artifactId>
+			<version>3.3.0</version>
 			<type>pom</type>
 		</dependency>
 		<dependency>
@@ -110,7 +117,35 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
-
+	<profiles>
+		<profile>
+			<id>unit-test</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<unittest.category>,no.dcat.shared.testcategories.UnitTest</unittest.category>
+			</properties>
+		</profile>
+		<profile>
+			<id>integration-test</id>
+			<properties>
+				<integrationtest.category>,no.dcat.shared.testcategories.IntegrationTest</integrationtest.category>
+			</properties>
+		</profile>
+		<profile>
+			<id>end-to-end-test</id>
+			<properties>
+				<endtoendtest.category>,no.dcat.shared.testcategories.EndToEndTest</endtoendtest.category>
+			</properties>
+		</profile>
+		<profile>
+			<id>load-test</id>
+			<properties>
+				<loadtest.category>,no.dcat.shared.testcategories.LoadTest</loadtest.category>
+			</properties>
+		</profile>
+	</profiles>
 	<build>
 		<plugins>
 			<plugin>
@@ -163,11 +198,47 @@
 			</plugin>
 
 			<plugin>
+				<!-- Unit test runner -->
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.19.1</version>
 				<configuration>
-					<argLine>-noverify</argLine>
+					<groups>java.lang.Exception ${unittest.category} ${endtoendtest.category} ${loadtest.category}</groups> <!-- java.lang.Exception is a hack to make a valid comma-separated list og category classes -->
+					<argLine>${surefireArgLine} -Dfile.encoding=${project.build.sourceEncoding}</argLine>
 				</configuration>
+			</plugin>
+			<plugin>
+			<!-- Generates coverage reports from unit and integration tests -->
+			<groupId>org.jacoco</groupId>
+			<artifactId>jacoco-maven-plugin</artifactId>
+			<version>0.7.6.201602180812</version>
+			<executions>
+			<!--
+                JaCoCo report for unit tests
+            -->
+			<execution>
+				<id>pre-unit-test</id>
+				<goals>
+					<goal>prepare-agent</goal>
+				</goals>
+				<configuration>
+					<destFile>${project.build.directory}/coverage-reports/jacoco-ut.exec</destFile>
+					<propertyName>surefireArgLine</propertyName>
+				</configuration>
+			</execution>
+			<execution>
+				<id>post-unit-test</id>
+				<phase>test</phase>
+				<goals>
+					<goal>report</goal>
+				</goals>
+				<configuration>
+					<dataFile>${project.build.directory}/coverage-reports/jacoco-ut.exec</dataFile>
+					<!-- Sets the output directory for the code coverage report for unit tests. -->
+					<outputDirectory>${project.reporting.outputDirectory}/jacoco-ut</outputDirectory>
+				</configuration>
+			</execution>
+			</executions>
 			</plugin>
 		</plugins>
 	</build>
