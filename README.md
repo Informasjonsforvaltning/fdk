@@ -1,3 +1,4 @@
+
 [![Build Status](https://travis-ci.org/Informasjonsforvaltning/fdk.svg?branch=master)](https://travis-ci.org/Informasjonsforvaltning/fdk) 
 [![codecov](https://codecov.io/gh/Informasjonsforvaltning/fdk/branch/develop/graph/badge.svg)](https://codecov.io/gh/Informasjonsforvaltning/fdk)
 
@@ -32,16 +33,33 @@ If you have any questions please send them to [fellesdatakatalog@brreg.no](mailt
 
 # Usage
 
-## Test the search application
+# Test the search application
 The search application is available [here](https://fellesdatakatalog.brreg.no). The two other applications
 are only available for registered users. 
 Any questions can be sent to [fellesdatakatalog@brreg.no](mailto:fellesdatakatalog@brreg.no).
 
 The [search api](https://fellesdatakatalog.brreg.no/swagger-ui.html) can also be used.
 
-## Compile
-The system consists of several modules which can be compiled with `mvn clean install`. 
-A successful build results in corresponding docker images. 
+## Set up developement environnement
+  1) Clone this repo
+  2) Install Java8, Maven and Docker. 
+  If you have a Mac, running this script will install Java8 and Maven automatically: 
+
+         ./install-dependencies-mac.sh
+  3) Running the following will (re)compile the entire project: 
+
+         ./runAll.sh  
+
+	  If you only want to compile one module ("search-api" in this example), use the following:     
+
+         ./runDocker.sh search-api
+
+  4) Run the entire project using 
+
+          docker-compose up -d
+	  ...or a specific module  ("registration" in this example) using
+
+            docker-compose up -d registration
 
 ## Run from Docker Hub
 The docker images are also available on [Docker Hub](https://hub.docker.com/u/dcatno/). 
