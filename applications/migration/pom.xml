@@ -5,10 +5,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>no.dcat</groupId>
-        <artifactId>applications</artifactId>
-        <version>1.0</version>
-        <relativePath>..</relativePath>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.5.6.RELEASE</version>
     </parent>
 
     <artifactId>migration</artifactId>
@@ -40,6 +39,7 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-config</artifactId>
+            <version>1.1.0.RELEASE</version>
         </dependency>
         <!-- må ha actuator for å kjøre på openshift. kreves av readyness probe -->
         <dependency>
@@ -81,31 +81,37 @@
         <dependency>
             <groupId>info.cukes</groupId>
             <artifactId>cucumber-java</artifactId>
+            <version>1.2.5</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>info.cukes</groupId>
             <artifactId>cucumber-junit</artifactId>
+            <version>1.2.5</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>info.cukes</groupId>
             <artifactId>cucumber-spring</artifactId>
+            <version>1.2.5</version>
             <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>org.apache.jena</groupId>
             <artifactId>jena-core</artifactId>
+            <version>3.3.0</version>
         </dependency>
         <dependency>
             <groupId>org.apache.jena</groupId>
             <artifactId>jena-arq</artifactId>
+            <version>3.3.0</version>
         </dependency>
 
         <dependency>
             <groupId>net.java.dev.jna</groupId>
             <artifactId>jna</artifactId>
+            <version>4.2.2</version>
         </dependency>
 
         <dependency>
@@ -116,6 +122,7 @@
         <dependency>
             <groupId>no.dcat</groupId>
             <artifactId>registration-api</artifactId>
+            <version>1.0.0</version>
         </dependency>
 
         <dependency>
