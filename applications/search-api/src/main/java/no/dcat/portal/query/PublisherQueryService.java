@@ -9,7 +9,6 @@ import com.google.gson.reflect.TypeToken;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.Data;
-import no.dcat.shared.Dataset;
 import no.dcat.shared.Publisher;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
@@ -18,6 +17,7 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,7 +44,7 @@ public class PublisherQueryService extends ElasticsearchService {
     @CrossOrigin
     @ApiOperation(value = "Query for publishers.",
             notes = "Returns the elasticsearch response with matching publishers", response = Publisher.class)
-    @RequestMapping(value = QUERY_PUBLISHER, method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = QUERY_PUBLISHER, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> publishers(
             @ApiParam("A query string to match a publisher name")
             @RequestParam(value = "q", defaultValue = "", required = false) String query) {
@@ -70,17 +70,18 @@ public class PublisherQueryService extends ElasticsearchService {
         SearchResponse responsePublisher = searchQuery.setSize(totNrOfPublisher).execute().actionGet();
         logger.debug("Found publisher: {}", responsePublisher);
 
-        return new ResponseEntity<String>(responsePublisher.toString(), HttpStatus.OK);
+        return new ResponseEntity<>(responsePublisher.toString(), HttpStatus.OK);
     }
 
     /**
      * Finds all publisher loaded into elasticsearch and returns a tree of them.
+     *
      * @return orgPath and name of all publisher with children in a tree as Json-format is returned..
      */
     @CrossOrigin
     @ApiOperation(value = "Returns all publishers in a hierarchy.",
             response = PublisherHit.class)
-    @RequestMapping(value = QUERY_PUBLISHER_HIERARCHY, method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = QUERY_PUBLISHER_HIERARCHY, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Hits> publisherNames() {
         /**
          * Get publishers from empty query using publishers
@@ -95,7 +96,8 @@ public class PublisherQueryService extends ElasticsearchService {
          * Build flat list of PublisherHit from jsonArray.
          */
 
-        Type type = new TypeToken<Map<String,String>>(){}.getType();
+        Type type = new TypeToken<Map<String, String>>() {
+        }.getType();
 
         for (JsonElement element : jsonArray) {
             JsonObject jsonObject = element.getAsJsonObject().get("_source").getAsJsonObject();
@@ -133,9 +135,9 @@ public class PublisherQueryService extends ElasticsearchService {
                     parentMatch.children.add(publisherHit);
                     publisherHitListWithChildren.add(parentMatch);
                 }
-            /**
-             * Publisher is a root parent, need to add it to the list in the case where a child has not already done this.
-             */
+                /**
+                 * Publisher is a root parent, need to add it to the list in the case where a child has not already done this.
+                 */
             } else {
                 int imAlreadyAdded = publisherHitListWithChildren.indexOf(publisherHit);
                 if (imAlreadyAdded < 0) {
@@ -191,6 +193,7 @@ public class PublisherQueryService extends ElasticsearchService {
 
     /**
      * Recursively sort a parents children (and childrens children.. etc).
+     *
      * @param parent publisher.
      * @return parent publisher with all its children sorted alphabetically.
      */
@@ -219,11 +222,11 @@ public class PublisherQueryService extends ElasticsearchService {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     public class PublisherHit implements Comparable<PublisherHit> {
         String name, orgPath;
-        Map<String,String> prefLabel;
+        Map<String, String> prefLabel;
         List<PublisherHit> children;
 
         /**
-         *  To check on orgPath only.
+         * To check on orgPath only.
          */
         @Override
         public boolean equals(Object o) {
@@ -241,7 +244,7 @@ public class PublisherQueryService extends ElasticsearchService {
         }
 
         /**
-         *  To sort on name only.
+         * To sort on name only.
          */
         @Override
         public int compareTo(PublisherHit o) {
