@@ -36,12 +36,12 @@ describe('App', () => {
 
         // Search page component now waits for resolving API request before rendering.
         // If some other solution is implemented with initial rendering, delay can be removed
-        await delay(5000);
+        await delay(10000);
 
         await expect(page.title()).resolves.toBe('Felles datakatalog')
         await expect(page.$('input[name=searchBox]')).resolves.toBeTruthy()
         await expect(page.$('#content')).resolves.toBeTruthy()
-    }, 10000)
+    }, 20000)
 
     // todo - test that some results are coming, currently the dabaase is unpopulated, so no results
     // const hits = await page.$$('.fdk-container-search-hit')
