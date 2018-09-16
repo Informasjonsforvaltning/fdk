@@ -30,12 +30,17 @@
 	</modules>
 
 	<properties>
-        <fdk.version>1.0.0</fdk.version>
-		<java.encoding>UTF-8</java.encoding>
+		<!--standard properties-->
 		<java.version>1.8</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<maven.compiler.source>${java.version}</maven.compiler.source>
+		<maven.compiler.target>${java.version}</maven.compiler.target>
+		<maven.exec.skip>false</maven.exec.skip>
+		<!--end standard properties-->
+
+		<fdk.version>1.0.0</fdk.version>
 		<elasticsearch.version>2.4.1</elasticsearch.version>
-		<build.profile.id>dev</build.profile.id>
 
 		<unittest.category/>
 		<endtoendtest.category/>
@@ -394,7 +399,7 @@
 				<version>2.19.1</version>
 				<configuration>
 					<groups>java.lang.Exception ${unittest.category} ${endtoendtest.category} ${loadtest.category}</groups> <!-- java.lang.Exception is a hack to make a valid comma-separated list og category classes -->
-					<argLine>${surefireArgLine} -Dfile.encoding=${java.encoding}</argLine>
+					<argLine>${surefireArgLine} -Dfile.encoding=${project.build.sourceEncoding}</argLine>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -403,7 +408,7 @@
 				<version>2.19.1</version>
 				<configuration>
 					<groups>java.lang.Exception ${integrationtest.category}</groups> <!-- java.lang.Exception is a hack to make a valid comma-separated list og category classes -->
-					<encoding>${java.encoding}</encoding>
+					<encoding>${project.build.sourceEncoding}</encoding>
 					<argLine>${failsafeArgLine}</argLine>
 				</configuration>
 				<executions>
