@@ -153,6 +153,9 @@
                         <goals>
                             <goal>repackage</goal>
                         </goals>
+                        <configuration>
+                            <classifier>exec</classifier>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
@@ -172,16 +175,15 @@
                 </executions>
                 <configuration>
                     <imageName>
-                        ${docker.registry}${docker.image.prefix}/api-cat:latest
+                        ${docker.registry}${docker.image.prefix}/${project.artifactId}:latest
                     </imageName>
                     <dockerDirectory>${project.basedir}/src/main/docker</dockerDirectory>
-                    <!--dockerDirectory>docker</dockerDirectory -->
                     <pushImage>false</pushImage>
                     <resources>
                         <resource>
                             <targetPath>/</targetPath>
                             <directory>${project.build.directory}</directory>
-                            <include>${project.build.finalName}.jar</include>
+                            <include>${project.build.finalName}-exec.jar</include>
                             <excludes>
                                 <exclude>target/**/*</exclude>
                                 <exclude>pom.xml</exclude>
