@@ -33,8 +33,6 @@
         <fdk.version>1.0.0</fdk.version>
 		<java.encoding>UTF-8</java.encoding>
 		<java.version>1.8</java.version>
-		<docker.image.prefix>dcatno</docker.image.prefix>
-		<docker.registry />
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<elasticsearch.version>2.4.1</elasticsearch.version>
 		<build.profile.id>dev</build.profile.id>
@@ -499,41 +497,6 @@
 							</configuration>
 						</execution>
 					</executions>
-				</plugin>
-
-				<plugin>
-					<groupId>com.spotify</groupId>
-					<artifactId>docker-maven-plugin</artifactId>
-					<version>1.0.0</version>
-					<executions>
-						<execution>
-							<phase>package</phase>
-							<goals>
-								<goal>build</goal>
-							</goals>
-						</execution>
-					</executions>
-					<configuration>
-						<imageName>
-							${docker.registry}${docker.image.prefix}/${project.artifactId}:latest
-						</imageName>
-						<dockerDirectory>${project.basedir}/src/main/docker</dockerDirectory>
-						<pushImage>false</pushImage>
-						<resources>
-							<resource>
-								<targetPath>/</targetPath>
-								<directory>${project.build.directory}</directory>
-								<include>${project.build.finalName}.jar</include>
-								<include>${project.build.finalName}-exec.jar</include>
-								<include>${project.build.finalName}.war</include>
-								<excludes>
-									<exclude>target/**/*</exclude>
-									<exclude>pom.xml</exclude>
-									<exclude>*.iml</exclude>
-								</excludes>
-							</resource>
-						</resources>
-					</configuration>
 				</plugin>
 			</plugins>
 		</pluginManagement>
