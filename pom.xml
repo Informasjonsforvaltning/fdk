@@ -518,7 +518,6 @@
 							${docker.registry}${docker.image.prefix}/${project.artifactId}:latest
 						</imageName>
 						<dockerDirectory>${project.basedir}/src/main/docker</dockerDirectory>
-						<!--dockerDirectory>docker</dockerDirectory -->
 						<pushImage>false</pushImage>
 						<resources>
 							<resource>
