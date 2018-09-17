@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>applications</artifactId>
         <groupId>no.dcat</groupId>
@@ -10,6 +11,11 @@
     <artifactId>dev-management</artifactId>
     <description>Development Management Tools</description>
     <packaging>jar</packaging>
+
+    <properties>
+        <docker.image.prefix>dcatno</docker.image.prefix>
+        <docker.registry/>
+    </properties>
 
     <dependencies>
 
@@ -77,6 +83,9 @@
                         <goals>
                             <goal>repackage</goal>
                         </goals>
+                        <configuration>
+                            <classifier>exec</classifier>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
@@ -84,11 +93,38 @@
             <plugin>
                 <groupId>com.spotify</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
+                <version>1.1.1</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>build</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <imageName>
+                        ${docker.registry}${docker.image.prefix}/${project.artifactId}:latest
+                    </imageName>
+                    <dockerDirectory>${project.basedir}/src/main/docker</dockerDirectory>
+                    <pushImage>false</pushImage>
+                    <resources>
+                        <resource>
+                            <targetPath>/</targetPath>
+                            <directory>${project.build.directory}</directory>
+                            <include>${project.build.finalName}-exec.jar</include>
+                            <excludes>
+                                <exclude>target/**/*</exclude>
+                                <exclude>pom.xml</exclude>
+                                <exclude>*.iml</exclude>
+                            </excludes>
+                        </resource>
+                    </resources>
+                </configuration>
             </plugin>
 
         </plugins>
     </build>
-
 
 
 </project>
