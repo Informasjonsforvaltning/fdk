@@ -40,21 +40,25 @@ Any questions can be sent to [fellesdatakatalog@brreg.no](mailto:fellesdatakatal
 
 The [search api](https://fellesdatakatalog.brreg.no/swagger-ui.html) can also be used.
 
-## Set up developement environnement
+## Set up your developement environnement
   1) Clone this repo
   2) Install Java8, Maven and Docker. 
   If you have a Mac, running this script will install Java8 and Maven automatically: 
 
          ./install-dependencies-mac.sh
-  3) Running the following will (re)compile the entire project: 
+  3) (re)compile the entire project: 
 
          ./runAll.sh  
 
 	  If you only want to compile one module ("search-api" in this example), use the following:     
 
          ./runDocker.sh search-api
+	 
+	 Frontend applications such as search and registration-react are built and run the following way:
+	 
+	 docker-compose up -d --build registration-react
 
-  4) Run the entire project using 
+  4) Run without compiling the entire project using 
 
           docker-compose up -d
 	  ...or a specific module  ("registration" in this example) using
