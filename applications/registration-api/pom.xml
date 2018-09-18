@@ -4,16 +4,16 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>no.dcat</groupId>
-        <artifactId>applications</artifactId>
-        <version>1.0</version>
-        <relativePath>..</relativePath>
-    </parent>
-
+    <groupId>no.dcat</groupId>
     <artifactId>registration-api</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.5.6.RELEASE</version>
+    </parent>
 
     <properties>
         <!--standard properties-->
@@ -44,6 +44,7 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-config</artifactId>
+            <version>1.1.0.RELEASE</version>
         </dependency>
         <!-- må ha actuator for å kjøre på openshift. kreves av readyness probe -->
         <dependency>
@@ -94,26 +95,31 @@
         <dependency>
             <groupId>info.cukes</groupId>
             <artifactId>cucumber-java</artifactId>
+            <version>1.2.5</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>info.cukes</groupId>
             <artifactId>cucumber-junit</artifactId>
+            <version>1.2.5</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>info.cukes</groupId>
             <artifactId>cucumber-spring</artifactId>
+            <version>1.2.5</version>
             <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>org.apache.jena</groupId>
             <artifactId>jena-core</artifactId>
+            <version>3.3.0</version>
         </dependency>
         <dependency>
             <groupId>org.apache.jena</groupId>
             <artifactId>jena-arq</artifactId>
+            <version>3.3.0</version>
         </dependency>
 
         <dependency>
@@ -261,7 +267,8 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.19.1</version>
                 <configuration>
-                    <groups>no.dcat.shared.testcategories.UnitTest</groups> <!-- java.lang.Exception is a hack to make a valid comma-separated list og category classes -->
+                    <groups>no.dcat.shared.testcategories.UnitTest
+                    </groups> <!-- java.lang.Exception is a hack to make a valid comma-separated list og category classes -->
                     <argLine>${surefireArgLine} -Dfile.encoding=${project.build.sourceEncoding}</argLine>
                 </configuration>
             </plugin>
@@ -270,7 +277,8 @@
                 <artifactId>maven-failsafe-plugin</artifactId>
                 <version>2.19.1</version>
                 <configuration>
-                    <groups>no.dcat.shared.testcategories.IntegrationTest</groups> <!-- java.lang.Exception is a hack to make a valid comma-separated list og category classes -->
+                    <groups>no.dcat.shared.testcategories.IntegrationTest
+                    </groups> <!-- java.lang.Exception is a hack to make a valid comma-separated list og category classes -->
                     <encoding>${project.build.sourceEncoding}</encoding>
                     <argLine>${failsafeArgLine}</argLine>
                 </configuration>
@@ -345,8 +353,6 @@
                     </execution>
                 </executions>
             </plugin>
-
-
 
 
         </plugins>
