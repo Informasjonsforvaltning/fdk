@@ -143,6 +143,7 @@
     "vedtak": "Vedtak"
   },
   "dataset": {
+    "keyInfo": "Bruk av datasettet",
     "accessRight": "Datasettet er",
     "title": "Datasett",
     "type": "Type",
@@ -151,6 +152,7 @@
     "conformsTo": "Innhaldsstandard",
     "informationModel": "Informasjonsmodell",
     "informationModelDefaultText": "Informasjonsmodell",
+    "distributions": "Distribusjonar",
     "distribution": {
       "title": "Distribusjon",
       "format": "Tilgjengelege format",
@@ -183,7 +185,7 @@
     "restrictions": "Restriksjonar",
     "comments": "Kommentar",
     "objective": "Føremål",
-    "related": "Relaterte",
+    "related": "Relaterte datasett",
     "relates": "Relatert",
     "restriction": "Restriksjon",
     "downloadText": "Last ned DCAT-forklaring:",
@@ -214,7 +216,8 @@
         "nonPublicDetailsLabel": "Datasettet er unntatt offentlegheit"
       }
     },
-    "sample": "Eksempeldata"
+    "sample": "Eksempeldata",
+    "landingPage": "Meir informasjon om datasettet"
   },
   "terms": {
     "compareTerms": "Samanlikne omgrep",

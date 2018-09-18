@@ -143,6 +143,7 @@
     "vedtak": "Decision"
   },
   "dataset": {
+    "keyInfo": "Use of dataset",
     "accessRight": "Dataset is",
     "title": "Dataset",
     "type": "Type",
@@ -151,6 +152,7 @@
     "conformsTo": "Conforms to",
     "informationModel": "Information model",
     "informationModelDefaultText": "Information model",
+    "distributions": "Distributions",
     "distribution": {
       "title": "Distribution",
       "format": "Format",
@@ -183,7 +185,7 @@
     "restrictions": "Restrictions",
     "comments": "Comments",
     "objective": "Objective",
-    "related": "Related",
+    "related": "Related datasets",
     "relates": "Relates",
     "restriction": "Restriction",
     "downloadText": "Download DCAT-description:",
@@ -214,7 +216,8 @@
         "nonPublicDetailsLabel": "Dataset is non public"
       }
     },
-    "sample": "Sample data"
+    "sample": "Sample data",
+    "landingPage": "More information about this dataset"
   },
   "terms": {
     "compareTerms": "Compare concepts",

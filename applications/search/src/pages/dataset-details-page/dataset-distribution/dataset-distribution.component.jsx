@@ -1,229 +1,248 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import cx from 'classnames';
+import { Collapse } from 'reactstrap';
+import _ from 'lodash';
 
 import localization from '../../../lib/localization';
 import { getDistributionTypeByUri } from '../../../redux/modules/distributionType';
 import { getTranslateText } from '../../../lib/translateText';
-import { DistributionFormat } from '../../../components/distribution-format/distribution-format.component';
+import { ListRegular } from '../../../components/list-regular/list-regular.component';
+import { TwoColRow } from '../../../components/list-regular/twoColRow/twoColRow';
+import { LinkExternal } from '../../../components/link-external/link-external.component';
 import './dataset-distribution.scss';
 
-export class DatasetDistribution extends React.Component {
-  // eslint-disable-line react/prefer-stateless-function
+const formatItems = format => {
+  if (!format) {
+    return null;
+  }
+  return format.map((item, index) => (
+    <span key={index}>
+      {index > 0 ? ', ' : ''}
+      {item}
+    </span>
+  ));
+};
 
-  _renderType() {
+export class DatasetDistribution extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      openCollapse: this.props.defaultopenCollapse
+    };
+    this.toggle = this.toggle.bind(this);
+  }
+
+  toggle() {
+    this.setState({ openCollapse: !this.state.openCollapse });
+  }
+
+  renderType() {
     const { distributionTypeItems } = this.props;
-    let { type } = this.props;
-    if (type) {
+    const { type } = this.props;
+    if (!type) {
+      return null;
+    }
+    const distributionType = type => {
+      let typeText = null;
       if (type !== 'API' && type !== 'Feed' && type !== 'Nedlastbar fil') {
         const distributionType = getDistributionTypeByUri(
           distributionTypeItems,
           type
         );
         if (distributionType !== null && distributionType.length > 0) {
-          type = getTranslateText(distributionType[0].prefLabel);
-        } else {
-          type = null;
+          typeText = getTranslateText(distributionType[0].prefLabel);
         }
+        return typeText;
       }
-      return (
-        <div>
-          <h5 className="mt-5">{localization.dataset.distribution.type}</h5>
-          <p className="fdk-ingress">{type}</p>
-        </div>
-      );
-    }
-    return null;
+      return type;
+    };
+
+    return (
+      <TwoColRow
+        col1={localization.dataset.distribution.type}
+        col2={distributionType(type)}
+      />
+    );
   }
 
-  _renderFormats() {
-    const { code, format } = this.props;
-    const children = (items, code) =>
-      items.map(item => {
-        if (item !== null) {
-          const formatArray = item.trim().split(',');
-          return formatArray.map((item, index) => {
-            if (item === null) {
-              return null;
-            }
-            return (
-              <DistributionFormat
-                key={`dataset-distribution-format${index}`}
-                code={code}
-                text={item}
-              />
-            );
-          });
-        }
-        return null;
-      });
+  renderFormats() {
+    const { format } = this.props;
 
-    if (format && format[0] !== null) {
-      return (
-        <div>
-          <h5 className="mt-4">{localization.dataset.distribution.format}</h5>
-          {children(format, code)}
-        </div>
-      );
+    if (!format || format.length === 0) {
+      return null;
     }
-    return null;
+
+    return (
+      <TwoColRow
+        col1={localization.dataset.distribution.format}
+        col2={formatItems(format)}
+      />
+    );
   }
 
-  _renderTilgangsURL() {
+  renderTilgangsURL() {
     const { accessUrl } = this.props;
     const children = items =>
-      items.map((item, index) => (
-        <a
-          key={`dataset-distribution-accessurl-${index}`}
-          className="dataset-distribution-accessurl"
-          href={item}
-        >
-          {item}
-          <i className="fa fa-external-link fdk-fa-right" />
-        </a>
+      items.map(item => (
+        <LinkExternal key={item} uri={item} prefLabel={item} />
       ));
-
-    if (accessUrl) {
-      return (
-        <div>
-          <h5 className="mt-5">
-            {localization.dataset.distribution.accessUrl}
-          </h5>
-          <p className="fdk-ingress">{children(accessUrl)}</p>
-        </div>
-      );
+    if (!accessUrl) {
+      return null;
     }
-    return null;
+    return (
+      <TwoColRow
+        col1={localization.dataset.distribution.accessUrl}
+        col2={children(accessUrl)}
+      />
+    );
   }
 
-  _renderLicense() {
+  renderLicense() {
     const { license } = this.props;
-    if (license && license.uri) {
-      return (
-        <div>
-          <h5 className="mt-5">{localization.dataset.distribution.license}</h5>
-          <p className="fdk-ingress">
-            {license &&
-              license.uri &&
-              license.prefLabel && (
-                <a href={license.uri}>
-                  {getTranslateText(license.prefLabel)}
-                  <i className="fa fa-external-link fdk-fa-right" />
-                </a>
-              )}
-            {license &&
-              license.uri &&
-              !license.prefLabel && (
-                <a href={license.uri}>
-                  {localization.dataset.distribution.licenseLinkDefault}
-                  <i className="fa fa-external-link fdk-fa-right" />
-                </a>
-              )}
-          </p>
-        </div>
-      );
+    const licenseLink = license => (
+      <LinkExternal
+        uri={_.get(license, 'uri')}
+        prefLabel={getTranslateText(_.get(license, 'prefLabel'))}
+      />
+    );
+    if (!license) {
+      return null;
     }
-    return null;
+    return (
+      <TwoColRow
+        col1={localization.dataset.distribution.license}
+        col2={licenseLink(license)}
+      />
+    );
   }
 
-  _renderConformsTo() {
+  renderConformsTo() {
     const { conformsTo } = this.props;
 
     const children = items =>
       items.map(item => (
-        <a key={item.uri} href={item.uri}>
-          {item.prefLabel
-            ? getTranslateText(item.prefLabel)
-            : localization.dataset.distribution.standard}
-          <i className="fa fa-external-link fdk-fa-right" />
-        </a>
+        <LinkExternal
+          key={_.get(item, 'uri')}
+          uri={_.get(item, 'uri')}
+          prefLabel={getTranslateText(_.get(item, 'prefLabel'))}
+        />
       ));
 
-    if (conformsTo) {
-      return (
-        <div>
-          <h5 className="mt-5">
-            {localization.dataset.distribution.conformsTo}
-          </h5>
-          <p className="fdk-ingress">{children(conformsTo)}</p>
-        </div>
-      );
+    if (!conformsTo) {
+      return null;
     }
-    return null;
+    return (
+      <TwoColRow
+        col1={localization.dataset.distribution.conformsTo}
+        col2={children(conformsTo)}
+      />
+    );
   }
 
-  _renderDistributionPage() {
+  renderDistributionPage() {
     const { page } = this.props;
     const children = items =>
       items.map(page => {
-        if (page && page.uri) {
+        if (_.get(page, 'uri')) {
           return (
-            <a key={page.uri} href={page.uri}>
-              {page.prefLabel ? getTranslateText(page.prefLabel) : page.uri}
-            </a>
+            <LinkExternal
+              key={_.get(page, 'uri')}
+              uri={_.get(page, 'uri')}
+              prefLabel={localization.dataset.distribution.page}
+            />
           );
         }
         return null;
       });
 
-    if (page) {
-      return (
-        <div>
-          <h5 className="mt-5">{localization.dataset.distribution.page}</h5>
-          <p className="fdk-ingress">{children(page)}</p>
-        </div>
-      );
+    if (!page) {
+      return null;
     }
-    return null;
+
+    return (
+      <div className="row list-regular--item">
+        <div className="col-12 pl-0">{children(page)}</div>
+      </div>
+    );
   }
 
   render() {
-    const { title, code } = this.props;
-    const distributionClass = cx('fdk-container-detail', {
-      'fdk-container-detail-unntatt-offentlig': code === 'NON_PUBLIC',
-      'fdk-container-detail-begrenset': code === 'RESTRICTED',
-      'fdk-container-detail-offentlig': code === 'PUBLIC',
-      'fdk-container-detail-sample': code === 'SAMPLE'
-    });
+    const { description, format } = this.props;
+    const { openCollapse } = this.state;
     return (
-      <section className={distributionClass}>
-        <h4>{title}</h4>
-        {this.props.description && (
-          <p className="fdk-ingress">{this.props.description}</p>
-        )}
-        {this._renderType()}
-        {this._renderFormats()}
-        {this._renderTilgangsURL()}
-        {this._renderLicense()}
-        {this._renderConformsTo()}
-        {this._renderDistributionPage()}
+      <section className="fdk-distribution-item mb-1">
+        <ListRegular bottomMargin={false}>
+          <button className="w-100 p-0" onClick={this.toggle}>
+            {format && (
+              <div className="row list-regular--item text-left">
+                <div className="col-4 pl-0">
+                  <span>
+                    <strong>{localization.dataset.distribution.format}</strong>
+                  </span>
+                </div>
+                <div className="col-8">{formatItems(format)}</div>
+                <i
+                  className={`fa fdk-color-blue-dark ${
+                    openCollapse ? 'fa-chevron-up' : 'fa-chevron-down'
+                  }`}
+                />
+              </div>
+            )}
+            {description && (
+              <div
+                className={`row list-regular--item text-left mb-2 ${
+                  !openCollapse ? 'closedCollapse' : ''
+                }`}
+              >
+                <div className="col-4 pl-0 fdk-text-strong">
+                  {localization.description}
+                </div>
+                <div
+                  className={`col-8 ${
+                    !openCollapse && description.length > 150
+                      ? 'show-more__cropped-box'
+                      : ''
+                  }`}
+                >
+                  {description}
+                </div>
+              </div>
+            )}
+          </button>
+
+          <Collapse isOpen={openCollapse}>
+            {this.renderType()}
+            {this.renderTilgangsURL()}
+            {this.renderLicense()}
+            {this.renderConformsTo()}
+            {this.renderDistributionPage()}
+          </Collapse>
+        </ListRegular>
       </section>
     );
   }
 }
 
 DatasetDistribution.defaultProps = {
-  title: '',
   description: null,
   accessUrl: null,
   format: null,
-  code: '',
   license: null,
   conformsTo: null,
   page: null,
   type: null,
-  distributionTypeItems: null
+  distributionTypeItems: null,
+  defaultopenCollapse: false
 };
 
 DatasetDistribution.propTypes = {
-  title: PropTypes.string,
   description: PropTypes.string,
   accessUrl: PropTypes.array,
   format: PropTypes.array,
-  code: PropTypes.string,
   license: PropTypes.object,
   conformsTo: PropTypes.array,
   page: PropTypes.array,
   type: PropTypes.string,
-  distributionTypeItems: PropTypes.array
+  distributionTypeItems: PropTypes.array,
+  defaultopenCollapse: PropTypes.bool
 };

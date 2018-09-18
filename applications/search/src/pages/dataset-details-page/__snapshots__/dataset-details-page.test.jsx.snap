@@ -1,18 +1,59 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`should render DatasetDetailsPage correctly with datasetItem 1`] = `
-<div
+<main
   className="container"
+  id="content"
 >
-  <div
-    className="row"
-  >
+  <article>
     <div
-      className="col-lg-8 offset-lg-2"
-      id="content"
-      role="main"
+      className="row"
     >
-      <article>
+      <div
+        className="col-12 col-lg-4 "
+      >
+        <StickyMenu
+          menuItems={
+            Array [
+              Object {
+                "name": "Description",
+                "prefLabel": "Description",
+              },
+              Object {
+                "name": "Use of dataset",
+                "prefLabel": "Use of dataset",
+              },
+              Object {
+                "name": "Distributions",
+                "prefLabel": "Distributions",
+              },
+              Object {
+                "name": "Sample data",
+                "prefLabel": "Sample data",
+              },
+              Object {
+                "name": "Quality",
+                "prefLabel": "Quality",
+              },
+              Object {
+                "name": "Subject",
+                "prefLabel": "Subject",
+              },
+              Object {
+                "name": "Keyword",
+                "prefLabel": "Keyword",
+              },
+              Object {
+                "name": "Contact information",
+                "prefLabel": "Contact information",
+              },
+            ]
+          }
+        />
+      </div>
+      <div
+        className="col-12 col-lg-8"
+      >
         <SideEffect(DocumentMeta)
           description="Datasettet avgrenser område for virkeområdet til lov 6. juni 2009 nr. 35 om naturområder i Oslo og nærliggende kommuner (markaloven) som trådte i kraft 1. september 2009. Markalovens virkeområde er fastsatt i forskrift 4. september 2015 nr. 1032 om justering av markagrensen fastlegger markalovens geografiske virkeområde med tilhørende kart."
           title="AAMarkagrensen Oslo Kommune og nærliggende kommuner"
@@ -56,6 +97,58 @@ exports[`should render DatasetDetailsPage correctly with datasetItem 1`] = `
           }
           title="AAMarkagrensen Oslo Kommune og nærliggende kommuner"
         />
+        <div
+          className="d-flex flex-wrap mb-5"
+        >
+          <BoxRegular
+            subText={
+              <t
+                ago={false}
+                calendar={false}
+                decimal={false}
+                element="time"
+                filter={[Function]}
+                format="DD.MM.YYYY"
+                fromNow={false}
+                interval={60000}
+                onChange={[Function]}
+                toNow={false}
+                unit={null}
+                unix={false}
+                utc={false}
+              >
+                2018-04-26T00:00:00+0200
+              </t>
+            }
+            title="Issue date"
+          />
+          <BoxRegular
+            subText={
+              <t
+                ago={false}
+                calendar={false}
+                decimal={false}
+                element="time"
+                filter={[Function]}
+                format="DD.MM.YYYY"
+                fromNow={false}
+                interval={60000}
+                onChange={[Function]}
+                toNow={false}
+                unit={null}
+                unix={false}
+                utc={false}
+              >
+                2018-04-26T00:00:00+0200
+              </t>
+            }
+            title="Last modified"
+          />
+          <BoxRegular
+            subText="Årlig"
+            title="Update frequency"
+          />
+        </div>
         <DatasetKeyInfo
           accessRights={
             Object {
@@ -84,6 +177,22 @@ exports[`should render DatasetDetailsPage correctly with datasetItem 1`] = `
                   "nb": "SKOS",
                 },
                 "uri": "https://www.w3.org/2004/02/skos/",
+              },
+            ]
+          }
+          landingPage={
+            Array [
+              "http://testetaten.no/landingsside/nr1",
+            ]
+          }
+          language={
+            Array [
+              Object {
+                "code": "NOR",
+                "prefLabel": Object {
+                  "nb": "Norsk",
+                },
+                "uri": "http://publications.europa.eu/resource/authority/language/NOR",
               },
             ]
           }
@@ -131,97 +240,116 @@ exports[`should render DatasetDetailsPage correctly with datasetItem 1`] = `
           }
           type="Kodeliste"
         />
-        <DatasetDistribution
-          accessUrl={
-            Array [
-              "http://www.detteerenlenke.no/til-nedlasting",
-              "http://www.detteerenannenlenke.no/til-en-annen-nedlasting
+        <div
+          className="dataset-distributions"
+        >
+          <DistributionHeading
+            title="Distributions"
+          />
+          <DatasetDistribution
+            accessUrl={
+              Array [
+                "http://www.detteerenlenke.no/til-nedlasting",
+                "http://www.detteerenannenlenke.no/til-en-annen-nedlasting
 ",
-              "http://www.detteerentredjelenke.no/til-en-tredje-nedlasting",
-            ]
-          }
-          code="NON_PUBLIC"
-          conformsTo={null}
-          description="Dette er beskrivelsen av distribusjonen. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Vestibulum id ligula porta felis euismod semper con desbit arum. Se dokumentasjon for denne distribusjonen."
-          distributionTypeItems={null}
-          format={null}
-          key="http%3A%2F%2Fbrreg.no%2Fcatalogs%2F987654321%2Fdatasets%2F3645d5a8-6689-4fc1-8684-d3d6c2d47386%2Fdistributions%2F96d63bba-e624-4f39-ad26-26b8c6a68880"
-          license={
-            Object {
-              "extraType": "dct:Standard",
-              "prefLabel": Object {
-                "nb": "SOSI",
-              },
-              "uri": "https://www.kartverket.no/geodataarbeid/standarder/sosi/",
+                "http://www.detteerentredjelenke.no/til-en-tredje-nedlasting",
+              ]
             }
-          }
-          page={
-            Array [
+            conformsTo={null}
+            defaultopenCollapse={false}
+            description="Dette er beskrivelsen av distribusjonen. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Vestibulum id ligula porta felis euismod semper con desbit arum. Se dokumentasjon for denne distribusjonen."
+            distributionTypeItems={null}
+            format={null}
+            key="dist-0"
+            license={
               Object {
+                "extraType": "dct:Standard",
                 "prefLabel": Object {
-                  "nb": "Dokumentasjon av distribusjonen",
+                  "nb": "SOSI",
                 },
-                "uri": "http://lenke/til/mer/info",
-              },
-            ]
-          }
-          title="Distribution"
-          type={null}
-        />
-        <DatasetDistribution
-          accessUrl={
-            Array [
-              "http://www.detteerenlenke.no/til-nedlasting",
-              "http://www.detteerenannenlenke.no/til-en-annen-nedlasting
+                "uri": "https://www.kartverket.no/geodataarbeid/standarder/sosi/",
+              }
+            }
+            page={
+              Array [
+                Object {
+                  "prefLabel": Object {
+                    "nb": "Dokumentasjon av distribusjonen",
+                  },
+                  "uri": "http://lenke/til/mer/info",
+                },
+              ]
+            }
+            type={null}
+          />
+          <DatasetDistribution
+            accessUrl={
+              Array [
+                "http://www.detteerenlenke.no/til-nedlasting",
+                "http://www.detteerenannenlenke.no/til-en-annen-nedlasting
 ",
-              "http://www.detteerentredjelenke.no/til-en-tredje-nedlasting",
-            ]
-          }
-          code="NON_PUBLIC"
-          conformsTo={null}
-          description="Dette er beskrivelsen av distribusjonen. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Vestibulum id ligula porta felis euismod semper con desbit arum. Se dokumentasjon for denne distribusjonen."
-          distributionTypeItems={null}
-          format={null}
-          key="http%3A%2F%2Fbrreg.no%2Fcatalogs%2F987654321%2Fdatasets%2F3645d5a8-6689-4fc1-8684-d3d6c2d47386%2Fdistributions%2F96d63bba-e624-4f39-ad26-26b8c6a68880"
-          license={
-            Object {
-              "extraType": "dct:Standard",
-              "uri": "http://data.norge.no/nlod",
+                "http://www.detteerentredjelenke.no/til-en-tredje-nedlasting",
+              ]
             }
-          }
-          page={
-            Array [
+            conformsTo={null}
+            defaultopenCollapse={false}
+            description="Dette er beskrivelsen av distribusjonen. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Vestibulum id ligula porta felis euismod semper con desbit arum. Se dokumentasjon for denne distribusjonen."
+            distributionTypeItems={null}
+            format={null}
+            key="dist-1"
+            license={
               Object {
-                "prefLabel": Object {
-                  "nb": "Dokumentasjon av distribusjonen",
+                "extraType": "dct:Standard",
+                "uri": "http://data.norge.no/nlod",
+              }
+            }
+            page={
+              Array [
+                Object {
+                  "prefLabel": Object {
+                    "nb": "Dokumentasjon av distribusjonen",
+                  },
+                  "uri": "http://lenke/til/mer/info",
                 },
-                "uri": "http://lenke/til/mer/info",
-              },
-            ]
-          }
-          title="Distribution"
-          type={null}
-        />
-        <DatasetDistribution
-          accessUrl={
-            Array [
-              "http://www.detteerenlenke.no/til-nedlasting",
-            ]
-          }
-          code="SAMPLE"
-          conformsTo={null}
-          description="Dette er beskrivelsen av eksempeldataene. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor."
-          distributionTypeItems={null}
-          format={
-            Array [
-              "application/rdf+xml",
-            ]
-          }
-          key="http%3A%2F%2Fbrreg.no%2Fcatalogs%2F987654321%2Fdatasets%2F3645d5a8-6689-4fc1-8684-d3d6c2d47386%2Fdistributions%2F95a6b5e5-753c-4bc3-a421-2671c8f6a7bb"
-          license={null}
-          page={null}
-          title="Sample data"
-          type={null}
+              ]
+            }
+            type={null}
+          />
+        </div>
+        <div
+          className="dataset-distributions"
+        >
+          <DistributionHeading
+            title="Sample data"
+          />
+          <DatasetDistribution
+            accessUrl={
+              Array [
+                "http://www.detteerenlenke.no/til-nedlasting",
+              ]
+            }
+            conformsTo={null}
+            defaultopenCollapse={true}
+            description="Dette er beskrivelsen av eksempeldataene. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor."
+            distributionTypeItems={null}
+            format={
+              Array [
+                "application/rdf+xml",
+              ]
+            }
+            key="dist-0"
+            license={null}
+            page={null}
+            type={null}
+          />
+        </div>
+        <DatasetQuality
+          accuracyAnnotation="Denne teksten sier noe om nøyaktigheten. Cras mattis consectetur purus sit."
+          availabilityAnnotations={null}
+          completenessAnnotation="Denne teksten sier noe om komplettheten. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras mattis consectetur purus sit amet fermentum."
+          hasCurrentnessAnnotation="Denne teksten sier noe om aktualiteten. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras mattis consectetur purus sit amet fermentum. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus."
+          provenance="Vedtak"
+          relevanceAnnotation="Denne teksten sier noe om relevansen. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras mattis consectetur purus sit amet fermentum. Cum sociis natoque penatibus et magnis dis parturient montes."
         />
         <DatasetInfo
           accrualPeriodicity="årlig"
@@ -240,6 +368,8 @@ exports[`should render DatasetDetailsPage correctly with datasetItem 1`] = `
           }
           modified="2018-04-26T00:00:00+0200"
           provenance="Vedtak"
+          referenceTypeItems={null}
+          referencedItems={null}
           references={
             Array [
               Object {
@@ -295,77 +425,93 @@ exports[`should render DatasetDetailsPage correctly with datasetItem 1`] = `
           }
           temporal={Array []}
         />
-        <DatasetQuality
-          accuracyAnnotation="Denne teksten sier noe om nøyaktigheten. Cras mattis consectetur purus sit."
-          availabilityAnnotations={null}
-          completenessAnnotation="Denne teksten sier noe om komplettheten. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras mattis consectetur purus sit amet fermentum."
-          relevanceAnnotation="Denne teksten sier noe om relevansen. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras mattis consectetur purus sit amet fermentum. Cum sociis natoque penatibus et magnis dis parturient montes."
-        />
-        <DatasetBegrep
-          keyword={
-            Array [
-              Object {
-                "nb": "Bestemmelse",
-              },
-              Object {
-                "nb": "jord",
-              },
-              Object {
-                "nb": "regulering",
-              },
-              Object {
-                "nb": "statlig bestemmelse",
-              },
-            ]
-          }
-          subject={
-            Array [
-              Object {
-                "definition": Object {
-                  "no": "alt som er registrert med et organisasjonsnummer ",
-                },
-                "note": Object {
-                  "no": "Alle hovedenheter, underenheter og organisasjonsledd som er identifisert med et organisasjonsnummer.",
-                },
-                "prefLabel": Object {
-                  "no": "enhet",
-                },
-                "source": "https://jira.brreg.no/browse/BEGREP-208",
-                "uri": "https://data-david.github.io/Begrep/begrep/Enhet",
-              },
-            ]
-          }
-        />
-        <section
-          className="mt-5"
+        <ListRegular
+          bottomMargin={true}
+          title="Subject"
         >
-          <DatasetLandingPage
-            key="dataset-contactpoint-undefined"
-            landingPage="http://testetaten.no/landingsside/nr1"
+          <TwoColRow
+            col1="enhet"
+            col2="alt som er registrert med et organisasjonsnummer "
+            key="https://data-david.github.io/Begrep/begrep/Enhet"
           />
-          <DatasetContactInfo
-            contactPoint={
-              Object {
-                "email": "digitalisering@kartverket.no",
-                "hasTelephone": "22306022",
-                "hasURL": "http://testetaten.no/url",
-                "id": "3c50088c-489f-4168-95e6-e6f3cd0c67c5",
-                "organizationUnit": "Avdeling for digitalisering",
-                "uri": "http://brreg.no/catalogs/987654321/contacts/null",
+        </ListRegular>
+        <ListRegular
+          bottomMargin={true}
+          title="Keyword"
+        >
+          <div
+            className="row list-regular--item"
+          >
+            <span
+              key="0"
+            >
+              Bestemmelse
+            </span>
+            <span
+              key="1"
+            >
+              , 
+              jord
+            </span>
+            <span
+              key="2"
+            >
+              , 
+              regulering
+            </span>
+            <span
+              key="3"
+            >
+              , 
+              statlig bestemmelse
+            </span>
+          </div>
+        </ListRegular>
+        <ListRegular
+          bottomMargin={true}
+          title="Contact information"
+        >
+          <React.Fragment
+            key="http://testetaten.no/url"
+          >
+            <TwoColRow
+              col1="Contact point"
+              col2={
+                <LinkExternal
+                  prefLabel="Avdeling for digitalisering"
+                  uri="http://testetaten.no/url"
+                />
               }
+            />
+            <TwoColRow
+              col1="Email"
+              col2={
+                <a
+                  href="mailto:digitalisering@kartverket.no"
+                  rel="noopener noreferrer"
+                  title="digitalisering@kartverket.no"
+                >
+                  digitalisering@kartverket.no
+                </a>
+              }
+            />
+            <TwoColRow
+              col1="Phone"
+              col2="22306022"
+            />
+          </React.Fragment>
+        </ListRegular>
+        <div
+          style={
+            Object {
+              "height": "75vh",
             }
-            key="0"
-            landingPage={
-              Array [
-                "http://testetaten.no/landingsside/nr1",
-              ]
-            }
-          />
-        </section>
-      </article>
+          }
+        />
+      </div>
     </div>
-  </div>
-</div>
+  </article>
+</main>
 `;
 
 exports[`should render DatasetDetailsPage correctly with no datasetItem 1`] = `""`;

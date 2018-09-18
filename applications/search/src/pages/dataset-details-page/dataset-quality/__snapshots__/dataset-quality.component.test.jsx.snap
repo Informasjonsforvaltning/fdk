@@ -1,58 +1,33 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`should render DatasetQuality correctly 1`] = `
-<section>
-  <div
-    className="fdk-container-detail fdk-container-detail-header"
-  >
-    <i
-      className="fa fa-star fdk-fa-left fdk-color-cta"
+<ListRegular
+  bottomMargin={true}
+  title="Quality"
+>
+  <React.Fragment>
+    <TwoColRow
+      col1="Completeness"
+      col2="comleteness"
     />
-    Quality
-  </div>
-  <div
-    className="fdk-container-detail"
-  >
-    <div>
-      <h5>
-        Relevance
-      </h5>
-      <p
-        className="fdk-ingress mb-5"
-      >
-        relevance
-      </p>
-    </div>
-    <div>
-      <h5>
-        Completeness
-      </h5>
-      <p
-        className="fdk-ingress mb-5"
-      >
-        comleteness
-      </p>
-    </div>
-    <div>
-      <h5>
-        Accuracy
-      </h5>
-      <p
-        className="fdk-ingress mb-5"
-      >
-        accuracy
-      </p>
-    </div>
-    <div>
-      <h5>
-        Availability
-      </h5>
-      <p
-        className="fdk-ingress mb-5"
-      >
-        availability
-      </p>
-    </div>
-  </div>
-</section>
+  </React.Fragment>
+  <React.Fragment>
+    <TwoColRow
+      col1="Accuracy"
+      col2="accuracy"
+    />
+  </React.Fragment>
+  <React.Fragment>
+    <TwoColRow
+      col1="Relevance"
+      col2="relevance"
+    />
+  </React.Fragment>
+  <React.Fragment>
+    <TwoColRow
+      col1="Availability"
+      col2="availability"
+    />
+  </React.Fragment>
+</ListRegular>
 `;
