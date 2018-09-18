@@ -4,15 +4,35 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>no.dcat</groupId>
-        <artifactId>applications</artifactId>
-        <version>1.0</version>
-    </parent>
-
+    <groupId>no.dcat</groupId>
     <artifactId>reference-data</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.5.6.RELEASE</version>
+        <relativePath/>
+    </parent>
+
+    <properties>
+        <!--standard properties-->
+        <java.version>1.8</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <maven.exec.skip>false</maven.exec.skip>
+        <!--end standard properties-->
+
+        <docker.image.prefix>dcatno</docker.image.prefix>
+        <docker.registry/>
+        <unittest.category/>
+        <endtoendtest.category/>
+        <loadtest.category/>
+        <integrationtest.category/>
+    </properties>
 
     <dependencies>
         <dependency>
@@ -23,6 +43,7 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-config</artifactId>
+            <version>1.1.0.RELEASE</version>
         </dependency>
         <!-- må ha actuator for å kjøre på openshift. kreves av readyness probe -->
         <dependency>
@@ -61,14 +82,17 @@
         <dependency>
             <groupId>org.apache.jena</groupId>
             <artifactId>jena-core</artifactId>
+            <version>3.3.0</version>
         </dependency>
         <dependency>
             <groupId>org.apache.jena</groupId>
             <artifactId>jena-arq</artifactId>
+            <version>3.3.0</version>
         </dependency>
         <dependency>
             <groupId>org.apache.jena</groupId>
             <artifactId>jena-tdb</artifactId>
+            <version>3.3.0</version>
         </dependency>
         <dependency>
             <groupId>net.sf.ehcache</groupId>
@@ -96,20 +120,48 @@
             <version>2.7.0</version>
         </dependency>
     </dependencies>
-
+    <profiles>
+        <profile>
+            <id>unit-test</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <unittest.category>,no.dcat.shared.testcategories.UnitTest</unittest.category>
+            </properties>
+        </profile>
+        <profile>
+            <id>integration-test</id>
+            <properties>
+                <integrationtest.category>,no.dcat.shared.testcategories.IntegrationTest</integrationtest.category>
+            </properties>
+        </profile>
+        <profile>
+            <id>end-to-end-test</id>
+            <properties>
+                <endtoendtest.category>,no.dcat.shared.testcategories.EndToEndTest</endtoendtest.category>
+            </properties>
+        </profile>
+        <profile>
+            <id>load-test</id>
+            <properties>
+                <loadtest.category>,no.dcat.shared.testcategories.LoadTest</loadtest.category>
+            </properties>
+        </profile>
+    </profiles>
     <build>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <classifier>exec</classifier>
-                </configuration>
                 <executions>
                     <execution>
                         <goals>
                             <goal>repackage</goal>
                         </goals>
+                        <configuration>
+                            <classifier>exec</classifier>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
@@ -117,7 +169,129 @@
             <plugin>
                 <groupId>com.spotify</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
+                <version>1.1.1</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>build</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <imageName>
+                        ${docker.registry}${docker.image.prefix}/${project.artifactId}:latest
+                    </imageName>
+                    <dockerDirectory>${project.basedir}/src/main/docker</dockerDirectory>
+                    <pushImage>false</pushImage>
+                    <resources>
+                        <resource>
+                            <targetPath>/</targetPath>
+                            <directory>${project.build.directory}</directory>
+                            <include>${project.build.finalName}-exec.jar</include>
+                            <excludes>
+                                <exclude>target/**/*</exclude>
+                                <exclude>pom.xml</exclude>
+                                <exclude>*.iml</exclude>
+                            </excludes>
+                        </resource>
+                    </resources>
+                </configuration>
             </plugin>
+
+            <plugin>
+                <!-- Unit test runner -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.19.1</version>
+                <configuration>
+                    <groups>java.lang.Exception ${unittest.category} ${endtoendtest.category} ${loadtest.category}
+                    </groups> <!-- java.lang.Exception is a hack to make a valid comma-separated list og category classes -->
+                    <argLine>${surefireArgLine} -Dfile.encoding=${project.build.sourceEncoding}</argLine>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>2.19.1</version>
+                <configuration>
+                    <groups>java.lang.Exception ${integrationtest.category}
+                    </groups> <!-- java.lang.Exception is a hack to make a valid comma-separated list og category classes -->
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                    <argLine>${failsafeArgLine}</argLine>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+
+            <plugin>
+                <!-- Generates coverage reports from unit and integration tests -->
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.7.6.201602180812</version>
+                <executions>
+                    <!--
+                        JaCoCo report for unit tests
+                    -->
+                    <execution>
+                        <id>pre-unit-test</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                        <configuration>
+                            <destFile>${project.build.directory}/coverage-reports/jacoco-ut.exec</destFile>
+                            <propertyName>surefireArgLine</propertyName>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>post-unit-test</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                        <configuration>
+                            <dataFile>${project.build.directory}/coverage-reports/jacoco-ut.exec</dataFile>
+                            <!-- Sets the output directory for the code coverage report for unit tests. -->
+                            <outputDirectory>${project.reporting.outputDirectory}/jacoco-ut</outputDirectory>
+                        </configuration>
+                    </execution>
+
+                    <!--
+                        JaCoCo report for integration tests
+                    -->
+                    <execution>
+                        <id>pre-integration-test</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                        <configuration>
+                            <destFile>${project.build.directory}/coverage-reports/jacoco-it.exec</destFile>
+                            <propertyName>failsafeArgLine</propertyName>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>post-integration-test</id>
+                        <phase>post-integration-test</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                        <configuration>
+                            <!-- Sets the output directory for coverage report. Must be different from unit test report-->
+                            <dataFile>${project.build.directory}/coverage-reports/jacoco-it.exec</dataFile>
+                            <outputDirectory>${project.reporting.outputDirectory}/jacoco-it</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
 
         </plugins>
     </build>
