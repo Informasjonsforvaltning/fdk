@@ -35,15 +35,15 @@ jobs:
       env:
         - comment=Build all applications
 
-    - stage: Tests # Run unit and integration tests + generate test coverage report
-      if: type = cron #run only during nightly cron job - time-consuming operation
+    - stage: Integration tests - Maven # Run unit and integration tests + generate test coverage report
+      if: type =cron OR type = pull_request OR ( type = push AND branch = develop )
       script: mvn install -DskipTests -Dmaven.javadoc.skip=true -B && docker-compose up -d  && ./waitForDocker.sh  &&  mvn failsafe:integration-test -DskipDockerBuild -B -P integration-test org.jacoco:jacoco-maven-plugin:report
       after_success:
         - bash <(curl -s https://codecov.io/bash)
       env:
         - comment=Run unit and integration tests + generate test coverage report
 
-    - stage: Integration
+    - stage: End-to-end - Jest
       if: type = pull_request OR ( type = push AND branch = develop )
       script: source ./travisIntegration.sh
       env:
