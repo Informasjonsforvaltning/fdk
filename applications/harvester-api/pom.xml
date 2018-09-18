@@ -191,7 +191,7 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.19.1</version>
                 <configuration>
-                    <groups>java.lang.Exception ${unittest.category} ${endtoendtest.category} ${loadtest.category}</groups> <!-- java.lang.Exception is a hack to make a valid comma-separated list og category classes -->
+                    <groups>no.dcat.shared.testcategories.UnitTest</groups> <!-- java.lang.Exception is a hack to make a valid comma-separated list og category classes -->
                     <argLine>${surefireArgLine} -Dfile.encoding=${project.build.sourceEncoding}</argLine>
                 </configuration>
             </plugin>
@@ -200,7 +200,7 @@
                 <artifactId>maven-failsafe-plugin</artifactId>
                 <version>2.19.1</version>
                 <configuration>
-                    <groups>java.lang.Exception ${integrationtest.category}</groups> <!-- java.lang.Exception is a hack to make a valid comma-separated list og category classes -->
+                    <groups>no.dcat.shared.testcategories.IntegrationTest</groups> <!-- java.lang.Exception is a hack to make a valid comma-separated list og category classes -->
                     <encoding>${project.build.sourceEncoding}</encoding>
                     <argLine>${failsafeArgLine}</argLine>
                 </configuration>
@@ -275,8 +275,6 @@
                     </execution>
                 </executions>
             </plugin>
-
-
             <!-- Use -DskipDockerBuild to skip this rule -->
             <plugin>
                 <groupId>com.spotify</groupId>
