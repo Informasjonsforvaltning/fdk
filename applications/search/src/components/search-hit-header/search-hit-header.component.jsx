@@ -93,9 +93,9 @@ export const SearchHitHeader = props => {
           publisher && (
             <PublisherLabel label={publisherLabel} publisherItem={publisher} />
           )}
-
-        {theme && renderThemes(theme)}
       </div>
+
+      {theme && <div className="mb-4">{renderThemes(theme)}</div>}
     </React.Fragment>
   );
 };
