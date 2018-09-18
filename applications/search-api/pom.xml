@@ -11,6 +11,11 @@
     <packaging>jar</packaging>
     <version>1.0.0</version>
 
+    <properties>
+        <docker.image.prefix>dcatno</docker.image.prefix>
+        <docker.registry/>
+    </properties>
+
     <dependencies>
         <!-- må være med for å kjøre i intellij -->
         <dependency>
@@ -96,20 +101,47 @@
                         <goals>
                             <goal>repackage</goal>
                         </goals>
+                        <configuration>
+                            <classifier>exec</classifier>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
 
-            <!-- skip this step by -DskipDockerBuild -->
+            <!-- Use -DskipDockerBuild to skip this rule -->
             <plugin>
                 <groupId>com.spotify</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
+                <version>1.1.1</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>build</goal>
+                        </goals>
+                    </execution>
+                </executions>
                 <configuration>
                     <imageName>
-                        ${docker.registry}${docker.image.prefix}/search-api:latest
+                        ${docker.registry}${docker.image.prefix}/${project.artifactId}:latest
                     </imageName>
+                    <dockerDirectory>${project.basedir}/src/main/docker</dockerDirectory>
+                    <pushImage>false</pushImage>
+                    <resources>
+                        <resource>
+                            <targetPath>/</targetPath>
+                            <directory>${project.build.directory}</directory>
+                            <include>${project.build.finalName}-exec.jar</include>
+                            <excludes>
+                                <exclude>target/**/*</exclude>
+                                <exclude>pom.xml</exclude>
+                                <exclude>*.iml</exclude>
+                            </excludes>
+                        </resource>
+                    </resources>
                 </configuration>
             </plugin>
+
 
         </plugins>
     </build>
