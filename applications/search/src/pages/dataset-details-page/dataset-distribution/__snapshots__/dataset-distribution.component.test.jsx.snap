@@ -2,210 +2,241 @@
 
 exports[`should render DatasetDistribution correctly 1`] = `
 <section
-  className="fdk-container-detail"
+  className="fdk-distribution-item mb-1"
 >
-  <h4>
-    AAMarkagrensen Oslo Kommune og nærliggende kommuner
-  </h4>
-  <p
-    className="fdk-ingress"
+  <ListRegular
+    bottomMargin={false}
+    title={null}
   >
-    Datasettet avgrenser område for virkeområdet til lov 6. juni 2009 nr. 35 om naturområder i Oslo og nærliggende kommuner (markaloven) som trådte i kraft 1. september 2009. Markalovens virkeområde er fastsatt i forskrift 4. september 2015 nr. 1032 om justering av markagrensen fastlegger markalovens geografiske virkeområde med tilhørende kart.
-  </p>
-  <div>
-    <h5
-      className="mt-5"
+    <button
+      className="w-100 p-0"
+      onClick={[Function]}
     >
-      AccessURL
-    </h5>
-    <p
-      className="fdk-ingress"
-    >
-      <a
-        className="dataset-distribution-accessurl"
-        href="http://www.detteerenlenke.no/til-nedlasting"
-        key="dataset-distribution-accessurl-0"
+      <div
+        className="row list-regular--item text-left mb-2 closedCollapse"
       >
-        http://www.detteerenlenke.no/til-nedlasting
-        <i
-          className="fa fa-external-link fdk-fa-right"
-        />
-      </a>
-      <a
-        className="dataset-distribution-accessurl"
-        href="http://www.detteerenannenlenke.no/til-en-annen-nedlasting
+        <div
+          className="col-4 pl-0 fdk-text-strong"
+        >
+          Description
+        </div>
+        <div
+          className="col-8 show-more__cropped-box"
+        >
+          Datasettet avgrenser område for virkeområdet til lov 6. juni 2009 nr. 35 om naturområder i Oslo og nærliggende kommuner (markaloven) som trådte i kraft 1. september 2009. Markalovens virkeområde er fastsatt i forskrift 4. september 2015 nr. 1032 om justering av markagrensen fastlegger markalovens geografiske virkeområde med tilhørende kart.
+        </div>
+      </div>
+    </button>
+    <Collapse
+      appear={false}
+      enter={true}
+      exit={true}
+      in={false}
+      isOpen={false}
+      mountOnEnter={false}
+      onEnter={[Function]}
+      onEntered={[Function]}
+      onEntering={[Function]}
+      onExit={[Function]}
+      onExited={[Function]}
+      onExiting={[Function]}
+      tag="div"
+      timeout={350}
+      unmountOnExit={false}
+    >
+      <TwoColRow
+        col1="AccessURL"
+        col2={
+          Array [
+            <LinkExternal
+              prefLabel="http://www.detteerenlenke.no/til-nedlasting"
+              uri="http://www.detteerenlenke.no/til-nedlasting"
+            />,
+            <LinkExternal
+              prefLabel="http://www.detteerenannenlenke.no/til-en-annen-nedlasting
 "
-        key="dataset-distribution-accessurl-1"
+              uri="http://www.detteerenannenlenke.no/til-en-annen-nedlasting
+"
+            />,
+            <LinkExternal
+              prefLabel="http://www.detteerentredjelenke.no/til-en-tredje-nedlasting"
+              uri="http://www.detteerentredjelenke.no/til-en-tredje-nedlasting"
+            />,
+          ]
+        }
+      />
+      <TwoColRow
+        col1="License"
+        col2={
+          <LinkExternal
+            prefLabel="SOSI"
+            uri="https://www.kartverket.no/geodataarbeid/standarder/sosi/"
+          />
+        }
+      />
+      <TwoColRow
+        col1="Conforms to"
+        col2={
+          Array [
+            <LinkExternal
+              prefLabel="SOSI"
+              uri="https://www.kartverket.no/geodataarbeid/standarder/sosi/"
+            />,
+          ]
+        }
+      />
+      <div
+        className="row list-regular--item"
       >
-        http://www.detteerenannenlenke.no/til-en-annen-nedlasting
-
-        <i
-          className="fa fa-external-link fdk-fa-right"
+        <div
+          className="col-12 pl-0"
         />
-      </a>
-      <a
-        className="dataset-distribution-accessurl"
-        href="http://www.detteerentredjelenke.no/til-en-tredje-nedlasting"
-        key="dataset-distribution-accessurl-2"
-      >
-        http://www.detteerentredjelenke.no/til-en-tredje-nedlasting
-        <i
-          className="fa fa-external-link fdk-fa-right"
-        />
-      </a>
-    </p>
-  </div>
-  <div>
-    <h5
-      className="mt-5"
-    >
-      License
-    </h5>
-    <p
-      className="fdk-ingress"
-    >
-      <a
-        href="https://www.kartverket.no/geodataarbeid/standarder/sosi/"
-      >
-        SOSI
-        <i
-          className="fa fa-external-link fdk-fa-right"
-        />
-      </a>
-    </p>
-  </div>
-  <div>
-    <h5
-      className="mt-5"
-    >
-      Conforms to
-    </h5>
-    <p
-      className="fdk-ingress"
-    >
-      <a
-        href="https://www.kartverket.no/geodataarbeid/standarder/sosi/"
-        key="https://www.kartverket.no/geodataarbeid/standarder/sosi/"
-      >
-        SOSI
-        <i
-          className="fa fa-external-link fdk-fa-right"
-        />
-      </a>
-    </p>
-  </div>
-  <div>
-    <h5
-      className="mt-5"
-    >
-      More information about this distribution
-    </h5>
-    <p
-      className="fdk-ingress"
-    />
-  </div>
+      </div>
+    </Collapse>
+  </ListRegular>
 </section>
 `;
 
 exports[`should render DatasetDistribution correctly 2`] = `
 <section
-  className="fdk-container-detail"
+  className="fdk-distribution-item mb-1"
 >
-  <h4>
-    AAMarkagrensen Oslo Kommune og nærliggende kommuner
-  </h4>
-  <p
-    className="fdk-ingress"
+  <ListRegular
+    bottomMargin={false}
+    title={null}
   >
-    Datasettet avgrenser område for virkeområdet til lov 6. juni 2009 nr. 35 om naturområder i Oslo og nærliggende kommuner (markaloven) som trådte i kraft 1. september 2009. Markalovens virkeområde er fastsatt i forskrift 4. september 2015 nr. 1032 om justering av markagrensen fastlegger markalovens geografiske virkeområde med tilhørende kart.
-  </p>
-  <div>
-    <h5
-      className="mt-5"
+    <button
+      className="w-100 p-0"
+      onClick={[Function]}
     >
-      Type
-    </h5>
-    <p
-      className="fdk-ingress"
-    >
-      Feed
-    </p>
-  </div>
-  <div>
-    <h5
-      className="mt-4"
-    >
-      Format
-    </h5>
-    <DistributionFormat
-      code=""
-      key="dataset-distribution-format0"
-      text="application/json"
-      type={null}
-    />
-    <DistributionFormat
-      code=""
-      key="dataset-distribution-format0"
-      text="xml"
-      type={null}
-    />
-  </div>
-  <div>
-    <h5
-      className="mt-5"
-    >
-      License
-    </h5>
-    <p
-      className="fdk-ingress"
-    >
-      <a
-        href="https://www.kartverket.no/geodataarbeid/standarder/sosi/"
+      <div
+        className="row list-regular--item text-left"
       >
-        SOSI
+        <div
+          className="col-4 pl-0"
+        >
+          <span>
+            <strong>
+              Format
+            </strong>
+          </span>
+        </div>
+        <div
+          className="col-8"
+        >
+          <span
+            key="0"
+          >
+            application/json
+          </span>
+          <span
+            key="1"
+          >
+            , 
+            xml
+          </span>
+        </div>
         <i
-          className="fa fa-external-link fdk-fa-right"
+          className="fa fdk-color-blue-dark fa-chevron-down"
         />
-      </a>
-    </p>
-  </div>
-  <div>
-    <h5
-      className="mt-5"
-    >
-      Conforms to
-    </h5>
-    <p
-      className="fdk-ingress"
-    >
-      <a
-        href="https://www.kartverket.no/geodataarbeid/standarder/sosi/"
-        key="https://www.kartverket.no/geodataarbeid/standarder/sosi/"
+      </div>
+      <div
+        className="row list-regular--item text-left mb-2 closedCollapse"
       >
-        SOSI
-        <i
-          className="fa fa-external-link fdk-fa-right"
-        />
-      </a>
-    </p>
-  </div>
-  <div>
-    <h5
-      className="mt-5"
+        <div
+          className="col-4 pl-0 fdk-text-strong"
+        >
+          Description
+        </div>
+        <div
+          className="col-8 show-more__cropped-box"
+        >
+          Datasettet avgrenser område for virkeområdet til lov 6. juni 2009 nr. 35 om naturområder i Oslo og nærliggende kommuner (markaloven) som trådte i kraft 1. september 2009. Markalovens virkeområde er fastsatt i forskrift 4. september 2015 nr. 1032 om justering av markagrensen fastlegger markalovens geografiske virkeområde med tilhørende kart.
+        </div>
+      </div>
+    </button>
+    <Collapse
+      appear={false}
+      enter={true}
+      exit={true}
+      in={false}
+      isOpen={false}
+      mountOnEnter={false}
+      onEnter={[Function]}
+      onEntered={[Function]}
+      onEntering={[Function]}
+      onExit={[Function]}
+      onExited={[Function]}
+      onExiting={[Function]}
+      tag="div"
+      timeout={350}
+      unmountOnExit={false}
     >
-      More information about this distribution
-    </h5>
-    <p
-      className="fdk-ingress"
-    />
-  </div>
+      <TwoColRow
+        col1="Type"
+        col2="Feed"
+      />
+      <TwoColRow
+        col1="License"
+        col2={
+          <LinkExternal
+            prefLabel="SOSI"
+            uri="https://www.kartverket.no/geodataarbeid/standarder/sosi/"
+          />
+        }
+      />
+      <TwoColRow
+        col1="Conforms to"
+        col2={
+          Array [
+            <LinkExternal
+              prefLabel="SOSI"
+              uri="https://www.kartverket.no/geodataarbeid/standarder/sosi/"
+            />,
+          ]
+        }
+      />
+      <div
+        className="row list-regular--item"
+      >
+        <div
+          className="col-12 pl-0"
+        />
+      </div>
+    </Collapse>
+  </ListRegular>
 </section>
 `;
 
 exports[`should render DatasetDistribution correctly with no props 1`] = `
 <section
-  className="fdk-container-detail"
+  className="fdk-distribution-item mb-1"
 >
-  <h4 />
+  <ListRegular
+    bottomMargin={false}
+    title={null}
+  >
+    <button
+      className="w-100 p-0"
+      onClick={[Function]}
+    />
+    <Collapse
+      appear={false}
+      enter={true}
+      exit={true}
+      in={false}
+      isOpen={false}
+      mountOnEnter={false}
+      onEnter={[Function]}
+      onEntered={[Function]}
+      onEntering={[Function]}
+      onExit={[Function]}
+      onExited={[Function]}
+      onExiting={[Function]}
+      tag="div"
+      timeout={350}
+      unmountOnExit={false}
+    />
+  </ListRegular>
 </section>
 `;

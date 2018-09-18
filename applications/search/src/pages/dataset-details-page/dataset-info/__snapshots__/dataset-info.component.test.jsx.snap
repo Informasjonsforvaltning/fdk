@@ -1,599 +1,189 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`should render DatasetInfo correctly 1`] = `
-<section>
-  <div
-    className="row fdk-row"
+<React.Fragment>
+  <ListRegular
+    bottomMargin={true}
+    title="Related datasets"
   >
     <div
-      className="p-0 col-lg-4"
+      className="row list-regular--item"
+      key="reference-http://referenced/dataset"
     >
       <div
-        className="fdk-container-detail"
+        className="col-4 pl-0 fdk-text-strong"
       >
-        <div
-          className="fdk-detail-icon"
-        >
-          <i
-            className="fa fa-upload"
-          />
-        </div>
-        <div
-          className="fdk-detail-text"
-        >
-          <h5>
-            Issue date
-          </h5>
-          <p
-            className="fdk-ingress mb-0 text-nowrap"
-          >
-            <t
-              ago={false}
-              calendar={false}
-              decimal={false}
-              element="time"
-              filter={[Function]}
-              format="DD.MM.YYYY"
-              fromNow={false}
-              interval={60000}
-              onChange={[Function]}
-              toNow={false}
-              unit={null}
-              unix={false}
-              utc={false}
-            >
-              2018-04-26T00:00:00+0200
-            </t>
-          </p>
-        </div>
+        http://www.w3.org/2002/07/hasVersion
       </div>
-    </div>
-    <div
-      className="p-0 col-lg-8"
-    >
       <div
-        className="fdk-container-detail"
+        className="col-8"
       >
-        <div
-          className="fdk-detail-icon"
-        >
-          <i
-            className="fa fa-refresh"
-          />
-        </div>
-        <div
-          className="fdk-detail-text"
-        >
-          <h5>
-            Update frequency
-          </h5>
-          <p
-            className="fdk-ingress mb-0"
-          >
-            Å
-            rlig
-          </p>
-        </div>
+        <LinkExternal
+          prefLabel="http://referenced/dataset"
+          uri=""
+        />
       </div>
     </div>
-    <div
-      className="p-0"
-    >
-      <div
-        className="fdk-container-detail"
-      >
-        <div
-          className="fdk-detail-icon"
-        >
-          <i
-            className="fa fa-user"
-          />
-        </div>
-        <div
-          className="fdk-detail-text"
-        >
-          <h5>
-            Provenance
-          </h5>
-          <p
-            className="fdk-ingress mb-0"
-          >
-            Vedtak
-          </p>
-        </div>
-      </div>
-    </div>
-    <div
-      className="p-0"
-    >
-      <div
-        className="fdk-container-detail"
-      >
-        <div
-          className="fdk-detail-icon"
-        >
-          <i
-            className="fa fa-certificate"
-          />
-        </div>
-        <div
-          className="fdk-detail-text"
-        >
-          <h5>
-            Currentness
-          </h5>
-          <p
-            className="fdk-ingress mb-0"
-          >
-            Denne teksten sier noe om aktualiteten. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras mattis consectetur purus sit amet fermentum. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
-          </p>
-        </div>
-      </div>
-    </div>
-    <div
-      className="col-md-12 p-0"
-    >
-      <div
-        className="fdk-container-detail"
-      >
-        <div
-          className="fdk-detail-icon"
-        >
-          <i
-            className="fa fa-map"
-          />
-        </div>
-        <div
-          className="fdk-detail-text"
-        >
-          <h5>
-            Spatial
-          </h5>
-          <p
-            className="fdk-ingress mb-0"
-          >
-            <span
-              className="fdk-ingress mb-0"
-              key="dataset-info-spatial-0"
-            >
-              Asker
-            </span>
-            <span
-              className="fdk-ingress mb-0"
-              key="dataset-info-spatial-1"
-            >
-              , Bærum
-            </span>
-            <span
-              className="fdk-ingress mb-0"
-              key="dataset-info-spatial-2"
-            >
-              , Hurum
-            </span>
-            <span
-              className="fdk-ingress mb-0"
-              key="dataset-info-spatial-3"
-            >
-              , Røyken
-            </span>
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div
-    className="row fdk-row row-eq-height"
+  </ListRegular>
+  <ListRegular
+    bottomMargin={true}
+    title="Restrictions"
   >
     <div
-      className="col-12 p-0"
+      className="row list-regular--item"
     >
       <div
-        className="fdk-container-detail col-12"
+        className="col-4 pl-0 fdk-text-strong"
       >
-        <div
-          className="fdk-detail-icon"
-        >
-          <i
-            className="fa fa-flag"
-          />
-        </div>
-        <div
-          className="fdk-detail-text"
-        >
-          <h5>
-            Language
-          </h5>
-          <p
-            className="fdk-ingress mb-0"
-            key="dataset-info-language-0"
-          >
-            Norsk
-          </p>
-        </div>
+        Spatial
       </div>
-    </div>
-  </div>
-  <div
-    className="row fdk-row"
-  >
-    <div
-      className="col-12 p-0"
-    >
       <div
-        className="fdk-container-detail"
+        className="col-8"
       >
-        <div
-          className="fdk-detail-icon"
+        <span
+          key="0"
         >
-          <i
-            className="fa fa-link"
-          />
-        </div>
-        <div
-          className="fdk-detail-text refer"
-          key="dataset-reference-0"
+          Asker
+        </span>
+        <span
+          key="1"
         >
-          <h5>
-            Har versjon
-          </h5>
-          <p
-            className="fdk-ingress"
-          >
-            <a
-              href="http://referenced/dataset"
-            >
-              Relation
-              <i
-                className="fa fa-external-link fdk-fa-right"
-              />
-            </a>
-          </p>
-        </div>
+          , 
+          Bærum
+        </span>
+        <span
+          key="2"
+        >
+          , 
+          Hurum
+        </span>
+        <span
+          key="3"
+        >
+          , 
+          Røyken
+        </span>
       </div>
     </div>
-  </div>
-</section>
+  </ListRegular>
+</React.Fragment>
 `;
 
 exports[`should render DatasetInfo correctly 2`] = `
-<section>
-  <div
-    className="row fdk-row"
+<React.Fragment>
+  <ListRegular
+    bottomMargin={true}
+    title="Related datasets"
   >
     <div
-      className="p-0 col-lg-4"
+      className="row list-regular--item"
+      key="reference-http://referenced/dataset"
     >
       <div
-        className="fdk-container-detail"
+        className="col-4 pl-0 fdk-text-strong"
       >
-        <div
-          className="fdk-detail-icon"
-        >
-          <i
-            className="fa fa-upload"
-          />
-        </div>
-        <div
-          className="fdk-detail-text"
-        >
-          <h5>
-            Issue date
-          </h5>
-          <p
-            className="fdk-ingress mb-0 text-nowrap"
-          >
-            <t
-              ago={false}
-              calendar={false}
-              decimal={false}
-              element="time"
-              filter={[Function]}
-              format="DD.MM.YYYY"
-              fromNow={false}
-              interval={60000}
-              onChange={[Function]}
-              toNow={false}
-              unit={null}
-              unix={false}
-              utc={false}
-            >
-              2018-04-26T00:00:00+0200
-            </t>
-          </p>
-        </div>
+        http://www.w3.org/2002/07/hasVersion
       </div>
-    </div>
-    <div
-      className="p-0 col-lg-8"
-    >
       <div
-        className="fdk-container-detail"
+        className="col-8"
       >
-        <div
-          className="fdk-detail-icon"
-        >
-          <i
-            className="fa fa-refresh"
-          />
-        </div>
-        <div
-          className="fdk-detail-text"
-        >
-          <h5>
-            Update frequency
-          </h5>
-          <p
-            className="fdk-ingress mb-0"
-          >
-            Å
-            rlig
-          </p>
-        </div>
+        <LinkExternal
+          prefLabel="http://referenced/dataset"
+          uri=""
+        />
       </div>
     </div>
-    <div
-      className="p-0"
-    >
-      <div
-        className="fdk-container-detail"
-      >
-        <div
-          className="fdk-detail-icon"
-        >
-          <i
-            className="fa fa-user"
-          />
-        </div>
-        <div
-          className="fdk-detail-text"
-        >
-          <h5>
-            Provenance
-          </h5>
-          <p
-            className="fdk-ingress mb-0"
-          >
-            Vedtak
-          </p>
-        </div>
-      </div>
-    </div>
-    <div
-      className="p-0"
-    >
-      <div
-        className="fdk-container-detail"
-      >
-        <div
-          className="fdk-detail-icon"
-        >
-          <i
-            className="fa fa-certificate"
-          />
-        </div>
-        <div
-          className="fdk-detail-text"
-        >
-          <h5>
-            Currentness
-          </h5>
-          <p
-            className="fdk-ingress mb-0"
-          >
-            Denne teksten sier noe om aktualiteten. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras mattis consectetur purus sit amet fermentum. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
-          </p>
-        </div>
-      </div>
-    </div>
-    <div
-      className="col-md-12 p-0"
-    >
-      <div
-        className="fdk-container-detail"
-      >
-        <div
-          className="fdk-detail-icon"
-        >
-          <i
-            className="fa fa-map"
-          />
-        </div>
-        <div
-          className="fdk-detail-text"
-        >
-          <h5>
-            Spatial
-          </h5>
-          <p
-            className="fdk-ingress mb-0"
-          >
-            <span
-              className="fdk-ingress mb-0"
-              key="dataset-info-spatial-0"
-            >
-              Asker
-            </span>
-            <span
-              className="fdk-ingress mb-0"
-              key="dataset-info-spatial-1"
-            >
-              , Bærum
-            </span>
-            <span
-              className="fdk-ingress mb-0"
-              key="dataset-info-spatial-2"
-            >
-              , Hurum
-            </span>
-            <span
-              className="fdk-ingress mb-0"
-              key="dataset-info-spatial-3"
-            >
-              , Røyken
-            </span>
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div
-    className="row fdk-row row-eq-height"
+  </ListRegular>
+  <ListRegular
+    bottomMargin={true}
+    title="Restrictions"
   >
     <div
-      className="col-12 p-0"
+      className="row list-regular--item"
     >
       <div
-        className="fdk-container-detail col-lg-8"
+        className="col-4 pl-0 fdk-text-strong"
       >
-        <div
-          className="fdk-detail-icon"
-        >
-          <i
-            className="fa fa-calendar"
-          />
-        </div>
-        <div
-          className="fdk-detail-text"
-        >
-          <div
-            className="clearfix mb-1-em"
-            key="dataset-info-temporal-0"
-          >
-            <div
-              className="col-12 col-lg-6 dataset-temporal-date"
-            >
-              <h5>
-                From
-              </h5>
-              <p
-                className="fdk-ingress mb-0 text-nowrap"
-              >
-                <t
-                  ago={false}
-                  calendar={false}
-                  decimal={false}
-                  element="time"
-                  filter={[Function]}
-                  format="DD.MM.YYYY"
-                  fromNow={false}
-                  interval={60000}
-                  onChange={[Function]}
-                  toNow={false}
-                  unit={null}
-                  unix={false}
-                  utc={false}
-                >
-                  1483228800000
-                </t>
-              </p>
-            </div>
-            <div
-              className="col-12 col-lg-6 dataset-temporal-date"
-            >
-              <h5>
-                To
-              </h5>
-              <p
-                className="fdk-ingress mb-0 text-nowrap"
-              >
-                <t
-                  ago={false}
-                  calendar={false}
-                  decimal={false}
-                  element="time"
-                  filter={[Function]}
-                  format="DD.MM.YYYY"
-                  fromNow={false}
-                  interval={60000}
-                  onChange={[Function]}
-                  toNow={false}
-                  unit={null}
-                  unix={false}
-                  utc={false}
-                >
-                  1514764799000
-                </t>
-              </p>
-            </div>
-          </div>
-        </div>
+        Spatial
       </div>
       <div
-        className="fdk-container-detail col-12 col-lg-4"
+        className="col-8"
       >
-        <div
-          className="fdk-detail-icon"
+        <span
+          key="0"
         >
-          <i
-            className="fa fa-flag"
-          />
-        </div>
-        <div
-          className="fdk-detail-text"
+          Asker
+        </span>
+        <span
+          key="1"
         >
-          <h5>
-            Language
-          </h5>
-        </div>
+          , 
+          Bærum
+        </span>
+        <span
+          key="2"
+        >
+          , 
+          Hurum
+        </span>
+        <span
+          key="3"
+        >
+          , 
+          Røyken
+        </span>
       </div>
     </div>
-  </div>
-  <div
-    className="row fdk-row"
-  >
-    <div
-      className="col-12 p-0"
+    <React.Fragment
+      key="temporal-1483228800000"
     >
-      <div
-        className="fdk-container-detail"
-      >
-        <div
-          className="fdk-detail-icon"
-        >
-          <i
-            className="fa fa-link"
-          />
-        </div>
-        <div
-          className="fdk-detail-text refer"
-          key="dataset-reference-0"
-        >
-          <h5>
-            Har versjon
-          </h5>
-          <p
-            className="fdk-ingress"
+      <TwoColRow
+        col1="From"
+        col2={
+          <t
+            ago={false}
+            calendar={false}
+            decimal={false}
+            element="time"
+            filter={[Function]}
+            format="DD.MM.YYYY"
+            fromNow={false}
+            interval={60000}
+            onChange={[Function]}
+            toNow={false}
+            unit={null}
+            unix={false}
+            utc={false}
           >
-            <a
-              href="http://referenced/dataset"
-            >
-              Relation
-              <i
-                className="fa fa-external-link fdk-fa-right"
-              />
-            </a>
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+            1483228800000
+          </t>
+        }
+      />
+      <TwoColRow
+        col1="To"
+        col2={
+          <t
+            ago={false}
+            calendar={false}
+            decimal={false}
+            element="time"
+            filter={[Function]}
+            format="DD.MM.YYYY"
+            fromNow={false}
+            interval={60000}
+            onChange={[Function]}
+            toNow={false}
+            unit={null}
+            unix={false}
+            utc={false}
+          >
+            1514764799000
+          </t>
+        }
+      />
+    </React.Fragment>
+  </ListRegular>
+</React.Fragment>
 `;
 
-exports[`should render DatasetInfo correctly with no props 1`] = `
-<section>
-  <div
-    className="row fdk-row"
-  />
-  <div
-    className="row fdk-row row-eq-height"
-  >
-    <div
-      className="col-12 p-0"
-    />
-  </div>
-  <div
-    className="row fdk-row"
-  />
-</section>
-`;
+exports[`should render DatasetInfo correctly with no props 1`] = `<React.Fragment />`;
