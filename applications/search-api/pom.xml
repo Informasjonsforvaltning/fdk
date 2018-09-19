@@ -86,6 +86,12 @@
             <artifactId>jsoup</artifactId>
             <version>1.10.3</version>
         </dependency>
+
+        <dependency>
+            <groupId>no.dcat</groupId>
+            <artifactId>webutils-spring1</artifactId>
+            <version>1.0.0</version>
+        </dependency>
     </dependencies>
 
     <!-- Nødvendig for å brukes på openshift-->

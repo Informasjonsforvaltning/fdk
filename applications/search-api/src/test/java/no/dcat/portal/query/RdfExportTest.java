@@ -1,5 +1,7 @@
 package no.dcat.portal.query;
 
+import com.google.gson.Gson;
+import no.dcat.shared.Dataset;
 import no.dcat.shared.testcategories.UnitTest;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
@@ -277,7 +279,9 @@ public class RdfExportTest {
     @Test
     public void testRdfResponse4Turtle() throws Throwable {
 
-        ResponseEntity<String> actual = queryService.getRdfResponse(queryReply, "text/turtle");
+        Dataset dataset=new Gson().fromJson(queryReply,Dataset.class);
+
+        ResponseEntity<String> actual = queryService.transformResponse(dataset, "text/turtle");
 
         Assert.assertThat(actual.getStatusCode(), Matchers.is(HttpStatus.OK));
 
@@ -287,8 +291,9 @@ public class RdfExportTest {
 
     @Test
     public void testRdfResponse4RDFXML() throws Throwable {
+        Dataset dataset=new Gson().fromJson(queryReply,Dataset.class);
 
-        ResponseEntity<String> actual = queryService.getRdfResponse(queryReply, "application/rdf+xml");
+        ResponseEntity<String> actual = queryService.transformResponse(dataset, "application/rdf+xml");
 
         Assert.assertThat(actual.getStatusCode(), Matchers.is(HttpStatus.OK));
 
@@ -298,8 +303,9 @@ public class RdfExportTest {
 
     @Test
     public void testRdfResponse4JSONLD() throws Throwable {
+        Dataset dataset=new Gson().fromJson(queryReply,Dataset.class);
 
-        ResponseEntity<String> actual = queryService.getRdfResponse(queryReply, "application/ld+json");
+        ResponseEntity<String> actual = queryService.transformResponse(dataset, "application/ld+json");
 
         Assert.assertThat(actual.getStatusCode(), Matchers.is(HttpStatus.OK));
 

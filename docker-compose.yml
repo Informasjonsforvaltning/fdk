@@ -21,6 +21,7 @@ services:
     depends_on:
       - elasticsearch5
       - reference-data
+      - search-api
 
   nginx-search:
     image: dcatno/nginx-search:latest

@@ -17,6 +17,7 @@ import org.elasticsearch.client.Client;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +35,9 @@ public class ApiHarvester {
     private Client elasticsearchClient;
     private ReferenceDataClient referenceDataClient;
     private ObjectMapper mapper = Utils.jsonMapper();
+
+    @Value("${application.searchApiUrl}")
+    private String searchApiUrl;
 
     @Autowired
     public ApiHarvester(ElasticsearchService elasticsearchService, ReferenceDataService referenceDataService) {
@@ -61,7 +65,7 @@ public class ApiHarvester {
     }
 
     ApiDocumentBuilder createApiDocumentBuilder() {
-        return new ApiDocumentBuilder(elasticsearchClient, referenceDataClient);
+        return new ApiDocumentBuilder(elasticsearchClient, referenceDataClient, searchApiUrl);
     }
 
     void indexApi(ApiDocument document) throws JsonProcessingException {
