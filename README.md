@@ -171,3 +171,6 @@ Solution: remove old containers
 Remove old images
 >  `bash: docker rmi -f $(docker images -q)`
 
+Docker is slow on mac:
+Docker needs at least 8G of memory
+>  Docker -> Preferences -> Advanced -> Change memory to (8 GiB)
