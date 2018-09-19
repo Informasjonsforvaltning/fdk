@@ -170,3 +170,4 @@ Solution: remove old containers
 
 Remove old images
 >  `bash: docker rmi -f $(docker images -q)`
+
