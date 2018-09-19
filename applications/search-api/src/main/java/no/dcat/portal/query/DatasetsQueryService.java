@@ -5,6 +5,8 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import no.dcat.datastore.domain.dcat.builders.DcatBuilder;
 import no.dcat.shared.Dataset;
+import no.dcat.webutils.exceptions.NotFoundException;
+import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.index.query.BoolQueryBuilder;
@@ -21,17 +23,12 @@ import org.elasticsearch.search.sort.SortOrder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.util.Arrays;
 import java.util.Date;
 
@@ -62,7 +59,7 @@ public class DatasetsQueryService extends ElasticsearchService {
 
     /* api names */
     public static final String QUERY_SEARCH = "/datasets";
-
+    public static final String QUERY_GET_BY_ID = "/datasets/{id}";
 
     /**
      * Compose and execute an elasticsearch query on dcat based on the input parameters.
@@ -509,92 +506,66 @@ public class DatasetsQueryService extends ElasticsearchService {
     }
 
     /**
-     * Retrieves the dataset record identified by the provided id. The complete dataset, as defined in elasticsearch,
-     * is returned on Json-format.
-     * <p/>
+     * Retrieves the dataset record identified by the provided id.
      *
-     * @return the record (JSON) of the retrieved dataset. The complete elasticsearch response on Json-fornat is returned.
+     * @return the record (JSON) of the retrieved dataset.
      */
     @CrossOrigin
-    @ApiOperation(value = "Get a specific dataset.",
-            notes = "You must specify the dataset's identifier", response = Dataset.class)
+    @ApiOperation(
+            value = "Get a specific dataset",
+            response = Dataset.class)
     @RequestMapping(
-            value = "/datasets/**",
+            value = QUERY_GET_BY_ID,
             method = RequestMethod.GET,
             produces = {"application/json", "text/turtle", "application/ld+json", "application/rdf+xml"})
-    public ResponseEntity<String> detail(HttpServletRequest request) {
-        ResponseEntity<String> jsonError = initializeElasticsearchTransportClient();
+    public ResponseEntity<String> getDatasetByIdHandler(
+            HttpServletRequest request,
+            @ApiParam("Dataset ID") @PathVariable String id) throws NotFoundException {
+        logger.info(String.format("Get dataset with id: %s", id));
 
-        String id = extractIdentifier(request);
-
-        logger.info("request for {}", id);
-        try {
-            id = URLDecoder.decode(id, "utf-8");
-        } catch (UnsupportedEncodingException e) {
-            logger.warn("id could not be decoded {}. Reason {}", id, e.getLocalizedMessage());
+        Dataset dataset = getDatasetById(id);
+        if (dataset == null) {
+            throw new NotFoundException();
         }
-
-        QueryBuilder search = QueryBuilders.idsQuery("dataset").addIds(id);
-
-        logger.debug(String.format("Get dataset with id: %s", id));
-        SearchResponse response = getClient().prepareSearch(INDEX_DCAT).setQuery(search).execute().actionGet();
-
-        if (response.getHits().getTotalHits() == 0) {
-            logger.error(String.format("Found no dataset with id: %s", id));
-            jsonError = new ResponseEntity<>(String.format("Found no dataset with id: %s", id), HttpStatus.NOT_FOUND);
-
-        }
-        logger.trace(String.format("Found dataset: %s", response.toString()));
-
-        if (jsonError != null) {
-            return jsonError;
-        }
-
-        logger.info("request success for {}", id);
 
         String acceptHeader = request.getHeader("Accept");
-        if (acceptHeader != null && !acceptHeader.isEmpty() && !acceptHeader.contains("application/json")) {
-            ResponseEntity<String> rdfResponse = produceRDFResponse(id, response, acceptHeader);
-            if (rdfResponse != null) return rdfResponse;
+        String contentType = acceptHeader != null ? acceptHeader : "";
+
+        return transformResponse(dataset, contentType);
+    }
+
+    Dataset getDatasetById(String id) {
+        initializeElasticsearchTransportClient();
+        GetResponse elasticGetResponse = getClient().prepareGet(INDEX_DCAT, "dataset", id).get();
+
+        if (!elasticGetResponse.isExists()) {
+            return null;
         }
+        String datasetAsJson = elasticGetResponse.getSourceAsString();
+        logger.trace(String.format("Found dataset: %s", datasetAsJson));
 
-        return new ResponseEntity<>(response.toString(), HttpStatus.OK);
+        return new Gson().fromJson(datasetAsJson, Dataset.class);
     }
 
-    private ResponseEntity<String> produceRDFResponse(String id, SearchResponse response, String acceptHeader) {
-        try {
-            String datasetAsJson = response.getHits().getAt(0).getSourceAsString();
-
-            ResponseEntity<String> rdfResponse = getRdfResponse(datasetAsJson, acceptHeader);
-            if (rdfResponse != null) return rdfResponse;
-        } catch (Exception e) {
-            logger.warn("Unable to return rdf for {}. Reason {}", id, e.getLocalizedMessage());
+    ResponseEntity<String> transformResponse(Dataset d, String contentType) {
+        if (contentType.contains("text/turtle")) {
+            return ResponseEntity.ok()
+                    .contentType(new MediaType("text", "turtle"))
+                    .body(DcatBuilder.transform(d, "TURTLE"));
+        } else if (contentType.contains("application/ld+json")) {
+            return ResponseEntity.ok()
+                    .contentType(new MediaType("application", "ld+json"))
+                    .body(DcatBuilder.transform(d, "JSON-LD"));
+        } else if (contentType.contains("application/rdf+xml")) {
+            return ResponseEntity.ok()
+                    .contentType(new MediaType("application", "rdf+xml"))
+                    .body(DcatBuilder.transform(d, "RDF/XML"));
+        } else {
+            return ResponseEntity.ok()
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body(new Gson().toJson(d));
         }
-        return null;
     }
-
-    ResponseEntity<String> getRdfResponse(String datasetAsJson, String acceptHeader) {
-
-        Dataset d = new Gson().fromJson(datasetAsJson, Dataset.class);
-
-        if (acceptHeader.contains("text/turtle")) {
-            return new ResponseEntity<>(DcatBuilder.transform(d, "TURTLE"), HttpStatus.OK);
-        } else if (acceptHeader.contains("application/ld+json")) {
-            return new ResponseEntity<>(DcatBuilder.transform(d, "JSON-LD"), HttpStatus.OK);
-        } else if (acceptHeader.contains("application/rdf+xml")) {
-            return new ResponseEntity<>(DcatBuilder.transform(d, "RDF/XML"), HttpStatus.OK);
-        }
-
-        return null;
-    }
-
-    String extractIdentifier(HttpServletRequest request) {
-        String id = request.getServletPath().replaceFirst("/datasets/", "");
-        id = id.replaceFirst(":/", "://");
-
-        return id;
-    }
-
 
     /**
      * Create aggregation object that counts the number of

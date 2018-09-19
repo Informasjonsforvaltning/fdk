@@ -28,7 +28,7 @@ import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
 
 /**
- * Class for testing detail Rest-API in DatasetsQueryService.
+ * Class for testing getDatasetByIdHandler Rest-API in DatasetsQueryService.
  */
 @RunWith(MockitoJUnitRunner.class)
 @Category(UnitTest.class)
