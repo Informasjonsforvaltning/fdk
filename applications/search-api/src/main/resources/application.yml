@@ -34,6 +34,6 @@ logging:
   level.no.brreg: INFO
   level.org.springframework: ERROR
 server:
-  port: 8083
+  port: 8093
 management:
   port: 8993
