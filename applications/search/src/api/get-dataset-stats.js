@@ -27,9 +27,9 @@ export function extractStats(data) {
     nonPublic: getFromBucketArray(data, 'accessRightsCount', 'NON_PUBLIC'),
     unknown: getFromBucketArray(data, 'accessRightsCount', 'UKJENT'),
     opendata: getFromAggregation(data, 'opendata'),
-    newLastWeek: getFromBucketKeyed(data, 'firstHarvested', 'last7days'),
-    newLastMonth: getFromBucketKeyed(data, 'firstHarvested', 'last30days'),
-    newLastYear: getFromBucketKeyed(data, 'firstHarvested', 'last365days'),
+    newLastWeek: _.get(data, 'aggregations.firstHarvested.buckets[0].last7days'),
+    newLastMonth: _.get(data, 'aggregations.firstHarvested.buckets[1].last30days'),
+    newLastYear: _.get(data, 'aggregations.firstHarvested.buckets[2].last365days'),
     distributions: getFromAggregation(data, 'distCount'),
     distOnPublicAccessCount: getFromAggregation(
       data,
@@ -45,6 +45,5 @@ export const getDatasetStats = async query => {
   const response = await axios
     .get(`/aggregateDataset?q=${q}`)
     .catch(e => console.log(JSON.stringify(e))); // eslint-disable-line no-console
-
   return response && extractStats(normalizeAggregations(response.data));
 };
