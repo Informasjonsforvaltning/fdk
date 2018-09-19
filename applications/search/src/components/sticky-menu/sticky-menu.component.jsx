@@ -13,7 +13,7 @@ const renderMenuItem = menuItem => (
       spy
       smooth
       isDynamic
-      offset={-100}
+      offset={0}
       duration={1500}
     >
       <span>{menuItem.prefLabel}</span>
