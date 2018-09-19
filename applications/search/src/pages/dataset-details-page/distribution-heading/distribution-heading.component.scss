@@ -1,0 +1,10 @@
+@import '../../../../node_modules/designsystemet/fdk-designsystem-bootstrap4/scss/colors.scss';
+
+.fdk-distribution-heading {
+  background-color: $color_white;
+  border: 1px $color_white;
+  padding: 2em 2em 1em 2em;
+  margin-bottom: .2em;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
