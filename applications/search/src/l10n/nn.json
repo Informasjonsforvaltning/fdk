@@ -22,11 +22,7 @@
   "non_public": "Unntatt offentlegheit",
   "unknown": "Ukjend",
   "app": {
-    "title": "Felles Datakatalog",
-    "titleSub": "Oversikt over datasett frå verksemder i Noreg.",
-    "publisher": "Velg ut frå verksemd",
-    "menu": "Meny",
-    "readMore": "Les meir om "
+    "menu": "Meny"
   },
   "beta": {
     "header": "Dette er ein beta-versjon. ",
@@ -42,21 +38,13 @@
     "english-en": "Engelsk"
   },
   "menu": {
-    "home": "Hjem",
-    "about": "Felles Datakatalog",
     "aboutRegistration": "Registrere datasett",
     "reports": "Rapporter"
-  },
-  "feedback": {
-    "title": "Tilbakemelding"
   },
   "query": {
     "intro": "Søk etter innhald",
     "do": "Søk",
     "clear": "Fjern alle filter"
-  },
-  "login": {
-    "title": "Logg inn"
   },
   "about": {
     "about": "Om felles Datakatalog",
@@ -96,9 +84,7 @@
     },
     "search": "Søket gav",
     "datasetHits": "treff i datasett",
-    "datasetNoHits": "ingen treff i datasett",
     "conceptHits": "treff i omgrep",
-    "conceptNoHits": "ingen treff i omgrep",
     "noHits": "Søket gav dessverre ingen treff",
     "concepts": "omgrep",
     "and": "og",
@@ -131,9 +117,6 @@
   "result": {
     "dataset":"Datasett",
     "waiting":"Hentar data ..."
-  },
-  "noHits": {
-    "error": "Ingen datasett funne"
   },
   "footer": {
     "organisation.number": "Organisasjonsnummer:",
@@ -246,7 +229,6 @@
     "source": "Kjelde",
     "note": "Forklaring",
     "compare": "Samanlikning",
-    "hideCompare": "Skjul samanlikning",
     "openCompare": "Vis samanlikning",
     "remove": "Fjern omgrep",
     "added": "Du har lagt ",
