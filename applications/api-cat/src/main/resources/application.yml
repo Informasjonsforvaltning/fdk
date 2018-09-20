@@ -7,8 +7,8 @@ logging:
 application:
   referenceDataUrl: http://reference-data:8080
 elastic:
-  clusterNodes: ${FDK_ES_CLUSTERNODES}
-  clusterName: ${FDK_ES_CLUSTERNAME}
+  clusterNodes: ${FDK_ES_CLUSTERNODES:elasticsearch5:9300}
+  clusterName: ${FDK_ES_CLUSTERNAME:elasticsearch}
 server:
   port: 8080
 management:
