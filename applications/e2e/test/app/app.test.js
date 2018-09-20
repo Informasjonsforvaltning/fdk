@@ -3,6 +3,8 @@ import { isDebugging } from './../testingInit';
 import delay from 'delay'
 
 const APP = process.env.HOST_SEARCH;
+
+const isMacOS = !!process.env.IS_MACOS;
 let page;
 let browser;
 const width = 1920;
@@ -10,7 +12,13 @@ const height = 1080;
 
 beforeAll(async () => {
     try {
-        browser = await puppeteer.launch(isDebugging().puppeteer);
+        const options = isMacOS ?
+        {
+          headless: false,
+          executablePath: '/Applications/Chromium.app/Contents/MacOS/Chromium',
+          args: ["--window-size=2400,1239"]
+        } : isDebugging().puppeteer;
+        browser = await puppeteer.launch(options);
         page = await browser.newPage();
         page.on('console', consoleMessage => {
             console.log('CONSOLE MESSAGE TYPE:', consoleMessage.type())
@@ -30,10 +38,8 @@ afterAll(() => {
 });
 
 describe('App', () => {
-
     test('search page opens', async () => {
-        await page.goto(APP)
-
+        await page.goto(APP);
         // Search page component now waits for resolving API request before rendering.
         // If some other solution is implemented with initial rendering, delay can be removed
         await delay(10000);
