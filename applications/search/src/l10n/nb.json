@@ -22,11 +22,7 @@
   "non_public": "Unntatt offentlighet",
   "unknown": "Ukjent",
   "app": {
-    "title": "Felles Datakatalog",
-    "titleSub": "Oversikt over datasett fra virksomheter i Norge.",
-    "publisher": "Virksomhet",
-    "menu": "Meny",
-    "readMore": "Les mer om "
+    "menu": "Meny"
   },
   "beta": {
     "header": "Dette er en beta-versjon. ",
@@ -42,21 +38,13 @@
     "english-en": "Engelsk"
   },
   "menu": {
-    "home": "Hjem",
-    "about": "Om Felles Datakatalog",
     "aboutRegistration": "Registrere datasett",
     "reports": "Rapporter"
-  },
-  "feedback": {
-    "title": "Tilbakemelding"
   },
   "query": {
     "intro": "Søk etter innhold",
     "do": "Søk",
     "clear": "Fjern alle filtre"
-  },
-  "login": {
-    "title": "Logg inn"
   },
   "about": {
     "about": "Om Felles Datakatalog",
@@ -96,9 +84,7 @@
     },
     "search": "Søket ga",
     "datasetHits": "treff i datasett",
-    "datasetNoHits": "ingen treff i datasett",
     "conceptHits": "treff i begrep",
-    "conceptNoHits": "ingen treff i begrep",
     "noHits": "Søket ga dessverre ingen treff",
     "concepts": "begrep",
     "and": "og",
@@ -131,9 +117,6 @@
   "result": {
     "dataset":"Datasett",
     "waiting":"Henter data ..."
-  },
-  "noHits": {
-    "error": "Ingen datasett funnet"
   },
   "footer": {
     "organisation.number": "Organisasjonsnummer:",
@@ -181,18 +164,18 @@
       "referenceDefault": "Relasjon",
       "type": "Type"
     },
-    "issued": "Utgivelsesdato",
+    "issued": "Utgitt",
     "quality": "Kvalitet på innhold",
     "provenance": "Opphav",
     "currentness": "Aktualitet",
     "frequency": "Oppdateringsfrekvens",
     "miscInfo": "Øvrig info",
     "created": "Opprettet",
-    "modified": "Sist endret",
+    "modified": "Sist oppdatert",
     "language": "Språk",
     "theme": "Tema",
-    "periodFrom": "Gjelder fra",
-    "periodTo": "Gjelder til",
+    "periodFrom": "Tidsmessig avgrenset fra",
+    "periodTo": "Tidsmessig avgrenset til",
     "spatial": "Geografisk avgrenset til",
     "information": "Opplysninger",
     "keyword": "Søkeord",
@@ -246,7 +229,6 @@
     "source": "Kilde",
     "note": "Beskrivelse",
     "compare": "Sammenligning",
-    "hideCompare": "Skjul sammenligning",
     "openCompare": "Vis sammenligning",
     "remove": "Fjern begrep",
     "added": "Du har lagt ",
