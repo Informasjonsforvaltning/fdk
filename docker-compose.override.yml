@@ -131,6 +131,8 @@ services:
       - "8079:8080"
     environment:
      - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
+     - FDK_ES_CLUSTERNODES=elasticsearch5:9300
+     - FDK_ES_CLUSTERNAME=elasticsearch
      - registrationAPI_clusterName=elasticsearch
      - registrationApi_altinnServiceUrl=http://registration-auth:8080/
      - registrationApi_apikey=${registrationApi_apikey}
