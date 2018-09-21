@@ -1,6 +1,5 @@
 package no.dcat.harvester.crawler;
 
-
 import no.dcat.datastore.AdminDataStore;
 import no.dcat.datastore.DcatDataStore;
 import no.dcat.datastore.domain.DcatSource;
@@ -21,7 +20,6 @@ import org.apache.jena.util.FileManager;
 import org.apache.jena.vocabulary.RDF;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import org.mockito.Mockito;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
@@ -34,8 +32,8 @@ import java.util.List;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
 
 @Category(UnitTest.class)
@@ -46,10 +44,10 @@ public class CrawlerJobTest {
     @Test
     public void testLastPath() {
         DcatSource dcatSource = new DcatSource("http//dcat.difi.no/test", "Test", "https://test", "tester", "123456789");
-        AdminDataStore adminDataStore = Mockito.mock(AdminDataStore.class);
-        ElasticSearchResultHandler elasticHandler = Mockito.mock(ElasticSearchResultHandler.class);
+        AdminDataStore adminDataStore = mock(AdminDataStore.class);
+        ElasticSearchResultHandler elasticHandler = mock(ElasticSearchResultHandler.class);
 
-        CrawlerJob job = new CrawlerJob(dcatSource, adminDataStore, null,null, elasticHandler);
+        CrawlerJob job = new CrawlerJob(dcatSource, adminDataStore, null, elasticHandler);
         job.testMode();
 
         String actual = job.lastPath("/p1/p2");
@@ -59,7 +57,7 @@ public class CrawlerJobTest {
 
         assertThat(job.lastPath(""), is(""));
 
-        assertThat(job.lastPath(null), is (nullValue()));
+        assertThat(job.lastPath(null), is(nullValue()));
     }
 
     @Test
@@ -70,10 +68,10 @@ public class CrawlerJobTest {
                 "description", "message", null, null, null);
 
         DcatSource dcatSource = new DcatSource("http//dcat.difi.no/test", "Test", "https://test", "tester", "123456789");
-        AdminDataStore adminDataStore = Mockito.mock(AdminDataStore.class);
-        ElasticSearchResultHandler elasticHandler = Mockito.mock(ElasticSearchResultHandler.class);
+        AdminDataStore adminDataStore = mock(AdminDataStore.class);
+        ElasticSearchResultHandler elasticHandler = mock(ElasticSearchResultHandler.class);
 
-        CrawlerJob job = new CrawlerJob(dcatSource, adminDataStore, null,null, elasticHandler);
+        CrawlerJob job = new CrawlerJob(dcatSource, adminDataStore, null, elasticHandler);
         job.testMode();
 
         String actual = job.formatValidationMessage(error);
@@ -108,14 +106,14 @@ public class CrawlerJobTest {
 
         DcatSource dcatSource = new DcatSource("http//dcat.difi.no/test", "Test", resource.getURL().toString(), "tester", "123456789");
 
-        DcatDataStore dcatDataStore = Mockito.mock(DcatDataStore.class);
-        Mockito.doThrow(Exception.class).when(dcatDataStore).saveDataCatalogue(Mockito.anyObject(), Mockito.anyObject());
+        DcatDataStore dcatDataStore = mock(DcatDataStore.class);
+        doThrow(RuntimeException.class).when(dcatDataStore).saveDataCatalogue(any(), any());
 
         FusekiResultHandler handler = new FusekiResultHandler(dcatDataStore, null);
 
-        AdminDataStore adminDataStore = Mockito.mock(AdminDataStore.class);
+        AdminDataStore adminDataStore = mock(AdminDataStore.class);
 
-        CrawlerJob job = new CrawlerJob(dcatSource, adminDataStore, null, null, handler);
+        CrawlerJob job = new CrawlerJob(dcatSource, adminDataStore, null, handler);
 
         job.testMode();
         job.run();
@@ -129,24 +127,24 @@ public class CrawlerJobTest {
 
         DcatSource dcatSource = new DcatSource("http//dcat.difi.no/test", "Test", resource.getURL().toString(), "tester", "123456789");
 
-        DcatDataStore dcatDataStore = Mockito.mock(DcatDataStore.class);
-        Mockito.doThrow(Exception.class).when(dcatDataStore).saveDataCatalogue(Mockito.anyObject(), Mockito.anyObject());
+        DcatDataStore dcatDataStore = mock(DcatDataStore.class);
+        doThrow(RuntimeException.class).when(dcatDataStore).saveDataCatalogue(any(), any());
 
         FusekiResultHandler handler = new FusekiResultHandler(dcatDataStore, null);
 
-        AdminDataStore adminDataStore = Mockito.mock(AdminDataStore.class);
+        AdminDataStore adminDataStore = mock(AdminDataStore.class);
 
-        CrawlerJob job = new CrawlerJob(dcatSource, adminDataStore, null, null, handler);
+        CrawlerJob job = new CrawlerJob(dcatSource, adminDataStore, null, handler);
 
-        CrawlerJob spyJob = Mockito.spy(job);
-        Mockito.doReturn(job.loadModelAndValidate(resource.getURL())).when(spyJob).prepareModelForValidation();
+        CrawlerJob spyJob = spy(job);
+        doReturn(job.loadModelAndValidate(resource.getURL())).when(spyJob).prepareModelForValidation();
         spyJob.testMode();
         spyJob.run();
 
         List<String> report =  spyJob.getValidationResult();
 
         logger.debug("validation report: {}", report);
-        assertThat(report.size(), is(41));
+        assertThat(report.size(), is(42));
     }
 
 
@@ -156,14 +154,14 @@ public class CrawlerJobTest {
 
         DcatSource dcatSource = new DcatSource("http//dcat.difi.no/test", "Test", resource.getURL().toString(), "tester", "123456789");
 
-        DcatDataStore dcatDataStore = Mockito.mock(DcatDataStore.class);
-        Mockito.doThrow(Exception.class).when(dcatDataStore).saveDataCatalogue(Mockito.anyObject(), Mockito.anyObject());
+        DcatDataStore dcatDataStore = mock(DcatDataStore.class);
+        doThrow(Exception.class).when(dcatDataStore).saveDataCatalogue(any(), any());
 
         FusekiResultHandler handler = new FusekiResultHandler(dcatDataStore, null);
 
-        AdminDataStore adminDataStore = Mockito.mock(AdminDataStore.class);
+        AdminDataStore adminDataStore = mock(AdminDataStore.class);
 
-        CrawlerJob job = new CrawlerJob(dcatSource, adminDataStore, null, null, handler);
+        CrawlerJob job = new CrawlerJob(dcatSource, adminDataStore, null, handler);
 
         job.testMode();
         job.run();
@@ -176,8 +174,8 @@ public class CrawlerJobTest {
         ClassPathResource resource = new ClassPathResource("npolar.jsonld");
         DcatSource dcatSource = new DcatSource("http//dcat.difi.no/test", "Test", resource.getURL().toString(), "tester", null);
 
-        DcatDataStore dcatDataStore = Mockito.mock(DcatDataStore.class);
-        AdminDataStore adminDataStore = Mockito.mock(AdminDataStore.class);
+        DcatDataStore dcatDataStore = mock(DcatDataStore.class);
+        AdminDataStore adminDataStore = mock(AdminDataStore.class);
 
         FusekiResultHandler handler = new FusekiResultHandler(dcatDataStore, adminDataStore);
 
@@ -190,14 +188,14 @@ public class CrawlerJobTest {
         ClassPathResource resource = new ClassPathResource("dataset-FDK-138-validering.ttl");
         DcatSource dcatSource = new DcatSource("http//dcat.difi.no/test", "Test", resource.getURL().toString(), "tester", "");
 
-        DcatDataStore dcatDataStore = Mockito.mock(DcatDataStore.class);
-        AdminDataStore adminDataStore = Mockito.mock(AdminDataStore.class);
+        DcatDataStore dcatDataStore = mock(DcatDataStore.class);
+        AdminDataStore adminDataStore = mock(AdminDataStore.class);
 
         FusekiResultHandler handler = new FusekiResultHandler(dcatDataStore, null);
 
         handler.process(dcatSource, ModelFactory.createDefaultModel(), null);
 
-        CrawlerJob job = new CrawlerJob(dcatSource, adminDataStore, null, null, handler);
+        CrawlerJob job = new CrawlerJob(dcatSource, adminDataStore, null, handler);
         job.testMode();
         job.run();
     }
@@ -208,14 +206,14 @@ public class CrawlerJobTest {
 
         DcatSource dcatSource = new DcatSource("http://someid", "Test", resource.getURL().toString(), "tester", "123");
 
-        DcatDataStore dcatDataStore = Mockito.mock(DcatDataStore.class);
-        AdminDataStore adminDataStore = Mockito.mock(AdminDataStore.class);
+        DcatDataStore dcatDataStore = mock(DcatDataStore.class);
+        AdminDataStore adminDataStore = mock(AdminDataStore.class);
 
         FusekiResultHandler handler = new FusekiResultHandler(dcatDataStore, null);
 
         handler.process(dcatSource, ModelFactory.createDefaultModel(), null);
 
-        CrawlerJob job = new CrawlerJob(dcatSource, adminDataStore, HarvesterApplication.getBrregCache(), null, handler);
+        CrawlerJob job = new CrawlerJob(dcatSource, adminDataStore, null, handler);
         job.testMode();
         job.run();
 
@@ -243,9 +241,9 @@ public class CrawlerJobTest {
     public void testCrawlingJsonLdWithSpaceInUri() throws Throwable {
         ClassPathResource resource = new ClassPathResource("space-in-uri.jsonld");
 
-        FusekiResultHandler handler = Mockito.mock(FusekiResultHandler.class);
+        FusekiResultHandler handler = mock(FusekiResultHandler.class);
 
-        CrawlerJob job = new CrawlerJob(null, null, null, null, handler);
+        CrawlerJob job = new CrawlerJob(null, null, null, handler);
         job.verifyModelByParsing(FileManager.get().loadModel(resource.getFile().getCanonicalPath()));
         job.run();
 
@@ -256,9 +254,9 @@ public class CrawlerJobTest {
         ClassPathResource resource = new ClassPathResource("dcat-11.xml");
 
 
-        FusekiResultHandler handler = Mockito.mock(FusekiResultHandler.class);
+        FusekiResultHandler handler = mock(FusekiResultHandler.class);
 
-        CrawlerJob job = new CrawlerJob(null, null, null, null, handler);
+        CrawlerJob job = new CrawlerJob(null, null, null, handler);
 
         job.verifyModelByParsing(FileManager.get().loadModel(resource.getFile().getCanonicalPath()));
 

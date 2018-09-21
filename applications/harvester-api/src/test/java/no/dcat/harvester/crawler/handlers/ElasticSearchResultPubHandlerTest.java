@@ -29,7 +29,7 @@ public class ElasticSearchResultPubHandlerTest {
     @Before
     public void setup() {
         gson = new GsonBuilder().setPrettyPrinting().setDateFormat("yyyy-MM-dd'T'HH:mm:ssX").create();
-        handler = new ElasticSearchResultPubHandler(null, 0, null);
+        handler = new ElasticSearchResultPubHandler(null, null);
     }
 
     @Test

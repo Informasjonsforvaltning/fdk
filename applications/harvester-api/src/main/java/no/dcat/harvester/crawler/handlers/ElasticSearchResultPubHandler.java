@@ -35,14 +35,12 @@ public class ElasticSearchResultPubHandler implements CrawlerResultHandler {
     public static final String PUBLISHER_TYPE = "publisher";
     private final Logger logger = LoggerFactory.getLogger(ElasticSearchResultPubHandler.class);
 
-    String hostname;
-    int port;
-    String clustername;
+    String clusterNodes;
+    String clusterName;
 
-    public ElasticSearchResultPubHandler(String hostname, int port, String clustername) {
-        this.hostname = hostname;
-        this.port = port;
-        this.clustername = clustername;
+    public ElasticSearchResultPubHandler(String clusterNodes, String clusterName) {
+        this.clusterNodes = clusterNodes;
+        this.clusterName = clusterName;
     }
 
     /**
@@ -56,7 +54,7 @@ public class ElasticSearchResultPubHandler implements CrawlerResultHandler {
     public void process(DcatSource dcatSource, Model model, List<String> validationResults) {
         logger.trace("Processing results Elasticsearch");
 
-        try (Elasticsearch elasticsearch = new Elasticsearch(hostname, port, clustername)) {
+        try (Elasticsearch elasticsearch = new Elasticsearch(clusterNodes, clusterName)) {
             logger.trace("Start indexing");
             indexWithElasticsearch(model, elasticsearch);
         } catch (Exception e) {

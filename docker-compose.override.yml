@@ -52,12 +52,11 @@ services:
      - "9081:8181"
     environment:
      - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx1024M -Dspring.profiles.active=docker
+     - FDK_ES_CLUSTERNODES=elasticsearch5:9300
+     - FDK_ES_CLUSTERNAME=elasticsearch
      - fuseki.dcatServiceUri=http://fuseki:8080/fuseki/dcat
      - fuseki.adminServiceUri=http://fuseki:8080/fuseki/admin
      - application.crawlerThreadPoolSize=2
-     - application.elasticSearchHost=elasticsearch
-     - application.elasticSearchPort=9300
-     - application.elasticSearchCluster=elasticsearch
     volumes:
      - ./logs:/usr/local/tomcat/logs:rw
 
