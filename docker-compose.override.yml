@@ -30,8 +30,8 @@ services:
       - "9083:8181"
     environment:
      - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
-     - application.elasticsearchHost=elasticsearch
-     - application.elasticsearchPort=9300
+     - FDK_ES_CLUSTERNODES=elasticsearch5:9300
+     - FDK_ES_CLUSTERNAME=elasticsearch
 
   nginx-search:
     restart: always

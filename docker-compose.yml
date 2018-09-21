@@ -11,7 +11,7 @@ services:
     expose:
       - "8080"
     depends_on:
-      - elasticsearch
+      - elasticsearch5
 
   api-cat:
     image: dcatno/api-cat:latest
