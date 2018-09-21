@@ -7,7 +7,7 @@ logging:
 application:
   fusekiService: http://fuseki:8080/fuseki
 elastic:
-  clusterNodes: ${FDK_ES_CLUSTERNODES:elasticsearch:9300}
+  clusterNodes: ${FDK_ES_CLUSTERNODES:elasticsearch5:9300}
   clusterName: ${FDK_ES_CLUSTERNAME:elasticsearch}
 server:
   port: 8080
