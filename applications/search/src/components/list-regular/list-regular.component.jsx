@@ -6,11 +6,11 @@ export const ListRegular = props => {
   const { title, bottomMargin } = props;
   return (
     <section
-      className={`list-type1 ${bottomMargin ? 'mb-5' : ''}`}
+      className={`list-regular ${bottomMargin ? 'mb-5' : ''}`}
       name={title}
     >
       {title && (
-        <div className="row list-type--item">
+        <div className="row list-regular--item">
           <h3>{title}</h3>
         </div>
       )}
