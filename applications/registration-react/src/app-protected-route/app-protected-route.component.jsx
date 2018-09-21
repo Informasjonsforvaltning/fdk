@@ -6,7 +6,7 @@ import IdleTimer from 'react-idle-timer';
 
 import localization from '../utils/localization';
 import { fetchUserIfNeeded } from '../actions/index';
-import TimeoutModal from '../components/app-timeout-modal';
+import TimeoutModal from './timeout-modal/timeout-modal.component';
 
 export class ProtectedRoute extends React.Component {
   constructor(props) {

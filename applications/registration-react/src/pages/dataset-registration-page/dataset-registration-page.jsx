@@ -15,21 +15,21 @@ import {
   fetchReferenceDatasetsIfNeeded,
   fetchOpenLicensesIfNeeded
 } from '../../actions/index';
-import FormTemplate from '../../components/reg-form-template';
-import FormTitle from '../../components/reg-form-schema-title';
-import FormDistribution from '../../components/reg-form-schema-distribution';
-import FormSample from '../../components/reg-form-schema-sample';
-import FormSpatial from '../../components/reg-form-schema-spatial';
-import FormProvenance from '../../components/reg-form-schema-provenance';
-import FormTheme from '../../components/reg-form-schema-theme';
-import FormType from '../../components/reg-form-schema-type';
-import FormConcept from '../../components/reg-form-schema-concept';
-import FormAccessRights from '../../components/reg-form-schema-accessRights';
-import FormReference from '../../components/reg-form-schema-reference';
-import DatasetPublish from '../../components/reg-form-dataset-publish';
-import FormInformationModel from '../../components/reg-form-schema-informationmodel';
-import FormContactPoint from '../../components/reg-form-schema-contactPoint';
-import FormContents from '../../components/reg-form-schema-contents';
+import FormTemplate from './form-template/form-template.component';
+import FormTitle from './form-title/connected-form-title.component';
+import FormDistribution from './form-distribution/connected-form-distribution.component';
+import FormSample from './form-sample/connected-form-sample.component';
+import FormSpatial from './form-spatial/connected-form-spatial.component';
+import FormProvenance from './form-provenance/connected-form-provenance.component';
+import FormTheme from './form-theme/connected-form-theme.component';
+import FormType from './form-type/connected-form-type.component';
+import FormConcept from './form-concept/connected-form-concept.component';
+import FormAccessRights from './form-accessRights/connected-form-accessRights.component';
+import FormReference from './form-reference/connected-form-reference.component';
+import DatasetPublish from './publish/publish.component';
+import FormInformationModel from './form-informationmodel/connected-form-informationmodel.component';
+import FormContactPoint from './form-contactPoint/connected-form-contactPoint.component';
+import FormContents from './form-contents/connected-form-contents.component';
 import {
   titleValues,
   accessRightsValues,

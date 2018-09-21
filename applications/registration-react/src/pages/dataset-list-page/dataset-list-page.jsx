@@ -7,8 +7,8 @@ import {
   fetchCatalogIfNeeded,
   fetchDatasetsIfNeeded
 } from '../../actions/index';
-import FormCatalog from '../../components/reg-form-schema-catalog';
-import DatasetItemsList from '../../components/reg-dataset-items-list';
+import FormCatalog from './form-catalog/connected-form-catalog.component';
+import DatasetItemsList from './items-list/item-list.component';
 import './dataset-list-page.scss';
 
 export class RegDatasetsList extends React.Component {
