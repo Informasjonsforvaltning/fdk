@@ -9,7 +9,7 @@ import {
 } from '../../actions/index';
 import FormCatalog from '../../components/reg-form-schema-catalog';
 import DatasetItemsList from '../../components/reg-dataset-items-list';
-import './index.scss';
+import './dataset-list-page.scss';
 
 export class RegDatasetsList extends React.Component {
   constructor(props) {

@@ -4,9 +4,9 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import IdleTimer from 'react-idle-timer';
 
-import localization from '../../utils/localization';
-import { fetchUserIfNeeded } from '../../actions/index';
-import TimeoutModal from '../../components/app-timeout-modal';
+import localization from '../utils/localization';
+import { fetchUserIfNeeded } from '../actions/index';
+import TimeoutModal from '../components/app-timeout-modal';
 
 export class ProtectedRoute extends React.Component {
   constructor(props) {

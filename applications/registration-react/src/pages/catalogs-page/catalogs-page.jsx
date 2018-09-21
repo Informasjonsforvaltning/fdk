@@ -6,7 +6,7 @@ import { CardGroup } from 'reactstrap';
 import localization from '../../utils/localization';
 import { fetchCatalogsIfNeeded } from '../../actions/index';
 import CatalogItem from '../../components/reg-catalogs-item';
-import './index.scss';
+import './catalogs-page.scss';
 
 export class RegCatalogs extends React.Component {
   constructor(props) {

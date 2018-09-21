@@ -44,8 +44,8 @@ import {
   contactPointValues,
   distributionValues,
   sampleValues
-} from './logic';
-import './index.scss';
+} from './dataset-registration-page.logic';
+import './dataset-registration-page.scss';
 
 export class RegDataset extends React.Component {
   constructor(props) {

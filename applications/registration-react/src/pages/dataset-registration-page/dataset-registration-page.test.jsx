@@ -1,12 +1,10 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { createMockStore } from 'redux-test-utils';
-import shallowWithStore from '../../shallowWithStore';
-import RegDatasetComponent, {
-  RegDataset
-} from '../../../src/containers/reg-dataset';
-import dataset from '../../fixtures/datasets';
-import helptexts from '../../fixtures/helptext';
+import shallowWithStore from '../../../test/shallowWithStore';
+import RegDatasetComponent, { RegDataset } from './dataset-registration-page';
+import dataset from '../../../test/fixtures/datasets';
+import helptexts from '../../../test/fixtures/helptext';
 
 let defaultProps;
 let wrapper;

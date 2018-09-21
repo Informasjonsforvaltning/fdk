@@ -1,11 +1,9 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { createMockStore } from 'redux-test-utils';
-import shallowWithStore from '../../shallowWithStore';
-import RegCatalogsComponent, {
-  RegCatalogs
-} from '../../../src/containers/reg-catalogs';
-import catalogs from '../../fixtures/catalogs';
+import shallowWithStore from '../../../test/shallowWithStore';
+import RegCatalogsComponent, { RegCatalogs } from './catalogs-page';
+import catalogs from '../../../test/fixtures/catalogs';
 
 let defaultProps;
 let wrapper;

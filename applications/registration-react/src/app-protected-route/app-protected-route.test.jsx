@@ -1,11 +1,11 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { createMockStore } from 'redux-test-utils';
-import shallowWithStore from '../../shallowWithStore';
+import shallowWithStore from '../../test/shallowWithStore';
 import ProtectedRouteComponent, {
   ProtectedRoute
-} from '../../../src/containers/app-protected-route';
-import user from '../../fixtures/user';
+} from './app-protected-route.component';
+import user from '../../test/fixtures/user';
 
 let defaultProps;
 let wrapper;

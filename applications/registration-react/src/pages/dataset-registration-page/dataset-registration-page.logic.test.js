@@ -12,8 +12,8 @@ import {
   contactPointValues,
   distributionValues,
   sampleValues
-} from '../../../src/containers/reg-dataset/logic';
-import datasets from '../../fixtures/datasets';
+} from './dataset-registration-page.logic';
+import datasets from '../../../test/fixtures/datasets';
 
 it('should run titleValues without errors', () => {
   const dataset = datasets.datasetItems._embedded.datasets[0];
