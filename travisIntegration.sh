@@ -53,7 +53,7 @@ echo $SECONDS
 echo "SECONDS"
 echo $SECONDS
 
-docker exec -it fdk_e2e_1 sh -c "npm run test:smoke_dev"
+docker exec -it fdk_e2e_1 sh -c "npm run test:in_container"
 
 echo "SECONDS"
 echo $SECONDS

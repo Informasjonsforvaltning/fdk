@@ -1,4 +1,0 @@
-{
-  "testMatch": ["<rootDir>/test/**/*.test.js", "**/?(*.)(test).js?(x)"],
-  "testPathIgnorePatterns": ["/node_modules/", "<rootDir>/test/jestsetup.js", "<rootDir>/test/fixtures/", "/target/"]
-}

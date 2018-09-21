@@ -64,6 +64,22 @@ The [search api](https://fellesdatakatalog.brreg.no/swagger-ui.html) can also be
 	  ...or a specific module  ("registration" in this example) using
 
             docker-compose up -d registration
+  5) Run end2end tests
+      
+      brew cask install chromium
+
+      cd applications/e2e
+      
+      // install npm dependencies
+      npm i
+
+      // run tests in chromium
+      npm t
+      
+      // run tests headless
+      npm test:headless
+
+            
 
 ## Run from Docker Hub
 The docker images are also available on [Docker Hub](https://hub.docker.com/u/dcatno/). 
