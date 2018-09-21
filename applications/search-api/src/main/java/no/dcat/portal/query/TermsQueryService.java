@@ -133,7 +133,7 @@ import org.springframework.web.bind.annotation.RestController;
         if (!StringUtils.isEmpty(creator)) {
             BoolQueryBuilder boolFilterPublisher = QueryBuilders.boolQuery();
             if (creator.toLowerCase().equals("ukjent")) {
-                boolFilterPublisher.must(QueryBuilders.missingQuery("creator.name.raw"));
+                boolFilterPublisher.mustNot(QueryBuilders.existsQuery("creator.name.raw"));
             } else {
                 boolFilterPublisher.must(QueryBuilders.termQuery("creator.name.raw", creator));
             }
@@ -168,14 +168,13 @@ import org.springframework.web.bind.annotation.RestController;
                 .order(Order.count(false));
 
         // set up search query with aggregations
-        SearchRequestBuilder searchBuilder = client.prepareSearch(SUBJECT_INDEX)
+        SearchRequestBuilder searchBuilder = getClient().prepareSearch(SUBJECT_INDEX)
                 .setTypes("subject")
                 .setQuery(search)
                 .setFrom(from)
                 .setSize(size)
                 .addAggregation(aggregateCreatorNames)
-                .addAggregation(aggregateOrgPath)
-                ;
+                .addAggregation(aggregateOrgPath);
 
         return searchBuilder.execute().actionGet();
     }
