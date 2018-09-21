@@ -12,6 +12,17 @@ const normalizeAggregation = aggregation => {
       normalizedBuckets.push(normalizedBucket);
     });
     return { buckets: normalizedBuckets };
+  } else if(typeof buckets === "object") {
+    const normalizedBuckets = [];
+    for (var k in buckets) {
+        if (buckets.hasOwnProperty(k)) {
+            const normalizedBucket = {};
+            normalizedBucket[k] = buckets[k].doc_count;
+            delete normalizedBucket.doc_count;
+            normalizedBuckets.push(normalizedBucket);
+        }
+    }
+    return { buckets: normalizedBuckets }
   } else if (docCount) {
     return {
       count: docCount

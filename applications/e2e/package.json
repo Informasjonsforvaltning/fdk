@@ -9,6 +9,7 @@
   "scripts": {
     "test": "jest --config=jest.config.json",
     "test:smoke_dev": "HOST_SEARCH=http://nginx-search:8080 jest --config=jest.config.json",
+    "test:smoke_dev_mac": "HOST_SEARCH=http://localhost:8080 IS_MACOS=true jest --config=jest.config.json",
     "test:e2e": ""
   },
   "author": "",
