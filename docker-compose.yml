@@ -43,7 +43,7 @@ services:
      - "8080"
     depends_on:
      - fuseki
-     - elasticsearch
+     - elasticsearch5
      - reference-data
 
   harvester:

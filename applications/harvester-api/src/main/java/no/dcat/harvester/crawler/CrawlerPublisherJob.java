@@ -2,9 +2,9 @@ package no.dcat.harvester.crawler;
 
 import com.google.common.cache.LoadingCache;
 
-import no.dcat.harvester.crawler.converters.BrregAgentConverter;
 import no.dcat.datastore.AdminDataStore;
 import no.dcat.datastore.domain.DcatSource;
+import no.dcat.harvester.crawler.converters.EnhetsregisterResolver;
 import org.apache.jena.query.Dataset;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
@@ -25,7 +25,6 @@ public class CrawlerPublisherJob implements Runnable {
     private final List<CrawlerResultHandler> handlers;
     private final DcatSource dcatSource;
     private final AdminDataStore adminDataStore;
-    private final LoadingCache<URL, String> brregCache;
     private final List<String> validationResult = new ArrayList<>();
 
     public List<String> getValidationResult() {return validationResult;}
@@ -34,12 +33,10 @@ public class CrawlerPublisherJob implements Runnable {
 
     protected CrawlerPublisherJob(DcatSource dcatSource,
                          AdminDataStore adminDataStore,
-                         LoadingCache<URL, String> brregCaache,
                          CrawlerResultHandler... handlers) {
         this.handlers = Arrays.asList(handlers);
         this.dcatSource = dcatSource;
         this.adminDataStore = adminDataStore;
-        this.brregCache = brregCaache;
     }
 
     /**
@@ -56,8 +53,8 @@ public class CrawlerPublisherJob implements Runnable {
 
         Model modelDataset = ModelFactory.createUnion(ModelFactory.createDefaultModel(), dataset.getDefaultModel());
 
-        BrregAgentConverter brregAgentConverter = new BrregAgentConverter(brregCache);
-        brregAgentConverter.collectFromModel(modelDataset);
+        EnhetsregisterResolver enhetsregisterResolver = new EnhetsregisterResolver();
+        enhetsregisterResolver.resolveModel(modelDataset);
 
         for (CrawlerResultHandler handler : handlers) {
             handler.process(dcatSource, modelDataset, null);

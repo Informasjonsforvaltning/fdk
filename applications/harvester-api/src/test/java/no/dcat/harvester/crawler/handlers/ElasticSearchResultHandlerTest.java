@@ -27,7 +27,6 @@ import org.elasticsearch.client.Client;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import org.mockito.Matchers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,11 +39,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static org.hamcrest.Matchers.any;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.anyObject;
-import static org.mockito.Mockito.anyString;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
@@ -76,11 +74,11 @@ public class ElasticSearchResultHandlerTest {
 
         ElasticSearchResultHandler spyHandler = spy(resultHandler);
         doReturn(reader).when(spyHandler).getReader(model);
-        doReturn(null).when(spyHandler).findLookupDataset(Matchers.any(), anyString(), Matchers.any());
-        doReturn(null).when(spyHandler).findLastDatasetHarvestRecordWithContent(Matchers.any(), Matchers.any(), Matchers.any());
-        doNothing().when(spyHandler).deletePreviousDatasetsNotPresentInThisHarvest(Matchers.any(), Matchers.any(), Matchers.any(), Matchers.any());
-        doNothing().when(spyHandler).saveCatalogHarvestRecord(Matchers.any(), Matchers.any(), Matchers.any(), Matchers.any(), Matchers.any(), Matchers.any());
-        doNothing().when(spyHandler).waitForIndexing(anyObject());
+        doReturn(null).when(spyHandler).findLookupDataset(any(), anyString(), any());
+        doReturn(null).when(spyHandler).findLastDatasetHarvestRecordWithContent(any(), any(), any());
+        doNothing().when(spyHandler).deletePreviousDatasetsNotPresentInThisHarvest(any(), any(), any(), any());
+        doNothing().when(spyHandler).saveCatalogHarvestRecord(any(), any(), any(), any(), any(), any());
+        doNothing().when(spyHandler).waitForIndexing(any());
 
         spyHandler.indexWithElasticsearch(dataSource, model, elasticsearch, Collections.EMPTY_LIST);
     }
@@ -102,9 +100,9 @@ public class ElasticSearchResultHandlerTest {
         Elasticsearch elasticsearch = mock(Elasticsearch.class);
         BulkRequestBuilder bulkRequestBuilder = mock(BulkRequestBuilder.class);
 
-        doReturn(datasetLookup).when(spyHandler).findOrCreateDatasetLookupAndUpdateDatasetId(Matchers.any(), Matchers.any(), Matchers.any(), Matchers.any(), Matchers.any());
-        doReturn(new Date()).when(spyHandler).getFirstHarvestedDate(Matchers.any(), Matchers.any(), Matchers.any());
-        doReturn(null).when(spyHandler).updateDatasetHarvestRecordsAndReturnLastChanged(Matchers.any(), Matchers.any(), Matchers.any(), Matchers.any(), Matchers.any());
+        doReturn(datasetLookup).when(spyHandler).findOrCreateDatasetLookupAndUpdateDatasetId(any(), any(), any(), any(), any());
+        doReturn(new Date()).when(spyHandler).getFirstHarvestedDate(any(), any(), any());
+        doReturn(null).when(spyHandler).updateDatasetHarvestRecordsAndReturnLastChanged(any(), any(), any(), any(), any());
         spyHandler.saveDatasetAndHarvestRecord(dcatSource, elasticsearch,
                 Collections.emptyList(), gson, bulkRequestBuilder, new Date(), dataset, null);
 
@@ -118,7 +116,7 @@ public class ElasticSearchResultHandlerTest {
         DatasetHarvestRecord harvestRecord = new DatasetHarvestRecord();
         harvestRecord.setDate(new Date());
         ElasticSearchResultHandler spyHandler = spy(resultHandler);
-        doReturn(harvestRecord).when(spyHandler).findFirstDatasetHarvestRecord(Matchers.any(), Matchers.any(), Matchers.any());
+        doReturn(harvestRecord).when(spyHandler).findFirstDatasetHarvestRecord(any(), any(), any());
 
         spyHandler.getFirstHarvestedDate(dataset, elasticsearch, gson);
 
@@ -135,8 +133,8 @@ public class ElasticSearchResultHandlerTest {
         Elasticsearch elasticsearch = mock(Elasticsearch.class);
         ElasticSearchResultHandler spyHandler = spy(resultHandler);
         doReturn(elasticsearch).when(spyHandler).createElasticsearch();
-        doNothing().when(spyHandler).indexWithElasticsearch(Matchers.any(), Matchers.any(), Matchers.any(), Matchers.any());
-        doNothing().when(spyHandler).waitForIndexing(anyObject());
+        doNothing().when(spyHandler).indexWithElasticsearch(any(), any(), any(), any());
+        doNothing().when(spyHandler).waitForIndexing(any());
 
         spyHandler.process(dcatSource, model, Collections.emptyList());
     }
@@ -204,10 +202,10 @@ public class ElasticSearchResultHandlerTest {
 
         BulkRequestBuilder bulkBuilder = mock(BulkRequestBuilder.class);
         when(client.prepareBulk()).thenReturn(bulkBuilder);
-        when(bulkBuilder.add((IndexRequest)anyObject())).thenReturn(null);
+        when(bulkBuilder.add((IndexRequest)any())).thenReturn(null);
         GetResponse getResponse = mock(GetResponse.class);
         ActionFuture actionFuture = mock(ActionFuture.class);
-        when(client.get(anyObject())).thenReturn(actionFuture);
+        when(client.get(any())).thenReturn(actionFuture);
         BulkResponse bulkResponse = mock(BulkResponse.class);
         when(actionFuture.actionGet()).thenReturn(getResponse);
         when(getResponse.getSourceAsString()).thenReturn(gson.toJson(s3));
@@ -263,7 +261,7 @@ public class ElasticSearchResultHandlerTest {
 
     @Before
     public void setup() {
-        resultHandler = new ElasticSearchResultHandler(null, 0, null, null, null, null);
+        resultHandler = new ElasticSearchResultHandler(null, null, null, null, null);
         validationMessages = new Gson().fromJson(msgs, new TypeToken<List<String>>() {
         }.getType());
     }

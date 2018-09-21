@@ -33,7 +33,7 @@ public class TestHarvestSceduler {
         Calendar cal = Calendar.getInstance();
         cal.setTime(getNextExecutionTime(onceAminute));
 
-        assertThat(cal.get(Calendar.MINUTE), equalTo(now.get(Calendar.MINUTE) + 1 % 60));
+        assertThat(cal.get(Calendar.MINUTE), equalTo((now.get(Calendar.MINUTE) + 1) % 60));
     }
 
     @Test
