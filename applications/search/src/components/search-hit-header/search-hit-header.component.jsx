@@ -44,7 +44,9 @@ const renderThemes = theme => {
 const renderTitle = (Tag, title, titleLink) => {
   const titleTag = (Tag, title) => (
     <React.Fragment>
-      <Tag className="mr-3">{title}</Tag>
+      <Tag className="mr-3" name={title}>
+        {title}
+      </Tag>
     </React.Fragment>
   );
   if (titleLink) {
