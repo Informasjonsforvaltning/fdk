@@ -16,7 +16,7 @@ exports[`should render DatasetDetailsPage correctly with datasetItem 1`] = `
           menuItems={
             Array [
               Object {
-                "name": "Description",
+                "name": "AAMarkagrensen Oslo Kommune og nærliggende kommuner",
                 "prefLabel": "Description",
               },
               Object {
