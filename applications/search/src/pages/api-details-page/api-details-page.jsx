@@ -22,7 +22,6 @@ const renderDescription = description => {
   return (
     <ShowMore
       showMoreButtonText={localization.showFullDescription}
-      label={localization.description}
       contentHtml={descriptionText}
     />
   );
@@ -182,7 +181,7 @@ const renderStickyMenu = apiItem => {
   const menuItems = [];
   if (_.get(apiItem, 'description')) {
     menuItems.push({
-      name: localization.description,
+      name: getTranslateText(_.get(apiItem, 'title')),
       prefLabel: localization.description
     });
   }

@@ -41,7 +41,7 @@ exports[`should render ApiDetailsPage correctly with apiItem 1`] = `
           menuItems={
             Array [
               Object {
-                "name": "Description",
+                "name": "National Data Directory Search API",
                 "prefLabel": "Description",
               },
               Object {
@@ -61,7 +61,7 @@ exports[`should render ApiDetailsPage correctly with apiItem 1`] = `
       >
         <ShowMore
           contentHtml="Provides a basic search api against the National Data Directory of Norway"
-          label="Description"
+          label=""
           showLessButtonText="Show less"
           showMoreButtonText="Show the full description"
         />
