@@ -275,7 +275,7 @@ const renderStickyMenu = datasetItem => {
   const menuItems = [];
   if (_.get(datasetItem, 'description')) {
     menuItems.push({
-      name: localization.description,
+      name: getTranslateText(_.get(datasetItem, 'title')),
       prefLabel: localization.description
     });
   }
