@@ -17,8 +17,19 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <maven.exec.skip>false</maven.exec.skip>
         <!--end standard properties-->
+        <skipTests>true</skipTests>
+
     </properties>
 
+    <profiles>
+        <profile>
+            <id>end-to-end-test</id>
+            <properties>
+                <skipTests>false</skipTests>
+                <endtoendtest.category>,no.dcat.shared.testcategories.EndToEndTest</endtoendtest.category>
+            </properties>
+        </profile>
+    </profiles>
     <dependencies>
         <dependency>
             <groupId>no.dcat</groupId>
@@ -129,6 +140,16 @@
 
 
     </dependencies>
-
-
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.19.1</version>
+                <configuration>
+                    <skipTests>${skipTests}</skipTests>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>
