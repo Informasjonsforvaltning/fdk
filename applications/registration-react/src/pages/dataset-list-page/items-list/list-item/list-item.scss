@@ -1,0 +1,13 @@
+@import '../../../../../node_modules/designsystemet/fdk-designsystem-bootstrap4/scss/colors.scss';
+
+.fdk-datasets-list-item {
+  background-color: $color0;
+  margin-bottom: .3em;
+  border-radius: 3px;
+  padding: .5em 1em;
+
+  a {
+    text-decoration: none;
+    color: $color1;
+  }
+}

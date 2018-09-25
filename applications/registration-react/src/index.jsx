@@ -4,13 +4,13 @@ import { Provider } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import configureStore from './store/configureStore';
-import ProtectedRoute from './containers/app-protected-route';
-import RegCatalogs from './containers/reg-catalogs';
-import RegDatasetsList from './containers/reg-datasets-list';
-import RegDataset from './containers/reg-dataset';
-import Header from './components/app-header';
-import Footer from './components/app-footer';
-import LoginDialog from './components/app-login-dialog';
+import ProtectedRoute from './app-protected-route/app-protected-route.component';
+import RegCatalogs from './pages/catalogs-page/catalogs-page';
+import RegDatasetsList from './pages/dataset-list-page/dataset-list-page';
+import RegDataset from './pages/dataset-registration-page/dataset-registration-page';
+import Header from './components/app-header/app-header.component';
+import Footer from './components/app-footer/app-footer.component';
+import LoginDialog from './components/app-login-dialog/app-login-dialog.component';
 
 const store = configureStore();
 
