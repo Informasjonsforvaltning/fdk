@@ -10,7 +10,7 @@
 
     <groupId>no.dcat</groupId>
     <artifactId>harvester-api</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <packaging>jar</packaging>
 
     <properties>
@@ -103,13 +103,6 @@
 
         <dependency>
             <groupId>org.powermock</groupId>
-            <artifactId>powermock-api-mockito2</artifactId>
-            <version>1.7.4</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.powermock</groupId>
             <artifactId>powermock-module-junit4</artifactId>
             <version>2.0.0-beta.5</version>
             <scope>test</scope>
@@ -160,11 +153,6 @@
             </exclusions>
         </dependency>
 
-        <dependency>
-            <groupId>org.apache.jena</groupId>
-            <artifactId>jena-arq</artifactId>
-            <version>3.8.0</version>
-        </dependency>
         <dependency>
             <groupId>no.dcat</groupId>
             <artifactId>shared</artifactId>

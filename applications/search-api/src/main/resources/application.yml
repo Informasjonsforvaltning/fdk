@@ -22,8 +22,8 @@ spring:
 application:
   fusekiService: http://localhost:3030/fuseki
 elastic:
-  clusterNodes: localhost:9300
-  clusterName: elasticsearch
+  clusterNodes: ${FDK_ES_CLUSTERNODES:elasticsearch5:9300}
+  clusterName: ${FDK_ES_CLUSTERNAME:elasticsearch}
 logging:
   level.: ERROR
   level.no.brreg: INFO

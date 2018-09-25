@@ -4,3 +4,15 @@ logging:
   level.no.dcat: WARN
   level.org.springframework: ERROR
 
+elastic:
+  clusterNodes: ${FDK_ES_CLUSTERNODES:elasticsearch5:9300}
+  clusterName: ${FDK_ES_CLUSTERNAME:elasticsearch}
+---
+#Utv-miljø lokalt på egen PC
+spring:
+  profiles: develop, unit-integration
+
+elastic:
+  clusterNodes: localhost:9301
+  clusterName: elasticsearch
+
