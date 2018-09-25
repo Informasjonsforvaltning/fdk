@@ -1,20 +1,19 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import _ from 'lodash';
+import { resolve } from 'react-resolver';
+import { getDataset } from '../../../api/get-dataset';
 import { getTranslateText } from '../../../lib/translateText';
+
+const memoizedGetDataset = _.memoize(getDataset);
 
 export const PureDatasetBreadcrumb = props => {
   const { datasetItem } = props;
   return <span>{getTranslateText(datasetItem && datasetItem.title)}</span>;
 };
 
-const mapStateToProps = ({ datasetDetails }) => {
-  const { datasetItem } = datasetDetails || {
-    datasetItem: null
-  };
-  return {
-    datasetItem
-  };
+const mapProps = {
+  datasetItem: props => memoizedGetDataset(props.match.params.id)
 };
 
 PureDatasetBreadcrumb.defaultProps = {
@@ -25,6 +24,4 @@ PureDatasetBreadcrumb.propTypes = {
   datasetItem: PropTypes.object
 };
 
-export const DatasetBreadcrumb = connect(mapStateToProps)(
-  PureDatasetBreadcrumb
-);
+export const DatasetBreadcrumb = resolve(mapProps)(PureDatasetBreadcrumb);
