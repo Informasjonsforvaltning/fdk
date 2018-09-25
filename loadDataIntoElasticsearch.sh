@@ -42,8 +42,8 @@ function startLoad {
     loadDcat
     loadScat
     loadRegister
-    loadAcat
-    #loadHarvest
+    #loadAcat
+    loadHarvest
 
     ENDTIME=`date "+%Y-%m-%dT%H_%M_%S"`
 
