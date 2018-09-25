@@ -50,7 +50,9 @@ export function App(props) {
 
       <div className="container">
         <div className="row">
-          <Breadcrumbs />
+          <div className="col-12">
+            <Breadcrumbs />
+          </div>
         </div>
       </div>
       <div className="app-routes">
