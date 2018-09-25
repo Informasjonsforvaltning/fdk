@@ -38,6 +38,8 @@
     "english-en": "Engelsk"
   },
   "menu": {
+    "home": "Tilbake til søk",
+    "about": "Om Felles Datakatalog",
     "aboutRegistration": "Registrere datasett",
     "reports": "Rapporter"
   },

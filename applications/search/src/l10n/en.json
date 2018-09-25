@@ -38,6 +38,8 @@
     "english-en": "English"
   },
   "menu": {
+    "home": "Back to search",
+    "about": "About The National Data Directory",
     "aboutRegistration": "Registration",
     "reports": "Reports"
   },
