@@ -1,20 +1,24 @@
 package no.dcat.harvester.crawler;
 
+import com.google.common.cache.LoadingCache;
+import no.dcat.harvester.HarvesterApplication;
+import no.dcat.harvester.crawler.handlers.ElasticSearchResultHandler;
+import no.dcat.harvester.crawler.handlers.ElasticSearchResultPubHandler;
+import no.dcat.datastore.domain.DcatSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
-import no.dcat.datastore.domain.DcatSource;
-import no.dcat.harvester.crawler.handlers.ElasticSearchResultHandler;
-import no.dcat.harvester.crawler.handlers.ElasticSearchResultPubHandler;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Created by nodavsko on 29.09.2016.
  *
- * <p>2017.03.17 - Denne har vært midlertidig og har gått utenom fuseki. Det bør den ikke gjøre. Se
- * ny metode load på CrawlerRestController
+ * 2017.03.17 - Denne har vært midlertidig og har gått utenom fuseki. Det bør den ikke gjøre.
+ * Se ny metode load på CrawlerRestController
  */
+
 @Deprecated
 public class Loader {
 
@@ -27,19 +31,16 @@ public class Loader {
   String httpUsername;
   String httpPassword;
 
-  public Loader(
-      String hosts,
-      int port,
-      String cluster,
-      String referenceDataUrl,
-      String httpUsername,
-      String httpPassword) {
+
+
+  public Loader(String hosts, String cluster , String referenceDataUrl, String httpUsername, String httpPassword) {
     this.hosts = hosts;
     this.elasticsearchCluster = cluster;
     this.referenceDataUrl = referenceDataUrl;
     this.httpUsername = httpUsername;
     this.httpPassword = httpPassword;
   }
+
 
   /**
    * Load dataset from file into specified elasticsearch instance
@@ -54,40 +55,39 @@ public class Loader {
 
       logger.debug("loadDatasetFromFile: filename: " + filename);
       logger.debug("loadDatasetFromFile: elasticsearch hosts: " + hosts);
-      logger.debug("loadDatasetFromFile: elasticsearch cluster: " + elasticsearchCluster);
+      logger.debug("loadDatasetFromFile: elasticsearch cluster: " +elasticsearchCluster);
 
       url = new URL(filename);
-      DcatSource dcatSource =
-          new DcatSource("http//dcat.no/test", "Test", url.toString(), "admin_user", "123456789");
+      DcatSource dcatSource = new DcatSource("http//dcat.no/test", "Test", url.toString(), "admin_user", "123456789");
 
       // Load all codes.
-      // harvestAllCodes(true);
+      //harvestAllCodes(true);
 
-      // FusekiResultHandler fshandler = new FusekiResultHandler(dcatDataStore, null);
-      CrawlerResultHandler esHandler =
-          new ElasticSearchResultHandler(
-              hosts, elasticsearchCluster, referenceDataUrl, httpUsername, httpPassword);
-      CrawlerResultHandler publisherHandler =
-          new ElasticSearchResultPubHandler(hosts, elasticsearchCluster);
+      //FusekiResultHandler fshandler = new FusekiResultHandler(dcatDataStore, null);
+      CrawlerResultHandler esHandler = new ElasticSearchResultHandler(hosts, elasticsearchCluster, referenceDataUrl, httpUsername, httpPassword);
+      CrawlerResultHandler publisherHandler = new ElasticSearchResultPubHandler(hosts, elasticsearchCluster);
 
       CrawlerJob job = new CrawlerJob(dcatSource, null, null, esHandler, publisherHandler);
 
       Thread crawlerThread = new Thread(job);
       crawlerThread.start();
 
-      // job.run();
+      //job.run();
       // wait for the job to finish
       crawlerThread.join();
 
       return job.getValidationResult();
 
     } catch (MalformedURLException e) {
-      logger.error("URL not valid: {} ", filename, e);
+      logger.error("URL not valid: {} ", filename,e);
     } catch (InterruptedException e) {
-      logger.error("Interrupted: {}", e.getMessage());
+      logger.error("Interrupted: {}",e.getMessage());
       Thread.currentThread().interrupt();
     }
 
     return null;
   }
+
+
+
 }

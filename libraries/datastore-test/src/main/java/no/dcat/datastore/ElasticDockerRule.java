@@ -45,7 +45,7 @@ public class ElasticDockerRule extends DockerRule {
                 ))
 
                 .addStartedListener(container -> {
-                    container.waitForPort("9300/tcp");
+                    container.waitForPort("localhost", 9399);
                     logger.info("Waiting fifteen seconds for Elasticsearch container to start...");
                     Thread.sleep(15000);
                     logger.info("Waiting over");
