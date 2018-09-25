@@ -136,6 +136,10 @@ can be used: (03096000854, 01066800187, 23076102252)
 ## Shut down all containers:
 >`docker-compose down`
 
+## Run end2end tests (java)
+
+In IntelliJ, select module applications/end2end-test and click "run tests"
+
 # Storage
 The repository is stored in a persistent volume, see [data/esdata](data/esdata) for elasticsearch 
 repository and [data/fuseki](data/fuseki) for the fuseki repository. 
