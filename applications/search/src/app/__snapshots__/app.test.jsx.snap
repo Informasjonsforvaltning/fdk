@@ -29,7 +29,11 @@ exports[`should render App correctly 1`] = `
     <div
       className="row"
     >
-      <withRouter() />
+      <div
+        className="col-12"
+      >
+        <withRouter() />
+      </div>
     </div>
   </div>
   <div
