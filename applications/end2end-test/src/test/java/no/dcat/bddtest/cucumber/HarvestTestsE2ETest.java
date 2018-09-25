@@ -13,5 +13,5 @@ import org.junit.runner.RunWith;
         features = {"classpath:feature/HarvestedDatasetsVisibleInPortal.feature"},
         tags = {"~@ignore"}
 )
-public class HarvestTestsE2E {
+public class HarvestTestsE2ETest {
 }
