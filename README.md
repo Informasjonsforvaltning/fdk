@@ -64,22 +64,6 @@ The [search api](https://fellesdatakatalog.brreg.no/swagger-ui.html) can also be
 	  ...or a specific module  ("registration" in this example) using
 
             docker-compose up -d registration
-  5) Run end2end tests
-      
-      brew cask install chromium
-
-      cd applications/e2e
-      
-      // install npm dependencies
-      npm i
-
-      // run tests in chromium
-      npm t
-      
-      // run tests headless
-      npm test:headless
-
-            
 
 ## Run from Docker Hub
 The docker images are also available on [Docker Hub](https://hub.docker.com/u/dcatno/). 
@@ -151,6 +135,10 @@ can be used: (03096000854, 01066800187, 23076102252)
 
 ## Shut down all containers:
 >`docker-compose down`
+
+## Run end2end tests (java)
+
+In IntelliJ, select module applications/end2end-test and click "run tests"
 
 # Storage
 The repository is stored in a persistent volume, see [data/esdata](data/esdata) for elasticsearch 

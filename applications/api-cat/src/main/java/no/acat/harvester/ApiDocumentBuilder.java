@@ -13,7 +13,10 @@ import no.acat.model.ApiDocument;
 import no.acat.spec.converters.OpenApiV3JsonSpecConverter;
 import no.acat.spec.converters.SwaggerJsonSpecConverter;
 import no.dcat.client.referencedata.ReferenceDataClient;
-import no.dcat.shared.*;
+import no.dcat.shared.Contact;
+import no.dcat.shared.DatasetReference;
+import no.dcat.shared.Publisher;
+import no.dcat.shared.SkosCode;
 import org.apache.commons.io.Charsets;
 import org.apache.commons.io.IOUtils;
 import org.elasticsearch.action.get.GetResponse;
@@ -24,8 +27,6 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
 import java.net.URL;
@@ -40,17 +41,13 @@ import java.util.UUID;
 public class ApiDocumentBuilder {
     private Client elasticsearchClient;
     private ReferenceDataClient referenceDataClient;
-
-    private String searchApiUrl;
-
     private static final ObjectMapper mapper = Utils.jsonMapper();
     private static final Logger logger = LoggerFactory.getLogger(ApiHarvester.class);
 
 
-    public ApiDocumentBuilder(Client elasticsearchClient, ReferenceDataClient referenceDataClient, String searchApiUrl) {
+    public ApiDocumentBuilder(Client elasticsearchClient, ReferenceDataClient referenceDataClient) {
         this.elasticsearchClient = elasticsearchClient;
         this.referenceDataClient = referenceDataClient;
-        this.searchApiUrl = searchApiUrl;
     }
 
     public ApiDocument create(ApiCatalogRecord apiCatalogRecord) {
@@ -128,28 +125,38 @@ public class ApiDocumentBuilder {
         return id;
     }
 
-    Publisher lookupPublisher(String orgNr) {
-        String lookupUri = searchApiUrl + "/publishers/{orgNr}";
+    Publisher lookupPublisher(String id) {
         try {
-            RestTemplate restTemplate = new RestTemplate();
-            return restTemplate.getForObject(lookupUri, Publisher.class, orgNr);
+            GetResponse response = elasticsearchClient.prepareGet("dcat", "publisher", id).get();
+            if (response.isExists()) {
+                return mapper.readValue(response.getSourceAsString(), Publisher.class);
+            }
         } catch (Exception e) {
-            logger.warn("Publisher lookup failed for uri={}. Error: {}", lookupUri, e.getMessage());
+            logger.warn("Publisher lookup failed for OrgNr={}", id);
         }
+
         return null;
     }
 
     DatasetReference lookupDatasetReference(String uri) {
-        String lookupUrl = UriComponentsBuilder
-                .fromHttpUrl(searchApiUrl)
-                .path("/datasets/byuri")
-                .queryParam("uri", uri)
-                .toUriString();
         try {
-            RestTemplate restTemplate = new RestTemplate();
-            return restTemplate.getForObject(lookupUrl, DatasetReference.class);
+            SearchResponse response = elasticsearchClient.prepareSearch("dcat")
+                    .setTypes("dataset")
+                    .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
+                    .setQuery(QueryBuilders.termQuery("uri", uri))
+                    .execute()
+                    .actionGet();
+
+            SearchHit[] hits = response.getHits().getHits();
+
+
+            if (hits.length == 1) {
+                return mapper.readValue(hits[0].getSourceAsString(), DatasetReference.class);
+            }
+
+            throw new Exception("No exact dataset match found, count=" + hits.length);
         } catch (Exception e) {
-            logger.warn("Dataset lookup failed for uri={}. Error: {}", lookupUrl, e.getMessage());
+            logger.warn("Dataset lookup failed for uri={}. Error: {}", uri, e.getMessage());
         }
         return null;
     }

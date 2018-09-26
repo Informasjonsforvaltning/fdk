@@ -1,16 +1,38 @@
+import puppeteer from "puppeteer";
+import { isDebugging } from './../testingInit';
 import delay from 'delay'
-import * as browser from "../../lib/browser";
-import {config} from "../../config";
+
+const APP = process.env.HOST_SEARCH;
+let page;
+let browser;
+const width = 1920;
+const height = 1080;
+
+beforeAll(async () => {
+    try {
+        browser = await puppeteer.launch(isDebugging().puppeteer);
+        page = await browser.newPage();
+        page.on('console', consoleMessage => {
+            console.log('CONSOLE MESSAGE TYPE:', consoleMessage.type())
+            console.log('CONSOLE MESSAGE TEXT:', consoleMessage.text())
+            consoleMessage.args().forEach(msgArgJSHandle => {
+                console.log('CONSOLE MESSAGE ARG:', msgArgJSHandle.jsonValue())
+            })
+        });
+        await page.setViewport({ width, height });
+    } catch (e) {
+        console.error('got error', e)
+    }
+});
 
 afterAll(() => {
-    browser.close();// we might not want to close the browser between each suite
+    browser.close();
 });
 
 describe('App', () => {
 
     test('search page opens', async () => {
-        const page = await browser.getNewBrowserPage();
-        await page.goto(config.searchHost)
+        await page.goto(APP)
 
         // Search page component now waits for resolving API request before rendering.
         // If some other solution is implemented with initial rendering, delay can be removed

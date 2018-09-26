@@ -2,160 +2,153 @@
 
 exports[`should render DatasetKeyInfo correctly 1`] = `
 <section>
-  <ListRegular
-    bottomMargin={true}
-    title="Use of dataset"
+  <div
+    className="fdk-container-detail fdk-container-detail-header mt-5"
+  >
+    <React.Fragment>
+      <i
+        className="fa fdk-fa-left fdk-color-unntatt fa-lock"
+      />
+      Dataset is non public
+    </React.Fragment>
+  </div>
+  <div
+    className="row fdk-row"
   >
     <div
-      className="row list-regular--item"
+      className="col-xs-12 p-0"
     >
       <div
-        className="col-4 pl-0 fdk-text-strong"
+        className="fdk-container-detail"
       >
-        Accesslevel
-      </div>
-      <div
-        className="col-8"
-      >
-        <i
-          className="fa fdk-fa-left fdk-color-unntatt fa-lock"
-        />
-        API that are not public
+        <div>
+          <h5>
+            Legal basis for restriction
+          </h5>
+          <div
+            className="fdk-ingress"
+          >
+            <div
+              key="restriction-https://lovdata.no/dokument/NL/lov/1992-12-04-126-0"
+            >
+              <LinkExternal
+                prefLabel="Lov om arkiv [arkivlova]"
+                uri="https://lovdata.no/dokument/NL/lov/1992-12-04-126"
+              />
+            </div>
+            <div
+              key="restriction-http://lovdata/paragraph/20-1"
+            >
+              <LinkExternal
+                prefLabel="Den spesifikke loven § 20"
+                uri="http://lovdata/paragraph/20"
+              />
+            </div>
+            <div
+              key="restriction-http://lovdata/paragraph/26-2"
+            >
+              <LinkExternal
+                prefLabel="Den mindre spesifikke loven § 26"
+                uri="http://lovdata/paragraph/26"
+              />
+            </div>
+          </div>
+        </div>
+        <div>
+          <h5>
+            Legal basis for processing
+          </h5>
+          <div
+            className="fdk-ingress"
+          >
+            <div
+              key="processing-http://lovdata/paragraph/2-0"
+            >
+              <LinkExternal
+                prefLabel="Den andre loven med lenger tittel § 2"
+                uri="http://lovdata/paragraph/2"
+              />
+            </div>
+          </div>
+        </div>
+        <div>
+          <h5>
+            Legal basis for access
+          </h5>
+          <div
+            className="fdk-ingress"
+          >
+            <div
+              key="access-http://lovdata/paragraph/10-0"
+            >
+              <LinkExternal
+                prefLabel="Den siste loven med den lengste tittelen § 10"
+                uri="http://lovdata/paragraph/10"
+              />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-    <React.Fragment>
-      <div
-        className="row list-regular--item"
+  </div>
+  <div
+    className="row-eq-height"
+  >
+    <div
+      className="col-xs-12 fdk-container-detail"
+    >
+      <h5>
+        Type
+      </h5>
+      <p
+        className="fdk-ingress mb-0"
       >
-        <div
-          className="col-4 pl-0 fdk-text-strong"
-        >
-          Legal basis for restriction
-        </div>
-        <div
-          className="col-8"
-        >
-          <div
-            key="restriction-https://lovdata.no/dokument/NL/lov/1992-12-04-126-0"
-          >
-            <LinkExternal
-              prefLabel="Lov om arkiv [arkivlova]"
-              uri="https://lovdata.no/dokument/NL/lov/1992-12-04-126"
-            />
-          </div>
-          <div
-            key="restriction-http://lovdata/paragraph/20-1"
-          >
-            <LinkExternal
-              prefLabel="Den spesifikke loven § 20"
-              uri="http://lovdata/paragraph/20"
-            />
-          </div>
-          <div
-            key="restriction-http://lovdata/paragraph/26-2"
-          >
-            <LinkExternal
-              prefLabel="Den mindre spesifikke loven § 26"
-              uri="http://lovdata/paragraph/26"
-            />
-          </div>
-        </div>
-      </div>
-    </React.Fragment>
-    <React.Fragment>
-      <div
-        className="row list-regular--item"
+        Kodeliste
+      </p>
+    </div>
+    <div
+      className="col-xs-12 fdk-container-detail"
+    >
+      <h5>
+        Information model
+      </h5>
+      <p
+        className="fdk-ingress mb-0"
       >
-        <div
-          className="col-4 pl-0 fdk-text-strong"
-        >
-          Legal basis for processing
-        </div>
-        <div
-          className="col-8"
-        >
-          <div
-            key="restriction-http://lovdata/paragraph/2-0"
-          >
-            <LinkExternal
-              prefLabel="Den andre loven med lenger tittel § 2"
-              uri="http://lovdata/paragraph/2"
-            />
-          </div>
-        </div>
-      </div>
-    </React.Fragment>
-    <React.Fragment>
-      <div
-        className="row list-regular--item"
+        <LinkExternal
+          key="https://www.w3.org/2004/02/skos/"
+          prefLabel="SKOS"
+          uri="https://www.w3.org/2004/02/skos/"
+        />
+      </p>
+    </div>
+    <div
+      className="col-xs-12 fdk-container-detail"
+    >
+      <h5>
+        Conforms to
+      </h5>
+      <p
+        className="fdk-ingress mb-0"
       >
-        <div
-          className="col-4 pl-0 fdk-text-strong"
-        >
-          Legal basis for access
-        </div>
-        <div
-          className="col-8"
-        >
-          <div
-            key="restriction-http://lovdata/paragraph/10-0"
-          >
-            <LinkExternal
-              prefLabel="Den siste loven med den lengste tittelen § 10"
-              uri="http://lovdata/paragraph/10"
-            />
-          </div>
-        </div>
-      </div>
-    </React.Fragment>
-    <React.Fragment>
-      <TwoColRow
-        col1="Type"
-        col2="Kodeliste"
-      />
-    </React.Fragment>
-    <React.Fragment>
-      <div
-        className="row list-regular--item"
-      >
-        <div
-          className="col-4 pl-0 fdk-text-strong"
-        >
-          Conforms to
-        </div>
-        <div
-          className="col-8"
-        >
-          <LinkExternal
-            key="https://www.kartverket.no/geodataarbeid/standarder/sosi/"
-            prefLabel="SOSI"
-            uri="https://www.kartverket.no/geodataarbeid/standarder/sosi/"
-          />
-        </div>
-      </div>
-    </React.Fragment>
-    <React.Fragment>
-      <div
-        className="row list-regular--item"
-      >
-        <div
-          className="col-4 pl-0 fdk-text-strong"
-        >
-          Information model
-        </div>
-        <div
-          className="col-8"
-        >
-          <LinkExternal
-            key="https://www.w3.org/2004/02/skos/"
-            prefLabel="SKOS"
-            uri="https://www.w3.org/2004/02/skos/"
-          />
-        </div>
-      </div>
-    </React.Fragment>
-  </ListRegular>
+        <LinkExternal
+          key="https://www.kartverket.no/geodataarbeid/standarder/sosi/"
+          prefLabel="SOSI"
+          uri="https://www.kartverket.no/geodataarbeid/standarder/sosi/"
+        />
+      </p>
+    </div>
+  </div>
 </section>
 `;
 
-exports[`should render DatasetKeyInfo correctly with no props 1`] = `<section />`;
+exports[`should render DatasetKeyInfo correctly with no props 1`] = `
+<section>
+  <div
+    className="row fdk-row"
+  />
+  <div
+    className="row-eq-height"
+  />
+</section>
+`;

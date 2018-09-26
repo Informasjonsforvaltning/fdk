@@ -26,14 +26,19 @@ public class HarvesterApplication {
     @Value("${springfox.documentation.swagger.v2.path}")
     private String swagger2Endpoint;
 
+//    private static String enhetsregisteretUrl = "https://data.st1.brreg.no/enhetsregisteret/api/enheter/";
+    private static String enhetsregisteretUrl = "https://data.brreg.no/enhetsregisteret/api/enheter/";
+    @Value("${application.openDataEnhet}")
+    public void setEnhetsregisteretUrl(String enhetsregisteretUrl) {
+        this.enhetsregisteretUrl = enhetsregisteretUrl;
+    }
 
-    @Bean
-    public static LoadingCache<URL, String> getBrregCache() {
-        logger.debug("Starting BRREG ENHETSREGISTERET cache!");
+    public static String getEnhetsregisteretUrl() {
+        return enhetsregisteretUrl;
+    }
 
-        return CacheBuilder.newBuilder().maximumSize(1000)
-                .build(new ForwardingCacheLoader());
-
+    public static String getEnhetsregisterJsonUrlForOrganization(final String orgNo) {
+        return enhetsregisteretUrl + orgNo;
     }
 
     @Bean

@@ -41,7 +41,7 @@ exports[`should render ApiDetailsPage correctly with apiItem 1`] = `
           menuItems={
             Array [
               Object {
-                "name": "National Data Directory Search API",
+                "name": "Description",
                 "prefLabel": "Description",
               },
               Object {
@@ -61,7 +61,7 @@ exports[`should render ApiDetailsPage correctly with apiItem 1`] = `
       >
         <ShowMore
           contentHtml="Provides a basic search api against the National Data Directory of Norway"
-          label=""
+          label="Description"
           showLessButtonText="Show less"
           showMoreButtonText="Show the full description"
         />
@@ -242,40 +242,44 @@ exports[`should render ApiDetailsPage correctly with apiItem 1`] = `
             }
           }
         />
-        <ListRegular
-          bottomMargin={true}
+        <ListType1
           title="Contact information"
         >
           <React.Fragment
             key="https://fellesdatakatalog.brreg.no"
           >
-            <TwoColRow
-              col1="Contact point"
-              col2={
-                <a
-                  href="https://fellesdatakatalog.brreg.no"
-                >
-                  Brønnøysundregistrene
-                  <i
-                    className="fa fa-external-link fdk-fa-right"
-                  />
-                </a>
-              }
-            />
-            <TwoColRow
-              col1="Email"
-              col2={
-                <a
-                  href="mailto:fellesdatakatalog@brreg.no"
-                  rel="noopener noreferrer"
-                  title="fellesdatakatalog@brreg.no"
-                >
-                  fellesdatakatalog@brreg.no
-                </a>
-              }
-            />
+            <React.Fragment>
+              <TwoColRow
+                col1="Contact point"
+                col2={
+                  <a
+                    href="https://fellesdatakatalog.brreg.no"
+                  >
+                    Brønnøysundregistrene
+                    <i
+                      className="fa fa-external-link fdk-fa-right"
+                    />
+                  </a>
+                }
+              />
+            </React.Fragment>
+            <React.Fragment>
+              <hr />
+              <TwoColRow
+                col1="Email"
+                col2={
+                  <a
+                    href="mailto:fellesdatakatalog@brreg.no"
+                    rel="noopener noreferrer"
+                    title="fellesdatakatalog@brreg.no"
+                  >
+                    fellesdatakatalog@brreg.no
+                  </a>
+                }
+              />
+            </React.Fragment>
           </React.Fragment>
-        </ListRegular>
+        </ListType1>
         <div
           style={
             Object {

@@ -2,14 +2,14 @@
 
 exports[`should render api-ApiEndpoints correctly 1`] = `
 <section
-  className="mb-5 list-regular"
+  className="mb-5 list-type1"
   name="Test"
 >
   <div
     className="row"
   >
     <div
-      className="col-5 pl-0"
+      className="col-5"
     >
       <h3
         className=""
@@ -27,39 +27,43 @@ exports[`should render api-ApiEndpoints correctly 1`] = `
       </h3>
     </div>
   </div>
-  <React.Fragment
-    key="get-/catalogs"
-  >
-    <div
-      className="row list-regular--item"
+  <hr />
+  <div>
+    <React.Fragment
+      key="get-/catalogs"
     >
       <div
-        className="col-5 pl-0 fdk-text-strong"
+        className="row"
       >
-        GET
-         
-        /catalogs
+        <div
+          className="col-5 fdk-text-strong"
+        >
+          GET
+           
+          /catalogs
+        </div>
+        <div
+          className="col-7"
+        >
+          The three formats are: text/turtle, application/ld+json and application/rdf+xml
+        </div>
       </div>
-      <div
-        className="col-7"
-      >
-        The three formats are: text/turtle, application/ld+json and application/rdf+xml
-      </div>
-    </div>
-  </React.Fragment>
+      <hr />
+    </React.Fragment>
+  </div>
 </section>
 `;
 
 exports[`should render api-ApiEndpoints correctly with no props 1`] = `
 <section
-  className="mb-5 list-regular"
+  className="mb-5 list-type1"
   name={null}
 >
   <div
     className="row"
   >
     <div
-      className="col-5 pl-0"
+      className="col-5"
     >
       <h3
         className=""
@@ -77,5 +81,7 @@ exports[`should render api-ApiEndpoints correctly with no props 1`] = `
       </h3>
     </div>
   </div>
+  <hr />
+  <div />
 </section>
 `;

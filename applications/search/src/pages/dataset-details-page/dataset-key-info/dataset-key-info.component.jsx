@@ -1,275 +1,239 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import './dataset-key-info.scss';
 
 import localization from '../../../lib/localization';
 import { getTranslateText } from '../../../lib/translateText';
 import { LinkExternal } from '../../../components/link-external/link-external.component';
-import { ListRegular } from '../../../components/list-regular/list-regular.component';
-import { TwoColRow } from '../../../components/list-regular/twoColRow/twoColRow';
-import './dataset-key-info.scss';
 
-const renderAccessRights = accessRight => {
-  if (!accessRight) {
+export class DatasetKeyInfo extends React.Component {
+  // eslint-disable-line react/prefer-stateless-function
+  constructor(props) {
+    super(props);
+    this.state = {
+      colClass: 'col-xs-12'
+    };
+  }
+
+  componentWillMount() {
+    const { type, informationModel, conformsTo } = this.props;
+    let countClasses = 0;
+    if (type) {
+      countClasses += 1;
+    }
+    if (informationModel && informationModel.length > 0) {
+      countClasses += 1;
+    }
+    if (
+      conformsTo &&
+      typeof conformsTo !== 'undefined' &&
+      conformsTo.length > 0
+    ) {
+      countClasses += 1;
+    }
+    if (countClasses > 0) {
+      const colWidht = 12 / countClasses;
+      const colClass = `col-xs-12 col-sm-${colWidht}`;
+      this.setState = {
+        colClass
+      };
+    }
+  }
+
+  _renderHeader() {
+    const { accessRights } = this.props;
+    if (accessRights) {
+      const { code } = accessRights;
+      return (
+        <div className="fdk-container-detail fdk-container-detail-header mt-5">
+          {code === 'NON_PUBLIC' && (
+            <React.Fragment>
+              <i className="fa fdk-fa-left fdk-color-unntatt fa-lock" />
+              {
+                localization.dataset.accessRights.authorityCode
+                  .nonPublicDetailsLabel
+              }
+            </React.Fragment>
+          )}
+          {code === 'RESTRICTED' && (
+            <React.Fragment>
+              <i className="fa fdk-fa-left fa-unlock-alt fdk-color-begrenset" />
+              {
+                localization.dataset.accessRights.authorityCode
+                  .restrictedDetailsLabel
+              }
+            </React.Fragment>
+          )}
+          {code === 'PUBLIC' && (
+            <React.Fragment>
+              <i className="fa fdk-fa-left fa-unlock fdk-color-offentlig" />
+              {
+                localization.dataset.accessRights.authorityCode
+                  .publicDetailsLabel
+              }
+            </React.Fragment>
+          )}
+        </div>
+      );
+    }
+    return null;
+  }
+  _renderLegalBasis() {
+    const {
+      legalBasisForRestriction,
+      legalBasisForProcessing,
+      legalBasisForAccess
+    } = this.props;
+
+    const childrenLegalBasisForRestriction = items =>
+      items.map((item, index) => (
+        <div key={`restriction-${item.uri}-${index}`}>
+          <LinkExternal
+            uri={item.uri}
+            prefLabel={getTranslateText(item.prefLabel)}
+          />
+        </div>
+      ));
+
+    const childrenLegalBasisForProcessing = items =>
+      items.map((item, index) => (
+        <div key={`processing-${item.uri}-${index}`}>
+          <LinkExternal
+            uri={item.uri}
+            prefLabel={getTranslateText(item.prefLabel)}
+          />
+        </div>
+      ));
+
+    const childrenLegalBasisForAccess = items =>
+      items.map((item, index) => (
+        <div key={`access-${item.uri}-${index}`}>
+          <LinkExternal
+            uri={item.uri}
+            prefLabel={getTranslateText(item.prefLabel)}
+          />
+        </div>
+      ));
+
+    if (
+      legalBasisForProcessing ||
+      legalBasisForRestriction ||
+      legalBasisForAccess
+    ) {
+      return (
+        <div className="col-xs-12 p-0">
+          <div className="fdk-container-detail">
+            {legalBasisForRestriction && (
+              <div>
+                <h5>{localization.dataset.legalBasisForRestriction}</h5>
+                <div className="fdk-ingress">
+                  {childrenLegalBasisForRestriction(legalBasisForRestriction)}
+                </div>
+              </div>
+            )}
+
+            {legalBasisForProcessing && (
+              <div>
+                <h5>{localization.dataset.legalBasisForProcessing}</h5>
+                <div className="fdk-ingress">
+                  {childrenLegalBasisForProcessing(legalBasisForProcessing)}
+                </div>
+              </div>
+            )}
+
+            {legalBasisForAccess && (
+              <div>
+                <h5>{localization.dataset.legalBasisForAccess}</h5>
+                <div className="fdk-ingress">
+                  {childrenLegalBasisForAccess(legalBasisForAccess)}
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      );
+    }
     return null;
   }
 
-  const { code } = accessRight || {
-    code: null
-  };
-  let accessRightsIconClass;
-  let accessRightsLabel;
-
-  switch (code) {
-    case 'NON_PUBLIC':
-      accessRightsIconClass = 'fdk-color-unntatt fa-lock';
-      accessRightsLabel = localization.api.accessRight.nonPublic;
-      break;
-    case 'RESTRICTED':
-      accessRightsIconClass = 'fdk-color-begrenset fa-unlock-alt';
-      accessRightsLabel = localization.api.accessRight.restricted;
-      break;
-    case 'PUBLIC':
-      accessRightsIconClass = 'fdk-color-offentlig fa-unlock';
-      accessRightsLabel = localization.api.accessRight.public;
-      break;
-    default:
-      accessRightsLabel = localization.api.accessRight.unknown;
+  _renderType() {
+    const { type } = this.props;
+    if (!type) {
+      return null;
+    }
+    const heading = localization.dataset.type;
+    return (
+      <div className={`${this.state.colClass} fdk-container-detail`}>
+        <h5>{heading}</h5>
+        <p className="fdk-ingress mb-0">{type}</p>
+      </div>
+    );
   }
 
-  return (
-    <div className="row list-regular--item">
-      <div className="col-4 pl-0 fdk-text-strong">
-        {localization.accessLevel}
-      </div>
-      <div className="col-8">
-        <i className={`fa fdk-fa-left ${accessRightsIconClass}`} />
-        {accessRightsLabel}
-      </div>
-    </div>
-  );
-};
-
-const renderLegalBasis = (title, legalBasis) => {
-  const childrenLegalBasis = items =>
-    items.map((item, index) => (
-      <div key={`restriction-${item.uri}-${index}`}>
+  _renderConformsTo() {
+    const { conformsTo } = this.props;
+    const header = localization.dataset.conformsTo;
+    const children = items =>
+      items.map(item => (
         <LinkExternal
+          key={item.uri}
           uri={item.uri}
           prefLabel={getTranslateText(item.prefLabel)}
         />
-      </div>
-    ));
-
-  if (!legalBasis) {
-    return null;
-  }
-
-  return (
-    <React.Fragment>
-      <div className="row list-regular--item">
-        <div className="col-4 pl-0 fdk-text-strong">{title}</div>
-        <div className="col-8">{childrenLegalBasis(legalBasis)}</div>
-      </div>
-    </React.Fragment>
-  );
-};
-
-const renderType = type => {
-  if (!type) {
-    return null;
-  }
-
-  return (
-    <React.Fragment>
-      <TwoColRow col1={localization.dataset.type} col2={type} />
-    </React.Fragment>
-  );
-};
-
-const renderConformsTo = conformsTo => {
-  const children = items =>
-    items.map(item => (
-      <LinkExternal
-        key={item.uri}
-        uri={item.uri}
-        prefLabel={getTranslateText(item.prefLabel)}
-      />
-    ));
-
-  if (!(conformsTo && conformsTo.length > 0)) {
-    return null;
-  }
-
-  return (
-    <React.Fragment>
-      <div className="row list-regular--item">
-        <div className="col-4 pl-0 fdk-text-strong">
-          {localization.dataset.conformsTo}
+      ));
+    if (
+      conformsTo &&
+      typeof conformsTo !== 'undefined' &&
+      conformsTo.length > 0
+    ) {
+      return (
+        <div className={`${this.state.colClass} fdk-container-detail`}>
+          <h5>{header}</h5>
+          <p className="fdk-ingress mb-0">{children(conformsTo)}</p>
         </div>
-        <div className="col-8">{children(conformsTo)}</div>
-      </div>
-    </React.Fragment>
-  );
-};
-
-const renderInformationModel = informationModel => {
-  const children = items =>
-    items.map(item => (
-      <LinkExternal
-        key={item.uri}
-        uri={item.uri}
-        prefLabel={
-          getTranslateText(item.prefLabel) ||
-          localization.dataset.informationModelDefaultText
-        }
-      />
-    ));
-
-  if (!(informationModel && informationModel.length > 0)) {
+      );
+    }
     return null;
   }
 
-  return (
-    <React.Fragment>
-      <div className="row list-regular--item">
-        <div className="col-4 pl-0 fdk-text-strong">
-          {localization.dataset.informationModel}
+  _renderInformationModel() {
+    const { informationModel } = this.props;
+    const children = items =>
+      items.map(item => (
+        <LinkExternal
+          key={item.uri}
+          uri={item.uri}
+          prefLabel={
+            getTranslateText(item.prefLabel) ||
+            localization.dataset.informationModelDefaultText
+          }
+        />
+      ));
+    if (informationModel && informationModel.length > 0) {
+      return (
+        <div className={`${this.state.colClass} fdk-container-detail`}>
+          <h5>{localization.dataset.informationModel}</h5>
+          <p className="fdk-ingress mb-0">{children(informationModel)}</p>
         </div>
-        <div className="col-8">{children(informationModel)}</div>
-      </div>
-    </React.Fragment>
-  );
-};
-
-const renderLanguage = language => {
-  const children = items =>
-    items.map(item => (
-      <div key={item.uri}>
-        <span>{getTranslateText(item.prefLabel)}</span>
-      </div>
-    ));
-
-  if (!(language && language.length > 0)) {
+      );
+    }
     return null;
   }
 
-  return (
-    <React.Fragment>
-      <div className="row list-regular--item">
-        <div className="col-4 pl-0 fdk-text-strong">
-          {localization.dataset.language}
+  render() {
+    return (
+      <section>
+        {this._renderHeader()}
+        <div className="row fdk-row">{this._renderLegalBasis()}</div>
+        <div className="row-eq-height">
+          {this._renderType()}
+          {this._renderInformationModel()}
+          {this._renderConformsTo()}
         </div>
-        <div className="col-8">{children(language)}</div>
-      </div>
-    </React.Fragment>
-  );
-};
-
-const renderLandingPage = landingPage => {
-  const children = items =>
-    items.map(item => {
-      if (item) {
-        return (
-          <LinkExternal
-            key={item}
-            uri={item}
-            prefLabel={localization.dataset.landingPage}
-          />
-        );
-      }
-      return null;
-    });
-
-  if (!(landingPage && landingPage.length > 0)) {
-    return null;
+      </section>
+    );
   }
-
-  return (
-    <div className="row list-regular--item">
-      <div className="col-12 pl-0">{children(landingPage)}</div>
-    </div>
-  );
-};
-
-const renderDatasetInfo = (
-  accessRights,
-  legalBasisForRestriction,
-  legalBasisForProcessing,
-  legalBasisForAccess,
-  type,
-  conformsTo,
-  informationModel,
-  language,
-  landingPage
-) => {
-  if (
-    !(
-      accessRights ||
-      legalBasisForRestriction ||
-      legalBasisForProcessing ||
-      legalBasisForAccess ||
-      type ||
-      conformsTo ||
-      informationModel ||
-      language ||
-      landingPage
-    )
-  ) {
-    return null;
-  }
-
-  return (
-    <ListRegular title={localization.dataset.keyInfo}>
-      {renderAccessRights(accessRights)}
-      {renderLegalBasis(
-        localization.dataset.legalBasisForRestriction,
-        legalBasisForRestriction
-      )}
-      {renderLegalBasis(
-        localization.dataset.legalBasisForProcessing,
-        legalBasisForProcessing
-      )}
-      {renderLegalBasis(
-        localization.dataset.legalBasisForAccess,
-        legalBasisForAccess
-      )}
-      {renderType(type)}
-      {renderConformsTo(conformsTo)}
-      {renderInformationModel(informationModel)}
-      {renderLanguage(language)}
-      {renderLandingPage(landingPage)}
-    </ListRegular>
-  );
-};
-
-export const DatasetKeyInfo = props => {
-  const {
-    accessRights,
-    legalBasisForRestriction,
-    legalBasisForProcessing,
-    legalBasisForAccess,
-    type,
-    conformsTo,
-    informationModel,
-    language,
-    landingPage
-  } = props;
-  return (
-    <section>
-      {renderDatasetInfo(
-        accessRights,
-        legalBasisForRestriction,
-        legalBasisForProcessing,
-        legalBasisForAccess,
-        type,
-        conformsTo,
-        informationModel,
-        language,
-        landingPage
-      )}
-    </section>
-  );
-};
+}
 
 DatasetKeyInfo.defaultProps = {
   accessRights: null,
@@ -278,9 +242,7 @@ DatasetKeyInfo.defaultProps = {
   legalBasisForAccess: null,
   type: null,
   conformsTo: null,
-  informationModel: null,
-  language: null,
-  landingPage: null
+  informationModel: null
 };
 
 DatasetKeyInfo.propTypes = {
@@ -290,7 +252,5 @@ DatasetKeyInfo.propTypes = {
   legalBasisForAccess: PropTypes.array,
   type: PropTypes.string,
   conformsTo: PropTypes.array,
-  informationModel: PropTypes.array,
-  language: PropTypes.array,
-  landingPage: PropTypes.array
+  informationModel: PropTypes.array
 };

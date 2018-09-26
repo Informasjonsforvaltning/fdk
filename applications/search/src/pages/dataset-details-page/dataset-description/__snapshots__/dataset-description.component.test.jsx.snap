@@ -42,7 +42,7 @@ exports[`should render DatasetDescription correctly 1`] = `
   />
   <ShowMore
     contentHtml={null}
-    label=""
+    label="Description"
     showLessButtonText="Show less"
     showMoreButtonText="Show the full description"
   />
@@ -97,7 +97,7 @@ exports[`should render DatasetDescription correctly 2`] = `
   />
   <ShowMore
     contentHtml={null}
-    label=""
+    label="Description"
     showLessButtonText="Show less"
     showMoreButtonText="Show the full description"
   />

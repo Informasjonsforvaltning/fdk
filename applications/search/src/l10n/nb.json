@@ -22,7 +22,11 @@
   "non_public": "Unntatt offentlighet",
   "unknown": "Ukjent",
   "app": {
-    "menu": "Meny"
+    "title": "Felles Datakatalog",
+    "titleSub": "Oversikt over datasett fra virksomheter i Norge.",
+    "publisher": "Virksomhet",
+    "menu": "Meny",
+    "readMore": "Les mer om "
   },
   "beta": {
     "header": "Dette er en beta-versjon. ",
@@ -38,15 +42,21 @@
     "english-en": "Engelsk"
   },
   "menu": {
-    "home": "Tilbake til søk",
+    "home": "Hjem",
     "about": "Om Felles Datakatalog",
     "aboutRegistration": "Registrere datasett",
     "reports": "Rapporter"
+  },
+  "feedback": {
+    "title": "Tilbakemelding"
   },
   "query": {
     "intro": "Søk etter innhold",
     "do": "Søk",
     "clear": "Fjern alle filtre"
+  },
+  "login": {
+    "title": "Logg inn"
   },
   "about": {
     "about": "Om Felles Datakatalog",
@@ -86,7 +96,9 @@
     },
     "search": "Søket ga",
     "datasetHits": "treff i datasett",
+    "datasetNoHits": "ingen treff i datasett",
     "conceptHits": "treff i begrep",
+    "conceptNoHits": "ingen treff i begrep",
     "noHits": "Søket ga dessverre ingen treff",
     "concepts": "begrep",
     "and": "og",
@@ -120,6 +132,9 @@
     "dataset":"Datasett",
     "waiting":"Henter data ..."
   },
+  "noHits": {
+    "error": "Ingen datasett funnet"
+  },
   "footer": {
     "organisation.number": "Organisasjonsnummer:",
     "information": "Informasjonskapsler",
@@ -145,7 +160,6 @@
     "vedtak": "Vedtak"
   },
   "dataset": {
-    "keyInfo": "Bruk av datasettet",
     "accessRight": "Datasettet er",
     "title": "Datasett",
     "type": "Type",
@@ -154,7 +168,6 @@
     "conformsTo": "Innholdsstandard",
     "informationModel": "Informasjonsmodell",
     "informationModelDefaultText": "Informasjonsmodell",
-    "distributions": "Distribusjoner",
     "distribution": {
       "title": "Distribusjon",
       "format": "Tilgjengelige format",
@@ -168,26 +181,26 @@
       "referenceDefault": "Relasjon",
       "type": "Type"
     },
-    "issued": "Utgitt",
+    "issued": "Utgivelsesdato",
     "quality": "Kvalitet på innhold",
     "provenance": "Opphav",
     "currentness": "Aktualitet",
     "frequency": "Oppdateringsfrekvens",
     "miscInfo": "Øvrig info",
     "created": "Opprettet",
-    "modified": "Sist oppdatert",
+    "modified": "Sist endret",
     "language": "Språk",
     "theme": "Tema",
-    "periodFrom": "Tidsmessig avgrenset fra",
-    "periodTo": "Tidsmessig avgrenset til",
+    "periodFrom": "Gjelder fra",
+    "periodTo": "Gjelder til",
     "spatial": "Geografisk avgrenset til",
     "information": "Opplysninger",
     "keyword": "Søkeord",
-    "subject": "Begrep brukt i datasettet",
-    "restrictions": "Avgrensninger",
+    "subject": "Begrep",
+    "restrictions": "Restriksjoner",
     "comments": "Kommentar",
     "objective": "Formål",
-    "related": "Relaterte datasett",
+    "related": "Relaterte",
     "relates": "Relatert",
     "restriction": "Restriksjon",
     "downloadText": "Last ned DCAT-beskrivelse:",
@@ -218,8 +231,7 @@
         "nonPublicDetailsLabel": "Datasettet er unntatt offentlighet"
       }
     },
-    "sample": "Eksempeldata",
-    "landingPage": "Mer informasjon om datasettet"
+    "sample": "Eksempeldata"
   },
   "terms": {
     "compareTerms": "Sammenlign begrep",
@@ -234,6 +246,7 @@
     "source": "Kilde",
     "note": "Beskrivelse",
     "compare": "Sammenligning",
+    "hideCompare": "Skjul sammenligning",
     "openCompare": "Vis sammenligning",
     "remove": "Fjern begrep",
     "added": "Du har lagt ",

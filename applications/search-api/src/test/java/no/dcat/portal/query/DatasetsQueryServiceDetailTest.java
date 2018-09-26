@@ -1,8 +1,6 @@
 package no.dcat.portal.query;
 
-import no.dcat.shared.Dataset;
 import no.dcat.shared.testcategories.UnitTest;
-import no.dcat.webutils.exceptions.NotFoundException;
 import org.elasticsearch.action.ListenableActionFuture;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
@@ -10,7 +8,6 @@ import org.elasticsearch.client.Client;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
-import org.elasticsearch.search.internal.InternalSearchHit;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -19,14 +16,14 @@ import org.springframework.http.ResponseEntity;
 
 import javax.servlet.http.HttpServletRequestWrapper;
 
-
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.*;
-import static org.mockito.Mockito.doReturn;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 /**
- * Class for testing getDatasetByIdHandler rest-API in DatasetsQueryService.
+ * Class for testing detail rest-API in DatasetsQueryService.
  */
 @Category(UnitTest.class)
 public class DatasetsQueryServiceDetailTest {
@@ -39,43 +36,40 @@ public class DatasetsQueryServiceDetailTest {
         sqs = new DatasetsQueryService();
         client = mock(Client.class);
         populateMock();
-        sqs.client = client;
+        sqs.setClient(client);
     }
 
     /**
      * Tests when dataset is found.
      */
     @Test
-    public void testWithHits() throws NotFoundException {
-        DatasetsQueryService spyController= spy(new DatasetsQueryService());
-        doReturn(new Dataset()).when(spyController).getDatasetById(anyString());
+    public void testWithHits() {
+        ResponseEntity<String> actual = sqs.detail(new ServletRequest("29"));
 
-        ResponseEntity<String> actual = spyController.getDatasetByIdHandler(new ServletRequest("29"), "29");
+        verify(client.prepareSearch("dcat").setQuery(any(QueryBuilder.class)).execute()).actionGet();
         assertThat(actual.getStatusCodeValue()).isEqualTo(HttpStatus.OK.value());
     }
 
     /**
      * Tests when dataset is not found.
      */
-    @Test(expected = NotFoundException.class)
-    public void testWithNoHits() throws NotFoundException {
-        DatasetsQueryService spyController= spy(new DatasetsQueryService());
-        doReturn(null).when(spyController).getDatasetById(anyString());
+    @Test
+    public void testWithNoHits() {
+        when(response.getHits().getTotalHits()).thenReturn((long) 0);
+        ResponseEntity<String> actual = sqs.detail(new ServletRequest("29"));
 
-        spyController.getDatasetByIdHandler(new ServletRequest("29"), "29");
+        verify(client.prepareSearch("dcat").setQuery(any(QueryBuilder.class)).execute()).actionGet();
+        assertThat(actual.getStatusCodeValue()).isEqualTo(HttpStatus.NOT_FOUND.value());
     }
 
     @Test
     public void testGetNullRDFresponse() {
-        sqs.transformResponse(null, "application/rdf+xml");
-        sqs.transformResponse(null, "text/html");
+        sqs.getRdfResponse("{}", "application/rdf+xml");
+        sqs.getRdfResponse("{}", "text/html");
     }
 
     @Test
-    public void correctAcceptheader() throws NotFoundException {
-        DatasetsQueryService spyController= spy(new DatasetsQueryService());
-        doReturn(new Dataset()).when(spyController).getDatasetById(anyString());
-
+    public void correctAcceptheader() {
         HttpServletRequestWrapper request = new HttpServletRequestWrapper(new ServletRequest("/details/path")) {
             @Override
             public String getHeader(String name) {
@@ -86,16 +80,15 @@ public class DatasetsQueryServiceDetailTest {
             }
         };
 
-        ResponseEntity<String> actual = spyController.getDatasetByIdHandler(request, "id");
-        assertThat(actual.getHeaders().getContentType().toString()).isEqualTo("text/turtle");
+            sqs.detail(request);
     }
 
     private void populateMock() {
         String id = "29";
 
         SearchHit[] hits = null;
-        SearchHit hit = mock(InternalSearchHit.class);
-        SearchHit hit2 = mock(InternalSearchHit.class);
+        SearchHit hit = mock(SearchHit.class);
+        SearchHit hit2 = mock(SearchHit.class);
 
 
         SearchHits searchHits = mock(SearchHits.class);
@@ -115,7 +108,7 @@ public class DatasetsQueryServiceDetailTest {
         when(action.actionGet()).thenReturn(response);
 
         SearchRequestBuilder builder = mock(SearchRequestBuilder.class);
-        when(builder.setQuery(any(QueryBuilder.class))).thenReturn(builder);
+        when(builder.setQuery(any())).thenReturn(builder);
         when(builder.execute()).thenReturn(action);
 
         when(client.prepareSearch("dcat")).thenReturn(builder);

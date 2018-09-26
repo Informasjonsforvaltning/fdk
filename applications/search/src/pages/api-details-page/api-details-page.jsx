@@ -10,8 +10,8 @@ import { SearchHitHeader } from '../../components/search-hit-header/search-hit-h
 import { ApiEndpoints } from './api-endpoints/api-endpoints.component';
 import { ShowMore } from '../../components/show-more/show-more';
 import { StickyMenu } from '../../components/sticky-menu/sticky-menu.component';
-import { ListRegular } from '../../components/list-regular/list-regular.component';
-import { TwoColRow } from '../../components/list-regular/twoColRow/twoColRow';
+import { ListType1 } from '../../components/listType1/listType1';
+import { TwoColRow } from '../../components/listType1/twoColRow/twoColRow';
 
 const renderDescription = description => {
   if (!description) {
@@ -22,6 +22,7 @@ const renderDescription = description => {
   return (
     <ShowMore
       showMoreButtonText={localization.showFullDescription}
+      label={localization.description}
       contentHtml={descriptionText}
     />
   );
@@ -39,9 +40,11 @@ const renderFormats = formats => {
       </span>
     ));
   return (
-    <ListRegular title={localization.format}>
-      <div className="row list-regular--item">{formatItems(formats)}</div>
-    </ListRegular>
+    <section className="mb-5 list-type1" name={localization.format}>
+      <h3>{localization.format}</h3>
+      <hr />
+      {formatItems(formats)}
+    </section>
   );
 };
 
@@ -83,7 +86,11 @@ const renderAccessRights = accessRight => {
       accessRightsLabel = localization.api.accessRight.unknown;
   }
 
-  return <TwoColRow col1={localization.accessLevel} col2={accessRightsLabel} />;
+  return (
+    <React.Fragment>
+      <TwoColRow col1={localization.accessLevel} col2={accessRightsLabel} />
+    </React.Fragment>
+  );
 };
 
 const renderAPIInfo = accessRights => {
@@ -92,9 +99,9 @@ const renderAPIInfo = accessRights => {
   }
 
   return (
-    <ListRegular title={localization.apiInfo}>
+    <ListType1 title={localization.apiInfo}>
       {renderAccessRights(accessRights[0])}
-    </ListRegular>
+    </ListType1>
   );
 };
 
@@ -104,7 +111,7 @@ const renderDatasetReference = (datasetReference, index) => {
 
   return (
     <React.Fragment key={`${index}-${id}`}>
-      <div className="row list-regular--item mb-4">
+      <div className="mb-4">
         <a
           title={localization.api.linkDatasetReference}
           href={`/datasets/${id}`}
@@ -124,9 +131,9 @@ const renderDatasetReferences = references => {
     items.map((item, index) => renderDatasetReference(item, index));
 
   return (
-    <ListRegular title={localization.datasetReferences}>
+    <ListType1 title={localization.datasetReferences}>
       {children(references)}
-    </ListRegular>
+    </ListType1>
   );
 };
 
@@ -135,31 +142,45 @@ const renderContactPoint = contactPoint => {
   return (
     <React.Fragment key={uri || organizationName}>
       {uri && (
-        <TwoColRow
-          col1={localization.contactPoint}
-          col2={
-            uri ? (
-              <a href={uri}>
-                {organizationName || uri}
-                <i className="fa fa-external-link fdk-fa-right" />
-              </a>
-            ) : (
-              { organizationName }
-            )
-          }
-        />
+        <React.Fragment>
+          <TwoColRow
+            col1={localization.contactPoint}
+            col2={
+              uri ? (
+                <a href={uri}>
+                  {organizationName || uri}
+                  <i className="fa fa-external-link fdk-fa-right" />
+                </a>
+              ) : (
+                { organizationName }
+              )
+            }
+          />
+        </React.Fragment>
       )}
       {email && (
-        <TwoColRow
-          col1={localization.email}
-          col2={
-            <a title={email} href={`mailto:${email}`} rel="noopener noreferrer">
-              {email}
-            </a>
-          }
-        />
+        <React.Fragment>
+          <hr />
+          <TwoColRow
+            col1={localization.email}
+            col2={
+              <a
+                title={email}
+                href={`mailto:${email}`}
+                rel="noopener noreferrer"
+              >
+                {email}
+              </a>
+            }
+          />
+        </React.Fragment>
       )}
-      {phone && <TwoColRow col1={localization.phone} col2={phone} />}
+      {phone && (
+        <React.Fragment>
+          <hr />
+          <TwoColRow col1={localization.phone} col2={phone} />
+        </React.Fragment>
+      )}
     </React.Fragment>
   );
 };
@@ -171,9 +192,9 @@ const renderContactPoints = contactPoints => {
   const children = items => items.map(item => renderContactPoint(item));
 
   return (
-    <ListRegular title={localization.contactInfo}>
+    <ListType1 title={localization.contactInfo}>
       {children(contactPoints)}
-    </ListRegular>
+    </ListType1>
   );
 };
 
@@ -181,7 +202,7 @@ const renderStickyMenu = apiItem => {
   const menuItems = [];
   if (_.get(apiItem, 'description')) {
     menuItems.push({
-      name: getTranslateText(_.get(apiItem, 'title')),
+      name: localization.description,
       prefLabel: localization.description
     });
   }

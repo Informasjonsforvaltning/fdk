@@ -15,12 +15,11 @@ import org.apache.jena.vocabulary.DCTerms;
 import org.apache.jena.vocabulary.RDF;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.test.context.TestComponent;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicBoolean;
+
 
 public class DistributionBuilder extends AbstractBuilder {
     private static Logger logger = LoggerFactory.getLogger(DistributionBuilder.class);

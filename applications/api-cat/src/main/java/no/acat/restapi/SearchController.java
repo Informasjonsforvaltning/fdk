@@ -12,16 +12,10 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms;
-import org.elasticsearch.search.sort.SortOrder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
 
 @CrossOrigin
 @RestController
@@ -65,20 +59,10 @@ public class SearchController {
 
             @ApiParam("Specifies the size, i.e. the number of datasets to return in one request. The default is 10, the maximum number of datasets returned is 100")
             @RequestParam(value = "size", defaultValue = "10", required = false)
-                    int size,
-
-            @ApiParam("Specifies the sort field, at the present we support title, modified and publisher. Default is no value")
-            @RequestParam(value = "sortfield", defaultValue = "", required = false) String sortfield,
-
-
-            @ApiParam("Specifies the sort direction of the sorted result. The directions are: asc for ascending and desc for descending")
-            @RequestParam(value = "sortdirection", defaultValue = "", required = false) String sortdirection
-
-            ) {
+                    int size
+    ) {
         try {
             SearchRequestBuilder searchRequest = buildSearchRequest(query, accessRights, orgPath, formats, from, size);
-            addSort(sortfield, sortdirection, searchRequest);
-
             SearchResponse elasticResponse = doQuery(searchRequest);
             return convertFromElasticResponse(elasticResponse);
         } catch (Exception e) {
@@ -143,32 +127,6 @@ public class SearchController {
             boolQuery.filter(QueryBuilders.termQuery(term, value));
         }
     }
-
-
-    private void addSort(String sortfield, String sortdirection, SearchRequestBuilder searchBuilder) {
-
-        //Key is search field in request from client
-        //Value is actual search field in acat index, as acat datamodel is different from dcat datamodel
-        //also, sort must use unanalyzed fields
-        HashMap<String,String> allowedSearchFields = new HashMap<String,String>();
-        allowedSearchFields.put("title.nn", "title.no.raw");
-        allowedSearchFields.put("title.nb", "title.no.raw");
-        allowedSearchFields.put("title.no", "title.no.raw");
-        allowedSearchFields.put("publisher.name", "publisher.prefLabel.no.keyword");
-
-        //ony allow sorting on field contained in map. Other fields are ignored
-        if(allowedSearchFields.containsKey(sortfield)) {
-            SortOrder sortOrder = sortdirection.toLowerCase().contains("asc".toLowerCase()) ? SortOrder.ASC : SortOrder.DESC;
-            StringBuilder sbSortField = new StringBuilder();
-
-            sbSortField.append(allowedSearchFields.get(sortfield));
-
-            logger.debug("Added sortfield: {} with sort direction {}", sbSortField.toString(), sortOrder.toString() );
-
-            searchBuilder.addSort(sbSortField.toString(), sortOrder);
-        }
-    }
-
 
     private int checkAndAdjustFrom(int from) {
         if (from < 0) {

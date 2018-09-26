@@ -1,16 +1,12 @@
 package no.dcat.harvester.crawler;
 
-import no.dcat.harvester.settings.ApplicationSettings;
+import no.dcat.harvester.settings.CrawlerSettings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import sun.nio.ch.ThreadPool;
 
 import javax.annotation.PostConstruct;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -19,7 +15,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 public class Crawler {
 	
 	@Autowired
-	private ApplicationSettings applicationSettings;
+	private CrawlerSettings crawlerSettings;
 
 
 	private ThreadPoolExecutor executorService;
@@ -31,8 +27,8 @@ public class Crawler {
 	
 	@PostConstruct
 	public void initialize() {
-		if (applicationSettings != null) {
-			executorService = (ThreadPoolExecutor) Executors.newFixedThreadPool(applicationSettings.getCrawlerThreadPoolSize());
+		if (crawlerSettings != null) {
+			executorService = (ThreadPoolExecutor) Executors.newFixedThreadPool(crawlerSettings.getThreadPoolSize());
 		} else {
 			executorService = (ThreadPoolExecutor) Executors.newFixedThreadPool(2);
 		}
