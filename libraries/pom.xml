@@ -13,10 +13,10 @@
     <modules>
         <module>shared</module>
         <module>datastore</module>
+        <module>datastore-test</module>
         <module>elasticsearch5-client</module>
         <module>referencedata-client</module>
-        <module>referencedata-client-spring1</module>
-        <module>webutils-spring1</module>
+        <module>webutils-spring</module>
     </modules>
 
 </project>

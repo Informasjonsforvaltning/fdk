@@ -44,9 +44,7 @@ const renderThemes = theme => {
 const renderTitle = (Tag, title, titleLink) => {
   const titleTag = (Tag, title) => (
     <React.Fragment>
-      <Tag className="mr-3" name={title}>
-        {title}
-      </Tag>
+      <Tag className="mr-3">{title}</Tag>
     </React.Fragment>
   );
   if (titleLink) {
@@ -95,9 +93,9 @@ export const SearchHitHeader = props => {
           publisher && (
             <PublisherLabel label={publisherLabel} publisherItem={publisher} />
           )}
-      </div>
 
-      {theme && <div className="mb-4">{renderThemes(theme)}</div>}
+        {theme && renderThemes(theme)}
+      </div>
     </React.Fragment>
   );
 };

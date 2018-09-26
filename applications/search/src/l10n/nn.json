@@ -22,7 +22,11 @@
   "non_public": "Unntatt offentlegheit",
   "unknown": "Ukjend",
   "app": {
-    "menu": "Meny"
+    "title": "Felles Datakatalog",
+    "titleSub": "Oversikt over datasett frå verksemder i Noreg.",
+    "publisher": "Velg ut frå verksemd",
+    "menu": "Meny",
+    "readMore": "Les meir om "
   },
   "beta": {
     "header": "Dette er ein beta-versjon. ",
@@ -38,15 +42,21 @@
     "english-en": "Engelsk"
   },
   "menu": {
-    "home": "Tilbake til søk",
+    "home": "Hjem",
     "about": "Felles Datakatalog",
     "aboutRegistration": "Registrere datasett",
     "reports": "Rapporter"
+  },
+  "feedback": {
+    "title": "Tilbakemelding"
   },
   "query": {
     "intro": "Søk etter innhald",
     "do": "Søk",
     "clear": "Fjern alle filter"
+  },
+  "login": {
+    "title": "Logg inn"
   },
   "about": {
     "about": "Om felles Datakatalog",
@@ -86,7 +96,9 @@
     },
     "search": "Søket gav",
     "datasetHits": "treff i datasett",
+    "datasetNoHits": "ingen treff i datasett",
     "conceptHits": "treff i omgrep",
+    "conceptNoHits": "ingen treff i omgrep",
     "noHits": "Søket gav dessverre ingen treff",
     "concepts": "omgrep",
     "and": "og",
@@ -120,6 +132,9 @@
     "dataset":"Datasett",
     "waiting":"Hentar data ..."
   },
+  "noHits": {
+    "error": "Ingen datasett funne"
+  },
   "footer": {
     "organisation.number": "Organisasjonsnummer:",
     "information": "Informasjonskapslar - personvern",
@@ -145,7 +160,6 @@
     "vedtak": "Vedtak"
   },
   "dataset": {
-    "keyInfo": "Bruk av datasettet",
     "accessRight": "Datasettet er",
     "title": "Datasett",
     "type": "Type",
@@ -154,7 +168,6 @@
     "conformsTo": "Innhaldsstandard",
     "informationModel": "Informasjonsmodell",
     "informationModelDefaultText": "Informasjonsmodell",
-    "distributions": "Distribusjonar",
     "distribution": {
       "title": "Distribusjon",
       "format": "Tilgjengelege format",
@@ -187,7 +200,7 @@
     "restrictions": "Restriksjonar",
     "comments": "Kommentar",
     "objective": "Føremål",
-    "related": "Relaterte datasett",
+    "related": "Relaterte",
     "relates": "Relatert",
     "restriction": "Restriksjon",
     "downloadText": "Last ned DCAT-forklaring:",
@@ -218,8 +231,7 @@
         "nonPublicDetailsLabel": "Datasettet er unntatt offentlegheit"
       }
     },
-    "sample": "Eksempeldata",
-    "landingPage": "Meir informasjon om datasettet"
+    "sample": "Eksempeldata"
   },
   "terms": {
     "compareTerms": "Samanlikne omgrep",
@@ -234,6 +246,7 @@
     "source": "Kjelde",
     "note": "Forklaring",
     "compare": "Samanlikning",
+    "hideCompare": "Skjul samanlikning",
     "openCompare": "Vis samanlikning",
     "remove": "Fjern omgrep",
     "added": "Du har lagt ",

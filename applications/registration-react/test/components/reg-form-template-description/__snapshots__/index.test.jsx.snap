@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render FormTemplateDescription correctly 1`] = `
+<div
+  className="fdk-reg_collapse"
+>
+  <button
+    className="d-flex justify-content-between p-0 w-100"
+    onClick={[Function]}
+  >
+    <div>
+      <div
+        className="d-flex"
+      >
+        <i
+          className="fa fa-2x mr-2 fa-angle-down"
+        />
+        <h2
+          className="mb-0"
+        />
+      </div>
+    </div>
+  </button>
+  <Collapse
+    appear={false}
+    className="mt-3"
+    enter={true}
+    exit={true}
+    in={false}
+    isOpen={false}
+    mountOnEnter={false}
+    onEnter={[Function]}
+    onEntered={[Function]}
+    onEntering={[Function]}
+    onExit={[Function]}
+    onExited={[Function]}
+    onExiting={[Function]}
+    tag="div"
+    timeout={350}
+    unmountOnExit={false}
+  />
+</div>
+`;

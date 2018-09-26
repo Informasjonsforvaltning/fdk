@@ -53,6 +53,7 @@ export class DatasetDescription extends React.Component {
         {this.props.description && (
           <ShowMore
             showMoreButtonText={localization.showFullDescription}
+            label={localization.description}
             contentHtml={this.props.descriptionFormatted}
           />
         )}

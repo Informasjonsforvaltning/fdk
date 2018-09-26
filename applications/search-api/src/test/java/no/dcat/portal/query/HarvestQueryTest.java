@@ -2,39 +2,25 @@ package no.dcat.portal.query;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import lombok.Data;
+import no.dcat.datastore.ElasticDockerRule;
 import no.dcat.datastore.Elasticsearch;
 import no.dcat.datastore.domain.dcat.Publisher;
 import no.dcat.datastore.domain.harvest.CatalogHarvestRecord;
 import no.dcat.datastore.domain.harvest.ChangeInformation;
 import no.dcat.shared.testcategories.UnitTest;
-import org.apache.commons.io.FileUtils;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.action.index.IndexRequest;
-import org.elasticsearch.action.search.SearchRequestBuilder;
-import org.elasticsearch.action.search.SearchResponse;
-import org.elasticsearch.client.Client;
-import org.elasticsearch.common.settings.Settings;
-import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.node.Node;
-import org.elasticsearch.node.NodeBuilder;
-import org.elasticsearch.search.aggregations.Aggregations;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.experimental.categories.Category;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 
-import java.io.File;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -44,46 +30,23 @@ import java.util.Random;
 import static org.junit.Assert.*;
 import static org.hamcrest.Matchers.*;
 
+
 @Category(UnitTest.class)
 public class HarvestQueryTest {
     private static Logger logger = LoggerFactory.getLogger(HarvestQueryTest.class);
 
-    private static final String DATA_DIR = "target/elasticsearch";
-
     public static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ssZ";
-    private static final SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
 
     private ChangeInformation totalChangesCatalog1, totalChangesCatalog2;
 
-    Node node;
-    Client client;
     Elasticsearch elasticsearch;
 
-    private File dataDir = null;
+    @ClassRule
+    public static ElasticDockerRule elasticRule = new ElasticDockerRule();
 
     @Before
     public void setUp() throws Exception {
-
-        dataDir = new File(DATA_DIR);
-        Settings settings = Settings.settingsBuilder()
-                .put("http.enabled", "false")
-                .put("path.home", dataDir.toString())
-                .build();
-
-        node = NodeBuilder.nodeBuilder()
-                .local(true)
-                .settings(settings)
-                .build();
-
-        node.start();
-        client = node.client();
-        Assert.assertNotNull(node);
-        Assert.assertFalse(node.isClosed());
-        Assert.assertNotNull(client);
-
-        elasticsearch = new Elasticsearch(client);
-
-//        elasticsearch = new Elasticsearch("localhost",9300,"elasticsearch");
+        elasticsearch = new Elasticsearch("localhost:9399","elasticsearch");
         elasticsearch.createIndex("harvest");
         totalChangesCatalog1 = generateData(200, 1);
         totalChangesCatalog2 = generateData(100, 2);
@@ -166,28 +129,11 @@ public class HarvestQueryTest {
         return total;
     }
 
-    @After
-    public void tearDown() throws Exception {
-        if (client != null) {
-            client.close();
-        }
-        if (node != null) {
-            node.close();
-        }
-        if (dataDir != null && dataDir.exists()) {
-            FileUtils.forceDelete(dataDir);
-        }
-
-        node = null;
-        client = null;
-
-    }
-
     @Test
     public void queryCatalogHarvestRecordsOK () throws Throwable {
 
         HarvestQueryService service = new HarvestQueryService();
-        service.setClient(client);
+        service.setClient(elasticsearch.getClient());
 
         // First query, all under /STAT
         ResponseEntity<String> response = service.listCatalogHarvestRecords("/STAT/1");

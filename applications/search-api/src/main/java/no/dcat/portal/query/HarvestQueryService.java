@@ -2,7 +2,6 @@ package no.dcat.portal.query;
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import no.dcat.datastore.domain.harvest.CatalogHarvestRecord;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.index.query.QueryBuilder;
@@ -10,7 +9,7 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.query.RangeQueryBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
-import org.elasticsearch.search.aggregations.metrics.MetricsAggregationBuilder;
+import org.elasticsearch.search.aggregations.metrics.sum.SumAggregationBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -52,9 +51,9 @@ public class HarvestQueryService extends ElasticsearchService {
             search = QueryBuilders.termQuery("publisher.orgPath", query);
         }
 
-        MetricsAggregationBuilder agg1 = AggregationBuilders.sum("inserts").field("changeInformation.inserts");
-        MetricsAggregationBuilder agg2 = AggregationBuilders.sum("updates").field("changeInformation.updates");
-        MetricsAggregationBuilder agg3 = AggregationBuilders.sum("deletes").field("changeInformation.deletes");
+        SumAggregationBuilder agg1 = AggregationBuilders.sum("inserts").field("changeInformation.inserts");
+        SumAggregationBuilder agg2 = AggregationBuilders.sum("updates").field("changeInformation.updates");
+        SumAggregationBuilder agg3 = AggregationBuilders.sum("deletes").field("changeInformation.deletes");
 
         long now = new Date().getTime();
         long DAY_IN_MS = 1000 * 3600 *24;
@@ -63,9 +62,9 @@ public class HarvestQueryService extends ElasticsearchService {
         RangeQueryBuilder range2 = QueryBuilders.rangeQuery("date").from(now -  30*DAY_IN_MS).to(now).format("epoch_millis");
         RangeQueryBuilder range3 = QueryBuilders.rangeQuery("date").from(now - 365*DAY_IN_MS).to(now).format("epoch_millis");
 
-        AggregationBuilder last7 = AggregationBuilders.filter("last7days").filter(range1).subAggregation(agg1).subAggregation(agg2).subAggregation(agg3);
-        AggregationBuilder last30 = AggregationBuilders.filter("last30days").filter(range2).subAggregation(agg1).subAggregation(agg2).subAggregation(agg3);
-        AggregationBuilder last365 = AggregationBuilders.filter("last365days").filter(range3).subAggregation(agg1).subAggregation(agg2).subAggregation(agg3);
+        AggregationBuilder last7 = AggregationBuilders.filter("last7days", range1).subAggregation(agg1).subAggregation(agg2).subAggregation(agg3);
+        AggregationBuilder last30 = AggregationBuilders.filter("last30days", range2).subAggregation(agg1).subAggregation(agg2).subAggregation(agg3);
+        AggregationBuilder last365 = AggregationBuilders.filter("last365days", range3).subAggregation(agg1).subAggregation(agg2).subAggregation(agg3);
 
         SearchRequestBuilder searchQuery = getClient()
                 .prepareSearch("harvest").setTypes("catalog")

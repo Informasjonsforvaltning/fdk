@@ -1,55 +1,46 @@
 {
   "dataset": {
     "properties": {
-      "uri": {
-        "type": "string",
-        "index": "not_analyzed"
-      },
       "catalog": {
         "properties": {
           "uri": {
-            "type": "string",
-            "index": "not_analyzed"
+            "type": "keyword"
           },
           "description": {
             "properties": {
               "nb": {
-                "type": "string",
+                "type": "text",
                 "analyzer": "norwegian",
                 "fields": {
                   "raw": {
-                    "type": "string",
-                    "index": "not_analyzed"
+                    "type": "keyword"
                   }
                 }
               },
               "nn": {
-                "type": "string",
+                "type": "text",
                 "analyzer": "norwegian",
                 "fields": {
                   "raw": {
-                    "type": "string",
-                    "index": "not_analyzed"
+                    "type": "keyword"
                   }
                 }
               },
               "no": {
-                "type": "string",
+                "type": "text",
                 "analyzer": "norwegian",
                 "fields": {
                   "raw": {
-                    "type": "string",
-                    "index": "not_analyzed"
+                    "type": "keyword"
                   }
                 }
               },
               "en": {
-                "type": "string",
+                "type": "text",
                 "analyzer": "english",
                 "fields": {
                   "raw": {
-                    "type": "string",
-                    "index": "not_analyzed"
+                    "type": "keyword"
                   }
                 }
               }
@@ -58,42 +49,38 @@
           "title": {
             "properties": {
               "nb": {
-                "type": "string",
+                "type": "text",
                 "analyzer": "norwegian",
                 "fields": {
                   "raw": {
-                    "type": "string",
-                    "index": "not_analyzed"
+                    "type": "keyword"
                   }
                 }
               },
               "nn": {
-                "type": "string",
+                "type": "text",
                 "analyzer": "norwegian",
                 "fields": {
                   "raw": {
-                    "type": "string",
-                    "index": "not_analyzed"
+                    "type": "keyword"
                   }
                 }
               },
               "no": {
-                "type": "string",
+                "type": "text",
                 "analyzer": "norwegian",
                 "fields": {
                   "raw": {
-                    "type": "string",
-                    "index": "not_analyzed"
+                    "type": "keyword"
                   }
                 }
               },
               "en": {
-                "type": "string",
+                "type": "text",
                 "analyzer": "english",
                 "fields": {
                   "raw": {
-                    "type": "string",
-                    "index": "not_analyzed"
+                    "type": "keyword"
                   }
                 }
               }
@@ -104,42 +91,42 @@
       "description": {
         "properties": {
           "nb": {
-            "type": "string",
+            "type": "text",
+            "fielddata": true,
             "analyzer": "norwegian",
             "fields": {
               "raw": {
-                "type": "string",
-                "index": "not_analyzed"
+                "type": "keyword"
               }
             }
           },
           "nn": {
-            "type": "string",
+            "type": "text",
+            "fielddata": true,
             "analyzer": "norwegian",
             "fields": {
               "raw": {
-                "type": "string",
-                "index": "not_analyzed"
+                "type": "keyword"
               }
             }
           },
           "no": {
-            "type": "string",
+            "type": "text",
+            "fielddata": true,
             "analyzer": "norwegian",
             "fields": {
               "raw": {
-                "type": "string",
-                "index": "not_analyzed"
+                "type": "keyword"
               }
             }
           },
           "en": {
-            "type": "string",
+            "type": "text",
+            "fielddata": true,
             "analyzer": "english",
             "fields": {
               "raw": {
-                "type": "string",
-                "index": "not_analyzed"
+                "type": "keyword"
               }
             }
           }
@@ -148,42 +135,38 @@
       "keyword": {
         "properties": {
           "nb": {
-            "type": "string",
+            "type": "text",
             "analyzer": "norwegian",
             "fields": {
               "raw": {
-                "type": "string",
-                "index": "not_analyzed"
+                "type": "keyword"
               }
             }
           },
           "nn": {
-            "type": "string",
+            "type": "text",
             "analyzer": "norwegian",
             "fields": {
               "raw": {
-                "type": "string",
-                "index": "not_analyzed"
+                "type": "keyword"
               }
             }
           },
           "no": {
-            "type": "string",
+            "type": "text",
             "analyzer": "norwegian",
             "fields": {
               "raw": {
-                "type": "string",
-                "index": "not_analyzed"
+                "type": "keyword"
               }
             }
           },
           "en": {
-            "type": "string",
+            "type": "text",
             "analyzer": "english",
             "fields": {
               "raw": {
-                "type": "string",
-                "index": "not_analyzed"
+                "type": "keyword"
               }
             }
           }
@@ -192,42 +175,38 @@
       "title": {
         "properties": {
           "nb": {
-            "type": "string",
+            "type": "text",
             "analyzer": "norwegian",
             "fields": {
               "raw": {
-                "type": "string",
-                "index": "not_analyzed"
+                "type": "keyword"
               }
             }
           },
           "nn": {
-            "type": "string",
+            "type": "text",
             "analyzer": "norwegian",
             "fields": {
               "raw": {
-                "type": "string",
-                "index": "not_analyzed"
+                "type": "keyword"
               }
             }
           },
           "no": {
-            "type": "string",
+            "type": "text",
             "analyzer": "norwegian",
             "fields": {
               "raw": {
-                "type": "string",
-                "index": "not_analyzed"
+                "type": "keyword"
               }
             }
           },
           "en": {
-            "type": "string",
+            "type": "text",
             "analyzer": "english",
             "fields": {
               "raw": {
-                "type": "string",
-                "index": "not_analyzed"
+                "type": "keyword"
               }
             }
           }
@@ -236,56 +215,49 @@
       "theme": {
         "properties": {
           "id": {
-            "type": "string",
-            "index": "not_analyzed"
+            "type": "keyword"
           },
           "code": {
-            "type": "string",
-            "index": "not_analyzed"
+            "type": "keyword"
           },
           "startUse": {
-            "type": "string",
-            "index": "not_analyzed"
+            "type": "keyword"
           },
           "title": {
             "properties": {
               "nb": {
-                "type": "string",
+                "type": "text",
                 "analyzer": "norwegian",
                 "fields": {
                   "raw": {
-                    "type": "string",
-                    "index": "not_analyzed"
+                    "type": "keyword"
                   }
                 }
               },
               "nn": {
-                "type": "string",
+                "type": "text",
                 "analyzer": "norwegian",
                 "fields": {
                   "raw": {
-                    "type": "string",
-                    "index": "not_analyzed"
+                    "type": "keyword"
                   }
                 }
               },
               "no": {
-                "type": "string",
+                "type": "text",
                 "analyzer": "norwegian",
                 "fields": {
                   "raw": {
-                    "type": "string",
-                    "index": "not_analyzed"
+                    "type": "keyword"
                   }
                 }
               },
               "en": {
-                "type": "string",
+                "type": "text",
                 "analyzer": "english",
                 "fields": {
                   "raw": {
-                    "type": "string",
-                    "index": "not_analyzed"
+                    "type": "keyword"
                   }
                 }
               }
@@ -294,60 +266,53 @@
           "conceptSchema": {
             "properties": {
               "id": {
-                "type": "string",
-                "index": "not_analyzed"
+                "type": "keyword"
               },
               "title": {
                 "properties": {
                   "nb": {
-                    "type": "string",
+                    "type": "text",
                     "analyzer": "norwegian",
                     "fields": {
                       "raw": {
-                        "type": "string",
-                        "index": "not_analyzed"
+                        "type": "keyword"
                       }
                     }
                   },
                   "nn": {
-                    "type": "string",
+                    "type": "text",
                     "analyzer": "norwegian",
                     "fields": {
                       "raw": {
-                        "type": "string",
-                        "index": "not_analyzed"
+                        "type": "keyword"
                       }
                     }
                   },
                   "no": {
-                    "type": "string",
+                    "type": "text",
                     "analyzer": "norwegian",
                     "fields": {
                       "raw": {
-                        "type": "string",
-                        "index": "not_analyzed"
+                        "type": "keyword"
                       }
                     }
                   },
                   "en": {
-                    "type": "string",
+                    "type": "text",
                     "analyzer": "english",
                     "fields": {
                       "raw": {
-                        "type": "string",
-                        "index": "not_analyzed"
+                        "type": "keyword"
                       }
                     }
                   }
                 }
               },
               "versioninfo": {
-                "type": "string",
-                "index": "not_analyzed"
+                "type": "keyword"
               },
               "versionnumber": {
-                "type": "string",
-                "index": "not_analyzed"
+                "type": "keyword"
               }
             }
           }
@@ -356,31 +321,31 @@
       "publisher": {
         "properties": {
           "name": {
-            "type": "string",
+            "type": "text",
+            "fielddata": true,
             "analyzer": "norwegian",
             "fields": {
               "raw": {
-                "type": "string",
-                "index": "not_analyzed"
+                "type": "keyword"
               }
             }
           },
           "orgPath": {
-            "type": "string",
-            "analyzer": "path-analyzer",
-            "search_analyzer": "keyword"
+            "type": "text",
+            "fielddata": true,
+            "analyzer": "path-analyzer"
           }
         }
       },
       "accessRights": {
         "properties": {
           "code": {
-            "type": "string",
+            "type": "text",
+            "fielddata": true,
             "analyzer": "norwegian",
             "fields": {
               "raw": {
-                "type": "string",
-                "index": "not_analyzed"
+                "type": "keyword"
               }
             }
           }
@@ -389,37 +354,30 @@
       "provenance": {
         "properties": {
           "code": {
-            "type": "string",
+            "type": "text",
+            "fielddata": true,
             "analyzer": "norwegian",
             "fields": {
               "raw": {
-                "type": "string",
-                "index": "not_analyzed"
+                "type": "keyword"
               }
             }
           }
         }
       },
       "source": {
-        "type": "string",
-        "analyzer": "norwegian",
-        "fields": {
-          "raw": {
-            "type": "string",
-            "index": "not_analyzed"
-          }
-        }
+        "type": "keyword"
       },
       "subject": {
         "properties": {
           "prefLabel": {
             "properties": {
               "no": {
-                "type": "string",
+                "type": "text",
+                "fielddata": true,
                 "fields": {
                   "raw": {
-                    "type": "string",
-                    "index": "not_analyzed"
+                    "type": "keyword"
                   }
                 }
               }
@@ -428,7 +386,7 @@
           "altLabel": {
             "properties": {
               "no": {
-                "type": "string",
+                "type": "text",
                 "analyzer": "norwegian"
               }
             }
@@ -436,44 +394,41 @@
           "definition": {
             "properties": {
               "no": {
-                "type": "string",
+                "type": "text",
                 "analyzer": "norwegian"
               }
             }
           },
           "uri": {
-            "type": "string",
-            "index": "not_analyzed"
+            "type": "keyword"
           }
         }
       },
       "spatial": {
         "properties": {
           "code": {
-            "type": "string"
+            "type": "keyword"
           },
           "prefLabel": {
             "properties": {
               "no": {
-                "type": "string",
+                "type": "text",
+                "fielddata": true,
                 "fields": {
                   "raw": {
-                    "type": "string",
-                    "index": "not_analyzed"
+                    "type": "keyword"
                   }
                 }
               }
             }
           },
           "uri": {
-            "type": "string",
-            "index": "not_analyzed"
+            "type": "keyword"
           }
         }
       },
       "provenanceSort": {
-        "type": "string",
-        "index": "not_analyzed"
+        "type": "keyword"
       }
     }
   }

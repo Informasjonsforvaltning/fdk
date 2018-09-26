@@ -1,0 +1,132 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render DatasetContactInfo correctly 1`] = `
+<div
+  className="dataset-contactinfo"
+>
+  <div
+    className="row fdk-row"
+  >
+    <div
+      className="col-md-12 p-0"
+    >
+      <div
+        className="fdk-container-detail"
+      >
+        <div
+          className="fdk-detail-icon p-0"
+        >
+          <i
+            className="fa fa-address-card fdk-detail-icon-oneline"
+          />
+        </div>
+        <div
+          className="fdk-detail-text"
+        >
+          <p
+            className="fdk-ingress mb-0"
+          >
+            <a
+              className="dataset-contact-url"
+              href="http://testetaten.no/url"
+              rel="noopener noreferrer"
+              target="_blank"
+              title="Contact Avdeling for digitalisering"
+            >
+              Contact
+               
+              Avdeling for digitalisering
+              <i
+                className="fa fa-external-link fdk-fa-right"
+              />
+            </a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="row fdk-row row-eq-height"
+  >
+    <div
+      className="fdk-container-detail col-md-8"
+    >
+      <div
+        className="fdk-detail-icon fdk-detail-icon-oneline"
+      >
+        <i
+          className="fa fa-envelope"
+        />
+      </div>
+      <div
+        className="fdk-detail-text"
+      >
+        <h5>
+          E-mail
+        </h5>
+        <p
+          className="fdk-ingress mb-0"
+        >
+          <a
+            href="mailto:digitalisering@kartverket.no"
+            rel="noopener noreferrer"
+            target="_blank"
+            title="digitalisering@kartverket.no"
+          >
+            digitalisering@kartverket.no
+          </a>
+        </p>
+      </div>
+    </div>
+    <div
+      className="fdk-container-detail col-md-4"
+    >
+      <div
+        className="fdk-detail-icon fdk-detail-icon-oneline"
+      >
+        <i
+          className="fa fa-phone"
+        />
+      </div>
+      <div
+        className="fdk-detail-text"
+      >
+        <h5>
+          Telephone
+        </h5>
+        <p
+          className="fdk-ingress mb-0 text-nowrap"
+        >
+          22306022
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`should render DatasetContactInfo correctly 2`] = `
+<div
+  className="dataset-contactinfo"
+>
+  <div
+    className="row fdk-row"
+  />
+  <div
+    className="row fdk-row row-eq-height"
+  />
+</div>
+`;
+
+exports[`should render DatasetContactInfo correctly with no props 1`] = `
+<div
+  className="dataset-contactinfo"
+>
+  <div
+    className="row fdk-row"
+  />
+  <div
+    className="row fdk-row row-eq-height"
+  />
+</div>
+`;

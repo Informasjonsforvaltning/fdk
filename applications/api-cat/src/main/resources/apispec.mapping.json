@@ -16,37 +16,10 @@
               }
             }
           },
-          "prefLabel": {
-            "properties": {
-              "no": {
-                "type": "text",
-                "fields": {
-                  "keyword": {
-                    "type": "keyword",
-                    "ignore_above": 256
-                  }
-                }
-              }
-            }
-          },
           "orgPath": {
             "type": "text",
             "fielddata": "true",
             "analyzer": "path-analyzer"
-          }
-        }
-      },
-      "title": {
-        "properties": {
-          "no": {
-            "analyzer": "norwegian",
-            "type": "string",
-            "fields": {
-              "raw": {
-                "type": "string",
-                "index": "not_analyzed"
-              }
-            }
           }
         }
       },

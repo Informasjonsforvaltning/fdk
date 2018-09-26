@@ -1,0 +1,132 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render DatasetBegrep correctly 1`] = `
+<section>
+  <div>
+    <div
+      className="fdk-container-detail fdk-container-detail-header"
+    >
+      <i
+        className="fa fa-book fdk-fa-left fdk-color-cta"
+      />
+      Subject
+    </div>
+    <BegrepCollapse
+      definition="alt som er registrert med et organisasjonsnummer "
+      key="https://data-david.github.io/Begrep/begrep/Enhet"
+      note="Alle hovedenheter, underenheter og organisasjonsledd som er identifisert med et organisasjonsnummer."
+      prefLabel="enhet"
+      source="https://jira.brreg.no/browse/BEGREP-208"
+    />
+  </div>
+  <div
+    className="fdk-container-detail fdk-container-detail-begrep mt-5"
+  >
+    <div
+      className="fdk-detail-icon"
+    >
+      <i
+        className="fa fa-search"
+      />
+    </div>
+    <div
+      className="fdk-detail-text"
+    >
+      <h5>
+        Keyword
+      </h5>
+      <p
+        className="fdk-ingress mb-0"
+      >
+        <span
+          className="keyword"
+          key="dataset-begrep-search-0"
+        >
+          Bestemmelse
+        </span>
+        <span
+          className="keyword"
+          key="dataset-begrep-search-1"
+        >
+          , jord
+        </span>
+        <span
+          className="keyword"
+          key="dataset-begrep-search-2"
+        >
+          , regulering
+        </span>
+        <span
+          className="keyword"
+          key="dataset-begrep-search-3"
+        >
+          , statlig bestemmelse
+        </span>
+      </p>
+    </div>
+  </div>
+</section>
+`;
+
+exports[`should render DatasetBegrep correctly with no props 1`] = `<section />`;
+
+exports[`should render DatasetBegrep correctly with no subject definition 1`] = `
+<section>
+  <div>
+    <div
+      className="fdk-container-detail fdk-container-detail-header"
+    >
+      <i
+        className="fa fa-book fdk-fa-left fdk-color-cta"
+      />
+      Subject
+    </div>
+  </div>
+  <div
+    className="fdk-container-detail fdk-container-detail-begrep mt-5"
+  >
+    <div
+      className="fdk-detail-icon"
+    >
+      <i
+        className="fa fa-search"
+      />
+    </div>
+    <div
+      className="fdk-detail-text"
+    >
+      <h5>
+        Keyword
+      </h5>
+      <p
+        className="fdk-ingress mb-0"
+      >
+        <span
+          className="keyword"
+          key="dataset-begrep-search-0"
+        >
+          Bestemmelse
+        </span>
+        <span
+          className="keyword"
+          key="dataset-begrep-search-1"
+        >
+          , jord
+        </span>
+        <span
+          className="keyword"
+          key="dataset-begrep-search-2"
+        >
+          , regulering
+        </span>
+        <span
+          className="keyword"
+          key="dataset-begrep-search-3"
+        >
+          , statlig bestemmelse
+        </span>
+      </p>
+    </div>
+  </div>
+</section>
+`;

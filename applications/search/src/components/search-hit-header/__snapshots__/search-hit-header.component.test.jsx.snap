@@ -8,7 +8,6 @@ exports[`should render SearchHitHeader with harvest dates 1`] = `
     <React.Fragment>
       <h1
         className="mr-3"
-        name="Test tittel"
       >
         Test tittel
       </h1>

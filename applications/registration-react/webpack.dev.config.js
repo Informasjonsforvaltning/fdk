@@ -4,7 +4,6 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
-  mode: 'development',
   devtool: 'cheap-module-eval-source-map',
   context: path.join(__dirname),
   entry: ['@babel/polyfill', './src/index.jsx'],
@@ -64,10 +63,6 @@ module.exports = {
   },
   resolveLoader: {
     modules: [__dirname, 'node_modules']
-  },
-  optimization: {
-    // We no not want to minimize our code.
-    minimize: false
   },
   plugins: [
     new webpack.DefinePlugin({

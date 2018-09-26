@@ -1,15 +1,14 @@
 spring.jackson.default-property-inclusion: non_null
 logging:
   level.: WARN
-  level.no.acat: DEBUG
+  level.no.acat: INFO
   level.org.springframework: WARN
   level.org.springframework.web: WARN
 application:
   referenceDataUrl: http://reference-data:8080
-  searchApiUrl: http://search-api:8080
 elastic:
-  clusterNodes: ${FDK_ES_CLUSTERNODES}
-  clusterName: ${FDK_ES_CLUSTERNAME}
+  clusterNodes: ${FDK_ES_CLUSTERNODES:elasticsearch5:9300}
+  clusterName: ${FDK_ES_CLUSTERNAME:elasticsearch}
 server:
   port: 8080
 management:
@@ -22,7 +21,6 @@ spring:
   profiles: develop, unit-integration
 application:
   referenceDataUrl: http://localhost:8100
-  searchApiUrl: http://localhost:8083
 elastic:
   clusterNodes: localhost:9301
   clusterName: elasticsearch

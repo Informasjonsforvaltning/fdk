@@ -7,9 +7,8 @@
     "test": "test"
   },
   "scripts": {
-    "test": "BROWSER=chromium jest",
-    "test:headless": "jest",
-    "test:in_container": "BROWSER=google-chrome-unstable HOST_SEARCH=http://nginx-search:8080 jest",
+    "test": "jest --config=jest.config.json",
+    "test:smoke_dev": "HOST_SEARCH=http://nginx-search:8080 jest --config=jest.config.json",
     "test:e2e": ""
   },
   "author": "",
@@ -23,9 +22,5 @@
   },
   "dependencies": {
     "delay": "^3.0.0"
-  },
-  "jest":{
-    "testMatch": ["<rootDir>/test/**/*.test.js", "**/?(*.)(test).js?(x)"],
-    "testPathIgnorePatterns": ["/node_modules/", "<rootDir>/test/fixtures/"]
   }
 }

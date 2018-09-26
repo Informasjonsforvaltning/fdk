@@ -4,16 +4,17 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import org.apache.commons.io.IOUtils;
 import org.elasticsearch.action.ActionRequestValidationException;
+import org.elasticsearch.action.DocWriteResponse;
 import org.elasticsearch.action.delete.DeleteResponse;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Client;
-import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.cluster.health.ClusterHealthStatus;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
+import org.elasticsearch.transport.client.PreBuiltTransportClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
@@ -24,6 +25,8 @@ import java.io.InputStream;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -38,16 +41,21 @@ public class Elasticsearch implements AutoCloseable {
 
     private Client client;
 
+
+    public static class ElasticsearchNode {
+        public String host;
+        public int port;
+    }
+
     /**
      * Creates connection to a particular elasticsearch cluster
      *
-     * @param host        IP address or hostname where cluster can be reached
-     * @param port        Port number for connection to cluster. Usually 9300
+     * @param clusterNodes Comma-separated list og <IP address or hostname>:port where cluster can be reached
      * @param clusterName Name of cluster. Default is "elasticsearch"
      */
-    public Elasticsearch(String host, int port, String clusterName) {
-        logger.debug("Attempt to connect to Elasticsearch client: " + host + ":" + port + " cluster: " + clusterName);
-        this.client = returnElasticsearchTransportClient(host, port, clusterName);
+    public Elasticsearch(String clusterNodes, String clusterName) {
+        logger.debug("Attempt to connect to Elasticsearch clients: " + clusterNodes + " cluster: " + clusterName);
+        this.client = returnElasticsearchTransportClient(clusterNodes, clusterName);
         logger.debug("transportclient success ...? " + this.client);
     }
 
@@ -62,39 +70,61 @@ public class Elasticsearch implements AutoCloseable {
     }
 
 
+    public static List<ElasticsearchNode> parseHostsString(final String hosts) {
+        List<ElasticsearchNode> nodes = new ArrayList<>();
+        for (String nodeString : hosts.split(",")) {
+            if (nodeString.trim().isEmpty()) {
+                continue;
+            }
+
+            String[] parts = nodeString.split(":");
+            if (parts.length==0 || parts[0].trim().isEmpty()) {
+                continue;
+            }
+
+            ElasticsearchNode node = new ElasticsearchNode();
+            node.host = parts[0].trim();
+            node.port = (parts.length <= 1) ? 9300 : Integer.parseInt(parts[1].trim());
+
+            nodes.add(node);
+        }
+
+        return nodes;
+    }
+
     /**
      * Creates elasticsearch transport client and returns it to caller
      *
-     * @param host        IP address or hostname where cluster can be reached
-     * @param port        Port number for connection to cluster. Usually 9300
+     * @param clusterNodes Comma-separated list og <IP address or hostname>:port where cluster can be reached
      * @param clusterName Name of cluster. Default is "elasticsearch"
      * @return elasticsearch transport client bound to hostname, port and cluster specified in input parameters
      */
-    public Client returnElasticsearchTransportClient(String host, int port, String clusterName) {
-        Client client = null;
+    public Client returnElasticsearchTransportClient(String clusterNodes, String clusterName) {
+        PreBuiltTransportClient client = null;
         try {
-            logger.debug("Connect to elasticsearch: " + host + " : " + port + " cluster: " + clusterName);
+            logger.debug("Connect to elasticsearch clients: " + clusterNodes + " cluster: " + clusterName);
+            List<ElasticsearchNode> nodes = parseHostsString(clusterNodes);
 
-            InetAddress inetaddress = InetAddress.getByName(host);
-            logger.debug("ES inetddress: " + inetaddress.toString());
-            InetSocketTransportAddress address = new InetSocketTransportAddress(inetaddress, port);
-            logger.debug("ES address: " + address.toString());
             Settings settings = Settings.builder()
                     .put(CLUSTER_NAME, clusterName)
                     .build();
 
-            client = TransportClient.builder().settings(settings).build()
-                    .addTransportAddress(address);
+            client = new PreBuiltTransportClient(settings); //.addTransportAddress(address);
 
-            logger.debug("Client returns! " + address.toString());
+            for (ElasticsearchNode node : nodes) {
+                InetAddress inetaddress = InetAddress.getByName(node.host);
+                logger.debug("ES inetddress: " + inetaddress.toString());
+                InetSocketTransportAddress address = new InetSocketTransportAddress(inetaddress, node.port);
+                logger.debug("ES address: " + address.toString());
 
+                client.addTransportAddress(address);
+            }
         } catch (UnknownHostException e) {
             logger.error(e.toString());
         }
 
         logger.debug("transportclient: " + client);
         return client;
-
     }
 
     /**
@@ -257,7 +287,7 @@ public class Elasticsearch implements AutoCloseable {
      */
     public boolean indexDocument(String index, String type, String id, JsonObject jsonObject) {
         IndexResponse rsp = client.prepareIndex(index, type, id).setSource(jsonObject).execute().actionGet();
-        return rsp.isCreated();
+        return rsp.getResult() == DocWriteResponse.Result.CREATED;
     }
 
 
@@ -272,7 +302,7 @@ public class Elasticsearch implements AutoCloseable {
      */
     public boolean indexDocument(String index, String type, String id, JsonArray jsonArray) {
         IndexResponse rsp = client.prepareIndex(index, type, id).setSource(jsonArray).execute().actionGet();
-        return rsp.isCreated();
+        return rsp.getResult() == DocWriteResponse.Result.CREATED;
     }
 
 
@@ -287,7 +317,7 @@ public class Elasticsearch implements AutoCloseable {
      */
     public boolean indexDocument(String index, String type, String id, String string) {
         IndexResponse rsp = client.prepareIndex(index, type, id).setSource(string).execute().actionGet();
-        return rsp.isCreated();
+        return rsp.getResult() == DocWriteResponse.Result.CREATED;
     }
 
 
@@ -302,7 +332,7 @@ public class Elasticsearch implements AutoCloseable {
      */
     public boolean indexDocument(String index, String type, String id, Map<String, Object> map) {
         IndexResponse rsp = client.prepareIndex(index, type, id).setSource(map).execute().actionGet();
-        return rsp.isCreated();
+        return rsp.getResult() == DocWriteResponse.Result.CREATED;
     }
 
 
@@ -316,7 +346,7 @@ public class Elasticsearch implements AutoCloseable {
      */
     public boolean deleteDocument(String index, String type, String id) {
         DeleteResponse rsp = client.prepareDelete(index, type, id).execute().actionGet();
-        return !rsp.isFound();
+        return rsp.getResult() != DocWriteResponse.Result.DELETED;
     }
 
     /**

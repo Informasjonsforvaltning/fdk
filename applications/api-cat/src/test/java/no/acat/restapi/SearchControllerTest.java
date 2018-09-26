@@ -46,7 +46,7 @@ public class SearchControllerTest {
         when(hit.getSourceAsString()).thenReturn(apiSpecExample);
         when(hit.getId()).thenReturn("http://testtesttset");
 
-        QueryResponse response = spyController.search("","","",new String[]{""},0,0, "", "");
+        QueryResponse response = spyController.search("","","",new String[]{""},0,0);
 
         assertThat(response, notNullValue());
 
