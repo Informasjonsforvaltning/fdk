@@ -2,7 +2,6 @@ package no.dcat.config;
 
 import no.dcat.authorization.AuthorizationService;
 import no.dcat.authorization.AuthorizationServiceException;
-import no.dcat.authorization.EntityNameService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +22,6 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationSu
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler;
 
-import java.net.URL;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -38,32 +36,25 @@ import static no.dcat.config.Roles.ROLE_USER;
 @Profile({"prod-localauth", "docker", "develop", "unit-integration"})
 @EnableWebSecurity
 public class BasicAuthConfig extends WebSecurityConfigurerAdapter {
-    private static final Logger logger = LoggerFactory.getLogger(AuthorizationService.class);
+    private static final Logger logger = LoggerFactory.getLogger(BasicAuthConfig.class);
 
     @Bean
     public AuthenticationSuccessHandler loginSuccessHandler() {
         SimpleUrlAuthenticationSuccessHandler handler = new SimpleUrlAuthenticationSuccessHandler();
         handler.setRedirectStrategy((request, response, url) -> {
-            String referer = request.getHeaders("referer").nextElement();
-            URL url1 = new URL(referer);
-            String port = url1.getPort() != -1 ? ":" + url1.getPort() : "";
-            referer = url1.getProtocol() + "://" + url1.getHost() + port + "/";
+            String referer = Referer.getReferer(request);
             logger.debug("loginSuccessRedirect: {}", referer);
             response.sendRedirect(referer);
         });
         return handler;
     }
 
-
     @Bean
     public LogoutSuccessHandler logoutSuccessHandler() {
 
         SimpleUrlLogoutSuccessHandler handler = new SimpleUrlLogoutSuccessHandler();
         handler.setRedirectStrategy((request, response, url) -> {
-            String referer = request.getHeaders("referer").nextElement();
-            URL url1 = new URL(referer);
-            String port = url1.getPort() != -1 ? ":" + url1.getPort() : "";
-            referer = url1.getProtocol() + "://" + url1.getHost() + port + "/";
+            String referer = Referer.getReferer(request);
             logger.debug("logoutSuccessRedirect: {}", referer);
             response.sendRedirect(referer);
         });
@@ -71,14 +62,10 @@ public class BasicAuthConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Autowired
-    AuthorizationService authorizationService;
+    private AuthorizationService authorizationService;
 
     @Autowired
-    EntityNameService entityNameService;
-
-
-    @Autowired
-    UserDetailsService basicUserDetailsService;
+    private UserDetailsService basicUserDetailsService;
 
     @Bean
     public UserDetailsService getBasicUserDetailsService() {
@@ -97,7 +84,7 @@ public class BasicAuthConfig extends WebSecurityConfigurerAdapter {
             } finally {
                 authorities.add(new SimpleGrantedAuthority(ROLE_USER));
             }
-            return new User(personnummer, "password01", authorities);
+            return User.withDefaultPasswordEncoder().username(personnummer).password("password01").authorities(authorities).build();
         };
     }
 
@@ -105,18 +92,18 @@ public class BasicAuthConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     public void globalUserDetails(AuthenticationManagerBuilder auth) throws Exception {
         auth
-                .userDetailsService(basicUserDetailsService);
+            .userDetailsService(basicUserDetailsService);
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        logger.info("basic-auth-configure...");
 
-
+        // @formatter:off
         http
-                //.httpBasic()
-                //     .and()
-                .csrf().disable()
-                .authorizeRequests()
+            .csrf()
+                .disable()
+            .authorizeRequests()
                 .antMatchers("/*.js").permitAll()
                 .antMatchers("/*.woff2").permitAll()
                 .antMatchers("/*.woff").permitAll()
@@ -129,30 +116,25 @@ public class BasicAuthConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/health").permitAll()
                 .antMatchers(HttpMethod.GET,"/catalogs/**").permitAll()
 
-                .and()
+            .and()
                 .authorizeRequests()
-
-                .anyRequest().authenticated()
-                .and()
+                    .anyRequest().authenticated()
+            .and()
                 .formLogin()
-                // .loginPage("/login")
-                .permitAll()
-                .successHandler(loginSuccessHandler())
-                .failureUrl("/loginerror")
-                .and()
-
+                    .permitAll()
+                    .successHandler(loginSuccessHandler())
+                    .failureUrl("/loginerror")
+            .and()
                 .logout()
-                .logoutUrl("/logout")
-                .logoutSuccessHandler(logoutSuccessHandler())
-                .invalidateHttpSession(true)
-                .deleteCookies("JSESSIONID")
-                .permitAll()
-                .and()
+                    .logoutUrl("/logout")
+                    .logoutSuccessHandler(logoutSuccessHandler())
+                    .invalidateHttpSession(true)
+                    .deleteCookies("JSESSIONID")
+                    .permitAll()
+            .and()
                 .exceptionHandling()
                 .accessDeniedPage("/loginerror");
-
-
+        // @formatter:on
     }
-
 
 }

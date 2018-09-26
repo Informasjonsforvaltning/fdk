@@ -4,7 +4,6 @@ import no.dcat.model.Catalog;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
-import org.springframework.data.querydsl.QueryDslPredicateExecutor;
 
 import java.util.List;
 

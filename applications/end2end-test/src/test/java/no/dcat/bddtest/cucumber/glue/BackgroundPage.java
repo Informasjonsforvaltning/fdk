@@ -29,102 +29,99 @@ import static org.hamcrest.Matchers.is;
  * Glue-code common for all page-tests.
  */
 public class BackgroundPage extends CommonPage {
-    private static Logger logger = LoggerFactory.getLogger(BackgroundPage.class);
-    private final String index = "dcat";
+  private static Logger logger = LoggerFactory.getLogger(BackgroundPage.class);
+  private final String index = "dcat";
 
-    private final String portalHostname = "localhost";
-    private int portalPort = 8080;
+  private final String portalHostname = "localhost";
+  private int portalPort = 8080;
 
-    @Before
-    public void setup() {
-        setupDriver();
-    }
+  @Before
+  public void setup() {
+    setupDriver();
+  }
 
-    @After
-    public void shutdown() {
-        stopDriver();
-    }
+  @After
+  public void shutdown() {
+    stopDriver();
+  }
 
-    @Given("^I start with empty elasticsearch index\\.$")
-    public void cleanElasticSearch() throws Throwable {
-        String hostname = "localhost";
-        int port = 9300;
+  @Given("^I start with empty elasticsearch index\\.$")
+  public void cleanElasticSearch() throws Throwable {
+        String hosts = "localhost:9300";
 
-        new DeleteIndex(hostname, port).deleteIndex(index);
-    }
+        new DeleteIndex(hosts).deleteIndex(index);
+  }
 
 
-    @Given("^I load the \"([^\"]*)\" dataset\\.$")
+  @Given("^I load the \"([^\"]*)\" dataset\\.$")
     public void loadDataset(String filename) throws IOException {
-        deleteAndLoad(filename);
-    }
+    deleteAndLoad(filename);
+  }
 
 
-    @Given("^Elasticsearch is running")
-    public void elasticSearchIsRunning() {
-        RestTemplate restTemplate = new RestTemplate();
+  @Given("^Elasticsearch is running")
+  public void elasticSearchIsRunning() {
+    RestTemplate restTemplate = new RestTemplate();
         String health = restTemplate.getForObject("http://localhost:9200/_cluster/health", String.class);
-        assertThat(health, is(not(nullValue())));
-    }
+    assertThat(health, is(not(nullValue())));
+  }
 
 
-    @Given("^uses dataset (.*).ttl")
+  @Given("^uses dataset (.*).ttl")
     public void setupTestData(String datasett) throws IOException {
 
-        logger.info("setupTestData(datasett: '{}')", datasett);
+    logger.info("setupTestData(datasett: '{}')", datasett);
 
         Callable<Boolean> waitFor = () -> {
-            int total = getThemeCount();
-            logger.info("total: {}", total);
-            return total == 92;
+          int total = getThemeCount();
+          logger.info("total: {}", total);
+          return total == 92;
 
         };
 
-        deleteLoadAndWait(datasett + ".ttl", waitFor);
+    deleteLoadAndWait(datasett + ".ttl", waitFor);
 
-    }
-
-
-    @Given("^Search portal is open in web browser")
-    public void openBrowserToHomepage() {
-        driver.get("http://" + portalHostname + ":" + portalPort + "/");
-    }
+  }
 
 
-    private int getThemeCount() {
-        RestTemplate restTemplate1 = new RestTemplate();
-        try {
+  @Given("^Search portal is open in web browser")
+  public void openBrowserToHomepage() {
+    driver.get("http://" + portalHostname + ":" + portalPort + "/");
+  }
+
+
+  private int getThemeCount() {
+    RestTemplate restTemplate1 = new RestTemplate();
+    try {
             return restTemplate1.getForObject("http://localhost:8083/themecount", ThemeCountSmall.class).getHits().getTotal();
-        } catch (Exception e) {
-            return 0;
-        }
+    } catch (Exception e) {
+      return 0;
     }
+  }
 
 
     private void deleteLoadAndWait(String dataset, Callable<Boolean> waitFor) throws IOException {
-        deleteAndLoad(dataset);
-        await().atMost(30, SECONDS).until(waitFor);
-    }
+    deleteAndLoad(dataset);
+    await().atMost(30, SECONDS).until(waitFor);
+  }
 
 
     private void deleteAndLoad(String datasett) throws IOException {
 
-        String hostname = "localhost";
-        int port = 9300;
+        String hosts = "localhost:9300";
 
-        new DeleteIndex(hostname, port).deleteIndex(index);
+        new DeleteIndex(hosts).deleteIndex(index);
 
+        Loader loader = new Loader(hosts, "elasticsearch", "http://localhost:8100", "user", "password");
 
-        Loader loader = new Loader(hostname, port, "elasticsearch", "http://localhost:8100", "user", "password");
+    waitForHarvesterToComplete();
 
-        waitForHarvesterToComplete();
+    Resource resource = new ClassPathResource(datasett);
 
-        Resource resource = new ClassPathResource(datasett);
+    loader.loadDatasetFromFile(resource.getURL().toString());
+    waitForHarvesterToComplete();
 
-        loader.loadDatasetFromFile(resource.getURL().toString());
-        waitForHarvesterToComplete();
-
-        refreshElasticsearch(hostname, port, "elasticsearch");
-    }
+        refreshElasticsearch(hosts, "elasticsearch");
+  }
 
 }

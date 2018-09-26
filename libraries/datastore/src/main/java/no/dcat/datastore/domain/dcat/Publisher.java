@@ -10,8 +10,6 @@ import java.util.List;
 @ToString(callSuper = true)
 public class Publisher extends no.dcat.shared.Publisher {
 
-    public static String PUBLISHERID_ENHETSREGISTERET_URI = "http://data.brreg.no/enhetsregisteret/enhet/%s";
-
     private String overordnetEnhet;
     private String organisasjonsform;
     private SkosCode naeringskode;

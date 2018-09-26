@@ -11,34 +11,32 @@ import org.slf4j.LoggerFactory;
  * Class for deleting index in Elasticsearch.
  */
 public class DeleteIndex {
-    private final Logger logger = LoggerFactory.getLogger(DeleteIndex.class);
+  private final Logger logger = LoggerFactory.getLogger(DeleteIndex.class);
 
-    private final String hostname;
-    private final String clustername = "elasticsearch";
-    private final int port;
+  private final String clusterNodes;
+  private final String clusterName = "elasticsearch";
 
-    public DeleteIndex(String hostname, int port) {
-        this.hostname = hostname;
-        this.port = port;
+  public DeleteIndex(String clusterNodes) {
+    this.clusterNodes = clusterNodes;
+  }
+
+  public void deleteIndex(String index) {
+    try (Elasticsearch elasticsearch = new Elasticsearch(clusterNodes, clusterName)) {
+      logger.info("Deleting indexing {}", index);
+      deleteIndexInElasticsearch(elasticsearch, index);
+    } catch (Exception e) {
+      logger.error("Exception occurred while deleting index: {}", e.getMessage());
+      throw e;
     }
+  }
 
-    public void deleteIndex(String index) {
-        try (Elasticsearch elasticsearch = new Elasticsearch(hostname, port, clustername)) {
-            logger.info("Deleting indexing {}", index);
-            deleteIndexInElasticsearch(elasticsearch, index);
-        } catch (Exception e) {
-            logger.error("Exception occurred while deleting index: {}", e.getMessage());
-            throw e;
-        }
+  private void deleteIndexInElasticsearch(Elasticsearch elasticsearch, String index) {
+    try {
+      elasticsearch.getClient().admin().indices().delete(new DeleteIndexRequest(index)).actionGet();
+      elasticsearch.getClient().admin().indices().prepareRefresh().get();
+
+    } catch (IndexNotFoundException e) {
+      logger.info("Index not found: {}", index);
     }
-
-    private void deleteIndexInElasticsearch(Elasticsearch elasticsearch, String index) {
-        try {
-            elasticsearch.getClient().admin().indices().delete(new DeleteIndexRequest(index)).actionGet();
-            elasticsearch.getClient().admin().indices().prepareRefresh().get();
-
-        } catch (IndexNotFoundException e) {
-            logger.info("Index not found: {}", index);
-        }
-    }
+  }
 }

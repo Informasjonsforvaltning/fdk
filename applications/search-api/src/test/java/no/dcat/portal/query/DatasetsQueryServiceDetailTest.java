@@ -10,7 +10,6 @@ import org.elasticsearch.client.Client;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
-import org.elasticsearch.search.internal.InternalSearchHit;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -19,9 +18,8 @@ import org.springframework.http.ResponseEntity;
 
 import javax.servlet.http.HttpServletRequestWrapper;
 
-
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Matchers.any;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.doReturn;
 
@@ -39,7 +37,7 @@ public class DatasetsQueryServiceDetailTest {
         sqs = new DatasetsQueryService();
         client = mock(Client.class);
         populateMock();
-        sqs.client = client;
+        sqs.setClient(client);
     }
 
     /**
@@ -94,8 +92,8 @@ public class DatasetsQueryServiceDetailTest {
         String id = "29";
 
         SearchHit[] hits = null;
-        SearchHit hit = mock(InternalSearchHit.class);
-        SearchHit hit2 = mock(InternalSearchHit.class);
+        SearchHit hit = mock(SearchHit.class);
+        SearchHit hit2 = mock(SearchHit.class);
 
 
         SearchHits searchHits = mock(SearchHits.class);
@@ -115,7 +113,7 @@ public class DatasetsQueryServiceDetailTest {
         when(action.actionGet()).thenReturn(response);
 
         SearchRequestBuilder builder = mock(SearchRequestBuilder.class);
-        when(builder.setQuery(any(QueryBuilder.class))).thenReturn(builder);
+        when(builder.setQuery(any())).thenReturn(builder);
         when(builder.execute()).thenReturn(action);
 
         when(client.prepareSearch("dcat")).thenReturn(builder);

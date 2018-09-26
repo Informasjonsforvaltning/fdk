@@ -1,14 +1,18 @@
 package no.dcat.controller;
 
+import no.dcat.datastore.ElasticDockerRule;
 import no.dcat.model.Catalog;
 import no.dcat.model.Dataset;
 import no.dcat.service.CatalogRepository;
 import no.dcat.service.DatasetRepository;
 import no.dcat.shared.testcategories.IntegrationTest;
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -32,12 +36,10 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 @AutoConfigureMockMvc
 @Category(IntegrationTest.class)
 public class RdfCatalogControllerIT {
-
-
+    private static Logger logger = LoggerFactory.getLogger(RdfCatalogControllerIT.class);
 
     @Autowired
     private DatasetRepository datasetRepository;
-
 
     @Autowired
     private RdfCatalogController rdfCatalogController;
@@ -49,10 +51,22 @@ public class RdfCatalogControllerIT {
     @Autowired
     private CatalogRepository catalogRepository;
 
+    @ClassRule
+    public static ElasticDockerRule elasticRule = new ElasticDockerRule();
+
     @Before
     public void before() {
-        catalogRepository.deleteAll();
-        datasetRepository.deleteAll();;
+        try {
+            catalogRepository.deleteAll();
+        } catch (Exception e) {
+            logger.debug("catalogRepository was probably empty");
+        }
+
+        try {
+            datasetRepository.deleteAll();
+        } catch (Exception e) {
+            logger.debug("datasetRepository was probably empty");
+        }
     }
 
     @Test

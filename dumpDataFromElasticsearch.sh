@@ -19,7 +19,7 @@ function startDump {
 
     echo "Starting dump ${DATETIME}"
 
-    indexes="dcat scat register acat"
+    indexes="dcat scat register harvest"
 
     # dump indexes
     for i in ${indexes} ;
