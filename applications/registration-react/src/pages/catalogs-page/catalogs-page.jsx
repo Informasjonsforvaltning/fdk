@@ -3,93 +3,124 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { CardGroup } from 'reactstrap';
 import _ from 'lodash';
+import { FeatureToggle } from 'react-feature-toggles';
 
 import localization from '../../utils/localization';
-import { fetchCatalogsIfNeeded } from '../../actions/index';
-import CatalogItem from './catalogs-item/catalogs-item.component';
+import { FEATURES } from '../../app-protected-route/features';
+import { fetchCatalogsIfNeeded } from '../../redux/modules/catalogs';
+import { fetchDatasetsIfNeeded } from '../../redux/modules/datasets';
+import { Catalog } from './catalogs/catalogs.component';
+import getTranslateText from '../../utils/translateText';
 import './catalogs-page.scss';
 
-export class RegCatalogs extends React.Component {
-  constructor(props) {
-    super(props);
-    const catalogsURL = '/catalogs';
-    this.props.dispatch(fetchCatalogsIfNeeded(catalogsURL));
-  }
+const renderCatalogs = props => {
+  const { catalogItems, datasets, apis, fetchDatasetsIfNeeded } = props;
 
-  _renderCatalogs() {
-    const { catalogItems } = this.props;
-
-    if (_.get(catalogItems, ['_embedded', 'catalogs'])) {
-      return catalogItems._embedded.catalogs.map(item => (
-        <CatalogItem key={item.uri} item={item} />
-      ));
-    }
+  if (!_.get(catalogItems, ['_embedded', 'catalogs'])) {
     return null;
   }
-  render() {
-    const { isFetchingCatalogs, catalogItems } = this.props;
-    return (
-      <div className="container">
-        <div className="row mb-2 mb-md-5">
-          {catalogItems && (
-            <div className="col-12">
-              <div>
-                <h1 className="fdk-text-strong mb-4">
-                  {localization.catalogs.title}
-                </h1>
-              </div>
-              <CardGroup>{this._renderCatalogs()}</CardGroup>
-            </div>
-          )}
-          {!isFetchingCatalogs &&
-            !catalogItems && (
-              <div id="no-catalogs">
-                <h1 className="fdk-text-strong">
-                  {localization.catalogs.missingCatalogs.title}
-                </h1>
-                <div className="mt-2 mb-2">
-                  {localization.catalogs.missingCatalogs.ingress}
-                </div>
-                <div className="fdk-text-size-small">
-                  <strong>
-                    {localization.catalogs.missingCatalogs.accessTitle}
-                  </strong>
-                  <p>{localization.catalogs.missingCatalogs.accessText}</p>
-                  <strong>
-                    {localization.catalogs.missingCatalogs.assignAccessTitle}
-                  </strong>
-                  <p>
-                    {localization.catalogs.missingCatalogs.assignAccessText}
-                  </p>
-                </div>
-              </div>
-            )}
+
+  return _.get(catalogItems, ['_embedded', 'catalogs']).map(item => (
+    <div key={_.get(item, 'id')} className="row mb-2 mb-md-5">
+      <div className="col-12">
+        <div>
+          <h2 className="fdk-text-strong mb-4">
+            {getTranslateText(_.get(item, ['publisher', 'prefLabel'])) ||
+              _.get(item, ['publisher', 'name'], '')}
+          </h2>
         </div>
+        <CardGroup>
+          {datasets && (
+            <Catalog
+              key={`datasets-${item.id}`}
+              catalogId={item.id}
+              type="datasets"
+              fetchItems={fetchDatasetsIfNeeded}
+              items={datasets}
+            />
+          )}
+          <FeatureToggle featureName={FEATURES.API}>
+            {apis && (
+              <Catalog
+                key={`apis-${item.id}`}
+                catalogId={item.id}
+                type="apiSpecs"
+                items={apis}
+              />
+            )}
+          </FeatureToggle>
+        </CardGroup>
       </div>
-    );
-  }
-}
+    </div>
+  ));
+};
+
+export const RegCatalogs = props => {
+  const { isFetching, catalogItems, fetchCatalogsIfNeeded } = props;
+  const catalogsURL = '/catalogs';
+  fetchCatalogsIfNeeded(catalogsURL);
+  return (
+    <div className="container">
+      {catalogItems && renderCatalogs(props)}
+      {!isFetching &&
+        !catalogItems && (
+          <div className="row mb-2 mb-md-5">
+            <div id="no-catalogs">
+              <h1 className="fdk-text-strong">
+                {localization.catalogs.missingCatalogs.title}
+              </h1>
+              <div className="mt-2 mb-2">
+                {localization.catalogs.missingCatalogs.ingress}
+              </div>
+              <div className="fdk-text-size-small">
+                <strong>
+                  {localization.catalogs.missingCatalogs.accessTitle}
+                </strong>
+                <p>{localization.catalogs.missingCatalogs.accessText}</p>
+                <strong>
+                  {localization.catalogs.missingCatalogs.assignAccessTitle}
+                </strong>
+                <p>{localization.catalogs.missingCatalogs.assignAccessText}</p>
+              </div>
+            </div>
+          </div>
+        )}
+    </div>
+  );
+};
 
 RegCatalogs.defaultProps = {
   catalogItems: null,
-  isFetchingCatalogs: false
+  isFetching: false,
+  fetchCatalogsIfNeeded: _.noop
 };
 
 RegCatalogs.propTypes = {
-  dispatch: PropTypes.func.isRequired,
   catalogItems: PropTypes.object,
-  isFetchingCatalogs: PropTypes.bool
+  isFetching: PropTypes.bool,
+  fetchCatalogsIfNeeded: PropTypes.func
 };
 
-function mapStateToProps({ catalogs }) {
-  const { catalogItems, isFetchingCatalogs } = catalogs || {
+function mapStateToProps({ catalogs, datasets, apis }) {
+  const { catalogItems, isFetching } = catalogs || {
     catalogItems: null
   };
 
   return {
     catalogItems,
-    isFetchingCatalogs
+    datasets,
+    apis,
+    isFetching
   };
 }
 
-export default connect(mapStateToProps)(RegCatalogs);
+const mapDispatchToProps = dispatch => ({
+  fetchCatalogsIfNeeded: catalogsURL =>
+    dispatch(fetchCatalogsIfNeeded(catalogsURL)),
+  fetchDatasetsIfNeeded: catalogId => dispatch(fetchDatasetsIfNeeded(catalogId))
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(RegCatalogs);

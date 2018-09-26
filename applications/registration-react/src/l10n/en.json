@@ -313,6 +313,12 @@
       "accessText": "Contact your leader to get access to register dataset.",
       "assignAccessTitle": "Are you assigning access to others?",
       "assignAccessText": "You can grant other users access to edit datasets through Altinn. Read more on how to do this."
+    },
+    "datasets": "Datasettkatalog",
+    "apiSpecs": "API-katalog",
+    "type": {
+      "datasets": "datasett",
+      "apiSpecs": "API-er"
     }
   },
   "loginDialog": {

@@ -1,29 +1,54 @@
+import _ from 'lodash';
 import {
   CATALOGS_REQUEST,
   CATALOGS_SUCCESS,
   CATALOGS_FAILURE
 } from '../../constants/ActionTypes';
+import { fetchActions } from '../fetchActions';
 
-export default function catalogs(
-  state = { isFetchingCatalogs: false, catalogItems: null },
-  action
-) {
+function shouldFetch(metaState) {
+  const threshold = 60 * 1000; // seconds
+  return (
+    !metaState ||
+    (!metaState.isFetching &&
+      (metaState.lastFetch || 0) < Date.now() - threshold)
+  );
+}
+
+export function fetchCatalogsIfNeeded(catalogsURL) {
+  return (dispatch, getState) =>
+    shouldFetch(_.get(getState(), 'catalogs')) &&
+    dispatch(
+      fetchActions(catalogsURL, [
+        CATALOGS_REQUEST,
+        CATALOGS_SUCCESS,
+        CATALOGS_FAILURE
+      ])
+    );
+}
+
+const initialState = { isFetchingCatalogs: false, catalogItems: null };
+
+export default function catalogs(state = initialState, action) {
   switch (action.type) {
     case CATALOGS_REQUEST:
       return {
         ...state,
-        isFetchingCatalogs: true
+        isFetching: true,
+        lastFetch: null
       };
     case CATALOGS_SUCCESS:
       return {
         ...state,
-        isFetchingCatalogs: false,
+        isFetching: false,
+        lastFetch: Date.now(),
         catalogItems: action.payload
       };
     case CATALOGS_FAILURE:
       return {
         ...state,
-        isFetchingCatalogs: false,
+        isFetching: false,
+        lastFetch: null,
         catalogItems: null
       };
     default:

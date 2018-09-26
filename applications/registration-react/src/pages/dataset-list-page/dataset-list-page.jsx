@@ -18,10 +18,10 @@ export class RegDatasetsList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
-    const catalogURL = window.location.pathname; // .substring(6);
-    const catalogId = catalogURL.split('/').pop();
+    const catalogURL = window.location.pathname;
+    const catalogId = catalogURL.split('/')[2];
     this.props.dispatch(fetchHelptextsIfNeeded());
-    this.props.dispatch(fetchCatalogIfNeeded(catalogURL));
+    this.props.dispatch(fetchCatalogIfNeeded(`/catalogs/${catalogId}`));
     this.props.dispatch(fetchDatasetsIfNeeded(catalogId));
   }
 

@@ -113,18 +113,6 @@ export function fetchCatalogIfNeeded(catalogURL) {
     );
 }
 
-export function fetchCatalogsIfNeeded(catalogsURL) {
-  return (dispatch, getState) =>
-    shouldFetchApi(getState().catalogs) &&
-    dispatch(
-      fetchActions(catalogsURL, [
-        actions.CATALOGS_REQUEST,
-        actions.CATALOGS_SUCCESS,
-        actions.CATALOGS_FAILURE
-      ])
-    );
-}
-
 export function fetchOpenLicensesIfNeeded() {
   return (dispatch, getState) =>
     shouldFetchApi(getState().openlicenses) &&
