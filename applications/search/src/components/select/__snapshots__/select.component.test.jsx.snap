@@ -2,10 +2,10 @@
 
 exports[`should render Select correctly with active sort 1`] = `
 <UncontrolledDropdown
-  aria-label="Sorter søkeresultat, Sort by title"
+  aria-label="Sorter søkeresultat, Sort by title A-Z"
   className="ml-auto"
   id="search-result-dropdown-1"
-  title="Sort by title"
+  title="Sort by title A-Z"
 >
   <DropdownToggle
     aria-haspopup={true}
@@ -15,7 +15,7 @@ exports[`should render Select correctly with active sort 1`] = `
   >
     Sort by
      
-    title
+    title A-Z
   </DropdownToggle>
   <DropdownMenu
     className="fdk-dropdownmenu"
@@ -37,7 +37,7 @@ exports[`should render Select correctly with active sort 1`] = `
       tag="button"
       toggle={true}
     >
-      Sort by title
+      Sort by title A-Z
     </DropdownItem>
     <DropdownItem
       key="2"
@@ -53,7 +53,7 @@ exports[`should render Select correctly with active sort 1`] = `
       tag="button"
       toggle={true}
     >
-      Sort by publisher
+      Sort by publisher A-Z
     </DropdownItem>
   </DropdownMenu>
 </UncontrolledDropdown>
@@ -96,7 +96,7 @@ exports[`should render Select correctly with no active sort 1`] = `
       tag="button"
       toggle={true}
     >
-      Sort by title
+      Sort by title A-Z
     </DropdownItem>
     <DropdownItem
       key="2"
@@ -112,7 +112,7 @@ exports[`should render Select correctly with no active sort 1`] = `
       tag="button"
       toggle={true}
     >
-      Sort by publisher
+      Sort by publisher A-Z
     </DropdownItem>
   </DropdownMenu>
 </UncontrolledDropdown>
