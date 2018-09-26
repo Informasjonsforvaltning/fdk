@@ -93,7 +93,7 @@ public abstract class CommonPage extends SpringIntegrationTestConfigE2E {
                 "--webdriver-loglevel=NONE"
         };
     dcap.setCapability(PhantomJSDriverService.PHANTOMJS_CLI_ARGS, phantomArgs);
-        dcap.setCapability(PhantomJSDriverService.PHANTOMJS_EXECUTABLE_PATH_PROPERTY, ".\\phantomjs\\windows\\");
+//        dcap.setCapability(PhantomJSDriverService.PHANTOMJS_EXECUTABLE_PATH_PROPERTY, ".\\phantomjs\\windows\\");
 
     driver = new PhantomJSDriver(dcap);
   }
