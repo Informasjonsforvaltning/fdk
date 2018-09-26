@@ -67,4 +67,7 @@ public class ApiDocument  {
 
     @ApiModelProperty("The url of the API documentation")
     private String apiDocUrl;
+
+    @ApiModelProperty("Transformed version of provenance property that allows sorting on provenance by using simple string sort")
+    private String provenanceSort;
 }
