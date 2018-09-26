@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render Catalog correctly with minimum props 1`] = `
+<CatalogItem
+  itemsCount={0}
+  key="910244132"
+  publisherId="910244132"
+  type="datasets"
+/>
+`;
+
+exports[`should render Catalog correctly with one dataset item 1`] = `
+<CatalogItem
+  itemsCount={1}
+  key="910244132"
+  publisherId="910244132"
+  type="datasets"
+/>
+`;

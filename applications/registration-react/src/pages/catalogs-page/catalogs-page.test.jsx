@@ -19,11 +19,11 @@ beforeEach(() => {
   wrapper = shallow(<RegCatalogs {...defaultProps} />);
 });
 
-test('should render ProtectedRoute correctly', () => {
+test('should render RegCatalogsComponent correctly', () => {
   expect(wrapper).toMatchSnapshot();
 });
 
-test('should render FormAccessRightsSchema correctly', () => {
+test('should render RegCatalogsComponent correctly with catalogItems', () => {
   const testState = {
     catalogs
   };

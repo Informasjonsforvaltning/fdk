@@ -1,0 +1,46 @@
+@import '../../../../../node_modules/designsystemet/fdk-designsystem-bootstrap4/scss/colors.scss';
+@import '../../../../../node_modules/designsystemet/fdk-designsystem-bootstrap4/scss/mixins.scss';
+
+.catalog-item {
+  color: $color-dark-1;
+  text-decoration: none;
+  &:hover, &:focus, &:active {
+
+  }
+}
+
+.catalog-item__body {
+  background-color: $color_white;
+  border-radius: 5px;
+  padding: 2em;
+  word-wrap: break-word;
+  @include fdk-shadow--regular;
+  @include fdk-grow--regular;
+  &:focus, &:active {
+    box-shadow: none;
+    transform: none;
+  }
+}
+
+.catalog-icon {
+  background-repeat: no-repeat;
+  background-position: center 0;
+  background-size: 2.5em;
+  padding-top: 3em;
+}
+
+.catalog-icon--dataset {
+  background-image: url("/static/img/icon-catalog-dataset.svg");
+}
+
+.catalog-icon--api {
+  background-image: url("/static/img/icon-catalog-api.svg");
+}
+
+.catalog-icon--begrep {
+  background-image: url("/static/img/icon-catalog-begrep.svg");
+}
+
+.catalog-icon--protokoll {
+  background-image: url("/static/img/icon-catalog-protokoll.svg");
+}

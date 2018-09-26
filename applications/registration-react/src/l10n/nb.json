@@ -313,6 +313,12 @@
       "accessText": "Kontakt din leder for å få tilgang til å registrere datasett.",
       "assignAccessTitle": "Skal du gi andre tilgang?",
       "assignAccessText": "Du kan gi andre tilgang til å redigere datasett for din virksomhet via Altinn. Les mer om hvordan du gir andre tilgang."
+    },
+    "datasets": "Datasettkatalog",
+    "apiSpecs": "API-katalog",
+    "type": {
+      "datasets": "datasett",
+      "apiSpecs": "API-er"
     }
   },
   "loginDialog": {

@@ -107,10 +107,6 @@ export class RegDataset extends React.Component {
       0,
       datasetURL.lastIndexOf('/')
     );
-    const catalogURL = catalogDatasetsURL.substring(
-      0,
-      catalogDatasetsURL.lastIndexOf('/')
-    );
     return (
       <div className="container">
         <div className="row mb-2 mb-md-5">
@@ -118,7 +114,7 @@ export class RegDataset extends React.Component {
             <i className="fa fa-arrow-left mr-2" />
             <Link
               className="fdk-text-size-small fdk-color1 font-weight-light"
-              to={catalogURL}
+              to={catalogDatasetsURL}
             >
               {localization.datasets.backToCatalog}
             </Link>

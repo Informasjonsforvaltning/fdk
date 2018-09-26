@@ -26,7 +26,7 @@ const routes = (
     <ProtectedRoute exact path="/" component={RegCatalogs} />
     <ProtectedRoute
       exact
-      path="/catalogs/:catalogId"
+      path="/catalogs/:catalogId/datasets"
       component={RegDatasetsList}
     />
     <ProtectedRoute
