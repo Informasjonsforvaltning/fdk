@@ -1,12 +1,14 @@
 package no.dcat.controller;
 
 import com.google.gson.Gson;
+import no.dcat.datastore.ElasticDockerRule;
 import no.dcat.model.Catalog;
 import no.dcat.service.CatalogRepository;
 import no.dcat.shared.admin.DcatSourceDto;
 import no.dcat.shared.testcategories.IntegrationTest;
 import org.apache.commons.codec.binary.Base64;
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
@@ -30,11 +32,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.web.client.RestTemplate;
 
 import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
@@ -60,6 +58,9 @@ public class CatalogControllerIT {
 
     @Autowired
     private CatalogController catalogController;
+
+    @ClassRule
+    public static ElasticDockerRule elasticRule = new ElasticDockerRule();
 
     @Before
     public void before() {
@@ -160,7 +161,7 @@ public class CatalogControllerIT {
                         "      },\n" +
                         "      \"description\" : { },\n" +
                         "      \"publisher\" : {\n" +
-                        "        \"uri\" : \"https://data.brreg.no/enhetsregisteret/enhet/910244132\",\n" +
+                        "        \"uri\" : \"https://data.brreg.no/enhetsregisteret/api/enheter/910244132\",\n" +
                         "        \"name\" : \"RAMSUND OG ROGNAN REVISJON\"\n" +
                         "      }\n" +
                         "    } ]\n" +
@@ -187,7 +188,7 @@ public class CatalogControllerIT {
     public void updateCatalogRunsOK() throws Exception {
         listCatalogToCreateCatalogs();
 
-        Catalog catalog = catalogRepository.findOne("910244132");
+        Catalog catalog = catalogRepository.findById("910244132").get();
 
         // change title
         Map<String, String> title2 = new HashMap<>();
@@ -200,7 +201,7 @@ public class CatalogControllerIT {
                                 .post("/catalogs", catalog)
                                 .content(asJsonString(catalog))
                                 .contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(content().string("{\"id\":\"910244132\",\"uri\":\"http://brreg.no/catalogs/910244132\",\"title\":{\"en\":\"aTest\"},\"description\":{},\"publisher\":{\"uri\":\"https://data.brreg.no/enhetsregisteret/enhet/910244132\",\"id\":\"910244132\",\"name\":\"RAMSUND OG ROGNAN REVISJON\"}}"))
+                .andExpect(content().string("{\"id\":\"910244132\",\"uri\":\"http://brreg.no/catalogs/910244132\",\"title\":{\"en\":\"aTest\"},\"description\":{},\"publisher\":{\"uri\":\"https://data.brreg.no/enhetsregisteret/api/enheter/910244132\",\"id\":\"910244132\",\"name\":\"RAMSUND OG ROGNAN REVISJON\"}}"))
                 .andExpect(status().isOk());
 
     }
@@ -211,7 +212,7 @@ public class CatalogControllerIT {
     public void updateCatalogWithPutRunsOK() throws Exception {
         listCatalogToCreateCatalogs();
 
-        Catalog catalog = catalogRepository.findOne("910244132");
+        Catalog catalog = catalogRepository.findById("910244132").get();
 
         // change title
         Map<String, String> title2 = new HashMap<>();
@@ -224,7 +225,7 @@ public class CatalogControllerIT {
                                 .put("/catalogs/910244132", catalog)
                                 .content(asJsonString(catalog))
                                 .contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(content().string("{\"id\":\"910244132\",\"uri\":\"http://brreg.no/catalogs/910244132\",\"title\":{\"en\":\"aTest\"},\"description\":{},\"publisher\":{\"uri\":\"https://data.brreg.no/enhetsregisteret/enhet/910244132\",\"id\":\"910244132\",\"name\":\"RAMSUND OG ROGNAN REVISJON\"}}"))
+                .andExpect(content().string("{\"id\":\"910244132\",\"uri\":\"http://brreg.no/catalogs/910244132\",\"title\":{\"en\":\"aTest\"},\"description\":{},\"publisher\":{\"uri\":\"https://data.brreg.no/enhetsregisteret/api/enheter/910244132\",\"id\":\"910244132\",\"name\":\"RAMSUND OG ROGNAN REVISJON\"}}"))
                 .andExpect(status().isOk());
 
     }

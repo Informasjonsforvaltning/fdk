@@ -25,11 +25,11 @@ public class Dataset extends no.dcat.shared.Dataset {
     public static final String REGISTRATION_STATUS_PUBLISH = "PUBLISH";
 
     //Can't specify parent if no parent field has been configured
-    @Field(type = FieldType.String, store = true)
+    @Field(type = FieldType.Keyword, store = true)
     private String catalogId;
 
     //Meta information about editiong of the dataset description
-    @Field
+    @Field(type = FieldType.Date, store = true)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern ="yyyy-MM-dd'T'HH:mm:ss.SSSZZ")
     private Date _lastModified;
 

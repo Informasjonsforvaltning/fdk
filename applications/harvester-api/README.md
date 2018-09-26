@@ -32,8 +32,8 @@ The harvester api processes dcat data source (url) which contains a dcat catalog
 
 ## Technologies/frameworks
 * Java
-* Spring Boot v. 1.5.1
-* Elasticsearch v. 2.4.1
+* Spring Boot v. 2.0.4
+* Elasticsearch v. 5.6.9
 * Apache Jena v.3.3.0
 
 ## Architecture

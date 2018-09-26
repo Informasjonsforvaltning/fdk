@@ -60,6 +60,10 @@ public class CatalogController {
     @Value("${saml.sso.context-provider.lb.include-server-port-in-request-url}")
     private boolean includeServerPortInUrl;
 
+    @Value("${application.openDataEnhet}")
+    private String openDataEnhetsregisteret;
+
+
     @Autowired
     public CatalogController(CatalogRepository catalogRepository, SpringSecurityContextBean springSecurityContextBean, EntityNameService entityNameService, HarvesterService harvesterService) {
         this.catalogRepository = catalogRepository;
@@ -82,6 +86,7 @@ public class CatalogController {
                                                             PagedResourcesAssembler assembler) {
 
         Authentication auth = springSecurityContextBean.getAuthentication();
+
         Set<String> validCatalogs = new HashSet<>();
 
         for (GrantedAuthority authority : auth.getAuthorities()) {
@@ -134,7 +139,7 @@ public class CatalogController {
     Publisher getPublisher(Catalog catalog) {
 
         RestTemplate restTemplate = new RestTemplate();
-        String uri = "https://data.brreg.no/enhetsregisteret/enhet/" + catalog.getId() ;
+        String uri = openDataEnhetsregisteret + catalog.getId() ;
         Enhet enhet;
         try {
             enhet = restTemplate.getForObject(uri + ".json", Enhet.class);
@@ -175,8 +180,7 @@ public class CatalogController {
                                              @RequestBody Catalog catalog) {
         logger.info("Modify catalog: " + catalog.toString());
 
-        Catalog existingCatalog = catalogRepository.findOne(id);
-        if (existingCatalog == null) {
+        if (!catalogRepository.findById(id).isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
@@ -209,7 +213,7 @@ public class CatalogController {
             produces = APPLICATION_JSON_UTF8_VALUE)
     public HttpEntity<String> removeCatalog(@PathVariable("id") String id) {
         logger.info("Delete catalog: " + id);
-        catalogRepository.delete(id);
+        catalogRepository.deleteById(id);
 
         //TODO: FDK-1024 slett fra harvester hvis den finnes der. OBS miljøer.
 
@@ -227,12 +231,11 @@ public class CatalogController {
     @RequestMapping(value = "/{id}", method = GET,
             produces = APPLICATION_JSON_UTF8_VALUE)
     public HttpEntity<Catalog> getCatalog(@PathVariable("id") String id) {
-        Catalog catalog = catalogRepository.findOne(id);
-
-        if (catalog == null) {
+        Optional<Catalog> catalogOptional = catalogRepository.findById(id);
+        if (!catalogOptional.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(catalog, OK);
+        return new ResponseEntity<>(catalogOptional.get(), OK);
     }
 
 
@@ -245,8 +248,8 @@ public class CatalogController {
             return null;
         }
 
-        Catalog catalog = catalogRepository.findOne(orgnr);
-        if (catalog == null) {
+        Optional<Catalog> catalogOptional = catalogRepository.findById(orgnr);
+        if (!catalogOptional.isPresent()) {
 
             Catalog newCatalog = new Catalog(orgnr);
 
@@ -261,7 +264,7 @@ public class CatalogController {
 
             return newCatalog;
         }
-        return catalog;
+        return catalogOptional.get();
     }
 
 

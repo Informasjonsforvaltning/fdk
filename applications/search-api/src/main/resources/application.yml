@@ -5,30 +5,25 @@ logging:
   level.org.springframework: ERROR
   level.org.springframework.web: ERROR
 application:
-  elasticsearchHost: elasticsearch
-  elasticsearchPort: 9300
-  clusterName: elasticsearch
   fusekiService: http://fuseki:8080/fuseki
+elastic:
+  clusterNodes: ${FDK_ES_CLUSTERNODES:elasticsearch5:9300}
+  clusterName: ${FDK_ES_CLUSTERNAME:elasticsearch}
 server:
   port: 8080
 management:
-  port: 8181
-
----
-spring:
-  profiles: prod
-application:
-  clusterName: fellesdatakatalog
+  server:
+    port: 8181
 
 ---
 #Utv-miljø lokalt på egen PC
 spring:
   profiles: develop, unit-integration
 application:
-  elasticsearchHost: localhost
-  elasticsearchPort: 9300
-  clusterName: elasticsearch
   fusekiService: http://localhost:3030/fuseki
+elastic:
+  clusterNodes: ${FDK_ES_CLUSTERNODES:elasticsearch5:9300}
+  clusterName: ${FDK_ES_CLUSTERNAME:elasticsearch}
 logging:
   level.: ERROR
   level.no.brreg: INFO
@@ -36,4 +31,5 @@ logging:
 server:
   port: 8093
 management:
-  port: 8993
+  server:
+    port: 8993

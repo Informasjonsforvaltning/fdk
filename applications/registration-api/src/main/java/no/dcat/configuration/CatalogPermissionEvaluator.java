@@ -12,7 +12,6 @@ import java.io.Serializable;
 /**
  * Created by dask on 01.06.2017.
  */
-@Component
 public class CatalogPermissionEvaluator implements PermissionEvaluator {
     private static Logger logger = LoggerFactory.getLogger(CatalogPermissionEvaluator.class);
 

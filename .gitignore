@@ -4,8 +4,6 @@ target/
 logs/
 /phantomjsdriver.log
 /test/*.zip
-/test/elasticsearch-2.4.1/data/
-/test/elasticsearch-2.4.1/logs/
 /test/lib/
 /portal/webapp/phantomjsdriver.log
 **/phantomjsdriver.log
@@ -15,7 +13,6 @@ logs/
 **/node_modules/
 tdb
 catalog-v001.xml
-
 /conf/subjects/
 /conf/idporten/
 /conf/altinn/

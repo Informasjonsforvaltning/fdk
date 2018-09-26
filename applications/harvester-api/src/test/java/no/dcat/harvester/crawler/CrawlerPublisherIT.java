@@ -33,7 +33,7 @@ public class CrawlerPublisherIT {
         Resource r = new ClassPathResource("organizations.ttl");
 
         // Crawler brregAgentConverter should generate organization paths in model
-        Model model = new CrawlerJob(null,null, HarvesterApplication.getBrregCache(), null)
+        Model model = new CrawlerJob(null,null, null)
                 .loadModelAndValidate(r.getURL());
 
         //model.write(System.out, "TURTLE");

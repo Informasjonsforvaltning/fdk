@@ -11,7 +11,7 @@ services:
     expose:
       - "8080"
     depends_on:
-      - elasticsearch
+      - elasticsearch5
 
   api-cat:
     image: dcatno/api-cat:latest
@@ -43,7 +43,7 @@ services:
      - "8080"
     depends_on:
      - fuseki
-     - elasticsearch
+     - elasticsearch5
      - reference-data
 
   harvester:
@@ -51,30 +51,14 @@ services:
     expose:
      - "8080"
     depends_on:
-     - elasticsearch
      - fuseki
      - harvester-api
 
   elasticsearch5:
     image: docker.elastic.co/elasticsearch/elasticsearch:5.6.9
 
-  elasticsearch:
-    image: elasticsearch:2.4.1
-    expose:
-     - "9200"
-     - "9300"
-
   elasticsearch-copy:
     image: dcatno/elasticsearch-copy:latest
-
-  dev-management:
-    image: dcatno/dev-management:latest
-    expose:
-     - "8080"
-    depends_on:
-      - elasticsearch
-      - fuseki
-      - harvester-api
 
   nginx-registration:
     image: dcatno/nginx-registration:latest
@@ -90,7 +74,7 @@ services:
     expose:
      - "8080"
     depends_on:
-      - elasticsearch
+      - elasticsearch5
       - reference-data
       - registration-auth
 

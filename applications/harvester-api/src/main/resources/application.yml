@@ -9,16 +9,19 @@ logging:
 server:
   port: 8080
 management:
-  port: 8181
+  server:
+    port: 8181
 application:
   httpUsername: ${themesHttpUsername:user}
   httpPassword: ${themesHttpPassword:password}
-  crawlerThreadPoolSize: 2
-  elasticSearchHost: ${elasticSearchHost:elasticsearch}
-  elasticSearchPort: 9300
-  elasticSearchCluster: elasticsearch
   referenceDataUrl: ${referenceDataUrl:http://reference-data:8080}
   notificationMailSenderAddress: fdksystembjg@gmail.com
+  openDataEnhet: https://data.brreg.no/enhetsregisteret/api/enheter/
+crawler:
+  threadPoolSize: 2
+elastic:
+  clusterNodes: ${FDK_ES_CLUSTERNODES:elasticsearch5:9300}
+  clusterName: ${FDK_ES_CLUSTERNAME:elasticsearch}
 fuseki:
   dcatServiceUri: ${fusekiDcatServiceUri:http://fuseki:8080/fuseki/dcat}
   adminServiceUri: ${fusekiAdminServiceUri:http://fuseki:8080/fuseki/admin}
@@ -29,7 +32,6 @@ spring:
   mail:
     host: smtprelay.brreg.no
 application:
-  elasticSearchCluster: fellesdatakatalog
   notificationMailSenderAddress: ${emailSenderAddress}
 
 ---
@@ -54,13 +56,17 @@ fuseki:
   dcatServiceUri: http://localhost:3030/fuseki/dcat
   adminServiceUri: http://localhost:3030/fuseki/admin
 application:
-  elasticSearchHost: localhost
   referenceDataUrl: http://localhost:8100
   notificationMailSenderAddress: fdksystembjg@gmail.com
+
+elastic:
+  clusterNodes: localhost:9300
+  clusterName: elasticsearch
 server:
   port: 8081
 management:
-  port: 8991
+  server:
+    port: 8991
 
 ---
 spring:
