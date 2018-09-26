@@ -43,11 +43,6 @@ exports[`should render ProtectedRoute correctly 1`] = `
   className="container"
 >
   <div
-    className="row"
-  >
-    <div />
-  </div>
-  <div
     className="row mb-2 mb-md-5"
   >
     <div

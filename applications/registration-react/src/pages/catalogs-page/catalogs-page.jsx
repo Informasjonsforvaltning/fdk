@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { CardGroup } from 'reactstrap';
+import _ from 'lodash';
 
 import localization from '../../utils/localization';
 import { fetchCatalogsIfNeeded } from '../../actions/index';
@@ -11,7 +12,6 @@ import './catalogs-page.scss';
 export class RegCatalogs extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
     const catalogsURL = '/catalogs';
     this.props.dispatch(fetchCatalogsIfNeeded(catalogsURL));
   }
@@ -19,11 +19,7 @@ export class RegCatalogs extends React.Component {
   _renderCatalogs() {
     const { catalogItems } = this.props;
 
-    if (
-      catalogItems &&
-      catalogItems._embedded &&
-      catalogItems._embedded.catalogs
-    ) {
+    if (_.get(catalogItems, ['_embedded', 'catalogs'])) {
       return catalogItems._embedded.catalogs.map(item => (
         <CatalogItem key={item.uri} item={item} />
       ));
@@ -34,21 +30,17 @@ export class RegCatalogs extends React.Component {
     const { isFetchingCatalogs, catalogItems } = this.props;
     return (
       <div className="container">
-        <div className="row">
-          <div />
-        </div>
         <div className="row mb-2 mb-md-5">
-          {!isFetchingCatalogs &&
-            catalogItems && (
-              <div className="col-12">
-                <div>
-                  <h1 className="fdk-text-strong mb-4">
-                    {localization.catalogs.title}
-                  </h1>
-                </div>
-                <CardGroup>{this._renderCatalogs()}</CardGroup>
+          {catalogItems && (
+            <div className="col-12">
+              <div>
+                <h1 className="fdk-text-strong mb-4">
+                  {localization.catalogs.title}
+                </h1>
               </div>
-            )}
+              <CardGroup>{this._renderCatalogs()}</CardGroup>
+            </div>
+          )}
           {!isFetchingCatalogs &&
             !catalogItems && (
               <div id="no-catalogs">
