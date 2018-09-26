@@ -38,7 +38,7 @@ The search application is available [here](https://fellesdatakatalog.brreg.no). 
 are only available for registered users. 
 Any questions can be sent to [fellesdatakatalog@brreg.no](mailto:fellesdatakatalog@brreg.no).
 
-The [search api](https://fellesdatakatalog.brreg.no/swagger-ui.html) can also be used.
+The [search api](https://github.com/brreg/openAPI/blob/master/specs/fdk.yaml) can also be used.
 
 ## Set up your developement environnement
   1) Clone this repo
