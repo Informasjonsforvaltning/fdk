@@ -21,6 +21,7 @@
     ],
     "no-console": ["error", { "allow": ["warn", "error"] }],
     "import/no-named-as-default": 0,
+    "import/prefer-default-export": 0,
     "no-else-return": 2,
     "no-shadow": 0,
     "no-underscore-dangle": 0,
