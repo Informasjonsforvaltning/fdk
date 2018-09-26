@@ -50,7 +50,7 @@ public class CrawlerValidationIT {
         Resource r = new ClassPathResource("difi-complete-2018-03-08.jsonld");
         DcatSource dcatSource = new DcatSource();
         dcatSource.setUrl("http://testurl");
-        CrawlerJob crawlerJob = new CrawlerJob(dcatSource,null,null, subjectCrawler);
+        CrawlerJob crawlerJob = new CrawlerJob(dcatSource,null, subjectCrawler);
         Model model = crawlerJob.loadModelAndValidate(r.getURL());
 
        // model.write(System.out, "TURTLE");

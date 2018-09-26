@@ -25,8 +25,8 @@ import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.anyObject;
-import static org.mockito.Mockito.anyString;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doReturn;
 
 @Category(UnitTest.class)
@@ -54,7 +54,7 @@ public class ImportControllerTest {
         prefLabel.put("no", "test");
 
         doReturn(prefLabel).when(iController).getLabelForCode(anyString(), anyString());
-        doReturn(new DcatReader(model)).when(iController).getDcatReader(anyObject());
+        doReturn(new DcatReader(model)).when(iController).getDcatReader(any());
 
         List<Dataset> ds = iController.parseDatasets(model);
 
@@ -71,7 +71,7 @@ public class ImportControllerTest {
         prefLabel.put("no", "test");
 
         doReturn(prefLabel).when(iController).getLabelForCode(anyString(), anyString());
-        doReturn(new DcatReader(model)).when(iController).getDcatReader(anyObject());
+        doReturn(new DcatReader(model)).when(iController).getDcatReader(any());
 
         List<Dataset> ds = iController.parseDatasets(model);
 

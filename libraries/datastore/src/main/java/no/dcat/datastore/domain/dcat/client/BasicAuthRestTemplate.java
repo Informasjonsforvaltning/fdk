@@ -40,7 +40,7 @@ public class BasicAuthRestTemplate extends RestTemplate {
         @Override
         public ClientHttpResponse intercept(HttpRequest request, byte[] body, ClientHttpRequestExecution execution) throws IOException {
             byte[] token = Base64.getEncoder().encode((this.username + ":" + this.password).getBytes());
-            request.getHeaders().add("Authorization", "Basic " + new String(token));
+            request.getHeaders().add("Authorization", "Basic " + new String(token, "US-ASCII"));
             return execution.execute(request, body);
         }
 

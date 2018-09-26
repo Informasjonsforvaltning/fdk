@@ -31,7 +31,7 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 
 @ActiveProfiles(value = "unit-integration")
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = RANDOM_PORT)
+@SpringBootTest
 @Category(IntegrationTest.class)
 public class SubjectCrawlerIT {
     private static Logger logger = LoggerFactory.getLogger(SubjectCrawlerIT.class);

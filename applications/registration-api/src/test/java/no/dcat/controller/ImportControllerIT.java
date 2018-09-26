@@ -1,5 +1,6 @@
 package no.dcat.controller;
 
+import no.dcat.datastore.ElasticDockerRule;
 import no.dcat.model.Catalog;
 import no.dcat.model.Dataset;
 import no.dcat.model.exceptions.CatalogNotFoundException;
@@ -10,6 +11,7 @@ import no.dcat.shared.testcategories.IntegrationTest;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.util.FileManager;
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
@@ -63,10 +65,16 @@ public class ImportControllerIT {
     @Autowired
     private CatalogRepository catalogRepository;
 
+    @ClassRule
+    public static ElasticDockerRule elasticRule = new ElasticDockerRule();
+
     @Before
     public void before() {
-        catalogRepository.deleteAll();
-
+        try {
+            catalogRepository.deleteAll();
+        } catch (Exception e) {
+            logger.debug("catalogRepository was probably empty");
+        }
     }
 
     @Test

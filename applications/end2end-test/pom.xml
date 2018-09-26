@@ -17,8 +17,19 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <maven.exec.skip>false</maven.exec.skip>
         <!--end standard properties-->
+        <skipTests>true</skipTests>
+
     </properties>
 
+    <profiles>
+        <profile>
+            <id>end-to-end-test</id>
+            <properties>
+                <skipTests>false</skipTests>
+                <endtoendtest.category>,no.dcat.shared.testcategories.EndToEndTest</endtoendtest.category>
+            </properties>
+        </profile>
+    </profiles>
     <dependencies>
         <dependency>
             <groupId>no.dcat</groupId>
@@ -28,17 +39,17 @@
         <dependency>
             <groupId>no.dcat</groupId>
             <artifactId>datastore</artifactId>
-            <version>1.0.2</version>
+            <version>1.0.3</version>
         </dependency>
         <dependency>
             <groupId>no.dcat</groupId>
             <artifactId>harvester-api</artifactId>
-            <version>1.0.0</version>
+            <version>1.0.1</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
-            <version>1.5.6.RELEASE</version>
+            <version>2.0.4.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -80,10 +91,14 @@
         <dependency>
             <groupId>io.github.bonigarcia</groupId>
             <artifactId>webdrivermanager</artifactId>
-            <version>1.6.0</version>
+            <version>3.0.0</version>
             <scope>test</scope>
         </dependency>
-
+        <dependency>
+            <groupId>com.codeborne</groupId>
+            <artifactId>phantomjsdriver</artifactId>
+            <version>1.4.1</version>
+        </dependency>
 
 
         <dependency>
@@ -102,19 +117,13 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
-            <version>1.5.6.RELEASE</version>
+            <version>2.0.4.RELEASE</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-elasticsearch</artifactId>
-            <version>1.5.6.RELEASE</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.elasticsearch</groupId>
-            <artifactId>elasticsearch</artifactId>
-            <version>2.4.1</version>
+            <version>2.0.4.RELEASE</version>
             <scope>test</scope>
         </dependency>
 
@@ -123,8 +132,24 @@
             <artifactId>guava</artifactId>
             <version>21.0</version>
         </dependency>
+        <dependency>
+            <groupId>no.dcat</groupId>
+            <artifactId>elasticsearch5client</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
 
     </dependencies>
-
-
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.19.1</version>
+                <configuration>
+                    <skipTests>${skipTests}</skipTests>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>

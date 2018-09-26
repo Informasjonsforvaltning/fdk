@@ -12,14 +12,15 @@ application:
   harvesterUsername: ${registrationApi_harvesterUsername:test_admin}
   harvesterPassword: ${registrationApi_harvesterPassword:password}
   harvesterUrl: http://harvester:8080
+  openDataEnhet: ${FDK_ENHETSREGISTERET_URL:https://data.brreg.no/enhetsregisteret/api/enheter/}
 
 spring:
   hateoas:
     use-hal-as-default-json-media-type: false
   data:
     elasticsearch:
-      clusterNodes: elasticsearch:9300
-      clusterName: elasticsearch
+      clusterNodes: ${FDK_ES_CLUSTERNODES:elasticsearch5:9300}
+      clusterName: ${FDK_ES_CLUSTERNAME:elasticsearch}
 saml:
   sso:
     metadata-generator:
@@ -48,14 +49,16 @@ saml:
         scheme: https
         server-name: ${registrationApi_ServerName:localhost}
         server-port: ${registrationApi_ServerPort:8099}
+    logout:
+      default-target-url: /
 
 ---
 spring:
   profiles: prod
   data:
     elasticsearch:
-      clusterNodes: elasticsearch:9300
-      clusterName: fellesdatakatalog
+      clusterNodes: ${FDK_ES_CLUSTERNODES:elasticsearch5:9300}
+      clusterName: ${FDK_ES_CLUSTERNAME:elasticsearch}
 logging:
   level.: ERROR
   level.no.brreg: INFO
@@ -63,16 +66,14 @@ logging:
   level.org.springframework: INFO
   level.org.springframework.web: ERROR
   level.org.opensaml: INFO
-health:
-  config:
-    enabled: false
 application:
   authentication:
     includedOrgforms: ADOS,FKF,FYLK,IKS,KF,KIRK,KOMM,ORGL,SF,STAT,SÆR
     includedOrgnr: 974760673
-  openDataEnhet: https://data.brreg.no/enhetsregisteret/enhet/
+  openDataEnhet: ${FDK_ENHETSREGISTERET_URL:https://data.brreg.no/enhetsregisteret/api/enheter/}
 management:
-  port: 8181
+  server:
+    port: 8181
 server:
   tomcat:
     accesslog:
@@ -84,20 +85,17 @@ spring:
   profiles: st1
   data:
     elasticsearch:
-      clusterNodes: elasticsearch:9300
-      clusterName: fellesdatakatalog
+      clusterNodes: ${FDK_ES_CLUSTERNODES:elasticsearch5:9300}
+      clusterName: ${FDK_ES_CLUSTERNAME:elasticsearch}
 logging:
   level.: ERROR
-  level.no.brreg: INFO
-  level.no.dcat: INFO
-  level.org.springframework: INFO
-  level.org.springframework.web: ERROR
+  level.no.dcat: DEBUG
+  level.org.springframework: WARN
+  level.org.springframework.web: WARN
   level.org.opensaml: INFO
-health:
-  config:
-    enabled: false
 management:
-  port: 8181
+  server:
+    port: 8181
 server:
   tomcat:
     accesslog:
@@ -109,8 +107,8 @@ spring:
   profiles: prod-localauth
   data:
     elasticsearch:
-      clusterNodes: elasticsearch:9300
-      clusterName: fellesdatakatalog
+      clusterNodes: ${FDK_ES_CLUSTERNODES:elasticsearch5:9300}
+      clusterName: ${FDK_ES_CLUSTERNAME:elasticsearch}
 logging:
   level.: ERROR
   level.no.brreg: INFO
@@ -122,7 +120,8 @@ health:
   config:
     enabled: false
 management:
-  port: 8181
+  server:
+    port: 8181
 server:
   tomcat:
     accesslog:
@@ -134,7 +133,8 @@ spring:
   profiles: develop
   data:
     elasticsearch:
-      clusterNodes: localhost:9300
+      clusterNodes: localhost:9399
+      clusterName: elasticsearch
 server:
   port: ${registrationApi_serverPort:8099}
   ssl:
@@ -150,7 +150,7 @@ spring:
   profiles: unit-integration
   data:
     elasticsearch:
-      clusterNodes: localhost:9300
+      clusterNodes: localhost:9399
       clusterName: elasticsearch
       properties:
         http:
@@ -170,13 +170,7 @@ spring:
   profiles: docker
   data:
     elasticsearch:
-      clusterNodes: elasticsearch:9300
-      clusterName: elasticsearch
+      clusterNodes: ${FDK_ES_CLUSTERNODES:elasticsearch5:9300}
+      clusterName: ${FDK_ES_CLUSTERNAME:elasticsearch}
 logging:
   level.no.dcat: DEBUG
-
-
-
-
-
-
