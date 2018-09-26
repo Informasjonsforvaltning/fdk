@@ -131,8 +131,8 @@
   "sort": {
     "by": "Sorter på",
     "relevance": "relevans",
-    "title": "tittel",
-    "publisher": "utgivar",
+    "title": "tittel A-Å",
+    "publisher": "utgivar A-Å",
     "modified": "sist endra"
   },
   "search_hit": {

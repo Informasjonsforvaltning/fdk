@@ -131,8 +131,8 @@
   "sort": {
     "by": "Sort by",
     "relevance": "relevance",
-    "title": "title",
-    "publisher": "publisher",
+    "title": "title A-Z",
+    "publisher": "publisher A-Z",
     "modified": "modified"
   },
   "search_hit": {
