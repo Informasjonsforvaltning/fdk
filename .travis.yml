@@ -36,8 +36,8 @@ jobs:
         - comment=Build all applications
 
     - stage: Tests # Run unit and integration tests + generate test coverage report
-#      if: type = pull_request OR ( type = push AND branch = develop )
-      if: type = cron #run only during nightly cron job - time-consuming operation
+      if: type = pull_request OR ( type = push AND branch = develop )
+#      if: type = cron #run only during nightly cron job - time-consuming operation
       script: mvn install -DskipTests -Dmaven.javadoc.skip=true -B && docker-compose up -d  && ./waitForDocker.sh  &&  mvn failsafe:integration-test -DskipDockerBuild -B -P integration-test org.jacoco:jacoco-maven-plugin:report
       after_success:
         - bash <(curl -s https://codecov.io/bash)
@@ -51,8 +51,8 @@ jobs:
         - comment="Run integration tests"
 
     - stage: Tests # Run end-to-end tests + generate test coverage report
-#      if: type = pull_request OR ( type = push AND branch = develop )
-      if: type = cron #run only during nightly cron job - time-consuming operation
+      if: type = pull_request OR ( type = push AND branch = develop )
+#      if: type = cron #run only during nightly cron job - time-consuming operation
       script: mvn install -DskipTests -Dmaven.javadoc.skip=true -B && docker-compose up -d  && ./waitForDocker.sh  &&  mvn verify -DskipDockerBuild -B -pl applications/end2end-test/ -P end-to-end-test org.jacoco:jacoco-maven-plugin:report
       after_success:
         - bash <(curl -s https://codecov.io/bash)
