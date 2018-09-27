@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 
 import localization from '../../../lib/localization';
 import { ShowMore } from '../../../components/show-more/show-more';
-import { PublisherLabel } from '../../../components/publisher-label/publisher-label.component';
 import { HarvestDate } from '../../../components/harvest-date/harvest-date.component';
 import { SearchHitHeader } from '../../../components/search-hit-header/search-hit-header.component';
+import { getTranslateText } from '../../../lib/translateText';
 
 export class DatasetDescription extends React.Component {
   constructor(props) {
@@ -20,22 +20,14 @@ export class DatasetDescription extends React.Component {
     this.setState({ showAll: !this.state.showAll });
   }
 
-  _renderPublisher() {
-    const { publisher } = this.props;
-
-    if (!publisher) {
-      return null;
-    }
-    return (
-      <PublisherLabel
-        label={localization.search_hit.owned}
-        publisherItem={publisher}
-      />
-    );
-  }
-
   render() {
-    const { harvest, title, publisher, themes, provenance } = this.props;
+    const { datasetItem } = this.props;
+    const { harvest, publisher, themes, provenance } = datasetItem || {};
+    let { title, descriptionFormatted, objective } = datasetItem || {};
+    title = getTranslateText(title);
+    descriptionFormatted = getTranslateText(descriptionFormatted);
+    objective = getTranslateText(objective);
+
     return (
       <header>
         <div className="fdk-detail-date mb-5">
@@ -50,18 +42,18 @@ export class DatasetDescription extends React.Component {
           provenance={provenance}
         />
 
-        {this.props.description && (
+        {descriptionFormatted && (
           <ShowMore
             showMoreButtonText={localization.showFullDescription}
-            contentHtml={this.props.descriptionFormatted}
+            contentHtml={descriptionFormatted}
           />
         )}
 
-        {this.props.objective && (
+        {objective && (
           <ShowMore
             showMoreButtonText={localization.showFullObjective}
             label={localization.objective}
-            contentHtml={this.props.objective}
+            contentHtml={objective}
           />
         )}
       </header>
@@ -70,23 +62,9 @@ export class DatasetDescription extends React.Component {
 }
 
 DatasetDescription.defaultProps = {
-  title: '',
-  description: '',
-  descriptionFormatted: null,
-  objective: '',
-  publisher: null,
-  themes: null,
-  harvest: null,
-  provenance: null
+  datasetItem: null
 };
 
 DatasetDescription.propTypes = {
-  title: PropTypes.string,
-  description: PropTypes.string,
-  descriptionFormatted: PropTypes.string,
-  objective: PropTypes.string,
-  publisher: PropTypes.object,
-  themes: PropTypes.array,
-  harvest: PropTypes.object,
-  provenance: PropTypes.object
+  datasetItem: PropTypes.object
 };
