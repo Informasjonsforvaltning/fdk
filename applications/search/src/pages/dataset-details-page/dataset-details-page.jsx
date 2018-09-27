@@ -146,7 +146,11 @@ const renderContactPoint = (uri, organizationName, email, phone) => {
 };
 
 const renderContactPoints = contactPoint => {
-  if (!contactPoint) {
+  if (
+    !contactPoint ||
+    !Array.isArray(contactPoint) ||
+    contactPoint.length === 0
+  ) {
     return null;
   }
 
