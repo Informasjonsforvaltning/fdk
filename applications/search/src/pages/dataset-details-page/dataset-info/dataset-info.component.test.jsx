@@ -1,7 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { DatasetInfo } from './dataset-info.component';
-import datasets from '../../../../test/fixtures/datasets';
 
 test('should render DatasetInfo correctly with no props', () => {
   const minWrapper = shallow(<DatasetInfo />);
@@ -9,32 +8,62 @@ test('should render DatasetInfo correctly with no props', () => {
 });
 
 test('should render DatasetInfo correctly', () => {
-  const { _source } = datasets[0];
   const defaultProps = {
-    issued: _source.issued,
-    accrualPeriodicity: _source.accrualPeriodicity.prefLabel.nb,
-    provenance: _source.provenance.prefLabel.nb,
-    hasCurrentnessAnnotation: _source.hasCurrentnessAnnotation.hasBody.no,
-    spatial: _source.spatial,
-    temporal: _source.temporal,
-    language: _source.language,
-    references: _source.references
-  };
-  const wrapper = shallow(<DatasetInfo {...defaultProps} />);
-  expect(wrapper).toMatchSnapshot();
-});
-
-test('should render DatasetInfo correctly', () => {
-  const { _source } = datasets[1];
-  const defaultProps = {
-    issued: _source.issued,
-    accrualPeriodicity: _source.accrualPeriodicity.prefLabel.nb,
-    provenance: _source.provenance.prefLabel.nb,
-    hasCurrentnessAnnotation: _source.hasCurrentnessAnnotation.hasBody.no,
-    spatial: _source.spatial,
-    temporal: _source.temporal,
-    language: _source.language,
-    references: _source.references
+    temporal: [
+      {
+        startDate: 1483228800000,
+        endDate: 1514764799000
+      }
+    ],
+    spatial: [
+      {
+        uri: 'http://www.geonames.org/3162656/asker.html',
+        prefLabel: {
+          nb: 'Asker'
+        }
+      },
+      {
+        uri: 'http://www.geonames.org/3162212/baerum.html',
+        prefLabel: {
+          nb: 'Bærum'
+        }
+      },
+      {
+        uri: 'http://www.geonames.org/3151404/hurum.html',
+        prefLabel: {
+          nb: 'Hurum'
+        }
+      },
+      {
+        uri: 'http://www.geonames.org/3141104/royken.html',
+        prefLabel: {
+          nb: 'Røyken'
+        }
+      }
+    ],
+    references: [
+      {
+        referenceType: {
+          uri: 'http://www.w3.org/2002/07/hasVersion',
+          code: 'hasVersion',
+          prefLabel: {
+            nb: 'Har versjon'
+          }
+        },
+        source: {
+          uri: 'http://referenced/dataset',
+          title: {
+            nb: 'The first one'
+          },
+          description: {},
+          contactPoint: [],
+          legalBasisForRestriction: [],
+          legalBasisForProcessing: [],
+          legalBasisForAccess: [],
+          registrationStatus: 'DRAFT'
+        }
+      }
+    ]
   };
   const wrapper = shallow(<DatasetInfo {...defaultProps} />);
   expect(wrapper).toMatchSnapshot();

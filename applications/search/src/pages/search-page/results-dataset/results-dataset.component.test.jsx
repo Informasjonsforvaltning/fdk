@@ -1,7 +1,10 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { ResultsDataset } from './results-dataset.component';
-import datasetItems from '../../../../test/fixtures/datasetItems';
+import datasetsResponse from '../__fixtures/datasetsApiResponse.json';
+import { normalizeAggregations } from '../../../api/normalizeAggregations';
+
+const datasetItems = normalizeAggregations(datasetsResponse);
 
 let closeFilterModal;
 let onFilterTheme;
@@ -56,7 +59,7 @@ test('should render ResultsDataset correctly with props', () => {
 
 test('should render ResultsDataset correctly with hits', () => {
   wrapper.setProps({
-    datasetItems: datasetItems[0]
+    datasetItems
   });
   expect(wrapper).toMatchSnapshot();
 });
