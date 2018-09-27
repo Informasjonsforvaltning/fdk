@@ -123,14 +123,8 @@ const renderRestrictions = (spatial, temporal) => {
 };
 
 export const DatasetInfo = props => {
-  const {
-    references,
-    spatial,
-    temporal,
-    referenceTypeItems,
-    referencedItems
-  } = props;
-
+  const { datasetItem, referenceTypeItems, referencedItems } = props;
+  const { references, spatial, temporal } = datasetItem || {};
   return (
     <React.Fragment>
       {renderReferences(references, referencedItems, referenceTypeItems)}
@@ -140,17 +134,13 @@ export const DatasetInfo = props => {
 };
 
 DatasetInfo.defaultProps = {
-  spatial: null,
-  temporal: null,
-  references: null,
+  datasetItem: null,
   referenceTypeItems: null,
   referencedItems: null
 };
 
 DatasetInfo.propTypes = {
-  spatial: PropTypes.array,
-  temporal: PropTypes.array,
-  references: PropTypes.array,
+  datasetItem: PropTypes.object,
   referenceTypeItems: PropTypes.array,
   referencedItems: PropTypes.array
 };
