@@ -18,26 +18,6 @@ import { LinkExternal } from '../../components/link-external/link-external.compo
 import { DistributionHeading } from './distribution-heading/distribution-heading.component';
 import { StickyMenu } from '../../components/sticky-menu/sticky-menu.component';
 
-const renderDatasetDescription = datasetItem => {
-  if (!datasetItem) {
-    return null;
-  }
-  return (
-    <DatasetDescription
-      title={getTranslateText(_.get(datasetItem, 'title'))}
-      description={getTranslateText(_.get(datasetItem, 'description'))}
-      descriptionFormatted={getTranslateText(
-        _.get(datasetItem, 'descriptionFormatted')
-      )}
-      objective={getTranslateText(_.get(datasetItem, 'objective'))}
-      publisher={_.get(datasetItem, 'publisher')}
-      themes={_.get(datasetItem, 'theme')}
-      harvest={_.get(datasetItem, 'harvest')}
-      provenance={_.get(datasetItem, 'provenance')}
-    />
-  );
-};
-
 const renderPublished = datasetItem => {
   if (!datasetItem) {
     return null;
@@ -349,7 +329,7 @@ export const DatasetDetailsPage = props => {
           <div className="col-12 col-lg-8">
             <DocumentMeta {...meta} />
 
-            {renderDatasetDescription(datasetItem)}
+            <DatasetDescription datasetItem={datasetItem} />
 
             {renderPublished(datasetItem)}
 
