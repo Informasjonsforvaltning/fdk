@@ -33,11 +33,6 @@ exports[`should render ResultsApi correctly with hits 1`] = `
               "order": "asc",
             },
             Object {
-              "field": "modified",
-              "label": "modified",
-              "order": "desc",
-            },
-            Object {
               "field": "publisher.name",
               "label": "publisher",
               "order": "asc",
@@ -2368,11 +2363,6 @@ exports[`should render ResultsApi correctly with minimum of props and no hits 1`
               "field": "title",
               "label": "title",
               "order": "asc",
-            },
-            Object {
-              "field": "modified",
-              "label": "modified",
-              "order": "desc",
             },
             Object {
               "field": "publisher.name",
