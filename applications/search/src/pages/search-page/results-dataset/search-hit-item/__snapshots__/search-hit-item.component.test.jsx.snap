@@ -122,7 +122,7 @@ exports[`should render SearchHitItem 1`] = `
             code="PUBLIC"
             key="dataset-distribution-format0"
             text="GPX"
-            type={null}
+            type="Nedlastbar fil"
           />
           <DistributionFormat
             code="PUBLIC"

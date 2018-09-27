@@ -8,14 +8,16 @@ import { getTranslateText } from '../../../lib/translateText';
 import { ListRegular } from '../../../components/list-regular/list-regular.component';
 import { TwoColRow } from '../../../components/list-regular/twoColRow/twoColRow';
 import { LinkExternal } from '../../../components/link-external/link-external.component';
-import { getReferenceTypeByUri } from '../../../redux/modules/referenceTypes';
 import './dataset-info.scss';
+import { getReferenceDataByUri } from '../../../redux/modules/referenceData';
+import { REFERENCEDATA_REFERENCETYPES } from '../../../constants/constants';
 
-const renderReferences = (references, referencedItems, referenceTypeItems) => {
+const renderReferences = (references, referencedItems, referenceData) => {
   const children = items =>
     items.map(item => {
-      const referencedType = getReferenceTypeByUri(
-        referenceTypeItems,
+      const referencedType = getReferenceDataByUri(
+        referenceData,
+        REFERENCEDATA_REFERENCETYPES,
         _.get(item, ['referenceType', 'uri'])
       );
 
@@ -123,11 +125,11 @@ const renderRestrictions = (spatial, temporal) => {
 };
 
 export const DatasetInfo = props => {
-  const { datasetItem, referenceTypeItems, referencedItems } = props;
+  const { datasetItem, referenceData, referencedItems } = props;
   const { references, spatial, temporal } = datasetItem || {};
   return (
     <React.Fragment>
-      {renderReferences(references, referencedItems, referenceTypeItems)}
+      {renderReferences(references, referencedItems, referenceData)}
       {renderRestrictions(spatial, temporal)}
     </React.Fragment>
   );
@@ -135,12 +137,12 @@ export const DatasetInfo = props => {
 
 DatasetInfo.defaultProps = {
   datasetItem: null,
-  referenceTypeItems: null,
+  referenceData: null,
   referencedItems: null
 };
 
 DatasetInfo.propTypes = {
   datasetItem: PropTypes.object,
-  referenceTypeItems: PropTypes.array,
+  referenceData: PropTypes.object,
   referencedItems: PropTypes.array
 };

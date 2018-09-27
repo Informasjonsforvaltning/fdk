@@ -561,7 +561,6 @@ exports[`should render DatasetDetailsPage correctly with datasetItem 1`] = `
             conformsTo={null}
             defaultopenCollapse={false}
             description="Nedlastning gjennom Geonorge-portalen ved bruk av handlevognsfunksjonalitet"
-            distributionTypeItems={null}
             format={
               Array [
                 "GPX",
@@ -570,6 +569,7 @@ exports[`should render DatasetDetailsPage correctly with datasetItem 1`] = `
             key="dist-0"
             license={null}
             page={null}
+            referenceData={null}
             type={null}
           />
           <DatasetDistribution
@@ -581,7 +581,6 @@ exports[`should render DatasetDetailsPage correctly with datasetItem 1`] = `
             conformsTo={null}
             defaultopenCollapse={false}
             description="View Service (WFS)"
-            distributionTypeItems={null}
             format={
               Array [
                 "WFS",
@@ -590,6 +589,7 @@ exports[`should render DatasetDetailsPage correctly with datasetItem 1`] = `
             key="dist-1"
             license={null}
             page={null}
+            referenceData={null}
             type={null}
           />
           <DatasetDistribution
@@ -601,7 +601,6 @@ exports[`should render DatasetDetailsPage correctly with datasetItem 1`] = `
             conformsTo={null}
             defaultopenCollapse={false}
             description="Nedlastning gjennom Geonorge-portalen ved bruk av handlevognsfunksjonalitet"
-            distributionTypeItems={null}
             format={
               Array [
                 "GML",
@@ -610,6 +609,7 @@ exports[`should render DatasetDetailsPage correctly with datasetItem 1`] = `
             key="dist-2"
             license={null}
             page={null}
+            referenceData={null}
             type={null}
           />
           <DatasetDistribution
@@ -621,7 +621,6 @@ exports[`should render DatasetDetailsPage correctly with datasetItem 1`] = `
             conformsTo={null}
             defaultopenCollapse={false}
             description="Nedlastning gjennom Geonorge-portalen ved bruk av handlevognsfunksjonalitet"
-            distributionTypeItems={null}
             format={
               Array [
                 "ESRI Filgeodatabase",
@@ -630,6 +629,7 @@ exports[`should render DatasetDetailsPage correctly with datasetItem 1`] = `
             key="dist-3"
             license={null}
             page={null}
+            referenceData={null}
             type={null}
           />
           <DatasetDistribution
@@ -641,7 +641,6 @@ exports[`should render DatasetDetailsPage correctly with datasetItem 1`] = `
             conformsTo={null}
             defaultopenCollapse={false}
             description="View Service (WMS)"
-            distributionTypeItems={null}
             format={
               Array [
                 "WMS",
@@ -650,6 +649,7 @@ exports[`should render DatasetDetailsPage correctly with datasetItem 1`] = `
             key="dist-4"
             license={null}
             page={null}
+            referenceData={null}
             type={null}
           />
           <DatasetDistribution
@@ -661,7 +661,6 @@ exports[`should render DatasetDetailsPage correctly with datasetItem 1`] = `
             conformsTo={null}
             defaultopenCollapse={false}
             description="Nedlastning gjennom Geonorge-portalen ved bruk av handlevognsfunksjonalitet"
-            distributionTypeItems={null}
             format={
               Array [
                 "postgis",
@@ -670,6 +669,7 @@ exports[`should render DatasetDetailsPage correctly with datasetItem 1`] = `
             key="dist-5"
             license={null}
             page={null}
+            referenceData={null}
             type={null}
           />
           <DatasetDistribution
@@ -681,7 +681,6 @@ exports[`should render DatasetDetailsPage correctly with datasetItem 1`] = `
             conformsTo={null}
             defaultopenCollapse={false}
             description="Nedlastning gjennom Geonorge-portalen ved bruk av handlevognsfunksjonalitet"
-            distributionTypeItems={null}
             format={
               Array [
                 "SOSI",
@@ -690,6 +689,7 @@ exports[`should render DatasetDetailsPage correctly with datasetItem 1`] = `
             key="dist-6"
             license={null}
             page={null}
+            referenceData={null}
             type={null}
           />
         </div>
@@ -1131,7 +1131,7 @@ exports[`should render DatasetDetailsPage correctly with datasetItem 1`] = `
               "uri": "https://kartkatalog.geonorge.no/Metadata/uuid/45e9ba77-388c-40eb-87df-e34e9d9ab300",
             }
           }
-          referenceTypeItems={null}
+          referenceData={null}
           referencedItems={null}
         />
         <ListRegular

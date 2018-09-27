@@ -65,7 +65,7 @@ export class SearchPage extends React.Component {
 
     this.props.fetchThemesIfNeeded();
     this.props.fetchPublishersIfNeeded();
-    this.props.fetchDistributionTypeIfNeeded();
+    this.props.fetchReferenceDataIfNeeded();
   }
 
   handleClearSearch() {
@@ -442,7 +442,7 @@ export class SearchPage extends React.Component {
       apiItems,
       themesItems,
       publisherItems,
-      distributionTypeItems,
+      referenceData,
       location
     } = this.props;
     const topSectionClass = cx('top-section-search', 'mb-4', {
@@ -497,7 +497,7 @@ export class SearchPage extends React.Component {
                   hitsPerPage={50}
                   publisherArray={extractPublisherCounts(datasetItems)}
                   publishers={publisherItems}
-                  distributionTypeItems={distributionTypeItems}
+                  referenceData={referenceData}
                   {...props}
                 />
               )}
@@ -528,7 +528,6 @@ export class SearchPage extends React.Component {
                   hitsPerPage={50}
                   publisherArray={extractPublisherCounts(apiItems)}
                   publishers={publisherItems}
-                  distributionTypeItems={distributionTypeItems}
                   {...props}
                 />
               )}

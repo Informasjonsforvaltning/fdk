@@ -17,6 +17,10 @@ import { BoxRegular } from '../../components/box-regular/box-regular.component';
 import { LinkExternal } from '../../components/link-external/link-external.component';
 import { DistributionHeading } from './distribution-heading/distribution-heading.component';
 import { StickyMenu } from '../../components/sticky-menu/sticky-menu.component';
+import {
+  REFERENCEDATA_REFERENCETYPES,
+  REFERENCEDATA_DISTRIBUTIONTYPE
+} from '../../redux/modules/referenceData';
 
 const renderPublished = datasetItem => {
   if (!datasetItem) {
@@ -94,11 +98,7 @@ const renderQuality = datasetItem => {
   );
 };
 
-const renderDatasetInfo = (
-  datasetItem,
-  referencedItems,
-  referenceTypeItems
-) => {
+const renderDatasetInfo = (datasetItem, referencedItems, referenceData) => {
   if (!datasetItem) {
     return null;
   }
@@ -106,7 +106,7 @@ const renderDatasetInfo = (
   return (
     <DatasetInfo
       datasetItem={datasetItem}
-      referenceTypeItems={referenceTypeItems}
+      referenceData={referenceData}
       referencedItems={referencedItems}
     />
   );
@@ -207,12 +207,7 @@ const renderKeywords = keyword => {
   );
 };
 
-const renderDistribution = (
-  heading,
-  distribution,
-  openLicenseItems,
-  distributionTypeItems
-) => {
+const renderDistribution = (heading, distribution, referenceData) => {
   if (!distribution) {
     return null;
   }
@@ -227,8 +222,7 @@ const renderDistribution = (
         conformsTo={item.conformsTo}
         page={item.page}
         type={item.type}
-        openLicenseItems={openLicenseItems}
-        distributionTypeItems={distributionTypeItems}
+        referenceData={referenceData}
         defaultopenCollapse={!!(size === 1)}
       />
     ));
@@ -302,16 +296,10 @@ const renderStickyMenu = datasetItem => {
 };
 
 export const DatasetDetailsPage = props => {
-  props.fetchDistributionTypeIfNeeded();
-  props.fetchReferenceTypesIfNeeded();
+  props.fetchReferenceDataIfNeeded(REFERENCEDATA_REFERENCETYPES);
+  props.fetchReferenceDataIfNeeded(REFERENCEDATA_DISTRIBUTIONTYPE);
 
-  const {
-    datasetItem,
-    referencedItems,
-    referenceTypeItems,
-    openLicenseItems,
-    distributionTypeItems
-  } = props;
+  const { datasetItem, referencedItems, referenceData } = props;
 
   if (!datasetItem) {
     return null;
@@ -342,24 +330,18 @@ export const DatasetDetailsPage = props => {
             {renderDistribution(
               localization.dataset.distributions,
               _.get(datasetItem, 'distribution'),
-              openLicenseItems,
-              distributionTypeItems
+              referenceData
             )}
 
             {renderDistribution(
               localization.dataset.sample,
               _.get(datasetItem, 'sample'),
-              openLicenseItems,
-              distributionTypeItems
+              referenceData
             )}
 
             {renderQuality(datasetItem)}
 
-            {renderDatasetInfo(
-              datasetItem,
-              referencedItems,
-              referenceTypeItems
-            )}
+            {renderDatasetInfo(datasetItem, referencedItems, referenceData)}
 
             {renderSubjects(_.get(datasetItem, 'subject'))}
 
@@ -378,17 +360,13 @@ export const DatasetDetailsPage = props => {
 DatasetDetailsPage.defaultProps = {
   datasetItem: null,
   referencedItems: null,
-  distributionTypeItems: null,
-  referenceTypeItems: null,
-  fetchDistributionTypeIfNeeded: () => {},
-  fetchReferenceTypesIfNeeded: () => {}
+  referenceData: null,
+  fetchReferenceDataIfNeeded: () => {}
 };
 
 DatasetDetailsPage.propTypes = {
   datasetItem: PropTypes.object,
   referencedItems: PropTypes.array,
-  distributionTypeItems: PropTypes.array,
-  referenceTypeItems: PropTypes.array,
-  fetchDistributionTypeIfNeeded: PropTypes.func,
-  fetchReferenceTypesIfNeeded: PropTypes.func
+  referenceData: PropTypes.object,
+  fetchReferenceDataIfNeeded: PropTypes.func
 };

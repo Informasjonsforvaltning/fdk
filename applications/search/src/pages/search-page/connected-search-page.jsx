@@ -1,10 +1,13 @@
 import { connect } from 'react-redux';
-import { fetchDistributionTypeIfNeededAction } from '../../redux/modules/distributionType';
 import { fetchPublishersIfNeededAction } from '../../redux/modules/publishers';
 import { fetchThemesIfNeededAction } from '../../redux/modules/themes';
 import { ResolvedSearchPage } from './resolved-search-page';
+import {
+  fetchReferenceDataIfNeededAction,
+  REFERENCEDATA_DISTRIBUTIONTYPE
+} from '../../redux/modules/referenceData';
 
-const mapStateToProps = ({ themes, publishers, distributionTypes }) => {
+const mapStateToProps = ({ themes, publishers, referenceData }) => {
   const { themesItems, isFetchingThemes } = themes || {
     themesItems: null
   };
@@ -13,24 +16,20 @@ const mapStateToProps = ({ themes, publishers, distributionTypes }) => {
     publisherItems: null
   };
 
-  const { distributionTypeItems } = distributionTypes || {
-    distributionTypeItems: null
-  };
-
   return {
     themesItems,
     isFetchingThemes,
     publisherItems,
     isFetchingPublishers,
-    distributionTypeItems
+    referenceData
   };
 };
 
 const mapDispatchToProps = dispatch => ({
   fetchThemesIfNeeded: () => dispatch(fetchThemesIfNeededAction()),
   fetchPublishersIfNeeded: () => dispatch(fetchPublishersIfNeededAction()),
-  fetchDistributionTypeIfNeeded: () =>
-    dispatch(fetchDistributionTypeIfNeededAction())
+  fetchReferenceDataIfNeeded: () =>
+    dispatch(fetchReferenceDataIfNeededAction(REFERENCEDATA_DISTRIBUTIONTYPE))
 });
 
 export const ConnectedSearchPage = connect(
