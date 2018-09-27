@@ -4,9 +4,12 @@ import PropTypes from 'prop-types';
 
 import {
   fetchHelptextsIfNeeded,
-  fetchCatalogIfNeeded,
-  fetchDatasetsIfNeeded
+  fetchCatalogIfNeeded
 } from '../../actions/index';
+import {
+  fetchDatasetsIfNeeded,
+  getDatasetItemsByCatalogId
+} from '../../redux/modules/datasets';
 import FormCatalog from './form-catalog/connected-form-catalog.component';
 import DatasetItemsList from './items-list/item-list.component';
 import './dataset-list-page.scss';
@@ -16,10 +19,10 @@ export class RegDatasetsList extends React.Component {
     super(props);
     this.state = {};
     const catalogURL = window.location.pathname; // .substring(6);
-    const datasetsURL = `${catalogURL}/datasets?size=1000&page=0`;
+    const catalogId = catalogURL.split('/').pop();
     this.props.dispatch(fetchHelptextsIfNeeded());
     this.props.dispatch(fetchCatalogIfNeeded(catalogURL));
-    this.props.dispatch(fetchDatasetsIfNeeded(datasetsURL));
+    this.props.dispatch(fetchDatasetsIfNeeded(catalogId));
   }
 
   render() {
@@ -27,7 +30,7 @@ export class RegDatasetsList extends React.Component {
       helptextItems,
       isFetchingCatalog,
       catalogItem,
-      datasetItems
+      datasets
     } = this.props;
     return (
       <div className="container">
@@ -42,7 +45,10 @@ export class RegDatasetsList extends React.Component {
                 <FormCatalog helptextItems={helptextItems} />
                 <DatasetItemsList
                   catalogId={catalogItem.id}
-                  datasetItems={datasetItems}
+                  datasetItems={getDatasetItemsByCatalogId(
+                    datasets,
+                    catalogItem.id
+                  )}
                 />
               </div>
             )}
@@ -53,7 +59,7 @@ export class RegDatasetsList extends React.Component {
 }
 
 RegDatasetsList.defaultProps = {
-  datasetItems: null,
+  datasets: null,
   helptextItems: null,
   isFetchingCatalog: false,
   catalogItem: null
@@ -61,7 +67,7 @@ RegDatasetsList.defaultProps = {
 
 RegDatasetsList.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  datasetItems: PropTypes.object,
+  datasets: PropTypes.object,
   helptextItems: PropTypes.object,
   isFetchingCatalog: PropTypes.bool,
   catalogItem: PropTypes.object
@@ -74,14 +80,11 @@ function mapStateToProps({ helptexts, catalog, datasets }) {
   const { catalogItem, isFetchingCatalog } = catalog || {
     catalogItem: null
   };
-  const { datasetItems } = datasets || {
-    datasetItems: null
-  };
   return {
     helptextItems,
     catalogItem,
     isFetchingCatalog,
-    datasetItems
+    datasets
   };
 }
 
