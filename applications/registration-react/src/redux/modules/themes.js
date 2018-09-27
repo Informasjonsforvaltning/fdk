@@ -2,7 +2,7 @@ import {
   THEMES_REQUEST,
   THEMES_SUCCESS,
   THEMES_FAILURE
-} from '../constants/ActionTypes';
+} from '../../constants/ActionTypes';
 
 export default function themes(
   state = { isFetchingThemes: false, themesItems: null },
@@ -18,7 +18,7 @@ export default function themes(
       return {
         ...state,
         isFetchingThemes: false,
-        themesItems: action.response.data
+        themesItems: action.payload
       };
     case THEMES_FAILURE:
       return {

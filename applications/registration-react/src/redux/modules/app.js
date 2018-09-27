@@ -1,4 +1,7 @@
-import { PUBLISHDATASET, DATASET_LAST_SAVED } from '../constants/ActionTypes';
+import {
+  PUBLISHDATASET,
+  DATASET_LAST_SAVED
+} from '../../constants/ActionTypes';
 
 export default function app(
   state = { registrationStatus: null, lastSaved: null },

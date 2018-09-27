@@ -2,7 +2,7 @@ import {
   PROVENANCE_REQUEST,
   PROVENANCE_SUCCESS,
   PROVENANCE_FAILURE
-} from '../constants/ActionTypes';
+} from '../../constants/ActionTypes';
 
 export default function provenance(
   state = { isFetchingProvenance: false, provenanceItems: null },
@@ -16,13 +16,10 @@ export default function provenance(
       };
     }
     case PROVENANCE_SUCCESS: {
-      const objFromArray = action.response.data.reduce(
-        (accumulator, current) => {
-          accumulator[current.code] = current; // eslint-disable-line no-param-reassign
-          return accumulator;
-        },
-        {}
-      );
+      const objFromArray = action.payload.reduce((accumulator, current) => {
+        accumulator[current.code] = current; // eslint-disable-line no-param-reassign
+        return accumulator;
+      }, {});
       return {
         ...state,
         isFetchingProvenance: false,

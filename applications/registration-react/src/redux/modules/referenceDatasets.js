@@ -2,7 +2,7 @@ import {
   REFERENCEDATASETS_REQUEST,
   REFERENCEDATASETS_SUCCESS,
   REFERENCEDATASETS_FAILURE
-} from '../constants/ActionTypes';
+} from '../../constants/ActionTypes';
 
 export default function referenceDatasets(
   state = { isFetchingReferenceDatasets: false, referenceDatasetsItems: null },
@@ -16,7 +16,7 @@ export default function referenceDatasets(
       };
     }
     case REFERENCEDATASETS_SUCCESS: {
-      const referenceDatasetsItems = action.response.data._embedded.datasets.map(
+      const referenceDatasetsItems = action.payload._embedded.datasets.map(
         item => ({
           id: item.id,
           uri: item.uri,

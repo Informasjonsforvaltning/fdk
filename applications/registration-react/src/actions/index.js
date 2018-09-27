@@ -1,14 +1,5 @@
-import { CALL_API } from '../middleware/api';
+import { fetchActions } from '../redux/fetchActions';
 import * as actions from '../constants/ActionTypes';
-
-function fetchApi(url, types) {
-  return {
-    [CALL_API]: {
-      types,
-      url
-    }
-  };
-}
 
 function shouldFetchApi(state) {
   return !state.isFetching;
@@ -18,7 +9,7 @@ export function fetchDatasetIfNeeded(datasetURL) {
   return (dispatch, getState) =>
     shouldFetchApi(getState().dataset) &&
     dispatch(
-      fetchApi(datasetURL, [
+      fetchActions(datasetURL, [
         actions.DATASET_REQUEST,
         actions.DATASET_SUCCESS,
         actions.DATASET_FAILURE
@@ -30,7 +21,7 @@ export function fetchReferenceDatasetsIfNeeded(datasetURL) {
   return (dispatch, getState) =>
     shouldFetchApi(getState().referenceDatasets) &&
     dispatch(
-      fetchApi(datasetURL, [
+      fetchActions(datasetURL, [
         actions.REFERENCEDATASETS_REQUEST,
         actions.REFERENCEDATASETS_SUCCESS,
         actions.REFERENCEDATASETS_FAILURE
@@ -42,7 +33,7 @@ export function fetchHelptextsIfNeeded() {
   return (dispatch, getState) =>
     shouldFetchApi(getState().helptexts) &&
     dispatch(
-      fetchApi('/reference-data/helptexts', [
+      fetchActions('/reference-data/helptexts', [
         actions.HELPTEXTS_REQUEST,
         actions.HELPTEXTS_SUCCESS,
         actions.HELPTEXTS_FAILURE
@@ -54,7 +45,7 @@ export function fetchProvenanceIfNeeded() {
   return (dispatch, getState) =>
     shouldFetchApi(getState().provenance) &&
     dispatch(
-      fetchApi('/reference-data/codes/provenancestatement', [
+      fetchActions('/reference-data/codes/provenancestatement', [
         actions.PROVENANCE_REQUEST,
         actions.PROVENANCE_SUCCESS,
         actions.PROVENANCE_FAILURE
@@ -66,7 +57,7 @@ export function fetchFrequencyIfNeeded() {
   return (dispatch, getState) =>
     shouldFetchApi(getState().frequency) &&
     dispatch(
-      fetchApi('/reference-data/codes/frequency', [
+      fetchActions('/reference-data/codes/frequency', [
         actions.FREQUENCY_REQUEST,
         actions.FREQUENCY_SUCCESS,
         actions.FREQUENCY_FAILURE
@@ -78,7 +69,7 @@ export function fetchThemesIfNeeded() {
   return (dispatch, getState) =>
     shouldFetchApi(getState().themes) &&
     dispatch(
-      fetchApi('/reference-data/themes', [
+      fetchActions('/reference-data/themes', [
         actions.THEMES_REQUEST,
         actions.THEMES_SUCCESS,
         actions.THEMES_FAILURE
@@ -90,7 +81,7 @@ export function fetchUserIfNeeded() {
   return (dispatch, getState) =>
     shouldFetchApi(getState().user) &&
     dispatch(
-      fetchApi('/innloggetBruker', [
+      fetchActions('/innloggetBruker', [
         actions.USER_REQUEST,
         actions.USER_SUCCESS,
         actions.USER_FAILURE
@@ -102,7 +93,7 @@ export function fetchReferenceTypesIfNeeded() {
   return (dispatch, getState) =>
     shouldFetchApi(getState().referenceTypes) &&
     dispatch(
-      fetchApi('/reference-data/codes/referencetypes', [
+      fetchActions('/reference-data/codes/referencetypes', [
         actions.REFERENCETYPES_REQUEST,
         actions.REFERENCETYPES_SUCCESS,
         actions.REFERENCETYPES_FAILURE
@@ -114,7 +105,7 @@ export function fetchCatalogIfNeeded(catalogURL) {
   return (dispatch, getState) =>
     shouldFetchApi(getState().catalog) &&
     dispatch(
-      fetchApi(catalogURL, [
+      fetchActions(catalogURL, [
         actions.CATALOG_REQUEST,
         actions.CATALOG_SUCCESS,
         actions.CATALOG_FAILURE
@@ -126,7 +117,7 @@ export function fetchDatasetsIfNeeded(datasetsURL) {
   return (dispatch, getState) =>
     shouldFetchApi(getState().datasets) &&
     dispatch(
-      fetchApi(datasetsURL, [
+      fetchActions(datasetsURL, [
         actions.DATASETS_REQUEST,
         actions.DATASETS_SUCCESS,
         actions.DATASETS_FAILURE
@@ -138,7 +129,7 @@ export function fetchCatalogsIfNeeded(catalogsURL) {
   return (dispatch, getState) =>
     shouldFetchApi(getState().catalogs) &&
     dispatch(
-      fetchApi(catalogsURL, [
+      fetchActions(catalogsURL, [
         actions.CATALOGS_REQUEST,
         actions.CATALOGS_SUCCESS,
         actions.CATALOGS_FAILURE
@@ -150,7 +141,7 @@ export function fetchOpenLicensesIfNeeded() {
   return (dispatch, getState) =>
     shouldFetchApi(getState().openlicenses) &&
     dispatch(
-      fetchApi('reference-data/codes/openlicenses', [
+      fetchActions('reference-data/codes/openlicenses', [
         actions.OPENLICENSES_REQUEST,
         actions.OPENLICENSES_SUCCESS,
         actions.OPENLICENSES_FAILURE
