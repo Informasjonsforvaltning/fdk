@@ -2,7 +2,7 @@ import {
   FREQUENCY_REQUEST,
   FREQUENCY_SUCCESS,
   FREQUENCY_FAILURE
-} from '../constants/ActionTypes';
+} from '../../constants/ActionTypes';
 
 export default function provenance(
   state = { isFetchingFrequency: false, frequencyItems: null },
@@ -15,7 +15,7 @@ export default function provenance(
         isFetchingFrequency: true
       };
     case FREQUENCY_SUCCESS: {
-      const frequencyItems = action.response.data.map(item => ({
+      const frequencyItems = action.payload.map(item => ({
         uri: item.uri,
         code: item.code,
         prefLabel_no: item.prefLabel.no,

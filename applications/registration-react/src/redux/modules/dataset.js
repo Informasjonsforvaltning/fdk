@@ -2,7 +2,7 @@ import {
   DATASET_REQUEST,
   DATASET_SUCCESS,
   DATASET_FAILURE
-} from '../constants/ActionTypes';
+} from '../../constants/ActionTypes';
 
 export default function dataset(
   state = { isFetching: false, result: null },
@@ -19,7 +19,7 @@ export default function dataset(
       return {
         ...state,
         isFetching: false,
-        result: action.response.data
+        result: action.payload
       };
     }
     case DATASET_FAILURE: {

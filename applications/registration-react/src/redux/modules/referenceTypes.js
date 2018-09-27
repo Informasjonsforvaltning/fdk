@@ -2,7 +2,7 @@ import {
   REFERENCETYPES_REQUEST,
   REFERENCETYPES_SUCCESS,
   REFERENCETYPES_FAILURE
-} from '../constants/ActionTypes';
+} from '../../constants/ActionTypes';
 
 export default function referenceTypes(
   state = { isFetchingReferenceTypes: false, referenceTypesItems: null },
@@ -16,7 +16,7 @@ export default function referenceTypes(
       };
     }
     case REFERENCETYPES_SUCCESS: {
-      const referenceTypesItems = action.response.data.map(item => ({
+      const referenceTypesItems = action.payload.map(item => ({
         uri: item.uri,
         code: item.code,
         prefLabel_no: item.prefLabel.nb,

@@ -2,7 +2,7 @@ import {
   CATALOGS_REQUEST,
   CATALOGS_SUCCESS,
   CATALOGS_FAILURE
-} from '../constants/ActionTypes';
+} from '../../constants/ActionTypes';
 
 export default function catalogs(
   state = { isFetchingCatalogs: false, catalogItems: null },
@@ -18,7 +18,7 @@ export default function catalogs(
       return {
         ...state,
         isFetchingCatalogs: false,
-        catalogItems: action.response.data
+        catalogItems: action.payload
       };
     case CATALOGS_FAILURE:
       return {

@@ -2,7 +2,7 @@ import {
   USER_REQUEST,
   USER_SUCCESS,
   USER_FAILURE
-} from '../constants/ActionTypes';
+} from '../../constants/ActionTypes';
 
 export default function user(
   state = { isFetchingUser: false, userItem: null },
@@ -18,7 +18,7 @@ export default function user(
       return {
         ...state,
         isFetchingUser: false,
-        userItem: action.response.data
+        userItem: action.payload
       };
     case USER_FAILURE:
       return {

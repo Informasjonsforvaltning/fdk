@@ -2,7 +2,7 @@ import {
   OPENLICENSES_REQUEST,
   OPENLICENSES_SUCCESS,
   OPENLICENSES_FAILURE
-} from '../constants/ActionTypes';
+} from '../../constants/ActionTypes';
 
 export default function openlicenses(
   state = { isFetchingOpenLicenses: false, openLicenseItems: null },
@@ -15,7 +15,7 @@ export default function openlicenses(
         isFetchingOpenLicenses: true
       };
     case OPENLICENSES_SUCCESS: {
-      const openLicenseItems = action.response.data.map(item => ({
+      const openLicenseItems = action.payload.map(item => ({
         uri: item.uri,
         code: item.code,
         prefLabel_no: item.prefLabel.no,

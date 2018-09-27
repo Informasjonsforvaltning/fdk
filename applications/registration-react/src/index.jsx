@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-import configureStore from './store/configureStore';
+import { configureStore } from './redux/configureStore';
 import ProtectedRoute from './app-protected-route/app-protected-route.component';
 import RegCatalogs from './pages/catalogs-page/catalogs-page';
 import RegDatasetsList from './pages/dataset-list-page/dataset-list-page';

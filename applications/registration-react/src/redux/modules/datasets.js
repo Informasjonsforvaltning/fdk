@@ -2,7 +2,7 @@ import {
   DATASETS_REQUEST,
   DATASETS_SUCCESS,
   DATASETS_FAILURE
-} from '../constants/ActionTypes';
+} from '../../constants/ActionTypes';
 
 export default function datasets(
   state = { isFetchingDatasets: false, datasetItems: null },
@@ -18,7 +18,7 @@ export default function datasets(
       return {
         ...state,
         isFetchingDatasets: false,
-        datasetItems: action.response.data
+        datasetItems: action.payload
       };
     case DATASETS_FAILURE:
       return {
