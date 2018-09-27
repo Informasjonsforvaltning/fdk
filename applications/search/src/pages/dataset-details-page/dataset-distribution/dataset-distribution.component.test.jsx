@@ -2,7 +2,6 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { DatasetDistribution } from './dataset-distribution.component';
 import dataset from '../__fixtures/datasetApiResponse.json';
-// import openLicenses from '../../fixtures/openLicenses';
 
 test('should render DatasetDistribution correctly with no props', () => {
   const minWrapper = shallow(<DatasetDistribution />);

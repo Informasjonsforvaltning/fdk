@@ -7,11 +7,14 @@ import { Link } from 'react-router-dom';
 import { DistributionFormat } from '../../../../components/distribution-format/distribution-format.component';
 import localization from '../../../../lib/localization';
 import { getTranslateText } from '../../../../lib/translateText';
-import { getDistributionTypeByUri } from '../../../../redux/modules/distributionType';
 import { SearchHitHeader } from '../../../../components/search-hit-header/search-hit-header.component';
 import './search-hit-item.scss';
+import {
+  getReferenceDataByUri,
+  REFERENCEDATA_DISTRIBUTIONTYPE
+} from '../../../../redux/modules/referenceData';
 
-const renderFormats = (source, code, distributionTypeItems) => {
+const renderFormats = (source, code, referenceData) => {
   const { distribution } = source;
 
   const children = (distributions, code) => {
@@ -24,8 +27,9 @@ const renderFormats = (source, code, distributionTypeItems) => {
           type &&
           (type !== 'API' && type !== 'Feed' && type !== 'Nedlastbar fil')
         ) {
-          const distributionType = getDistributionTypeByUri(
-            distributionTypeItems,
+          const distributionType = getReferenceDataByUri(
+            referenceData,
+            REFERENCEDATA_DISTRIBUTIONTYPE,
             type
           );
           if (distributionType !== null && distributionType.length > 0) {
@@ -63,7 +67,7 @@ const renderSample = dataset => {
 };
 
 export const SearchHitItem = props => {
-  const { distributionTypeItems, result } = props;
+  const { referenceData, result } = props;
   const { _source: dataset } = result || {};
   const { id, publisher, theme, provenance, accessRights } = dataset || {};
   let { title, description, objective } = dataset || {};
@@ -139,7 +143,7 @@ export const SearchHitItem = props => {
           </p>
           <div className={distributionClass}>
             <strong>{accessRightsLabel}</strong>
-            {renderFormats(dataset, authorityCode, distributionTypeItems)}
+            {renderFormats(dataset, authorityCode, referenceData)}
             {renderSample(dataset)}
           </div>
         </div>
@@ -150,10 +154,10 @@ export const SearchHitItem = props => {
 
 SearchHitItem.defaultProps = {
   result: null,
-  distributionTypeItems: null
+  referenceData: null
 };
 
 SearchHitItem.propTypes = {
   result: PropTypes.shape({}),
-  distributionTypeItems: PropTypes.array
+  referenceData: PropTypes.object
 };

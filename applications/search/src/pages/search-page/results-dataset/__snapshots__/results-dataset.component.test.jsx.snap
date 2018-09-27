@@ -309,7 +309,7 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
         key="43dbbfe0-ae35-43dd-8411-2e8b1e9f9276"
       >
         <SearchHitItem
-          distributionTypeItems={null}
+          referenceData={null}
           result={
             Object {
               "_id": "43dbbfe0-ae35-43dd-8411-2e8b1e9f9276",
@@ -398,6 +398,7 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
                     "title": Object {
                       "nb": "Geonorge nedlastning",
                     },
+                    "type": "Nedlastbar fil",
                     "uri": "https://kartkatalog.geonorge.no/Metadata/uuid/45e9ba77-388c-40eb-87df-e34e9d9ab300/GPX",
                   },
                   Object {
@@ -751,7 +752,7 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
         key="2f82c1ab-7e7d-4f06-80b9-95750bffb6fd"
       >
         <SearchHitItem
-          distributionTypeItems={null}
+          referenceData={null}
           result={
             Object {
               "_id": "2f82c1ab-7e7d-4f06-80b9-95750bffb6fd",
@@ -1076,7 +1077,7 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
         key="ce318678-1b50-4068-8aa3-18e4c4683f61"
       >
         <SearchHitItem
-          distributionTypeItems={null}
+          referenceData={null}
           result={
             Object {
               "_id": "ce318678-1b50-4068-8aa3-18e4c4683f61",
@@ -1384,7 +1385,7 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
         key="64781991-d2a1-421a-9a20-19bdd5a4d701"
       >
         <SearchHitItem
-          distributionTypeItems={null}
+          referenceData={null}
           result={
             Object {
               "_id": "64781991-d2a1-421a-9a20-19bdd5a4d701",

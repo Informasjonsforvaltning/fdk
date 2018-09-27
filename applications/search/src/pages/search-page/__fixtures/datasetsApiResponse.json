@@ -276,7 +276,8 @@
               "openLicense": false,
               "format": [
                 "GPX"
-              ]
+              ],
+              "type": "Nedlastbar fil"
             },
             {
               "uri": "https://kartkatalog.geonorge.no/Metadata/uuid/bd4c56e8-383f-4048-acd5-86aea32e457c",
