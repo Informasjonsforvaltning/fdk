@@ -125,21 +125,7 @@ const renderDatasetInfo = (
 
   return (
     <DatasetInfo
-      issued={_.get(datasetItem, 'issued')}
-      accrualPeriodicity={getTranslateText(
-        _.get(datasetItem, ['accrualPeriodicity', 'prefLabel'])
-      )}
-      modified={_.get(datasetItem, 'modified')}
-      provenance={getTranslateText(
-        _.get(datasetItem, ['provenance', 'prefLabel'])
-      )}
-      hasCurrentnessAnnotation={getTranslateText(
-        _.get(datasetItem, ['hasCurrentnessAnnotation', 'hasBody'])
-      )}
-      spatial={_.get(datasetItem, 'spatial')}
-      temporal={_.get(datasetItem, 'temporal')}
-      language={_.get(datasetItem, 'language')}
-      references={_.get(datasetItem, 'references')}
+      datasetItem={datasetItem}
       referenceTypeItems={referenceTypeItems}
       referencedItems={referencedItems}
     />
