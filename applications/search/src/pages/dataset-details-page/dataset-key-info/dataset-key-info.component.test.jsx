@@ -1,21 +1,20 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { DatasetKeyInfo } from './dataset-key-info.component';
-import datasets from '../../../../test/fixtures/datasets';
+import dataset from '../__fixtures/datasetApiResponse.json';
 
 let defaultProps;
 let wrapper;
 
 beforeEach(() => {
-  const { _source } = datasets[0];
   defaultProps = {
-    accessRights: _source.accessRights,
-    legalBasisForRestriction: _source.legalBasisForRestriction,
-    legalBasisForProcessing: _source.legalBasisForProcessing,
-    legalBasisForAccess: _source.legalBasisForAccess,
-    type: _source.type,
-    conformsTo: _source.conformsTo,
-    informationModel: _source.informationModel
+    accessRights: dataset.accessRights,
+    legalBasisForRestriction: dataset.legalBasisForRestriction,
+    legalBasisForProcessing: dataset.legalBasisForProcessing,
+    legalBasisForAccess: dataset.legalBasisForAccess,
+    type: dataset.type,
+    conformsTo: dataset.conformsTo,
+    informationModel: dataset.informationModel
   };
   wrapper = shallow(<DatasetKeyInfo {...defaultProps} />);
 });
