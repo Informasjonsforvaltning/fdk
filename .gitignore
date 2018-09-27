@@ -17,11 +17,12 @@ tdb
 catalog-v001.xml
 
 /conf/subjects/
-/conf/idporten/
+/conf/idporten/*
 /conf/altinn/
 /conf/config.sh
 /conf/env.vars
 /conf-secret/
+!/conf/idporten/ssldevelop.p12
 !/conf/dummy-client-SSL-cert.p12
 /conf/environments/
 applications/end2end-test/data/
