@@ -77,8 +77,8 @@ services:
   elasticsearch5:
     restart: always
     ports:
-    - "9201:9200"
-    - "9301:9300"
+    - "9200:9200"
+    - "9300:9300"
     volumes:
     - ./data/esdata5:/usr/share/elasticsearch/data
     environment:

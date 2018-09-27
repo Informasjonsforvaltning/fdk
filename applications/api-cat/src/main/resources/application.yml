@@ -24,7 +24,7 @@ application:
   referenceDataUrl: http://localhost:8100
   searchApiUrl: http://localhost:8083
 elastic:
-  clusterNodes: localhost:9301
+  clusterNodes: localhost:9300
   clusterName: elasticsearch
 server:
   port: 8088
