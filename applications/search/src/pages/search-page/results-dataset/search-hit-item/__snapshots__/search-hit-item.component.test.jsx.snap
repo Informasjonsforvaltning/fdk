@@ -1,12 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`should render SearchHitItem NON_PUBLIC correctly 1`] = `
+exports[`should render SearchHitItem 1`] = `
 <article>
   <Link
     className="fdk-a-search-hit"
     replace={false}
-    title="Dataset: AAMarkagrensen Oslo Kommune og nærliggende kommuner"
-    to="/datasets/3645d5a8-6689-4fc1-8684-d3d6c2d47386"
+    title="Dataset: Markagrensen"
+    to="/datasets/43dbbfe0-ae35-43dd-8411-2e8b1e9f9276"
   >
     <span
       aria-hidden="false"
@@ -19,20 +19,34 @@ exports[`should render SearchHitItem NON_PUBLIC correctly 1`] = `
     >
       <header>
         <SearchHitHeader
-          provenance={
-            Object {
-              "code": "vedtak",
-              "prefLabel": Object {
-                "nb": "Vedtak",
-              },
-              "uri": "http://data.brreg.no/datakatalog/provenance/vedtak",
-            }
-          }
+          provenance={null}
           publisher={
             Object {
-              "id": "987654321",
-              "name": "TESTETATEN",
-              "uri": "http://data.brreg.no/enhetsregisteret/enhet/987654321",
+              "id": "971040238",
+              "naeringskode": Object {
+                "code": "71.123",
+                "prefLabel": Object {
+                  "no": "Kart og oppmåling",
+                },
+                "uri": "http://www.ssb.no/nace/sn2007/71.123",
+              },
+              "name": "STATENS KARTVERK",
+              "orgPath": "/STAT/972417858/971040238",
+              "organisasjonsform": "ORGL",
+              "overordnetEnhet": "972417858",
+              "prefLabel": Object {
+                "no": "Kartverket",
+              },
+              "sektorkode": Object {
+                "code": "1110",
+                "prefLabel": Object {
+                  "no": "Statens forretningsdrift",
+                },
+                "uri": "http://www.brreg.no/sektorkode/1110",
+              },
+              "type": "no.dcat.datastore.domain.dcat.Publisher",
+              "uri": "http://data.brreg.no/enhetsregisteret/enhet/971040238",
+              "valid": true,
             }
           }
           publisherItems={null}
@@ -41,20 +55,48 @@ exports[`should render SearchHitItem NON_PUBLIC correctly 1`] = `
           theme={
             Array [
               Object {
-                "title": Object {
-                  "nb": "Forvaltning og offentlig støtte",
+                "code": "GOVE",
+                "conceptSchema": Object {
+                  "id": "http://publications.europa.eu/resource/authority/data-theme",
+                  "title": Object {
+                    "en": "Dataset types Named Authority List",
+                  },
+                  "versioninfo": "20160921-0",
+                  "versionnumber": "20160921-0",
                 },
-                "uri": "http://publications.europa.eu/resource/authority/data-theme/GOVE",
-              },
-              Object {
+                "id": "http://publications.europa.eu/resource/authority/data-theme/GOVE",
+                "startUse": "2015-10-01",
                 "title": Object {
-                  "nb": "Miljø",
+                  "bg": "Правителство и публичен сектор",
+                  "cs": "Vláda a veřejný sektor",
+                  "da": "Regeringen og den offentlige sektor",
+                  "de": "Regierung und öffentlicher Sektor",
+                  "el": "Κυβέρνηση και δημόσιος τομέας",
+                  "en": "Government and public sector",
+                  "es": "Gobierno y sector público",
+                  "et": "Valitsus ja avalik sektor",
+                  "fi": "Valtioneuvosto ja julkinen sektori",
+                  "fr": "Gouvernement et secteur public",
+                  "ga": "Rialtas agus earnáil phoiblí",
+                  "hr": "Vlada i javni sektor",
+                  "hu": "Kormányzat és közszféra",
+                  "it": "Governo e settore pubblico",
+                  "lt": "Vyriausybė ir viešasis sektorius",
+                  "lv": "Valdība un sabiedriskais sektors",
+                  "mt": "Gvern u settur pubbliku",
+                  "nb": "Forvaltning og offentlig sektor",
+                  "nl": "Overheid en publieke sector",
+                  "pl": "Rząd i sektor publiczny",
+                  "pt": "Governo e setor público",
+                  "ro": "Guvern şi sector public",
+                  "sk": "Vláda a verejný sektor",
+                  "sl": "Vlada in javni sektor",
+                  "sv": "Regeringen och den offentliga sektorn",
                 },
-                "uri": "http://publications.europa.eu/resource/authority/data-theme/ENVI",
               },
             ]
           }
-          title="AAMarkagrensen Oslo Kommune og nærliggende kommuner"
+          title="Markagrensen"
           titleLink={null}
         />
       </header>
@@ -70,262 +112,6 @@ exports[`should render SearchHitItem NON_PUBLIC correctly 1`] = `
         Datasettet avgrenser område for virkeområdet til lov 6. juni 2009 nr. 35 om naturområder i Oslo og nærliggende kommuner (markaloven) som trådte i kraft 1. september 2009. Markalovens virkeområde er fastsatt i forskrift 4...
       </p>
       <div
-        className="fdk-container-distributions fdk-distributions-red"
-      >
-        <strong>
-          Non public
-        </strong>
-        <div />
-        <div
-          id="search-hit-sample"
-        >
-          Sample data are available
-        </div>
-      </div>
-    </div>
-  </Link>
-</article>
-`;
-
-exports[`should render SearchHitItem PUBLIC correctly 1`] = `
-<article>
-  <Link
-    className="fdk-a-search-hit"
-    replace={false}
-    title="Dataset: AAMarkagrensen Oslo Kommune og nærliggende kommuner"
-    to="/datasets/3645d5a8-6689-4fc1-8684-d3d6c2d47386"
-  >
-    <span
-      aria-hidden="false"
-      className="uu-invisible"
-    >
-      Søketreff.
-    </span>
-    <div
-      className="fdk-container-search-hit"
-    >
-      <header>
-        <SearchHitHeader
-          provenance={
-            Object {
-              "code": "vedtak",
-              "prefLabel": Object {
-                "nb": "Vedtak",
-              },
-              "uri": "http://data.brreg.no/datakatalog/provenance/vedtak",
-            }
-          }
-          publisher={null}
-          publisherItems={null}
-          publisherLabel="Owned by"
-          tag="h2"
-          theme={
-            Array [
-              Object {
-                "title": Object {
-                  "nb": "Forvaltning og offentlig støtte",
-                },
-                "uri": "http://publications.europa.eu/resource/authority/data-theme/GOVE",
-              },
-              Object {
-                "title": Object {
-                  "nb": "Miljø",
-                },
-                "uri": "http://publications.europa.eu/resource/authority/data-theme/ENVI",
-              },
-            ]
-          }
-          title="AAMarkagrensen Oslo Kommune og nærliggende kommuner"
-          titleLink={null}
-        />
-      </header>
-      <p
-        className="fdk-p-search-hit"
-      >
-        <span
-          aria-hidden="false"
-          className="uu-invisible"
-        >
-          Beskrivelse av datasettet,
-        </span>
-        Datasettet avgrenser område for virkeområdet til lov 6. juni 2009 nr. 35 om naturområder Datasettes formål er nullam quis rius eget urna mollis ornare vel eu leo. Praesent commo ...
-      </p>
-      <div
-        className="fdk-container-distributions fdk-distributions-green"
-      >
-        <strong>
-          Public
-        </strong>
-      </div>
-    </div>
-  </Link>
-</article>
-`;
-
-exports[`should render SearchHitItem RESTRICTED correctly 1`] = `
-<article>
-  <Link
-    className="fdk-a-search-hit"
-    replace={false}
-    title="Dataset: AAMarkagrensen Oslo Kommune og nærliggende kommuner"
-    to="/datasets/3645d5a8-6689-4fc1-8684-d3d6c2d47386"
-  >
-    <span
-      aria-hidden="false"
-      className="uu-invisible"
-    >
-      Søketreff.
-    </span>
-    <div
-      className="fdk-container-search-hit"
-    >
-      <header>
-        <SearchHitHeader
-          provenance={
-            Object {
-              "code": "vedtak",
-              "prefLabel": Object {
-                "nb": "Vedtak",
-              },
-              "uri": "http://data.brreg.no/datakatalog/provenance/vedtak",
-            }
-          }
-          publisher={
-            Object {
-              "id": "987654321",
-              "name": "TESTETATEN",
-              "uri": "http://data.brreg.no/enhetsregisteret/enhet/987654321",
-            }
-          }
-          publisherItems={null}
-          publisherLabel="Owned by"
-          tag="h2"
-          theme={
-            Array [
-              Object {
-                "title": Object {
-                  "nb": "Forvaltning og offentlig støtte",
-                },
-                "uri": "http://publications.europa.eu/resource/authority/data-theme/GOVE",
-              },
-              Object {
-                "title": Object {
-                  "nb": "Miljø",
-                },
-                "uri": "http://publications.europa.eu/resource/authority/data-theme/ENVI",
-              },
-            ]
-          }
-          title="AAMarkagrensen Oslo Kommune og nærliggende kommuner"
-          titleLink={null}
-        />
-      </header>
-      <p
-        className="fdk-p-search-hit"
-      >
-        <span
-          aria-hidden="false"
-          className="uu-invisible"
-        >
-          Beskrivelse av datasettet,
-        </span>
-        Datasettet avgrenser område for virkeområdet til lov 6. juni 2009 nr. 35 om naturområder i Oslo og nærliggende kommuner (markaloven) som trådte i kraft 1. september 2009. Markalovens virkeområde er fastsatt i forskrift 4...
-      </p>
-      <div
-        className="fdk-container-distributions fdk-distributions-yellow"
-      >
-        <strong>
-          Restricted
-        </strong>
-        <div>
-          <DistributionFormat
-            code="RESTRICTED"
-            key="dataset-distribution-format0"
-            text="application/json"
-            type={null}
-          />
-          <DistributionFormat
-            code="RESTRICTED"
-            key="dataset-distribution-format1"
-            text="xml"
-            type={null}
-          />
-        </div>
-        <div
-          id="search-hit-sample"
-        >
-          Sample data are available
-        </div>
-      </div>
-    </div>
-  </Link>
-</article>
-`;
-
-exports[`should render SearchHitItem with distribution type correctly 1`] = `
-<article>
-  <Link
-    className="fdk-a-search-hit"
-    replace={false}
-    title="Dataset: AAMarkagrensen Oslo Kommune og nærliggende kommuner"
-    to="/datasets/3645d5a8-6689-4fc1-8684-d3d6c2d47386"
-  >
-    <span
-      aria-hidden="false"
-      className="uu-invisible"
-    >
-      Søketreff.
-    </span>
-    <div
-      className="fdk-container-search-hit"
-    >
-      <header>
-        <SearchHitHeader
-          provenance={
-            Object {
-              "code": "vedtak",
-              "prefLabel": Object {
-                "nb": "Vedtak",
-              },
-              "uri": "http://data.brreg.no/datakatalog/provenance/vedtak",
-            }
-          }
-          publisher={null}
-          publisherItems={null}
-          publisherLabel="Owned by"
-          tag="h2"
-          theme={
-            Array [
-              Object {
-                "title": Object {
-                  "nb": "Forvaltning og offentlig støtte",
-                },
-                "uri": "http://publications.europa.eu/resource/authority/data-theme/GOVE",
-              },
-              Object {
-                "title": Object {
-                  "nb": "Miljø",
-                },
-                "uri": "http://publications.europa.eu/resource/authority/data-theme/ENVI",
-              },
-            ]
-          }
-          title="AAMarkagrensen Oslo Kommune og nærliggende kommuner"
-          titleLink={null}
-        />
-      </header>
-      <p
-        className="fdk-p-search-hit"
-      >
-        <span
-          aria-hidden="false"
-          className="uu-invisible"
-        >
-          Beskrivelse av datasettet,
-        </span>
-        Datasettet avgrenser område for virkeområdet til lov 6. juni 2009 nr. 35 om naturområder Datasettes formål er nullam quis rius eget urna mollis ornare vel eu leo. Praesent commo ...
-      </p>
-      <div
         className="fdk-container-distributions fdk-distributions-green"
       >
         <strong>
@@ -335,104 +121,46 @@ exports[`should render SearchHitItem with distribution type correctly 1`] = `
           <DistributionFormat
             code="PUBLIC"
             key="dataset-distribution-format0"
-            text="xml"
-            type="Downloadable file"
-          />
-          <DistributionFormat
-            code="PUBLIC"
-            key="dataset-distribution-format1"
-            text="tekst"
-            type="Downloadable file"
-          />
-          <DistributionFormat
-            code="PUBLIC"
-            key="dataset-distribution-format2"
-            text="json"
-            type="Downloadable file"
+            text="GPX"
+            type={null}
           />
           <DistributionFormat
             code="PUBLIC"
             key="dataset-distribution-format0"
-            text="xml"
+            text="WFS"
             type={null}
           />
           <DistributionFormat
             code="PUBLIC"
-            key="dataset-distribution-format1"
-            text="tekst"
+            key="dataset-distribution-format0"
+            text="GML"
             type={null}
           />
           <DistributionFormat
             code="PUBLIC"
-            key="dataset-distribution-format2"
-            text="json"
+            key="dataset-distribution-format0"
+            text="ESRI Filgeodatabase"
+            type={null}
+          />
+          <DistributionFormat
+            code="PUBLIC"
+            key="dataset-distribution-format0"
+            text="WMS"
+            type={null}
+          />
+          <DistributionFormat
+            code="PUBLIC"
+            key="dataset-distribution-format0"
+            text="postgis"
+            type={null}
+          />
+          <DistributionFormat
+            code="PUBLIC"
+            key="dataset-distribution-format0"
+            text="SOSI"
             type={null}
           />
         </div>
-      </div>
-    </div>
-  </Link>
-</article>
-`;
-
-exports[`should render SearchHitItem with no title, description, accessRights and distribution with no format correctly 1`] = `
-<article>
-  <Link
-    className="fdk-a-search-hit"
-    replace={false}
-    title="Dataset: undefined"
-    to="/datasets/3645d5a8-6689-4fc1-8684-d3d6c2d47386"
-  >
-    <span
-      aria-hidden="false"
-      className="uu-invisible"
-    >
-      Søketreff.
-    </span>
-    <div
-      className="fdk-container-search-hit"
-    >
-      <header>
-        <SearchHitHeader
-          provenance={
-            Object {
-              "code": "vedtak",
-              "prefLabel": Object {
-                "nb": "Vedtak",
-              },
-              "uri": "http://data.brreg.no/datakatalog/provenance/vedtak",
-            }
-          }
-          publisher={
-            Object {
-              "id": "987654321",
-              "name": "TESTETATEN",
-              "uri": "http://data.brreg.no/enhetsregisteret/enhet/987654321",
-            }
-          }
-          publisherItems={null}
-          publisherLabel="Owned by"
-          tag="h2"
-          theme={null}
-          title={null}
-          titleLink={null}
-        />
-      </header>
-      <p
-        className="fdk-p-search-hit"
-      >
-        <span
-          aria-hidden="false"
-          className="uu-invisible"
-        >
-          Beskrivelse av datasettet,
-        </span>
-      </p>
-      <div
-        className=""
-      >
-        <strong />
-        <div />
       </div>
     </div>
   </Link>

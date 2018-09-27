@@ -54,32 +54,22 @@ const renderFormats = (source, code, distributionTypeItems) => {
   return null;
 };
 
-const renderSample = source => {
-  const { sample } = source;
-  if (sample) {
-    if (sample.length > 0) {
-      return <div id="search-hit-sample">{localization.search_hit.sample}</div>;
-    }
+const renderSample = dataset => {
+  const { sample } = dataset;
+  if (Array.isArray(sample) && sample.length > 0) {
+    return <div id="search-hit-sample">{localization.search_hit.sample}</div>;
   }
   return null;
 };
 
 export const SearchHitItem = props => {
-  const { distributionTypeItems } = props;
-  const { _source } = props.result;
-
-  const hitId = encodeURIComponent(_source.id);
-  const { publisher, theme, provenance } = _source;
-  let { title, description, objective } = _source;
-  if (title) {
-    title = getTranslateText(_source.title);
-  }
-  if (description) {
-    description = getTranslateText(_source.description);
-  }
-  if (objective) {
-    objective = getTranslateText(_source.objective);
-  }
+  const { distributionTypeItems, result } = props;
+  const { _source: dataset } = result || {};
+  const { id, publisher, theme, provenance, accessRights } = dataset || {};
+  let { title, description, objective } = dataset || {};
+  title = getTranslateText(title);
+  description = getTranslateText(description);
+  objective = getTranslateText(objective);
 
   if (description && description.length > 220) {
     description = `${description.substr(0, 220)}...`;
@@ -90,27 +80,24 @@ export const SearchHitItem = props => {
       objectiveLength > freeLength ? '...' : ''
     }`;
   }
-  const link = `/datasets/${hitId}`;
+  const link = `/datasets/${id}`;
 
   let accessRightsLabel;
   let distributionNonPublic = false;
   let distributionRestricted = false;
   let distributionPublic = false;
 
-  let authorityCode = '';
-  if (_source.accessRights && _source.accessRights.code) {
-    authorityCode = _source.accessRights.code;
-  }
+  const authorityCode = _.get(accessRights, 'code', '');
 
-  if (_source.accessRights && authorityCode === 'NON_PUBLIC') {
+  if (authorityCode === 'NON_PUBLIC') {
     distributionNonPublic = true;
     accessRightsLabel =
       localization.dataset.accessRights.authorityCode.nonPublic;
-  } else if (_source.accessRights && authorityCode === 'RESTRICTED') {
+  } else if (authorityCode === 'RESTRICTED') {
     distributionRestricted = true;
     accessRightsLabel =
       localization.dataset.accessRights.authorityCode.restricted;
-  } else if (_source.accessRights && authorityCode === 'PUBLIC') {
+  } else if (authorityCode === 'PUBLIC') {
     distributionPublic = true;
     accessRightsLabel = localization.dataset.accessRights.authorityCode.public;
   }
@@ -152,8 +139,8 @@ export const SearchHitItem = props => {
           </p>
           <div className={distributionClass}>
             <strong>{accessRightsLabel}</strong>
-            {renderFormats(_source, authorityCode, distributionTypeItems)}
-            {renderSample(_source)}
+            {renderFormats(dataset, authorityCode, distributionTypeItems)}
+            {renderSample(dataset)}
           </div>
         </div>
       </Link>
