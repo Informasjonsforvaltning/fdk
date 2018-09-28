@@ -4,7 +4,7 @@ import localization from '../../../lib/localization';
 
 export const renderPathMethod = (path, method, methodDeclaration) => (
   <React.Fragment key={`${method}-${path}`}>
-    <div className="row list-regular--item">
+    <div className="d-flex list-regular--item">
       <div className="col-5 pl-0 fdk-text-strong">
         {method.toUpperCase()} {path}
       </div>
@@ -28,7 +28,7 @@ export const renderPaths = paths => {
 const renderLinks = (apiSpecUrl, apiDocUrl) => {
   if (apiSpecUrl || apiDocUrl) {
     return (
-      <div className="row list-regular--item">
+      <div className="d-flex list-regular--item">
         <div className="col-12 pl-0">
           {apiDocUrl && (
             <a href={apiDocUrl} className="mr-5">
@@ -53,7 +53,7 @@ export const ApiEndpoints = props => {
   const { name, paths, apiSpecUrl, apiDocUrl } = props;
   return (
     <section className="mb-5 list-regular" name={name}>
-      <div className="row">
+      <div className="d-flex list-regular--item">
         <div className="col-5 pl-0">
           <h3 className="">{localization.api.endpoints.operation}</h3>
         </div>

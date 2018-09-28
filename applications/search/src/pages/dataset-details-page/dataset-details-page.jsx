@@ -202,7 +202,7 @@ const renderKeywords = keyword => {
   }
   return (
     <ListRegular title={localization.dataset.keyword}>
-      <div className="row list-regular--item">{keywordItems(keyword)}</div>
+      <div className="d-flex list-regular--item">{keywordItems(keyword)}</div>
     </ListRegular>
   );
 };

@@ -160,7 +160,7 @@ export class DatasetDistribution extends React.Component {
     }
 
     return (
-      <div className="row list-regular--item">
+      <div className="d-flex list-regular--item">
         <div className="col-12 pl-0">{children(page)}</div>
       </div>
     );
@@ -174,7 +174,7 @@ export class DatasetDistribution extends React.Component {
         <ListRegular bottomMargin={false}>
           <button className="w-100 p-0" onClick={this.toggle}>
             {format && (
-              <div className="row list-regular--item text-left">
+              <div className="d-flex list-regular--item text-left">
                 <div className="col-4 pl-0">
                   <span>
                     <strong>{localization.dataset.distribution.format}</strong>
@@ -190,7 +190,7 @@ export class DatasetDistribution extends React.Component {
             )}
             {description && (
               <div
-                className={`row list-regular--item text-left mb-2 ${
+                className={`d-flex list-regular--item text-left mb-2 ${
                   !openCollapse ? 'closedCollapse' : ''
                 }`}
               >

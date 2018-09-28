@@ -1139,7 +1139,7 @@ exports[`should render DatasetDetailsPage correctly with datasetItem 1`] = `
           title="Keyword"
         >
           <div
-            className="row list-regular--item"
+            className="d-flex list-regular--item"
           >
             <span
               key="0"

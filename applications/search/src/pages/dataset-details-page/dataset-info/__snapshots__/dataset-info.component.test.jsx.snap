@@ -7,7 +7,7 @@ exports[`should render DatasetInfo correctly 1`] = `
     title="Related datasets"
   >
     <div
-      className="row list-regular--item"
+      className="d-flex list-regular--item"
       key="reference-http://referenced/dataset"
     >
       <div
@@ -30,7 +30,7 @@ exports[`should render DatasetInfo correctly 1`] = `
     title="Restrictions"
   >
     <div
-      className="row list-regular--item"
+      className="d-flex list-regular--item"
     >
       <div
         className="col-4 pl-0 fdk-text-strong"

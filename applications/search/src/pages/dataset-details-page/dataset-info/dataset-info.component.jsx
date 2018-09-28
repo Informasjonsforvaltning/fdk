@@ -32,7 +32,7 @@ const renderReferences = (references, referencedItems, referenceTypeItems) => {
       return (
         <div
           key={`reference-${_.get(item, ['source', 'uri'])}`}
-          className="row list-regular--item"
+          className="d-flex list-regular--item"
         >
           <div className="col-4 pl-0 fdk-text-strong">
             {referencedType && referencedType.length > 0
@@ -75,7 +75,7 @@ const renderSpatial = spatial => {
     ));
 
   return (
-    <div className="row list-regular--item">
+    <div className="d-flex list-regular--item">
       <div className="col-4 pl-0 fdk-text-strong">
         {localization.dataset.spatial}
       </div>

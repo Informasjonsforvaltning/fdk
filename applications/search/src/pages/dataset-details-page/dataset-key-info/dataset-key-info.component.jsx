@@ -37,7 +37,7 @@ const renderAccessRights = accessRight => {
   }
 
   return (
-    <div className="row list-regular--item">
+    <div className="d-flex list-regular--item">
       <div className="col-4 pl-0 fdk-text-strong">
         {localization.accessLevel}
       </div>
@@ -66,7 +66,7 @@ const renderLegalBasis = (title, legalBasis) => {
 
   return (
     <React.Fragment>
-      <div className="row list-regular--item">
+      <div className="d-flex list-regular--item">
         <div className="col-4 pl-0 fdk-text-strong">{title}</div>
         <div className="col-8">{childrenLegalBasis(legalBasis)}</div>
       </div>
@@ -102,7 +102,7 @@ const renderConformsTo = conformsTo => {
 
   return (
     <React.Fragment>
-      <div className="row list-regular--item">
+      <div className="d-flex list-regular--item">
         <div className="col-4 pl-0 fdk-text-strong">
           {localization.dataset.conformsTo}
         </div>
@@ -131,7 +131,7 @@ const renderInformationModel = informationModel => {
 
   return (
     <React.Fragment>
-      <div className="row list-regular--item">
+      <div className="d-flex list-regular--item">
         <div className="col-4 pl-0 fdk-text-strong">
           {localization.dataset.informationModel}
         </div>
@@ -155,7 +155,7 @@ const renderLanguage = language => {
 
   return (
     <React.Fragment>
-      <div className="row list-regular--item">
+      <div className="d-flex list-regular--item">
         <div className="col-4 pl-0 fdk-text-strong">
           {localization.dataset.language}
         </div>
@@ -185,7 +185,7 @@ const renderLandingPage = landingPage => {
   }
 
   return (
-    <div className="row list-regular--item">
+    <div className="d-flex list-regular--item">
       <div className="col-12 pl-0">{children(landingPage)}</div>
     </div>
   );
