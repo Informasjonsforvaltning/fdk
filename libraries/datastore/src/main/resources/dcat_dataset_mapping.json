@@ -1,6 +1,9 @@
 {
   "dataset": {
     "properties": {
+      "uri": {
+        "type": "keyword"
+      },
       "catalog": {
         "properties": {
           "uri": {
