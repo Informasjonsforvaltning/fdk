@@ -6,7 +6,7 @@ exports[`should render api-ApiEndpoints correctly 1`] = `
   name="Test"
 >
   <div
-    className="row"
+    className="d-flex list-regular--item"
   >
     <div
       className="col-5 pl-0"
@@ -31,7 +31,7 @@ exports[`should render api-ApiEndpoints correctly 1`] = `
     key="get-/catalogs"
   >
     <div
-      className="row list-regular--item"
+      className="d-flex list-regular--item"
     >
       <div
         className="col-5 pl-0 fdk-text-strong"
@@ -56,7 +56,7 @@ exports[`should render api-ApiEndpoints correctly with no props 1`] = `
   name={null}
 >
   <div
-    className="row"
+    className="d-flex list-regular--item"
   >
     <div
       className="col-5 pl-0"

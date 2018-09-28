@@ -13,7 +13,7 @@ exports[`should render DatasetDistribution correctly 1`] = `
       onClick={[Function]}
     >
       <div
-        className="row list-regular--item text-left"
+        className="d-flex list-regular--item text-left"
       >
         <div
           className="col-4 pl-0"
@@ -38,7 +38,7 @@ exports[`should render DatasetDistribution correctly 1`] = `
         />
       </div>
       <div
-        className="row list-regular--item text-left mb-2 closedCollapse"
+        className="d-flex list-regular--item text-left mb-2 closedCollapse"
       >
         <div
           className="col-4 pl-0 fdk-text-strong"

@@ -7,7 +7,7 @@ exports[`should render DatasetKeyInfo correctly 1`] = `
     title="Use of dataset"
   >
     <div
-      className="row list-regular--item"
+      className="d-flex list-regular--item"
     >
       <div
         className="col-4 pl-0 fdk-text-strong"
