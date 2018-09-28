@@ -220,7 +220,7 @@ exports[`should render ReportStats correctly 1`] = `
                   replace={false}
                   to="/?firstHarvested=30"
                 >
-                  0
+                  568
                 </Link>
               </strong>
             </CardText>
@@ -256,7 +256,7 @@ exports[`should render ReportStats correctly 1`] = `
                   title="New datasets"
                   to="/?firstHarvested=365"
                 >
-                  0
+                  985
                 </Link>
               </strong>
             </CardText>
