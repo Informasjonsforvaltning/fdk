@@ -12,6 +12,7 @@ exports[`should render Select correctly with active sort 1`] = `
     caret={true}
     className="fdk-button"
     color="primary"
+    title=""
   >
     Sort by
      
@@ -27,6 +28,7 @@ exports[`should render Select correctly with active sort 1`] = `
       key="0"
       onClick={[Function]}
       tag="button"
+      title=""
       toggle={true}
     >
       Sort by relevance
@@ -35,6 +37,7 @@ exports[`should render Select correctly with active sort 1`] = `
       key="1"
       onClick={[Function]}
       tag="button"
+      title=""
       toggle={true}
     >
       Sort by title
@@ -43,6 +46,7 @@ exports[`should render Select correctly with active sort 1`] = `
       key="2"
       onClick={[Function]}
       tag="button"
+      title=""
       toggle={true}
     >
       Sort by modified
@@ -51,6 +55,7 @@ exports[`should render Select correctly with active sort 1`] = `
       key="3"
       onClick={[Function]}
       tag="button"
+      title=""
       toggle={true}
     >
       Sort by publisher
@@ -71,6 +76,7 @@ exports[`should render Select correctly with no active sort 1`] = `
     caret={true}
     className="fdk-button"
     color="primary"
+    title=""
   >
     Sort by
      
@@ -86,6 +92,7 @@ exports[`should render Select correctly with no active sort 1`] = `
       key="0"
       onClick={[Function]}
       tag="button"
+      title=""
       toggle={true}
     >
       Sort by relevance
@@ -94,6 +101,7 @@ exports[`should render Select correctly with no active sort 1`] = `
       key="1"
       onClick={[Function]}
       tag="button"
+      title=""
       toggle={true}
     >
       Sort by title
@@ -102,6 +110,7 @@ exports[`should render Select correctly with no active sort 1`] = `
       key="2"
       onClick={[Function]}
       tag="button"
+      title=""
       toggle={true}
     >
       Sort by modified
@@ -110,6 +119,7 @@ exports[`should render Select correctly with no active sort 1`] = `
       key="3"
       onClick={[Function]}
       tag="button"
+      title=""
       toggle={true}
     >
       Sort by publisher

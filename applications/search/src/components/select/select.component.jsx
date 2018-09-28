@@ -43,7 +43,7 @@ export class Select extends React.Component {
           localization.sort[this.state.selectedValue]
         }`}
       >
-        <DropdownToggle className="fdk-button" caret color="primary">
+        <DropdownToggle className="fdk-button" caret color="primary" title="">
           {localization.sort.by} {localization.sort[this.state.selectedValue]}
         </DropdownToggle>
         <DropdownMenu right className="fdk-dropdownmenu">
@@ -51,7 +51,11 @@ export class Select extends React.Component {
             const { label } = item;
             const text = `${localization.sort.by} ${localization.sort[label]}`;
             return (
-              <DropdownItem key={idx} onClick={() => this.onChange(item)}>
+              <DropdownItem
+                key={idx}
+                onClick={() => this.onChange(item)}
+                title=""
+              >
                 {text}
               </DropdownItem>
             );
