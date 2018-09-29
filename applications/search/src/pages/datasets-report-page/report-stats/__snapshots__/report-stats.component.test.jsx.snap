@@ -173,7 +173,7 @@ exports[`should render ReportStats correctly 1`] = `
             tag="div"
           >
             <h2>
-              Changes last 7 days
+              Published in last 7 days
             </h2>
             <CardText
               tag="p"
@@ -209,7 +209,7 @@ exports[`should render ReportStats correctly 1`] = `
             tag="div"
           >
             <h2>
-              Changes last 30 days
+              Published in last 30 days
             </h2>
             <CardText
               tag="p"
@@ -218,6 +218,7 @@ exports[`should render ReportStats correctly 1`] = `
                 <Link
                   className="fdk-plain-label"
                   replace={false}
+                  title="New datasets"
                   to="/?firstHarvested=30"
                 >
                   568
@@ -244,7 +245,7 @@ exports[`should render ReportStats correctly 1`] = `
             tag="div"
           >
             <h2>
-              Changes last 365 days
+              Published in last 365 days
             </h2>
             <CardText
               tag="p"
