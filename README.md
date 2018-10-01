@@ -157,7 +157,7 @@ can be used: (03096000854, 01066800187, 23076102252)
 In IntelliJ, select module applications/end2end-test and click "run tests"
 
 # Storage
-The repository is stored in a persistent volume, see [data/esdata](data/esdata) for elasticsearch 
+The repository is stored in a persistent volume, see [data/esdata5](data/esdata5) for elasticsearch 
 repository and [data/fuseki](data/fuseki) for the fuseki repository. 
   * Elasticsearch stores the data in JSON denormalized for search
   * Fuseki stores the data in RDF/DCAT format
