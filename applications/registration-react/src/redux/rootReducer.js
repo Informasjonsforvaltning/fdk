@@ -13,9 +13,12 @@ import catalog from './modules/catalog';
 import datasets from './modules/datasets';
 import catalogs from './modules/catalogs';
 import openlicenses from './modules/openlicenses';
+import apis from './modules/apis';
+import { featureToggleReducer } from './modules/featureToggle';
 
 const rootReducer = combineReducers({
   form: formReducer,
+  featureToggle: featureToggleReducer,
   app,
   dataset,
   helptexts,
