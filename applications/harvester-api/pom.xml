@@ -165,9 +165,14 @@
         </dependency>
         <dependency>
             <groupId>no.dcat</groupId>
-            <artifactId>datastore-test</artifactId>
+            <artifactId>elasticsearch5-test</artifactId>
             <version>1.0.0</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>no.dcat</groupId>
+            <artifactId>elasticsearch5-client</artifactId>
+            <version>1.0.0</version>
         </dependency>
 
         <dependency>

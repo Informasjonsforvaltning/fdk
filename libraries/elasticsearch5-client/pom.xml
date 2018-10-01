@@ -13,7 +13,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>no.dcat</groupId>
-    <artifactId>elasticsearch5client</artifactId>
+    <artifactId>elasticsearch5-client</artifactId>
     <version>1.0.0</version>
 
     <dependencies>
