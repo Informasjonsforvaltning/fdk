@@ -8,6 +8,7 @@ import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.search.aggregations.AbstractAggregationBuilder;
+import org.elasticsearch.search.sort.SortBuilders;
 import org.elasticsearch.search.sort.SortOrder;
 import org.junit.Before;
 import org.junit.Test;
@@ -46,16 +47,16 @@ public class DatasetsQueryServiceSearchTest {
      */
     @Test
     public void testValidWithSortdirection() {
-        ResponseEntity<String> actual = sqs.search("query", "", "", "","",0, 0,0, 1, 10, "nb", "tema.nb", "ascending", "", "", "", "", "");
+        ResponseEntity<String> actual = sqs.search("query", "", "", "","",0, 0,0, 1, 10, "nb", "title.nb", "ascending", "", "", "", "", "");
 
         verify(client.prepareSearch("dcat")
                 .setTypes("dataset")
                 .setQuery(any(QueryBuilder.class))
                 .setFrom(1).setSize(10))
-                .addSort("tema.nb.raw", SortOrder.ASC);
+                .addSort(SortBuilders.fieldSort("title.nb.raw").order(SortOrder.ASC).missing("_last"));
         assertThat(actual.getStatusCodeValue()).isEqualTo(HttpStatus.OK.value());
 
-        sqs.search("query", "", "", "","",0, 0,0, 1, 10, "nb", "not_modified", "ascending", "", "", "", "", "");
+        sqs.search("query", "", "", "","",0, 0,0, 1, 10, "nb", "title.nb", "ascending", "", "", "", "", "");
     }
 
     /**

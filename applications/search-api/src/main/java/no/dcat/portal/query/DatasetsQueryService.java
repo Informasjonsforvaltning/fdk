@@ -16,6 +16,7 @@ import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.bucket.filters.FiltersAggregator;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms.Order;
+import org.elasticsearch.search.sort.FieldSortBuilder;
 import org.elasticsearch.search.sort.SortBuilder;
 import org.elasticsearch.search.sort.SortBuilders;
 import org.elasticsearch.search.sort.SortOrder;
@@ -320,10 +321,15 @@ public class DatasetsQueryService extends ElasticsearchService {
             if (!sortfield.equals("modified")) {
                 sbSortField.append(sortfield).append(".raw");
             } else {
-                sbSortField.append(sortfield);
+                sbSortField.append("harvest.firstHarvested");
             }
 
-            searchBuilder.addSort(sbSortField.toString(), sortOrder);
+            SortBuilder sortBuilder = SortBuilders.fieldSort(sbSortField.toString());
+            sortBuilder.order(sortOrder);
+            ((FieldSortBuilder) sortBuilder).missing("_last");
+
+            logger.debug("sort: {}", sortBuilder.toString());
+            searchBuilder.addSort(sortBuilder);
         }
     }
 
