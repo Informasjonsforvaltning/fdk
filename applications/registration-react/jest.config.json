@@ -13,6 +13,6 @@
     "^.+\\.(css|less|scss)$": "identity-obj-proxy"
   },
   "collectCoverage": true,
-  "collectCoverageFrom": ["src/components/**/*.{js,jsx}", "src/containers/**/*.{js,jsx}", "src/validation/*.js"],
+  "collectCoverageFrom": ["src/components/**/*.{js,jsx}", "src/pages/**/*.{js,jsx}", "src/validation/*.js"],
   "coverageDirectory": "coverage"
 }
