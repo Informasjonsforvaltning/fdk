@@ -7,7 +7,8 @@ import ch.qos.logback.core.FileAppender;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonParseException;
-import no.dcat.datastore.Elasticsearch;
+import no.dcat.client.elasticsearch5.Elasticsearch5Client;
+import no.dcat.datastore.DcatIndexUtils;
 import no.dcat.datastore.domain.DcatSource;
 import no.dcat.datastore.domain.dcat.builders.AbstractBuilder;
 import no.dcat.datastore.domain.dcat.builders.DcatReader;
@@ -129,10 +130,10 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         this(clusterNodes, clusterName, referenceDataUrl, httpUsername, httpPassword, DEFAULT_EMAIL_SENDER, null);
     }
 
-    Elasticsearch createElasticsearch() {
+    Elasticsearch5Client createElasticsearch() {
         logger.debug("Connect to Elasticsearch: " + this.clusterNodes + " cluster: " + this.clusterName);
 
-        return new Elasticsearch(clusterNodes, clusterName);
+        return new Elasticsearch5Client(clusterNodes, clusterName);
     }
 
     /**
@@ -143,7 +144,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
      */
     @Override
     public void process(DcatSource dcatSource, Model model, List<String> validationResults) {
-        try (Elasticsearch elasticsearch = createElasticsearch()) {
+        try (Elasticsearch5Client elasticsearch = createElasticsearch()) {
 
             logger.info("Start indexing ...");
             long startTime = System.currentTimeMillis();
@@ -160,7 +161,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
 
     }
 
-    void waitForIndexing(Elasticsearch elasticsearch) {
+    void waitForIndexing(Elasticsearch5Client elasticsearch) {
         logger.debug("Checking elasticsearch status...");
         long startTime = System.currentTimeMillis();
 
@@ -186,7 +187,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
      * @param elasticsearch     The Elasticsearch instance where the data catalog should be stored
      * @param validationResults List of strings with result from validation rules execution
      */
-    void indexWithElasticsearch(DcatSource dcatSource, Model model, Elasticsearch elasticsearch, List<String> validationResults) {
+    void indexWithElasticsearch(DcatSource dcatSource, Model model, Elasticsearch5Client elasticsearch, List<String> validationResults) {
 
         createIndexIfNotExists(elasticsearch, DCAT_INDEX);
         createIndexIfNotExists(elasticsearch, HARVEST_INDEX);
@@ -341,7 +342,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         }
     }
 
-    private void updateDatasets(DcatSource dcatSource, Model model, Elasticsearch elasticsearch,
+    private void updateDatasets(DcatSource dcatSource, Model model, Elasticsearch5Client elasticsearch,
                                 List<String> validationResults, Gson gson,
                                 List<Dataset> datasetsToImport, List<Catalog> catalogs) {
 
@@ -453,7 +454,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         dataset.setDescription(descriptionCleaned);
     }
 
-    DatasetHarvestRecord findLastDatasetHarvestRecordWithContent(Dataset dataset, Elasticsearch elasticsearch, Gson gson) {
+    DatasetHarvestRecord findLastDatasetHarvestRecordWithContent(Dataset dataset, Elasticsearch5Client elasticsearch, Gson gson) {
         TermQueryBuilder hasDatasetId = QueryBuilders.termQuery("datasetId", dataset.getId());
         ExistsQueryBuilder hasDatasetValue = QueryBuilders.existsQuery("dataset");
 
@@ -485,7 +486,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         return null;
     }
 
-    DatasetHarvestRecord findFirstDatasetHarvestRecord(Dataset dataset, Elasticsearch elasticsearch, Gson gson) {
+    DatasetHarvestRecord findFirstDatasetHarvestRecord(Dataset dataset, Elasticsearch5Client elasticsearch, Gson gson) {
 
         TermQueryBuilder hasDatasetId = QueryBuilders.termQuery("datasetId", dataset.getId());
         logger.trace("findFirstDataset: {}", hasDatasetId.toString());
@@ -512,7 +513,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
     }
 
 
-    void deletePreviousDatasetsNotPresentInThisHarvest(Elasticsearch elasticsearch, Gson gson,
+    void deletePreviousDatasetsNotPresentInThisHarvest(Elasticsearch5Client elasticsearch, Gson gson,
                                                        CatalogHarvestRecord thisCatalogRecord, ChangeInformation stats) {
 
         TermQueryBuilder termQueryBuilder = QueryBuilders.termQuery("catalogUri", thisCatalogRecord.getCatalogUri());
@@ -543,7 +544,8 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
                         for (String uri : missingUris) {
                             DatasetLookup lookup = findLookupDataset(elasticsearch.getClient(), uri, gson);
                             if (lookup != null && lookup.getDatasetId() != null) {
-                                elasticsearch.deleteDocument(DCAT_INDEX, DATASET_TYPE, lookup.getDatasetId());
+                                DcatIndexUtils dcatIndexUtils = new DcatIndexUtils(elasticsearch);
+                                dcatIndexUtils.deleteDocument(DCAT_INDEX, DATASET_TYPE, lookup.getDatasetId());
                                 logger.info("deleted dataset {} with harvest uri {}", lookup.getDatasetId(), lookup.getHarvestUri());
                                 stats.setDeletes(stats.getDeletes() + 1);
                             }
@@ -601,7 +603,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         return result;
     }
 
-    DatasetLookup findOrCreateDatasetLookupAndUpdateDatasetId(Dataset dataset, Elasticsearch elasticsearch, Gson gson, ChangeInformation stats, Date harvestTime) {
+    DatasetLookup findOrCreateDatasetLookupAndUpdateDatasetId(Dataset dataset, Elasticsearch5Client elasticsearch, Gson gson, ChangeInformation stats, Date harvestTime) {
         String datasetId = null;
 
         // get dataset lookup entry
@@ -638,7 +640,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         return lookupEntry;
     }
 
-    Date getFirstHarvestedDate(Dataset dataset, Elasticsearch elasticsearch, Gson gson) {
+    Date getFirstHarvestedDate(Dataset dataset, Elasticsearch5Client elasticsearch, Gson gson) {
         DatasetHarvestRecord firstHarvestRecord = findFirstDatasetHarvestRecord(dataset, elasticsearch, gson);
         if (firstHarvestRecord != null) {
             return firstHarvestRecord.getDate();
@@ -648,7 +650,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
     }
 
     // TODO remove after run in production
-    DatasetHarvestRecord updateDatasetHarvestRecordsAndReturnLastChanged(Dataset dataset, Elasticsearch elasticsearch, Gson gson, BulkRequestBuilder bulkRequest, DatasetLookup lookupEntry) {
+    DatasetHarvestRecord updateDatasetHarvestRecordsAndReturnLastChanged(Dataset dataset, Elasticsearch5Client elasticsearch, Gson gson, BulkRequestBuilder bulkRequest, DatasetLookup lookupEntry) {
 
         logger.info("update dataset harvest records for dataset {} - {}", dataset.getId(), dataset.getUri());
         TermQueryBuilder hasDatasetId = QueryBuilders.termQuery("datasetId", dataset.getId());
@@ -723,7 +725,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
     }
 
 
-    void saveDatasetAndHarvestRecord(DcatSource dcatSource, Elasticsearch elasticsearch,
+    void saveDatasetAndHarvestRecord(DcatSource dcatSource, Elasticsearch5Client elasticsearch,
                                      List<String> catalogValidationResults, Gson gson, BulkRequestBuilder bulkRequest,
                                      Date harvestTime, Dataset dataset, ChangeInformation stats) {
 
@@ -971,7 +973,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         bulkRequest.add(catalogCrawlRequest);
     }
 
-    void updateSubjects(List<Dataset> datasets, Elasticsearch elasticsearch, Gson gson) {
+    void updateSubjects(List<Dataset> datasets, Elasticsearch5Client elasticsearch, Gson gson) {
 
         try {
 
@@ -1076,10 +1078,15 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         return s;
     }
 
-    private void createIndexIfNotExists(Elasticsearch elasticsearch, String indexName) {
-        if (!elasticsearch.indexExists(indexName)) {
+    DcatIndexUtils createDcatIndexUtils(final Elasticsearch5Client elasticsearch) {
+        return new DcatIndexUtils(elasticsearch);
+    }
+
+    private void createIndexIfNotExists(Elasticsearch5Client elasticsearch, String indexName) {
+        DcatIndexUtils dcatIndexUtils = createDcatIndexUtils(elasticsearch);
+        if (!dcatIndexUtils.indexExists(indexName)) {
             logger.info("Creating index: " + indexName);
-            elasticsearch.createIndex(indexName);
+            dcatIndexUtils.createIndex(indexName);
         } else {
             logger.debug("Index exists: " + indexName);
         }

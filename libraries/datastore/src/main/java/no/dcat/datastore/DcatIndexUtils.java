@@ -2,19 +2,15 @@ package no.dcat.datastore;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import no.dcat.client.elasticsearch5.Elasticsearch5Client;
 import org.apache.commons.io.IOUtils;
 import org.elasticsearch.action.ActionRequestValidationException;
 import org.elasticsearch.action.DocWriteResponse;
 import org.elasticsearch.action.delete.DeleteResponse;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.SearchResponse;
-import org.elasticsearch.client.Client;
-import org.elasticsearch.cluster.health.ClusterHealthStatus;
-import org.elasticsearch.common.settings.Settings;
-import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
-import org.elasticsearch.transport.client.PreBuiltTransportClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
@@ -22,130 +18,23 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 import java.io.InputStream;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
-/**
- * Represents connection to Elasticsearch instance
- */
-public class DcatIndexUtils implements AutoCloseable {
+
+public class DcatIndexUtils {
 
     private static final String DCAT_INDEX_MAPPING_FILENAME = "dcat_dataset_mapping.json";
     private static final String DCAT_INDEX_SETTINGS_FILENAME = "dcat_settings.json";
     private static final String CLUSTER_NAME = "cluster.name";
     private final Logger logger = LoggerFactory.getLogger(DcatIndexUtils.class);
 
-    private Client client;
+    private Elasticsearch5Client esClient;
 
 
-    public static class ElasticsearchNode {
-        public String host;
-        public int port;
+    public DcatIndexUtils(final Elasticsearch5Client esClient) {
+        this.esClient = esClient;
     }
-
-    /**
-     * Creates connection to a particular elasticsearch cluster
-     *
-     * @param clusterNodes Comma-separated list og <IP address or hostname>:port where cluster can be reached
-     * @param clusterName Name of cluster. Default is "elasticsearch"
-     */
-    public DcatIndexUtils(String clusterNodes, String clusterName) {
-        logger.debug("Attempt to connect to Elasticsearch clients: " + clusterNodes + " cluster: " + clusterName);
-        this.client = returnElasticsearchTransportClient(clusterNodes, clusterName);
-        logger.debug("transportclient success ...? " + this.client);
-    }
-
-
-    /**
-     * Set elastic search transport client
-     *
-     * @param client An elasticsearch transport client
-     */
-    public DcatIndexUtils(Client client) {
-        this.client = client;
-    }
-
-
-    public static List<ElasticsearchNode> parseHostsString(final String hosts) {
-        List<ElasticsearchNode> nodes = new ArrayList<>();
-        for (String nodeString : hosts.split(",")) {
-            if (nodeString.trim().isEmpty()) {
-                continue;
-            }
-
-            String[] parts = nodeString.split(":");
-            if (parts.length==0 || parts[0].trim().isEmpty()) {
-                continue;
-            }
-
-            ElasticsearchNode node = new ElasticsearchNode();
-            node.host = parts[0].trim();
-            node.port = (parts.length <= 1) ? 9300 : Integer.parseInt(parts[1].trim());
-
-            nodes.add(node);
-        }
-
-        return nodes;
-    }
-
-    /**
-     * Creates elasticsearch transport client and returns it to caller
-     *
-     * @param clusterNodes Comma-separated list og <IP address or hostname>:port where cluster can be reached
-     * @param clusterName Name of cluster. Default is "elasticsearch"
-     * @return elasticsearch transport client bound to hostname, port and cluster specified in input parameters
-     */
-    public Client returnElasticsearchTransportClient(String clusterNodes, String clusterName) {
-        PreBuiltTransportClient client = null;
-        try {
-            logger.debug("Connect to elasticsearch clients: " + clusterNodes + " cluster: " + clusterName);
-            List<ElasticsearchNode> nodes = parseHostsString(clusterNodes);
-
-            Settings settings = Settings.builder()
-                    .put(CLUSTER_NAME, clusterName)
-                    .build();
-
-            client = new PreBuiltTransportClient(settings); //.addTransportAddress(address);
-
-            for (ElasticsearchNode node : nodes) {
-                InetAddress inetaddress = InetAddress.getByName(node.host);
-                logger.debug("ES inetddress: " + inetaddress.toString());
-                InetSocketTransportAddress address = new InetSocketTransportAddress(inetaddress, node.port);
-                logger.debug("ES address: " + address.toString());
-
-                client.addTransportAddress(address);
-            }
-        } catch (UnknownHostException e) {
-            logger.error(e.toString());
-        }
-
-        logger.debug("transportclient: " + client);
-        return client;
-    }
-
-    /**
-     * Check to see if Elasticsearch cluster is answering
-     *
-     * @return True if cluster is running
-     */
-    public boolean isElasticsearchRunning() {
-        return client != null && elasticsearchStatus() != null ;
-    }
-
-
-    /**
-     * Return status of Elasticsearch cluster. status can be either GREEN, YELLOW or RED.
-     *
-     * @return one value of ClusterHealthStatus enumeration: GREEN, YELLOW or RED
-     */
-    public ClusterHealthStatus elasticsearchStatus() {
-        return client.admin().cluster().prepareHealth().execute().actionGet().getStatus();
-    }
-
 
     /**
      * Checks if a particular document exists in elasticsearch index
@@ -156,7 +45,7 @@ public class DcatIndexUtils implements AutoCloseable {
      * @return True if document exists
      */
     public boolean documentExists(String index, String type, String id) {
-        return client.prepareGet(index, type, id).execute().actionGet().isExists();
+        return esClient.getClient().prepareGet(index, type, id).execute().actionGet().isExists();
     }
 
 
@@ -167,7 +56,11 @@ public class DcatIndexUtils implements AutoCloseable {
      * @return True if index exists
      */
     public boolean indexExists(String index) {
-        return client.admin().indices().prepareExists(index).execute().actionGet().isExists();
+        Object a = esClient.getClient();
+        Object b = esClient.getClient().admin();
+        Object c = esClient.getClient().admin().indices();
+        Object d = esClient.getClient().admin().indices().prepareExists(index);
+        return esClient.getClient().admin().indices().prepareExists(index).execute().actionGet().isExists();
     }
 
     /**
@@ -178,7 +71,7 @@ public class DcatIndexUtils implements AutoCloseable {
      */
     public boolean typeExists(String type) {
         try {
-            return client.admin().indices().prepareTypesExists(type).execute().actionGet().isExists();
+            return esClient.getClient().admin().indices().prepareTypesExists(type).execute().actionGet().isExists();
         } catch (ActionRequestValidationException e) {
             logger.error("XXXType {} does not exist",type);
         }
@@ -202,7 +95,7 @@ public class DcatIndexUtils implements AutoCloseable {
                 Resource harvestLookupResource = new ClassPathResource("harvest_lookup_mapping.json");
                 Resource settingsResource = new ClassPathResource(DCAT_INDEX_SETTINGS_FILENAME);
                 try {
-                    client.admin().indices().prepareCreate("harvest")
+                    esClient.getClient().admin().indices().prepareCreate("harvest")
                             .setSettings(IOUtils.toString(settingsResource.getInputStream(),"UTF-8"))
                             .addMapping("catalog", IOUtils.toString(harvestCatalogResource.getInputStream(), "UTF-8"))
                             .addMapping("dataset", IOUtils.toString(harvestDatasetResource.getInputStream(), "UTF-8"))
@@ -210,7 +103,7 @@ public class DcatIndexUtils implements AutoCloseable {
                             .execute().actionGet();
 
                     logger.debug("[createIndex] {}", "harvest");
-                    client.admin().cluster().prepareHealth(index).setWaitForYellowStatus().execute().actionGet();
+                    esClient.getClient().admin().cluster().prepareHealth(index).setWaitForYellowStatus().execute().actionGet();
 
                 } catch (IOException e) {
                     logger.error("Unable to create index for {}. Reason {}", index, e.getLocalizedMessage());
@@ -222,13 +115,13 @@ public class DcatIndexUtils implements AutoCloseable {
                     Resource dcatSettingsResource = new ClassPathResource(DCAT_INDEX_SETTINGS_FILENAME);
                     Resource datasetMappingResource = new ClassPathResource(DCAT_INDEX_MAPPING_FILENAME);
 
-                    client.admin().indices().prepareCreate(index)
+                    esClient.getClient().admin().indices().prepareCreate(index)
                             .setSettings(IOUtils.toString(dcatSettingsResource.getInputStream(), "UTF-8"))
                             .addMapping("dataset", IOUtils.toString(datasetMappingResource.getInputStream(), "UTF-8"))
                             .execute().actionGet();
 
                     logger.debug("[createIndex] {}", index);
-                    client.admin().cluster().prepareHealth(index).setWaitForYellowStatus().execute().actionGet();
+                    esClient.getClient().admin().cluster().prepareHealth(index).setWaitForYellowStatus().execute().actionGet();
 
                 } catch (IOException e) {
                     logger.error("Unable to create index [{}] in Elasticsearch. Reason {} ", index, e.getMessage());
@@ -238,13 +131,13 @@ public class DcatIndexUtils implements AutoCloseable {
                     Resource dcatSettingsResource = new ClassPathResource(DCAT_INDEX_SETTINGS_FILENAME);
                     Resource subjectMappingResource = new ClassPathResource("scat_subject_mapping.json");
 
-                    client.admin().indices().prepareCreate(index)
+                    esClient.getClient().admin().indices().prepareCreate(index)
                             .setSettings(IOUtils.toString(dcatSettingsResource.getInputStream(), "UTF-8"))
                             .addMapping("subject", IOUtils.toString(subjectMappingResource.getInputStream(), "UTF-8"))
                             .execute().actionGet();
 
                     logger.debug("[createIndex] {}", index);
-                    client.admin().cluster().prepareHealth(index).setWaitForYellowStatus().execute().actionGet();
+                    esClient.getClient().admin().cluster().prepareHealth(index).setWaitForYellowStatus().execute().actionGet();
                 } catch (IOException e) {
                     logger.error("Unable to create index [{}] in Elasticsearch. Reason {} ", index, e.getMessage());
                 }
@@ -253,26 +146,26 @@ public class DcatIndexUtils implements AutoCloseable {
     }
 
     private void createElasticsearchIndex(String index) throws IOException {
-        client.admin().indices().prepareCreate(index).execute().actionGet();
+        esClient.getClient().admin().indices().prepareCreate(index).execute().actionGet();
         logger.debug("[createIndex] {}", index);
-        client.admin().cluster().prepareHealth(index).setWaitForYellowStatus().execute().actionGet();
+        esClient.getClient().admin().cluster().prepareHealth(index).setWaitForYellowStatus().execute().actionGet();
         logger.debug("[createIndex] after prepareHealth");
     }
 
     private void createMapping(String index, String type, InputStream is) throws IOException {
         String mappingJson = IOUtils.toString(is, "UTF-8");
 
-        client.admin().indices().preparePutMapping(index).setType(type).setSource(mappingJson).execute().actionGet();
+        esClient.getClient().admin().indices().preparePutMapping(index).setType(type).setSource(mappingJson).execute().actionGet();
         logger.info("Create mapping {}/{}. Mapping file contains {} characters", index, type, mappingJson.length());
-        client.admin().cluster().prepareHealth(index).setWaitForYellowStatus().execute().actionGet();
+        esClient.getClient().admin().cluster().prepareHealth(index).setWaitForYellowStatus().execute().actionGet();
     }
 
 
     private void createSettings(String index, InputStream is) throws IOException {
         String settingsJson = IOUtils.toString(is, "UTF-8");
-        client.admin().indices().prepareUpdateSettings(index).setSettings(settingsJson).execute().actionGet();
+        esClient.getClient().admin().indices().prepareUpdateSettings(index).setSettings(settingsJson).execute().actionGet();
         logger.debug("[createIndex] after prepareUpdateSettings");
-        client.admin().cluster().prepareHealth(index).setWaitForYellowStatus().execute().actionGet();
+        esClient.getClient().admin().cluster().prepareHealth(index).setWaitForYellowStatus().execute().actionGet();
         logger.debug("[createIndex] after prepareHealth");
     }
 
@@ -286,7 +179,7 @@ public class DcatIndexUtils implements AutoCloseable {
      * @return True if successful
      */
     public boolean indexDocument(String index, String type, String id, JsonObject jsonObject) {
-        IndexResponse rsp = client.prepareIndex(index, type, id).setSource(jsonObject).execute().actionGet();
+        IndexResponse rsp = esClient.getClient().prepareIndex(index, type, id).setSource(jsonObject).execute().actionGet();
         return rsp.getResult() == DocWriteResponse.Result.CREATED;
     }
 
@@ -301,7 +194,7 @@ public class DcatIndexUtils implements AutoCloseable {
      * @return True if successful
      */
     public boolean indexDocument(String index, String type, String id, JsonArray jsonArray) {
-        IndexResponse rsp = client.prepareIndex(index, type, id).setSource(jsonArray).execute().actionGet();
+        IndexResponse rsp = esClient.getClient().prepareIndex(index, type, id).setSource(jsonArray).execute().actionGet();
         return rsp.getResult() == DocWriteResponse.Result.CREATED;
     }
 
@@ -316,7 +209,7 @@ public class DcatIndexUtils implements AutoCloseable {
      * @return True if successful
      */
     public boolean indexDocument(String index, String type, String id, String string) {
-        IndexResponse rsp = client.prepareIndex(index, type, id).setSource(string).execute().actionGet();
+        IndexResponse rsp = esClient.getClient().prepareIndex(index, type, id).setSource(string).execute().actionGet();
         return rsp.getResult() == DocWriteResponse.Result.CREATED;
     }
 
@@ -331,7 +224,7 @@ public class DcatIndexUtils implements AutoCloseable {
      * @return True if successful
      */
     public boolean indexDocument(String index, String type, String id, Map<String, Object> map) {
-        IndexResponse rsp = client.prepareIndex(index, type, id).setSource(map).execute().actionGet();
+        IndexResponse rsp = esClient.getClient().prepareIndex(index, type, id).setSource(map).execute().actionGet();
         return rsp.getResult() == DocWriteResponse.Result.CREATED;
     }
 
@@ -345,7 +238,7 @@ public class DcatIndexUtils implements AutoCloseable {
      * @return True if successful
      */
     public boolean deleteDocument(String index, String type, String id) {
-        DeleteResponse rsp = client.prepareDelete(index, type, id).execute().actionGet();
+        DeleteResponse rsp = esClient.getClient().prepareDelete(index, type, id).execute().actionGet();
         return rsp.getResult() != DocWriteResponse.Result.DELETED;
     }
 
@@ -363,7 +256,7 @@ public class DcatIndexUtils implements AutoCloseable {
             return false;
         }
 
-        SearchResponse sr = this.getClient().prepareSearch(index).setTypes(type).
+        SearchResponse sr = esClient.getClient().prepareSearch(index).setTypes(type).
                 setQuery(QueryBuilders.matchAllQuery()).setSize(size).get();
 
         if (sr.getHits().getHits().length == 0) {
@@ -371,25 +264,9 @@ public class DcatIndexUtils implements AutoCloseable {
         }
 
         for (SearchHit s : sr.getHits().getHits()) {
-            this.getClient().prepareDelete(index, type, s.getId()).get();
+            esClient.getClient().prepareDelete(index, type, s.getId()).get();
         }
         return true;
     }
 
-
-    /**
-     * Close connection to Elasticsearch cluster
-     */
-    public void close() {
-        client.close();
-    }
-
-    /**
-     * Get Elasticsearc transport client instance
-     *
-     * @return Elasticsearch transport client
-     */
-    public Client getClient() {
-        return client;
-    }
 }

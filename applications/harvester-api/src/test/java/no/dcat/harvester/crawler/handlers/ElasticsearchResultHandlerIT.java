@@ -1,9 +1,10 @@
 package no.dcat.harvester.crawler.handlers;
 
 import com.google.gson.Gson;
+import no.dcat.client.elasticsearch5.Elasticsearch5Client;
+import no.dcat.datastore.DcatIndexUtils;
 import no.dcat.datastore.ElasticDockerRule;
 import no.dcat.shared.Dataset;
-import no.dcat.datastore.Elasticsearch;
 import no.dcat.datastore.domain.DcatSource;
 import no.dcat.shared.testcategories.IntegrationTest;
 import org.apache.commons.io.IOUtils;
@@ -37,14 +38,14 @@ public class ElasticsearchResultHandlerIT {
 
 	private final Logger logger = LoggerFactory.getLogger(ElasticsearchResultHandlerIT.class);
 
-	Elasticsearch elasticsearch;
+	Elasticsearch5Client elasticsearch;
 
 	@ClassRule
 	public static ElasticDockerRule elasticRule = new ElasticDockerRule();
 
 	@Before
 	public void setUp() throws Exception {
-		elasticsearch = new Elasticsearch("localhost:9399","elasticsearch");
+		elasticsearch = new Elasticsearch5Client("localhost:9399","elasticsearch");
 	}
 
 	@Test
@@ -90,8 +91,9 @@ public class ElasticsearchResultHandlerIT {
 				"123456789");
         harvestSource(dcatSource);
 
-        assertTrue("dcat index exists", elasticsearch.indexExists(DCAT_INDEX));
-		assertTrue("harvest index exists", elasticsearch.indexExists("harvest"));
+		DcatIndexUtils dcatIndexUtils = new DcatIndexUtils(elasticsearch);
+        assertTrue("dcat index exists", dcatIndexUtils.indexExists(DCAT_INDEX));
+		assertTrue("harvest index exists", dcatIndexUtils.indexExists("harvest"));
 
 		SearchRequestBuilder srb_dataset = elasticsearch.getClient().prepareSearch(DCAT_INDEX).setTypes(DATASET_TYPE).setQuery(QueryBuilders.matchAllQuery());
 		SearchResponse searchResponse = null;
@@ -151,7 +153,7 @@ public class ElasticsearchResultHandlerIT {
 
     private void harvestSource(DcatSource dcatSource) {
         ElasticSearchResultHandler handler = new ElasticSearchResultHandler("", "elasticsearch","http://localhost:8100", "user", "password");
-        handler.indexWithElasticsearch(dcatSource, FileManager.get().loadModel(dcatSource.getUrl()), new Elasticsearch(elasticsearch.getClient()),null);
+        handler.indexWithElasticsearch(dcatSource, FileManager.get().loadModel(dcatSource.getUrl()), new Elasticsearch5Client(elasticsearch.getClient()),null);
 
         //prevent race condition where elasticsearch is still indexing!!!
         sleep();

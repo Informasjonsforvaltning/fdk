@@ -2,7 +2,8 @@ package no.dcat.harvester.crawler.handlers;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import no.dcat.datastore.Elasticsearch;
+import no.dcat.client.elasticsearch5.Elasticsearch5Client;
+import no.dcat.datastore.DcatIndexUtils;
 import no.dcat.datastore.domain.DcatSource;
 import no.dcat.datastore.domain.dcat.builders.DcatReader;
 import no.dcat.datastore.domain.harvest.DatasetHarvestRecord;
@@ -57,7 +58,8 @@ public class ElasticSearchResultHandlerTest {
     public void indexWithElasticsearch() {
         DcatSource dataSource = mock(DcatSource.class);
         Client client = mock(Client.class);
-        Elasticsearch elasticsearch = mock(Elasticsearch.class);
+        Elasticsearch5Client elasticsearch = mock(Elasticsearch5Client.class);
+        DcatIndexUtils dcatIndexUtils = mock(DcatIndexUtils.class);
         BulkRequestBuilder bulkRequestBuilder = mock(BulkRequestBuilder.class);
         BulkResponse bulkResponse = mock(BulkResponse.class);
         ListenableActionFuture listenableActionFuture = mock(ListenableActionFuture.class);
@@ -74,6 +76,7 @@ public class ElasticSearchResultHandlerTest {
 
         ElasticSearchResultHandler spyHandler = spy(resultHandler);
         doReturn(reader).when(spyHandler).getReader(model);
+        doReturn(dcatIndexUtils).when(spyHandler).createDcatIndexUtils(elasticsearch);
         doReturn(null).when(spyHandler).findLookupDataset(any(), anyString(), any());
         doReturn(null).when(spyHandler).findLastDatasetHarvestRecordWithContent(any(), any(), any());
         doNothing().when(spyHandler).deletePreviousDatasetsNotPresentInThisHarvest(any(), any(), any(), any());
@@ -97,7 +100,7 @@ public class ElasticSearchResultHandlerTest {
         datasetLookup.setHarvest(new HarvestMetadata());
         datasetLookup.getHarvest().setChanged(new ArrayList<>());
 
-        Elasticsearch elasticsearch = mock(Elasticsearch.class);
+        Elasticsearch5Client elasticsearch = mock(Elasticsearch5Client.class);
         BulkRequestBuilder bulkRequestBuilder = mock(BulkRequestBuilder.class);
 
         doReturn(datasetLookup).when(spyHandler).findOrCreateDatasetLookupAndUpdateDatasetId(any(), any(), any(), any(), any());
@@ -111,7 +114,7 @@ public class ElasticSearchResultHandlerTest {
     @Test
     public void getFirstHarvestedDate() {
         Dataset dataset = mock(Dataset.class);
-        Elasticsearch elasticsearch = mock(Elasticsearch.class);
+        Elasticsearch5Client elasticsearch = mock(Elasticsearch5Client.class);
         Gson gson = new Gson();
         DatasetHarvestRecord harvestRecord = new DatasetHarvestRecord();
         harvestRecord.setDate(new Date());
@@ -130,7 +133,7 @@ public class ElasticSearchResultHandlerTest {
     public void process() {
         DcatSource dcatSource = mock(DcatSource.class);
         Model model = mock(Model.class);
-        Elasticsearch elasticsearch = mock(Elasticsearch.class);
+        Elasticsearch5Client elasticsearch = mock(Elasticsearch5Client.class);
         ElasticSearchResultHandler spyHandler = spy(resultHandler);
         doReturn(elasticsearch).when(spyHandler).createElasticsearch();
         doNothing().when(spyHandler).indexWithElasticsearch(any(), any(), any(), any());
@@ -190,7 +193,7 @@ public class ElasticSearchResultHandlerTest {
 
         dataset2.setSubject(Arrays.asList(s2));
 
-        Elasticsearch elasticsearch = mock(Elasticsearch.class);
+        Elasticsearch5Client elasticsearch = mock(Elasticsearch5Client.class);
         Gson gson = new Gson();
 
         // first time should fail

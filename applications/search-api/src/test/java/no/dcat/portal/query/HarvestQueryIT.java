@@ -6,8 +6,9 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import lombok.Data;
+import no.dcat.client.elasticsearch5.Elasticsearch5Client;
+import no.dcat.datastore.DcatIndexUtils;
 import no.dcat.datastore.ElasticDockerRule;
-import no.dcat.datastore.Elasticsearch;
 import no.dcat.datastore.domain.dcat.Publisher;
 import no.dcat.datastore.domain.harvest.CatalogHarvestRecord;
 import no.dcat.datastore.domain.harvest.ChangeInformation;
@@ -39,15 +40,18 @@ public class HarvestQueryIT {
 
     private ChangeInformation totalChangesCatalog1, totalChangesCatalog2;
 
-    Elasticsearch elasticsearch;
+    Elasticsearch5Client elasticsearch;
 
     @ClassRule
     public static ElasticDockerRule elasticRule = new ElasticDockerRule();
 
     @Before
     public void setUp() throws Exception {
-        elasticsearch = new Elasticsearch("localhost:9399","elasticsearch");
-        elasticsearch.createIndex("harvest");
+        elasticsearch = new Elasticsearch5Client("localhost:9399","elasticsearch");
+
+        DcatIndexUtils dcatIndexUtils = new DcatIndexUtils(elasticsearch);
+        dcatIndexUtils.createIndex("harvest");
+
         totalChangesCatalog1 = generateData(200, 1);
         totalChangesCatalog2 = generateData(100, 2);
     }
