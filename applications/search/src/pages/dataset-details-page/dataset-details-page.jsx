@@ -145,18 +145,22 @@ const renderContactPoint = (uri, organizationName, email, phone) => {
   );
 };
 
-const renderContactPoints = contactPoint => {
-  if (
-    !contactPoint ||
-    !Array.isArray(contactPoint) ||
-    contactPoint.length === 0
-  ) {
+const shouldRenderContactPoints = dataset => {
+  const contactPoints = _.get(dataset, 'contactPoint');
+  return (
+    contactPoints && Array.isArray(contactPoints) && contactPoints.length > 0
+  );
+};
+
+const renderContactPoints = dataset => {
+  if (!shouldRenderContactPoints(dataset)) {
     return null;
   }
+  const contactPoints = _.get(dataset, 'contactPoint', []);
 
   return (
     <ListRegular title={localization.contactInfo}>
-      {contactPoint.map(item =>
+      {contactPoints.map(item =>
         renderContactPoint(
           _.get(item, 'hasURL'),
           _.get(item, 'organizationUnit'),
@@ -286,7 +290,7 @@ const renderStickyMenu = datasetItem => {
       prefLabel: localization.dataset.keyword
     });
   }
-  if (_.get(datasetItem, 'contactPoint')) {
+  if (shouldRenderContactPoints(datasetItem)) {
     menuItems.push({
       name: localization.contactInfo,
       prefLabel: localization.contactInfo
@@ -347,7 +351,7 @@ export const DatasetDetailsPage = props => {
 
             {renderKeywords(_.get(datasetItem, 'keyword'))}
 
-            {renderContactPoints(_.get(datasetItem, 'contactPoint'))}
+            {renderContactPoints(datasetItem)}
 
             <div style={{ height: '75vh' }} />
           </div>
