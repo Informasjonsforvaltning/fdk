@@ -1,6 +1,7 @@
 package no.dcat.datastore.domain.dcat.smoke;
 
 import no.dcat.datastore.domain.dcat.vocabulary.DQV;
+import no.dcat.shared.ApiSpecification;
 import no.dcat.shared.Catalog;
 import no.dcat.shared.Contact;
 import no.dcat.shared.DataTheme;
@@ -58,6 +59,11 @@ public class TestCompleteCatalog {
         dataset.setId(UUID.randomUUID().toString());
         dataset.setUri(catalog.getUri() + "/datasets/" + dataset.getId());
         catalog.setDataset(Arrays.asList(dataset));
+
+        ApiSpecification apiSpecification = new ApiSpecification();
+        apiSpecification.setId(UUID.randomUUID().toString());
+        apiSpecification.setApiDocUrl(catalog.getUri() + "/datasets/" + apiSpecification.getId());
+        catalog.setApiSpecifications(Arrays.asList(apiSpecification));
 
         dataset.setTitle(map("nb", "Markagrensen Oslo Kommune og nærliggende kommuner"));
         dataset.setDescription(map("nb", "Datasettet avgrenser område for virkeområdet til lov 6. juni 2009 nr. 35 om naturområder i Oslo og nærliggende kommuner (markaloven) som trådte i kraft 1. september 2009. Markalovens virkeområde er fastsatt i forskrift 4. september 2015 nr. 1032 om justering av markagrensen fastlegger markalovens geografiske virkeområde med tilhørende kart."));
