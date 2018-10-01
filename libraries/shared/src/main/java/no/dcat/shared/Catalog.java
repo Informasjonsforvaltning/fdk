@@ -22,5 +22,6 @@ public class Catalog {
     private String language;
     private List<String> themeTaxonomy;
     private List<Dataset> dataset;
+    //private List<ApiSpecification> apiSpecifications;
 }
 
