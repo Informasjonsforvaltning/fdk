@@ -11,7 +11,7 @@ import no.dcat.datastore.Elasticsearch;
 import no.dcat.datastore.domain.dcat.Publisher;
 import no.dcat.datastore.domain.harvest.CatalogHarvestRecord;
 import no.dcat.datastore.domain.harvest.ChangeInformation;
-import no.dcat.shared.testcategories.UnitTest;
+import no.dcat.shared.testcategories.IntegrationTest;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.action.index.IndexRequest;
@@ -31,9 +31,9 @@ import static org.junit.Assert.*;
 import static org.hamcrest.Matchers.*;
 
 
-@Category(UnitTest.class)
-public class HarvestQueryTest {
-    private static Logger logger = LoggerFactory.getLogger(HarvestQueryTest.class);
+@Category(IntegrationTest.class)
+public class HarvestQueryIT {
+    private static Logger logger = LoggerFactory.getLogger(HarvestQueryIT.class);
 
     public static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ssZ";
 
