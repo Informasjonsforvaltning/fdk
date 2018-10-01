@@ -5,6 +5,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import { configureStore } from './redux/configureStore';
 import ProtectedRoute from './app-protected-route/app-protected-route.component';
+import { ConnectedFeatureToggleProvider } from './components/connected-feature-toggle-provider';
 import RegCatalogs from './pages/catalogs-page/catalogs-page';
 import RegDatasetsList from './pages/dataset-list-page/dataset-list-page';
 import RegDataset from './pages/dataset-registration-page/dataset-registration-page';
@@ -38,13 +39,15 @@ const routes = (
 
 ReactDOM.render(
   <Provider store={store}>
-    <BrowserRouter>
-      <div className="d-flex flex-column site">
-        <Header />
-        <div className="site-content d-flex flex-column">{routes}</div>
-        <Footer />
-      </div>
-    </BrowserRouter>
+    <ConnectedFeatureToggleProvider>
+      <BrowserRouter>
+        <div className="d-flex flex-column site">
+          <Header />
+          <div className="site-content d-flex flex-column">{routes}</div>
+          <Footer />
+        </div>
+      </BrowserRouter>
+    </ConnectedFeatureToggleProvider>
   </Provider>,
   document.getElementById('root')
 );
