@@ -30,3 +30,12 @@ export default function catalogs(
       return state;
   }
 }
+
+export const getCatalogItemByCatalogId = (catalogItems, catalogId) => {
+  if (Array.isArray(_.get(catalogItems, ['_embedded', 'catalogs']))) {
+    return _.get(catalogItems, ['_embedded', 'catalogs']).filter(
+      item => item.id === catalogId
+    )[0];
+  }
+  return null;
+};
