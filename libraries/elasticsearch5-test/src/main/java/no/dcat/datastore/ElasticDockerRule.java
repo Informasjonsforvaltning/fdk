@@ -16,10 +16,10 @@ public class ElasticDockerRule extends DockerRule {
     private static final Logger logger = LoggerFactory.getLogger(ElasticDockerRule.class);
 
     public ElasticDockerRule() {
-        super(ImmutableDockerConfig.builder() //
-                .name("elasticsearch") //
-                .image("docker.elastic.co/elasticsearch/elasticsearch:5.6.10") //
-                .ports("9200", "9300") //
+        super(ImmutableDockerConfig.builder()
+                .name("elasticsearch")
+                .image("docker.elastic.co/elasticsearch/elasticsearch:5.6.10")
+                .ports("9200", "9300")
                 .alwaysRemoveContainer(true)
                 .allowRunningBetweenUnitTests(false)
 

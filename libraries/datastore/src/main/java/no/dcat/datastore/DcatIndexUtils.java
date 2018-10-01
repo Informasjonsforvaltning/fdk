@@ -32,12 +32,12 @@ import java.util.Map;
 /**
  * Represents connection to Elasticsearch instance
  */
-public class Elasticsearch implements AutoCloseable {
+public class DcatIndexUtils implements AutoCloseable {
 
     private static final String DCAT_INDEX_MAPPING_FILENAME = "dcat_dataset_mapping.json";
     private static final String DCAT_INDEX_SETTINGS_FILENAME = "dcat_settings.json";
     private static final String CLUSTER_NAME = "cluster.name";
-    private final Logger logger = LoggerFactory.getLogger(Elasticsearch.class);
+    private final Logger logger = LoggerFactory.getLogger(DcatIndexUtils.class);
 
     private Client client;
 
@@ -53,7 +53,7 @@ public class Elasticsearch implements AutoCloseable {
      * @param clusterNodes Comma-separated list og <IP address or hostname>:port where cluster can be reached
      * @param clusterName Name of cluster. Default is "elasticsearch"
      */
-    public Elasticsearch(String clusterNodes, String clusterName) {
+    public DcatIndexUtils(String clusterNodes, String clusterName) {
         logger.debug("Attempt to connect to Elasticsearch clients: " + clusterNodes + " cluster: " + clusterName);
         this.client = returnElasticsearchTransportClient(clusterNodes, clusterName);
         logger.debug("transportclient success ...? " + this.client);
@@ -65,7 +65,7 @@ public class Elasticsearch implements AutoCloseable {
      *
      * @param client An elasticsearch transport client
      */
-    public Elasticsearch(Client client) {
+    public DcatIndexUtils(Client client) {
         this.client = client;
     }
 
