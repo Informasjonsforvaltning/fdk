@@ -97,4 +97,3 @@ services:
     image: dcatno/e2e:latest
     volumes:
       - ./applications/e2e/test:/usr/src/app/test:rw
-    command: tail -F /dev/null
