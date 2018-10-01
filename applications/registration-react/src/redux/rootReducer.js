@@ -31,7 +31,8 @@ const rootReducer = combineReducers({
   catalog,
   datasets,
   catalogs,
-  openlicenses
+  openlicenses,
+  apis
 });
 
 export default rootReducer;
