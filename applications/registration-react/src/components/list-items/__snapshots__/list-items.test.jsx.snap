@@ -1,0 +1,66 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render ListItem correctly with props 1`] = `
+<div>
+  <div
+    className="fdk-datasets-list-header d-flex"
+  >
+    <div
+      className="d-flex align-items-center w-75"
+    >
+      <span
+        className="header-item mr-1"
+      >
+        Tittel på datasett
+      </span>
+      <SortButtons
+        field="title"
+        onSortField={[MockFunction]}
+        sortField="title"
+        sortType="asc"
+      />
+    </div>
+    <div
+      className="d-flex align-items-center w-25"
+    >
+      <span
+        className="header-item mr-1"
+      >
+        Status
+      </span>
+      <SortButtons
+        field="registrationStatus"
+        onSortField={[MockFunction]}
+        sortField="title"
+        sortType="asc"
+      />
+    </div>
+  </div>
+  <ListItem
+    catalogId="123"
+    item={
+      Object {
+        "id": 1,
+        "registrationStatus": "DRAFT",
+        "title": Object {
+          "nb": "Test item",
+        },
+      }
+    }
+    key="1"
+  />
+  <ListItem
+    catalogId="123"
+    item={
+      Object {
+        "id": 2,
+        "registrationStatus": "PUBLISH",
+        "title": Object {
+          "nb": "Test item",
+        },
+      }
+    }
+    key="2"
+  />
+</div>
+`;
