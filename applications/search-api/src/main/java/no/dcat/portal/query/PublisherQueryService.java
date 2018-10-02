@@ -279,7 +279,7 @@ public class PublisherQueryService extends ElasticsearchService {
 
         @Override
         public int hashCode() {
-            return 31 * 17 + orgPath.hashCode();
+            return orgPath.hashCode();
         }
 
         /**

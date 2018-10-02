@@ -7,7 +7,7 @@ exports[`should render DatasetInfo correctly 1`] = `
     title="Related datasets"
   >
     <div
-      className="row list-regular--item"
+      className="d-flex list-regular--item"
       key="reference-http://referenced/dataset"
     >
       <div
@@ -30,76 +30,7 @@ exports[`should render DatasetInfo correctly 1`] = `
     title="Restrictions"
   >
     <div
-      className="row list-regular--item"
-    >
-      <div
-        className="col-4 pl-0 fdk-text-strong"
-      >
-        Spatial
-      </div>
-      <div
-        className="col-8"
-      >
-        <span
-          key="0"
-        >
-          Asker
-        </span>
-        <span
-          key="1"
-        >
-          , 
-          Bærum
-        </span>
-        <span
-          key="2"
-        >
-          , 
-          Hurum
-        </span>
-        <span
-          key="3"
-        >
-          , 
-          Røyken
-        </span>
-      </div>
-    </div>
-  </ListRegular>
-</React.Fragment>
-`;
-
-exports[`should render DatasetInfo correctly 2`] = `
-<React.Fragment>
-  <ListRegular
-    bottomMargin={true}
-    title="Related datasets"
-  >
-    <div
-      className="row list-regular--item"
-      key="reference-http://referenced/dataset"
-    >
-      <div
-        className="col-4 pl-0 fdk-text-strong"
-      >
-        http://www.w3.org/2002/07/hasVersion
-      </div>
-      <div
-        className="col-8"
-      >
-        <LinkExternal
-          prefLabel="http://referenced/dataset"
-          uri=""
-        />
-      </div>
-    </div>
-  </ListRegular>
-  <ListRegular
-    bottomMargin={true}
-    title="Restrictions"
-  >
-    <div
-      className="row list-regular--item"
+      className="d-flex list-regular--item"
     >
       <div
         className="col-4 pl-0 fdk-text-strong"

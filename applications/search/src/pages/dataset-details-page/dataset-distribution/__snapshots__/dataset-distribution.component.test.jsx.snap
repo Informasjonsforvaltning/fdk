@@ -13,7 +13,32 @@ exports[`should render DatasetDistribution correctly 1`] = `
       onClick={[Function]}
     >
       <div
-        className="row list-regular--item text-left mb-2 closedCollapse"
+        className="d-flex list-regular--item text-left"
+      >
+        <div
+          className="col-4 pl-0"
+        >
+          <span>
+            <strong>
+              Format
+            </strong>
+          </span>
+        </div>
+        <div
+          className="col-8"
+        >
+          <span
+            key="0"
+          >
+            GPX
+          </span>
+        </div>
+        <i
+          className="fa fdk-color-blue-dark fa-chevron-down"
+        />
+      </div>
+      <div
+        className="d-flex list-regular--item text-left mb-2 closedCollapse"
       >
         <div
           className="col-4 pl-0 fdk-text-strong"
@@ -49,160 +74,12 @@ exports[`should render DatasetDistribution correctly 1`] = `
         col2={
           Array [
             <LinkExternal
-              prefLabel="http://www.detteerenlenke.no/til-nedlasting"
-              uri="http://www.detteerenlenke.no/til-nedlasting"
-            />,
-            <LinkExternal
-              prefLabel="http://www.detteerenannenlenke.no/til-en-annen-nedlasting
-"
-              uri="http://www.detteerenannenlenke.no/til-en-annen-nedlasting
-"
-            />,
-            <LinkExternal
-              prefLabel="http://www.detteerentredjelenke.no/til-en-tredje-nedlasting"
-              uri="http://www.detteerentredjelenke.no/til-en-tredje-nedlasting"
+              prefLabel="https://kartkatalog.geonorge.no/metadata/uuid/45e9ba77-388c-40eb-87df-e34e9d9ab300"
+              uri="https://kartkatalog.geonorge.no/metadata/uuid/45e9ba77-388c-40eb-87df-e34e9d9ab300"
             />,
           ]
         }
       />
-      <TwoColRow
-        col1="License"
-        col2={
-          <LinkExternal
-            prefLabel="SOSI"
-            uri="https://www.kartverket.no/geodataarbeid/standarder/sosi/"
-          />
-        }
-      />
-      <TwoColRow
-        col1="Conforms to"
-        col2={
-          Array [
-            <LinkExternal
-              prefLabel="SOSI"
-              uri="https://www.kartverket.no/geodataarbeid/standarder/sosi/"
-            />,
-          ]
-        }
-      />
-      <div
-        className="row list-regular--item"
-      >
-        <div
-          className="col-12 pl-0"
-        />
-      </div>
-    </Collapse>
-  </ListRegular>
-</section>
-`;
-
-exports[`should render DatasetDistribution correctly 2`] = `
-<section
-  className="fdk-distribution-item mb-1"
->
-  <ListRegular
-    bottomMargin={false}
-    title={null}
-  >
-    <button
-      className="w-100 p-0"
-      onClick={[Function]}
-    >
-      <div
-        className="row list-regular--item text-left"
-      >
-        <div
-          className="col-4 pl-0"
-        >
-          <span>
-            <strong>
-              Format
-            </strong>
-          </span>
-        </div>
-        <div
-          className="col-8"
-        >
-          <span
-            key="0"
-          >
-            application/json
-          </span>
-          <span
-            key="1"
-          >
-            , 
-            xml
-          </span>
-        </div>
-        <i
-          className="fa fdk-color-blue-dark fa-chevron-down"
-        />
-      </div>
-      <div
-        className="row list-regular--item text-left mb-2 closedCollapse"
-      >
-        <div
-          className="col-4 pl-0 fdk-text-strong"
-        >
-          Description
-        </div>
-        <div
-          className="col-8 show-more__cropped-box"
-        >
-          Datasettet avgrenser område for virkeområdet til lov 6. juni 2009 nr. 35 om naturområder i Oslo og nærliggende kommuner (markaloven) som trådte i kraft 1. september 2009. Markalovens virkeområde er fastsatt i forskrift 4. september 2015 nr. 1032 om justering av markagrensen fastlegger markalovens geografiske virkeområde med tilhørende kart.
-        </div>
-      </div>
-    </button>
-    <Collapse
-      appear={false}
-      enter={true}
-      exit={true}
-      in={false}
-      isOpen={false}
-      mountOnEnter={false}
-      onEnter={[Function]}
-      onEntered={[Function]}
-      onEntering={[Function]}
-      onExit={[Function]}
-      onExited={[Function]}
-      onExiting={[Function]}
-      tag="div"
-      timeout={350}
-      unmountOnExit={false}
-    >
-      <TwoColRow
-        col1="Type"
-        col2="Feed"
-      />
-      <TwoColRow
-        col1="License"
-        col2={
-          <LinkExternal
-            prefLabel="SOSI"
-            uri="https://www.kartverket.no/geodataarbeid/standarder/sosi/"
-          />
-        }
-      />
-      <TwoColRow
-        col1="Conforms to"
-        col2={
-          Array [
-            <LinkExternal
-              prefLabel="SOSI"
-              uri="https://www.kartverket.no/geodataarbeid/standarder/sosi/"
-            />,
-          ]
-        }
-      />
-      <div
-        className="row list-regular--item"
-      >
-        <div
-          className="col-12 pl-0"
-        />
-      </div>
     </Collapse>
   </ListRegular>
 </section>

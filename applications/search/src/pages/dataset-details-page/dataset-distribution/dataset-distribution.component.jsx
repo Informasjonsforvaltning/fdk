@@ -4,12 +4,15 @@ import { Collapse } from 'reactstrap';
 import _ from 'lodash';
 
 import localization from '../../../lib/localization';
-import { getDistributionTypeByUri } from '../../../redux/modules/distributionType';
 import { getTranslateText } from '../../../lib/translateText';
 import { ListRegular } from '../../../components/list-regular/list-regular.component';
 import { TwoColRow } from '../../../components/list-regular/twoColRow/twoColRow';
 import { LinkExternal } from '../../../components/link-external/link-external.component';
 import './dataset-distribution.scss';
+import {
+  getReferenceDataByUri,
+  REFERENCEDATA_DISTRIBUTIONTYPE
+} from '../../../redux/modules/referenceData';
 
 const formatItems = format => {
   if (!format) {
@@ -37,7 +40,7 @@ export class DatasetDistribution extends React.Component {
   }
 
   renderType() {
-    const { distributionTypeItems } = this.props;
+    const { referenceData } = this.props;
     const { type } = this.props;
     if (!type) {
       return null;
@@ -45,8 +48,9 @@ export class DatasetDistribution extends React.Component {
     const distributionType = type => {
       let typeText = null;
       if (type !== 'API' && type !== 'Feed' && type !== 'Nedlastbar fil') {
-        const distributionType = getDistributionTypeByUri(
-          distributionTypeItems,
+        const distributionType = getReferenceDataByUri(
+          referenceData,
+          REFERENCEDATA_DISTRIBUTIONTYPE,
           type
         );
         if (distributionType !== null && distributionType.length > 0) {
@@ -160,7 +164,7 @@ export class DatasetDistribution extends React.Component {
     }
 
     return (
-      <div className="row list-regular--item">
+      <div className="d-flex list-regular--item">
         <div className="col-12 pl-0">{children(page)}</div>
       </div>
     );
@@ -174,7 +178,7 @@ export class DatasetDistribution extends React.Component {
         <ListRegular bottomMargin={false}>
           <button className="w-100 p-0" onClick={this.toggle}>
             {format && (
-              <div className="row list-regular--item text-left">
+              <div className="d-flex list-regular--item text-left">
                 <div className="col-4 pl-0">
                   <span>
                     <strong>{localization.dataset.distribution.format}</strong>
@@ -190,7 +194,7 @@ export class DatasetDistribution extends React.Component {
             )}
             {description && (
               <div
-                className={`row list-regular--item text-left mb-2 ${
+                className={`d-flex list-regular--item text-left mb-2 ${
                   !openCollapse ? 'closedCollapse' : ''
                 }`}
               >
@@ -231,7 +235,7 @@ DatasetDistribution.defaultProps = {
   conformsTo: null,
   page: null,
   type: null,
-  distributionTypeItems: null,
+  referenceData: null,
   defaultopenCollapse: false
 };
 
@@ -243,6 +247,6 @@ DatasetDistribution.propTypes = {
   conformsTo: PropTypes.array,
   page: PropTypes.array,
   type: PropTypes.string,
-  distributionTypeItems: PropTypes.array,
+  referenceData: PropTypes.object,
   defaultopenCollapse: PropTypes.bool
 };

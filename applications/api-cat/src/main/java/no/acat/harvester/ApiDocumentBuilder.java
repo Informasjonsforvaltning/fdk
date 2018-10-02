@@ -101,6 +101,7 @@ public class ApiDocumentBuilder {
         apiDocument.setProvenance(extractProvenance(apiCatalogRecord));
         apiDocument.setDatasetReferences(extractDatasetReferences(apiCatalogRecord));
         apiDocument.setApiDocUrl(apiCatalogRecord.getApiDocUrl());
+        apiDocument.setProvenanceSort(createProvenanceSort(apiDocument.getProvenance()));
     }
 
     String lookupOrGenerateId(ApiCatalogRecord apiCatalogRecord) {
@@ -258,6 +259,32 @@ public class ApiDocumentBuilder {
             }));
         });
         return formats;
+    }
+
+
+    /**
+     * Create string that allows simples string sorting of provenance
+     *
+     * @param provenanceCode Skos code with provenance value
+     */
+    String createProvenanceSort(SkosCode provenanceCode) {
+        String sortString = "";
+
+        final String provenanceValue = provenanceCode != null ? provenanceCode.getCode() : null;
+
+        if ("NASJONAL".equals(provenanceValue)) {
+            sortString = "1NASJONAL";
+        } else if ("VEDTAK".equals(provenanceValue)) {
+            sortString = "2VEDTAK";
+        } else if ("BRUKER".equals(provenanceValue)) {
+            sortString = "3BRUKER";
+        } else if ("TREDJEPART".equals(provenanceValue)) {
+            sortString = "4TREDJEPART";
+        } else {
+            sortString = "9UKJENT";
+        }
+
+        return sortString;
     }
 
 }

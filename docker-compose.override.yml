@@ -30,8 +30,8 @@ services:
       - "9083:8181"
     environment:
      - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
-     - application.elasticsearchHost=elasticsearch
-     - application.elasticsearchPort=9300
+     - FDK_ES_CLUSTERNODES=elasticsearch5:9300
+     - FDK_ES_CLUSTERNAME=elasticsearch
 
   nginx-search:
     restart: always
@@ -52,12 +52,11 @@ services:
      - "9081:8181"
     environment:
      - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx1024M -Dspring.profiles.active=docker
+     - FDK_ES_CLUSTERNODES=elasticsearch5:9300
+     - FDK_ES_CLUSTERNAME=elasticsearch
      - fuseki.dcatServiceUri=http://fuseki:8080/fuseki/dcat
      - fuseki.adminServiceUri=http://fuseki:8080/fuseki/admin
      - application.crawlerThreadPoolSize=2
-     - application.elasticSearchHost=elasticsearch
-     - application.elasticSearchPort=9300
-     - application.elasticSearchCluster=elasticsearch
     volumes:
      - ./logs:/usr/local/tomcat/logs:rw
 
@@ -75,43 +74,16 @@ services:
     volumes:
      - ./logs:/usr/local/tomcat/logs:rw
 
-  elasticsearch:
-    restart: always
-    ports:
-      - "9200:9200"
-      - "9300:9300"
-    volumes:
-      - ./data/esdata:/usr/share/elasticsearch/data
-    environment:
-      - cluster.name=elasticsearch
-
   elasticsearch5:
     restart: always
     ports:
-    - "9201:9200"
-    - "9301:9300"
+    - "9200:9200"
+    - "9300:9300"
     volumes:
     - ./data/esdata5:/usr/share/elasticsearch/data
     environment:
     - cluster.name=elasticsearch
     - xpack.security.enabled=false
-
-  elasticsearch-copy:
-    restart: always
-    volumes:
-    - ./data/escopy:/escopydata
-
-  dev-management:
-    restart: always
-    ports:
-      - "8085:8080"
-    environment:
-     - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
-     - application.elasticsearchHost=elasticsearch
-     - application.elasticsearchPort=9300
-     - application.elasticsearchCluster=elasticsearch
-     - application.fusekiHost=http://fuseki:8080
-     - application.harvesterHost=http://harvester-api:8080
 
   nginx-registration:
     restart: always
@@ -131,6 +103,8 @@ services:
       - "8079:8080"
     environment:
      - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
+     - FDK_ES_CLUSTERNODES=elasticsearch5:9300
+     - FDK_ES_CLUSTERNAME=elasticsearch
      - registrationAPI_clusterName=elasticsearch
      - registrationApi_altinnServiceUrl=http://registration-auth:8080/
      - registrationApi_apikey=${registrationApi_apikey}

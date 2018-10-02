@@ -40,6 +40,7 @@ public class SearchControllerTest {
 
         doReturn(null).when(spyController).buildSearchRequest(anyString(),anyString(),anyString(),any(),anyInt(),anyInt());
         doReturn(searchResponse).when(spyController).doQuery(anyObject());
+        doNothing().when(spyController).addSortForEmptySearch(anyObject());
         // todo this is nonsense, we do not test anything
         doReturn(new QueryResponse()).when(spyController).convertFromElasticResponse(anyObject());
 

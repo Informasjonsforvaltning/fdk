@@ -1,21 +1,32 @@
+import _ from 'lodash';
+
+const normalizeBucketsArray = buckets =>
+  buckets.map(bucket => ({
+    key: bucket.key,
+    count: bucket.doc_count || bucket.count // support passing through already normalized data
+  }));
+
+const normalizeBucketsObject = buckets =>
+  Object.keys(buckets).map(key => ({
+    key,
+    count: buckets[key].doc_count || buckets[key].count // support passing through already normalized data
+  }));
+
+/* aggregation types encountered in wild are converted to normal form
+  {count}
+  {buckets:[{key,count}]}
+*/
 const normalizeAggregation = aggregation => {
+  if (aggregation.doc_count) {
+    return { count: aggregation.doc_count };
+  }
+
   const { buckets } = aggregation;
-  const docCount = aggregation.doc_count;
   if (buckets && Array.isArray(buckets)) {
-    const normalizedBuckets = [];
-    buckets.forEach(bucket => {
-      const normalizedBucket = {
-        ...bucket,
-        count: bucket.doc_count
-      };
-      delete normalizedBucket.doc_count;
-      normalizedBuckets.push(normalizedBucket);
-    });
-    return { buckets: normalizedBuckets };
-  } else if (docCount) {
-    return {
-      count: docCount
-    };
+    return { buckets: normalizeBucketsArray(buckets) };
+  }
+  if (typeof buckets === 'object') {
+    return { buckets: normalizeBucketsObject(buckets) };
   }
   return {};
 };
@@ -23,16 +34,9 @@ const normalizeAggregation = aggregation => {
 export const normalizeAggregations = data => {
   const { aggregations } = data;
   if (aggregations) {
-    const normalizedAggregations = {};
-    Object.keys(aggregations).forEach(aggregation => {
-      const currentAggregation = aggregations[aggregation];
-      normalizedAggregations[aggregation] = normalizeAggregation(
-        currentAggregation
-      );
-    });
     return {
       ...data,
-      aggregations: normalizedAggregations
+      aggregations: _.mapValues(aggregations, normalizeAggregation)
     };
   }
   return data;

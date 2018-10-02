@@ -12,6 +12,8 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms;
+import org.elasticsearch.search.sort.SortBuilder;
+import org.elasticsearch.search.sort.SortBuilders;
 import org.elasticsearch.search.sort.SortOrder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -78,6 +80,9 @@ public class SearchController {
         try {
             SearchRequestBuilder searchRequest = buildSearchRequest(query, accessRights, orgPath, formats, from, size);
             addSort(sortfield, sortdirection, searchRequest);
+            if(query.isEmpty()) {
+                addSortForEmptySearch(searchRequest);
+            }
 
             SearchResponse elasticResponse = doQuery(searchRequest);
             return convertFromElasticResponse(elasticResponse);
@@ -167,6 +172,18 @@ public class SearchController {
 
             searchBuilder.addSort(sbSortField.toString(), sortOrder);
         }
+    }
+
+
+    /**
+     * create default sort order - national components should appear first
+     *
+     */
+    void addSortForEmptySearch(SearchRequestBuilder searchBuilder) {
+        SortBuilder sortFieldProvenance = SortBuilders.fieldSort("provenanceSort")
+                .order(SortOrder.ASC);
+
+        searchBuilder.addSort(sortFieldProvenance);
     }
 
 

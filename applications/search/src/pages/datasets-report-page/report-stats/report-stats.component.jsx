@@ -170,7 +170,7 @@ export const ReportStats = props => {
               <CardText>
                 <strong>
                   <Link
-                    title={localization.report.deletedLastMonth}
+                    title={localization.report.newDatasets}
                     className="fdk-plain-label"
                     to={`/?firstHarvested=30${orgPathParam}`}
                   >

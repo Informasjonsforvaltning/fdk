@@ -15,9 +15,8 @@ import java.util.List;
 public abstract class AbstractCrawlerHandler implements CrawlerResultHandler {
     private final Logger logger = LoggerFactory.getLogger(AbstractCrawlerHandler.class);
 
-    String hostename;
-    int port;
-    String clustername;
+    String clusterNodes;
+    String clusterName;
 
     /**
      * Process a data catalog, represented as an RDF model
@@ -27,9 +26,9 @@ public abstract class AbstractCrawlerHandler implements CrawlerResultHandler {
      */
     @Override
     public void process(DcatSource dcatSource, Model model, List<String> validationResults) {
-        logger.debug("Processing results Elasticsearch: " + this.hostename + ":" + this.port + " cluster: " + this.clustername);
+        logger.debug("Processing results Elasticsearch: " + this.clusterNodes + " cluster: " + this.clusterName);
 
-        try (Elasticsearch elasticsearch = new Elasticsearch(hostename, port, clustername)) {
+        try (Elasticsearch elasticsearch = new Elasticsearch(clusterNodes, clusterName)) {
             logger.trace("Start indexing");
             indexWithElasticsearch(dcatSource, model, elasticsearch);
         } catch (Exception e) {

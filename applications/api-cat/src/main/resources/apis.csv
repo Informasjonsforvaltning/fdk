@@ -1,6 +1,5 @@
 OrgNr;OrgName;ApiSpecUrl;ApiDocUrl;AccessRights;Provenance;DatasetRefs
 974760673;Brønnøysundregistrene;https://raw.githubusercontent.com/brreg/openAPI/master/specs/enhetsregisteret.json;https://data.brreg.no/enhetsregisteret/api/docs/index.html;PUBLIC;NASJONAL;http://brreg.no/catalogs/974760673/datasets/63086dda-9b72-43f0-bbc2-3ced4bc2edd6
-974760673;Brønnøysundregistrene;https://fellesdatakatalog.brreg.no/api-docs/search-api;https://fellesdatakatalog.brreg.no/swagger-ui.html;PUBLIC;;http://brreg.no/catalogs/974760673/datasets/ed6510da-01cf-4905-82fb-72e3cda08789
 971035854;Universitetet i Oslo;https://docker-demo.fsat.no/fsapi/swagger.json;https://docker-demo.fsat.no/fsapi/swagger.html#!/person/get_personer_id;PUBLIC;;
 971032146;KS;https://ks-no.github.io/api/innsyn-sok-api-v1.json;https://editor.swagger.io/?url=https://ks-no.github.io/api/innsyn-sok-api-v1.json;PUBLIC;;
 970018131;Utdanningsdirektoratet;https://data-nor.udir.no/swagger/docs/v1.0;https://data.norge.no/data/utdanningsdirektoratet/nasjonalt-register-opplæringskontorer-nor;PUBLIC;;
@@ -9,4 +8,5 @@ OrgNr;OrgName;ApiSpecUrl;ApiDocUrl;AccessRights;Provenance;DatasetRefs
 970018131;Utdanningsdirektoratet;https://data-nxr-fellestjeneste.udir.no/swagger/docs/v1;https://data.norge.no/data/utdanningsdirektoratet/nxr-fellestjeneste-0;PUBLIC;;
 970018131;Utdanningsdirektoratet;http://www.barnehagefakta.no:80/swagger/docs/v1;https://data.norge.no/data/utdanningsdirektoratet/barnehagefakta-baf;PUBLIC;;
 971032146;KS;https://play-with-fint.felleskomponent.no/administrasjon/personal/v2/api-docs;https://play-with-fint.felleskomponent.no/administrasjon/personal/swagger-ui.html;PUBLIC;;
-974760673;Brønnøysundregistrene;https://raw.githubusercontent.com/brreg/openAPI/master/specs/fdk.json;https://github.com/Informasjonsforvaltning/fdk;PUBLIC;NASJONAL;https://fellesdatakatalog.brreg.no/datasets/ea9e2aa7-880c-4387-888e-77446acab279
+974760673;Brønnøysundregistrene;https://raw.githubusercontent.com/brreg/openAPI/master/specs/fdk.json;https://github.com/Informasjonsforvaltning/fdk;PUBLIC;;https://fellesdatakatalog.brreg.no/datasets/ea9e2aa7-880c-4387-888e-77446acab279
+974760673;Brønnøysundregistrene;https://raw.githubusercontent.com/brreg/openAPI/master/specs/api-cat.json;https://github.com/Informasjonsforvaltning/fdk;PUBLIC;;

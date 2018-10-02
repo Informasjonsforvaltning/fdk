@@ -8,14 +8,16 @@ import { getTranslateText } from '../../../lib/translateText';
 import { ListRegular } from '../../../components/list-regular/list-regular.component';
 import { TwoColRow } from '../../../components/list-regular/twoColRow/twoColRow';
 import { LinkExternal } from '../../../components/link-external/link-external.component';
-import { getReferenceTypeByUri } from '../../../redux/modules/referenceTypes';
 import './dataset-info.scss';
+import { getReferenceDataByUri } from '../../../redux/modules/referenceData';
+import { REFERENCEDATA_REFERENCETYPES } from '../../../constants/constants';
 
-const renderReferences = (references, referencedItems, referenceTypeItems) => {
+const renderReferences = (references, referencedItems, referenceData) => {
   const children = items =>
     items.map(item => {
-      const referencedType = getReferenceTypeByUri(
-        referenceTypeItems,
+      const referencedType = getReferenceDataByUri(
+        referenceData,
+        REFERENCEDATA_REFERENCETYPES,
         _.get(item, ['referenceType', 'uri'])
       );
 
@@ -32,7 +34,7 @@ const renderReferences = (references, referencedItems, referenceTypeItems) => {
       return (
         <div
           key={`reference-${_.get(item, ['source', 'uri'])}`}
-          className="row list-regular--item"
+          className="d-flex list-regular--item"
         >
           <div className="col-4 pl-0 fdk-text-strong">
             {referencedType && referencedType.length > 0
@@ -75,7 +77,7 @@ const renderSpatial = spatial => {
     ));
 
   return (
-    <div className="row list-regular--item">
+    <div className="d-flex list-regular--item">
       <div className="col-4 pl-0 fdk-text-strong">
         {localization.dataset.spatial}
       </div>
@@ -123,34 +125,24 @@ const renderRestrictions = (spatial, temporal) => {
 };
 
 export const DatasetInfo = props => {
-  const {
-    references,
-    spatial,
-    temporal,
-    referenceTypeItems,
-    referencedItems
-  } = props;
-
+  const { datasetItem, referenceData, referencedItems } = props;
+  const { references, spatial, temporal } = datasetItem || {};
   return (
     <React.Fragment>
-      {renderReferences(references, referencedItems, referenceTypeItems)}
+      {renderReferences(references, referencedItems, referenceData)}
       {renderRestrictions(spatial, temporal)}
     </React.Fragment>
   );
 };
 
 DatasetInfo.defaultProps = {
-  spatial: null,
-  temporal: null,
-  references: null,
-  referenceTypeItems: null,
+  datasetItem: null,
+  referenceData: null,
   referencedItems: null
 };
 
 DatasetInfo.propTypes = {
-  spatial: PropTypes.array,
-  temporal: PropTypes.array,
-  references: PropTypes.array,
-  referenceTypeItems: PropTypes.array,
+  datasetItem: PropTypes.object,
+  referenceData: PropTypes.object,
   referencedItems: PropTypes.array
 };

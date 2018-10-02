@@ -133,7 +133,7 @@ public class CrawlerResultHandlerTest {
 		File file = new File(classLoader.getResource("syntax-error.jsonld").getFile());
 
 		CrawlerJob crawlerJob = new CrawlerJob(new DcatSource("", "", file.getCanonicalPath(), "", ""),
-				adminDataStore, null, null);
+				adminDataStore, null);
 
 		crawlerJob.run();
 
@@ -165,9 +165,9 @@ public class CrawlerResultHandlerTest {
 		ClassLoader classLoader = getClass().getClassLoader();
 		File file = new File(classLoader.getResource("syntax-error.jsonld").getFile());
 
-		new CrawlerJob(new DcatSource("", "", "http://example.com/nothing.jsonld", "", ""), adminDataStore, null, null).run();
-		new CrawlerJob(new DcatSource("", "", "http://fje389403wlkfklewfl.local/nothing.jsonld", "", ""), adminDataStore, null, null).run();
-		new CrawlerJob(new DcatSource("", "", "http://localhost:9452/nothing.jsonld", "", ""),  adminDataStore, null, null).run();
+		new CrawlerJob(new DcatSource("", "", "http://.invalid/nothing.jsonld", "", ""), adminDataStore, null).run();
+		new CrawlerJob(new DcatSource("", "", "http://fje389403wlkfklewfl.local/nothing.jsonld", "", ""), adminDataStore, null).run();
+		new CrawlerJob(new DcatSource("", "", "http://localhost:9452/nothing.jsonld", "", ""),  adminDataStore, null).run();
 
 		assertTrue("The addCrawlResults was not called", addCrawlResultsDidRun[0]);
 	}

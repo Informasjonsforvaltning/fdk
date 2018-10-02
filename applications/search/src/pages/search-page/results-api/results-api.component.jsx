@@ -112,11 +112,6 @@ export const ResultsApi = props => {
                 order: 'asc'
               },
               {
-                label: 'modified',
-                field: 'modified',
-                order: 'desc'
-              },
-              {
                 label: 'publisher',
                 field: 'publisher.name',
                 order: 'asc'

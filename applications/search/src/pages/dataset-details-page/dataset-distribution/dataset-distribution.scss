@@ -7,10 +7,12 @@
 .dataset-distributions {
   .fdk-distribution-item {
     background-color: $color_white;
-    padding: 0 2em;
+    padding: 0 1em;
     word-wrap: break-word;
 
     &:last-child {
+      border-bottom-left-radius: 5px;
+      border-bottom-right-radius: 5px;
       margin-bottom: 3rem !important;
     }
 

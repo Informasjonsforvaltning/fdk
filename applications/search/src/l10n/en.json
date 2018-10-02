@@ -38,7 +38,7 @@
     "english-en": "English"
   },
   "menu": {
-    "home": "Back to search",
+    "home": "Search in The National Data Directory",
     "about": "About The National Data Directory",
     "aboutRegistration": "Registration",
     "reports": "Reports"
@@ -131,8 +131,8 @@
   "sort": {
     "by": "Sort by",
     "relevance": "relevance",
-    "title": "title",
-    "publisher": "publisher",
+    "title": "title A-Z",
+    "publisher": "publisher A-Z",
     "modified": "modified"
   },
   "search_hit": {
@@ -250,9 +250,9 @@
     "restricted": "Datasets with restricted access",
     "nonPublic": "Datasets that are not public",
     "unknown": "Datasets with unknown accesslevel",
-    "changesLastWeek": "Changes last 7 days",
-    "changesLastMonth": "Changes last 30 days",
-    "changesLastYear": "Changes last 365 days",
+    "changesLastWeek": "Published in last 7 days",
+    "changesLastMonth": "Published in last 30 days",
+    "changesLastYear": "Published in last 365 days",
     "newDatasets": "New datasets",
     "deletedDatasets": "Deleted datasets",
     "concepts": "Use of concepts",

@@ -40,7 +40,7 @@ const renderFormats = formats => {
     ));
   return (
     <ListRegular title={localization.format}>
-      <div className="row list-regular--item">{formatItems(formats)}</div>
+      <div className="d-flex list-regular--item">{formatItems(formats)}</div>
     </ListRegular>
   );
 };
@@ -104,7 +104,7 @@ const renderDatasetReference = (datasetReference, index) => {
 
   return (
     <React.Fragment key={`${index}-${id}`}>
-      <div className="row list-regular--item mb-4">
+      <div className="d-flex list-regular--item mb-4">
         <a
           title={localization.api.linkDatasetReference}
           href={`/datasets/${id}`}

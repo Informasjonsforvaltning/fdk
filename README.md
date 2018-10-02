@@ -38,7 +38,7 @@ The search application is available [here](https://fellesdatakatalog.brreg.no). 
 are only available for registered users. 
 Any questions can be sent to [fellesdatakatalog@brreg.no](mailto:fellesdatakatalog@brreg.no).
 
-The [search api](https://fellesdatakatalog.brreg.no/swagger-ui.html) can also be used.
+The [search api](https://github.com/brreg/openAPI/blob/master/specs/fdk.yaml) can also be used.
 
 ## Set up your developement environnement
   1) Clone this repo
@@ -151,6 +151,10 @@ can be used: (03096000854, 01066800187, 23076102252)
 
 ## Shut down all containers:
 >`docker-compose down`
+
+## Run end2end tests (java)
+
+In IntelliJ, select module applications/end2end-test and click "run tests"
 
 # Storage
 The repository is stored in a persistent volume, see [data/esdata](data/esdata) for elasticsearch 

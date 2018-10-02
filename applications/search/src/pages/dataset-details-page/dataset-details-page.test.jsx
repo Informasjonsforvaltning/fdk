@@ -1,12 +1,12 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { DatasetDetailsPage } from './dataset-details-page';
-import datasets from '../../../test/fixtures/datasets';
+import datasetItem from './__fixtures/datasetApiResponse.json';
 
 let wrapper;
 
 beforeEach(() => {
-  wrapper = shallow(<DatasetDetailsPage datasetItem={datasets[0]._source} />);
+  wrapper = shallow(<DatasetDetailsPage datasetItem={datasetItem} />);
 });
 
 test('should render DatasetDetailsPage correctly with no datasetItem', () => {

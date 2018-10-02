@@ -8,20 +8,9 @@
       color: $color-cta2;
       a {
         cursor: pointer;
-        font-weight: 500;
         &.active {
           color: $color1;
-          font-weight: 600;
-          &:after {
-            content: "\f105";
-            font: normal 14px/1 FontAwesome;
-            font-size: 1.2em;
-            font-weight: 600;
-            text-rendering: auto;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            margin-right: 2.5em;
-          }
+          font-weight: 500;
         }
       }
     }

@@ -17,26 +17,10 @@ import { BoxRegular } from '../../components/box-regular/box-regular.component';
 import { LinkExternal } from '../../components/link-external/link-external.component';
 import { DistributionHeading } from './distribution-heading/distribution-heading.component';
 import { StickyMenu } from '../../components/sticky-menu/sticky-menu.component';
-
-const renderDatasetDescription = datasetItem => {
-  if (!datasetItem) {
-    return null;
-  }
-  return (
-    <DatasetDescription
-      title={getTranslateText(_.get(datasetItem, 'title'))}
-      description={getTranslateText(_.get(datasetItem, 'description'))}
-      descriptionFormatted={getTranslateText(
-        _.get(datasetItem, 'descriptionFormatted')
-      )}
-      objective={getTranslateText(_.get(datasetItem, 'objective'))}
-      publisher={_.get(datasetItem, 'publisher')}
-      themes={_.get(datasetItem, 'theme')}
-      harvest={_.get(datasetItem, 'harvest')}
-      provenance={_.get(datasetItem, 'provenance')}
-    />
-  );
-};
+import {
+  REFERENCEDATA_REFERENCETYPES,
+  REFERENCEDATA_DISTRIBUTIONTYPE
+} from '../../redux/modules/referenceData';
 
 const renderPublished = datasetItem => {
   if (!datasetItem) {
@@ -114,33 +98,15 @@ const renderQuality = datasetItem => {
   );
 };
 
-const renderDatasetInfo = (
-  datasetItem,
-  referencedItems,
-  referenceTypeItems
-) => {
+const renderDatasetInfo = (datasetItem, referencedItems, referenceData) => {
   if (!datasetItem) {
     return null;
   }
 
   return (
     <DatasetInfo
-      issued={_.get(datasetItem, 'issued')}
-      accrualPeriodicity={getTranslateText(
-        _.get(datasetItem, ['accrualPeriodicity', 'prefLabel'])
-      )}
-      modified={_.get(datasetItem, 'modified')}
-      provenance={getTranslateText(
-        _.get(datasetItem, ['provenance', 'prefLabel'])
-      )}
-      hasCurrentnessAnnotation={getTranslateText(
-        _.get(datasetItem, ['hasCurrentnessAnnotation', 'hasBody'])
-      )}
-      spatial={_.get(datasetItem, 'spatial')}
-      temporal={_.get(datasetItem, 'temporal')}
-      language={_.get(datasetItem, 'language')}
-      references={_.get(datasetItem, 'references')}
-      referenceTypeItems={referenceTypeItems}
+      datasetItem={datasetItem}
+      referenceData={referenceData}
       referencedItems={referencedItems}
     />
   );
@@ -179,14 +145,22 @@ const renderContactPoint = (uri, organizationName, email, phone) => {
   );
 };
 
-const renderContactPoints = contactPoint => {
-  if (!contactPoint) {
+const shouldRenderContactPoints = dataset => {
+  const contactPoints = _.get(dataset, 'contactPoint');
+  return (
+    contactPoints && Array.isArray(contactPoints) && contactPoints.length > 0
+  );
+};
+
+const renderContactPoints = dataset => {
+  if (!shouldRenderContactPoints(dataset)) {
     return null;
   }
+  const contactPoints = _.get(dataset, 'contactPoint', []);
 
   return (
     <ListRegular title={localization.contactInfo}>
-      {contactPoint.map(item =>
+      {contactPoints.map(item =>
         renderContactPoint(
           _.get(item, 'hasURL'),
           _.get(item, 'organizationUnit'),
@@ -232,17 +206,12 @@ const renderKeywords = keyword => {
   }
   return (
     <ListRegular title={localization.dataset.keyword}>
-      <div className="row list-regular--item">{keywordItems(keyword)}</div>
+      <div className="d-flex list-regular--item">{keywordItems(keyword)}</div>
     </ListRegular>
   );
 };
 
-const renderDistribution = (
-  heading,
-  distribution,
-  openLicenseItems,
-  distributionTypeItems
-) => {
+const renderDistribution = (heading, distribution, referenceData) => {
   if (!distribution) {
     return null;
   }
@@ -257,8 +226,7 @@ const renderDistribution = (
         conformsTo={item.conformsTo}
         page={item.page}
         type={item.type}
-        openLicenseItems={openLicenseItems}
-        distributionTypeItems={distributionTypeItems}
+        referenceData={referenceData}
         defaultopenCollapse={!!(size === 1)}
       />
     ));
@@ -322,7 +290,7 @@ const renderStickyMenu = datasetItem => {
       prefLabel: localization.dataset.keyword
     });
   }
-  if (_.get(datasetItem, 'contactPoint')) {
+  if (shouldRenderContactPoints(datasetItem)) {
     menuItems.push({
       name: localization.contactInfo,
       prefLabel: localization.contactInfo
@@ -332,16 +300,10 @@ const renderStickyMenu = datasetItem => {
 };
 
 export const DatasetDetailsPage = props => {
-  props.fetchDistributionTypeIfNeeded();
-  props.fetchReferenceTypesIfNeeded();
+  props.fetchReferenceDataIfNeeded(REFERENCEDATA_REFERENCETYPES);
+  props.fetchReferenceDataIfNeeded(REFERENCEDATA_DISTRIBUTIONTYPE);
 
-  const {
-    datasetItem,
-    referencedItems,
-    referenceTypeItems,
-    openLicenseItems,
-    distributionTypeItems
-  } = props;
+  const { datasetItem, referencedItems, referenceData } = props;
 
   if (!datasetItem) {
     return null;
@@ -363,7 +325,7 @@ export const DatasetDetailsPage = props => {
           <div className="col-12 col-lg-8">
             <DocumentMeta {...meta} />
 
-            {renderDatasetDescription(datasetItem)}
+            <DatasetDescription datasetItem={datasetItem} />
 
             {renderPublished(datasetItem)}
 
@@ -372,30 +334,24 @@ export const DatasetDetailsPage = props => {
             {renderDistribution(
               localization.dataset.distributions,
               _.get(datasetItem, 'distribution'),
-              openLicenseItems,
-              distributionTypeItems
+              referenceData
             )}
 
             {renderDistribution(
               localization.dataset.sample,
               _.get(datasetItem, 'sample'),
-              openLicenseItems,
-              distributionTypeItems
+              referenceData
             )}
 
             {renderQuality(datasetItem)}
 
-            {renderDatasetInfo(
-              datasetItem,
-              referencedItems,
-              referenceTypeItems
-            )}
+            {renderDatasetInfo(datasetItem, referencedItems, referenceData)}
 
             {renderSubjects(_.get(datasetItem, 'subject'))}
 
             {renderKeywords(_.get(datasetItem, 'keyword'))}
 
-            {renderContactPoints(_.get(datasetItem, 'contactPoint'))}
+            {renderContactPoints(datasetItem)}
 
             <div style={{ height: '75vh' }} />
           </div>
@@ -408,17 +364,13 @@ export const DatasetDetailsPage = props => {
 DatasetDetailsPage.defaultProps = {
   datasetItem: null,
   referencedItems: null,
-  distributionTypeItems: null,
-  referenceTypeItems: null,
-  fetchDistributionTypeIfNeeded: () => {},
-  fetchReferenceTypesIfNeeded: () => {}
+  referenceData: null,
+  fetchReferenceDataIfNeeded: () => {}
 };
 
 DatasetDetailsPage.propTypes = {
   datasetItem: PropTypes.object,
   referencedItems: PropTypes.array,
-  distributionTypeItems: PropTypes.array,
-  referenceTypeItems: PropTypes.array,
-  fetchDistributionTypeIfNeeded: PropTypes.func,
-  fetchReferenceTypesIfNeeded: PropTypes.func
+  referenceData: PropTypes.object,
+  fetchReferenceDataIfNeeded: PropTypes.func
 };

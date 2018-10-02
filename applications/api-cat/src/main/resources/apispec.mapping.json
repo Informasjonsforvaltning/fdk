@@ -62,6 +62,10 @@
       },
       "openApi": {
         "enabled": "false"
+      },
+      "provenanceSort": {
+        "type": "string",
+        "index": "not_analyzed"
       }
     }
   }

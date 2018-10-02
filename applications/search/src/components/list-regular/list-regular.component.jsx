@@ -10,7 +10,7 @@ export const ListRegular = props => {
       name={title}
     >
       {title && (
-        <div className="row list-regular--item">
+        <div className="list-regular--item">
           <h3>{title}</h3>
         </div>
       )}

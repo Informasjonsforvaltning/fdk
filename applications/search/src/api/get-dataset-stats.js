@@ -11,10 +11,6 @@ function getFromBucketArray(data, aggregation, key) {
   return _.get(bucket, 'count', 0);
 }
 
-function getFromBucketKeyed(data, aggregation, key) {
-  return _.get(data, ['aggregations', aggregation, 'buckets', key, 'count'], 0);
-}
-
 function getFromAggregation(data, aggregation) {
   return _.get(data, ['aggregations', aggregation, 'count'], 0);
 }
@@ -27,9 +23,9 @@ export function extractStats(data) {
     nonPublic: getFromBucketArray(data, 'accessRightsCount', 'NON_PUBLIC'),
     unknown: getFromBucketArray(data, 'accessRightsCount', 'UKJENT'),
     opendata: getFromAggregation(data, 'opendata'),
-    newLastWeek: getFromBucketKeyed(data, 'firstHarvested', 'last7days'),
-    newLastMonth: getFromBucketKeyed(data, 'firstHarvested', 'last30days'),
-    newLastYear: getFromBucketKeyed(data, 'firstHarvested', 'last365days'),
+    newLastWeek: getFromBucketArray(data, 'firstHarvested', 'last7days'),
+    newLastMonth: getFromBucketArray(data, 'firstHarvested', 'last30days'),
+    newLastYear: getFromBucketArray(data, 'firstHarvested', 'last365days'),
     distributions: getFromAggregation(data, 'distCount'),
     distOnPublicAccessCount: getFromAggregation(
       data,

@@ -113,20 +113,12 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
                   Object {
                     "buckets": Array [
                       Object {
+                        "count": 2,
+                        "key": "GOVE",
+                      },
+                      Object {
                         "count": 1,
                         "key": "AGRI",
-                      },
-                      Object {
-                        "count": 1,
-                        "key": "ECON",
-                      },
-                      Object {
-                        "count": 1,
-                        "key": "EDUC",
-                      },
-                      Object {
-                        "count": 1,
-                        "key": "ENER",
                       },
                       Object {
                         "count": 1,
@@ -134,27 +126,9 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
                       },
                       Object {
                         "count": 1,
-                        "key": "GOVE",
-                      },
-                      Object {
-                        "count": 1,
                         "key": "HEAL",
                       },
-                      Object {
-                        "count": 1,
-                        "key": "INTR",
-                      },
-                      Object {
-                        "count": 1,
-                        "key": "JUST",
-                      },
-                      Object {
-                        "count": 1,
-                        "key": "REGI",
-                      },
                     ],
-                    "doc_count_error_upper_bound": 0,
-                    "sum_other_doc_count": 0,
                   }
                 }
                 htmlKey={1}
@@ -168,12 +142,10 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
                   Object {
                     "buckets": Array [
                       Object {
-                        "count": 1,
+                        "count": 4,
                         "key": "PUBLIC",
                       },
                     ],
-                    "doc_count_error_upper_bound": 0,
-                    "sum_other_doc_count": 0,
                   }
                 }
                 htmlKey={2}
@@ -196,12 +168,10 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
                   Object {
                     "buckets": Array [
                       Object {
-                        "count": 1,
+                        "count": 4,
                         "key": "Ukjent",
                       },
                     ],
-                    "doc_count_error_upper_bound": 0,
-                    "sum_other_doc_count": 0,
                   }
                 }
                 htmlKey={3}
@@ -215,12 +185,10 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
                   Object {
                     "buckets": Array [
                       Object {
-                        "count": 1,
-                        "key": "VEDTAK",
+                        "count": 4,
+                        "key": "Ukjent",
                       },
                     ],
-                    "doc_count_error_upper_bound": 0,
-                    "sum_other_doc_count": 0,
                   }
                 }
                 htmlKey={4}
@@ -249,20 +217,12 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
             Object {
               "buckets": Array [
                 Object {
+                  "count": 2,
+                  "key": "GOVE",
+                },
+                Object {
                   "count": 1,
                   "key": "AGRI",
-                },
-                Object {
-                  "count": 1,
-                  "key": "ECON",
-                },
-                Object {
-                  "count": 1,
-                  "key": "EDUC",
-                },
-                Object {
-                  "count": 1,
-                  "key": "ENER",
                 },
                 Object {
                   "count": 1,
@@ -270,27 +230,9 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
                 },
                 Object {
                   "count": 1,
-                  "key": "GOVE",
-                },
-                Object {
-                  "count": 1,
                   "key": "HEAL",
                 },
-                Object {
-                  "count": 1,
-                  "key": "INTR",
-                },
-                Object {
-                  "count": 1,
-                  "key": "JUST",
-                },
-                Object {
-                  "count": 1,
-                  "key": "REGI",
-                },
               ],
-              "doc_count_error_upper_bound": 0,
-              "sum_other_doc_count": 0,
             }
           }
           htmlKey={1}
@@ -304,12 +246,10 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
             Object {
               "buckets": Array [
                 Object {
-                  "count": 1,
+                  "count": 4,
                   "key": "PUBLIC",
                 },
               ],
-              "doc_count_error_upper_bound": 0,
-              "sum_other_doc_count": 0,
             }
           }
           htmlKey={2}
@@ -332,12 +272,10 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
             Object {
               "buckets": Array [
                 Object {
-                  "count": 1,
+                  "count": 4,
                   "key": "Ukjent",
                 },
               ],
-              "doc_count_error_upper_bound": 0,
-              "sum_other_doc_count": 0,
             }
           }
           htmlKey={3}
@@ -351,12 +289,10 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
             Object {
               "buckets": Array [
                 Object {
-                  "count": 1,
-                  "key": "VEDTAK",
+                  "count": 4,
+                  "key": "Ukjent",
                 },
               ],
-              "doc_count_error_upper_bound": 0,
-              "sum_other_doc_count": 0,
             }
           }
           htmlKey={4}
@@ -370,15 +306,15 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
       className="col-12 col-lg-8"
     >
       <ErrorBoundary
-        key="b12e9e8d-3833-49e2-9f62-0f8fd877be05"
+        key="43dbbfe0-ae35-43dd-8411-2e8b1e9f9276"
       >
         <SearchHitItem
-          distributionTypeItems={null}
+          referenceData={null}
           result={
             Object {
-              "_id": "b12e9e8d-3833-49e2-9f62-0f8fd877be05",
+              "_id": "43dbbfe0-ae35-43dd-8411-2e8b1e9f9276",
               "_index": "dcat",
-              "_score": null,
+              "_score": 0.16897388,
               "_source": Object {
                 "accessRights": Object {
                   "code": "PUBLIC",
@@ -390,58 +326,379 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
                   "uri": "http://publications.europa.eu/resource/authority/access-right/PUBLIC",
                 },
                 "catalog": Object {
-                  "id": "910244132",
+                  "description": Object {
+                    "nb": "GeoNorge er den nasjonale katalogen for geografisk informasjon",
+                  },
+                  "issued": "2018-02-13T00:00:00+0100",
+                  "language": "http://publications.europa.eu/resource/authority/language/NOR",
+                  "modified": "2018-01-19T00:00:00+0100",
                   "publisher": Object {
-                    "id": "910244132",
-                    "name": "RAMSUND OG ROGNAN REVISJON",
-                    "orgPath": "/ANNET/910244132",
+                    "id": "971040238",
+                    "naeringskode": Object {
+                      "code": "71.123",
+                      "prefLabel": Object {
+                        "no": "Kart og oppmåling",
+                      },
+                      "uri": "http://www.ssb.no/nace/sn2007/71.123",
+                    },
+                    "name": "STATENS KARTVERK",
+                    "orgPath": "/STAT/972417858/971040238",
+                    "organisasjonsform": "ORGL",
+                    "overordnetEnhet": "972417858",
+                    "prefLabel": Object {
+                      "no": "Kartverket",
+                    },
+                    "sektorkode": Object {
+                      "code": "1110",
+                      "prefLabel": Object {
+                        "no": "Statens forretningsdrift",
+                      },
+                      "uri": "http://www.brreg.no/sektorkode/1110",
+                    },
                     "type": "no.dcat.datastore.domain.dcat.Publisher",
-                    "uri": "http://data.brreg.no/enhetsregisteret/enhet/910244132",
-                    "valid": false,
+                    "uri": "http://data.brreg.no/enhetsregisteret/enhet/971040238",
+                    "valid": true,
                   },
+                  "themeTaxonomy": Array [
+                    "https://register.geonorge.no/subregister/metadata-kodelister/kartverket/nasjonal-temainndeling",
+                    "http://publications.europa.eu/mdr/resource/authority/data-theme/html/data-theme-eng.html",
+                    "http://www.eionet.europa.eu/gemet/inspire_themes",
+                  ],
                   "title": Object {
-                    "nb": "Datakatalog for RAMSUND OG ROGNAN REVISJON",
+                    "nb": "Geonorge",
                   },
-                  "uri": "http://brreg.no/catalogs/910244132",
+                  "uri": "http://www.geonorge.no/geonetwork",
                 },
-                "contactPoint": Array [],
+                "contactPoint": Array [
+                  Object {
+                    "email": "kundesenter@kartverket.no",
+                    "organizationName": "Kartverket",
+                    "uri": "https://register.geonorge.no/register/organisasjoner/kartverket",
+                  },
+                ],
                 "description": Object {
-                  "nb": "test",
+                  "nb": "Datasettet avgrenser område for virkeområdet til lov 6. juni 2009 nr. 35 om naturområder i Oslo og nærliggende kommuner (markaloven) som trådte i kraft 1. september 2009. Markalovens virkeområde er fastsatt i forskrift 4. september 2015 nr. 1032 om justering av markagrensen fastlegger markalovens geografiske virkeområde med tilhørende kart.",
                 },
                 "descriptionFormatted": Object {
-                  "nb": "test",
+                  "nb": "Datasettet avgrenser område for virkeområdet til lov 6. juni 2009 nr. 35 om naturområder i Oslo og nærliggende kommuner (markaloven) som trådte i kraft 1. september 2009. Markalovens virkeområde er fastsatt i forskrift 4. september 2015 nr. 1032 om justering av markagrensen fastlegger markalovens geografiske virkeområde med tilhørende kart.",
                 },
+                "distribution": Array [
+                  Object {
+                    "accessURL": Array [
+                      "https://kartkatalog.geonorge.no/metadata/uuid/45e9ba77-388c-40eb-87df-e34e9d9ab300",
+                    ],
+                    "description": Object {
+                      "nb": "Nedlastning gjennom Geonorge-portalen ved bruk av handlevognsfunksjonalitet",
+                    },
+                    "downloadURL": Array [],
+                    "format": Array [
+                      "GPX",
+                    ],
+                    "openLicense": false,
+                    "title": Object {
+                      "nb": "Geonorge nedlastning",
+                    },
+                    "type": "Nedlastbar fil",
+                    "uri": "https://kartkatalog.geonorge.no/Metadata/uuid/45e9ba77-388c-40eb-87df-e34e9d9ab300/GPX",
+                  },
+                  Object {
+                    "accessURL": Array [
+                      "https://wfs.geonorge.no/skwms1/wfs.markagrensa?service=wfs&request=getcapabilities",
+                    ],
+                    "description": Object {
+                      "en": "View Service (WFS)",
+                      "nb": "Karttjeneste som returnerer vektordata (OGC Web Feature Service)",
+                    },
+                    "downloadURL": Array [],
+                    "format": Array [
+                      "WFS",
+                    ],
+                    "openLicense": false,
+                    "title": Object {
+                      "en": "OGC:WFS",
+                      "nb": "WFS-tjeneste",
+                    },
+                    "uri": "https://kartkatalog.geonorge.no/Metadata/uuid/bd4c56e8-383f-4048-acd5-86aea32e457c",
+                  },
+                  Object {
+                    "accessURL": Array [
+                      "https://kartkatalog.geonorge.no/metadata/uuid/45e9ba77-388c-40eb-87df-e34e9d9ab300",
+                    ],
+                    "description": Object {
+                      "nb": "Nedlastning gjennom Geonorge-portalen ved bruk av handlevognsfunksjonalitet",
+                    },
+                    "downloadURL": Array [],
+                    "format": Array [
+                      "GML",
+                    ],
+                    "openLicense": false,
+                    "title": Object {
+                      "nb": "Geonorge nedlastning",
+                    },
+                    "uri": "https://kartkatalog.geonorge.no/Metadata/uuid/45e9ba77-388c-40eb-87df-e34e9d9ab300/GML",
+                  },
+                  Object {
+                    "accessURL": Array [
+                      "https://kartkatalog.geonorge.no/metadata/uuid/45e9ba77-388c-40eb-87df-e34e9d9ab300",
+                    ],
+                    "description": Object {
+                      "nb": "Nedlastning gjennom Geonorge-portalen ved bruk av handlevognsfunksjonalitet",
+                    },
+                    "downloadURL": Array [],
+                    "format": Array [
+                      "ESRI Filgeodatabase",
+                    ],
+                    "openLicense": false,
+                    "title": Object {
+                      "nb": "Geonorge nedlastning",
+                    },
+                    "uri": "https://kartkatalog.geonorge.no/Metadata/uuid/45e9ba77-388c-40eb-87df-e34e9d9ab300/ESRI+Filgeodatabase",
+                  },
+                  Object {
+                    "accessURL": Array [
+                      "https://wms.geonorge.no/skwms1/wms.markagrensen?request=GetCapabilities&Service=WMS",
+                    ],
+                    "description": Object {
+                      "en": "View Service (WMS)",
+                      "nb": "Karttjeneste som returnerer kartbilder (Web Map Service)",
+                    },
+                    "downloadURL": Array [],
+                    "format": Array [
+                      "WMS",
+                    ],
+                    "openLicense": false,
+                    "title": Object {
+                      "en": "OGC:WMS",
+                      "nb": "WMS-tjeneste",
+                    },
+                    "uri": "https://kartkatalog.geonorge.no/Metadata/uuid/4d0fd462-aa69-4d49-b773-52382dc0e450",
+                  },
+                  Object {
+                    "accessURL": Array [
+                      "https://kartkatalog.geonorge.no/metadata/uuid/45e9ba77-388c-40eb-87df-e34e9d9ab300",
+                    ],
+                    "description": Object {
+                      "nb": "Nedlastning gjennom Geonorge-portalen ved bruk av handlevognsfunksjonalitet",
+                    },
+                    "downloadURL": Array [],
+                    "format": Array [
+                      "postgis",
+                    ],
+                    "openLicense": false,
+                    "title": Object {
+                      "nb": "Geonorge nedlastning",
+                    },
+                    "uri": "https://kartkatalog.geonorge.no/Metadata/uuid/45e9ba77-388c-40eb-87df-e34e9d9ab300/postgis",
+                  },
+                  Object {
+                    "accessURL": Array [
+                      "https://kartkatalog.geonorge.no/metadata/uuid/45e9ba77-388c-40eb-87df-e34e9d9ab300",
+                    ],
+                    "description": Object {
+                      "nb": "Nedlastning gjennom Geonorge-portalen ved bruk av handlevognsfunksjonalitet",
+                    },
+                    "downloadURL": Array [],
+                    "format": Array [
+                      "SOSI",
+                    ],
+                    "openLicense": false,
+                    "title": Object {
+                      "nb": "Geonorge nedlastning",
+                    },
+                    "uri": "https://kartkatalog.geonorge.no/Metadata/uuid/45e9ba77-388c-40eb-87df-e34e9d9ab300/SOSI",
+                  },
+                ],
                 "harvest": Object {
                   "changed": Array [
-                    "2018-04-13T08:26:27+0200",
+                    "2018-05-07T01:04:10+0200",
+                    "2018-05-07T13:59:37+0200",
+                    "2018-06-12T02:12:48+0200",
+                    "2018-06-12T10:08:32+0200",
+                    "2018-06-12T14:13:21+0200",
+                    "2018-06-12T15:58:34+0200",
+                    "2018-06-13T01:10:48+0200",
+                    "2018-06-14T01:10:46+0200",
+                    "2018-06-15T01:10:47+0200",
+                    "2018-06-15T14:42:44+0200",
+                    "2018-06-16T01:10:45+0200",
+                    "2018-06-17T01:10:45+0200",
+                    "2018-06-18T01:10:46+0200",
+                    "2018-06-19T01:10:45+0200",
+                    "2018-06-20T01:10:45+0200",
+                    "2018-06-25T16:24:34+0200",
+                    "2018-06-26T01:00:16+0200",
+                    "2018-06-27T01:00:15+0200",
+                    "2018-06-28T01:00:15+0200",
+                    "2018-06-29T01:00:19+0200",
+                    "2018-06-30T01:00:16+0200",
+                    "2018-07-01T01:00:14+0200",
+                    "2018-07-02T01:00:16+0200",
+                    "2018-07-02T15:41:19+0200",
+                    "2018-07-03T01:00:18+0200",
+                    "2018-07-04T01:00:16+0200",
+                    "2018-07-05T01:00:17+0200",
+                    "2018-07-06T01:00:20+0200",
+                    "2018-07-07T01:00:14+0200",
+                    "2018-07-08T01:00:15+0200",
+                    "2018-07-09T01:00:15+0200",
+                    "2018-07-10T01:00:21+0200",
+                    "2018-07-13T01:00:16+0200",
+                    "2018-07-14T01:00:12+0200",
+                    "2018-07-15T01:00:15+0200",
+                    "2018-07-16T01:00:13+0200",
+                    "2018-07-17T01:00:15+0200",
+                    "2018-07-18T01:00:16+0200",
+                    "2018-07-19T01:00:13+0200",
+                    "2018-07-20T01:00:26+0200",
+                    "2018-07-21T01:00:12+0200",
+                    "2018-07-22T01:00:12+0200",
+                    "2018-07-23T01:00:16+0200",
+                    "2018-07-24T01:00:12+0200",
+                    "2018-07-25T01:00:12+0200",
+                    "2018-07-26T01:00:14+0200",
+                    "2018-07-27T01:00:14+0200",
+                    "2018-07-28T01:00:15+0200",
+                    "2018-07-29T01:00:12+0200",
+                    "2018-07-30T01:00:15+0200",
+                    "2018-07-31T01:00:14+0200",
+                    "2018-08-01T01:00:16+0200",
+                    "2018-08-02T01:00:15+0200",
+                    "2018-08-03T01:00:15+0200",
+                    "2018-08-04T01:00:12+0200",
+                    "2018-08-05T01:00:15+0200",
+                    "2018-08-06T01:00:15+0200",
+                    "2018-08-07T01:00:14+0200",
+                    "2018-08-08T01:00:19+0200",
+                    "2018-08-09T01:00:15+0200",
+                    "2018-08-10T01:00:15+0200",
+                    "2018-08-11T01:00:12+0200",
+                    "2018-08-12T01:00:15+0200",
+                    "2018-08-13T01:00:16+0200",
+                    "2018-08-14T01:00:20+0200",
+                    "2018-08-15T01:00:13+0200",
+                    "2018-08-30T12:49:49+0200",
                   ],
-                  "firstHarvested": "2018-04-12T17:18:30+0200",
-                  "lastChanged": "2018-04-13T08:26:27+0200",
-                  "lastHarvested": "2018-04-13T08:26:27+0200",
+                  "firstHarvested": "2017-12-18T15:51:21+0100",
+                  "lastChanged": "2018-08-30T12:49:49+0200",
+                  "lastHarvested": "2018-09-27T01:00:16+0200",
                 },
-                "id": "b12e9e8d-3833-49e2-9f62-0f8fd877be05",
-                "landingPage": Array [],
-                "provenance": Object {
-                  "code": "NASJONAL",
-                  "prefLabel": Object {
-                    "en": "National Building Block",
-                    "nb": "Nasjonal felleskomponent",
-                    "nn": "Nasjonal felleskomponent",
+                "id": "43dbbfe0-ae35-43dd-8411-2e8b1e9f9276",
+                "identifier": Array [
+                  "45e9ba77-388c-40eb-87df-e34e9d9ab300",
+                ],
+                "keyword": Array [
+                  Object {
+                    "nb": "Sørmarka",
                   },
-                  "uri": "http://data.brreg.no/datakatalog/provinens/nasjonal",
-                },
+                  Object {
+                    "nb": "Gjelleråsmarka",
+                  },
+                  Object {
+                    "nb": "fellesDatakatalog",
+                  },
+                  Object {
+                    "nb": "Krokskogen",
+                  },
+                  Object {
+                    "nb": "Markagrensa",
+                  },
+                  Object {
+                    "nb": "forskriftsreferanse",
+                  },
+                  Object {
+                    "nb": "Vardåsmarka",
+                  },
+                  Object {
+                    "nb": "LovVirkeområde",
+                  },
+                  Object {
+                    "nb": "Østmarka",
+                  },
+                  Object {
+                    "nb": "grense",
+                  },
+                  Object {
+                    "nb": "Markaloven",
+                  },
+                  Object {
+                    "nb": "Nordmarka",
+                  },
+                  Object {
+                    "nb": "Norge digitalt",
+                  },
+                  Object {
+                    "nb": "Plan",
+                  },
+                  Object {
+                    "nb": "Bærumsmarka",
+                  },
+                  Object {
+                    "nb": "Lillomarka",
+                  },
+                  Object {
+                    "nb": "Vestmarka",
+                  },
+                  Object {
+                    "nb": "lovreferanse",
+                  },
+                  Object {
+                    "nb": "Det offentlige kartgrunnlaget",
+                  },
+                  Object {
+                    "nb": "grensestatus",
+                  },
+                  Object {
+                    "nb": "Marka",
+                  },
+                  Object {
+                    "nb": "geodataloven",
+                  },
+                  Object {
+                    "nb": "Kjekstadmarka",
+                  },
+                  Object {
+                    "nb": "Romeriksåsene",
+                  },
+                  Object {
+                    "nb": "Oslomarka",
+                  },
+                  Object {
+                    "nb": "Markagrensen",
+                  },
+                ],
+                "landingPage": Array [],
+                "provenanceSort": "9UKJENT",
                 "publisher": Object {
-                  "id": "910244132",
-                  "name": "RAMSUND OG ROGNAN REVISJON",
-                  "orgPath": "/ANNET/910244132",
+                  "id": "971040238",
+                  "naeringskode": Object {
+                    "code": "71.123",
+                    "prefLabel": Object {
+                      "no": "Kart og oppmåling",
+                    },
+                    "uri": "http://www.ssb.no/nace/sn2007/71.123",
+                  },
+                  "name": "STATENS KARTVERK",
+                  "orgPath": "/STAT/972417858/971040238",
+                  "organisasjonsform": "ORGL",
+                  "overordnetEnhet": "972417858",
+                  "prefLabel": Object {
+                    "no": "Kartverket",
+                  },
+                  "sektorkode": Object {
+                    "code": "1110",
+                    "prefLabel": Object {
+                      "no": "Statens forretningsdrift",
+                    },
+                    "uri": "http://www.brreg.no/sektorkode/1110",
+                  },
                   "type": "no.dcat.datastore.domain.dcat.Publisher",
-                  "uri": "http://data.brreg.no/enhetsregisteret/enhet/910244132",
-                  "valid": false,
+                  "uri": "http://data.brreg.no/enhetsregisteret/enhet/971040238",
+                  "valid": true,
                 },
-                "source": "A",
+                "source": "B",
                 "theme": Array [
                   Object {
-                    "code": "EDUC",
+                    "code": "GOVE",
                     "conceptSchema": Object {
                       "id": "http://publications.europa.eu/resource/authority/data-theme",
                       "title": Object {
@@ -450,84 +707,967 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
                       "versioninfo": "20160921-0",
                       "versionnumber": "20160921-0",
                     },
-                    "id": "http://publications.europa.eu/resource/authority/data-theme/EDUC",
+                    "id": "http://publications.europa.eu/resource/authority/data-theme/GOVE",
                     "startUse": "2015-10-01",
                     "title": Object {
-                      "bg": "Образование, култура и спорт",
-                      "cs": "Vzdělávání, kultura a sport",
-                      "da": "Uddannelse, kultur og sport",
-                      "de": "Bildung, Kultur und Sport",
-                      "el": "Παιδεία, πολιτιστικά θέματα και αθλητισμός",
-                      "en": "Education, culture and sport",
-                      "es": "Educación, cultura y deportes",
-                      "et": "Haridus, kultuur ja sport",
-                      "fi": "Koulutus, kulttuuri ja urheilu",
-                      "fr": "Éducation, culture et sport",
-                      "ga": "Oideachas, cultúr agus spórt",
-                      "hr": "Obrazovanje, kultura i sport",
-                      "hu": "Oktatás, kultúra és sport",
-                      "it": "Istruzione, cultura e sport",
-                      "lt": "Švietimas, kultūra ir sportas",
-                      "lv": "Izglītība, kultūra un sports",
-                      "mt": "Edukazzjoni, kultura u sport",
-                      "nb": "Utdanning, kultur og sport",
-                      "nl": "Onderwijs, cultuur en sport",
-                      "pl": "Edukacja, kultura i sport",
-                      "pt": "Educação, cultura e desporto",
-                      "ro": "Educaţie, cultură şi sport",
-                      "sk": "Vzdelávanie, kultúra a šport",
-                      "sl": "Izobraževanje, kultura in šport",
-                      "sv": "Utbildning, kultur och sport",
+                      "bg": "Правителство и публичен сектор",
+                      "cs": "Vláda a veřejný sektor",
+                      "da": "Regeringen og den offentlige sektor",
+                      "de": "Regierung und öffentlicher Sektor",
+                      "el": "Κυβέρνηση και δημόσιος τομέας",
+                      "en": "Government and public sector",
+                      "es": "Gobierno y sector público",
+                      "et": "Valitsus ja avalik sektor",
+                      "fi": "Valtioneuvosto ja julkinen sektori",
+                      "fr": "Gouvernement et secteur public",
+                      "ga": "Rialtas agus earnáil phoiblí",
+                      "hr": "Vlada i javni sektor",
+                      "hu": "Kormányzat és közszféra",
+                      "it": "Governo e settore pubblico",
+                      "lt": "Vyriausybė ir viešasis sektorius",
+                      "lv": "Valdība un sabiedriskais sektors",
+                      "mt": "Gvern u settur pubbliku",
+                      "nb": "Forvaltning og offentlig sektor",
+                      "nl": "Overheid en publieke sector",
+                      "pl": "Rząd i sektor publiczny",
+                      "pt": "Governo e setor público",
+                      "ro": "Guvern şi sector public",
+                      "sk": "Vláda a verejný sektor",
+                      "sl": "Vlada in javni sektor",
+                      "sv": "Regeringen och den offentliga sektorn",
                     },
                   },
                 ],
                 "title": Object {
-                  "nb": "test ois",
+                  "nb": "Markagrensen",
                 },
-                "uri": "http://brreg.no/catalogs/910244132/datasets/633a0af6-5c88-4027-9f58-79f487a80642",
+                "uri": "https://kartkatalog.geonorge.no/Metadata/uuid/45e9ba77-388c-40eb-87df-e34e9d9ab300",
               },
               "_type": "dataset",
-              "sort": Array [
-                "nasjonal",
-                "a",
-                1523600787000,
-              ],
             }
           }
         />
       </ErrorBoundary>
-    </section>
-    <section
-      className="col-12 col-lg-8 offset-lg-4 d-flex justify-content-center"
-    >
-      <span
-        aria-hidden="false"
-        className="uu-invisible"
+      <ErrorBoundary
+        key="2f82c1ab-7e7d-4f06-80b9-95750bffb6fd"
       >
-        Sidepaginering.
-      </span>
-      <PaginationBoxView
-        activeClassName="active"
-        breakClassName="break-me"
-        breakLabel={
-          <span>
-            ...
-          </span>
-        }
-        containerClassName="pagination"
-        disableInitialCallback={true}
-        disabledClassName="disabled"
-        initialPage={0}
-        marginPagesDisplayed={1}
-        nextClassName="next"
-        nextLabel="Neste side"
-        onPageChange={[MockFunction]}
-        pageCount={14}
-        pageRangeDisplayed={2}
-        previousClassName="previous"
-        previousLabel="Forrige side"
-        subContainerClassName="pages pagination"
-      />
+        <SearchHitItem
+          referenceData={null}
+          result={
+            Object {
+              "_id": "2f82c1ab-7e7d-4f06-80b9-95750bffb6fd",
+              "_index": "dcat",
+              "_score": 0.07064194,
+              "_source": Object {
+                "accessRights": Object {
+                  "code": "PUBLIC",
+                  "prefLabel": Object {
+                    "en": "Public",
+                    "nb": "Offentlig",
+                    "nn": "Offentlig",
+                  },
+                  "uri": "http://publications.europa.eu/resource/authority/access-right/PUBLIC",
+                },
+                "catalog": Object {
+                  "description": Object {
+                    "nb": "GeoNorge er den nasjonale katalogen for geografisk informasjon",
+                  },
+                  "issued": "2018-02-13T00:00:00+0100",
+                  "language": "http://publications.europa.eu/resource/authority/language/NOR",
+                  "modified": "2018-01-19T00:00:00+0100",
+                  "publisher": Object {
+                    "id": "971040238",
+                    "naeringskode": Object {
+                      "code": "71.123",
+                      "prefLabel": Object {
+                        "no": "Kart og oppmåling",
+                      },
+                      "uri": "http://www.ssb.no/nace/sn2007/71.123",
+                    },
+                    "name": "STATENS KARTVERK",
+                    "orgPath": "/STAT/972417858/971040238",
+                    "organisasjonsform": "ORGL",
+                    "overordnetEnhet": "972417858",
+                    "prefLabel": Object {
+                      "no": "Kartverket",
+                    },
+                    "sektorkode": Object {
+                      "code": "1110",
+                      "prefLabel": Object {
+                        "no": "Statens forretningsdrift",
+                      },
+                      "uri": "http://www.brreg.no/sektorkode/1110",
+                    },
+                    "type": "no.dcat.datastore.domain.dcat.Publisher",
+                    "uri": "http://data.brreg.no/enhetsregisteret/enhet/971040238",
+                    "valid": true,
+                  },
+                  "themeTaxonomy": Array [
+                    "https://register.geonorge.no/subregister/metadata-kodelister/kartverket/nasjonal-temainndeling",
+                    "http://publications.europa.eu/mdr/resource/authority/data-theme/html/data-theme-eng.html",
+                    "http://www.eionet.europa.eu/gemet/inspire_themes",
+                  ],
+                  "title": Object {
+                    "nb": "Geonorge",
+                  },
+                  "uri": "http://www.geonorge.no/geonetwork",
+                },
+                "contactPoint": Array [
+                  Object {
+                    "email": "kundesenter@kartverket.no",
+                    "organizationName": "Kartverket",
+                    "uri": "https://register.geonorge.no/register/organisasjoner/kartverket",
+                  },
+                ],
+                "description": Object {
+                  "nb": "Arealstatistikken viser utstrekning (oppgitt i kvadratkilometer) for fylker, kommuner og grunnkretser fordelt på ulike arealtyper som havflate, innsjø, skog, dyrket mark, tettbebyggelse, med flere.",
+                },
+                "descriptionFormatted": Object {
+                  "nb": "Arealstatistikken viser utstrekning (oppgitt i kvadratkilometer) for fylker, kommuner og grunnkretser fordelt på ulike arealtyper som havflate, innsjø, skog, dyrket mark, tettbebyggelse, med flere.",
+                },
+                "distribution": Array [
+                  Object {
+                    "accessURL": Array [
+                      "https://kartkatalog.geonorge.no/metadata/uuid/ce353b52-910e-404b-8a61-f7805b021bc7",
+                    ],
+                    "description": Object {
+                      "nb": "Webside eller webløsning hvor en etat tibyr nedlastning av data direkte eller gjennom ulike grafiske brukergrensesnitt",
+                    },
+                    "downloadURL": Array [],
+                    "format": Array [
+                      "Microsoft Excel",
+                    ],
+                    "openLicense": false,
+                    "title": Object {
+                      "nb": "Egen nedlastningsside",
+                    },
+                    "uri": "https://kartkatalog.geonorge.no/Metadata/uuid/ce353b52-910e-404b-8a61-f7805b021bc7/Microsoft+Excel",
+                  },
+                ],
+                "harvest": Object {
+                  "changed": Array [
+                    "2018-05-07T01:04:10+0200",
+                    "2018-05-07T13:59:37+0200",
+                    "2018-06-12T02:12:48+0200",
+                    "2018-06-12T10:08:32+0200",
+                    "2018-06-12T14:13:21+0200",
+                    "2018-06-12T15:58:34+0200",
+                    "2018-06-13T01:10:48+0200",
+                    "2018-06-14T01:10:46+0200",
+                    "2018-06-15T01:10:47+0200",
+                    "2018-06-15T14:42:44+0200",
+                    "2018-06-16T01:10:45+0200",
+                    "2018-06-17T01:10:45+0200",
+                    "2018-06-18T01:10:46+0200",
+                    "2018-06-19T01:10:45+0200",
+                    "2018-06-20T01:10:45+0200",
+                    "2018-06-25T16:24:34+0200",
+                    "2018-06-26T01:00:16+0200",
+                    "2018-06-27T01:00:15+0200",
+                    "2018-06-28T01:00:15+0200",
+                    "2018-06-29T01:00:19+0200",
+                    "2018-06-30T01:00:16+0200",
+                    "2018-07-01T01:00:14+0200",
+                    "2018-07-02T01:00:16+0200",
+                    "2018-07-02T15:41:19+0200",
+                    "2018-07-03T01:00:18+0200",
+                    "2018-07-04T01:00:16+0200",
+                    "2018-07-05T01:00:17+0200",
+                    "2018-07-06T01:00:20+0200",
+                    "2018-07-07T01:00:14+0200",
+                    "2018-07-08T01:00:15+0200",
+                    "2018-07-09T01:00:15+0200",
+                    "2018-07-10T01:00:21+0200",
+                    "2018-07-13T01:00:16+0200",
+                    "2018-07-14T01:00:12+0200",
+                    "2018-07-15T01:00:15+0200",
+                    "2018-07-16T01:00:13+0200",
+                    "2018-07-17T01:00:15+0200",
+                    "2018-07-18T01:00:16+0200",
+                    "2018-07-19T01:00:13+0200",
+                    "2018-07-20T01:00:26+0200",
+                    "2018-07-21T01:00:12+0200",
+                    "2018-07-22T01:00:12+0200",
+                    "2018-07-23T01:00:16+0200",
+                    "2018-07-24T01:00:12+0200",
+                    "2018-07-25T01:00:12+0200",
+                    "2018-07-26T01:00:14+0200",
+                    "2018-07-27T01:00:14+0200",
+                    "2018-07-28T01:00:15+0200",
+                    "2018-07-29T01:00:12+0200",
+                    "2018-07-30T01:00:15+0200",
+                    "2018-07-31T01:00:14+0200",
+                    "2018-08-01T01:00:16+0200",
+                    "2018-08-02T01:00:15+0200",
+                    "2018-08-03T01:00:15+0200",
+                    "2018-08-04T01:00:12+0200",
+                    "2018-08-05T01:00:15+0200",
+                    "2018-08-06T01:00:15+0200",
+                    "2018-08-07T01:00:14+0200",
+                    "2018-08-08T01:00:19+0200",
+                    "2018-08-09T01:00:15+0200",
+                    "2018-08-10T01:00:15+0200",
+                    "2018-08-11T01:00:12+0200",
+                    "2018-08-12T01:00:15+0200",
+                    "2018-08-13T01:00:16+0200",
+                    "2018-08-14T01:00:20+0200",
+                    "2018-08-15T01:00:13+0200",
+                    "2018-08-30T12:49:49+0200",
+                  ],
+                  "firstHarvested": "2017-12-18T15:51:21+0100",
+                  "lastChanged": "2018-08-30T12:49:49+0200",
+                  "lastHarvested": "2018-09-27T01:00:16+0200",
+                },
+                "id": "2f82c1ab-7e7d-4f06-80b9-95750bffb6fd",
+                "identifier": Array [
+                  "ce353b52-910e-404b-8a61-f7805b021bc7",
+                ],
+                "keyword": Array [
+                  Object {
+                    "nb": "Statistikk",
+                  },
+                  Object {
+                    "nb": "fellesDatakatalog",
+                  },
+                  Object {
+                    "nb": "Arealstatistikk",
+                  },
+                  Object {
+                    "nb": "Land cover",
+                  },
+                  Object {
+                    "nb": "Areal",
+                  },
+                  Object {
+                    "nb": "Norge",
+                  },
+                  Object {
+                    "nb": "Statistikk over Norge",
+                  },
+                  Object {
+                    "nb": "Åpne data",
+                  },
+                  Object {
+                    "nb": "Plan",
+                  },
+                ],
+                "landingPage": Array [],
+                "provenanceSort": "9UKJENT",
+                "publisher": Object {
+                  "id": "971040238",
+                  "naeringskode": Object {
+                    "code": "71.123",
+                    "prefLabel": Object {
+                      "no": "Kart og oppmåling",
+                    },
+                    "uri": "http://www.ssb.no/nace/sn2007/71.123",
+                  },
+                  "name": "STATENS KARTVERK",
+                  "orgPath": "/STAT/972417858/971040238",
+                  "organisasjonsform": "ORGL",
+                  "overordnetEnhet": "972417858",
+                  "prefLabel": Object {
+                    "no": "Kartverket",
+                  },
+                  "sektorkode": Object {
+                    "code": "1110",
+                    "prefLabel": Object {
+                      "no": "Statens forretningsdrift",
+                    },
+                    "uri": "http://www.brreg.no/sektorkode/1110",
+                  },
+                  "type": "no.dcat.datastore.domain.dcat.Publisher",
+                  "uri": "http://data.brreg.no/enhetsregisteret/enhet/971040238",
+                  "valid": true,
+                },
+                "source": "B",
+                "theme": Array [
+                  Object {
+                    "code": "ENVI",
+                    "conceptSchema": Object {
+                      "id": "http://publications.europa.eu/resource/authority/data-theme",
+                      "title": Object {
+                        "en": "Dataset types Named Authority List",
+                      },
+                      "versioninfo": "20160921-0",
+                      "versionnumber": "20160921-0",
+                    },
+                    "id": "http://publications.europa.eu/resource/authority/data-theme/ENVI",
+                    "startUse": "2015-10-01",
+                    "title": Object {
+                      "bg": "Околна среда",
+                      "cs": "Životní prostředí",
+                      "da": "Miljø",
+                      "de": "Umwelt",
+                      "el": "Περιβάλλον",
+                      "en": "Environment",
+                      "es": "Medio ambiente",
+                      "et": "Keskkond",
+                      "fi": "Ympäristö",
+                      "fr": "Environnement",
+                      "ga": "Comhshaol",
+                      "hr": "Okoliš",
+                      "hu": "Környezet",
+                      "it": "Ambiente",
+                      "lt": "Aplinka",
+                      "lv": "Vide",
+                      "mt": "Ambjent",
+                      "nb": "Miljø",
+                      "nl": "Milieu",
+                      "pl": "Środowisko",
+                      "pt": "Ambiente",
+                      "ro": "Mediu",
+                      "sk": "Životné prostredie",
+                      "sl": "Okolje",
+                      "sv": "Miljö",
+                    },
+                  },
+                  Object {
+                    "code": "GOVE",
+                    "conceptSchema": Object {
+                      "id": "http://publications.europa.eu/resource/authority/data-theme",
+                      "title": Object {
+                        "en": "Dataset types Named Authority List",
+                      },
+                      "versioninfo": "20160921-0",
+                      "versionnumber": "20160921-0",
+                    },
+                    "id": "http://publications.europa.eu/resource/authority/data-theme/GOVE",
+                    "startUse": "2015-10-01",
+                    "title": Object {
+                      "bg": "Правителство и публичен сектор",
+                      "cs": "Vláda a veřejný sektor",
+                      "da": "Regeringen og den offentlige sektor",
+                      "de": "Regierung und öffentlicher Sektor",
+                      "el": "Κυβέρνηση και δημόσιος τομέας",
+                      "en": "Government and public sector",
+                      "es": "Gobierno y sector público",
+                      "et": "Valitsus ja avalik sektor",
+                      "fi": "Valtioneuvosto ja julkinen sektori",
+                      "fr": "Gouvernement et secteur public",
+                      "ga": "Rialtas agus earnáil phoiblí",
+                      "hr": "Vlada i javni sektor",
+                      "hu": "Kormányzat és közszféra",
+                      "it": "Governo e settore pubblico",
+                      "lt": "Vyriausybė ir viešasis sektorius",
+                      "lv": "Valdība un sabiedriskais sektors",
+                      "mt": "Gvern u settur pubbliku",
+                      "nb": "Forvaltning og offentlig sektor",
+                      "nl": "Overheid en publieke sector",
+                      "pl": "Rząd i sektor publiczny",
+                      "pt": "Governo e setor público",
+                      "ro": "Guvern şi sector public",
+                      "sk": "Vláda a verejný sektor",
+                      "sl": "Vlada in javni sektor",
+                      "sv": "Regeringen och den offentliga sektorn",
+                    },
+                  },
+                ],
+                "title": Object {
+                  "nb": "Arealstatistikk for Norge",
+                },
+                "uri": "https://kartkatalog.geonorge.no/Metadata/uuid/ce353b52-910e-404b-8a61-f7805b021bc7",
+              },
+              "_type": "dataset",
+            }
+          }
+        />
+      </ErrorBoundary>
+      <ErrorBoundary
+        key="ce318678-1b50-4068-8aa3-18e4c4683f61"
+      >
+        <SearchHitItem
+          referenceData={null}
+          result={
+            Object {
+              "_id": "ce318678-1b50-4068-8aa3-18e4c4683f61",
+              "_index": "dcat",
+              "_score": 0.039356172,
+              "_source": Object {
+                "accessRights": Object {
+                  "code": "PUBLIC",
+                  "prefLabel": Object {
+                    "en": "Public",
+                    "nb": "Offentlig",
+                    "nn": "Offentlig",
+                  },
+                  "uri": "http://publications.europa.eu/resource/authority/access-right/PUBLIC",
+                },
+                "catalog": Object {
+                  "description": Object {
+                    "nb": "GeoNorge er den nasjonale katalogen for geografisk informasjon",
+                  },
+                  "issued": "2018-02-13T00:00:00+0100",
+                  "language": "http://publications.europa.eu/resource/authority/language/NOR",
+                  "modified": "2018-01-19T00:00:00+0100",
+                  "publisher": Object {
+                    "id": "971040238",
+                    "naeringskode": Object {
+                      "code": "71.123",
+                      "prefLabel": Object {
+                        "no": "Kart og oppmåling",
+                      },
+                      "uri": "http://www.ssb.no/nace/sn2007/71.123",
+                    },
+                    "name": "STATENS KARTVERK",
+                    "orgPath": "/STAT/972417858/971040238",
+                    "organisasjonsform": "ORGL",
+                    "overordnetEnhet": "972417858",
+                    "prefLabel": Object {
+                      "no": "Kartverket",
+                    },
+                    "sektorkode": Object {
+                      "code": "1110",
+                      "prefLabel": Object {
+                        "no": "Statens forretningsdrift",
+                      },
+                      "uri": "http://www.brreg.no/sektorkode/1110",
+                    },
+                    "type": "no.dcat.datastore.domain.dcat.Publisher",
+                    "uri": "http://data.brreg.no/enhetsregisteret/enhet/971040238",
+                    "valid": true,
+                  },
+                  "themeTaxonomy": Array [
+                    "https://register.geonorge.no/subregister/metadata-kodelister/kartverket/nasjonal-temainndeling",
+                    "http://publications.europa.eu/mdr/resource/authority/data-theme/html/data-theme-eng.html",
+                    "http://www.eionet.europa.eu/gemet/inspire_themes",
+                  ],
+                  "title": Object {
+                    "nb": "Geonorge",
+                  },
+                  "uri": "http://www.geonorge.no/geonetwork",
+                },
+                "contactPoint": Array [
+                  Object {
+                    "email": "gisdrift@nibio.no",
+                    "organizationName": "Norsk institutt for bioøkonomi",
+                    "uri": "https://register.geonorge.no/register/organisasjoner/norsk-institutt-for-biookonomi",
+                  },
+                ],
+                "description": Object {
+                  "nb": "Jordressurs er et kartlag i datasettet Jordsmonn som viser dyrka mark inndelt i fire klasser hvor inndelingen er basert på enkelte jordsmonnegenskapers begrensende innvirkning på bruken av jorda. Egenskap som skal brukes til å fremstille kartlaget heter JR_KLASSE. Rundt halvparten av Norges fulldyrka og overflatedyrka jord er jordsmonnskartlagt, med hovedvekt på Sør-Østlandet, Trøndelag og Jæren. På enkelte steder er også også innmarksbeite kartlagt. Kartlaget er fremstilt i målestokk 1:5000 og er tilpasset bruk i målestokker fra 1:5000 til 1:20 000. Geografisk objekt er jordtype. Areal i kvadratmeter er oppført under AREA_C.",
+                },
+                "descriptionFormatted": Object {
+                  "nb": "Jordressurs er et kartlag i datasettet Jordsmonn som viser dyrka mark inndelt i fire klasser hvor inndelingen er basert på enkelte jordsmonnegenskapers begrensende innvirkning på bruken av jorda. Egenskap som skal brukes til å fremstille kartlaget heter JR_KLASSE. Rundt halvparten av Norges fulldyrka og overflatedyrka jord er jordsmonnskartlagt, med hovedvekt på Sør-Østlandet, Trøndelag og Jæren. På enkelte steder er også også innmarksbeite kartlagt. Kartlaget er fremstilt i målestokk 1:5000 og er tilpasset bruk i målestokker fra 1:5000 til 1:20 000. Geografisk objekt er jordtype. Areal i kvadratmeter er oppført under AREA_C.",
+                },
+                "distribution": Array [
+                  Object {
+                    "accessURL": Array [
+                      "https://kartkatalog.geonorge.no/metadata/uuid/4403b8b6-6c10-4570-b402-8633e03a606e",
+                    ],
+                    "description": Object {
+                      "nb": "Webside eller webløsning hvor en etat tibyr nedlastning av data direkte eller gjennom ulike grafiske brukergrensesnitt",
+                    },
+                    "downloadURL": Array [],
+                    "format": Array [
+                      "SOSI",
+                    ],
+                    "openLicense": false,
+                    "title": Object {
+                      "nb": "Egen nedlastningsside",
+                    },
+                    "uri": "https://kartkatalog.geonorge.no/Metadata/uuid/4403b8b6-6c10-4570-b402-8633e03a606e/SOSI",
+                  },
+                  Object {
+                    "accessURL": Array [
+                      "https://kartkatalog.geonorge.no/metadata/uuid/4403b8b6-6c10-4570-b402-8633e03a606e",
+                    ],
+                    "description": Object {
+                      "nb": "Webside eller webløsning hvor en etat tibyr nedlastning av data direkte eller gjennom ulike grafiske brukergrensesnitt",
+                    },
+                    "downloadURL": Array [],
+                    "format": Array [
+                      "ESRI Shape",
+                    ],
+                    "openLicense": false,
+                    "title": Object {
+                      "nb": "Egen nedlastningsside",
+                    },
+                    "uri": "https://kartkatalog.geonorge.no/Metadata/uuid/4403b8b6-6c10-4570-b402-8633e03a606e/ESRI+Shape",
+                  },
+                ],
+                "harvest": Object {
+                  "changed": Array [
+                    "2018-05-07T01:04:10+0200",
+                    "2018-05-07T13:59:37+0200",
+                    "2018-06-12T02:12:48+0200",
+                    "2018-06-12T10:08:32+0200",
+                    "2018-06-12T14:13:21+0200",
+                    "2018-06-12T15:58:34+0200",
+                    "2018-06-13T01:10:48+0200",
+                    "2018-06-14T01:10:46+0200",
+                    "2018-06-15T01:10:47+0200",
+                    "2018-06-15T14:42:44+0200",
+                    "2018-06-16T01:10:45+0200",
+                    "2018-06-17T01:10:45+0200",
+                    "2018-06-18T01:10:46+0200",
+                    "2018-06-19T01:10:45+0200",
+                    "2018-06-20T01:10:45+0200",
+                    "2018-06-25T16:24:34+0200",
+                    "2018-06-26T01:00:16+0200",
+                    "2018-06-27T01:00:15+0200",
+                    "2018-06-28T01:00:15+0200",
+                    "2018-06-29T01:00:19+0200",
+                    "2018-06-30T01:00:16+0200",
+                    "2018-07-01T01:00:14+0200",
+                    "2018-07-02T01:00:16+0200",
+                    "2018-07-02T15:41:19+0200",
+                    "2018-07-03T01:00:18+0200",
+                    "2018-07-04T01:00:16+0200",
+                    "2018-07-05T01:00:17+0200",
+                    "2018-07-06T01:00:20+0200",
+                    "2018-07-07T01:00:14+0200",
+                    "2018-07-08T01:00:15+0200",
+                    "2018-07-09T01:00:15+0200",
+                    "2018-07-10T01:00:21+0200",
+                    "2018-07-13T01:00:16+0200",
+                    "2018-07-14T01:00:12+0200",
+                    "2018-07-15T01:00:15+0200",
+                    "2018-07-16T01:00:13+0200",
+                    "2018-07-17T01:00:15+0200",
+                    "2018-07-18T01:00:16+0200",
+                    "2018-07-19T01:00:13+0200",
+                    "2018-07-20T01:00:26+0200",
+                    "2018-07-21T01:00:12+0200",
+                    "2018-07-22T01:00:12+0200",
+                    "2018-07-23T01:00:16+0200",
+                    "2018-07-24T01:00:12+0200",
+                    "2018-07-25T01:00:12+0200",
+                    "2018-07-26T01:00:14+0200",
+                    "2018-07-27T01:00:14+0200",
+                    "2018-07-28T01:00:15+0200",
+                    "2018-07-29T01:00:12+0200",
+                    "2018-07-30T01:00:15+0200",
+                    "2018-07-31T01:00:14+0200",
+                    "2018-08-01T01:00:16+0200",
+                    "2018-08-02T01:00:15+0200",
+                    "2018-08-03T01:00:15+0200",
+                    "2018-08-04T01:00:12+0200",
+                    "2018-08-05T01:00:15+0200",
+                    "2018-08-06T01:00:15+0200",
+                    "2018-08-07T01:00:14+0200",
+                    "2018-08-08T01:00:19+0200",
+                    "2018-08-09T01:00:15+0200",
+                    "2018-08-10T01:00:15+0200",
+                    "2018-08-11T01:00:12+0200",
+                    "2018-08-12T01:00:15+0200",
+                    "2018-08-13T01:00:16+0200",
+                    "2018-08-14T01:00:20+0200",
+                    "2018-08-15T01:00:13+0200",
+                    "2018-08-30T12:49:49+0200",
+                  ],
+                  "firstHarvested": "2017-12-18T15:51:21+0100",
+                  "lastChanged": "2018-08-30T12:49:49+0200",
+                  "lastHarvested": "2018-09-27T01:00:16+0200",
+                },
+                "id": "ce318678-1b50-4068-8aa3-18e4c4683f61",
+                "identifier": Array [
+                  "4403b8b6-6c10-4570-b402-8633e03a606e",
+                ],
+                "keyword": Array [
+                  Object {
+                    "nb": "Landbruk",
+                  },
+                  Object {
+                    "nb": "Åpne data",
+                  },
+                  Object {
+                    "nb": "Helling",
+                  },
+                  Object {
+                    "nb": "Jordegenskap",
+                  },
+                  Object {
+                    "nb": "Driftsforhold",
+                  },
+                  Object {
+                    "nb": "Norge digitalt",
+                  },
+                  Object {
+                    "nb": "Jordsmonn",
+                  },
+                  Object {
+                    "nb": "fellesDatakatalog",
+                  },
+                  Object {
+                    "nb": "Jordressurs",
+                  },
+                  Object {
+                    "nb": "Jordbruksareal",
+                  },
+                  Object {
+                    "nb": "Norge fastland",
+                  },
+                ],
+                "landingPage": Array [],
+                "provenanceSort": "9UKJENT",
+                "publisher": Object {
+                  "id": "988983837",
+                  "naeringskode": Object {
+                    "code": "72.190",
+                    "prefLabel": Object {
+                      "no": "Annen forskning og annet utviklingsarbeid innen naturvitenskap ogteknikk",
+                    },
+                    "uri": "http://www.ssb.no/nace/sn2007/72.190",
+                  },
+                  "name": "NIBIO - NORSK INSTITUTT FOR BIOØKONOMI",
+                  "orgPath": "/STAT/972417874/988983837",
+                  "organisasjonsform": "ORGL",
+                  "overordnetEnhet": "972417874",
+                  "prefLabel": Object {
+                    "no": "Norsk institutt for bioøkonomi",
+                  },
+                  "sektorkode": Object {
+                    "code": "6100",
+                    "prefLabel": Object {
+                      "no": "Statsforvaltningen",
+                    },
+                    "uri": "http://www.brreg.no/sektorkode/6100",
+                  },
+                  "type": "no.dcat.datastore.domain.dcat.Publisher",
+                  "uri": "http://data.brreg.no/enhetsregisteret/enhet/988983837",
+                  "valid": true,
+                },
+                "source": "B",
+                "theme": Array [
+                  Object {
+                    "code": "AGRI",
+                    "conceptSchema": Object {
+                      "id": "http://publications.europa.eu/resource/authority/data-theme",
+                      "title": Object {
+                        "en": "Dataset types Named Authority List",
+                      },
+                      "versioninfo": "20160921-0",
+                      "versionnumber": "20160921-0",
+                    },
+                    "id": "http://publications.europa.eu/resource/authority/data-theme/AGRI",
+                    "startUse": "2015-10-01",
+                    "title": Object {
+                      "bg": "Селско стопанство, рибарство, горско стопанство и храни",
+                      "cs": "Zemědělství, rybolov, lesnictví a výživa",
+                      "da": "Landbrug, fiskeri, skovbrug og fødevarer",
+                      "de": "Landwirtschaft, Fischerei, Forstwirtschaft und Nahrungsmittel",
+                      "el": "Γεωργία, αλιεία, δασοκομία και τρόφιμα",
+                      "en": "Agriculture, fisheries, forestry and food",
+                      "es": "Agricultura, pesca, silvicultura y alimentación",
+                      "et": "Põllumajandus, kalandus, metsandus ja toiduained",
+                      "fi": "Maatalous, kalastus, metsätalous ja elintarvikkeet",
+                      "fr": "Agriculture, pêche, sylviculture et alimentation",
+                      "ga": "Talmhaíocht, iascach, foraoiseacht agus bia",
+                      "hr": "Poljoprivreda, ribarstvo, šumarstvo i hrana",
+                      "hu": "Mezőgazdaság, halászat, erdészet és élelmiszer",
+                      "it": "Agricoltura, pesca, silvicoltura e prodotti alimentari",
+                      "lt": "Žemės ūkis, žuvininkystė, miškininkystė ir maistas",
+                      "lv": "Lauksaimniecība, zivsaimniecība, mežsaimniecība un pārtika",
+                      "mt": "Agrikoltura, sajd, forestrija u ikel",
+                      "nb": "Jordbruk, fiskeri, skogbruk og mat",
+                      "nl": "Landbouw, visserij, bosbouw en voeding",
+                      "pl": "Rolnictwo, rybołówstwo, leśnictwo i żywność",
+                      "pt": "Agricultura, pesca, silvicultura e alimentação",
+                      "ro": "Agricultură, pescuit, silvicultură şi hrană",
+                      "sk": "Poľnohospodárstvo, rybné hospodárstvo, lesníctvo a potravinárstvo",
+                      "sl": "Kmetijstvo, ribištvo, gozdarstvo in prehrana",
+                      "sv": "Jordbruk, fiske, skogsbruk och livsmedel",
+                    },
+                  },
+                ],
+                "title": Object {
+                  "nb": "Jordsmonn - Jordressurs",
+                },
+                "uri": "https://kartkatalog.geonorge.no/Metadata/uuid/4403b8b6-6c10-4570-b402-8633e03a606e",
+              },
+              "_type": "dataset",
+            }
+          }
+        />
+      </ErrorBoundary>
+      <ErrorBoundary
+        key="64781991-d2a1-421a-9a20-19bdd5a4d701"
+      >
+        <SearchHitItem
+          referenceData={null}
+          result={
+            Object {
+              "_id": "64781991-d2a1-421a-9a20-19bdd5a4d701",
+              "_index": "dcat",
+              "_score": 0.008524122,
+              "_source": Object {
+                "accessRights": Object {
+                  "code": "PUBLIC",
+                  "prefLabel": Object {
+                    "en": "Public",
+                    "nb": "Offentlig",
+                    "nn": "Offentlig",
+                  },
+                  "uri": "http://publications.europa.eu/resource/authority/access-right/PUBLIC",
+                },
+                "catalog": Object {
+                  "description": Object {
+                    "nb": "GeoNorge er den nasjonale katalogen for geografisk informasjon",
+                  },
+                  "issued": "2018-02-13T00:00:00+0100",
+                  "language": "http://publications.europa.eu/resource/authority/language/NOR",
+                  "modified": "2018-01-19T00:00:00+0100",
+                  "publisher": Object {
+                    "id": "971040238",
+                    "naeringskode": Object {
+                      "code": "71.123",
+                      "prefLabel": Object {
+                        "no": "Kart og oppmåling",
+                      },
+                      "uri": "http://www.ssb.no/nace/sn2007/71.123",
+                    },
+                    "name": "STATENS KARTVERK",
+                    "orgPath": "/STAT/972417858/971040238",
+                    "organisasjonsform": "ORGL",
+                    "overordnetEnhet": "972417858",
+                    "prefLabel": Object {
+                      "no": "Kartverket",
+                    },
+                    "sektorkode": Object {
+                      "code": "1110",
+                      "prefLabel": Object {
+                        "no": "Statens forretningsdrift",
+                      },
+                      "uri": "http://www.brreg.no/sektorkode/1110",
+                    },
+                    "type": "no.dcat.datastore.domain.dcat.Publisher",
+                    "uri": "http://data.brreg.no/enhetsregisteret/enhet/971040238",
+                    "valid": true,
+                  },
+                  "themeTaxonomy": Array [
+                    "https://register.geonorge.no/subregister/metadata-kodelister/kartverket/nasjonal-temainndeling",
+                    "http://publications.europa.eu/mdr/resource/authority/data-theme/html/data-theme-eng.html",
+                    "http://www.eionet.europa.eu/gemet/inspire_themes",
+                  ],
+                  "title": Object {
+                    "nb": "Geonorge",
+                  },
+                  "uri": "http://www.geonorge.no/geonetwork",
+                },
+                "contactPoint": Array [
+                  Object {
+                    "email": "henning.hartvedt@ssb.no",
+                    "organizationName": "Statistisk sentralbyrå",
+                    "uri": "https://register.geonorge.no/register/organisasjoner/statistisk-sentralbyra",
+                  },
+                ],
+                "description": Object {
+                  "nb": "Potensielt tilgjengelige strandsonearealer i strandsonen beregnes ut fra terreng, veistrekninger, jernbanestrekninger, dyrket markarealer, bygninger og kystlinje. Dataene er hentet fra ulike kilder og bearbeidet til arealbruksflater i SSB. De flater som ikke er påvirket av tekniske inngrepp betraktes som potensielt tilgjengelige for friluftslivsaktiviteter. De ulike flatene innholder også egenskaper som viser til helling: liten helling &lt;3, noe helling 3-10, stor helling 10-25 og veldig stor helling &gt;25 grader.
+
+Potensielt tilgjengelige strandsonearealer er geografiske områder som har en dynamisk avgrensing, og antall flateobjekt og deres yttergrenser vil endre seg over tid avhengig av byggeaktivitet.
+
+Flateobjektene avgrenses uavhengig av de administrative grensene.",
+                },
+                "descriptionFormatted": Object {
+                  "nb": "Potensielt tilgjengelige strandsonearealer i strandsonen beregnes ut fra terreng, veistrekninger, jernbanestrekninger, dyrket markarealer, bygninger og kystlinje. Dataene er hentet fra ulike kilder og bearbeidet til arealbruksflater i SSB. De flater som ikke er påvirket av tekniske inngrepp betraktes som potensielt tilgjengelige for friluftslivsaktiviteter. De ulike flatene innholder også egenskaper som viser til helling: liten helling &lt;3, noe helling 3-10, stor helling 10-25 og veldig stor helling &gt;25 grader.
+
+Potensielt tilgjengelige strandsonearealer er geografiske områder som har en dynamisk avgrensing, og antall flateobjekt og deres yttergrenser vil endre seg over tid avhengig av byggeaktivitet.
+
+Flateobjektene avgrenses uavhengig av de administrative grensene.",
+                },
+                "distribution": Array [
+                  Object {
+                    "accessURL": Array [
+                      "https://kartkatalog.geonorge.no/metadata/uuid/1b359df9-1d36-4e90-815d-5cf98c6a8cb2",
+                    ],
+                    "description": Object {
+                      "nb": "Webside hvor en kan finne aktuell informasjon",
+                    },
+                    "downloadURL": Array [],
+                    "format": Array [
+                      "SOSI",
+                    ],
+                    "openLicense": false,
+                    "title": Object {
+                      "nb": "Webside",
+                    },
+                    "uri": "https://kartkatalog.geonorge.no/Metadata/uuid/1b359df9-1d36-4e90-815d-5cf98c6a8cb2/SOSI",
+                  },
+                ],
+                "harvest": Object {
+                  "changed": Array [
+                    "2018-05-07T01:04:10+0200",
+                    "2018-05-07T13:59:37+0200",
+                    "2018-06-12T02:12:48+0200",
+                    "2018-06-12T10:08:32+0200",
+                    "2018-06-12T14:13:21+0200",
+                    "2018-06-12T15:58:34+0200",
+                    "2018-06-13T01:10:48+0200",
+                    "2018-06-14T01:10:46+0200",
+                    "2018-06-15T01:10:47+0200",
+                    "2018-06-15T14:42:44+0200",
+                    "2018-06-16T01:10:45+0200",
+                    "2018-06-17T01:10:45+0200",
+                    "2018-06-18T01:10:46+0200",
+                    "2018-06-19T01:10:45+0200",
+                    "2018-06-20T01:10:45+0200",
+                    "2018-06-25T16:24:34+0200",
+                    "2018-06-26T01:00:16+0200",
+                    "2018-06-27T01:00:15+0200",
+                    "2018-06-28T01:00:15+0200",
+                    "2018-06-29T01:00:19+0200",
+                    "2018-06-30T01:00:16+0200",
+                    "2018-07-01T01:00:14+0200",
+                    "2018-07-02T01:00:16+0200",
+                    "2018-07-02T15:41:19+0200",
+                    "2018-07-03T01:00:18+0200",
+                    "2018-07-04T01:00:16+0200",
+                    "2018-07-05T01:00:17+0200",
+                    "2018-07-06T01:00:20+0200",
+                    "2018-07-07T01:00:14+0200",
+                    "2018-07-08T01:00:15+0200",
+                    "2018-07-09T01:00:15+0200",
+                    "2018-07-10T01:00:21+0200",
+                    "2018-07-13T01:00:16+0200",
+                    "2018-07-14T01:00:12+0200",
+                    "2018-07-15T01:00:15+0200",
+                    "2018-07-16T01:00:13+0200",
+                    "2018-07-17T01:00:15+0200",
+                    "2018-07-18T01:00:16+0200",
+                    "2018-07-19T01:00:13+0200",
+                    "2018-07-20T01:00:26+0200",
+                    "2018-07-21T01:00:12+0200",
+                    "2018-07-22T01:00:12+0200",
+                    "2018-07-23T01:00:16+0200",
+                    "2018-07-24T01:00:12+0200",
+                    "2018-07-25T01:00:12+0200",
+                    "2018-07-26T01:00:14+0200",
+                    "2018-07-27T01:00:14+0200",
+                    "2018-07-28T01:00:15+0200",
+                    "2018-07-29T01:00:12+0200",
+                    "2018-07-30T01:00:15+0200",
+                    "2018-07-31T01:00:14+0200",
+                    "2018-08-01T01:00:16+0200",
+                    "2018-08-02T01:00:15+0200",
+                    "2018-08-03T01:00:15+0200",
+                    "2018-08-04T01:00:12+0200",
+                    "2018-08-05T01:00:15+0200",
+                    "2018-08-06T01:00:15+0200",
+                    "2018-08-07T01:00:14+0200",
+                    "2018-08-08T01:00:19+0200",
+                    "2018-08-09T01:00:15+0200",
+                    "2018-08-10T01:00:15+0200",
+                    "2018-08-11T01:00:12+0200",
+                    "2018-08-12T01:00:15+0200",
+                    "2018-08-13T01:00:16+0200",
+                    "2018-08-14T01:00:20+0200",
+                    "2018-08-15T01:00:13+0200",
+                    "2018-08-30T12:49:49+0200",
+                  ],
+                  "firstHarvested": "2017-12-18T15:51:21+0100",
+                  "lastChanged": "2018-08-30T12:49:49+0200",
+                  "lastHarvested": "2018-09-27T01:00:16+0200",
+                },
+                "id": "64781991-d2a1-421a-9a20-19bdd5a4d701",
+                "identifier": Array [
+                  "1b359df9-1d36-4e90-815d-5cf98c6a8cb2",
+                ],
+                "keyword": Array [
+                  Object {
+                    "nb": "Norge digitalt",
+                  },
+                  Object {
+                    "nb": "Åpne data",
+                  },
+                  Object {
+                    "nb": "Norges fastland",
+                  },
+                  Object {
+                    "nb": "Tilgjengelighet",
+                  },
+                  Object {
+                    "nb": "Strandsone",
+                  },
+                  Object {
+                    "nb": "fellesDatakatalog",
+                  },
+                  Object {
+                    "nb": "Friluftsliv",
+                  },
+                ],
+                "landingPage": Array [],
+                "provenanceSort": "9UKJENT",
+                "publisher": Object {
+                  "id": "971526920",
+                  "naeringskode": Object {
+                    "code": "84.110",
+                    "prefLabel": Object {
+                      "no": "Generell offentlig administrasjon",
+                    },
+                    "uri": "http://www.ssb.no/nace/sn2007/84.110",
+                  },
+                  "name": "STATISTISK SENTRALBYRÅ",
+                  "orgPath": "/STAT/972417807/971526920",
+                  "organisasjonsform": "ORGL",
+                  "overordnetEnhet": "972417807",
+                  "prefLabel": Object {
+                    "no": "Statistisk sentralbyrå",
+                  },
+                  "sektorkode": Object {
+                    "code": "6100",
+                    "prefLabel": Object {
+                      "no": "Statsforvaltningen",
+                    },
+                    "uri": "http://www.brreg.no/sektorkode/6100",
+                  },
+                  "type": "no.dcat.datastore.domain.dcat.Publisher",
+                  "uri": "http://data.brreg.no/enhetsregisteret/enhet/971526920",
+                  "valid": true,
+                },
+                "source": "B",
+                "theme": Array [
+                  Object {
+                    "code": "HEAL",
+                    "conceptSchema": Object {
+                      "id": "http://publications.europa.eu/resource/authority/data-theme",
+                      "title": Object {
+                        "en": "Dataset types Named Authority List",
+                      },
+                      "versioninfo": "20160921-0",
+                      "versionnumber": "20160921-0",
+                    },
+                    "id": "http://publications.europa.eu/resource/authority/data-theme/HEAL",
+                    "startUse": "2015-10-01",
+                    "title": Object {
+                      "bg": "Здраве",
+                      "cs": "Zdraví",
+                      "da": "Sundhed",
+                      "de": "Gesundheit",
+                      "el": "Υγεία",
+                      "en": "Health",
+                      "es": "Salud",
+                      "et": "Tervis",
+                      "fi": "Terveys",
+                      "fr": "Santé",
+                      "ga": "Sláinte",
+                      "hr": "Zdravlje",
+                      "hu": "Egészségügy",
+                      "it": "Salute",
+                      "lt": "Sveikata",
+                      "lv": "Veselība",
+                      "mt": "Saħħa",
+                      "nb": "Helse",
+                      "nl": "Gezondheid",
+                      "pl": "Zdrowie",
+                      "pt": "Saúde",
+                      "ro": "Sănătate",
+                      "sk": "Zdravotníctvo",
+                      "sl": "Zdravje",
+                      "sv": "Hälsa",
+                    },
+                  },
+                ],
+                "title": Object {
+                  "nb": "Potensielt tilgjengelig strandsone",
+                },
+                "uri": "https://kartkatalog.geonorge.no/Metadata/uuid/1b359df9-1d36-4e90-815d-5cf98c6a8cb2",
+              },
+              "_type": "dataset",
+            }
+          }
+        />
+      </ErrorBoundary>
     </section>
   </section>
 </main>

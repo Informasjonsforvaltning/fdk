@@ -38,7 +38,7 @@
     "english-en": "Engelsk"
   },
   "menu": {
-    "home": "Tilbake til søk",
+    "home": "Søk i Felles datakatalog",
     "about": "Felles Datakatalog",
     "aboutRegistration": "Registrere datasett",
     "reports": "Rapporter"
@@ -131,8 +131,8 @@
   "sort": {
     "by": "Sorter på",
     "relevance": "relevans",
-    "title": "tittel",
-    "publisher": "utgivar",
+    "title": "tittel A-Å",
+    "publisher": "utgivar A-Å",
     "modified": "sist endra"
   },
   "search_hit": {
@@ -250,9 +250,9 @@
     "restricted": "Datasett med avgrensa offentlegheit",
     "nonPublic": "Datasett som er unntatt offentlegheit",
     "unknown": "Datasett med ukjend tilgangsnivå",
-    "changesLastWeek": "Endring siste 7 dagar",
-    "changesLastMonth": "Endring siste 30 dagar",
-    "changesLastYear": "Endring siste 365 dagar",
+    "changesLastWeek": "Publisert siste 7 dagar",
+    "changesLastMonth": "Publisert siste 30 dagar",
+    "changesLastYear": "Publisert siste 365 dagar",
     "newDatasets": "Nye datasett",
     "deletedDatasets": "Sletta datasett",
     "concepts": "Bruk av omgrep",

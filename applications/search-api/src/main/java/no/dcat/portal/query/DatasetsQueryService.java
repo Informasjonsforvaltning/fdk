@@ -10,15 +10,13 @@ import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.search.SearchType;
-import org.elasticsearch.index.query.BoolQueryBuilder;
-import org.elasticsearch.index.query.QueryBuilder;
-import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.index.query.RangeQueryBuilder;
-import org.elasticsearch.index.query.SimpleQueryStringBuilder;
+import org.elasticsearch.index.query.*;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
+import org.elasticsearch.search.aggregations.bucket.filters.FiltersAggregator;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms.Order;
+import org.elasticsearch.search.sort.FieldSortBuilder;
 import org.elasticsearch.search.sort.SortBuilder;
 import org.elasticsearch.search.sort.SortBuilders;
 import org.elasticsearch.search.sort.SortOrder;
@@ -221,7 +219,7 @@ public class DatasetsQueryService extends ElasticsearchService {
                     .field("subject.prefLabel." + lang)
                     .field("subject.altLabel." + lang)
                     .field("subject.definition." + lang)
-                    .defaultOperator(SimpleQueryStringBuilder.Operator.OR);
+                    .defaultOperator(Operator.OR);
         }
 
         // add filter
@@ -249,14 +247,13 @@ public class DatasetsQueryService extends ElasticsearchService {
 
         logger.trace("Query: {}", searchBuilder.toString());
 
+        if (emptySearch) {
+            addSortForEmptySearch(searchBuilder);
+        }
 
         // Handle attempting to sort on score, because any sorting removes score i.e. relevance from the search.
         if (sortfield.compareTo("score") != 0) {
             addSort(sortfield, sortdirection, searchBuilder);
-        }
-
-        if (emptySearch) {
-            addSortForEmptySearch(searchBuilder);
         }
 
         // Execute search
@@ -269,8 +266,8 @@ public class DatasetsQueryService extends ElasticsearchService {
     }
 
     public AggregationBuilder getOpendataAggregation() {
-        return AggregationBuilders.filter("opendata")
-                .filter(QueryBuilders.boolQuery()
+        return AggregationBuilders.filter("opendata",
+                QueryBuilders.boolQuery()
                         .must(QueryBuilders.termQuery("accessRights.code.raw", "PUBLIC"))
                         .must(QueryBuilders.termQuery("distribution.openLicense", "true"))
                 );
@@ -297,10 +294,10 @@ public class DatasetsQueryService extends ElasticsearchService {
 
     AggregationBuilder temporalAggregation(String name, String dateField) {
 
-        return AggregationBuilders.filters(name)
-                .filter("last7days", temporalRangeFromXdaysToNow(7, dateField))
-                .filter("last30days", temporalRangeFromXdaysToNow(30, dateField))
-                .filter("last365days", temporalRangeFromXdaysToNow(365, dateField));
+        return AggregationBuilders.filters(name,
+                new FiltersAggregator.KeyedFilter("last7days", temporalRangeFromXdaysToNow(7, dateField)),
+                new FiltersAggregator.KeyedFilter("last30days", temporalRangeFromXdaysToNow(30, dateField)),
+                new FiltersAggregator.KeyedFilter("last365days", temporalRangeFromXdaysToNow(365, dateField)));
     }
 
 
@@ -324,10 +321,15 @@ public class DatasetsQueryService extends ElasticsearchService {
             if (!sortfield.equals("modified")) {
                 sbSortField.append(sortfield).append(".raw");
             } else {
-                sbSortField.append(sortfield);
+                sbSortField.append("harvest.firstHarvested");
             }
 
-            searchBuilder.addSort(sbSortField.toString(), sortOrder);
+            SortBuilder sortBuilder = SortBuilders.fieldSort(sbSortField.toString());
+            sortBuilder.order(sortOrder);
+            ((FieldSortBuilder) sortBuilder).missing("_last");
+
+            logger.debug("sort: {}", sortBuilder.toString());
+            searchBuilder.addSort(sortBuilder);
         }
     }
 
@@ -588,7 +590,7 @@ public class DatasetsQueryService extends ElasticsearchService {
 
         if (hits.length == 0) {
             return null;
-        } 
+        }
 
         if (hits.length == 1) {
             return new Gson().fromJson(hits[0].getSourceAsString(), Dataset.class);
@@ -662,17 +664,15 @@ public class DatasetsQueryService extends ElasticsearchService {
 
         logger.trace(search.toString());
 
-        AggregationBuilder datasetsWithDistribution = AggregationBuilders.filter("distCount")
-                .filter(QueryBuilders.existsQuery("distribution"));
+        AggregationBuilder datasetsWithDistribution = AggregationBuilders.filter("distCount", QueryBuilders.existsQuery("distribution"));
 
-        AggregationBuilder openDatasetsWithDistribution = AggregationBuilders.filter("distOnPublicAccessCount")
-                .filter(QueryBuilders.boolQuery()
+        AggregationBuilder openDatasetsWithDistribution = AggregationBuilders.filter("distOnPublicAccessCount",
+                QueryBuilders.boolQuery()
                         .must(QueryBuilders.existsQuery("distribution"))
                         .must(QueryBuilders.termQuery("accessRights.code.raw", "PUBLIC"))
                 );
 
-        AggregationBuilder datasetsWithSubject = AggregationBuilders.filter("subjectCount")
-                .filter(QueryBuilders.existsQuery("subject.prefLabel"));
+        AggregationBuilder datasetsWithSubject = AggregationBuilders.filter("subjectCount", QueryBuilders.existsQuery("subject.prefLabel"));
 
         // set up search query with aggregations
         SearchRequestBuilder searchBuilder = getClient().prepareSearch("dcat")

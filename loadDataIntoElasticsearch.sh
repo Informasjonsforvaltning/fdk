@@ -42,8 +42,8 @@ function startLoad {
     loadDcat
     loadScat
     loadRegister
-    loadAcat
-    #loadHarvest
+    #loadAcat
+    loadHarvest
 
     ENDTIME=`date "+%Y-%m-%dT%H_%M_%S"`
 
@@ -119,10 +119,10 @@ function loadDcat {
     echo "DCAT"
     echo "******************"
 
-    echo "Delete dcat index"
+    echo -e "Delete dcat index: \n\t curl -XDELETE ${targetElasticUrl}/dcat"
     curl -XDELETE ${targetElasticUrl}/dcat
 
-    echo "Create index with mapping"
+    echo -e "\nCreate index with mapping"
 
     dcatMapping=`cat libraries/datastore/src/main/resources/dcat_dataset_mapping.json`
     dcatMetadata="{ \"settings\": ${dcatSetting}, \"mappings\": ${dcatMapping} }"
@@ -130,7 +130,7 @@ function loadDcat {
     curl -XPUT ${targetElasticUrl}/dcat -d "${dcatMetadata}"
 
     # recreate data in target environment
-    echo "Dump data into target environment"
+    echo -e "\nDump data into target environment"
     elasticdump --bulk=true --input=${source}_dcat.json --output=${targetElasticUrl}/dcat --type=data
 }
 

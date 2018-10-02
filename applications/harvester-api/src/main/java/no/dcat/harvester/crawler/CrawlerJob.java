@@ -4,7 +4,7 @@ import com.google.common.cache.LoadingCache;
 import no.dcat.datastore.domain.dcat.vocabulary.DCAT;
 import no.dcat.harvester.DataEnricher;
 import no.dcat.harvester.DatasetSortRankingCreator;
-import no.dcat.harvester.crawler.converters.BrregAgentConverter;
+import no.dcat.harvester.crawler.converters.EnhetsregisterResolver;
 import no.dcat.harvester.service.SubjectCrawler;
 import no.dcat.harvester.validation.DcatValidation;
 import no.dcat.harvester.validation.ImportStatus;
@@ -60,7 +60,6 @@ public class CrawlerJob implements Runnable {
     private List<CrawlerResultHandler> handlers;
     private DcatSource dcatSource;
     private AdminDataStore adminDataStore;
-    private LoadingCache<URL, String> brregCache;
     private List<String> validationResult = new ArrayList<>();
 
     private Map<RDFNode, ImportStatus> nonValidDatasets = new HashMap<>();
@@ -79,13 +78,11 @@ public class CrawlerJob implements Runnable {
 
     protected CrawlerJob(DcatSource dcatSource,
                          AdminDataStore adminDataStore,
-                         LoadingCache<URL, String> brregCaache,
                          SubjectCrawler subjectCrawler,
                          CrawlerResultHandler... handlers) {
         this.handlers = Arrays.asList(handlers);
         this.dcatSource = dcatSource;
         this.adminDataStore = adminDataStore;
-        this.brregCache = brregCaache;
         this.subjectCrawler = subjectCrawler;
     }
 
@@ -282,10 +279,8 @@ public class CrawlerJob implements Runnable {
         }
 
         // Checks publisher and resolve according to registrered in BRREG Enhetsregistret
-        BrregAgentConverter brregAgentConverter = new BrregAgentConverter(brregCache);
-        brregAgentConverter.collectFromModel(union);
-
-        return union;
+        EnhetsregisterResolver enhetsregisterResolver = new EnhetsregisterResolver();
+        return enhetsregisterResolver.resolveModel(union);
     }
 
 
@@ -580,14 +575,19 @@ public class CrawlerJob implements Runnable {
             is.shouldBeImported = true;
         }
 
-        if(!nonValidDatasets.containsKey(error.getSubject())) {
-            nonValidDatasets.put(error.getSubject(), is);
-        } else {
-            if(nonValidDatasets.get(error.getSubject()).mostSevereValidationResult == ValidationError.RuleSeverity.warning) {
-                //if the preexisting most severe error level is warning, we must put the new one
-                //in case it is higher severity (error). Otherwise we skip, as it is already at highest severity.
-                nonValidDatasets.put(error.getSubject(), is);
+        RDFNode errorSubject = error.getSubject();
+        if (errorSubject != null) {
+            if (!nonValidDatasets.containsKey(errorSubject)) {
+                nonValidDatasets.put(errorSubject, is);
+            } else {
+                if (nonValidDatasets.get(errorSubject).mostSevereValidationResult == ValidationError.RuleSeverity.warning) {
+                    //if the preexisting most severe error level is warning, we must put the new one
+                    //in case it is higher severity (error). Otherwise we skip, as it is already at highest severity.
+                    nonValidDatasets.put(errorSubject, is);
+                }
             }
+        } else {
+            logger.info("Couldn't find subject for error: {}", formatValidationMessage(error));
         }
     }
 
