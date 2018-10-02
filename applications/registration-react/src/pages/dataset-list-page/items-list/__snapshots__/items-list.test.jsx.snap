@@ -24,49 +24,13 @@ exports[`should render DatasetItemsList correctly sortField equal title 1`] = `
       Importer datasett
     </button>
   </div>
-  <div
-    className="fdk-datasets-list-header d-flex"
-  >
-    <div
-      className="d-flex align-items-center w-75"
-    >
-      <span
-        className="header-item mr-1"
-      >
-        Tittel på datasett
-      </span>
-      <SortButtons
-        field="title"
-        onSortField={[Function]}
-        sortField="title"
-        sortType=""
-      />
-    </div>
-    <div
-      className="d-flex align-items-center w-25"
-    >
-      <span
-        className="header-item mr-1"
-      >
-        Status
-      </span>
-      <SortButtons
-        field="registrationStatus"
-        onSortField={[Function]}
-        sortField="title"
-        sortType=""
-      />
-    </div>
-  </div>
-  <div
-    className="fdk-datasets-list-item d-flex"
-  >
-    <span
-      className="fdk-text-size-small fdk-color2"
-    >
-      Ingen datasettbeskrivelse registrert
-    </span>
-  </div>
+  <ListItems
+    catalogId="123"
+    items={null}
+    onSortField={[Function]}
+    sortField="title"
+    sortType=""
+  />
   <AppImportModal
     body="DCAT-modellen som blir importert må inneholde en katalog som har samme organisasjonsnr som katalogen du redigerer. Kun datasett som er med i denne katalogen vil bli importert."
     btnCancel="Avbryt"
@@ -105,49 +69,13 @@ exports[`should render DatasetItemsList correctly sortField equal title 2`] = `
       Importer datasett
     </button>
   </div>
-  <div
-    className="fdk-datasets-list-header d-flex"
-  >
-    <div
-      className="d-flex align-items-center w-75"
-    >
-      <span
-        className="header-item mr-1"
-      >
-        Tittel på datasett
-      </span>
-      <SortButtons
-        field="title"
-        onSortField={[Function]}
-        sortField="registrationStatus"
-        sortType=""
-      />
-    </div>
-    <div
-      className="d-flex align-items-center w-25"
-    >
-      <span
-        className="header-item mr-1"
-      >
-        Status
-      </span>
-      <SortButtons
-        field="registrationStatus"
-        onSortField={[Function]}
-        sortField="registrationStatus"
-        sortType=""
-      />
-    </div>
-  </div>
-  <div
-    className="fdk-datasets-list-item d-flex"
-  >
-    <span
-      className="fdk-text-size-small fdk-color2"
-    >
-      Ingen datasettbeskrivelse registrert
-    </span>
-  </div>
+  <ListItems
+    catalogId="123"
+    items={null}
+    onSortField={[Function]}
+    sortField="registrationStatus"
+    sortType=""
+  />
   <AppImportModal
     body="DCAT-modellen som blir importert må inneholde en katalog som har samme organisasjonsnr som katalogen du redigerer. Kun datasett som er med i denne katalogen vil bli importert."
     btnCancel="Avbryt"
@@ -186,49 +114,13 @@ exports[`should render DatasetItemsList correctly with datasetItems 1`] = `
       Importer datasett
     </button>
   </div>
-  <div
-    className="fdk-datasets-list-header d-flex"
-  >
-    <div
-      className="d-flex align-items-center w-75"
-    >
-      <span
-        className="header-item mr-1"
-      >
-        Tittel på datasett
-      </span>
-      <SortButtons
-        field="title"
-        onSortField={[Function]}
-        sortField=""
-        sortType=""
-      />
-    </div>
-    <div
-      className="d-flex align-items-center w-25"
-    >
-      <span
-        className="header-item mr-1"
-      >
-        Status
-      </span>
-      <SortButtons
-        field="registrationStatus"
-        onSortField={[Function]}
-        sortField=""
-        sortType=""
-      />
-    </div>
-  </div>
-  <div
-    className="fdk-datasets-list-item d-flex"
-  >
-    <span
-      className="fdk-text-size-small fdk-color2"
-    >
-      Ingen datasettbeskrivelse registrert
-    </span>
-  </div>
+  <ListItems
+    catalogId="123"
+    items={null}
+    onSortField={[Function]}
+    sortField=""
+    sortType=""
+  />
   <AppImportModal
     body="DCAT-modellen som blir importert må inneholde en katalog som har samme organisasjonsnr som katalogen du redigerer. Kun datasett som er med i denne katalogen vil bli importert."
     btnCancel="Avbryt"
@@ -267,49 +159,13 @@ exports[`should render DatasetItemsList correctly with missing datasetItems 1`] 
       Importer datasett
     </button>
   </div>
-  <div
-    className="fdk-datasets-list-header d-flex"
-  >
-    <div
-      className="d-flex align-items-center w-75"
-    >
-      <span
-        className="header-item mr-1"
-      >
-        Tittel på datasett
-      </span>
-      <SortButtons
-        field="title"
-        onSortField={[Function]}
-        sortField=""
-        sortType=""
-      />
-    </div>
-    <div
-      className="d-flex align-items-center w-25"
-    >
-      <span
-        className="header-item mr-1"
-      >
-        Status
-      </span>
-      <SortButtons
-        field="registrationStatus"
-        onSortField={[Function]}
-        sortField=""
-        sortType=""
-      />
-    </div>
-  </div>
-  <div
-    className="fdk-datasets-list-item d-flex"
-  >
-    <span
-      className="fdk-text-size-small fdk-color2"
-    >
-      Ingen datasettbeskrivelse registrert
-    </span>
-  </div>
+  <ListItems
+    catalogId="123"
+    items={null}
+    onSortField={[Function]}
+    sortField=""
+    sortType=""
+  />
   <AppImportModal
     body="DCAT-modellen som blir importert må inneholde en katalog som har samme organisasjonsnr som katalogen du redigerer. Kun datasett som er med i denne katalogen vil bli importert."
     btnCancel="Avbryt"
@@ -348,49 +204,13 @@ exports[`should render DatasetItemsList correctly with missing items 1`] = `
       Importer datasett
     </button>
   </div>
-  <div
-    className="fdk-datasets-list-header d-flex"
-  >
-    <div
-      className="d-flex align-items-center w-75"
-    >
-      <span
-        className="header-item mr-1"
-      >
-        Tittel på datasett
-      </span>
-      <SortButtons
-        field="title"
-        onSortField={[Function]}
-        sortField=""
-        sortType=""
-      />
-    </div>
-    <div
-      className="d-flex align-items-center w-25"
-    >
-      <span
-        className="header-item mr-1"
-      >
-        Status
-      </span>
-      <SortButtons
-        field="registrationStatus"
-        onSortField={[Function]}
-        sortField=""
-        sortType=""
-      />
-    </div>
-  </div>
-  <div
-    className="fdk-datasets-list-item d-flex"
-  >
-    <span
-      className="fdk-text-size-small fdk-color2"
-    >
-      Ingen datasettbeskrivelse registrert
-    </span>
-  </div>
+  <ListItems
+    catalogId="123"
+    items={null}
+    onSortField={[Function]}
+    sortField=""
+    sortType=""
+  />
   <AppImportModal
     body="DCAT-modellen som blir importert må inneholde en katalog som har samme organisasjonsnr som katalogen du redigerer. Kun datasett som er med i denne katalogen vil bli importert."
     btnCancel="Avbryt"
