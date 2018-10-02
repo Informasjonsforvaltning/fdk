@@ -1,13 +1,12 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import DatasetItemsList from './item-list.component';
-import datasets from '../../../../test/fixtures/datasets';
+import datasetItems from './__fixtures/datasetItems';
 
 let defaultProps;
 let wrapper;
 
 beforeEach(() => {
-  const { datasetItems } = datasets;
   defaultProps = {
     catalogId: '123',
     datasetItems
@@ -20,7 +19,6 @@ test('should render DatasetItemsList correctly with missing datasetItems', () =>
 });
 
 test('should render DatasetItemsList correctly with datasetItems', () => {
-  const { datasetItems } = datasets;
   wrapper.setProps({
     datasetItems
   });

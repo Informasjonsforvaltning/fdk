@@ -44,7 +44,7 @@ export default function apis(state = initialState, action) {
       return {
         ...state,
         [action.meta.catalogId]: {
-          items: action.payload,
+          items: _.get(action.payload, ['_embedded', 'apiSpecs']),
           meta: {
             isFetching: false,
             lastFetch: Date.now()

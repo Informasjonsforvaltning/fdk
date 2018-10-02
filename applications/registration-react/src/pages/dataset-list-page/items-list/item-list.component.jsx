@@ -121,15 +121,11 @@ class DatasetItemsList extends React.Component {
 
   _renderDatasetItems() {
     const { catalogId, datasetItems } = this.props;
-    if (
-      datasetItems &&
-      datasetItems._embedded &&
-      datasetItems._embedded.datasets
-    ) {
+    if (datasetItems) {
       if (this.state.sortField === 'title') {
         // order by title and ignore case
-        datasetItems._embedded.datasets = orderBy(
-          datasetItems._embedded.datasets,
+        orderBy(
+          datasetItems,
           [
             item => {
               const { nb } = item.title;
@@ -142,14 +138,10 @@ class DatasetItemsList extends React.Component {
           [this.state.sortType]
         );
       } else if (this.state.sortField === 'registrationStatus') {
-        datasetItems._embedded.datasets = orderBy(
-          datasetItems._embedded.datasets,
-          'registrationStatus',
-          [this.state.sortType]
-        );
+        orderBy(datasetItems, 'registrationStatus', [this.state.sortType]);
       }
 
-      return datasetItems._embedded.datasets.map(item => (
+      return datasetItems.map(item => (
         <DatasetItemsListItem key={item.id} catalogId={catalogId} item={item} />
       ));
     }
@@ -230,7 +222,7 @@ DatasetItemsList.defaultProps = {
 
 DatasetItemsList.propTypes = {
   catalogId: PropTypes.string.isRequired,
-  datasetItems: PropTypes.object
+  datasetItems: PropTypes.array
 };
 
 export default DatasetItemsList;

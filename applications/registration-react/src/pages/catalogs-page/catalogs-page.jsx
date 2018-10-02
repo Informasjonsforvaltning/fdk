@@ -16,11 +16,11 @@ import './catalogs-page.scss';
 const renderCatalogs = props => {
   const { catalogItems, datasets, apis, fetchDatasetsIfNeeded } = props;
 
-  if (!_.get(catalogItems, ['_embedded', 'catalogs'])) {
+  if (!catalogItems) {
     return null;
   }
 
-  return _.get(catalogItems, ['_embedded', 'catalogs']).map(item => (
+  return catalogItems.map(item => (
     <div key={_.get(item, 'id')} className="row mb-2 mb-md-5">
       <div className="col-12">
         <div>
@@ -96,7 +96,7 @@ RegCatalogs.defaultProps = {
 };
 
 RegCatalogs.propTypes = {
-  catalogItems: PropTypes.object,
+  catalogItems: PropTypes.array,
   isFetching: PropTypes.bool,
   fetchCatalogsIfNeeded: PropTypes.func
 };

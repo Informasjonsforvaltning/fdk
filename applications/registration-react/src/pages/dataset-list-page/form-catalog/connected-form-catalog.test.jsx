@@ -9,7 +9,7 @@ let wrapper;
 test('should render FormCatalog correctly', () => {
   const testState = {
     catalog: {
-      catalogItem: catalogs.catalogItems._embedded.catalogs[0]
+      catalogItem: catalogs.catalogItems[0]
     }
   };
   const store = createMockStore(testState);

@@ -42,7 +42,7 @@ export default function catalogs(state = initialState, action) {
         ...state,
         isFetching: false,
         lastFetch: Date.now(),
-        catalogItems: action.payload
+        catalogItems: _.get(action.payload, ['_embedded', 'catalogs'])
       };
     case CATALOGS_FAILURE:
       return {
