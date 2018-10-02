@@ -3,20 +3,23 @@ package no.acat.harvester;
 
 import lombok.extern.slf4j.Slf4j;
 import no.acat.model.ApiDocument;
+import no.acat.model.ApiSource;
 import no.acat.spec.converters.ParseApiSpecToApiDocument;
+import no.dcat.shared.testcategories.UnitTest;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.junit4.SpringRunner;
 
 
 @RunWith(SpringRunner.class)
+@Category(UnitTest.class)
 @Slf4j
 public class ParseApiSpecToApiDocumentTest {
 
-    private String url;
-    private String data;
+    private ApiSource apiSource;
 
     private ParseApiSpecToApiDocument parseApiSpecToApiDocument;
 
@@ -28,19 +31,23 @@ public class ParseApiSpecToApiDocumentTest {
 
     @Test
     public void parseApiSpec_From_Url(){
-        url= "http://www.barnehagefakta.no/swagger/docs/v1";
-        data= "";
-        ApiDocument apiDocument =parseApiSpecToApiDocument.parseApiSpecFromUrl(url, data);
+        apiSource = new ApiSource("http://www.barnehagefakta.no/swagger/docs/v1","");
+        ApiDocument apiDocument =parseApiSpecToApiDocument.parseApiSpecFromUrl(apiSource);
         Assert.assertNotNull(apiDocument);
         Assert.assertEquals(apiDocument.getTitle().get("no"),"Barnehagefakta");
     }
 
     @Test
-    public  void parseAPIspecification_Fraom_Data(){
-        url= "";
-        ApiDocument apiDocument =parseApiSpecToApiDocument.parseApiSpecFromUrl(url,getData());
+    public  void parseAPIspecification_From_Data(){
+        apiSource = new ApiSource("", getData());
+        ApiDocument apiDocument =parseApiSpecToApiDocument.parseApiSpecFromUrl(apiSource);
         Assert.assertNotNull(apiDocument);
         Assert.assertEquals(apiDocument.getTitle().get("no"),"Nasjonalt barnehageregister API");
+    }
+
+    @Test(expected= NullPointerException.class)
+    public void parseApiSpecificationw_with_nullInput(){
+        ApiDocument apiDocument =parseApiSpecToApiDocument.parseApiSpecFromUrl(null);
     }
 
 

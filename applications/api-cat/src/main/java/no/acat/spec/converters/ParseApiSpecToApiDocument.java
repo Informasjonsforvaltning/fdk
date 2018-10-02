@@ -1,12 +1,12 @@
 package no.acat.spec.converters;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.swagger.models.Swagger;
 import io.swagger.v3.oas.models.OpenAPI;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import no.acat.config.Utils;
 import no.acat.model.ApiDocument;
+import no.acat.model.ApiSource;
 import no.dcat.shared.Contact;
 import org.apache.commons.io.Charsets;
 import org.apache.commons.io.IOUtils;
@@ -23,25 +23,23 @@ public class ParseApiSpecToApiDocument {
     private static final ObjectMapper objectMapper = Utils.jsonMapper();
 
 
-    public ApiDocument parseApiSpecFromUrl(String url, String data){
+    public ApiDocument parseApiSpecFromUrl(ApiSource apiSource){
         String apiSpec = null;
         OpenAPI openAPI = null;
-        if(url== null || url.equals("")){
-            apiSpec = data;
+        if(apiSource.getUrl()== null || apiSource.getUrl().isEmpty()){
+            apiSpec = apiSource.getData();
             try{
-                OpenAPI test = objectMapper.readValue(data, OpenAPI.class);
-                log.info("after mapping to OpenApi {}", test);
+                OpenAPI test = objectMapper.readValue(apiSource.getData(), OpenAPI.class);
              } catch (IOException e){
-                log.error(e.getMessage());
-                throw new IllegalArgumentException("Error in data spec: {}", e.getCause());
+                throw new IllegalArgumentException("Error in data spec: {}" +  apiSource.getData());
             }
 
-        } else if (url.startsWith("http") &&!url.isEmpty()) {
+        } else if (apiSource.getUrl().startsWith("http") && !apiSource.getUrl().isEmpty()) {
             try {
-                apiSpec = IOUtils.toString(new URL(url).openStream(), Charsets.UTF_8);
+                apiSpec = IOUtils.toString(new URL(apiSource.getUrl()).openStream(), Charsets.UTF_8);
                 //Swagger swagger = objectMapper.readValue(apiSpec,Swagger.class);
             } catch (IOException e) {
-                throw new IllegalArgumentException("Error downloading api spec from url: " + url);
+                throw new IllegalArgumentException("Error downloading api spec from url: " + apiSource.getUrl());
             }
         }
         if(OpenApiV3JsonSpecConverter.canConvert(apiSpec)){
@@ -52,18 +50,17 @@ public class ParseApiSpecToApiDocument {
         try {
              String parsedjson = objectMapper.writeValueAsString(openAPI);
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new IllegalArgumentException("Error verifying OpenAPI deserialization for: " + openAPI);
         }
-
-        return createApiDocumnet(url,openAPI);
+        return createApiDocument(apiSource.getUrl(),openAPI);
     }
 
-    private ApiDocument createApiDocumnet(String url, OpenAPI openAPI){
+    private ApiDocument createApiDocument(String url, OpenAPI openAPI){
         Map<String,String> title = new HashMap<>();
         Map<String,String> description = new HashMap<>();
         title.put("no",openAPI.getInfo().getTitle());
         description.put("no",openAPI.getInfo().getDescription());
-        Set<String> formate = new HashSet<>();
+        Set<String> formats = new HashSet<>();
         return ApiDocument.builder().apiSpecUrl(url).title(title).contactPoint(Arrays.asList(getContact(openAPI))).description(description).build();
     }
 
