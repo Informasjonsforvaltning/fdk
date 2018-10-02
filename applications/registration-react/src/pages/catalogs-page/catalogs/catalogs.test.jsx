@@ -11,15 +11,11 @@ beforeEach(() => {
   fetchItems = jest.fn();
   items = {
     '910244132': {
-      items: {
-        _embedded: {
-          datasets: [
-            {
-              id: 'aab2063b-adf4-483a-a342-9e75c9a7c948'
-            }
-          ]
+      items: [
+        {
+          id: 'aab2063b-adf4-483a-a342-9e75c9a7c948'
         }
-      }
+      ]
     }
   };
   defaultProps = {

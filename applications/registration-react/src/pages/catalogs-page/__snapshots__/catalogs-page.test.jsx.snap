@@ -34,35 +34,20 @@ exports[`should render RegCatalogsComponent correctly 1`] = `
 exports[`should render RegCatalogsComponent correctly with catalogItems 1`] = `
 <RegCatalogs
   catalogItems={
-    Object {
-      "_embedded": Object {
-        "catalogs": Array [
-          Object {
-            "description": Object {},
-            "id": "910244132",
-            "publisher": Object {
-              "name": "RAMSUND OG ROGNAN REVISJON",
-              "uri": "http://data.brreg.no/enhetsregisteret/enhet/910244132",
-            },
-            "title": Object {
-              "nb": "Datakatalog for RAMSUND OG ROGNAN REVISJON",
-            },
-            "uri": "http://brreg.no/catalogs/910244132",
-          },
-        ],
-      },
-      "_links": Object {
-        "self": Object {
-          "href": "http://registration-api:8080/catalogs?page=0&size=20",
+    Array [
+      Object {
+        "description": Object {},
+        "id": "910244132",
+        "publisher": Object {
+          "name": "RAMSUND OG ROGNAN REVISJON",
+          "uri": "http://data.brreg.no/enhetsregisteret/enhet/910244132",
         },
+        "title": Object {
+          "nb": "Datakatalog for RAMSUND OG ROGNAN REVISJON",
+        },
+        "uri": "http://brreg.no/catalogs/910244132",
       },
-      "page": Object {
-        "number": 0,
-        "size": 20,
-        "totalElements": 1,
-        "totalPages": 1,
-      },
-    }
+    ]
   }
   fetchCatalogsIfNeeded={[Function]}
   fetchDatasetsIfNeeded={[Function]}

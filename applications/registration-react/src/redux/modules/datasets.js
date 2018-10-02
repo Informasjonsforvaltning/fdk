@@ -45,7 +45,7 @@ export default function datasets(state = initialState, action) {
       return {
         ...state,
         [action.meta.catalogId]: {
-          items: action.payload,
+          items: _.get(action.payload, ['_embedded', 'datasets']),
           meta: {
             isFetching: false,
             lastFetch: Date.now()

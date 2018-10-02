@@ -18,7 +18,7 @@ beforeEach(() => {
     datasetItems: datasets.datasetItems,
     helptextItems: helptext.helptextItems,
     isFetchingCatalog: false,
-    catalogItem: catalogs.catalogItems._embedded.catalogs[0]
+    catalogItem: catalogs.catalogItems[0]
   };
   wrapper = shallow(<RegDatasetsList {...defaultProps} />);
 });

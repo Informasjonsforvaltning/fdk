@@ -12,9 +12,7 @@ export const Catalog = props => {
       key={catalogId}
       publisherId={catalogId}
       type={type}
-      itemsCount={
-        _.get(items, [catalogId, 'items', '_embedded', type], []).length
-      }
+      itemsCount={_.get(items, [catalogId, 'items'], []).length}
     />
   );
 };
