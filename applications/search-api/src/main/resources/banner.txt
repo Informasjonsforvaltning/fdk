@@ -6,4 +6,4 @@
 |___/\___|\__,_|_|  \___|_| |_|     \__,_| .__/|_|
                                          | |
                                          |_|
-@project.version@
+@project.version@, Spring Boot @parent.version@, Spring @spring.version@
