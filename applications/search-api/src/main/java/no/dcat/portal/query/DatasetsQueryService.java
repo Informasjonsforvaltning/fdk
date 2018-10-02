@@ -247,19 +247,18 @@ public class DatasetsQueryService extends ElasticsearchService {
 
         logger.trace("Query: {}", searchBuilder.toString());
 
-        if (emptySearch) {
-            addSortForEmptySearch(searchBuilder);
-        }
-
-        // Handle attempting to sort on score, because any sorting removes score i.e. relevance from the search.
-        if (sortfield.compareTo("score") != 0) {
+        if (isEmpty(sortfield)) {
+            if (emptySearch) {
+                addSortForEmptySearch(searchBuilder);
+            }
+        } else {
             addSort(sortfield, sortdirection, searchBuilder);
         }
 
         // Execute search
         SearchResponse response = searchBuilder.execute().actionGet();
 
-        logger.trace("Search response: " + response.toString());
+        logger.trace("Search response: {}", response.toString());
 
         // return response
         return new ResponseEntity<>(response.toString(), HttpStatus.OK);
