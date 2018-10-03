@@ -103,7 +103,7 @@ export default class DatasetPublish extends Component {
     // find catalog url, remove all from second last slash
     const catalogDatasetsURL = datasetURL.substring(
       0,
-      datasetURL.lastIndexOf('/', datasetURL.lastIndexOf('/') - 1)
+      datasetURL.lastIndexOf('/')
     );
     const api = {
       Authorization: `Basic user:password`
