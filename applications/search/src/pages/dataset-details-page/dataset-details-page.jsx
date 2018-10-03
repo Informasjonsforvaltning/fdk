@@ -233,7 +233,7 @@ const renderDistribution = (heading, distribution, referenceData) => {
 
   return (
     <div className="dataset-distributions">
-      <DistributionHeading title={heading} />
+      <DistributionHeading title={heading} itemsCount={distribution.length} />
       {distributionItems(distribution, distribution.length)}
     </div>
   );
