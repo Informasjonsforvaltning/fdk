@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import Form from './form-catalog.component';
 import validate from './form-catalog-validations';
-import asyncValidate from '../../../utils/asyncValidatePut';
+import { putCatalogDataset } from './async-catalog-dataset';
 import shouldAsyncValidate from '../../../utils/shouldAsyncValidate';
 import { textType } from '../../../schemaTypes';
 import './connected-form-catalog.scss';
@@ -13,7 +13,7 @@ const FormCatalog = reduxForm({
   form: 'catalog',
   validate,
   shouldAsyncValidate,
-  asyncValidate,
+  asyncValidate: putCatalogDataset,
   asyncChangeFields: []
 })(
   connect(state => ({
