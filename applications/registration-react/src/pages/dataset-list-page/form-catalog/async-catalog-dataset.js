@@ -1,7 +1,7 @@
 import axios from 'axios';
-import { datasetLastSaved } from '../actions';
+import { datasetLastSaved } from '../../../actions';
 
-const asyncValidatePut = (values, dispatch) => {
+export const putCatalogDataset = (values, dispatch) => {
   const postURL = window.location.pathname;
   const catalogDatasetsURL = postURL.substring(0, postURL.lastIndexOf('/'));
 
@@ -17,5 +17,3 @@ const asyncValidatePut = (values, dispatch) => {
       return Promise.reject(error);
     });
 };
-
-export default asyncValidatePut;
