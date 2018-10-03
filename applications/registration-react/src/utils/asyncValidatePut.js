@@ -3,9 +3,10 @@ import { datasetLastSaved } from '../actions';
 
 const asyncValidatePut = (values, dispatch) => {
   const postURL = window.location.pathname;
+  const catalogDatasetsURL = postURL.substring(0, postURL.lastIndexOf('/'));
 
   return axios
-    .put(postURL, values)
+    .put(catalogDatasetsURL, values)
     .then(response => {
       if (dispatch) {
         dispatch(datasetLastSaved(response.data._lastModified));
