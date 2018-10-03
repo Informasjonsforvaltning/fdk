@@ -2,6 +2,8 @@ package no.acat.harvester;
 
 
 import lombok.extern.slf4j.Slf4j;
+import mockit.Mock;
+import mockit.MockUp;
 import no.acat.model.ApiDocument;
 import no.acat.model.ApiSource;
 import no.acat.spec.converters.ParseApiSpecToApiDocument;
@@ -26,7 +28,6 @@ public class ParseApiSpecToApiDocumentTest {
     @Before
     public void setUp(){
         parseApiSpecToApiDocument = new ParseApiSpecToApiDocument();
-
     }
 
     @Test
@@ -45,10 +46,24 @@ public class ParseApiSpecToApiDocumentTest {
         Assert.assertEquals(apiDocument.getTitle().get("no"),"Nasjonalt barnehageregister API");
     }
 
+    @Test
+    public void parseApiSpec_From_Url_Mocked() throws  Exception{
+        apiSource = new ApiSource("http://www.barnehagefakta.no/swagger/docs/v1","");
+        new MockUp<ParseApiSpecToApiDocument>() {
+            @Mock
+            public String getApiSpecFromUrl(ApiSource apiSource){
+                return getData();
+            }
+        };
+        ApiDocument apiDocument = parseApiSpecToApiDocument.parseApiSpecFromUrl(apiSource);
+        Assert.assertNotNull(apiDocument);
+        Assert.assertEquals(apiDocument.getTitle().get("no"),"Nasjonalt barnehageregister API");
+    }
     @Test(expected= NullPointerException.class)
     public void parseApiSpecificationw_with_nullInput(){
         ApiDocument apiDocument =parseApiSpecToApiDocument.parseApiSpecFromUrl(null);
     }
+
 
 
     private String getData( ){

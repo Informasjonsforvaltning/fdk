@@ -30,18 +30,20 @@ public class ParseApiSpecToApiDocument {
             apiSpec = apiSource.getData();
             try{
                 OpenAPI test = objectMapper.readValue(apiSource.getData(), OpenAPI.class);
-             } catch (IOException e){
-                throw new IllegalArgumentException("Error in data spec: {}" +  apiSource.getData());
+            } catch (IOException e){
+                throw new IllegalArgumentException("Error in data spec: {}" + e.getMessage());
             }
 
         } else if (apiSource.getUrl().startsWith("http") && !apiSource.getUrl().isEmpty()) {
             try {
-                apiSpec = IOUtils.toString(new URL(apiSource.getUrl()).openStream(), Charsets.UTF_8);
-                //Swagger swagger = objectMapper.readValue(apiSpec,Swagger.class);
+                apiSpec = getApiSpecFromUrl(apiSource);
             } catch (IOException e) {
-                throw new IllegalArgumentException("Error downloading api spec from url: " + apiSource.getUrl());
+                throw new IllegalArgumentException("Error downloading api spec from url: " + e.getMessage());
             }
+        } else {
+            throw new IllegalArgumentException("Url is not starting with http are null. " );
         }
+
         if(OpenApiV3JsonSpecConverter.canConvert(apiSpec)){
             openAPI = OpenApiV3JsonSpecConverter.convert(apiSpec);
         } else if (SwaggerJsonSpecConverter.canConvert(apiSpec)){
@@ -50,9 +52,13 @@ public class ParseApiSpecToApiDocument {
         try {
              String parsedjson = objectMapper.writeValueAsString(openAPI);
         } catch (IOException e) {
-            throw new IllegalArgumentException("Error verifying OpenAPI deserialization for: " + openAPI);
+            throw new IllegalArgumentException("Error verifying OpenAPI deserialization for: " + e.getMessage());
         }
         return createApiDocument(apiSource.getUrl(),openAPI);
+    }
+
+    public static String getApiSpecFromUrl(ApiSource apiSource) throws IOException {
+        return IOUtils.toString(new URL(apiSource.getUrl()).openStream(), Charsets.UTF_8);
     }
 
     private ApiDocument createApiDocument(String url, OpenAPI openAPI){
