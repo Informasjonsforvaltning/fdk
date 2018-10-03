@@ -8,10 +8,7 @@ exports[`should render DatasetDistribution correctly 1`] = `
     bottomMargin={false}
     title={null}
   >
-    <button
-      className="w-100 p-0"
-      onClick={[Function]}
-    >
+    <div>
       <div
         className="d-flex list-regular--item text-left"
       >
@@ -33,9 +30,13 @@ exports[`should render DatasetDistribution correctly 1`] = `
             GPX
           </span>
         </div>
-        <i
-          className="fa fdk-color-blue-dark fa-chevron-down"
-        />
+        <button
+          onClick={[Function]}
+        >
+          <i
+            className="fa fdk-color-blue-dark fa-chevron-down"
+          />
+        </button>
       </div>
       <div
         className="d-flex list-regular--item text-left mb-2 closedCollapse"
@@ -51,7 +52,7 @@ exports[`should render DatasetDistribution correctly 1`] = `
           Datasettet avgrenser område for virkeområdet til lov 6. juni 2009 nr. 35 om naturområder i Oslo og nærliggende kommuner (markaloven) som trådte i kraft 1. september 2009. Markalovens virkeområde er fastsatt i forskrift 4. september 2015 nr. 1032 om justering av markagrensen fastlegger markalovens geografiske virkeområde med tilhørende kart.
         </div>
       </div>
-    </button>
+    </div>
     <Collapse
       appear={false}
       enter={true}
@@ -93,10 +94,7 @@ exports[`should render DatasetDistribution correctly with no props 1`] = `
     bottomMargin={false}
     title={null}
   >
-    <button
-      className="w-100 p-0"
-      onClick={[Function]}
-    />
+    <div />
     <Collapse
       appear={false}
       enter={true}
