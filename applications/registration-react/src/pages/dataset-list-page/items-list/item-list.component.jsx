@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import orderBy from 'lodash/orderBy';
 import axios from 'axios';
+import _ from 'lodash';
 
 import localization from '../../../utils/localization';
 import DatasetItemsListItem from './list-item/list-item.component';
@@ -11,7 +12,6 @@ import './items-list.scss';
 
 const handleCreateDataset = () => {
   const catalogURL = window.location.pathname;
-  const datasetPath = 'datasets/';
 
   const header = {
     Accept: 'application/json'
@@ -23,10 +23,10 @@ const handleCreateDataset = () => {
   };
 
   return axios
-    .post(`${catalogURL}/${datasetPath}`, getInit)
+    .post(`${catalogURL}/`, getInit)
     .then(response => {
       window.location.replace(
-        `${catalogURL}/${datasetPath}${response.data.id}`
+        `${catalogURL}/${_.get(response, ['data', 'id'])}`
       );
     })
     .catch(response => {
@@ -61,7 +61,6 @@ class DatasetItemsList extends React.Component {
 
   handleImportDataset(url) {
     const catalogURL = window.location.pathname;
-    const datasetPath = 'datasets/';
 
     this.setState({
       showImportModal: false
@@ -80,43 +79,13 @@ class DatasetItemsList extends React.Component {
       .post(`${catalogURL}`, url, getInit)
       .then(response => {
         window.location.replace(
-          `${catalogURL}/${datasetPath}${response.data.id}`
+          `${catalogURL}/${_.get(response, ['data', 'id'])}`
         );
       })
       .catch(response => {
         const { error } = response;
         return Promise.reject(error);
       });
-
-    /*
-     this.service.import(this.catalog, this.import.datasetImportUrl).then(() => {
-     modal.hide();
-     this.import.importLoading = false;
-     this.getAllDatasets();
-
-     }).catch((error) => {
-     this.import.importLoading = false;
-     this.import.importErrorMessage = "Ukjent feil";
-     try {
-     this.import.importErrorMessage = JSON.parse(error._body).message;
-     } catch (error) {
-     console.error(error);
-     }
-     });
-
-     import(catalog: Catalog, url: string) : Promise<Catalog> {
-     const postUrl = `${this.catalogsUrl}/${catalog.id}/import`;
-
-     let authorization : string = localStorage.getItem("authorization");
-     this.headers.append("Authorization", "Basic " + authorization);
-
-     return this.http
-     .post(postUrl, url, {headers: this.headers})
-     .toPromise()
-     .then(() => catalog);
-
-     }
-     */
   }
 
   _renderDatasetItems() {
