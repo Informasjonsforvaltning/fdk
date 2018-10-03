@@ -1,37 +1,30 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { createMockStore } from 'redux-test-utils';
-import shallowWithStore from '../../../test/shallowWithStore';
-import RegDatasetsListComponent, { RegDatasetsList } from './dataset-list-page';
-import datasets from '../../../test/fixtures/datasets';
+import { DatasetsListPage } from './dataset-list-page';
+import datasets from './__fixtures/datasets';
 import helptext from '../../../test/fixtures/helptext';
-import catalogs from '../../../test/fixtures/catalogs';
+import catalog from './__fixtures/catalog';
 
 let defaultProps;
 let wrapper;
 let dispatch;
 
 beforeEach(() => {
-  dispatch = jest.fn();
+  const fetchHelptextsIfNeeded = jest.fn();
+  const fetchCatalogIfNeeded = jest.fn();
+  const fetchDatasetsIfNeeded = jest.fn();
   defaultProps = {
     dispatch,
-    datasetItems: datasets.datasetItems,
+    datasets,
     helptextItems: helptext.helptextItems,
-    isFetchingCatalog: false,
-    catalogItem: catalogs.catalogItems[0]
+    catalog,
+    fetchHelptextsIfNeeded,
+    fetchCatalogIfNeeded,
+    fetchDatasetsIfNeeded
   };
-  wrapper = shallow(<RegDatasetsList {...defaultProps} />);
+  wrapper = shallow(<DatasetsListPage {...defaultProps} />);
 });
 
-test('should render ProtectedRoute correctly', () => {
-  expect(wrapper).toMatchSnapshot();
-});
-
-test('should render FormAccessRightsSchema correctly', () => {
-  const testState = {
-    catalogs
-  };
-  const store = createMockStore(testState);
-  wrapper = shallowWithStore(<RegDatasetsListComponent />, store);
+test('should render DatasetsListPage correctly', () => {
   expect(wrapper).toMatchSnapshot();
 });
