@@ -3,21 +3,26 @@ import PropTypes from 'prop-types';
 import './distribution-heading.component.scss';
 
 export const DistributionHeading = props => {
-  const { title } = props;
+  const { title, itemsCount } = props;
   if (!title) {
     return null;
   }
   return (
     <div className="fdk-distribution-heading" name={title}>
-      <h3>{title}</h3>
+      <h3>
+        {title}
+        {itemsCount && ` (${itemsCount})`}
+      </h3>
     </div>
   );
 };
 
 DistributionHeading.defaultProps = {
-  title: null
+  title: null,
+  itemsCount: null
 };
 
 DistributionHeading.propTypes = {
-  title: PropTypes.string
+  title: PropTypes.string,
+  itemsCount: PropTypes.number
 };
