@@ -29,18 +29,6 @@ export function fetchReferenceDatasetsIfNeeded(datasetURL) {
     );
 }
 
-export function fetchHelptextsIfNeeded() {
-  return (dispatch, getState) =>
-    shouldFetchApi(getState().helptexts) &&
-    dispatch(
-      fetchActions('/reference-data/helptexts', [
-        actions.HELPTEXTS_REQUEST,
-        actions.HELPTEXTS_SUCCESS,
-        actions.HELPTEXTS_FAILURE
-      ])
-    );
-}
-
 export function fetchProvenanceIfNeeded() {
   return (dispatch, getState) =>
     shouldFetchApi(getState().provenance) &&
@@ -97,18 +85,6 @@ export function fetchReferenceTypesIfNeeded() {
         actions.REFERENCETYPES_REQUEST,
         actions.REFERENCETYPES_SUCCESS,
         actions.REFERENCETYPES_FAILURE
-      ])
-    );
-}
-
-export function fetchCatalogIfNeeded(catalogURL) {
-  return (dispatch, getState) =>
-    shouldFetchApi(getState().catalog) &&
-    dispatch(
-      fetchActions(catalogURL, [
-        actions.CATALOG_REQUEST,
-        actions.CATALOG_SUCCESS,
-        actions.CATALOG_FAILURE
       ])
     );
 }

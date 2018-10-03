@@ -7,7 +7,7 @@ import { configureStore } from './redux/configureStore';
 import ProtectedRoute from './app-protected-route/app-protected-route.component';
 import { ConnectedFeatureToggleProvider } from './components/connected-feature-toggle-provider';
 import RegCatalogs from './pages/catalogs-page/catalogs-page';
-import RegDatasetsList from './pages/dataset-list-page/dataset-list-page';
+import { ConnectedDatasetsListPage } from './pages/dataset-list-page/connected-dataset-list-page';
 import RegDataset from './pages/dataset-registration-page/dataset-registration-page';
 import Header from './components/app-header/app-header.component';
 import Footer from './components/app-footer/app-footer.component';
@@ -27,12 +27,17 @@ const routes = (
     <ProtectedRoute
       exact
       path="/catalogs/:catalogId/datasets"
-      component={RegDatasetsList}
+      component={ConnectedDatasetsListPage}
     />
     <ProtectedRoute
       exact
       path="/catalogs/:catalogId/datasets/:id"
       component={RegDataset}
+    />
+    <ProtectedRoute
+      exact
+      path="/catalogs/:catalogId/apiSpecs"
+      component={RegCatalogs}
     />
   </Switch>
 );

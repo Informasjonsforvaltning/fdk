@@ -1,18 +1,42 @@
-import {
-  HELPTEXTS_REQUEST,
-  HELPTEXTS_SUCCESS,
-  HELPTEXTS_FAILURE
-} from '../../constants/ActionTypes';
+import _ from 'lodash';
+import { fetchActions } from '../fetchActions';
 
-export default function dataset(
-  state = { isFetchingHelptext: false, helptextItems: null },
-  action
-) {
+const HELPTEXTS_REQUEST = 'HELPTEXTS_REQUEST';
+const HELPTEXTS_SUCCESS = 'HELPTEXTS_SUCCESS';
+const HELPTEXTS_FAILURE = 'HELPTEXTS_FAILURE';
+
+function shouldFetch(metaState) {
+  const threshold = 60 * 1000; // seconds
+  return (
+    !metaState ||
+    (!metaState.isFetching &&
+      (metaState.lastFetch || 0) < Date.now() - threshold)
+  );
+}
+
+export function fetchHelptextsIfNeeded() {
+  return (dispatch, getState) =>
+    shouldFetch(_.get(getState(), ['helptexts', 'meta'])) &&
+    dispatch(
+      fetchActions('/reference-data/helptexts', [
+        HELPTEXTS_REQUEST,
+        HELPTEXTS_SUCCESS,
+        HELPTEXTS_FAILURE
+      ])
+    );
+}
+
+const initialState = {};
+
+export default function helptexts(state = initialState, action) {
   switch (action.type) {
     case HELPTEXTS_REQUEST: {
       return {
         ...state,
-        isFetchingHelptext: true
+        meta: {
+          isFetching: true,
+          lastFetch: null
+        }
       };
     }
     case HELPTEXTS_SUCCESS: {
@@ -22,15 +46,21 @@ export default function dataset(
       }, {});
       return {
         ...state,
-        isFetchingHelptext: false,
-        helptextItems: objFromArray
+        helptextItems: objFromArray,
+        meta: {
+          isFetching: false,
+          lastFetch: Date.now()
+        }
       };
     }
     case HELPTEXTS_FAILURE: {
       return {
         ...state,
-        isFetchingHelptext: false,
-        helptextItems: null
+        helptextItems: null,
+        meta: {
+          isFetching: false,
+          lastFetch: null
+        }
       };
     }
     default:

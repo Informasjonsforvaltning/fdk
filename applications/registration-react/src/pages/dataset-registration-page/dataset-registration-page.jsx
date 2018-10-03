@@ -7,7 +7,6 @@ import localization from '../../utils/localization';
 import {
   fetchUserIfNeeded,
   fetchDatasetIfNeeded,
-  fetchHelptextsIfNeeded,
   fetchProvenanceIfNeeded,
   fetchFrequencyIfNeeded,
   fetchThemesIfNeeded,
@@ -15,6 +14,7 @@ import {
   fetchReferenceDatasetsIfNeeded,
   fetchOpenLicensesIfNeeded
 } from '../../actions/index';
+import { fetchHelptextsIfNeeded } from '../../redux/modules/helptexts';
 import FormTemplate from './form-template/form-template.component';
 import FormTitle from './form-title/connected-form-title.component';
 import FormDistribution from './form-distribution/connected-form-distribution.component';
