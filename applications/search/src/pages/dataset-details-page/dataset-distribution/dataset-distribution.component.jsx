@@ -176,7 +176,7 @@ export class DatasetDistribution extends React.Component {
     return (
       <section className="fdk-distribution-item mb-1">
         <ListRegular bottomMargin={false}>
-          <button className="w-100 p-0" onClick={this.toggle}>
+          <div>
             {format && (
               <div className="d-flex list-regular--item text-left">
                 <div className="col-4 pl-0">
@@ -185,11 +185,13 @@ export class DatasetDistribution extends React.Component {
                   </span>
                 </div>
                 <div className="col-8">{formatItems(format)}</div>
-                <i
-                  className={`fa fdk-color-blue-dark ${
-                    openCollapse ? 'fa-chevron-up' : 'fa-chevron-down'
-                  }`}
-                />
+                <button onClick={this.toggle}>
+                  <i
+                    className={`fa fdk-color-blue-dark ${
+                      openCollapse ? 'fa-chevron-up' : 'fa-chevron-down'
+                    }`}
+                  />
+                </button>
               </div>
             )}
             {description && (
@@ -212,7 +214,7 @@ export class DatasetDistribution extends React.Component {
                 </div>
               </div>
             )}
-          </button>
+          </div>
 
           <Collapse isOpen={openCollapse}>
             {this.renderType()}

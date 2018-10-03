@@ -20,23 +20,15 @@
       border: none;
       background-color: transparent;
       cursor: pointer;
-      .list-regular--item {
-        &:last-child {
-          border-bottom: 1px solid $color-grey-1 !important;
-        }
-        &.closedCollapse {
-          &:last-child {
-            border-bottom: none !important;
-          }
-        }
-      }
-      i.fa {
-        position: absolute;
-        right: 3em;
-      }
+      position: absolute;
+      right: 3em;
     }
     .list-regular {
       padding: 1em !important;
+      .list-regular--item {
+        border-top: none !important;
+        border-bottom: none !important;
+      }
     }
     .show-more__cropped-box {
       &:before {
