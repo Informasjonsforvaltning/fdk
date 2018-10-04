@@ -20,7 +20,7 @@ exports[`should render DatasetKeyInfo correctly 1`] = `
         <i
           className="fa fdk-fa-left fdk-color-offentlig fa-unlock"
         />
-        API that are public
+        Dataset is public
       </div>
     </div>
   </ListRegular>

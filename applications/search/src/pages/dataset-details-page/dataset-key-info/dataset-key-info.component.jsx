@@ -22,18 +22,21 @@ const renderAccessRights = accessRight => {
   switch (code) {
     case 'NON_PUBLIC':
       accessRightsIconClass = 'fdk-color-unntatt fa-lock';
-      accessRightsLabel = localization.api.accessRight.nonPublic;
+      accessRightsLabel =
+        localization.dataset.accessRights.authorityCode.nonPublicDetailsLabel;
       break;
     case 'RESTRICTED':
       accessRightsIconClass = 'fdk-color-begrenset fa-unlock-alt';
-      accessRightsLabel = localization.api.accessRight.restricted;
+      accessRightsLabel =
+        localization.dataset.accessRights.authorityCode.restrictedDetailsLabel;
       break;
     case 'PUBLIC':
       accessRightsIconClass = 'fdk-color-offentlig fa-unlock';
-      accessRightsLabel = localization.api.accessRight.public;
+      accessRightsLabel =
+        localization.dataset.accessRights.authorityCode.publicDetailsLabel;
       break;
     default:
-      accessRightsLabel = localization.api.accessRight.unknown;
+      accessRightsLabel = localization.unknown;
   }
 
   return (
