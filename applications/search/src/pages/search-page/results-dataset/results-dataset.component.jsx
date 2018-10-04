@@ -99,7 +99,7 @@ export class ResultsDataset extends React.Component {
   render() {
     const {
       datasetItems,
-      onClearSearch,
+      onClearFilters,
       onFilterTheme,
       onFilterAccessRights,
       onFilterPublisherHierarchy,
@@ -137,7 +137,7 @@ export class ResultsDataset extends React.Component {
           <div className="col-6 col-lg-4">
             <button
               className={clearButtonClass}
-              onClick={onClearSearch}
+              onClick={onClearFilters}
               type="button"
             >
               {localization.query.clear}
@@ -269,7 +269,7 @@ ResultsDataset.defaultProps = {
   publisherArray: null,
   publishers: null,
   referenceData: null,
-  onClearSearch: null,
+  onClearFilters: null,
   onPageChange: null,
   showClearFilterButton: null,
   hitsPerPage: null
@@ -289,7 +289,7 @@ ResultsDataset.propTypes = {
   publisherArray: PropTypes.array,
   publishers: PropTypes.object,
   referenceData: PropTypes.object,
-  onClearSearch: PropTypes.func,
+  onClearFilters: PropTypes.func,
   onSort: PropTypes.func.isRequired,
   onPageChange: PropTypes.func,
   showClearFilterButton: PropTypes.bool,

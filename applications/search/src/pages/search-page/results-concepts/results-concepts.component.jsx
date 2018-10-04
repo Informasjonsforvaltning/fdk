@@ -132,7 +132,7 @@ export class ResultsConcepts extends React.Component {
   render() {
     const {
       termItems,
-      onClearSearch,
+      onClearFilters,
       onPageChange,
       onFilterPublisherHierarchy,
       searchQuery,
@@ -163,7 +163,7 @@ export class ResultsConcepts extends React.Component {
           <div className="col-lg-4">
             <button
               className={clearButtonClass}
-              onClick={onClearSearch}
+              onClick={onClearFilters}
               type="button"
             >
               {localization.query.clear}
@@ -226,7 +226,7 @@ export class ResultsConcepts extends React.Component {
 
 ResultsConcepts.defaultProps = {
   termItems: null,
-  onClearSearch: null,
+  onClearFilters: null,
   onPageChange: null,
   onFilterPublisherHierarchy: null,
   searchQuery: null,
@@ -240,7 +240,7 @@ ResultsConcepts.defaultProps = {
 
 ResultsConcepts.propTypes = {
   termItems: PropTypes.object,
-  onClearSearch: PropTypes.func,
+  onClearFilters: PropTypes.func,
   onPageChange: PropTypes.func,
   onFilterPublisherHierarchy: PropTypes.func,
   searchQuery: PropTypes.object,

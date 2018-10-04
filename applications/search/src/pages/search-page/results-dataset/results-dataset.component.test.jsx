@@ -10,7 +10,7 @@ let closeFilterModal;
 let onFilterTheme;
 let onFilterAccessRights;
 let onFilterPublisherHierarchy;
-let onClearSearch;
+let onClearFilters;
 let onSort;
 let onPageChange;
 let defaultProps;
@@ -21,7 +21,7 @@ beforeEach(() => {
   onFilterTheme = jest.fn();
   onFilterAccessRights = jest.fn();
   onFilterPublisherHierarchy = jest.fn();
-  onClearSearch = jest.fn();
+  onClearFilters = jest.fn();
   onSort = jest.fn();
   onPageChange = jest.fn();
 
@@ -41,7 +41,7 @@ beforeEach(() => {
     onFilterTheme,
     onFilterAccessRights,
     onFilterPublisherHierarchy,
-    onClearSearch,
+    onClearFilters,
     onSort,
     onPageChange
   };
