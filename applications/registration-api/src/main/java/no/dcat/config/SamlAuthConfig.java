@@ -2,6 +2,8 @@ package no.dcat.config;
 
 import com.github.ulisesbocchio.spring.boot.security.saml.annotation.EnableSAMLSSO;
 import com.github.ulisesbocchio.spring.boot.security.saml.bean.SAMLConfigurerBean;
+import com.github.ulisesbocchio.spring.boot.security.saml.configurer.ServiceProviderBuilder;
+import com.github.ulisesbocchio.spring.boot.security.saml.configurer.ServiceProviderConfigurerAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +12,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
@@ -22,7 +22,8 @@ import javax.annotation.PostConstruct;
 
 @Configuration
 @Profile( {"prod", "st1"})
-public class SamlAuthConfig extends WebSecurityConfigurerAdapter {
+@EnableSAMLSSO
+public class SamlAuthConfig extends ServiceProviderConfigurerAdapter {
 
     private static final Logger logger = LoggerFactory.getLogger(SamlAuthConfig.class);
 
@@ -31,18 +32,12 @@ public class SamlAuthConfig extends WebSecurityConfigurerAdapter {
         return new SAMLConfigurerBean();
     }
 
-    @Bean
-    @Override
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
-    }
-
     @Autowired
     FdkSamlUserDetailsService fdkSamlUserDetailsService;
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        logger.info("saml-configure...");
+        logger.info("saml-configure http security ...");
 
         // @formatter:off
         http
@@ -73,12 +68,22 @@ public class SamlAuthConfig extends WebSecurityConfigurerAdapter {
                 .logoutUrl("/logout")
         ;
         // @formatter:on
+    }
 
-        saml().serviceProvider().authenticationProvider().userDetailsService(fdkSamlUserDetailsService);
+    @Override
+    public void configure(ServiceProviderBuilder serviceProvider) throws Exception {
+        logger.info("saml-configure service provider ...");
 
-        saml().serviceProvider().sso().successHandler(loginSuccessHandler());
-        saml().serviceProvider().logout().successHandler(logoutSuccesHandler());
-
+        // @formatter:off
+        serviceProvider
+            .authenticationProvider().userDetailsService(fdkSamlUserDetailsService)
+            .and()
+                .sso()
+                    .successHandler(loginSuccessHandler())
+            .and()
+                .logout()
+                    .successHandler(logoutSuccesHandler());
+        // @formatter:on
     }
 
 
