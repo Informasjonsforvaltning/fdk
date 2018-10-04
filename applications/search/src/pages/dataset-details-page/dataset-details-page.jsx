@@ -211,7 +211,12 @@ const renderKeywords = keyword => {
   );
 };
 
-const renderDistribution = (heading, distribution, referenceData) => {
+const renderDistribution = (
+  heading,
+  showCount,
+  distribution,
+  referenceData
+) => {
   if (!distribution) {
     return null;
   }
@@ -233,7 +238,10 @@ const renderDistribution = (heading, distribution, referenceData) => {
 
   return (
     <div className="dataset-distributions">
-      <DistributionHeading title={heading} itemsCount={distribution.length} />
+      <DistributionHeading
+        title={heading}
+        itemsCount={showCount ? distribution.length : undefined}
+      />
       {distributionItems(distribution, distribution.length)}
     </div>
   );
@@ -333,12 +341,14 @@ export const DatasetDetailsPage = props => {
 
             {renderDistribution(
               localization.dataset.distributions,
+              true,
               _.get(datasetItem, 'distribution'),
               referenceData
             )}
 
             {renderDistribution(
               localization.dataset.sample,
+              false,
               _.get(datasetItem, 'sample'),
               referenceData
             )}
