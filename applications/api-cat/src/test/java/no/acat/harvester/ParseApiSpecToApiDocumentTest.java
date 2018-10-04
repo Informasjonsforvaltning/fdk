@@ -31,14 +31,6 @@ public class ParseApiSpecToApiDocumentTest {
     }
 
     @Test
-    public void parseApiSpec_From_Url(){
-        apiSource = new ApiSource("http://www.barnehagefakta.no/swagger/docs/v1","");
-        ApiDocument apiDocument =parseApiSpecToApiDocument.parseApiSpecFromUrl(apiSource);
-        Assert.assertNotNull(apiDocument);
-        Assert.assertEquals(apiDocument.getTitle().get("no"),"Barnehagefakta");
-    }
-
-    @Test
     public  void parseAPIspecification_From_Data(){
         apiSource = new ApiSource("", getData());
         ApiDocument apiDocument =parseApiSpecToApiDocument.parseApiSpecFromUrl(apiSource);
