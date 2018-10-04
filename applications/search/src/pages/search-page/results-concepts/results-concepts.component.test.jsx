@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import { ResultsConcepts } from './results-concepts.component';
 import concepts from '../../../../test/fixtures/concepts';
 
-let onClearSearch;
+let onClearFilters;
 let onPageChange;
 let onFilterPublisherHierarchy;
 let closeFilterModal;
@@ -11,14 +11,14 @@ let defaultProps;
 let wrapper;
 
 beforeEach(() => {
-  onClearSearch = jest.fn();
+  onClearFilters = jest.fn();
   onPageChange = jest.fn();
   onFilterPublisherHierarchy = jest.fn();
   closeFilterModal = jest.fn();
 
   defaultProps = {
     termItems: concepts,
-    onClearSearch,
+    onClearFilters,
     onPageChange,
     onFilterPublisherHierarchy,
     searchQuery: {},

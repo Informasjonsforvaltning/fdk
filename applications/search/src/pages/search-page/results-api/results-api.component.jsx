@@ -64,7 +64,7 @@ export const ResultsApi = props => {
     searchQuery,
     publisherArray,
     publishers,
-    onClearSearch,
+    onClearFilters,
     onSort,
     onPageChange,
     showClearFilterButton,
@@ -93,7 +93,7 @@ export const ResultsApi = props => {
         <div className="col-12 d-flex justify-content-between">
           <button
             className={clearButtonClass}
-            onClick={onClearSearch}
+            onClick={onClearFilters}
             type="button"
           >
             {localization.query.clear}
@@ -201,7 +201,7 @@ ResultsApi.defaultProps = {
   searchQuery: {},
   publisherArray: null,
   publishers: null,
-  onClearSearch: null,
+  onClearFilters: null,
   onPageChange: null,
   showClearFilterButton: null,
   hitsPerPage: null
@@ -217,7 +217,7 @@ ResultsApi.propTypes = {
   searchQuery: PropTypes.object,
   publisherArray: PropTypes.array,
   publishers: PropTypes.object,
-  onClearSearch: PropTypes.func,
+  onClearFilters: PropTypes.func,
   onSort: PropTypes.func.isRequired,
   onPageChange: PropTypes.func,
   showClearFilterButton: PropTypes.bool,

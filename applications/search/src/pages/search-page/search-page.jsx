@@ -37,7 +37,7 @@ export class SearchPage extends React.Component {
       searchQuery
     };
 
-    this.handleClearSearch = this.handleClearSearch.bind(this);
+    this.handleClearFilters = this.handleClearFilters.bind(this);
     this.handleSearchSubmit = this.handleSearchSubmit.bind(this);
     this.handleSearchChange = this.handleSearchChange.bind(this);
     this.handleDatasetFilterThemes = this.handleDatasetFilterThemes.bind(this);
@@ -68,10 +68,15 @@ export class SearchPage extends React.Component {
     this.props.fetchReferenceDataIfNeeded();
   }
 
-  handleClearSearch() {
+  handleClearFilters() {
+    const searchQuery = _.pick(this.state.searchQuery, [
+      'q',
+      'sortfield',
+      'sortdirection'
+    ]);
     this.setState(
       {
-        searchQuery: {}
+        searchQuery
       },
       this.handleSearchSubmit
     );
@@ -478,7 +483,7 @@ export class SearchPage extends React.Component {
               render={props => (
                 <ResultsDataset
                   datasetItems={datasetItems}
-                  onClearSearch={this.handleClearSearch}
+                  onClearFilters={this.handleClearFilters}
                   onFilterTheme={this.handleDatasetFilterThemes}
                   onFilterAccessRights={this.handleDatasetFilterAccessRights}
                   onFilterPublisher={this.handleDatasetFilterPublisher}
@@ -508,7 +513,7 @@ export class SearchPage extends React.Component {
               render={props => (
                 <ResultsApi
                   apiItems={this.props.apiItems}
-                  onClearSearch={this.handleClearSearch}
+                  onClearFilters={this.handleClearFilters}
                   onFilterTheme={this.handleDatasetFilterThemes}
                   onFilterAccessRights={this.handleDatasetFilterAccessRights}
                   onFilterPublisher={this.handleDatasetFilterPublisher}
@@ -538,7 +543,7 @@ export class SearchPage extends React.Component {
               render={props => (
                 <ResultsConcepts
                   termItems={termItems}
-                  onClearSearch={this.handleClearSearch}
+                  onClearFilters={this.handleClearFilters}
                   onPageChange={this.handlePageChange}
                   onFilterPublisherHierarchy={
                     this.handleDatasetFilterPublisherHierarchy
