@@ -6,16 +6,19 @@ import io.swagger.annotations.ApiModelProperty;
 import io.swagger.v3.oas.models.OpenAPI;
 import lombok.*;
 import no.dcat.shared.Publisher;
+import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 
 import java.util.*;
 
+@Document (indexName = "register", type = Catalog.ELASTIC_TYPE)
 @Data
-@AllArgsConstructor
 @ToString(includeFieldNames = false)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ApiRegistration {
-
+  
+  public static final String ELASTIC_TYPE = "registration";
+  
   public static final String REGISTRATION_STATUS_DRAFT = "DRAFT";
   public static final String REGISTRATION_STATUS_PUBLISH = "PUBLISH";
 

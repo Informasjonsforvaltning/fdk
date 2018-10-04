@@ -57,7 +57,7 @@ public class ApiRegistrationController {
    * @return complete apiRegistration. HTTP status 200 OK is returned if apiRegistration is found.
    *     If apiRegistration is not found, HTTP 404 Not found is returned, with an empty body.
    */
-  @PreAuthorize("hasPermission(#catalogId, 'write')")
+  @PreAuthorize("hasPermission(#orgNr, 'write')")
   @CrossOrigin
   @RequestMapping(value = "/{id}", method = GET, produces = APPLICATION_JSON_UTF8_VALUE)
   public HttpEntity<ApiRegistration> getApispec(
@@ -84,7 +84,7 @@ public class ApiRegistrationController {
    * @param pageable number of apiRegistrations returned
    * @return List of data sets, with hyperlinks to other pages in search result
    */
-  @PreAuthorize("hasPermission(#catalogId, 'write')")
+  @PreAuthorize("hasPermission(#orgNr, 'write')")
   @CrossOrigin
   @RequestMapping(value = "", method = GET, produces = APPLICATION_JSON_UTF8_VALUE)
   public HttpEntity<PagedResources<ApiRegistration>> listApiRegistrations(
@@ -105,7 +105,7 @@ public class ApiRegistrationController {
    * @param apiRegistration
    * @return HTTP 200 OK if apiRegistration could be could be created.
    */
-  @PreAuthorize("hasPermission(#catalogId, 'write')")
+  @PreAuthorize("hasPermission(#orgNr, 'write')")
   @CrossOrigin
   @RequestMapping(
       value = "/",
@@ -177,7 +177,7 @@ public class ApiRegistrationController {
    * @param apiRegistration
    * @return HTTP 200 OK if apiRegistration could be could be created.
    */
-  @PreAuthorize("hasPermission(#catalogId, 'write')")
+  @PreAuthorize("hasPermission(#orgNr, 'write')")
   @CrossOrigin
   @RequestMapping(
       value = "/{id}",
@@ -210,7 +210,7 @@ public class ApiRegistrationController {
    * @param updates Objects in apiRegistration to be updated
    * @return HTTP 200 OK if apiRegistration could be could be updated.
    */
-  @PreAuthorize("hasPermission(#catalogId, 'write')")
+  @PreAuthorize("hasPermission(#orgNr, 'write')")
   @CrossOrigin
   @RequestMapping(
       value = "/{id}",
@@ -267,7 +267,7 @@ public class ApiRegistrationController {
    *     empty. If apiRegistration is not found, HTTP 404 Not found is returned, with an empty
    *     body.
    */
-  @PreAuthorize("hasPermission(#catalogId, 'write')")
+  @PreAuthorize("hasPermission(#orgNr, 'write')")
   @CrossOrigin
   @RequestMapping(value = "/{id}", method = DELETE, produces = APPLICATION_JSON_UTF8_VALUE)
   public HttpEntity<ApiRegistration> deleteApiRegistration(
