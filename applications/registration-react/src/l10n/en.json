@@ -1,5 +1,12 @@
 {
   "title": "Title",
+  "description": "Description",
+  "version": "Version",
+  "operations": "Operations",
+  "operation": "Operation",
+  "license": "License",
+  "termsOfService": "Terms of use",
+  "contactInformation": "Contact information",
   "listItems": {
     "header": {
       "title": "Dataset title",
@@ -349,7 +356,10 @@
     },
     "register": {
       "apiCatalog": "API catalog",
-      "registerNew": "Register API description"
+      "registerNew": "Register API description",
+      "importFromSpecPart1": "Import from",
+      "importFromSpecPart2": "was successful!",
+      "importFromSpec": "Importert fra spesifikasjon"
     }
   }
 }
