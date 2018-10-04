@@ -35,7 +35,7 @@ public class ParseApiSpecTilApiDocumentControllerTest {
         apiDocument.setApiDocUrl("api document url");
         apiDocument.setApiSpecUrl(url);
         ApiSource apiSource = new ApiSource(url,"");
-        Mockito.when(apiSpecToApiDocument.parseApiSpecFromUrl(apiSource)).thenReturn(apiDocument);
+        Mockito.when(apiSpecToApiDocument.parseApiSpec(apiSource)).thenReturn(apiDocument);
         ApiDocument result = parseApiSpecTilApiDocumentController.parseApiSpec(apiSource);
         Assert.assertNotNull(result);
         Assert.assertEquals(result.getApiDocUrl(),apiDocument.getApiDocUrl());

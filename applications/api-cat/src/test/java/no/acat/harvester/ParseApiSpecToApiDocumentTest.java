@@ -33,7 +33,7 @@ public class ParseApiSpecToApiDocumentTest {
     @Test
     public  void parseAPIspecification_From_Data(){
         apiSource = new ApiSource("", getData());
-        ApiDocument apiDocument =parseApiSpecToApiDocument.parseApiSpecFromUrl(apiSource);
+        ApiDocument apiDocument =parseApiSpecToApiDocument.parseApiSpec(apiSource);
         Assert.assertNotNull(apiDocument);
         Assert.assertEquals(apiDocument.getTitle().get("no"),"Nasjonalt barnehageregister API");
     }
@@ -47,13 +47,13 @@ public class ParseApiSpecToApiDocumentTest {
                 return getData();
             }
         };
-        ApiDocument apiDocument = parseApiSpecToApiDocument.parseApiSpecFromUrl(apiSource);
+        ApiDocument apiDocument = parseApiSpecToApiDocument.parseApiSpec(apiSource);
         Assert.assertNotNull(apiDocument);
         Assert.assertEquals(apiDocument.getTitle().get("no"),"Nasjonalt barnehageregister API");
     }
     @Test(expected= NullPointerException.class)
     public void parseApiSpecificationw_with_nullInput(){
-        ApiDocument apiDocument =parseApiSpecToApiDocument.parseApiSpecFromUrl(null);
+        ApiDocument apiDocument =parseApiSpecToApiDocument.parseApiSpec(null);
     }
 
 

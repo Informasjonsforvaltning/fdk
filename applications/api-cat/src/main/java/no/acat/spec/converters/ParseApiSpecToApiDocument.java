@@ -23,7 +23,7 @@ public class ParseApiSpecToApiDocument {
     private static final ObjectMapper objectMapper = Utils.jsonMapper();
 
 
-    public ApiDocument parseApiSpecFromUrl(ApiSource apiSource){
+    public ApiDocument parseApiSpec(ApiSource apiSource){
         String apiSpec = null;
         OpenAPI openAPI = null;
         if(apiSource.getUrl()== null || apiSource.getUrl().isEmpty()){

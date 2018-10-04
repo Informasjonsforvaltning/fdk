@@ -16,7 +16,7 @@ public class ParseApiSpecTilApiDocumentController {
 
     @PostMapping( produces = "application/json")
     public ApiDocument parseApiSpec(@RequestBody ApiSource apiSource) {
-        return parseApiSpecToApiDocument.parseApiSpecFromUrl(apiSource);
+        return parseApiSpecToApiDocument.parseApiSpec(apiSource);
     }
 
 
