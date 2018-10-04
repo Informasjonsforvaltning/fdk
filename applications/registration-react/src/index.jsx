@@ -10,6 +10,7 @@ import { ConnectedFeatureToggleProvider } from './components/connected-feature-t
 import { ConnectedCatalogsPage } from './pages/catalogs-page/connected-catalogs-page';
 import { ConnectedDatasetsListPage } from './pages/dataset-list-page/connected-dataset-list-page';
 import { ConnectedAPIListPage } from './pages/api-list-page/connected-api-list-page';
+import { ConnectedAPIRegistrationPage } from './pages/api-registration-page/connected-api-registration-page';
 import RegDataset from './pages/dataset-registration-page/dataset-registration-page';
 import Header from './components/app-header/app-header.component';
 import Footer from './components/app-footer/app-footer.component';
@@ -46,6 +47,11 @@ const routes = (
       exact
       path="/catalogs/:catalogId/apis/import"
       component={ApiImportPage}
+    />
+    <ProtectedRoute
+      exact
+      path="/catalogs/:catalogId/apis/:id"
+      component={ConnectedAPIRegistrationPage}
     />
   </Switch>
 );
