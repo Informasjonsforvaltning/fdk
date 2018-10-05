@@ -1,7 +1,7 @@
 
 # Elasticsearch 5 (and Spring Boot 2)
 
-Fellesdatakatalog (fdk) is now upgraded to Spring Boot 2 (currently 2.0.4), which uses Elasticserch 5 (currently 5.6.9).
+Fellesdatakatalog (fdk) is now upgraded to Spring Boot 2 (currently 2.0.5), which uses Elasticserch 5 (currently 5.6.9).
 This module contains code to create a ES5 client 
 
                 import no.dcat.client.elasticsearch5.Elasticsearch5Client;
