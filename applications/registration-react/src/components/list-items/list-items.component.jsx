@@ -1,10 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import orderBy from 'lodash/orderBy';
+import _ from 'lodash';
 
 import localization from '../../utils/localization';
 import SortButtons from '../sort-button/sort-button.component';
 import { ListItem } from './list-item/list-item.component';
+import getTranslateText from '../../utils/translateText';
 
 const renderDatasetItems = (catalogId, items, sortField, sortType) => {
   if (items) {
@@ -29,7 +31,12 @@ const renderDatasetItems = (catalogId, items, sortField, sortType) => {
     }
 
     return sortedItems.map(item => (
-      <ListItem key={item.id} catalogId={catalogId} item={item} />
+      <ListItem
+        key={item.id}
+        title={getTranslateText(_.get(item, 'title'))}
+        status={_.get(item, 'registrationStatus')}
+        path={`/catalogs/${catalogId}/datasets/${item.id}`}
+      />
     ));
   }
   return (
