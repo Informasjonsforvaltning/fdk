@@ -28,6 +28,7 @@ exports[`should render DatasetItemsList correctly sortField equal title 1`] = `
     catalogId="123"
     items={null}
     onSortField={[Function]}
+    prefixPath="/catalogs/123/datasets"
     sortField="title"
     sortType=""
   />
@@ -73,6 +74,7 @@ exports[`should render DatasetItemsList correctly sortField equal title 2`] = `
     catalogId="123"
     items={null}
     onSortField={[Function]}
+    prefixPath="/catalogs/123/datasets"
     sortField="registrationStatus"
     sortType=""
   />
@@ -118,6 +120,7 @@ exports[`should render DatasetItemsList correctly with datasetItems 1`] = `
     catalogId="123"
     items={null}
     onSortField={[Function]}
+    prefixPath="/catalogs/123/datasets"
     sortField=""
     sortType=""
   />
@@ -163,6 +166,7 @@ exports[`should render DatasetItemsList correctly with missing datasetItems 1`] 
     catalogId="123"
     items={null}
     onSortField={[Function]}
+    prefixPath="/catalogs/123/datasets"
     sortField=""
     sortType=""
   />
@@ -208,6 +212,7 @@ exports[`should render DatasetItemsList correctly with missing items 1`] = `
     catalogId="123"
     items={null}
     onSortField={[Function]}
+    prefixPath="/catalogs/123/datasets"
     sortField=""
     sortType=""
   />

@@ -3,7 +3,7 @@
 exports[`should render ListItem correctly with props 1`] = `
 <div>
   <div
-    className="fdk-datasets-list-header d-flex"
+    className="fdk-list-header d-flex"
   >
     <div
       className="d-flex align-items-center w-75"
