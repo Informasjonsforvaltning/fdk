@@ -30,7 +30,8 @@ beforeEach(() => {
     items: items.items,
     sortField: 'title',
     sortType: 'asc',
-    onSortField: onSort
+    onSortField: onSort,
+    prefixPath: '/catalogs/123/datasets'
   };
   wrapper = shallow(<ListItems {...defaultProps} />);
 });

@@ -3,7 +3,7 @@
 exports[`should render ListItem correctly with props 1`] = `
 <div>
   <div
-    className="fdk-datasets-list-header d-flex"
+    className="fdk-list-header d-flex"
   >
     <div
       className="d-flex align-items-center w-75"
@@ -37,30 +37,16 @@ exports[`should render ListItem correctly with props 1`] = `
     </div>
   </div>
   <ListItem
-    catalogId="123"
-    item={
-      Object {
-        "id": 1,
-        "registrationStatus": "DRAFT",
-        "title": Object {
-          "nb": "Test item",
-        },
-      }
-    }
     key="1"
+    path="/catalogs/123/datasets/1"
+    status="DRAFT"
+    title="Test item"
   />
   <ListItem
-    catalogId="123"
-    item={
-      Object {
-        "id": 2,
-        "registrationStatus": "PUBLISH",
-        "title": Object {
-          "nb": "Test item",
-        },
-      }
-    }
     key="2"
+    path="/catalogs/123/datasets/2"
+    status="PUBLISH"
+    title="Test item"
   />
 </div>
 `;
