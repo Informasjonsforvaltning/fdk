@@ -3,11 +3,11 @@ package no.dcat.controller;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import no.dcat.exception.ApiRegistrationException;
 import no.dcat.factory.RegistrationFactory;
 import no.dcat.model.ApiRegistration;
 import no.dcat.model.Catalog;
 import no.dcat.model.exceptions.ApispecNotFoundException;
-import no.dcat.model.exceptions.CatalogNotFoundException;
 import no.dcat.model.exceptions.ErrorResponse;
 import no.dcat.service.ApiRegistrationRepository;
 import no.dcat.service.CatalogRepository;
@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.PagedResources;
 import org.springframework.http.HttpEntity;
@@ -45,7 +46,7 @@ public class ApiRegistrationController {
 
   @Autowired
   public ApiRegistrationController(
-          ApiRegistrationRepository apiRegistrationRepository, CatalogRepository catalogRepository) {
+      ApiRegistrationRepository apiRegistrationRepository, CatalogRepository catalogRepository) {
     this.apiRegistrationRepository = apiRegistrationRepository;
     this.catalogRepository = catalogRepository;
   }
@@ -75,8 +76,8 @@ public class ApiRegistrationController {
   }
 
   /**
-   * Return list of all apiRegistrations in catalog. Without parameters, the first 20
-   * apiRegistrations are returned The returned data contains paging hyperlinks.
+   * Return list of all apiRegistrations in catalog. Without parameters, the max of apiRegistrations
+   * are returned The returned data contains paging hyperlinks.
    *
    * <p>
    *
@@ -89,13 +90,12 @@ public class ApiRegistrationController {
   @RequestMapping(value = "", method = GET, produces = APPLICATION_JSON_UTF8_VALUE)
   public HttpEntity<PagedResources<ApiRegistration>> listApiRegistrations(
       @PathVariable("orgNr") String orgNr,
-      Pageable pageable,
+      @PageableDefault(size = Integer.MAX_VALUE) Pageable pageable,
       PagedResourcesAssembler assembler) {
 
     logger.info("Get apiRegistrations");
 
-    Page<ApiRegistration> apiRegistrations =
-        apiRegistrationRepository.findByOrgNr(orgNr, pageable);
+    Page<ApiRegistration> apiRegistrations = apiRegistrationRepository.findByOrgNr(orgNr, pageable);
     return new ResponseEntity<>(assembler.toResource(apiRegistrations), HttpStatus.OK);
   }
 
@@ -113,26 +113,33 @@ public class ApiRegistrationController {
       consumes = APPLICATION_JSON_VALUE,
       produces = APPLICATION_JSON_UTF8_VALUE)
   public HttpEntity<ApiRegistration> saveApispec(
-      @PathVariable("orgNr") String orgNr, @RequestBody ApiRegistration apiRegistration)
-      throws CatalogNotFoundException {
+      @PathVariable("orgNr") String orgNr, @RequestBody ApiRegistration apiRegistration) throws ApiRegistrationException {
 
     logger.info("SAVE requestbody apiRegistration");
 
     Optional<Catalog> catalogOptional = catalogRepository.findById(orgNr);
 
     if (!catalogOptional.isPresent()) {
-      throw new CatalogNotFoundException(
+      throw new ApiRegistrationException(
           String.format(
               "Unable to create apiRegistration, catalog with id %s not found", orgNr));
     }
 
     ApiRegistration savedApispec =
-        createAndSaveApispec(orgNr, apiRegistration, catalogOptional.get());
-
+        createAndSaveApiReg(orgNr, apiRegistration, catalogOptional.get());
+    
     return new ResponseEntity<>(savedApispec, HttpStatus.OK);
   }
 
-  ApiRegistration createAndSaveApispec(
+  @ExceptionHandler(ApiRegistrationException.class)
+  public ResponseEntity<ErrorResponse> exceptionHandlerApi(Exception ex) {
+    ErrorResponse error = new ErrorResponse();
+    error.setErrorCode(HttpStatus.PRECONDITION_FAILED.value());
+    error.setMessage(ex.getMessage());
+    return new ResponseEntity<ErrorResponse>(error, HttpStatus.PRECONDITION_FAILED);
+}
+
+  ApiRegistration createAndSaveApiReg(
       String orgNr, ApiRegistration apiRegistration, Catalog catalog) {
 
     // Create new apiRegistration
@@ -158,8 +165,8 @@ public class ApiRegistrationController {
     return save(apiRegistration);
   }
 
-  ApiRegistration save(ApiRegistration apispec) {
-    return apiRegistrationRepository.save(apispec);
+  ApiRegistration save(ApiRegistration apireg) {
+    return apiRegistrationRepository.save(apireg);
   }
 
   @ExceptionHandler(ApispecNotFoundException.class)
@@ -231,8 +238,7 @@ public class ApiRegistrationController {
     ApiRegistration oldApiRegistration =
         oldApiRegistrationOptional.isPresent() ? oldApiRegistrationOptional.get() : null;
 
-    if (oldApiRegistration == null
-        || !Objects.equals(orgNr, oldApiRegistration.getOrgNr())) {
+    if (oldApiRegistration == null || !Objects.equals(orgNr, oldApiRegistration.getOrgNr())) {
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
@@ -263,9 +269,8 @@ public class ApiRegistrationController {
    * Delete apiRegistration
    *
    * @param id Identifier of apiRegistration
-   * @return HTTP status 200 OK is returned if apiRegistration was successfully deleted. Body
-   *     empty. If apiRegistration is not found, HTTP 404 Not found is returned, with an empty
-   *     body.
+   * @return HTTP status 200 OK is returned if apiRegistration was successfully deleted. Body empty.
+   *     If apiRegistration is not found, HTTP 404 Not found is returned, with an empty body.
    */
   @PreAuthorize("hasPermission(#orgNr, 'write')")
   @CrossOrigin
