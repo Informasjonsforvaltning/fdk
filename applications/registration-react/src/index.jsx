@@ -9,6 +9,7 @@ import ProtectedRoute from './app-protected-route/app-protected-route.component'
 import { ConnectedFeatureToggleProvider } from './components/connected-feature-toggle-provider';
 import { ConnectedCatalogsPage } from './pages/catalogs-page/connected-catalogs-page';
 import { ConnectedDatasetsListPage } from './pages/dataset-list-page/connected-dataset-list-page';
+import { ConnectedAPIListPage } from './pages/api-list-page/connected-api-list-page';
 import RegDataset from './pages/dataset-registration-page/dataset-registration-page';
 import Header from './components/app-header/app-header.component';
 import Footer from './components/app-footer/app-footer.component';
@@ -38,7 +39,7 @@ const routes = (
     <ProtectedRoute
       exact
       path="/catalogs/:catalogId/apis"
-      component={ConnectedCatalogsPage}
+      component={ConnectedAPIListPage}
     />
   </Switch>
 );
