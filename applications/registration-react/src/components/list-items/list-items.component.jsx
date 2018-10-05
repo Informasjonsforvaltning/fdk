@@ -1,12 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import orderBy from 'lodash/orderBy';
+import _ from 'lodash';
 
 import localization from '../../utils/localization';
 import SortButtons from '../sort-button/sort-button.component';
 import { ListItem } from './list-item/list-item.component';
+import getTranslateText from '../../utils/translateText';
+import './list-items.scss';
 
-const renderDatasetItems = (catalogId, items, sortField, sortType) => {
+const renderItems = (catalogId, items, sortField, sortType, prefixPath) => {
   if (items) {
     let sortedItems = items;
     if (sortField === 'title') {
@@ -29,26 +32,38 @@ const renderDatasetItems = (catalogId, items, sortField, sortType) => {
     }
 
     return sortedItems.map(item => (
-      <ListItem key={item.id} catalogId={catalogId} item={item} />
+      <ListItem
+        key={item.id}
+        title={getTranslateText(_.get(item, 'title'))}
+        status={_.get(item, 'registrationStatus')}
+        path={`${prefixPath}/${item.id}`}
+      />
     ));
   }
   return (
-    <div className="fdk-datasets-list-item d-flex">
+    <div className="fdk-list-item d-flex">
       <span className="fdk-text-size-small fdk-color2">
-        {localization.datasets.list.missingItems}
+        {localization.listItems.missingItems}
       </span>
     </div>
   );
 };
 
 export const ListItems = props => {
-  const { catalogId, items, sortField, sortType, onSortField } = props;
+  const {
+    catalogId,
+    items,
+    sortField,
+    sortType,
+    onSortField,
+    prefixPath
+  } = props;
   return (
     <div>
-      <div className="fdk-datasets-list-header d-flex">
+      <div className="fdk-list-header d-flex">
         <div className="d-flex align-items-center w-75">
           <span className="header-item mr-1">
-            {localization.datasets.list.header.title}
+            {localization.listItems.header.title}
           </span>
           <SortButtons
             field="title"
@@ -60,7 +75,7 @@ export const ListItems = props => {
 
         <div className="d-flex align-items-center w-25">
           <span className="header-item mr-1">
-            {localization.datasets.list.header.status}
+            {localization.listItems.header.status}
           </span>
           <SortButtons
             field="registrationStatus"
@@ -70,7 +85,7 @@ export const ListItems = props => {
           />
         </div>
       </div>
-      {renderDatasetItems(catalogId, items)}
+      {renderItems(catalogId, items, sortField, sortType, prefixPath)}
     </div>
   );
 };
@@ -78,10 +93,10 @@ export const ListItems = props => {
 ListItems.defaultProps = {
   catalogId: null,
   items: null,
-
   sortField: null,
   sortType: null,
-  onSortField: null
+  onSortField: null,
+  prefixPath: null
 };
 
 ListItems.propTypes = {
@@ -89,5 +104,6 @@ ListItems.propTypes = {
   items: PropTypes.array,
   sortField: PropTypes.string,
   sortType: PropTypes.string,
-  onSortField: PropTypes.func
+  onSortField: PropTypes.func,
+  prefixPath: PropTypes.string
 };

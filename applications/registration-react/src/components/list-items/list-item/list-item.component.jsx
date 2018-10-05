@@ -2,42 +2,39 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import cx from 'classnames';
-import _ from 'lodash';
 
 import localization from '../../../utils/localization';
-import getTranslateText from '../../../utils/translateText';
 import './list-item.scss';
 
 export const ListItem = props => {
-  const { catalogId, item } = props;
+  const { title, status, path } = props;
 
-  if (!item) {
+  if (!(title || status)) {
     return null;
   }
 
   const itemClass = cx('w-75', 'fdk-text-size-small', {
-    'fdk-color2': item && !getTranslateText(_.get(item, 'title'))
+    'fdk-color2': !title
   });
 
   return (
-    <div className="fdk-datasets-list-item d-flex">
-      <Link className="w-100" to={`/catalogs/${catalogId}/datasets/${item.id}`}>
+    <div className="fdk-list-item d-flex">
+      <Link className="w-100" to={path}>
         <div className="d-flex justify-content-between">
           <span className={itemClass}>
-            {getTranslateText(_.get(item, 'title')) ||
-              localization.datasets.list.missingTitle}
+            {title || localization.listItems.missingTitle}
           </span>
           <span className="d-flex w-25">
-            {_.get(item, 'registrationStatus') === 'PUBLISH' && (
+            {status === 'PUBLISH' && (
               <span>
                 <i className="fa fa-circle fdk-color-cta mr-2" />
-                <span>{localization.datasets.list.statusPublished}</span>
+                <span>{localization.listItems.statusPublished}</span>
               </span>
             )}
-            {_.get(item, 'registrationStatus') === 'DRAFT' && (
+            {status === 'DRAFT' && (
               <span>
                 <i className="fa fa-circle fdk-color3 mr-2" />
-                <span>{localization.datasets.list.statusDraft}</span>
+                <span>{localization.listItems.statusDraft}</span>
               </span>
             )}
           </span>
@@ -48,10 +45,13 @@ export const ListItem = props => {
 };
 
 ListItem.defaultProps = {
-  item: null
+  title: null,
+  status: null,
+  path: null
 };
 
 ListItem.propTypes = {
-  catalogId: PropTypes.string.isRequired,
-  item: PropTypes.object
+  title: PropTypes.string,
+  status: PropTypes.string,
+  path: PropTypes.string
 };

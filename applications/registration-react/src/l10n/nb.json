@@ -1,4 +1,14 @@
 {
+  "listItems": {
+    "header": {
+      "title": "Tittel på datasett",
+      "status": "Status"
+    },
+    "missingItems": "Ingen datasettbeskrivelse registrert",
+    "missingTitle": "Mangler tittel",
+    "statusPublished": "Publisert",
+    "statusDraft": "Utkast"
+  },
   "app": {
     "skipLink": "Hopp til hovedinnhold",
     "navigateFrontpage": "Gå til forside",
@@ -262,15 +272,7 @@
     "backToCatalog": "Tilbake til katalogen",
     "list": {
       "btnNewDataset": "Legg til ny datasettbeskrivelse",
-      "btnImportDataset": "Importer datasett",
-      "header": {
-        "title": "Tittel på datasett",
-        "status": "Status"
-      },
-      "missingItems": "Ingen datasettbeskrivelse registrert",
-      "missingTitle": "Mangler tittel",
-      "statusPublished": "Publisert",
-      "statusDraft": "Utkast"
+      "btnImportDataset": "Importer datasett"
     },
     "import": {
       "notEmpty": "URL kan ikke være tom",

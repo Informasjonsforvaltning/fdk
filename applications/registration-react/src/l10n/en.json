@@ -1,4 +1,14 @@
 {
+  "listItems": {
+    "header": {
+      "title": "Dataset title",
+      "status": "Status"
+    },
+    "missingItems": "No dataset description registered",
+    "missingTitle": "Missing title",
+    "statusPublished": "Published",
+    "statusDraft": "Draft"
+  },
   "app": {
     "skipLink": "Skip link",
     "navigateFrontpage": "Navigate to frontpage",
@@ -262,15 +272,7 @@
     "backToCatalog": "Back to catalog",
     "list": {
       "btnNewDataset": "Add dataset description",
-      "btnImportDataset": "Import dataset",
-      "header": {
-        "title": "Dataset title",
-        "status": "Status"
-      },
-      "missingItems": "No dataset description registered",
-      "missingTitle": "Missing title",
-      "statusPublished": "Published",
-      "statusDraft": "Draft"
+      "btnImportDataset": "Import dataset"
     },
     "import": {
       "notEmpty": "URL can't be empty",

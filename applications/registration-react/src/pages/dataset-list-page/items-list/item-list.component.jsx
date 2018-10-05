@@ -114,6 +114,7 @@ class DatasetItemsList extends React.Component {
           sortField={sortField}
           sortType={sortType}
           onSortField={this.onSortField}
+          prefixPath={`/catalogs/${catalogId}/datasets`}
         />
 
         <ImportModal
