@@ -1,0 +1,62 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render APIListPageComponent correctly 1`] = `
+<div
+  className="container"
+>
+  <div
+    className="row mb-5"
+  >
+    <div
+      className="col-12"
+    >
+      <h1>
+        API-katalog
+      </h1>
+      <div
+        className="fdk-reg-datasets-publisher mt-2 mb-4"
+      >
+        RAMSUND OG ROGNAN REVISJON
+      </div>
+    </div>
+  </div>
+  <div
+    className="row mb-5"
+  >
+    <div
+      className="col-12"
+    >
+      <Link
+        className="ml-0"
+        replace={false}
+        to="/catalogs/910244132/apis/import"
+      >
+        <i
+          className="fa fa-plus mr-2"
+        />
+        Registrer ny API-beskrivelse
+      </Link>
+    </div>
+  </div>
+  <div
+    className="row mb-2 mb-md-5"
+  >
+    <div
+      className="col-12 fdk-reg-datasets-list"
+    >
+      <withState(withState(withHandlers(ListItems)))
+        catalogId="910244132"
+        itemTitleField={
+          Array [
+            "openApi",
+            "info",
+            "title",
+          ]
+        }
+        items={null}
+        prefixPath="/catalogs/910244132/apis"
+      />
+    </div>
+  </div>
+</div>
+`;
