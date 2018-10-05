@@ -1,4 +1,9 @@
 {
+  "listItems": {
+    "missingTitle": "Mangler tittel",
+    "statusPublished": "Publisert",
+    "statusDraft": "Utkast"
+  },
   "app": {
     "skipLink": "Hopp til hovedinnhold",
     "navigateFrontpage": "Gå til forside",
@@ -267,10 +272,7 @@
         "title": "Tittel på datasett",
         "status": "Status"
       },
-      "missingItems": "Ingen datasettbeskrivelse registrert",
-      "missingTitle": "Mangler tittel",
-      "statusPublished": "Publisert",
-      "statusDraft": "Utkast"
+      "missingItems": "Ingen datasettbeskrivelse registrert"
     },
     "import": {
       "notEmpty": "URL kan ikke være tom",

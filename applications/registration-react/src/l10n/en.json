@@ -1,4 +1,9 @@
 {
+  "listItems": {
+    "missingTitle": "Missing title",
+    "statusPublished": "Published",
+    "statusDraft": "Draft"
+  },
   "app": {
     "skipLink": "Skip link",
     "navigateFrontpage": "Navigate to frontpage",
@@ -267,10 +272,7 @@
         "title": "Dataset title",
         "status": "Status"
       },
-      "missingItems": "No dataset description registered",
-      "missingTitle": "Missing title",
-      "statusPublished": "Published",
-      "statusDraft": "Draft"
+      "missingItems": "No dataset description registered"
     },
     "import": {
       "notEmpty": "URL can't be empty",
