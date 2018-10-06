@@ -25,8 +25,8 @@ public class SearchControllerTest {
         // todo meaningful test would be to allow elastic client to build a query and process sample response,
         // instead of mocking entire elastic client here
         ElasticsearchService elasticsearchService = mock(ElasticsearchService.class);
-        SearchController controller = new SearchController(elasticsearchService);
-        SearchController spyController = spy(controller);
+        ApiSearchController controller = new ApiSearchController(elasticsearchService);
+        ApiSearchController spyController = spy(controller);
 
         SearchHit hit = mock(SearchHit.class);
         SearchHit[] hits = { hit };

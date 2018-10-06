@@ -20,16 +20,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 
 @CrossOrigin
 @RestController
-@RequestMapping(value = "/api")
-public class SearchController {
-    private static final Logger logger = LoggerFactory.getLogger(SearchController.class);
+@RequestMapping(value = "/apis")
+public class ApiSearchController {
+    private static final Logger logger = LoggerFactory.getLogger(ApiSearchController.class);
 
     public static final String MISSING = "MISSING";
     public static final int MAX_AGGREGATIONS = 10000;
@@ -37,7 +34,7 @@ public class SearchController {
     private ElasticsearchService elasticsearch;
 
     @Autowired
-    public SearchController(ElasticsearchService elasticsearchService) {
+    public ApiSearchController(ElasticsearchService elasticsearchService) {
         this.elasticsearch = elasticsearchService;
     }
 
