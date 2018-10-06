@@ -1,5 +1,6 @@
 package no.dcat.config;
 
+import no.dcat.model.ApiRegistration;
 import no.dcat.model.Catalog;
 import no.dcat.model.Dataset;
 import org.springframework.context.annotation.Bean;
@@ -17,7 +18,7 @@ public class CustomRepositoryRestConfig extends RepositoryRestConfigurerAdapter 
         return new RepositoryRestConfigurerAdapter() {
             @Override
             public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config) {
-                config.exposeIdsFor(Catalog.class, Dataset.class);
+                config.exposeIdsFor(Catalog.class, Dataset.class, ApiRegistration.class);
             }
         };
     }
