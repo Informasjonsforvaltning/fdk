@@ -10,13 +10,10 @@ import io.swagger.v3.oas.models.responses.ApiResponses;
 import no.acat.config.Utils;
 import no.acat.model.ApiCatalogRecord;
 import no.acat.model.ApiDocument;
-import no.acat.spec.converters.OpenApiV3JsonSpecConverter;
-import no.acat.spec.converters.SwaggerJsonSpecConverter;
+import no.acat.spec.ParseException;
+import no.acat.spec.Parser;
 import no.dcat.client.referencedata.ReferenceDataClient;
 import no.dcat.shared.*;
-import org.apache.commons.io.Charsets;
-import org.apache.commons.io.IOUtils;
-import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.client.Client;
@@ -27,8 +24,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -53,36 +48,18 @@ public class ApiDocumentBuilder {
         this.searchApiUrl = searchApiUrl;
     }
 
-    public ApiDocument create(ApiCatalogRecord apiCatalogRecord) {
+    public ApiDocument create(ApiCatalogRecord apiCatalogRecord) throws ParseException {
         String apiSpecUrl = apiCatalogRecord.getApiSpecUrl();
+
         OpenAPI openApi;
-        String apiSpec;
+        String apiSpec = Parser.getSpecFromUrl(apiSpecUrl);
 
-        try {
-            apiSpec = IOUtils.toString(new URL(apiSpecUrl).openStream(), Charsets.UTF_8);
-        } catch (IOException e) {
-            throw new IllegalArgumentException("Error downloading api spec from url: " + apiSpecUrl);
-        }
+        openApi = Parser.parse(apiSpec);
 
-        if (OpenApiV3JsonSpecConverter.canConvert(apiSpec)) {
-            openApi = OpenApiV3JsonSpecConverter.convert(apiSpec);
-        } else if (SwaggerJsonSpecConverter.canConvert(apiSpec)) {
-            openApi = SwaggerJsonSpecConverter.convert(apiSpec);
-        } else {
-            throw new IllegalArgumentException("Unsupported api spec format: " + apiSpecUrl);
-        }
-
-        try {
-            // todo there is something wrong with the converter and openApi model implementation
-            // in some case the serialized version does not unserialize
-            String json = mapper.writeValueAsString(openApi);
-            mapper.readValue(json, OpenAPI.class);
-        } catch (IOException e) {
-            throw new IllegalArgumentException("Error verifying OpenAPI deserialization for: " + apiSpecUrl);
-        }
+        String id = lookupOrGenerateId(apiCatalogRecord);
 
         ApiDocument apiDocument = new ApiDocument().builder()
-                .id(lookupOrGenerateId(apiCatalogRecord))
+                .id(id)
                 .apiSpecUrl(apiSpecUrl)
                 .apiSpec(apiSpec)
                 .build();
