@@ -40,17 +40,9 @@ public class Parser {
         return openAPI;
     }
 
-    public static String getSpecFromUrl(String apiSpecUrlString) throws IllegalArgumentException {
-
-        try {
+    public static String getSpecFromUrl(String apiSpecUrlString) throws IOException {
             URL apiSpecUrl;
             apiSpecUrl = new URL(apiSpecUrlString);
             return IOUtils.toString(apiSpecUrl.openStream(), UTF_8);
-        } catch (MalformedURLException e) {
-            throw new IllegalArgumentException("Invalid api spec url: " + apiSpecUrlString);
-        } catch (IOException e) {
-            throw new IllegalArgumentException("Error downloading api spec from url: " + apiSpecUrlString);
-        }
-
     }
 }

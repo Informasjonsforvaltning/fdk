@@ -24,6 +24,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -48,7 +49,7 @@ public class ApiDocumentBuilder {
         this.searchApiUrl = searchApiUrl;
     }
 
-    public ApiDocument create(ApiCatalogRecord apiCatalogRecord) throws ParseException {
+    public ApiDocument create(ApiCatalogRecord apiCatalogRecord) throws IOException, ParseException {
         String apiSpecUrl = apiCatalogRecord.getApiSpecUrl();
 
         OpenAPI openApi;
