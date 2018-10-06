@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.parser.converter.SwaggerConverter;
 import no.acat.config.Utils;
+import no.acat.spec.ParseException;
 
 import java.io.IOException;
 
@@ -21,11 +22,11 @@ public class SwaggerJsonSpecConverter {
         }
     }
 
-    public static OpenAPI convert(String spec) {
+    public static OpenAPI convert(String spec) throws ParseException {
         try {
             return new SwaggerConverter().readContents(spec, null, null).getOpenAPI();
         } catch (Exception e) {
-            throw new IllegalArgumentException("Error parsing spec as Swagger v2 json", e);
+            throw new ParseException("Error parsing spec as Swagger v2 json: "+e.getMessage());
         }
     }
 }

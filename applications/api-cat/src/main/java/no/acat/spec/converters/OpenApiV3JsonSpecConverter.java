@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.parser.OpenAPIV3Parser;
 import no.acat.config.Utils;
+import no.acat.spec.ParseException;
 
 import java.io.IOException;
 
@@ -21,11 +22,11 @@ public class OpenApiV3JsonSpecConverter {
         }
     }
 
-    public static OpenAPI convert(String spec) {
+    public static OpenAPI convert(String spec) throws ParseException {
         try {
             return new OpenAPIV3Parser().readContents(spec, null, null).getOpenAPI();
         } catch (Error e) {
-            throw new IllegalArgumentException("Cannot import spec as OpenApi v3 json", e);
+            throw new ParseException("Cannot import spec as OpenApi v3 json: " + e.getMessage());
         }
     }
 }
