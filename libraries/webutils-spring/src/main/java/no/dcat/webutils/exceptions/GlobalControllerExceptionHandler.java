@@ -15,8 +15,8 @@ public class GlobalControllerExceptionHandler {
     private static Logger logger = LoggerFactory.getLogger(GlobalControllerExceptionHandler.class);
 
     @ExceptionHandler
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ResponseBody
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     protected Object handleException(Exception ex) {
         logger.error("Server error: ",ex.getMessage(),ex);
         Map<String,String> result = new HashMap<>();
@@ -24,9 +24,19 @@ public class GlobalControllerExceptionHandler {
         return result;
     }
 
-    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler({BadRequestException.class})
+    @ResponseBody
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Object handleBadRequestException(Exception ex) {
+        logger.info("BadRequest error:",ex.getMessage());
+        Map<String,String> result = new HashMap<>();
+        result.put("error", "bad_request");
+        return result;
+    }
+
     @ExceptionHandler({NotFoundException.class})
     @ResponseBody
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     public Object handleNotFoundException(Exception ex) {
         logger.info("NotFound error:",ex.getMessage());
         Map<String,String> result = new HashMap<>();
