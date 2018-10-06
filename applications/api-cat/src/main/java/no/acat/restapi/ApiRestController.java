@@ -13,14 +13,14 @@ import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin
 @RestController
-@RequestMapping(value = "/api")
-public class GetController {
-    private static final Logger logger = LoggerFactory.getLogger(GetController.class);
+@RequestMapping(value = "/apis")
+public class ApiRestController {
+    private static final Logger logger = LoggerFactory.getLogger(ApiRestController.class);
 
     private ElasticsearchService elasticsearch;
 
     @Autowired
-    public GetController(ElasticsearchService elasticsearchService) {
+    public ApiRestController(ElasticsearchService elasticsearchService) {
         this.elasticsearch = elasticsearchService;
     }
 
