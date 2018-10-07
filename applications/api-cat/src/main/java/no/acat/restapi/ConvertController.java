@@ -3,10 +3,10 @@ package no.acat.restapi;
 import com.google.common.base.Strings;
 import io.swagger.v3.oas.models.OpenAPI;
 import lombok.AllArgsConstructor;
-import no.acat.model.ConvertRequest;
-import no.acat.model.ConvertResponse;
 import no.acat.spec.ParseException;
 import no.acat.spec.Parser;
+import no.dcat.client.apicat.ConvertRequest;
+import no.dcat.client.apicat.ConvertResponse;
 import no.dcat.webutils.exceptions.BadRequestException;
 import org.springframework.web.bind.annotation.*;
 
