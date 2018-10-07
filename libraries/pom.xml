@@ -17,6 +17,7 @@
         <module>elasticsearch5-test</module>
         <module>referencedata-client</module>
         <module>webutils-spring</module>
+        <module>api-cat-client</module>
     </modules>
 
 </project>

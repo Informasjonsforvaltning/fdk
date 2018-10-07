@@ -1,4 +1,4 @@
-package no.acat.model;
+package no.dcat.client.apicat;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import lombok.Data;

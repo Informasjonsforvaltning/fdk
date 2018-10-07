@@ -1,8 +1,10 @@
-package no.acat.model;
+package no.dcat.client.apicat;
 
 
+import lombok.Builder;
 import lombok.Data;
 
+@Builder
 @Data
 public class ConvertRequest {
 
