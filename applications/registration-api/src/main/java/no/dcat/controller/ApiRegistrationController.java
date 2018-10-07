@@ -1,10 +1,14 @@
 package no.dcat.controller;
 
+import io.swagger.v3.oas.models.OpenAPI;
+import no.dcat.client.apicat.ApiCatClient;
 import no.dcat.factory.ApiRegistrationFactory;
 import no.dcat.model.ApiRegistration;
 import no.dcat.model.Catalog;
+import no.dcat.service.ApiCatService;
 import no.dcat.service.ApiRegistrationRepository;
 import no.dcat.service.CatalogRepository;
+import no.dcat.webutils.exceptions.BadRequestException;
 import no.dcat.webutils.exceptions.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,12 +36,17 @@ public class ApiRegistrationController {
 
     private ApiRegistrationRepository apiRegistrationRepository;
     private CatalogRepository catalogRepository;
+    private ApiCatClient apiCatClient;
 
     @Autowired
     public ApiRegistrationController(
-            ApiRegistrationRepository apiRegistrationRepository, CatalogRepository catalogRepository) {
+            ApiRegistrationRepository apiRegistrationRepository,
+            CatalogRepository catalogRepository,
+            ApiCatService apiCatService
+    ) {
         this.apiRegistrationRepository = apiRegistrationRepository;
         this.catalogRepository = catalogRepository;
+        this.apiCatClient = apiCatService.getClient();
     }
 
     /**
@@ -104,7 +113,7 @@ public class ApiRegistrationController {
     public ApiRegistration createApiRegistration(
             @PathVariable("catalogId") String catalogId,
             @RequestBody ApiRegistration apiRegistrationData
-    ) throws NotFoundException {
+    ) throws NotFoundException, BadRequestException {
 
         logger.info("SAVE requestbody apiRegistration");
 
@@ -113,6 +122,15 @@ public class ApiRegistrationController {
         if (!catalogOptional.isPresent()) {
             // This can happen if authorization system has catalogId, but we don't have it in our system
             throw new NotFoundException();
+        }
+
+        try {
+            String apiSpecUrl = apiRegistrationData.getApiSpecUrl();
+            String apiSpec = apiRegistrationData.getApiSpec();
+            OpenAPI openAPI = this.apiCatClient.convert(apiSpecUrl, apiSpec);
+            apiRegistrationData.setOpenApi(openAPI);
+        } catch (Exception e) {
+            throw new BadRequestException(e.getMessage());
         }
 
         ApiRegistration apiRegistration = ApiRegistrationFactory.createApiRegistration(catalogId, apiRegistrationData);
