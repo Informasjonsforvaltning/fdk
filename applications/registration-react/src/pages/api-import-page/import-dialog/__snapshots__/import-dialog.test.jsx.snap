@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render ImportDialog correctly 1`] = `
+<PanelBase>
+  <div
+    className="mb-5"
+  >
+    <h3>
+      Importer API-spesifikasjon
+    </h3>
+  </div>
+  <Button
+    className="mr-3"
+    color="primary"
+    onClick={[MockFunction]}
+    tag="button"
+  >
+    Importer via lenke
+  </Button>
+  <InputFile
+    className="btn btn-primary m-0"
+    onChange={[MockFunction]}
+  >
+    Importer via fil
+  </InputFile>
+</PanelBase>
+`;

@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render ImportFileUpload correctly 1`] = `
+<PanelBase>
+  <div
+    className="mb-5"
+  >
+    <h3>
+      Importer API-spesifikasjon via fil
+    </h3>
+  </div>
+  <div
+    className="mb-5"
+  >
+    <AlertMessage
+      type="danger"
+    >
+      Noe gikk galt med importen. Kontroller at du har valgt riktig fil, eller prøv å 
+      <button
+        className="fdk-button-small fdk-color-blue-dark"
+      >
+        importere via lenke
+      </button>
+    </AlertMessage>
+  </div>
+  <div
+    className="mb-3"
+  >
+    <span>
+      Filnavn
+      : 
+    </span>
+    <span>
+      Api.json
+    </span>
+  </div>
+  <InputFile
+    className="btn btn-primary mr-3 mb-0"
+    onChange={[MockFunction]}
+  >
+    Importer ny fil
+  </InputFile>
+  <Button
+    color="primary"
+    onClick={[MockFunction]}
+    tag="button"
+  >
+    Avbryt
+  </Button>
+</PanelBase>
+`;
