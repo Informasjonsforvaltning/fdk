@@ -1,4 +1,4 @@
-package no.dcat.controller;
+package no.acat.restapi;
 
 import no.dcat.webutils.exceptions.GlobalControllerExceptionHandler;
 import org.springframework.web.bind.annotation.ControllerAdvice;
