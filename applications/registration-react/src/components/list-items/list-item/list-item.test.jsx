@@ -17,40 +17,27 @@ test('should render ListItem correctly with no props', () => {
 });
 
 test('should render ListItem correctly "DRAFT" item', () => {
-  const draftItem = {
-    id: 1,
-    title: {
-      nb: 'Test item'
-    },
-    registrationStatus: 'DRAFT'
-  };
   wrapper.setProps({
-    item: draftItem
+    title: 'Test item',
+    status: 'DRAFT',
+    path: '/catalogs/123/datasets/1'
   });
   expect(wrapper).toMatchSnapshot();
 });
 
 test('should render ListItem correctly "PUBLISH" item', () => {
-  const publishItem = {
-    id: 1,
-    title: {
-      nb: 'Test item'
-    },
-    registrationStatus: 'PUBLISH'
-  };
   wrapper.setProps({
-    item: publishItem
+    title: 'Test item',
+    status: 'PUBLISH',
+    path: '/catalogs/123/datasets/1'
   });
   expect(wrapper).toMatchSnapshot();
 });
 
 test('should render ListItem correctly when missing title', () => {
-  const missingTitleItem = {
-    id: 1,
-    registrationStatus: 'DRAFT'
-  };
   wrapper.setProps({
-    item: missingTitleItem
+    status: 'DRAFT',
+    path: '/catalogs/123/datasets/1'
   });
   expect(wrapper).toMatchSnapshot();
 });
