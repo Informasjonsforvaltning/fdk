@@ -33,17 +33,6 @@
                     </imageName>
                     <dockerDirectory>${project.basedir}/src/main/docker</dockerDirectory>
                     <pushImage>false</pushImage>
-                    <resources>
-                        <resource>
-                            <targetPath>/</targetPath>
-                            <directory>${project.build.directory}</directory>
-                            <excludes>
-                                <exclude>target/**/*</exclude>
-                                <exclude>pom.xml</exclude>
-                                <exclude>*.iml</exclude>
-                            </excludes>
-                        </resource>
-                    </resources>
                 </configuration>
             </plugin>
         </plugins>
