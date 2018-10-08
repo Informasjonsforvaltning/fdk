@@ -33,8 +33,7 @@ export const DatasetsListPage = props => {
       </div>
       <div className="row mb-2 mb-md-5">
         {helptextItems &&
-          _.get(catalog, ['items', catalogId]) &&
-          _.get(datasets, [catalogId, 'items']) && (
+          _.get(catalog, ['items', catalogId]) && (
             <div className="col-12 fdk-reg-datasets-list">
               <FormCatalog
                 catalogId={catalogId}
