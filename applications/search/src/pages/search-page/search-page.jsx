@@ -83,7 +83,11 @@ export class SearchPage extends React.Component {
   }
 
   isFilterNotEmpty() {
-    return _.some(_.values(this.state.searchQuery));
+    return _.some(
+      _.values(
+        _.omit(this.state.searchQuery, ['q', 'sortfield', 'sortdirection'])
+      )
+    );
   }
 
   handleSearchSubmit() {
