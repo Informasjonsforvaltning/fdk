@@ -1,7 +1,7 @@
 package no.dcat.bddtest.elasticsearch.client;
 
 
-import no.dcat.datastore.Elasticsearch;
+import no.dcat.client.elasticsearch5.Elasticsearch5Client;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
 import org.elasticsearch.index.IndexNotFoundException;
 import org.slf4j.Logger;
@@ -21,7 +21,7 @@ public class DeleteIndex {
   }
 
   public void deleteIndex(String index) {
-    try (Elasticsearch elasticsearch = new Elasticsearch(clusterNodes, clusterName)) {
+    try (Elasticsearch5Client elasticsearch = new Elasticsearch5Client(clusterNodes, clusterName)) {
       logger.info("Deleting indexing {}", index);
       deleteIndexInElasticsearch(elasticsearch, index);
     } catch (Exception e) {
@@ -30,7 +30,7 @@ public class DeleteIndex {
     }
   }
 
-  private void deleteIndexInElasticsearch(Elasticsearch elasticsearch, String index) {
+  private void deleteIndexInElasticsearch(Elasticsearch5Client elasticsearch, String index) {
     try {
       elasticsearch.getClient().admin().indices().delete(new DeleteIndexRequest(index)).actionGet();
       elasticsearch.getClient().admin().indices().prepareRefresh().get();

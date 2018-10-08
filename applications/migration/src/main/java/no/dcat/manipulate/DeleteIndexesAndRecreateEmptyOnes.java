@@ -1,6 +1,7 @@
 package no.dcat.manipulate;
 
-import no.dcat.datastore.Elasticsearch;
+import no.dcat.client.elasticsearch5.Elasticsearch5Client;
+import no.dcat.datastore.DcatIndexUtils;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
 import org.elasticsearch.index.IndexNotFoundException;
 import org.slf4j.Logger;
@@ -33,31 +34,31 @@ public class DeleteIndexesAndRecreateEmptyOnes {
     // //"http://elasticsearch-fellesdatakatalog-ppe.ose-pc.brreg.no";
     // //"http://elasticsearch-fellesdatakatalog-st2.ose-npc.brreg.no";
 
-    Elasticsearch elasticsearch = new Elasticsearch(clusterNodes, clusterName);
-
+    Elasticsearch5Client elasticsearch = new Elasticsearch5Client(clusterNodes, clusterName);
+    DcatIndexUtils dcatIndexUtils = new DcatIndexUtils(elasticsearch);
     if (elasticsearch.isElasticsearchRunning()) {
 
-      if (elasticsearch.indexExists("dcat")) {
+      if (dcatIndexUtils.indexExists("dcat")) {
         deleteIndexInElasticsearch(elasticsearch, "dcat");
       }
 
-      if (elasticsearch.indexExists("harvest")) {
+      if (dcatIndexUtils.indexExists("harvest")) {
         deleteIndexInElasticsearch(elasticsearch, "harvest");
       }
 
-      if (!elasticsearch.indexExists("dcat")) {
-        elasticsearch.createIndex("dcat");
+      if (!dcatIndexUtils.indexExists("dcat")) {
+        dcatIndexUtils.createIndex("dcat");
       }
 
-      if (!elasticsearch.indexExists("harvest")) {
-        elasticsearch.createIndex("harvest");
+      if (!dcatIndexUtils.indexExists("harvest")) {
+        dcatIndexUtils.createIndex("harvest");
       }
     } else {
       logger.error("Elasticsearch is not running! {}", clusterNodes);
     }
   }
 
-  public static void deleteIndexInElasticsearch(Elasticsearch elasticsearch, String index) {
+  public static void deleteIndexInElasticsearch(Elasticsearch5Client elasticsearch, String index) {
     try {
       elasticsearch.getClient().admin().indices().delete(new DeleteIndexRequest(index)).actionGet();
       elasticsearch.getClient().admin().indices().prepareRefresh().get();

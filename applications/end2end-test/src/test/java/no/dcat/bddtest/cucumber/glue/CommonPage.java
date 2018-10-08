@@ -2,7 +2,7 @@ package no.dcat.bddtest.cucumber.glue;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import no.dcat.bddtest.cucumber.SpringIntegrationTestConfigE2E;
-import no.dcat.datastore.Elasticsearch;
+import no.dcat.client.elasticsearch5.Elasticsearch5Client;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
@@ -149,7 +149,7 @@ public abstract class CommonPage extends SpringIntegrationTestConfigE2E {
 
 
     void refreshElasticsearch(String clusterNodes, String clusterName){
-        try (Elasticsearch elasticsearch = new Elasticsearch(clusterNodes, clusterName)) {
+        try (Elasticsearch5Client elasticsearch = new Elasticsearch5Client(clusterNodes, clusterName)) {
             elasticsearch.getClient().admin().indices().prepareRefresh().get();
         }
     }
