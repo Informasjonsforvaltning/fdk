@@ -1,10 +1,10 @@
 package no.acat.restapi;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import io.swagger.annotations.ApiOperation;
-import no.acat.config.Utils;
 import no.acat.model.ApiDocument;
 import no.acat.service.ElasticsearchService;
+import no.dcat.webutils.exceptions.NotFoundException;
 import org.elasticsearch.action.get.GetResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,17 +26,15 @@ public class ApiRestController {
 
     @ApiOperation(value = "Get a specific api", response = ApiDocument.class)
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = "application/json")
-    public ApiDocument getApiDocument(@PathVariable String id) {
+    public ApiDocument getApiDocument(@PathVariable String id) throws NotFoundException {
         logger.info("request for {}", id);
 
-        GetResponse response = elasticsearch.getClient().prepareGet("acat", "apispec", id).get();
-        ObjectMapper mapper = Utils.jsonMapper();
-        try {
-            ApiDocument apiDocument = mapper.readValue(response.getSourceAsString(), ApiDocument.class);
-            return apiDocument;
-        } catch (Exception e) {
-            logger.error("error {}", e.getMessage(), e);
+        GetResponse getResponse = elasticsearch.getClient().prepareGet("acat", "apispec", id).get();
+
+        if (!getResponse.isExists()) {
+            throw new NotFoundException();
         }
-        return null;
+
+        return new Gson().fromJson(getResponse.getSourceAsString(), ApiDocument.class);
     }
 }
