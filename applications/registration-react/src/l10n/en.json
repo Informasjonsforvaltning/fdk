@@ -331,6 +331,22 @@
     "loggedOutMsgPart2": "Your session has timed out, but all your changes have been saved. Log in to continue working with registration."
   },
   "api": {
+    "import": {
+      "cancel": "Cancel",
+      "importApiSpec": "Import API specification",
+      "importLink": "Import from link",
+      "toImportLink": "import from link",
+      "importFile": "Import from file",
+      "toImportFile": "import from file",
+      "importApiSpecFile": "Import API specificaton from file",
+      "importApiSpecFileError": "Something went wrong. Please check file again, or try to ",
+      "filename": "Filename",
+      "importNewFile": "Import new file",
+      "importApiSpecLink": "Import API specification from link",
+      "importApiSpecLinkError": "Something went wrong. Please check if url is correct, or try to ",
+      "linkToSpec": "Link to specification",
+      "import": "Import"
+    },
     "register": {
       "apiCatalog": "API catalog",
       "registerNew": "Register API description"

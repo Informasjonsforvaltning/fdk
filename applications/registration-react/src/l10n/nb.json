@@ -331,6 +331,22 @@
     "loggedOutMsgPart2": "Sesjonen ble tidsavbrutt, men vi har tatt vare på alle endringene du har gjort. Logg inn på nytt for å fortsette å jobbe med registreringen."
   },
   "api": {
+    "import": {
+      "cancel": "Avbryt",
+      "importApiSpec": "Importer API-spesifikasjon",
+      "importLink": "Importer via lenke",
+      "toImportLink": "importere via lenke",
+      "importFile": "Importer via fil",
+      "toImportFile": "importere via fil",
+      "importApiSpecFile": "Importer API-spesifikasjon via fil",
+      "importApiSpecFileError": "Noe gikk galt med importen. Kontroller at du har valgt riktig fil, eller prøv å ",
+      "filename": "Filnavn",
+      "importNewFile": "Importer ny fil",
+      "importApiSpecLink": "Importer API-spesifikasjon via lenke",
+      "importApiSpecLinkError": "Noe gikk galt med importen. Kontroller at URL-en er skrevet riktig, eller prøv å ",
+      "linkToSpec": "Lenke til spesifikasjon",
+      "import": "Importer"
+    },
     "register": {
       "apiCatalog": "API-katalog",
       "registerNew": "Registrer ny API-beskrivelse"
