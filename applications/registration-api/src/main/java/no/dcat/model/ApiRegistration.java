@@ -11,7 +11,7 @@ import org.springframework.data.elasticsearch.annotations.Field;
 
 import java.util.*;
 
-@Document (indexName = "register", type = Catalog.ELASTIC_TYPE)
+@Document (indexName = "register", type = ApiRegistration.ELASTIC_TYPE)
 @Data
 @ToString(includeFieldNames = false)
 @JsonInclude(JsonInclude.Include.NON_NULL)

@@ -87,7 +87,7 @@ public class ApiRegistrationControllerIT {
         .andExpect(status().isOk());
 
     ApiRegistration apiRegistration = new ApiRegistration();
-
+    
     Map<String, String> languageTitle = new HashMap<>();
     languageTitle.put("api", "Test-tittel");
     apiRegistration.setTitle(languageTitle);
@@ -95,7 +95,8 @@ public class ApiRegistrationControllerIT {
     Map<String, String> languangeDescription = new HashMap<>();
     languangeDescription.put("api", "Test-beskrivelse");
     apiRegistration.setDescription(languangeDescription);
-
+    apiRegistration.setApiSpec("IMPORT DATA");
+    
     String apiResponseJson =
         mockMvc
             .perform(
