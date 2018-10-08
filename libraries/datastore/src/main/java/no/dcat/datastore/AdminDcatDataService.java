@@ -18,7 +18,6 @@ public class AdminDcatDataService {
 
 	private final AdminDataStore adminDataStore;
 	private final DcatDataStore dcatDataStore;
-	private Elasticsearch elasticsearch;
 
 
 	private final Logger logger = LoggerFactory.getLogger(AdminDcatDataService.class);

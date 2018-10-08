@@ -1,6 +1,6 @@
 package no.dcat.portal.query;
 
-import no.dcat.datastore.Elasticsearch;
+import no.dcat.client.elasticsearch5.Elasticsearch5Client;
 import org.elasticsearch.client.Client;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,7 +27,7 @@ public class ElasticsearchService {
     }
 
 
-    private Elasticsearch elasticsearch;
+    private Elasticsearch5Client elasticsearch;
 
     public Client getClient() {
         if (elasticsearch == null) {
@@ -37,7 +37,7 @@ public class ElasticsearchService {
     }
 
     void setClient(Client client) {
-        elasticsearch = new Elasticsearch(client);
+        elasticsearch = new Elasticsearch5Client(client);
     }
 
     public ResponseEntity<String> initializeElasticsearchTransportClient() {
@@ -50,7 +50,7 @@ public class ElasticsearchService {
                 return new ResponseEntity<>(jsonError, HttpStatus.INTERNAL_SERVER_ERROR);
             }
 
-            elasticsearch = new Elasticsearch(clusterNodes, clusterName);
+            elasticsearch = new Elasticsearch5Client(clusterNodes, clusterName);
         }
         return null;
     }

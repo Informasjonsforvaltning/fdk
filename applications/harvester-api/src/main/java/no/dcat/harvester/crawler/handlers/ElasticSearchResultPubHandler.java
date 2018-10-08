@@ -2,7 +2,7 @@ package no.dcat.harvester.crawler.handlers;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import no.dcat.datastore.Elasticsearch;
+import no.dcat.client.elasticsearch5.Elasticsearch5Client;
 import no.dcat.datastore.domain.DcatSource;
 import no.dcat.datastore.domain.dcat.Publisher;
 import no.dcat.datastore.domain.dcat.builders.PublisherBuilder;
@@ -54,7 +54,7 @@ public class ElasticSearchResultPubHandler implements CrawlerResultHandler {
     public void process(DcatSource dcatSource, Model model, List<String> validationResults) {
         logger.trace("Processing results Elasticsearch");
 
-        try (Elasticsearch elasticsearch = new Elasticsearch(clusterNodes, clusterName)) {
+        try (Elasticsearch5Client elasticsearch = new Elasticsearch5Client(clusterNodes, clusterName)) {
             logger.trace("Start indexing");
             indexWithElasticsearch(model, elasticsearch);
         } catch (Exception e) {
@@ -64,7 +64,7 @@ public class ElasticSearchResultPubHandler implements CrawlerResultHandler {
         logger.trace("finished");
     }
 
-    protected void indexWithElasticsearch(Model model, Elasticsearch elasticsearch) {
+    protected void indexWithElasticsearch(Model model, Elasticsearch5Client elasticsearch) {
         if (model != null && elasticsearch != null) {
             Gson gson = new GsonBuilder().setPrettyPrinting().setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").create();
 
@@ -88,7 +88,7 @@ public class ElasticSearchResultPubHandler implements CrawlerResultHandler {
         }
     }
 
-    public List<Publisher> getTopAgentsNotIndexed(Elasticsearch elasticsearch, List<Publisher> publishers, Gson gson) {
+    public List<Publisher> getTopAgentsNotIndexed(Elasticsearch5Client elasticsearch, List<Publisher> publishers, Gson gson) {
         List<Publisher> result = new ArrayList<>();
 
         String[] topDomains = {"STAT", "FYLKE", "KOMMUNE", "PRIVAT", "ANNET"};

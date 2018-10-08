@@ -1,7 +1,6 @@
 package no.dcat.harvester.crawler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import no.dcat.datastore.Elasticsearch;
 import no.dcat.datastore.domain.DcatSource;
 import no.dcat.harvester.crawler.handlers.ElasticSearchResultHandler;
 import no.dcat.harvester.crawler.handlers.ElasticsearchResultHandlerIT;
