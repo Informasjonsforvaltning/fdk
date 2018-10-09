@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import orderBy from 'lodash/orderBy';
 import _ from 'lodash';
+import { withState, withHandlers, compose } from 'recompose';
 
 import localization from '../../utils/localization';
 import SortButtons from '../sort-button/sort-button.component';
@@ -107,3 +108,16 @@ ListItems.propTypes = {
   onSortField: PropTypes.func,
   prefixPath: PropTypes.string
 };
+
+const enhance = compose(
+  withState('sortField', 'setSortField', ''),
+  withState('sortType', 'setSortType', ''),
+  withHandlers({
+    onSortField: props => (field, type) => {
+      props.setSortField(field);
+      props.setSortType(type);
+    }
+  })
+);
+
+export default enhance(ListItems);
