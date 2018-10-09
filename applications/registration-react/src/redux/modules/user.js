@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import {
   USER_REQUEST,
   USER_SUCCESS,
@@ -10,6 +11,12 @@ export default function user(
 ) {
   switch (action.type) {
     case USER_REQUEST:
+      if (_.get(action, 'error')) {
+        return {
+          ...state,
+          isFetchingUser: false
+        };
+      }
       return {
         ...state,
         isFetchingUser: true
