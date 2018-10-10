@@ -18,7 +18,7 @@ export function fetchApisIfNeededAction(catalogId) {
   return (dispatch, getState) =>
     shouldFetch(_.get(getState(), ['apis', catalogId, 'meta'])) &&
     dispatch(
-      fetchActions(`/catalogs/${catalogId}/apiSpecs`, [
+      fetchActions(`/catalogs/${catalogId}/apis`, [
         { type: APIS_REQUEST, meta: { catalogId } },
         { type: APIS_SUCCESS, meta: { catalogId } },
         { type: APIS_FAILURE, meta: { catalogId } }
@@ -44,7 +44,7 @@ export default function apis(state = initialState, action) {
       return {
         ...state,
         [action.meta.catalogId]: {
-          items: _.get(action.payload, ['_embedded', 'apiSpecs']),
+          items: _.get(action.payload, ['_embedded', 'apiRegistrations']),
           meta: {
             isFetching: false,
             lastFetch: Date.now()
