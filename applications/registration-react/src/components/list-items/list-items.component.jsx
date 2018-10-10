@@ -10,7 +10,14 @@ import { ListItem } from './list-item/list-item.component';
 import getTranslateText from '../../utils/translateText';
 import './list-items.scss';
 
-const renderItems = (catalogId, items, sortField, sortType, prefixPath) => {
+const renderItems = (
+  catalogId,
+  items,
+  itemTitleField,
+  sortField,
+  sortType,
+  prefixPath
+) => {
   if (items) {
     let sortedItems = items;
     if (sortField === 'title') {
@@ -19,9 +26,11 @@ const renderItems = (catalogId, items, sortField, sortType, prefixPath) => {
         items,
         [
           item => {
-            const { nb } = item.title;
-            if (nb) {
-              return nb.toLowerCase();
+            if (_.get(item, itemTitleField)) {
+              const retTitle =
+                getTranslateText(_.get(item, itemTitleField)) ||
+                _.get(item, itemTitleField);
+              return retTitle.toLowerCase();
             }
             return null;
           }
@@ -35,7 +44,10 @@ const renderItems = (catalogId, items, sortField, sortType, prefixPath) => {
     return sortedItems.map(item => (
       <ListItem
         key={item.id}
-        title={getTranslateText(_.get(item, 'title'))}
+        title={
+          getTranslateText(_.get(item, itemTitleField)) ||
+          _.get(item, itemTitleField)
+        }
         status={_.get(item, 'registrationStatus')}
         path={`${prefixPath}/${item.id}`}
       />
@@ -54,6 +66,7 @@ export const ListItems = props => {
   const {
     catalogId,
     items,
+    itemTitleField,
     sortField,
     sortType,
     onSortField,
@@ -86,7 +99,14 @@ export const ListItems = props => {
           />
         </div>
       </div>
-      {renderItems(catalogId, items, sortField, sortType, prefixPath)}
+      {renderItems(
+        catalogId,
+        items,
+        itemTitleField,
+        sortField,
+        sortType,
+        prefixPath
+      )}
     </div>
   );
 };
@@ -94,6 +114,7 @@ export const ListItems = props => {
 ListItems.defaultProps = {
   catalogId: null,
   items: null,
+  itemTitleField: ['title'],
   sortField: null,
   sortType: null,
   onSortField: null,
@@ -103,6 +124,7 @@ ListItems.defaultProps = {
 ListItems.propTypes = {
   catalogId: PropTypes.string.isRequired,
   items: PropTypes.array,
+  itemTitleField: PropTypes.array,
   sortField: PropTypes.string,
   sortType: PropTypes.string,
   onSortField: PropTypes.func,
