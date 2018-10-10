@@ -6,15 +6,15 @@ import lombok.Data;
 public class OpenDataEnhet {
     String organisasjonsnummer;
     String navn;
-    OpenDataOrganisasjonsform orgform;
+    OpenDataOrganisasjonsform organisasjonsform;
 
     public OpenDataEnhet() {
         //Default constructur used by frameworks
     }
 
-    public OpenDataEnhet(String organisasjonsnummer, String navn, OpenDataOrganisasjonsform orgform) {
+    public OpenDataEnhet(String organisasjonsnummer, String navn, OpenDataOrganisasjonsform organisasjonsform) {
         this.organisasjonsnummer = organisasjonsnummer;
         this.navn = navn;
-        this.orgform = orgform;
+        this.organisasjonsform = organisasjonsform;
     }
 }
