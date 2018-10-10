@@ -16,7 +16,6 @@ import no.dcat.client.referencedata.ReferenceDataClient;
 import no.dcat.shared.*;
 import org.apache.commons.io.Charsets;
 import org.apache.commons.io.IOUtils;
-import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.client.Client;

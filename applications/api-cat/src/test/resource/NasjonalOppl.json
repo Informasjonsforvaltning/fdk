@@ -1,0 +1,1011 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "v1.0",
+    "title": "Nasjonalt opplæringskontorregister API"
+  },
+  "host": "data-nor.udir.no",
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/enhet/{id}": {
+      "get": {
+        "tags": [
+          "Enhet"
+        ],
+        "summary": "Hent enhet",
+        "description": "Returnerer alle enheter i registeret. \r\n            Anbefalt bruk mellom 15.00 - 08.00 for et fullverdig datagrunnlag utenom importtid til opplæringskontorregisteret.\r\n            Cachetid er på 2 timer.",
+        "operationId": "EnhetApi_GetEnhet",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/EnhetNORApiModel"
+            }
+          }
+        }
+      }
+    },
+    "/enheter": {
+      "get": {
+        "tags": [
+          "Enhet"
+        ],
+        "summary": "Alle enheter",
+        "description": "Returnerer alle enheter i kommune.",
+        "operationId": "EnhetApi_GetEnheter",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/EnhetNORTinyApiModel"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/enheter/{date}": {
+      "get": {
+        "tags": [
+          "Enhet"
+        ],
+        "summary": "Enheter endret",
+        "description": "Returnerer alle enheter i registeret det er registrert endringer på fra gitt dato.",
+        "operationId": "EnhetApi_GetEnheterFromDate",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "date",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "date-time"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/EnhetNORTinyApiModel"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/enheter/kommune/{kommuneNr}": {
+      "get": {
+        "tags": [
+          "Enhet"
+        ],
+        "summary": "Alle enheter i kommune",
+        "description": "Returnerer alle enheter i fylke.",
+        "operationId": "EnhetApi_GetEnheterInKommune",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "kommuneNr",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/EnhetSmallApiModel"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/enheter/fylke/{fylkeNr}": {
+      "get": {
+        "tags": [
+          "Enhet"
+        ],
+        "summary": "Alle enheter i fylke",
+        "description": "Returnerer alle enheter i fylke.",
+        "operationId": "EnhetApi_GetEnheterTinyInFylke",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "fylkeNr",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/EnhetSmallApiModel"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/enheter/kontortype/{kontorTypeId}": {
+      "get": {
+        "tags": [
+          "Enhet"
+        ],
+        "summary": "Alle enheter med opplæringskontortype",
+        "description": "Returnerer alle enheter som inneholder gitt opplæringskontortype.",
+        "operationId": "EnhetApi_GetEnheterWithKontorType",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "kontorTypeId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/EnhetSmallApiModel"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/enheter/nacekode/{nacekode}": {
+      "get": {
+        "tags": [
+          "Enhet"
+        ],
+        "summary": "Alle enheter med nacekode",
+        "description": "Returnerer alle enheter som inneholder gitt nacekode.",
+        "operationId": "EnhetApi_GetEnheterWithNacekode",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "nacekode",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/EnhetSmallApiModel"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/enheter/sok": {
+      "post": {
+        "tags": [
+          "Enhet"
+        ],
+        "summary": "Søk i enheter",
+        "description": "Returnerer enheter basert på søkekriterier. Requesten må inneholde et objekt som vist under. \r\n            Her kan du kombinere søkekriterier som søkestreng, nacekode, kontortype, fylke og kommune samt filtrering på om du vil ha kun opplæringskontor, \r\n            opplæringskontoreiere eller andre enheter som f.eks organisasjonsledd.  Du kan også filtrere på om du vil\r\n            ha aktive eller nedlagte enheter.\r\n            Ved behov om å ytterligere filtrering og funksjonalitet kan hele datagrunnlag for registere hentes i metoden /enheter.\r\n            \r\n            EGENSKAPER:\r\n            SokeString - Begrens til enheter med navn, orgnr eller nsrid\r\n            NaceKode - Begrens til enheter med nacekode\r\n            KontorType - Begrens til enheter med opplæringskontortype\r\n            Fylke - Begrens til enheter i fylke\r\n            Kommune - Begrens til enheter i kommune\r\n            \r\n            Aktive - Enheter som er aktive\r\n            Nedlagte - Enheter som ikke er aktive\r\n            AndreEnheter - Enheter som har enhetstype STAT eller ORGL\r\n            Eiere - Enheter som eier et opplæringskontor\r\n            Opplaringskontor - Enheter som er opplæringskontor \r\n            \r\n            MERK:\r\n            En av egenskapene sokestring, fylke, kommune, nacekode eller kontortype må med for å få tilbake enheter. \r\n            Disse kan kombineres med de boolske egenskapene.\r\n            Boolske properties skal kun benyttes med value true.\r\n            Eksempler:\r\n            Hvis du ønsker å ikke ha med utgåtte enheter legger du med \"Aktive\": true\r\n            Hvis du ønsker kun nedlagte opplæringskontor i Oppland sender du med \"Fylke\": \"5\", \"Nedlagte\": true, \"Opplaringskontor\": true\r\n            Hvis ingen boolske properties er angitt så er det, det samme som at alle står til true.",
+        "operationId": "EnhetApi_Sok",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "model",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SokNORApiModel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/EnhetSmallApiModel"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/fylker": {
+      "get": {
+        "tags": [
+          "Fylke"
+        ],
+        "summary": "Alle fylker",
+        "description": "Returnerer alle fylker.",
+        "operationId": "FylkeApi_GetFylker",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Fylke"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/kommuner": {
+      "get": {
+        "tags": [
+          "Kommune"
+        ],
+        "summary": "Alle kommuner",
+        "description": "Returnerer alle kommuner.",
+        "operationId": "KommuneApi_GetKommuner",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Kommune"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/kommuner/{fylkeNr}": {
+      "get": {
+        "tags": [
+          "Kommune"
+        ],
+        "summary": "Alle kommuner i fylke",
+        "description": "Returnerer alle kommuner i gitt fylke.",
+        "operationId": "KommuneApi_GetKommunerInFylke",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "fylkeNr",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Kommune"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/kontortyper": {
+      "get": {
+        "tags": [
+          "Kontortype"
+        ],
+        "summary": "Alle opplæringskontortyper",
+        "description": "Returnerer alle opplæringskontortyper.",
+        "operationId": "KontorTypeApi_GetEnheter",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/SkoleType"
+            }
+          }
+        }
+      }
+    },
+    "/nacekoder": {
+      "get": {
+        "tags": [
+          "Nacekode"
+        ],
+        "summary": "Alle nacekoder",
+        "description": "Returnerer alle nacekoder for registeret.",
+        "operationId": "NaceKodeApi_GetNacekoder",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Nacekode"
+            }
+          }
+        }
+      }
+    },
+    "/relasjonstyper": {
+      "get": {
+        "tags": [
+          "Relasjon"
+        ],
+        "summary": "Alle relasjonstyper",
+        "description": "Returnerer alle relasjonstyper.",
+        "operationId": "RelasjonApi_GetRelasjonsTyper",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/RelasjonsType"
+            }
+          }
+        }
+      }
+    },
+    "/trestruktur/{orgNr}/{relasjonsType}": {
+      "get": {
+        "tags": [
+          "Relasjon"
+        ],
+        "summary": "Trestruktur for enhet med relasjonstype",
+        "description": "Returnerer en trestruktur med underenheter av en gitt enhet basert på orgnr og relasjonstype.",
+        "operationId": "RelasjonApi_GetEnheterWithNacekode",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "orgNr",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "relasjonsType",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/EnhetTrestrukturApiModel"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "EnhetNORApiModel": {
+      "type": "object",
+      "properties": {
+        "NSRId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "OrgNr": {
+          "type": "string"
+        },
+        "Navn": {
+          "type": "string"
+        },
+        "Karakteristikk": {
+          "type": "string"
+        },
+        "FulltNavn": {
+          "type": "string",
+          "readOnly": true
+        },
+        "Kallenavn": {
+          "type": "string"
+        },
+        "KommuneNavn": {
+          "type": "string"
+        },
+        "Epost": {
+          "type": "string"
+        },
+        "Url": {
+          "type": "string"
+        },
+        "Maalform": {
+          "type": "string"
+        },
+        "OpplaeringsKontorLeder": {
+          "type": "string"
+        },
+        "OpplaeringsKontorLederFornavn": {
+          "type": "string"
+        },
+        "OpplaeringsKontorLederEtternavn": {
+          "type": "string"
+        },
+        "GsiId": {
+          "type": "string"
+        },
+        "Telefon": {
+          "type": "string"
+        },
+        "Mobil": {
+          "type": "string"
+        },
+        "Fax": {
+          "type": "string"
+        },
+        "ErOpplaeringskontor": {
+          "type": "boolean"
+        },
+        "ErOpplaeringskontorEier": {
+          "type": "boolean"
+        },
+        "VisesPaaWeb": {
+          "type": "boolean"
+        },
+        "ErAktiv": {
+          "type": "boolean"
+        },
+        "AntallLaerlinger": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "AnsatteFra": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "AnsatteTil": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "SistEndretDato": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "OpprettetDato": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "Besoksadresse": {
+          "$ref": "#/definitions/Adresse"
+        },
+        "Nacekoder": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Nacekode"
+          }
+        },
+        "Postadresse": {
+          "$ref": "#/definitions/Adresse"
+        },
+        "Fylke": {
+          "$ref": "#/definitions/Fylke"
+        },
+        "EnhetsType": {
+          "$ref": "#/definitions/EnhetsType"
+        },
+        "SektorType": {
+          "$ref": "#/definitions/SektorType"
+        },
+        "OpplaeringsKontorTyper": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SkoleType"
+          }
+        },
+        "Kommune": {
+          "$ref": "#/definitions/Kommune"
+        },
+        "Koordinater": {
+          "$ref": "#/definitions/Koordinater"
+        },
+        "Utgaattype": {
+          "$ref": "#/definitions/Utgaattype"
+        },
+        "ParentRelasjoner": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Relasjon"
+          }
+        },
+        "ChildRelasjoner": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Relasjon"
+          }
+        },
+        "PersonEpost": {
+          "type": "string"
+        },
+        "PersonTelefon": {
+          "type": "string"
+        }
+      }
+    },
+    "Adresse": {
+      "type": "object",
+      "properties": {
+        "Adress": {
+          "type": "string"
+        },
+        "Postnr": {
+          "type": "string"
+        },
+        "Poststed": {
+          "type": "string"
+        },
+        "Land": {
+          "type": "string"
+        }
+      }
+    },
+    "Nacekode": {
+      "type": "object",
+      "properties": {
+        "Kode": {
+          "type": "string"
+        },
+        "Navn": {
+          "type": "string"
+        },
+        "Versjon": {
+          "type": "string"
+        }
+      }
+    },
+    "Fylke": {
+      "type": "object",
+      "properties": {
+        "Fylkesnr": {
+          "type": "string"
+        },
+        "Navn": {
+          "type": "string"
+        },
+        "OrgNr": {
+          "type": "string"
+        },
+        "OrgNrFylkesmann": {
+          "type": "string"
+        }
+      }
+    },
+    "EnhetsType": {
+      "type": "object",
+      "properties": {
+        "Type": {
+          "type": "string"
+        },
+        "Navn": {
+          "type": "string"
+        },
+        "Offentlig": {
+          "type": "boolean"
+        }
+      }
+    },
+    "SektorType": {
+      "type": "object",
+      "properties": {
+        "Navn": {
+          "type": "string"
+        },
+        "Id": {
+          "type": "string"
+        }
+      }
+    },
+    "SkoleType": {
+      "type": "object",
+      "properties": {
+        "Navn": {
+          "type": "string"
+        },
+        "NavnTekst": {
+          "type": "string"
+        },
+        "Id": {
+          "type": "string"
+        },
+        "ErSystemType": {
+          "type": "boolean"
+        }
+      }
+    },
+    "Kommune": {
+      "type": "object",
+      "properties": {
+        "ErNedlagt": {
+          "type": "boolean"
+        },
+        "KommuneGruppe": {
+          "$ref": "#/definitions/KommuneGruppe"
+        },
+        "Kommunenr": {
+          "type": "string"
+        },
+        "Navn": {
+          "type": "string"
+        },
+        "OrgNr": {
+          "type": "string"
+        },
+        "Fylkesnr": {
+          "type": "string"
+        }
+      }
+    },
+    "Koordinater": {
+      "type": "object",
+      "properties": {
+        "Zoom": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Lengdegrad": {
+          "format": "double",
+          "type": "number"
+        },
+        "Breddegrad": {
+          "format": "double",
+          "type": "number"
+        },
+        "GeoKvalitet": {
+          "type": "string"
+        }
+      }
+    },
+    "Utgaattype": {
+      "type": "object",
+      "properties": {
+        "EnumId": {
+          "type": "string"
+        },
+        "Name": {
+          "type": "string"
+        }
+      }
+    },
+    "Relasjon": {
+      "type": "object",
+      "properties": {
+        "Enhet": {
+          "$ref": "#/definitions/EnhetSmallApiModel"
+        },
+        "RelasjonsType": {
+          "$ref": "#/definitions/RelasjonsType"
+        }
+      }
+    },
+    "KommuneGruppe": {
+      "type": "object",
+      "properties": {
+        "Gruppe": {
+          "type": "string"
+        },
+        "Navn": {
+          "type": "string"
+        }
+      }
+    },
+    "EnhetSmallApiModel": {
+      "type": "object",
+      "properties": {
+        "NSRId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Navn": {
+          "type": "string"
+        },
+        "Karakteristikk": {
+          "type": "string"
+        },
+        "FulltNavn": {
+          "type": "string",
+          "readOnly": true
+        },
+        "Kallenavn": {
+          "type": "string"
+        },
+        "OrgNr": {
+          "type": "string"
+        },
+        "Epost": {
+          "type": "string"
+        },
+        "Poststed": {
+          "type": "string"
+        },
+        "Kommune": {
+          "type": "string"
+        },
+        "Kommunenr": {
+          "type": "string"
+        },
+        "BesoksAdresse": {
+          "type": "string"
+        },
+        "Telefon": {
+          "type": "string"
+        },
+        "NaceKode1": {
+          "type": "string"
+        },
+        "NaceKode2": {
+          "type": "string"
+        },
+        "NaceKode3": {
+          "type": "string"
+        },
+        "Zoom": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Lengdegrad": {
+          "format": "double",
+          "type": "number"
+        },
+        "Breddegrad": {
+          "format": "double",
+          "type": "number"
+        },
+        "GeoKvalitet": {
+          "type": "string"
+        }
+      }
+    },
+    "RelasjonsType": {
+      "type": "object",
+      "properties": {
+        "Beskrivelse": {
+          "type": "string"
+        },
+        "Navn": {
+          "type": "string"
+        },
+        "Id": {
+          "type": "string"
+        },
+        "ErSystemRelasjon": {
+          "type": "boolean"
+        }
+      }
+    },
+    "EnhetNORTinyApiModel": {
+      "type": "object",
+      "properties": {
+        "NSRId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "OrgNr": {
+          "type": "string"
+        },
+        "Navn": {
+          "type": "string"
+        },
+        "Karakteristikk": {
+          "type": "string"
+        },
+        "FulltNavn": {
+          "type": "string",
+          "readOnly": true
+        },
+        "KommuneNavn": {
+          "type": "string"
+        },
+        "Epost": {
+          "type": "string"
+        },
+        "ErAktiv": {
+          "type": "boolean"
+        },
+        "ErOpplaeringskontor": {
+          "type": "boolean"
+        },
+        "ErOpplaeringskontorEier": {
+          "type": "boolean"
+        },
+        "VisesPaaWeb": {
+          "type": "boolean"
+        },
+        "KommuneNr": {
+          "type": "string"
+        },
+        "FylkeNr": {
+          "type": "string"
+        }
+      }
+    },
+    "SokNORApiModel": {
+      "type": "object",
+      "properties": {
+        "SokeString": {
+          "type": "string"
+        },
+        "NaceKode": {
+          "type": "string"
+        },
+        "KontorType": {
+          "type": "string"
+        },
+        "Fylke": {
+          "type": "string"
+        },
+        "Kommune": {
+          "type": "string"
+        },
+        "Nedlagte": {
+          "type": "boolean"
+        },
+        "Aktive": {
+          "type": "boolean"
+        },
+        "Opplaringskontor": {
+          "type": "boolean"
+        },
+        "Eiere": {
+          "type": "boolean"
+        },
+        "AndreEnheter": {
+          "type": "boolean"
+        }
+      }
+    },
+    "EnhetTrestrukturApiModel": {
+      "type": "object",
+      "properties": {
+        "NSRId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "OrgNr": {
+          "type": "string"
+        },
+        "Navn": {
+          "type": "string"
+        },
+        "Karakteristikk": {
+          "type": "string"
+        },
+        "RelasjonsType": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Children": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/EnhetTrestrukturApiModel"
+          }
+        }
+      }
+    }
+  }
+}
