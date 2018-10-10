@@ -115,6 +115,7 @@ public class BasicAuthConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/login").permitAll()
                 .antMatchers("/health").permitAll()
                 .antMatchers(HttpMethod.GET,"/catalogs/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/public/**").permitAll()
 
             .and()
                 .authorizeRequests()
