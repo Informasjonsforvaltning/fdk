@@ -286,6 +286,18 @@ const renderStickyMenu = datasetItem => {
       prefLabel: localization.dataset.quality
     });
   }
+  if (_.get(datasetItem, 'references')) {
+    menuItems.push({
+      name: localization.dataset.related,
+      prefLabel: localization.dataset.related
+    });
+  }
+  if (_.get(datasetItem, 'spatial') || _.get(datasetItem, 'temporal')) {
+    menuItems.push({
+      name: localization.dataset.restrictions,
+      prefLabel: localization.dataset.restrictions
+    });
+  }
   if (_.get(datasetItem, 'subject')) {
     menuItems.push({
       name: localization.dataset.subject,
