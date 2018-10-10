@@ -46,7 +46,7 @@ public class OpenDataAuthorizedOrgformService implements AuthorizedOrgformServic
     }
 
     private boolean isAuthorisedOrganisation(OpenDataEnhet enhet) {
-        return isAuthorisedOrgform(enhet.getOrgform().kode) || isAuthorisedOrganisation(enhet.organisasjonsnummer);
+        return isAuthorisedOrgform(enhet.getOrganisasjonsform().kode) || isAuthorisedOrganisation(enhet.organisasjonsnummer);
     }
 
     private boolean isAuthorisedOrgform(String kode) {
