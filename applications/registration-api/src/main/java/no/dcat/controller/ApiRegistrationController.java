@@ -1,5 +1,8 @@
 package no.dcat.controller;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import io.swagger.v3.oas.models.OpenAPI;
 import no.dcat.client.apicat.ApiCatClient;
 import no.dcat.factory.ApiRegistrationFactory;
@@ -18,9 +21,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.PagedResources;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -60,9 +66,9 @@ public class ApiRegistrationController {
     @CrossOrigin
     @RequestMapping(value = "", method = GET, produces = APPLICATION_JSON_UTF8_VALUE)
     public PagedResources<ApiRegistration> listApiRegistrations(
-            @PathVariable("catalogId") String catalogId,
-            Pageable pageable,
-            PagedResourcesAssembler assembler
+        @PathVariable("catalogId") String catalogId,
+        Pageable pageable,
+        PagedResourcesAssembler assembler
     ) {
         Page<ApiRegistration> apiRegistrations = apiRegistrationRepository.findByCatalogId(catalogId, pageable);
 
@@ -170,5 +176,62 @@ public class ApiRegistrationController {
             throw new NotFoundException();
         }
         apiRegistrationRepository.delete(apiRegistration);
+    }
+
+    /**
+     * Modify apiRegistration in catalog.
+     *
+     * @param updates Objects in apiRegistration to be updated
+     * @return apiRegistration
+     */
+    @PreAuthorize("hasPermission(#catalogId, 'write')")
+    @CrossOrigin
+    @RequestMapping(
+            value = "/{id}",
+            method = PATCH,
+            consumes = APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ApiRegistration patchApiRegistration(
+            @PathVariable("catalogId") String catalogId,
+            @PathVariable("id") String id,
+            @RequestBody Map<String, Object> updates)
+            throws NotFoundException {
+        logger.info("PATCH requestbody update apiRegistration: {}", updates.toString());
+
+        Gson gson = new Gson();
+
+        // get already saved apiRegistration
+        Optional<ApiRegistration> oldApiRegistrationOptional = apiRegistrationRepository.findById(id);
+        if (!oldApiRegistrationOptional.isPresent()) {
+            throw new NotFoundException();
+        }
+
+        ApiRegistration oldApiRegistration = oldApiRegistrationOptional.get();
+
+        if (!Objects.equals(catalogId, oldApiRegistration.getCatalogId())) {
+            throw new NotFoundException();
+        }
+
+        JsonObject oldApiRegistrationJson = gson.toJsonTree(oldApiRegistration).getAsJsonObject();
+
+        updates.forEach((key, value) -> {
+            logger.debug("update key: {} value: ", key, value);
+            if (key != null) {
+                JsonElement changes = gson.toJsonTree(value);
+                if (oldApiRegistrationJson.has(key)) {
+                    oldApiRegistrationJson.remove(key);
+                }
+                oldApiRegistrationJson.add(key, changes);
+            }
+        });
+
+        logger.debug("Changed apiRegistration Json element: {}", oldApiRegistrationJson.toString());
+
+        ApiRegistration newApiRegistration =
+                gson.fromJson(oldApiRegistrationJson.toString(), ApiRegistration.class);
+        newApiRegistration.set_lastModified(new Date());
+
+        ApiRegistration savedApiRegistration = apiRegistrationRepository.save(newApiRegistration);
+        return savedApiRegistration;
     }
 }
