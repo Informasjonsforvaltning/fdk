@@ -8,6 +8,7 @@ export function fetchActions(url, types) {
       headers: {
         Accept: 'application/json'
       },
+      credentials: 'include',
       types
     }
   };
