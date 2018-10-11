@@ -41,17 +41,19 @@ const renderItems = (
       sortedItems = orderBy(items, 'registrationStatus', [sortType]);
     }
 
-    return sortedItems.map(item => (
-      <ListItem
-        key={item.id}
-        title={
-          getTranslateText(_.get(item, itemTitleField)) ||
-          _.get(item, itemTitleField)
-        }
-        status={_.get(item, 'registrationStatus')}
-        path={`${prefixPath}/${item.id}`}
-      />
-    ));
+    return sortedItems.map(item => {
+      const title =
+        getTranslateText(_.get(item, itemTitleField)) ||
+        _.get(item, itemTitleField);
+      return (
+        <ListItem
+          key={item.id}
+          title={typeof title === 'object' ? null : title}
+          status={_.get(item, 'registrationStatus')}
+          path={`${prefixPath}/${item.id}`}
+        />
+      );
+    });
   }
   return (
     <div className="fdk-list-item d-flex">
