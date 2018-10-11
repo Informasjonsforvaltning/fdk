@@ -2,16 +2,23 @@ package no.acat.harvester;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import no.acat.config.Utils;
 import no.acat.model.ApiCatalogRecord;
 import no.acat.model.ApiDocument;
 import no.acat.service.ElasticsearchService;
+import no.acat.service.ReferenceDataService;
+import no.dcat.client.apiregistration.ApiRegistrationClient;
+import no.dcat.client.referencedata.ReferenceDataClient;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.client.Client;
+import org.json.JSONObject;
+import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +33,8 @@ import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class ApiHarvester {
@@ -33,16 +42,18 @@ public class ApiHarvester {
 
     private Client elasticsearchClient;
     private ObjectMapper mapper = Utils.jsonMapper();
+    private ApiRegistrationClient apiRegistrationClient;
 
     @Value("${application.searchApiUrl}")
     private String searchApiUrl;
+
 
     @Autowired
     public ApiHarvester(ElasticsearchService elasticsearchService) {
         this.elasticsearchClient = elasticsearchService.getClient();
     }
 
-    public List<ApiDocument> harvestAll() {
+    public List<ApiDocument> harvestAll() throws ParseException {
         List<ApiDocument> result = new ArrayList<>();
 
         List<ApiCatalogRecord> apiCatalog = getApiCatalog();
@@ -57,7 +68,19 @@ public class ApiHarvester {
                 logger.error("Error importing API record: {}", e.getMessage());
             }
         }
-        return result;
+        JSONObject publishedJson = apiRegistrationClient.getPublished("PUBLISHED");
+
+        Gson gson = new Gson();
+        TypeToken<List<ApiDocument>> token = new TypeToken<List<ApiDocument>>() {
+        };
+        List<ApiDocument> apiDocumentList = gson.fromJson(String.valueOf(publishedJson), token.getType());
+
+        result.removeIf(c -> apiDocumentList.stream()
+            .map(ApiDocument::getApiDocUrl)
+            .anyMatch(n -> n.equals(c.getApiDocUrl())));
+
+        return Stream.concat(result.stream(), apiDocumentList.stream())
+            .collect(Collectors.toList());
     }
 
     ApiDocumentBuilder createApiDocumentBuilder() {

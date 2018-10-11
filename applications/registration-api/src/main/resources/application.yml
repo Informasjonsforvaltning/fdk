@@ -1,4 +1,5 @@
 application:
+  apiRegistrationUrl: http://registration-api:8080
   apiCatUrl: http://api-cat:8080
   themesServiceUrl: http://reference-data:8080
   catalogUriPrefix: http://localhost:8099
