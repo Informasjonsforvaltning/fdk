@@ -1,29 +1,30 @@
-@import './node_modules/designsystemet/fdk-designsystem-bootstrap4/scss/colors.scss';
+@import '../../../node_modules/designsystemet/fdk-designsystem-bootstrap4/scss/colors.scss';
 
 /***************  **************************/
 /*********** Bootstrap overrides **********/
 /*****************************************/
-$primary:       $color-cta4 !default;
-$secondary:     $color3 !default;
-$success:       $color-green !default;
-$info:          $color-cta4 !default;
-$warning:       $color-yellow !default;
-$danger:        $color-red !default;
+$primary:       $color-blue-light !default;
+$secondary:     $color-dark-2 !default;
+$success:       $color-green-2 !default;
+$info:          $color-blue-light !default;
+$warning:       $color-yellow-1 !default;
+$danger:        $color-red-1 !default;
 
 $font-size-base: 1.6rem;
 $input-padding-y: 0.6rem;
 $input-padding-x: 1.2rem;
 $input-height: 3.6rem;
-$input-focus-border-color: $color3;
+$input-focus-border-color: $color-dark-2;
 $input-focus-box-shadow: 0 0 0 0.4rem rgba(45, 55, 65, 0.25);
 
 $form-check-input-gutter: 2rem;
 
-@import './node_modules/bootstrap/scss/bootstrap';
+@import '../../../node_modules/bootstrap/scss/bootstrap';
+
 
 .alert-success {
-  background-color: $color-green2;
-  color: $color1;
+  background-color: $color-green-3;
+  color: $color-green-1;
 }
 
 .alert-warning {
