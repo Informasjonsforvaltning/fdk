@@ -44,8 +44,7 @@ public class ApiHarvester {
         this.elasticsearchClient = elasticsearchService.getClient();
         this.referenceDataClient = referenceDataService.getClient();
     }
-
-    @PostConstruct
+    
     public List<ApiDocument> harvestAll() {
         List<ApiDocument> result = new ArrayList<>();
 
