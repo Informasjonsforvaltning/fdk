@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render InputFile success correctly with props 1`] = `
+<React.Fragment>
+  <label
+    className="inputfile null"
+    htmlFor="file"
+  >
+    <input
+      className="inputfile"
+      id="file"
+      onChange={[Function]}
+      type="file"
+    />
+    Velg fil
+  </label>
+</React.Fragment>
+`;
