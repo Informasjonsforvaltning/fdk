@@ -6,25 +6,18 @@
 root = true
 
 # Use bracketed regexp to target specific file types or file locations
-[*.{js,jsx,json}]
 
-# Use hard or soft tabs ["tab", "space"]
+
+[*.{js,jsx,json,java}]
 indent_style = space
-
-# Size of a single indent [an integer, "tab"]
+end_of_line = lf
+charset = utf-8
+trim_trailing_whitespace = true
+insert_final_newline = true
 indent_size = 2
 
-# Line breaks representation ["lf", "cr", "crlf"]
-end_of_line = lf
-
-# ["latin1", "utf-8", "utf-16be", "utf-16le"]
-charset = utf-8
-
-# Remove any whitespace characters preceding newline characters ["true", "false"]
-trim_trailing_whitespace = true
-
-# Ensure file ends with a newline when saving ["true", "false"]
-insert_final_newline = true
+[*.java]
+indent_size = 4
 
 # Markdown files
 [*.md]

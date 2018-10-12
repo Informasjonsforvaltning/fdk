@@ -4,12 +4,10 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.ToString;
 
-import java.util.Date;
 import java.util.Map;
 
 /**
  * Created by dsk on 03.10.2017.
- *
  */
 @Data
 @ToString(includeFieldNames = false)
@@ -17,5 +15,5 @@ import java.util.Map;
 public class QualityAnnotation {
     private String inDimension;
     private String motivatedBy;
-    private Map<String,String> hasBody;
+    private Map<String, String> hasBody;
 }
