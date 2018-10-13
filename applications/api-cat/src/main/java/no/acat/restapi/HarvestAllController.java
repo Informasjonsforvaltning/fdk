@@ -25,6 +25,12 @@ public class HarvestAllController {
     public void getApiDocument() throws NotFoundException, ParseException {
       logger.info("Trigger sync");
 
-      apiHarvester.harvestAll();
+        /**
+         * no more than one thread will be able to access the code inside that block
+         * obtain lock on the current instance
+         */
+        synchronized(this) {
+            apiHarvester.harvestAll();
+        }
     }
 }
