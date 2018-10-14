@@ -26,7 +26,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @Service
 public class ApiHarvester {
@@ -58,7 +60,7 @@ public class ApiHarvester {
                 indexApi(apiDocument);
                 result.add(apiDocument);
             } catch (Exception e) {
-                logger.error("Error importing API record: {}",e.getMessage());
+                logger.error("Error importing API record: {}", e.getMessage());
             }
         }
         return result;
@@ -83,7 +85,7 @@ public class ApiHarvester {
             throw new RuntimeException(msg);
         }
 
-        logger.info("ApiDocument is indexed. id={}, url={}",document.getId(),document.getApiSpecUrl());
+        logger.info("ApiDocument is indexed. id={}, url={}", document.getId(), document.getApiSpecUrl());
     }
 
     List<ApiCatalogRecord> getApiCatalog() {
@@ -93,20 +95,20 @@ public class ApiHarvester {
         Iterable<CSVRecord> records;
 
         try (
-                Reader input =
-                        new BufferedReader(new InputStreamReader(apiCatalogCsvFile.getInputStream()))
+            Reader input =
+                new BufferedReader(new InputStreamReader(apiCatalogCsvFile.getInputStream()))
         ) {
             records = CSVFormat.EXCEL.withHeader().withDelimiter(';').parse(input);
 
             for (CSVRecord line : records) {
                 ApiCatalogRecord catalogRecord = new ApiCatalogRecord().builder()
-                        .orgNr(line.get("OrgNr"))
-                        .apiSpecUrl(line.get("ApiSpecUrl"))
-                        .apiDocUrl(line.get("ApiDocUrl"))
-                        .accessRightsCodes(Arrays.asList(line.get("AccessRights").split(",")))
-                        .provenanceCode(line.get("Provenance"))
-                        .datasetReferences(Arrays.asList(line.get("DatasetRefs").split(",")))
-                        .build();
+                    .orgNr(line.get("OrgNr"))
+                    .apiSpecUrl(line.get("ApiSpecUrl"))
+                    .apiDocUrl(line.get("ApiDocUrl"))
+                    .accessRightsCodes(Arrays.asList(line.get("AccessRights").split(",")))
+                    .provenanceCode(line.get("Provenance"))
+                    .datasetReferences(Arrays.asList(line.get("DatasetRefs").split(",")))
+                    .build();
 
                 result.add(catalogRecord);
             }
@@ -114,7 +116,7 @@ public class ApiHarvester {
             logger.info("Read {} api catalog records.", result.size());
 
         } catch (
-                IOException e) {
+            IOException e) {
             logger.error("Could not read api catalog records: {}", e.getMessage());
         }
         return result;

@@ -9,7 +9,6 @@ import no.acat.spec.converters.SwaggerJsonSpecConverter;
 import org.apache.commons.io.IOUtils;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
@@ -41,8 +40,8 @@ public class Parser {
     }
 
     public static String getSpecFromUrl(String apiSpecUrlString) throws IOException {
-            URL apiSpecUrl;
-            apiSpecUrl = new URL(apiSpecUrlString);
-            return IOUtils.toString(apiSpecUrl.openStream(), UTF_8);
+        URL apiSpecUrl;
+        apiSpecUrl = new URL(apiSpecUrlString);
+        return IOUtils.toString(apiSpecUrl.openStream(), UTF_8);
     }
 }

@@ -1,11 +1,9 @@
 package no.acat.harvester;
 
-import no.acat.service.ElasticsearchService;
-import no.acat.service.ReferenceDataService;
 import no.dcat.client.referencedata.ReferenceDataClient;
-import org.elasticsearch.client.Client;
 import no.dcat.shared.SkosCode;
 import no.dcat.shared.testcategories.UnitTest;
+import org.elasticsearch.client.Client;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
@@ -24,7 +22,7 @@ public class ApiDocumentBuilderTest {
     public void createProvenanceSortNational() {
 
         Client elasticsearchClient = mock(Client.class);
-        ReferenceDataClient referencedataClient =mock(ReferenceDataClient.class);
+        ReferenceDataClient referencedataClient = mock(ReferenceDataClient.class);
 
         ApiDocumentBuilder builder = new ApiDocumentBuilder(elasticsearchClient, referencedataClient, "http://some.url");
 
@@ -39,7 +37,7 @@ public class ApiDocumentBuilderTest {
     public void createProvenanceSortVedtak() {
 
         Client elasticsearchClient = mock(Client.class);
-        ReferenceDataClient referencedataClient =mock(ReferenceDataClient.class);
+        ReferenceDataClient referencedataClient = mock(ReferenceDataClient.class);
 
         ApiDocumentBuilder builder = new ApiDocumentBuilder(elasticsearchClient, referencedataClient, "http://some.url");
 
@@ -53,7 +51,7 @@ public class ApiDocumentBuilderTest {
     public void createProvenanceSortNoCodeSupplied() {
 
         Client elasticsearchClient = mock(Client.class);
-        ReferenceDataClient referencedataClient =mock(ReferenceDataClient.class);
+        ReferenceDataClient referencedataClient = mock(ReferenceDataClient.class);
 
         ApiDocumentBuilder builder = new ApiDocumentBuilder(elasticsearchClient, referencedataClient, "http://some.url");
 
