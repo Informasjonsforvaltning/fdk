@@ -1,8 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { createMockStore } from 'redux-test-utils';
-import shallowWithStore from '../../../test/shallowWithStore';
-import RegCatalogsComponent, { RegCatalogs } from './catalogs-page';
+import { RegCatalogs } from './catalogs-page';
 import catalogs from '../../../test/fixtures/catalogs';
 
 let defaultProps;
@@ -19,15 +17,6 @@ beforeEach(() => {
   wrapper = shallow(<RegCatalogs {...defaultProps} />);
 });
 
-test('should render RegCatalogsComponent correctly', () => {
-  expect(wrapper).toMatchSnapshot();
-});
-
-test('should render RegCatalogsComponent correctly with catalogItems', () => {
-  const testState = {
-    catalogs
-  };
-  const store = createMockStore(testState);
-  wrapper = shallowWithStore(<RegCatalogsComponent />, store);
+test('should render RegCatalogs correctly', () => {
   expect(wrapper).toMatchSnapshot();
 });

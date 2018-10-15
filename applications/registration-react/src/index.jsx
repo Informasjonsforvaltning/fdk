@@ -7,7 +7,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { configureStore } from './redux/configureStore';
 import ProtectedRoute from './app-protected-route/app-protected-route.component';
 import { ConnectedFeatureToggleProvider } from './components/connected-feature-toggle-provider';
-import RegCatalogs from './pages/catalogs-page/catalogs-page';
+import { ConnectedCatalogsPage } from './pages/catalogs-page/connected-catalogs-page';
 import { ConnectedDatasetsListPage } from './pages/dataset-list-page/connected-dataset-list-page';
 import RegDataset from './pages/dataset-registration-page/dataset-registration-page';
 import Header from './components/app-header/app-header.component';
@@ -24,7 +24,7 @@ const routes = (
       render={props => <LoginDialog {...props} loggedOut />}
     />
     <Route exact path="/loggin" render={props => <LoginDialog {...props} />} />
-    <ProtectedRoute exact path="/" component={RegCatalogs} />
+    <ProtectedRoute exact path="/" component={ConnectedCatalogsPage} />
     <ProtectedRoute
       exact
       path="/catalogs/:catalogId/datasets"
@@ -38,7 +38,7 @@ const routes = (
     <ProtectedRoute
       exact
       path="/catalogs/:catalogId/apis"
-      component={RegCatalogs}
+      component={ConnectedCatalogsPage}
     />
   </Switch>
 );
