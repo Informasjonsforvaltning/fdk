@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`should render RegCatalogsComponent correctly 1`] = `
+exports[`should render RegCatalogs correctly 1`] = `
 <div
   className="container"
 >
@@ -29,28 +29,4 @@ exports[`should render RegCatalogsComponent correctly 1`] = `
     </div>
   </div>
 </div>
-`;
-
-exports[`should render RegCatalogsComponent correctly with catalogItems 1`] = `
-<RegCatalogs
-  catalogItems={
-    Array [
-      Object {
-        "description": Object {},
-        "id": "910244132",
-        "publisher": Object {
-          "name": "RAMSUND OG ROGNAN REVISJON",
-          "uri": "http://data.brreg.no/enhetsregisteret/enhet/910244132",
-        },
-        "title": Object {
-          "nb": "Datakatalog for RAMSUND OG ROGNAN REVISJON",
-        },
-        "uri": "http://brreg.no/catalogs/910244132",
-      },
-    ]
-  }
-  fetchCatalogsIfNeeded={[Function]}
-  fetchDatasetsIfNeeded={[Function]}
-  isFetching={false}
-/>
 `;
