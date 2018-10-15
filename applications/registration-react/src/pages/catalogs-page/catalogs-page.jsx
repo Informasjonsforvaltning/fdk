@@ -44,7 +44,7 @@ const renderCatalogs = props => {
               <Catalog
                 key={`apis-${item.id}`}
                 catalogId={item.id}
-                type="apiSpecs"
+                type="apis"
                 items={apis}
               />
             )}

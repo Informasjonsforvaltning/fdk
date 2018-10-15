@@ -317,10 +317,10 @@
       "assignAccessText": "Du kan gi andre tilgang til å redigere datasett for din virksomhet via Altinn. Les mer om hvordan du gir andre tilgang."
     },
     "datasets": "Datasettkatalog",
-    "apiSpecs": "API-katalog",
+    "apis": "API-katalog",
     "type": {
       "datasets": "datasett",
-      "apiSpecs": "API-er"
+      "apis": "API-er"
     }
   },
   "loginDialog": {
