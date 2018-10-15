@@ -161,6 +161,11 @@
         </dependency>
         <dependency>
             <groupId>no.dcat</groupId>
+            <artifactId>html-cleaner</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>no.dcat</groupId>
             <artifactId>datastore</artifactId>
             <version>1.0.3</version>
         </dependency>

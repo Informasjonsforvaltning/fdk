@@ -1,4 +1,4 @@
-package no.dcat.harvester.clean;
+package no.dcat.htmlclean;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
