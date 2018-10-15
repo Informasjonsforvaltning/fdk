@@ -37,7 +37,7 @@ const routes = (
     />
     <ProtectedRoute
       exact
-      path="/catalogs/:catalogId/apiSpecs"
+      path="/catalogs/:catalogId/apis"
       component={RegCatalogs}
     />
   </Switch>

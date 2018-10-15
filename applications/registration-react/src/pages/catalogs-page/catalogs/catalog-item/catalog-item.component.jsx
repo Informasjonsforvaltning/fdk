@@ -9,7 +9,7 @@ export const CatalogItem = props => {
   const { publisherId, type, itemsCount } = props;
   const iconClass = cx('catalog-icon', {
     'catalog-icon--dataset': type === 'datasets',
-    'catalog-icon--api': type === 'apiSpecs'
+    'catalog-icon--api': type === 'apis'
   });
   return (
     <div className="col-md-4 pl-0">
