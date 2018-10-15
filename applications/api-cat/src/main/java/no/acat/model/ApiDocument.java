@@ -2,8 +2,8 @@ package no.acat.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.*;
 import io.swagger.v3.oas.models.OpenAPI;
+import lombok.*;
 import no.dcat.shared.*;
 
 import java.util.List;
@@ -16,7 +16,7 @@ import java.util.Set;
 @Builder
 @ToString(includeFieldNames = false)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ApiDocument  {
+public class ApiDocument {
     @ApiModelProperty("The id given to the object by the harvest system")
     private String id;
 
@@ -48,7 +48,7 @@ public class ApiDocument  {
     private Publisher publisher;
 
     @ApiModelProperty("The contact point [dcat:contactPoint]")
-    private List<Contact> contactPoint ;
+    private List<Contact> contactPoint;
 
     @ApiModelProperty("An overview of the formats returned by the api")
     private Set<String> formats;

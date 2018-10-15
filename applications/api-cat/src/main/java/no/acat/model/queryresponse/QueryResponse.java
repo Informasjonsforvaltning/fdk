@@ -11,5 +11,5 @@ public class QueryResponse {
 
     long total;
     List<ApiDocument> hits;
-    Map<String,Aggregation> aggregations;
+    Map<String, Aggregation> aggregations;
 }

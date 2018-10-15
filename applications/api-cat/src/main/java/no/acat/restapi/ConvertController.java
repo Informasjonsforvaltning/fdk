@@ -8,7 +8,10 @@ import no.acat.spec.Parser;
 import no.dcat.client.apicat.ConvertRequest;
 import no.dcat.client.apicat.ConvertResponse;
 import no.dcat.webutils.exceptions.BadRequestException;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;

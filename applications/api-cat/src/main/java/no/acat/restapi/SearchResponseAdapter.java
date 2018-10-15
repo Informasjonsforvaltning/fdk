@@ -2,8 +2,8 @@ package no.acat.restapi;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import no.acat.config.Utils;
-import no.acat.model.queryresponse.AggregationBucket;
 import no.acat.model.ApiDocument;
+import no.acat.model.queryresponse.AggregationBucket;
 import no.acat.model.queryresponse.QueryResponse;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.search.SearchHit;
@@ -45,14 +45,14 @@ class SearchResponseAdapter {
 
     static void convertAggregations(QueryResponse queryResponse, SearchResponse elasticResponse) {
         queryResponse.setAggregations(new HashMap<>());
-        Map<String, Aggregation> elasticAggregationsMap=elasticResponse.getAggregations().getAsMap();
+        Map<String, Aggregation> elasticAggregationsMap = elasticResponse.getAggregations().getAsMap();
 
         elasticAggregationsMap.forEach((aggregationName, aggregation) -> {
-            no.acat.model.queryresponse.Aggregation outputAggregation=new no.acat.model.queryresponse.Aggregation() {{
+            no.acat.model.queryresponse.Aggregation outputAggregation = new no.acat.model.queryresponse.Aggregation() {{
                 buckets = new ArrayList<>();
             }};
 
-            ((Terms)aggregation).getBuckets().forEach((bucket)->{
+            ((Terms) aggregation).getBuckets().forEach((bucket) -> {
                 outputAggregation.getBuckets().add(AggregationBucket.of(bucket.getKeyAsString(), bucket.getDocCount()));
             });
             queryResponse.getAggregations().put(aggregationName, outputAggregation);
