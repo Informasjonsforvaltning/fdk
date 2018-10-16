@@ -18,6 +18,7 @@ import org.apache.jena.rdf.model.Statement;
 import org.apache.jena.rdf.model.StmtIterator;
 import org.apache.jena.riot.RDFDataMgr;
 import org.apache.jena.vocabulary.DCTerms;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
@@ -52,7 +53,7 @@ import static org.powermock.api.mockito.PowerMockito.*;
 @PowerMockIgnore({"java.lang.*",
         "javax.management.*",  "javax.security.*", "javax.xml.*",
         "org.apache.xerces.*",
-        "ch.qos.logback.*", "org.slf4j.*",
+        "ch.qos.logback.*", "org.slf4j.*", "org.apache.logging.log4j.*",
         "org.apache.jena.*", "org.apache.xerces.*", "com.sun.org.*" })
 @PrepareForTest({RetrieveCodes.class, ElasticSearchResultHandler.class, CrawlerJob.class})
 @Category(UnitTest.class)
@@ -80,6 +81,7 @@ public class LoadRealDatasetsAndCheckLocationTest {
         assertThat(job.getDatasetsInError().size(), is(1));
     }
 
+    @Ignore //temporarily disable this. Should be enabled, but a UnitTest should not fetch resources from data.geonorge.no (which this test ends up doing)
     @Test
     public void loadDatanorgeData() throws Exception {
 
@@ -96,7 +98,8 @@ public class LoadRealDatasetsAndCheckLocationTest {
         doThrow(RuntimeException.class).when(dcatDataStore).saveDataCatalogue(any(), any());
 
         mockStatic(RetrieveCodes.class);
-        when(RetrieveCodes.getAllCodes(anyString())).thenReturn(extractLocationCodes(resource, getCodes()));
+        Map<String, Map<String,SkosCode>> locationCodes = extractLocationCodes(resource, getCodes());
+        when(RetrieveCodes.getAllCodes(anyString())).thenReturn(locationCodes);
 
         ElasticSearchResultHandler esHandler = new ElasticSearchResultHandler("localhost:9300", "elasticsearch", "http://localhost:8100", "user", "password");
         AdminDataStore adminDataStore = mock(AdminDataStore.class);
