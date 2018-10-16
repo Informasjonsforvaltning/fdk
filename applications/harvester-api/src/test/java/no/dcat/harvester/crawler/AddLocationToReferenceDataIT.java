@@ -5,6 +5,7 @@ import no.dcat.datastore.domain.dcat.client.LoadLocations;
 import no.dcat.shared.SkosCode;
 import no.dcat.shared.testcategories.IntegrationTest;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
@@ -20,6 +21,7 @@ import static org.junit.Assert.*;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @Category(IntegrationTest.class)
+@Ignore
 public class AddLocationToReferenceDataIT {
 
     @Value("${application.referenceDataUrl}")

@@ -57,6 +57,7 @@ import static org.powermock.api.mockito.PowerMockito.*;
         "org.apache.jena.*", "org.apache.xerces.*", "com.sun.org.*" })
 @PrepareForTest({RetrieveCodes.class, ElasticSearchResultHandler.class, CrawlerJob.class})
 @Category(UnitTest.class)
+@Ignore
 public class LoadRealDatasetsAndCheckLocationTest {
     private static Logger logger = LoggerFactory.getLogger(LoadRealDatasetsAndCheckLocationTest.class);
 

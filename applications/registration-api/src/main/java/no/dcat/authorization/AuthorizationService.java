@@ -109,7 +109,7 @@ public class AuthorizationService {
     }
 
     String getReporteesUrl(String ssn) {
-        return altinnServiceUrl + String.format(servicePath, ssn, altinnServiceCode, altinnServiceEdition);
+        return altinnServiceUrl + "/" + String.format(servicePath, ssn, altinnServiceCode, altinnServiceEdition);
     }
 
     /**

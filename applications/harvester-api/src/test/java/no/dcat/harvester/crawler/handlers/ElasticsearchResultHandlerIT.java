@@ -66,6 +66,7 @@ public class ElasticsearchResultHandlerIT {
 	 * Tests if indexWithElasticsearch.
 	 */
 	@Test
+    @Ignore
 	public void testCrawlingIndexesToElasticsearchIT() throws  Throwable {
 		//prevent race condition where elasticsearch is still indexing!!!
 		try {

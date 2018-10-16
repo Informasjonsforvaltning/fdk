@@ -8,6 +8,7 @@ import no.dcat.service.CatalogRepository;
 import no.dcat.service.HarvesterService;
 import no.dcat.shared.Publisher;
 import no.dcat.shared.admin.DcatSourceDto;
+import org.elasticsearch.index.IndexNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,11 +94,9 @@ public class CatalogController {
                 validCatalogs.add(authority.getAuthority());
         }
 
-        Page<Catalog> catalogs = catalogRepository.findByIdIn(new ArrayList<>(validCatalogs), pageable);
-
         createCatalogsIfNeeded(validCatalogs);
 
-        catalogs = catalogRepository.findByIdIn(new ArrayList<>(validCatalogs), pageable);
+        Page<Catalog> catalogs = catalogRepository.findByIdIn(new ArrayList<>(validCatalogs), pageable);
 
         return new ResponseEntity<>(assembler.toResource(catalogs), OK);
     }
@@ -247,9 +246,17 @@ public class CatalogController {
         if (! orgnr.matches("\\d{9}")) {
             return null;
         }
+        boolean noIndex = false;
+        Optional<Catalog> catalogOptional = null;
 
-        Optional<Catalog> catalogOptional = catalogRepository.findById(orgnr);
-        if (!catalogOptional.isPresent()) {
+        try {
+            catalogOptional = catalogRepository.findById(orgnr);
+        } catch (IndexNotFoundException infe) {
+            noIndex = true;
+        }
+
+
+        if (noIndex || (catalogOptional != null && !catalogOptional.isPresent())) {
 
             Catalog newCatalog = new Catalog(orgnr);
 
