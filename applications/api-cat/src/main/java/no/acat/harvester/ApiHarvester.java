@@ -6,8 +6,6 @@ import no.acat.config.Utils;
 import no.acat.model.ApiCatalogRecord;
 import no.acat.model.ApiDocument;
 import no.acat.service.ElasticsearchService;
-import no.acat.service.ReferenceDataService;
-import no.dcat.client.referencedata.ReferenceDataClient;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
@@ -34,16 +32,14 @@ public class ApiHarvester {
     private static final Logger logger = LoggerFactory.getLogger(ApiHarvester.class);
 
     private Client elasticsearchClient;
-    private ReferenceDataClient referenceDataClient;
     private ObjectMapper mapper = Utils.jsonMapper();
 
     @Value("${application.searchApiUrl}")
     private String searchApiUrl;
 
     @Autowired
-    public ApiHarvester(ElasticsearchService elasticsearchService, ReferenceDataService referenceDataService) {
+    public ApiHarvester(ElasticsearchService elasticsearchService) {
         this.elasticsearchClient = elasticsearchService.getClient();
-        this.referenceDataClient = referenceDataService.getClient();
     }
 
     public List<ApiDocument> harvestAll() {
@@ -65,13 +61,13 @@ public class ApiHarvester {
     }
 
     ApiDocumentBuilder createApiDocumentBuilder() {
-        return new ApiDocumentBuilder(elasticsearchClient, referenceDataClient, searchApiUrl);
+        return new ApiDocumentBuilder(elasticsearchClient, searchApiUrl);
     }
 
     void indexApi(ApiDocument document) throws JsonProcessingException {
         BulkRequestBuilder bulkRequest = elasticsearchClient.prepareBulk();
         String id = document.getId();
-        IndexRequest request = new IndexRequest("acat", "apispec", id);
+        IndexRequest request = new IndexRequest("acat", "apidocument", id);
 
         String json = mapper.writeValueAsString(document);
         request.source(json);
@@ -103,8 +99,7 @@ public class ApiHarvester {
                     .orgNr(line.get("OrgNr"))
                     .apiSpecUrl(line.get("ApiSpecUrl"))
                     .apiDocUrl(line.get("ApiDocUrl"))
-                    .accessRightsCodes(Arrays.asList(line.get("AccessRights").split(",")))
-                    .provenanceCode(line.get("Provenance"))
+                    .nationalComponent("true".equals(line.get("NationalComponent")))
                     .datasetReferences(Arrays.asList(line.get("DatasetRefs").split(",")))
                     .build();
 

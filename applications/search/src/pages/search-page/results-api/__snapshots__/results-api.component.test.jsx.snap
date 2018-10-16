@@ -94,22 +94,47 @@ exports[`should render ResultsApi correctly with hits 1`] = `
             <div
               className="search-filters"
             >
+              <SearchPublishersTree
+                activeFilter={null}
+                filter={Array []}
+                onFilterPublisherHierarchy={[MockFunction]}
+                onSearch={null}
+                orgPath={null}
+                publishers={Object {}}
+                title="Provider"
+              />
               <FilterBox
                 activeFilter={null}
                 filter={
                   Object {
                     "buckets": Array [
                       Object {
-                        "count": 2,
-                        "key": "PUBLIC",
+                        "count": 1,
+                        "key": "MISSING",
+                      },
+                      Object {
+                        "count": 1,
+                        "key": "application/json",
+                      },
+                      Object {
+                        "count": 1,
+                        "key": "application/xml",
+                      },
+                      Object {
+                        "count": 1,
+                        "key": "text/json",
+                      },
+                      Object {
+                        "count": 1,
+                        "key": "text/xml",
                       },
                     ],
                   }
                 }
                 htmlKey={2}
-                onClick={[MockFunction]}
+                onClick={null}
                 themesItems={null}
-                title="Access"
+                title="Format"
               />
             </div>
           </ModalBody>
@@ -126,23 +151,6 @@ exports[`should render ResultsApi correctly with hits 1`] = `
             </Button>
           </ModalFooter>
         </Modal>
-        <FilterBox
-          activeFilter={null}
-          filter={
-            Object {
-              "buckets": Array [
-                Object {
-                  "count": 2,
-                  "key": "PUBLIC",
-                },
-              ],
-            }
-          }
-          htmlKey={1}
-          onClick={[MockFunction]}
-          themesItems={null}
-          title="Access"
-        />
         <SearchPublishersTree
           activeFilter={null}
           filter={Array []}

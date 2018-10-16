@@ -16,7 +16,6 @@ public class ApiCatalogRecord {
     private String orgName;
     private String apiSpecUrl;
     private String apiDocUrl;
-    private List<String> accessRightsCodes;
-    private String provenanceCode;
+    private boolean nationalComponent;
     private List<String> datasetReferences;
 }

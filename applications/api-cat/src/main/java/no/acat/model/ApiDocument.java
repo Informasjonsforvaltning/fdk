@@ -7,7 +7,6 @@ import lombok.*;
 import no.dcat.shared.*;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 @Data
@@ -33,16 +32,15 @@ public class ApiDocument {
     private Deprecation deprecation;
 
     @ApiModelProperty("the title of the api, can be specified in multiple langauges [dct:title]")
-    private Map<String, String> title;
+    private String title;
+    private String titleFormatted;
 
     @ApiModelProperty("the description of the api, can be specified in multiple languages [dct:description]")
-    private Map<String, String> description;
+    private String description;
+    private String descriptionFormatted;
 
-    @ApiModelProperty("a code that identifies the level of trust you should put in the data returned from the api (NASJONAL, VEDTAK, BRUKER, TREDJEPART) [dct:provenance]")
-    private SkosCode provenance;
-
-    @ApiModelProperty("A code to identify if the api is open or restricted in some way [dct:accessRights]")
-    private List<SkosCode> accessRights;
+    @ApiModelProperty("Indication if the api is National Component")
+    private boolean nationalComponent;
 
     @ApiModelProperty("The publisher of the api [dct:publisher]")
     private Publisher publisher;
@@ -52,9 +50,6 @@ public class ApiDocument {
 
     @ApiModelProperty("An overview of the formats returned by the api")
     private Set<String> formats;
-
-    @ApiModelProperty("A code to specify how often the data is updated (the frequency) [dct:accrualPeriodicity]")
-    private SkosCode accrualPeriodicity;
 
     @ApiModelProperty("A list of references to the datasets that can be returned by the api")
     private Set<DatasetReference> datasetReferences;
@@ -69,5 +64,13 @@ public class ApiDocument {
     private String apiDocUrl;
 
     @ApiModelProperty("Transformed version of provenance property that allows sorting on provenance by using simple string sort")
-    private String provenanceSort;
+
+    private String cost;
+
+    private String usageLimitation;
+
+    private String performance;
+
+    private String availability;
+
 }

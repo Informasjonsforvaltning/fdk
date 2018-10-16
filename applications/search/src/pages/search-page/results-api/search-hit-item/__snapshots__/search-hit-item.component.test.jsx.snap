@@ -12,7 +12,7 @@ exports[`should render api-SearchHitItem correctly 1`] = `
   </span>
   <header>
     <SearchHitHeader
-      provenance={null}
+      nationalComponent={false}
       publisher={
         Object {
           "id": "974760673",
@@ -97,7 +97,7 @@ exports[`should render api-SearchHitItem with long description 1`] = `
   </span>
   <header>
     <SearchHitHeader
-      provenance={null}
+      nationalComponent={false}
       publisher={null}
       publisherItems={null}
       publisherLabel="Provider:"

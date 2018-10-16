@@ -1,5 +1,5 @@
 {
-  "apispec": {
+  "apidocument": {
     "properties": {
       "apiSpecUrl": {
         "type": "keyword"
@@ -20,6 +20,7 @@
             "properties": {
               "no": {
                 "type": "text",
+                "fielddata": true,
                 "fields": {
                   "keyword": {
                     "type": "keyword",
@@ -37,25 +38,19 @@
         }
       },
       "title": {
-        "properties": {
-          "no": {
-            "analyzer": "norwegian",
-            "type": "string",
-            "fields": {
-              "raw": {
-                "type": "string",
-                "index": "not_analyzed"
-              }
-            }
+        "analyzer": "norwegian",
+        "type": "text",
+        "fielddata": true,
+        "fields": {
+          "raw": {
+            "type": "keyword",
+            "ignore_above": 256
           }
         }
       },
-      "accessRights": {
-        "properties": {
-          "code": {
-            "type": "keyword"
-          }
-        }
+      "description": {
+        "analyzer": "norwegian",
+        "type": "text"
       },
       "formats": {
         "type": "keyword"
@@ -63,9 +58,8 @@
       "openApi": {
         "enabled": "false"
       },
-      "provenanceSort": {
-        "type": "string",
-        "index": "not_analyzed"
+      "nationalComponent": {
+        "type": "boolean"
       }
     }
   }

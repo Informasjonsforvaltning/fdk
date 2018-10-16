@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -39,7 +40,7 @@ export class DatasetDescription extends React.Component {
           publisherLabel={localization.search_hit.owned}
           publisher={publisher}
           theme={theme}
-          provenance={provenance}
+          nationalComponent={_.get(provenance, 'code') === 'NASJONAL'}
         />
 
         {descriptionFormatted && (

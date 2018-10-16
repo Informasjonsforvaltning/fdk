@@ -64,14 +64,14 @@ public class ElasticsearchService {
         logger.info("Creating index: " + indexName);
 
         try {
-            Resource apispecMappingResource = new ClassPathResource("apispec.mapping.json");
+            Resource apiDocumentMappingResource = new ClassPathResource("apidocument.mapping.json");
             Resource settingsResource = new ClassPathResource("acat.settings.json");
 
-            String apispecMapping = IOUtils.toString(apispecMappingResource.getInputStream(), "UTF-8");
+            String apiDocumentMapping = IOUtils.toString(apiDocumentMappingResource.getInputStream(), "UTF-8");
             String indexSettings = IOUtils.toString(settingsResource.getInputStream(), "UTF-8");
             getClient().admin().indices().prepareCreate(indexName)
                 .setSettings(indexSettings)
-                .addMapping("apispec", apispecMapping)
+                .addMapping("apidocument", apiDocumentMapping)
                 .execute().actionGet();
         } catch (IOException e) {
             logger.error("Unable to connect to Elasticsearch: {}", e.toString(), e);

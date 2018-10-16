@@ -5,7 +5,6 @@ logging:
   level.org.springframework: WARN
   level.org.springframework.web: WARN
 application:
-  referenceDataUrl: http://reference-data:8080
   searchApiUrl: http://search-api:8080
 elastic:
   clusterNodes: ${FDK_ES_CLUSTERNODES:elasticsearch5:9300}

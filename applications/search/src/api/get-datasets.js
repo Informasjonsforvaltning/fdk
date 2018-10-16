@@ -3,6 +3,7 @@ import axios from 'axios';
 
 import { addOrReplaceParam } from '../lib/addOrReplaceUrlParam';
 import { normalizeAggregations } from './normalizeAggregations';
+// import datasetsApiResponseFixture from '../pages/search-page/__fixtures/datasetsApiResponse.json'
 
 export const getDatasets = async search => {
   const datasetsUrl = `/datasets${search}`;
@@ -12,6 +13,7 @@ export const getDatasets = async search => {
     .get(url)
     .catch(e => console.log(JSON.stringify(e))); // eslint-disable-line no-console
 
+  // return normalizeAggregations(datasetsApiResponseFixture);
   return response && normalizeAggregations(response.data);
 };
 
