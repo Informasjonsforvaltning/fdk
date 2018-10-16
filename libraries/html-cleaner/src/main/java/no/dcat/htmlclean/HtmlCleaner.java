@@ -7,7 +7,7 @@ import org.jsoup.safety.Whitelist;
 public class HtmlCleaner {
 
     private HtmlCleaner() {
-        // Hiude the implicit public constructor
+        // Hide the implicit public constructor
     }
 
 
