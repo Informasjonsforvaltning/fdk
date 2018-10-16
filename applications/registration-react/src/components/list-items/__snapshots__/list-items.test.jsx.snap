@@ -11,7 +11,7 @@ exports[`should render ListItem correctly with props 1`] = `
       <span
         className="header-item mr-1"
       >
-        Tittel på datasett
+        Tittel
       </span>
       <SortButtons
         field="title"

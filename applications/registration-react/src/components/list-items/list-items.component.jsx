@@ -78,9 +78,7 @@ export const ListItems = props => {
     <div>
       <div className="fdk-list-header d-flex">
         <div className="d-flex align-items-center w-75">
-          <span className="header-item mr-1">
-            {localization.listItems.header.title}
-          </span>
+          <span className="header-item mr-1">{localization.title}</span>
           <SortButtons
             field="title"
             sortField={sortField}
