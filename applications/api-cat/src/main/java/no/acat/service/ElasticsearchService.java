@@ -22,6 +22,7 @@ public class ElasticsearchService {
 
     @Value("${elastic.clusterName}")
     private String clusterName;
+    private Elasticsearch5Client elasticsearch;
 
     @PostConstruct
     void validate() {
@@ -32,14 +33,11 @@ public class ElasticsearchService {
         createIndexIfNotExists();
     }
 
-
-    private Elasticsearch5Client elasticsearch;
-
     public Client getClient() {
         if (elasticsearch == null) {
             initializeElasticsearchTransportClient();
         }
-        return elasticsearch==null ? null : elasticsearch.getClient();
+        return elasticsearch == null ? null : elasticsearch.getClient();
     }
 
     private void initializeElasticsearchTransportClient() {
@@ -72,9 +70,9 @@ public class ElasticsearchService {
             String apispecMapping = IOUtils.toString(apispecMappingResource.getInputStream(), "UTF-8");
             String indexSettings = IOUtils.toString(settingsResource.getInputStream(), "UTF-8");
             getClient().admin().indices().prepareCreate(indexName)
-                    .setSettings(indexSettings)
-                    .addMapping("apispec", apispecMapping)
-                    .execute().actionGet();
+                .setSettings(indexSettings)
+                .addMapping("apispec", apispecMapping)
+                .execute().actionGet();
         } catch (IOException e) {
             logger.error("Unable to connect to Elasticsearch: {}", e.toString(), e);
         }

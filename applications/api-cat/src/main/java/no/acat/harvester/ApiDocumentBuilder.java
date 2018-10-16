@@ -14,7 +14,10 @@ import no.acat.spec.ParseException;
 import no.acat.spec.Parser;
 import no.dcat.client.referencedata.ReferenceDataClient;
 import no.dcat.htmlclean.HtmlCleaner;
-import no.dcat.shared.*;
+import no.dcat.shared.Contact;
+import no.dcat.shared.DatasetReference;
+import no.dcat.shared.Publisher;
+import no.dcat.shared.SkosCode;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.client.Client;
@@ -26,22 +29,14 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 public class ApiDocumentBuilder {
-    private Client elasticsearchClient;
-    private ReferenceDataClient referenceDataClient;
-
-    private String searchApiUrl;
-
     private static final ObjectMapper mapper = Utils.jsonMapper();
     private static final Logger logger = LoggerFactory.getLogger(ApiHarvester.class);
+    private Client elasticsearchClient;
+    private ReferenceDataClient referenceDataClient;
+    private String searchApiUrl;
 
 
     public ApiDocumentBuilder(Client elasticsearchClient, ReferenceDataClient referenceDataClient, String searchApiUrl) {
@@ -61,10 +56,10 @@ public class ApiDocumentBuilder {
         String id = lookupOrGenerateId(apiCatalogRecord);
 
         ApiDocument apiDocument = new ApiDocument().builder()
-                .id(id)
-                .apiSpecUrl(apiSpecUrl)
-                .apiSpec(apiSpec)
-                .build();
+            .id(id)
+            .apiSpecUrl(apiSpecUrl)
+            .apiSpec(apiSpec)
+            .build();
 
         populateFromApiCatalogRecord(apiDocument, apiCatalogRecord);
         populateFromOpenApi(apiDocument, openApi);
@@ -88,10 +83,10 @@ public class ApiDocumentBuilder {
 
         String apiSpecUrl = apiCatalogRecord.getApiSpecUrl();
         SearchResponse response = elasticsearchClient.prepareSearch("acat")
-                .setTypes("apispec")
-                .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
-                .setQuery(QueryBuilders.termQuery("apiSpecUrl", apiSpecUrl))
-                .get();
+            .setTypes("apispec")
+            .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
+            .setQuery(QueryBuilders.termQuery("apiSpecUrl", apiSpecUrl))
+            .get();
 
         SearchHit[] hits = response.getHits().getHits();
         if (hits.length > 0) {
@@ -121,10 +116,10 @@ public class ApiDocumentBuilder {
 
     DatasetReference lookupDatasetReference(String uri) {
         String lookupUrl = UriComponentsBuilder
-                .fromHttpUrl(searchApiUrl)
-                .path("/datasets/byuri")
-                .queryParam("uri", uri)
-                .toUriString();
+            .fromHttpUrl(searchApiUrl)
+            .path("/datasets/byuri")
+            .queryParam("uri", uri)
+            .toUriString();
         try {
             RestTemplate restTemplate = new RestTemplate();
             return restTemplate.getForObject(lookupUrl, DatasetReference.class);

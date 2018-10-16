@@ -288,7 +288,8 @@ export const ApiDetailsPage = props => {
 ApiDetailsPage.defaultProps = {
   apiItem: null,
   publisherItems: null,
-  fetchPublishersIfNeeded: () => {}
+  fetchPublishersIfNeeded: () => {
+  }
 };
 
 ApiDetailsPage.propTypes = {
