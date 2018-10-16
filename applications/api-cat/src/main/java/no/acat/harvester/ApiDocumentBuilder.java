@@ -13,6 +13,7 @@ import no.acat.model.ApiDocument;
 import no.acat.spec.ParseException;
 import no.acat.spec.Parser;
 import no.dcat.client.referencedata.ReferenceDataClient;
+import no.dcat.htmlclean.HtmlCleaner;
 import no.dcat.shared.*;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.search.SearchType;
@@ -184,25 +185,25 @@ public class ApiDocumentBuilder {
         if (openApi.getInfo() != null) {
             if (openApi.getInfo().getTitle() != null) {
                 apiDocument.setTitle(new HashMap<>());
-                apiDocument.getTitle().put("no", openApi.getInfo().getTitle());
+                apiDocument.getTitle().put("no", HtmlCleaner.clean(openApi.getInfo().getTitle()));
             }
 
             if (openApi.getInfo().getDescription() != null) {
                 apiDocument.setDescription(new HashMap<>());
-                apiDocument.getDescription().put("no", openApi.getInfo().getDescription());
+                apiDocument.getDescription().put("no", HtmlCleaner.clean(openApi.getInfo().getDescription()));
             }
 
             if (openApi.getInfo().getContact() != null) {
                 apiDocument.setContactPoint(new ArrayList<>());
                 Contact contact = new Contact();
                 if (openApi.getInfo().getContact().getEmail() != null) {
-                    contact.setEmail(openApi.getInfo().getContact().getEmail());
+                    contact.setEmail(HtmlCleaner.cleanAllHtmlTags(openApi.getInfo().getContact().getEmail()));
                 }
                 if (openApi.getInfo().getContact().getName() != null) {
-                    contact.setOrganizationName(openApi.getInfo().getContact().getName());
+                    contact.setOrganizationName(HtmlCleaner.cleanAllHtmlTags(openApi.getInfo().getContact().getName()));
                 }
                 if (openApi.getInfo().getContact().getUrl() != null) {
-                    contact.setUri(openApi.getInfo().getContact().getUrl());
+                    contact.setUri(HtmlCleaner.cleanAllHtmlTags(openApi.getInfo().getContact().getUrl()));
                 }
                 apiDocument.getContactPoint().add(contact);
             }
