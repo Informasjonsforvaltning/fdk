@@ -9,6 +9,7 @@ import no.dcat.themes.database.TDBService;
 import no.dcat.themes.service.CodesService;
 import org.hamcrest.Matchers;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -63,6 +64,7 @@ public class LocationIT {
     }
 
     @Test
+    @Ignore
     public void testGeonorgeFylke() throws IOException {
         SkosCode code = codesService.addLocation("http://data.geonorge.no/administrativeEnheter/fylke/id/173150");
 
@@ -70,6 +72,7 @@ public class LocationIT {
     }
 
     @Test
+    @Ignore
     public void testGeonorgeKommune() throws IOException {
         SkosCode code = codesService.addLocation("http://data.geonorge.no/administrativeEnheter/kommune/id/172778");
 
@@ -77,6 +80,7 @@ public class LocationIT {
     }
 
     @Test
+    @Ignore
     public void testGeonorgeNasjon() throws IOException {
         SkosCode code = codesService.addLocation("http://data.geonorge.no/administrativeEnheter/nasjon/id/173163");
 
@@ -84,6 +88,7 @@ public class LocationIT {
     }
 
     @Test
+    @Ignore
     public void testExtractionFromLocation () throws Throwable {
         testOsloFromGeonames2();
         testGeonorgeFylke();
