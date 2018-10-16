@@ -77,11 +77,6 @@
         </dependency>
         <dependency>
             <groupId>no.dcat</groupId>
-            <artifactId>referencedata-client</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-        <dependency>
-            <groupId>no.dcat</groupId>
             <artifactId>shared</artifactId>
             <version>1.2.0</version>
         </dependency>

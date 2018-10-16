@@ -72,7 +72,7 @@ export const SearchHitHeader = props => {
     publisher,
     publisherItems,
     theme,
-    provenance
+    nationalComponent
   } = props;
 
   return (
@@ -80,7 +80,7 @@ export const SearchHitHeader = props => {
       {title && (
         <div className="mb-2 d-flex flex-wrap align-items-baseline">
           {renderTitle(Tag, title, titleLink)}
-          {_.get(provenance, 'code') === 'NASJONAL' && <LabelNational />}
+          {nationalComponent && <LabelNational />}
         </div>
       )}
 
@@ -110,7 +110,7 @@ SearchHitHeader.defaultProps = {
   publisher: null,
   publisherItems: null,
   theme: null,
-  provenance: null
+  nationalComponent: false
 };
 
 SearchHitHeader.propTypes = {
@@ -121,5 +121,5 @@ SearchHitHeader.propTypes = {
   publisher: PropTypes.object,
   publisherItems: PropTypes.object,
   theme: PropTypes.array,
-  provenance: PropTypes.object
+  nationalComponent: PropTypes.bool
 };

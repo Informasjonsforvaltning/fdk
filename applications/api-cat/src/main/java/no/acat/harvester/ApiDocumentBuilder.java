@@ -1,23 +1,19 @@
 package no.acat.harvester;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.Paths;
 import io.swagger.v3.oas.models.media.Content;
 import io.swagger.v3.oas.models.responses.ApiResponse;
 import io.swagger.v3.oas.models.responses.ApiResponses;
-import no.acat.config.Utils;
 import no.acat.model.ApiCatalogRecord;
 import no.acat.model.ApiDocument;
 import no.acat.spec.ParseException;
 import no.acat.spec.Parser;
-import no.dcat.client.referencedata.ReferenceDataClient;
 import no.dcat.htmlclean.HtmlCleaner;
 import no.dcat.shared.Contact;
 import no.dcat.shared.DatasetReference;
 import no.dcat.shared.Publisher;
-import no.dcat.shared.SkosCode;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.client.Client;
@@ -32,16 +28,13 @@ import java.io.IOException;
 import java.util.*;
 
 public class ApiDocumentBuilder {
-    private static final ObjectMapper mapper = Utils.jsonMapper();
     private static final Logger logger = LoggerFactory.getLogger(ApiHarvester.class);
     private Client elasticsearchClient;
-    private ReferenceDataClient referenceDataClient;
     private String searchApiUrl;
 
 
-    public ApiDocumentBuilder(Client elasticsearchClient, ReferenceDataClient referenceDataClient, String searchApiUrl) {
+    public ApiDocumentBuilder(Client elasticsearchClient, String searchApiUrl) {
         this.elasticsearchClient = elasticsearchClient;
-        this.referenceDataClient = referenceDataClient;
         this.searchApiUrl = searchApiUrl;
     }
 
@@ -71,11 +64,9 @@ public class ApiDocumentBuilder {
 
     void populateFromApiCatalogRecord(ApiDocument apiDocument, ApiCatalogRecord apiCatalogRecord) {
         apiDocument.setPublisher(lookupPublisher(apiCatalogRecord.getOrgNr()));
-        apiDocument.setAccessRights(extractAccessRights(apiCatalogRecord));
-        apiDocument.setProvenance(extractProvenance(apiCatalogRecord));
+        apiDocument.setNationalComponent(apiCatalogRecord.isNationalComponent());
         apiDocument.setDatasetReferences(extractDatasetReferences(apiCatalogRecord));
         apiDocument.setApiDocUrl(apiCatalogRecord.getApiDocUrl());
-        apiDocument.setProvenanceSort(createProvenanceSort(apiDocument.getProvenance()));
     }
 
     String lookupOrGenerateId(ApiCatalogRecord apiCatalogRecord) {
@@ -83,7 +74,7 @@ public class ApiDocumentBuilder {
 
         String apiSpecUrl = apiCatalogRecord.getApiSpecUrl();
         SearchResponse response = elasticsearchClient.prepareSearch("acat")
-            .setTypes("apispec")
+            .setTypes("apidocument")
             .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
             .setQuery(QueryBuilders.termQuery("apiSpecUrl", apiSpecUrl))
             .get();
@@ -129,30 +120,6 @@ public class ApiDocumentBuilder {
         return null;
     }
 
-    List<SkosCode> extractAccessRights(ApiCatalogRecord apiCatalogRecord) {
-        Map<String, SkosCode> rightsStatements = referenceDataClient.getCodes("rightsstatement");
-        List<String> accessRightCodes = apiCatalogRecord.getAccessRightsCodes();
-        List<SkosCode> accessRights = new ArrayList();
-
-        if (accessRightCodes == null) {
-            return null;
-        }
-
-        for (String accessRightCode : accessRightCodes) {
-            SkosCode rightStatement = rightsStatements.get(accessRightCode);
-            if (rightStatement != null) {
-                accessRights.add(rightStatement);
-            }
-        }
-
-        return accessRights.isEmpty() ? null : accessRights;
-    }
-
-    SkosCode extractProvenance(ApiCatalogRecord apiCatalogRecord) {
-        String provenanceCode = apiCatalogRecord.getProvenanceCode();
-        return referenceDataClient.getCodes("provenancestatement").get(provenanceCode);
-    }
-
     Set<DatasetReference> extractDatasetReferences(ApiCatalogRecord apiCatalogRecord) {
         Set<DatasetReference> datasetReferences = new HashSet<>();
         List<String> datasetReferenceSources = apiCatalogRecord.getDatasetReferences();
@@ -179,13 +146,13 @@ public class ApiDocumentBuilder {
 
         if (openApi.getInfo() != null) {
             if (openApi.getInfo().getTitle() != null) {
-                apiDocument.setTitle(new HashMap<>());
-                apiDocument.getTitle().put("no", HtmlCleaner.clean(openApi.getInfo().getTitle()));
+                apiDocument.setTitle(HtmlCleaner.cleanAllHtmlTags(openApi.getInfo().getTitle()));
+                apiDocument.setTitleFormatted(HtmlCleaner.clean(openApi.getInfo().getTitle()));
             }
 
             if (openApi.getInfo().getDescription() != null) {
-                apiDocument.setDescription(new HashMap<>());
-                apiDocument.getDescription().put("no", HtmlCleaner.clean(openApi.getInfo().getDescription()));
+                apiDocument.setDescription(HtmlCleaner.cleanAllHtmlTags(openApi.getInfo().getDescription()));
+                apiDocument.setDescriptionFormatted(HtmlCleaner.clean(openApi.getInfo().getDescription()));
             }
 
             if (openApi.getInfo().getContact() != null) {
@@ -233,32 +200,6 @@ public class ApiDocumentBuilder {
             }));
         });
         return formats;
-    }
-
-
-    /**
-     * Create string that allows simples string sorting of provenance
-     *
-     * @param provenanceCode Skos code with provenance value
-     */
-    String createProvenanceSort(SkosCode provenanceCode) {
-        String sortString = "";
-
-        final String provenanceValue = provenanceCode != null ? provenanceCode.getCode() : null;
-
-        if ("NASJONAL".equals(provenanceValue)) {
-            sortString = "1NASJONAL";
-        } else if ("VEDTAK".equals(provenanceValue)) {
-            sortString = "2VEDTAK";
-        } else if ("BRUKER".equals(provenanceValue)) {
-            sortString = "3BRUKER";
-        } else if ("TREDJEPART".equals(provenanceValue)) {
-            sortString = "4TREDJEPART";
-        } else {
-            sortString = "9UKJENT";
-        }
-
-        return sortString;
     }
 
 }

@@ -667,6 +667,9 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
                   },
                 ],
                 "landingPage": Array [],
+                "provenance": Object {
+                  "code": "NASJONAL",
+                },
                 "provenanceSort": "9UKJENT",
                 "publisher": Object {
                   "id": "971040238",

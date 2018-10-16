@@ -2,7 +2,6 @@ package no.acat.harvester;
 
 import no.acat.model.ApiDocument;
 import no.acat.service.ElasticsearchService;
-import no.acat.service.ReferenceDataService;
 import no.dcat.shared.testcategories.UnitTest;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -23,8 +22,7 @@ public class ApiHarvestTest {
     public void harvestAllOK() throws Throwable {
 
         ElasticsearchService elasticsearchService = mock(ElasticsearchService.class);
-        ReferenceDataService referenceDataService = mock(ReferenceDataService.class);
-        ApiHarvester harvester = new ApiHarvester(elasticsearchService, referenceDataService);
+        ApiHarvester harvester = new ApiHarvester(elasticsearchService);
 
         ApiHarvester spyHarvester = spy(harvester);
         doNothing().when(spyHarvester).indexApi(any());

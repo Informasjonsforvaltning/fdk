@@ -29,7 +29,7 @@ public class ApiRestController {
     public ApiDocument getApiDocument(@PathVariable String id) throws NotFoundException {
         logger.info("request for {}", id);
 
-        GetResponse getResponse = elasticsearch.getClient().prepareGet("acat", "apispec", id).get();
+        GetResponse getResponse = elasticsearch.getClient().prepareGet("acat", "apidocument", id).get();
 
         if (!getResponse.isExists()) {
             throw new NotFoundException();

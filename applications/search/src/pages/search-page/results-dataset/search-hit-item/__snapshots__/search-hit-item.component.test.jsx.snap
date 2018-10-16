@@ -19,7 +19,7 @@ exports[`should render SearchHitItem 1`] = `
     >
       <header>
         <SearchHitHeader
-          provenance={null}
+          nationalComponent={true}
           publisher={
             Object {
               "id": "971040238",

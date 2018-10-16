@@ -129,7 +129,7 @@ export const SearchHitItem = props => {
               publisherLabel={localization.search_hit.owned}
               publisher={publisher}
               theme={theme}
-              provenance={provenance}
+              nationalComponent={_.get(provenance, 'code') === 'NASJONAL'}
             />
           </header>
           <p className="fdk-p-search-hit">

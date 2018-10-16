@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.Map;
 
 @CrossOrigin
 @RestController
@@ -121,7 +122,6 @@ public class ApiSearchController {
 
         BoolQueryBuilder boolQuery = QueryBuilders.boolQuery().must(search);
 
-        addTermFilter(boolQuery, "accessRights.code", accessRights);
         addTermFilter(boolQuery, "publisher.orgPath", orgPath);
         addAllTermsFilter(boolQuery, "formats", formats);
 
@@ -129,11 +129,10 @@ public class ApiSearchController {
 
         return elasticsearch.getClient()
             .prepareSearch("acat")
-            .setTypes("apispec")
+            .setTypes("apidocument")
             .setQuery(boolQuery)
             .setFrom(checkAndAdjustFrom(from))
             .setSize(checkAndAdjustSize(size))
-            .addAggregation(createTermsAggregation("accessRights", "accessRights.code"))
             .addAggregation(createTermsAggregation("formats", "formats"))
             .addAggregation(createTermsAggregation("orgPath", "publisher.orgPath"));
 
@@ -148,10 +147,12 @@ public class ApiSearchController {
         //Key is search field in request from client
         //Value is actual search field in acat index, as acat datamodel is different from dcat datamodel
         //also, sort must use unanalyzed fields
-        HashMap<String, String> allowedSearchFields = new HashMap<String, String>();
-        allowedSearchFields.put("title.nn", "title.no.raw");
-        allowedSearchFields.put("title.nb", "title.no.raw");
-        allowedSearchFields.put("title.no", "title.no.raw");
+        Map<String, String> allowedSearchFields = new HashMap<>();
+        // We have shared logic in frontend for sorting fields both for datasets and apis.
+        // It is a major hack to introduce dependency at this level, but I hope we can remove sorting functionality as a whole as soon as possible
+        allowedSearchFields.put("title.nn", "title.raw");
+        allowedSearchFields.put("title.nb", "title.raw");
+        allowedSearchFields.put("title.no", "title.raw");
         allowedSearchFields.put("publisher.name", "publisher.prefLabel.no.keyword");
 
         //ony allow sorting on field contained in map. Other fields are ignored
@@ -172,10 +173,11 @@ public class ApiSearchController {
      * create default sort order - national components should appear first
      */
     void addSortForEmptySearch(SearchRequestBuilder searchBuilder) {
-        SortBuilder sortFieldProvenance = SortBuilders.fieldSort("provenanceSort")
-            .order(SortOrder.ASC);
+        SortBuilder sortNationalComponentFirst = SortBuilders
+            .fieldSort("nationalComponent")
+            .order(SortOrder.DESC);
 
-        searchBuilder.addSort(sortFieldProvenance);
+        searchBuilder.addSort(sortNationalComponentFirst);
     }
 
 
