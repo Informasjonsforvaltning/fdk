@@ -15,7 +15,7 @@ import {
   fetchOpenLicensesIfNeeded
 } from '../../actions/index';
 import { fetchHelptextsIfNeeded } from '../../redux/modules/helptexts';
-import FormTemplate from './form-template/form-template.component';
+import { FormTemplateWithState } from '../../components/form-template/form-template-with-state.component';
 import FormTitle from './form-title/connected-form-title.component';
 import FormDistribution from './form-distribution/connected-form-distribution.component';
 import FormSample from './form-sample/connected-form-sample.component';
@@ -126,97 +126,97 @@ export class RegDataset extends React.Component {
             referenceDatasetsItems &&
             openLicenseItems && (
               <div className="col-md-8">
-                <FormTemplate
+                <FormTemplateWithState
                   title={localization.datasets.formTemplates.title}
                   required
                   values={titleValues(title.values)}
                   syncErrors={title.syncErrors}
                 >
                   <FormTitle helptextItems={helptextItems} />
-                </FormTemplate>
+                </FormTemplateWithState>
 
-                <FormTemplate
+                <FormTemplateWithState
                   title={localization.datasets.formTemplates.accessRight}
                   required
                   values={accessRightsValues(accessRights.values)}
                   syncErrors={accessRights.syncErrors}
                 >
                   <FormAccessRights helptextItems={helptextItems} />
-                </FormTemplate>
+                </FormTemplateWithState>
 
-                <FormTemplate
+                <FormTemplateWithState
                   title={localization.datasets.formTemplates.theme}
                   required
                   values={themesValues(formThemes.values)}
                   syncErrors={formThemes.syncErrors}
                 >
                   <FormTheme helptextItems={helptextItems} />
-                </FormTemplate>
+                </FormTemplateWithState>
 
-                <FormTemplate
+                <FormTemplateWithState
                   title={localization.datasets.formTemplates.type}
                   values={typeValues(type.values)}
                   syncErrors={type.syncErrors}
                 >
                   <FormType helptextItems={helptextItems} />
-                </FormTemplate>
+                </FormTemplateWithState>
 
-                <FormTemplate
+                <FormTemplateWithState
                   title={localization.datasets.formTemplates.concept}
                   values={conceptValues(concept.values)}
                   syncErrors={concept.syncErrors}
                 >
                   <FormConcept helptextItems={helptextItems} />
-                </FormTemplate>
+                </FormTemplateWithState>
 
-                <FormTemplate
+                <FormTemplateWithState
                   title={localization.datasets.formTemplates.spatial}
                   values={spatialValues(spatial.values)}
                   syncErrors={spatial.syncErrors}
                 >
                   <FormSpatial helptextItems={helptextItems} />
-                </FormTemplate>
+                </FormTemplateWithState>
 
-                <FormTemplate
+                <FormTemplateWithState
                   title={localization.datasets.formTemplates.provenance}
                   values={provenanceValues(formProvenance.values)}
                   syncErrors={formProvenance.syncErrors}
                 >
                   <FormProvenance helptextItems={helptextItems} />
-                </FormTemplate>
+                </FormTemplateWithState>
 
-                <FormTemplate
+                <FormTemplateWithState
                   title={localization.datasets.formTemplates.content}
                   values={contentsValues(contents.values)}
                   syncErrors={contents.syncErrors}
                 >
                   <FormContents helptextItems={helptextItems} />
-                </FormTemplate>
+                </FormTemplateWithState>
 
-                <FormTemplate
+                <FormTemplateWithState
                   title={localization.datasets.formTemplates.informationModel}
                   values={informationModelValues(informationModel.values)}
                   syncErrors={informationModel.syncErrors}
                 >
                   <FormInformationModel helptextItems={helptextItems} />
-                </FormTemplate>
+                </FormTemplateWithState>
 
-                <FormTemplate
+                <FormTemplateWithState
                   title={localization.datasets.formTemplates.reference}
                   values={referenceValues(reference.values)}
                 >
                   <FormReference helptextItems={helptextItems} />
-                </FormTemplate>
+                </FormTemplateWithState>
 
-                <FormTemplate
+                <FormTemplateWithState
                   title={localization.datasets.formTemplates.contactInformation}
                   values={contactPointValues(contactPoint.values)}
                   syncErrors={contactPoint.syncErrors}
                 >
                   <FormContactPoint helptextItems={helptextItems} />
-                </FormTemplate>
+                </FormTemplateWithState>
 
-                <FormTemplate
+                <FormTemplateWithState
                   title={localization.datasets.formTemplates.distribution}
                   backgroundBlue
                   values={distributionValues(distribution.values)}
@@ -230,9 +230,9 @@ export class RegDataset extends React.Component {
                   }
                 >
                   <FormDistribution helptextItems={helptextItems} />
-                </FormTemplate>
+                </FormTemplateWithState>
 
-                <FormTemplate
+                <FormTemplateWithState
                   title={localization.datasets.formTemplates.sample}
                   backgroundBlue
                   values={sampleValues(sample.values)}
@@ -245,7 +245,7 @@ export class RegDataset extends React.Component {
                   }
                 >
                   <FormSample helptextItems={helptextItems} />
-                </FormTemplate>
+                </FormTemplateWithState>
 
                 <DatasetPublish
                   dispatch={this.props.dispatch}

@@ -1,0 +1,17 @@
+.fdk-syncError-icon {
+  flex-grow: 1;
+}
+
+.fdk-reg_collapse {
+  margin: .8rem;
+  border-radius: 5px;
+  display: block;
+  button.fdk-btn-no-border {
+    background-color: transparent;
+    border: none;
+  }
+}
+
+.fdk-reg_collapse_open {
+  box-shadow: 0 3px 12px rgba(35,55,65,.55);
+}
