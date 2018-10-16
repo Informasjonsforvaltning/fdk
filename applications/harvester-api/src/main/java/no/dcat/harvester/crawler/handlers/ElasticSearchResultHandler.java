@@ -18,7 +18,7 @@ import no.dcat.datastore.domain.harvest.ChangeInformation;
 import no.dcat.datastore.domain.harvest.DatasetHarvestRecord;
 import no.dcat.datastore.domain.harvest.DatasetLookup;
 import no.dcat.datastore.domain.harvest.ValidationStatus;
-import no.dcat.harvester.clean.HtmlCleaner;
+import no.dcat.htmlclean.HtmlCleaner;
 import no.dcat.harvester.crawler.CrawlerResultHandler;
 import no.dcat.harvester.crawler.notification.EmailNotificationService;
 import no.dcat.shared.Catalog;

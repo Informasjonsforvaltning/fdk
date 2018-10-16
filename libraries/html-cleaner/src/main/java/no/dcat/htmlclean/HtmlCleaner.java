@@ -1,4 +1,4 @@
-package no.dcat.harvester.clean;
+package no.dcat.htmlclean;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -7,7 +7,7 @@ import org.jsoup.safety.Whitelist;
 public class HtmlCleaner {
 
     private HtmlCleaner() {
-        // Hiude the implicit public constructor
+        // Hide the implicit public constructor
     }
 
 

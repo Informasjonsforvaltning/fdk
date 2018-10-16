@@ -1,4 +1,4 @@
-package no.dcat.harvester.clean;
+package no.dcat.htmlclean;
 
 import no.dcat.shared.testcategories.UnitTest;
 import org.hamcrest.Matchers;
