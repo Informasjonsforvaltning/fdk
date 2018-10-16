@@ -1,15 +1,5 @@
 @import '../../../node_modules/designsystemet/fdk-designsystem-bootstrap4/scss/colors.scss';
 
-.fdk-reg_collapse {
-  margin: .8rem;
-  border-radius: 5px;
-  display: block;
-  button.fdk-btn-no-border {
-    background-color: transparent;
-    border: none;
-  }
-}
-
 .fdk-reg_backgroundDefault {
   background-color: $color0;
   padding: 1.6rem 3.2rem;
@@ -24,10 +14,6 @@
     padding: 1.2rem 3.2rem;
     background-color: $color0;
   }
-}
-
-.fdk-reg_collapse_open {
-  box-shadow: 0 3px 12px rgba(35,55,65,.55);
 }
 
 .form-group {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import FormTemplate from './form-template.component';
+import { FormTemplate } from './form-template.component';
 
 let defaultProps;
 let wrapper;
