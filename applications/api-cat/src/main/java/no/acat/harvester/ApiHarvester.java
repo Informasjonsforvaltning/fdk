@@ -2,22 +2,18 @@ package no.acat.harvester;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import no.acat.config.Utils;
 import no.acat.model.ApiCatalogRecord;
 import no.acat.model.ApiDocument;
 import no.acat.service.ElasticsearchService;
-import no.acat.service.ReferenceDataService;
 import no.dcat.client.apiregistration.ApiRegistrationClient;
-import no.dcat.client.referencedata.ReferenceDataClient;
+import no.dcat.shared.HarvestMetadata;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.client.Client;
-import org.json.JSONObject;
 import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,13 +22,17 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
+import javax.xml.parsers.DocumentBuilder;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -43,6 +43,7 @@ public class ApiHarvester {
     private Client elasticsearchClient;
     private ObjectMapper mapper = Utils.jsonMapper();
     private ApiRegistrationClient apiRegistrationClient;
+    private ElasticsearchService elasticsearchService;
 
     @Value("${application.searchApiUrl}")
     private String searchApiUrl;
@@ -50,6 +51,7 @@ public class ApiHarvester {
 
     @Autowired
     public ApiHarvester(ElasticsearchService elasticsearchService) {
+        this.elasticsearchService = elasticsearchService;
         this.elasticsearchClient = elasticsearchService.getClient();
     }
 
@@ -62,47 +64,78 @@ public class ApiHarvester {
         for (ApiCatalogRecord apiCatalogRecord : apiCatalog) {
             try {
                 ApiDocument apiDocument = apiDocumentBuilder.create(apiCatalogRecord);
-                indexApi(apiDocument);
                 result.add(apiDocument);
             } catch (Exception e) {
                 logger.error("Error importing API record: {}", e.getMessage());
             }
         }
-        JSONObject publishedJson = apiRegistrationClient.getPublished("PUBLISHED");
 
-        Gson gson = new Gson();
-        TypeToken<List<ApiDocument>> token = new TypeToken<List<ApiDocument>>() {
-        };
-        List<ApiDocument> apiDocumentList = gson.fromJson(String.valueOf(publishedJson), token.getType());
+        List<ApiDocument> registeredDocuments = getRegisteredApis();
 
-        result.removeIf(c -> apiDocumentList.stream()
+        result.removeIf(c -> registeredDocuments.stream()
             .map(ApiDocument::getApiDocUrl)
             .anyMatch(n -> n.equals(c.getApiDocUrl())));
 
-        return Stream.concat(result.stream(), apiDocumentList.stream())
+        List<ApiDocument> mergedApis = Stream.concat(result.stream(), registeredDocuments.stream())
             .collect(Collectors.toList());
+
+        indexApis(mergedApis);
+
+        return mergedApis;
+    }
+
+    List<ApiDocument> getRegisteredApis() {
+
+        //JSONObject publishedJson = apiRegistrationClient.getPublished("PUBLISHED");
+        return Arrays.asList();
+
     }
 
     ApiDocumentBuilder createApiDocumentBuilder() {
         return new ApiDocumentBuilder(elasticsearchClient, searchApiUrl);
     }
 
-    void indexApi(ApiDocument document) throws JsonProcessingException {
+    void indexApis(List<ApiDocument> documents) {
         BulkRequestBuilder bulkRequest = elasticsearchClient.prepareBulk();
-        String id = document.getId();
-        IndexRequest request = new IndexRequest("acat", "apidocument", id);
 
-        String json = mapper.writeValueAsString(document);
-        request.source(json);
-        bulkRequest.add(request);
+        documents.forEach( document -> {
+
+            try {
+                ApiDocument existingDocument = elasticsearchService.getApiDcoumentBySpecUrl(document.getId());
+
+                if (existingDocument != null) {
+                    document.setId(existingDocument.getId());
+
+                } else {
+                    // create uuuid and
+                    document.setId(UUID.randomUUID().toString());
+                    document.setHarvest(new HarvestMetadata());
+                    document.getHarvest().setFirstHarvested(new Date());
+                }
+
+                document.getHarvest().setLastChanged(new Date());
+
+
+                IndexRequest request = new IndexRequest("acat", "apidocument", document.getId());
+
+                String json = mapper.writeValueAsString(document);
+                request.source(json);
+
+                bulkRequest.add(request);
+
+            } catch (JsonProcessingException jpe) {
+
+            }
+
+        });
 
         BulkResponse bulkResponse = bulkRequest.execute().actionGet();
         if (bulkResponse.hasFailures()) {
-            final String msg = String.format("Failed index of %s. Reason %s", id, bulkResponse.buildFailureMessage());
+            final String msg = String.format("Failed bulked indexing. Reason %s", bulkResponse.buildFailureMessage());
             throw new RuntimeException(msg);
         }
 
-        logger.info("ApiDocument is indexed. id={}, url={}", document.getId(), document.getApiSpecUrl());
+        logger.info("Indexed {} api documents", documents.size());
     }
 
     List<ApiCatalogRecord> getApiCatalog() {
