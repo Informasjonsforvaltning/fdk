@@ -69,7 +69,7 @@ exports[`should render FormCatalog correctly 1`] = `
       <div
         className="form-group"
       >
-        <Helptext
+        <withState(withHandlers(Helptext))
           helptextItems={
             Object {
               "description": Object {

@@ -5,7 +5,7 @@ exports[`should render FormConcept correctly 1`] = `
   <div
     className="form-group"
   >
-    <Helptext
+    <withState(withHandlers(Helptext))
       helptextItems={
         Object {
           "description": Object {
@@ -21,7 +21,6 @@ Et datasett skal lenke til de aktuelle og sentrale begrepene i en begrepskatalog
           "uri": "http://brreg.no/fdk/fields#Dataset_content",
         }
       }
-      required={false}
       title="Begrep"
     />
     <Field
@@ -35,7 +34,7 @@ Et datasett skal lenke til de aktuelle og sentrale begrepene i en begrepskatalog
   <div
     className="form-group"
   >
-    <Helptext
+    <withState(withHandlers(Helptext))
       helptextItems={
         Object {
           "description": Object {
@@ -52,7 +51,6 @@ I noen tilfeller mangler noen av begrepsdefinisjonene som er sentrale for å bes
           "uri": "http://brreg.no/fdk/fields#Dataset_keyword",
         }
       }
-      required={false}
       title="Søkeord"
     />
     <Field
@@ -71,7 +69,7 @@ exports[`should render FormConcept correctly with syncErrors 1`] = `
   <div
     className="form-group"
   >
-    <Helptext
+    <withState(withHandlers(Helptext))
       helptextItems={
         Object {
           "description": Object {
@@ -87,7 +85,6 @@ Et datasett skal lenke til de aktuelle og sentrale begrepene i en begrepskatalog
           "uri": "http://brreg.no/fdk/fields#Dataset_content",
         }
       }
-      required={false}
       title="Begrep"
     />
     <Field
@@ -101,7 +98,7 @@ Et datasett skal lenke til de aktuelle og sentrale begrepene i en begrepskatalog
   <div
     className="form-group"
   >
-    <Helptext
+    <withState(withHandlers(Helptext))
       helptextItems={
         Object {
           "description": Object {
@@ -118,7 +115,6 @@ I noen tilfeller mangler noen av begrepsdefinisjonene som er sentrale for å bes
           "uri": "http://brreg.no/fdk/fields#Dataset_keyword",
         }
       }
-      required={false}
       title="Søkeord"
     />
     <Field

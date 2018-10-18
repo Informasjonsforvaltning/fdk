@@ -5,7 +5,7 @@ exports[`should render FormType, { renderLandingpage  correctly 1`] = `
   <div
     className="form-group"
   >
-    <Helptext
+    <withState(withHandlers(Helptext))
       helptextItems={
         Object {
           "description": Object {
@@ -21,7 +21,6 @@ exports[`should render FormType, { renderLandingpage  correctly 1`] = `
           "uri": "http://brreg.no/fdk/fields#Dataset_type",
         }
       }
-      required={false}
       title="Type"
     />
     <Field
