@@ -8,8 +8,12 @@ let defaultProps;
 let wrapper;
 
 beforeEach(() => {
+  const fetchHelptextsIfNeeded = jest.fn();
+  const fetchCatalogIfNeeded = jest.fn();
   defaultProps = {
-    item: _.get(api, ['910244132', 'item', 0])
+    item: _.get(api, ['910244132', 'item', 0]),
+    fetchHelptextsIfNeeded,
+    fetchCatalogIfNeeded
   };
   wrapper = shallow(<APIRegistrationPage {...defaultProps} />);
 });
