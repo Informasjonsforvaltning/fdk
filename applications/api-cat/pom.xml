@@ -158,7 +158,7 @@
         </dependency>
         <dependency>
             <groupId>no.dcat</groupId>
-            <artifactId>api-registration-client</artifactId>
+            <artifactId>registration-api-client</artifactId>
             <version>1.0.0</version>
         </dependency>
 

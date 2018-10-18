@@ -1,9 +1,13 @@
 package no.acat.harvester;
 
+import com.google.gson.Gson;
 import no.acat.model.ApiCatalogRecord;
 import no.acat.model.ApiDocument;
 import no.acat.service.ElasticsearchService;
+import no.dcat.client.apiregistration.ApiRegistrationClient;
+import no.dcat.client.apiregistration.ApiRegistrationPublic;
 import no.dcat.shared.testcategories.UnitTest;
+import org.apache.commons.io.IOUtils;
 import org.elasticsearch.action.bulk.BulkAction;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.client.Client;
@@ -14,15 +18,23 @@ import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.anyObject;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.when;
 
 @Category(UnitTest.class)
 @RunWith(SpringRunner.class)
@@ -52,8 +64,9 @@ public class ApiHarvestTest {
     doNothing().when(spyHarvester).indexApis(any());
 
     ApiDocumentBuilder mockApiDocumentBuilder = mock(ApiDocumentBuilder.class);
-    doReturn(new ApiDocument()).when(mockApiDocumentBuilder).create(any());
+    when(mockApiDocumentBuilder.create(any())).thenReturn(new ApiDocument());
 
+    doReturn(new ArrayList<ApiDocument>()).when(spyHarvester).getRegisteredApis();
     doReturn(mockApiDocumentBuilder).when(spyHarvester).createApiDocumentBuilder();
 
     List<ApiDocument> response = spyHarvester.harvestAll();
@@ -66,8 +79,8 @@ public class ApiHarvestTest {
 
     ElasticsearchService elasticsearchService = mock(ElasticsearchService.class);
     ApiHarvester harvester = new ApiHarvester(elasticsearchService);
-
     ApiHarvester spyHarvester = spy(harvester);
+
     doNothing().when(spyHarvester).indexApis(any());
 
     ApiDocumentBuilder mockApiDocumentBuilder = mock(ApiDocumentBuilder.class);
@@ -77,7 +90,7 @@ public class ApiHarvestTest {
 
     List<ApiDocument> apiDocumentsList = apiDocumentTestData();
 
-    when(spyHarvester.getRegisteredApis()).thenReturn(apiDocumentsList);
+    doReturn(apiDocumentsList).when(spyHarvester).getRegisteredApis();
     List<ApiDocument> response = spyHarvester.harvestAll();
     final int FROM_CSV = 11;
     final int FROM_REGAPI = 1;
@@ -102,7 +115,7 @@ public class ApiHarvestTest {
 
     List<ApiDocument> apiDocumentsList = apiDocumentTestData();
 
-    when(spyHarvester.getRegisteredApis()).thenReturn(apiDocumentsList);
+    doReturn(apiDocumentsList).when(spyHarvester).getRegisteredApis();
 
     List<ApiDocument> response = spyHarvester.harvestAll();
     final int FROM_CSV = 0;
@@ -123,10 +136,10 @@ public class ApiHarvestTest {
 
     List<ApiDocument> apiDocumentsList = apiDocumentTestData();
 
-    when(spyHarvester.getRegisteredApis()).thenReturn(apiDocumentsList);
+    doReturn(apiDocumentsList).when(spyHarvester).getRegisteredApis();
     when(client.prepareBulk()).thenReturn(bulkRequestBuilder);
 
-    doNothing().when(spyHarvester).doBuilkIndex(anyObject());
+    doNothing().when(spyHarvester).doBulkIndex(anyObject());
 
     spyHarvester.harvestAll();
 
@@ -143,4 +156,34 @@ public class ApiHarvestTest {
     apiDocumentsList.add(apiDocument);
     return apiDocumentsList;
   }
+
+    @Test
+    public void testGetRegisteredApisLogic() throws Throwable {
+
+        ElasticsearchService elasticsearchService = mock(ElasticsearchService.class);
+        ApiHarvester harvester = new ApiHarvester(elasticsearchService);
+        ApiHarvester harvesterSpy = spy(harvester);
+
+        ClassPathResource bhf = new ClassPathResource("navneprod-api.json");
+
+        ApiRegistrationPublic api = new Gson().fromJson(IOUtils.toString(bhf.getInputStream(), "UTF-8"), ApiRegistrationPublic.class);
+        Collection<ApiRegistrationPublic> apis = new ArrayList<>();
+        apis.add(api);
+
+        ApiRegistrationClient mockApiRegistrationClient = mock(ApiRegistrationClient.class);
+        when(mockApiRegistrationClient.getPublished()).thenReturn(apis);
+
+        doReturn(mockApiRegistrationClient).when(harvesterSpy).initApiRegistrationClient();
+
+        // test
+        List<ApiDocument> actualDocuments = harvesterSpy.getRegisteredApis();
+
+        assertThat(actualDocuments.size(), is(1));
+        ApiDocument document = actualDocuments.get(0);
+
+        assertThat("title is mapped from openapi.info.title", document.getTitle(), is("Echo API"));
+        assertThat("html is stripped off", document.getDescription(), is("Dette er en fin beskrivelse."));
+        assertThat("safe html is kept in formated", document.getDescriptionFormatted(), is("<strong>Dette</strong> er en fin beskrivelse."));
+    }
+
 }

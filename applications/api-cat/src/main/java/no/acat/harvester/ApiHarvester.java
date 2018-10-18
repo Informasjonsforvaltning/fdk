@@ -7,6 +7,7 @@ import no.acat.model.ApiCatalogRecord;
 import no.acat.model.ApiDocument;
 import no.acat.service.ElasticsearchService;
 import no.dcat.client.apiregistration.ApiRegistrationClient;
+import no.dcat.client.apiregistration.ApiRegistrationPublic;
 import no.dcat.shared.HarvestMetadata;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
@@ -17,19 +18,19 @@ import org.elasticsearch.client.Client;
 import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
-import javax.xml.parsers.DocumentBuilder;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -42,8 +43,10 @@ public class ApiHarvester {
 
     private Client elasticsearchClient;
     private ObjectMapper mapper = Utils.jsonMapper();
-    private ApiRegistrationClient apiRegistrationClient;
     private ElasticsearchService elasticsearchService;
+
+    @Value("${application.registrationApiUrl")
+    private String registrationApiUrl;
 
     @Value("${application.searchApiUrl}")
     private String searchApiUrl;
@@ -53,6 +56,10 @@ public class ApiHarvester {
     public ApiHarvester(ElasticsearchService elasticsearchService) {
         this.elasticsearchService = elasticsearchService;
         this.elasticsearchClient = elasticsearchService.getClient();
+    }
+
+    ApiRegistrationClient initApiRegistrationClient() {
+        return new ApiRegistrationClient(registrationApiUrl);
     }
 
     public List<ApiDocument> harvestAll() throws ParseException {
@@ -85,10 +92,22 @@ public class ApiHarvester {
     }
 
     List<ApiDocument> getRegisteredApis() {
+        ApiRegistrationClient apiRegistrationClient = initApiRegistrationClient();
 
-        //JSONObject publishedJson = apiRegistrationClient.getPublished("PUBLISHED");
-        return Arrays.asList();
+        Collection<ApiRegistrationPublic> registrationPublics = apiRegistrationClient.getPublished();
+        List<ApiDocument> documents = new ArrayList<>();
 
+        ApiDocumentBuilder apiDocumentBuilder = createApiDocumentBuilder();
+
+        registrationPublics.forEach( api -> {
+            ApiDocument doc = new ApiDocument();
+            BeanUtils.copyProperties(api, doc);
+            apiDocumentBuilder.populateFromOpenApi(doc, doc.getOpenApi());
+            doc.setPublisher(apiDocumentBuilder.lookupPublisher(api.getCatalogId()));
+            documents.add(doc);
+        });
+
+        return documents;
     }
 
     ApiDocumentBuilder createApiDocumentBuilder() {
@@ -115,7 +134,6 @@ public class ApiHarvester {
 
                 document.getHarvest().setLastChanged(new Date());
 
-
                 IndexRequest request = new IndexRequest("acat", "apidocument", document.getId());
 
                 String json = mapper.writeValueAsString(document);
@@ -124,17 +142,17 @@ public class ApiHarvester {
                 bulkRequest.add(request);
 
             } catch (JsonProcessingException jpe) {
-
+                logger.warn("Unable to serialize document {}. Reason {}", document.getId(), jpe.getMessage());
             }
 
         });
 
-        doBuilkIndex(bulkRequest);
+        doBulkIndex(bulkRequest);
 
         logger.info("Indexed {} api documents", documents.size());
     }
 
-    void doBuilkIndex(BulkRequestBuilder bulkRequest) {
+    void doBulkIndex(BulkRequestBuilder bulkRequest) {
         BulkResponse bulkResponse = bulkRequest.execute().actionGet();
         if (bulkResponse.hasFailures()) {
             final String msg = String.format("Failed bulked indexing. Reason %s", bulkResponse.buildFailureMessage());
@@ -157,7 +175,7 @@ public class ApiHarvester {
             records = CSVFormat.EXCEL.withHeader().withDelimiter(';').parse(input);
 
             for (CSVRecord line : records) {
-                ApiCatalogRecord catalogRecord = new ApiCatalogRecord().builder()
+                ApiCatalogRecord catalogRecord = ApiCatalogRecord.builder()
                     .orgNr(line.get("OrgNr"))
                     .apiSpecUrl(line.get("ApiSpecUrl"))
                     .apiDocUrl(line.get("ApiDocUrl"))
