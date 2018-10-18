@@ -1,0 +1,13 @@
+{
+  "api": {
+    "dynamic": false,
+    "properties": {
+      "catalogId": {
+        "type": "keyword"
+      },
+      "registrationStatus": {
+        "type": "keyword"
+      }
+    }
+  }
+}
