@@ -12,13 +12,26 @@ public class ApiCatClient {
         this.apiCatUrl = apiCatUrl;
     }
 
+    static String getMessage(ConvertResponse response) {
+        if (response.getMessages() != null) {
+            if (response.getMessages().size() == 1) {
+                return response.getMessages().get(0);
+            } else {
+                return response.getMessages().toString();
+            }
+        } else {
+            return "Unknown error";
+        }
+
+    }
+
     public OpenAPI convert(String url, String spec) {
         RestTemplate restTemplate = new RestTemplate();
 
         ConvertRequest request = ConvertRequest.builder()
-                .url(url)
-                .spec(spec)
-                .build();
+            .url(url)
+            .spec(spec)
+            .build();
 
         HttpEntity<ConvertRequest> entity = new HttpEntity<>(request);
 
@@ -31,19 +44,6 @@ public class ApiCatClient {
         }
 
         return openAPI;
-    }
-
-    static String getMessage(ConvertResponse response) {
-        if (response.getMessages() != null) {
-            if (response.getMessages().size() == 1) {
-                return response.getMessages().get(0);
-            } else {
-                return response.getMessages().toString();
-            }
-        } else {
-            return "Unknown error";
-        }
-
     }
 }
 
