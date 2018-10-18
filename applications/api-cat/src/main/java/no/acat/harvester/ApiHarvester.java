@@ -129,14 +129,20 @@ public class ApiHarvester {
 
         });
 
+        doBuilkIndex(bulkRequest);
+
+        logger.info("Indexed {} api documents", documents.size());
+    }
+
+    void doBuilkIndex(BulkRequestBuilder bulkRequest) {
         BulkResponse bulkResponse = bulkRequest.execute().actionGet();
         if (bulkResponse.hasFailures()) {
             final String msg = String.format("Failed bulked indexing. Reason %s", bulkResponse.buildFailureMessage());
             throw new RuntimeException(msg);
         }
 
-        logger.info("Indexed {} api documents", documents.size());
     }
+
 
     List<ApiCatalogRecord> getApiCatalog() {
         List<ApiCatalogRecord> result = new ArrayList<>();
