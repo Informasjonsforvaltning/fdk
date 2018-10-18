@@ -5,7 +5,7 @@ exports[`should render FormAccessRights correctly 1`] = `
   <div
     className="form-group"
   >
-    <Helptext
+    <withState(withHandlers(Helptext))
       helptextItems={
         Object {
           "description": Object {
@@ -20,7 +20,6 @@ exports[`should render FormAccessRights correctly 1`] = `
           "uri": "http://brreg.no/fdk/fields#Dataset_distribution",
         }
       }
-      required={false}
       title="Tilgangsnivå"
     />
     <Field
@@ -57,7 +56,7 @@ exports[`should render FormAccessRights correctly with syncErrors 1`] = `
   <div
     className="form-group"
   >
-    <Helptext
+    <withState(withHandlers(Helptext))
       helptextItems={
         Object {
           "description": Object {
@@ -72,7 +71,6 @@ exports[`should render FormAccessRights correctly with syncErrors 1`] = `
           "uri": "http://brreg.no/fdk/fields#Dataset_distribution",
         }
       }
-      required={false}
       title="Tilgangsnivå"
     />
     <Field
@@ -111,7 +109,7 @@ exports[`should render FormAccessRights correctly with syncErrors 1`] = `
       <div
         className="form-group"
       >
-        <Helptext
+        <withState(withHandlers(Helptext))
           helptextItems={
             Object {
               "description": Object {
@@ -126,7 +124,6 @@ exports[`should render FormAccessRights correctly with syncErrors 1`] = `
               "uri": "http://brreg.no/fdk/fields#Dataset_legalBasisForRestriction",
             }
           }
-          required={false}
           title="Skjermingshjemmel"
         />
         <FieldArray
@@ -139,7 +136,7 @@ exports[`should render FormAccessRights correctly with syncErrors 1`] = `
       <div
         className="form-group"
       >
-        <Helptext
+        <withState(withHandlers(Helptext))
           helptextItems={
             Object {
               "description": Object {
@@ -155,7 +152,6 @@ Dersom et datasett inneholder personopplysninger skal det være et grunnlag for 
               "uri": "http://brreg.no/fdk/fields#Dataset_legalBasisForProcessing",
             }
           }
-          required={false}
           title="Behandlingsgrunnlag"
         />
         <FieldArray
@@ -168,7 +164,7 @@ Dersom et datasett inneholder personopplysninger skal det være et grunnlag for 
       <div
         className="form-group"
       >
-        <Helptext
+        <withState(withHandlers(Helptext))
           helptextItems={
             Object {
               "description": Object {
@@ -183,7 +179,6 @@ Dersom et datasett inneholder personopplysninger skal det være et grunnlag for 
               "uri": "http://brreg.no/fdk/fields#Dataset_legalBasisForAccess",
             }
           }
-          required={false}
           title="Utleveringshjemmel"
         />
         <FieldArray

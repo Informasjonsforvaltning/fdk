@@ -5,7 +5,7 @@ exports[`should render FormContactPoint correctly 1`] = `
   <div
     className="form-group"
   >
-    <Helptext
+    <withState(withHandlers(Helptext))
       helptextItems={
         Object {
           "description": Object {
@@ -20,7 +20,6 @@ Dette kan være navnet til en gruppe, avdeling, seksjon eller liknende i organis
           "uri": "http://brreg.no/fdk/fields#ContactPoint_organizational-unit",
         }
       }
-      required={false}
       title="Kontaktpunkt"
     />
     <Field
@@ -32,7 +31,7 @@ Dette kan være navnet til en gruppe, avdeling, seksjon eller liknende i organis
   <div
     className="form-group"
   >
-    <Helptext
+    <withState(withHandlers(Helptext))
       helptextItems={
         Object {
           "description": Object {
@@ -45,7 +44,6 @@ Dette kan være navnet til en gruppe, avdeling, seksjon eller liknende i organis
           "uri": "http://brreg.no/fdk/fields#ContactPoint_hasURL",
         }
       }
-      required={false}
       title="Kontaktskjema"
     />
     <Field
@@ -57,7 +55,7 @@ Dette kan være navnet til en gruppe, avdeling, seksjon eller liknende i organis
   <div
     className="form-group"
   >
-    <Helptext
+    <withState(withHandlers(Helptext))
       helptextItems={
         Object {
           "description": Object {
@@ -70,7 +68,6 @@ Dette kan være navnet til en gruppe, avdeling, seksjon eller liknende i organis
           "uri": "http://brreg.no/fdk/fields#ContactPoint_hasEmail",
         }
       }
-      required={false}
       title="E-post"
     />
     <Field
@@ -82,7 +79,7 @@ Dette kan være navnet til en gruppe, avdeling, seksjon eller liknende i organis
   <div
     className="form-group"
   >
-    <Helptext
+    <withState(withHandlers(Helptext))
       helptextItems={
         Object {
           "description": Object {
@@ -95,7 +92,6 @@ Dette kan være navnet til en gruppe, avdeling, seksjon eller liknende i organis
           "uri": "http://brreg.no/fdk/fields#ContactPoint_hasTelephone",
         }
       }
-      required={false}
       title="Telefon"
     />
     <div

@@ -7,7 +7,7 @@ exports[`should render FormSpatial correctly with initialValues 1`] = `
   <div
     className="form-group"
   >
-    <Helptext
+    <withState(withHandlers(Helptext))
       helptextItems={
         Object {
           "description": Object {
@@ -25,7 +25,6 @@ exports[`should render FormSpatial correctly with initialValues 1`] = `
           "uri": "http://brreg.no/fdk/fields#Dataset_spatial",
         }
       }
-      required={false}
       title="Geografisk avgrensning"
     />
     <Field
@@ -39,7 +38,7 @@ exports[`should render FormSpatial correctly with initialValues 1`] = `
   <div
     className="form-group"
   >
-    <Helptext
+    <withState(withHandlers(Helptext))
       helptextItems={
         Object {
           "description": Object {
@@ -60,7 +59,6 @@ exports[`should render FormSpatial correctly with initialValues 1`] = `
           "uri": "http://brreg.no/fdk/fields#Dataset_temporal",
         }
       }
-      required={false}
       title="Tidsmessig avgrenset til"
     />
     <FieldArray
@@ -71,7 +69,7 @@ exports[`should render FormSpatial correctly with initialValues 1`] = `
   <div
     className="form-group"
   >
-    <Helptext
+    <withState(withHandlers(Helptext))
       helptextItems={
         Object {
           "description": Object {
@@ -87,7 +85,6 @@ Tidspunkt angis med xsd:dateTime. Dette inkluderer utvidelser av kapittel 5.4 i 
           "uri": "http://brreg.no/fdk/fields#Dataset_issued",
         }
       }
-      required={false}
       title="Utgivelsesdato"
     />
     <Field
@@ -100,7 +97,7 @@ Tidspunkt angis med xsd:dateTime. Dette inkluderer utvidelser av kapittel 5.4 i 
   <div
     className="form-group"
   >
-    <Helptext
+    <withState(withHandlers(Helptext))
       helptextItems={
         Object {
           "description": Object {
@@ -118,7 +115,6 @@ Tidspunkt angis med xsd:dateTime. Dette inkluderer utvidelser av kapittel 5.4 i 
           "uri": "http://brreg.no/fdk/fields#Dataset_language",
         }
       }
-      required={false}
       title="Språk"
     />
     <Field

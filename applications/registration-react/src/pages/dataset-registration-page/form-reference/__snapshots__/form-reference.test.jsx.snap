@@ -5,7 +5,7 @@ exports[`should render FormReference correctly 1`] = `
   <div
     className="form-group"
   >
-    <Helptext
+    <withState(withHandlers(Helptext))
       helptextItems={
         Object {
           "description": Object {
@@ -20,7 +20,6 @@ Angi referanser til andre datasett som gir supplerende informasjon om innholdet.
           "uri": "http://brreg.no/fdk/fields#Dataset_relation",
         }
       }
-      required={false}
       title="Relasjoner"
     />
     <FieldArray
