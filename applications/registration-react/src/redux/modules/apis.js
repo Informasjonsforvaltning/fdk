@@ -70,4 +70,4 @@ export const getApiItemsByCatalogId = (apis, catalogId) =>
   _.get(apis, [catalogId, 'items']);
 
 export const getApiItemsByApiId = (apis, catalogId, id) =>
-  _.find(_.get(apis, [catalogId, 'items'], []), 'id', id);
+  _.find(_.get(apis, [catalogId, 'items'], []), ['id', id]);
