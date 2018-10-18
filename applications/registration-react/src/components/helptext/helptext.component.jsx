@@ -48,7 +48,7 @@ export const Helptext = props => {
         {description && (
           <button
             className="fdk-btn-no-border text-left p-0 ml-1 fdk-reg-helptext-more align-self-start"
-            onClick={e => onToggle(e)}
+span class="pl-smi">             onClick={onToggle}
           >
             <i className={collapseClass} />
             {localization.helptext.more}
