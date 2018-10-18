@@ -8,7 +8,6 @@ import { withState, withHandlers, compose } from 'recompose';
 import localization from '../../utils/localization';
 import './helptext.scss';
 
-// export default class Helptext extends Component {
 export const Helptext = props => {
   const { title, required, helptextItems, onToggle, collapse } = props;
 
