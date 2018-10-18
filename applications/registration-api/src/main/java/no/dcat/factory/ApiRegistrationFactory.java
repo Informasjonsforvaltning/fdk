@@ -1,6 +1,7 @@
 package no.dcat.factory;
 
 import no.dcat.model.ApiRegistration;
+import org.springframework.beans.BeanUtils;
 
 import java.util.Date;
 import java.util.UUID;
@@ -8,11 +9,17 @@ import java.util.UUID;
 public class ApiRegistrationFactory {
 
     public static ApiRegistration createApiRegistration(String catalogId, ApiRegistration data) {
-        return data.toBuilder()
-                .id(UUID.randomUUID().toString())
-                .catalogId(catalogId)
-                .registrationStatus(ApiRegistration.REGISTRATION_STATUS_DRAFT)
-                ._lastModified(new Date())
-                .build();
+
+        ApiRegistration apiRegistration = new ApiRegistration();
+
+        BeanUtils.copyProperties(data, apiRegistration);
+
+        apiRegistration.setId(UUID.randomUUID().toString());
+        apiRegistration.setCatalogId(catalogId);
+        apiRegistration.setRegistrationStatus(ApiRegistration.REGISTRATION_STATUS_DRAFT);
+        apiRegistration.set_lastModified(new Date());
+
+        return apiRegistration;
+
     }
 }
