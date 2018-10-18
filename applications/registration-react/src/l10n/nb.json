@@ -7,6 +7,9 @@
   "license": "Lisens",
   "termsOfService": "Bruksvilkår",
   "contactInformation": "Kontaktinformasjon",
+  "yesterday": "i går",
+  "time": "kl.",
+  "at": "på",
   "listItems": {
     "header": {
       "title": "Tittel på datasett",
@@ -268,6 +271,15 @@
       "accessURLLabel": "Tilgangslenke",
       "formatLabel": "Format",
       "descriptionLabel": "Beskrivelse"
+    },
+    "apiMeta": {
+      "title": "Vilkår og begrensninger",
+      "helptext": {
+        "cost": "Pris",
+        "usageLimitation": "Trafikkbegrensninger",
+        "performance": "Kapasitet og ytelse",
+        "availability": "Pålitelighet"
+      }
     }
   },
   "inactiveSessionWarning": {
@@ -360,7 +372,8 @@
       "registerNew": "Registrer ny API-beskrivelse",
       "importFromSpecPart1": "Import fra",
       "importFromSpecPart2": "var vellykket!",
-      "importFromSpec": "Importert fra spesifikasjon"
+      "importFromSpec": "Importert fra spesifikasjon",
+      "addInfo": "For at API-beskrivelsen skal være nyttig for brukerne av Felles Datakatalog bør du legge til tilleggsinformasjon. Denne er spesifikk for Datakatalogen og vil kun brukes her."
     }
   }
 }
