@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import no.acat.config.Utils;
 import no.acat.model.ApiCatalogRecord;
 import no.acat.model.ApiDocument;
+import no.acat.service.ApiDocumentBuilderService;
 import no.acat.service.ElasticsearchService;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
@@ -15,7 +16,6 @@ import org.elasticsearch.client.Client;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
@@ -27,30 +27,31 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/*
+The purpose of the harvester is to ensure that search index is synchronized to registrations.
+ */
 @Service
 public class ApiHarvester {
     private static final Logger logger = LoggerFactory.getLogger(ApiHarvester.class);
 
     private Client elasticsearchClient;
+    private ApiDocumentBuilderService apiDocumentBuilderService;
     private ObjectMapper mapper = Utils.jsonMapper();
 
-    @Value("${application.searchApiUrl}")
-    private String searchApiUrl;
-
     @Autowired
-    public ApiHarvester(ElasticsearchService elasticsearchService) {
+    public ApiHarvester(ElasticsearchService elasticsearchService, ApiDocumentBuilderService apiDocumentBuilderService) {
         this.elasticsearchClient = elasticsearchService.getClient();
+        this.apiDocumentBuilderService = apiDocumentBuilderService;
     }
 
     public List<ApiDocument> harvestAll() {
         List<ApiDocument> result = new ArrayList<>();
 
         List<ApiCatalogRecord> apiCatalog = getApiCatalog();
-        ApiDocumentBuilder apiDocumentBuilder = createApiDocumentBuilder();
 
         for (ApiCatalogRecord apiCatalogRecord : apiCatalog) {
             try {
-                ApiDocument apiDocument = apiDocumentBuilder.create(apiCatalogRecord);
+                ApiDocument apiDocument = apiDocumentBuilderService.create(apiCatalogRecord);
                 indexApi(apiDocument);
                 result.add(apiDocument);
             } catch (Exception e) {
@@ -58,10 +59,6 @@ public class ApiHarvester {
             }
         }
         return result;
-    }
-
-    ApiDocumentBuilder createApiDocumentBuilder() {
-        return new ApiDocumentBuilder(elasticsearchClient, searchApiUrl);
     }
 
     void indexApi(ApiDocument document) throws JsonProcessingException {
