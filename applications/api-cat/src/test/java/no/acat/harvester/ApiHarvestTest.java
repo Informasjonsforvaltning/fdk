@@ -1,6 +1,7 @@
 package no.acat.harvester;
 
 import no.acat.model.ApiDocument;
+import no.acat.service.ApiDocumentBuilderService;
 import no.acat.service.ElasticsearchService;
 import no.dcat.shared.testcategories.UnitTest;
 import org.junit.Test;
@@ -22,15 +23,12 @@ public class ApiHarvestTest {
     public void harvestAllOK() throws Throwable {
 
         ElasticsearchService elasticsearchService = mock(ElasticsearchService.class);
-        ApiHarvester harvester = new ApiHarvester(elasticsearchService);
+        ApiDocumentBuilderService apiDocumentBuilderService = mock(ApiDocumentBuilderService.class);
+        doReturn(new ApiDocument()).when(apiDocumentBuilderService).create(any());
+        ApiHarvester harvester = new ApiHarvester(elasticsearchService, apiDocumentBuilderService);
 
         ApiHarvester spyHarvester = spy(harvester);
         doNothing().when(spyHarvester).indexApi(any());
-
-        ApiDocumentBuilder mockApiDocumentBuilder = mock(ApiDocumentBuilder.class);
-        doReturn(new ApiDocument()).when(mockApiDocumentBuilder).create(any());
-
-        doReturn(mockApiDocumentBuilder).when(spyHarvester).createApiDocumentBuilder();
 
         List<ApiDocument> response = spyHarvester.harvestAll();
         final int FROM_CSV = 11;

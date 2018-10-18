@@ -1,4 +1,4 @@
-package no.acat.harvester;
+package no.acat.service;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;
@@ -21,21 +21,30 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
 import java.util.*;
 
-public class ApiDocumentBuilder {
-    private static final Logger logger = LoggerFactory.getLogger(ApiHarvester.class);
+/*
+ApiDocumentBuilder service is enriching api registrations with related data and
+denormalizes it for indexing and display purpose in search service
+ */
+@Service
+public class ApiDocumentBuilderService {
+    private static final Logger logger = LoggerFactory.getLogger(ApiDocumentBuilderService.class);
     private Client elasticsearchClient;
+
+    @Value("${application.searchApiUrl}")
     private String searchApiUrl;
 
-
-    public ApiDocumentBuilder(Client elasticsearchClient, String searchApiUrl) {
-        this.elasticsearchClient = elasticsearchClient;
-        this.searchApiUrl = searchApiUrl;
+    @Autowired
+    public ApiDocumentBuilderService(ElasticsearchService elasticsearchService) {
+        this.elasticsearchClient = elasticsearchService.getClient();
     }
 
     public ApiDocument create(ApiCatalogRecord apiCatalogRecord) throws IOException, ParseException {
