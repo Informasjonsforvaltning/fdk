@@ -2,8 +2,9 @@ package no.dcat.client.apicat;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
 import org.springframework.web.client.RestTemplate;
+
+import static org.springframework.http.HttpMethod.POST;
 
 public class ApiCatClient {
     private String apiCatUrl;
@@ -25,6 +26,17 @@ public class ApiCatClient {
 
     }
 
+    public void triggerHarvestAll() {
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.exchange(this.apiCatUrl + "/trigger/harvest/all", POST, null, Void.class);
+    }
+
+    public void triggerHarvestApiRegistration(String apiRegistrationId) {
+        RestTemplate restTemplate = new RestTemplate();
+
+        restTemplate.exchange(this.apiCatUrl + "/trigger/harvest/apiregistration/" + apiRegistrationId, POST, null, Void.class);
+    }
+
     public OpenAPI convert(String url, String spec) {
         RestTemplate restTemplate = new RestTemplate();
 
@@ -33,9 +45,9 @@ public class ApiCatClient {
             .spec(spec)
             .build();
 
-        HttpEntity<ConvertRequest> entity = new HttpEntity<>(request);
+        HttpEntity<ConvertRequest> requestEntity = new HttpEntity<>(request);
 
-        ConvertResponse convertResponse = restTemplate.exchange(this.apiCatUrl + "/convert", HttpMethod.POST, entity, ConvertResponse.class).getBody();
+        ConvertResponse convertResponse = restTemplate.exchange(this.apiCatUrl + "/convert", POST, requestEntity, ConvertResponse.class).getBody();
 
         OpenAPI openAPI = convertResponse.openApi;
 
