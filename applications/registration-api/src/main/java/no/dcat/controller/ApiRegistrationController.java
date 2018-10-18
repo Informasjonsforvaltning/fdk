@@ -143,7 +143,11 @@ public class ApiRegistrationController {
 
         logger.debug("create apiRegistration {}", apiRegistration.getId());
 
-        return apiRegistrationRepository.save(apiRegistration);
+        ApiRegistration savedApiRegistration = apiRegistrationRepository.save(apiRegistration);
+
+        apiCatClient.triggerHarvestApiRegistration(savedApiRegistration.getId());
+
+        return savedApiRegistration;
     }
 
     /**
@@ -176,6 +180,8 @@ public class ApiRegistrationController {
             throw new NotFoundException();
         }
         apiRegistrationRepository.delete(apiRegistration);
+
+        apiCatClient.triggerHarvestApiRegistration(id);
     }
 
     /**
@@ -232,6 +238,9 @@ public class ApiRegistrationController {
         newApiRegistration.set_lastModified(new Date());
 
         ApiRegistration savedApiRegistration = apiRegistrationRepository.save(newApiRegistration);
+
+        apiCatClient.triggerHarvestApiRegistration(id);
+
         return savedApiRegistration;
     }
 }
