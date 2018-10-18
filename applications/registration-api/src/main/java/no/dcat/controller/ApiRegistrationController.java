@@ -46,9 +46,9 @@ public class ApiRegistrationController {
 
     @Autowired
     public ApiRegistrationController(
-            ApiRegistrationRepository apiRegistrationRepository,
-            CatalogRepository catalogRepository,
-            ApiCatService apiCatService
+        ApiRegistrationRepository apiRegistrationRepository,
+        CatalogRepository catalogRepository,
+        ApiCatService apiCatService
     ) {
         this.apiRegistrationRepository = apiRegistrationRepository;
         this.catalogRepository = catalogRepository;
@@ -58,7 +58,7 @@ public class ApiRegistrationController {
     /**
      * Return list of all apiRegistrations in catalog.
      *
-     * @param catalogId    the id of the catalog
+     * @param catalogId the id of the catalog
      * @param pageable
      * @return List of api registrations
      */
@@ -85,8 +85,8 @@ public class ApiRegistrationController {
     @CrossOrigin
     @RequestMapping(value = "/{id}", method = GET, produces = APPLICATION_JSON_UTF8_VALUE)
     public ApiRegistration getApiRegistration(
-            @PathVariable("catalogId") String catalogId,
-            @PathVariable("id") String id
+        @PathVariable("catalogId") String catalogId,
+        @PathVariable("id") String id
     ) throws NotFoundException {
         Optional<ApiRegistration> apiRegistrationOptional = apiRegistrationRepository.findById(id);
 
@@ -112,13 +112,13 @@ public class ApiRegistrationController {
     @PreAuthorize("hasPermission(#catalogId, 'write')")
     @CrossOrigin
     @RequestMapping(
-            value = "",
-            method = POST,
-            consumes = APPLICATION_JSON_VALUE,
-            produces = APPLICATION_JSON_UTF8_VALUE)
+        value = "",
+        method = POST,
+        consumes = APPLICATION_JSON_VALUE,
+        produces = APPLICATION_JSON_UTF8_VALUE)
     public ApiRegistration createApiRegistration(
-            @PathVariable("catalogId") String catalogId,
-            @RequestBody ApiRegistration apiRegistrationData
+        @PathVariable("catalogId") String catalogId,
+        @RequestBody ApiRegistration apiRegistrationData
     ) throws NotFoundException, BadRequestException {
 
         logger.info("SAVE requestbody apiRegistration");
@@ -158,8 +158,8 @@ public class ApiRegistrationController {
     @RequestMapping(value = "/{id}", method = DELETE, produces = APPLICATION_JSON_UTF8_VALUE)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void deleteApiRegistration(
-            @PathVariable("catalogId") String catalogId,
-            @PathVariable("id") String id
+        @PathVariable("catalogId") String catalogId,
+        @PathVariable("id") String id
     ) throws NotFoundException {
         logger.info("DELETE apiRegistration: " + id);
 
@@ -187,15 +187,15 @@ public class ApiRegistrationController {
     @PreAuthorize("hasPermission(#catalogId, 'write')")
     @CrossOrigin
     @RequestMapping(
-            value = "/{id}",
-            method = PATCH,
-            consumes = APPLICATION_JSON_VALUE,
-            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+        value = "/{id}",
+        method = PATCH,
+        consumes = APPLICATION_JSON_VALUE,
+        produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ApiRegistration patchApiRegistration(
-            @PathVariable("catalogId") String catalogId,
-            @PathVariable("id") String id,
-            @RequestBody Map<String, Object> updates)
-            throws NotFoundException {
+        @PathVariable("catalogId") String catalogId,
+        @PathVariable("id") String id,
+        @RequestBody Map<String, Object> updates)
+        throws NotFoundException {
         logger.info("PATCH requestbody update apiRegistration: {}", updates.toString());
 
         Gson gson = new Gson();
@@ -228,7 +228,7 @@ public class ApiRegistrationController {
         logger.debug("Changed apiRegistration Json element: {}", oldApiRegistrationJson.toString());
 
         ApiRegistration newApiRegistration =
-                gson.fromJson(oldApiRegistrationJson.toString(), ApiRegistration.class);
+            gson.fromJson(oldApiRegistrationJson.toString(), ApiRegistration.class);
         newApiRegistration.set_lastModified(new Date());
 
         ApiRegistration savedApiRegistration = apiRegistrationRepository.save(newApiRegistration);
