@@ -6,6 +6,7 @@ logging:
   level.org.springframework.web: WARN
 application:
   searchApiUrl: http://search-api:8080
+  registrationApiUrl: http://registration-api:8080
 elastic:
   clusterNodes: ${FDK_ES_CLUSTERNODES:elasticsearch5:9300}
   clusterName: ${FDK_ES_CLUSTERNAME:elasticsearch}
@@ -21,6 +22,7 @@ spring:
   profiles: develop, unit-integration
 application:
   searchApiUrl: http://localhost:8083
+  registrationApiUrl: https://localhost:8099
 elastic:
   clusterNodes: localhost:9300
   clusterName: elasticsearch
