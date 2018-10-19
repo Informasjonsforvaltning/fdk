@@ -26,6 +26,7 @@ exports[`should render DatasetItemsList correctly sortField equal title 1`] = `
   </div>
   <ListItems
     catalogId="123"
+    defaultEmptyListText={null}
     itemTitleField={
       Array [
         "title",
@@ -77,6 +78,7 @@ exports[`should render DatasetItemsList correctly sortField equal title 2`] = `
   </div>
   <ListItems
     catalogId="123"
+    defaultEmptyListText={null}
     itemTitleField={
       Array [
         "title",
@@ -128,6 +130,7 @@ exports[`should render DatasetItemsList correctly with datasetItems 1`] = `
   </div>
   <ListItems
     catalogId="123"
+    defaultEmptyListText={null}
     itemTitleField={
       Array [
         "title",
@@ -179,6 +182,7 @@ exports[`should render DatasetItemsList correctly with missing datasetItems 1`] 
   </div>
   <ListItems
     catalogId="123"
+    defaultEmptyListText={null}
     itemTitleField={
       Array [
         "title",
@@ -230,6 +234,7 @@ exports[`should render DatasetItemsList correctly with missing items 1`] = `
   </div>
   <ListItems
     catalogId="123"
+    defaultEmptyListText={null}
     itemTitleField={
       Array [
         "title",

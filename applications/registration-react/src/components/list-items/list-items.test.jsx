@@ -31,7 +31,8 @@ beforeEach(() => {
     sortField: 'title',
     sortType: 'asc',
     onSortField: onSort,
-    prefixPath: '/catalogs/123/datasets'
+    prefixPath: '/catalogs/123/datasets',
+    defaultEmptyListText: 'Ingen beskrivelser er registrert'
   };
   wrapper = shallow(<ListItems {...defaultProps} />);
 });

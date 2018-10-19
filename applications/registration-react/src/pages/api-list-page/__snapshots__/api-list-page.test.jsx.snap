@@ -46,6 +46,7 @@ exports[`should render APIListPageComponent correctly 1`] = `
     >
       <withState(withState(withHandlers(ListItems)))
         catalogId="910244132"
+        defaultEmptyListText="Det er ikke registrert noen API-beskrivelser ennå."
         itemTitleField={
           Array [
             "openApi",

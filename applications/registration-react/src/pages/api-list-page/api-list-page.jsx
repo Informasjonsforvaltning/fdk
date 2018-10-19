@@ -49,6 +49,7 @@ export const APIListPage = props => {
               items={items}
               itemTitleField={['openApi', 'info', 'title']}
               prefixPath={`/catalogs/${catalogId}/apis`}
+              defaultEmptyListText={localization.listItems.missingApiItems}
             />
           </div>
         )}

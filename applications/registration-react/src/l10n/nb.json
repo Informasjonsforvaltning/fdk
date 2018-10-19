@@ -12,7 +12,8 @@
       "title": "Tittel på datasett",
       "status": "Status"
     },
-    "missingItems": "Ingen datasettbeskrivelse registrert",
+    "missingDatasetItems": "Ingen datasettbeskrivelse registrert",
+    "missingApiItems": "Det er ikke registrert noen API-beskrivelser ennå.",
     "missingTitle": "Mangler tittel",
     "statusPublished": "Publisert",
     "statusDraft": "Utkast"

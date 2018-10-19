@@ -12,7 +12,8 @@
       "title": "Dataset title",
       "status": "Status"
     },
-    "missingItems": "No dataset description registered",
+    "missingDatasetItems": "No dataset description registered",
+    "missingApiItems": "No api description registered.",
     "missingTitle": "Missing title",
     "statusPublished": "Published",
     "statusDraft": "Draft"
