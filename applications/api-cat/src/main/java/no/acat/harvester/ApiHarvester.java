@@ -6,7 +6,9 @@ import no.acat.config.Utils;
 import no.acat.model.ApiDocument;
 import no.acat.service.ApiDocumentBuilderService;
 import no.acat.service.ElasticsearchService;
+import no.acat.service.RegistrationApiService;
 import no.dcat.client.registrationapi.ApiRegistrationPublic;
+import no.dcat.client.registrationapi.RegistrationApiClient;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
@@ -25,7 +27,9 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /*
 The purpose of the harvester is to ensure that search index is synchronized to registrations.
@@ -36,11 +40,13 @@ public class ApiHarvester {
 
     private Client elasticsearchClient;
     private ApiDocumentBuilderService apiDocumentBuilderService;
+    private RegistrationApiClient registrationApiClient;
     private ObjectMapper mapper = Utils.jsonMapper();
 
     @Autowired
-    public ApiHarvester(ElasticsearchService elasticsearchService, ApiDocumentBuilderService apiDocumentBuilderService) {
+    public ApiHarvester(ElasticsearchService elasticsearchService, ApiDocumentBuilderService apiDocumentBuilderService, RegistrationApiService registrationApiService) {
         this.elasticsearchClient = elasticsearchService.getClient();
+        this.registrationApiClient = registrationApiService.getClient();
         this.apiDocumentBuilderService = apiDocumentBuilderService;
     }
 
@@ -80,7 +86,27 @@ public class ApiHarvester {
     }
 
     List<ApiRegistrationPublic> getApiRegistrations() {
-        return getApiRegistrationsFromCsv();
+        List<ApiRegistrationPublic> apiRegistrationsFromCsv = getApiRegistrationsFromCsv();
+        logger.info("Loaded registrations from csv {}", apiRegistrationsFromCsv.size());
+
+        Collection<ApiRegistrationPublic> apiRegistrationsFromRegistrationApi = registrationApiClient.getPublished();
+        logger.info("Loaded registrations from registration-api {}", apiRegistrationsFromRegistrationApi.size());
+
+        // remove duplicates from csv
+        List<String> registeredSpecUrls = apiRegistrationsFromRegistrationApi.stream()
+            .map(r -> r.getApiSpecUrl())
+            .collect(Collectors.toList());
+        List<ApiRegistrationPublic> uniqueApiRegistrationsFromCsv = apiRegistrationsFromCsv.stream()
+            .filter(c -> !registeredSpecUrls.contains(c.getApiSpecUrl()))
+            .collect(Collectors.toList());
+
+        // concatenate lists
+        List<ApiRegistrationPublic> result = new ArrayList<>();
+        result.addAll(uniqueApiRegistrationsFromCsv);
+        result.addAll(apiRegistrationsFromRegistrationApi);
+        logger.info("Total registrations {}", result.size());
+
+        return result;
     }
 
     List<ApiRegistrationPublic> getApiRegistrationsFromCsv() {
@@ -108,7 +134,7 @@ public class ApiHarvester {
                 result.add(apiRegistration);
             }
 
-            logger.info("Read {} api catalog records.", result.size());
+            logger.debug("Read {} api catalog records.", result.size());
 
         } catch (
             IOException e) {
