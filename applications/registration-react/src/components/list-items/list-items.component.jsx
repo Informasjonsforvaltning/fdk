@@ -16,7 +16,8 @@ const renderItems = (
   itemTitleField,
   sortField,
   sortType,
-  prefixPath
+  prefixPath,
+  defaultEmptyListText
 ) => {
   if (items) {
     let sortedItems = items;
@@ -58,7 +59,7 @@ const renderItems = (
   return (
     <div className="fdk-list-item d-flex">
       <span className="fdk-text-size-small fdk-color2">
-        {localization.listItems.missingItems}
+        {defaultEmptyListText}
       </span>
     </div>
   );
@@ -72,7 +73,8 @@ export const ListItems = props => {
     sortField,
     sortType,
     onSortField,
-    prefixPath
+    prefixPath,
+    defaultEmptyListText
   } = props;
   return (
     <div>
@@ -105,7 +107,8 @@ export const ListItems = props => {
         itemTitleField,
         sortField,
         sortType,
-        prefixPath
+        prefixPath,
+        defaultEmptyListText
       )}
     </div>
   );
@@ -118,7 +121,8 @@ ListItems.defaultProps = {
   sortField: null,
   sortType: null,
   onSortField: null,
-  prefixPath: null
+  prefixPath: null,
+  defaultEmptyListText: null
 };
 
 ListItems.propTypes = {
@@ -128,7 +132,8 @@ ListItems.propTypes = {
   sortField: PropTypes.string,
   sortType: PropTypes.string,
   onSortField: PropTypes.func,
-  prefixPath: PropTypes.string
+  prefixPath: PropTypes.string,
+  defaultEmptyListText: PropTypes.string
 };
 
 const enhance = compose(
