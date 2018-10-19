@@ -1,15 +1,16 @@
 package no.acat.service;
 
+import com.google.common.base.Strings;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.Paths;
 import io.swagger.v3.oas.models.media.Content;
 import io.swagger.v3.oas.models.responses.ApiResponse;
 import io.swagger.v3.oas.models.responses.ApiResponses;
-import no.acat.model.ApiCatalogRecord;
 import no.acat.model.ApiDocument;
 import no.acat.spec.ParseException;
 import no.acat.spec.Parser;
+import no.dcat.client.registrationapi.ApiRegistrationPublic;
 import no.dcat.htmlclean.HtmlCleaner;
 import no.dcat.shared.Contact;
 import no.dcat.shared.DatasetReference;
@@ -47,15 +48,18 @@ public class ApiDocumentBuilderService {
         this.elasticsearchClient = elasticsearchService.getClient();
     }
 
-    public ApiDocument create(ApiCatalogRecord apiCatalogRecord) throws IOException, ParseException {
-        String apiSpecUrl = apiCatalogRecord.getApiSpecUrl();
+    public ApiDocument create(ApiRegistrationPublic apiRegistration) throws IOException, ParseException {
+        String apiSpecUrl = apiRegistration.getApiSpecUrl();
+        String apiSpec = apiRegistration.getApiSpec();
 
         OpenAPI openApi;
-        String apiSpec = Parser.getSpecFromUrl(apiSpecUrl);
+        if (Strings.isNullOrEmpty(apiSpec) && !Strings.isNullOrEmpty(apiSpecUrl)) {
+            apiSpec = Parser.getSpecFromUrl(apiSpecUrl);
+        }
 
         openApi = Parser.parse(apiSpec);
 
-        String id = lookupOrGenerateId(apiCatalogRecord);
+        String id = lookupOrGenerateId(apiRegistration);
 
         ApiDocument apiDocument = new ApiDocument().builder()
             .id(id)
@@ -63,7 +67,7 @@ public class ApiDocumentBuilderService {
             .apiSpec(apiSpec)
             .build();
 
-        populateFromApiCatalogRecord(apiDocument, apiCatalogRecord);
+        populateFromApiRegistration(apiDocument, apiRegistration);
         populateFromOpenApi(apiDocument, openApi);
 
         logger.info("ApiDocument is created. id={}, url={}", apiDocument.getId(), apiDocument.getApiSpecUrl());
@@ -71,17 +75,17 @@ public class ApiDocumentBuilderService {
         return apiDocument;
     }
 
-    void populateFromApiCatalogRecord(ApiDocument apiDocument, ApiCatalogRecord apiCatalogRecord) {
-        apiDocument.setPublisher(lookupPublisher(apiCatalogRecord.getOrgNr()));
-        apiDocument.setNationalComponent(apiCatalogRecord.isNationalComponent());
-        apiDocument.setDatasetReferences(extractDatasetReferences(apiCatalogRecord));
-        apiDocument.setApiDocUrl(apiCatalogRecord.getApiDocUrl());
+    void populateFromApiRegistration(ApiDocument apiDocument, ApiRegistrationPublic apiRegistration) {
+        apiDocument.setPublisher(lookupPublisher(apiRegistration.getCatalogId()));
+        apiDocument.setNationalComponent(apiRegistration.isNationalComponent());
+        apiDocument.setDatasetReferences(extractDatasetReferences(apiRegistration));
+        apiDocument.setApiDocUrl(apiRegistration.getApiDocUrl());
     }
 
-    String lookupOrGenerateId(ApiCatalogRecord apiCatalogRecord) {
+    String lookupOrGenerateId(ApiRegistrationPublic apiRegistration) {
         String id = null;
 
-        String apiSpecUrl = apiCatalogRecord.getApiSpecUrl();
+        String apiSpecUrl = apiRegistration.getApiSpecUrl();
         SearchResponse response = elasticsearchClient.prepareSearch("acat")
             .setTypes("apidocument")
             .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
@@ -129,9 +133,9 @@ public class ApiDocumentBuilderService {
         return null;
     }
 
-    Set<DatasetReference> extractDatasetReferences(ApiCatalogRecord apiCatalogRecord) {
+    Set<DatasetReference> extractDatasetReferences(ApiRegistrationPublic apiRegistration) {
         Set<DatasetReference> datasetReferences = new HashSet<>();
-        List<String> datasetReferenceSources = apiCatalogRecord.getDatasetReferences();
+        List<String> datasetReferenceSources = apiRegistration.getDatasetReferences();
         if (datasetReferenceSources != null) {
             for (String datasetRefUrl : datasetReferenceSources) {
                 if (!datasetRefUrl.isEmpty()) {

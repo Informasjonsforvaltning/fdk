@@ -155,6 +155,11 @@
             <artifactId>api-cat-client</artifactId>
             <version>1.1.0</version>
         </dependency>
+        <dependency>
+            <groupId>no.dcat</groupId>
+            <artifactId>registration-api-client</artifactId>
+            <version>1.1.0</version>
+        </dependency>
 
     </dependencies>
 
