@@ -1,6 +1,6 @@
 package no.dcat.controller;
 
-import no.dcat.client.apiregistration.ApiRegistrationPublic;
+import no.dcat.client.registrationapi.ApiRegistrationPublic;
 import no.dcat.model.ApiRegistration;
 import no.dcat.service.ApiRegistrationRepository;
 import org.springframework.beans.BeanUtils;
@@ -20,6 +20,11 @@ import java.util.stream.Collectors;
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
+/*
+* The controller for public apis provided by the registration service.
+* Authentication and authorization is disabled.
+* Public endpoints are used for example as a sourcing the public search service.
+*/
 @RestController
 @RequestMapping(value = "/public")
 public class ApiRegistrationPublicController {

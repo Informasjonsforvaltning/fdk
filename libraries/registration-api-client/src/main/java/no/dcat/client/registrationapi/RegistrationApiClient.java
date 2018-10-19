@@ -1,4 +1,4 @@
-package no.dcat.client.apiregistration;
+package no.dcat.client.registrationapi;
 
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.hateoas.PagedResources;
@@ -7,10 +7,13 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.Collection;
 
-public class ApiRegistrationClient {
+/*
+RegistrationApiClient is a library for consuming REST api with strong types.
+ */
+public class RegistrationApiClient {
     private String apiregistrationUrl;
 
-    public ApiRegistrationClient(String apiregistrationUrl) {
+    public RegistrationApiClient(String apiregistrationUrl) {
         this.apiregistrationUrl = apiregistrationUrl;
     }
 
