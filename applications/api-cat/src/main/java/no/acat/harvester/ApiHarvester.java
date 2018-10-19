@@ -3,10 +3,10 @@ package no.acat.harvester;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import no.acat.config.Utils;
-import no.acat.model.ApiCatalogRecord;
 import no.acat.model.ApiDocument;
 import no.acat.service.ApiDocumentBuilderService;
 import no.acat.service.ElasticsearchService;
+import no.dcat.client.registrationapi.ApiRegistrationPublic;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
@@ -47,11 +47,11 @@ public class ApiHarvester {
     public List<ApiDocument> harvestAll() {
         List<ApiDocument> result = new ArrayList<>();
 
-        List<ApiCatalogRecord> apiCatalog = getApiCatalog();
+        List<ApiRegistrationPublic> apiRegistrations = getApiRegistrations();
 
-        for (ApiCatalogRecord apiCatalogRecord : apiCatalog) {
+        for (ApiRegistrationPublic apiRegistration : apiRegistrations) {
             try {
-                ApiDocument apiDocument = apiDocumentBuilderService.create(apiCatalogRecord);
+                ApiDocument apiDocument = apiDocumentBuilderService.create(apiRegistration);
                 indexApi(apiDocument);
                 result.add(apiDocument);
             } catch (Exception e) {
@@ -79,8 +79,12 @@ public class ApiHarvester {
         logger.info("ApiDocument is indexed. id={}, url={}", document.getId(), document.getApiSpecUrl());
     }
 
-    List<ApiCatalogRecord> getApiCatalog() {
-        List<ApiCatalogRecord> result = new ArrayList<>();
+    List<ApiRegistrationPublic> getApiRegistrations() {
+        return getApiRegistrationsFromCsv();
+    }
+
+    List<ApiRegistrationPublic> getApiRegistrationsFromCsv() {
+        List<ApiRegistrationPublic> result = new ArrayList<>();
 
         org.springframework.core.io.Resource apiCatalogCsvFile = new ClassPathResource("apis.csv");
         Iterable<CSVRecord> records;
@@ -92,15 +96,16 @@ public class ApiHarvester {
             records = CSVFormat.EXCEL.withHeader().withDelimiter(';').parse(input);
 
             for (CSVRecord line : records) {
-                ApiCatalogRecord catalogRecord = new ApiCatalogRecord().builder()
-                    .orgNr(line.get("OrgNr"))
-                    .apiSpecUrl(line.get("ApiSpecUrl"))
-                    .apiDocUrl(line.get("ApiDocUrl"))
-                    .nationalComponent("true".equals(line.get("NationalComponent")))
-                    .datasetReferences(Arrays.asList(line.get("DatasetRefs").split(",")))
-                    .build();
+                ApiRegistrationPublic apiRegistration = new ApiRegistrationPublic();
 
-                result.add(catalogRecord);
+                apiRegistration.setCatalogId(line.get("OrgNr"));
+                apiRegistration.setApiSpecUrl(line.get("ApiSpecUrl"));
+                apiRegistration.setApiDocUrl(line.get("ApiDocUrl"));
+                apiRegistration.setNationalComponent("true".equals(line.get("NationalComponent")));
+                List<String> datasetReferences = Arrays.asList(line.get("DatasetRefs").split(","));
+                apiRegistration.setDatasetReferences(datasetReferences);
+
+                result.add(apiRegistration);
             }
 
             logger.info("Read {} api catalog records.", result.size());
