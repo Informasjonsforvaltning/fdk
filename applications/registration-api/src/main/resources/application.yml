@@ -16,6 +16,8 @@ application:
   openDataEnhet: ${FDK_ENHETSREGISTERET_URL:https://data.brreg.no/enhetsregisteret/api/enheter/}
 
 spring:
+  jackson:
+    default-property-inclusion: non_null
   hateoas:
     use-hal-as-default-json-media-type: false
   data:
