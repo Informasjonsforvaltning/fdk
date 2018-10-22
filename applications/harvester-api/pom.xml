@@ -274,9 +274,7 @@
                 <version>2.19.1</version>
                 <configuration>
                     <groups>java.lang.Exception ${unittest.category} ${endtoendtest.category} ${loadtest.category}</groups> <!-- java.lang.Exception is a hack to make a valid comma-separated list og category classes -->
-                    <argLine>-noverify</argLine>
-                    <!-- this is how it is in other projects-->
-                    <!--<argLine>${surefireArgLine} -Dfile.encoding=${project.build.sourceEncoding}</argLine>-->
+                    <argLine>${surefireArgLine} -Dfile.encoding=${project.build.sourceEncoding}</argLine>
                 </configuration>
             </plugin>
             <plugin>
