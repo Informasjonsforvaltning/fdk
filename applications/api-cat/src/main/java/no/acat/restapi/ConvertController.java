@@ -8,8 +8,6 @@ import no.acat.spec.Parser;
 import no.dcat.client.apicat.ConvertRequest;
 import no.dcat.client.apicat.ConvertResponse;
 import no.dcat.webutils.exceptions.BadRequestException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +19,6 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 public class ConvertController {
-    private static final Logger logger = LoggerFactory.getLogger(ConvertController.class);
 
     @RequestMapping("/convert")
     @PostMapping(produces = "application/json")
@@ -30,7 +27,6 @@ public class ConvertController {
         List<String> messages = new ArrayList();
         String spec = request.getSpec();
         String url = request.getUrl();
-        logger.debug("Starting convert spec:{}, url:{}", spec, url);
 
         if (Strings.isNullOrEmpty(spec) && Strings.isNullOrEmpty(url)) {
             throw new BadRequestException("Url or spec parameter is required");
@@ -54,6 +50,7 @@ public class ConvertController {
         if (messages.size() > 0) {
             responseBody.setMessages(messages);
         }
+
         return responseBody;
     }
 
