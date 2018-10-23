@@ -22,6 +22,7 @@ services:
       - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
       - FDK_ES_CLUSTERNODES=elasticsearch5:9300
       - FDK_ES_CLUSTERNAME=elasticsearch
+      - LOG_LEVEL=${LOG_LEVEL}
 
   search-api:
     restart: always
