@@ -14,18 +14,18 @@ import java.util.List;
 RegistrationApiClient is a library for consuming REST api with strong types.
  */
 public class RegistrationApiClient {
-    private String apiregistrationUrl;
+    private String apiRegistrationUrl;
     private Logger logger;
 
-    public RegistrationApiClient(String apiregistrationUrl, Logger logger) {
-        this.apiregistrationUrl = apiregistrationUrl;
+    public RegistrationApiClient(String apiRegistrationUrl, Logger logger) {
+        this.apiRegistrationUrl = apiRegistrationUrl;
         this.logger = logger;
     }
 
     public Collection<ApiRegistrationPublic> getPublished() {
 
         RestTemplate restTemplate = new RestTemplate();
-        String publishedHalJson = restTemplate.getForObject(this.apiregistrationUrl + "/public/apis", String.class);
+        String publishedHalJson = restTemplate.getForObject(getPublicApisUrlBase(), String.class);
         logger.debug("String response from public apis \"{}\"...", publishedHalJson.substring(0, 20));
 
         JsonParser parser = new JsonParser();
@@ -44,5 +44,9 @@ public class RegistrationApiClient {
         logger.debug("Converted list of public apis: {}", apiRegistrations.size());
 
         return apiRegistrations;
+    }
+
+    public String getPublicApisUrlBase() {
+        return apiRegistrationUrl + "/public/apis";
     }
 }
