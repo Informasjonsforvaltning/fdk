@@ -28,7 +28,7 @@ public class ApiHarvestTest {
         ElasticsearchService elasticsearchServiceMock = mock(ElasticsearchService.class);
 
         ApiDocumentBuilderService apiDocumentBuilderServiceMock = mock(ApiDocumentBuilderService.class);
-        when(apiDocumentBuilderServiceMock.create(any())).thenReturn(new ApiDocument());
+        when(apiDocumentBuilderServiceMock.createFromApiRegistration(any(),any())).thenReturn(new ApiDocument());
 
         RegistrationApiClient registrationApiClientMock = mock(RegistrationApiClient.class);
         when(registrationApiClientMock.getPublished()).thenReturn(new ArrayList<>());
@@ -41,7 +41,7 @@ public class ApiHarvestTest {
         doNothing().when(spyHarvester).indexApi(any());
 
         List<ApiDocument> response = spyHarvester.harvestAll();
-        final int FROM_CSV = 11;
+        final int FROM_CSV = 8;
         assertThat(response.size(), is(FROM_CSV));
 
     }

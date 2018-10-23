@@ -1,12 +1,9 @@
-OrgNr;OrgName;ApiSpecUrl;ApiDocUrl;NationalComponent;DatasetRefs
-974760673;Brønnøysundregistrene;https://raw.githubusercontent.com/brreg/openAPI/master/specs/enhetsregisteret.json;https://data.brreg.no/enhetsregisteret/api/docs/index.html;true;http://brreg.no/catalogs/974760673/datasets/63086dda-9b72-43f0-bbc2-3ced4bc2edd6
-971035854;Universitetet i Oslo;https://docker-demo.fsat.no/fsapi/swagger.json;https://docker-demo.fsat.no/fsapi/swagger.html#!/person/get_personer_id;;
-971032146;KS;https://ks-no.github.io/api/innsyn-sok-api-v1.json;https://editor.swagger.io/?url=https://ks-no.github.io/api/innsyn-sok-api-v1.json;;
-970018131;Utdanningsdirektoratet;https://data-nor.udir.no/swagger/docs/v1.0;https://data.norge.no/data/utdanningsdirektoratet/nasjonalt-register-opplæringskontorer-nor;;
-970018131;Utdanningsdirektoratet;https://data-nbr.udir.no/swagger/docs/v1.0;https://data.norge.no/data/utdanningsdirektoratet/nasjonalt-barnehageregister-nbr;;
-970018131;Utdanningsdirektoratet;https://data-nsr.udir.no/swagger/docs/v1.0;https://data.norge.no/data/utdanningsdirektoratet/nasjonalt-skoleregister-nsr-0;;
-970018131;Utdanningsdirektoratet;https://data-nxr-fellestjeneste.udir.no/swagger/docs/v1;https://data.norge.no/data/utdanningsdirektoratet/nxr-fellestjeneste-0;;
-970018131;Utdanningsdirektoratet;http://www.barnehagefakta.no:80/swagger/docs/v1;https://data.norge.no/data/utdanningsdirektoratet/barnehagefakta-baf;;
-971032146;KS;https://play-with-fint.felleskomponent.no/administrasjon/personal/v2/api-docs;https://play-with-fint.felleskomponent.no/administrasjon/personal/swagger-ui.html;;
-974760673;Brønnøysundregistrene;https://raw.githubusercontent.com/brreg/openAPI/master/specs/fdk.json;https://github.com/Informasjonsforvaltning/fdk;;https://fellesdatakatalog.brreg.no/datasets/ea9e2aa7-880c-4387-888e-77446acab279
-974760673;Brønnøysundregistrene;https://raw.githubusercontent.com/brreg/openAPI/master/specs/api-cat.json;https://github.com/Informasjonsforvaltning/fdk;;
+Id;OrgNr;OrgName;ApiSpecUrl;ApiDocUrl;NationalComponent;DatasetRefs
+2;971035854;Universitetet i Oslo;https://docker-demo.fsat.no/fsapi/swagger.json;https://docker-demo.fsat.no/fsapi/swagger.html#!/person/get_personer_id;;
+3;971032146;KS;https://ks-no.github.io/api/innsyn-sok-api-v1.json;https://editor.swagger.io/?url=https://ks-no.github.io/api/innsyn-sok-api-v1.json;;
+4;970018131;Utdanningsdirektoratet;https://data-nor.udir.no/swagger/docs/v1.0;https://data.norge.no/data/utdanningsdirektoratet/nasjonalt-register-opplæringskontorer-nor;;
+5;970018131;Utdanningsdirektoratet;https://data-nbr.udir.no/swagger/docs/v1.0;https://data.norge.no/data/utdanningsdirektoratet/nasjonalt-barnehageregister-nbr;;
+6;970018131;Utdanningsdirektoratet;https://data-nsr.udir.no/swagger/docs/v1.0;https://data.norge.no/data/utdanningsdirektoratet/nasjonalt-skoleregister-nsr-0;;
+7;970018131;Utdanningsdirektoratet;https://data-nxr-fellestjeneste.udir.no/swagger/docs/v1;https://data.norge.no/data/utdanningsdirektoratet/nxr-fellestjeneste-0;;
+8;970018131;Utdanningsdirektoratet;http://www.barnehagefakta.no:80/swagger/docs/v1;https://data.norge.no/data/utdanningsdirektoratet/barnehagefakta-baf;;
+9;971032146;KS;https://play-with-fint.felleskomponent.no/administrasjon/personal/v2/api-docs;https://play-with-fint.felleskomponent.no/administrasjon/personal/swagger-ui.html;;
