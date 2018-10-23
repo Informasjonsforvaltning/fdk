@@ -6,7 +6,6 @@ import { readAsText } from 'promise-file-reader';
 import { postApiFile } from '../../api/post-api-file';
 import { postApiLink } from '../../api/post-api-link';
 import localization from '../../utils/localization';
-
 import { ImportDialog } from './import-dialog/import-dialog.component';
 import { ImportFileUpload } from './import-file-upload/import-file-upload.component';
 import ImportLinkUpload from './import-link-upload/import-link-upload.component';
@@ -67,9 +66,11 @@ export class ApiImportPage extends React.Component {
 
   onLinkUpload() {
     const { catalogId, importUrl } = this.state;
+    const { addApiItem } = this.props;
 
     postApiLink(catalogId, importUrl)
       .then(responseData => {
+        addApiItem(responseData);
         redirectWhenImportSucceeded(
           this.props,
           responseData,
@@ -93,6 +94,7 @@ export class ApiImportPage extends React.Component {
 
   onFileUpload(e) {
     const { catalogId } = this.state;
+    const { addApiItem } = this.props;
     const fileMetaData = e.target.files[0] || null;
 
     if (fileMetaData) {
@@ -103,6 +105,7 @@ export class ApiImportPage extends React.Component {
         .then(apiSpec => {
           postApiFile(catalogId, apiSpec)
             .then(responseData => {
+              addApiItem(responseData);
               redirectWhenImportSucceeded(
                 this.props,
                 responseData,
@@ -186,9 +189,11 @@ export class ApiImportPage extends React.Component {
 }
 
 ApiImportPage.defaultProps = {
-  match: null
+  match: null,
+  addApiItem: _.noop()
 };
 
 ApiImportPage.propTypes = {
-  match: PropTypes.object
+  match: PropTypes.object,
+  addApiItem: PropTypes.func
 };

@@ -4,6 +4,7 @@ import { fetchActions } from '../fetchActions';
 export const APIS_REQUEST = 'APIS_REQUEST';
 export const APIS_SUCCESS = 'APIS_SUCCESS';
 export const APIS_FAILURE = 'APIS_FAILURE';
+export const APIS_ADD_ITEM = 'APIS_ADD_ITEM';
 
 function shouldFetch(metaState) {
   const threshold = 60 * 1000; // seconds
@@ -25,6 +26,11 @@ export function fetchApisIfNeededAction(catalogId) {
       ])
     );
 }
+
+export const addApiItemAction = payload => ({
+  type: APIS_ADD_ITEM,
+  payload
+});
 
 const initialState = {};
 
@@ -58,6 +64,19 @@ export default function apis(state = initialState, action) {
           meta: {
             isFetching: false,
             lastFetch: null
+          }
+        }
+      };
+    case APIS_ADD_ITEM:
+      return {
+        ...state,
+        [_.get(action.payload, 'orgNr')]: {
+          items: [
+            ..._.get(state, [_.get(action.payload, 'orgNr'), 'items'], []),
+            action.payload
+          ],
+          meta: {
+            ..._.get(state, [_.get(action.payload, 'orgNr'), 'meta'], [])
           }
         }
       };
