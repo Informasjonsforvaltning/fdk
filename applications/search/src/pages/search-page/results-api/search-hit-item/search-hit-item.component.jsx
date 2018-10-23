@@ -128,11 +128,7 @@ export const SearchHitItem = props => {
         Søketreff.
       </span>
 
-      {renderHeaderLink(
-        item,
-        _.get(item, 'publisher'),
-        publishers
-      )}
+      {renderHeaderLink(item, _.get(item, 'publisher'), publishers)}
 
       {renderExpiredVersion(_.get(item, 'expired'))}
 

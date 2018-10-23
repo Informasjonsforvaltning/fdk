@@ -12,26 +12,26 @@ import { FilterBox } from '../../../components/filter-box/filter-box.component';
 import { SearchPublishersTree } from '../search-publishers-tree/search-publishers-tree.component';
 
 const renderFilterModal = ({
-                             showFilterModal,
-                             closeFilterModal,
-                             apiItems,
-                             searchQuery,
-                             publisherArray,
-                             publishers,
-                             onFilterFormat,
-                             onFilterPublisherHierarchy
-                           }) => (
+  showFilterModal,
+  closeFilterModal,
+  apiItems,
+  searchQuery,
+  publisherArray,
+  publishers,
+  onFilterFormat,
+  onFilterPublisherHierarchy
+}) => (
   <Modal isOpen={showFilterModal} toggle={closeFilterModal}>
     <ModalHeader toggle={closeFilterModal}>{localization.filter}</ModalHeader>
     <ModalBody>
       <div className="search-filters">
-        {/*<FilterBox*/}
-        {/*htmlKey={2}*/}
-        {/*title={localization.facet.accessRight}*/}
-        {/*filter={apiItems.aggregations.accessRights}*/}
-        {/*onClick={onFilterAccessRights}*/}
-        {/*activeFilter={searchQuery.accessrights}*/}
-        {/*/>*/}
+        {/* <FilterBox */}
+        {/* htmlKey={2} */}
+        {/* title={localization.facet.accessRight} */}
+        {/* filter={apiItems.aggregations.accessRights} */}
+        {/* onClick={onFilterAccessRights} */}
+        {/* activeFilter={searchQuery.accessrights} */}
+        {/* /> */}
         <SearchPublishersTree
           title={localization.facet.provider}
           filter={publisherArray}
@@ -146,19 +146,17 @@ export const ResultsApi = props => {
           </span>
           {_.get(apiItems, 'aggregations') && (
             <div>
-              {renderFilterModal(
-                {
-                  showFilterModal,
-                  closeFilterModal,
-                  apiItems,
-                  onFilterAccessRights,
-                  searchQuery,
-                  publisherArray,
-                  publishers,
-                  onFilterFormat,
-                  onFilterPublisherHierarchy
-                }
-              )}
+              {renderFilterModal({
+                showFilterModal,
+                closeFilterModal,
+                apiItems,
+                onFilterAccessRights,
+                searchQuery,
+                publisherArray,
+                publishers,
+                onFilterFormat,
+                onFilterPublisherHierarchy
+              })}
               <SearchPublishersTree
                 title={localization.facet.provider}
                 filter={publisherArray}
