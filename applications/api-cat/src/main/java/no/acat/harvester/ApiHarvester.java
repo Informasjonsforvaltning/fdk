@@ -51,12 +51,18 @@ public class ApiHarvester {
     }
 
     public List<ApiDocument> harvestAll() {
+
+        logger.info("harvestAll");
+
         List<ApiDocument> result = new ArrayList<>();
 
         List<ApiRegistrationPublic> apiRegistrations = getApiRegistrations();
+        int registrationCount = apiRegistrations != null ? apiRegistrations.size() : 0;
+        logger.info("Extracted {} api-registrations", registrationCount);
 
         for (ApiRegistrationPublic apiRegistration : apiRegistrations) {
             try {
+                logger.debug("Indexing: {}", apiRegistration.getId());
                 ApiDocument apiDocument = apiDocumentBuilderService.create(apiRegistration);
                 indexApi(apiDocument);
                 result.add(apiDocument);

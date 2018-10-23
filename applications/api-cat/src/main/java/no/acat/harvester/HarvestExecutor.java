@@ -8,10 +8,10 @@ import javax.annotation.PostConstruct;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
 
-import static no.acat.harvester.HarvestTask.HARVEST_ALL;
-
 @Service
 public class HarvestExecutor {
+    public static final String HARVEST_ALL = "harvestAll";
+
     private static final Logger logger = LoggerFactory.getLogger(HarvestExecutor.class);
     private ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(1);
     private ApiHarvester apiHarvester;
@@ -24,20 +24,28 @@ public class HarvestExecutor {
 
     @PostConstruct
     void harvestLoop() {
-        executor.submit(() -> {
+        executor.execute(() -> {
+
             while (true) {
-                Thread.sleep(1000L);
-                HarvestTask task;
-                do {
-                    task = harvestQueue.poll();
+                try {
+                    Thread.sleep(1000L);
+
+                    String task = harvestQueue.poll();
+
                     if (task != null) {
                         logger.debug("Running task {}", task);
-                        switch (task.getMethod()) {
+                        switch (task) {
                             case HARVEST_ALL:
-                                apiHarvester.harvestAll();
+                                try {
+                                    apiHarvester.harvestAll();
+                                } catch (Exception e) {
+                                    logger.warn("Problem with harvestAll: {}", e.getMessage());
+                                }
                         }
                     }
-                } while (task != null);
+                } catch (InterruptedException ie) {
+                    logger.error("Harvest loop interrupted!");
+                }
             }
         });
 
