@@ -15,7 +15,7 @@ import RegDataset from './pages/dataset-registration-page/dataset-registration-p
 import Header from './components/app-header/app-header.component';
 import Footer from './components/app-footer/app-footer.component';
 import LoginDialog from './components/app-login-dialog/app-login-dialog.component';
-import { ApiImportPage } from './pages/api-import-page/api-import-page';
+import { ConnectedApiImportPage } from './pages/api-import-page/connected-api-import-page';
 
 const store = configureStore();
 
@@ -46,7 +46,7 @@ const routes = (
     <ProtectedRoute
       exact
       path="/catalogs/:catalogId/apis/import"
-      component={ApiImportPage}
+      component={ConnectedApiImportPage}
     />
     <ProtectedRoute
       exact
