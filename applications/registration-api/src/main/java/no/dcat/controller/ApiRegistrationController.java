@@ -133,7 +133,7 @@ public class ApiRegistrationController {
         try {
             String apiSpecUrl = apiRegistrationData.getApiSpecUrl();
             String apiSpec = apiRegistrationData.getApiSpec();
-            OpenAPI openAPI = this.apiCatClient.convert(apiSpecUrl, apiSpec);
+            OpenAPI openAPI = apiCatClient.convert(apiSpecUrl, apiSpec);
             apiRegistrationData.setOpenApi(openAPI);
         } catch (Exception e) {
             throw new BadRequestException(e.getMessage());
