@@ -92,9 +92,9 @@ export const SearchHitHeader = props => {
 
       <div className="mb-4">
         {!publisherItems &&
-        publisher && (
-          <PublisherLabel label={publisherLabel} publisherItem={publisher} />
-        )}
+          publisher && (
+            <PublisherLabel label={publisherLabel} publisherItem={publisher} />
+          )}
       </div>
 
       {theme && <div className="mb-4">{renderThemes(theme)}</div>}

@@ -63,11 +63,7 @@ const renderAPIInfo = ({ children }) => {
   if (!children) {
     return null;
   }
-  return (
-    <ListRegular title={localization.apiInfo}>
-      {children}
-    </ListRegular>
-  );
+  return <ListRegular title={localization.apiInfo}>{children}</ListRegular>;
 };
 
 const renderDatasetReference = (datasetReference, index) => {
@@ -260,8 +256,7 @@ export const ApiDetailsPage = props => {
 ApiDetailsPage.defaultProps = {
   apiItem: null,
   publisherItems: null,
-  fetchPublishersIfNeeded: () => {
-  }
+  fetchPublishersIfNeeded: () => {}
 };
 
 ApiDetailsPage.propTypes = {

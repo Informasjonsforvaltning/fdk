@@ -9,7 +9,10 @@ import localization from '../../../../lib/localization';
 import { getTranslateText } from '../../../../lib/translateText';
 import { SearchHitHeader } from '../../../../components/search-hit-header/search-hit-header.component';
 import './search-hit-item.scss';
-import { getReferenceDataByUri, REFERENCEDATA_DISTRIBUTIONTYPE } from '../../../../redux/modules/referenceData';
+import {
+  getReferenceDataByUri,
+  REFERENCEDATA_DISTRIBUTIONTYPE
+} from '../../../../redux/modules/referenceData';
 
 const renderFormats = (source, code, referenceData) => {
   const { distribution } = source;
@@ -79,7 +82,7 @@ export const SearchHitItem = props => {
     const objectiveLength = objective.length;
     description = `${description} ${objective.substr(0, 200 - freeLength)} ${
       objectiveLength > freeLength ? '...' : ''
-      }`;
+    }`;
   }
   const link = `/datasets/${id}`;
 
