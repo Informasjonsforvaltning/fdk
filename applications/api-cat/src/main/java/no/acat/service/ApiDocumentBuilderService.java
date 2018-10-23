@@ -48,7 +48,7 @@ public class ApiDocumentBuilderService {
         this.elasticsearchClient = elasticsearchService.getClient();
     }
 
-    public ApiDocument create(ApiRegistrationPublic apiRegistration) throws IOException, ParseException {
+    public ApiDocument createFromApiRegistration(ApiRegistrationPublic apiRegistration, String harvestSourceUri) throws IOException, ParseException {
         String apiSpecUrl = apiRegistration.getApiSpecUrl();
         String apiSpec = apiRegistration.getApiSpec();
 
@@ -59,10 +59,11 @@ public class ApiDocumentBuilderService {
 
         openApi = Parser.parse(apiSpec);
 
-        String id = lookupOrGenerateId(apiRegistration);
+        String id = lookupOrGenerateId(harvestSourceUri);
 
         ApiDocument apiDocument = new ApiDocument().builder()
             .id(id)
+            .harvestSourceUri(harvestSourceUri)
             .apiSpecUrl(apiSpecUrl)
             .apiSpec(apiSpec)
             .build();
@@ -70,8 +71,7 @@ public class ApiDocumentBuilderService {
         populateFromApiRegistration(apiDocument, apiRegistration);
         populateFromOpenApi(apiDocument, openApi);
 
-        logger.info("ApiDocument is created. id={}, url={}", apiDocument.getId(), apiDocument.getApiSpecUrl());
-
+        logger.info("ApiDocument is created. id={}, harvestSourceUri={}", apiDocument.getId(), apiDocument.getHarvestSourceUri());
         return apiDocument;
     }
 
@@ -86,14 +86,13 @@ public class ApiDocumentBuilderService {
         apiDocument.setAvailability(apiRegistration.getAvailability());
     }
 
-    String lookupOrGenerateId(ApiRegistrationPublic apiRegistration) {
+    String lookupOrGenerateId(String harvestSourceUri) {
         String id = null;
 
-        String apiSpecUrl = apiRegistration.getApiSpecUrl();
         SearchResponse response = elasticsearchClient.prepareSearch("acat")
             .setTypes("apidocument")
             .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
-            .setQuery(QueryBuilders.termQuery("apiSpecUrl", apiSpecUrl))
+            .setQuery(QueryBuilders.termQuery("harvestSourceUri", harvestSourceUri))
             .get();
 
         SearchHit[] hits = response.getHits().getHits();

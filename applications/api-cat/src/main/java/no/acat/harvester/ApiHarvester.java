@@ -29,7 +29,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /*
 The purpose of the harvester is to ensure that search index is synchronized to registrations.
@@ -61,13 +60,16 @@ public class ApiHarvester {
         logger.info("Extracted {} api-registrations", registrationCount);
 
         for (ApiRegistrationPublic apiRegistration : apiRegistrations) {
+            String harvestSourceUri = registrationApiClient.getPublicApisUrlBase() + '/' + apiRegistration.getId();
             try {
-                logger.debug("Indexing: {}", apiRegistration.getId());
-                ApiDocument apiDocument = apiDocumentBuilderService.create(apiRegistration);
+                logger.debug("Indexing from source uri: {}", harvestSourceUri);
+                ApiDocument apiDocument = apiDocumentBuilderService.createFromApiRegistration(apiRegistration, harvestSourceUri);
                 indexApi(apiDocument);
                 result.add(apiDocument);
             } catch (Exception e) {
-                logger.error("Error importing API record: {}", e.getMessage());
+                logger.error("Error importing API record. ErrorClass={} message={}", e.getClass().getName(), e.getMessage());
+                logger.debug("Error stacktrace", e);
+
             }
         }
         return result;
@@ -79,6 +81,7 @@ public class ApiHarvester {
         IndexRequest request = new IndexRequest("acat", "apidocument", id);
 
         String json = mapper.writeValueAsString(document);
+        logger.trace("Indexing document source: {}", json);
         request.source(json);
         bulkRequest.add(request);
 
@@ -88,7 +91,7 @@ public class ApiHarvester {
             throw new RuntimeException(msg);
         }
 
-        logger.info("ApiDocument is indexed. id={}, url={}", document.getId(), document.getApiSpecUrl());
+        logger.info("ApiDocument is indexed. id={}, harvestSourceUri={}", document.getId(), document.getHarvestSourceUri());
     }
 
     List<ApiRegistrationPublic> getApiRegistrations() {
@@ -98,17 +101,9 @@ public class ApiHarvester {
         Collection<ApiRegistrationPublic> apiRegistrationsFromRegistrationApi = registrationApiClient.getPublished();
         logger.info("Loaded registrations from registration-api {}", apiRegistrationsFromRegistrationApi.size());
 
-        // remove duplicates from csv
-        List<String> registeredSpecUrls = apiRegistrationsFromRegistrationApi.stream()
-            .map(r -> r.getApiSpecUrl())
-            .collect(Collectors.toList());
-        List<ApiRegistrationPublic> uniqueApiRegistrationsFromCsv = apiRegistrationsFromCsv.stream()
-            .filter(c -> !registeredSpecUrls.contains(c.getApiSpecUrl()))
-            .collect(Collectors.toList());
-
         // concatenate lists
         List<ApiRegistrationPublic> result = new ArrayList<>();
-        result.addAll(uniqueApiRegistrationsFromCsv);
+        result.addAll(apiRegistrationsFromCsv);
         result.addAll(apiRegistrationsFromRegistrationApi);
         logger.info("Total registrations {}", result.size());
 
@@ -130,6 +125,7 @@ public class ApiHarvester {
             for (CSVRecord line : records) {
                 ApiRegistrationPublic apiRegistration = new ApiRegistrationPublic();
 
+                apiRegistration.setId(line.get("Id"));
                 apiRegistration.setCatalogId(line.get("OrgNr"));
                 apiRegistration.setApiSpecUrl(line.get("ApiSpecUrl"));
                 apiRegistration.setApiDocUrl(line.get("ApiDocUrl"));
