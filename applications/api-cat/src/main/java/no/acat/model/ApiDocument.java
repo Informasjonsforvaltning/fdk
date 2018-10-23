@@ -16,8 +16,11 @@ import java.util.Set;
 @ToString(includeFieldNames = false)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ApiDocument {
-    @ApiModelProperty("The id given to the object by the harvest system")
+    @ApiModelProperty("The id given by the harvest system")
     private String id;
+
+    @ApiModelProperty("The source where the record was harvested from")
+    private String harvestSourceUri;
 
     @ApiModelProperty("The url of the specification which are used to harvest the specification ")
     private String apiSpecUrl;

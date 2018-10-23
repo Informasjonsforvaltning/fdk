@@ -1,7 +1,7 @@
 {
   "apidocument": {
     "properties": {
-      "apiSpecUrl": {
+      "harvestSourceUri": {
         "type": "keyword"
       },
       "publisher": {
