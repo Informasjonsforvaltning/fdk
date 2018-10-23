@@ -18,7 +18,7 @@ export function fetchApisIfNeededAction(catalogId) {
   return (dispatch, getState) =>
     shouldFetch(_.get(getState(), ['apis', catalogId, 'meta'])) &&
     dispatch(
-      fetchActions(`/catalogs/${catalogId}/apis`, [
+      fetchActions(`/catalogs/${catalogId}/apis?size=1000`, [
         { type: APIS_REQUEST, meta: { catalogId } },
         { type: APIS_SUCCESS, meta: { catalogId } },
         { type: APIS_FAILURE, meta: { catalogId } }
