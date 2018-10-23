@@ -41,7 +41,7 @@ exports[`should render ImportFileUpload correctly 1`] = `
     Importer ny fil
   </InputFile>
   <Button
-    className="fdk-color-blue-dark"
+    className="fdk-color-blue-dark fdk-bg-color-white"
     color="transparent"
     onClick={[MockFunction]}
     tag="button"
