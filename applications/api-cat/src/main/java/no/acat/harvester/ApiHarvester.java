@@ -25,10 +25,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 /*
 The purpose of the harvester is to ensure that search index is synchronized to registrations.
@@ -59,11 +56,13 @@ public class ApiHarvester {
         int registrationCount = apiRegistrations != null ? apiRegistrations.size() : 0;
         logger.info("Extracted {} api-registrations", registrationCount);
 
+        Date harvestDate= new Date();
+
         for (ApiRegistrationPublic apiRegistration : apiRegistrations) {
             String harvestSourceUri = registrationApiClient.getPublicApisUrlBase() + '/' + apiRegistration.getId();
             try {
                 logger.debug("Indexing from source uri: {}", harvestSourceUri);
-                ApiDocument apiDocument = apiDocumentBuilderService.createFromApiRegistration(apiRegistration, harvestSourceUri);
+                ApiDocument apiDocument = apiDocumentBuilderService.createFromApiRegistration(apiRegistration, harvestSourceUri, harvestDate);
                 indexApi(apiDocument);
                 result.add(apiDocument);
             } catch (Exception e) {
