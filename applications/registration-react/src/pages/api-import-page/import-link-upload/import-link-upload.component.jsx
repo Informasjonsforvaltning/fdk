@@ -64,7 +64,7 @@ export const ImportLinkUpload = props => {
       </Button>
       <Button
         testid="button-cancel"
-        className="fdk-color-blue-dark"
+        className="fdk-color-blue-dark fdk-bg-color-white"
         color="transparent"
         onClick={handleCancelImport}
       >

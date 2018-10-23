@@ -42,7 +42,7 @@ export const ImportFileUpload = props => {
         {localization.api.import.importNewFile}
       </InputFile>
       <Button
-        className="fdk-color-blue-dark"
+        className="fdk-color-blue-dark fdk-bg-color-white"
         color="transparent"
         onClick={handleCancelImport}
       >
