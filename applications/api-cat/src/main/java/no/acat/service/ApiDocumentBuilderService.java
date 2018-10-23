@@ -15,11 +15,6 @@ import no.dcat.htmlclean.HtmlCleaner;
 import no.dcat.shared.Contact;
 import no.dcat.shared.DatasetReference;
 import no.dcat.shared.Publisher;
-import org.elasticsearch.action.search.SearchResponse;
-import org.elasticsearch.action.search.SearchType;
-import org.elasticsearch.client.Client;
-import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.search.SearchHit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,14 +33,14 @@ denormalizes it for indexing and display purpose in search service
 @Service
 public class ApiDocumentBuilderService {
     private static final Logger logger = LoggerFactory.getLogger(ApiDocumentBuilderService.class);
-    private Client elasticsearchClient;
+    private ElasticsearchService elasticsearchService;
 
     @Value("${application.searchApiUrl}")
     private String searchApiUrl;
 
     @Autowired
     public ApiDocumentBuilderService(ElasticsearchService elasticsearchService) {
-        this.elasticsearchClient = elasticsearchService.getClient();
+        this.elasticsearchService = elasticsearchService;
     }
 
     public ApiDocument createFromApiRegistration(ApiRegistrationPublic apiRegistration, String harvestSourceUri) throws IOException, ParseException {
@@ -59,7 +54,8 @@ public class ApiDocumentBuilderService {
 
         openApi = Parser.parse(apiSpec);
 
-        String id = lookupOrGenerateId(harvestSourceUri);
+        ApiDocument existingApiDocument = elasticsearchService.getApiDocumentByHarvestSourceUri(harvestSourceUri);
+        String id = existingApiDocument != null ? existingApiDocument.getId() : UUID.randomUUID().toString();
 
         ApiDocument apiDocument = new ApiDocument().builder()
             .id(id)
@@ -80,30 +76,6 @@ public class ApiDocumentBuilderService {
         apiDocument.setNationalComponent(apiRegistration.isNationalComponent());
         apiDocument.setDatasetReferences(extractDatasetReferences(apiRegistration));
         apiDocument.setApiDocUrl(apiRegistration.getApiDocUrl());
-    }
-
-    String lookupOrGenerateId(String harvestSourceUri) {
-        String id = null;
-
-        SearchResponse response = elasticsearchClient.prepareSearch("acat")
-            .setTypes("apidocument")
-            .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
-            .setQuery(QueryBuilders.termQuery("harvestSourceUri", harvestSourceUri))
-            .get();
-
-        SearchHit[] hits = response.getHits().getHits();
-        if (hits.length > 0) {
-            id = hits[0].getId();
-        }
-
-        if (id != null && !id.isEmpty()) {
-            logger.info("ApiDocument exists in index, looked up id={}", id);
-            return id;
-        }
-
-        id = UUID.randomUUID().toString();
-        logger.info("ApiDocument does not exist in index, generated id={}", id);
-        return id;
     }
 
     Publisher lookupPublisher(String orgNr) {
