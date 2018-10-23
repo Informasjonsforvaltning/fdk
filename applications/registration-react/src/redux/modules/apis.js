@@ -70,13 +70,13 @@ export default function apis(state = initialState, action) {
     case APIS_ADD_ITEM:
       return {
         ...state,
-        [_.get(action.payload, 'orgNr')]: {
+        [_.get(action.payload, 'catalogId')]: {
           items: [
-            ..._.get(state, [_.get(action.payload, 'orgNr'), 'items'], []),
+            ..._.get(state, [_.get(action.payload, 'catalogId'), 'items'], []),
             action.payload
           ],
           meta: {
-            ..._.get(state, [_.get(action.payload, 'orgNr'), 'meta'], [])
+            ..._.get(state, [_.get(action.payload, 'catalogId'), 'meta'], [])
           }
         }
       };
