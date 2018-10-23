@@ -60,14 +60,14 @@ const renderOpenApiInfo = (info, paths) => {
           </div>
         </div>
       )}
-      {_.get(info, ['termsOfService', 'url']) && (
+      {_.get(info, 'termsOfService') && (
         <div className="d-flex list-regular--item">
           <div className="col-4 pl-0 fdk-text-strong">
             {localization.termsOfService}
           </div>
           <div className="col-8">
-            <a href={_.get(info, ['termsOfService', 'url'])}>
-              {_.get(info, ['termsOfService', 'name'])}
+            <a href={_.get(info, 'termsOfService')}>
+              {_.get(info, 'termsOfService')}
               <i className="fa fa-external-link fdk-fa-right" />
             </a>
           </div>
