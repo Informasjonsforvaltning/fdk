@@ -4,6 +4,20 @@
       "harvestSourceUri": {
         "type": "keyword"
       },
+      "harvest": {
+        "dynamic": false,
+        "properties": {
+          "firstHarvested": {
+            "type": "date"
+          },
+          "lastHarvested": {
+            "type": "date"
+          },
+          "lastChanged": {
+            "type": "date"
+          }
+        }
+      },
       "publisher": {
         "properties": {
           "name": {

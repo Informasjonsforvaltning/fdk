@@ -29,7 +29,7 @@ public class ApiHarvestTest {
         ElasticsearchService elasticsearchServiceMock = mock(ElasticsearchService.class);
 
         ApiDocumentBuilderService apiDocumentBuilderServiceMock = mock(ApiDocumentBuilderService.class);
-        when(apiDocumentBuilderServiceMock.createFromApiRegistration(any(), any())).thenReturn(new ApiDocument());
+        when(apiDocumentBuilderServiceMock.createFromApiRegistration(any(), any(),any())).thenReturn(new ApiDocument());
 
         RegistrationApiClient registrationApiClientMock = mock(RegistrationApiClient.class);
         when(registrationApiClientMock.getPublished()).thenReturn(new ArrayList<>());
