@@ -8,14 +8,17 @@ import io.swagger.v3.oas.models.media.Content;
 import io.swagger.v3.oas.models.responses.ApiResponse;
 import io.swagger.v3.oas.models.responses.ApiResponses;
 import no.acat.model.ApiDocument;
+import no.acat.model.HarvestMetadataFactory;
 import no.acat.spec.ParseException;
 import no.dcat.client.registrationapi.ApiRegistrationPublic;
 import no.dcat.htmlclean.HtmlCleaner;
 import no.dcat.shared.Contact;
 import no.dcat.shared.DatasetReference;
+import no.dcat.shared.HarvestMetadata;
 import no.dcat.shared.Publisher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -44,7 +47,7 @@ public class ApiDocumentBuilderService {
         this.parserService = parserService;
     }
 
-    public ApiDocument createFromApiRegistration(ApiRegistrationPublic apiRegistration, String harvestSourceUri) throws IOException, ParseException {
+    public ApiDocument createFromApiRegistration(ApiRegistrationPublic apiRegistration, String harvestSourceUri, Date harvestDate) throws IOException, ParseException {
         String apiSpecUrl = apiRegistration.getApiSpecUrl();
         String apiSpec = getApiSpec(apiRegistration);
         OpenAPI openApi = parserService.parse(apiSpec);
@@ -61,9 +64,21 @@ public class ApiDocumentBuilderService {
 
         populateFromApiRegistration(apiDocument, apiRegistration);
         populateFromOpenApi(apiDocument, openApi);
+        updateHarvestMetadata(apiDocument, harvestDate, existingApiDocument);
 
         logger.info("ApiDocument is created. id={}, harvestSourceUri={}", apiDocument.getId(), apiDocument.getHarvestSourceUri());
         return apiDocument;
+    }
+
+    void updateHarvestMetadata(ApiDocument apiDocument, Date harvestDate, ApiDocument existingApiDocument) {
+        HarvestMetadata oldHarvest = existingApiDocument != null ? existingApiDocument.getHarvest() : null;
+
+        // new document is not considered a change
+        boolean hasChanged = existingApiDocument != null && !isEqualContent(apiDocument, existingApiDocument);
+
+        HarvestMetadata harvest = HarvestMetadataFactory.recordHarvest(oldHarvest, harvestDate, hasChanged);
+
+        apiDocument.setHarvest(harvest);
     }
 
     String getApiSpec(ApiRegistrationPublic apiRegistration) throws IOException {
@@ -74,6 +89,20 @@ public class ApiDocumentBuilderService {
             apiSpec = parserService.getSpecFromUrl(apiSpecUrl);
         }
         return apiSpec;
+    }
+
+    boolean isEqualContent(ApiDocument first, ApiDocument second) {
+        String[] ignoredProperties = {"id", "harvest", "openApi"};
+        ApiDocument firstContent = new ApiDocument();
+        ApiDocument secondContent = new ApiDocument();
+
+        BeanUtils.copyProperties(first, firstContent, ignoredProperties);
+        BeanUtils.copyProperties(second, secondContent, ignoredProperties);
+
+        // This is a poor mans comparator. Seems to include all fields
+        String firstString = firstContent.toString();
+        String secondString = secondContent.toString();
+        return firstString.equals(secondString);
     }
 
     void populateFromApiRegistration(ApiDocument apiDocument, ApiRegistrationPublic apiRegistration) {
