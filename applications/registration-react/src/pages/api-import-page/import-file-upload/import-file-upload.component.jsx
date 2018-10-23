@@ -41,7 +41,11 @@ export const ImportFileUpload = props => {
       >
         {localization.api.import.importNewFile}
       </InputFile>
-      <Button color="primary" onClick={handleCancelImport}>
+      <Button
+        className="fdk-color-blue-dark"
+        color="transparent"
+        onClick={handleCancelImport}
+      >
         {localization.api.import.cancel}
       </Button>
     </PanelBase>
