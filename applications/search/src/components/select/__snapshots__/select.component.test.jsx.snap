@@ -49,7 +49,7 @@ exports[`should render Select correctly with active sort 1`] = `
       title=""
       toggle={true}
     >
-      Sort by modified
+      Sort by published date
     </DropdownItem>
     <DropdownItem
       key="3"
@@ -113,7 +113,7 @@ exports[`should render Select correctly with no active sort 1`] = `
       title=""
       toggle={true}
     >
-      Sort by modified
+      Sort by published date
     </DropdownItem>
     <DropdownItem
       key="3"
