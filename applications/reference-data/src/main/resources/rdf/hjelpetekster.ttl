@@ -350,8 +350,8 @@ Angi referanser til andre datasett som gir supplerende informasjon om innholdet.
 
 # Agent_identifier (Enhet organisasjonsnummer)
 :Agent_identifier
-    dct:abstract """Enheter skal oppgis med organisasjonsnummer. """@no ;
-    dct:description """Enheter skal oppgis med organisasjonsnummer. """@no .  
+    dct:abstract """Enheter skal oppgis med organisasjonsnummer."""@no ;
+    dct:description """Enheter skal oppgis med organisasjonsnummer."""@no .
 
 # Agent_type (Enhet utgivertype)
 :Agent_type
@@ -381,7 +381,25 @@ Dette kan være navnet til en gruppe, avdeling, seksjon eller liknende i organis
     dct:abstract """Angi referanse til kontaktskjema på web dersom dette er en ønsket kontaktform"""@no ;
     dct:description """Angi referanse til kontaktskjema på web dersom dette er en ønsket kontaktform"""@no .
 
+# Traffic_Limits (Trafikkbegrensninger)
+:Traffic_Limits
+    dct:abstract """Begrensninger på antall kall til API e.l. per bruker."""@no ;
+    dct:description """Begrensninger på antall kall til API e.l. per bruker."""@no .
 
+# Performance (Kapasitet og ytelse)
+:Performance
+    dct:abstract """Oppgi responstiden til API-et. Typisk angitt i ms. Er det begrensinger på antall samtidige brukere?"""@no ;
+    dct:description """Oppgi responstiden til API-et. Typisk angitt i ms. Er det begrensinger på antall samtidige brukere?"""@no .
+
+# Availability (Pålitelighet)
+:Availability
+    dct:abstract """Oppgi oppetiden til API-et."""@no ;
+    dct:description """Oppgi oppetiden til API-et."""@no .
+
+# Cost (Kostnader)
+:Cost
+    dct:abstract """Kostnader forbundet med å bruke API-et. Transaksjonskostnader, abonnement e.l."""@no ;
+    dct:description """Kostnader forbundet med å bruke API-et. Transaksjonskostnader, abonnement e.l."""@no .
 
 # Distribution description (beskrivelse)
 :Distribution_description 
