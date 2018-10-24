@@ -28,7 +28,7 @@ public class OpenApiV3JsonSpecConverter {
         try {
             SwaggerParseResult swaggerParseResult = new OpenAPIV3Parser().readContents(spec, null, null);
 
-            if (swaggerParseResult.getOpenAPI() == null && (swaggerParseResult.getMessages().size()> 0)) {
+            if (swaggerParseResult.getOpenAPI() == null && (swaggerParseResult.getMessages().size() > 0)) {
                 throw new ParseException("Failed to parse document. Messages: " + String.join(" ", swaggerParseResult.getMessages()));
             }
             return swaggerParseResult.getOpenAPI();
