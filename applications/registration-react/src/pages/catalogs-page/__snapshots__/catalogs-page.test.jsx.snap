@@ -20,12 +20,7 @@ exports[`should render RegCatalogs correctly 1`] = `
       </div>
       <CardGroup
         tag="div"
-      >
-        <FeatureToggle
-          featureName="API"
-          showOnlyWhenDisabled={false}
-        />
-      </CardGroup>
+      />
     </div>
   </div>
 </div>
