@@ -2,7 +2,6 @@ package no.acat.harvester;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import no.acat.config.Utils;
 import no.acat.model.ApiDocument;
 import no.acat.service.ApiDocumentBuilderService;
 import no.acat.service.ElasticsearchService;
@@ -40,10 +39,11 @@ public class ApiHarvester {
     private Client elasticsearchClient;
     private ApiDocumentBuilderService apiDocumentBuilderService;
     private RegistrationApiClient registrationApiClient;
-    private ObjectMapper mapper = Utils.jsonMapper();
+    private ObjectMapper mapper;
 
     @Autowired
-    public ApiHarvester(ElasticsearchService elasticsearchService, ApiDocumentBuilderService apiDocumentBuilderService, RegistrationApiService registrationApiService) {
+    public ApiHarvester(ObjectMapper mapper, ElasticsearchService elasticsearchService, ApiDocumentBuilderService apiDocumentBuilderService, RegistrationApiService registrationApiService) {
+        this.mapper = mapper;
         this.elasticsearchClient = elasticsearchService.getClient();
         this.registrationApiClient = registrationApiService.getClient();
         this.apiDocumentBuilderService = apiDocumentBuilderService;

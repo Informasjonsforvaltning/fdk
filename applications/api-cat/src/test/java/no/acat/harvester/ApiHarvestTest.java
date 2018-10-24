@@ -1,5 +1,6 @@
 package no.acat.harvester;
 
+import no.acat.config.Utils;
 import no.acat.model.ApiDocument;
 import no.acat.service.ApiDocumentBuilderService;
 import no.acat.service.ElasticsearchService;
@@ -35,7 +36,7 @@ public class ApiHarvestTest {
         RegistrationApiService registrationApiService = mock(RegistrationApiService.class);
         when(registrationApiService.getClient()).thenReturn(registrationApiClientMock);
 
-        ApiHarvester harvester = new ApiHarvester(elasticsearchServiceMock, apiDocumentBuilderServiceMock, registrationApiService);
+        ApiHarvester harvester = new ApiHarvester(Utils.jsonMapper(), elasticsearchServiceMock, apiDocumentBuilderServiceMock, registrationApiService);
 
         ApiHarvester spyHarvester = spy(harvester);
         doNothing().when(spyHarvester).indexApi(any());
