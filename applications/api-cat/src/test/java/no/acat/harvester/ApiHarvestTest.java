@@ -12,10 +12,7 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.*;
 
 @Category(UnitTest.class)
@@ -37,12 +34,9 @@ public class ApiHarvestTest {
 
         ApiHarvester harvester = new ApiHarvester(elasticsearchServiceMock, apiDocumentBuilderServiceMock, registrationApiService);
 
-        ApiHarvester spyHarvester = spy(harvester);
-        doNothing().when(spyHarvester).indexApi(any());
-
-        List<ApiDocument> response = spyHarvester.harvestAll();
+        harvester.harvestAll();
         final int FROM_CSV = 8;
-        assertThat(response.size(), is(FROM_CSV));
+        verify(elasticsearchServiceMock, times(FROM_CSV)).createOrReplaceApiDocument(any());
 
     }
 }

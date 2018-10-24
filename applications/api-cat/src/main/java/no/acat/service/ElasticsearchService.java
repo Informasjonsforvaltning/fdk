@@ -1,10 +1,21 @@
 package no.acat.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import no.acat.model.ApiDocument;
 import no.dcat.client.elasticsearch5.Elasticsearch5Client;
 import org.apache.commons.io.IOUtils;
+import org.elasticsearch.action.bulk.BulkRequestBuilder;
+import org.elasticsearch.action.bulk.BulkResponse;
+import org.elasticsearch.action.index.IndexRequest;
+import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.client.Client;
+import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.SearchHit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
@@ -23,6 +34,13 @@ public class ElasticsearchService {
     @Value("${elastic.clusterName}")
     private String clusterName;
     private Elasticsearch5Client elasticsearch;
+
+    private ObjectMapper mapper;
+
+    @Autowired
+    public ElasticsearchService(ObjectMapper mapper) {
+        this.mapper = mapper;
+    }
 
     @PostConstruct
     void validate() {
@@ -77,4 +95,25 @@ public class ElasticsearchService {
             logger.error("Unable to connect to Elasticsearch: {}", e.toString(), e);
         }
     }
+
+    public void createOrReplaceApiDocument(ApiDocument document) throws IOException {
+        BulkRequestBuilder bulkRequest = getClient().prepareBulk();
+        String id = document.getId();
+
+        IndexRequest request = new IndexRequest("acat", "apidocument", id);
+        String json = mapper.writeValueAsString(document);
+        logger.trace("Indexing document source: {}", json);
+
+        request.source(json);
+        bulkRequest.add(request);
+
+        BulkResponse bulkResponse = bulkRequest.execute().actionGet();
+        if (bulkResponse.hasFailures()) {
+            final String msg = String.format("Failed index of %s. Reason %s", id, bulkResponse.buildFailureMessage());
+            throw new RuntimeException(msg);
+        }
+
+        logger.info("ApiDocument is indexed. id={}, harvestSourceUri={}", document.getId(), document.getHarvestSourceUri());
+    }
+
 }
