@@ -28,7 +28,7 @@ exports[`should render api-ApiEndpoints correctly 1`] = `
     </div>
   </div>
   <React.Fragment
-    key="get-/catalogs"
+    key="get-/"
   >
     <div
       className="d-flex list-regular--item"
@@ -38,15 +38,201 @@ exports[`should render api-ApiEndpoints correctly 1`] = `
       >
         GET
          
-        /catalogs
+        /
       </div>
       <div
         className="col-7"
       >
-        The three formats are: text/turtle, application/ld+json and application/rdf+xml
+        Hent alle tjenester
       </div>
     </div>
   </React.Fragment>
+  <React.Fragment
+    key="get-/enheter"
+  >
+    <div
+      className="d-flex list-regular--item"
+    >
+      <div
+        className="col-5 pl-0 fdk-text-strong"
+      >
+        GET
+         
+        /enheter
+      </div>
+      <div
+        className="col-7"
+      >
+        Hent alle enheter
+      </div>
+    </div>
+  </React.Fragment>
+  <React.Fragment
+    key="get-/enheter/{organisasjonsnummer}"
+  >
+    <div
+      className="d-flex list-regular--item"
+    >
+      <div
+        className="col-5 pl-0 fdk-text-strong"
+      >
+        GET
+         
+        /enheter/{organisasjonsnummer}
+      </div>
+      <div
+        className="col-7"
+      >
+        Hent detaljer om enhet
+      </div>
+    </div>
+  </React.Fragment>
+  <React.Fragment
+    key="post-/underenheter"
+  >
+    <div
+      className="d-flex list-regular--item"
+    >
+      <div
+        className="col-5 pl-0 fdk-text-strong"
+      >
+        POST
+         
+        /underenheter
+      </div>
+      <div
+        className="col-7"
+      >
+        Hent alle underenheter
+      </div>
+    </div>
+  </React.Fragment>
+  <React.Fragment
+    key="get-/underenheter/{organisasjonsnummer}"
+  >
+    <div
+      className="d-flex list-regular--item"
+    >
+      <div
+        className="col-5 pl-0 fdk-text-strong"
+      >
+        GET
+         
+        /underenheter/{organisasjonsnummer}
+      </div>
+      <div
+        className="col-7"
+      >
+        Hent detaljer om underenhet
+      </div>
+    </div>
+  </React.Fragment>
+  <React.Fragment
+    key="get-/oppdateringer/enheter"
+  >
+    <div
+      className="d-flex list-regular--item"
+    >
+      <div
+        className="col-5 pl-0 fdk-text-strong"
+      >
+        GET
+         
+        /oppdateringer/enheter
+      </div>
+      <div
+        className="col-7"
+      >
+        Hent oppdateringer på enheter
+      </div>
+    </div>
+  </React.Fragment>
+  <React.Fragment
+    key="get-/oppdateringer/underenheter"
+  >
+    <div
+      className="d-flex list-regular--item"
+    >
+      <div
+        className="col-5 pl-0 fdk-text-strong"
+      >
+        GET
+         
+        /oppdateringer/underenheter
+      </div>
+      <div
+        className="col-7"
+      >
+        Hent oppdateringer på underenheter
+      </div>
+    </div>
+  </React.Fragment>
+  <React.Fragment
+    key="get-/organisasjonsformer"
+  >
+    <div
+      className="d-flex list-regular--item"
+    >
+      <div
+        className="col-5 pl-0 fdk-text-strong"
+      >
+        GET
+         
+        /organisasjonsformer
+      </div>
+      <div
+        className="col-7"
+      >
+        Hent alle organisasjonsformer
+      </div>
+    </div>
+  </React.Fragment>
+  <React.Fragment
+    key="get-/organisasjonsformer/{orgformKode}"
+  >
+    <div
+      className="d-flex list-regular--item"
+    >
+      <div
+        className="col-5 pl-0 fdk-text-strong"
+      >
+        GET
+         
+        /organisasjonsformer/{orgformKode}
+      </div>
+      <div
+        className="col-7"
+      >
+        Hent en enkelt organisasjonsform fra kode
+      </div>
+    </div>
+  </React.Fragment>
+  <div
+    className="d-flex list-regular--item"
+  >
+    <div
+      className="col-12 pl-0"
+    >
+      <a
+        className="mr-5"
+        href="https://data.brreg.no/enhetsregisteret/api/docs/index.html"
+      >
+        Documentation
+        <i
+          className="fa fa-external-link fdk-fa-right"
+        />
+      </a>
+      <a
+        className="mr-5"
+        href="https://raw.githubusercontent.com/brreg/openAPI/master/specs/enhetsregisteret.json"
+      >
+        Specification
+        <i
+          className="fa fa-external-link fdk-fa-right"
+        />
+      </a>
+    </div>
+  </div>
 </section>
 `;
 
