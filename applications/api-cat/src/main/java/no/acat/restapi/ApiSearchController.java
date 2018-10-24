@@ -1,5 +1,6 @@
 package no.acat.restapi;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import no.acat.model.queryresponse.QueryResponse;
@@ -31,10 +32,12 @@ public class ApiSearchController {
     public static final int MAX_AGGREGATIONS = 10000;
     private static final Logger logger = LoggerFactory.getLogger(ApiSearchController.class);
     private ElasticsearchService elasticsearch;
+    private ObjectMapper mapper;
 
     @Autowired
-    public ApiSearchController(ElasticsearchService elasticsearchService) {
+    public ApiSearchController(ElasticsearchService elasticsearchService, ObjectMapper mapper) {
         this.elasticsearch = elasticsearchService;
+        this.mapper = mapper;
     }
 
     static void addTermFilter(BoolQueryBuilder boolQuery, String term, String value) {
@@ -107,7 +110,7 @@ public class ApiSearchController {
     }
 
     QueryResponse convertFromElasticResponse(SearchResponse elasticResponse) {
-        return SearchResponseAdapter.convertFromElasticResponse(elasticResponse);
+        return SearchResponseAdapter.convertFromElasticResponse(elasticResponse, mapper);
     }
 
     SearchRequestBuilder buildSearchRequest(String query, String accessRights, String orgPath, String[] formats, int from, int size) {

@@ -1,25 +1,20 @@
 package no.acat.spec.converters;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.parser.OpenAPIV3Parser;
 import io.swagger.v3.parser.core.models.SwaggerParseResult;
-import no.acat.config.Utils;
 import no.acat.spec.ParseException;
-
-import java.io.IOException;
 
 public class OpenApiV3JsonSpecConverter {
 
     public static boolean canConvert(String spec) {
-        ObjectMapper mapper = Utils.jsonMapper();
         try {
-            JsonNode rootNode = mapper.readTree(spec);
-
-            String version = rootNode.path("openapi").asText();
+            JsonElement element = new JsonParser().parse(spec);
+            String version = element.getAsJsonObject().get("openapi").getAsString();
             return version.length() > 2 && version.substring(0, 2).equals("3.");
-        } catch (IOException e) {
+        } catch (Exception e) {
             return false;
         }
     }

@@ -2,6 +2,7 @@ package no.acat.restapi;
 
 import no.acat.model.queryresponse.QueryResponse;
 import no.acat.service.ElasticsearchService;
+import no.acat.utils.Utils;
 import no.dcat.shared.testcategories.UnitTest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.search.SearchHit;
@@ -272,7 +273,7 @@ public class SearchControllerTest {
         // todo meaningful test would be to allow elastic client to build a query and process sample response,
         // instead of mocking entire elastic client here
         ElasticsearchService elasticsearchService = mock(ElasticsearchService.class);
-        ApiSearchController controller = new ApiSearchController(elasticsearchService);
+        ApiSearchController controller = new ApiSearchController(elasticsearchService, Utils.jsonMapper());
         ApiSearchController spyController = spy(controller);
 
         SearchHit hit = mock(SearchHit.class);

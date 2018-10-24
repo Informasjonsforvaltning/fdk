@@ -1,7 +1,6 @@
 package no.acat.restapi;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import no.acat.config.Utils;
 import no.acat.model.ApiDocument;
 import no.acat.model.queryresponse.AggregationBucket;
 import no.acat.model.queryresponse.QueryResponse;
@@ -19,16 +18,15 @@ import java.util.Map;
 class SearchResponseAdapter {
     private static final Logger logger = LoggerFactory.getLogger(SearchResponseAdapter.class);
 
-    static QueryResponse convertFromElasticResponse(SearchResponse elasticResponse) {
+    static QueryResponse convertFromElasticResponse(SearchResponse elasticResponse, ObjectMapper mapper) {
         logger.debug("converting response");
         QueryResponse queryResponse = new QueryResponse();
-        convertHits(queryResponse, elasticResponse);
+        convertHits(queryResponse, elasticResponse, mapper);
         convertAggregations(queryResponse, elasticResponse);
         return queryResponse;
     }
 
-    static void convertHits(QueryResponse queryResponse, SearchResponse elasticResponse) {
-        ObjectMapper mapper = Utils.jsonMapper();
+    static void convertHits(QueryResponse queryResponse, SearchResponse elasticResponse, ObjectMapper mapper) {
 
         queryResponse.setTotal(elasticResponse.getHits().getTotalHits());
 
