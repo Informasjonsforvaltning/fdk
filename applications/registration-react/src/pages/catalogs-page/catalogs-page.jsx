@@ -2,10 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { CardGroup } from 'reactstrap';
 import _ from 'lodash';
-import { FeatureToggle } from 'react-feature-toggles';
 
 import localization from '../../utils/localization';
-import { FEATURES } from '../../app-protected-route/features';
 import { Catalog } from './catalogs/catalogs.component';
 import getTranslateText from '../../utils/translateText';
 import './catalogs-page.scss';
@@ -42,17 +40,15 @@ const renderCatalogs = props => {
               items={datasets}
             />
           )}
-          <FeatureToggle featureName={FEATURES.API}>
-            {apis && (
-              <Catalog
-                key={`apis-${item.id}`}
-                catalogId={item.id}
-                fetchItems={fetchApisIfNeeded}
-                type="apis"
-                items={apis}
-              />
-            )}
-          </FeatureToggle>
+          {apis && (
+            <Catalog
+              key={`apis-${item.id}`}
+              catalogId={item.id}
+              fetchItems={fetchApisIfNeeded}
+              type="apis"
+              items={apis}
+            />
+          )}
         </CardGroup>
       </div>
     </div>
