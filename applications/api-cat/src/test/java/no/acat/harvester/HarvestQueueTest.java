@@ -8,9 +8,8 @@ import org.junit.experimental.categories.Category;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.*;
 
 @Category(UnitTest.class)
 public class HarvestQueueTest {
@@ -21,10 +20,10 @@ public class HarvestQueueTest {
     private HarvestExecutor executor;
 
     @Before
-    public void setup () {
+    public void setup() {
         queue = new HarvestQueue();
         harvester = mock(ApiHarvester.class);
-        // when(harvester.harvestAll()).thenReturn(null);
+        doNothing().when(harvester).harvestAll();
 
         executor = new HarvestExecutor(harvester, queue);
         executor.harvestLoop();
@@ -57,7 +56,7 @@ public class HarvestQueueTest {
 
     @Test
     public void harvestAllFails() throws Throwable {
-        when(harvester.harvestAll()).thenThrow(new NullPointerException("Throws error"));
+        doThrow(new NullPointerException("Throws error")).when(harvester).harvestAll();
 
         queue.addTask(HarvestExecutor.HARVEST_ALL);
 
