@@ -26,7 +26,7 @@ public class SwaggerJsonSpecConverter {
         try {
             return new SwaggerConverter().readContents(spec, null, null).getOpenAPI();
         } catch (Exception e) {
-            throw new ParseException("Error parsing spec as Swagger v2 json: "+e.getMessage());
+            throw new ParseException("Error parsing spec as Swagger v2 json: " + e.getMessage());
         }
     }
 }
