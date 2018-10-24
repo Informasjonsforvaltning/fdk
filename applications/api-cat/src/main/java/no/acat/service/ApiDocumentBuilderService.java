@@ -46,7 +46,7 @@ public class ApiDocumentBuilderService {
     @Autowired
     public ApiDocumentBuilderService(ElasticsearchService elasticsearchService, ParserService parserService) {
         this.elasticsearchClient = elasticsearchService.getClient();
-        this.parserService=parserService;
+        this.parserService = parserService;
     }
 
     public ApiDocument createFromApiRegistration(ApiRegistrationPublic apiRegistration, String harvestSourceUri) throws IOException, ParseException {
