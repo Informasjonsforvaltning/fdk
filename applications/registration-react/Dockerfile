@@ -5,6 +5,7 @@ RUN apk add --no-cache git
 # to run localhost docker
 
 RUN npm init -y
+RUN npm config set unsafe-perm true
 RUN npm install ejs express method-override body-parser compression --loglevel error
 RUN npm install pm2 -g --loglevel error
 

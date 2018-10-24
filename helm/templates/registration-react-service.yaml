@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    fdk.service: registration-react
+  name: registration-react
+  namespace: {{ required "Missing value" .Values.NAMESPACE }}
+spec:
+  type: NodePort
+  ports:
+  - name: "4300"
+    port: 4300
+    targetPort: 4300
+  selector:
+    fdk.service: registration-react
+status:
+  loadBalancer: {}

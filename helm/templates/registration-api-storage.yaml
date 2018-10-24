@@ -1,0 +1,32 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  creationTimestamp: null
+  labels:
+    fdk.service: registration-api-claim0
+  name: registration-api-claim0
+  namespace: {{ required "Missing value" .Values.NAMESPACE }}
+spec:
+  storageClassName: ""
+  volumeName: {{ required "Missing value" .Values.FDK_REGISTRATION_API_VOLUMENAME }}
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ required "Missing value" .Values.FDK_REGISTRATION_API_STORAGESIZE }}
+status: {}
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: {{ required "Missing value" .Values.FDK_REGISTRATION_API_VOLUMENAME }}
+  namespace: {{ required "Mssing value" .Values.NAMESPACE }}
+spec:
+  storageClassName: ""
+  capacity:
+    storage: {{ required "Missing value" .Values.FDK_REGISTRATION_API_STORAGESIZE }}
+  accessModes:
+    - ReadWriteOnce
+  gcePersistentDisk:
+    pdName: {{ required "Missing value" .Values.FDK_REGISTRATION_API_VOLUMENAME }}
+    fsType: ext4

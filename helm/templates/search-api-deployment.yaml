@@ -1,0 +1,36 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    fdk.service: search-api
+  name: search-api
+  namespace: {{ required "Missing value" .Values.NAMESPACE }}
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        fdk.service: search-api
+    spec:
+      containers:
+      - env:
+        - name: SPRING_PROFILES_ACTIVE
+          value: {{ required "Missing value" .Values.SPRING_PROFILES_ACTIVE }}
+        - name: FDK_ES_CLUSTERNAME
+          value: {{ required "Missing value" .Values.FDK_ES_CLUSTERNAME }}
+        - name: FDK_ES_CLUSTERNODES
+          value: {{ required "Missing value" .Values.FDK_ES_CLUSTERNODES }}
+        image: {{ required "Missing value" .Values.SEARCH_API_IMAGE }}
+        imagePullPolicy: Always
+        name: search-api
+        ports:
+        - containerPort: 8080
+        - containerPort: 8181
+        resources:
+          requests:
+            memory: {{ required "Missing value" .Values.FDK_SEARCH_API_MEMORY | quote }}
+      restartPolicy: Always
+status: {}
