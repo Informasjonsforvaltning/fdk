@@ -46,14 +46,8 @@ public class ApiDocumentBuilderService {
 
     public ApiDocument createFromApiRegistration(ApiRegistrationPublic apiRegistration, String harvestSourceUri) throws IOException, ParseException {
         String apiSpecUrl = apiRegistration.getApiSpecUrl();
-        String apiSpec = apiRegistration.getApiSpec();
-
-        OpenAPI openApi;
-        if (Strings.isNullOrEmpty(apiSpec) && !Strings.isNullOrEmpty(apiSpecUrl)) {
-            apiSpec = parserService.getSpecFromUrl(apiSpecUrl);
-        }
-
-        openApi = parserService.parse(apiSpec);
+        String apiSpec = getApiSpec(apiRegistration);
+        OpenAPI openApi = parserService.parse(apiSpec);
 
         ApiDocument existingApiDocument = elasticsearchService.getApiDocumentByHarvestSourceUri(harvestSourceUri);
         String id = existingApiDocument != null ? existingApiDocument.getId() : UUID.randomUUID().toString();
@@ -70,6 +64,16 @@ public class ApiDocumentBuilderService {
 
         logger.info("ApiDocument is created. id={}, harvestSourceUri={}", apiDocument.getId(), apiDocument.getHarvestSourceUri());
         return apiDocument;
+    }
+
+    String getApiSpec(ApiRegistrationPublic apiRegistration) throws IOException {
+        String apiSpecUrl = apiRegistration.getApiSpecUrl();
+        String apiSpec = apiRegistration.getApiSpec();
+
+        if (Strings.isNullOrEmpty(apiSpec) && !Strings.isNullOrEmpty(apiSpecUrl)) {
+            apiSpec = parserService.getSpecFromUrl(apiSpecUrl);
+        }
+        return apiSpec;
     }
 
     void populateFromApiRegistration(ApiDocument apiDocument, ApiRegistrationPublic apiRegistration) {
