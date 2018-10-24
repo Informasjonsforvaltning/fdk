@@ -1,0 +1,51 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    fdk.service: elasticsearch5
+  name: elasticsearch5
+  namespace: {{ required "Missing value" .Values.NAMESPACE }}
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        fdk.service: elasticsearch5
+    spec:
+      initContainers:
+        - name: increase-the-vm-max-map-count
+          image: {{ required "Missing value" .Values.ES5_BUSY_IMAGE }}
+          command:
+            - sysctl
+            - -w
+            - vm.max_map_count=262144
+          securityContext:
+            privileged: true
+      containers:
+      - env:
+        - name: cluster.name
+          value: {{ required "Missing value" .Values.FDK_ES_CLUSTERNAME }}
+        - name: xpack.security.enabled
+          value: "{{ required "Missing value"  .Values.FDK_ES_SECURITY }}"
+        image: {{ required "Missing value" .Values.ES5_IMAGE }}
+        imagePullPolicy: Always
+        name: elasticsearch5
+        ports:
+        - containerPort: 9200
+        - containerPort: 9300
+        resources: 
+          requests:
+            memory: {{ required "Missing value" .Values.FDK_ES_MEMORY | quote }}
+        volumeMounts:
+        - mountPath: /usr/share/elasticsearch/data
+          name: elasticsearch5-claim0
+      restartPolicy: Always
+      volumes:
+      - name: elasticsearch5-claim0
+        persistentVolumeClaim:
+          claimName: elasticsearch5-claim0
+status: {}

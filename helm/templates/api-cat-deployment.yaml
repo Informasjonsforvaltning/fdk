@@ -1,0 +1,36 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    fdk.service: api-cat
+  name: api-cat
+  namespace: {{ required "Missing value" .Values.NAMESPACE }}
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        fdk.service: api-cat
+    spec:
+      containers:
+      - env:
+        - name: FDK_ES_CLUSTERNAME
+          value: {{ required "Missing value" .Values.FDK_ES_CLUSTERNAME }}
+        - name: FDK_ES_CLUSTERNODES
+          value: {{ required "Missing value" .Values.FDK_ES_CLUSTERNODES }}
+        - name: SPRING_PROFILES_ACTIVE
+          value: {{ required "Missing value" .Values.SPRING_PROFILES_ACTIVE }}
+        image: {{ required "Missing value" .Values.API_CAT_IMAGE }}
+        imagePullPolicy: Always
+        name: api-cat
+        ports:
+        - containerPort: 8080
+        - containerPort: 8181
+        resources: 
+          requests:
+            memory: {{ required "Missing value" .Values.FDK_API_CAT_MEMORY | quote }}
+      restartPolicy: Always
+status: {}

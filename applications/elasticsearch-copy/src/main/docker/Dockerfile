@@ -8,6 +8,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 #RUN apt-get update && apt-get install -y cron curl nodejs npm
 RUN apk add --no-cache curl
 RUN npm init -y
+RUN npm config set unsafe-perm true
 RUN npm install -g elasticdump
 
 #install Supercronic - cron job runner specially designed for containers
