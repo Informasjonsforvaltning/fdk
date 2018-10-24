@@ -60,6 +60,22 @@
       },
       "nationalComponent": {
         "type": "boolean"
+      },
+      "cost": {
+        "analyzer": "norwegian",
+        "type": "text"
+      },
+      "usageLimitation": {
+        "analyzer": "norwegian",
+        "type": "text"
+      },
+      "performance": {
+        "analyzer": "norwegian",
+        "type": "text"
+      },
+      "availability": {
+        "analyzer": "norwegian",
+        "type": "text"
       }
     }
   }

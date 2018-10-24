@@ -80,6 +80,10 @@ public class ApiDocumentBuilderService {
         apiDocument.setNationalComponent(apiRegistration.isNationalComponent());
         apiDocument.setDatasetReferences(extractDatasetReferences(apiRegistration));
         apiDocument.setApiDocUrl(apiRegistration.getApiDocUrl());
+        apiDocument.setCost(apiRegistration.getCost());
+        apiDocument.setUsageLimitation(apiRegistration.getUsageLimitation());
+        apiDocument.setPerformance(apiRegistration.getPerformance());
+        apiDocument.setAvailability(apiRegistration.getAvailability());
     }
 
     String lookupOrGenerateId(ApiRegistrationPublic apiRegistration) {
