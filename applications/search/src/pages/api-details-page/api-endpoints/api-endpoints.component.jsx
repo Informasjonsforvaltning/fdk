@@ -1,6 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import _ from 'lodash';
 import localization from '../../../lib/localization';
+
+const allowedEndpointOperations = [
+  'get',
+  'put',
+  'post',
+  'delete',
+  'options',
+  'head',
+  'patch',
+  'trace'
+];
 
 export const renderPathMethod = (path, method, methodDeclaration) => (
   <React.Fragment key={`${method}-${path}`}>
@@ -13,11 +25,17 @@ export const renderPathMethod = (path, method, methodDeclaration) => (
   </React.Fragment>
 );
 
-export const renderPath = (path, declaration) =>
-  declaration &&
-  Object.keys(declaration).map(method =>
-    renderPathMethod(path, method, declaration[method])
+export const renderPath = (path, declaration) => {
+  if (!declaration) {
+    return null;
+  }
+  // only display endpoint operations as predefined in constant
+  const allowedDeclaration = _.pick(declaration, allowedEndpointOperations);
+
+  return Object.keys(allowedDeclaration).map(method =>
+    renderPathMethod(path, method, allowedDeclaration[method])
   );
+};
 
 export const renderPaths = paths => {
   const renderedMethods =
