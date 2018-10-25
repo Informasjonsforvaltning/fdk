@@ -31,7 +31,7 @@ jobs:
   include:
     - stage: Build
       if: type = pull_request OR ( type = push AND branch = develop )
-      script: travis_wait 30 source ./travisBuild.sh
+      script: source ./travisBuild.sh
       env:
         - comment=Build all applications
 
