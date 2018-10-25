@@ -244,6 +244,10 @@ exports[`should render ApiDetailsPage correctly with apiItem 1`] = `
         />
         <ListRegular
           bottomMargin={true}
+          title="Terms and restrictions"
+        />
+        <ListRegular
+          bottomMargin={true}
           title="Contact information"
         >
           <React.Fragment
@@ -333,6 +337,10 @@ exports[`should render ApiDetailsPage correctly with missing api-properties 1`] 
       <section
         className="col-12 col-lg-8 mt-3"
       >
+        <ListRegular
+          bottomMargin={true}
+          title="Terms and restrictions"
+        />
         <div
           style={
             Object {
