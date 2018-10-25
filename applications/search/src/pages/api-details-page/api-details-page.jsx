@@ -145,6 +145,30 @@ const renderContactPoints = contactPoints => {
   );
 };
 
+const renderTermsAndRestrictions = termsAndRestrictions => {
+  if (!termsAndRestrictions) {
+    return null;
+  }
+  const children = items =>
+    items.map(
+      item =>
+        item[Object.keys(item)[0]] && ( // The item has a value, display the row
+          <TwoColRow
+            col1={localization.api.termsAndRestrictions[Object.keys(item)[0]]}
+            col2={item[Object.keys(item)[0]]}
+          />
+        )
+    );
+
+  return (
+    <ListRegular
+      title={localization.api.termsAndRestrictions.termsAndRestrictions}
+    >
+      {children(termsAndRestrictions)}
+    </ListRegular>
+  );
+};
+
 const renderStickyMenu = apiItem => {
   const menuItems = [];
   if (_.get(apiItem, 'description')) {
@@ -240,6 +264,13 @@ export const ApiDetailsPage = props => {
             )}
 
             {renderAPIInfo({})}
+
+            {renderTermsAndRestrictions([
+              { cost: _.get(apiItem, 'cost') },
+              { usageLimitation: _.get(apiItem, 'usageLimitation') },
+              { performance: _.get(apiItem, 'performance') },
+              { availability: _.get(apiItem, 'availability') }
+            ])}
 
             {renderDatasetReferences(_.get(apiItem, 'datasetReferences'))}
 

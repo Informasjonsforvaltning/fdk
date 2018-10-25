@@ -282,6 +282,13 @@
       "operation": "Operation",
       "description": "Description"
     },
+    "termsAndRestrictions": {
+      "termsAndRestrictions": "Terms and restrictions",
+      "cost": "Price",
+      "usageLimitation": "Usage limitation",
+      "performance": "Performance",
+      "availability": "Availability"
+    },
     "provider": "Provider:",
     "linkDatasetReference": "Link to dataset reference"
   }

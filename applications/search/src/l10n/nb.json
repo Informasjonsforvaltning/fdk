@@ -282,6 +282,13 @@
       "operation": "Operasjon",
       "description": "Beskrivelse"
     },
+    "termsAndRestrictions": {
+      "termsAndRestrictions": "Vilkår og begrensninger",
+      "cost": "Pris",
+      "usageLimitation": "Trafikkbegrensning",
+      "performance": "Kapasitet og Ytelse",
+      "availability": "Pålitelighet"
+    },
     "provider": "Tilbyder:",
     "linkDatasetReference": "Lenke til datasettreferanse"
   }

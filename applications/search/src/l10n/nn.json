@@ -282,6 +282,13 @@
       "operation": "Operasjon",
       "description": "Skildring"
     },
+    "termsAndRestrictions": {
+      "termsAndRestrictions": "Vilkår og avgrensingar",
+      "cost": "Pris",
+      "usageLimitation": "Trafikkavgrensning",
+      "performance": "Kapasitet og Ytelse",
+      "availability": "Pålietelegheit"
+    },
     "provider": "Tilbydar:",
     "linkDatasetReference": "Lenke til datasettreferanse"
   }
