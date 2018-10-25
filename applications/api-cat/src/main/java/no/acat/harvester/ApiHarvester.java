@@ -47,6 +47,7 @@ public class ApiHarvester {
         logger.info("Extracted {} api-registrations", registrationCount);
 
         Date harvestDate = new Date();
+        List<String> idsHarvested = new ArrayList<>();
 
         for (ApiRegistrationPublic apiRegistration : apiRegistrations) {
             String harvestSourceUri = registrationApiClient.getPublicApisUrlBase() + '/' + apiRegistration.getId();
@@ -54,10 +55,18 @@ public class ApiHarvester {
                 logger.debug("Indexing from source uri: {}", harvestSourceUri);
                 ApiDocument apiDocument = apiDocumentBuilderService.createFromApiRegistration(apiRegistration, harvestSourceUri, harvestDate);
                 elasticsearchService.updateApiDocument(apiDocument);
+                idsHarvested.add(apiDocument.getId());
             } catch (Exception e) {
                 logger.error("Error importing API record. ErrorClass={} message={}", e.getClass().getName(), e.getMessage());
                 logger.debug("Error stacktrace", e);
             }
+        }
+        try {
+            List<String> idsToDelete = elasticsearchService.getApiDocumentIdsNotHarvested(idsHarvested);
+            elasticsearchService.deleteApiDocumentByIds(idsToDelete);
+        } catch (Exception e) {
+            logger.error("Error deleting {}", e.getMessage());
+            logger.debug("Error stacktrace", e);
         }
     }
 
