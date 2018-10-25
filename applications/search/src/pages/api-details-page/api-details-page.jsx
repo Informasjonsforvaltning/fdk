@@ -154,6 +154,7 @@ const renderTermsAndRestrictions = termsAndRestrictions => {
       item =>
         item[Object.keys(item)[0]] && ( // The item has a value, display the row
           <TwoColRow
+            key={Object.keys(item)[0]}
             col1={localization.api.termsAndRestrictions[Object.keys(item)[0]]}
             col2={item[Object.keys(item)[0]]}
           />
