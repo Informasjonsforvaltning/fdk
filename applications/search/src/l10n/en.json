@@ -284,6 +284,8 @@
     },
     "termsAndRestrictions": {
       "termsAndRestrictions": "Terms and restrictions",
+      "termsOfService": "Terms of service",
+      "license": "License",
       "cost": "Price",
       "usageLimitation": "Usage limitation",
       "performance": "Performance",
