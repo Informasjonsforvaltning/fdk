@@ -145,27 +145,77 @@ const renderContactPoints = contactPoints => {
   );
 };
 
-const renderTermsAndRestrictions = termsAndRestrictions => {
-  if (!termsAndRestrictions) {
+const renderTermsAndRestrictions = (
+  termsOfService,
+  license,
+  cost,
+  usageLimitation,
+  performance,
+  availability
+) => {
+  if (
+    !(
+      termsOfService ||
+      license ||
+      cost ||
+      usageLimitation ||
+      performance ||
+      availability
+    )
+  ) {
     return null;
   }
-  const children = items =>
-    items.map(
-      item =>
-        item[Object.keys(item)[0]] && ( // The item has a value, display the row
-          <TwoColRow
-            key={Object.keys(item)[0]}
-            col1={localization.api.termsAndRestrictions[Object.keys(item)[0]]}
-            col2={item[Object.keys(item)[0]]}
-          />
-        )
-    );
 
   return (
     <ListRegular
       title={localization.api.termsAndRestrictions.termsAndRestrictions}
     >
-      {children(termsAndRestrictions)}
+      {termsOfService && (
+        <TwoColRow
+          col1={localization.api.termsAndRestrictions.termsOfService}
+          col2={
+            <a href={termsOfService}>
+              {termsOfService}
+              <i className="fa fa-external-link fdk-fa-right" />
+            </a>
+          }
+        />
+      )}
+      {license && (
+        <TwoColRow
+          col1={localization.api.termsAndRestrictions.license}
+          col2={
+            <a href={_.get(license, 'url')}>
+              {_.get(license, 'name')}
+              <i className="fa fa-external-link fdk-fa-right" />
+            </a>
+          }
+        />
+      )}
+      {cost && (
+        <TwoColRow
+          col1={localization.api.termsAndRestrictions.cost}
+          col2={cost}
+        />
+      )}
+      {usageLimitation && (
+        <TwoColRow
+          col1={localization.api.termsAndRestrictions.usageLimitation}
+          col2={usageLimitation}
+        />
+      )}
+      {performance && (
+        <TwoColRow
+          col1={localization.api.termsAndRestrictions.performance}
+          col2={performance}
+        />
+      )}
+      {availability && (
+        <TwoColRow
+          col1={localization.api.termsAndRestrictions.availability}
+          col2={availability}
+        />
+      )}
     </ListRegular>
   );
 };
@@ -190,10 +240,17 @@ const renderStickyMenu = apiItem => {
       prefLabel: localization.api.endpoints.operations
     });
   }
-  if (_.get(apiItem, 'accessRights')) {
+  if (
+    _.get(apiItem, ['openApi', 'info', 'termsOfService']) ||
+    _.get(apiItem, ['openApi', 'info', 'license']) ||
+    _.get(apiItem, 'cost') ||
+    _.get(apiItem, 'usageLimitation') ||
+    _.get(apiItem, 'performance') ||
+    _.get(apiItem, 'availability')
+  ) {
     menuItems.push({
-      name: localization.apiInfo,
-      prefLabel: localization.apiInfo
+      name: localization.api.termsAndRestrictions.termsAndRestrictions,
+      prefLabel: localization.api.termsAndRestrictions.termsAndRestrictions
     });
   }
   if (_.get(apiItem, 'datasetReferences')) {
@@ -266,12 +323,14 @@ export const ApiDetailsPage = props => {
 
             {renderAPIInfo({})}
 
-            {renderTermsAndRestrictions([
-              { cost: _.get(apiItem, 'cost') },
-              { usageLimitation: _.get(apiItem, 'usageLimitation') },
-              { performance: _.get(apiItem, 'performance') },
-              { availability: _.get(apiItem, 'availability') }
-            ])}
+            {renderTermsAndRestrictions(
+              _.get(apiItem, ['openApi', 'info', 'termsOfService']),
+              _.get(apiItem, ['openApi', 'info', 'license']),
+              _.get(apiItem, 'cost'),
+              _.get(apiItem, 'usageLimitation'),
+              _.get(apiItem, 'performance'),
+              _.get(apiItem, 'availability')
+            )}
 
             {renderDatasetReferences(_.get(apiItem, 'datasetReferences'))}
 

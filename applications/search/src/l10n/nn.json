@@ -284,6 +284,8 @@
     },
     "termsAndRestrictions": {
       "termsAndRestrictions": "Vilkår og avgrensingar",
+      "termsOfService": "Bruksvilkår",
+      "license": "Lisens",
       "cost": "Pris",
       "usageLimitation": "Trafikkavgrensning",
       "performance": "Kapasitet og Ytelse",

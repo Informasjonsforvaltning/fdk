@@ -49,6 +49,10 @@ exports[`should render ApiDetailsPage correctly with apiItem 1`] = `
                 "prefLabel": "Operations",
               },
               Object {
+                "name": "Terms and restrictions",
+                "prefLabel": "Terms and restrictions",
+              },
+              Object {
                 "name": "Contact information",
                 "prefLabel": "Contact information",
               },
@@ -245,7 +249,34 @@ exports[`should render ApiDetailsPage correctly with apiItem 1`] = `
         <ListRegular
           bottomMargin={true}
           title="Terms and restrictions"
-        />
+        >
+          <TwoColRow
+            col1="Terms of service"
+            col2={
+              <a
+                href="https://fellesdatakatalog.brreg.no/about"
+              >
+                https://fellesdatakatalog.brreg.no/about
+                <i
+                  className="fa fa-external-link fdk-fa-right"
+                />
+              </a>
+            }
+          />
+          <TwoColRow
+            col1="License"
+            col2={
+              <a
+                href="http://data.norge.no/nlod/no/2.0"
+              >
+                License of API
+                <i
+                  className="fa fa-external-link fdk-fa-right"
+                />
+              </a>
+            }
+          />
+        </ListRegular>
         <ListRegular
           bottomMargin={true}
           title="Contact information"
@@ -331,7 +362,14 @@ exports[`should render ApiDetailsPage correctly with missing api-properties 1`] 
         className="col-12 col-lg-4 "
       >
         <StickyMenu
-          menuItems={Array []}
+          menuItems={
+            Array [
+              Object {
+                "name": "Terms and restrictions",
+                "prefLabel": "Terms and restrictions",
+              },
+            ]
+          }
         />
       </div>
       <section
@@ -340,7 +378,34 @@ exports[`should render ApiDetailsPage correctly with missing api-properties 1`] 
         <ListRegular
           bottomMargin={true}
           title="Terms and restrictions"
-        />
+        >
+          <TwoColRow
+            col1="Terms of service"
+            col2={
+              <a
+                href="https://fellesdatakatalog.brreg.no/about"
+              >
+                https://fellesdatakatalog.brreg.no/about
+                <i
+                  className="fa fa-external-link fdk-fa-right"
+                />
+              </a>
+            }
+          />
+          <TwoColRow
+            col1="License"
+            col2={
+              <a
+                href="http://data.norge.no/nlod/no/2.0"
+              >
+                License of API
+                <i
+                  className="fa fa-external-link fdk-fa-right"
+                />
+              </a>
+            }
+          />
+        </ListRegular>
         <div
           style={
             Object {
