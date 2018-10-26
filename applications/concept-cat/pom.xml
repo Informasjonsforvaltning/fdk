@@ -35,7 +35,6 @@
         <integrationtest.category/>
     </properties>
 
-
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -226,10 +225,7 @@
                 </executions>
             </plugin>
 
-
         </plugins>
-
-
 
     </build>
 
