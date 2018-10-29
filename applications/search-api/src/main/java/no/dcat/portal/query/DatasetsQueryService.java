@@ -31,6 +31,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 
 /**
@@ -70,9 +73,13 @@ public class DatasetsQueryService extends ElasticsearchService {
             "In order to access all datasets, use multiple queries and increment from parameter.", response = Dataset.class)
     @RequestMapping(value = QUERY_SEARCH, method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity<String> search(
-        @ApiParam("the query string")
+        @ApiParam("Full content search")
         @RequestParam(value = "q", defaultValue = "", required = false)
             String query,
+
+        @ApiParam("Title search")
+        @RequestParam(value = "title", defaultValue = "", required = false)
+            String title,
 
         @ApiParam("Filters on specified theme(s). ex. GOVE, or GOVE,SOCI")
         @RequestParam(value = "theme", defaultValue = "", required = false)
@@ -145,6 +152,7 @@ public class DatasetsQueryService extends ElasticsearchService {
 
         StringBuilder loggMsg = new StringBuilder()
             .append(" query:").append(query)
+            .append(" title:").append(title)
             .append(" theme:").append(theme)
             .append(" publisher:").append(publisher)
             .append(" accessRights:").append(accessRights)
@@ -181,7 +189,13 @@ public class DatasetsQueryService extends ElasticsearchService {
 
         QueryBuilder search;
 
-        if (!StringUtils.isEmpty(query)) {
+        if (!StringUtils.isEmpty(title)) {
+            QueryBuilder nbQuery = QueryBuilders.matchPhrasePrefixQuery("title.nb", title).analyzer("norwegian").maxExpansions(15);
+            QueryBuilder noQuery = QueryBuilders.matchPhrasePrefixQuery("title.no", title).analyzer("norwegian").maxExpansions(15);
+            QueryBuilder nnQuery = QueryBuilders.matchPhrasePrefixQuery("title.nn", title).analyzer("norwegian").maxExpansions(15);
+            QueryBuilder enQuery = QueryBuilders.matchPhrasePrefixQuery("title.en", title).analyzer("english").maxExpansions(15);
+            search = QueryBuilders.boolQuery().should(nbQuery).should(noQuery).should(nnQuery).should(enQuery);
+        } else if (!StringUtils.isEmpty(query)) {
             // add * if query only contains one word
             if (!query.contains(" ")) {
                 query = query + " " + query + "*";

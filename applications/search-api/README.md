@@ -53,5 +53,7 @@ Example `/harvest/catalog?q=/STAT` which returns aggregations of harvestRecords 
 Example `/harvest/catalog?q=/STAT/123456789/987654321` returns aggregations of a particular publisher and all organisations that are organized under it. 
 
 
+## search for title
+/datasets?title=Postnummer i Norge  (witch returns datasets with title)
 
 
