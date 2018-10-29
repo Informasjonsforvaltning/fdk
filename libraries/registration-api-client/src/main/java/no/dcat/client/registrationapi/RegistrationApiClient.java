@@ -7,6 +7,7 @@ import com.google.gson.reflect.TypeToken;
 import org.slf4j.Logger;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -22,28 +23,36 @@ public class RegistrationApiClient {
         this.logger = logger;
     }
 
-    public Collection<ApiRegistrationPublic> getPublished() {
+    public List<ApiRegistrationPublic> getPublished() {
+        List<ApiRegistrationPublic> result = new ArrayList<>();
 
-        RestTemplate restTemplate = new RestTemplate();
-        String publishedHalJson = restTemplate.getForObject(getPublicApisUrlBase(), String.class);
-        logger.debug("String response from public apis \"{}\"...", publishedHalJson.substring(0, 20));
+        try {
+            RestTemplate restTemplate = new RestTemplate();
+            String publishedHalJson = restTemplate.getForObject(getPublicApisUrlBase(), String.class);
+            logger.debug("String response from public apis \"{}\"...", publishedHalJson.substring(0, 20));
 
-        JsonParser parser = new JsonParser();
-        JsonElement rootElement = parser.parse(publishedHalJson);
+            JsonParser parser = new JsonParser();
+            JsonElement rootElement = parser.parse(publishedHalJson);
 
-        JsonElement apiRegistrationPublicsJson = rootElement
-            .getAsJsonObject().get("_embedded")
-            .getAsJsonObject().get("apiRegistrationPublics");
+            JsonElement apiRegistrationPublicsJson = rootElement
+                .getAsJsonObject().get("_embedded")
+                .getAsJsonObject().get("apiRegistrationPublics");
 
-        Gson gson = new Gson();
-        TypeToken<List<ApiRegistrationPublic>> token = new TypeToken<List<ApiRegistrationPublic>>() {
-        };
+            Gson gson = new Gson();
+            TypeToken<List<ApiRegistrationPublic>> token = new TypeToken<List<ApiRegistrationPublic>>() {};
 
-        List<ApiRegistrationPublic> apiRegistrations = gson.fromJson(apiRegistrationPublicsJson, token.getType());
+            List<ApiRegistrationPublic> apiRegistrations = gson.fromJson(apiRegistrationPublicsJson, token.getType());
 
-        logger.debug("Converted list of public apis: {}", apiRegistrations.size());
+            logger.debug("Converted {} public apis", apiRegistrations.size());
 
-        return apiRegistrations;
+            result.addAll(apiRegistrations);
+
+        } catch (Exception e) {
+            logger.info("Error. Cannot read published apis from registration. {}", e.getMessage());
+            logger.debug("Error. Stack trace", e);
+        }
+
+        return result;
     }
 
     public String getPublicApisUrlBase() {

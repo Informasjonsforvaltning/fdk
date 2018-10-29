@@ -4,7 +4,7 @@
     <logger name="org.springframework" level="ERROR"/>
     <logger name="org.springframework.web" level="ERROR"/>
 
-	<logger name="no.dcat" level="DEBUG"/>
-    <logger name="no.acat" level="DEBUG"/>
+	<logger name="no.dcat" level="INFO"/>
+    <logger name="no.acat" level="INFO"/>
 
 </configuration>
