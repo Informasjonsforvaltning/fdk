@@ -8,7 +8,6 @@ import no.dcat.shared.Subject;
 import no.dcat.shared.Types;
 import no.dcat.themes.service.CodesService;
 import no.dcat.themes.service.HelpTextService;
-import no.dcat.themes.service.SubjectsService;
 import no.dcat.themes.service.ThemesService;
 import org.apache.jena.shared.NotFoundException;
 import org.slf4j.Logger;
@@ -33,7 +32,6 @@ import java.util.List;
 
 @RestController
 @Scope("thread")
-
 public class Controller {
 
     @Autowired
@@ -44,9 +42,6 @@ public class Controller {
 
     @Autowired
     private ThemesService themesService;
-
-    @Autowired
-    private SubjectsService subjectsService;
 
     static private final Logger logger = LoggerFactory.getLogger(Controller.class);
 
@@ -107,21 +102,4 @@ public class Controller {
             throw e;
         }
     }
-
-    @PreAuthorize("hasAuthority('INTERNAL_CALL')")
-    @CrossOrigin
-    @RequestMapping(value = "/subjects",  method = RequestMethod.GET)
-    public Subject getRemoteResourceForSubject(@RequestParam String uri) throws MalformedURLException {
-        logger.info("Request for subject with uri <{}>", uri);
-        try {
-            Subject subject = subjectsService.addSubject(uri);
-            logger.info("Return subject: {}", subject);
-            return subject;
-        }catch (Exception e){
-            logger.error("Unable to find subject with URI <{}>. Reason {}",uri, e.getLocalizedMessage());
-            throw e;
-        }
-    }
-
-
 }

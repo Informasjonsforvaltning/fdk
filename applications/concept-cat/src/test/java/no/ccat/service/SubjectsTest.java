@@ -1,34 +1,27 @@
-package no.dcat.themes.builders;
+package no.ccat.service;
 
-import no.dcat.shared.SkosCode;
 import no.dcat.shared.Subject;
 import no.dcat.shared.testcategories.UnitTest;
-import no.dcat.themes.database.TDBConnection;
-import no.dcat.themes.database.TDBInferenceService;
-import no.dcat.themes.database.TDBService;
-import no.dcat.themes.service.SubjectsService;
-import org.apache.jena.vocabulary.SKOS;
+import no.ccat.database.TDBConnection;
+import no.ccat.database.TDBInferenceService;
+import no.ccat.database.TDBService;
 import org.hamcrest.Matchers;
+import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.junit.rules.TemporaryFolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.io.IOException;
 import java.net.MalformedURLException;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
 
 /**
  * Test class for CodeBuildersTest
  */
 @Category(UnitTest.class)
-public class SubjectsTests {
-    private static Logger logger = LoggerFactory.getLogger(SubjectsTests.class);
+public class SubjectsTest {
+    private static Logger logger = LoggerFactory.getLogger(SubjectsTest.class);
 
     @Rule
     public TemporaryFolder testFolder = new TemporaryFolder();
@@ -61,12 +54,12 @@ public class SubjectsTests {
 
     }
 
-    private void checkSubject(TDBConnection tdbConnection, String uri, String prefLabel) throws MalformedURLException {
+    private void checkSubject(no.ccat.database.TDBConnection tdbConnection, String uri, String prefLabel) throws MalformedURLException {
         logger.debug("lookup uri: {}", uri);
         Subject subject = new SubjectsService(tdbConnection).addSubject(uri);
 
-        assertThat(subject, Matchers.is(Matchers.notNullValue()));
-        assertEquals(prefLabel, subject.getPrefLabel().get("no"));
+        Assert.assertThat(subject, Matchers.is(Matchers.notNullValue()));
+        Assert.assertEquals(prefLabel, subject.getPrefLabel().get("no"));
 
         logger.debug(subject.toString());
     }

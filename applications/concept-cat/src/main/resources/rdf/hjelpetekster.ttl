@@ -1,0 +1,509 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dcatno: <http://difi.no/dcatno#> .
+@prefix : <http://brreg.no/fdk/fields#> .
+
+# Dataset_title
+:Dataset_title  
+    dct:abstract """Tittelen skal være kortfattet, kunne stå alene og gi mening. Organisasjonens navn trenger ikke å være med. Tittelen skal gjenspeile avgrensninger dersom datasettet er avgrenset i populasjonen. Forkortelser skal skrives helt ut."""@no ;
+    dct:description """Datasettet har en tittel slik at det bl.a. kan vises i lister. Tittel er et obligatorisk felt.
+* Tittelen skal være kortfattet, kunne stå alene og gi mening.
+* Organisasjonens navn trenger ikke å være med, med mindre det er spesielt relevant for datasettets innholdsmessige utvalg.
+* Tittelen skal gjenspeile avgrensninger dersom datasettet er avgrenset i populasjonen - populasjonen er avgrenset av geografi eller formål, f.eks. “... med støtte i Lånekassen”, “... i Oslo”, “ Folketellingen av 1910”
+* Der populasjonen ikke er avgrenset angis IKKE dette (f.eks. valgkrets)
+* Forkortelser skal skrives helt ut (DTM10 erstattes av “Digital Terrengmodell 10m oppløsning (DTM10)”. Bruk eventuelt feltet for emneord til forkortelser. Målgruppen er personer som ønsker å finne relevante datasett raskt, unngå derfor interne navn eller forkortelser i tittel. I det offentlige opererer man ofte med flere titler eller navn på ting. Et datasett kan ha et offisielt navn, et kortnavn og en forkortelse. For eksempel: Datasettet “Administrative enheter i Norge” har ABAS som forkortelse. Det er sjelden man bruker den fulle tittelen, så for å gjøre et datasett mest mulig søkbart er det behov for at man kan registrere kortnavn, forkortelser og/eller alternative titler.
+* Lov- eller forskriftshjemlede navn bør brukes i tittel (f.eks. Jegerregisteret)"""@no .
+
+
+# Dataset_description
+:Dataset_description
+	dct:abstract """Beskrivelsen skal være kortfattet. Hensikten med datasettet bør komme fram. Hvilke opplysninger som utgjør kjernen i datasettet bør angis. Bruk folkelige ord. Beskriv avgrensninger, hva dataettet ikke inneholder. Begrens lenker og markup."""@no ;
+	dct:description """En kort og presis beskrivelse av datasettet skal gjøre det lett for andre å se hva det inneholder. Beskrivelse er et obligatorisk felt.
+* Beskrivelsen skal være kortfattet slik at lister over datasett forståes ved å lese de første linjene.
+* Hensikten med datasettet bør komme fram (f.eks. “Løsøreregisteret inneholder tinglyste flyttbare eiendeler”). For datasett som er omfattet av Personopplysningsloven, skal behandlingsformålet beskrives.
+* Beskriv hva datasettet inneholder. Hvilke opplysninger som utgjør kjernen i datasettet bør angis.
+* Feltinnhold skal ikke listes, men listes i emneord eller begreper.
+* Beskrivelsen er ikke en gjentakelse av tittel
+* Bruk folkelige ord (f.eks.”Løsøre” må forklares. F.eks. “flyttbare eiendeler (Løsøre)”, ev. bare folkelige uttrykk mens faguttrykket tas med som stikkord slik at det gir treff i søk)
+* Beskriv avgrensninger, hva datasettet ikke inneholder, dersom dette kan misforstås ut fra tittelen.
+* Begrens lenker og markup (formatering) i teksten. Skal man angi språk må teksten formelt sett være fri for lenker og formatering (HTML).
+* Der målform er kjent skal "nb" eller "nn" brukes, "no" brukes ellers."""@no . 
+
+
+# Dataset_objective
+:Dataset_objective
+	dct:abstract """Beskrivelsen skal være kortfattet og ikke gjentas i Beskrivelsesfeltet."""@no ;
+	dct:description """En setnings-beskrivelse av formålet til datasettet.
+* Beskrivelsen skal være kortfattet og ikke gjentas i Beskrivelsesfeltet. 
+* Dersom datasettet inneholder personopplysninger skal behandlingsformålet for personopplysninger etter Personopplysningsloven beskrives her."""@no .
+
+
+# Dataset_spatial
+:Dataset_spatial
+	dct:abstract """Angi geografisk avgrensning dersom datasett kun har innhold fra visse områder. Referer til geografiske områder angitt med URI fra GeoNames"""@no ;
+	dct:description """Det er ønskelig å synliggjøre om datasettets utvalg er begrenset til bestemte geografiske områder.
+* Angi geografisk avgrensning dersom datasett kun har innhold fra visse områder. “Observert hekking av grågås i Oppdal” er datasettets geografiske omfang begrenset til kommunen Oppdal. 
+* Benytt eksisterende avgrensninger som kommuner, fylker m.v. 
+* Bør referere til geografiske områder angitt med URI-er (f.eks. Sentralt Stedsnavnsregister eller Administrative grenser fra Kartverket) 
+* Flere områder kan angis om relevant
+* Dersom det finnes en tilsvarende landsdekkende oversikt, bør dette beskrives som et separat datasett, og disse relateres. (se også “relasjoner mellom datasett”).  f.eks. Observert hekking av grågås i Norge"""@no .
+
+# Dataset_temporal
+:Dataset_temporal
+	dct:abstract """Angi tidsmessig  avgrensning dersom datasett kun har innhold fra visse perioder. Dersom det finnes en tilsvarende komplett oversikt, bør også dette beskrives som et eget datasett"""@no ;
+	dct:description """En tidsromangivelse er nødvendig for datasett hvor innholdet dekker et avgrenset tidsrom. 
+* Angi tidsmessig  avgrensning dersom datasett kun har innhold fra visse perioder. For mange datasett knyttet til registerfunksjoner vil tidsrom være direkte koblet mot oppdateringsfrekvens. For andre datasett vil tidsrom være vesentlig i forhold til forståelse av bruk av dataene, f.eks folketellinger.
+* Dersom det er angitt en periode med årstall, tolkes dette som fra og med 1. januar første år til og med 31. desember siste år. 
+* Ved ett årstall på begynnelse, men ikke angitt slutt, tolkes det at datasettet har data også i en ubestemt fremtid og tilsvarende om startdatoen mangler antas det at det er ikke angitt om datasettet har en start. 
+* Dersom det finnes en tilsvarende komplett oversikt, bør også dette beskrives som et eget datasett, og disse relateres.  (se også “4.25 Relasjoner mellom datasett”)
+* Dersom datasettet er en av flere i en tidsserie anbefales det at det lages et overordnet datasett for tidsserien uten distribusjoner som peker på hver datasett.
+* Det benyttes tidsstempel for registreringen av første og siste dataelement i datasettet. 
+* Det kan angis flere tidsperioder per datasett, men det anbefales at periodene ikke er overlappende.
+* Relativ avgrensning i tid fra tidspunkt for uttrekk (eksempelvis fra og med dato for forrige påbegynte semester og til og med avslutning av påfølgende semester)"""@no .
+
+# Dataset_identifier (identifikator)
+:Dataset_identifier
+	dct:abstract """Identifikatoren skal automatisk genereres"""@no ;
+	dct:description """For å kunne referere til et datasett entydig og kunne angi relasjoner mellom datasett, må alle datasett ha stabile, globale og unike identifikatorer. Identifikator er et obligatorisk felt.
+* Identifikatoren bør automatisk genereres når du registrerer datasettet om du benytter en registreringsløsning. 
+* Identifikatoren skal være unik innenfor aktuell datakatalog
+* Identifikatoren skal inngå i en globalt unik identifikator.
+* Den globalt unike identifikatoren skal utformes som en URI
+* Den globalt unike identifikatoren er representert ved feltet dct:identifier
+Datasettets URI bør benytte en av de globalt unike identifikatorene i dct:identifier 
+* Man bør kunne registrere ytterligere identifikatorer."""@no .
+
+# Dataset_theme (tema)
+:Dataset_theme
+    dct:abstract """Ett eller flere temaer velges fra den kontrollerte listen av EU-temaer"""@no ;
+    dct:description """For å kunne sortere datasettet inn under gitte kategorier er det behov for tema
+* Ett eller flere temaer velges fra den kontrollerte listen av EU-temaer."""@no .
+
+
+# Dataset_content (begreper)
+:Dataset_content
+    dct:abstract """innholdstyper i datasettet beskrives med referanse til begreper i begrepskatalog"""@no ;
+    dct:description """For å beskrive viktigste typer innhold i datasettet refereres det til begreper i begrepskataloger som også gir mulighet til å utnytte synonymer
+* innholdstyper i datasettet beskrives med referanse til begreper i begrepskatalog 
+* dersom det ikke kan benyttes en begrepskatalog brukes emneord. 
+Et datasett skal lenke til de aktuelle og sentrale begrepene i en begrepskatalog. Ved å henvise til gjennomarbeidede definisjoner som virksomheten selv er ansvarlig for å vedlikeholde, sikrer vi at det er tydelig hvordan et begrep brukt i datasettet skal forstås og at denne forståelsen til en hver tid er riktig og oppdatert. Vi ønsker at alle datasettene skal ha lenker til de aktuelle begrepene i virksomhetens katalog, slik at det er tydelig definert hva begrepene innebærer"""@no .
+
+
+# Dataset_keyword (søkeord)
+:Dataset_keyword
+    dct:abstract """Angi synonymer og andre ord som kan hjelpe i søk. Sentralt innhold i datasettet som ikke ennå har begrepsdefinisjoner."""@no ;
+    dct:description """Ord og uttrykk som hjelper brukeren til å finne datasettet inkluderes (der det ikke er eksplisitt angitt referanser til begreper)  
+* Angi synonymer til hjelp i søk 
+* Angi sentralt innhold i datasettet som ikke finnes begrepsdefinisjoner for enda 
+I noen tilfeller mangler noen av begrepsdefinisjonene som er sentrale for å beskrive datasettet, eller man har et ord som ikke formelt forbindes med datasettet men som man vet at mange likevel bruker. Da kan vi bruke dette feltet for å sørge for at disse søkeordene likevel gir treff i søkemotoren.
+"""@no .
+
+
+# Dataset_language (språk)
+:Dataset_language
+    dct:abstract """Hovedspråket benyttet i datasettets innhold angis"""@no ;
+    dct:description """For å forstå hvilket språk innholdet til datasettet har angis dette
+* Det er hovedspråket benyttet i datasettets innhold som skal angis 
+* Er datasettet uten språklige tekster angis ikke språk
+* Inneholder datasett tekster på flere språk, og det ikke er tydelig hva som er hovedspråket, angis ikke språk
+* Språk angis fra en liste av gyldige språk fra EUs autoritetsliste.
+"""@no .
+
+
+# Dataset_issued (utgivelse)
+:Dataset_issued
+    dct:abstract """Tidspunktet angir når innholdet i datasettet gjøres tilgjengelig."""@no ;
+    dct:description """For å forstå når datasettet er operativt og tilgjengelig angis tidspunkt for utgivelse. 
+* Angis som tidspunkt (dato alene tolkes som kl. 00:00)
+* Tidspunktet angir når innholdet i datasettet gjøres tilgjengelig. Dette er ikke alltid  samsvarende med når den enkelte distribusjonen er tilgjengelig.  * Og heller ikke når beskrivelsen om datasettet utgis (katalogpostens utgivelse).
+Tidspunkt angis med xsd:dateTime. Dette inkluderer utvidelser av kapittel 5.4 i ISO 8601 med tidssoner) [-]CCYY-MM-DDThh:mm:ss[Z|(+|-)hh:mm]"""@no .
+
+# Dataset_modified (modifisert)
+:Dataset_modified
+    dct:abstract """Tidspunktet angir når innholdet i datasettet sist er endret."""@no ;
+    dct:description """For å forstå når datasettet sist ble oppdatert angis tidspunkt for siste endring
+* Angis som tidspunkt (dato alene tolkes som kl. 00:00:00 norsk tid)
+* Tidspunktet angir når innholdet i datasettet sist er endret.
+* Tidspunkt angis med xsd:dateTime etter kapittel 5.4 i ISO 8601 utvidet med tidssoner [-]CCYY-MM-DDThh:mm:ss[Z|(+|-)hh:mm]
+"""@no .
+
+# Dataset_publisher (utgiver/eier)
+:Dataset_publisher
+    dct:abstract """Skal peke på en Enhet i Enhetsregisteret."""@no ;
+    dct:description """Identifisering av den enheten som er ansvarlig for at datasettet er tilgjengelig, ikke den som faktisk gjør datasettet tilgjengelig. Eier er et obligatorisk felt.
+* Skal peke på en Enhet (juridisk person, organisasjonsledd, underenhet)
+* Det offisielle navnet på virksomheten vil hentes fra Enhetsregisteret, men kortform (f.eks. Difi) kan legges inn av brukeren
+* Eieren av datasettet forvalter sammensetning av dataene, altså datasettet, og ikke nødvendigvis selve dataene. 
+"""@no .
+
+# Dataset_creator (skaper)
+:Dataset_creator
+    dct:abstract """Brukes unntaksvis der det er datasett som er satt sammen av data som andre er ansvarlige for"""@no ;
+    dct:description """Egenskapen angir produsent(er) av datasettet der dette er en annen enn dataeier
+* Bruke unntaksvis der det er datasett som er satt sammen av data som andre er ansvarlige for
+* Skaper vil ikke angis med organisasjonsnummer siden det typisk vil være en sammensatt gruppe."""@no .
+
+# Dataset_contactPoint (kontaktpunkt)
+:Dataset_contactPoint
+    dct:abstract """Angi kontaktinformasjonen som kan brukes ved henvendelser om et datasett."""@no ;
+    dct:description """Egenskapen kontaktpunkt angis for å komme i dialog med eieren av datasettet.
+* Angi kontaktinformasjonen som kan brukes ved henvendelser om et datasett.
+* Angi navn og kontaktinfo på avdeling, seksjon, kontor e.l.
+* Hvis det finnes et web-basert kontaktskjema bør dette benyttes
+* Kontaktinformasjon på person frarådes.
+* Vcard https://www.w3.org/TR/vcard-rdf benyttes for å beskrive kontaktpunktet (se Kontaktpunkt)"""@no .
+
+# Dataset_documentation (dokumentasjon)
+:Dataset_documentation
+    dct:abstract """Referanse til en side som beskriver utdypende dokumentasjon om datasettet."""@no ;
+    dct:description """Utdypende dokumentasjon av datasettet angis ved å peke på en side der den finnes. Det anbefales at Landingsside brukes i stedet for dokumentasjon."""@no .
+    
+# Dataset_landingpage (landingsside)
+:Dataset_landingpage
+    dct:abstract """Referanse til en side som beskriver datasettets innhold, struktur og tilgang."""@no ;
+    dct:description """Dokumentasjon om datasettet på en landingsside hos datasetteieren som kan beskrive registeret, innhold og struktur, og tilgang.
+* kan referere til registerets hjemmeside
+* kan referere til en samleside som beskriver innhold og struktur 
+* kan referere til en samleside om nedlasting/bruk/søk (tjenestene)
+* det kan refereres til flere sider"""@no .
+
+# Dataset_accessRights (tilgangsnivå)
+:Dataset_accessRights
+    dct:abstract """Angi om datasettet offentlig åpne data, eller er helt eller delvis skjermet for innsyn"""@no ;
+    dct:description """Det er behov for å angi i hvilken grad datasettet kan bli gjort tilgjengelig for allmennheten, uten hensyn til om det er publisert eller ikke
+* Angi om datasettet er helt eller delvis skjermet for innsyn. Offentlig, begrenset offentlighet og unntatt offentlighet. 
+* Skal gjenspeile det mest begrensede feltet/opplysningen i datasettet
+“Offentlig” betyr at datasettet ikke inneholder begrensede opplysninger og kan legges ut som åpne data, selv om det ikke er laget en løsning for tilgang. Se Difis veileder for åpne data. 
+* “Begrenset offentlighet” betyr at tilgangen til opplysningene avhenger av hvilket formål opplysningene er innsamlet til, og hvilket lovhjemmel den som skal bruke dataene har. Begrensningen kan skyldes innhold som personopplysninger. Når noen ønsker å benytte datasettet må man foreta en konkret vurdering av tilgangen. 
+* “Unntatt offentlighet” betyr saksbehandler har med referanse til lov eller forskrift valgt at  datasett (dokumenter eller saksopplysninger) kan unndras fra offentlighet. Typiske eksempler er interne dokumenter, styringsdialog, ansettelser, gradert informasjon, forretningshemmeligheter eller data som andre eier. 
+* Varianter av datasettet kan være offentlig ved at det utelater de felt som gjør at det opprinnelige datasettet er begrenset teller unntatt offentlighet. (se relasjoner mellom datasett)
+* Ved bruk av verdiene "begrenset offentlighet" og "unntatt offentlighet" er egenskapen skjermingshjemmel anbefalt
+"""@no .
+
+# Dataset_legalBasisForRestriction (skjermingshjemmel)
+:Dataset_legalBasisForRestriction
+    dct:abstract """Angi referanse til relevant lov eller forskrift."""@no ;
+    dct:description """Dersom datasettet har begrensninger på deling trenger vi å vite hva skjermingen gjelder. Det kan være hjemmel (kilde for påstand) i offentlighetsloven, sikkerhetsloven, beskyttelsesinstruksen eller annet lovverk som ligger til grunn for vurdering av tilgangsnivå.
+* Angi referanse til relevant lov eller forskrift. Helst til lovdata på paragrafnivå. 
+* Egenskapen er anbefalt dersom «tilgangsnivå» har verdiene «begrenset» eller «ikke-offentlig»"""@no .
+
+# Dataset_legalBasisForProcessing (behandlingsgrunnlag)
+:Dataset_legalBasisForProcessing
+    dct:abstract """Behandlingsgrunnlag knyttes enten til angitt lovhjemmel, samtykke eller nødvendighetsvurdering."""@no ;
+    dct:description """Etter personopplysningsloven § 8 og 9 skal det foreligge et grunnlag for behandling av personopplysninger. 
+Dersom et datasett inneholder personopplysninger skal det være et grunnlag for behandlingen.
+* Behandlingsgrunnlag knyttes enten til lovhjemmel, samtykke eller nødvendighetsvurdering. Angi dette i tekst.
+* Dersom behandlingsgrunnlaget er knyttet til lovhjemmel angis en referanse til dette."""@no .
+
+# Dataset_legalBasisForAccess (utleveringshjemmel)
+:Dataset_legalBasisForAccess
+    dct:abstract """Henvisning til regelverk som begrunner en offentlig virksomhet sin rett eller plikt til å utlevere opplysninger til andre private personer eller juridiske personer."""@no ;
+    dct:description """Informasjon om utleveringshjemmel gjør det enklere for brukere av datasettet å se om det er nødvendig med egen hjemmel for innhenting eller om de kan få tillatelse til å bruke opplysninger etter søknad til dataeier.
+* Henvisning til regelverk som begrunner en offentlig virksomhet sin rett eller plikt til å utlevere opplysninger til andre private personer eller juridiske personer.
+* Henvisningen gjøres til lovdata på paragraf-nivå."""@no .
+
+# Dataset_provenance (opphav)
+:Dataset_provenance
+    dct:abstract """Angi om opplysningene i datasettet er resultat av vedtak eller innsamlet fra bruker eller tredjepart"""@no ;
+    dct:description """Det er behov for en sortering om innholdet er basert på avgjørelse truffet under utøvelse av offentlig myndighet (vedtak) eller er kommer fra andre kilder (bruker eller tredjepart). Vedtak anses å være autoritative kilder for hele forvaltningen. 
+* Angi om opplysningene i datasettet er resultat av vedtak eller innsamlet fra bruker eller tredjepart
+* Det skal velges en verdi fra et kontrollert vokabular med verdiene :Vedtak, :Bruker, :Tredjepart"""@no .
+    
+# Dataset_conformsTo (i samsvar med)
+:Dataset_conformsTo
+    dct:abstract """Angi at et datasett er i samsvar med en standard, spesifikasjon eller implementasjonsregel."""@no ;
+    dct:description """Det er behov for å vite om et datasett er i henhold til gitt(e) standard(er).
+* Benyttes til å angi at et datasett er i samsvar med en standard, spesifikasjon eller implementasjonsregel. Eksempel: Et datasett er i samsvar med SOSI 4.5 som  innholdsstandard. 
+* For referanser til maskinlesbare informasjonsmodeller, skal egenskapen “innholdsspesifikasjon benyttes”"""@no .
+
+# Dataset_informationModel (informasjonsmodell)
+:Dataset_informationModel
+    dct:abstract """Refereranse til datasettets informasjonsmodell"""@no ;
+    dct:description """En eksplisitt referanse til informasjonsmodell
+* Benyttes til å angi en maskinlesbar referanse til informasjonsmodell."""@no .
+
+
+# Dataset_accruralPeriodicity (frekvens)
+:Dataset_accruralPeriodicity 
+    dct:abstract """Beskriv hvor ofte datasettet har nytt innhold."""@no ;
+    dct:description """En angivelse hvor ofte datasettet blir oppdatert. 
+* Beskriv hvor ofte datasettet har nytt innhold. For eksempel oppdateres Enhetsregisteret med nye enheter og sletting av enheter kontinuerlig, mens Inntektsdata fra likningen (Skattemelding) er årlig og Folketelling fra 1910 oppdateres aldri."""@no .
+
+# Dataset_hasQualityAnnotation_accuracy (nøyaktighet)
+:Dataset_hasQualityAnnotation_accuracy
+    dct:abstract """I hvilken grad er innholdet i samsvar med formålet."""@no ;
+    dct:description """I hvilken grad datasettet korrekt representerer intensjonen som er angitt av dataeier i formålet
+Nøyaktighet skal tolkes i forhold til formålet. 
+"""@no .
+
+# Dataset_hasQualityAnnotation_completeness (kompletthet)
+:Dataset_hasQualityAnnotation_completeness
+    dct:abstract """I hvilken grad inneholder datasettet alle objekter som nevnt i formålet"""@no ;
+    dct:description """I hvilken grad inneholder datasettet forventede opplysninger
+* Kompletthet tolkes i forhold til formålet (utvalget)
+* Inneholder datasettet de objekter som nevnt i formålet? """@no .
+
+
+# Dataset_hasQualityAnnotation_currentness (aktualitet)
+:Dataset_hasQualityAnnotation_currentness
+    dct:abstract """Avvik eller tilleggsopplysninger om “oppdateringsfrekvens” og “sist oppdatert”"""@no ;
+    dct:description """Avvik eller tilleggsopplysninger om “oppdateringsfrekvens” og “sist oppdatert” 
+Er opplysninger om “oppdateringsfrekvens” og “sist oppdatert” alltid gyldig? Er det opplysninger i datasettet som har annen oppdateringsfrekvens?"""@no .
+
+
+# Dataset_hasQualityAnnotation_avaliability (tilgjengelighet)
+:Dataset_hasQualityAnnotation_availability
+    dct:abstract """Avvik eller tilleggsopplysninger knyttet til datasettes tilgjengelighet."""@no ;
+    dct:description """Avvik eller tilleggsopplysninger knyttet til datasettets tilgjengelighet
+* Tilgjengelighet tolkes i forhold til tilgangsnivå og ev. begrensninger utover det som er angitt i behandlingsgrunnlag, skjermings- og utleveringshjemmel.
+* Dersom datasettet er åpent men mangler distribusjoner bør årsaken angis her.
+"""@no .
+
+
+# Dataset_hasQualityAnnotation_relevance (relevans)
+:Dataset_hasQualityAnnotation_relevance
+    dct:abstract """Avvik eller tilleggsopplysninger knyttet til datasettes relevans i ulike brukskontekster
+"""@no ;
+    dct:description """Avvik eller tilleggsopplysninger knyttet til datasettes relevans i ulike brukskontekster
+* En vurdering om det er bruksområder datasettet er spesielt velegnet eller ikke bør brukes."""@no .
+    
+    
+# Dataset_distribution (datasettdistribusjon)
+:Dataset_distribution 
+    dct:abstract """For å angi hvor man kan få tilgang til datasettet skal det angis ulike distribusjoner."""@no ;
+    dct:description """For å angi hvor man kan få tilgang til datasettet skal det angis ulike distribusjoner.
+* Det angis i utgangspunktet en distribusjon per fil, feed eller API
+* Dersom det er ett API som leverer flere filformater angis det som en distribusjon"""@no .
+
+
+# Dataset_example (eksempeldata)
+:Dataset_example
+    dct:abstract """Benyttes for å gi eksempeldata for et datasett, og hvordan en faktisk distribusjon ser ut.
+"""@no ;
+    dct:description """Benyttes for å gi eksempeldata for et datasett, og hvordan en faktisk distribusjon ser ut.
+ * Dersom datasettet inneholder personopplysninger vil det være nyttig for bruker å se en eksempedata som viser en anonymisert rad i datasettet."""@no .
+ 
+# Dataset_type (type)
+:Dataset_type
+    dct:abstract """Referanse til en klassifisering av datasettets type innhold. Refererer til EU publication office sine datasett-typer"""@no ;
+    dct:description """Referanse til en klassifisering av datasettets type innhold. Refererer til EU publication office sine datasett-typer.
+* Datasett som anses som å inneholde data angis med “Data”
+* Datasett som anses som metadata (f.eks. Kodelister, Taksonomier og Tesauri) skal angis tilsvarende
+* Datasett som anses som testdata angis som “Testdata”"""@no .
+
+# Dataset_source (kilde)
+:Dataset_source
+    dct:abstract """Peker til ressurs (datasett eller annet) som helt eller delvis er en kilde for det aktuelle datasettet."""@no;
+    dct:description """Peker til en ressurs som er kilde til datasettet
+* Peker til ressurs (datasett eller annet) som helt eller delvis er en kilde for det aktuelle datasettet. F.eks. kan et datasett er opprettet basert på data som er hentet fra en nettside, uten at den er definert som et datasett.
+* Dersom et åpent datasett er basert på et annet hvor personopplysninger er fjernet, kan relasjonen brukes.
+* Et datasett som er avledet fra et annet skal ha en referanse til kilde for det aktuelle datasettet. 
+* Dersom det er et utvalg fra et annet datasett bør heller relasjonen del av brukes"""@no .
+
+# Dataset_testdata (testdatasett)
+:Dataeset_testdata
+    dct:abstract """For å angi at et register eller datasett foreligger som testdata, typisk syntetiske eller anonymiserte, angis dette med relasjonen testdatasett til et annet datasett. """@no ;
+    dct:description """For å angi at et register eller datasett foreligger som testdata, typisk syntetiske eller anonymiserte, angis dette med relasjonen testdatasett til et annet datasett. 
+* Peker til datasett som er består av testdata til det aktuelle datasettet"""@no .
+
+# Dataset_requires (krever)
+:Dataset_requires
+    dct:abstract """Peker til en ressurs som må være tilstede for at datasettet skal kunne produseres."""@no ;
+    dct:description """Peker til en ressurs som må være tilstede for at datasettet skal kunne produseres.
+* Peker til ressurs (datasett eller annet) som aktuelt datasett er avhengig av"""@no .    
+
+# Dataset_ (del av)
+:Dataset_partOf
+    dct:abstract """Der registre oppdeles i mindre datasett skal relasjonen brukes."""@no ;
+    dct:description """Peker til et datasett som det aktuelle datasettet er en delmengde av av, eller at det er brutt opp i mindre datasett. 
+* Der registre oppdeles i mindre datasett skal relasjonen brukes. F.eks. er datasettet Underenheter er del av datasettet Enhetsregisteret."""@no .   
+
+# Dataset_ (versjon av)
+:Dataset_versionOf
+    dct:abstract """Referanse til et datasett som i prinsippet er det samme, men hvor innholdet er blitt oppdatert på bakgrunn av bedret datakvalitet e.l. """@no ;
+    dct:description """Peker til et datasett som det aktuelle datasettet er en versjon av.
+* I prinsippet det samme datasettet, men hvor innholdet er blitt oppdatert på bakgrunn av bedret datakvalitet e.l. 
+* Peker til en versjon av det aktuelle datasettet kan avledes (har versjon).
+* Det kan legges til en versjonskommentar til feltet"""@no .   
+
+# Dataset_ (erstattet av)
+:Dataset_replacedBy
+    dct:abstract """Peker til et datasett som erstatter et aktuelt datasettet."""@no ;
+    dct:description """Peker til et datasett som erstatter et aktuelt datasettet.
+* F.eks. kan et kodeverk erstattet av en nyere utgave."""@no .  
+
+# Dataset_ (relatert)
+:Dataset_relation
+    dct:abstract """Referanse til andre datasett som gir supplerende informasjon om innholdet, f.eks. et kodeverk."""@no ;
+    dct:description """En generell relasjon som peker til ressurser som er relatert til datasettet.
+
+Angi referanser til andre datasett som gir supplerende informasjon om innholdet. Kan f.eks. være å relatere til et kodeverk."""@no .
+
+
+# Agent_name (Enhet enhetsnavn)
+:Agent_name
+    dct:abstract """Navnet på enheten benyttes i visninger"""@no ;
+    dct:description """Navnet på enheten benyttes i visninger"""@no .  
+
+# Agent_identifier (Enhet organisasjonsnummer)
+:Agent_identifier
+    dct:abstract """Enheter skal oppgis med organisasjonsnummer."""@no ;
+    dct:description """Enheter skal oppgis med organisasjonsnummer."""@no .
+
+# Agent_type (Enhet utgivertype)
+:Agent_type
+    dct:abstract """Enheter angis med organisasjonstype for å skille mellom offentlige og private datasetteiere."""@no ;
+    dct:description """Enheter angis med organisasjonstype for å skille mellom offentlige og private datasetteiere."""@no .  
+
+
+# ContactPoint organization (Kontaktpunkt organisasjonsenhet)
+:ContactPoint_organizational-unit 
+    dct:abstract """Kontaktpunkt angis med organisasjonsenhet
+Dette kan være navnet til en gruppe, avdeling, seksjon eller liknende i organisasjonen."""@no ;
+    dct:description """Kontaktpunkt angis med organisasjonsenhet
+Dette kan være navnet til en gruppe, avdeling, seksjon eller liknende i organisasjonen. """@no .
+    
+# ContactPoint e-post (Kontaktpunkt e-post)
+:ContactPoint_hasEmail
+    dct:abstract """Angi e-postadresse for kontaktpunktet dersom dette er en ønsket kontaktform"""@no ;
+    dct:description """Angi e-postadresse for kontaktpunktet dersom dette er en ønsket kontaktform"""@no .
+
+# ContactPoint_hasTelephone (Kontakt telefon)
+:ContactPoint_hasTelephone
+    dct:abstract """Angi telefonnummer for kontaktpunktet dersom dette er en ønsket kontaktform"""@no ;
+    dct:description """Angi telefonnummer for kontaktpunktet dersom dette er en ønsket kontaktform"""@no .
+    
+# ContactPoint_hasURL (Kontakt kontaktskjema)
+:ContactPoint_hasURL 
+    dct:abstract """Angi referanse til kontaktskjema på web dersom dette er en ønsket kontaktform"""@no ;
+    dct:description """Angi referanse til kontaktskjema på web dersom dette er en ønsket kontaktform"""@no .
+
+# Traffic_Limits (Trafikkbegrensninger)
+:Traffic_Limits
+    dct:abstract """Begrensninger på antall kall til API e.l. per bruker."""@no ;
+    dct:description """Begrensninger på antall kall til API e.l. per bruker."""@no .
+
+# Performance (Kapasitet og ytelse)
+:Performance
+    dct:abstract """Oppgi responstiden til API-et. Typisk angitt i ms. Er det begrensinger på antall samtidige brukere?"""@no ;
+    dct:description """Oppgi responstiden til API-et. Typisk angitt i ms. Er det begrensinger på antall samtidige brukere?"""@no .
+
+# Availability (Pålitelighet)
+:Availability
+    dct:abstract """Oppgi oppetiden til API-et."""@no ;
+    dct:description """Oppgi oppetiden til API-et."""@no .
+
+# Cost (Kostnader)
+:Cost
+    dct:abstract """Kostnader forbundet med å bruke API-et. Transaksjonskostnader, abonnement e.l."""@no ;
+    dct:description """Kostnader forbundet med å bruke API-et. Transaksjonskostnader, abonnement e.l."""@no .
+
+# Distribution description (beskrivelse)
+:Distribution_description 
+    dct:abstract """"""@no ;
+    dct:description """Beskrivelse skal uttrykke de ulike distribusjonene
+* Er det kun en distribusjon kan beskrivelsen utelates
+* Ved flere distribusjoner bør beskrivelsen benyttes for å skille dem
+* Dersom det er et utsnitt spesifikt for distribusjonen/formål til distribusjonen benyttes beskrivelse
+"""@no .    
+
+# Distribusjon_type (distribusjonstype)
+:Distribution_type
+    dct:abstract """En distribusjon kan bli levert på ulike vis
+* Angi distribusjonens type (Nedlastbar fil, API, Feed)"""@no ;
+    dct:description """En distribusjon kan bli levert på ulike vis
+
+Det skal angis distribusjonens type 
+* Bruk Nedlastbar fil dersom hele distribusjonen kan hentes ned
+* Bruk API dersom deler av datasettet lastes ned gjennom et programmeringsgrensesnitt, typisk REST-API
+* Bruk Feed dersom det i prinsippet er endringer som hentes gjennom f.eks. RSS, Atom eller medlingsformidling 
+* Se EU publication office (http://publications.europa.eu/mdr/resource/authority/distribution-type/html/distribution-types-eng.html)"""@no .    
+
+# Distribusjon_format (format)
+:Distribution_format
+    dct:abstract """Hver distribusjon har format for utveksling. Format er et obligatorisk felt for en distribusjon."""@no ;
+    dct:description """Hver distribusjon har format for utveksling. Format er et obligatorisk felt for en distribusjon.
+* Det skal angis mediatype (e.g. application/json) fra (https://www.iana.org/assignments/media-types/media-types.xhtml)
+* Det kan angis mediatyper utover denne listen, f.eks. “application/x.sosi” 
+* Flere formater skal kun brukes når et og samme API eller sluttbrukerapplikasjoner som tilbyr flere formater"""@no .    
+
+# Distribusjon_accessURL (tilgangsurl)
+:Distribution_accessURL
+    dct:abstract """Lenke til utfyllende informasjon om hvordan en kan få tilgang til i datasettet."""@no ;
+    dct:description """Lenke til informasjon om hvordan en kan få tilgang til i datasettet. TilgangsURL er et obligatorisk felt.
+* bør i så stor grad som mulig peke direkte til en distribusjon av data. 
+* skal benyttes for tjenesteendepunkter eller lenke til filnedlasting.
+* kan peke til en nettside med informasjon om hvordan man får tilgang til distribusjonen."""@no .
+
+# Distribusjon_downloadURL (nedlastingslenke)
+:Distribution_downloadURL
+    dct:abstract """Direktelenke til en nedlastbar fil i et gitt format"""@no ;
+    dct:description """Direktelenke til en nedlastbar fil i et gitt format
+* kan benyttes dersom alle data tilgjengelig via en tjeneste også er tilgjengelig for nedlasting som en fil."""@no .
+
+# Distribusjon_landingpage (landingsside)
+:Distribution_landingpage
+    dct:abstract """Refererer til en nettside som gir tilgang til datasettet, distribusjoner og annen informasjon. """@no ;
+    dct:description """Egenskap ved datasett som refererer til en nettside som gir tilgang til datasettet, distribusjoner og annen informasjon. Skal peke til en side hos den originale tilbyderen av data.
+* kan benyttes for å peke til en samleside om et datasett og dets distribusjoner.
+* bør peke til en side hos den originale tilbyderen av data."""@no .
+
+# Distribusjon (i samsvar med)
+:Distribution_conformsTo
+    dct:abstract """Benyttes for å angi et etablert skjema som distribusjonen er i samsvar med, for eksempel et XSD-dokument."""@no ;
+    dct:description """Benyttes for å angi et etablert skjema som distribusjonen er i samsvar med, for eksempel et XSD-dokument."""@no .
+
+# Distribusjon (dokumentasjon)
+:Distribution_documentation
+    dct:abstract """Referanse til en side eller et dokument som beskriver og dokumenterer innhold og struktur spesifikk for distribusjonen."""@no ;
+    dct:description """Referanse til en side eller et dokument som beskriver og dokumenterer innhold og struktur spesifikk for distribusjonen."""@no .
+
+# Distribusjon (distribusjonsdato)
+:Distribution_issued
+    dct:abstract """Dato/tid når distribusjonen (f.eks. api) først ble publisert i tilknytning til et datasett."""@no ;
+    dct:description """Dato/tid når distribusjonen (f.eks. api) først ble publisert i tilknytning til et datasett. Når innholdet i datasettene ble gjort tilgjengelige. """@no .
+    
+# Distribusjon (modifisert)
+:Distribution_modified
+    dct:abstract """DDato/tid sist distribusjonen (API-et, filen eller feeden) sist ble endret."""@no ;
+    dct:description """Dato/tid sist distribusjonen (API-et, filen eller feeden) sist ble endret."""@no .
+
+
+# Katalog (tittel)
+:Catalog_title
+    dct:abstract """Kortfattet om katalogen. Angi, uten å liste, hvilke datasett den omfatter."""@no ;
+    dct:description """Kortfattet om katalogen
+* Angi, uten å liste, hvilke datasett den omfatter, 
+* f.eks. datasettene til Brønnøysundregistrene."""@no .
+    
+# Katalog (beskrivelse)
+:Catalog_description
+    dct:abstract """En kort og presis beskrivelse av datasettet skal gjøre det lett for andre å se hva det inneholder. Beskrivelse er et obligatorisk felt."""@no ;
+    dct:description """En kort og presis beskrivelse av datasettet skal gjøre det lett for andre å se hva det inneholder. Beskrivelse er et obligatorisk felt."""@no .
+    
+# Katalog (datasett)
+:Catalog_dataset
+    dct:abstract """Beskriver datasettene i katalogen. Minst ett datasett er påkrevd."""@no ;
+    dct:description """Beskriver datasettene i katalogen. Minst ett datasett er påkrevd.
+* Lenke til alle datasettene"""@no .
+
+# Katalog (eier)
+:Catalog_publisher
+    dct:abstract """Identifisering av den enheten som er ansvarlig for katalogen."""@no ;
+    dct:description """Identifisering av den enheten som er ansvarlig for katalogen. Eier er et obligatorisk felt.
+* Skal peke på en Enhet (juridisk person, organisasjonsledd, underenhet)
+* Det offisielle navnet på virksomheten vil hentes fra Enhetsregisteret, men kortform (f.eks. Difi) kan legges inn av brukeren"""@no .
+    
+# Katalog (utgivelsesdato)
+:Catalog_issued
+    dct:abstract """Dato/tid katalogen først ble publisert."""@no ;
+    dct:description """Dato/tid katalogen først ble publisert."""@no .
+
+# Katalog (modifisert)
+:Catalog_modified
+    dct:abstract """Dato/tid sist katalogen ble endret,. Dette kan være endring av en datasettbeskrivelse, eller andre metadata i katalogen."""@no ;
+    dct:description """Dato/tid sist katalogen ble endret,. Dette kan være endring av en datasettbeskrivelse, eller andre metadata i katalogen."""@no .
+    
