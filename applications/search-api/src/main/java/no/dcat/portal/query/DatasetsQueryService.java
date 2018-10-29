@@ -147,8 +147,12 @@ public class DatasetsQueryService extends ElasticsearchService {
 
         @ApiParam("Filters on catalog. ")
         @RequestParam(value = "catalog", defaultValue = "", required = false)
-            String catalog) {
+            String catalog,
 
+        @ApiParam("Comma separated list of which fields should be returned. E.g id,uri,harvest,publisher")
+        @RequestParam(value = "returnfields", defaultValue = "", required = false)
+            String returnFields
+    ) {
 
         StringBuilder loggMsg = new StringBuilder()
             .append(" query:").append(query)
@@ -168,7 +172,8 @@ public class DatasetsQueryService extends ElasticsearchService {
             .append(" subject:").append(subject)
             .append(" provenance:").append(provenance)
             .append(" spatial:").append(spatial)
-            .append(" opendata: ").append(opendata);
+            .append(" opendata: ").append(opendata)
+            .append(" returnfields: ").append(returnFields);
 
         logger.debug(loggMsg.toString());
 
@@ -223,7 +228,8 @@ public class DatasetsQueryService extends ElasticsearchService {
         BoolQueryBuilder boolQuery = addFilter(theme, publisher, accessRights, search, orgPath, firstHarvested, lastHarvested, lastChanged, subject, provenance, spatial, opendata, catalog);
 
         // set up search query with aggregations
-        SearchRequestBuilder searchBuilder = getClient().prepareSearch("dcat")
+        SearchRequestBuilder searchBuilder = getClient().prepareSearch("dcat");
+        searchBuilder
             .setTypes("dataset")
             .setQuery(boolQuery)
             .setFrom(from)
@@ -242,7 +248,12 @@ public class DatasetsQueryService extends ElasticsearchService {
             .addAggregation(getOpendataAggregation());
 
 
+        if (!StringUtils.isEmpty(returnFields)) {
+            searchBuilder.setFetchSource(returnFields.split(","), null);
+        }
+
         logger.trace("Query: {}", searchBuilder.toString());
+
 
         if (StringUtils.isEmpty(sortfield)) {
             if (StringUtils.isEmpty(query)) {
