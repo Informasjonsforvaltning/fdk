@@ -61,6 +61,7 @@ public class DatasetsQueryService extends ElasticsearchService {
     public static final String QUERY_SEARCH = "/datasets";
     public static final String QUERY_GET_BY_ID = "/datasets/{id}";
     public static final String QUERY_GET_BY_URI = "/datasets/byuri";
+    public static final String QUERY_GET_BY_TITLE = "/datasets/bytitle";
 
     /**
      * Compose and execute an elasticsearch query on dcat based on the input parameters.
@@ -596,6 +597,68 @@ public class DatasetsQueryService extends ElasticsearchService {
         }
 
         throw new Exception("More than one dataset match found, count=" + hits.length + " uri=" + uri);
+    }
+
+    @CrossOrigin
+    @ApiOperation(
+        value = "Get a specific dataset by its title",
+        response = Dataset.class)
+    @RequestMapping(
+        value = QUERY_GET_BY_TITLE,
+        method = RequestMethod.GET,
+        produces = {"application/json", "text/turtle", "application/ld+json", "application/rdf+xml"})
+    public ResponseEntity<String> getDatasetByTitleHandler(
+        HttpServletRequest request,
+        @ApiParam("Dataset title")
+        @RequestParam("title") String title,
+        @ApiParam("Filters on publisher's organization path (orgPath), e.g. /STAT/972417858/971040238")
+        @RequestParam(value = "orgPath", defaultValue = "", required = false)
+            String orgPath) throws NotFoundException {
+        logger.info(String.format("Get dataset with title: %s", title));
+
+        Dataset dataset = getDatasetByTitle(title, orgPath);
+        if (dataset == null) {
+            throw new NotFoundException();
+        }
+
+        String acceptHeader = request.getHeader("Accept");
+        String contentType = acceptHeader != null ? acceptHeader : "";
+
+        return transformResponse(dataset, contentType);
+    }
+
+    Dataset getDatasetByTitle(String title, String orgPath) throws NotFoundException {
+        initializeElasticsearchTransportClient();
+        BoolQueryBuilder boolQuery = QueryBuilders.boolQuery();
+        BoolQueryBuilder filter = QueryBuilders.boolQuery();
+
+        if (!StringUtils.isEmpty(title)) {
+            filter.must(QueryBuilders.termQuery("title.nb.raw", title));
+            boolQuery.filter(filter);
+        }
+        if (!StringUtils.isEmpty(orgPath)) {
+            filter.must(QueryBuilders.termQuery("publisher.orgPath", orgPath));
+            boolQuery.filter(filter);
+        }
+
+        SearchResponse response = getClient().prepareSearch("dcat")
+            .setTypes("dataset")
+            .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
+            .setQuery(boolQuery)
+            .execute()
+            .actionGet();
+
+        SearchHit[] hits = response.getHits().getHits();
+
+        if (hits.length == 0) {
+            return null;
+        }
+
+        if (hits.length == 1) {
+            return new Gson().fromJson(hits[0].getSourceAsString(), Dataset.class);
+        }
+
+        throw new NotFoundException("More than one dataset match found, count=" + hits.length + " title=" + title);
     }
 
     ResponseEntity<String> transformResponse(Dataset d, String contentType) {
