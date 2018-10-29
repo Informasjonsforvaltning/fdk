@@ -34,11 +34,9 @@ public class ConvertControllerTest {
 
         ConvertRequest request = ConvertRequest.builder().spec(IOUtils.toString(resource.getInputStream(),"UTF-8")).build();
 
-        //logger.info("request: {}",request);
-
         ConvertResponse response = controller.convert(request);
 
-        logger.info("response: {}",response);
+        logger.debug("response: {}", response);
 
         assertThat(response.getOpenApi().getInfo().getTitle(), is("Åpne Data fra Enhetsregisteret - API Dokumentasjon"));
         assertThat(response.getOpenApi().getInfo().getContact().getName(), is("Forenkling og Brukerdialog hos Brønnøysundregistrene"));

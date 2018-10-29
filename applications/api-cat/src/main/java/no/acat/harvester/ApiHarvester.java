@@ -73,16 +73,19 @@ public class ApiHarvester {
     }
 
     List<ApiRegistrationPublic> getApiRegistrations() {
+
+        List<ApiRegistrationPublic> result = new ArrayList<>();
+
         List<ApiRegistrationPublic> apiRegistrationsFromCsv = getApiRegistrationsFromCsv();
-        logger.info("Loaded registrations from csv {}", apiRegistrationsFromCsv.size());
+
+        logger.info("Loaded {} registrations from csv", apiRegistrationsFromCsv.size());
+        result.addAll(apiRegistrationsFromCsv);
 
         Collection<ApiRegistrationPublic> apiRegistrationsFromRegistrationApi = registrationApiClient.getPublished();
-        logger.info("Loaded registrations from registration-api {}", apiRegistrationsFromRegistrationApi.size());
 
-        // concatenate lists
-        List<ApiRegistrationPublic> result = new ArrayList<>();
-        result.addAll(apiRegistrationsFromCsv);
+        logger.info("Loaded {} registrations from registration-api", apiRegistrationsFromRegistrationApi.size());
         result.addAll(apiRegistrationsFromRegistrationApi);
+
         logger.info("Total registrations {}", result.size());
 
         return result;
@@ -94,10 +97,7 @@ public class ApiHarvester {
         org.springframework.core.io.Resource apiCatalogCsvFile = new ClassPathResource("apis.csv");
         Iterable<CSVRecord> records;
 
-        try (
-            Reader input =
-                new BufferedReader(new InputStreamReader(apiCatalogCsvFile.getInputStream()))
-        ) {
+        try (Reader input = new BufferedReader(new InputStreamReader(apiCatalogCsvFile.getInputStream()))) {
             records = CSVFormat.EXCEL.withHeader().withDelimiter(';').parse(input);
 
             for (CSVRecord line : records) {
@@ -116,8 +116,7 @@ public class ApiHarvester {
 
             logger.debug("Read {} api catalog records.", result.size());
 
-        } catch (
-            IOException e) {
+        } catch (IOException e) {
             logger.error("Could not read api catalog records: {}", e.getMessage());
         }
         return result;
