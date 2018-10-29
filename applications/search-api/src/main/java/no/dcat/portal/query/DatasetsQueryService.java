@@ -61,7 +61,6 @@ public class DatasetsQueryService extends ElasticsearchService {
     public static final String QUERY_SEARCH = "/datasets";
     public static final String QUERY_GET_BY_ID = "/datasets/{id}";
     public static final String QUERY_GET_BY_URI = "/datasets/byuri";
-    public static final String QUERY_GET_BY_TITLE = "/datasets/bytitle";
 
     /**
      * Compose and execute an elasticsearch query on dcat based on the input parameters.
@@ -79,6 +78,10 @@ public class DatasetsQueryService extends ElasticsearchService {
             @ApiParam("the query string")
             @RequestParam(value = "q", defaultValue = "", required = false)
                     String query,
+
+            @ApiParam("Filters on title name")
+            @RequestParam(value = "title", defaultValue = "", required = false)
+                String title,
 
             @ApiParam("Filters on specified theme(s). ex. GOVE, or GOVE,SOCI")
             @RequestParam(value = "theme", defaultValue = "", required = false)
@@ -155,6 +158,7 @@ public class DatasetsQueryService extends ElasticsearchService {
                 .append(" publisher:").append(publisher)
                 .append(" accessRights:").append(accessRights)
                 .append(" orgPath:").append(orgPath)
+                .append(" title:").append(title)
                 .append(" firstHarvested:").append(firstHarvested)
                 .append(" lastHarvested:").append(lastHarvested)
                 .append(" lastChanged:").append(lastChanged)
@@ -187,14 +191,6 @@ public class DatasetsQueryService extends ElasticsearchService {
 
         boolean emptySearch = isEmpty(query);
 
-        boolean emptyFilter = isEmpty(theme) &&
-                isEmpty(accessRights) && isEmpty(provenance) &&
-                isEmpty(orgPath) && isEmpty(publisher) &&
-                isEmpty(sortfield) && isEmpty(sortdirection) &&
-                isEmpty(subject) && firstHarvested == 0 && lastChanged == 0 && lastHarvested == 0 &&
-                isEmpty(provenance) && isEmpty(spatial) &&
-                isEmpty(opendata);
-
         // add * if query only contains one word
         if (!query.isEmpty() && !query.contains(" ")) {
             query = query + " " + query + "*";
@@ -202,11 +198,14 @@ public class DatasetsQueryService extends ElasticsearchService {
 
         QueryBuilder search;
 
-        if (emptySearch) {
+        if (!isEmpty(title)){
+            search = QueryBuilders.simpleQueryStringQuery(title).analyzer(analyzerLang).field("title"+ "." + lang).defaultOperator(Operator.OR);;
+        }
+        else if (emptySearch) {
             search = QueryBuilders.matchAllQuery();
-        } else {
+        }
+        else {
             search = QueryBuilders.simpleQueryStringQuery(query)
-
                     .analyzer(analyzerLang)
                     .field("title" + "." + lang).boost(3f)
                     .field("objective" + "." + lang)
@@ -227,11 +226,17 @@ public class DatasetsQueryService extends ElasticsearchService {
         BoolQueryBuilder boolQuery = addFilter(theme, publisher, accessRights, search, orgPath, firstHarvested, lastHarvested, lastChanged, subject, provenance, spatial, opendata, catalog);
 
         // set up search query with aggregations
-        SearchRequestBuilder searchBuilder = getClient().prepareSearch("dcat")
-                .setTypes("dataset")
-                .setQuery(boolQuery)
-                .setFrom(from)
-                .setSize(size)
+        SearchRequestBuilder searchBuilder = getClient().prepareSearch("dcat");
+        searchBuilder
+            .setTypes("dataset")
+            .setQuery(boolQuery)
+            .setFrom(from)
+            .setSize(size);
+
+        if(!isEmpty(title)){
+            searchBuilder.setFetchSource(new String[] { "title" }, null);
+        } else {
+            searchBuilder
                 .addAggregation(createAggregation(TERMS_SUBJECTS_COUNT, FIELD_SUBJECTS_PREFLABEL, UNKNOWN))
                 .addAggregation(createAggregation(TERMS_ACCESS_RIGHTS_COUNT, FIELD_ACCESS_RIGHTS_PREFLABEL, UNKNOWN))
                 .addAggregation(createAggregation(TERMS_THEME_COUNT, FIELD_THEME_CODE, UNKNOWN))
@@ -245,15 +250,18 @@ public class DatasetsQueryService extends ElasticsearchService {
                 .addAggregation(createAggregation("spatial", "spatial.prefLabel.no.raw", UNKNOWN))
                 .addAggregation(getOpendataAggregation());
 
+        }
 
         logger.trace("Query: {}", searchBuilder.toString());
 
-        if (isEmpty(sortfield)) {
+        if (isEmpty(title)) {
+          if (isEmpty(sortfield)) {
             if (emptySearch) {
-                addSortForEmptySearch(searchBuilder);
+              addSortForEmptySearch(searchBuilder);
             }
-        } else {
+          } else {
             addSort(sortfield, sortdirection, searchBuilder);
+          }
         }
 
         // Execute search
@@ -284,7 +292,6 @@ public class DatasetsQueryService extends ElasticsearchService {
         SortBuilder sortOnLastChanged = SortBuilders.fieldSort("harvest.lastChanged")
                 .order(SortOrder.DESC);
 
-
         searchBuilder.addSort(sortFieldProvenance).addSort(sortOnSource).addSort(sortOnLastChanged);
     }
 
@@ -310,7 +317,6 @@ public class DatasetsQueryService extends ElasticsearchService {
     RangeQueryBuilder temporalRangeBefore(int days, String dateField) {
         return QueryBuilders.rangeQuery(dateField).lte("now-" + days + "d/d");
     }
-
 
     private void addSort(String sortfield, String sortdirection, SearchRequestBuilder searchBuilder) {
         if (!sortfield.trim().isEmpty()) {
@@ -352,7 +358,6 @@ public class DatasetsQueryService extends ElasticsearchService {
 
         return size;
     }
-
 
     /**
      * Adds filters to query.
@@ -597,68 +602,6 @@ public class DatasetsQueryService extends ElasticsearchService {
         }
 
         throw new Exception("More than one dataset match found, count=" + hits.length + " uri=" + uri);
-    }
-
-    @CrossOrigin
-    @ApiOperation(
-        value = "Get a specific dataset by its title",
-        response = Dataset.class)
-    @RequestMapping(
-        value = QUERY_GET_BY_TITLE,
-        method = RequestMethod.GET,
-        produces = {"application/json", "text/turtle", "application/ld+json", "application/rdf+xml"})
-    public ResponseEntity<String> getDatasetByTitleHandler(
-        HttpServletRequest request,
-        @ApiParam("Dataset title")
-        @RequestParam("title") String title,
-        @ApiParam("Filters on publisher's organization path (orgPath), e.g. /STAT/972417858/971040238")
-        @RequestParam(value = "orgPath", defaultValue = "", required = false)
-            String orgPath) throws NotFoundException {
-        logger.info(String.format("Get dataset with title: %s", title));
-
-        Dataset dataset = getDatasetByTitle(title, orgPath);
-        if (dataset == null) {
-            throw new NotFoundException();
-        }
-
-        String acceptHeader = request.getHeader("Accept");
-        String contentType = acceptHeader != null ? acceptHeader : "";
-
-        return transformResponse(dataset, contentType);
-    }
-
-    Dataset getDatasetByTitle(String title, String orgPath) throws NotFoundException {
-        initializeElasticsearchTransportClient();
-        BoolQueryBuilder boolQuery = QueryBuilders.boolQuery();
-        BoolQueryBuilder filter = QueryBuilders.boolQuery();
-
-        if (!StringUtils.isEmpty(title)) {
-            filter.must(QueryBuilders.termQuery("title.nb.raw", title));
-            boolQuery.filter(filter);
-        }
-        if (!StringUtils.isEmpty(orgPath)) {
-            filter.must(QueryBuilders.termQuery("publisher.orgPath", orgPath));
-            boolQuery.filter(filter);
-        }
-
-        SearchResponse response = getClient().prepareSearch("dcat")
-            .setTypes("dataset")
-            .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
-            .setQuery(boolQuery)
-            .execute()
-            .actionGet();
-
-        SearchHit[] hits = response.getHits().getHits();
-
-        if (hits.length == 0) {
-            return null;
-        }
-
-        if (hits.length == 1) {
-            return new Gson().fromJson(hits[0].getSourceAsString(), Dataset.class);
-        }
-
-        throw new NotFoundException("More than one dataset match found, count=" + hits.length + " title=" + title);
     }
 
     ResponseEntity<String> transformResponse(Dataset d, String contentType) {
