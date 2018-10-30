@@ -333,9 +333,9 @@
       "title": "Hei",
       "ingress": "Det ser ikke ut til at du har fått tilgang til noen kataloger.",
       "accessTitle": "Trenger du tilgang?",
-      "accessText": "Kontakt din leder for å få tilgang til å registrere datasett.",
+      "accessText": "Kontakt din leder for å få tilgang til å registrere datasett og API-beskrivelser.",
       "assignAccessTitle": "Skal du gi andre tilgang?",
-      "assignAccessText": "Du kan gi andre tilgang til å redigere datasett for din virksomhet via Altinn. Les mer om hvordan du gir andre tilgang."
+      "assignAccessText": "Du kan gi andre tilgang til å redigere datasett og API-beskrivelser for din virksomhet via Altinn. Les mer om hvordan du gir andre tilgang."
     },
     "datasets": "Datasettkatalog",
     "apis": "API-katalog",
