@@ -346,7 +346,7 @@
   },
   "loginDialog": {
     "title": "Velkommen til registrering i felles datakatalog",
-    "ingress": "Her kan du registrere og administrere datasettbeskrivelser for din virksomhet. For å få tilgang må du være innlogget.",
+    "ingress": "Her kan du registrere og administrere datasettbeskrivelser og API-beskrivelser for din virksomhet. For å få tilgang må du være innlogget.",
     "loggedOutMsgPart1": "Du har blitt logget ut. ",
     "loggedOutMsgPart2": "Sesjonen ble tidsavbrutt, men vi har tatt vare på alle endringene du har gjort. Logg inn på nytt for å fortsette å jobbe med registreringen."
   },
