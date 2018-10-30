@@ -46,13 +46,13 @@ exports[`should render LoginDialog correctly 1`] = `
               Trenger du tilgang?
             </strong>
             <p>
-              Kontakt din leder for å få tilgang til å registrere datasett.
+              Kontakt din leder for å få tilgang til å registrere datasett og API-beskrivelser.
             </p>
             <strong>
               Skal du gi andre tilgang?
             </strong>
             <p>
-              Du kan gi andre tilgang til å redigere datasett for din virksomhet via Altinn. Les mer om hvordan du gir andre tilgang.
+              Du kan gi andre tilgang til å redigere datasett og API-beskrivelser for din virksomhet via Altinn. Les mer om hvordan du gir andre tilgang.
             </p>
           </div>
         </div>
