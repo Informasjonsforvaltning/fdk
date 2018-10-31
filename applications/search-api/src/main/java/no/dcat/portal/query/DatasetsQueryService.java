@@ -31,6 +31,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 
 /**
@@ -79,7 +82,7 @@ public class DatasetsQueryService extends ElasticsearchService {
             @RequestParam(value = "q", defaultValue = "", required = false)
                     String query,
 
-            @ApiParam("Filters on title name")
+            @ApiParam("the query-title string")
             @RequestParam(value = "title", defaultValue = "", required = false)
                 String title,
 
@@ -149,8 +152,12 @@ public class DatasetsQueryService extends ElasticsearchService {
 
             @ApiParam("Filters on catalog. ")
             @RequestParam(value = "catalog", defaultValue = "", required = false)
-                    String catalog) {
+                    String catalog,
 
+            @ApiParam("Filters on returnFields. ")
+            @RequestParam(value = "returnfields", defaultValue = "", required = false)
+                String returnFields
+            ) {
 
         StringBuilder loggMsg = new StringBuilder()
                 .append(" query:").append(query)
@@ -199,7 +206,7 @@ public class DatasetsQueryService extends ElasticsearchService {
         QueryBuilder search;
 
         if (!isEmpty(title)){
-            search = QueryBuilders.simpleQueryStringQuery(title).analyzer(analyzerLang).field("title"+ "." + lang).defaultOperator(Operator.OR);;
+            search = QueryBuilders.simpleQueryStringQuery(title).analyzer(analyzerLang).field("title"+ "." + lang);
         }
         else if (emptySearch) {
             search = QueryBuilders.matchAllQuery();
@@ -234,7 +241,7 @@ public class DatasetsQueryService extends ElasticsearchService {
             .setSize(size);
 
         if(!isEmpty(title)){
-            searchBuilder.setFetchSource(new String[] { "title" }, null);
+            searchBuilder.setFetchSource(includeReturnFields(returnFields), null);
         } else {
             searchBuilder
                 .addAggregation(createAggregation(TERMS_SUBJECTS_COUNT, FIELD_SUBJECTS_PREFLABEL, UNKNOWN))
@@ -254,7 +261,7 @@ public class DatasetsQueryService extends ElasticsearchService {
 
         logger.trace("Query: {}", searchBuilder.toString());
 
-        if (isEmpty(title)) {
+
           if (isEmpty(sortfield)) {
             if (emptySearch) {
               addSortForEmptySearch(searchBuilder);
@@ -262,7 +269,7 @@ public class DatasetsQueryService extends ElasticsearchService {
           } else {
             addSort(sortfield, sortdirection, searchBuilder);
           }
-        }
+
 
         // Execute search
         SearchResponse response = searchBuilder.execute().actionGet();
@@ -704,6 +711,17 @@ public class DatasetsQueryService extends ElasticsearchService {
 
         // return response
         return new ResponseEntity<>(response.toString(), HttpStatus.OK);
+    }
+
+    private String[] includeReturnFields(String returnFields){
+        List<String> retFields = Arrays
+            .stream(returnFields.split(","))
+            .collect(Collectors.toList()) ;
+
+        return Stream
+                .of(new String[]{"title"}, retFields.toArray(new String[0]))
+                .flatMap(Stream::of)
+                .toArray(String[]::new);
     }
 
 }
