@@ -14,29 +14,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
-
-/**
- * Created by extkkj on 27.09.2017.
- */
-
 @Service
 @Scope("thread")
 public class TDBInferenceService {
     private final TDBService tdbService;
     private Model schema  = FileManager.get().loadModel("ontology.ttl");
-
+    
     static private final Logger logger = LoggerFactory.getLogger(TDBInferenceService.class);
 
     @Autowired
     public TDBInferenceService(TDBService tdbService) {
         this.tdbService = tdbService;
-    }
-
-    public Model getModelWithInference(String name) {
-
-        logger.info("Model for name not cached: {}", name);
-        return ModelFactory.createInfModel(ReasonerRegistry.getRDFSReasoner(), schema, tdbService.getDataset().getNamedModel(name));
-
     }
 
     public Model describeWithInference(String uri) {
@@ -49,18 +37,6 @@ public class TDBInferenceService {
     public Dataset getDataset() {
         return tdbService.getDataset();
     }
-
-
-
-    public Model getModel(String name) {
-
-        logger.info("Model for name not cached: {}", name);
-        return getDataset().getNamedModel(name);
-
-    }
-
-
-
 
     public void addModelToGraph(Model model, String location) {
         getDataset().getNamedModel(location).add(model);

@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 
 /**
- * Test class for CodeBuildersTest
+ * Test class for SubjectsService
  */
 @Category(UnitTest.class)
 public class SubjectsTest {
@@ -29,7 +29,6 @@ public class SubjectsTest {
     @Test
     public void testDataFromGithub() throws IOException {
         TDBService tdbService = new TDBService(testFolder.getRoot().getCanonicalPath());
-        tdbService.postConstruct();
 
         TDBInferenceService tdbInferenceService = new TDBInferenceService(tdbService);
         TDBConnection tdbConnection = new TDBConnection(tdbInferenceService);
@@ -45,7 +44,6 @@ public class SubjectsTest {
     @Test(expected = MalformedURLException.class)
     public void testLocalAccessDoesNotWork() throws IOException {
         TDBService tdbService = new TDBService(testFolder.getRoot().getCanonicalPath());
-        tdbService.postConstruct();
 
         TDBInferenceService tdbInferenceService = new TDBInferenceService(tdbService);
         TDBConnection tdbConnection = new TDBConnection(tdbInferenceService);
