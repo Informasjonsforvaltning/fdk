@@ -18,7 +18,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -35,7 +34,6 @@ public class SubjectsService extends BaseServiceWithFraming {
 
     @Cacheable("subjects")
     public Subject addSubject(String uri) throws MalformedURLException, HttpException {
-
         try {
             return getSubject(uri);
         } catch (Throwable e) {
