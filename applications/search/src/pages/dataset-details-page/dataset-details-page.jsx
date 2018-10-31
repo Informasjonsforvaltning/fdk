@@ -28,26 +28,34 @@ const renderPublished = datasetItem => {
   }
   return (
     <div className="d-flex flex-wrap mb-5">
-      <BoxRegular
-        title={localization.dataset.issued}
-        subText={
-          <Moment format="DD.MM.YYYY">{_.get(datasetItem, 'issued')}</Moment>
-        }
-      />
-      <BoxRegular
-        title={localization.dataset.modified}
-        subText={
-          <Moment format="DD.MM.YYYY">{_.get(datasetItem, 'modified')}</Moment>
-        }
-      />
-      <BoxRegular
-        title={localization.dataset.frequency}
-        subText={_.capitalize(
-          getTranslateText(
-            _.get(datasetItem, ['accrualPeriodicity', 'prefLabel'])
-          )
-        )}
-      />
+      {_.get(datasetItem, 'issued') && (
+        <BoxRegular
+          title={localization.dataset.issued}
+          subText={
+            <Moment format="DD.MM.YYYY">{_.get(datasetItem, 'issued')}</Moment>
+          }
+        />
+      )}
+      {_.get(datasetItem, 'modified') && (
+        <BoxRegular
+          title={localization.dataset.modified}
+          subText={
+            <Moment format="DD.MM.YYYY">
+              {_.get(datasetItem, 'modified')}
+            </Moment>
+          }
+        />
+      )}
+      {_.get(datasetItem, ['accrualPeriodicity', 'prefLabel']) && (
+        <BoxRegular
+          title={localization.dataset.frequency}
+          subText={_.capitalize(
+            getTranslateText(
+              _.get(datasetItem, ['accrualPeriodicity', 'prefLabel'])
+            )
+          )}
+        />
+      )}
     </div>
   );
 };

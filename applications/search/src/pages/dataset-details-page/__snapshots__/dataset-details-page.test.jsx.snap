@@ -479,52 +479,7 @@ exports[`should render DatasetDetailsPage correctly with datasetItem 1`] = `
         />
         <div
           className="d-flex flex-wrap mb-5"
-        >
-          <BoxRegular
-            subText={
-              <t
-                ago={false}
-                calendar={false}
-                decimal={false}
-                element="time"
-                filter={[Function]}
-                format="DD.MM.YYYY"
-                fromNow={false}
-                interval={60000}
-                onChange={[Function]}
-                toNow={false}
-                unit={null}
-                unix={false}
-                utc={false}
-              />
-            }
-            title="Issue date"
-          />
-          <BoxRegular
-            subText={
-              <t
-                ago={false}
-                calendar={false}
-                decimal={false}
-                element="time"
-                filter={[Function]}
-                format="DD.MM.YYYY"
-                fromNow={false}
-                interval={60000}
-                onChange={[Function]}
-                toNow={false}
-                unit={null}
-                unix={false}
-                utc={false}
-              />
-            }
-            title="Last modified"
-          />
-          <BoxRegular
-            subText=""
-            title="Update frequency"
-          />
-        </div>
+        />
         <DatasetKeyInfo
           accessRights={
             Object {
