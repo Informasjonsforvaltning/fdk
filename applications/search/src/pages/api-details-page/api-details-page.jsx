@@ -295,7 +295,7 @@ export const ApiDetailsPage = props => {
         <div className="row">
           <div className="col-12 col-lg-8 offset-lg-4">
             <DocumentMeta {...meta} />
-            <HarvestDate harvest={apiItem.harvest} />
+            <HarvestDate harvest={_.get(apiItem, 'harvest')} />
 
             <SearchHitHeader
               title={getTranslateText(title)}
