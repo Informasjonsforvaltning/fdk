@@ -154,7 +154,7 @@ public class DatasetsQueryService extends ElasticsearchService {
             @RequestParam(value = "catalog", defaultValue = "", required = false)
                     String catalog,
 
-            @ApiParam("Filters on returnFields. ")
+            @ApiParam("Commaseparated list of which fields should be returned. E.g id,uri,harvest,publisher")
             @RequestParam(value = "returnfields", defaultValue = "", required = false)
                 String returnFields
             ) {
