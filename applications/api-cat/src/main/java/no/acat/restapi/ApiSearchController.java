@@ -1,7 +1,10 @@
 package no.acat.restapi;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import no.acat.model.ApiDocument;
+import no.acat.model.queryresponse.AggregationBucket;
 import no.acat.model.queryresponse.QueryResponse;
 import no.acat.service.ElasticsearchService;
 import org.elasticsearch.action.search.SearchRequestBuilder;
@@ -9,6 +12,8 @@ import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.SearchHit;
+import org.elasticsearch.search.aggregations.Aggregation;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms;
@@ -20,6 +25,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,10 +37,12 @@ public class ApiSearchController {
     public static final int MAX_AGGREGATIONS = 10000;
     private static final Logger logger = LoggerFactory.getLogger(ApiSearchController.class);
     private ElasticsearchService elasticsearch;
+    private ObjectMapper mapper;
 
     @Autowired
-    public ApiSearchController(ElasticsearchService elasticsearchService) {
+    public ApiSearchController(ElasticsearchService elasticsearchService, ObjectMapper mapper) {
         this.elasticsearch = elasticsearchService;
+        this.mapper = mapper;
     }
 
     static void addTermFilter(BoolQueryBuilder boolQuery, String term, String value) {
@@ -104,10 +112,6 @@ public class ApiSearchController {
         }
 
         return null;
-    }
-
-    QueryResponse convertFromElasticResponse(SearchResponse elasticResponse) {
-        return SearchResponseAdapter.convertFromElasticResponse(elasticResponse);
     }
 
     SearchRequestBuilder buildSearchRequest(String query, String accessRights, String orgPath, String[] formats, int from, int size) {
@@ -208,5 +212,44 @@ public class ApiSearchController {
             .field(field)
             .size(MAX_AGGREGATIONS)
             .order(Terms.Order.count(false));
+    }
+
+    QueryResponse convertFromElasticResponse(SearchResponse elasticResponse) {
+        logger.debug("converting response");
+        QueryResponse queryResponse = new QueryResponse();
+        convertHits(queryResponse, elasticResponse);
+        convertAggregations(queryResponse, elasticResponse);
+        return queryResponse;
+    }
+
+    void convertHits(QueryResponse queryResponse, SearchResponse elasticResponse) {
+
+        queryResponse.setTotal(elasticResponse.getHits().getTotalHits());
+
+        queryResponse.setHits(new ArrayList<>());
+        for (SearchHit hit : elasticResponse.getHits().getHits()) {
+            try {
+                ApiDocument document = mapper.readValue(hit.getSourceAsString(), ApiDocument.class);
+                queryResponse.getHits().add(document);
+            } catch (Exception e) {
+                logger.error("error {}", e.getMessage(), e);
+            }
+        }
+    }
+
+    void convertAggregations(QueryResponse queryResponse, SearchResponse elasticResponse) {
+        queryResponse.setAggregations(new HashMap<>());
+        Map<String, Aggregation> elasticAggregationsMap = elasticResponse.getAggregations().getAsMap();
+
+        elasticAggregationsMap.forEach((aggregationName, aggregation) -> {
+            no.acat.model.queryresponse.Aggregation outputAggregation = new no.acat.model.queryresponse.Aggregation() {{
+                buckets = new ArrayList<>();
+            }};
+
+            ((Terms) aggregation).getBuckets().forEach((bucket) -> {
+                outputAggregation.getBuckets().add(AggregationBucket.of(bucket.getKeyAsString(), bucket.getDocCount()));
+            });
+            queryResponse.getAggregations().put(aggregationName, outputAggregation);
+        });
     }
 }
