@@ -1,3 +1,10 @@
+logging:
+  level.root: ERROR
+  level.no.brreg: INFO
+  level.no.dcat: INFO
+  level.org.springframework: INFO
+  level.org.springframework.web: ERROR
+  level.org.opensaml: INFO
 application:
   apiCatUrl: http://api-cat:8080
   themesServiceUrl: http://reference-data:8080
@@ -70,13 +77,6 @@ spring:
     elasticsearch:
       clusterNodes: ${FDK_ES_CLUSTERNODES:elasticsearch5:9300}
       clusterName: ${FDK_ES_CLUSTERNAME:elasticsearch}
-logging:
-  level.: ERROR
-  level.no.brreg: INFO
-  level.no.dcat: INFO
-  level.org.springframework: INFO
-  level.org.springframework.web: ERROR
-  level.org.opensaml: INFO
 application:
   authentication:
     includedOrgforms: ADOS,FKF,FYLK,IKS,KF,KIRK,KOMM,ORGL,SF,STAT,SÆR
@@ -105,12 +105,6 @@ spring:
     elasticsearch:
       clusterNodes: ${FDK_ES_CLUSTERNODES:elasticsearch5:9300}
       clusterName: ${FDK_ES_CLUSTERNAME:elasticsearch}
-logging:
-  level.: ERROR
-  level.no.dcat: INFO
-  level.org.springframework: INFO
-  level.org.springframework.web: ERROR
-  level.org.opensaml: INFO
 server:
   tomcat:
     accesslog:
@@ -124,13 +118,6 @@ spring:
     elasticsearch:
       clusterNodes: ${FDK_ES_CLUSTERNODES:elasticsearch5:9300}
       clusterName: ${FDK_ES_CLUSTERNAME:elasticsearch}
-logging:
-  level.: ERROR
-  level.no.brreg: INFO
-  level.no.dcat: INFO
-  level.org.springframework: INFO
-  level.org.springframework.web: WARN
-  level.org.opensaml: INFO
 server:
   tomcat:
     accesslog:
@@ -175,8 +162,6 @@ application:
   altinnServiceEdition: 42
   apiKey: 1234-abcde-56789-fghij
   harvesterUrl: http://localhost:8082
-logging:
-  level.no.dcat: DEBUG
 
 
 ---
@@ -186,5 +171,3 @@ spring:
     elasticsearch:
       clusterNodes: ${FDK_ES_CLUSTERNODES:elasticsearch5:9300}
       clusterName: ${FDK_ES_CLUSTERNAME:elasticsearch}
-logging:
-  level.no.dcat: DEBUG

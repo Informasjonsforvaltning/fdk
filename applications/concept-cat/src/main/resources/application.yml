@@ -1,6 +1,6 @@
 spring.jackson.default-property-inclusion: non_null
 logging:
-  level: WARN
+  level.root: WARN
   level.no.acat: ${LOG_LEVEL:INFO}
   level.org.springframework: WARN
   level.org.springframework.web: WARN
