@@ -186,14 +186,6 @@ public class DatasetsQueryService extends ElasticsearchService {
 
         boolean emptySearch = isEmpty(query);
 
-        boolean emptyFilter = isEmpty(theme) &&
-                isEmpty(accessRights) && isEmpty(provenance) &&
-                isEmpty(orgPath) && isEmpty(publisher) &&
-                isEmpty(sortfield) && isEmpty(sortdirection) &&
-                isEmpty(subject) && firstHarvested == 0 && lastChanged == 0 && lastHarvested == 0 &&
-                isEmpty(provenance) && isEmpty(spatial) &&
-                isEmpty(opendata);
-
         // add * if query only contains one word
         if (!query.isEmpty() && !query.contains(" ")) {
             query = query + " " + query + "*";
