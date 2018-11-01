@@ -179,20 +179,14 @@ public class DatasetsQueryService extends ElasticsearchService {
         ResponseEntity<String> jsonError = initializeElasticsearchTransportClient();
         if (jsonError != null) return jsonError;
 
-        boolean emptySearch = isEmpty(query);
-
-        // add * if query only contains one word
-        if (!query.isEmpty() && !query.contains(" ")) {
-            query = query + " " + query + "*";
-        }
-
         QueryBuilder search;
 
-        if (emptySearch) {
-            search = QueryBuilders.matchAllQuery();
-        } else {
+        if (!StringUtils.isEmpty(query)) {
+            // add * if query only contains one word
+            if (!query.contains(" ")) {
+                query = query + " " + query + "*";
+            }
             search = QueryBuilders.simpleQueryStringQuery(query)
-
                 .analyzer(analyzerLang)
                 .field("title" + "." + lang).boost(3f)
                 .field("objective" + "." + lang)
@@ -207,6 +201,8 @@ public class DatasetsQueryService extends ElasticsearchService {
                 .field("subject.altLabel." + lang)
                 .field("subject.definition." + lang)
                 .defaultOperator(Operator.OR);
+        } else {
+            search = QueryBuilders.matchAllQuery();
         }
 
         // add filter
@@ -234,8 +230,8 @@ public class DatasetsQueryService extends ElasticsearchService {
 
         logger.trace("Query: {}", searchBuilder.toString());
 
-        if (isEmpty(sortfield)) {
-            if (emptySearch) {
+        if (StringUtils.isEmpty(sortfield)) {
+            if (StringUtils.isEmpty(query)) {
                 addSortForEmptySearch(searchBuilder);
             }
         } else {
@@ -272,10 +268,6 @@ public class DatasetsQueryService extends ElasticsearchService {
 
 
         searchBuilder.addSort(sortFieldProvenance).addSort(sortOnSource).addSort(sortOnLastChanged);
-    }
-
-    private boolean isEmpty(String value) {
-        return value == null || value.isEmpty();
     }
 
     AggregationBuilder temporalAggregation(String name, String dateField) {
