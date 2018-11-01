@@ -1,9 +1,6 @@
 logging:
-  level.: ERROR
-  level.no.difi: ERROR
+  level.root: INFO
   level.no.dcat: INFO
-  level.org.springframework: ERROR
-  level.org.springframework.web: ERROR
 application:
   fusekiService: http://fuseki:8080/fuseki
 elastic:
@@ -25,9 +22,7 @@ elastic:
   clusterNodes: localhost:9300
   clusterName: elasticsearch
 logging:
-  level.: ERROR
-  level.no.brreg: INFO
-  level.org.springframework: ERROR
+  level.no.dcat: INFO
 server:
   port: 8093
 management:
