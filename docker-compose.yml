@@ -23,6 +23,11 @@ services:
       - reference-data
       - search-api
 
+  concept-cat:
+    image: dcatno/concept-cat:latest
+    expose:
+      - "8080"
+
   nginx-search:
     image: dcatno/nginx-search:latest
     expose:

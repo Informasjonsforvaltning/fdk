@@ -33,7 +33,6 @@ import java.util.List;
 
 @RestController
 @Scope("thread")
-
 public class Controller {
 
     @Autowired
