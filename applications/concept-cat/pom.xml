@@ -5,7 +5,7 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>no.ccat</groupId>
+    <groupId>no.dcat</groupId>
     <artifactId>concept-cat</artifactId>
     <version>0.1.0</version>
     <packaging>jar</packaging>
@@ -27,7 +27,7 @@
         <maven.exec.skip>false</maven.exec.skip>
         <!--end standard properties-->
 
-        <docker.image.prefix>ccatno</docker.image.prefix>
+        <docker.image.prefix>dcatno</docker.image.prefix>
         <docker.registry/>
         <unittest.category/>
         <endtoendtest.category/>
