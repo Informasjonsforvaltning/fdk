@@ -31,9 +31,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 
 /**
@@ -151,7 +148,11 @@ public class DatasetsQueryService extends ElasticsearchService {
 
         @ApiParam("Comma separated list of which fields should be returned. E.g id,uri,harvest,publisher")
         @RequestParam(value = "returnfields", defaultValue = "", required = false)
-            String returnFields
+            String returnFields,
+
+        @ApiParam("Include aggregations")
+        @RequestParam(value = "aggregations", defaultValue = "true", required = false)
+            String aggregations
     ) {
 
         StringBuilder loggMsg = new StringBuilder()
@@ -233,19 +234,22 @@ public class DatasetsQueryService extends ElasticsearchService {
             .setTypes("dataset")
             .setQuery(boolQuery)
             .setFrom(from)
-            .setSize(size)
-            .addAggregation(createAggregation(TERMS_SUBJECTS_COUNT, FIELD_SUBJECTS_PREFLABEL, UNKNOWN))
-            .addAggregation(createAggregation(TERMS_ACCESS_RIGHTS_COUNT, FIELD_ACCESS_RIGHTS_PREFLABEL, UNKNOWN))
-            .addAggregation(createAggregation(TERMS_THEME_COUNT, FIELD_THEME_CODE, UNKNOWN))
-            .addAggregation(createAggregation("catalogs", "catalog.uri", UNKNOWN))
-            .addAggregation(createAggregation("provenanceCount", "provenance.code.raw", UNKNOWN))
-            .addAggregation(createAggregation("orgPath", "publisher.orgPath", UNKNOWN))
-            .addAggregation(temporalAggregation("firstHarvested", "harvest.firstHarvested"))
-            .addAggregation(AggregationBuilders.missing("missingFirstHarvested").field("harvest.firstHarvested"))
-            .addAggregation(temporalAggregation("lastChanged", "harvest.lastChanged"))
-            .addAggregation(AggregationBuilders.missing("missingLastChanged").field("harvest.lastChanged"))
-            .addAggregation(createAggregation("spatial", "spatial.prefLabel.no.raw", UNKNOWN))
-            .addAggregation(getOpendataAggregation());
+            .setSize(size);
+
+        if ("true".equals(aggregations)) {
+            searchBuilder.addAggregation(createAggregation(TERMS_SUBJECTS_COUNT, FIELD_SUBJECTS_PREFLABEL, UNKNOWN))
+                .addAggregation(createAggregation(TERMS_ACCESS_RIGHTS_COUNT, FIELD_ACCESS_RIGHTS_PREFLABEL, UNKNOWN))
+                .addAggregation(createAggregation(TERMS_THEME_COUNT, FIELD_THEME_CODE, UNKNOWN))
+                .addAggregation(createAggregation("catalogs", "catalog.uri", UNKNOWN))
+                .addAggregation(createAggregation("provenanceCount", "provenance.code.raw", UNKNOWN))
+                .addAggregation(createAggregation("orgPath", "publisher.orgPath", UNKNOWN))
+                .addAggregation(temporalAggregation("firstHarvested", "harvest.firstHarvested"))
+                .addAggregation(AggregationBuilders.missing("missingFirstHarvested").field("harvest.firstHarvested"))
+                .addAggregation(temporalAggregation("lastChanged", "harvest.lastChanged"))
+                .addAggregation(AggregationBuilders.missing("missingLastChanged").field("harvest.lastChanged"))
+                .addAggregation(createAggregation("spatial", "spatial.prefLabel.no.raw", UNKNOWN))
+                .addAggregation(getOpendataAggregation());
+        }
 
 
         if (!StringUtils.isEmpty(returnFields)) {
