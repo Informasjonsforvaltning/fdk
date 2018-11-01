@@ -1,5 +1,6 @@
 package no.acat.harvester;
 
+import no.acat.utils.Utils;
 import no.acat.model.ApiDocument;
 import no.acat.service.ApiDocumentBuilderService;
 import no.acat.service.ElasticsearchService;

@@ -2,23 +2,26 @@ package no.acat.restapi;
 
 import com.google.common.base.Strings;
 import io.swagger.v3.oas.models.OpenAPI;
-import lombok.AllArgsConstructor;
+import no.acat.service.ParserService;
 import no.acat.spec.ParseException;
-import no.acat.spec.Parser;
 import no.dcat.client.apicat.ConvertRequest;
 import no.dcat.client.apicat.ConvertResponse;
 import no.dcat.webutils.exceptions.BadRequestException;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@CrossOrigin
 @RestController
-@AllArgsConstructor
 public class ConvertController {
+    private ParserService parserService;
+
+    @Autowired
+    public ConvertController(ParserService parserService) {
+        this.parserService = parserService;
+    }
 
     @RequestMapping("/convert")
     @PostMapping(produces = "application/json")
@@ -34,14 +37,14 @@ public class ConvertController {
 
         if (Strings.isNullOrEmpty(spec) && !Strings.isNullOrEmpty(url)) {
             try {
-                spec = Parser.getSpecFromUrl(url);
+                spec = ParserService.getSpecFromUrl(url);
             } catch (Exception e) {
                 throw new BadRequestException("Error downloading spec: " + e.getMessage());
             }
         }
 
         try {
-            OpenAPI openAPI = Parser.parse(spec);
+            OpenAPI openAPI = parserService.parse(spec);
             responseBody.setOpenApi(openAPI);
         } catch (ParseException e) {
             messages.add(e.getMessage());

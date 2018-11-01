@@ -9,7 +9,6 @@ import io.swagger.v3.oas.models.responses.ApiResponse;
 import io.swagger.v3.oas.models.responses.ApiResponses;
 import no.acat.model.ApiDocument;
 import no.acat.spec.ParseException;
-import no.acat.spec.Parser;
 import no.dcat.client.registrationapi.ApiRegistrationPublic;
 import no.dcat.htmlclean.HtmlCleaner;
 import no.dcat.shared.Contact;
@@ -34,13 +33,15 @@ denormalizes it for indexing and display purpose in search service
 public class ApiDocumentBuilderService {
     private static final Logger logger = LoggerFactory.getLogger(ApiDocumentBuilderService.class);
     private ElasticsearchService elasticsearchService;
+    private ParserService parserService;
 
     @Value("${application.searchApiUrl}")
     private String searchApiUrl;
 
     @Autowired
-    public ApiDocumentBuilderService(ElasticsearchService elasticsearchService) {
+    public ApiDocumentBuilderService(ElasticsearchService elasticsearchService, ParserService parserService) {
         this.elasticsearchService = elasticsearchService;
+        this.parserService = parserService;
     }
 
     public ApiDocument createFromApiRegistration(ApiRegistrationPublic apiRegistration, String harvestSourceUri) throws IOException, ParseException {
@@ -49,10 +50,10 @@ public class ApiDocumentBuilderService {
 
         OpenAPI openApi;
         if (Strings.isNullOrEmpty(apiSpec) && !Strings.isNullOrEmpty(apiSpecUrl)) {
-            apiSpec = Parser.getSpecFromUrl(apiSpecUrl);
+            apiSpec = parserService.getSpecFromUrl(apiSpecUrl);
         }
 
-        openApi = Parser.parse(apiSpec);
+        openApi = parserService.parse(apiSpec);
 
         ApiDocument existingApiDocument = elasticsearchService.getApiDocumentByHarvestSourceUri(harvestSourceUri);
         String id = existingApiDocument != null ? existingApiDocument.getId() : UUID.randomUUID().toString();
