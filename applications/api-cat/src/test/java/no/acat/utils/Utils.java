@@ -1,4 +1,4 @@
-package no.acat.config;
+package no.acat.utils;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.DeserializationFeature;

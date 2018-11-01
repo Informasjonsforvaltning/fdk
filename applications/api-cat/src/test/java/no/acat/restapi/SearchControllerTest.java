@@ -1,8 +1,8 @@
 package no.acat.restapi;
 
-import no.acat.config.Utils;
 import no.acat.model.queryresponse.QueryResponse;
 import no.acat.service.ElasticsearchService;
+import no.acat.utils.Utils;
 import no.dcat.shared.testcategories.UnitTest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.search.SearchHit;
