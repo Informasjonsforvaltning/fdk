@@ -1,5 +1,6 @@
 package no.acat.service;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.models.OpenAPI;
 import no.acat.spec.ParseException;
@@ -21,7 +22,7 @@ public class ParserService {
 
     @Autowired
     public ParserService(ObjectMapper mapper) {
-        this.mapper = mapper;
+        this.mapper = mapper.addMixIn(Object.class, MixInByPropName.class);
     }
 
     public static String getSpecFromUrl(String apiSpecUrlString) throws IOException {
@@ -51,5 +52,9 @@ public class ParserService {
         }
 
         return openAPI;
+    }
+
+    @JsonIgnoreProperties(value = {"additionalProperties", "items"})
+    public class MixInByPropName {
     }
 }
