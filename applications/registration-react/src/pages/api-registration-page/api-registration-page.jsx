@@ -11,6 +11,7 @@ import { AlertMessage } from '../../components/alert-message/alert-message.compo
 import { FormTemplateWithState } from '../../components/form-template/form-template-with-state.component';
 import { ConnectedFormMeta } from './form-meta/connected-form-meta';
 import { ConnectedFormPublish } from './form-publish/connected-form-publish';
+import { ConnectedFormRelatedDatasets } from './form-relatedDatasets/connected-form-related-datasets';
 
 const renderOpenApiInfo = (info, paths) => {
   if (!info) {
@@ -99,7 +100,9 @@ export const APIRegistrationPage = props => {
     helptextItems,
     item,
     location,
-    match
+    match,
+    publisher,
+    referencedDatasets
   } = props;
   const catalogId = _.get(match, ['params', 'catalogId']);
   const searchQuery =
@@ -166,6 +169,23 @@ export const APIRegistrationPage = props => {
 
           <div className="row mb-5">
             <div className="col-12">
+              <FormTemplateWithState
+                showInitially
+                title={localization.schema.apiDatasetReferences.title}
+              >
+                <ConnectedFormRelatedDatasets
+                  apiItem={item}
+                  match={match}
+                  orgPath={_.get(publisher, 'orgPath')}
+                  helptextItems={helptextItems}
+                  referencedDatasets={referencedDatasets}
+                />
+              </FormTemplateWithState>
+            </div>
+          </div>
+
+          <div className="row mb-5">
+            <div className="col-12">
               <ConnectedFormPublish
                 apiItem={item}
                 lastSaved={lastSaved}
@@ -188,7 +208,9 @@ APIRegistrationPage.defaultProps = {
   helptextItems: null,
   item: null,
   location: null,
-  match: null
+  match: null,
+  publisher: null,
+  referencedDatasets: null
 };
 
 APIRegistrationPage.propTypes = {
@@ -200,5 +222,7 @@ APIRegistrationPage.propTypes = {
   helptextItems: PropTypes.object,
   item: PropTypes.object,
   location: PropTypes.object,
-  match: PropTypes.object
+  match: PropTypes.object,
+  publisher: PropTypes.object,
+  referencedDatasets: PropTypes.array
 };

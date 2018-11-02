@@ -1746,6 +1746,1544 @@ Eksempel på endring som medfører versjonering:
       <div
         className="col-12"
       >
+        <withState(withHandlers(FormTemplate))
+          showInitially={true}
+          title="Tilknyttede datasettbeskrivelser"
+        >
+          <Connect(ReduxForm)
+            apiItem={
+              Object {
+                "accessRights": Array [
+                  Object {
+                    "code": "PUBLIC",
+                    "prefLabel": Object {
+                      "en": "Public",
+                      "nb": "Offentlig",
+                      "nn": "Offentlig",
+                    },
+                    "uri": "http://publications.europa.eu/resource/authority/access-right/PUBLIC",
+                  },
+                ],
+                "apiDocUrl": "https://data.brreg.no/enhetsregisteret/api/docs/index.html",
+                "apiSpec": "{
+  \\"openapi\\": \\"3.0.0\\",
+  \\"servers\\": [
+    {
+      \\"url\\": \\"https://data.brreg.no/enhetsregisteret/api\\",
+      \\"description\\": \\"Produksjon\\"
+    }
+  ],
+  \\"info\\": {
+    \\"description\\": \\"Teknisk beskrivelse av REST-tjenestene i Åpne Data fra Enhetsregisteret - Work in progress\\\\n---\\\\n\\\\n## Ordbok\\\\n### Enhetsregisteret\\\\nRegister over grunndata om juridiske personer og andre enheter. Enhetsregisteret tildeler organisasjonsnummer for entydig identifisering av enheter.\\\\n\\\\n### Organisasjonsnummer\\\\nNisifret nummer som entydig identifiserer enheter i Enhetsregisteret.\\\\n\\\\n### Enhet\\\\nEnhet på øverste nivå i registreringsstrukturen i Enhetsregisteret. Eksempelvis enkeltpersonforetak, foreninger, selskap, sameier og andre som er registrert i Enhetsregisteret. Identifiseres med organisasjonsnummer.\\\\n\\\\n### Underenhet\\\\nEnhet på laveste nivå i registreringsstrukturen i Enhetsregisteret. En underenhet kan ikke eksistere alene og har alltid knytning til en hovedenhet. Identifiseres med organisasjonsnummer.\\\\n\\\\n### Organisasjonsform\\\\nOrganisasjonsform er virksomhetens formelle organisering og gir retningslinjer overfor blant annet ansvarsforhold, skatt, revisjonsplikt, rettigheter og plikter.\\\\n\\\\n### Næringskode\\\\n[Næringskoder]: https://www.brreg.no/bedrift/naeringskoder/\\\\n[Næringskoder]  på brreg.no\\\\n\\\\n[Standard for næringsgruppering]: https://www.ssb.no/klass/klassifikasjoner/6\\\\n[Standard for næringsgruppering]\\\\n---\\\\n\\\\n## Versjonering\\\\nDu kan velge major versjon ved å spesifisere HTTP Accept-headeren. Bruk headeren spesifisert i tabellen under. Hvis versjon ikke spesifiseres, vil man få siste versjon.\\\\n<table>\\\\n  <thead>\\\\n    <tr>\\\\n      <th>API</th>\\\\n      <th>Header</th>\\\\n    </tr>\\\\n  </thead>\\\\n  <tbody>\\\\n    <tr>\\\\n      <td>/</td>\\\\n      <td>application/vnd.enhetsregisteret.v1+json</td>\\\\n    </tr>\\\\n    <tr>\\\\n      <td>/organisasjonsformer</td>\\\\n      <td>application/vnd.enhetsregisteret.organisasjonsform.v1+json</td>\\\\n    </tr>\\\\n  </tbody>\\\\n</table>\\\\n\\\\n\\\\n### Strategi\\\\nVi skal normalt ikke bryte bakoverkompabiliteten med våre brukere. Likevel kan det være nødvendig i enkelte situasjoner, av for eksempel juridiske årsaker eller vedlikehold, å gjøre endringer som medfører et slikt brudd. Vi vil i dette tilfellet versjonere tjenesten slik at nyeste versjon vil være tilgjengelig sammen med forrige versjon.\\\\n\\\\n#### Dersom man ikke benytter versjonering i accept header, vil man få siste versjon.\\\\n\\\\nEldre versjon vil anses som utdatert/deprecated, og vil på sikt bli tatt bort. Ved behov for denne typen endringer vil vi forsøke å gi bruker god tid, og varsle om endringen i forkant. Se punkt om varsling.\\\\n\\\\n### Når innføres ny versjon\\\\nVi vil innføre en ny versjon når vi introduserer en endring som påvirker bakoverkompabiliteten. Mindre endringer og patcher vil ikke medføre versjonsendring i header.\\\\n\\\\n### Når fjernes en versjon\\\\nVi vil legge ut varsel/driftsmeldinger i god tid på følgende steder:\\\\n- [Driftsmeldinger]: https://www.brreg.no/om-oss/driftsmeldinger/\\\\n[Driftsmeldinger]\\\\n- [RSS-feed]: https://www.brreg.no/produkter-og-tjenester/rss-feed/\\\\n[RSS-feed].\\\\n\\\\nEksempel på endring som medfører versjonering:\\\\n\\\\n- Fjerne eller endre navn på et attributt i HTTP-responsen.\\\\n\\\\n- Fjerne eller endre navn på et REST endepunkt.\\\\n\\\\n---\\\\n\\\\n## Endringslogg\\\\n<table>\\\\n  <thead>\\\\n    <tr>\\\\n      <th>Versjon</th>\\\\n      <th>Dato</th>\\\\n      <th>Endring</th>\\\\n    </tr>\\\\n  </thead>\\\\n  <tbody>\\\\n    <tr>\\\\n      <td>1.1.0</td>\\\\n      <td>14. august 2018</td>\\\\n      <td>Ny tjeneste /oppdateringer/enheter og /oppdateringer/underenheter</td>\\\\n    </tr>\\\\n    <tr>\\\\n      <td>1.0.0</td>\\\\n      <td>6. april 2018</td>\\\\n      <td>Produksjonssetting av ny åpne data tjeneste for Enhetsregisteret</td>\\\\n    </tr>\\\\n  </tbody>\\\\n</table>\\\\n\\",
+    \\"version\\": \\"1.0.0\\",
+    \\"title\\": \\"Åpne Data fra Enhetsregisteret - API Dokumentasjon\\",
+    \\"contact\\": {
+      \\"name\\": \\"Forenkling og Brukerdialog hos Brønnøysundregistrene\\",
+      \\"email\\": \\"opendata@brreg.no\\"
+    },
+    \\"license\\": {
+      \\"name\\": \\"Norsk lisens for offentlige data (NLOD)\\",
+      \\"url\\": \\"https://data.norge.no/nlod/no/\\"
+    }
+  },
+  \\"paths\\": {
+    \\"/\\": {
+      \\"get\\": {
+        \\"operationId\\": \\"listTjenester\\",
+        \\"description\\": \\"Hent alle tjenester\\",
+        \\"responses\\": {
+          \\"200\\": {
+            \\"description\\": \\"Tjenester mot åpne data fra Enhetsregisteret\\"
+          },
+          \\"default\\": {
+            \\"description\\": \\"Udefinert feil\\"
+          }
+        }
+      }
+    },
+    \\"/enheter\\": {
+      \\"parameters\\": [
+        {
+          \\"name\\": \\"size\\",
+          \\"in\\": \\"query\\",
+          \\"description\\": \\"Antall ønskede treff i response. Default verdi er 20. Max dypde (page*size) er 10 000.\\",
+          \\"schema\\": {
+            \\"type\\": \\"integer\\"
+          }
+        },
+        {
+          \\"name\\": \\"page\\",
+          \\"in\\": \\"query\\",
+          \\"description\\": \\"Hvilken side som ønskes av resultatsettet. Default verdi er 0. Max dypde (page*size) er 10 000\\",
+          \\"schema\\": {
+            \\"type\\": \\"integer\\"
+          }
+        },
+        {
+          \\"name\\": \\"navn\\",
+          \\"in\\": \\"query\\",
+          \\"description\\": \\"Filtrer på navn. Sammensatt søk på likhet. Resultat sorteres pr default etter score\\",
+          \\"required\\": false,
+          \\"schema\\": {
+            \\"type\\": \\"string\\"
+          }
+        },
+        {
+          \\"name\\": \\"sort\\",
+          \\"in\\": \\"query\\",
+          \\"description\\": \\"Sorter resultatsett på feltnavn. Merk at navn må sorteres på navn.norwegian\\",
+          \\"required\\": false,
+          \\"schema\\": {
+            \\"type\\": \\"string\\"
+          }
+        },
+        {
+          \\"name\\": \\"organisasjonsform\\",
+          \\"in\\": \\"query\\",
+          \\"description\\": \\"Filtrer på organisasjonsformkode. Kommaseparert liste.\\",
+          \\"required\\": false,
+          \\"schema\\": {
+            \\"type\\": \\"string\\"
+          }
+        },
+        {
+          \\"name\\": \\"naeringskode\\",
+          \\"in\\": \\"query\\",
+          \\"description\\": \\"Filtrer på næringskode. Valgfritt nivå. Kommaseparert liste.\\",
+          \\"required\\": false,
+          \\"schema\\": {
+            \\"type\\": \\"string\\"
+          }
+        },
+        {
+          \\"name\\": \\"kommunenummer\\",
+          \\"in\\": \\"query\\",
+          \\"description\\": \\"Filtrer på kommunenummer 4 siffer.\\",
+          \\"required\\": false,
+          \\"schema\\": {
+            \\"type\\": \\"string\\"
+          }
+        },
+        {
+          \\"name\\": \\"overordnetEnhet\\",
+          \\"in\\": \\"query\\",
+          \\"description\\": \\"Organisasjonsnummeret til overordnet enhet\\",
+          \\"required\\": false,
+          \\"schema\\": {
+            \\"type\\": \\"string\\"
+          }
+        },
+        {
+          \\"name\\": \\"fraRegistreringsdatoEnhetsregisteret\\",
+          \\"in\\": \\"query\\",
+          \\"description\\": \\"Filtrer på fra registreringsdato i Enhetsregisteret.\\",
+          \\"required\\": false,
+          \\"schema\\": {
+            \\"type\\": \\"string\\",
+            \\"format\\": \\"date (ISO-8601)\\"
+          }
+        },
+        {
+          \\"name\\": \\"tilRegistreringsdatoEnhetsregisteret\\",
+          \\"in\\": \\"query\\",
+          \\"description\\": \\"Filtrer på til registreringsdato i Enhetsregisteret.\\",
+          \\"required\\": false,
+          \\"schema\\": {
+            \\"type\\": \\"string\\",
+            \\"format\\": \\"date (ISO-8601)\\"
+          }
+        },
+        {
+          \\"name\\": \\"registrertIMvaregisteret\\",
+          \\"in\\": \\"query\\",
+          \\"description\\": \\"Filtrer på om enheten er registrert i Merverdiregisteret\\",
+          \\"required\\": false,
+          \\"schema\\": {
+            \\"type\\": \\"boolean\\"
+          }
+        },
+        {
+          \\"name\\": \\"konkurs\\",
+          \\"in\\": \\"query\\",
+          \\"description\\": \\"Filtrer på om enheten er registrert konkurs\\",
+          \\"required\\": false,
+          \\"schema\\": {
+            \\"type\\": \\"boolean\\"
+          }
+        },
+        {
+          \\"name\\": \\"fraAntallAnsatte\\",
+          \\"in\\": \\"query\\",
+          \\"description\\": \\"Filtrer på fra antall ansatte\\",
+          \\"required\\": false,
+          \\"schema\\": {
+            \\"type\\": \\"integer\\"
+          }
+        },
+        {
+          \\"name\\": \\"tilAntallAnsatte\\",
+          \\"in\\": \\"query\\",
+          \\"description\\": \\"Filtrer på til antall ansatte\\",
+          \\"required\\": false,
+          \\"schema\\": {
+            \\"type\\": \\"integer\\"
+          }
+        }
+      ],
+      \\"get\\": {
+        \\"operationId\\": \\"listEnheter\\",
+        \\"description\\": \\"Hent alle enheter\\",
+        \\"responses\\": {
+          \\"200\\": {
+            \\"description\\": \\"Enheter fra Enhetsregisteret\\"
+          },
+          \\"400\\": {
+            \\"description\\": \\"Ugyldig forespørsel\\"
+          },
+          \\"default\\": {
+            \\"description\\": \\"Udefinert feil\\"
+          }
+        }
+      }
+    },
+    \\"/enheter/{organisasjonsnummer}\\": {
+      \\"parameters\\": [
+        {
+          \\"name\\": \\"organisasjonsnummer\\",
+          \\"in\\": \\"path\\",
+          \\"description\\": \\"Organisasjonsnummeret til enheten - 9 siffer\\",
+          \\"required\\": true,
+          \\"schema\\": {
+            \\"type\\": \\"string\\"
+          }
+        }
+      ],
+      \\"get\\": {
+        \\"operationId\\": \\"hentEnhet\\",
+        \\"description\\": \\"Hent detaljer om enhet\\",
+        \\"responses\\": {
+          \\"200\\": {
+            \\"description\\": \\"Enhet fra Enhetsregisteret\\",
+            \\"content\\": {
+              \\"application/json\\": {
+                \\"schema\\": {
+                  \\"$ref\\": \\"#/components/schemas/Enhet\\"
+                }
+              },
+              \\"application/vnd.enhetsregisteret.enhet.v1+json\\": {
+                \\"schema\\": {
+                  \\"$ref\\": \\"#/components/schemas/Enhet\\"
+                }
+              }
+            }
+          },
+          \\"404\\": {
+            \\"description\\": \\"Enheten finnes ikke\\"
+          },
+          \\"410\\": {
+            \\"description\\": \\"Enheten er fjernet\\"
+          },
+          \\"default\\": {
+            \\"description\\": \\"Udefinert feil\\"
+          }
+        }
+      }
+    },
+    \\"/underenheter\\": {
+      \\"parameters\\": [
+        {
+          \\"name\\": \\"size\\",
+          \\"in\\": \\"query\\",
+          \\"description\\": \\"Antall ønskede treff i response. Default verdi er 20. Max dypde (page*size) er 10 000.\\",
+          \\"schema\\": {
+            \\"type\\": \\"integer\\"
+          }
+        },
+        {
+          \\"name\\": \\"page\\",
+          \\"in\\": \\"query\\",
+          \\"description\\": \\"Hvilken side som ønskes av resultatsettet. Default verdi er 0. Max dypde (page*size) er 10 000\\",
+          \\"schema\\": {
+            \\"type\\": \\"integer\\"
+          }
+        },
+        {
+          \\"name\\": \\"navn\\",
+          \\"in\\": \\"query\\",
+          \\"description\\": \\"Filtrer på navn. Sammensatt søk på likhet. Resultat sorteres pr default etter score\\",
+          \\"required\\": false,
+          \\"schema\\": {
+            \\"type\\": \\"string\\"
+          }
+        },
+        {
+          \\"name\\": \\"sort\\",
+          \\"in\\": \\"query\\",
+          \\"description\\": \\"Sorter resultatsett på feltnavn. Merk at navn må sorteres på navn.norwegian\\",
+          \\"required\\": false,
+          \\"schema\\": {
+            \\"type\\": \\"string\\"
+          }
+        },
+        {
+          \\"name\\": \\"organisasjonsform\\",
+          \\"in\\": \\"query\\",
+          \\"description\\": \\"Filtrer på organisasjonsformkode. Kommaseparert liste.\\",
+          \\"required\\": false,
+          \\"schema\\": {
+            \\"type\\": \\"string\\"
+          }
+        },
+        {
+          \\"name\\": \\"naeringskode\\",
+          \\"in\\": \\"query\\",
+          \\"description\\": \\"Filtrer på næringskode. Valgfritt nivå. Kommaseparert liste.\\",
+          \\"required\\": false,
+          \\"schema\\": {
+            \\"type\\": \\"string\\"
+          }
+        },
+        {
+          \\"name\\": \\"kommunenummer\\",
+          \\"in\\": \\"query\\",
+          \\"description\\": \\"Filtrer på kommunenummer 4 siffer.\\",
+          \\"required\\": false,
+          \\"schema\\": {
+            \\"type\\": \\"string\\"
+          }
+        },
+        {
+          \\"name\\": \\"overordnetEnhet\\",
+          \\"in\\": \\"query\\",
+          \\"description\\": \\"Organisasjonsnummeret til overordnet enhet\\",
+          \\"required\\": false,
+          \\"schema\\": {
+            \\"type\\": \\"string\\"
+          }
+        }
+      ],
+      \\"get\\": {
+        \\"operationId\\": \\"listUnderenheter\\",
+        \\"description\\": \\"Hent alle underenheter\\",
+        \\"responses\\": {
+          \\"200\\": {
+            \\"description\\": \\"Underenheter fra Enhetsregisteret\\"
+          },
+          \\"default\\": {
+            \\"description\\": \\"Udefinert feil\\"
+          }
+        }
+      }
+    },
+    \\"/underenheter/{organisasjonsnummer}\\": {
+      \\"parameters\\": [
+        {
+          \\"name\\": \\"organisasjonsnummer\\",
+          \\"in\\": \\"path\\",
+          \\"description\\": \\"Organisasjonsnummeret til underenheten - 9 siffer\\",
+          \\"required\\": true,
+          \\"schema\\": {
+            \\"type\\": \\"string\\"
+          }
+        }
+      ],
+      \\"get\\": {
+        \\"operationId\\": \\"hentUnderenhet\\",
+        \\"description\\": \\"Hent detaljer om underenhet\\",
+        \\"responses\\": {
+          \\"200\\": {
+            \\"description\\": \\"Underenhet fra Enhetsregisteret\\"
+          },
+          \\"404\\": {
+            \\"description\\": \\"Underenhet finnes ikke\\"
+          },
+          \\"410\\": {
+            \\"description\\": \\"Underenhet er fjernet\\"
+          },
+          \\"default\\": {
+            \\"description\\": \\"Udefinert feil\\"
+          }
+        }
+      }
+    },
+    \\"/oppdateringer/enheter\\": {
+      \\"get\\": {
+        \\"operationId\\": \\"listOppdateringerEnhet\\",
+        \\"description\\": \\"Hent oppdateringer på enheter\\",
+        \\"responses\\": {
+          \\"200\\": {
+            \\"description\\": \\"Oppdateringer på enheter fra Enhetsregisteret\\"
+          },
+          \\"default\\": {
+            \\"description\\": \\"Udefinert feil\\"
+          }
+        }
+      }
+    },
+    \\"/oppdateringer/underenheter\\": {
+      \\"get\\": {
+        \\"operationId\\": \\"listOppdateringerUnderenhet\\",
+        \\"description\\": \\"Hent oppdateringer på underenheter\\",
+        \\"responses\\": {
+          \\"200\\": {
+            \\"description\\": \\"Oppdateringer på underenheter fra Enhetsregisteret\\"
+          },
+          \\"default\\": {
+            \\"description\\": \\"Udefinert feil\\"
+          }
+        }
+      }
+    },
+    \\"/organisasjonsformer\\": {
+      \\"get\\": {
+        \\"operationId\\": \\"listOrganisasjonsformer\\",
+        \\"description\\": \\"Hent alle organisasjonsformer\\",
+        \\"responses\\": {
+          \\"200\\": {
+            \\"description\\": \\"Organisasjonsformer fra Enhetsregisteret\\",
+            \\"content\\": {
+              \\"application/json\\": {
+                \\"schema\\": {
+                  \\"$ref\\": \\"#/components/schemas/_Organisasjonsformer\\"
+                }
+              },
+              \\"application/vnd.enhetsregisteret.organisasjonsform.v1+json\\": {
+                \\"schema\\": {
+                  \\"$ref\\": \\"#/components/schemas/_Organisasjonsformer\\"
+                }
+              }
+            }
+          },
+          \\"default\\": {
+            \\"description\\": \\"Udefinert feil\\"
+          }
+        }
+      }
+    },
+    \\"/organisasjonsformer/{orgformKode}\\": {
+      \\"parameters\\": [
+        {
+          \\"name\\": \\"orgformKode\\",
+          \\"in\\": \\"path\\",
+          \\"description\\": \\"Kode for organisasjonsform\\",
+          \\"required\\": true,
+          \\"schema\\": {
+            \\"type\\": \\"string\\"
+          },
+          \\"examples\\": {
+            \\"AS\\": {
+              \\"summary\\": \\"Organisasjonsformkode for Aksjeselskap\\",
+              \\"value\\": \\"AS\\"
+            }
+          }
+        }
+      ],
+      \\"get\\": {
+        \\"operationId\\": \\"hentOrganisasjonsform\\",
+        \\"description\\": \\"Hent en enkelt organisasjonsform fra kode\\",
+        \\"responses\\": {
+          \\"200\\": {
+            \\"description\\": \\"Organisasjonsform fra Enhetsregisteret\\",
+            \\"content\\": {
+              \\"application/json\\": {
+                \\"schema\\": {
+                  \\"$ref\\": \\"#/components/schemas/Organisasjonsform\\"
+                }
+              },
+              \\"application/vnd.enhetsregisteret.organisasjonsform.v1+json\\": {
+                \\"schema\\": {
+                  \\"$ref\\": \\"#/components/schemas/Organisasjonsform\\"
+                }
+              }
+            }
+          },
+          \\"404\\": {
+            \\"description\\": \\"Organisasjonsformen eksisterer ikke\\"
+          },
+          \\"default\\": {
+            \\"description\\": \\"Udefinert feil\\"
+          }
+        }
+      }
+    }
+  },
+  \\"components\\": {
+    \\"schemas\\": {
+      \\"Enhet\\": {
+        \\"properties\\": {
+          \\"organisasjonsnummer\\": {
+            \\"type\\": \\"string\\"
+          },
+          \\"navn\\": {
+            \\"type\\": \\"string\\"
+          },
+          \\"organisasjonsform\\": {
+            \\"$ref\\": \\"#/components/schemas/Organisasjonsform\\"
+          },
+          \\"postadresse\\": {
+            \\"$ref\\": \\"#/components/schemas/Adresse\\"
+          },
+          \\"registreringsdatoEnhetsregisteret\\": {
+            \\"type\\": \\"string\\"
+          },
+          \\"registrertIMvaregisteret\\": {
+            \\"type\\": \\"boolean\\"
+          },
+          \\"naeringskode1\\": {
+            \\"$ref\\": \\"#/components/schemas/Naeringskode\\"
+          },
+          \\"naeringskode2\\": {
+            \\"$ref\\": \\"#/components/schemas/Naeringskode\\"
+          },
+          \\"naeringskode3\\": {
+            \\"$ref\\": \\"#/components/schemas/Naeringskode\\"
+          },
+          \\"antallAnsatte\\": {
+            \\"type\\": \\"integer\\"
+          },
+          \\"forretningsadresse\\": {
+            \\"$ref\\": \\"#/components/schemas/Adresse\\"
+          },
+          \\"stiftelsedato\\": {
+            \\"type\\": \\"string\\"
+          },
+          \\"institusjonellSektorkode\\": {
+            \\"$ref\\": \\"#/components/schemas/Sektorkode\\"
+          },
+          \\"registrertIForetaksregisteret\\": {
+            \\"type\\": \\"boolean\\"
+          },
+          \\"registrertIStiftelsesregisteret\\": {
+            \\"type\\": \\"boolean\\"
+          },
+          \\"registrertIFrivillighetsregisteret\\": {
+            \\"type\\": \\"boolean\\"
+          },
+          \\"sisteInnsendteAarsregnskap\\": {
+            \\"type\\": \\"string\\"
+          },
+          \\"konkurs\\": {
+            \\"type\\": \\"boolean\\"
+          },
+          \\"underAvvikling\\": {
+            \\"type\\": \\"boolean\\"
+          },
+          \\"underTvangsavviklingEllerTvangsopplosning\\": {
+            \\"type\\": \\"boolean\\"
+          },
+          \\"maalform\\": {
+            \\"type\\": \\"string\\"
+          },
+          \\"_links\\": {
+            \\"$ref\\": \\"#/components/schemas/Self\\"
+          }
+        }
+      },
+      \\"Adresse\\": {
+        \\"properties\\": {
+          \\"land\\": {
+            \\"type\\": \\"string\\"
+          },
+          \\"landkode\\": {
+            \\"type\\": \\"string\\"
+          },
+          \\"postnummer\\": {
+            \\"type\\": \\"string\\"
+          },
+          \\"poststed\\": {
+            \\"type\\": \\"string\\"
+          },
+          \\"adresse\\": {
+            \\"type\\": \\"array\\",
+            \\"items\\": {
+              \\"type\\": \\"string\\"
+            }
+          },
+          \\"kommune\\": {
+            \\"type\\": \\"string\\"
+          },
+          \\"kommunenummer\\": {
+            \\"type\\": \\"string\\"
+          }
+        }
+      },
+      \\"Naeringskode\\": {
+        \\"properties\\": {
+          \\"kode\\": {
+            \\"type\\": \\"string\\"
+          },
+          \\"beskrivelse\\": {
+            \\"type\\": \\"string\\"
+          }
+        }
+      },
+      \\"Sektorkode\\": {
+        \\"properties\\": {
+          \\"kode\\": {
+            \\"type\\": \\"string\\"
+          },
+          \\"beskrivelse\\": {
+            \\"type\\": \\"string\\"
+          }
+        }
+      },
+      \\"_Organisasjonsformer\\": {
+        \\"properties\\": {
+          \\"embedded\\": {
+            \\"$ref\\": \\"#/components/schemas/Organisasjonsformer\\"
+          }
+        }
+      },
+      \\"Organisasjonsformer\\": {
+        \\"properties\\": {
+          \\"organisasjonsformer\\": {
+            \\"type\\": \\"array\\",
+            \\"items\\": {
+              \\"$ref\\": \\"#/components/schemas/Organisasjonsform\\"
+            }
+          }
+        }
+      },
+      \\"Organisasjonsform\\": {
+        \\"properties\\": {
+          \\"kode\\": {
+            \\"type\\": \\"string\\"
+          },
+          \\"beskrivelse\\": {
+            \\"type\\": \\"string\\"
+          },
+          \\"_links\\": {
+            \\"$ref\\": \\"#/components/schemas/Self\\"
+          }
+        }
+      },
+      \\"Self\\": {
+        \\"properties\\": {
+          \\"self\\": {
+            \\"$ref\\": \\"#/components/schemas/Href\\"
+          }
+        }
+      },
+      \\"Href\\": {
+        \\"properties\\": {
+          \\"href\\": {
+            \\"type\\": \\"string\\"
+          }
+        }
+      }
+    }
+  }
+}",
+                "apiSpecUrl": "https://raw.githubusercontent.com/brreg/openAPI/master/specs/enhetsregisteret.json",
+                "contactPoint": Array [
+                  Object {
+                    "email": "opendata@brreg.no",
+                    "organizationName": "Forenkling og Brukerdialog hos Brønnøysundregistrene",
+                  },
+                ],
+                "description": Object {
+                  "no": "Teknisk beskrivelse av REST-tjenestene i Åpne Data fra Enhetsregisteret - Work in progress
+---
+
+## Ordbok
+### Enhetsregisteret
+Register over grunndata om juridiske personer og andre enheter. Enhetsregisteret tildeler organisasjonsnummer for entydig identifisering av enheter.
+
+### Organisasjonsnummer
+Nisifret nummer som entydig identifiserer enheter i Enhetsregisteret.
+
+### Enhet
+Enhet på øverste nivå i registreringsstrukturen i Enhetsregisteret. Eksempelvis enkeltpersonforetak, foreninger, selskap, sameier og andre som er registrert i Enhetsregisteret. Identifiseres med organisasjonsnummer.
+
+### Underenhet
+Enhet på laveste nivå i registreringsstrukturen i Enhetsregisteret. En underenhet kan ikke eksistere alene og har alltid knytning til en hovedenhet. Identifiseres med organisasjonsnummer.
+
+### Organisasjonsform
+Organisasjonsform er virksomhetens formelle organisering og gir retningslinjer overfor blant annet ansvarsforhold, skatt, revisjonsplikt, rettigheter og plikter.
+
+### Næringskode
+[Næringskoder]: https://www.brreg.no/bedrift/naeringskoder/
+[Næringskoder]  på brreg.no
+
+[Standard for næringsgruppering]: https://www.ssb.no/klass/klassifikasjoner/6
+[Standard for næringsgruppering]
+---
+
+## Versjonering
+Du kan velge major versjon ved å spesifisere HTTP Accept-headeren. Bruk headeren spesifisert i tabellen under. Hvis versjon ikke spesifiseres, vil man få siste versjon.
+<table>
+  <thead>
+    <tr>
+      <th>API</th>
+      <th>Header</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>/</td>
+      <td>application/vnd.enhetsregisteret.v1+json</td>
+    </tr>
+    <tr>
+      <td>/organisasjonsformer</td>
+      <td>application/vnd.enhetsregisteret.organisasjonsform.v1+json</td>
+    </tr>
+  </tbody>
+</table>
+
+
+### Strategi
+Vi skal normalt ikke bryte bakoverkompabiliteten med våre brukere. Likevel kan det være nødvendig i enkelte situasjoner, av for eksempel juridiske årsaker eller vedlikehold, å gjøre endringer som medfører et slikt brudd. Vi vil i dette tilfellet versjonere tjenesten slik at nyeste versjon vil være tilgjengelig sammen med forrige versjon.
+
+#### Dersom man ikke benytter versjonering i accept header, vil man få siste versjon.
+
+Eldre versjon vil anses som utdatert/deprecated, og vil på sikt bli tatt bort. Ved behov for denne typen endringer vil vi forsøke å gi bruker god tid, og varsle om endringen i forkant. Se punkt om varsling.
+
+### Når innføres ny versjon
+Vi vil innføre en ny versjon når vi introduserer en endring som påvirker bakoverkompabiliteten. Mindre endringer og patcher vil ikke medføre versjonsendring i header.
+
+### Når fjernes en versjon
+Vi vil legge ut varsel/driftsmeldinger i god tid på følgende steder:
+- [Driftsmeldinger]: https://www.brreg.no/om-oss/driftsmeldinger/
+[Driftsmeldinger]
+- [RSS-feed]: https://www.brreg.no/produkter-og-tjenester/rss-feed/
+[RSS-feed].
+
+Eksempel på endring som medfører versjonering:
+
+- Fjerne eller endre navn på et attributt i HTTP-responsen.
+
+- Fjerne eller endre navn på et REST endepunkt.
+
+---
+
+## Endringslogg
+<table>
+  <thead>
+    <tr>
+      <th>Versjon</th>
+      <th>Dato</th>
+      <th>Endring</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1.1.0</td>
+      <td>14. august 2018</td>
+      <td>Ny tjeneste /oppdateringer/enheter og /oppdateringer/underenheter</td>
+    </tr>
+    <tr>
+      <td>1.0.0</td>
+      <td>6. april 2018</td>
+      <td>Produksjonssetting av ny åpne data tjeneste for Enhetsregisteret</td>
+    </tr>
+  </tbody>
+</table>
+",
+                },
+                "formats": Array [
+                  "application/json",
+                  "application/vnd.enhetsregisteret.enhet.v1+json",
+                  "application/vnd.enhetsregisteret.organisasjonsform.v1+json",
+                ],
+                "id": "6d462b9b-67ca-4324-a829-d073e7519fa4",
+                "openApi": Object {
+                  "components": Object {
+                    "extensions": Object {},
+                    "schemas": Object {
+                      "Adresse": Object {
+                        "properties": Object {
+                          "adresse": Object {
+                            "type": "array",
+                          },
+                          "kommune": Object {
+                            "type": "string",
+                          },
+                          "kommunenummer": Object {
+                            "type": "string",
+                          },
+                          "land": Object {
+                            "type": "string",
+                          },
+                          "landkode": Object {
+                            "type": "string",
+                          },
+                          "postnummer": Object {
+                            "type": "string",
+                          },
+                          "poststed": Object {
+                            "type": "string",
+                          },
+                        },
+                      },
+                      "Enhet": Object {
+                        "properties": Object {
+                          "_links": Object {
+                            "$ref": "#/components/schemas/Self",
+                          },
+                          "antallAnsatte": Object {
+                            "format": "int32",
+                            "type": "integer",
+                          },
+                          "forretningsadresse": Object {
+                            "$ref": "#/components/schemas/Adresse",
+                          },
+                          "institusjonellSektorkode": Object {
+                            "$ref": "#/components/schemas/Sektorkode",
+                          },
+                          "konkurs": Object {
+                            "type": "boolean",
+                          },
+                          "maalform": Object {
+                            "type": "string",
+                          },
+                          "naeringskode1": Object {
+                            "$ref": "#/components/schemas/Naeringskode",
+                          },
+                          "naeringskode2": Object {
+                            "$ref": "#/components/schemas/Naeringskode",
+                          },
+                          "naeringskode3": Object {
+                            "$ref": "#/components/schemas/Naeringskode",
+                          },
+                          "navn": Object {
+                            "type": "string",
+                          },
+                          "organisasjonsform": Object {
+                            "$ref": "#/components/schemas/Organisasjonsform",
+                          },
+                          "organisasjonsnummer": Object {
+                            "type": "string",
+                          },
+                          "postadresse": Object {
+                            "$ref": "#/components/schemas/Adresse",
+                          },
+                          "registreringsdatoEnhetsregisteret": Object {
+                            "type": "string",
+                          },
+                          "registrertIForetaksregisteret": Object {
+                            "type": "boolean",
+                          },
+                          "registrertIFrivillighetsregisteret": Object {
+                            "type": "boolean",
+                          },
+                          "registrertIMvaregisteret": Object {
+                            "type": "boolean",
+                          },
+                          "registrertIStiftelsesregisteret": Object {
+                            "type": "boolean",
+                          },
+                          "sisteInnsendteAarsregnskap": Object {
+                            "type": "string",
+                          },
+                          "stiftelsedato": Object {
+                            "type": "string",
+                          },
+                          "underAvvikling": Object {
+                            "type": "boolean",
+                          },
+                          "underTvangsavviklingEllerTvangsopplosning": Object {
+                            "type": "boolean",
+                          },
+                        },
+                      },
+                      "Href": Object {
+                        "properties": Object {
+                          "href": Object {
+                            "type": "string",
+                          },
+                        },
+                      },
+                      "Naeringskode": Object {
+                        "properties": Object {
+                          "beskrivelse": Object {
+                            "type": "string",
+                          },
+                          "kode": Object {
+                            "type": "string",
+                          },
+                        },
+                      },
+                      "Organisasjonsform": Object {
+                        "properties": Object {
+                          "_links": Object {
+                            "$ref": "#/components/schemas/Self",
+                          },
+                          "beskrivelse": Object {
+                            "type": "string",
+                          },
+                          "kode": Object {
+                            "type": "string",
+                          },
+                        },
+                      },
+                      "Organisasjonsformer": Object {
+                        "properties": Object {
+                          "organisasjonsformer": Object {
+                            "type": "array",
+                          },
+                        },
+                      },
+                      "Sektorkode": Object {
+                        "properties": Object {
+                          "beskrivelse": Object {
+                            "type": "string",
+                          },
+                          "kode": Object {
+                            "type": "string",
+                          },
+                        },
+                      },
+                      "Self": Object {
+                        "properties": Object {
+                          "self": Object {
+                            "$ref": "#/components/schemas/Href",
+                          },
+                        },
+                      },
+                      "_Organisasjonsformer": Object {
+                        "properties": Object {
+                          "embedded": Object {
+                            "$ref": "#/components/schemas/Organisasjonsformer",
+                          },
+                        },
+                      },
+                    },
+                  },
+                  "info": Object {
+                    "contact": Object {
+                      "email": "opendata@brreg.no",
+                      "name": "Forenkling og Brukerdialog hos Brønnøysundregistrene",
+                    },
+                    "description": "Teknisk beskrivelse av REST-tjenestene i Åpne Data fra Enhetsregisteret - Work in progress
+---
+
+## Ordbok
+### Enhetsregisteret
+Register over grunndata om juridiske personer og andre enheter. Enhetsregisteret tildeler organisasjonsnummer for entydig identifisering av enheter.
+
+### Organisasjonsnummer
+Nisifret nummer som entydig identifiserer enheter i Enhetsregisteret.
+
+### Enhet
+Enhet på øverste nivå i registreringsstrukturen i Enhetsregisteret. Eksempelvis enkeltpersonforetak, foreninger, selskap, sameier og andre som er registrert i Enhetsregisteret. Identifiseres med organisasjonsnummer.
+
+### Underenhet
+Enhet på laveste nivå i registreringsstrukturen i Enhetsregisteret. En underenhet kan ikke eksistere alene og har alltid knytning til en hovedenhet. Identifiseres med organisasjonsnummer.
+
+### Organisasjonsform
+Organisasjonsform er virksomhetens formelle organisering og gir retningslinjer overfor blant annet ansvarsforhold, skatt, revisjonsplikt, rettigheter og plikter.
+
+### Næringskode
+[Næringskoder]: https://www.brreg.no/bedrift/naeringskoder/
+[Næringskoder]  på brreg.no
+
+[Standard for næringsgruppering]: https://www.ssb.no/klass/klassifikasjoner/6
+[Standard for næringsgruppering]
+---
+
+## Versjonering
+Du kan velge major versjon ved å spesifisere HTTP Accept-headeren. Bruk headeren spesifisert i tabellen under. Hvis versjon ikke spesifiseres, vil man få siste versjon.
+<table>
+  <thead>
+    <tr>
+      <th>API</th>
+      <th>Header</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>/</td>
+      <td>application/vnd.enhetsregisteret.v1+json</td>
+    </tr>
+    <tr>
+      <td>/organisasjonsformer</td>
+      <td>application/vnd.enhetsregisteret.organisasjonsform.v1+json</td>
+    </tr>
+  </tbody>
+</table>
+
+
+### Strategi
+Vi skal normalt ikke bryte bakoverkompabiliteten med våre brukere. Likevel kan det være nødvendig i enkelte situasjoner, av for eksempel juridiske årsaker eller vedlikehold, å gjøre endringer som medfører et slikt brudd. Vi vil i dette tilfellet versjonere tjenesten slik at nyeste versjon vil være tilgjengelig sammen med forrige versjon.
+
+#### Dersom man ikke benytter versjonering i accept header, vil man få siste versjon.
+
+Eldre versjon vil anses som utdatert/deprecated, og vil på sikt bli tatt bort. Ved behov for denne typen endringer vil vi forsøke å gi bruker god tid, og varsle om endringen i forkant. Se punkt om varsling.
+
+### Når innføres ny versjon
+Vi vil innføre en ny versjon når vi introduserer en endring som påvirker bakoverkompabiliteten. Mindre endringer og patcher vil ikke medføre versjonsendring i header.
+
+### Når fjernes en versjon
+Vi vil legge ut varsel/driftsmeldinger i god tid på følgende steder:
+- [Driftsmeldinger]: https://www.brreg.no/om-oss/driftsmeldinger/
+[Driftsmeldinger]
+- [RSS-feed]: https://www.brreg.no/produkter-og-tjenester/rss-feed/
+[RSS-feed].
+
+Eksempel på endring som medfører versjonering:
+
+- Fjerne eller endre navn på et attributt i HTTP-responsen.
+
+- Fjerne eller endre navn på et REST endepunkt.
+
+---
+
+## Endringslogg
+<table>
+  <thead>
+    <tr>
+      <th>Versjon</th>
+      <th>Dato</th>
+      <th>Endring</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1.1.0</td>
+      <td>14. august 2018</td>
+      <td>Ny tjeneste /oppdateringer/enheter og /oppdateringer/underenheter</td>
+    </tr>
+    <tr>
+      <td>1.0.0</td>
+      <td>6. april 2018</td>
+      <td>Produksjonssetting av ny åpne data tjeneste for Enhetsregisteret</td>
+    </tr>
+  </tbody>
+</table>
+",
+                    "license": Object {
+                      "name": "Norsk lisens for offentlige data (NLOD)",
+                      "url": "https://data.norge.no/nlod/no/",
+                    },
+                    "title": "Åpne Data fra Enhetsregisteret - API Dokumentasjon",
+                    "version": "1.0.0",
+                  },
+                  "openapi": "3.0.0",
+                  "paths": Object {
+                    "/": Object {
+                      "get": Object {
+                        "description": "Hent alle tjenester",
+                        "operationId": "listTjenester",
+                        "responses": Object {
+                          "200": Object {
+                            "description": "Tjenester mot åpne data fra Enhetsregisteret",
+                          },
+                          "default": Object {
+                            "description": "Udefinert feil",
+                          },
+                        },
+                      },
+                    },
+                    "/enheter": Object {
+                      "get": Object {
+                        "description": "Hent alle enheter",
+                        "operationId": "listEnheter",
+                        "responses": Object {
+                          "200": Object {
+                            "description": "Enheter fra Enhetsregisteret",
+                          },
+                          "400": Object {
+                            "description": "Ugyldig forespørsel",
+                          },
+                          "default": Object {
+                            "description": "Udefinert feil",
+                          },
+                        },
+                      },
+                      "parameters": Array [
+                        Object {
+                          "description": "Antall ønskede treff i response. Default verdi er 20. Max dypde (page*size) er 10 000.",
+                          "explode": true,
+                          "in": "query",
+                          "name": "size",
+                          "required": false,
+                          "schema": Object {
+                            "format": "int32",
+                            "type": "integer",
+                          },
+                          "style": "FORM",
+                        },
+                        Object {
+                          "description": "Hvilken side som ønskes av resultatsettet. Default verdi er 0. Max dypde (page*size) er 10 000",
+                          "explode": true,
+                          "in": "query",
+                          "name": "page",
+                          "required": false,
+                          "schema": Object {
+                            "format": "int32",
+                            "type": "integer",
+                          },
+                          "style": "FORM",
+                        },
+                        Object {
+                          "description": "Filtrer på navn. Sammensatt søk på likhet. Resultat sorteres pr default etter score",
+                          "explode": true,
+                          "in": "query",
+                          "name": "navn",
+                          "required": false,
+                          "schema": Object {
+                            "type": "string",
+                          },
+                          "style": "FORM",
+                        },
+                        Object {
+                          "description": "Sorter resultatsett på feltnavn. Merk at navn må sorteres på navn.norwegian",
+                          "explode": true,
+                          "in": "query",
+                          "name": "sort",
+                          "required": false,
+                          "schema": Object {
+                            "type": "string",
+                          },
+                          "style": "FORM",
+                        },
+                        Object {
+                          "description": "Filtrer på organisasjonsformkode. Kommaseparert liste.",
+                          "explode": true,
+                          "in": "query",
+                          "name": "organisasjonsform",
+                          "required": false,
+                          "schema": Object {
+                            "type": "string",
+                          },
+                          "style": "FORM",
+                        },
+                        Object {
+                          "description": "Filtrer på næringskode. Valgfritt nivå. Kommaseparert liste.",
+                          "explode": true,
+                          "in": "query",
+                          "name": "naeringskode",
+                          "required": false,
+                          "schema": Object {
+                            "type": "string",
+                          },
+                          "style": "FORM",
+                        },
+                        Object {
+                          "description": "Filtrer på kommunenummer 4 siffer.",
+                          "explode": true,
+                          "in": "query",
+                          "name": "kommunenummer",
+                          "required": false,
+                          "schema": Object {
+                            "type": "string",
+                          },
+                          "style": "FORM",
+                        },
+                        Object {
+                          "description": "Organisasjonsnummeret til overordnet enhet",
+                          "explode": true,
+                          "in": "query",
+                          "name": "overordnetEnhet",
+                          "required": false,
+                          "schema": Object {
+                            "type": "string",
+                          },
+                          "style": "FORM",
+                        },
+                        Object {
+                          "description": "Filtrer på fra registreringsdato i Enhetsregisteret.",
+                          "explode": true,
+                          "in": "query",
+                          "name": "fraRegistreringsdatoEnhetsregisteret",
+                          "required": false,
+                          "schema": Object {
+                            "format": "date (ISO-8601)",
+                            "type": "string",
+                          },
+                          "style": "FORM",
+                        },
+                        Object {
+                          "description": "Filtrer på til registreringsdato i Enhetsregisteret.",
+                          "explode": true,
+                          "in": "query",
+                          "name": "tilRegistreringsdatoEnhetsregisteret",
+                          "required": false,
+                          "schema": Object {
+                            "format": "date (ISO-8601)",
+                            "type": "string",
+                          },
+                          "style": "FORM",
+                        },
+                        Object {
+                          "description": "Filtrer på om enheten er registrert i Merverdiregisteret",
+                          "explode": true,
+                          "in": "query",
+                          "name": "registrertIMvaregisteret",
+                          "required": false,
+                          "schema": Object {
+                            "type": "boolean",
+                          },
+                          "style": "FORM",
+                        },
+                        Object {
+                          "description": "Filtrer på om enheten er registrert konkurs",
+                          "explode": true,
+                          "in": "query",
+                          "name": "konkurs",
+                          "required": false,
+                          "schema": Object {
+                            "type": "boolean",
+                          },
+                          "style": "FORM",
+                        },
+                        Object {
+                          "description": "Filtrer på fra antall ansatte",
+                          "explode": true,
+                          "in": "query",
+                          "name": "fraAntallAnsatte",
+                          "required": false,
+                          "schema": Object {
+                            "format": "int32",
+                            "type": "integer",
+                          },
+                          "style": "FORM",
+                        },
+                        Object {
+                          "description": "Filtrer på til antall ansatte",
+                          "explode": true,
+                          "in": "query",
+                          "name": "tilAntallAnsatte",
+                          "required": false,
+                          "schema": Object {
+                            "format": "int32",
+                            "type": "integer",
+                          },
+                          "style": "FORM",
+                        },
+                      ],
+                    },
+                    "/enheter/{organisasjonsnummer}": Object {
+                      "get": Object {
+                        "description": "Hent detaljer om enhet",
+                        "operationId": "hentEnhet",
+                        "responses": Object {
+                          "200": Object {
+                            "content": Object {
+                              "application/json": Object {
+                                "schema": Object {
+                                  "$ref": "#/components/schemas/Enhet",
+                                },
+                              },
+                              "application/vnd.enhetsregisteret.enhet.v1+json": Object {
+                                "schema": Object {
+                                  "$ref": "#/components/schemas/Enhet",
+                                },
+                              },
+                            },
+                            "description": "Enhet fra Enhetsregisteret",
+                          },
+                          "404": Object {
+                            "description": "Enheten finnes ikke",
+                          },
+                          "410": Object {
+                            "description": "Enheten er fjernet",
+                          },
+                          "default": Object {
+                            "description": "Udefinert feil",
+                          },
+                        },
+                      },
+                      "parameters": Array [
+                        Object {
+                          "description": "Organisasjonsnummeret til enheten - 9 siffer",
+                          "explode": false,
+                          "in": "path",
+                          "name": "organisasjonsnummer",
+                          "required": true,
+                          "schema": Object {
+                            "type": "string",
+                          },
+                          "style": "SIMPLE",
+                        },
+                      ],
+                    },
+                    "/oppdateringer/enheter": Object {
+                      "get": Object {
+                        "description": "Hent oppdateringer på enheter",
+                        "operationId": "listOppdateringerEnhet",
+                        "responses": Object {
+                          "200": Object {
+                            "description": "Oppdateringer på enheter fra Enhetsregisteret",
+                          },
+                          "default": Object {
+                            "description": "Udefinert feil",
+                          },
+                        },
+                      },
+                    },
+                    "/oppdateringer/underenheter": Object {
+                      "get": Object {
+                        "description": "Hent oppdateringer på underenheter",
+                        "operationId": "listOppdateringerUnderenhet",
+                        "responses": Object {
+                          "200": Object {
+                            "description": "Oppdateringer på underenheter fra Enhetsregisteret",
+                          },
+                          "default": Object {
+                            "description": "Udefinert feil",
+                          },
+                        },
+                      },
+                    },
+                    "/organisasjonsformer": Object {
+                      "get": Object {
+                        "description": "Hent alle organisasjonsformer",
+                        "operationId": "listOrganisasjonsformer",
+                        "responses": Object {
+                          "200": Object {
+                            "content": Object {
+                              "application/json": Object {
+                                "schema": Object {
+                                  "$ref": "#/components/schemas/_Organisasjonsformer",
+                                },
+                              },
+                              "application/vnd.enhetsregisteret.organisasjonsform.v1+json": Object {
+                                "schema": Object {
+                                  "$ref": "#/components/schemas/_Organisasjonsformer",
+                                },
+                              },
+                            },
+                            "description": "Organisasjonsformer fra Enhetsregisteret",
+                          },
+                          "default": Object {
+                            "description": "Udefinert feil",
+                          },
+                        },
+                      },
+                    },
+                    "/organisasjonsformer/{orgformKode}": Object {
+                      "get": Object {
+                        "description": "Hent en enkelt organisasjonsform fra kode",
+                        "operationId": "hentOrganisasjonsform",
+                        "responses": Object {
+                          "200": Object {
+                            "content": Object {
+                              "application/json": Object {
+                                "schema": Object {
+                                  "$ref": "#/components/schemas/Organisasjonsform",
+                                },
+                              },
+                              "application/vnd.enhetsregisteret.organisasjonsform.v1+json": Object {
+                                "schema": Object {
+                                  "$ref": "#/components/schemas/Organisasjonsform",
+                                },
+                              },
+                            },
+                            "description": "Organisasjonsform fra Enhetsregisteret",
+                          },
+                          "404": Object {
+                            "description": "Organisasjonsformen eksisterer ikke",
+                          },
+                          "default": Object {
+                            "description": "Udefinert feil",
+                          },
+                        },
+                      },
+                      "parameters": Array [
+                        Object {
+                          "description": "Kode for organisasjonsform",
+                          "examples": Object {
+                            "AS": Object {
+                              "summary": "Organisasjonsformkode for Aksjeselskap",
+                              "value": "AS",
+                            },
+                          },
+                          "explode": false,
+                          "in": "path",
+                          "name": "orgformKode",
+                          "required": true,
+                          "schema": Object {
+                            "type": "string",
+                          },
+                          "style": "SIMPLE",
+                        },
+                      ],
+                    },
+                    "/underenheter": Object {
+                      "get": Object {
+                        "description": "Hent alle underenheter",
+                        "operationId": "listUnderenheter",
+                        "responses": Object {
+                          "200": Object {
+                            "description": "Underenheter fra Enhetsregisteret",
+                          },
+                          "default": Object {
+                            "description": "Udefinert feil",
+                          },
+                        },
+                      },
+                      "parameters": Array [
+                        Object {
+                          "description": "Antall ønskede treff i response. Default verdi er 20. Max dypde (page*size) er 10 000.",
+                          "explode": true,
+                          "in": "query",
+                          "name": "size",
+                          "required": false,
+                          "schema": Object {
+                            "format": "int32",
+                            "type": "integer",
+                          },
+                          "style": "FORM",
+                        },
+                        Object {
+                          "description": "Hvilken side som ønskes av resultatsettet. Default verdi er 0. Max dypde (page*size) er 10 000",
+                          "explode": true,
+                          "in": "query",
+                          "name": "page",
+                          "required": false,
+                          "schema": Object {
+                            "format": "int32",
+                            "type": "integer",
+                          },
+                          "style": "FORM",
+                        },
+                        Object {
+                          "description": "Filtrer på navn. Sammensatt søk på likhet. Resultat sorteres pr default etter score",
+                          "explode": true,
+                          "in": "query",
+                          "name": "navn",
+                          "required": false,
+                          "schema": Object {
+                            "type": "string",
+                          },
+                          "style": "FORM",
+                        },
+                        Object {
+                          "description": "Sorter resultatsett på feltnavn. Merk at navn må sorteres på navn.norwegian",
+                          "explode": true,
+                          "in": "query",
+                          "name": "sort",
+                          "required": false,
+                          "schema": Object {
+                            "type": "string",
+                          },
+                          "style": "FORM",
+                        },
+                        Object {
+                          "description": "Filtrer på organisasjonsformkode. Kommaseparert liste.",
+                          "explode": true,
+                          "in": "query",
+                          "name": "organisasjonsform",
+                          "required": false,
+                          "schema": Object {
+                            "type": "string",
+                          },
+                          "style": "FORM",
+                        },
+                        Object {
+                          "description": "Filtrer på næringskode. Valgfritt nivå. Kommaseparert liste.",
+                          "explode": true,
+                          "in": "query",
+                          "name": "naeringskode",
+                          "required": false,
+                          "schema": Object {
+                            "type": "string",
+                          },
+                          "style": "FORM",
+                        },
+                        Object {
+                          "description": "Filtrer på kommunenummer 4 siffer.",
+                          "explode": true,
+                          "in": "query",
+                          "name": "kommunenummer",
+                          "required": false,
+                          "schema": Object {
+                            "type": "string",
+                          },
+                          "style": "FORM",
+                        },
+                        Object {
+                          "description": "Organisasjonsnummeret til overordnet enhet",
+                          "explode": true,
+                          "in": "query",
+                          "name": "overordnetEnhet",
+                          "required": false,
+                          "schema": Object {
+                            "type": "string",
+                          },
+                          "style": "FORM",
+                        },
+                      ],
+                    },
+                    "/underenheter/{organisasjonsnummer}": Object {
+                      "get": Object {
+                        "description": "Hent detaljer om underenhet",
+                        "operationId": "hentUnderenhet",
+                        "responses": Object {
+                          "200": Object {
+                            "description": "Underenhet fra Enhetsregisteret",
+                          },
+                          "404": Object {
+                            "description": "Underenhet finnes ikke",
+                          },
+                          "410": Object {
+                            "description": "Underenhet er fjernet",
+                          },
+                          "default": Object {
+                            "description": "Udefinert feil",
+                          },
+                        },
+                      },
+                      "parameters": Array [
+                        Object {
+                          "description": "Organisasjonsnummeret til underenheten - 9 siffer",
+                          "explode": false,
+                          "in": "path",
+                          "name": "organisasjonsnummer",
+                          "required": true,
+                          "schema": Object {
+                            "type": "string",
+                          },
+                          "style": "SIMPLE",
+                        },
+                      ],
+                    },
+                  },
+                  "servers": Array [
+                    Object {
+                      "description": "Produksjon",
+                      "url": "https://data.brreg.no/enhetsregisteret/api",
+                    },
+                  ],
+                },
+                "provenance": Object {
+                  "code": "NASJONAL",
+                  "prefLabel": Object {
+                    "en": "National Building Block",
+                    "nb": "Nasjonal felleskomponent",
+                    "nn": "Nasjonal felleskomponent",
+                  },
+                  "uri": "http://data.brreg.no/datakatalog/provinens/nasjonal",
+                },
+                "provenanceSort": "1NASJONAL",
+                "publisher": Object {
+                  "id": "974760673",
+                  "name": "REGISTERENHETEN I BRØNNØYSUND",
+                  "orgPath": "/STAT/912660680/974760673",
+                  "prefLabel": Object {
+                    "no": "Brønnøysundregistrene",
+                  },
+                  "uri": "http://data.brreg.no/enhetsregisteret/enhet/974760673",
+                },
+                "title": Object {
+                  "no": "Åpne Data fra Enhetsregisteret - API Dokumentasjon",
+                },
+              }
+            }
+            helptextItems={null}
+            match={null}
+            referencedDatasets={null}
+          />
+        </withState(withHandlers(FormTemplate))>
+      </div>
+    </div>
+    <div
+      className="row mb-5"
+    >
+      <div
+        className="col-12"
+      >
         <Connect(ReduxForm)
           apiItem={
             Object {

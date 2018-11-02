@@ -7,7 +7,7 @@ import {
 import { getApiFormStatusById } from '../../redux/modules/api-form-status';
 import { fetchHelptextsIfNeeded } from '../../redux/modules/helptexts';
 import { fetchCatalogIfNeeded } from '../../redux/modules/catalog';
-import { APIRegistrationPage } from './api-registration-page';
+import { ResolvedAPIRegistrationPage } from './resolved-api-registration-page';
 
 const mapStateToProps = (
   { apiFormStatus, apis, helptexts, catalog },
@@ -37,4 +37,4 @@ const mapDispatchToProps = dispatch => ({
 export const ConnectedAPIRegistrationPage = connect(
   mapStateToProps,
   mapDispatchToProps
-)(APIRegistrationPage);
+)(ResolvedAPIRegistrationPage);
