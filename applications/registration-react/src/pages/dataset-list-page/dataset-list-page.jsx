@@ -16,7 +16,8 @@ export const DatasetsListPage = props => {
     fetchHelptextsIfNeeded,
     fetchCatalogIfNeeded,
     fetchDatasetsIfNeeded,
-    match
+    match,
+    history
   } = props;
 
   const catalogId = _.get(match, ['params', 'catalogId']);
@@ -49,6 +50,8 @@ export const DatasetsListPage = props => {
                 defaultEmptyListText={
                   localization.listItems.missingDatasetItems
                 }
+                history={history}
+                match={match}
               />
             </div>
           )}
@@ -64,6 +67,7 @@ DatasetsListPage.defaultProps = {
   fetchHelptextsIfNeeded: () => {},
   fetchCatalogIfNeeded: () => {},
   fetchDatasetsIfNeeded: () => {},
+  history: null,
   match: null
 };
 
@@ -74,5 +78,6 @@ DatasetsListPage.propTypes = {
   fetchHelptextsIfNeeded: PropTypes.func,
   fetchCatalogIfNeeded: PropTypes.func,
   fetchDatasetsIfNeeded: PropTypes.func,
+  history: PropTypes.object,
   match: PropTypes.object
 };

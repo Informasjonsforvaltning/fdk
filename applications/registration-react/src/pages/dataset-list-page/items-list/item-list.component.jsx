@@ -8,8 +8,9 @@ import ImportModal from '../../../components/import-modal/import-modal.component
 import { ListItems } from '../../../components/list-items/list-items.component';
 import './items-list.scss';
 
-const handleCreateDataset = () => {
-  const catalogURL = window.location.pathname;
+const handleCreateDataset = props => {
+  const { history, match } = props;
+  const catalogURL = _.get(match, 'url');
 
   const header = {
     Accept: 'application/json'
@@ -23,9 +24,9 @@ const handleCreateDataset = () => {
   return axios
     .post(`${catalogURL}/`, getInit)
     .then(response => {
-      window.location.replace(
-        `${catalogURL}/${_.get(response, ['data', 'id'])}`
-      );
+      if (_.get(response, ['data', 'id'])) {
+        history.push(`${catalogURL}/${_.get(response, ['data', 'id'])}`);
+      }
     })
     .catch(response => {
       const { error } = response;
@@ -94,7 +95,7 @@ class DatasetItemsList extends React.Component {
         <div className="d-flex mb-3">
           <button
             className="fdk-button fdk-button-cta"
-            onClick={handleCreateDataset}
+            onClick={() => handleCreateDataset(this.props)}
           >
             <i className="fa fa-plus fdk-color0 mr-2" />
             {localization.datasets.list.btnNewDataset}
