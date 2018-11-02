@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import {
   REFERENCEDATASETS_REQUEST,
   REFERENCEDATASETS_SUCCESS,
@@ -16,13 +17,14 @@ export default function referenceDatasets(
       };
     }
     case REFERENCEDATASETS_SUCCESS: {
-      const referenceDatasetsItems = action.payload._embedded.datasets.map(
-        item => ({
-          id: item.id,
-          uri: item.uri,
-          prefLabel_no: item.title.nb
-        })
-      );
+      const referenceDatasetsItems = _.get(action.payload, [
+        '_embedded',
+        'datasets'
+      ]).map(item => ({
+        id: _.get(item, 'id'),
+        uri: _.get(item, 'uri'),
+        prefLabel_no: _.get(item, ['title', 'nb'])
+      }));
       return {
         ...state,
         isFetchingReferenceDatasets: false,
