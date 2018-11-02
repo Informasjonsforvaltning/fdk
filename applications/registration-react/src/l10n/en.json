@@ -280,6 +280,12 @@
         "performance": "Performance",
         "availability": "Availability"
       }
+    },
+    "apiDatasetReferences": {
+      "title": "Related datasets",
+      "helptext": {
+        "datasetReferences": "Search and choose related datasets"
+      }
     }
   },
   "inactiveSessionWarning": {

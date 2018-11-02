@@ -280,6 +280,12 @@
         "performance": "Kapasitet og ytelse",
         "availability": "Pålitelighet"
       }
+    },
+    "apiDatasetReferences": {
+      "title": "Tilknyttede datasettbeskrivelser",
+      "helptext": {
+        "datasetReferences": "Søk etter og velg datasettbeskrivelse(r)"
+      }
     }
   },
   "inactiveSessionWarning": {
