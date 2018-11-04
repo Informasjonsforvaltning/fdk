@@ -1,7 +1,7 @@
 package no.dcat.client.apicat;
 
-import io.swagger.v3.oas.models.OpenAPI;
 import lombok.Data;
+import no.dcat.openapi.OpenAPI;
 
 import java.util.List;
 

@@ -3,33 +3,16 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.0.5.RELEASE</version>
-        <relativePath/>
-    </parent>
-
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>no.dcat</groupId>
-    <artifactId>api-cat-client</artifactId>
-    <version>1.2.0</version>
+    <artifactId>openapi</artifactId>
+    <version>1.0.0</version>
 
     <dependencies>
         <dependency>
-            <groupId>no.dcat</groupId>
-            <artifactId>shared</artifactId>
-            <version>1.2.0</version>
-        </dependency>
-        <dependency>
-            <groupId>no.dcat</groupId>
-            <artifactId>openapi</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-        <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>spring-web</artifactId>
+            <artifactId>spring-beans</artifactId>
             <version>4.3.10.RELEASE</version>
         </dependency>
         <dependency>
@@ -41,11 +24,6 @@
             <groupId>io.swagger.parser.v3</groupId>
             <artifactId>swagger-parser-v3</artifactId>
             <version>2.0.5</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-            <version>2.8.0</version>
         </dependency>
     </dependencies>
 </project>
