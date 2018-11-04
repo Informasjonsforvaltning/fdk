@@ -1,11 +1,11 @@
 package no.acat.restapi;
 
 import com.google.common.base.Strings;
-import io.swagger.v3.oas.models.OpenAPI;
 import no.acat.service.ParserService;
 import no.acat.spec.ParseException;
 import no.dcat.client.apicat.ConvertRequest;
 import no.dcat.client.apicat.ConvertResponse;
+import no.dcat.openapi.OpenAPI;
 import no.dcat.webutils.exceptions.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
