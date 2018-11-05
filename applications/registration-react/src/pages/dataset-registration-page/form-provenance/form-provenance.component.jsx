@@ -66,7 +66,7 @@ export const renderProvenance = componentProps => {
   return null;
 };
 
-const FormProvenance = props => {
+export const FormProvenance = props => {
   const { helptextItems, initialValues } = props;
   const { provenance, provenanceItems, frequencyItems } = initialValues;
   if (provenance) {
@@ -133,5 +133,3 @@ FormProvenance.propTypes = {
   initialValues: PropTypes.object,
   helptextItems: PropTypes.object.isRequired
 };
-
-export default FormProvenance;

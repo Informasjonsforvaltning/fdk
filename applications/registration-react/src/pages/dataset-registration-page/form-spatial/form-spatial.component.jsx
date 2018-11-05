@@ -78,7 +78,7 @@ export const renderTemporal = componentProps => {
   );
 };
 
-const FormSpatial = props => {
+export const FormSpatial = props => {
   const { helptextItems, initialValues } = props;
   if (initialValues) {
     return (
@@ -136,5 +136,3 @@ FormSpatial.propTypes = {
   initialValues: PropTypes.object,
   helptextItems: PropTypes.object.isRequired
 };
-
-export default FormSpatial;

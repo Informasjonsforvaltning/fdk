@@ -1,6 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import FormContentsComponent, {
+import {
+  FormContentsComponent,
   renderStandard
 } from './form-contents.component';
 import helptext from '../../../../test/fixtures/helptext';

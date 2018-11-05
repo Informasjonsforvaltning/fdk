@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import FormProvenance from './form-provenance.component';
+import { FormProvenance } from './form-provenance.component';
 import helptext from '../../../../test/fixtures/helptext';
 import frequency from '../../../../test/fixtures/frequency';
 import provenance from '../../../../test/fixtures/provenance';

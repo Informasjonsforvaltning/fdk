@@ -1,17 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
+import _ from 'lodash';
 
 import localization from '../../../utils/localization';
 import Helptext from '../../../components/helptext/helptext.component';
 import CheckboxFieldTheme from './theme-checkbox/theme-checkbox.component';
 
-const FormThemes = props => {
-  const {
-    syncErrors: { errorTheme },
-    helptextItems,
-    initialValues
-  } = props;
+export const FormThemes = props => {
+  const { syncErrors, helptextItems, initialValues } = props;
   const { theme, themesItems } = initialValues;
   if (theme && themesItems) {
     return (
@@ -26,8 +23,10 @@ const FormThemes = props => {
             component={CheckboxFieldTheme}
             themesItems={themesItems}
           />
-          {errorTheme && (
-            <div className="alert alert-danger mt-3">{errorTheme}</div>
+          {_.get(syncErrors, 'errorTheme') && (
+            <div className="alert alert-danger mt-3">
+              {_.get(syncErrors, 'errorTheme')}
+            </div>
           )}
         </div>
       </form>
@@ -46,5 +45,3 @@ FormThemes.propTypes = {
   syncErrors: PropTypes.object,
   helptextItems: PropTypes.object.isRequired
 };
-
-export default FormThemes;

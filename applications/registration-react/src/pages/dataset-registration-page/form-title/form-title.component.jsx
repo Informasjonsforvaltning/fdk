@@ -20,7 +20,7 @@ export const renderLandingpage = componentProps => (
   </div>
 );
 
-const FormTitle = props => {
+export const FormTitle = props => {
   const { helptextItems } = props;
   return (
     <form>
@@ -78,5 +78,3 @@ const FormTitle = props => {
 FormTitle.propTypes = {
   helptextItems: PropTypes.object.isRequired
 };
-
-export default FormTitle;

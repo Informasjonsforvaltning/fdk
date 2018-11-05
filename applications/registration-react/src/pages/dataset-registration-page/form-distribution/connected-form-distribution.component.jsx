@@ -1,17 +1,8 @@
-import { reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
-import _throttle from 'lodash/throttle';
+import _ from 'lodash';
 
-import Form from './form-distribution.component';
-import validate from './form-distribution-validations';
-import asyncValidate from '../../../utils/asyncValidate';
+import { ConfiguredFormDistribution } from './configured-form-distribution';
 import { textType, licenseType } from '../../../schemaTypes';
-
-const FormDistribution = reduxForm({
-  form: 'distribution',
-  validate,
-  asyncValidate: _throttle(asyncValidate, 250)
-})(Form);
 
 export const distributionTypes = values => {
   let distributions = null;
@@ -32,11 +23,16 @@ export const distributionTypes = values => {
   return distributions;
 };
 
-const mapStateToProps = ({ dataset, openlicenses }) => ({
-  initialValues: {
-    distribution: distributionTypes(dataset.result.distribution),
-    openLicenseItems: openlicenses.openLicenseItems
-  }
-});
+const mapStateToProps = (state, ownProps) => {
+  const { datasetItem, openLicenseItems } = ownProps;
+  return {
+    initialValues: {
+      distribution: distributionTypes(_.get(datasetItem, 'distribution')),
+      openLicenseItems
+    }
+  };
+};
 
-export default connect(mapStateToProps)(FormDistribution);
+export const ConnectedFormDistribution = connect(mapStateToProps)(
+  ConfiguredFormDistribution
+);

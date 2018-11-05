@@ -217,5 +217,3 @@ FormDistribution.propTypes = {
   initialValues: PropTypes.object.isRequired,
   helptextItems: PropTypes.object.isRequired
 };
-
-export default FormDistribution;

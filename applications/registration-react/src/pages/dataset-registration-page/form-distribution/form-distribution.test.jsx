@@ -1,6 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import FormDistribution, {
+import {
+  FormDistribution,
   renderDistributions,
   renderDistributionLandingpage
 } from './form-distribution.component';

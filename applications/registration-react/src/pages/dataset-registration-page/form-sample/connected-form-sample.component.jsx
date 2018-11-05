@@ -1,18 +1,8 @@
-import { reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
-import _throttle from 'lodash/throttle';
+import _ from 'lodash';
 
-import Form from './form-sample.component';
-import validate from './form-sample-validations';
-import asyncValidate from '../../../utils/asyncValidate';
+import { ConfiguredFormSample } from './configured-form-sample';
 import { textType, licenseType } from '../../../schemaTypes';
-
-// Decorate with reduxForm(). It will read the initialValues prop provided by connect()
-const FormSample = reduxForm({
-  form: 'sample',
-  validate,
-  asyncValidate: _throttle(asyncValidate, 250)
-})(Form);
 
 export const sampleTypes = values => {
   let samples = null;
@@ -33,11 +23,16 @@ export const sampleTypes = values => {
   return samples;
 };
 
-const mapStateToProps = ({ dataset, openlicenses }) => ({
-  initialValues: {
-    sample: sampleTypes(dataset.result.sample) || [{}],
-    openLicenseItems: openlicenses.openLicenseItems
-  }
-});
+const mapStateToProps = (state, ownProps) => {
+  const { datasetItem, openLicenseItems } = ownProps;
+  return {
+    initialValues: {
+      sample: sampleTypes(_.get(datasetItem, 'sample')) || [{}],
+      openLicenseItems
+    }
+  };
+};
 
-export default connect(mapStateToProps)(FormSample);
+export const ConnectedFormSample = connect(mapStateToProps)(
+  ConfiguredFormSample
+);

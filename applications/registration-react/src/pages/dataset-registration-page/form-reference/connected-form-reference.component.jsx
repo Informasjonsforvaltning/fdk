@@ -1,26 +1,25 @@
-import { reduxForm } from 'redux-form';
+import { getFormSyncErrors } from 'redux-form';
 import { connect } from 'react-redux';
+import _ from 'lodash';
 
-import Form from './form-reference.component';
-import validate from './form-reference-validations';
-import asyncValidate from '../../../utils/asyncValidate';
+import { ConfiguredFormTitle } from './configured-form-reference';
 import { languageType } from '../../../schemaTypes';
 
-const FormReference = reduxForm({
-  form: 'reference',
-  validate,
-  asyncValidate
-})(Form);
+const mapStateToProps = (state, ownProps) => {
+  const { datasetItem, referenceTypesItems, referenceDatasetsItems } = ownProps;
+  return {
+    initialValues: {
+      references:
+        _.get(datasetItem, 'references', []).length > 0
+          ? _.get(datasetItem, 'references')
+          : [languageType],
+      referenceTypesItems,
+      referenceDatasetsItems
+    },
+    syncErrors: getFormSyncErrors('reference')(state)
+  };
+};
 
-const mapStateToProps = ({ dataset, referenceTypes, referenceDatasets }) => ({
-  initialValues: {
-    references:
-      dataset.result.references && dataset.result.references.length > 0
-        ? dataset.result.references
-        : [languageType],
-    referenceTypesItems: referenceTypes.referenceTypesItems,
-    referenceDatasetsItems: referenceDatasets.referenceDatasetsItems
-  }
-});
-
-export default connect(mapStateToProps)(FormReference);
+export const ConnectedFormReference = connect(mapStateToProps)(
+  ConfiguredFormTitle
+);

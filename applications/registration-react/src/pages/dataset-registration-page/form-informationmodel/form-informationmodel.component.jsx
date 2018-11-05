@@ -39,7 +39,7 @@ export const renderInformationModel = compopnentProps => {
   );
 };
 
-const FormInformationModel = props => {
+export const FormInformationModel = props => {
   const { helptextItems } = props;
   return (
     <form>
@@ -70,5 +70,3 @@ const FormInformationModel = props => {
 FormInformationModel.propTypes = {
   helptextItems: PropTypes.object.isRequired
 };
-
-export default FormInformationModel;

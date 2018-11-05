@@ -1,56 +1,41 @@
-import { reduxForm, formValueSelector, getFormSyncErrors } from 'redux-form';
+import { formValueSelector, getFormSyncErrors } from 'redux-form';
 import { connect } from 'react-redux';
-import _throttle from 'lodash/throttle';
+import _ from 'lodash';
 
-import Form from './form-accessRights.component';
-import validate from './form-accessRights.validations';
-import asyncValidate from '../../../utils/asyncValidate';
+import { ConfiguredFormAccessRights } from './configured-form-accessRights';
 import { accessRights, legalBasisType } from '../../../schemaTypes';
 
 const selector = formValueSelector('accessRights');
 
-const FormAccessRightsSchema = reduxForm({
-  form: 'accessRights',
-  validate,
-  asyncValidate: _throttle(asyncValidate, 250)
-})(
-  connect(state => {
-    const hasAccessRightsURI = selector(state, 'accessRights.uri');
-    return {
-      hasAccessRightsURI,
-      syncErrors: getFormSyncErrors('accessRights')(state)
-    };
-  })(Form)
-);
-
-const mapStateToProps = ({ dataset }) => ({
-  initialValues: {
-    accessRights: dataset.result.accessRights
-      ? dataset.result.accessRights
-      : accessRights,
-    legalBasisForRestriction:
-      dataset.result.legalBasisForRestriction &&
-      dataset.result.legalBasisForRestriction.length > 0
-        ? dataset.result.legalBasisForRestriction
-        : [legalBasisType],
-    legalBasisForProcessing:
-      dataset.result.legalBasisForProcessing &&
-      dataset.result.legalBasisForProcessing.length > 0
-        ? dataset.result.legalBasisForProcessing
-        : [legalBasisType],
-    legalBasisForAccess:
-      dataset.result.legalBasisForAccess &&
-      dataset.result.legalBasisForAccess.length > 0
-        ? dataset.result.legalBasisForAccess
-        : [legalBasisType]
-  }
-});
+const mapStateToProps = (state, ownProps) => {
+  const { datasetItem } = ownProps;
+  const hasAccessRightsURI = selector(state, 'accessRights.uri');
+  return {
+    initialValues: {
+      accessRights: _.get(datasetItem, 'accessRights', accessRights),
+      legalBasisForRestriction:
+        _.get(datasetItem, ['legalBasisForRestriction'], []).length > 0
+          ? _.get(datasetItem, 'legalBasisForRestriction')
+          : [legalBasisType],
+      legalBasisForProcessing:
+        _.get(datasetItem, ['legalBasisForProcessing'], []).length > 0
+          ? _.get(datasetItem, 'legalBasisForProcessing')
+          : [legalBasisType],
+      legalBasisForAccess:
+        _.get(datasetItem, ['legalBasisForAccess'], []).length > 0
+          ? _.get(datasetItem, 'legalBasisForAccess')
+          : [legalBasisType]
+    },
+    hasAccessRightsURI,
+    syncErrors: getFormSyncErrors('accessRights')(state.form)
+  };
+};
 
 const mergeProps = (stateProps, dispatchProps, ownProps) =>
   Object.assign({}, stateProps, dispatchProps, ownProps);
 
-export default connect(
+export const ConnectedFormAccessRights = connect(
   mapStateToProps,
   null,
   mergeProps
-)(FormAccessRightsSchema);
+)(ConfiguredFormAccessRights);

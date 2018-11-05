@@ -211,5 +211,3 @@ FormAccessRights.propTypes = {
   helptextItems: PropTypes.object.isRequired,
   hasAccessRightsURI: PropTypes.string
 };
-
-export default FormAccessRights;

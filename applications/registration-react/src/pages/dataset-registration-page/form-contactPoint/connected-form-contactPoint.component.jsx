@@ -1,25 +1,23 @@
-import { reduxForm } from 'redux-form';
+import { getFormSyncErrors } from 'redux-form';
 import { connect } from 'react-redux';
+import _ from 'lodash';
 
-import Form from './form-contactPoint.component';
-import validate from './form-contactPoint-validations';
-import asyncValidate from '../../../utils/asyncValidate';
+import { ConfiguredFormTitle } from './configured-form-contactPoint';
 import { contactPointType } from '../../../schemaTypes';
 
-const FormContactPoint = reduxForm({
-  form: 'contactPoint',
-  validate,
-  asyncValidate,
-  asyncChangeFields: []
-})(Form);
+const mapStateToProps = (state, ownProps) => {
+  const { datasetItem } = ownProps;
+  return {
+    initialValues: {
+      contactPoint:
+        _.get(datasetItem, 'contactPoint', []).length > 0
+          ? _.get(datasetItem, 'contactPoint')
+          : [contactPointType]
+    },
+    syncErrors: getFormSyncErrors('contactPoint')(state)
+  };
+};
 
-const mapStateToProps = ({ dataset }) => ({
-  initialValues: {
-    contactPoint:
-      dataset.result.contactPoint && dataset.result.contactPoint.length > 0
-        ? dataset.result.contactPoint
-        : [contactPointType]
-  }
-});
-
-export default connect(mapStateToProps)(FormContactPoint);
+export const ConnectedFormContactPoint = connect(mapStateToProps)(
+  ConfiguredFormTitle
+);

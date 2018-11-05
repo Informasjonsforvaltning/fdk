@@ -1,6 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import FormSpatial, {
+import {
+  FormSpatial,
   renderTemporal,
   renderTemporalFields
 } from './form-spatial.component';

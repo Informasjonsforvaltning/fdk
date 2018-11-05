@@ -118,5 +118,3 @@ export const FormContentsComponent = props => {
 FormContentsComponent.propTypes = {
   helptextItems: PropTypes.object.isRequired
 };
-
-export default FormContentsComponent;

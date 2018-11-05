@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import FormSample, { renderSamples } from './form-sample.component';
+import { FormSample, renderSamples } from './form-sample.component';
 import { sampleTypes } from './connected-form-sample.component';
 import helptext from '../../../../test/fixtures/helptext';
 import openlicenses from '../../../../test/fixtures/openlicenses';

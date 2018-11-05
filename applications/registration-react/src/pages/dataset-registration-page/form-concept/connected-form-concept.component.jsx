@@ -1,31 +1,26 @@
-import { reduxForm, getFormSyncErrors } from 'redux-form';
+import { getFormSyncErrors } from 'redux-form';
 import { connect } from 'react-redux';
+import _ from 'lodash';
 
-import Form from './form-concept.component';
-import validate from './form-concept-validations';
-import asyncValidate from '../../../utils/asyncValidate';
+import { ConfiguredFormConcept } from './configured-form-concept';
 
-const FormConcept = reduxForm({
-  form: 'concept',
-  validate,
-  asyncValidate
-})(
-  connect(state => ({
+const mapStateToProps = (state, ownProps) => {
+  const { datasetItem } = ownProps;
+  return {
+    initialValues: {
+      subject:
+        _.get(datasetItem, 'subject', []).length > 0
+          ? _.get(datasetItem, 'subject')
+          : [],
+      keyword:
+        _.get(datasetItem, 'keyword', []).length > 0
+          ? _.get(datasetItem, 'keyword')
+          : []
+    },
     syncErrors: getFormSyncErrors('concept')(state)
-  }))(Form)
+  };
+};
+
+export const ConnectedFormConcept = connect(mapStateToProps)(
+  ConfiguredFormConcept
 );
-
-const mapStateToProps = ({ dataset }) => ({
-  initialValues: {
-    subject:
-      dataset.result.subject && dataset.result.subject.length > 0
-        ? dataset.result.subject
-        : [],
-    keyword:
-      dataset.result.keyword && dataset.result.keyword.length > 0
-        ? dataset.result.keyword
-        : []
-  }
-});
-
-export default connect(mapStateToProps)(FormConcept);

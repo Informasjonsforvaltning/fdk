@@ -63,5 +63,3 @@ export const FormContactPoint = props => {
 FormContactPoint.propTypes = {
   helptextItems: PropTypes.object.isRequired
 };
-
-export default FormContactPoint;
