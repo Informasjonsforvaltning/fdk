@@ -38,13 +38,13 @@ public class HarvestQueueTest {
 
         queue.addTask(ht); // should be blocked by queue since it already has the same task registered
 
-        Thread.sleep(1002);
+        Thread.sleep(1100);
 
         verify(harvester, times(1)).harvestAll();
 
         queue.addTask(ht);
 
-        Thread.sleep(1002);
+        Thread.sleep(1100);
 
         verify(harvester, times(2)).harvestAll();
 
