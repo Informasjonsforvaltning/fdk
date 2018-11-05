@@ -89,7 +89,7 @@ export const renderReference = componentProps => {
   );
 };
 
-const FormReference = props => {
+export const FormReference = props => {
   const { helptextItems, initialValues } = props;
   const { referenceTypesItems, referenceDatasetsItems } = initialValues;
   if (initialValues) {
@@ -121,5 +121,3 @@ FormReference.propTypes = {
   initialValues: PropTypes.object,
   helptextItems: PropTypes.object.isRequired
 };
-
-export default FormReference;

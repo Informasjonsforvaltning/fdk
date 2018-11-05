@@ -1,26 +1,20 @@
-import { reduxForm, getFormSyncErrors } from 'redux-form';
+import { getFormSyncErrors } from 'redux-form';
 import { connect } from 'react-redux';
-
-import Form from './form-theme.component';
-import validate from './form-theme-validations';
-import asyncValidate from '../../../utils/asyncValidate';
+import _ from 'lodash';
+import { ConfiguredFormThemes } from './configured-form-theme';
 import { themeType } from '../../../schemaTypes';
 
-const FormThemes = reduxForm({
-  form: 'themes',
-  validate,
-  asyncValidate
-})(
-  connect(state => ({
+const mapStateToProps = (state, ownProps) => {
+  const { datasetItem, themesItems } = ownProps;
+  return {
+    initialValues: {
+      theme: _.get(datasetItem, 'theme', [themeType]),
+      themesItems
+    },
     syncErrors: getFormSyncErrors('themes')(state)
-  }))(Form)
+  };
+};
+
+export const ConnectedFormThemes = connect(mapStateToProps)(
+  ConfiguredFormThemes
 );
-
-const mapStateToProps = ({ dataset, themes }) => ({
-  initialValues: {
-    theme: dataset.result.theme || [themeType],
-    themesItems: themes.themesItems
-  }
-});
-
-export default connect(mapStateToProps)(FormThemes);

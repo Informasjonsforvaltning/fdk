@@ -1,6 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import FormInformationModel, {
+import {
+  FormInformationModel,
   renderInformationModel
 } from './form-informationmodel.component';
 import helptext from '../../../../test/fixtures/helptext';

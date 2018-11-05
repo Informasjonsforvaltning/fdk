@@ -16,20 +16,20 @@ import {
 } from '../../actions/index';
 import { fetchHelptextsIfNeeded } from '../../redux/modules/helptexts';
 import { FormTemplateWithState } from '../../components/form-template/form-template-with-state.component';
-import FormTitle from './form-title/connected-form-title.component';
-import FormDistribution from './form-distribution/connected-form-distribution.component';
-import FormSample from './form-sample/connected-form-sample.component';
-import FormSpatial from './form-spatial/connected-form-spatial.component';
-import FormProvenance from './form-provenance/connected-form-provenance.component';
-import FormTheme from './form-theme/connected-form-theme.component';
-import FormType from './form-type/connected-form-type.component';
-import FormConcept from './form-concept/connected-form-concept.component';
-import FormAccessRights from './form-accessRights/connected-form-accessRights.component';
-import FormReference from './form-reference/connected-form-reference.component';
+import { ConnectedFormTitle } from './form-title/connected-form-title.component';
+import { ConnectedFormDistribution } from './form-distribution/connected-form-distribution.component';
+import { ConnectedFormSample } from './form-sample/connected-form-sample.component';
+import { ConnectedFormSpatial } from './form-spatial/connected-form-spatial.component';
+import { ConnectedFormProvenance } from './form-provenance/connected-form-provenance.component';
+import { ConnectedFormThemes } from './form-theme/connected-form-theme.component';
+import { ConnectedFormType } from './form-type/connected-form-type.component';
+import { ConnectedFormConcept } from './form-concept/connected-form-concept.component';
+import { ConnectedFormAccessRights } from './form-accessRights/connected-form-accessRights.component';
+import { ConnectedFormReference } from './form-reference/connected-form-reference.component';
 import DatasetPublish from './publish/publish.component';
-import FormInformationModel from './form-informationmodel/connected-form-informationmodel.component';
-import FormContactPoint from './form-contactPoint/connected-form-contactPoint.component';
-import FormContents from './form-contents/connected-form-contents.component';
+import { ConnectedFormInformationModel } from './form-informationmodel/connected-form-informationmodel.component';
+import { ConnectedFormContactPoint } from './form-contactPoint/connected-form-contactPoint.component';
+import { ConnectedFormContents } from './form-contents/connected-form-contents.component';
 import {
   titleValues,
   accessRightsValues,
@@ -81,6 +81,9 @@ export class RegDataset extends React.Component {
   render() {
     const {
       helptextItems,
+      themesItems,
+      provenanceItems,
+      frequencyItems,
       isFetching,
       title,
       accessRights,
@@ -122,6 +125,9 @@ export class RegDataset extends React.Component {
           {!isFetching &&
             helptextItems &&
             title &&
+            themesItems &&
+            provenanceItems &&
+            frequencyItems &&
             referenceTypesItems &&
             referenceDatasetsItems &&
             openLicenseItems && (
@@ -132,7 +138,10 @@ export class RegDataset extends React.Component {
                   values={titleValues(title.values)}
                   syncErrors={title.syncErrors}
                 >
-                  <FormTitle helptextItems={helptextItems} />
+                  <ConnectedFormTitle
+                    datasetItem={result}
+                    helptextItems={helptextItems}
+                  />
                 </FormTemplateWithState>
 
                 <FormTemplateWithState
@@ -141,7 +150,10 @@ export class RegDataset extends React.Component {
                   values={accessRightsValues(accessRights.values)}
                   syncErrors={accessRights.syncErrors}
                 >
-                  <FormAccessRights helptextItems={helptextItems} />
+                  <ConnectedFormAccessRights
+                    datasetItem={result}
+                    helptextItems={helptextItems}
+                  />
                 </FormTemplateWithState>
 
                 <FormTemplateWithState
@@ -150,7 +162,11 @@ export class RegDataset extends React.Component {
                   values={themesValues(formThemes.values)}
                   syncErrors={formThemes.syncErrors}
                 >
-                  <FormTheme helptextItems={helptextItems} />
+                  <ConnectedFormThemes
+                    datasetItem={result}
+                    themesItems={themesItems}
+                    helptextItems={helptextItems}
+                  />
                 </FormTemplateWithState>
 
                 <FormTemplateWithState
@@ -158,7 +174,10 @@ export class RegDataset extends React.Component {
                   values={typeValues(type.values)}
                   syncErrors={type.syncErrors}
                 >
-                  <FormType helptextItems={helptextItems} />
+                  <ConnectedFormType
+                    datasetItem={result}
+                    helptextItems={helptextItems}
+                  />
                 </FormTemplateWithState>
 
                 <FormTemplateWithState
@@ -166,7 +185,10 @@ export class RegDataset extends React.Component {
                   values={conceptValues(concept.values)}
                   syncErrors={concept.syncErrors}
                 >
-                  <FormConcept helptextItems={helptextItems} />
+                  <ConnectedFormConcept
+                    datasetItem={result}
+                    helptextItems={helptextItems}
+                  />
                 </FormTemplateWithState>
 
                 <FormTemplateWithState
@@ -174,7 +196,10 @@ export class RegDataset extends React.Component {
                   values={spatialValues(spatial.values)}
                   syncErrors={spatial.syncErrors}
                 >
-                  <FormSpatial helptextItems={helptextItems} />
+                  <ConnectedFormSpatial
+                    datasetItem={result}
+                    helptextItems={helptextItems}
+                  />
                 </FormTemplateWithState>
 
                 <FormTemplateWithState
@@ -182,7 +207,12 @@ export class RegDataset extends React.Component {
                   values={provenanceValues(formProvenance.values)}
                   syncErrors={formProvenance.syncErrors}
                 >
-                  <FormProvenance helptextItems={helptextItems} />
+                  <ConnectedFormProvenance
+                    datasetItem={result}
+                    provenanceItems={provenanceItems}
+                    frequencyItems={frequencyItems}
+                    helptextItems={helptextItems}
+                  />
                 </FormTemplateWithState>
 
                 <FormTemplateWithState
@@ -190,7 +220,10 @@ export class RegDataset extends React.Component {
                   values={contentsValues(contents.values)}
                   syncErrors={contents.syncErrors}
                 >
-                  <FormContents helptextItems={helptextItems} />
+                  <ConnectedFormContents
+                    datasetItem={result}
+                    helptextItems={helptextItems}
+                  />
                 </FormTemplateWithState>
 
                 <FormTemplateWithState
@@ -198,14 +231,22 @@ export class RegDataset extends React.Component {
                   values={informationModelValues(informationModel.values)}
                   syncErrors={informationModel.syncErrors}
                 >
-                  <FormInformationModel helptextItems={helptextItems} />
+                  <ConnectedFormInformationModel
+                    datasetItem={result}
+                    helptextItems={helptextItems}
+                  />
                 </FormTemplateWithState>
 
                 <FormTemplateWithState
                   title={localization.datasets.formTemplates.reference}
                   values={referenceValues(reference.values)}
                 >
-                  <FormReference helptextItems={helptextItems} />
+                  <ConnectedFormReference
+                    datasetItem={result}
+                    referenceTypesItems={referenceTypesItems}
+                    referenceDatasetsItems={referenceDatasetsItems}
+                    helptextItems={helptextItems}
+                  />
                 </FormTemplateWithState>
 
                 <FormTemplateWithState
@@ -213,7 +254,10 @@ export class RegDataset extends React.Component {
                   values={contactPointValues(contactPoint.values)}
                   syncErrors={contactPoint.syncErrors}
                 >
-                  <FormContactPoint helptextItems={helptextItems} />
+                  <ConnectedFormContactPoint
+                    datasetItem={result}
+                    helptextItems={helptextItems}
+                  />
                 </FormTemplateWithState>
 
                 <FormTemplateWithState
@@ -229,7 +273,11 @@ export class RegDataset extends React.Component {
                       : null
                   }
                 >
-                  <FormDistribution helptextItems={helptextItems} />
+                  <ConnectedFormDistribution
+                    datasetItem={result}
+                    openLicenseItems={openLicenseItems}
+                    helptextItems={helptextItems}
+                  />
                 </FormTemplateWithState>
 
                 <FormTemplateWithState
@@ -244,7 +292,11 @@ export class RegDataset extends React.Component {
                       : null
                   }
                 >
-                  <FormSample helptextItems={helptextItems} />
+                  <ConnectedFormSample
+                    datasetItem={result}
+                    openLicenseItems={openLicenseItems}
+                    helptextItems={helptextItems}
+                  />
                 </FormTemplateWithState>
 
                 <DatasetPublish
@@ -290,6 +342,9 @@ export class RegDataset extends React.Component {
 
 RegDataset.defaultProps = {
   helptextItems: null,
+  themesItems: null,
+  provenanceItems: null,
+  frequencyItems: null,
   isFetching: false,
   title: null,
   accessRights: null,
@@ -315,6 +370,9 @@ RegDataset.defaultProps = {
 RegDataset.propTypes = {
   dispatch: PropTypes.func.isRequired,
   helptextItems: PropTypes.object,
+  themesItems: PropTypes.array,
+  provenanceItems: PropTypes.object,
+  frequencyItems: PropTypes.array,
   isFetching: PropTypes.bool,
   title: PropTypes.object,
   accessRights: PropTypes.object,

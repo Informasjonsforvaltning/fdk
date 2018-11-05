@@ -1,25 +1,17 @@
-import { reduxForm, getFormSyncErrors } from 'redux-form';
+import { getFormSyncErrors } from 'redux-form';
 import { connect } from 'react-redux';
+import _ from 'lodash';
 
-import Form from './form-type.component';
-import asyncValidate from '../../../utils/asyncValidate';
+import { ConfiguredFormType } from './configured-form-type';
 
-const FormType = reduxForm({
-  form: 'type',
-  asyncValidate
-})(
-  connect(state => ({
+const mapStateToProps = (state, ownProps) => {
+  const { datasetItem } = ownProps;
+  return {
+    initialValues: {
+      type: _.get(datasetItem, 'type', '')
+    },
     syncErrors: getFormSyncErrors('type')(state)
-  }))(Form)
-);
+  };
+};
 
-const mapStateToProps = ({ dataset }) => ({
-  initialValues: {
-    type:
-      dataset.result.type && dataset.result.type.length > 0
-        ? dataset.result.type
-        : ''
-  }
-});
-
-export default connect(mapStateToProps)(FormType);
+export const ConnectedFormType = connect(mapStateToProps)(ConfiguredFormType);

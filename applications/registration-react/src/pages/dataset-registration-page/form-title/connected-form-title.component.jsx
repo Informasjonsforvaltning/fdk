@@ -1,47 +1,33 @@
-import { reduxForm, getFormSyncErrors } from 'redux-form';
+import { getFormSyncErrors } from 'redux-form';
 import { connect } from 'react-redux';
+import _ from 'lodash';
 
 import localization from '../../../utils/localization';
-import Form from './form-title.component';
-import validate from './form-title.validations';
-import asyncValidate from '../../../utils/asyncValidate';
-import shouldAsyncValidate from '../../../utils/shouldAsyncValidate';
 import { textType, emptyArray } from '../../../schemaTypes';
+import { ConfiguredFormTitle } from './configured-form-title';
 
-const FormTitle = reduxForm({
-  form: 'title',
-  validate,
-  shouldAsyncValidate,
-  asyncValidate,
-  asyncChangeFields: []
-})(
-  connect(state => ({
+const mapStateToProps = (state, ownProps) => {
+  const { datasetItem } = ownProps;
+  return {
+    initialValues: {
+      title:
+        _.get(datasetItem, ['title', localization.getLanguage()], []).length > 0
+          ? _.get(datasetItem, 'title')
+          : textType,
+      description:
+        _.get(datasetItem, ['description', localization.getLanguage()], [])
+          .length > 0
+          ? _.get(datasetItem, 'description')
+          : textType,
+      objective:
+        _.get(datasetItem, ['objective', localization.getLanguage()], [])
+          .length > 0
+          ? _.get(datasetItem, 'objective')
+          : textType,
+      landingPage: _.get(datasetItem, 'landingPage', emptyArray)
+    },
     syncErrors: getFormSyncErrors('title')(state)
-  }))(Form)
-);
+  };
+};
 
-const mapStateToProps = ({ dataset }) => ({
-  initialValues: {
-    title:
-      dataset.result.title &&
-      dataset.result.title[localization.getLanguage()] &&
-      dataset.result.title[localization.getLanguage()].length > 0
-        ? dataset.result.title
-        : textType,
-    description:
-      dataset.result.description &&
-      dataset.result.description[localization.getLanguage()] &&
-      dataset.result.description[localization.getLanguage()].length > 0
-        ? dataset.result.description
-        : textType,
-    objective:
-      dataset.result.objective &&
-      dataset.result.objective[localization.getLanguage()] &&
-      dataset.result.objective[localization.getLanguage()].length > 0
-        ? dataset.result.objective
-        : textType,
-    landingPage: dataset.result.landingPage || emptyArray
-  }
-});
-
-export default connect(mapStateToProps)(FormTitle);
+export const ConnectedFormTitle = connect(mapStateToProps)(ConfiguredFormTitle);

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
+import _ from 'lodash';
 
 import localization from '../../../utils/localization';
 import Helptext from '../../../components/helptext/helptext.component';
@@ -8,11 +9,7 @@ import InputTagsFieldConcepts from './input-tags-concepts/input-tags-concepts.co
 import InputTagsFieldArray from '../../../components/field-input-tags-objects/field-input-tags-objects.component';
 
 export const FormConcept = props => {
-  const {
-    syncErrors: { keyword },
-    helptextItems
-  } = props;
-  // if((subject.indexOf('https://') !== -1 || subject.indexOf('http://') !== -1) && !this.subjectLookupInProgress) {
+  const { syncErrors, helptextItems } = props;
   return (
     <form>
       <div className="form-group">
@@ -40,9 +37,9 @@ export const FormConcept = props => {
           label={localization.schema.concept.keywordLabel}
           fieldLabel={localization.getLanguage()}
         />
-        {keyword && (
+        {_.get(syncErrors, 'keyword') && (
           <div className="alert alert-danger mt-3">
-            {keyword[localization.getLanguage()]}
+            {_.get(syncErrors, 'keyword')[localization.getLanguage()]}
           </div>
         )}
       </div>
@@ -57,5 +54,3 @@ FormConcept.propTypes = {
   syncErrors: PropTypes.object,
   helptextItems: PropTypes.object.isRequired
 };
-
-export default FormConcept;

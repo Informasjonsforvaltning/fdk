@@ -1,26 +1,23 @@
-import { reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
+import { getFormSyncErrors } from 'redux-form';
+import _ from 'lodash';
 
-import Form from './form-informationmodel.component';
-import validate from './form-informationmodel-validations';
-import asyncValidate from '../../../utils/asyncValidate';
+import { ConfiguredFormInformationModel } from './configured-form-informationmodel';
 import { informationModelType } from '../../../schemaTypes';
 
-const FormInformationModel = reduxForm({
-  form: 'informationModel',
-  validate,
-  asyncValidate,
-  asyncChangeFields: []
-})(Form);
+const mapStateToProps = (state, ownProps) => {
+  const { datasetItem } = ownProps;
+  return {
+    initialValues: {
+      informationModel:
+        _.get(datasetItem, 'informationModel', []).length > 0
+          ? _.get(datasetItem, 'informationModel')
+          : [informationModelType]
+    },
+    syncErrors: getFormSyncErrors('informationModel')(state)
+  };
+};
 
-const mapStateToProps = ({ dataset }) => ({
-  initialValues: {
-    informationModel:
-      dataset.result.informationModel &&
-      dataset.result.informationModel.length > 0
-        ? dataset.result.informationModel
-        : [informationModelType]
-  }
-});
-
-export default connect(mapStateToProps)(FormInformationModel);
+export const ConnectedFormInformationModel = connect(mapStateToProps)(
+  ConfiguredFormInformationModel
+);

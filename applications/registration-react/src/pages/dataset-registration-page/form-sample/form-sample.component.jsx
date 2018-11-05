@@ -117,5 +117,3 @@ FormSample.defaultProps = {};
 FormSample.propTypes = {
   helptextItems: PropTypes.object.isRequired
 };
-
-export default FormSample;
