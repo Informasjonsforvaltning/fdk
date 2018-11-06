@@ -34,3 +34,4 @@ server:
 management:
   server:
     port: 8997
+#  level.org.springframework.data.elasticsearch: DEBUG
