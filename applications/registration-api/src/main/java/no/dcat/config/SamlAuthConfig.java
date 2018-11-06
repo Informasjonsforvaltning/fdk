@@ -59,6 +59,7 @@ public class SamlAuthConfig extends ServiceProviderConfigurerAdapter {
                 .antMatchers("/loginerror").permitAll()
                 .antMatchers("/logout").permitAll()
                 .requestMatchers(saml().endpointsMatcher()).permitAll()
+                .antMatchers(HttpMethod.GET, "/actuator/**").permitAll()
         .and()
             .authorizeRequests()
                 .antMatchers(HttpMethod.GET,"/catalogs/**").permitAll()

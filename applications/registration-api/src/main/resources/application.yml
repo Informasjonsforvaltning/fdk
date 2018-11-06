@@ -15,6 +15,12 @@ application:
   harvesterUrl: http://harvester:8080
   openDataEnhet: ${FDK_ENHETSREGISTERET_URL:https://data.brreg.no/enhetsregisteret/api/enheter/}
 
+management:
+  server:
+    port: 8081
+  endpoints:
+      enabled-by-default: true
+
 spring:
   jackson:
     default-property-inclusion: non_null
@@ -24,6 +30,7 @@ spring:
     elasticsearch:
       clusterNodes: ${FDK_ES_CLUSTERNODES:elasticsearch5:9300}
       clusterName: ${FDK_ES_CLUSTERNAME:elasticsearch}
+
 saml:
   sso:
     metadata-generator:
@@ -75,9 +82,6 @@ application:
     includedOrgforms: ADOS,FKF,FYLK,IKS,KF,KIRK,KOMM,ORGL,SF,STAT,SÆR
     includedOrgnr: 974760673
   openDataEnhet: ${FDK_ENHETSREGISTERET_URL:https://data.brreg.no/enhetsregisteret/api/enheter/}
-management:
-  server:
-    port: 8181
 server:
   tomcat:
     accesslog:
@@ -85,6 +89,16 @@ server:
     basedir: /tmp/fdk
 
 ---
+spring:
+  profiles: it1
+server:
+  tomcat:
+    accesslog:
+      enabled: true
+    basedir: /tmp/fdk
+
+---
+# soon obsolete
 spring:
   profiles: st1
   data:
@@ -97,9 +111,6 @@ logging:
   level.org.springframework: INFO
   level.org.springframework.web: ERROR
   level.org.opensaml: INFO
-management:
-  server:
-    port: 8181
 server:
   tomcat:
     accesslog:
@@ -120,12 +131,6 @@ logging:
   level.org.springframework: INFO
   level.org.springframework.web: WARN
   level.org.opensaml: INFO
-health:
-  config:
-    enabled: false
-management:
-  server:
-    port: 8181
 server:
   tomcat:
     accesslog:
