@@ -39,6 +39,7 @@ saml:
       store-pass: ${registrationApi_ipStorePassword}
       default-key: difi.brreg.datakatalog.registrering.${registrationApi_OpenshiftEnvironment:dev}
       key-passwords:
+        difi.brreg.datakatalog.registrering.it1: ${registrationApi_ipKeyPassword}
         difi.brreg.datakatalog.registrering.st1: ${registrationApi_ipKeyPassword}
         difi.brreg.datakatalog.registrering.ppe: ${registrationApi_ipKeyPassword}
         difi.brreg.datakatalog.registrering.tt1: ${registrationApi_ipKeyPassword}
