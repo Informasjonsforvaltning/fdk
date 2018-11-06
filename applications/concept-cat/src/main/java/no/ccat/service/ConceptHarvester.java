@@ -1,15 +1,19 @@
 package no.ccat.service;
 
 import no.ccat.model.ConceptDenormalized;
+import no.dcat.shared.HarvestMetadata;
+import no.dcat.shared.HarvestMetadataUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.nio.charset.StandardCharsets;
+import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 /*
     Fetch concepts and insert or update them in the search index.
@@ -19,25 +23,30 @@ public class ConceptHarvester {
     private static final Logger logger = LoggerFactory.getLogger(ConceptHarvester.class);
 
     private final ConceptDenormalizedRepository conceptDenormalizedRepository;
-    private final ConceptBuilderService conceptBuilderService;
+    private final RDFToModelTransformer rdfToModelTransformer;
 
     @Autowired
-    public ConceptHarvester(ConceptDenormalizedRepository conceptDenormalizedRepository, ConceptBuilderService conceptBuilderService) {
+    public ConceptHarvester(ConceptDenormalizedRepository conceptDenormalizedRepository, RDFToModelTransformer rdfToModelTransformer) {
         this.conceptDenormalizedRepository = conceptDenormalizedRepository;
-        this.conceptBuilderService = conceptBuilderService;
+        this.rdfToModelTransformer = rdfToModelTransformer;
     }
 
     @PostConstruct
     public void harvestFromSource() {
         logger.info("harvest from source");
 
+        Reader reader =resourceAsReader("jira-example-big.ttl");
+        List<ConceptDenormalized> concepts = rdfToModelTransformer.getConceptsFromStream(reader);
 
-        List<String> ids = IntStream.rangeClosed(1, 50).mapToObj(String::valueOf).collect(Collectors.toList());
-        ids.add("970018131");
-
-        List<ConceptDenormalized> concepts = ids.stream().map(id -> conceptBuilderService.create(id)).collect(Collectors.toList());
-
-        concepts.stream().forEach(concept -> conceptDenormalizedRepository.save(concept));
+        Date harvestDate=new Date();
+        concepts.stream().forEach(concept -> {
+            HarvestMetadata harvest = HarvestMetadataUtil.createOrUpdate(null, harvestDate, false);
+            concept.setHarvest(harvest);
+            conceptDenormalizedRepository.save(concept);
+        });
     }
 
+    private Reader resourceAsReader(final String resourceName) {
+        return new InputStreamReader(getClass().getClassLoader().getResourceAsStream(resourceName), StandardCharsets.UTF_8);
+    }
 }
