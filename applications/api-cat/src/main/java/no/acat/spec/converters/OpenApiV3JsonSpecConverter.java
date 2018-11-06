@@ -27,7 +27,7 @@ public class OpenApiV3JsonSpecConverter {
                 throw new ParseException("Failed to parse document. Messages: " + String.join(" ", swaggerParseResult.getMessages()));
             }
             return swaggerParseResult.getOpenAPI();
-        } catch (Error e) {
+        } catch (Throwable e) {
             throw new ParseException("Cannot import spec as OpenApi v3 json: " + e.getMessage());
         }
     }

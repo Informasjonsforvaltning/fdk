@@ -20,7 +20,7 @@ public class SwaggerJsonSpecConverter {
     public static OpenAPI convert(String spec) throws ParseException {
         try {
             return new SwaggerConverter().readContents(spec, null, null).getOpenAPI();
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ParseException("Error parsing spec as Swagger v2 json: " + e.getMessage());
         }
     }
