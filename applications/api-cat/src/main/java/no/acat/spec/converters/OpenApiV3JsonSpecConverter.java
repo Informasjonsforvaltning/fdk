@@ -2,9 +2,10 @@ package no.acat.spec.converters;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.parser.OpenAPIV3Parser;
+import io.swagger.v3.parser.core.models.SwaggerParseResult;
 import no.acat.spec.ParseException;
-import no.dcat.openapi.OpenAPI;
-import no.dcat.openapi.OpenApiV3Parser;
 
 public class OpenApiV3JsonSpecConverter {
 
@@ -20,7 +21,12 @@ public class OpenApiV3JsonSpecConverter {
 
     public static OpenAPI convert(String spec) throws ParseException {
         try {
-            return OpenApiV3Parser.parse(spec);
+            SwaggerParseResult swaggerParseResult = new OpenAPIV3Parser().readContents(spec, null, null);
+
+            if (swaggerParseResult.getOpenAPI() == null && (swaggerParseResult.getMessages().size() > 0)) {
+                throw new ParseException("Failed to parse document. Messages: " + String.join(" ", swaggerParseResult.getMessages()));
+            }
+            return swaggerParseResult.getOpenAPI();
         } catch (Throwable e) {
             throw new ParseException("Cannot import spec as OpenApi v3 json: " + e.getMessage());
         }

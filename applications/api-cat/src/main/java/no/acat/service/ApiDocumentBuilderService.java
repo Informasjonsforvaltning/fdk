@@ -1,6 +1,7 @@
 package no.acat.service;
 
 import com.google.common.base.Strings;
+import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.Paths;
 import io.swagger.v3.oas.models.media.Content;
@@ -9,7 +10,6 @@ import io.swagger.v3.oas.models.responses.ApiResponses;
 import no.acat.model.ApiDocument;
 import no.acat.model.HarvestMetadataFactory;
 import no.acat.spec.ParseException;
-import no.dcat.openapi.OpenAPI;
 import no.dcat.client.registrationapi.ApiRegistrationPublic;
 import no.dcat.htmlclean.HtmlCleaner;
 import no.dcat.shared.Contact;

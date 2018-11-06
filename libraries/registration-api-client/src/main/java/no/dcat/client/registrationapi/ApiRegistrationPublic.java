@@ -2,9 +2,9 @@ package no.dcat.client.registrationapi;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.models.OpenAPI;
 import lombok.Data;
 import lombok.ToString;
-import no.dcat.openapi.OpenAPI;
 
 import java.util.List;
 

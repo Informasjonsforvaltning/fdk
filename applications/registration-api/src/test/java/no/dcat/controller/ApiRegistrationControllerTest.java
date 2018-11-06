@@ -1,8 +1,9 @@
 package no.dcat.controller;
 
 import com.google.gson.Gson;
+import io.swagger.v3.oas.models.OpenAPI;
 import no.dcat.client.apicat.ApiCatClient;
-import no.dcat.openapi.OpenAPI;
+import no.dcat.factory.RegistrationFactory;
 import no.dcat.model.ApiRegistration;
 import no.dcat.model.Catalog;
 import no.dcat.service.ApiCatService;
@@ -17,6 +18,7 @@ import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.opensaml.xml.parse.ClasspathResolver;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -24,11 +26,14 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.io.IOException;
 import java.util.Optional;
 
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
+import static org.hamcrest.Matchers.*;
 import static org.mockito.ArgumentMatchers.anyObject;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @Category(UnitTest.class)
 @RunWith(SpringRunner.class)

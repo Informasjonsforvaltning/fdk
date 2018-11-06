@@ -18,7 +18,6 @@
         <module>html-cleaner</module>
         <module>referencedata-client</module>
         <module>webutils-spring</module>
-        <module>openapi</module>
         <module>api-cat-client</module>
         <module>registration-api-client</module>
     </modules>

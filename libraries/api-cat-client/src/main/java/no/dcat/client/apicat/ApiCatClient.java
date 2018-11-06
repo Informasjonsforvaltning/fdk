@@ -1,6 +1,6 @@
 package no.dcat.client.apicat;
 
-import no.dcat.openapi.OpenAPI;
+import io.swagger.v3.oas.models.OpenAPI;
 import org.springframework.http.HttpEntity;
 import org.springframework.web.client.RestTemplate;
 

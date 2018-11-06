@@ -2,9 +2,9 @@ package no.acat.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.models.OpenAPI;
 import lombok.*;
 import no.dcat.shared.*;
-import no.dcat.openapi.OpenAPI;
 
 import java.util.List;
 import java.util.Set;
