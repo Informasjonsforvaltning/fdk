@@ -49,6 +49,7 @@ saml:
         difi.brreg.datakatalog.registrering.it1: ${registrationApi_ipKeyPassword}
         difi.brreg.datakatalog.registrering.st1: ${registrationApi_ipKeyPassword}
         difi.brreg.datakatalog.registrering.ppe: ${registrationApi_ipKeyPassword}
+        difi.brreg.datakatalog.registrering.prd: ${registrationApi_ipKeyPassword}
         difi.brreg.datakatalog.registrering.tt1: ${registrationApi_ipKeyPassword}
         difi.brreg.datakatalog.registrering.ut1: ${registrationApi_ipKeyPassword}
         difi.brreg.datakatalog.registrering.st2: ${registrationApi_ipKeyPassword}
