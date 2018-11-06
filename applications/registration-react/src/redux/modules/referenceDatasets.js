@@ -17,10 +17,11 @@ export default function referenceDatasets(
       };
     }
     case REFERENCEDATASETS_SUCCESS: {
-      const referenceDatasetsItems = _.get(action.payload, [
-        '_embedded',
-        'datasets'
-      ]).map(item => ({
+      const referenceDatasetsItems = _.get(
+        action.payload,
+        ['_embedded', 'datasets'],
+        []
+      ).map(item => ({
         id: _.get(item, 'id'),
         uri: _.get(item, 'uri'),
         prefLabel_no: _.get(item, ['title', 'nb'])
