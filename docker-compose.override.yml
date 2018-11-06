@@ -102,6 +102,7 @@ services:
     restart: always
     ports:
       - "8079:8080"
+      - "9079:8081"
     environment:
      - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
      - FDK_ES_CLUSTERNODES=elasticsearch5:9300
