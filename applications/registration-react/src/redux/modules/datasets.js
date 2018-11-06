@@ -7,7 +7,7 @@ import {
 import { fetchActions } from '../fetchActions';
 
 function shouldFetch(metaState) {
-  const threshold = 60 * 1000; // seconds
+  const threshold = 60 * 1; // seconds
   return (
     !metaState ||
     (!metaState.isFetching &&
@@ -69,3 +69,6 @@ export default function datasets(state = initialState, action) {
 
 export const getDatasetItemsByCatalogId = (datasets, catalogId) =>
   _.get(datasets, [catalogId, 'items']);
+
+export const getDatasetItemByDatasetiId = (datasets, catalogId, id) =>
+  _.find(_.get(datasets, [catalogId, 'items'], []), ['id', id]);
