@@ -1,9 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { createMockStore } from 'redux-test-utils';
-import shallowWithStore from '../../../test/shallowWithStore';
-import RegDatasetComponent, { RegDataset } from './dataset-registration-page';
-import dataset from '../../../test/fixtures/datasets';
+import { RegDataset } from './dataset-registration-page';
 import helptexts from '../../../test/fixtures/helptext';
 
 let defaultProps;
@@ -12,8 +9,24 @@ let dispatch;
 
 beforeEach(() => {
   dispatch = jest.fn();
+  const fetchDatasetsIfNeeded = jest.fn();
+  const fetchProvenanceIfNeeded = jest.fn();
+  const fetchFrequencyIfNeeded = jest.fn();
+  const fetchThemesIfNeeded = jest.fn();
+  const fetchReferenceTypesIfNeeded = jest.fn();
+  const fetchReferenceDatasetsIfNeeded = jest.fn();
+  const fetchOpenLicensesIfNeeded = jest.fn();
+  const fetchHelptextsIfNeeded = jest.fn();
   defaultProps = {
     dispatch,
+    fetchDatasetsIfNeeded,
+    fetchProvenanceIfNeeded,
+    fetchFrequencyIfNeeded,
+    fetchThemesIfNeeded,
+    fetchReferenceTypesIfNeeded,
+    fetchReferenceDatasetsIfNeeded,
+    fetchOpenLicensesIfNeeded,
+    fetchHelptextsIfNeeded,
     helptextItems: helptexts.helptextItems,
     isFetching: false
   };
@@ -23,15 +36,4 @@ beforeEach(() => {
 test('should render RegDataset correctly', () => {
   expect(wrapper).toHaveLength(1);
   expect(wrapper).toMatchSnapshot();
-});
-
-test('should render FormAccessRightsSchema correctly', () => {
-  const testState = {
-    dataset: dataset.datasetItems._embedded.datasets[0],
-    helptexts,
-    form: null
-  };
-  const store = createMockStore(testState);
-  wrapper = shallowWithStore(<RegDatasetComponent />, store);
-  expect(wrapper).toHaveLength(1);
 });

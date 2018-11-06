@@ -1,20 +1,9 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import _ from 'lodash';
 import { Link } from 'react-router-dom';
 
 import localization from '../../utils/localization';
-import {
-  fetchUserIfNeeded,
-  fetchDatasetIfNeeded,
-  fetchProvenanceIfNeeded,
-  fetchFrequencyIfNeeded,
-  fetchThemesIfNeeded,
-  fetchReferenceTypesIfNeeded,
-  fetchReferenceDatasetsIfNeeded,
-  fetchOpenLicensesIfNeeded
-} from '../../actions/index';
-import { fetchHelptextsIfNeeded } from '../../redux/modules/helptexts';
 import { FormTemplateWithState } from '../../components/form-template/form-template-with-state.component';
 import { ConnectedFormTitle } from './form-title/connected-form-title.component';
 import { ConnectedFormDistribution } from './form-distribution/connected-form-distribution.component';
@@ -50,32 +39,22 @@ import './dataset-registration-page.scss';
 export class RegDataset extends React.Component {
   constructor(props) {
     super(props);
-    const datasetURL = window.location.pathname;
-    const catalogDatasetsURL = datasetURL.substring(
-      0,
-      datasetURL.lastIndexOf('/')
+
+    this.props.fetchHelptextsIfNeeded();
+    this.props.fetchProvenanceIfNeeded();
+    this.props.fetchFrequencyIfNeeded();
+    this.props.fetchThemesIfNeeded();
+    this.props.fetchReferenceTypesIfNeeded();
+    this.props.fetchOpenLicensesIfNeeded();
+  }
+
+  componentWillMount() {
+    const { match } = this.props;
+    const catalogId = _.get(match, ['params', 'catalogId']);
+    this.props.fetchDatasetsIfNeeded(catalogId);
+    this.props.fetchReferenceDatasetsIfNeeded(
+      `/catalogs/${catalogId}/datasets`
     );
-    this.props.dispatch(fetchDatasetIfNeeded(datasetURL));
-    this.props.dispatch(fetchReferenceDatasetsIfNeeded(catalogDatasetsURL));
-    this.props.dispatch(fetchHelptextsIfNeeded());
-    this.props.dispatch(fetchProvenanceIfNeeded());
-    this.props.dispatch(fetchFrequencyIfNeeded());
-    this.props.dispatch(fetchThemesIfNeeded());
-    this.props.dispatch(fetchReferenceTypesIfNeeded());
-    this.props.dispatch(fetchOpenLicensesIfNeeded());
-    this.refreshSession = this.refreshSession.bind(this);
-  }
-
-  fetchHelptexts() {
-    this.props.dispatch(fetchHelptextsIfNeeded());
-  }
-
-  fetchDataset() {
-    this.props.dispatch(fetchDatasetIfNeeded());
-  }
-
-  refreshSession() {
-    this.props.dispatch(fetchUserIfNeeded());
   }
 
   render() {
@@ -84,7 +63,6 @@ export class RegDataset extends React.Component {
       themesItems,
       provenanceItems,
       frequencyItems,
-      isFetching,
       title,
       accessRights,
       formThemes,
@@ -100,7 +78,7 @@ export class RegDataset extends React.Component {
       sample,
       registrationStatus,
       lastSaved,
-      result,
+      datasetItem,
       referenceTypesItems,
       referenceDatasetsItems,
       openLicenseItems
@@ -122,7 +100,7 @@ export class RegDataset extends React.Component {
               {localization.datasets.backToCatalog}
             </Link>
           </div>
-          {!isFetching &&
+          {datasetItem &&
             helptextItems &&
             title &&
             themesItems &&
@@ -139,7 +117,7 @@ export class RegDataset extends React.Component {
                   syncErrors={title.syncErrors}
                 >
                   <ConnectedFormTitle
-                    datasetItem={result}
+                    datasetItem={datasetItem}
                     helptextItems={helptextItems}
                   />
                 </FormTemplateWithState>
@@ -151,7 +129,7 @@ export class RegDataset extends React.Component {
                   syncErrors={accessRights.syncErrors}
                 >
                   <ConnectedFormAccessRights
-                    datasetItem={result}
+                    datasetItem={datasetItem}
                     helptextItems={helptextItems}
                   />
                 </FormTemplateWithState>
@@ -163,7 +141,7 @@ export class RegDataset extends React.Component {
                   syncErrors={formThemes.syncErrors}
                 >
                   <ConnectedFormThemes
-                    datasetItem={result}
+                    datasetItem={datasetItem}
                     themesItems={themesItems}
                     helptextItems={helptextItems}
                   />
@@ -175,7 +153,7 @@ export class RegDataset extends React.Component {
                   syncErrors={type.syncErrors}
                 >
                   <ConnectedFormType
-                    datasetItem={result}
+                    datasetItem={datasetItem}
                     helptextItems={helptextItems}
                   />
                 </FormTemplateWithState>
@@ -186,7 +164,7 @@ export class RegDataset extends React.Component {
                   syncErrors={concept.syncErrors}
                 >
                   <ConnectedFormConcept
-                    datasetItem={result}
+                    datasetItem={datasetItem}
                     helptextItems={helptextItems}
                   />
                 </FormTemplateWithState>
@@ -197,7 +175,7 @@ export class RegDataset extends React.Component {
                   syncErrors={spatial.syncErrors}
                 >
                   <ConnectedFormSpatial
-                    datasetItem={result}
+                    datasetItem={datasetItem}
                     helptextItems={helptextItems}
                   />
                 </FormTemplateWithState>
@@ -208,7 +186,7 @@ export class RegDataset extends React.Component {
                   syncErrors={formProvenance.syncErrors}
                 >
                   <ConnectedFormProvenance
-                    datasetItem={result}
+                    datasetItem={datasetItem}
                     provenanceItems={provenanceItems}
                     frequencyItems={frequencyItems}
                     helptextItems={helptextItems}
@@ -221,7 +199,7 @@ export class RegDataset extends React.Component {
                   syncErrors={contents.syncErrors}
                 >
                   <ConnectedFormContents
-                    datasetItem={result}
+                    datasetItem={datasetItem}
                     helptextItems={helptextItems}
                   />
                 </FormTemplateWithState>
@@ -232,7 +210,7 @@ export class RegDataset extends React.Component {
                   syncErrors={informationModel.syncErrors}
                 >
                   <ConnectedFormInformationModel
-                    datasetItem={result}
+                    datasetItem={datasetItem}
                     helptextItems={helptextItems}
                   />
                 </FormTemplateWithState>
@@ -242,7 +220,7 @@ export class RegDataset extends React.Component {
                   values={referenceValues(reference.values)}
                 >
                   <ConnectedFormReference
-                    datasetItem={result}
+                    datasetItem={datasetItem}
                     referenceTypesItems={referenceTypesItems}
                     referenceDatasetsItems={referenceDatasetsItems}
                     helptextItems={helptextItems}
@@ -255,7 +233,7 @@ export class RegDataset extends React.Component {
                   syncErrors={contactPoint.syncErrors}
                 >
                   <ConnectedFormContactPoint
-                    datasetItem={result}
+                    datasetItem={datasetItem}
                     helptextItems={helptextItems}
                   />
                 </FormTemplateWithState>
@@ -274,7 +252,7 @@ export class RegDataset extends React.Component {
                   }
                 >
                   <ConnectedFormDistribution
-                    datasetItem={result}
+                    datasetItem={datasetItem}
                     openLicenseItems={openLicenseItems}
                     helptextItems={helptextItems}
                   />
@@ -293,7 +271,7 @@ export class RegDataset extends React.Component {
                   }
                 >
                   <ConnectedFormSample
-                    datasetItem={result}
+                    datasetItem={datasetItem}
                     openLicenseItems={openLicenseItems}
                     helptextItems={helptextItems}
                   />
@@ -304,9 +282,9 @@ export class RegDataset extends React.Component {
                   registrationStatus={
                     registrationStatus && registrationStatus.length > 0
                       ? registrationStatus
-                      : result.registrationStatus
+                      : datasetItem.registrationStatus
                   }
-                  lastSaved={lastSaved || result._lastModified}
+                  lastSaved={lastSaved || datasetItem._lastModified}
                   syncErrors={
                     !!(
                       (title && title.syncErrors) ||
@@ -341,11 +319,11 @@ export class RegDataset extends React.Component {
 }
 
 RegDataset.defaultProps = {
+  match: null,
   helptextItems: null,
   themesItems: null,
   provenanceItems: null,
   frequencyItems: null,
-  isFetching: false,
   title: null,
   accessRights: null,
   formThemes: null,
@@ -361,19 +339,27 @@ RegDataset.defaultProps = {
   sample: null,
   registrationStatus: null,
   lastSaved: null,
-  result: null,
+  datasetItem: null,
   referenceTypesItems: null,
   referenceDatasetsItems: null,
-  openLicenseItems: null
+  openLicenseItems: null,
+  fetchDatasetsIfNeeded: _.noop(),
+  fetchProvenanceIfNeeded: _.noop(),
+  fetchFrequencyIfNeeded: _.noop(),
+  fetchThemesIfNeeded: _.noop(),
+  fetchReferenceTypesIfNeeded: _.noop(),
+  fetchReferenceDatasetsIfNeeded: _.noop(),
+  fetchOpenLicensesIfNeeded: _.noop(),
+  fetchHelptextsIfNeeded: _.noop()
 };
 
 RegDataset.propTypes = {
+  match: PropTypes.object,
   dispatch: PropTypes.func.isRequired,
   helptextItems: PropTypes.object,
   themesItems: PropTypes.array,
   provenanceItems: PropTypes.object,
   frequencyItems: PropTypes.array,
-  isFetching: PropTypes.bool,
   title: PropTypes.object,
   accessRights: PropTypes.object,
   formThemes: PropTypes.object,
@@ -389,115 +375,16 @@ RegDataset.propTypes = {
   sample: PropTypes.object,
   registrationStatus: PropTypes.string,
   lastSaved: PropTypes.string,
-  result: PropTypes.object,
+  datasetItem: PropTypes.object,
   referenceTypesItems: PropTypes.array,
   referenceDatasetsItems: PropTypes.array,
-  openLicenseItems: PropTypes.array
+  openLicenseItems: PropTypes.array,
+  fetchDatasetsIfNeeded: PropTypes.func,
+  fetchProvenanceIfNeeded: PropTypes.func,
+  fetchFrequencyIfNeeded: PropTypes.func,
+  fetchThemesIfNeeded: PropTypes.func,
+  fetchReferenceTypesIfNeeded: PropTypes.func,
+  fetchReferenceDatasetsIfNeeded: PropTypes.func,
+  fetchOpenLicensesIfNeeded: PropTypes.func,
+  fetchHelptextsIfNeeded: PropTypes.func
 };
-
-function mapStateToProps({
-  app,
-  dataset,
-  helptexts,
-  provenance,
-  frequency,
-  themes,
-  referenceTypes,
-  referenceDatasets,
-  openlicenses,
-  form
-}) {
-  const { result, isFetching } = dataset || {
-    result: null,
-    isFetching: false
-  };
-
-  const { helptextItems } = helptexts || {
-    helptextItems: null
-  };
-
-  const { provenanceItems } = provenance || {
-    provenanceItems: null
-  };
-
-  const { frequencyItems } = frequency || {
-    frequencyItems: null
-  };
-
-  const { themesItems } = themes || {
-    themesItems: null
-  };
-
-  const { referenceTypesItems } = referenceTypes || {
-    referenceTypesItems: null
-  };
-
-  const { referenceDatasetsItems } = referenceDatasets || {
-    referenceDatasetsItems: null
-  };
-
-  const { openLicenseItems } = openlicenses || {
-    openLicenseItems: null
-  };
-
-  const title = form && form.title ? form.title : {};
-
-  const accessRights = form && form.accessRights ? form.accessRights : {};
-
-  const formThemes = form && form.themes ? form.themes : {};
-
-  const type = form && form.type ? form.type : {};
-
-  const concept = form && form.concept ? form.concept : {};
-
-  const spatial = form && form.spatial ? form.spatial : {};
-
-  const formProvenance = form && form.provenance ? form.provenance : {};
-
-  const contents = form && form.contents ? form.contents : {};
-
-  const informationModel =
-    form && form.informationModel ? form.informationModel : {};
-
-  const reference = form && form.reference ? form.reference : {};
-
-  const contactPoint = form && form.contactPoint ? form.contactPoint : {};
-
-  const distribution = form && form.distribution ? form.distribution : {};
-
-  const sample = form && form.sample ? form.sample : {};
-
-  const { registrationStatus, lastSaved } = app || {
-    registrationStatus: null,
-    lastSaved: null
-  };
-
-  return {
-    result,
-    isFetching,
-    helptextItems,
-    provenanceItems,
-    frequencyItems,
-    themesItems,
-    referenceTypesItems,
-    referenceDatasetsItems,
-    openLicenseItems,
-    title,
-    accessRights,
-    formThemes,
-    type,
-    concept,
-    spatial,
-    formProvenance,
-    contents,
-    informationModel,
-    reference,
-    contactPoint,
-    distribution,
-    sample,
-    registrationStatus,
-    lastSaved
-  };
-}
-
-export default connect(mapStateToProps)(RegDataset);
