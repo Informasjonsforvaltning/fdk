@@ -3,12 +3,12 @@
 /***************  **************************/
 /*********** Bootstrap overrides **********/
 /*****************************************/
-$primary:       $color-cta4 !default;
-$secondary:     $color3 !default;
-$success:       $color-green !default;
-$info:          $color-cta4 !default;
-$warning:       $color-yellow !default;
-$danger:        $color-red !default;
+$primary:       $color-blue-dark !default;
+$secondary:     $color-dark-2 !default;
+$success:       $color-green-1 !default;
+$info:          $color-blue-light !default;
+$warning:       $color-yellow-1 !default;
+$danger:        $color-red-1 !default;
 
 @import '../../../node_modules/bootstrap/scss/bootstrap.scss';
 
