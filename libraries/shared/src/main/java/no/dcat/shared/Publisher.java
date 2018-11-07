@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.ToString;
 
-import java.util.HashMap;
 import java.util.Map;
 
 @Data
@@ -15,15 +14,15 @@ public class Publisher {
     private String id;
     private String name;
     private String orgPath;
-    private Map<String,String> prefLabel;
+    private Map<String, String> prefLabel;
 
     public Publisher(String orgnr) {
         this.id = orgnr;
     }
 
     public Publisher(String orgnr, String uri) {
-       this.id = orgnr;
-       this.uri = uri;
+        this.id = orgnr;
+        this.uri = uri;
     }
 
     public Publisher() {
