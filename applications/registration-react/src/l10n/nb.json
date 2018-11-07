@@ -1,4 +1,4 @@
-{
+  {
   "title": "Tittel",
   "description": "Beskrivelse",
   "version": "Versjon",
@@ -10,6 +10,12 @@
   "yesterday": "i går",
   "time": "kl.",
   "at": "på",
+  "breadcrumbs": {
+    "home":"Hjem",
+    "API-descriptions":"API-descriptions",
+    "Register a new API-description": "Registrere ny API-beskrivelse",
+    "Datasets":"Datasett"
+  },
   "listItems": {
     "header": {
       "title": "Tittel på datasett",

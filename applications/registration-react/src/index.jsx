@@ -14,6 +14,7 @@ import { ConnectedAPIRegistrationPage } from './pages/api-registration-page/conn
 // import RegDataset from './pages/dataset-registration-page/dataset-registration-page';
 import { ConnectedDatasetRegistrationPage } from './pages/dataset-registration-page/connected-dataset-registration-page';
 import Header from './components/app-header/app-header.component';
+import { Breadcrumbs } from './components/breadcrumbs/breadcrumbs.component';
 import Footer from './components/app-footer/app-footer.component';
 import LoginDialog from './components/app-login-dialog/app-login-dialog.component';
 import { ConnectedApiImportPage } from './pages/api-import-page/connected-api-import-page';
@@ -63,6 +64,7 @@ ReactDOM.render(
       <BrowserRouter>
         <div className="d-flex flex-column site">
           <Header />
+          <Breadcrumbs />
           <div className="site-content d-flex flex-column">{routes}</div>
           <Footer />
         </div>
