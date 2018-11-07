@@ -1,19 +1,19 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { PureApiBreadcrumb } from './api-breadcrumb';
+import { ApiBreadcrumb } from './api-breadcrumb';
 
-test('should render PureApiBreadcrumb with "Dataset" active correctly', () => {
+test('should render ApiBreadcrumb with "Dataset" active correctly', () => {
   const defaultProps = {
     apiItem: {
       title: 'api title'
     }
   };
-  const wrapper = shallow(<PureApiBreadcrumb {...defaultProps} />);
+  const wrapper = shallow(<ApiBreadcrumb {...defaultProps} />);
   expect(wrapper).toMatchSnapshot();
 });
 
-test('should render PureApiBreadcrumb correctly with no apiItem', () => {
+test('should render ApiBreadcrumb correctly with no apiItem', () => {
   const defaultProps = {};
-  const wrapper = shallow(<PureApiBreadcrumb {...defaultProps} />);
+  const wrapper = shallow(<ApiBreadcrumb {...defaultProps} />);
   expect(wrapper).toMatchSnapshot();
 });
