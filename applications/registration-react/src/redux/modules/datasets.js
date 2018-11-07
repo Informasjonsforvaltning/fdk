@@ -7,7 +7,7 @@ import {
 import { fetchActions } from '../fetchActions';
 
 function shouldFetch(metaState) {
-  const threshold = 60 * 1; // seconds
+  const threshold = 60 * 100; // seconds
   return (
     !metaState ||
     (!metaState.isFetching &&
