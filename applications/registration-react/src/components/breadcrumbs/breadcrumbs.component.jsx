@@ -17,7 +17,7 @@ const routes = [
   },
   {
     path: '/catalogs/:catalogId/datasets',
-    breadcrumb: <PathNameBreadcrumb pathName="datasets" />
+    breadcrumb: <PathNameBreadcrumb pathName="Datasets" />
   },
   {
     path: '/catalogs/:catalogId/apis/import',
