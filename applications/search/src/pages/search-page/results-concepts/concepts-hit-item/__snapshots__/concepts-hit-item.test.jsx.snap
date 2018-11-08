@@ -78,6 +78,7 @@ exports[`should render ConceptsHitItem correctly 1`] = `
           "valid": true,
         }
       }
+      tag="strong"
     />
     <div
       className="mt-3"
@@ -207,6 +208,7 @@ exports[`should render ConceptsHitItem correctly with compare button not showing
           "valid": true,
         }
       }
+      tag="strong"
     />
     <div
       className="mt-3"
