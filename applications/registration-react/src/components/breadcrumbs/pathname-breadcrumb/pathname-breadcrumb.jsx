@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import localization from '../../../lib/localization';
+import localization from '../../../utils/localization';
 
 export const PathNameBreadcrumb = ({ pathName }) => (
   <span>{localization.breadcrumbs[pathName]}</span>
