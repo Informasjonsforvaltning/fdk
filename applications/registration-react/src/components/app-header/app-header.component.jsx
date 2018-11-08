@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Dropdown, DropdownToggle, DropdownMenu } from 'reactstrap';
 
 import { fetchUserIfNeeded } from '../../actions/index';
 import localization from '../../utils/localization';
@@ -54,7 +53,7 @@ export class Header extends React.Component {
                   </span>
                   <img
                     className="fdk-logo"
-                    src="/static/img/fdk-logo@2x.png"
+                    src="/static/img/logo-registrering.svg"
                     alt="Logo for Felles datakatalog"
                   />
                 </a>
@@ -87,52 +86,6 @@ export class Header extends React.Component {
                     </a>
                   </div>
                 )}
-
-                <div>
-                  <Dropdown
-                    className="btn-group-default"
-                    isOpen={this.state.dropdownOpen}
-                    toggle={this.toggle}
-                  >
-                    <DropdownToggle
-                      className="fdk-button fdk-button-menu"
-                      caret
-                      color="primary"
-                    >
-                      <span>{localization.menu.title}</span>
-                    </DropdownToggle>
-                    <DropdownMenu className="fdk-dropdownmenu">
-                      <a
-                        className="dropdown-item"
-                        title="Veileder"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        href="https://doc.difi.no/data/veileder-for-beskrivelse-av-datasett/"
-                      >
-                        {localization.menu.guide}
-                      </a>
-
-                      <a
-                        className="dropdown-item"
-                        title="Standard"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        href="https://doc.difi.no/dcat-ap-no/"
-                      >
-                        {localization.menu.standard}
-                      </a>
-                      <a
-                        className="dropdown-item"
-                        title="Felles datakatalog"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        href="https://fellesdatakatalog.brreg.no"
-                      >
-                        {localization.menu.fdk}
-                      </a>
-                    </DropdownMenu>
-                  </Dropdown>
-                </div>
               </div>
             </div>
           </div>
