@@ -7,11 +7,13 @@ import no.dcat.shared.Publisher;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Mapping;
 import org.springframework.data.elasticsearch.annotations.Setting;
+import org.springframework.hateoas.core.Relation;
 
 import java.util.List;
 import java.util.Map;
 
 @Data
+@Relation(value = "concept", collectionRelation = "concepts")
 @Document(indexName = "ccat", type = "concept")
 @Setting(settingPath = "ccat.settings.json")
 @Mapping(mappingPath = "conceptdenormalized.mapping.json")
