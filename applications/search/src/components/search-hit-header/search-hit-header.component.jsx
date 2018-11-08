@@ -8,6 +8,7 @@ import { PublisherLabel } from '../publisher-label/publisher-label.component';
 import { getPublisherByOrgNr } from '../../redux/modules/publishers';
 import { getTranslateText } from '../../lib/translateText';
 import localization from '../../lib/localization';
+import './search-hit-header.scss';
 
 const renderPublisher = (publisherLabel, publisher, publisherItems) => {
   if (!publisher) {
