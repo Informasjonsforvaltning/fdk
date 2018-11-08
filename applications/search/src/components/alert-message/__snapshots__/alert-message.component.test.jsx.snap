@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render AlertMessage danger correctly with props 1`] = `
+<div
+  className="alert pt-3 pb-3 alert-danger"
+  role="alert"
+>
+  <i
+    className="fa mr-2 fa-exclamation-triangle"
+  />
+  <span>
+    Alert advarsel
+  </span>
+</div>
+`;
+
+exports[`should render AlertMessage success correctly with props 1`] = `
+<div
+  className="alert pt-3 pb-3 alert-success"
+  role="alert"
+>
+  <i
+    className="fa mr-2 fa-check"
+  />
+  <span>
+    Alert suksess
+  </span>
+</div>
+`;
