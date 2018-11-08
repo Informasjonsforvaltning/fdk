@@ -10,6 +10,12 @@
   "yesterday": "yesterday",
   "time": "at",
   "at": "at",
+  "breadcrumbs": {
+    "home":"Home",
+    "API-descriptions":"API-descriptions",
+    "Register a new API-description": "Register a new API-description",
+    "Datasets": "Datasets"
+  },
   "listItems": {
     "header": {
       "title": "Dataset title",
