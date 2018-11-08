@@ -4,7 +4,7 @@ import _ from 'lodash';
 import { getTranslateText } from '../../lib/translateText';
 
 export const PublisherLabel = props => {
-  const { label, publisherItem } = props;
+  const { label, tag: Tag, publisherItem } = props;
   if (!publisherItem) {
     return null;
   }
@@ -16,17 +16,19 @@ export const PublisherLabel = props => {
   return (
     <span>
       {label}&nbsp;
-      <span className="fdk-strong-virksomhet">{publisherPrefLabel}</span>
+      <Tag>{publisherPrefLabel}</Tag>
     </span>
   );
 };
 
 PublisherLabel.defaultProps = {
   label: null,
+  tag: 'strong',
   publisherItem: null
 };
 
 PublisherLabel.propTypes = {
   label: PropTypes.string,
+  tag: PropTypes.string,
   publisherItem: PropTypes.object
 };
