@@ -2,8 +2,4 @@
 
 exports[`should render PuredatasetBreadcrumb correctly with no datasetItem 1`] = `<span />`;
 
-exports[`should render PuredatasetBreadcrumb with "dataset" active correctly 1`] = `
-<span>
-  dataset title
-</span>
-`;
+exports[`should render PuredatasetBreadcrumb with "dataset" active correctly 1`] = `<span />`;

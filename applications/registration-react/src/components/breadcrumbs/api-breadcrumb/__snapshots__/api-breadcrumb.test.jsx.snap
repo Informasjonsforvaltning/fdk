@@ -2,8 +2,4 @@
 
 exports[`should render ApiBreadcrumb correctly with no apiItem 1`] = `<span />`;
 
-exports[`should render ApiBreadcrumb with "Dataset" active correctly 1`] = `
-<span>
-  api title
-</span>
-`;
+exports[`should render ApiBreadcrumb with "Dataset" active correctly 1`] = `<span />`;
