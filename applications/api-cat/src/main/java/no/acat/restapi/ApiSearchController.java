@@ -76,7 +76,8 @@ public class ApiSearchController {
             String accessRights,
 
         @ApiParam("Filters on publisher's organization path (orgPath), e.g. /STAT/972417858/971040238")
-        @RequestParam(value = "orgPath", defaultValue = "", required = false) String orgPath,
+        @RequestParam(value = "orgPath", defaultValue = "", required = false)
+            String orgPath,
 
         @ApiParam("Filters on format")
         @RequestParam(value = "format", defaultValue = "", required = false)
@@ -91,11 +92,12 @@ public class ApiSearchController {
             int size,
 
         @ApiParam("Specifies the sort field, at the present we support title, modified and publisher. Default is no value")
-        @RequestParam(value = "sortfield", defaultValue = "", required = false) String sortfield,
-
+        @RequestParam(value = "sortfield", defaultValue = "", required = false)
+            String sortfield,
 
         @ApiParam("Specifies the sort direction of the sorted result. The directions are: asc for ascending and desc for descending")
-        @RequestParam(value = "sortdirection", defaultValue = "", required = false) String sortdirection
+        @RequestParam(value = "sortdirection", defaultValue = "", required = false)
+            String sortdirection
 
     ) {
         try {
