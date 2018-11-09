@@ -1,15 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`should render CompareTermModal correctly with one term 1`] = `
-<div>
+<div
+  className="d-flex justify-content-center"
+>
   <button
-    className="fdk-button fdk-button-cta fdk-fullwidth"
+    className="fdk-button-small fdk-color-blue-dark"
     onClick={[Function]}
   >
-    <i
-      className="fa fa-chevron-up fdk-color0"
-    />
-     
     Show comparison
   </button>
   <Modal
@@ -151,15 +149,13 @@ exports[`should render CompareTermModal correctly with one term 1`] = `
 `;
 
 exports[`should render CompareTermModal correctly with props 1`] = `
-<div>
+<div
+  className="d-flex justify-content-center"
+>
   <button
-    className="fdk-button fdk-button-cta fdk-fullwidth"
+    className="fdk-button-small fdk-color-blue-dark"
     onClick={[Function]}
   >
-    <i
-      className="fa fa-chevron-up fdk-color0"
-    />
-     
     Show comparison
   </button>
   <Modal
