@@ -58,7 +58,7 @@ public class ApiHarvester {
                 elasticsearchService.createOrReplaceApiDocument(apiDocument);
                 idsHarvested.add(apiDocument.getId());
             } catch (Exception e) {
-                logger.error("Error importing API record. ErrorClass={} message={}", e.getClass().getName(), e.getMessage());
+                logger.warn("Error importing API record. ErrorClass={} message={}", e.getClass().getName(), e.getMessage());
                 logger.debug("Error stacktrace", e);
             }
         }
