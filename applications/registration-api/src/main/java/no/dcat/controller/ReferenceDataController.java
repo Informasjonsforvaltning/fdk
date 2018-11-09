@@ -1,9 +1,7 @@
 package no.dcat.controller;
 
 import no.dcat.service.ReferenceDataService;
-import no.dcat.shared.SkosConcept;
 import no.dcat.shared.Subject;
-import org.apache.http.HttpResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpEntity;
@@ -12,8 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.net.MalformedURLException;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
@@ -38,11 +34,11 @@ public class ReferenceDataController {
         try {
             Subject result = referenceDataService.getSubject(uri);
             if (result == null) {
-                return new ResponseEntity<Subject>(HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
             return ResponseEntity.ok(result);
         } catch (Exception e) {
-            return new ResponseEntity<Subject>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
