@@ -11,7 +11,7 @@ export const CompareTerms = props => {
   return (
     <div className="fdk-container p-3">
       <button
-        className="float-right fdk-button-small"
+        className="float-right fdk-button-small fdk-color-blue-dark"
         onClick={() => {
           onDeleteTerm(termIndex);
         }}

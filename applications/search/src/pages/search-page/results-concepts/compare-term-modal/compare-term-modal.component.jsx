@@ -95,13 +95,11 @@ export class CompareTermModal extends React.Component {
     );
 
     return (
-      <div>
+      <div className="d-flex justify-content-center">
         <button
-          className="fdk-button fdk-button-cta fdk-fullwidth"
+          className="fdk-button-small fdk-color-blue-dark"
           onClick={this.open}
         >
-          <i className="fa fa-chevron-up fdk-color0" />
-          &nbsp;
           {localization.compare.openCompare}
         </button>
         <Modal

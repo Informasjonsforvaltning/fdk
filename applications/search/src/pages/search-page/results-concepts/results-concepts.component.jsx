@@ -42,11 +42,10 @@ export class ResultsConcepts extends React.Component {
     const { concepts } = this.state;
     const children = items =>
       items.map((item, index) => {
-        const { creator } = item;
-
+        const { publisher } = item;
         const publisherPrefLabel =
-          getTranslateText(_get(creator, ['prefLabel'])) ||
-          _capitalize(_get(creator, 'name', ''));
+          getTranslateText(_get(publisher, ['prefLabel'])) ||
+          _capitalize(_get(publisher, 'name', ''));
 
         return (
           <CompareTerms
@@ -68,7 +67,7 @@ export class ResultsConcepts extends React.Component {
 
     if (concepts && concepts.length > 0) {
       return (
-        <div>
+        <div className="mt-4">
           <h3 className="mb-2">{localization.terms.compareTerms}</h3>
           {children(concepts)}
           {compareButton}
