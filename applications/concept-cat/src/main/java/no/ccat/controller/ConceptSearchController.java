@@ -7,6 +7,7 @@ import org.elasticsearch.action.search.SearchType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 import org.springframework.data.elasticsearch.core.aggregation.AggregatedPage;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
@@ -37,7 +38,8 @@ public class ConceptSearchController {
     public PagedResources<ConceptDenormalized> search(
         @ApiParam("The query text")
         @RequestParam(value = "q", defaultValue = "", required = false)
-            String query
+            String query,
+        Pageable pageable
     ) {
         logger.debug("GET /concepts?q={}", query);
 
@@ -45,12 +47,20 @@ public class ConceptSearchController {
             .withQuery(simpleQueryStringQuery(query))
             .withSearchType(SearchType.DEFAULT)
             .withIndices("ccat").withTypes("concept")
+            .withPageable(pageable)
             .build();
 
         AggregatedPage<ConceptDenormalized> aggregatedPage = elasticsearchTemplate.queryForPage(searchQuery, ConceptDenormalized.class);
         List<ConceptDenormalized> concepts = aggregatedPage.getContent();
 
-        PagedResources<ConceptDenormalized> result = new PagedResources<>(concepts, null);
+        PagedResources.PageMetadata pageMetadata = new PagedResources.PageMetadata(
+            pageable.getPageSize(),
+            pageable.getPageNumber(),
+            aggregatedPage.getTotalElements(),
+            aggregatedPage.getTotalPages()
+        );
+
+        PagedResources<ConceptDenormalized> result = new PagedResources<>(concepts, pageMetadata);
 
         return result;
     }
