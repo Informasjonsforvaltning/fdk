@@ -4,6 +4,7 @@ import withBreadcrumbs from 'react-router-breadcrumbs-hoc';
 
 import { DatasetBreadcrumb } from './dataset-breadcrumb/dataset-breadcrumb';
 import { ApiBreadcrumb } from './api-breadcrumb/api-breadcrumb';
+import { ConceptBreadcrumb } from './concept-breadcrumb/concept-breadcrumb';
 import { PathNameBreadcrumb } from './pathname-breadcrumb/pathname-breadcrumb';
 import './breadcrumbs.scss';
 
@@ -12,6 +13,7 @@ const routes = [
   { path: '/', breadcrumb: <PathNameBreadcrumb pathName="home" /> },
   { path: '/datasets/:id', breadcrumb: DatasetBreadcrumb },
   { path: '/apis/:id', breadcrumb: ApiBreadcrumb },
+  { path: '/concepts/:id', breadcrumb: ConceptBreadcrumb },
   { path: '/about', breadcrumb: <PathNameBreadcrumb pathName="about" /> },
   {
     path: '/about-registration',
