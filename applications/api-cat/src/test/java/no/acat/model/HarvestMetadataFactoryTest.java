@@ -7,15 +7,12 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import org.junit.runner.RunWith;
 import org.mockito.MockitoAnnotations;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-@RunWith(PowerMockRunner.class)
 @Category(UnitTest.class)
 public class HarvestMetadataFactoryTest {
 

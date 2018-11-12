@@ -1,28 +1,32 @@
 package no.acat.service;
 
+import com.google.gson.Gson;
 import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.Paths;
 import no.acat.model.ApiDocument;
 import no.acat.spec.ParseException;
 import no.acat.utils.IOUtillity;
 import no.dcat.client.registrationapi.ApiRegistrationPublic;
 import no.dcat.shared.testcategories.UnitTest;
+import org.apache.commons.io.IOUtils;
 import org.joda.time.DateTime;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.powermock.api.mockito.PowerMockito;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.when;
 
-@RunWith(PowerMockRunner.class)
 @Category(UnitTest.class)
 public class ApiDocumentBuilderServiceTest {
 
@@ -48,13 +52,6 @@ public class ApiDocumentBuilderServiceTest {
     apiRegistrationPublic.setApiSpec(spec);
 
     spy = PowerMockito.spy(new ApiDocumentBuilderService(elasticsearchService, parserService));
-
-    PowerMockito.when(parserService.parse(spec)).thenReturn(null);
-    PowerMockito.doNothing().when(spy).populateFromApiRegistration(any(), any());
-    PowerMockito.doNothing().when(spy).populateFromOpenApi(any(), any());
-    PowerMockito.doNothing()
-        .when(spy)
-        .updateHarvestMetadata(any(ApiDocument.class), any(Date.class), any(ApiDocument.class));
   }
 
   @Test
@@ -95,6 +92,7 @@ public class ApiDocumentBuilderServiceTest {
   @Test
   public void check_if_populate_from_apiregistration_is_called_ones() throws Exception {
 
+    PowerMockito.doNothing().when(spy).populateFromApiRegistration(any(), any());
     spy.populateFromApiRegistration(apiDocument, apiRegistrationPublic);
 
     Mockito.verify(spy, Mockito.times(1))
@@ -104,9 +102,12 @@ public class ApiDocumentBuilderServiceTest {
   @Test
   public void check_if_populate_from_openapi_is_called_ones() throws Exception {
 
-    spy.populateFromOpenApi(apiDocument, openApi);
+      ApiDocument mockApiDocument = PowerMockito.mock(ApiDocument.class);
+      OpenAPI openApi = new Gson().fromJson(spec, OpenAPI.class);
 
-    Mockito.verify(spy, Mockito.times(1)).populateFromOpenApi(apiDocument, openApi);
+      spy.populateFromOpenApi(mockApiDocument, openApi);
+
+    Mockito.verify(spy, Mockito.times(1)).populateFromOpenApi(mockApiDocument, openApi);
   }
 
   @Test
