@@ -4,60 +4,60 @@ services:
   search:
     image: dcatno/search:latest
     expose:
-     - "3000"
+    - "3000"
 
   search-api:
     image: dcatno/search-api:latest
     expose:
-      - "8080"
+    - "8080"
     depends_on:
-      - elasticsearch5
+    - elasticsearch5
 
   api-cat:
     image: dcatno/api-cat:latest
     expose:
-      - "8080"
-      - "8181"
+    - "8080"
+    - "8181"
     depends_on:
-      - elasticsearch5
-      - reference-data
-      - search-api
+    - elasticsearch5
+    - reference-data
+    - search-api
 
   concept-cat:
     image: dcatno/concept-cat:latest
     expose:
-      - "8080"
+    - "8080"
 
   nginx-search:
     image: dcatno/nginx-search:latest
     expose:
-     - "8080"
+    - "8080"
     depends_on:
-      - search
-      - search-api
-      - harvester-api
+    - search
+    - search-api
+    - harvester-api
 
   fuseki:
     image: dcatno/fuseki:latest
     expose:
-     - "8080"
+    - "8080"
 
   harvester-api:
     image: dcatno/harvester-api:latest
     expose:
-     - "8080"
+    - "8080"
     depends_on:
-     - fuseki
-     - elasticsearch5
-     - reference-data
+    - fuseki
+    - elasticsearch5
+    - reference-data
 
   harvester:
     image: dcatno/harvester:latest
     expose:
-     - "8080"
+    - "8080"
     depends_on:
-     - fuseki
-     - harvester-api
+    - fuseki
+    - harvester-api
 
   elasticsearch5:
     image: docker.elastic.co/elasticsearch/elasticsearch:5.6.9
@@ -68,37 +68,37 @@ services:
   nginx-registration:
     image: dcatno/nginx-registration:latest
     expose:
-     - "8080"
+    - "8080"
     depends_on:
-      - registration-react
-      - registration-api
-      - reference-data
+    - registration-react
+    - registration-api
+    - reference-data
 
   registration-api:
     image: dcatno/registration-api:latest
     expose:
-     - "8080"
+    - "8080"
     depends_on:
-      - elasticsearch5
-      - reference-data
-      - registration-auth
+    - elasticsearch5
+    - reference-data
+    - registration-auth
 
   registration-react:
     image: dcatno/registration-react:latest
     expose:
-     - "4300"
+    - "4300"
 
   registration-auth:
     image: dcatno/registration-auth:latest
     expose:
-     - "8080"
+    - "8080"
 
   reference-data:
     image: dcatno/reference-data:latest
     expose:
-     - "8080"
+    - "8080"
 
   e2e:
     image: dcatno/e2e:latest
     volumes:
-      - ./applications/e2e/test:/usr/src/app/test:rw
+    - ./applications/e2e/test:/usr/src/app/test:rw
