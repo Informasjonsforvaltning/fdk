@@ -11,7 +11,7 @@ exports[`should render Footer correctly 1`] = `
       className="row"
     >
       <div
-        className="col-md-3"
+        className="col-md-4"
       >
         <p
           className="fdk-p-footer"
@@ -20,7 +20,6 @@ exports[`should render Footer correctly 1`] = `
             href="https://www.brreg.no/personvernerklaering/"
           >
             Informasjonskapsler
-            <br />
              og personvern
             <i
               className="fa fa-external-link fdk-fa-right"
@@ -29,7 +28,7 @@ exports[`should render Footer correctly 1`] = `
         </p>
       </div>
       <div
-        className="col-md-6 text-center"
+        className="col-md-4 text-center"
       >
         <span
           aria-hidden="false"
@@ -44,7 +43,7 @@ exports[`should render Footer correctly 1`] = `
         </p>
       </div>
       <div
-        className="col-md-3 text-right"
+        className="col-md-4 text-right"
       >
         <p
           className="fdk-p-footer"
@@ -59,7 +58,6 @@ exports[`should render Footer correctly 1`] = `
               Mailadresse.
             </span>
             Kontakt:
-            <br />
             fellesdatakatalog@brreg.no
           </a>
         </p>
