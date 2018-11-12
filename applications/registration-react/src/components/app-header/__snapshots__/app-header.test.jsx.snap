@@ -47,7 +47,7 @@ exports[`should render Header correctly 1`] = `
             <img
               alt="Logo for Felles datakatalog"
               className="fdk-logo"
-              src="/static/img/fdk-logo@2x.png"
+              src="/static/img/logo-registrering.svg"
             />
           </a>
         </div>
@@ -71,63 +71,6 @@ exports[`should render Header correctly 1`] = `
             >
               Logg inn
             </a>
-          </div>
-          <div>
-            <Dropdown
-              active={false}
-              addonType={false}
-              className="btn-group-default"
-              direction="down"
-              inNavbar={false}
-              isOpen={false}
-              nav={false}
-              setActiveFromChild={false}
-              toggle={[Function]}
-            >
-              <DropdownToggle
-                aria-haspopup={true}
-                caret={true}
-                className="fdk-button fdk-button-menu"
-                color="primary"
-              >
-                <span>
-                  Meny
-                </span>
-              </DropdownToggle>
-              <DropdownMenu
-                className="fdk-dropdownmenu"
-                flip={true}
-                tag="div"
-              >
-                <a
-                  className="dropdown-item"
-                  href="https://doc.difi.no/data/veileder-for-beskrivelse-av-datasett/"
-                  rel="noopener noreferrer"
-                  target="_blank"
-                  title="Veileder"
-                >
-                  Veileder
-                </a>
-                <a
-                  className="dropdown-item"
-                  href="https://doc.difi.no/dcat-ap-no/"
-                  rel="noopener noreferrer"
-                  target="_blank"
-                  title="Standard"
-                >
-                  Standard
-                </a>
-                <a
-                  className="dropdown-item"
-                  href="https://fellesdatakatalog.brreg.no"
-                  rel="noopener noreferrer"
-                  target="_blank"
-                  title="Felles datakatalog"
-                >
-                  Felles datakatalog
-                </a>
-              </DropdownMenu>
-            </Dropdown>
           </div>
         </div>
       </div>
