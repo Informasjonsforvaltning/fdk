@@ -1,224 +1,196 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import * as _ from 'lodash';
+import cx from 'classnames';
+import _ from 'lodash';
+import { Link } from 'react-router-dom';
 
 import localization from '../../../../lib/localization';
 import { getTranslateText } from '../../../../lib/translateText';
 import { PublisherLabel } from '../../../../components/publisher-label/publisher-label.component';
+import { LinkExternal } from '../../../../components/link-external/link-external.component';
 import './concepts-hit-item.scss';
 
-const renderPublisher = source => {
-  const { creator } = source;
+const renderAddRemoveCompareButton = (
+  item,
+  showCompare,
+  onAddConcept,
+  onDeleteConcept,
+  conceptIndex
+) => {
+  if (showCompare) {
+    return (
+      <button
+        className="btn btn-primary fdk-button float-lg-right ml-0 mt-3 fade-in-400"
+        onClick={() => {
+          onAddConcept(item);
+        }}
+        type="button"
+      >
+        <i className="fa fa-plus mr-2" />
+        {localization.compare.addCompare}
+      </button>
+    );
+  }
+  return (
+    <button
+      className="btn btn-primary fdk-button fdk-bg-color-white fdk-color-blue-dark float-lg-right ml-0 mt-3"
+      onClick={() => {
+        onDeleteConcept(conceptIndex);
+      }}
+      type="button"
+    >
+      <i className="fa fa-minus mr-2" />
+      {localization.compare.removeCompare}
+    </button>
+  );
+};
 
-  if (!creator) {
+const renderTitle = (title, id, deprecated = false) => {
+  if (!title) {
     return null;
   }
-  return <PublisherLabel publisherItem={creator} />;
-};
 
-const renderThemes = source => {
-  const { inScheme } = source;
-  const children = items =>
-    items.map((item, index) => {
-      const subItem = item.substring(item.lastIndexOf('/') + 1);
-      return (
-        <span
-          key={`dataset-description-inScheme-${index}`}
-          className="fdk-label"
-        >
-          <span className="uu-invisible" aria-hidden="false">
-            Tema.
-          </span>
-          {subItem}
+  const link = `/concepts/${id}`;
+
+  return (
+    <div className="mb-2 d-flex flex-wrap align-items-baseline">
+      <Link
+        className="search-hit__title-link"
+        title={`${localization.apiLabel}: ${title}`}
+        to={link}
+      >
+        <h2 className="mr-3" name={title}>
+          {title}
+        </h2>
+      </Link>
+      {deprecated && (
+        <span className="fdk-color-dark-2 fdk-text-extra-strong fdk-text-size-medium">
+          ({localization.deprecated})
         </span>
-      );
-    });
-  if (inScheme) {
-    return <div className="mt-3">{children(inScheme)}</div>;
-  }
-  return null;
+      )}
+    </div>
+  );
 };
 
-const renderLaw = _source => {
-  const { source } = _source;
-  if (source) {
-    return (
-      <div>
-        <span className="fa-stack fdk-fa-left fdk-fa-circle">
-          <i className="fa fa-file-text fa-stack-1x fdk-color0" />
-        </span>
-        <a title="Link til lovhjemmel for begrep" href={source}>
-          <span className="uu-invisible" aria-hidden="false">
-            Link til lovhjemmel for begrep.
-          </span>
-          {source}
-          <i className="fa fa-external-link fdk-fa-right" />
-        </a>
-      </div>
-    );
-  }
-  return null;
-};
-
-const renderNote = source => {
-  const { note } = source;
-  if (note) {
-    return <p className="fdk-p-search-hit">{getTranslateText(note)}</p>;
-  }
-  return null;
-};
-
-const renderAltLabel = source => {
-  const { altLabel } = source;
-  const children = items =>
-    items.map((item, index) => {
-      if (index > 0) {
-        return (
-          <span key={`concepts-altlabel-${index}`}>
-            {`, ${getTranslateText(item)}`}
-          </span>
-        );
-      }
-      return (
-        <span key={`concepts-altlabel-${index}`}>
-          {`${getTranslateText(item)}`}
-        </span>
-      );
-    });
-  if (altLabel) {
-    return (
-      <p>
-        <span className="uu-invisible" aria-hidden="false">
-          Begrep er
-        </span>
-        <strong>{localization.terms.altLabel} </strong>
-        {children(altLabel)}
-      </p>
-    );
-  }
-  return null;
-};
-
-const renderDocCount = result => {
-  const { _source } = result;
-
-  const subjectCountItem = _source.datasets ? _source.datasets.length : 0;
-  if (subjectCountItem > 0 && _source.prefLabel) {
-    return (
-      <p>
-        <a
-          className="fdk-hit-dataset-count"
-          title="Link til datasett med begrep"
-          href={`/?subject=${getTranslateText(_source.prefLabel)}`}
-        >
-          {localization.terms.docCount} {subjectCountItem}{' '}
-          {localization.terms.docCountPart2}
-        </a>
-      </p>
-    );
-  }
-  return null;
-};
-
-export const ConceptsHitItem = props => {
-  const { onAddTerm } = props;
-  const { _source } = props.result;
-  const { prefLabel, definition, uri } = _source;
-
-  let termTitle;
-  let termDescription;
-
-  if (prefLabel) {
-    termTitle = getTranslateText(prefLabel);
-    termTitle =
-      termTitle.charAt(0).toUpperCase() + termTitle.substring(1).toLowerCase();
-  }
-  if (definition) {
-    termDescription = getTranslateText(definition);
-  }
-
-  let toBeCompared = false;
-  if (props.terms) {
-    toBeCompared = _.some(props.terms, term => term.uri === uri);
+const renderPublisher = publisher => {
+  if (!publisher) {
+    return null;
   }
 
   return (
-    <article
-      className="fdk-a-search-hit"
-      title={`Begrep: ${termTitle}`}
-      tabIndex="0" // eslint-disable-line jsx-a11y/no-noninteractive-tabindex
-    >
+    <div className="mb-4">
+      <PublisherLabel label="Ansvarlig:" tag="span" publisherItem={publisher} />
+    </div>
+  );
+};
+
+const renderDescription = description => {
+  if (!description) {
+    return null;
+  }
+  let descriptionText = getTranslateText(description);
+  if (descriptionText && descriptionText.length > 220) {
+    descriptionText = `${descriptionText.substr(0, 220)}...`;
+  }
+  return (
+    <p>
       <span className="uu-invisible" aria-hidden="false">
-        Søketreff begrep.
+        {localization.compare.description}
       </span>
-      <div
-        className={`fdk-container-search-hit ${
-          toBeCompared ? 'toBeCompared' : ''
-        }`}
+      {descriptionText}
+    </p>
+  );
+};
+
+const renderIdentifiers = identifiers => {
+  const children = items =>
+    items.map(item => (
+      <LinkExternal
+        uri={_.get(item, 'uri')}
+        prefLabel={_.get(item, 'prefLabel') || _.get(item, 'uri')}
+      />
+    ));
+
+  if (!(identifiers && Array.isArray(identifiers))) {
+    return null;
+  }
+
+  return (
+    <div>
+      <span>{localization.compare.source}:&nbsp;</span>
+      {children(identifiers)}
+    </div>
+  );
+};
+
+export const ConceptsHitItem = props => {
+  const {
+    concepts,
+    onAddConcept,
+    onDeleteConcept,
+    conceptIndex,
+    fadeInCounter,
+    result
+  } = props;
+
+  let showCompareButton = true;
+  if (concepts) {
+    showCompareButton = !_.some(
+      concepts,
+      term => term.uri === _.get(result, 'uri')
+    );
+  }
+
+  const searchHitClass = cx('search-hit', {
+    'fade-in-200': fadeInCounter === 0,
+    'fade-in-300': fadeInCounter === 1,
+    'fade-in-400': fadeInCounter === 2
+  });
+
+  return (
+    <React.Fragment>
+      <article
+        className={searchHitClass}
+        title={`Begrep: ${getTranslateText(_.get(result, 'prefLabel'))}`}
       >
-        {!toBeCompared && (
-          <button
-            className="btn btn-primary fdk-button float-right mt-3 d-none d-lg-inline"
-            onClick={() => {
-              onAddTerm(_source);
-            }}
-            type="button"
-          >
-            <span aria-hidden="true">+</span>
-            {localization.compare.addCompare}
-          </button>
-        )}
-
-        {!toBeCompared && (
-          <button
-            className="fdk-button fdk-button-default fdk-btn-compare d-block d-lg-none"
-            onClick={() => {
-              onAddTerm(_source);
-            }}
-            type="button"
-          >
-            <span aria-hidden="true">+</span>
-            {localization.compare.addCompare}
-          </button>
-        )}
-
         <span className="uu-invisible" aria-hidden="false">
-          Tittel.
+          Søketreff begrep.
         </span>
-        <h2 className="inline-block mr-2">{termTitle}</h2>
 
-        {renderPublisher(_source)}
+        {renderAddRemoveCompareButton(
+          result,
+          showCompareButton,
+          onAddConcept,
+          onDeleteConcept,
+          conceptIndex
+        )}
 
-        {renderThemes(_source)}
+        {renderTitle(
+          getTranslateText(_.get(result, 'prefLabel')),
+          _.get(result, 'id')
+        )}
 
-        <p className="fdk-p-search-hit">
-          <span className="uu-invisible" aria-hidden="false">
-            Beskrivelse av begrep.
-          </span>
-          {termDescription}
-        </p>
+        {renderPublisher(_.get(result, 'publisher'))}
 
-        {renderLaw(_source)}
+        {renderDescription(_.get(result, ['definition', 'text']))}
 
-        <hr />
-
-        {renderNote(_source)}
-
-        {renderAltLabel(_source)}
-
-        {renderDocCount(props.result)}
-      </div>
-    </article>
+        {renderIdentifiers(_.get(result, 'harvest'))}
+      </article>
+    </React.Fragment>
   );
 };
 
 ConceptsHitItem.defaultProps = {
   result: null,
-  terms: null
+  concepts: null,
+  fadeInCounter: 0
 };
 
 ConceptsHitItem.propTypes = {
   result: PropTypes.shape({}),
-  terms: PropTypes.array,
-  onAddTerm: PropTypes.func.isRequired
+  concepts: PropTypes.array,
+  onAddConcept: PropTypes.func.isRequired,
+  onDeleteConcept: PropTypes.func.isRequired,
+  conceptIndex: PropTypes.number.isRequired,
+  fadeInCounter: PropTypes.number
 };

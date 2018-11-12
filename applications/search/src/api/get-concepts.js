@@ -1,21 +1,36 @@
 import _ from 'lodash';
 import axios from 'axios';
+import qs from 'qs';
 
 import { addOrReplaceParam } from '../lib/addOrReplaceUrlParam';
 import { normalizeAggregations } from './normalizeAggregations';
 
-export const getTerms = async search => {
-  const datasetsUrl = `/terms${search}`;
-  const url = addOrReplaceParam(datasetsUrl, 'size', '50');
+export const getConcepts = async search => {
+  let conceptsUrl = `/api/concepts${search}`;
+  const parsedParameters = qs.parse(search.split('?')[1]);
+
+  if (_.get(parsedParameters, 'from')) {
+    const { from } = parsedParameters;
+    const page = Math.ceil(from / 50);
+    conceptsUrl = addOrReplaceParam(conceptsUrl, 'from', '');
+    conceptsUrl = addOrReplaceParam(conceptsUrl, 'page', page);
+  }
+
+  conceptsUrl = addOrReplaceParam(conceptsUrl, 'size', '50');
+  conceptsUrl = addOrReplaceParam(conceptsUrl, 'aggregations', 'true');
 
   const response = await axios
-    .get(url)
+    .get(conceptsUrl)
     .catch(e => console.log(JSON.stringify(e))); // eslint-disable-line no-console
 
   return response && normalizeAggregations(response.data);
 };
 
 function createNestedListOfPublishers(listOfPublishers) {
+  if (!listOfPublishers) {
+    return null;
+  }
+
   const flat = _(listOfPublishers).forEach(f => {
     const filteredOrgs = _(listOfPublishers)
       .filter(g => g.key.substring(0, g.key.lastIndexOf('/')) === f.key)
@@ -34,7 +49,7 @@ function createNestedListOfPublishers(listOfPublishers) {
     .filter(f => !f.hasParent)
     .value();
 }
-export const extractPublisherTermsCounts = termsSearchResponse =>
+export const extractPublisherConceptsCounts = conceptsSearchResponse =>
   createNestedListOfPublishers(
-    termsSearchResponse.aggregations.orgPath.buckets
+    _.get(conceptsSearchResponse, ['aggregations', 'orgPath', 'buckets'])
   );

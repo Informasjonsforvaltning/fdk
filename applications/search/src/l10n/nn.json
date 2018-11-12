@@ -21,6 +21,7 @@
   "restricted": "Begrensa offentlegheit",
   "non_public": "Unntatt offentlegheit",
   "unknown": "Ukjend",
+  "deprecated": "under avvikling",
   "app": {
     "menu": "Meny"
   },
@@ -239,7 +240,10 @@
     "added": "Du har lagt ",
     "toCompare": " omgrep til samanlikning - klikk for å vise",
     "addCompare": "Legg til i samanlikning",
-    "altLabel": "Også kjent som:"
+    "removeCompare": "Fjern frå samanlikning",
+    "altLabel": "Også kjent som:",
+    "description": "Skildring av omgrep",
+    "law": "Lenke til lovheimel for omgrep."
   },
   "report": {
     "title": "Viser tall for ",

@@ -21,6 +21,7 @@
   "restricted": "Begrenset offentlighet",
   "non_public": "Unntatt offentlighet",
   "unknown": "Ukjent",
+  "deprecated": "under avvikling",
   "app": {
     "menu": "Meny"
   },
@@ -239,7 +240,10 @@
     "added": "Du har lagt ",
     "toCompare": " begrep til sammenligning - klikk for å vise",
     "addCompare": "Legg til i sammenligning",
-    "altLabel": "Også kjent som:"
+    "removeCompare": "Fjern fra sammenligning",
+    "altLabel": "Også kjent som:",
+    "description": "Beskrivelse av begrep",
+    "law": "Lenke til lovhjemmel for begrep."
   },
   "report": {
     "title": "Viser tall for ",
