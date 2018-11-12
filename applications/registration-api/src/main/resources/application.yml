@@ -27,6 +27,7 @@ management:
     port: 8081
   endpoints:
       enabled-by-default: true
+      web.exposure.include: "*"
 
 spring:
   jackson:
