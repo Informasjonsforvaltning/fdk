@@ -14,7 +14,7 @@ import { removeValue, addValue } from '../../lib/stringUtils';
 
 import './search-page.scss';
 import { extractPublisherCounts } from '../../api/get-datasets';
-import { extractPublisherTermsCounts } from '../../api/get-terms';
+import { extractPublisherConceptsCounts } from '../../api/get-concepts';
 import {
   PATHNAME_DATASETS,
   PATHNAME_APIS,
@@ -447,7 +447,7 @@ export class SearchPage extends React.Component {
   render() {
     const {
       datasetItems,
-      termItems,
+      conceptItems,
       apiItems,
       themesItems,
       publisherItems,
@@ -466,7 +466,7 @@ export class SearchPage extends React.Component {
               onSearchChange={this.handleSearchChange}
               searchQuery={this.state.searchQuery.q}
               countDatasets={_.get(datasetItems, ['hits', 'total'])}
-              countTerms={_.get(termItems, ['hits', 'total'])}
+              countTerms={_.get(conceptItems, ['page', 'totalElements'])}
               countApis={_.get(apiItems, 'total')}
               open={this.open}
             />
@@ -474,7 +474,7 @@ export class SearchPage extends React.Component {
               activePath={location.pathname}
               searchParam={location.search}
               countDatasets={_.get(datasetItems, ['hits', 'total'], 0)}
-              countTerms={_.get(termItems, ['hits', 'total'], 0)}
+              countTerms={_.get(conceptItems, ['page', 'totalElements'], 0)}
               countApis={_.get(apiItems, 'total', 0)}
             />
           </div>
@@ -546,7 +546,7 @@ export class SearchPage extends React.Component {
               path={PATHNAME_CONCEPTS}
               render={props => (
                 <ResultsConcepts
-                  termItems={termItems}
+                  conceptItems={conceptItems}
                   onClearFilters={this.handleClearFilters}
                   onPageChange={this.handlePageChange}
                   onFilterPublisherHierarchy={
@@ -557,7 +557,7 @@ export class SearchPage extends React.Component {
                   showFilterModal={this.state.showFilterModal}
                   closeFilterModal={this.close}
                   showClearFilterButton={!!this.state.searchQuery.orgPath}
-                  publisherArray={extractPublisherTermsCounts(termItems)}
+                  publisherArray={extractPublisherConceptsCounts(conceptItems)}
                   publishers={publisherItems}
                   {...props}
                 />

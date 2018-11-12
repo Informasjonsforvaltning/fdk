@@ -1,18 +1,24 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { ConceptsHitItem } from './concepts-hit-item.component';
-import concepts from '../../../../../test/fixtures/concepts';
+import _ from 'lodash';
 
-let onAddTerm;
+import { ConceptsHitItem } from './concepts-hit-item.component';
+import concepts from '../../__fixtures/conceptsApiResponse.json';
+import { normalizeAggregations } from '../../../../api/normalizeAggregations';
+import localization from '../../../../lib/localization';
+
+const conceptItems = normalizeAggregations(concepts);
+
+let onAddConcept;
 let defaultProps;
 let wrapper;
 
 beforeEach(() => {
-  onAddTerm = jest.fn();
+  onAddConcept = jest.fn();
   defaultProps = {
-    result: concepts.hits.hits[0],
-    terms: null,
-    onAddTerm
+    result: _.get(conceptItems, ['_embedded', 'concepts', 0]),
+    concepts: null,
+    onAddConcept
   };
   wrapper = shallow(<ConceptsHitItem {...defaultProps} />);
 });
@@ -21,34 +27,23 @@ test('should render ConceptsHitItem correctly', () => {
   expect(wrapper).toMatchSnapshot();
 });
 
-test('should handle onAddTerm', () => {
+test('should handle onAddConcept', () => {
   const shallowWrapper = shallow(<ConceptsHitItem {...defaultProps} />);
-  shallowWrapper.find('button.d-lg-inline').prop('onClick')(
-    concepts.hits.hits[0]._source
+  shallowWrapper.find('button').prop('onClick')(
+    _.get(conceptItems, ['_embedded', 'concepts', 0])
   );
-  expect(onAddTerm).toHaveBeenLastCalledWith(concepts.hits.hits[0]._source);
-  shallowWrapper.find('button.d-lg-inline').prop('onClick')(
-    concepts.hits.hits[1]._source
+  expect(onAddConcept).toHaveBeenLastCalledWith(
+    _.get(conceptItems, ['_embedded', 'concepts', 0])
   );
-  expect(onAddTerm).toHaveBeenLastCalledWith(concepts.hits.hits[0]._source);
 });
 
 test('should render ConceptsHitItem correctly with compare button not showing', () => {
   const props = {
-    result: concepts.hits.hits[0],
-    terms: [concepts.hits.hits[0]._source],
-    onAddTerm
+    result: _.get(conceptItems, ['_embedded', 'concepts', 0]),
+    concepts: [_.get(conceptItems, ['_embedded', 'concepts', 0])],
+    onAddConcept
   };
   const shallowWrapper = shallow(<ConceptsHitItem {...props} />);
-  expect(shallowWrapper).toMatchSnapshot();
-});
-
-test('should render ConceptsHitItem correctly with no alt label, no source and no note', () => {
-  const props = {
-    result: concepts.hits.hits[1],
-    terms: null,
-    onAddTerm
-  };
-  const shallowWrapper = shallow(<ConceptsHitItem {...props} />);
-  expect(shallowWrapper).toMatchSnapshot();
+  const button = shallowWrapper.find('button');
+  expect(button.text()).toEqual(localization.compare.removeCompare);
 });

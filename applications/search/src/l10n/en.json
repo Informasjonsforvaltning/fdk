@@ -21,6 +21,7 @@
   "restricted": "Restricted",
   "non_public": "Non public",
   "unknown": "Unknown",
+  "deprecated": "deprecated",
   "app": {
     "menu": "Menu"
   },
@@ -239,7 +240,10 @@
     "added": "You have added ",
     "toCompare": " concepts to comparison - click to show",
     "addCompare": "Add to compare",
-    "altLabel": "Also known as:"
+    "removeCompare": "Remove from comparison",
+    "altLabel": "Also known as:",
+    "description": "Description of concept",
+    "law": "Link to concept law."
   },
   "report": {
     "title": "Showing numbers for ",

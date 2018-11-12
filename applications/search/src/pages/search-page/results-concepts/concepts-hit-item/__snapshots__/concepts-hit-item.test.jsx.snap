@@ -1,386 +1,70 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`should render ConceptsHitItem correctly 1`] = `
-<article
-  className="fdk-a-search-hit"
-  tabIndex="0"
-  title="Begrep: Enhet"
->
-  <span
-    aria-hidden="false"
-    className="uu-invisible"
+<React.Fragment>
+  <article
+    className="search-hit fade-in-200"
+    title="Begrep: engelsk preflabel14"
   >
-    Søketreff begrep.
-  </span>
-  <div
-    className="fdk-container-search-hit "
-  >
-    <button
-      className="btn btn-primary fdk-button float-right mt-3 d-none d-lg-inline"
-      onClick={[Function]}
-      type="button"
-    >
-      <span
-        aria-hidden="true"
-      >
-        +
-      </span>
-      Add to compare
-    </button>
-    <button
-      className="fdk-button fdk-button-default fdk-btn-compare d-block d-lg-none"
-      onClick={[Function]}
-      type="button"
-    >
-      <span
-        aria-hidden="true"
-      >
-        +
-      </span>
-      Add to compare
-    </button>
     <span
       aria-hidden="false"
       className="uu-invisible"
     >
-      Tittel.
+      Søketreff begrep.
     </span>
-    <h2
-      className="inline-block mr-2"
+    <button
+      className="btn btn-primary fdk-button float-lg-right ml-0 mt-3 fade-in-400"
+      onClick={[Function]}
+      type="button"
     >
-      Enhet
-    </h2>
-    <PublisherLabel
-      label={null}
-      publisherItem={
-        Object {
-          "id": "974760673",
-          "naeringskode": Object {
-            "code": "84.110",
-            "prefLabel": Object {
-              "no": "Generell offentlig administrasjon",
-            },
-            "uri": "http://www.ssb.no/nace/sn2007/84.110",
-          },
-          "name": "Brønnøysundregistrene",
-          "orgPath": "/STAT/912660680/974760673",
-          "organisasjonsform": "ORGL",
-          "overordnetEnhet": "912660680",
-          "sektorkode": Object {
-            "code": "6100",
-            "prefLabel": Object {
-              "no": "Statsforvaltningen",
-            },
-            "uri": "http://www.brreg.no/sektorkode/6100",
-          },
-          "type": "no.dcat.datastore.domain.dcat.Publisher",
-          "uri": "http://data.brreg.no/enhetsregisteret/enhet/974760673",
-          "valid": true,
-        }
-      }
-      tag="strong"
-    />
+      <i
+        className="fa fa-plus mr-2"
+      />
+      Add to compare
+    </button>
     <div
-      className="mt-3"
+      className="mb-2 d-flex flex-wrap align-items-baseline"
     >
-      <span
-        className="fdk-label"
-        key="dataset-description-inScheme-0"
+      <Link
+        className="search-hit__title-link"
+        replace={false}
+        title="API: engelsk preflabel14"
+        to="/concepts/14"
       >
-        <span
-          aria-hidden="false"
-          className="uu-invisible"
+        <h2
+          className="mr-3"
+          name="engelsk preflabel14"
         >
-          Tema.
-        </span>
-        Befolkning
-      </span>
+          engelsk preflabel14
+        </h2>
+      </Link>
     </div>
-    <p
-      className="fdk-p-search-hit"
-    >
-      <span
-        aria-hidden="false"
-        className="uu-invisible"
-      >
-        Beskrivelse av begrep.
-      </span>
-      alt som er registrert med et organisasjonsnummer 
-    </p>
-    <div>
-      <span
-        className="fa-stack fdk-fa-left fdk-fa-circle"
-      >
-        <i
-          className="fa fa-file-text fa-stack-1x fdk-color0"
-        />
-      </span>
-      <a
-        href="https://jira.brreg.no/browse/BEGREP-208"
-        title="Link til lovhjemmel for begrep"
-      >
-        <span
-          aria-hidden="false"
-          className="uu-invisible"
-        >
-          Link til lovhjemmel for begrep.
-        </span>
-        https://jira.brreg.no/browse/BEGREP-208
-        <i
-          className="fa fa-external-link fdk-fa-right"
-        />
-      </a>
-    </div>
-    <hr />
-    <p
-      className="fdk-p-search-hit"
-    >
-      Alle hovedenheter, underenheter og organisasjonsledd som er identifisert med et organisasjonsnummer.
-    </p>
-    <p>
-      <a
-        className="fdk-hit-dataset-count"
-        href="/?subject=enhet"
-        title="Link til datasett med begrep"
-      >
-        Used in
-         
-        1
-         
-        dataset
-      </a>
-    </p>
-  </div>
-</article>
-`;
-
-exports[`should render ConceptsHitItem correctly with compare button not showing 1`] = `
-<article
-  className="fdk-a-search-hit"
-  tabIndex="0"
-  title="Begrep: Enhet"
->
-  <span
-    aria-hidden="false"
-    className="uu-invisible"
-  >
-    Søketreff begrep.
-  </span>
-  <div
-    className="fdk-container-search-hit toBeCompared"
-  >
-    <span
-      aria-hidden="false"
-      className="uu-invisible"
-    >
-      Tittel.
-    </span>
-    <h2
-      className="inline-block mr-2"
-    >
-      Enhet
-    </h2>
-    <PublisherLabel
-      label={null}
-      publisherItem={
-        Object {
-          "id": "974760673",
-          "naeringskode": Object {
-            "code": "84.110",
-            "prefLabel": Object {
-              "no": "Generell offentlig administrasjon",
-            },
-            "uri": "http://www.ssb.no/nace/sn2007/84.110",
-          },
-          "name": "Brønnøysundregistrene",
-          "orgPath": "/STAT/912660680/974760673",
-          "organisasjonsform": "ORGL",
-          "overordnetEnhet": "912660680",
-          "sektorkode": Object {
-            "code": "6100",
-            "prefLabel": Object {
-              "no": "Statsforvaltningen",
-            },
-            "uri": "http://www.brreg.no/sektorkode/6100",
-          },
-          "type": "no.dcat.datastore.domain.dcat.Publisher",
-          "uri": "http://data.brreg.no/enhetsregisteret/enhet/974760673",
-          "valid": true,
-        }
-      }
-      tag="strong"
-    />
     <div
-      className="mt-3"
+      className="mb-4"
     >
-      <span
-        className="fdk-label"
-        key="dataset-description-inScheme-0"
-      >
-        <span
-          aria-hidden="false"
-          className="uu-invisible"
-        >
-          Tema.
-        </span>
-        Befolkning
-      </span>
+      <PublisherLabel
+        label="Ansvarlig:"
+        publisherItem={
+          Object {
+            "orgPath": "/ba/be/bi/14",
+            "prefLabel": Object {
+              "en": "engelsk pub preflabel14",
+              "no": "norsk pub preflabel14",
+            },
+          }
+        }
+        tag="span"
+      />
     </div>
-    <p
-      className="fdk-p-search-hit"
-    >
-      <span
-        aria-hidden="false"
-        className="uu-invisible"
-      >
-        Beskrivelse av begrep.
-      </span>
-      alt som er registrert med et organisasjonsnummer 
-    </p>
-    <div>
-      <span
-        className="fa-stack fdk-fa-left fdk-fa-circle"
-      >
-        <i
-          className="fa fa-file-text fa-stack-1x fdk-color0"
-        />
-      </span>
-      <a
-        href="https://jira.brreg.no/browse/BEGREP-208"
-        title="Link til lovhjemmel for begrep"
-      >
-        <span
-          aria-hidden="false"
-          className="uu-invisible"
-        >
-          Link til lovhjemmel for begrep.
-        </span>
-        https://jira.brreg.no/browse/BEGREP-208
-        <i
-          className="fa fa-external-link fdk-fa-right"
-        />
-      </a>
-    </div>
-    <hr />
-    <p
-      className="fdk-p-search-hit"
-    >
-      Alle hovedenheter, underenheter og organisasjonsledd som er identifisert med et organisasjonsnummer.
-    </p>
-    <p>
-      <a
-        className="fdk-hit-dataset-count"
-        href="/?subject=enhet"
-        title="Link til datasett med begrep"
-      >
-        Used in
-         
-        1
-         
-        dataset
-      </a>
-    </p>
-  </div>
-</article>
-`;
-
-exports[`should render ConceptsHitItem correctly with no alt label, no source and no note 1`] = `
-<article
-  className="fdk-a-search-hit"
-  tabIndex="0"
-  title="Begrep: Organisasjonsnummer"
->
-  <span
-    aria-hidden="false"
-    className="uu-invisible"
-  >
-    Søketreff begrep.
-  </span>
-  <div
-    className="fdk-container-search-hit "
-  >
-    <button
-      className="btn btn-primary fdk-button float-right mt-3 d-none d-lg-inline"
-      onClick={[Function]}
-      type="button"
-    >
-      <span
-        aria-hidden="true"
-      >
-        +
-      </span>
-      Add to compare
-    </button>
-    <button
-      className="fdk-button fdk-button-default fdk-btn-compare d-block d-lg-none"
-      onClick={[Function]}
-      type="button"
-    >
-      <span
-        aria-hidden="true"
-      >
-        +
-      </span>
-      Add to compare
-    </button>
-    <span
-      aria-hidden="false"
-      className="uu-invisible"
-    >
-      Tittel.
-    </span>
-    <h2
-      className="inline-block mr-2"
-    >
-      Organisasjonsnummer
-    </h2>
-    <p
-      className="fdk-p-search-hit"
-    >
-      <span
-        aria-hidden="false"
-        className="uu-invisible"
-      >
-        Beskrivelse av begrep.
-      </span>
-      Et nisifret nummer som tildeles av Enhetsregisteret for en organisasjon som skal operere som en offentlig aktør
-    </p>
-    <hr />
     <p>
       <span
         aria-hidden="false"
         className="uu-invisible"
       >
-        Begrep er
+        Description of concept
       </span>
-      <strong>
-        Også kjent som:
-         
-      </strong>
-      <span
-        key="concepts-altlabel-0"
-      >
-        Orgid
-      </span>
-      <span
-        key="concepts-altlabel-1"
-      >
-        , Orgnr
-      </span>
+      engelsk definition14
     </p>
-    <p>
-      <a
-        className="fdk-hit-dataset-count"
-        href="/?subject=organisasjonsnummer"
-        title="Link til datasett med begrep"
-      >
-        Used in
-         
-        8
-         
-        dataset
-      </a>
-    </p>
-  </div>
-</article>
+  </article>
+</React.Fragment>
 `;

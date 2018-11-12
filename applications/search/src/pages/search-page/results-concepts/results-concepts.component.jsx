@@ -18,28 +18,28 @@ export class ResultsConcepts extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      terms: []
+      concepts: []
     };
-    this.handleAddTerm = this.handleAddTerm.bind(this);
-    this.handleDeleteTerm = this.handleDeleteTerm.bind(this);
+    this.handleAddConcept = this.handleAddConcept.bind(this);
+    this.handleDeleteConcept = this.handleDeleteConcept.bind(this);
   }
 
-  handleAddTerm(term) {
+  handleAddConcept(term) {
     this.setState({
-      terms: [...this.state.terms, term]
+      concepts: [...this.state.concepts, term]
     });
   }
 
-  handleDeleteTerm(termIndex) {
-    const { terms } = this.state;
-    terms.splice(termIndex, 1);
+  handleDeleteConcept(termIndex) {
+    const { concepts } = this.state;
+    concepts.splice(termIndex, 1);
     this.setState({
-      terms
+      concepts
     });
   }
 
   _renderCompareTerms() {
-    const { terms } = this.state;
+    const { concepts } = this.state;
     const children = items =>
       items.map((item, index) => {
         const { creator } = item;
@@ -53,7 +53,7 @@ export class ResultsConcepts extends React.Component {
             key={item.uri}
             prefLabel={item.prefLabel}
             creator={publisherPrefLabel}
-            onDeleteTerm={this.handleDeleteTerm}
+            onDeleteTerm={this.handleDeleteConcept}
             termIndex={index}
           />
         );
@@ -61,16 +61,16 @@ export class ResultsConcepts extends React.Component {
 
     const compareButton = (
       <CompareTermModal
-        terms={terms}
-        handleDeleteTerm={this.handleDeleteTerm}
+        terms={concepts}
+        handleDeleteTerm={this.handleDeleteConcept}
       />
     );
 
-    if (terms && terms.length > 0) {
+    if (concepts && concepts.length > 0) {
       return (
         <div>
           <h3 className="mb-2">{localization.terms.compareTerms}</h3>
-          {children(terms)}
+          {children(concepts)}
           {compareButton}
         </div>
       );
@@ -79,17 +79,20 @@ export class ResultsConcepts extends React.Component {
   }
 
   _renderTerms() {
-    const { termItems } = this.props;
-    if (termItems && termItems.hits && termItems.hits.hits) {
-      return termItems.hits.hits.map(item => (
-        <ConceptsHitItem
-          key={item._id}
-          result={item}
-          terms={this.state.terms}
-          onAddTerm={this.handleAddTerm}
-          onDeleteTerm={this.handleDeleteTerm}
-        />
-      ));
+    const { conceptItems } = this.props;
+    if (_.get(conceptItems, ['_embedded', 'concepts'])) {
+      return _.get(conceptItems, ['_embedded', 'concepts']).map(
+        (item, index) => (
+          <ConceptsHitItem
+            key={item.id}
+            result={item}
+            concepts={this.state.concepts}
+            onAddConcept={this.handleAddConcept}
+            onDeleteConcept={this.handleDeleteConcept}
+            conceptIndex={index}
+          />
+        )
+      );
     }
     return null;
   }
@@ -131,7 +134,7 @@ export class ResultsConcepts extends React.Component {
 
   render() {
     const {
-      termItems,
+      conceptItems,
       onClearFilters,
       onPageChange,
       onFilterPublisherHierarchy,
@@ -141,10 +144,13 @@ export class ResultsConcepts extends React.Component {
       publisherArray,
       publishers
     } = this.props;
-    const page =
-      searchQuery && searchQuery.from ? searchQuery.from / hitsPerPage : 0;
+    const page = _.get(searchQuery, 'from')
+      ? searchQuery.from / hitsPerPage
+      : 0;
     const pageCount = Math.ceil(
-      (termItems && termItems.hits ? termItems.hits.total : 1) / hitsPerPage
+      (_.get(conceptItems, ['page', 'totalElements'])
+        ? conceptItems.page.totalElements
+        : 1) / hitsPerPage
     );
 
     const clearButtonClass = cx(
@@ -177,26 +183,25 @@ export class ResultsConcepts extends React.Component {
               <span className="uu-invisible" aria-hidden="false">
                 Filtrering tilgang
               </span>
-              {termItems &&
-                termItems.aggregations && (
-                  <div>
-                    {this._renderFilterModal()}
-                    <SearchPublishersTree
-                      title={localization.facet.organisation}
-                      filter={publisherArray}
-                      onFilterPublisherHierarchy={onFilterPublisherHierarchy}
-                      activeFilter={searchQuery.orgPath}
-                      publishers={publishers}
-                    />
-                  </div>
-                )}
+              {_.get(conceptItems, 'aggregations') && (
+                <div>
+                  {this._renderFilterModal()}
+                  <SearchPublishersTree
+                    title={localization.facet.organisation}
+                    filter={publisherArray}
+                    onFilterPublisherHierarchy={onFilterPublisherHierarchy}
+                    activeFilter={_.get(searchQuery, 'orgPath')}
+                    publishers={publishers}
+                  />
+                </div>
+              )}
             </div>
             {this._renderCompareTerms()}
           </aside>
 
           <section className="col-lg-8">{this._renderTerms()}</section>
 
-          {_.get(termItems, ['hits', 'total'], 0) > 50 && (
+          {_.get(conceptItems, ['page', 'totalElements'], 0) > 50 && (
             <section className="col-lg-8 offset-lg-4 d-flex justify-content-center">
               <span className="uu-invisible" aria-hidden="false">
                 Sidepaginering.
@@ -225,7 +230,7 @@ export class ResultsConcepts extends React.Component {
 }
 
 ResultsConcepts.defaultProps = {
-  termItems: null,
+  conceptItems: null,
   onClearFilters: null,
   onPageChange: null,
   onFilterPublisherHierarchy: null,
@@ -239,7 +244,7 @@ ResultsConcepts.defaultProps = {
 };
 
 ResultsConcepts.propTypes = {
-  termItems: PropTypes.object,
+  conceptItems: PropTypes.object,
   onClearFilters: PropTypes.func,
   onPageChange: PropTypes.func,
   onFilterPublisherHierarchy: PropTypes.func,
