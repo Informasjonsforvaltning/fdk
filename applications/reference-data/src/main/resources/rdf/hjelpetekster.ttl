@@ -8,14 +8,14 @@
 
 # Dataset_title
 :Dataset_title  
-    dct:abstract """Tittelen skal være kortfattet, kunne stå alene og gi mening. Organisasjonens navn trenger ikke å være med. Tittelen skal gjenspeile avgrensninger dersom datasettet er avgrenset i populasjonen. Forkortelser skal skrives helt ut."""@no ;
-    dct:description """Datasettet har en tittel slik at det bl.a. kan vises i lister. Tittel er et obligatorisk felt.
+    dct:abstract """Tittelen skal være kortfattet, kunne stå alene og gi mening. Organisasjonens navn trenger ikke å være med. Tittelen skal gjenspeile avgrensninger dersom datasettet er avgrenset i populasjonen."""@no ;
+    dct:description """Datasettet har en tittel slik at det bl.a. kan vises i lister. 
 * Tittelen skal være kortfattet, kunne stå alene og gi mening.
 * Organisasjonens navn trenger ikke å være med, med mindre det er spesielt relevant for datasettets innholdsmessige utvalg.
-* Tittelen skal gjenspeile avgrensninger dersom datasettet er avgrenset i populasjonen - populasjonen er avgrenset av geografi eller formål, f.eks. “... med støtte i Lånekassen”, “... i Oslo”, “ Folketellingen av 1910”
-* Der populasjonen ikke er avgrenset angis IKKE dette (f.eks. valgkrets)
+* Tittelen skal gjenspeile avgrensninger dersom datasettet er avgrenset i populasjonen - populasjonen er avgrenset av geografi eller formål, f.eks. “... med støtte i Lånekassen”, “... i Oslo”, “Folketellingen av 1910”.
+* Der populasjonen ikke er avgrenset angis IKKE dette (f.eks. valgkrets).
 * Forkortelser skal skrives helt ut (DTM10 erstattes av “Digital Terrengmodell 10m oppløsning (DTM10)”. Bruk eventuelt feltet for emneord til forkortelser. Målgruppen er personer som ønsker å finne relevante datasett raskt, unngå derfor interne navn eller forkortelser i tittel. I det offentlige opererer man ofte med flere titler eller navn på ting. Et datasett kan ha et offisielt navn, et kortnavn og en forkortelse. For eksempel: Datasettet “Administrative enheter i Norge” har ABAS som forkortelse. Det er sjelden man bruker den fulle tittelen, så for å gjøre et datasett mest mulig søkbart er det behov for at man kan registrere kortnavn, forkortelser og/eller alternative titler.
-* Lov- eller forskriftshjemlede navn bør brukes i tittel (f.eks. Jegerregisteret)"""@no .
+* Lov- eller forskriftshjemlede navn bør brukes i tittel (f.eks. Jegerregisteret)."""@no .
 
 
 # Dataset_description
@@ -26,8 +26,8 @@
 * Hensikten med datasettet bør komme fram (f.eks. “Løsøreregisteret inneholder tinglyste flyttbare eiendeler”). For datasett som er omfattet av Personopplysningsloven, skal behandlingsformålet beskrives.
 * Beskriv hva datasettet inneholder. Hvilke opplysninger som utgjør kjernen i datasettet bør angis.
 * Feltinnhold skal ikke listes, men listes i emneord eller begreper.
-* Beskrivelsen er ikke en gjentakelse av tittel
-* Bruk folkelige ord (f.eks.”Løsøre” må forklares. F.eks. “flyttbare eiendeler (Løsøre)”, ev. bare folkelige uttrykk mens faguttrykket tas med som stikkord slik at det gir treff i søk)
+* Beskrivelsen er ikke en gjentakelse av tittel.
+* Bruk folkelige ord (f.eks.”Løsøre” må forklares. F.eks. “flyttbare eiendeler (Løsøre)”, ev. bare folkelige uttrykk mens faguttrykket tas med som stikkord slik at det gir treff i søk).
 * Beskriv avgrensninger, hva datasettet ikke inneholder, dersom dette kan misforstås ut fra tittelen.
 * Begrens lenker og markup (formatering) i teksten. Skal man angi språk må teksten formelt sett være fri for lenker og formatering (HTML).
 * Der målform er kjent skal "nb" eller "nn" brukes, "no" brukes ellers."""@no . 
@@ -35,7 +35,7 @@
 
 # Dataset_objective
 :Dataset_objective
-	dct:abstract """Beskrivelsen skal være kortfattet og ikke gjentas i Beskrivelsesfeltet."""@no ;
+	dct:abstract """Beskrivelsen skal være kortfattet og skal ikke gjenta det som er beskrevet i beskrivelsesfeltet."""@no ;
 	dct:description """En setnings-beskrivelse av formålet til datasettet.
 * Beskrivelsen skal være kortfattet og ikke gjentas i Beskrivelsesfeltet. 
 * Dersom datasettet inneholder personopplysninger skal behandlingsformålet for personopplysninger etter Personopplysningsloven beskrives her."""@no .
@@ -164,11 +164,11 @@ Tidspunkt angis med xsd:dateTime. Dette inkluderer utvidelser av kapittel 5.4 i 
 # Dataset_landingpage (landingsside)
 :Dataset_landingpage
     dct:abstract """Referanse til en side som beskriver datasettets innhold, struktur og tilgang."""@no ;
-    dct:description """Dokumentasjon om datasettet på en landingsside hos datasetteieren som kan beskrive registeret, innhold og struktur, og tilgang.
+    dct:description """Dokumentasjon om datasettet på en landingsside hos datasetteieren som kan beskrive registeret, innhold, struktur og tilgang.
 * kan referere til registerets hjemmeside
 * kan referere til en samleside som beskriver innhold og struktur 
 * kan referere til en samleside om nedlasting/bruk/søk (tjenestene)
-* det kan refereres til flere sider"""@no .
+* kan referere til flere sider"""@no .
 
 # Dataset_accessRights (tilgangsnivå)
 :Dataset_accessRights
