@@ -24,8 +24,14 @@
   "dependencies": {
     "delay": "^3.0.0"
   },
-  "jest":{
-    "testMatch": ["<rootDir>/test/**/*.test.js", "**/?(*.)(test).js?(x)"],
-    "testPathIgnorePatterns": ["/node_modules/", "<rootDir>/test/fixtures/"]
+  "jest": {
+    "testMatch": [
+      "<rootDir>/test/**/*.test.js",
+      "**/?(*.)(test).js?(x)"
+    ],
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "<rootDir>/test/fixtures/"
+    ]
   }
 }
