@@ -6,8 +6,8 @@ import java.io.IOException;
 
 public class IOUtillity {
 
-  public static String getStringOutputFromFile(String ClassPathResourceFileName) throws IOException {
+  public static String getStringOutputFromFile(String classPathResourceFileName) throws IOException {
     return IOUtils.toString(
-        new ClassPathResource(ClassPathResourceFileName).getInputStream(), "UTF-8");
+        new ClassPathResource(classPathResourceFileName).getInputStream(), "UTF-8");
   }
 }

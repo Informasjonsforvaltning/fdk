@@ -15,7 +15,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.io.IOException;
@@ -24,7 +23,6 @@ import java.util.Date;
 import static org.mockito.Mockito.any;
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest(ApiDocumentBuilderService.class)
 @Category(UnitTest.class)
 public class ApiDocumentBuilderServiceTest {
 
