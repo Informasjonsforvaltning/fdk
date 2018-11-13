@@ -14,8 +14,7 @@ const renderAddRemoveCompareButton = (
   item,
   showCompare,
   onAddConcept,
-  onDeleteConcept,
-  conceptIndex
+  onDeleteConcept
 ) => {
   if (showCompare) {
     return (
@@ -35,7 +34,7 @@ const renderAddRemoveCompareButton = (
     <button
       className="btn btn-primary fdk-button fdk-bg-color-white fdk-color-blue-dark float-lg-right ml-0 mt-3"
       onClick={() => {
-        onDeleteConcept(conceptIndex);
+        onDeleteConcept(_.get(item, 'uri'));
       }}
       type="button"
     >
@@ -128,7 +127,6 @@ export const ConceptsHitItem = props => {
     concepts,
     onAddConcept,
     onDeleteConcept,
-    conceptIndex,
     fadeInCounter,
     result
   } = props;
@@ -161,8 +159,7 @@ export const ConceptsHitItem = props => {
           result,
           showCompareButton,
           onAddConcept,
-          onDeleteConcept,
-          conceptIndex
+          onDeleteConcept
         )}
 
         {renderTitle(
@@ -191,6 +188,5 @@ ConceptsHitItem.propTypes = {
   concepts: PropTypes.array,
   onAddConcept: PropTypes.func.isRequired,
   onDeleteConcept: PropTypes.func.isRequired,
-  conceptIndex: PropTypes.number.isRequired,
   fadeInCounter: PropTypes.number
 };

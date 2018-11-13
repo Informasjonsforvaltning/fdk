@@ -30,11 +30,11 @@ export class ResultsConcepts extends React.Component {
     });
   }
 
-  handleDeleteConcept(termIndex) {
+  handleDeleteConcept(uri) {
     const { concepts } = this.state;
-    concepts.splice(termIndex, 1);
+    const filteredItems = concepts.filter(item => item.uri !== uri);
     this.setState({
-      concepts
+      concepts: filteredItems
     });
   }
 
@@ -80,18 +80,15 @@ export class ResultsConcepts extends React.Component {
   _renderTerms() {
     const { conceptItems } = this.props;
     if (_.get(conceptItems, ['_embedded', 'concepts'])) {
-      return _.get(conceptItems, ['_embedded', 'concepts']).map(
-        (item, index) => (
-          <ConceptsHitItem
-            key={item.id}
-            result={item}
-            concepts={this.state.concepts}
-            onAddConcept={this.handleAddConcept}
-            onDeleteConcept={this.handleDeleteConcept}
-            conceptIndex={index}
-          />
-        )
-      );
+      return _.get(conceptItems, ['_embedded', 'concepts']).map(item => (
+        <ConceptsHitItem
+          key={item.id}
+          result={item}
+          concepts={this.state.concepts}
+          onAddConcept={this.handleAddConcept}
+          onDeleteConcept={this.handleDeleteConcept}
+        />
+      ));
     }
     return null;
   }
