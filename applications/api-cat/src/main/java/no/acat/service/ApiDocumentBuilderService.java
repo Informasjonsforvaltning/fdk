@@ -10,6 +10,7 @@ import io.swagger.v3.oas.models.responses.ApiResponses;
 import no.acat.model.ApiDocument;
 import no.acat.model.HarvestMetadataFactory;
 import no.acat.spec.ParseException;
+import no.dcat.client.publishercat.PublisherCatClient;
 import no.dcat.client.registrationapi.ApiRegistrationPublic;
 import no.dcat.htmlclean.HtmlCleaner;
 import no.dcat.shared.Contact;
@@ -37,14 +38,16 @@ public class ApiDocumentBuilderService {
     private static final Logger logger = LoggerFactory.getLogger(ApiDocumentBuilderService.class);
     private ElasticsearchService elasticsearchService;
     private ParserService parserService;
+    private PublisherCatClient publisherCatClient;
 
     @Value("${application.searchApiUrl}")
     private String searchApiUrl;
 
     @Autowired
-    public ApiDocumentBuilderService(ElasticsearchService elasticsearchService, ParserService parserService) {
+    public ApiDocumentBuilderService(ElasticsearchService elasticsearchService, ParserService parserService, PublisherCatClient publisherCatClient) {
         this.elasticsearchService = elasticsearchService;
         this.parserService = parserService;
+        this.publisherCatClient = publisherCatClient;
     }
 
     public ApiDocument createFromApiRegistration(ApiRegistrationPublic apiRegistration, String harvestSourceUri, Date harvestDate) throws IOException, ParseException {
@@ -117,12 +120,10 @@ public class ApiDocumentBuilderService {
     }
 
     Publisher lookupPublisher(String orgNr) {
-        String lookupUri = searchApiUrl + "/publishers/{orgNr}";
         try {
-            RestTemplate restTemplate = new RestTemplate();
-            return restTemplate.getForObject(lookupUri, Publisher.class, orgNr);
+            return publisherCatClient.getByOrgNr(orgNr);
         } catch (Exception e) {
-            logger.warn("Publisher lookup failed for uri={}. Error: {}", lookupUri, e.getMessage());
+            logger.warn("Publisher lookup failed for orgNr={}. Error: {}", orgNr, e.getMessage());
         }
         return null;
     }
