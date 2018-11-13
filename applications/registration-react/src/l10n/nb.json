@@ -10,6 +10,10 @@
   "yesterday": "i går",
   "time": "kl.",
   "at": "på",
+  "header": {
+    "Registration of Datasets": "Registrering av Datasett",
+    "Registration of API's": "Registrering av API'er"
+  },
   "breadcrumbs": {
     "home":"Hjem",
     "API-descriptions":"API-beskrivelser",

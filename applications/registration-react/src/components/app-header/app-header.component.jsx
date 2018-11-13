@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 
 import { fetchUserIfNeeded } from '../../actions/index';
 import localization from '../../utils/localization';
@@ -25,6 +26,9 @@ export class Header extends React.Component {
   }
 
   render() {
+    const isApiReg = this.props.location.pathname.split('/')[3] === 'apis';
+    const isDatasetReg =
+      this.props.location.pathname.split('/')[3] === 'datasets';
     const { userItem } = this.props;
     return (
       <header>
@@ -61,7 +65,12 @@ export class Header extends React.Component {
 
               <div className="col-6 col-md-4 d-flex justify-content-center align-items-center">
                 <span>
-                  <strong>{localization.app.title}</strong>
+                  <strong>
+                    {isApiReg && localization.header["Registration of API's"]}
+                    {isDatasetReg &&
+                      localization.header['Registration of Datasets']}
+                    {!isDatasetReg && !isApiReg && localization.app.title}
+                  </strong>
                 </span>
               </div>
               <div className="col-md-4 d-flex align-items-center fdk-header-text_items justify-content-end">
@@ -96,15 +105,18 @@ export class Header extends React.Component {
 }
 
 Header.defaultProps = {
-  userItem: null
+  userItem: null,
+  location: null
 };
 
 Header.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  userItem: PropTypes.object
+  userItem: PropTypes.object,
+  location: PropTypes.object
 };
 
-function mapStateToProps({ user }) {
+function mapStateToProps(props) {
+  const { user } = props;
   const { userItem } = user || {
     userItem: null
   };
@@ -114,4 +126,4 @@ function mapStateToProps({ user }) {
   };
 }
 
-export default connect(mapStateToProps)(Header);
+export default withRouter(connect(mapStateToProps)(Header));
