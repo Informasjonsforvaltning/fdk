@@ -5,7 +5,7 @@ import localization from '../../../../lib/localization';
 import { getTranslateText } from '../../../../lib/translateText';
 
 export const CompareTerms = props => {
-  const { prefLabel, creator, onDeleteTerm, termIndex } = props;
+  const { uri, prefLabel, creator, onDeleteTerm } = props;
   let title = getTranslateText(prefLabel);
   title = title.charAt(0).toUpperCase() + title.substring(1).toLowerCase();
   return (
@@ -13,7 +13,7 @@ export const CompareTerms = props => {
       <button
         className="float-right fdk-button-small fdk-color-blue-dark"
         onClick={() => {
-          onDeleteTerm(termIndex);
+          onDeleteTerm(uri);
         }}
       >
         <i className="fa fa-times" />
@@ -27,13 +27,14 @@ export const CompareTerms = props => {
 };
 
 CompareTerms.defaultProps = {
+  uri: null,
   prefLabel: null,
   creator: null
 };
 
 CompareTerms.propTypes = {
+  uri: PropTypes.string,
   prefLabel: PropTypes.object,
   creator: PropTypes.string,
-  onDeleteTerm: PropTypes.func.isRequired,
-  termIndex: PropTypes.number.isRequired
+  onDeleteTerm: PropTypes.func.isRequired
 };
