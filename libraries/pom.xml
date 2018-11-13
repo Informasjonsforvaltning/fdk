@@ -19,6 +19,7 @@
         <module>referencedata-client</module>
         <module>webutils-spring</module>
         <module>api-cat-client</module>
+        <module>publisher-cat-client</module>
         <module>registration-api-client</module>
     </modules>
 

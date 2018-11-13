@@ -8,6 +8,7 @@ logging:
   level.org.springframework: WARN
   level.org.springframework.web: WARN
 application:
+  apiRootUrl: http://search-api:8080/api
   searchApiUrl: http://search-api:8080
   registrationApiUrl: http://registration-api:8080
 elastic:
@@ -24,6 +25,7 @@ management:
 spring:
   profiles: develop, unit-integration
 application:
+  apiRootUrl: http://localhost:8080/api
   searchApiUrl: http://localhost:8083
   registrationApiUrl: https://localhost:8099
 elastic:
