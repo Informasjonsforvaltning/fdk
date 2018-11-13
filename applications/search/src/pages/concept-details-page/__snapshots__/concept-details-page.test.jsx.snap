@@ -1,0 +1,79 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render ConceptDetailsPage correctly with conceptItem 1`] = `
+<main
+  className="container"
+  id="content"
+>
+  <article>
+    <div
+      className="row"
+    >
+      <div
+        className="col-12 col-lg-8 offset-lg-4"
+      >
+        <SideEffect(DocumentMeta)
+          description="engelsk definition14"
+          title="engelsk preflabel14"
+        />
+        <div
+          className="fdk-detail-date mb-5"
+        >
+          <HarvestDate
+            harvest={
+              Object {
+                "firstHarvested": "2018-11-12T08:13:43.584+0000",
+                "lastHarvested": "2018-11-12T08:13:43.584+0000",
+              }
+            }
+          />
+        </div>
+        <SearchHitHeader
+          nationalComponent={false}
+          publisher={
+            Object {
+              "orgPath": "/ba/be/bi/14",
+              "prefLabel": Object {
+                "en": "engelsk pub preflabel14",
+                "no": "norsk pub preflabel14",
+              },
+            }
+          }
+          publisherItems={null}
+          publisherLabel="Responsible:"
+          tag="h1"
+          theme={null}
+          title="engelsk preflabel14"
+          titleLink={null}
+        />
+      </div>
+    </div>
+    <div
+      className="row"
+    >
+      <div
+        className="col-12 col-lg-4 "
+      />
+      <section
+        className="col-12 col-lg-8 mt-3"
+      >
+        <ShowMore
+          contentHtml="engelsk definition14"
+          label=""
+          showLessButtonText="Show less"
+          showMoreButtonText="Show the full description"
+        />
+        <div
+          style={
+            Object {
+              "height": "75vh",
+            }
+          }
+        />
+      </section>
+    </div>
+  </article>
+</main>
+`;
+
+exports[`should render ConceptDetailsPage correctly with no apiItem 1`] = `""`;
