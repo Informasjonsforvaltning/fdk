@@ -14,7 +14,7 @@ beforeEach(() => {
     },
     creator: 'Creator 1',
     onDeleteTerm,
-    termIndex: 0
+    uri: 'testuri'
   };
   wrapper = shallow(<CompareTerms {...defaultProps} />);
 });
@@ -24,6 +24,6 @@ test('should render CompareTerms correctly', () => {
 });
 
 test('should handle onDeleteTerm', () => {
-  wrapper.find('button').prop('onClick')(defaultProps.termIndex);
-  expect(onDeleteTerm).toHaveBeenLastCalledWith(defaultProps.termIndex);
+  wrapper.find('button').prop('onClick')(defaultProps.uri);
+  expect(onDeleteTerm).toHaveBeenLastCalledWith(defaultProps.uri);
 });

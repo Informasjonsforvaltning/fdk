@@ -41,7 +41,7 @@ export class ResultsConcepts extends React.Component {
   _renderCompareTerms() {
     const { concepts } = this.state;
     const children = items =>
-      items.map((item, index) => {
+      items.map(item => {
         const { publisher } = item;
         const publisherPrefLabel =
           getTranslateText(_get(publisher, ['prefLabel'])) ||
@@ -50,10 +50,10 @@ export class ResultsConcepts extends React.Component {
         return (
           <CompareTerms
             key={item.uri}
+            uri={item.uri}
             prefLabel={item.prefLabel}
             creator={publisherPrefLabel}
             onDeleteTerm={this.handleDeleteConcept}
-            termIndex={index}
           />
         );
       });
