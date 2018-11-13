@@ -14,11 +14,8 @@ const renderPublisher = (publisherLabel, publisher, publisherItems) => {
   if (!publisher) {
     return null;
   }
-  const publisherItem = getPublisherByOrgNr(
-    publisherItems,
-    _.get(publisher, 'id')
-  );
-
+  const publisherItem =
+    getPublisherByOrgNr(publisherItems, _.get(publisher, 'id')) || publisher;
   return (
     <PublisherLabel label={publisherLabel} publisherItem={publisherItem} />
   );
