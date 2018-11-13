@@ -1,7 +1,6 @@
 package no.ccat.service;
 
 import no.ccat.model.ConceptDenormalized;
-import no.ccat.model.ConceptDenormalizedFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +19,12 @@ public class ConceptHarvester {
     private static final Logger logger = LoggerFactory.getLogger(ConceptHarvester.class);
 
     private final ConceptDenormalizedRepository conceptDenormalizedRepository;
+    private final ConceptBuilderService conceptBuilderService;
 
     @Autowired
-    public ConceptHarvester(ConceptDenormalizedRepository conceptDenormalizedRepository) {
+    public ConceptHarvester(ConceptDenormalizedRepository conceptDenormalizedRepository, ConceptBuilderService conceptBuilderService) {
         this.conceptDenormalizedRepository = conceptDenormalizedRepository;
+        this.conceptBuilderService = conceptBuilderService;
     }
 
     @PostConstruct
@@ -32,8 +33,9 @@ public class ConceptHarvester {
 
 
         List<String> ids = IntStream.rangeClosed(1, 50).mapToObj(String::valueOf).collect(Collectors.toList());
+        ids.add("970018131");
 
-        List<ConceptDenormalized> concepts = ids.stream().map(ConceptDenormalizedFactory::create).collect(Collectors.toList());
+        List<ConceptDenormalized> concepts = ids.stream().map(id -> conceptBuilderService.create(id)).collect(Collectors.toList());
 
         concepts.stream().forEach(concept -> conceptDenormalizedRepository.save(concept));
     }
