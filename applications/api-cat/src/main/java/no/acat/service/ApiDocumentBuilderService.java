@@ -8,15 +8,11 @@ import io.swagger.v3.oas.models.media.Content;
 import io.swagger.v3.oas.models.responses.ApiResponse;
 import io.swagger.v3.oas.models.responses.ApiResponses;
 import no.acat.model.ApiDocument;
-import no.acat.model.HarvestMetadataFactory;
 import no.acat.spec.ParseException;
 import no.dcat.client.publishercat.PublisherCatClient;
 import no.dcat.client.registrationapi.ApiRegistrationPublic;
 import no.dcat.htmlclean.HtmlCleaner;
-import no.dcat.shared.Contact;
-import no.dcat.shared.DatasetReference;
-import no.dcat.shared.HarvestMetadata;
-import no.dcat.shared.Publisher;
+import no.dcat.shared.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -79,7 +75,7 @@ public class ApiDocumentBuilderService {
         // new document is not considered a change
         boolean hasChanged = existingApiDocument != null && !isEqualContent(apiDocument, existingApiDocument);
 
-        HarvestMetadata harvest = HarvestMetadataFactory.recordHarvest(oldHarvest, harvestDate, hasChanged);
+        HarvestMetadata harvest = HarvestMetadataUtil.createOrUpdate(oldHarvest, harvestDate, hasChanged);
 
         apiDocument.setHarvest(harvest);
     }
