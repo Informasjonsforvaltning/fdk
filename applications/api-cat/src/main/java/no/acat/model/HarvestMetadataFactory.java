@@ -1,11 +1,9 @@
 package no.acat.model;
 
 import no.dcat.shared.HarvestMetadata;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 /*
 HarvestMetadataFactory is class for logic for managing HarvestMetadata objects, which itself are Anemic DTO

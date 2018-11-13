@@ -30,7 +30,7 @@ public class HarvestMetadataFactoryTest {
     }
 
     @Test
-    public void test_if_has_changed() throws Exception {
+    public void updateChangesIfChanged() throws Exception {
 
         HarvestMetadata metadata =
             HarvestMetadataFactory.recordHarvest(harvestMetadata, harvestDate, true);
@@ -38,7 +38,7 @@ public class HarvestMetadataFactoryTest {
     }
 
     @Test
-    public void test_if_not_changed() throws Exception {
+    public void updateLastHarvested() throws Exception {
 
         List<Date> dates =
             Arrays.asList(
