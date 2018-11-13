@@ -31,7 +31,7 @@ const renderItems = (
               const retTitle =
                 getTranslateText(_.get(item, itemTitleField)) ||
                 _.get(item, itemTitleField);
-              return retTitle.toLowerCase();
+              return retTitle ? retTitle.toLowerCase() : '';
             }
             return null;
           }
@@ -40,6 +40,8 @@ const renderItems = (
       );
     } else if (sortField === 'registrationStatus') {
       sortedItems = orderBy(items, 'registrationStatus', [sortType]);
+    } else {
+      sortedItems = orderBy(items, '_lastModified', ['desc']);
     }
 
     return sortedItems.map(item => {
