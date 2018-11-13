@@ -1,4 +1,11 @@
-spring.jackson.default-property-inclusion: non_null
+spring:
+  jackson:
+    default-property-inclusion: non_null
+  data:
+    elasticsearch:
+      clusterNodes: ${FDK_ES_CLUSTERNODES:elasticsearch5:9300}
+      clusterName: ${FDK_ES_CLUSTERNAME:elasticsearch}
+
 logging:
   level.root: WARN
   level.no.ccat: ${LOG_LEVEL:INFO}
@@ -14,12 +21,10 @@ management:
 #Utv-miljø lokalt på egen PC
 spring:
   profiles: develop, unit-integration
-application:
-  searchApiUrl: http://localhost:8083
-  registrationApiUrl: https://localhost:8099
-elastic:
-  clusterNodes: localhost:9300
-  clusterName: elasticsearch
+  data:
+    elasticsearch:
+      clusterNodes: localhost:9300
+      clusterName: elasticsearch
 server:
   port: 8088
 management:
