@@ -12,7 +12,7 @@ i=$((i+1))
 BUILD_APPS[$i]="registration-react"
 BUILD_CMD[$i]="( cd applications/registration-react && ./travisBuild.sh )"
 
-maven_apps="fuseki harvester harvester-api nginx-search nginx-registration reference-data registration-api registration-auth api-cat search-api elasticsearch-copy"
+maven_apps="fuseki harvester harvester-api nginx-search nginx-registration reference-data registration-api registration-auth api-cat concept-cat search-api elasticsearch-copy"
 
 for maven_app in $maven_apps; do
     i=$((i+1))
