@@ -110,6 +110,11 @@
             <artifactId>webutils-spring</artifactId>
             <version>1.0.3</version>
         </dependency>
+        <dependency>
+            <groupId>no.dcat</groupId>
+            <artifactId>publisher-cat-client</artifactId>
+            <version>1.0.0</version>
+        </dependency>
     </dependencies>
     <profiles>
         <profile>
