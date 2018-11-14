@@ -27,15 +27,17 @@ export class Header extends React.Component {
 
   render() {
     let headerTitle;
-    switch (this.props.location.pathname.split('/')[3]) {
-      case 'datasets':
-        headerTitle = localization.header['Registration of Datasets'];
-        break;
-      case 'apis':
-        headerTitle = localization.header["Registration of API's"];
-        break;
-      default:
-        headerTitle = localization.app.title;
+    if (this.props.location) {
+      switch (this.props.location.pathname.split('/')[3]) {
+        case 'datasets':
+          headerTitle = localization.header['Registration of Datasets'];
+          break;
+        case 'apis':
+          headerTitle = localization.header["Registration of API's"];
+          break;
+        default:
+          headerTitle = localization.app.title;
+      }
     }
     const { userItem } = this.props;
     return (

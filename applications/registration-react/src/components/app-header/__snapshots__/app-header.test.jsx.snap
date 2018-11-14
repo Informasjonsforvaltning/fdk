@@ -55,9 +55,7 @@ exports[`should render Header correctly 1`] = `
           className="col-6 col-md-4 d-flex justify-content-center align-items-center"
         >
           <span>
-            <strong>
-              Registrering
-            </strong>
+            <strong />
           </span>
         </div>
         <div
