@@ -12,7 +12,7 @@ logging:
   level.org.springframework: WARN
   level.org.springframework.web: WARN
 application:
-  apiRootUrl: http://search-api:8080/api/publishers
+  apiRootUrl: http://search-api:8080/api
 server:
   port: 8080
 management:
