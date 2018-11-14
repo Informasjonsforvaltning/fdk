@@ -26,9 +26,12 @@ export class Header extends React.Component {
   }
 
   render() {
-    const isApiReg = this.props.location.pathname.split('/')[3] === 'apis';
-    const isDatasetReg =
-      this.props.location.pathname.split('/')[3] === 'datasets';
+    let isApiReg;
+    let isDatasetReg;
+    if (this.props.location) {
+      isApiReg = this.props.location.pathname.split('/')[3] === 'apis';
+      isDatasetReg = this.props.location.pathname.split('/')[3] === 'datasets';
+    }
     const { userItem } = this.props;
     return (
       <header>
@@ -105,14 +108,13 @@ export class Header extends React.Component {
 }
 
 Header.defaultProps = {
-  userItem: null,
-  location: null
+  userItem: null
 };
 
 Header.propTypes = {
   dispatch: PropTypes.func.isRequired,
   userItem: PropTypes.object,
-  location: PropTypes.object
+  location: PropTypes.object.isRequired
 };
 
 function mapStateToProps(props) {
