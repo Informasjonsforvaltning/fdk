@@ -32,13 +32,13 @@ public class HarvestControllerTest {
   }
 
   @Test
-  public void add_one_task_to_harvest_quene() {
+  public void addOneTaskToHarvestQuene() {
     harvestQueue.addTask("task1");
     verify(harvestQueue, times(1)).addTask("task1");
   }
 
   @Test
-  public void add_two_task_to_harvest_quene() {
+  public void addTwoTaskToHarvestQuene() {
     doNothing().when(harvestQueue).addTask(isA(String.class));
     harvestQueue.addTask("task1");
     harvestQueue.addTask("task2");
@@ -47,7 +47,7 @@ public class HarvestControllerTest {
   }
 
   @Test
-  public void check_method_name_is_ok() {
+  public void checkMethodNameIsOk() {
 
     harvestController = new HarvestController(harvestQueue);
 
@@ -65,7 +65,7 @@ public class HarvestControllerTest {
   }
 
   @Test
-  public void check_if_method_name_is_ok() {
+  public void checkIfMethodNameIsOk() {
 
     harvestController = new HarvestController(harvestQueue);
 
