@@ -2,7 +2,6 @@ package no.acat.restapi;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import no.acat.service.ParserService;
-import no.acat.spec.ParseException;
 import no.acat.utils.IOUtillity;
 import no.acat.utils.Utils;
 import no.dcat.client.apicat.ConvertRequest;
@@ -16,8 +15,7 @@ import org.junit.experimental.categories.Category;
 import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
 import java.io.IOException;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @Category(UnitTest.class)
 public class ConvertControllerTest {
@@ -37,15 +35,15 @@ public class ConvertControllerTest {
   }
 
   @Test(expected = BadRequestException.class)
-  public void test_convert_without_spec_should_failed() throws Exception {
+  public void testConvertWithoutSpecShouldFailed() throws Exception {
 
     when(convertRequest.getSpec()).thenReturn(null);
     convertResponse = convertController.convert(convertRequest);
   }
 
   @Test
-  public void check_if_we_return_responsebody_success()
-      throws IOException, BadRequestException, ParseException {
+  public void checkIfReturnResponsebodySuccess()
+      throws IOException, BadRequestException {
 
     ObjectMapper mapper = Utils.jsonMapper();
     ParserService parserService = new ParserService(mapper);
@@ -60,7 +58,7 @@ public class ConvertControllerTest {
   }
 
   @Test
-  public void test_getting_spec_from_url_success() throws Exception {
+  public void checkIfGettingSpecFromUrlSuccess() throws Exception {
     ObjectMapper mapper = Utils.jsonMapper();
     ParserService parserService = new ParserService(mapper);
     convertController = new ConvertController(parserService);
@@ -71,7 +69,7 @@ public class ConvertControllerTest {
   }
 
   @Test(expected = BadRequestException.class)
-  public void check_if_downloading_spec_failed() throws Exception {
+  public void checkIfDownloadingSpecFailed() throws Exception {
     ObjectMapper mapper = Utils.jsonMapper();
     ParserService parserService = new ParserService(mapper);
     convertController = new ConvertController(parserService);
