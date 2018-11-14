@@ -26,11 +26,16 @@ export class Header extends React.Component {
   }
 
   render() {
-    let isApiReg;
-    let isDatasetReg;
-    if (this.props.location) {
-      isApiReg = this.props.location.pathname.split('/')[3] === 'apis';
-      isDatasetReg = this.props.location.pathname.split('/')[3] === 'datasets';
+    let headerTitle;
+    switch (this.props.location.pathname.split('/')[3]) {
+      case 'datasets':
+        headerTitle = localization.header['Registration of Datasets'];
+        break;
+      case 'apis':
+        headerTitle = localization.header["Registration of API's"];
+        break;
+      default:
+        headerTitle = localization.app.title;
     }
     const { userItem } = this.props;
     return (
@@ -68,12 +73,7 @@ export class Header extends React.Component {
 
               <div className="col-6 col-md-4 d-flex justify-content-center align-items-center">
                 <span>
-                  <strong>
-                    {isApiReg && localization.header["Registration of API's"]}
-                    {isDatasetReg &&
-                      localization.header['Registration of Datasets']}
-                    {!isDatasetReg && !isApiReg && localization.app.title}
-                  </strong>
+                  <strong>{headerTitle}</strong>
                 </span>
               </div>
               <div className="col-md-4 d-flex align-items-center fdk-header-text_items justify-content-end">
