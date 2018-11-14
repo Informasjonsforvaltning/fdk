@@ -46,7 +46,7 @@ public class ApiRestControllerTest {
   }
 
   @Test
-  public void test_getApiDocument_if_with_id_return_success() throws Exception {
+  public void testGetApiDocumentIfWithIdReturnSuccess() throws Exception {
 
     controller = new ApiRestController(elasticsearchService, Utils.jsonMapper());
 
@@ -62,7 +62,7 @@ public class ApiRestControllerTest {
   }
 
   @Test(expected = NotFoundException.class)
-  public void test_id_getresponse_not_exists_and_should_failed() throws NotFoundException, IOException {
+  public void checkIfIdGetResponseNotExistsAndShouldFailed() throws NotFoundException, IOException {
 
     controller = new ApiRestController(elasticsearchService, Utils.jsonMapper());
 
