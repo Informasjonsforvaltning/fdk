@@ -12,7 +12,6 @@ import java.util.Map;
  * Model class to represent code  values
  */
 @Data
-@ToString(includeFieldNames = false)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class SkosCode {
     private String uri;
