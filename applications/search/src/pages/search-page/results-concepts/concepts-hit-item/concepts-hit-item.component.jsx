@@ -34,7 +34,7 @@ const renderAddRemoveCompareButton = (
     <button
       className="btn btn-primary fdk-button fdk-bg-color-white fdk-color-blue-dark float-lg-right ml-0 mt-3"
       onClick={() => {
-        onDeleteConcept(_.get(item, 'uri'));
+        onDeleteConcept(_.get(item, 'id'));
       }}
       type="button"
     >
@@ -185,7 +185,7 @@ ConceptsHitItem.defaultProps = {
 
 ConceptsHitItem.propTypes = {
   result: PropTypes.shape({}),
-  concepts: PropTypes.array,
+  concepts: PropTypes.object,
   onAddConcept: PropTypes.func.isRequired,
   onDeleteConcept: PropTypes.func.isRequired,
   fadeInCounter: PropTypes.number

@@ -145,7 +145,7 @@ exports[`should render CompareTermModalContent correctly 1`] = `
       key="altLabel-0undefined"
     >
       <h5>
-        Also known as:
+        Alternative term
       </h5>
       <p />
     </div>
@@ -154,7 +154,7 @@ exports[`should render CompareTermModalContent correctly 1`] = `
       key="altLabel-1undefined"
     >
       <h5>
-        Also known as:
+        Alternative term
       </h5>
       <p>
         Orgid, Orgnr.

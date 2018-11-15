@@ -1,0 +1,183 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+import _ from 'lodash';
+import qs from 'qs';
+import DocumentMeta from 'react-document-meta';
+
+import localization from '../../lib/localization';
+import { getTranslateText } from '../../lib/translateText';
+import './concept-compare.scss';
+
+const onDeleteConcept = (id, history, conceptIdsArray, removeConcept) => {
+  removeConcept(id);
+  const filteredConceptIds = conceptIdsArray.filter(item => item !== id);
+  history.push(`?compare=${filteredConceptIds}`);
+};
+
+const renderTitle = (label, items, field) => {
+  const fields = items =>
+    Object.keys(items).map((item, index) => (
+      <th key={`row-title-${field}-${index}`}>
+        <h3>{getTranslateText(_.get(items[item], field))}</h3>
+      </th>
+    ));
+
+  return (
+    <thead className="sticky">
+      <tr>
+        <th>{label}</th>
+        {fields(items)}
+      </tr>
+    </thead>
+  );
+};
+
+const renderRow = (label, items, field) => {
+  let existValues = false;
+  const ret = Object.keys(items).map((item, index) => {
+    existValues = !!_.get(items[item], field);
+    return (
+      <td key={`row-${field}-${index}`}>
+        {getTranslateText(_.get(items[item], field))}
+      </td>
+    );
+  });
+
+  if (!existValues) {
+    return null;
+  }
+  return (
+    <tr>
+      <td>
+        <strong>{label}</strong>
+      </td>
+      {ret}
+    </tr>
+  );
+};
+
+const renderRemoveItem = (items, history, conceptIdsArray, removeConcept) => {
+  const removeButtons = items =>
+    Object.keys(items).map((item, index) => (
+      <td key={`row-button-${index}`}>
+        <button
+          className="fdk-button-small fdk-color-blue-dark"
+          onClick={() => {
+            onDeleteConcept(
+              _.get(items, [item, 'id']),
+              history,
+              conceptIdsArray,
+              removeConcept
+            );
+          }}
+        >
+          <i className="fa fa-minus-circle" />
+          &nbsp;
+          {localization.compare.removeCompare}
+        </button>
+      </td>
+    ));
+
+  return (
+    <tr>
+      <td />
+      {removeButtons(items)}
+    </tr>
+  );
+};
+
+export const ConceptComparePage = props => {
+  const {
+    conceptsCompare,
+    fetchConceptsToCompareIfNeeded,
+    removeConcept,
+    location,
+    history
+  } = props;
+  const search = qs.parse(_.get(location, 'search'), {
+    ignoreQueryPrefix: true
+  });
+  const conceptIdsArray = _.get(search, 'compare', '').split(',');
+  fetchConceptsToCompareIfNeeded(conceptIdsArray);
+
+  const meta = {
+    title: localization.menu.conceptsCompare
+  };
+
+  return (
+    <main id="content" className="container">
+      <article>
+        <div className="row">
+          <div className="col-12">
+            <DocumentMeta {...meta} />
+            {conceptsCompare && (
+              <React.Fragment>
+                <h1 className="title">
+                  {localization.menu.conceptsCompare} ({conceptsCompare.length})
+                </h1>
+
+                <section className="scrollable">
+                  <table className="table">
+                    {renderTitle(
+                      localization.facet.concept,
+                      conceptsCompare,
+                      'prefLabel'
+                    )}
+                    <tbody>
+                      {renderRow(localization.responsible, conceptsCompare, [
+                        'publisher',
+                        'prefLabel'
+                      ])}
+                      {renderRow(
+                        localization.compare.definition,
+                        conceptsCompare,
+                        ['definition', 'text']
+                      )}
+                      {renderRow(
+                        localization.compare.source,
+                        conceptsCompare,
+                        'source'
+                      )}
+                      {renderRow(
+                        localization.compare.subject,
+                        conceptsCompare,
+                        'subject'
+                      )}
+                      {renderRow(
+                        localization.compare.altLabel,
+                        conceptsCompare,
+                        'altLabel'
+                      )}
+                      {renderRow(
+                        localization.compare.hiddenLabel,
+                        conceptsCompare,
+                        'hiddenLabel'
+                      )}
+
+                      {renderRemoveItem(
+                        conceptsCompare,
+                        history,
+                        conceptIdsArray,
+                        removeConcept
+                      )}
+                    </tbody>
+                  </table>
+                </section>
+              </React.Fragment>
+            )}
+          </div>
+        </div>
+      </article>
+    </main>
+  );
+};
+
+ConceptComparePage.defaultProps = {
+  conceptsCompare: null,
+  fetchConceptsToCompareIfNeeded: _.noop
+};
+
+ConceptComparePage.propTypes = {
+  fetchConceptsToCompareIfNeeded: PropTypes.func,
+  conceptsCompare: PropTypes.object
+};

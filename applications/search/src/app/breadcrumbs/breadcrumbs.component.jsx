@@ -2,6 +2,10 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import withBreadcrumbs from 'react-router-breadcrumbs-hoc';
 
+import {
+  PATHNAME_CONCEPTS,
+  PATHNAME_CONCEPTS_COMPARE
+} from '../../constants/constants';
 import { DatasetBreadcrumb } from './dataset-breadcrumb/dataset-breadcrumb';
 import { ApiBreadcrumb } from './api-breadcrumb/api-breadcrumb';
 import { ConceptBreadcrumb } from './concept-breadcrumb/concept-breadcrumb';
@@ -13,6 +17,10 @@ const routes = [
   { path: '/', breadcrumb: <PathNameBreadcrumb pathName="home" /> },
   { path: '/datasets/:id', breadcrumb: DatasetBreadcrumb },
   { path: '/apis/:id', breadcrumb: ApiBreadcrumb },
+  {
+    path: `${PATHNAME_CONCEPTS}${PATHNAME_CONCEPTS_COMPARE}`,
+    breadcrumb: <PathNameBreadcrumb pathName="conceptsCompare" />
+  },
   { path: '/concepts/:id', breadcrumb: ConceptBreadcrumb },
   { path: '/about', breadcrumb: <PathNameBreadcrumb pathName="about" /> },
   {
