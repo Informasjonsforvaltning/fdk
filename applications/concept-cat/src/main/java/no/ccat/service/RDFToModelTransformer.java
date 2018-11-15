@@ -54,6 +54,7 @@ public class RDFToModelTransformer {
         return result;
     }
 
+
     protected static String extractPublisherOrgNrFromStmt(Resource publisherResource) {
         try {
             URL url = new URL(publisherResource.getURI());
@@ -151,9 +152,9 @@ public class RDFToModelTransformer {
 
         concept.setPrefLabel(extractLanguageLiteralFromLabel(conceptResource, SKOSXL.prefLabel));
 
-        concept.setHiddenLabel(extractLanguageLiteralFromListOfLabels(conceptResource, SKOS.hiddenLabel));
+        concept.setHiddenLabel(extractLanguageLiteralFromListOfLabels(conceptResource, SKOSXL.hiddenLabel));
 
-        concept.setAltLabel(extractLanguageLiteralFromListOfLabels(conceptResource, SKOS.altLabel));
+        concept.setAltLabel(extractLanguageLiteralFromListOfLabels(conceptResource, SKOSXL.altLabel));
 
         concept.setDefinition(extractDefinition(conceptResource));
 
