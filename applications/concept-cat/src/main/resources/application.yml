@@ -16,6 +16,8 @@ application:
   apiRootUrl: http://nginx-search:8080/api
   apiRootExternalURL: https://fellesdatakatalog.brreg.no/api
   conceptsPath: /concepts
+  harvestSourceUri: https://data.brreg.no/begrep/
+
 
 ---
 #Utv-miljø lokalt på egen PC
