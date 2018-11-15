@@ -8,7 +8,7 @@ logging:
   level.org.springframework: WARN
   level.org.springframework.web: WARN
 application:
-  apiRootUrl: http://search-api:8080/api
+  apiRootUrl: http://nginx-search:8080/api
   searchApiUrl: http://search-api:8080
   registrationApiUrl: http://registration-api:8080
 elastic:
