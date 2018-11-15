@@ -61,7 +61,16 @@ public class ConceptSearchController {
     ) {
         logger.debug("GET /concepts?q={}", query);
 
-        QueryBuilder searchQuery = query.isEmpty() ? QueryBuilders.matchAllQuery() : QueryBuilders.simpleQueryStringQuery(query);
+        QueryBuilder searchQuery;
+        if (query.isEmpty()) {
+            searchQuery = QueryBuilders.matchAllQuery();
+        } else {
+            // add * if query only contains one word
+            if (!query.contains(" ")) {
+                query = query + " " + query + "*";
+            }
+            searchQuery = QueryBuilders.simpleQueryStringQuery(query);
+        }
 
         BoolQueryBuilder composedQuery = QueryBuilders.boolQuery().must(searchQuery);
 
