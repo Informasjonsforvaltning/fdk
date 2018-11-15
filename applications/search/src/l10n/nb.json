@@ -43,7 +43,8 @@
     "home": "Søk i Felles datakatalog",
     "about": "Om Felles Datakatalog",
     "aboutRegistration": "Registrere datasett",
-    "reports": "Rapporter"
+    "reports": "Rapporter",
+    "conceptsCompare": "Sammenlign begrep"
   },
   "query": {
     "intro": "Søk etter innhold",
@@ -231,9 +232,11 @@
     "docCountPart2": "datasett"
   },
   "compare": {
+    "responsible": "Ansvarlig",
     "definition": "Definisjon",
     "inScheme": "Fagområde / bruksområde",
     "source": "Kilde",
+    "subject": "Fagområde",
     "note": "Beskrivelse",
     "compare": "Sammenligning",
     "openCompare": "Gå til sammenligning",
@@ -242,7 +245,8 @@
     "toCompare": " begrep til sammenligning - klikk for å vise",
     "addCompare": "Legg til i sammenligning",
     "removeCompare": "Fjern fra sammenligning",
-    "altLabel": "Også kjent som:",
+    "altLabel": "Tillatt / alternativ term",
+    "hiddenLabel": "Frarådet term",
     "description": "Beskrivelse av begrep",
     "law": "Lenke til lovhjemmel for begrep."
   },

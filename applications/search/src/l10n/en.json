@@ -43,7 +43,8 @@
     "home": "Search in The National Data Directory",
     "about": "About The National Data Directory",
     "aboutRegistration": "Registration",
-    "reports": "Reports"
+    "reports": "Reports",
+    "conceptsCompare": "Compare concepts"
   },
   "query": {
     "intro": "Search for datasets...",
@@ -231,9 +232,11 @@
     "docCountPart2": "dataset"
   },
   "compare": {
+    "responsible": "Responsible",
     "definition": "Definition",
     "inScheme": "Domain / application",
     "source": "Source",
+    "subject": "Domain",
     "note": "Description",
     "compare": "Comparison",
     "openCompare": "Show comparison",
@@ -242,7 +245,8 @@
     "toCompare": " concepts to comparison - click to show",
     "addCompare": "Add to compare",
     "removeCompare": "Remove from comparison",
-    "altLabel": "Also known as:",
+    "altLabel": "Alternative term",
+    "hiddenLabel": "Hidden term",
     "description": "Description of concept",
     "law": "Link to concept law."
   },

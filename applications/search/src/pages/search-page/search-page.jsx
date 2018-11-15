@@ -452,7 +452,10 @@ export class SearchPage extends React.Component {
       themesItems,
       publisherItems,
       referenceData,
-      location
+      location,
+      conceptsCompare,
+      addConcept,
+      removeConcept
     } = this.props;
     const topSectionClass = cx('top-section-search', 'mb-4', {
       'top-section-search--image': !!(browser && browser.name !== 'ie')
@@ -559,6 +562,9 @@ export class SearchPage extends React.Component {
                   showClearFilterButton={!!this.state.searchQuery.orgPath}
                   publisherArray={extractPublisherConceptsCounts(conceptItems)}
                   publishers={publisherItems}
+                  conceptsCompare={conceptsCompare}
+                  addConcept={addConcept}
+                  removeConcept={removeConcept}
                   {...props}
                 />
               )}

@@ -5,6 +5,7 @@ import { featureToggleResolver } from './modules/featureToggle';
 import { settingsResolver } from './modules/settings';
 import { catalogsReducer } from './modules/catalogs';
 import { referenceDataReducer } from './modules/referenceData';
+import { conceptsCompareReducer } from './modules/conceptsCompare';
 
 export const rootReducer = combineReducers({
   themes: themesReducer,
@@ -12,5 +13,6 @@ export const rootReducer = combineReducers({
   featureToggle: featureToggleResolver,
   settings: settingsResolver,
   catalogs: catalogsReducer,
-  referenceData: referenceDataReducer
+  referenceData: referenceDataReducer,
+  conceptsCompare: conceptsCompareReducer
 });

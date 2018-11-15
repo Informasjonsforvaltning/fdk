@@ -43,7 +43,8 @@
     "home": "Søk i Felles datakatalog",
     "about": "Felles Datakatalog",
     "aboutRegistration": "Registrere datasett",
-    "reports": "Rapporter"
+    "reports": "Rapporter",
+    "conceptsCompare": "Samanlikne omgrep"
   },
   "query": {
     "intro": "Søk etter innhald",
@@ -231,9 +232,11 @@
     "docCountPart2": "datasett"
   },
   "compare": {
+    "responsible": "Ansvarleg",
     "definition": "Definisjon",
     "inScheme": "Fagområde / bruksområde",
     "source": "Kjelde",
+    "subject": "Fagområde",
     "note": "Forklaring",
     "compare": "Samanlikning",
     "openCompare": "Gå til samanlikning",
@@ -242,7 +245,8 @@
     "toCompare": " omgrep til samanlikning - klikk for å vise",
     "addCompare": "Legg til i samanlikning",
     "removeCompare": "Fjern frå samanlikning",
-    "altLabel": "Også kjent som:",
+    "altLabel": "Tillaten term",
+    "hiddenLabel": "Frårådd term",
     "description": "Skildring av omgrep",
     "law": "Lenke til lovheimel for omgrep."
   },

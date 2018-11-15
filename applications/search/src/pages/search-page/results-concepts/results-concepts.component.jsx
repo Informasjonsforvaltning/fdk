@@ -6,42 +6,26 @@ import cx from 'classnames';
 import _get from 'lodash/get';
 import _capitalize from 'lodash/capitalize';
 import _ from 'lodash';
+import { Link } from 'react-router-dom';
 
+import {
+  PATHNAME_CONCEPTS,
+  PATHNAME_CONCEPTS_COMPARE
+} from '../../../constants/constants';
 import localization from '../../../lib/localization';
 import { ConceptsHitItem } from './concepts-hit-item/concepts-hit-item.component';
 import { CompareTerms } from './compare-terms/compare-terms.component';
-import { CompareTermModal } from './compare-term-modal/compare-term-modal.component';
 import { SearchPublishersTree } from '../search-publishers-tree/search-publishers-tree.component';
 import { getTranslateText } from '../../../lib/translateText';
 
 export class ResultsConcepts extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      concepts: []
-    };
-    this.handleAddConcept = this.handleAddConcept.bind(this);
-    this.handleDeleteConcept = this.handleDeleteConcept.bind(this);
-  }
-
-  handleAddConcept(term) {
-    this.setState({
-      concepts: [...this.state.concepts, term]
-    });
-  }
-
-  handleDeleteConcept(uri) {
-    const { concepts } = this.state;
-    const filteredItems = concepts.filter(item => item.uri !== uri);
-    this.setState({
-      concepts: filteredItems
-    });
-  }
-
   _renderCompareTerms() {
-    const { concepts } = this.state;
+    const { conceptsCompare } = this.props;
+    const conceptIdsArray = [];
     const children = items =>
-      items.map(item => {
+      Object.keys(items).map(el => {
+        const item = items[el];
+        conceptIdsArray.push(item.id);
         const { publisher } = item;
         const publisherPrefLabel =
           getTranslateText(_get(publisher, ['prefLabel'])) ||
@@ -50,27 +34,26 @@ export class ResultsConcepts extends React.Component {
         return (
           <CompareTerms
             key={item.uri}
-            uri={item.uri}
+            uri={item.id}
             prefLabel={item.prefLabel}
             creator={publisherPrefLabel}
-            onDeleteTerm={this.handleDeleteConcept}
+            onDeleteTerm={this.props.removeConcept}
           />
         );
       });
 
-    const compareButton = (
-      <CompareTermModal
-        terms={concepts}
-        handleDeleteTerm={this.handleDeleteConcept}
-      />
-    );
-
-    if (concepts && concepts.length > 0) {
+    if (conceptsCompare && Object.keys(conceptsCompare).length > 0) {
       return (
-        <div className="mt-4">
+        <div className="mt-5">
           <h3 className="mb-2">{localization.terms.compareTerms}</h3>
-          {children(concepts)}
-          {compareButton}
+          {children(conceptsCompare)}
+          <div className="d-flex justify-content-center">
+            <Link
+              to={`${PATHNAME_CONCEPTS}${PATHNAME_CONCEPTS_COMPARE}?compare=${conceptIdsArray}`}
+            >
+              {localization.compare.openCompare}
+            </Link>
+          </div>
         </div>
       );
     }
@@ -78,15 +61,15 @@ export class ResultsConcepts extends React.Component {
   }
 
   _renderTerms() {
-    const { conceptItems } = this.props;
+    const { conceptItems, conceptsCompare } = this.props;
     if (_.get(conceptItems, ['_embedded', 'concepts'])) {
       return _.get(conceptItems, ['_embedded', 'concepts']).map(item => (
         <ConceptsHitItem
           key={item.id}
           result={item}
-          concepts={this.state.concepts}
-          onAddConcept={this.handleAddConcept}
-          onDeleteConcept={this.handleDeleteConcept}
+          concepts={conceptsCompare}
+          onAddConcept={this.props.addConcept}
+          onDeleteConcept={this.props.removeConcept}
         />
       ));
     }
@@ -236,7 +219,9 @@ ResultsConcepts.defaultProps = {
   closeFilterModal: null,
   showClearFilterButton: null,
   publisherArray: null,
-  publishers: null
+  publishers: null,
+  conceptsCompare: null,
+  addConcept: _.noop
 };
 
 ResultsConcepts.propTypes = {
@@ -250,5 +235,7 @@ ResultsConcepts.propTypes = {
   closeFilterModal: PropTypes.func,
   showClearFilterButton: PropTypes.bool,
   publisherArray: PropTypes.array,
-  publishers: PropTypes.object
+  publishers: PropTypes.object,
+  conceptsCompare: PropTypes.object,
+  addConcept: PropTypes.func
 };
