@@ -19,7 +19,7 @@
         dct:publisher                 <https://data.brreg.no/enhetsregisteret/api/enheter/974760673> ;
         dct:subject                   "Arkiv"@nb ;
         skosxl:prefLabel              [ a                   skosxl:Label ;
-                                        skosxl:literalForm  "arkiv (enkeltarkiv)"@nb
+                                        skosxl:literalForm  "arkivperiode"@nb
                                       ] .
 
 <http://data.brreg.no/begrep/48784>
@@ -43,7 +43,7 @@
         dct:publisher                 <https://data.brreg.no/enhetsregisteret/api/enheter/974760673> ;
         dct:subject                   "Vergemål"@nb ;
         skosxl:prefLabel              [ a                   skosxl:Label ;
-                                        skosxl:literalForm  "fullmakt"@nb
+                                        skosxl:literalForm  "fremtidsfullmakt"@nb
                                       ] .
 
 <http://data.brreg.no/begrep/28167>
@@ -55,7 +55,7 @@
         dct:publisher                 <https://data.brreg.no/enhetsregisteret/api/enheter/974760673> ;
         dct:subject                   "Arkiv"@nb ;
         skosxl:prefLabel              [ a                   skosxl:Label ;
-                                        skosxl:literalForm  "arkiv (enkeltarkiv)"@nb
+                                        skosxl:literalForm  "arkivdel"@nb
                                       ] .
 
 <http://data.brreg.no/begrep/52068>
@@ -67,7 +67,7 @@
         dct:publisher                 <https://data.brreg.no/enhetsregisteret/api/enheter/974760673> ;
         dct:subject                   "Panterett"@nb ;
         skosxl:prefLabel              [ a                   skosxl:Label ;
-                                        skosxl:literalForm  "avtalepant"@nb
+                                        skosxl:literalForm  "panterett"@nb
                                       ] .
 
 <http://data.brreg.no/begrep/47114>
@@ -91,7 +91,7 @@
         dct:publisher                 <https://data.brreg.no/enhetsregisteret/api/enheter/974760673> ;
         dct:subject                   "Tvangsfullbyrdelse"@nb ;
         skosxl:prefLabel              [ a                   skosxl:Label ;
-                                        skosxl:literalForm  "forpliktede"@nb
+                                        skosxl:literalForm  "saksøkt"@nb
                                       ] .
 
 <http://data.brreg.no/begrep/47126>
@@ -103,7 +103,7 @@
         dct:publisher                 <https://data.brreg.no/enhetsregisteret/api/enheter/974760673> ;
         dct:subject                   "Arkiv"@nb ;
         skosxl:prefLabel              [ a                   skosxl:Label ;
-                                        skosxl:literalForm  "mappe"@nb
+                                        skosxl:literalForm  "saksmappe"@nb
                                       ] .
 
 <http://data.brreg.no/begrep/52081>
@@ -151,7 +151,7 @@
         dct:publisher                 <https://data.brreg.no/enhetsregisteret/api/enheter/974760673> ;
         dct:subject                   "Arkiv"@nb ;
         skosxl:prefLabel              [ a                   skosxl:Label ;
-                                        skosxl:literalForm  "sak (abstrakt)"@nb
+                                        skosxl:literalForm  "sak (i elektroniske journal- og arkivløsninger)"@nb
                                       ] .
 
 <http://data.brreg.no/begrep/52063>
@@ -163,7 +163,7 @@
         dct:publisher                 <https://data.brreg.no/enhetsregisteret/api/enheter/974760673> ;
         dct:subject                   "Tinglysing"@nb ;
         skosxl:prefLabel              [ a                   skosxl:Label ;
-                                        skosxl:literalForm  "pantsetter"@nb
+                                        skosxl:literalForm  "forpliktede"@nb
                                       ] .
 
 <http://data.brreg.no/begrep/44624>
@@ -175,7 +175,7 @@
         dct:publisher                 <https://data.brreg.no/enhetsregisteret/api/enheter/974760673> ;
         dct:subject                   "Tvangsfullbyrdelse"@nb ;
         skosxl:prefLabel              [ a                   skosxl:Label ;
-                                        skosxl:literalForm  "formuesgode"@nb
+                                        skosxl:literalForm  " utleggspant"@nb
                                       ] .
 
 <http://data.brreg.no/begrep/52075>
@@ -199,7 +199,7 @@
         dct:publisher                 <https://data.brreg.no/enhetsregisteret/api/enheter/974760673> ;
         dct:subject                   "Arkiv"@nb ;
         skosxl:prefLabel              [ a                   skosxl:Label ;
-                                        skosxl:literalForm  "journalpost"@nb
+                                        skosxl:literalForm  "avsender"@nb
                                       ] .
 
 <http://data.brreg.no/begrep/43419>
@@ -223,7 +223,7 @@
         dct:publisher                 <https://data.brreg.no/enhetsregisteret/api/enheter/974760673> ;
         dct:subject                   "Panterett"@nb ;
         skosxl:prefLabel              [ a                   skosxl:Label ;
-                                        skosxl:literalForm  "formuesgode"@nb
+                                        skosxl:literalForm  "pantobjekt"@nb
                                       ] .
 
 <http://data.brreg.no/begrep/28156>
@@ -238,7 +238,7 @@
                                         skosxl:literalForm  "Mappeansvarlig"@nb
                                       ] ;
         skosxl:prefLabel              [ a                   skosxl:Label ;
-                                        skosxl:literalForm  "person"@nb
+                                        skosxl:literalForm  "saksansvarlig"@nb
                                       ] .
 
 <http://data.brreg.no/begrep/43420>
@@ -250,22 +250,22 @@
         dct:publisher                 <https://data.brreg.no/enhetsregisteret/api/enheter/974760673> ;
         dct:subject                   "Informasjonssikkerhet"@nb ;
         skosxl:prefLabel              [ a                   skosxl:Label ;
-                                        skosxl:literalForm  "autorisering"@nb
+                                        skosxl:literalForm  "autorisasjon"@nb
                                       ] .
 
 <http://data.brreg.no/begrep/49220>
         a                             skos:Concept ;
         skosno:betydningsbeskrivelse  [ a           skosno:Definisjon ;
-                                        rdfs:label  "\"[...] ei logisk avgrensa informasjonsmengd som er lagra på eit medium for seinare lesing, lytting, framsyning, overføring eller liknande\""@nn
+                                        rdfs:label  "logisk avgrenset informasjonsmengde som er lagret på et medium for senere lesing, lytting, framvisning, overføring eller lignende"@nb
                                       ] ;
         skosno:betydningsbeskrivelse  [ a           skosno:Definisjon ;
-                                        rdfs:label  "logisk avgrenset informasjonsmengde som er lagret på et medium for senere lesing, lytting, framvisning, overføring eller lignende"@nb
+                                        rdfs:label  "\"[...] ei logisk avgrensa informasjonsmengd som er lagra på eit medium for seinare lesing, lytting, framsyning, overføring eller liknande\""@nn
                                       ] ;
         dct:identifier                "https://jira.brreg.no/rest/api/2/issue/49220" ;
         dct:publisher                 <https://data.brreg.no/enhetsregisteret/api/enheter/974760673> ;
         dct:subject                   "Arkiv"@nb ;
         skosxl:prefLabel              [ a                   skosxl:Label ;
-                                        skosxl:literalForm  "rapport"@nb
+                                        skosxl:literalForm  "dokument"@nb
                                       ] .
 
 <http://data.brreg.no/begrep/49612>
@@ -289,7 +289,7 @@
         dct:publisher                 <https://data.brreg.no/enhetsregisteret/api/enheter/974760673> ;
         dct:subject                   "Arkiv"@nb ;
         skosxl:prefLabel              [ a                   skosxl:Label ;
-                                        skosxl:literalForm  "journal"@nb
+                                        skosxl:literalForm  "journalpost"@nb
                                       ] .
 
 <http://data.brreg.no/begrep/42250>
@@ -301,7 +301,7 @@
         dct:publisher                 <https://data.brreg.no/enhetsregisteret/api/enheter/974760673> ;
         dct:subject                   "Tinglysing"@nb ;
         skosxl:prefLabel              [ a                   skosxl:Label ;
-                                        skosxl:literalForm  "pantobjekt"@nb
+                                        skosxl:literalForm  "formuesgode"@nb
                                       ] .
 
 <http://data.brreg.no/begrep/40821>
@@ -313,7 +313,7 @@
         dct:publisher                 <https://data.brreg.no/enhetsregisteret/api/enheter/974760673> ;
         dct:subject                   "Informasjonsforvaltning"@nb ;
         skosxl:prefLabel              [ a                   skosxl:Label ;
-                                        skosxl:literalForm  "datakatalog"@nb
+                                        skosxl:literalForm  "DCAT"@nb
                                       ] .
 
 <http://data.brreg.no/begrep/52069>
@@ -328,6 +328,18 @@
                                         skosxl:literalForm  "arrest"@nb
                                       ] .
 
+<http://data.brreg.no/begrep/53602>
+        a                             skos:Concept ;
+        skosno:betydningsbeskrivelse  [ a           skosno:Definisjon ;
+                                        rdfs:label  "\"En spesifikasjon basert på DCAT for å beskrive offentlige datasett i Europa\""@nb
+                                      ] ;
+        dct:identifier                "https://jira.brreg.no/rest/api/2/issue/53602" ;
+        dct:publisher                 <https://data.brreg.no/enhetsregisteret/api/enheter/974760673> ;
+        dct:subject                   "Informasjonsforvaltning"@nb ;
+        skosxl:prefLabel              [ a                   skosxl:Label ;
+                                        skosxl:literalForm  "DCAT-AP"@nb
+                                      ] .
+
 <http://data.brreg.no/begrep/28265>
         a                             skos:Concept ;
         skosno:betydningsbeskrivelse  [ a           skosno:Definisjon ;
@@ -340,18 +352,6 @@
                                         skosxl:literalForm  "dokumentbeskrivelse"@nb
                                       ] .
 
-<http://data.brreg.no/begrep/53602>
-        a                             skos:Concept ;
-        skosno:betydningsbeskrivelse  [ a           skosno:Definisjon ;
-                                        rdfs:label  "\"En spesifikasjon basert på DCAT for å beskrive offentlige datasett i Europa\""@nb
-                                      ] ;
-        dct:identifier                "https://jira.brreg.no/rest/api/2/issue/53602" ;
-        dct:publisher                 <https://data.brreg.no/enhetsregisteret/api/enheter/974760673> ;
-        dct:subject                   "Informasjonsforvaltning"@nb ;
-        skosxl:prefLabel              [ a                   skosxl:Label ;
-                                        skosxl:literalForm  "DCAT"@nb
-                                      ] .
-
 <http://data.brreg.no/begrep/43444>
         a                             skos:Concept ;
         skosno:betydningsbeskrivelse  [ a           skosno:Definisjon ;
@@ -361,7 +361,7 @@
         dct:publisher                 <https://data.brreg.no/enhetsregisteret/api/enheter/974760673> ;
         dct:subject                   "Tvangsfullbyrdelse"@nb ;
         skosxl:prefLabel              [ a                   skosxl:Label ;
-                                        skosxl:literalForm  "utleggstrekk"@nb
+                                        skosxl:literalForm  "trekkperiode"@nb
                                       ] .
 
 <http://data.brreg.no/begrep/48062>
@@ -373,7 +373,7 @@
         dct:publisher                 <https://data.brreg.no/enhetsregisteret/api/enheter/974760673> ;
         dct:subject                   "Semantikk"@nb ;
         skosxl:prefLabel              [ a                   skosxl:Label ;
-                                        skosxl:literalForm  "term"@nb
+                                        skosxl:literalForm  "anbefalt term"@nb
                                       ] .
 
 <http://data.brreg.no/begrep/52317>
@@ -385,7 +385,7 @@
         dct:publisher                 <https://data.brreg.no/enhetsregisteret/api/enheter/974760673> ;
         dct:subject                   "Økonomi"@nb ;
         skosxl:prefLabel              [ a                   skosxl:Label ;
-                                        skosxl:literalForm  "kundenummer"@nb
+                                        skosxl:literalForm  "gebyr"@nb
                                       ] .
 
 <http://data.brreg.no/begrep/41243>
@@ -397,7 +397,7 @@
         dct:publisher                 <https://data.brreg.no/enhetsregisteret/api/enheter/974760673> ;
         dct:subject                   "Arkiv"@nb ;
         skosxl:prefLabel              [ a                   skosxl:Label ;
-                                        skosxl:literalForm  "saksbehandler"@nb
+                                        skosxl:literalForm  "saksbehandling"@nb
                                       ] .
 
 <http://data.brreg.no/begrep/47520>
@@ -421,7 +421,7 @@
         dct:publisher                 <https://data.brreg.no/enhetsregisteret/api/enheter/974760673> ;
         dct:subject                   "Arkiv"@nb ;
         skosxl:prefLabel              [ a                   skosxl:Label ;
-                                        skosxl:literalForm  "avskrivningsmåte"@nb
+                                        skosxl:literalForm  "avskrivning"@nb
                                       ] .
 
 <http://data.brreg.no/begrep/28229>
@@ -433,7 +433,7 @@
         dct:publisher                 <https://data.brreg.no/enhetsregisteret/api/enheter/974760673> ;
         dct:subject                   "Arkiv"@nb ;
         skosxl:prefLabel              [ a                   skosxl:Label ;
-                                        skosxl:literalForm  "arkivformat"@nb
+                                        skosxl:literalForm  "dokumentobjekt"@nb
                                       ] .
 
 <http://data.brreg.no/begrep/52064>
@@ -445,7 +445,7 @@
         dct:publisher                 <https://data.brreg.no/enhetsregisteret/api/enheter/974760673> ;
         dct:subject                   "Panterett"@nb ;
         skosxl:prefLabel              [ a                   skosxl:Label ;
-                                        skosxl:literalForm  "heftelse"@nb
+                                        skosxl:literalForm  "pantheftelse"@nb
                                       ] .
 
 <http://data.brreg.no/begrep/42407>
@@ -484,7 +484,7 @@
                                         skosxl:literalForm  "tillatt term"@nb
                                       ] ;
         skosxl:prefLabel              [ a                   skosxl:Label ;
-                                        skosxl:literalForm  "term"@nb
+                                        skosxl:literalForm  "alternativ term"@nb
                                       ] .
 
 <http://data.brreg.no/begrep/41237>
@@ -520,7 +520,7 @@
         dct:publisher                 <https://data.brreg.no/enhetsregisteret/api/enheter/974760673> ;
         dct:subject                   "Informasjonssikkerhet"@nb ;
         skosxl:prefLabel              [ a                   skosxl:Label ;
-                                        skosxl:literalForm  "autorisasjon"@nb
+                                        skosxl:literalForm  "autorisering"@nb
                                       ] .
 
 <http://data.brreg.no/begrep/52088>
@@ -544,7 +544,7 @@
         dct:publisher                 <https://data.brreg.no/enhetsregisteret/api/enheter/974760673> ;
         dct:subject                   "Arkiv"@nb ;
         skosxl:prefLabel              [ a                   skosxl:Label ;
-                                        skosxl:literalForm  "brev"@nb
+                                        skosxl:literalForm  "dokumentmal"@nb
                                       ] .
 
 <http://data.brreg.no/begrep/52058>
@@ -556,7 +556,7 @@
         dct:publisher                 <https://data.brreg.no/enhetsregisteret/api/enheter/974760673> ;
         dct:subject                   "Tinglysing"@nb ;
         skosxl:prefLabel              [ a                   skosxl:Label ;
-                                        skosxl:literalForm  "panthaver"@nb
+                                        skosxl:literalForm  "rettighetshaver"@nb
                                       ] .
 
 <http://data.brreg.no/begrep/57993>
@@ -580,7 +580,7 @@
         dct:publisher                 <https://data.brreg.no/enhetsregisteret/api/enheter/974760673> ;
         dct:subject                   "Tvangsfullbyrdelse"@nb ;
         skosxl:prefLabel              [ a                   skosxl:Label ;
-                                        skosxl:literalForm  "formuesgode"@nb
+                                        skosxl:literalForm  "intet til utlegg"@nb
                                       ] .
 
 <http://data.brreg.no/begrep/48950>
@@ -604,7 +604,7 @@
         dct:publisher                 <https://data.brreg.no/enhetsregisteret/api/enheter/974760673> ;
         dct:subject                   "Arkiv"@nb ;
         skosxl:prefLabel              [ a                   skosxl:Label ;
-                                        skosxl:literalForm  "arkiv (enkeltarkiv)"@nb
+                                        skosxl:literalForm  "arkiv (oppbevaringssted)"@nb
                                       ] .
 
 <http://data.brreg.no/begrep/28296>
@@ -616,7 +616,7 @@
         dct:publisher                 <https://data.brreg.no/enhetsregisteret/api/enheter/974760673> ;
         dct:subject                   "Arkiv"@nb ;
         skosxl:prefLabel              [ a                   skosxl:Label ;
-                                        skosxl:literalForm  "arkiv (enkeltarkiv)"@nb
+                                        skosxl:literalForm  "arkivskaper"@nb
                                       ] .
 
 <http://data.brreg.no/begrep/55158>
@@ -643,7 +643,7 @@
         dct:publisher                 <https://data.brreg.no/enhetsregisteret/api/enheter/974760673> ;
         dct:subject                   "Informasjonsforvaltning"@nb ;
         skosxl:prefLabel              [ a                   skosxl:Label ;
-                                        skosxl:literalForm  "datakatalog"@nb
+                                        skosxl:literalForm  "DCAT-AP-NO"@nb
                                       ] .
 
 <http://data.brreg.no/begrep/48781>
@@ -655,7 +655,7 @@
         dct:publisher                 <https://data.brreg.no/enhetsregisteret/api/enheter/974760673> ;
         dct:subject                   "Tinglysing"@nb ;
         skosxl:prefLabel              [ a                   skosxl:Label ;
-                                        skosxl:literalForm  "løsøre "@nb
+                                        skosxl:literalForm  "Løsøreregisteret"@nb
                                       ] .
 
 <http://data.brreg.no/begrep/52071>
@@ -718,7 +718,7 @@
         dct:publisher                 <https://data.brreg.no/enhetsregisteret/api/enheter/974760673> ;
         dct:subject                   "Arkiv"@nb ;
         skosxl:prefLabel              [ a                   skosxl:Label ;
-                                        skosxl:literalForm  "arkiv (enkeltarkiv)"@nb
+                                        skosxl:literalForm  "arkiv (permanent dokumentasjon)"@nb
                                       ] .
 
 <http://data.brreg.no/begrep/28164>
@@ -730,7 +730,7 @@
         dct:publisher                 <https://data.brreg.no/enhetsregisteret/api/enheter/974760673> ;
         dct:subject                   "Arkiv"@nb ;
         skosxl:prefLabel              [ a                   skosxl:Label ;
-                                        skosxl:literalForm  "person"@nb
+                                        skosxl:literalForm  "saksbehandler"@nb
                                       ] .
 
 <http://data.brreg.no/begrep/46984>
@@ -742,7 +742,7 @@
         dct:publisher                 <https://data.brreg.no/enhetsregisteret/api/enheter/974760673> ;
         dct:subject                   "Arkiv"@nb ;
         skosxl:prefLabel              [ a                   skosxl:Label ;
-                                        skosxl:literalForm  "klasse"@nb
+                                        skosxl:literalForm  "klassifikasjonssystem"@nb
                                       ] .
 
 <http://data.brreg.no/begrep/52572>
@@ -769,7 +769,7 @@
                                         skosxl:literalForm  "kontraktspant"@nb
                                       ] ;
         skosxl:prefLabel              [ a                   skosxl:Label ;
-                                        skosxl:literalForm  "panterett"@nb
+                                        skosxl:literalForm  "avtalepant"@nb
                                       ] .
 
 <http://data.brreg.no/begrep/28261>
@@ -781,7 +781,7 @@
         dct:publisher                 <https://data.brreg.no/enhetsregisteret/api/enheter/974760673> ;
         dct:subject                   "Arkiv"@nb ;
         skosxl:prefLabel              [ a                   skosxl:Label ;
-                                        skosxl:literalForm  "arkiv (oppbevaringssted)"@nb
+                                        skosxl:literalForm  "arkiv (enkeltarkiv)"@nb
                                       ] .
 
 <http://data.brreg.no/begrep/43440>
@@ -793,7 +793,7 @@
         dct:publisher                 <https://data.brreg.no/enhetsregisteret/api/enheter/974760673> ;
         dct:subject                   "Tvangsfullbyrdelse"@nb ;
         skosxl:prefLabel              [ a                   skosxl:Label ;
-                                        skosxl:literalForm  "intet til utlegg"@nb
+                                        skosxl:literalForm  "namsmyndighet"@nb
                                       ] .
 
 <http://data.brreg.no/begrep/48069>
@@ -805,7 +805,7 @@
         dct:publisher                 <https://data.brreg.no/enhetsregisteret/api/enheter/974760673> ;
         dct:subject                   "Semantikk"@nb ;
         skosxl:prefLabel              [ a                   skosxl:Label ;
-                                        skosxl:literalForm  "term"@nb
+                                        skosxl:literalForm  "frarådet term"@nb
                                       ] .
 
 <http://data.brreg.no/begrep/41238>
@@ -817,7 +817,7 @@
         dct:publisher                 <https://data.brreg.no/enhetsregisteret/api/enheter/974760673> ;
         dct:subject                   "Arkiv"@nb ;
         skosxl:prefLabel              [ a                   skosxl:Label ;
-                                        skosxl:literalForm  "dokumentobjekt"@nb
+                                        skosxl:literalForm  "arkivformat"@nb
                                       ] .
 
 <http://data.brreg.no/begrep/40660>
@@ -829,7 +829,7 @@
         dct:publisher                 <https://data.brreg.no/enhetsregisteret/api/enheter/974760673> ;
         dct:subject                   "Semantikk"@nb ;
         skosxl:prefLabel              [ a                   skosxl:Label ;
-                                        skosxl:literalForm  "begrep"@nb
+                                        skosxl:literalForm  "term"@nb
                                       ] .
 
 <http://data.brreg.no/begrep/53989>
@@ -892,7 +892,7 @@
                                         skosxl:literalForm  "utlegg ved pålegg om trekk"@nb
                                       ] ;
         skosxl:prefLabel              [ a                   skosxl:Label ;
-                                        skosxl:literalForm  "namsmyndighet"@nb
+                                        skosxl:literalForm  "utleggstrekk"@nb
                                       ] .
 
 <http://data.brreg.no/begrep/52090>
@@ -919,7 +919,7 @@
                                         skosxl:literalForm  "arkivtjeneste"@nb
                                       ] ;
         skosxl:prefLabel              [ a                   skosxl:Label ;
-                                        skosxl:literalForm  "arkiv (enkeltarkiv)"@nb
+                                        skosxl:literalForm  "arkiv (tjeneste)"@nb
                                       ] .
 
 <http://data.brreg.no/begrep/52060>
@@ -943,7 +943,7 @@
         dct:publisher                 <https://data.brreg.no/enhetsregisteret/api/enheter/974760673> ;
         dct:subject                   "Informasjonsforvaltning"@nb ;
         skosxl:prefLabel              [ a                   skosxl:Label ;
-                                        skosxl:literalForm  "Lokal datakatalog"@nb
+                                        skosxl:literalForm  "datakatalog"@nb
                                       ] .
 
 <http://data.brreg.no/begrep/48782>
@@ -955,7 +955,7 @@
         dct:publisher                 <https://data.brreg.no/enhetsregisteret/api/enheter/974760673> ;
         dct:subject                   "Tinglysing"@nb ;
         skosxl:prefLabel              [ a                   skosxl:Label ;
-                                        skosxl:literalForm  "retinglysing"@nb
+                                        skosxl:literalForm  "tinglysing"@nb
                                       ] .
 
 <http://data.brreg.no/begrep/52072>
@@ -970,18 +970,6 @@
                                         skosxl:literalForm  "rettsvernstid"@nb
                                       ] .
 
-<http://data.brreg.no/begrep/52084>
-        a                             skos:Concept ;
-        skosno:betydningsbeskrivelse  [ a           skosno:Definisjon ;
-                                        rdfs:label  "et bestemt beløp eller et høyeste beløp som er sikret gjennom panteretten"@nb
-                                      ] ;
-        dct:identifier                "https://jira.brreg.no/rest/api/2/issue/52084" ;
-        dct:publisher                 <https://data.brreg.no/enhetsregisteret/api/enheter/974760673> ;
-        dct:subject                   "Panterett"@nb ;
-        skosxl:prefLabel              [ a                   skosxl:Label ;
-                                        skosxl:literalForm  "panterett"@nb
-                                      ] .
-
 <http://data.brreg.no/begrep/48945>
         a                             skos:Concept ;
         skosno:betydningsbeskrivelse  [ a           skosno:Definisjon ;
@@ -992,6 +980,18 @@
         dct:subject                   "Informasjonssikkerhet"@nb ;
         skosxl:prefLabel              [ a                   skosxl:Label ;
                                         skosxl:literalForm  "innsynslogg"@nb
+                                      ] .
+
+<http://data.brreg.no/begrep/52084>
+        a                             skos:Concept ;
+        skosno:betydningsbeskrivelse  [ a           skosno:Definisjon ;
+                                        rdfs:label  "et bestemt beløp eller et høyeste beløp som er sikret gjennom panteretten"@nb
+                                      ] ;
+        dct:identifier                "https://jira.brreg.no/rest/api/2/issue/52084" ;
+        dct:publisher                 <https://data.brreg.no/enhetsregisteret/api/enheter/974760673> ;
+        dct:subject                   "Panterett"@nb ;
+        skosxl:prefLabel              [ a                   skosxl:Label ;
+                                        skosxl:literalForm  "pantebeløp"@nb
                                       ] .
 
 <http://data.brreg.no/begrep/45477>
@@ -1015,7 +1015,7 @@
         dct:publisher                 <https://data.brreg.no/enhetsregisteret/api/enheter/974760673> ;
         dct:subject                   "Panterett"@nb ;
         skosxl:prefLabel              [ a                   skosxl:Label ;
-                                        skosxl:literalForm  "panterett"@nb
+                                        skosxl:literalForm  "legalpant"@nb
                                       ] .
 
 <http://data.brreg.no/begrep/47112>
@@ -1039,7 +1039,7 @@
         dct:publisher                 <https://data.brreg.no/enhetsregisteret/api/enheter/974760673> ;
         dct:subject                   "Tvangsfullbyrdelse"@nb ;
         skosxl:prefLabel              [ a                   skosxl:Label ;
-                                        skosxl:literalForm  "aktør"@nb
+                                        skosxl:literalForm  "prosessfullmektig"@nb
                                       ] .
 
 <http://data.brreg.no/begrep/52078>
@@ -1063,7 +1063,7 @@
         dct:publisher                 <https://data.brreg.no/enhetsregisteret/api/enheter/974760673> ;
         dct:subject                   "Arkiv"@nb ;
         skosxl:prefLabel              [ a                   skosxl:Label ;
-                                        skosxl:literalForm  "klassifikasjonssystem"@nb
+                                        skosxl:literalForm  "klasse"@nb
                                       ] .
 
 <http://data.brreg.no/begrep/41240>
@@ -1075,7 +1075,7 @@
         dct:publisher                 <https://data.brreg.no/enhetsregisteret/api/enheter/974760673> ;
         dct:subject                   "Arkiv"@nb ;
         skosxl:prefLabel              [ a                   skosxl:Label ;
-                                        skosxl:literalForm  "sak (konkret)"@nb
+                                        skosxl:literalForm  "sak (abstrakt)"@nb
                                       ] .
 
 <http://data.brreg.no/begrep/52091>
@@ -1087,7 +1087,7 @@
         dct:publisher                 <https://data.brreg.no/enhetsregisteret/api/enheter/974760673> ;
         dct:subject                   "Panterett"@nb ;
         skosxl:prefLabel              [ a                   skosxl:Label ;
-                                        skosxl:literalForm  "løsøre "@nb
+                                        skosxl:literalForm  "landbruksløsøre"@nb
                                       ] .
 
 <http://data.brreg.no/begrep/42645>
@@ -1102,7 +1102,7 @@
                                         skosxl:literalForm  "arkivdepot"@nb
                                       ] ;
         skosxl:prefLabel              [ a                   skosxl:Label ;
-                                        skosxl:literalForm  "arkiv (enkeltarkiv)"@nb
+                                        skosxl:literalForm  "arkiv (depot)"@nb
                                       ] .
 
 <http://data.brreg.no/begrep/52061>
@@ -1114,7 +1114,7 @@
         dct:publisher                 <https://data.brreg.no/enhetsregisteret/api/enheter/974760673> ;
         dct:subject                   "Tinglysing"@nb ;
         skosxl:prefLabel              [ a                   skosxl:Label ;
-                                        skosxl:literalForm  "pantheftelse"@nb
+                                        skosxl:literalForm  "heftelse"@nb
                                       ] .
 
 <http://data.brreg.no/begrep/43435>
@@ -1141,7 +1141,7 @@
                                         skosxl:literalForm  "Avskrivingsmåte"@nb
                                       ] ;
         skosxl:prefLabel              [ a                   skosxl:Label ;
-                                        skosxl:literalForm  "journalpost"@nb
+                                        skosxl:literalForm  "avskrivningsmåte"@nb
                                       ] .
 
 <http://data.brreg.no/begrep/39584>
@@ -1153,7 +1153,7 @@
         dct:publisher                 <https://data.brreg.no/enhetsregisteret/api/enheter/974760673> ;
         dct:subject                   "Informasjonsforvaltning"@nb ;
         skosxl:prefLabel              [ a                   skosxl:Label ;
-                                        skosxl:literalForm  "DCAT"@nb
+                                        skosxl:literalForm  "datasett"@nb
                                       ] .
 
 <http://data.brreg.no/begrep/52085>
@@ -1195,7 +1195,7 @@
                                         skosxl:literalForm  "arkivmappe"@nb
                                       ] ;
         skosxl:prefLabel              [ a                   skosxl:Label ;
-                                        skosxl:literalForm  "saksmappe"@nb
+                                        skosxl:literalForm  "mappe"@nb
                                       ] .
 
 <http://data.brreg.no/begrep/45478>
@@ -1222,7 +1222,7 @@
                                         skosxl:literalForm  "Journaldato"@nb
                                       ] ;
         skosxl:prefLabel              [ a                   skosxl:Label ;
-                                        skosxl:literalForm  "journalpost"@nb
+                                        skosxl:literalForm  "journalføringsdato"@nb
                                       ] .
 
 <http://data.brreg.no/begrep/43442>
@@ -1234,7 +1234,7 @@
         dct:publisher                 <https://data.brreg.no/enhetsregisteret/api/enheter/974760673> ;
         dct:subject                   "Tvangsfullbyrdelse"@nb ;
         skosxl:prefLabel              [ a                   skosxl:Label ;
-                                        skosxl:literalForm  "aktør"@nb
+                                        skosxl:literalForm  "saksøker"@nb
                                       ] .
 
 <http://data.brreg.no/begrep/46981>
@@ -1246,7 +1246,7 @@
         dct:publisher                 <https://data.brreg.no/enhetsregisteret/api/enheter/974760673> ;
         dct:subject                   "Arkiv"@nb ;
         skosxl:prefLabel              [ a                   skosxl:Label ;
-                                        skosxl:literalForm  "klassifikasjonssystem"@nb
+                                        skosxl:literalForm  "arkivnøkkel"@nb
                                       ] .
 
 <http://data.brreg.no/begrep/52092>
@@ -1270,7 +1270,7 @@
         dct:publisher                 <https://data.brreg.no/enhetsregisteret/api/enheter/974760673> ;
         dct:subject                   "Arkiv"@nb ;
         skosxl:prefLabel              [ a                   skosxl:Label ;
-                                        skosxl:literalForm  "sak (abstrakt)"@nb
+                                        skosxl:literalForm  "sak (konkret)"@nb
                                       ] .
 
 <http://data.brreg.no/begrep/44623>
@@ -1282,5 +1282,5 @@
         dct:publisher                 <https://data.brreg.no/enhetsregisteret/api/enheter/974760673> ;
         dct:subject                   "Tvangsfullbyrdelse"@nb ;
         skosxl:prefLabel              [ a                   skosxl:Label ;
-                                        skosxl:literalForm  "namsmyndighet"@nb
+                                        skosxl:literalForm  " utleggsforretning"@nb
                                       ] .
