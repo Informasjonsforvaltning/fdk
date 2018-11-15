@@ -123,6 +123,10 @@ public class ApiSearchController {
         if (query.isEmpty()) {
             search = QueryBuilders.matchAllQuery();
         } else {
+            // add * if query only contains one word
+            if (!query.contains(" ")) {
+                query = query + " " + query + "*";
+            }
             search = QueryBuilders.simpleQueryStringQuery(query);
         }
 
