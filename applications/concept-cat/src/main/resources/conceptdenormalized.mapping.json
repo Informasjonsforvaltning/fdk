@@ -1,6 +1,5 @@
 {
   "concept": {
-    "dynamic": false,
     "properties": {
       "harvestSourceUri": {
         "type": "keyword"
@@ -33,7 +32,7 @@
         "properties": {
           "text": {
             "properties": {
-              "no": {
+              "nb": {
                 "type": "text",
                 "analyzer": "norwegian"
               }
@@ -43,7 +42,7 @@
       },
       "subject": {
         "properties": {
-          "no": {
+          "nb": {
             "type": "text",
             "analyzer": "norwegian"
           }
@@ -51,7 +50,7 @@
       },
       "prefLabel": {
         "properties": {
-          "no": {
+          "nb": {
             "type": "text",
             "analyzer": "norwegian"
           }
@@ -59,7 +58,7 @@
       },
       "altLabel": {
         "properties": {
-          "no": {
+          "nb": {
             "type": "text",
             "analyzer": "norwegian"
           }
