@@ -29,4 +29,12 @@ public class SkosCode {
 
     }
 
+    @Override
+    public String toString() {
+        return "SkosCode{" +
+                "uri='" + uri + '\'' +
+                ", code='" + code + '\'' +
+                ", prefLabel=" + prefLabel +
+                '}';
+    }
 }
