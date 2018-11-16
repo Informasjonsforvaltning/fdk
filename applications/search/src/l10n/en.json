@@ -302,5 +302,12 @@
     },
     "provider": "Provider:",
     "linkDatasetReference": "Link to dataset reference"
+  },
+  "concept": {
+    "subjectHeader": "Domain",
+    "subject": "Domain",
+    "termHeader": "Alternative and hidden term",
+    "altLabel": "Alternative term",
+    "hiddenLabel": "Hidden term"
   }
 }

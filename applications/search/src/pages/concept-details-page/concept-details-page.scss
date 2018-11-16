@@ -1,0 +1,9 @@
+.fdk-label-item {
+  display: inline-block;
+}
+
+.fdk-label-item:not(:last-child)::after {
+  display: inline-block;
+  white-space: pre;
+  content: ", ";
+}

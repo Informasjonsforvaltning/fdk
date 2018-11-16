@@ -302,5 +302,12 @@
     },
     "provider": "Tilbyder:",
     "linkDatasetReference": "Lenke til datasettreferanse"
+  },
+  "concept": {
+    "subjectHeader": "Fag- og bruksområde",
+    "subject": "Fagområde",
+    "termHeader": "Tillatt og frarådet term",
+    "altLabel": "Tillat term",
+    "hiddenLabel": "Frarådet term"
   }
 }
