@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.Date;
 
 @Service
@@ -60,7 +59,7 @@ public class ConceptBuilderService {
             "        }}";
         SkosCode refType = new Gson().fromJson(refTypeJson, SkosCode.class);
         Reference sourceRef = new Reference(refType, source);
-        definition.setSources(Arrays.asList(sourceRef));
+        //definition.setSource(Arrays.asList(sourceRef));
 
         concept.setDefinition(definition);
 
