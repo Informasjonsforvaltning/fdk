@@ -22,4 +22,9 @@ public class Utils {
       return IOUtils.toString(
           new ClassPathResource(classPathResourceFileName).getInputStream(), "UTF-8");
     }
+
+    public static String getResourceUrl(String classPathResourceFileName) {
+        return Utils.class.getClassLoader().getResource(classPathResourceFileName).toString();
+    }
+
 }
