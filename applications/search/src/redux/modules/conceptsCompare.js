@@ -19,7 +19,7 @@ function shouldFetch(metaState) {
 
 export function fetchConceptsToCompareIfNeededAction(iDs) {
   return (dispatch, getState) => {
-    iDs.forEach(id => {
+    iDs.filter(id => !!id).forEach(id => {
       if (shouldFetch(_.get(getState(), ['conceptsCompare', 'meta', id]))) {
         dispatch(
           fetchActions(`/api/concepts/${id}`, [
