@@ -54,7 +54,7 @@ public class RDFToModelTransformer {
 
             Map<String, String> sourceAsLanguageLiteral = extractLanguageRDFSLabelFromLabel(betydningsbeskrivelse, DCTerms.source);
             if (sourceAsLanguageLiteral != null) {
-                definition.getRemark().putAll(sourceAsLanguageLiteral);
+                definition.getSource().putAll(sourceAsLanguageLiteral);
             }
         }
         return definition;
