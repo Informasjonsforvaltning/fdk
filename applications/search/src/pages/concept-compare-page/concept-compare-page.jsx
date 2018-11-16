@@ -32,26 +32,31 @@ const renderTitle = (label, items, field) => {
   );
 };
 
+const existFieldValue = value =>
+  Array.isArray(value) ? value.some(valueItem => !!valueItem) : !!value;
+
+const existValuesOnAnyItem = (items, fieldPath) =>
+  Object.values(items).some(item => existFieldValue(_.get(item, fieldPath)));
+
+const renderFieldValue = (item, fieldPath, index) => {
+  const fieldValue = _.get(item, fieldPath);
+  const renderArrayItem = (value, index) => (
+    <span key={index} className="mr-2">
+      {getTranslateText(value)}
+    </span>
+  );
+
+  return (
+    <td key={`row-${fieldPath}-${index}`}>
+      {Array.isArray(fieldValue)
+        ? fieldValue.map(renderArrayItem)
+        : getTranslateText(fieldValue)}
+    </td>
+  );
+};
+
 const renderRow = (label, items, fieldPath) => {
-  const existFieldValue = value => (Array.isArray(value) ? value.some(valueItem => !!valueItem) : !!value)
-  const existValuesOnAnyItem = Object.values(items).some(item => existFieldValue(_.get(item,fieldPath)));
-
-  const renderItem = (item, index) => {
-    const fieldValue = _.get(item, fieldPath);
-    if (Array.isArray(fieldValue)) {
-      const fieldValues = fieldValue.map((value, index) => (
-        <span key={index} className="mr-2">
-          {getTranslateText(value)}
-        </span>
-      ));
-      return <td key={`row-${fieldPath}-${index}`}>{fieldValues}</td>;
-    }
-    return (
-      <td key={`row-${fieldPath}-${index}`}>{getTranslateText(fieldValue)}</td>
-    );
-  };
-
-  if (!existValuesOnAnyItem) {
+  if (!existValuesOnAnyItem(items, fieldPath)) {
     return null;
   }
   return (
@@ -59,7 +64,9 @@ const renderRow = (label, items, fieldPath) => {
       <td>
         <strong>{label}</strong>
       </td>
-      {Object.values(items).map(renderItem)}
+      {Object.values(items).map((item, index) =>
+        renderFieldValue(item, fieldPath, index)
+      )}
     </tr>
   );
 };
