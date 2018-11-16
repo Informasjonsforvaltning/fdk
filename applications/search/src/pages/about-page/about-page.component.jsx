@@ -40,7 +40,7 @@ export const AboutPage = () => {
                 title="Lenke til registreringsløsning"
                 target="_blank"
                 rel="noopener noreferrer"
-                href="https://registrering-fdk.ppe.brreg.no/"
+                href="https://registrering.fellesdatakatalog.brreg.no/"
               >
                 <span className="fdk-button fdk-button-default">
                   Kom i gang med registreringen
