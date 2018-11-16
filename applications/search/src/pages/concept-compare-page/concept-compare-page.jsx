@@ -150,6 +150,10 @@ export const ConceptComparePage = props => {
                         conceptsCompare,
                         ['definition', 'text']
                       )}
+                      {renderRow(localization.compare.source, conceptsCompare, [
+                        'definition',
+                        'source'
+                      ])}
                       {renderRow(
                         localization.compare.source,
                         conceptsCompare,
