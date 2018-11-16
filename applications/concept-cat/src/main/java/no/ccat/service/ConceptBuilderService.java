@@ -46,20 +46,10 @@ public class ConceptBuilderService {
         concept.setPublisher(publisher);
 
         Definition definition = new Definition();
+        
         definition.setText(ImmutableMap.of("no", "norsk definitin" + id, "en", "engelsk definition" + id));
 
-        SkosConcept source = SkosConcept.getInstance("http://www.ee", "norsk label til url" + id);
-        String refTypeJson = "{\n" +
-            "            \"uri\": \"dct:source\",\n" +
-            "            \"code\": \"source\",\n" +
-            "            \"prefLabel\": {\n" +
-            "            \"en\": \"Source\",\n" +
-            "                \"nn\": \"Er avleda frå\",\n" +
-            "                \"nb\": \"Er avledet fra\"\n" +
-            "        }}";
-        SkosCode refType = new Gson().fromJson(refTypeJson, SkosCode.class);
-        Reference sourceRef = new Reference(refType, source);
-        //definition.setSource(Arrays.asList(sourceRef));
+        definition.setSource(ImmutableMap.of("no", "norsk kildetekst", "en", "engelsk kildetekst"));
 
         concept.setDefinition(definition);
 
