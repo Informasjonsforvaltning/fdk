@@ -35,11 +35,27 @@ public class RDFToModelTransformer {
     public static Definition extractDefinition(Resource resource) {
         Definition definition = new Definition();
         definition.setText(new HashMap());
+        definition.setRemark(new HashMap<>());
+        definition.setSource(new HashMap<>());
+
         List<Resource> betydningsbeskivelses = getNamedSubPropertiesAsListOfResources(resource, SKOSNO.betydningsbeskrivelse);
+
         for (Resource betydningsbeskrivelse : betydningsbeskivelses) {
             //We may need to merge the different language strings from the different betydningsbeskrivelses
-            Map<String, String> newLanguageLiteral = extractLanguageLiteral(betydningsbeskrivelse, RDFS.label);
-            definition.getText().putAll(newLanguageLiteral);
+            Map<String, String> definitionAsLanguageLiteral = extractLanguageLiteral(betydningsbeskrivelse, RDFS.label);
+            if (definitionAsLanguageLiteral != null) {
+                definition.getText().putAll(definitionAsLanguageLiteral);
+            }
+
+            Map<String, String> noteAsLanguageLiteral = extractLanguageLiteral(betydningsbeskrivelse, SKOS.scopeNote);
+            if (noteAsLanguageLiteral != null) {
+                definition.getRemark().putAll(noteAsLanguageLiteral);
+            }
+
+            Map<String, String> sourceAsLanguageLiteral = extractLanguageRDFSLabelFromLabel(betydningsbeskrivelse, DCTerms.source);
+            if (sourceAsLanguageLiteral != null) {
+                definition.getRemark().putAll(sourceAsLanguageLiteral);
+            }
         }
         return definition;
     }
@@ -89,6 +105,18 @@ public class RDFToModelTransformer {
 
         return null;
     }
+
+    public static Map<String, String> extractLanguageRDFSLabelFromLabel(Resource resource, Property property) {
+        Statement stmt = resource.getProperty(property);
+        if (stmt == null) {
+            return null;
+        }
+        RDFNode node = stmt.getObject();
+        Resource subResource = node.asResource();
+
+        return extractLanguageLiteral(subResource, RDFS.label);
+    }
+
 
     public static Map<String, String> extractLanguageLiteralFromLabel(Resource resource, Property property) {
         Statement stmt = resource.getProperty(property);
