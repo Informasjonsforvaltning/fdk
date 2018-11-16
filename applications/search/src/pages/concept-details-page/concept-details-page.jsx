@@ -5,10 +5,13 @@ import DocumentMeta from 'react-document-meta';
 
 import localization from '../../lib/localization';
 import { getTranslateText } from '../../lib/translateText';
+import { ListRegular } from '../../components/list-regular/list-regular.component';
+import { TwoColRow } from '../../components/list-regular/twoColRow/twoColRow';
 import { HarvestDate } from '../../components/harvest-date/harvest-date.component';
 import { SearchHitHeader } from '../../components/search-hit-header/search-hit-header.component';
 import { ShowMore } from '../../components/show-more/show-more';
 import { LinkExternal } from '../../components/link-external/link-external.component';
+import './concept-details-page.scss';
 
 const renderDescription = description => {
   if (!description) {
@@ -21,6 +24,53 @@ const renderDescription = description => {
       showMoreButtonText={localization.showFullDescription}
       contentHtml={descriptionText}
     />
+  );
+};
+
+const renderSubject = subject => {
+  if (!subject) {
+    return null;
+  }
+  return (
+    <ListRegular title={localization.concept.subjectHeader}>
+      <TwoColRow
+        col1={localization.concept.subject}
+        col2={getTranslateText(subject)}
+      />
+    </ListRegular>
+  );
+};
+
+const renderTerms = (altLabel, hiddenLabel) => {
+  const labels = labelArray =>
+    labelArray.map((item, index) => (
+      <span key={`altLabel-${index}`} className="fdk-label-item">
+        {getTranslateText(item)}
+      </span>
+    ));
+
+  const existFieldValue = value =>
+    Array.isArray(value) ? value.some(valueItem => !!valueItem) : !!value;
+
+  if (!(existFieldValue(altLabel) || existFieldValue(hiddenLabel))) {
+    return false;
+  }
+
+  return (
+    <ListRegular title={localization.concept.termHeader}>
+      {existFieldValue(altLabel) && (
+        <TwoColRow
+          col1={localization.concept.altLabel}
+          col2={labels(altLabel)}
+        />
+      )}
+      {existFieldValue(hiddenLabel) && (
+        <TwoColRow
+          col1={localization.concept.hiddenLabel}
+          col2={labels(hiddenLabel)}
+        />
+      )}
+    </ListRegular>
   );
 };
 
@@ -84,7 +134,11 @@ export const ConceptDetailsPage = props => {
 
           <section className="col-12 col-lg-8 mt-3">
             {renderDescription(_.get(conceptItem, ['definition', 'text']))}
-
+            {renderSubject(_.get(conceptItem, 'subject'))}
+            {renderTerms(
+              _.get(conceptItem, 'altLabel'),
+              _.get(conceptItem, 'hiddenLabel')
+            )}
             {renderIdentifiers(_.get(conceptItem, 'identifiers'))}
 
             <div style={{ height: '75vh' }} />
