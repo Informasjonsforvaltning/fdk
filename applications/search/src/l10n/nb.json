@@ -304,6 +304,7 @@
     "linkDatasetReference": "Lenke til datasettreferanse"
   },
   "concept": {
+    "remarkHeader": "Merknad",
     "subjectHeader": "Fag- og bruksområde",
     "subject": "Fagområde",
     "termHeader": "Tillatt og frarådet term",

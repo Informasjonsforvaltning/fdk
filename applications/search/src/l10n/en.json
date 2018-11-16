@@ -304,6 +304,7 @@
     "linkDatasetReference": "Link to dataset reference"
   },
   "concept": {
+    "remarkHeader": "Remark",
     "subjectHeader": "Domain",
     "subject": "Domain",
     "termHeader": "Alternative and hidden term",
