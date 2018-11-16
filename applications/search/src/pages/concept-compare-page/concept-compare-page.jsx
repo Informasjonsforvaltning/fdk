@@ -32,18 +32,26 @@ const renderTitle = (label, items, field) => {
   );
 };
 
-const renderRow = (label, items, field) => {
-  let existValues = false;
-  const ret = Object.keys(items).map((item, index) => {
-    existValues = !!_.get(items[item], field);
-    return (
-      <td key={`row-${field}-${index}`}>
-        {getTranslateText(_.get(items[item], field))}
-      </td>
-    );
-  });
+const renderRow = (label, items, fieldPath) => {
+  const existFieldValue = value => (Array.isArray(value) ? value.some(valueItem => !!valueItem) : !!value)
+  const existValuesOnAnyItem = Object.values(items).some(item => existFieldValue(_.get(item,fieldPath)));
 
-  if (!existValues) {
+  const renderItem = (item, index) => {
+    const fieldValue = _.get(item, fieldPath);
+    if (Array.isArray(fieldValue)) {
+      const fieldValues = fieldValue.map((value, index) => (
+        <span key={index} className="mr-2">
+          {getTranslateText(value)}
+        </span>
+      ));
+      return <td key={`row-${fieldPath}-${index}`}>{fieldValues}</td>;
+    }
+    return (
+      <td key={`row-${fieldPath}-${index}`}>{getTranslateText(fieldValue)}</td>
+    );
+  };
+
+  if (!existValuesOnAnyItem) {
     return null;
   }
   return (
@@ -51,7 +59,7 @@ const renderRow = (label, items, field) => {
       <td>
         <strong>{label}</strong>
       </td>
-      {ret}
+      {Object.values(items).map(renderItem)}
     </tr>
   );
 };
@@ -113,7 +121,9 @@ export const ConceptComparePage = props => {
             {conceptsCompare && (
               <React.Fragment>
                 <h1 className="title">
-                  {localization.menu.conceptsCompare} ({conceptsCompare.length})
+                  {localization.menu.conceptsCompare} ({
+                    Object.keys(conceptsCompare).length
+                  })
                 </h1>
 
                 <section className="scrollable">
