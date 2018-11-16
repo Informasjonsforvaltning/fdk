@@ -47,6 +47,13 @@ public class ElasticsearchService {
         this.mapper = mapper;
     }
 
+    public ElasticsearchService(ObjectMapper mapper, Elasticsearch5Client elasticsearch, String clusterNodes, String clusterName) {
+        this.mapper = mapper;
+        this.elasticsearch = elasticsearch;
+        this.clusterNodes = clusterNodes;
+        this.clusterName = clusterName;
+    }
+
     @PostConstruct
     void validate() {
         assert clusterNodes != null;
@@ -63,7 +70,7 @@ public class ElasticsearchService {
         return elasticsearch == null ? null : elasticsearch.getClient();
     }
 
-    private void initializeElasticsearchTransportClient() {
+     void initializeElasticsearchTransportClient() {
         logger.debug("elasticsearch: " + clusterNodes);
         if (elasticsearch == null) {
             if (clusterNodes == null) {
