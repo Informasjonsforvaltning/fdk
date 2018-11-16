@@ -27,6 +27,32 @@ const renderDescription = description => {
   );
 };
 
+const renderSource = source => {
+  if (!source) {
+    return null;
+  }
+  return (
+    <div className="fdk-ingress">
+      <span>{localization.compare.source}:&nbsp;</span>
+      <span>{getTranslateText(source)}</span>
+    </div>
+  );
+};
+
+const renderRemark = remark => {
+  if (!remark) {
+    return null;
+  }
+
+  return (
+    <ListRegular title={localization.concept.remarkHeader}>
+      <div className="d-flex list-regular--item">
+        {getTranslateText(remark)}
+      </div>
+    </ListRegular>
+  );
+};
+
 const renderSubject = subject => {
   if (!subject) {
     return null;
@@ -134,6 +160,8 @@ export const ConceptDetailsPage = props => {
 
           <section className="col-12 col-lg-8 mt-3">
             {renderDescription(_.get(conceptItem, ['definition', 'text']))}
+            {renderSource(_.get(conceptItem, ['definition', 'source']))}
+            {renderRemark(_.get(conceptItem, ['definition', 'remark']))}
             {renderSubject(_.get(conceptItem, 'subject'))}
             {renderTerms(
               _.get(conceptItem, 'altLabel'),
