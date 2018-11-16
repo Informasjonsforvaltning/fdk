@@ -39,7 +39,7 @@ exports[`should render ArticlePage correctly 1`] = `
           Når du har fått tilgang, vil din virksomhets datakatalog være tilgjengelig etter innlogging.
           <br />
           <a
-            href="https://registrering-fdk.ppe.brreg.no/"
+            href="https://registrering.fellesdatakatalog.brreg.no/"
             rel="noopener noreferrer"
             target="_blank"
             title="Lenke til registreringsløsning"

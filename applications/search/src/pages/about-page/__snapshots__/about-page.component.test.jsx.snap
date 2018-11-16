@@ -65,7 +65,7 @@ exports[`should render AboutPage correctly 1`] = `
         </p>
         <p>
           <a
-            href="https://registrering-fdk.ppe.brreg.no/"
+            href="https://registrering.fellesdatakatalog.brreg.no/"
             rel="noopener noreferrer"
             target="_blank"
             title="Lenke til registreringsløsning"
