@@ -7,7 +7,6 @@ import { Link } from 'react-router-dom';
 import localization from '../../../../lib/localization';
 import { getTranslateText } from '../../../../lib/translateText';
 import { PublisherLabel } from '../../../../components/publisher-label/publisher-label.component';
-import { LinkExternal } from '../../../../components/link-external/link-external.component';
 import './concepts-hit-item.scss';
 
 const renderAddRemoveCompareButton = (
@@ -101,23 +100,15 @@ const renderDescription = description => {
   );
 };
 
-const renderIdentifiers = identifiers => {
-  const children = items =>
-    items.map(item => (
-      <LinkExternal
-        uri={_.get(item, 'uri')}
-        prefLabel={_.get(item, 'prefLabel') || _.get(item, 'uri')}
-      />
-    ));
-
-  if (!(identifiers && Array.isArray(identifiers))) {
+const renderSource = source => {
+  if (!source) {
     return null;
   }
 
   return (
     <div>
       <span>{localization.compare.source}:&nbsp;</span>
-      {children(identifiers)}
+      {getTranslateText(source)}
     </div>
   );
 };
@@ -171,7 +162,7 @@ export const ConceptsHitItem = props => {
 
         {renderDescription(_.get(result, ['definition', 'text']))}
 
-        {renderIdentifiers(_.get(result, 'harvest'))}
+        {renderSource(_.get(result, ['definition', 'source']))}
       </article>
     </React.Fragment>
   );
