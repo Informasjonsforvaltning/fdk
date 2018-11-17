@@ -121,24 +121,6 @@ public class ElasticsearchService {
         logger.info("ApiDocument is indexed. id={}, harvestSourceUri={}", document.getId(), document.getHarvestSourceUri());
     }
 
-    public ApiDocument getApiDocumentByHarvestSourceUri(String harvestSourceUri) {
-
-        SearchResponse response = getClient().prepareSearch("acat")
-            .setTypes("apidocument")
-            .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
-            .setQuery(QueryBuilders.termQuery("harvestSourceUri", harvestSourceUri))
-            .get();
-
-        SearchHit[] hits = response.getHits().getHits();
-        if (hits.length == 1) {
-            return  new Gson().fromJson(hits[0].getSourceAsString(), ApiDocument.class);
-        } else if (hits.length > 1) {
-            throw new RuntimeException("Lookup by harvestSourceUri returned more than one result: " + hits.length);
-        }
-
-        return null;
-    }
-
     public void deleteApiDocumentByIds(List<String> ids) {
         if (ids.size()==0){
             logger.debug("ApiDocuments deleted. count:0");
