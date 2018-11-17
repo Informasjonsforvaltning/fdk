@@ -4,24 +4,24 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
+import lombok.Getter;
+import lombok.Setter;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 /*
 RegistrationApiClient is a library for consuming REST api with strong types.
  */
 public class RegistrationApiClient {
-    private String apiRegistrationUrl;
-    private Logger logger;
+    @Getter
+    @Setter
+    private String apiRootUrl;
 
-    public RegistrationApiClient(String apiRegistrationUrl, Logger logger) {
-        this.apiRegistrationUrl = apiRegistrationUrl;
-        this.logger = logger;
-    }
+    private static Logger logger = LoggerFactory.getLogger(RegistrationApiClient.class);
 
     public List<ApiRegistrationPublic> getPublished() {
         List<ApiRegistrationPublic> result = new ArrayList<>();
@@ -39,7 +39,8 @@ public class RegistrationApiClient {
                 .getAsJsonObject().get("apiRegistrationPublics");
 
             Gson gson = new Gson();
-            TypeToken<List<ApiRegistrationPublic>> token = new TypeToken<List<ApiRegistrationPublic>>() {};
+            TypeToken<List<ApiRegistrationPublic>> token = new TypeToken<List<ApiRegistrationPublic>>() {
+            };
 
             List<ApiRegistrationPublic> apiRegistrations = gson.fromJson(apiRegistrationPublicsJson, token.getType());
 
@@ -56,6 +57,6 @@ public class RegistrationApiClient {
     }
 
     public String getPublicApisUrlBase() {
-        return apiRegistrationUrl + "/public/apis";
+        return getApiRootUrl() + "/registration/apis";
     }
 }

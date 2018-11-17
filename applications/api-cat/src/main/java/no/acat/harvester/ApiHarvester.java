@@ -3,9 +3,8 @@ package no.acat.harvester;
 import no.acat.model.ApiDocument;
 import no.acat.service.ApiDocumentBuilderService;
 import no.acat.service.ElasticsearchService;
-import no.acat.service.RegistrationApiService;
+import no.acat.service.RegistrationApiClient;
 import no.dcat.client.registrationapi.ApiRegistrationPublic;
-import no.dcat.client.registrationapi.RegistrationApiClient;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 import org.slf4j.Logger;
@@ -32,9 +31,9 @@ public class ApiHarvester {
     private RegistrationApiClient registrationApiClient;
 
     @Autowired
-    public ApiHarvester(ElasticsearchService elasticsearchService, ApiDocumentBuilderService apiDocumentBuilderService, RegistrationApiService registrationApiService) {
+    public ApiHarvester(ElasticsearchService elasticsearchService, ApiDocumentBuilderService apiDocumentBuilderService, RegistrationApiClient registrationApiClient) {
         this.elasticsearchService = elasticsearchService;
-        this.registrationApiClient = registrationApiService.getClient();
+        this.registrationApiClient = registrationApiClient;
         this.apiDocumentBuilderService = apiDocumentBuilderService;
     }
 
