@@ -19,11 +19,10 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /*
 ApiDocumentBuilder service is enriching api registrations with related data and
@@ -35,15 +34,14 @@ public class ApiDocumentBuilderService {
     private ElasticsearchService elasticsearchService;
     private ParserService parserService;
     private PublisherCatClient publisherCatClient;
-
-    @Value("${application.searchApiUrl}")
-    private String searchApiUrl;
+    private DatasetCatClient datasetCatClient;
 
     @Autowired
-    public ApiDocumentBuilderService(ElasticsearchService elasticsearchService, ParserService parserService, PublisherCatClient publisherCatClient) {
+    public ApiDocumentBuilderService(ElasticsearchService elasticsearchService, ParserService parserService, PublisherCatClient publisherCatClient, DatasetCatClient datasetCatClient) {
         this.elasticsearchService = elasticsearchService;
         this.parserService = parserService;
         this.publisherCatClient = publisherCatClient;
+        this.datasetCatClient = datasetCatClient;
     }
 
     public ApiDocument createFromApiRegistration(ApiRegistrationPublic apiRegistration, String harvestSourceUri, Date harvestDate) throws IOException, ParseException {
@@ -124,34 +122,20 @@ public class ApiDocumentBuilderService {
         return null;
     }
 
-    DatasetReference lookupDatasetReference(String uri) {
-        String lookupUrl = UriComponentsBuilder
-            .fromHttpUrl(searchApiUrl)
-            .path("/datasets/byuri")
-            .queryParam("uri", uri)
-            .toUriString();
-        try {
-            RestTemplate restTemplate = new RestTemplate();
-            return restTemplate.getForObject(lookupUrl, DatasetReference.class);
-        } catch (Exception e) {
-            logger.warn("Dataset lookup failed for uri={}. Error: {}", lookupUrl, e.getMessage());
-        }
-        return null;
-    }
-
     Set<DatasetReference> extractDatasetReferences(ApiRegistrationPublic apiRegistration) {
-        Set<DatasetReference> datasetReferences = new HashSet<>();
         List<String> datasetReferenceSources = apiRegistration.getDatasetReferences();
-        if (datasetReferenceSources != null) {
-            for (String datasetRefUrl : datasetReferenceSources) {
-                if (!datasetRefUrl.isEmpty()) {
-                    DatasetReference datasetReference = lookupDatasetReference(datasetRefUrl);
-                    if (datasetReference != null) {
-                        datasetReferences.add(datasetReference);
-                    }
-                }
-            }
+
+        if (datasetReferenceSources == null) {
+            return null;
         }
+
+        Set<DatasetReference> datasetReferences = datasetReferenceSources.stream()
+            .filter(it -> !it.isEmpty())
+            .map(datasetRefUrl -> datasetCatClient.lookupDatasetReferenceByUri(datasetRefUrl))
+            .filter(Optional::isPresent)
+            .map(Optional::get)
+            .collect(Collectors.toSet());
+
         return datasetReferences.isEmpty() ? null : datasetReferences;
     }
 
