@@ -586,12 +586,15 @@ public class DatasetsQueryService extends ElasticsearchService {
 
     Dataset getDatasetByUri(String uri) throws Exception {
         initializeElasticsearchTransportClient();
-        SearchResponse response = getClient().prepareSearch("dcat")
+
+        SearchRequestBuilder searchBuilder = getClient().prepareSearch("dcat")
             .setTypes("dataset")
             .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
-            .setQuery(QueryBuilders.termQuery("uri", uri))
-            .execute()
-            .actionGet();
+            .setQuery(QueryBuilders.termQuery("uri", uri));
+
+        logger.debug("Search dataset by uri query: {}", searchBuilder.toString());
+
+        SearchResponse response = searchBuilder.execute().actionGet();
 
         SearchHit[] hits = response.getHits().getHits();
 
