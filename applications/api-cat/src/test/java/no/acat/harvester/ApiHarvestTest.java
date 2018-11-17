@@ -1,12 +1,10 @@
 package no.acat.harvester;
 
-import no.acat.utils.Utils;
 import no.acat.model.ApiDocument;
 import no.acat.service.ApiDocumentBuilderService;
 import no.acat.service.ElasticsearchService;
-import no.acat.service.RegistrationApiService;
+import no.acat.service.RegistrationApiClient;
 import no.dcat.client.registrationapi.ApiRegistrationPublic;
-import no.dcat.client.registrationapi.RegistrationApiClient;
 import no.dcat.shared.testcategories.UnitTest;
 import org.junit.Before;
 import org.junit.Test;
@@ -42,10 +40,8 @@ public class ApiHarvestTest {
 
         RegistrationApiClient registrationApiClientMock = mock(RegistrationApiClient.class);
         when(registrationApiClientMock.getPublished()).thenReturn(publishedApis);
-        RegistrationApiService registrationApiService = mock(RegistrationApiService.class);
-        when(registrationApiService.getClient()).thenReturn(registrationApiClientMock);
 
-        ApiHarvester harvester = new ApiHarvester(elasticsearchServiceMock, apiDocumentBuilderServiceMock, registrationApiService);
+        ApiHarvester harvester = new ApiHarvester(elasticsearchServiceMock, apiDocumentBuilderServiceMock, registrationApiClientMock);
 
         harvester.harvestAll();
 
@@ -59,11 +55,8 @@ public class ApiHarvestTest {
         RegistrationApiClient registrationApiClientMock = mock(RegistrationApiClient.class);
         when(registrationApiClientMock.getPublished()).thenReturn(new ArrayList<>());
 
-        RegistrationApiService registrationApiService = mock(RegistrationApiService.class);
-        when(registrationApiService.getClient()).thenReturn(registrationApiClientMock);
 
-
-        ApiHarvester harvester = new ApiHarvester(elasticsearchServiceMock, apiDocumentBuilderServiceMock, registrationApiService);
+        ApiHarvester harvester = new ApiHarvester(elasticsearchServiceMock, apiDocumentBuilderServiceMock, registrationApiClientMock);
 
         ApiHarvester harvesterSpy = spy(harvester);
 
@@ -80,10 +73,7 @@ public class ApiHarvestTest {
         RegistrationApiClient registrationApiClientMock = mock(RegistrationApiClient.class);
         when(registrationApiClientMock.getPublished()).thenReturn(new ArrayList<>());
 
-        RegistrationApiService registrationApiService = mock(RegistrationApiService.class);
-        when(registrationApiService.getClient()).thenReturn(registrationApiClientMock);
-
-        ApiHarvester harvester = new ApiHarvester(elasticsearchServiceMock, apiDocumentBuilderServiceMock, registrationApiService);
+        ApiHarvester harvester = new ApiHarvester(elasticsearchServiceMock, apiDocumentBuilderServiceMock, registrationApiClientMock);
 
         harvester.harvestAll();
 
