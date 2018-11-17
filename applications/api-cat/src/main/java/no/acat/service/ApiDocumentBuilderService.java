@@ -8,6 +8,7 @@ import io.swagger.v3.oas.models.media.Content;
 import io.swagger.v3.oas.models.responses.ApiResponse;
 import io.swagger.v3.oas.models.responses.ApiResponses;
 import no.acat.model.ApiDocument;
+import no.acat.repository.ApiDocumentRepository;
 import no.acat.spec.ParseException;
 import no.dcat.client.publishercat.PublisherCatClient;
 import no.dcat.client.registrationapi.ApiRegistrationPublic;
@@ -17,7 +18,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -31,14 +31,14 @@ denormalizes it for indexing and display purpose in search service
 @Service
 public class ApiDocumentBuilderService {
     private static final Logger logger = LoggerFactory.getLogger(ApiDocumentBuilderService.class);
-    private ElasticsearchService elasticsearchService;
+    private ApiDocumentRepository apiDocumentRepository;
     private ParserService parserService;
     private PublisherCatClient publisherCatClient;
     private DatasetCatClient datasetCatClient;
 
     @Autowired
-    public ApiDocumentBuilderService(ElasticsearchService elasticsearchService, ParserService parserService, PublisherCatClient publisherCatClient, DatasetCatClient datasetCatClient) {
-        this.elasticsearchService = elasticsearchService;
+    public ApiDocumentBuilderService(ApiDocumentRepository apiDocumentRepository, ParserService parserService, PublisherCatClient publisherCatClient, DatasetCatClient datasetCatClient) {
+        this.apiDocumentRepository = apiDocumentRepository;
         this.parserService = parserService;
         this.publisherCatClient = publisherCatClient;
         this.datasetCatClient = datasetCatClient;
@@ -49,8 +49,8 @@ public class ApiDocumentBuilderService {
         String apiSpec = getApiSpec(apiRegistration);
         OpenAPI openApi = parserService.parse(apiSpec);
 
-        ApiDocument existingApiDocument = elasticsearchService.getApiDocumentByHarvestSourceUri(harvestSourceUri);
-        String id = existingApiDocument != null ? existingApiDocument.getId() : UUID.randomUUID().toString();
+        Optional<ApiDocument> existingApiDocumentOptional = apiDocumentRepository.getApiDocumentByHarvestSourceUri(harvestSourceUri);
+        String id = existingApiDocumentOptional.isPresent() ? existingApiDocumentOptional.get().getId() : UUID.randomUUID().toString();
 
         ApiDocument apiDocument = new ApiDocument().builder()
             .id(id)
@@ -61,7 +61,7 @@ public class ApiDocumentBuilderService {
 
         populateFromApiRegistration(apiDocument, apiRegistration);
         populateFromOpenApi(apiDocument, openApi);
-        updateHarvestMetadata(apiDocument, harvestDate, existingApiDocument);
+        updateHarvestMetadata(apiDocument, harvestDate, existingApiDocumentOptional.orElse(null));
 
         logger.info("ApiDocument is created. id={}, harvestSourceUri={}", apiDocument.getId(), apiDocument.getHarvestSourceUri());
         return apiDocument;
