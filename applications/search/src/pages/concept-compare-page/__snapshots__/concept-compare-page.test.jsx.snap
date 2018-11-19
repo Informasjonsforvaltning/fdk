@@ -64,7 +64,7 @@ exports[`should render ConceptComparePage correctly with conceptItem 1`] = `
                 <tr>
                   <td>
                     <strong>
-                      Responsible:
+                      Responsible
                     </strong>
                   </td>
                   <td
