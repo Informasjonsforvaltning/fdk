@@ -148,7 +148,7 @@ export const ConceptDetailsPage = props => {
 
             <SearchHitHeader
               title={getTranslateText(_.get(conceptItem, 'prefLabel'))}
-              publisherLabel={localization.responsible}
+              publisherLabel={`${localization.responsible}:`}
               publisher={_.get(conceptItem, 'publisher')}
               publisherItems={publisherItems}
             />

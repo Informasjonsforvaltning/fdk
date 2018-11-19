@@ -77,7 +77,11 @@ const renderPublisher = publisher => {
 
   return (
     <div className="mb-4">
-      <PublisherLabel label="Ansvarlig:" tag="span" publisherItem={publisher} />
+      <PublisherLabel
+        label={`${localization.responsible}:`}
+        tag="span"
+        publisherItem={publisher}
+      />
     </div>
   );
 };

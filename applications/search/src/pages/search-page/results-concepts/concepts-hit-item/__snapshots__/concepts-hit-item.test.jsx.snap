@@ -43,7 +43,7 @@ exports[`should render ConceptsHitItem correctly 1`] = `
       className="mb-4"
     >
       <PublisherLabel
-        label="Ansvarlig:"
+        label="Responsible:"
         publisherItem={
           Object {
             "orgPath": "/ba/be/bi/14",
