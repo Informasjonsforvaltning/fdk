@@ -307,8 +307,8 @@
     "remarkHeader": "Merknad",
     "subjectHeader": "Fag- og bruksområde",
     "subject": "Fagområde",
-    "termHeader": "Tillatt og frårådd term",
-    "altLabel": "Tillat term",
+    "termHeader": "Tillaten og frårådd term",
+    "altLabel": "Tillaten term",
     "hiddenLabel": "Frårådd term"
   }
 }
