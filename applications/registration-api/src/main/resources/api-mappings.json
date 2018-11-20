@@ -7,6 +7,19 @@
       },
       "registrationStatus": {
         "type": "keyword"
+      },
+      "isFromApiCatalog": {
+        "type": "boolean"
+      },
+      "harveststatus": {
+        "properties": {
+          "success": {
+            "type":"boolean"
+          },
+          "errorMessage": {
+            "type" : "text"
+          }
+        }
       }
     }
   }
