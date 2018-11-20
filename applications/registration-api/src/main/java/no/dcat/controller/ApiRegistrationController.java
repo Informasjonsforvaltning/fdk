@@ -164,7 +164,7 @@ public class ApiRegistrationController {
     public void deleteApiRegistration(
         @PathVariable("catalogId") String catalogId,
         @PathVariable("id") String id
-    ) throws NotFoundException {
+    ) throws NotFoundException, BadRequestException {
         logger.info("DELETE apiRegistration: " + id);
 
         Optional<ApiRegistration> apiRegistrationOptional = apiRegistrationRepository.findById(id);
@@ -176,9 +176,14 @@ public class ApiRegistrationController {
 
         ApiRegistration apiRegistration = apiRegistrationOptional.get();
 
-        if (!Objects.equals(catalogId, apiRegistration.getCatalogId())) {
+        if (!Objects.equals(catalogId, apiRegistration.getCatalogId()) ) {
             throw new NotFoundException();
         }
+
+        if(apiRegistration.getRegistrationStatus().equals(ApiRegistration.REGISTRATION_STATUS_PUBLISH)){
+            throw new BadRequestException();
+        }
+
         apiRegistrationRepository.delete(apiRegistration);
 
         apiCatClient.triggerHarvestApiRegistration(id);

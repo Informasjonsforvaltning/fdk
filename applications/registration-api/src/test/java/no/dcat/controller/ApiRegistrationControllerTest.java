@@ -3,13 +3,14 @@ package no.dcat.controller;
 import com.google.gson.Gson;
 import io.swagger.v3.oas.models.OpenAPI;
 import no.dcat.client.apicat.ApiCatClient;
-import no.dcat.factory.RegistrationFactory;
 import no.dcat.model.ApiRegistration;
 import no.dcat.model.Catalog;
 import no.dcat.service.ApiCatService;
 import no.dcat.service.ApiRegistrationRepository;
 import no.dcat.service.CatalogRepository;
 import no.dcat.shared.testcategories.UnitTest;
+import no.dcat.webutils.exceptions.BadRequestException;
+import no.dcat.webutils.exceptions.NotFoundException;
 import org.apache.commons.io.IOUtils;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,7 +19,6 @@ import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.opensaml.xml.parse.ClasspathResolver;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -26,14 +26,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.io.IOException;
 import java.util.Optional;
 
-import static org.junit.Assert.*;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.anyObject;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @Category(UnitTest.class)
 @RunWith(SpringRunner.class)
@@ -62,8 +59,8 @@ public class ApiRegistrationControllerTest {
         Catalog catalog = new Catalog();
         catalog.setId(catalogId);
         apiResource = new ClassPathResource("raw-enhet-api.json");
-        OpenAPI openApi = new Gson().fromJson(IOUtils.toString(apiResource.getInputStream(), "UTF-8"), OpenAPI.class);
-        ApiRegistration apiRegistrationData;
+        OpenAPI openApi =
+            new Gson().fromJson(IOUtils.toString(apiResource.getInputStream(), "UTF-8"), OpenAPI.class);
 
         when(catalogRepository.findById(anyString())).thenReturn(Optional.of(catalog));
         when(apiCatService.getClient()).thenReturn(apiCatClient);
@@ -72,11 +69,9 @@ public class ApiRegistrationControllerTest {
         ApiRegistration apiRegData = mock(ApiRegistration.class);
         when(apiRegData.getId()).thenReturn("id");
         when(apiRegistrationRepository.save(anyObject())).thenReturn(apiRegData);
-        //doNothing().when(apiCatClient).triggerHarvestApiRegistration(anyString());
 
-        apiRegistrationController = new ApiRegistrationController(apiRegistrationRepository, catalogRepository, apiCatService);
-
-
+        apiRegistrationController =
+            new ApiRegistrationController(apiRegistrationRepository, catalogRepository, apiCatService);
     }
 
     @Test
@@ -91,7 +86,58 @@ public class ApiRegistrationControllerTest {
         verify(apiRegistrationRepository).save(apiCaptor.capture());
 
         actual = apiCaptor.getValue();
-        assertThat(actual.getOpenApi().getInfo().getTitle(), is("Åpne Data fra Enhetsregisteret - API Dokumentasjon"));
+        assertThat(
+            actual.getOpenApi().getInfo().getTitle(),
+            is("Åpne Data fra Enhetsregisteret - API Dokumentasjon"));
     }
 
+    @Test(expected = NotFoundException.class)
+    public void checkIfCatalogIdNotMatchWillFailWithNotFound() throws NotFoundException, BadRequestException {
+
+        String catalogId = "1234";
+        String id = "1234";
+
+        ApiRegistration apiRegistration = new ApiRegistration();
+        apiRegistration.setCatalogId(catalogId + "0000");
+
+        when(apiRegistrationRepository.findById(anyString())).thenReturn(Optional.of(apiRegistration));
+
+        apiRegistrationController.deleteApiRegistration(catalogId, id);
+    }
+
+    @Test(expected = BadRequestException.class)
+    public void checkDeleteApiRegistrationWithStatusPublishedBadRequest()
+        throws NotFoundException, BadRequestException {
+
+        String catalogId = "1234";
+        String id = "1234";
+
+        ApiRegistration apiRegistration = new ApiRegistration();
+        apiRegistration.setCatalogId(catalogId);
+        apiRegistration.setRegistrationStatus(ApiRegistration.REGISTRATION_STATUS_PUBLISH);
+
+        when(apiRegistrationRepository.findById(id)).thenReturn(Optional.of(apiRegistration));
+
+        apiRegistrationController.deleteApiRegistration(catalogId, id);
+    }
+
+    @Test
+    public void checkDeleteApiRegistrationWithStatusDraftOK()
+        throws NotFoundException, BadRequestException {
+
+        String catalogId = "1234";
+        String id = "1234";
+
+        ApiRegistration apiRegistration = new ApiRegistration();
+        apiRegistration.setCatalogId(catalogId);
+        apiRegistration.setRegistrationStatus(ApiRegistration.REGISTRATION_STATUS_DRAFT);
+
+        when(apiRegistrationRepository.findById(id)).thenReturn(Optional.of(apiRegistration));
+
+        apiRegistrationController.deleteApiRegistration(catalogId, id);
+        doNothing().when(apiRegistrationRepository).delete(apiRegistration);
+
+        verify(apiRegistrationRepository, times(1)).delete(apiRegistration);
+        verify(apiCatClient, times(1)).triggerHarvestApiRegistration(id);
+    }
 }
