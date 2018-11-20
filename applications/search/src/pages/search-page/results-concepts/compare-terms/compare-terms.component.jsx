@@ -9,14 +9,14 @@ export const CompareTerms = props => {
   let title = getTranslateText(prefLabel);
   title = title.charAt(0).toUpperCase() + title.substring(1).toLowerCase();
   return (
-    <div className="fdk-container p-3">
+    <div className="fdk-container p-4">
       <button
-        className="float-right fdk-button-small fdk-color-blue-dark"
+        className="float-right btn fdk-text-size-15 fdk-color-blue-dark"
         onClick={() => {
           onDeleteTerm(uri);
         }}
       >
-        <i className="fa fa-times" />
+        <i className="fa fa-minus-circle" />
         &nbsp;
         {localization.terms.removeTerms}
       </button>

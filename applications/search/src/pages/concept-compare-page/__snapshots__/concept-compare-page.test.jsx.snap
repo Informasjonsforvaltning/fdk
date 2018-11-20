@@ -111,7 +111,7 @@ exports[`should render ConceptComparePage correctly with conceptItem 1`] = `
                     key="row-button-0"
                   >
                     <button
-                      className="fdk-button-small fdk-color-blue-dark"
+                      className="btn fdk-text-size-15 fdk-color-blue-dark bg-transparent"
                       onClick={[Function]}
                     >
                       <i
@@ -125,7 +125,7 @@ exports[`should render ConceptComparePage correctly with conceptItem 1`] = `
                     key="row-button-1"
                   >
                     <button
-                      className="fdk-button-small fdk-color-blue-dark"
+                      className="btn fdk-text-size-15 fdk-color-blue-dark bg-transparent"
                       onClick={[Function]}
                     >
                       <i
@@ -139,7 +139,7 @@ exports[`should render ConceptComparePage correctly with conceptItem 1`] = `
                     key="row-button-2"
                   >
                     <button
-                      className="fdk-button-small fdk-color-blue-dark"
+                      className="btn fdk-text-size-15 fdk-color-blue-dark bg-transparent"
                       onClick={[Function]}
                     >
                       <i
