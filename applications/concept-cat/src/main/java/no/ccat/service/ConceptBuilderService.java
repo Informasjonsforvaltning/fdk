@@ -1,9 +1,9 @@
 package no.ccat.service;
 
 import com.google.common.collect.ImmutableMap;
-import com.google.gson.Gson;
 import no.ccat.model.ConceptDenormalized;
 import no.ccat.model.Definition;
+import no.ccat.model.Source;
 import no.dcat.shared.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,7 +49,13 @@ public class ConceptBuilderService {
         
         definition.setText(ImmutableMap.of("no", "norsk definitin" + id, "en", "engelsk definition" + id));
 
-        definition.setSource(ImmutableMap.of("no", "norsk kildetekst", "en", "engelsk kildetekst"));
+        Source source = new Source();
+
+        source.setUri("www.testuri.no");
+
+        source.setPrefLabel(ImmutableMap.of("no", "norsk kildetekst", "en", "engelsk kildetekst"));
+
+        definition.setSource(source);
 
         concept.setDefinition(definition);
 

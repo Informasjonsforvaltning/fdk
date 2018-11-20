@@ -3,6 +3,7 @@ package no.ccat.service;
 import no.ccat.SKOSNO;
 import no.ccat.model.ConceptDenormalized;
 import no.ccat.model.Definition;
+import no.ccat.model.Source;
 import no.dcat.shared.Publisher;
 import org.apache.jena.rdf.model.*;
 import org.apache.jena.vocabulary.*;
@@ -36,7 +37,9 @@ public class RDFToModelTransformer {
         Definition definition = new Definition();
         definition.setText(new HashMap());
         definition.setRemark(new HashMap<>());
-        definition.setSource(new HashMap<>());
+        Source source = new Source();
+        source.setPrefLabel(new HashMap());
+        definition.setSource(source);
 
         List<Resource> betydningsbeskivelses = getNamedSubPropertiesAsListOfResources(resource, SKOSNO.betydningsbeskrivelse);
 
@@ -52,9 +55,12 @@ public class RDFToModelTransformer {
                 definition.getRemark().putAll(noteAsLanguageLiteral);
             }
 
+
+
+
             Map<String, String> sourceAsLanguageLiteral = extractLanguageRDFSLabelFromLabel(betydningsbeskrivelse, DCTerms.source);
             if (sourceAsLanguageLiteral != null) {
-                definition.getSource().putAll(sourceAsLanguageLiteral);
+                definition.getSource().getPrefLabel().putAll(sourceAsLanguageLiteral);
             }
         }
         return definition;
