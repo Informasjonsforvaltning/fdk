@@ -124,35 +124,24 @@ const renderIdentifiers = identifiers => {
 
 const renderStickyMenu = conceptItem => {
   const menuItems = [];
-  console.log(conceptItem);
-  if (_.get(conceptItem, 'prefLabel.no')) {
+  menuItems.push({
+    name: getTranslateText(_.get(conceptItem, 'prefLabel')),
+    prefLabel: localization.concept.definition
+  });
+  if (getTranslateText(_.get(conceptItem, 'definition.remark'))) {
     menuItems.push({
-      name: _.get(conceptItem, 'prefLabel.no'),
-      prefLabel: localization.facet.concept
+      name: localization.concept.remarkHeader,
+      prefLabel: localization.concept.remarkHeader
     });
   }
-  if (_.get(conceptItem, 'publisher.prefLabel.no')) {
+  if (getTranslateText(_.get(conceptItem, 'subject'))) {
     menuItems.push({
-      name: _.get(conceptItem, 'publisher.prefLabel.no'),
-      prefLabel: localization.description
+      name: localization.concept.subjectHeader,
+      prefLabel: localization.concept.subjectHeader
     });
   }
   return <StickyMenu menuItems={menuItems} />;
 };
-
-const renderContactPoints = contactPoints => {
-  if (!contactPoints) {
-    return null;
-  }
-  const children = items => items.map(item => renderContactPoint(item));
-
-  return (
-    <ListRegular title={localization.contactInfo}>
-      {children(contactPoints)}
-    </ListRegular>
-  );
-};
-
 export const ConceptDetailsPage = props => {
   props.fetchPublishersIfNeeded();
 
@@ -170,19 +159,17 @@ export const ConceptDetailsPage = props => {
   return (
     <main id="content" className="container">
       <article>
-        <div className="row2">
-          <div className="col-12 col-lg-4 ">{renderStickyMenu(conceptItem)}</div>
-          <div className="col-12 col-lg-8 offset-lg-4">
+        <div className="row">
+          <div className="col-12 col-lg-8  offset-lg-4">
             <DocumentMeta {...meta} />
 
             <div className="fdk-detail-date mb-5">
               <HarvestDate harvest={_.get(conceptItem, 'harvest')} />
-
             </div>
 
             <SearchHitHeader
               title={getTranslateText(_.get(conceptItem, 'prefLabel'))}
-              publisherLabel={`${localization.responsible}:`}
+              publisherLabel={localization.responsible}
               publisher={_.get(conceptItem, 'publisher')}
               publisherItems={publisherItems}
             />

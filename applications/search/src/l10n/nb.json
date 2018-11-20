@@ -309,6 +309,7 @@
     "subject": "Fagområde",
     "termHeader": "Tillatt og frarådet term",
     "altLabel": "Tillat term",
-    "hiddenLabel": "Frarådet term"
+    "hiddenLabel": "Frarådet term",
+    "definition": "Definisjon"
   }
 }
