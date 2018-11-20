@@ -124,6 +124,7 @@ const renderIdentifiers = identifiers => {
 
 const renderStickyMenu = conceptItem => {
   const menuItems = [];
+  console.log(conceptItem);
   menuItems.push({
     name: getTranslateText(_.get(conceptItem, 'prefLabel')),
     prefLabel: localization.concept.definition
@@ -138,6 +139,12 @@ const renderStickyMenu = conceptItem => {
     menuItems.push({
       name: localization.concept.subjectHeader,
       prefLabel: localization.concept.subjectHeader
+    });
+  }
+  if(getTranslateText(_.get(conceptItem, 'altLabel[0]'))) {
+    menuItems.push({
+      name: localization.concept.termHeader,
+      prefLabel: localization.concept.termHeader
     });
   }
   return <StickyMenu menuItems={menuItems} />;
@@ -169,8 +176,9 @@ export const ConceptDetailsPage = props => {
 
             <SearchHitHeader
               title={getTranslateText(_.get(conceptItem, 'prefLabel'))}
-              publisherLabel={localization.responsible}
+              publisherLabel={`${localization.responsible}:`}
               publisher={_.get(conceptItem, 'publisher')}
+              publisherTag="span"
               publisherItems={publisherItems}
             />
           </div>

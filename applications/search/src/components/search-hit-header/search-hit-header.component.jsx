@@ -68,6 +68,7 @@ export const SearchHitHeader = props => {
     titleLink,
     publisherLabel,
     publisher,
+    publisherTag,
     publisherItems,
     theme,
     nationalComponent
@@ -91,7 +92,7 @@ export const SearchHitHeader = props => {
       <div className="mb-4">
         {!publisherItems &&
           publisher && (
-            <PublisherLabel label={publisherLabel} publisherItem={publisher} />
+            <PublisherLabel tag={publisherTag} label={publisherLabel} publisherItem={publisher} />
           )}
       </div>
 
@@ -106,6 +107,7 @@ SearchHitHeader.defaultProps = {
   titleLink: null,
   publisherLabel: null,
   publisher: null,
+  publisherTag:'strong',
   publisherItems: null,
   theme: null,
   nationalComponent: false
@@ -117,6 +119,7 @@ SearchHitHeader.propTypes = {
   titleLink: PropTypes.string,
   publisherLabel: PropTypes.string,
   publisher: PropTypes.object,
+  publisherTag: PropTypes.string,
   publisherItems: PropTypes.object,
   theme: PropTypes.array,
   nationalComponent: PropTypes.bool
