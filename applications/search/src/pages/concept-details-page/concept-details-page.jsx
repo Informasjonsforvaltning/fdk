@@ -11,6 +11,7 @@ import { HarvestDate } from '../../components/harvest-date/harvest-date.componen
 import { SearchHitHeader } from '../../components/search-hit-header/search-hit-header.component';
 import { ShowMore } from '../../components/show-more/show-more';
 import { LinkExternal } from '../../components/link-external/link-external.component';
+import { StickyMenu } from '../../components/sticky-menu/sticky-menu.component';
 import './concept-details-page.scss';
 
 const renderDescription = description => {
@@ -189,8 +190,9 @@ export const ConceptDetailsPage = props => {
         </div>
 
         <div className="row">
-          <div className="col-12 col-lg-4 " />
-
+          <div className="col-12 col-lg-4 ">
+            {renderStickyMenu(conceptItem)}
+          </div>
           <section className="col-12 col-lg-8 mt-3">
             {renderDescription(_.get(conceptItem, ['definition', 'text']))}
             {renderSource(_.get(conceptItem, ['definition', 'source']))}
@@ -201,40 +203,6 @@ export const ConceptDetailsPage = props => {
               _.get(conceptItem, 'hiddenLabel')
             )}
             {renderIdentifiers(_.get(conceptItem, 'identifiers'))}
-
-            <ListRegular title="Merknad">
-            </ListRegular>
-
-            <ListRegular title="Eksempel">
-            </ListRegular>
-
-            <ListRegular title="Fag- og bruksområde">
-              <TwoColRow
-                col1="Preflabel.no"
-                col2={_.get(conceptItem, "prefLabel.no")}
-              />
-            </ListRegular>
-
-            <ListRegular title="Tillat og frarådet term">
-              <TwoColRow
-                col1="Preflabel.no"
-                col2={_.get(conceptItem, "prefLabel.no")}
-              />
-            </ListRegular>
-
-            <ListRegular title="Identifikator">
-            </ListRegular>
-
-            <ListRegular title="Kontakt">
-              <TwoColRow
-                col1="Preflabel.no"
-                col2={_.get(conceptItem, "prefLabel.no")}
-              />
-            </ListRegular>
-
-            <ListRegular title="Brukt i datasett">
-            </ListRegular>
-
             <div style={{ height: '75vh' }} />
           </section>
         </div>
