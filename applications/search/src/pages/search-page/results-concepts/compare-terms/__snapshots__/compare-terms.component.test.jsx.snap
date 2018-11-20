@@ -2,14 +2,14 @@
 
 exports[`should render CompareTerms correctly 1`] = `
 <div
-  className="fdk-container p-3"
+  className="fdk-container p-4"
 >
   <button
-    className="float-right fdk-button-small fdk-color-blue-dark"
+    className="float-right btn fdk-text-size-15 fdk-color-blue-dark"
     onClick={[Function]}
   >
     <i
-      className="fa fa-times"
+      className="fa fa-minus-circle"
     />
      
     Remove

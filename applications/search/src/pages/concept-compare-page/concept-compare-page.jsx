@@ -76,7 +76,7 @@ const renderRemoveItem = (items, history, conceptIdsArray, removeConcept) => {
     Object.keys(items).map((item, index) => (
       <td key={`row-button-${index}`}>
         <button
-          className="fdk-button-small fdk-color-blue-dark"
+          className="btn fdk-text-size-15 fdk-color-blue-dark bg-transparent"
           onClick={() => {
             onDeleteConcept(
               _.get(items, [item, 'id']),
