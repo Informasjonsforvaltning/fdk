@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 import no.dcat.client.registrationapi.ApiRegistrationPublic;
+import no.dcat.shared.HarvestMetadata;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Mapping;
 
@@ -31,4 +32,12 @@ public class ApiRegistration extends ApiRegistrationPublic {
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZZ")
     private Date _lastModified;
+
+    private HarvestMetadata harvestMetadata;
+
+    private ApiHarvestStatus harvestStatus;
+
+    private boolean isFromApiCatalog;
+
+
 }
