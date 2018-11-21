@@ -309,6 +309,7 @@
     "subject": "Domain",
     "termHeader": "Alternative and hidden term",
     "altLabel": "Alternative term",
-    "hiddenLabel": "Hidden term"
+    "hiddenLabel": "Hidden term",
+    "definition": "Definition"
   }
 }

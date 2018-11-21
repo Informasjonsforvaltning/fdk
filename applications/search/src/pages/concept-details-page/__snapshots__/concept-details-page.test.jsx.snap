@@ -10,7 +10,7 @@ exports[`should render ConceptDetailsPage correctly with conceptItem 1`] = `
       className="row"
     >
       <div
-        className="col-12 col-lg-8 offset-lg-4"
+        className="col-12 col-lg-8  offset-lg-4"
       >
         <SideEffect(DocumentMeta)
           description="engelsk definition14"
@@ -41,6 +41,7 @@ exports[`should render ConceptDetailsPage correctly with conceptItem 1`] = `
           }
           publisherItems={null}
           publisherLabel="Responsible:"
+          publisherTag="span"
           tag="h1"
           theme={null}
           title="engelsk preflabel14"
@@ -53,7 +54,18 @@ exports[`should render ConceptDetailsPage correctly with conceptItem 1`] = `
     >
       <div
         className="col-12 col-lg-4 "
-      />
+      >
+        <StickyMenu
+          menuItems={
+            Array [
+              Object {
+                "name": "engelsk preflabel14",
+                "prefLabel": "Definition",
+              },
+            ]
+          }
+        />
+      </div>
       <section
         className="col-12 col-lg-8 mt-3"
       >

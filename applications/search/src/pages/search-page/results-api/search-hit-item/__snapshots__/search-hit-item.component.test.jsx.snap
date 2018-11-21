@@ -26,6 +26,7 @@ exports[`should render api-SearchHitItem correctly 1`] = `
       }
       publisherItems={null}
       publisherLabel="Provider:"
+      publisherTag="strong"
       tag="h2"
       theme={null}
       title="REST-API for Kontakt- og reserversjonsregisteret (KRR)"
@@ -101,6 +102,7 @@ exports[`should render api-SearchHitItem with long description 1`] = `
       publisher={null}
       publisherItems={null}
       publisherLabel="Provider:"
+      publisherTag="strong"
       tag="h2"
       theme={null}
       title="National Data Directory Search API"

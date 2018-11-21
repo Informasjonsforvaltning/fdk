@@ -24,6 +24,7 @@ exports[`should render ApiDetailsPage correctly with apiItem 1`] = `
           publisher={null}
           publisherItems={null}
           publisherLabel="Provider:"
+          publisherTag="strong"
           tag="h1"
           theme={null}
           title="National Data Directory Search API"
@@ -348,6 +349,7 @@ exports[`should render ApiDetailsPage correctly with missing api-properties 1`] 
           publisher={null}
           publisherItems={null}
           publisherLabel="Provider:"
+          publisherTag="strong"
           tag="h1"
           theme={null}
           title={null}

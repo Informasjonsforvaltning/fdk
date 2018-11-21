@@ -11,6 +11,7 @@ import { HarvestDate } from '../../components/harvest-date/harvest-date.componen
 import { SearchHitHeader } from '../../components/search-hit-header/search-hit-header.component';
 import { ShowMore } from '../../components/show-more/show-more';
 import { LinkExternal } from '../../components/link-external/link-external.component';
+import { StickyMenu } from '../../components/sticky-menu/sticky-menu.component';
 import './concept-details-page.scss';
 
 const renderDescription = description => {
@@ -121,6 +122,33 @@ const renderIdentifiers = identifiers => {
   );
 };
 
+const renderStickyMenu = conceptItem => {
+  const menuItems = [];
+  console.log(conceptItem);
+  menuItems.push({
+    name: getTranslateText(_.get(conceptItem, 'prefLabel')),
+    prefLabel: localization.concept.definition
+  });
+  if (getTranslateText(_.get(conceptItem, 'definition.remark'))) {
+    menuItems.push({
+      name: localization.concept.remarkHeader,
+      prefLabel: localization.concept.remarkHeader
+    });
+  }
+  if (getTranslateText(_.get(conceptItem, 'subject'))) {
+    menuItems.push({
+      name: localization.concept.subjectHeader,
+      prefLabel: localization.concept.subjectHeader
+    });
+  }
+  if(getTranslateText(_.get(conceptItem, 'altLabel[0]'))) {
+    menuItems.push({
+      name: localization.concept.termHeader,
+      prefLabel: localization.concept.termHeader
+    });
+  }
+  return <StickyMenu menuItems={menuItems} />;
+};
 export const ConceptDetailsPage = props => {
   props.fetchPublishersIfNeeded();
 
@@ -139,7 +167,7 @@ export const ConceptDetailsPage = props => {
     <main id="content" className="container">
       <article>
         <div className="row">
-          <div className="col-12 col-lg-8 offset-lg-4">
+          <div className="col-12 col-lg-8  offset-lg-4">
             <DocumentMeta {...meta} />
 
             <div className="fdk-detail-date mb-5">
@@ -150,14 +178,16 @@ export const ConceptDetailsPage = props => {
               title={getTranslateText(_.get(conceptItem, 'prefLabel'))}
               publisherLabel={`${localization.responsible}:`}
               publisher={_.get(conceptItem, 'publisher')}
+              publisherTag="span"
               publisherItems={publisherItems}
             />
           </div>
         </div>
 
         <div className="row">
-          <div className="col-12 col-lg-4 " />
-
+          <div className="col-12 col-lg-4 ">
+            {renderStickyMenu(conceptItem)}
+          </div>
           <section className="col-12 col-lg-8 mt-3">
             {renderDescription(_.get(conceptItem, ['definition', 'text']))}
             {renderSource(_.get(conceptItem, ['definition', 'source']))}
@@ -168,7 +198,6 @@ export const ConceptDetailsPage = props => {
               _.get(conceptItem, 'hiddenLabel')
             )}
             {renderIdentifiers(_.get(conceptItem, 'identifiers'))}
-
             <div style={{ height: '75vh' }} />
           </section>
         </div>
