@@ -1,7 +1,6 @@
 package no.acat.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
 import no.acat.model.ApiDocument;
 import no.dcat.client.elasticsearch5.Elasticsearch5Client;
 import org.apache.commons.io.IOUtils;
@@ -122,7 +121,7 @@ public class ElasticsearchService {
     }
 
     public void deleteApiDocumentByIds(List<String> ids) {
-        if (ids.size()==0){
+        if (ids.size() == 0) {
             logger.debug("ApiDocuments deleted. count:0");
             return;
         }
