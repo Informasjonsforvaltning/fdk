@@ -33,7 +33,7 @@ public class ApiRegistration extends ApiRegistrationPublic {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZZ")
     private Date _lastModified;
 
-    private HarvestMetadata harvestMetadata;
+    private HarvestMetadata harvest;
 
     private ApiHarvestStatus harvestStatus;
 
