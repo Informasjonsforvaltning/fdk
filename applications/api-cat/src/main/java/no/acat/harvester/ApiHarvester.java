@@ -1,6 +1,7 @@
 package no.acat.harvester;
 
 import no.acat.model.ApiDocument;
+import no.acat.repository.ApiDocumentRepository;
 import no.acat.service.ApiDocumentBuilderService;
 import no.acat.service.ElasticsearchService;
 import no.acat.service.RegistrationApiClient;
@@ -29,12 +30,17 @@ public class ApiHarvester {
     private ElasticsearchService elasticsearchService;
     private ApiDocumentBuilderService apiDocumentBuilderService;
     private RegistrationApiClient registrationApiClient;
+    private ApiDocumentRepository apiDocumentRepository;
 
     @Autowired
-    public ApiHarvester(ElasticsearchService elasticsearchService, ApiDocumentBuilderService apiDocumentBuilderService, RegistrationApiClient registrationApiClient) {
+    public ApiHarvester(ElasticsearchService elasticsearchService,
+                        ApiDocumentBuilderService apiDocumentBuilderService,
+                        RegistrationApiClient registrationApiClient,
+                        ApiDocumentRepository apiDocumentRepository) {
         this.elasticsearchService = elasticsearchService;
         this.registrationApiClient = registrationApiClient;
         this.apiDocumentBuilderService = apiDocumentBuilderService;
+        this.apiDocumentRepository = apiDocumentRepository;
     }
 
     public void harvestAll() {
@@ -54,7 +60,7 @@ public class ApiHarvester {
             try {
                 logger.debug("Indexing from source uri: {}", harvestSourceUri);
                 ApiDocument apiDocument = apiDocumentBuilderService.createFromApiRegistration(apiRegistration, harvestSourceUri, harvestDate);
-                elasticsearchService.createOrReplaceApiDocument(apiDocument);
+                apiDocumentRepository.createOrReplaceApiDocument(apiDocument);
                 idsHarvested.add(apiDocument.getId());
             } catch (Exception e) {
                 logger.warn("Error importing API record. ErrorClass={} message={}", e.getClass().getName(), e.getMessage());
@@ -62,8 +68,8 @@ public class ApiHarvester {
             }
         }
         try {
-            List<String> idsToDelete = elasticsearchService.getApiDocumentIdsNotHarvested(idsHarvested);
-            elasticsearchService.deleteApiDocumentByIds(idsToDelete);
+            List<String> idsToDelete = apiDocumentRepository.getApiDocumentIdsNotHarvested(idsHarvested);
+            apiDocumentRepository.deleteApiDocumentByIds(idsToDelete);
         } catch (Exception e) {
             logger.error("Error deleting {}", e.getMessage());
             logger.debug("Error stacktrace", e);
