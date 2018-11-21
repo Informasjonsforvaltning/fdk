@@ -56,9 +56,11 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
     public static final String VALIDATION_EMAIL_SUBJECT = "Felles datakatalog harvestlogg";
     private static final Logger logger = LoggerFactory.getLogger(ElasticSearchResultHandler.class);
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
-    private final String referenceDataUrl;
+    Elasticsearch5Client elasticClient;
+    DcatIndexUtils dcatIndexUtils;
     String clusterNodes;
     String clusterName;
+    String referenceDataUrl;
     String httpUsername;
     String httpPassword;
     String notificationEmailSender;
@@ -91,11 +93,19 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         this.notificationService = emailNotificationService;
 
         logger.debug("ES clusterName: " + this.clusterName);
-    }
 
+        this.elasticClient = createElasticsearch();
+        this.dcatIndexUtils = new DcatIndexUtils(elasticClient);
+
+    }
 
     public ElasticSearchResultHandler(String clusterNodes, String clusterName, String referenceDataUrl, String httpUsername, String httpPassword) {
         this(clusterNodes, clusterName, referenceDataUrl, httpUsername, httpPassword, DEFAULT_EMAIL_SENDER, null);
+    }
+
+    // for unit test purposes
+    ElasticSearchResultHandler() {
+
     }
 
     Elasticsearch5Client createElasticsearch() {
@@ -112,12 +122,12 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
      */
     @Override
     public void process(DcatSource dcatSource, Model model, List<String> validationResults) {
-        try (Elasticsearch5Client elasticsearch = createElasticsearch()) {
+        try {
 
             logger.info("Start indexing ...");
             long startTime = System.currentTimeMillis();
 
-            indexWithElasticsearch(dcatSource, model, elasticsearch, validationResults);
+            indexWithElasticsearch(dcatSource, model, elasticClient, validationResults);
 
             long took = (System.currentTimeMillis() - startTime) / 1000;
             logger.info("Finished indexing in {} seconds", took);
@@ -156,10 +166,6 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
      * @param validationResults List of strings with result from validation rules execution
      */
     void indexWithElasticsearch(DcatSource dcatSource, Model model, Elasticsearch5Client elasticsearch, List<String> validationResults) {
-
-        createIndexIfNotExists(elasticsearch, DCAT_INDEX);
-        createIndexIfNotExists(elasticsearch, HARVEST_INDEX);
-        createIndexIfNotExists(elasticsearch, SUBJECT_INDEX);
 
         startHarvestLog();
 
@@ -1044,20 +1050,6 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         s.setDescription(d.getDescription());
 
         return s;
-    }
-
-    DcatIndexUtils createDcatIndexUtils(final Elasticsearch5Client elasticsearch) {
-        return new DcatIndexUtils(elasticsearch);
-    }
-
-    private void createIndexIfNotExists(Elasticsearch5Client elasticsearch, String indexName) {
-        DcatIndexUtils dcatIndexUtils = createDcatIndexUtils(elasticsearch);
-        if (!dcatIndexUtils.indexExists(indexName)) {
-            logger.info("Creating index: " + indexName);
-            dcatIndexUtils.createIndex(indexName);
-        } else {
-            logger.debug("Index exists: " + indexName);
-        }
     }
 
 }

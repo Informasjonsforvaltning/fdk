@@ -1,9 +1,9 @@
 package no.dcat.datastore;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import no.dcat.client.elasticsearch5.Elasticsearch5Client;
-import org.apache.commons.io.IOUtils;
 import org.elasticsearch.action.ActionRequestValidationException;
 import org.elasticsearch.action.DocWriteResponse;
 import org.elasticsearch.action.delete.DeleteResponse;
@@ -14,26 +14,46 @@ import org.elasticsearch.search.SearchHit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Map;
 
 
 public class DcatIndexUtils {
 
-    private static final String DCAT_INDEX_MAPPING_FILENAME = "dcat_dataset_mapping.json";
-    private static final String DCAT_INDEX_SETTINGS_FILENAME = "dcat_settings.json";
-    private static final String CLUSTER_NAME = "cluster.name";
     private final Logger logger = LoggerFactory.getLogger(DcatIndexUtils.class);
 
     private Elasticsearch5Client esClient;
 
-
     public DcatIndexUtils(final Elasticsearch5Client esClient) {
+
         this.esClient = esClient;
+
+        try {
+
+            initializeAliasesAndMappings();
+
+        } catch (IOException e) {
+            throw new RuntimeException("Unable to initialize dcat alias and index");
+        }
+
+    }
+
+    public void initializeAliasesAndMappings() throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+
+        esClient.registerSetting("dcat", mapper.readTree(new ClassPathResource("dcat_settings.json").getInputStream()).toString());
+        esClient.registerMapping("dcat", "dataset", mapper.readTree(new ClassPathResource("dcat_dataset_mapping.json").getInputStream()).get("dataset").toString());
+
+        esClient.initializeAliasAndIndexMapping("dcat");
+
+        esClient.registerSetting("harvest", mapper.readTree(new ClassPathResource("dcat_settings.json").getInputStream()).toString());
+        esClient.registerMapping("harvest", "catalog", mapper.readTree(new ClassPathResource("harvest_catalog_mapping.json").getInputStream()).get("catalog").toString());
+        esClient.registerMapping("harvest", "dataset", mapper.readTree(new ClassPathResource("harvest_dataset_mapping.json").getInputStream()).get("dataset").toString());
+        esClient.registerMapping("harvest", "lookup", mapper.readTree(new ClassPathResource("harvest_lookup_mapping.json").getInputStream()).get("lookup").toString());
+
+        esClient.initializeAliasAndIndexMapping("harvest");
+
     }
 
     /**
@@ -56,11 +76,8 @@ public class DcatIndexUtils {
      * @return True if index exists
      */
     public boolean indexExists(String index) {
-        Object a = esClient.getClient();
-        Object b = esClient.getClient().admin();
-        Object c = esClient.getClient().admin().indices();
-        Object d = esClient.getClient().admin().indices().prepareExists(index);
-        return esClient.getClient().admin().indices().prepareExists(index).execute().actionGet().isExists();
+
+        return esClient.indexExists(index);
     }
 
     /**
@@ -77,96 +94,6 @@ public class DcatIndexUtils {
         }
 
         return false;
-    }
-
-    /**
-     * Creates new dcat and theme indexes on Elasticsearch cluster
-     * The indexes are set up correct indexing fields and language stemming
-     * Configuration of the indexes is specified in DCAT_INDEX_MAPPING_FILENAME
-     *
-     * @param index Name of index to be created
-     */
-    public void createIndex(String index) {
-        //Set mapping for correct language stemming and indexing
-        if (index != null) {
-            if (index.equals("harvest")) {
-                Resource harvestCatalogResource = new ClassPathResource("harvest_catalog_mapping.json");
-                Resource harvestDatasetResource = new ClassPathResource("harvest_dataset_mapping.json");
-                Resource harvestLookupResource = new ClassPathResource("harvest_lookup_mapping.json");
-                Resource settingsResource = new ClassPathResource(DCAT_INDEX_SETTINGS_FILENAME);
-                try {
-                    esClient.getClient().admin().indices().prepareCreate("harvest")
-                        .setSettings(IOUtils.toString(settingsResource.getInputStream(), "UTF-8"))
-                        .addMapping("catalog", IOUtils.toString(harvestCatalogResource.getInputStream(), "UTF-8"))
-                        .addMapping("dataset", IOUtils.toString(harvestDatasetResource.getInputStream(), "UTF-8"))
-                        .addMapping("lookup", IOUtils.toString(harvestLookupResource.getInputStream(), "UTF-8"))
-                        .execute().actionGet();
-
-                    logger.debug("[createIndex] {}", "harvest");
-                    esClient.getClient().admin().cluster().prepareHealth(index).setWaitForYellowStatus().execute().actionGet();
-
-                } catch (IOException e) {
-                    logger.error("Unable to create index for {}. Reason {}", index, e.getLocalizedMessage());
-                }
-            } else if (index.equals("dcat")) {
-
-                PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-                try {
-                    Resource dcatSettingsResource = new ClassPathResource(DCAT_INDEX_SETTINGS_FILENAME);
-                    Resource datasetMappingResource = new ClassPathResource(DCAT_INDEX_MAPPING_FILENAME);
-
-                    esClient.getClient().admin().indices().prepareCreate(index)
-                        .setSettings(IOUtils.toString(dcatSettingsResource.getInputStream(), "UTF-8"))
-                        .addMapping("dataset", IOUtils.toString(datasetMappingResource.getInputStream(), "UTF-8"))
-                        .execute().actionGet();
-
-                    logger.debug("[createIndex] {}", index);
-                    esClient.getClient().admin().cluster().prepareHealth(index).setWaitForYellowStatus().execute().actionGet();
-
-                } catch (IOException e) {
-                    logger.error("Unable to create index [{}] in Elasticsearch. Reason {} ", index, e.getMessage());
-                }
-            } else if (index.equals("scat")) {
-                try {
-                    Resource dcatSettingsResource = new ClassPathResource(DCAT_INDEX_SETTINGS_FILENAME);
-                    Resource subjectMappingResource = new ClassPathResource("scat_subject_mapping.json");
-
-                    esClient.getClient().admin().indices().prepareCreate(index)
-                        .setSettings(IOUtils.toString(dcatSettingsResource.getInputStream(), "UTF-8"))
-                        .addMapping("subject", IOUtils.toString(subjectMappingResource.getInputStream(), "UTF-8"))
-                        .execute().actionGet();
-
-                    logger.debug("[createIndex] {}", index);
-                    esClient.getClient().admin().cluster().prepareHealth(index).setWaitForYellowStatus().execute().actionGet();
-                } catch (IOException e) {
-                    logger.error("Unable to create index [{}] in Elasticsearch. Reason {} ", index, e.getMessage());
-                }
-            }
-        }
-    }
-
-    private void createElasticsearchIndex(String index) throws IOException {
-        esClient.getClient().admin().indices().prepareCreate(index).execute().actionGet();
-        logger.debug("[createIndex] {}", index);
-        esClient.getClient().admin().cluster().prepareHealth(index).setWaitForYellowStatus().execute().actionGet();
-        logger.debug("[createIndex] after prepareHealth");
-    }
-
-    private void createMapping(String index, String type, InputStream is) throws IOException {
-        String mappingJson = IOUtils.toString(is, "UTF-8");
-
-        esClient.getClient().admin().indices().preparePutMapping(index).setType(type).setSource(mappingJson).execute().actionGet();
-        logger.info("Create mapping {}/{}. Mapping file contains {} characters", index, type, mappingJson.length());
-        esClient.getClient().admin().cluster().prepareHealth(index).setWaitForYellowStatus().execute().actionGet();
-    }
-
-
-    private void createSettings(String index, InputStream is) throws IOException {
-        String settingsJson = IOUtils.toString(is, "UTF-8");
-        esClient.getClient().admin().indices().prepareUpdateSettings(index).setSettings(settingsJson).execute().actionGet();
-        logger.debug("[createIndex] after prepareUpdateSettings");
-        esClient.getClient().admin().cluster().prepareHealth(index).setWaitForYellowStatus().execute().actionGet();
-        logger.debug("[createIndex] after prepareHealth");
     }
 
     /**

@@ -5,7 +5,7 @@
         "type": "keyword"
       },
       "harvest": {
-        "dynamic": false,
+        "dynamic": "false",
         "properties": {
           "firstHarvested": {
             "type": "date"
@@ -46,7 +46,7 @@
           },
           "orgPath": {
             "type": "text",
-            "fielddata": "true",
+            "fielddata": true,
             "analyzer": "path-analyzer"
           }
         }
@@ -70,7 +70,8 @@
         "type": "keyword"
       },
       "openApi": {
-        "enabled": "false"
+        "type": "object",
+        "enabled": false
       },
       "nationalComponent": {
         "type": "boolean"

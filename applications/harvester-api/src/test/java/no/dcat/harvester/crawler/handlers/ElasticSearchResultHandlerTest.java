@@ -531,7 +531,6 @@ public class ElasticSearchResultHandlerTest {
 
         ElasticSearchResultHandler spyHandler = spy(resultHandler);
         doReturn(reader).when(spyHandler).getReader(model);
-        doReturn(dcatIndexUtils).when(spyHandler).createDcatIndexUtils(elasticsearch);
         doReturn(null).when(spyHandler).findLookupDataset(any(), anyString(), any());
         doReturn(null).when(spyHandler).findLastDatasetHarvestRecordWithContent(any(), any(), any());
         doNothing().when(spyHandler).deletePreviousDatasetsNotPresentInThisHarvest(any(), any(), any(), any());
@@ -679,7 +678,7 @@ public class ElasticSearchResultHandlerTest {
 
     @Before
     public void setup() {
-        resultHandler = new ElasticSearchResultHandler(null, null, null, null, null);
+        resultHandler = new ElasticSearchResultHandler();
         validationMessages = new Gson().fromJson(msgs, new TypeToken<List<String>>() {
         }.getType());
     }

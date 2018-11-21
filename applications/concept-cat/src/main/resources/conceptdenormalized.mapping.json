@@ -23,7 +23,7 @@
           },
           "orgPath": {
             "type": "text",
-            "fielddata": "true",
+            "fielddata": true,
             "analyzer": "path-analyzer"
           }
         }

@@ -40,7 +40,6 @@ public class HarvestQueryIT {
         elasticsearch = new Elasticsearch5Client("localhost:9399", "elasticsearch");
 
         DcatIndexUtils dcatIndexUtils = new DcatIndexUtils(elasticsearch);
-        dcatIndexUtils.createIndex("harvest");
 
         totalChangesCatalog1 = generateData(200, 1);
         totalChangesCatalog2 = generateData(100, 2);

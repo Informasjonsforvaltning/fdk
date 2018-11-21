@@ -14,7 +14,7 @@
 
     <groupId>no.dcat</groupId>
     <artifactId>elasticsearch5-client</artifactId>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
 
     <dependencies>
 
@@ -47,6 +47,12 @@
             <artifactId>transport-netty3-client</artifactId> <!-- spring-data-elasticsearch insists on using both netty4 and netty3 -->
             <version>5.6.10</version>
             <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.fge</groupId>
+            <artifactId>json-patch</artifactId>
+            <version>1.9</version>
         </dependency>
     </dependencies>
 
