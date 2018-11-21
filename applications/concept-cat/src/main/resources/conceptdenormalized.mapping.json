@@ -7,6 +7,9 @@
       "uri": {
         "type": "keyword"
       },
+      "identifier": {
+        "type" : "keyword"
+      },
       "publisher": {
         "properties": {
           "name": {

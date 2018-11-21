@@ -14,6 +14,8 @@ logging:
   level.org.springframework.data.elasticsearch: ${LOG_LEVEL:INFO}
 application:
   apiRootUrl: http://nginx-search:8080/api
+  externalApiRoot: https://fellesdatakatalog.brreg.no/api
+  conceptsPath: /concepts
 server:
   port: 8080
 management:

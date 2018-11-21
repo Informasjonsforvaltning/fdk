@@ -10,6 +10,7 @@ import org.apache.jena.vocabulary.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.Reader;
@@ -23,6 +24,14 @@ import java.util.*;
 public class RDFToModelTransformer {
 
     public static final String defaultLanguage = "nb";
+
+    @Value("${application.externalApiRoot}")
+    public static String externalApiRoot;
+
+    @Value("${application.conceptsPath}")
+    public static String conceptsPath;
+
+
     private static final Logger logger = LoggerFactory.getLogger(RDFToModelTransformer.class);
     private ConceptBuilderService conceptBuilderService;
     private ConceptDenormalizedRepository conceptDenormalizedRepository;
@@ -168,17 +177,18 @@ public class RDFToModelTransformer {
 
         ConceptDenormalized concept = new ConceptDenormalized();
 
-        String uri = conceptResource.getURI();
+        List<ConceptDenormalized> existingConcepts = conceptDenormalizedRepository.findByIdentifier(conceptResource.getId().toString());//TODO make find byIdentifier ?
 
-        List<ConceptDenormalized> existingConcepts = conceptDenormalizedRepository.findByUri(uri);
         if (existingConcepts.size() > 1) {
-            logger.warn("Found multiple concepts for uri " + uri + ", expected 0 or 1 ");
+            logger.warn("Found multiple concepts for id " + conceptResource.getId() + ", expected 0 or 1 ");
         }
         String id = existingConcepts.size() > 0 ? existingConcepts.get(0).getId() : UUID.randomUUID().toString();
 
         concept.setId(id);
 
-        concept.setUri(uri);
+        concept.setUri(externalApiRoot+conceptsPath+"/"+id);//So that URI is actually addressable into our system.
+
+        concept.setIdentifier(conceptResource.getURI());
 
         concept.setPublisher(extractPublisher(conceptResource, DCTerms.publisher));
 
