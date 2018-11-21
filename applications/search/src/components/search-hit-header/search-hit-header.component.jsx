@@ -92,7 +92,11 @@ export const SearchHitHeader = props => {
       <div className="mb-4">
         {!publisherItems &&
           publisher && (
-            <PublisherLabel tag={publisherTag} label={publisherLabel} publisherItem={publisher} />
+            <PublisherLabel
+              tag={publisherTag}
+              label={publisherLabel}
+              publisherItem={publisher}
+            />
           )}
       </div>
 
@@ -107,7 +111,7 @@ SearchHitHeader.defaultProps = {
   titleLink: null,
   publisherLabel: null,
   publisher: null,
-  publisherTag:'strong',
+  publisherTag: 'strong',
   publisherItems: null,
   theme: null,
   nationalComponent: false

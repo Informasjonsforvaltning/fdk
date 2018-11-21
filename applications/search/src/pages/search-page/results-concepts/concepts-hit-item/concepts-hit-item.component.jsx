@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import localization from '../../../../lib/localization';
 import { getTranslateText } from '../../../../lib/translateText';
 import { PublisherLabel } from '../../../../components/publisher-label/publisher-label.component';
+import { LinkExternal } from '../../../../components/link-external/link-external.component';
 import './concepts-hit-item.scss';
 
 const renderAddRemoveCompareButton = (
@@ -109,10 +110,16 @@ const renderSource = source => {
     return null;
   }
 
+  const { uri, prefLabel } = source;
+
   return (
     <div>
       <span>{localization.compare.source}:&nbsp;</span>
-      {getTranslateText(source)}
+      {uri ? (
+        <LinkExternal uri={uri} prefLabel={prefLabel || uri} />
+      ) : (
+        getTranslateText(prefLabel)
+      )}
     </div>
   );
 };

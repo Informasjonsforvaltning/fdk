@@ -32,10 +32,17 @@ const renderSource = source => {
   if (!source) {
     return null;
   }
+
+  const { uri, prefLabel } = source;
+
   return (
     <div className="fdk-ingress">
       <span>{localization.compare.source}:&nbsp;</span>
-      <span>{getTranslateText(source)}</span>
+      {uri ? (
+        <LinkExternal uri={uri} prefLabel={prefLabel || uri} />
+      ) : (
+        getTranslateText(prefLabel)
+      )}
     </div>
   );
 };
@@ -124,7 +131,6 @@ const renderIdentifiers = identifiers => {
 
 const renderStickyMenu = conceptItem => {
   const menuItems = [];
-  console.log(conceptItem);
   menuItems.push({
     name: getTranslateText(_.get(conceptItem, 'prefLabel')),
     prefLabel: localization.concept.definition
@@ -141,7 +147,7 @@ const renderStickyMenu = conceptItem => {
       prefLabel: localization.concept.subjectHeader
     });
   }
-  if(getTranslateText(_.get(conceptItem, 'altLabel[0]'))) {
+  if (getTranslateText(_.get(conceptItem, 'altLabel[0]'))) {
     menuItems.push({
       name: localization.concept.termHeader,
       prefLabel: localization.concept.termHeader
