@@ -19,7 +19,7 @@ const renderAddRemoveCompareButton = (
   if (showCompare) {
     return (
       <button
-        className="btn fdk-color-blue-dark fdk-text-size-15 float-lg-right mt-3 fade-in-400"
+        className="btn fdk-color-blue-dark bg-transparent fdk-text-size-15 float-lg-right mt-3 fade-in-400"
         onClick={() => {
           onAddConcept(item);
         }}
@@ -32,7 +32,7 @@ const renderAddRemoveCompareButton = (
   }
   return (
     <button
-      className="btn fdk-color-blue-dark fdk-text-size-15 float-lg-right mt-3"
+      className="btn fdk-color-blue-dark bg-transparent fdk-text-size-15 float-lg-right mt-3"
       onClick={() => {
         onDeleteConcept(_.get(item, 'id'));
       }}
