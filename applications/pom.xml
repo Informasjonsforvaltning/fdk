@@ -25,7 +25,6 @@
         <module>harvester</module>
 
         <module>dev-management</module>
-        <module>migration</module>
 
         <module>end2end-test</module>
         <module>elasticsearch-copy</module>
