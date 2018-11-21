@@ -1,6 +1,7 @@
 package no.acat.harvester;
 
 import no.acat.model.ApiDocument;
+import no.acat.repository.ApiDocumentRepository;
 import no.acat.service.ApiDocumentBuilderService;
 import no.acat.service.ElasticsearchService;
 import no.acat.service.RegistrationApiClient;
@@ -23,10 +24,12 @@ public class ApiHarvestTest {
 
     private ElasticsearchService elasticsearchServiceMock;
     private ApiDocumentBuilderService apiDocumentBuilderServiceMock;
+    private ApiDocumentRepository apiDocumentRepositoryMock;
 
     @Before
     public void setup() throws Throwable {
         elasticsearchServiceMock = mock(ElasticsearchService.class);
+        apiDocumentRepositoryMock = mock(ApiDocumentRepository.class);
 
         apiDocumentBuilderServiceMock = mock(ApiDocumentBuilderService.class);
         when(apiDocumentBuilderServiceMock.createFromApiRegistration(any(), any(), any())).thenReturn(new ApiDocument());
@@ -41,11 +44,11 @@ public class ApiHarvestTest {
         RegistrationApiClient registrationApiClientMock = mock(RegistrationApiClient.class);
         when(registrationApiClientMock.getPublished()).thenReturn(publishedApis);
 
-        ApiHarvester harvester = new ApiHarvester(elasticsearchServiceMock, apiDocumentBuilderServiceMock, registrationApiClientMock);
+        ApiHarvester harvester = new ApiHarvester(elasticsearchServiceMock, apiDocumentBuilderServiceMock, registrationApiClientMock, apiDocumentRepositoryMock);
 
         harvester.harvestAll();
 
-        verify(elasticsearchServiceMock, times(9)).createOrReplaceApiDocument(any());
+        verify(apiDocumentRepositoryMock, times(9)).createOrReplaceApiDocument(any());
     }
 
 
@@ -56,7 +59,7 @@ public class ApiHarvestTest {
         when(registrationApiClientMock.getPublished()).thenReturn(new ArrayList<>());
 
 
-        ApiHarvester harvester = new ApiHarvester(elasticsearchServiceMock, apiDocumentBuilderServiceMock, registrationApiClientMock);
+        ApiHarvester harvester = new ApiHarvester(elasticsearchServiceMock, apiDocumentBuilderServiceMock, registrationApiClientMock, apiDocumentRepositoryMock);
 
         ApiHarvester harvesterSpy = spy(harvester);
 
@@ -64,7 +67,7 @@ public class ApiHarvestTest {
 
         harvesterSpy.harvestAll();
 
-        verify(elasticsearchServiceMock, times(0)).createOrReplaceApiDocument(any());
+        verify(apiDocumentRepositoryMock, times(0)).createOrReplaceApiDocument(any());
     }
 
     @Test
@@ -73,10 +76,10 @@ public class ApiHarvestTest {
         RegistrationApiClient registrationApiClientMock = mock(RegistrationApiClient.class);
         when(registrationApiClientMock.getPublished()).thenReturn(new ArrayList<>());
 
-        ApiHarvester harvester = new ApiHarvester(elasticsearchServiceMock, apiDocumentBuilderServiceMock, registrationApiClientMock);
+        ApiHarvester harvester = new ApiHarvester(elasticsearchServiceMock, apiDocumentBuilderServiceMock, registrationApiClientMock, apiDocumentRepositoryMock);
 
         harvester.harvestAll();
 
-        verify(elasticsearchServiceMock, times(8)).createOrReplaceApiDocument(any());
+        verify(apiDocumentRepositoryMock, times(8)).createOrReplaceApiDocument(any());
     }
 }
