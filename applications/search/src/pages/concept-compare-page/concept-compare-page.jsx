@@ -6,6 +6,7 @@ import DocumentMeta from 'react-document-meta';
 
 import localization from '../../lib/localization';
 import { getTranslateText } from '../../lib/translateText';
+import { LinkExternal } from '../../components/link-external/link-external.component';
 import './concept-compare.scss';
 
 const onDeleteConcept = (id, history, conceptIdsArray, removeConcept) => {
@@ -66,6 +67,41 @@ const renderRow = (label, items, fieldPath) => {
       </td>
       {Object.values(items).map((item, index) =>
         renderFieldValue(item, fieldPath, index)
+      )}
+    </tr>
+  );
+};
+
+const renderRowUrl = (label, items, fieldPath) => {
+  const urlItem = (item, fieldPath, index) => {
+    const fieldValue = _.get(item, fieldPath);
+    return (
+      <td key={`row-${fieldPath}-${index}`}>
+        {_.get(fieldValue, 'uri') ? (
+          <LinkExternal
+            uri={_.get(fieldValue, 'uri')}
+            prefLabel={
+              _.get(fieldValue, 'prefLabel') || _.get(fieldValue, 'uri')
+            }
+          />
+        ) : (
+          getTranslateText(_.get(fieldValue, 'prefLabel'))
+        )}
+      </td>
+    );
+  };
+
+  if (!existValuesOnAnyItem(items, fieldPath)) {
+    return null;
+  }
+
+  return (
+    <tr>
+      <td>
+        <strong>{label}</strong>
+      </td>
+      {Object.values(items).map((item, index) =>
+        urlItem(item, fieldPath, index)
       )}
     </tr>
   );
@@ -150,14 +186,10 @@ export const ConceptComparePage = props => {
                         conceptsCompare,
                         ['definition', 'text']
                       )}
-                      {renderRow(localization.compare.source, conceptsCompare, [
-                        'definition',
-                        'source'
-                      ])}
-                      {renderRow(
+                      {renderRowUrl(
                         localization.compare.source,
                         conceptsCompare,
-                        'source'
+                        ['definition', 'source']
                       )}
                       {renderRow(
                         localization.compare.subject,
