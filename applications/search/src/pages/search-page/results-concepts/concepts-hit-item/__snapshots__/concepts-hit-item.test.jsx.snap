@@ -13,7 +13,7 @@ exports[`should render ConceptsHitItem correctly 1`] = `
       Søketreff begrep.
     </span>
     <button
-      className="btn fdk-color-blue-dark fdk-text-size-15 float-lg-right mt-3 fade-in-400"
+      className="btn fdk-color-blue-dark bg-transparent fdk-text-size-15 float-lg-right mt-3 fade-in-400"
       onClick={[Function]}
       type="button"
     >
