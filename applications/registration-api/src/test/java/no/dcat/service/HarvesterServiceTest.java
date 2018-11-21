@@ -1,23 +1,21 @@
 package no.dcat.service;
 
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
-import no.dcat.shared.admin.DcatSourceDto;
 import no.dcat.model.Catalog;
-
+import no.dcat.shared.admin.DcatSourceDto;
 import no.dcat.shared.testcategories.UnitTest;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
-import static com.github.tomakehurst.wiremock.client.WireMock.*;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig;
 import static junit.framework.TestCase.assertTrue;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by bjg on 20.02.2018.
@@ -84,33 +82,31 @@ public class HarvesterServiceTest {
     }
 
 
-
-
     /**
      * Simulate response from harvester
      */
     private void harvesterResponseGetDcatSourcesWireMockStub() {
         stubFor(get(urlEqualTo("/api/admin/dcat-sources"))
-                .withHeader("Accept", containing("application/json"))
-                .willReturn(aResponse()
-                        .withStatus(200)
-                        .withHeader("Content-Type", "application/json")
-                        .withBody("[\n" +
-                                "    {\n" +
-                                "        \"id\": \"http://dcat.difi.no/dcatSource_91413042-6549-4e11-8821-686f35954301\",\n" +
-                                "        \"description\": \"Datakatalog for REINLI OG BERLEVÅG REGNSKAP\",\n" +
-                                "        \"user\": \"test_admin\",\n" +
-                                "        \"orgnumber\": \"910888447\",\n" +
-                                "        \"url\": \"https://localhost:8099/catalogs/910888447\"\n" +
-                                "    },\n" +
-                                "    {\n" +
-                                "        \"id\": \"http://dcat.difi.no/dcatSource_e64c0b66-162a-4c5a-8ed0-01260d397d8c\",\n" +
-                                "        \"description\": \"Datakatalog for Testformål\",\n" +
-                                "        \"user\": \"test_admin\",\n" +
-                                "        \"orgnumber\": \"787867677\",\n" +
-                                "        \"url\": \"http://test.test.no\"\n" +
-                                "    }\n" +
-                                "]")));
+            .withHeader("Accept", containing("application/json"))
+            .willReturn(aResponse()
+                .withStatus(200)
+                .withHeader("Content-Type", "application/json")
+                .withBody("[\n" +
+                    "    {\n" +
+                    "        \"id\": \"http://dcat.difi.no/dcatSource_91413042-6549-4e11-8821-686f35954301\",\n" +
+                    "        \"description\": \"Datakatalog for REINLI OG BERLEVÅG REGNSKAP\",\n" +
+                    "        \"user\": \"test_admin\",\n" +
+                    "        \"orgnumber\": \"910888447\",\n" +
+                    "        \"url\": \"https://localhost:8099/catalogs/910888447\"\n" +
+                    "    },\n" +
+                    "    {\n" +
+                    "        \"id\": \"http://dcat.difi.no/dcatSource_e64c0b66-162a-4c5a-8ed0-01260d397d8c\",\n" +
+                    "        \"description\": \"Datakatalog for Testformål\",\n" +
+                    "        \"user\": \"test_admin\",\n" +
+                    "        \"orgnumber\": \"787867677\",\n" +
+                    "        \"url\": \"http://test.test.no\"\n" +
+                    "    }\n" +
+                    "]")));
 
     }
 
@@ -120,8 +116,8 @@ public class HarvesterServiceTest {
      */
     private void harvesterResponsePostDcatSourceWireMockStub() {
         stubFor(post(urlEqualTo("/api/admin/dcat-source"))
-                .willReturn(aResponse()
-                        .withStatus(202)));
+            .willReturn(aResponse()
+                .withStatus(202)));
 
     }
 }

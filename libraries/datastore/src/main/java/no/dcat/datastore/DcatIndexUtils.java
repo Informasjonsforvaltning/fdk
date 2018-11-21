@@ -17,8 +17,8 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
-import java.io.InputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Map;
 
 
@@ -73,7 +73,7 @@ public class DcatIndexUtils {
         try {
             return esClient.getClient().admin().indices().prepareTypesExists(type).execute().actionGet().isExists();
         } catch (ActionRequestValidationException e) {
-            logger.error("XXXType {} does not exist",type);
+            logger.error("XXXType {} does not exist", type);
         }
 
         return false;
@@ -96,11 +96,11 @@ public class DcatIndexUtils {
                 Resource settingsResource = new ClassPathResource(DCAT_INDEX_SETTINGS_FILENAME);
                 try {
                     esClient.getClient().admin().indices().prepareCreate("harvest")
-                            .setSettings(IOUtils.toString(settingsResource.getInputStream(),"UTF-8"))
-                            .addMapping("catalog", IOUtils.toString(harvestCatalogResource.getInputStream(), "UTF-8"))
-                            .addMapping("dataset", IOUtils.toString(harvestDatasetResource.getInputStream(), "UTF-8"))
-                            .addMapping("lookup", IOUtils.toString(harvestLookupResource.getInputStream(), "UTF-8"))
-                            .execute().actionGet();
+                        .setSettings(IOUtils.toString(settingsResource.getInputStream(), "UTF-8"))
+                        .addMapping("catalog", IOUtils.toString(harvestCatalogResource.getInputStream(), "UTF-8"))
+                        .addMapping("dataset", IOUtils.toString(harvestDatasetResource.getInputStream(), "UTF-8"))
+                        .addMapping("lookup", IOUtils.toString(harvestLookupResource.getInputStream(), "UTF-8"))
+                        .execute().actionGet();
 
                     logger.debug("[createIndex] {}", "harvest");
                     esClient.getClient().admin().cluster().prepareHealth(index).setWaitForYellowStatus().execute().actionGet();
@@ -116,9 +116,9 @@ public class DcatIndexUtils {
                     Resource datasetMappingResource = new ClassPathResource(DCAT_INDEX_MAPPING_FILENAME);
 
                     esClient.getClient().admin().indices().prepareCreate(index)
-                            .setSettings(IOUtils.toString(dcatSettingsResource.getInputStream(), "UTF-8"))
-                            .addMapping("dataset", IOUtils.toString(datasetMappingResource.getInputStream(), "UTF-8"))
-                            .execute().actionGet();
+                        .setSettings(IOUtils.toString(dcatSettingsResource.getInputStream(), "UTF-8"))
+                        .addMapping("dataset", IOUtils.toString(datasetMappingResource.getInputStream(), "UTF-8"))
+                        .execute().actionGet();
 
                     logger.debug("[createIndex] {}", index);
                     esClient.getClient().admin().cluster().prepareHealth(index).setWaitForYellowStatus().execute().actionGet();
@@ -132,9 +132,9 @@ public class DcatIndexUtils {
                     Resource subjectMappingResource = new ClassPathResource("scat_subject_mapping.json");
 
                     esClient.getClient().admin().indices().prepareCreate(index)
-                            .setSettings(IOUtils.toString(dcatSettingsResource.getInputStream(), "UTF-8"))
-                            .addMapping("subject", IOUtils.toString(subjectMappingResource.getInputStream(), "UTF-8"))
-                            .execute().actionGet();
+                        .setSettings(IOUtils.toString(dcatSettingsResource.getInputStream(), "UTF-8"))
+                        .addMapping("subject", IOUtils.toString(subjectMappingResource.getInputStream(), "UTF-8"))
+                        .execute().actionGet();
 
                     logger.debug("[createIndex] {}", index);
                     esClient.getClient().admin().cluster().prepareHealth(index).setWaitForYellowStatus().execute().actionGet();
@@ -252,12 +252,12 @@ public class DcatIndexUtils {
      */
     public boolean deleteAllDocumentsInType(String index, String type, int size) {
 
-        if(!indexExists(index)) {
+        if (!indexExists(index)) {
             return false;
         }
 
         SearchResponse sr = esClient.getClient().prepareSearch(index).setTypes(type).
-                setQuery(QueryBuilders.matchAllQuery()).setSize(size).get();
+            setQuery(QueryBuilders.matchAllQuery()).setSize(size).get();
 
         if (sr.getHits().getHits().length == 0) {
             return false;

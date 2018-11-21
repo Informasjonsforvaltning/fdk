@@ -22,11 +22,6 @@ public class Elasticsearch5Client implements AutoCloseable {
     private Client client;
 
 
-    public static class ElasticsearchNode {
-        public String host;
-        public int port;
-    }
-
     /**
      * Creates connection to a particular elasticsearch cluster
      *
@@ -39,7 +34,6 @@ public class Elasticsearch5Client implements AutoCloseable {
         logger.debug("transportclient success ...? " + this.client);
     }
 
-
     /**
      * Set elastic search transport client
      *
@@ -48,7 +42,6 @@ public class Elasticsearch5Client implements AutoCloseable {
     public Elasticsearch5Client(Client client) {
         this.client = client;
     }
-
 
     public static List<ElasticsearchNode> parseHostsString(final String hosts) {
         List<ElasticsearchNode> nodes = new ArrayList<>();
@@ -86,8 +79,8 @@ public class Elasticsearch5Client implements AutoCloseable {
             List<ElasticsearchNode> nodes = parseHostsString(clusterNodes);
 
             Settings settings = Settings.builder()
-                    .put(CLUSTER_NAME, clusterName)
-                    .build();
+                .put(CLUSTER_NAME, clusterName)
+                .build();
 
             client = new PreBuiltTransportClient(settings); //.addTransportAddress(address);
 
@@ -125,7 +118,6 @@ public class Elasticsearch5Client implements AutoCloseable {
         return client.admin().cluster().prepareHealth().execute().actionGet().getStatus();
     }
 
-
     /**
      * Close connection to Elasticsearch cluster
      */
@@ -140,5 +132,10 @@ public class Elasticsearch5Client implements AutoCloseable {
      */
     public Client getClient() {
         return client;
+    }
+
+    public static class ElasticsearchNode {
+        public String host;
+        public int port;
     }
 }
