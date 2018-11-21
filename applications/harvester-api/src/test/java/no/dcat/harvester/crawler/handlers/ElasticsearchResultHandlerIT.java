@@ -9,20 +9,20 @@ import no.dcat.shared.Dataset;
 import no.dcat.shared.testcategories.IntegrationTest;
 import org.apache.commons.io.IOUtils;
 import org.apache.jena.util.FileManager;
-import org.elasticsearch.action.admin.cluster.health.ClusterHealthResponse;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
-import org.elasticsearch.common.unit.TimeValue;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.junit.Before;
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -32,33 +32,27 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
-
+@ActiveProfiles("unit-integration")
 @Category(IntegrationTest.class)
+@RunWith(SpringRunner.class)
 public class ElasticsearchResultHandlerIT {
 
-    public static final String DATASET_TYPE = "dataset";
     private static final String DCAT_INDEX = "dcat";
+    private static final String DATASET_TYPE = "dataset";
     @ClassRule
     public static ElasticDockerRule elasticRule = new ElasticDockerRule();
     private final Logger logger = LoggerFactory.getLogger(ElasticsearchResultHandlerIT.class);
-    Elasticsearch5Client elasticsearch;
+    private final String clusterNodes = "localhost:9399";
+    private final String clusterName = "elasticsearch";
+    private Elasticsearch5Client elasticsearch;
+    private ElasticSearchResultHandler handler;
 
     @Before
     public void setUp() throws Exception {
-        elasticsearch = new Elasticsearch5Client("localhost:9399", "elasticsearch");
-    }
-
-    @Test
-    public void testThatEmbeddedElasticsearchWorks() {
-        ClusterHealthResponse healthResponse = null;
-        try {
-            healthResponse = elasticsearch.getClient().admin().cluster().prepareHealth().setTimeout(new TimeValue(5000)).execute()
-                .actionGet();
-            logger.info("Connected to Elasticsearch: " + healthResponse.getStatus().toString());
-        } catch (Exception e) {
-            logger.error("Failed to connect to Elasticsearch: " + e);
-        }
-        assertTrue(healthResponse.getStatus() != null);
+        elasticsearch = new Elasticsearch5Client(clusterNodes, clusterName);
+        handler = new ElasticSearchResultHandler(clusterNodes, clusterName,
+            "http://localhost:8100", "user", "password");
+        elasticsearch.deleteIndex("dcat");
     }
 
 
@@ -66,14 +60,8 @@ public class ElasticsearchResultHandlerIT {
      * Tests if indexWithElasticsearch.
      */
     @Test
-    @Ignore
+    // @Ignore
     public void testCrawlingIndexesToElasticsearchIT() throws Throwable {
-        //prevent race condition where elasticsearch is still indexing!!!
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
 
         // copy catalog info to temporary file to have a stable url for multipleharvests
         Resource catalogResource = new ClassPathResource("ramsund-elastic.ttl");
@@ -90,13 +78,16 @@ public class ElasticsearchResultHandlerIT {
         DcatSource dcatSource = new DcatSource("http//dcat.difi.no/test", "Test",
             ramsundUrl, "tester",
             "123456789");
+
         harvestSource(dcatSource);
 
         DcatIndexUtils dcatIndexUtils = new DcatIndexUtils(elasticsearch);
+
         assertTrue("dcat index exists", dcatIndexUtils.indexExists(DCAT_INDEX));
         assertTrue("harvest index exists", dcatIndexUtils.indexExists("harvest"));
 
-        SearchRequestBuilder srb_dataset = elasticsearch.getClient().prepareSearch(DCAT_INDEX).setTypes(DATASET_TYPE).setQuery(QueryBuilders.matchAllQuery());
+        SearchRequestBuilder srb_dataset = elasticsearch.getClient().prepareSearch(DCAT_INDEX)
+            .setTypes(DATASET_TYPE).setQuery(QueryBuilders.matchAllQuery());
         SearchResponse searchResponse = null;
         searchResponse = srb_dataset.execute().actionGet();
         logDatasets(searchResponse);
@@ -109,7 +100,8 @@ public class ElasticsearchResultHandlerIT {
         searchResponse = srb_dataset.execute().actionGet();
         logDatasets(searchResponse);
 
-        srb_dataset = elasticsearch.getClient().prepareSearch("harvest").setTypes("catalog").setQuery(QueryBuilders.matchAllQuery());
+        srb_dataset = elasticsearch.getClient().prepareSearch("harvest").setTypes("catalog")
+            .setQuery(QueryBuilders.matchAllQuery());
         SearchResponse catalogHarvestRecordResponse = srb_dataset.execute().actionGet();
 
         assertThat("Should have 2 or more catalogHarvestRecords",
@@ -128,16 +120,19 @@ public class ElasticsearchResultHandlerIT {
         harvestSource(dcatSource);
 
 
-        srb_dataset = elasticsearch.getClient().prepareSearch(DCAT_INDEX).setTypes(DATASET_TYPE).setQuery(QueryBuilders.matchAllQuery());
+        srb_dataset = elasticsearch.getClient().prepareSearch(DCAT_INDEX).setTypes(DATASET_TYPE)
+            .setQuery(QueryBuilders.matchAllQuery());
         searchResponse = srb_dataset.execute().actionGet();
         logDatasets(searchResponse);
 
-        assertThat("Old dataset should be deleted and new inserted total of 1", searchResponse.getHits().getTotalHits(), is(1l));
+        assertThat("Old dataset should be deleted and new inserted total of 1", searchResponse
+            .getHits().getTotalHits(), is(1l));
 
     }
 
     private void logDatasets(SearchResponse searchResponse) {
-        for (long i = 0; i < searchResponse.getHits().getTotalHits(); i++) {
+        int max = (int) (searchResponse.getHits().getTotalHits() < 10L ? searchResponse.getHits().getTotalHits() : 10L);
+        for (long i = 0; i < max; i++) {
             Dataset d = new Gson().fromJson(searchResponse.getHits().getAt((int) i).getSourceAsString(), Dataset.class);
             logger.info("dataset uri={}, id={}", d.getUri(), d.getId());
         }
@@ -153,8 +148,7 @@ public class ElasticsearchResultHandlerIT {
     }
 
     private void harvestSource(DcatSource dcatSource) {
-        ElasticSearchResultHandler handler = new ElasticSearchResultHandler("", "elasticsearch", "http://localhost:8100", "user", "password");
-        handler.indexWithElasticsearch(dcatSource, FileManager.get().loadModel(dcatSource.getUrl()), new Elasticsearch5Client(elasticsearch.getClient()), null);
+        handler.indexWithElasticsearch(dcatSource, FileManager.get().loadModel(dcatSource.getUrl()), elasticsearch, null);
 
         //prevent race condition where elasticsearch is still indexing!!!
         sleep();

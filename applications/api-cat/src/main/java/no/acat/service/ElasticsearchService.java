@@ -3,7 +3,6 @@ package no.acat.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import no.acat.model.ApiDocument;
 import no.dcat.client.elasticsearch5.Elasticsearch5Client;
-import org.apache.commons.io.IOUtils;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.action.delete.DeleteRequest;
@@ -11,6 +10,7 @@ import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.client.Client;
+import org.elasticsearch.common.xcontent.XContentType;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
@@ -19,10 +19,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
@@ -46,13 +44,29 @@ public class ElasticsearchService {
         this.mapper = mapper;
     }
 
-    @PostConstruct
-    void validate() {
+    void setElasticserchCluster(String clusterNodes, String clusterName) {
         assert clusterNodes != null;
         assert clusterName != null;
 
+        this.clusterNodes = clusterNodes;
+        this.clusterName = clusterName;
+
         initializeElasticsearchTransportClient();
-        createIndexIfNotExists();
+        try {
+            getElasticsearchClient().registerSetting("acat", mapper.readTree(new ClassPathResource("acat.settings.json").getInputStream()).toString());
+            getElasticsearchClient().registerMapping("acat", "apidocument", mapper.readTree(new ClassPathResource("apidocument.mapping.json").getInputStream()).get("apidocument").toString());
+
+            getElasticsearchClient().initializeAliasAndIndexMapping("acat");
+
+        } catch (IOException e) {
+            logger.error("Unable to initialize index, mapping and alias", e);
+        }
+
+    }
+
+
+    public Elasticsearch5Client getElasticsearchClient() {
+        return elasticsearch;
     }
 
     public Client getClient() {
@@ -73,32 +87,6 @@ public class ElasticsearchService {
         }
     }
 
-    public boolean indexExists(String index) {
-        return getClient().admin().indices().prepareExists(index).execute().actionGet().isExists();
-    }
-
-    public void createIndexIfNotExists() {
-        final String indexName = "acat";
-        if (indexExists(indexName)) {
-            logger.info("Index exists: " + indexName);
-            return;
-        }
-        logger.info("Creating index: " + indexName);
-
-        try {
-            Resource apiDocumentMappingResource = new ClassPathResource("apidocument.mapping.json");
-            Resource settingsResource = new ClassPathResource("acat.settings.json");
-
-            String apiDocumentMapping = IOUtils.toString(apiDocumentMappingResource.getInputStream(), "UTF-8");
-            String indexSettings = IOUtils.toString(settingsResource.getInputStream(), "UTF-8");
-            getClient().admin().indices().prepareCreate(indexName)
-                .setSettings(indexSettings)
-                .addMapping("apidocument", apiDocumentMapping)
-                .execute().actionGet();
-        } catch (IOException e) {
-            logger.error("Unable to connect to Elasticsearch: {}", e.toString(), e);
-        }
-    }
 
     public void createOrReplaceApiDocument(ApiDocument document) throws IOException {
         BulkRequestBuilder bulkRequest = getClient().prepareBulk();
@@ -108,7 +96,7 @@ public class ElasticsearchService {
         String json = mapper.writeValueAsString(document);
         logger.trace("Indexing document source: {}", json);
 
-        request.source(json);
+        request.source(json, XContentType.JSON);
         bulkRequest.add(request);
 
         BulkResponse bulkResponse = bulkRequest.execute().actionGet();
@@ -142,7 +130,7 @@ public class ElasticsearchService {
         logger.debug("ApiDocuments deleted. count:{}", ids.size());
     }
 
-    public List<String> getApiDocumentIdsNotHarvested(List<String> ids) throws IOException {
+    public List<String> getApiDocumentIdsNotHarvested(List<String> ids) {
         logger.debug("harvested ids {}", ids);
 
         String[] idsArray = ids.toArray(new String[0]);
@@ -161,7 +149,7 @@ public class ElasticsearchService {
         logger.trace("response {}", response);
 
         SearchHit[] hits = response.getHits().getHits();
-        List<String> idsNotHarvested = Arrays.stream(hits).map(hit -> hit.getId()).collect(Collectors.toList());
+        List<String> idsNotHarvested = Arrays.stream(hits).map(SearchHit::getId).collect(Collectors.toList());
 
         logger.debug("Ids not harvested {}", idsNotHarvested);
 
