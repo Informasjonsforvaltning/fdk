@@ -9,7 +9,8 @@ import java.util.Map;
 public class Definition {
     private Map<String, String> text;
     private Map<String, String> remark;
-    private Map<String, String> source;
+
+    private Source source;
     private String targetGroup; // TODO this is string-enum
     private Date lastUpdated;
 }
