@@ -19,7 +19,7 @@ const renderAddRemoveCompareButton = (
   if (showCompare) {
     return (
       <button
-        className="btn fdk-color-blue-dark bg-transparent fdk-text-size-15 float-lg-right mt-3 fade-in-400"
+        className="btn fdk-color-blue-dark bg-transparent fdk-text-size-15 fade-in-400"
         onClick={() => {
           onAddConcept(item);
         }}
@@ -32,7 +32,7 @@ const renderAddRemoveCompareButton = (
   }
   return (
     <button
-      className="btn fdk-color-blue-dark bg-transparent fdk-text-size-15 float-lg-right mt-3"
+      className="btn fdk-color-blue-dark bg-transparent fdk-text-size-15"
       onClick={() => {
         onDeleteConcept(_.get(item, 'id'));
       }}
@@ -52,7 +52,7 @@ const renderTitle = (title, id, deprecated = false) => {
   const link = `/concepts/${id}`;
 
   return (
-    <div className="mb-2 d-flex flex-wrap align-items-baseline">
+    <React.Fragment>
       <Link
         className="search-hit__title-link"
         title={`${localization.apiLabel}: ${title}`}
@@ -67,7 +67,7 @@ const renderTitle = (title, id, deprecated = false) => {
           ({localization.deprecated})
         </span>
       )}
-    </div>
+    </React.Fragment>
   );
 };
 
@@ -96,7 +96,7 @@ const renderDescription = description => {
     descriptionText = `${descriptionText.substr(0, 220)}...`;
   }
   return (
-    <p>
+    <p className="fdk-text-size-medium">
       <span className="uu-invisible" aria-hidden="false">
         {localization.compare.description}
       </span>
@@ -157,17 +157,19 @@ export const ConceptsHitItem = props => {
           Søketreff begrep.
         </span>
 
-        {renderAddRemoveCompareButton(
-          result,
-          showCompareButton,
-          onAddConcept,
-          onDeleteConcept
-        )}
+        <div className="mb-2 d-flex flex-wrap align-items-baseline justify-content-between">
+          {renderTitle(
+            getTranslateText(_.get(result, 'prefLabel')),
+            _.get(result, 'id')
+          )}
 
-        {renderTitle(
-          getTranslateText(_.get(result, 'prefLabel')),
-          _.get(result, 'id')
-        )}
+          {renderAddRemoveCompareButton(
+            result,
+            showCompareButton,
+            onAddConcept,
+            onDeleteConcept
+          )}
+        </div>
 
         {renderPublisher(_.get(result, 'publisher'))}
 
