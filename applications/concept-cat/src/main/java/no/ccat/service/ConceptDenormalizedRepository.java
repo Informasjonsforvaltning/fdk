@@ -20,7 +20,7 @@ public interface ConceptDenormalizedRepository
     @Query("{\"term\":{\"uri\":\"?0\"}}")
     List<ConceptDenormalized> findByUri(String uri);
 
-    //@Query("{\"term\":{\"identifier\":\"?0\"}}")
+    @Query("{\"term\":{\"identifier\":\"?0\"}}")
     List<ConceptDenormalized> findByIdentifier(String identifier);
 
 }

@@ -32,6 +32,8 @@ spring:
       clusterName: elasticsearch
 application:
   apiRootUrl: http://localhost:8080/api
+  externalApiRoot: https://fellesdatakatalog.brreg.no/api
+  conceptsPath: /concepts
 server:
   port: 8088
 management:

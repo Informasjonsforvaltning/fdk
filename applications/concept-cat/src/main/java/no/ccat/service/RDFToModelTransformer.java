@@ -26,10 +26,10 @@ public class RDFToModelTransformer {
     public static final String defaultLanguage = "nb";
 
     @Value("${application.externalApiRoot}")
-    public static String externalApiRoot;
+    public String externalApiRoot;
 
     @Value("${application.conceptsPath}")
-    public static String conceptsPath;
+    public String conceptsPath;
 
 
     private static final Logger logger = LoggerFactory.getLogger(RDFToModelTransformer.class);
@@ -174,14 +174,13 @@ public class RDFToModelTransformer {
     }
 
     public ConceptDenormalized extractConceptFromModel(Resource conceptResource) {
-
         ConceptDenormalized concept = new ConceptDenormalized();
-
-        List<ConceptDenormalized> existingConcepts = conceptDenormalizedRepository.findByIdentifier(conceptResource.getId().toString());//TODO make find byIdentifier ?
+        List<ConceptDenormalized> existingConcepts = conceptDenormalizedRepository.findByIdentifier(conceptResource.getURI());//TODO make find byIdentifier ?
 
         if (existingConcepts.size() > 1) {
-            logger.warn("Found multiple concepts for id " + conceptResource.getId() + ", expected 0 or 1 ");
+            logger.warn("Found multiple concepts for id " + conceptResource.getURI() + ", expected 0 or 1 ");
         }
+
         String id = existingConcepts.size() > 0 ? existingConcepts.get(0).getId() : UUID.randomUUID().toString();
 
         concept.setId(id);
