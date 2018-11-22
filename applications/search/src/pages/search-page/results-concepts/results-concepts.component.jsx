@@ -45,7 +45,7 @@ export class ResultsConcepts extends React.Component {
     if (conceptsCompare && Object.keys(conceptsCompare).length > 0) {
       return (
         <div className="mt-5">
-          <h3 className="mb-2">{localization.terms.compareTerms}</h3>
+          <h3 className="mb-3">{localization.terms.compareTerms}</h3>
           {children(conceptsCompare)}
           <div className="d-flex justify-content-center">
             <Link

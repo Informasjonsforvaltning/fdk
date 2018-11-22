@@ -11,7 +11,7 @@ export const CompareTerms = props => {
   return (
     <div className="fdk-container p-4">
       <div className="d-flex align-items-baseline justify-content-between">
-        <h4 className="">{title}</h4>
+        <h3 className="">{title}</h3>
         <button
           className="btn fdk-text-size-15 fdk-color-blue-dark bg-transparent"
           onClick={() => {
