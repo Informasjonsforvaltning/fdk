@@ -310,6 +310,7 @@
     "termHeader": "Alternative and hidden term",
     "altLabel": "Alternative term",
     "hiddenLabel": "Hidden term",
-    "definition": "Definition"
+    "definition": "Definition",
+    "identifier": "Identifier"
   }
 }

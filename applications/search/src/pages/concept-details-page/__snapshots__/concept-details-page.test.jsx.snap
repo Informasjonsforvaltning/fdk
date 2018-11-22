@@ -62,6 +62,10 @@ exports[`should render ConceptDetailsPage correctly with conceptItem 1`] = `
                 "name": "engelsk preflabel14",
                 "prefLabel": "Definition",
               },
+              Object {
+                "name": "Identifier",
+                "prefLabel": "Identifier",
+              },
             ]
           }
         />
@@ -75,6 +79,20 @@ exports[`should render ConceptDetailsPage correctly with conceptItem 1`] = `
           showLessButtonText="Show less"
           showMoreButtonText="Show the full description"
         />
+        <ListRegular
+          bottomMargin={true}
+          title="Identifier"
+        >
+          <div
+            className="d-flex list-regular--item"
+          >
+            <a
+              href="/api/concepts/14"
+            >
+              null/api/concepts/14
+            </a>
+          </div>
+        </ListRegular>
         <div
           style={
             Object {

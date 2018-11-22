@@ -108,24 +108,20 @@ const renderTerms = (altLabel, hiddenLabel) => {
   );
 };
 
-const renderIdentifiers = identifiers => {
-  const children = items =>
-    items.map(item => (
-      <LinkExternal
-        uri={_.get(item, 'uri')}
-        prefLabel={_.get(item, 'prefLabel') || _.get(item, 'uri')}
-      />
-    ));
-
-  if (!(identifiers && Array.isArray(identifiers))) {
+const renderIdentifiers = id => {
+  if (!id) {
     return null;
   }
 
   return (
-    <div>
-      <span>{localization.compare.source}:&nbsp;</span>
-      {children(identifiers)}
-    </div>
+    <ListRegular title={localization.concept.identifier}>
+      <div className="d-flex list-regular--item">
+        <a href={`/api/concepts/${id}`}>{`${_.get(
+          window.location,
+          'origin'
+        )}/api/concepts/${id}`}</a>
+      </div>
+    </ListRegular>
   );
 };
 
@@ -153,6 +149,12 @@ const renderStickyMenu = conceptItem => {
       prefLabel: localization.concept.termHeader
     });
   }
+
+  menuItems.push({
+    name: localization.concept.identifier,
+    prefLabel: localization.concept.identifier
+  });
+
   return <StickyMenu menuItems={menuItems} />;
 };
 export const ConceptDetailsPage = props => {
@@ -203,7 +205,7 @@ export const ConceptDetailsPage = props => {
               _.get(conceptItem, 'altLabel'),
               _.get(conceptItem, 'hiddenLabel')
             )}
-            {renderIdentifiers(_.get(conceptItem, 'identifiers'))}
+            {renderIdentifiers(_.get(conceptItem, 'id'))}
             <div style={{ height: '75vh' }} />
           </section>
         </div>

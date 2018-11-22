@@ -310,6 +310,7 @@
     "termHeader": "Tillaten og frårådd term",
     "altLabel": "Tillaten term",
     "hiddenLabel": "Frårådd term",
-    "definition": "Definisjon"
+    "definition": "Definisjon",
+    "identifier": "Identifikator"
   }
 }
