@@ -10,66 +10,50 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.io.IOException;
 
 @Service
 public class ElasticsearchService {
     private static Logger logger = LoggerFactory.getLogger(ElasticsearchService.class);
 
-    @Value("${elastic.clusterNodes}")
     private String clusterNodes;
-
-    @Value("${elastic.clusterName}")
     private String clusterName;
-    private Elasticsearch5Client elasticsearch;
+
+    private Elasticsearch5Client elasticsearch5Client;
 
     private ObjectMapper mapper;
 
     @Autowired
-    public ElasticsearchService(ObjectMapper mapper) {
+    public ElasticsearchService(
+        ObjectMapper mapper,
+        @Value("${elastic.clusterNodes}")
+            String clusterNodes,
+
+        @Value("${elastic.clusterName}")
+            String clusterName
+    ) {
         this.mapper = mapper;
-    }
-
-    void setElasticserchCluster(String clusterNodes, String clusterName) {
-        assert clusterNodes != null;
-        assert clusterName != null;
-
-        this.clusterNodes = clusterNodes;
         this.clusterName = clusterName;
+        this.clusterNodes = clusterNodes;
 
-        initializeElasticsearchTransportClient();
-        try {
-            getElasticsearchClient().registerSetting("acat", mapper.readTree(new ClassPathResource("acat.settings.json").getInputStream()).toString());
-            getElasticsearchClient().registerMapping("acat", "apidocument", mapper.readTree(new ClassPathResource("apidocument.mapping.json").getInputStream()).get("apidocument").toString());
-
-            getElasticsearchClient().initializeAliasAndIndexMapping("acat");
-
-        } catch (IOException e) {
-            logger.error("Unable to initialize index, mapping and alias", e);
-        }
-
+        assert this.clusterNodes != null;
+        assert this.clusterName != null;
     }
 
+    @PostConstruct
+    void init() throws IOException {
+        logger.debug("ElasticsearchService init()");
 
-    public Elasticsearch5Client getElasticsearchClient() {
-        return elasticsearch;
+        elasticsearch5Client = new Elasticsearch5Client(clusterNodes, clusterName);
+
+        elasticsearch5Client.registerSetting("acat", mapper.readTree(new ClassPathResource("acat.settings.json").getInputStream()).toString());
+        elasticsearch5Client.registerMapping("acat", "apidocument", mapper.readTree(new ClassPathResource("apidocument.mapping.json").getInputStream()).get("apidocument").toString());
+
+        elasticsearch5Client.initializeAliasAndIndexMapping("acat");
     }
 
     public Client getClient() {
-        if (elasticsearch == null) {
-            initializeElasticsearchTransportClient();
-        }
-        return elasticsearch == null ? null : elasticsearch.getClient();
-    }
-
-    private void initializeElasticsearchTransportClient() {
-        logger.debug("elasticsearch: " + clusterNodes);
-        if (elasticsearch == null) {
-            if (clusterNodes == null) {
-                logger.error("Configuration property elastic.clusterNodes is not initialized. Unable to connect to Elasticsearch");
-            }
-
-            elasticsearch = new Elasticsearch5Client(clusterNodes, clusterName);
-        }
+        return elasticsearch5Client.getClient();
     }
 }
