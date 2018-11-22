@@ -41,6 +41,17 @@ public class ApiDocumentRepository {
         this.mapper = mapper;
     }
 
+    public long getCount() {
+        SearchResponse response = elasticsearchService.getClient()
+            .prepareSearch("acat")
+            .setTypes("apidocument")
+            .setQuery(QueryBuilders.matchAllQuery())
+            .setSize(0) // Don't return any documents, we don't need them.
+            .get();
+
+        return response.getHits().getTotalHits();
+    }
+
     public Optional<ApiDocument> getById(String id) throws IOException {
 
         GetResponse getResponse = elasticsearchService.getClient().prepareGet("acat", "apidocument", id).get();

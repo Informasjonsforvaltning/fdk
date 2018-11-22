@@ -12,6 +12,8 @@ application:
 elastic:
   clusterNodes: ${FDK_ES_CLUSTERNODES:elasticsearch5:9300}
   clusterName: ${FDK_ES_CLUSTERNAME:elasticsearch}
+management:
+  endpoints.web.exposure.include: health, readiness
 
 ---
 #Utv-miljø lokalt på egen PC
