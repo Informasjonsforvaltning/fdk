@@ -8,7 +8,7 @@ import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurer;
 import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurerAdapter;
 
 @Configuration
-public class CustomRepositoryRestConfig extends RepositoryRestConfigurerAdapter {
+public class RepositoryRestConfig extends RepositoryRestConfigurerAdapter {
 
     @Bean
     public RepositoryRestConfigurer repositoryRestConfigurer() {
