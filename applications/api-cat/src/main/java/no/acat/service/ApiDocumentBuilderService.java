@@ -1,6 +1,6 @@
 package no.acat.service;
 
-import com.google.common.base.Strings;
+import io.swagger.v3.oas.models.ExternalDocumentation;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.Paths;
@@ -23,6 +23,8 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
+
+import static com.google.common.base.Strings.isNullOrEmpty;
 
 /*
 ApiDocumentBuilder service is enriching api registrations with related data and
@@ -82,7 +84,7 @@ public class ApiDocumentBuilderService {
         String apiSpecUrl = apiRegistration.getApiSpecUrl();
         String apiSpec = apiRegistration.getApiSpec();
 
-        if (Strings.isNullOrEmpty(apiSpec) && !Strings.isNullOrEmpty(apiSpecUrl)) {
+        if (isNullOrEmpty(apiSpec) && !isNullOrEmpty(apiSpecUrl)) {
             apiSpec = parserService.getSpecFromUrl(apiSpecUrl);
         }
         return apiSpec;
@@ -171,6 +173,16 @@ public class ApiDocumentBuilderService {
                     contact.setUri(HtmlCleaner.cleanAllHtmlTags(openApi.getInfo().getContact().getUrl()));
                 }
                 apiDocument.getContactPoint().add(contact);
+            }
+        }
+
+        if (isNullOrEmpty(apiDocument.getApiDocUrl())) {
+            ExternalDocumentation externalDocs = openApi.getExternalDocs();
+            if (externalDocs != null) {
+                String docUrl = externalDocs.getUrl();
+                if (!isNullOrEmpty(docUrl)) {
+                    apiDocument.setApiDocUrl(docUrl);
+                }
             }
         }
 
