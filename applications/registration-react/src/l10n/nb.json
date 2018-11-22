@@ -29,7 +29,8 @@
     "missingApiItems": "Det er ikke registrert noen API-beskrivelser ennå.",
     "missingTitle": "Mangler tittel",
     "statusPublished": "Publisert",
-    "statusDraft": "Utkast"
+    "statusDraft": "Utkast",
+    "statusNew": "Ny"
   },
   "app": {
     "skipLink": "Hopp til hovedinnhold",

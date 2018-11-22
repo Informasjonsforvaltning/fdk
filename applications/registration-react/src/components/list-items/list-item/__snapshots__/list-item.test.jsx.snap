@@ -17,18 +17,18 @@ exports[`should render ListItem correctly "DRAFT" item 1`] = `
       >
         Test item
       </span>
-      <span
-        className="d-flex w-25"
+      <div
+        className="d-flex w-25 justify-content-between"
       >
         <span>
           <i
-            className="fa fa-circle fdk-color3 mr-2"
+            className="fa fa-circle fdk-color3 mr-2 d-none d-sm-inline"
           />
           <span>
             Utkast
           </span>
         </span>
-      </span>
+      </div>
     </div>
   </Link>
 </div>
@@ -51,18 +51,18 @@ exports[`should render ListItem correctly "PUBLISH" item 1`] = `
       >
         Test item
       </span>
-      <span
-        className="d-flex w-25"
+      <div
+        className="d-flex w-25 justify-content-between"
       >
         <span>
           <i
-            className="fa fa-circle fdk-color-cta mr-2"
+            className="fa fa-circle fdk-color-cta mr-2 d-none d-sm-inline"
           />
           <span>
             Publisert
           </span>
         </span>
-      </span>
+      </div>
     </div>
   </Link>
 </div>
@@ -85,18 +85,18 @@ exports[`should render ListItem correctly when missing title 1`] = `
       >
         Mangler tittel
       </span>
-      <span
-        className="d-flex w-25"
+      <div
+        className="d-flex w-25 justify-content-between"
       >
         <span>
           <i
-            className="fa fa-circle fdk-color3 mr-2"
+            className="fa fa-circle fdk-color3 mr-2 d-none d-sm-inline"
           />
           <span>
             Utkast
           </span>
         </span>
-      </span>
+      </div>
     </div>
   </Link>
 </div>

@@ -7,7 +7,7 @@ import localization from '../../../utils/localization';
 import './list-item.scss';
 
 export const ListItem = props => {
-  const { title, status, path } = props;
+  const { title, status, path, statusNew } = props;
 
   if (!(title || status)) {
     return null;
@@ -24,20 +24,25 @@ export const ListItem = props => {
           <span className={itemClass}>
             {title || localization.listItems.missingTitle}
           </span>
-          <span className="d-flex w-25">
+          <div className="d-flex w-25 justify-content-between">
             {status === 'PUBLISH' && (
               <span>
-                <i className="fa fa-circle fdk-color-cta mr-2" />
+                <i className="fa fa-circle fdk-color-cta mr-2 d-none d-sm-inline" />
                 <span>{localization.listItems.statusPublished}</span>
               </span>
             )}
             {status === 'DRAFT' && (
               <span>
-                <i className="fa fa-circle fdk-color3 mr-2" />
+                <i className="fa fa-circle fdk-color3 mr-2 d-none d-sm-inline" />
                 <span>{localization.listItems.statusDraft}</span>
               </span>
             )}
-          </span>
+            {statusNew && (
+              <span className="badge badge-pill badge-success">
+                {localization.listItems.statusNew}
+              </span>
+            )}
+          </div>
         </div>
       </Link>
     </div>
@@ -47,11 +52,13 @@ export const ListItem = props => {
 ListItem.defaultProps = {
   title: null,
   status: null,
-  path: null
+  path: null,
+  statusNew: false
 };
 
 ListItem.propTypes = {
   title: PropTypes.string,
   status: PropTypes.string,
-  path: PropTypes.string
+  path: PropTypes.string,
+  statusNew: PropTypes.bool
 };

@@ -29,7 +29,8 @@
     "missingApiItems": "No api description registered.",
     "missingTitle": "Missing title",
     "statusPublished": "Published",
-    "statusDraft": "Draft"
+    "statusDraft": "Draft",
+    "statusNew": "New"
   },
   "app": {
     "skipLink": "Skip link",
