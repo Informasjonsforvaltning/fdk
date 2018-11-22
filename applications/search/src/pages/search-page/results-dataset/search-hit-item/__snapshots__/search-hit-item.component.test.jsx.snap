@@ -102,7 +102,7 @@ exports[`should render SearchHitItem 1`] = `
         />
       </header>
       <p
-        className="fdk-p-search-hit"
+        className="fdk-text-size-medium"
       >
         <span
           aria-hidden="false"
