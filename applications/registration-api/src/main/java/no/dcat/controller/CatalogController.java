@@ -17,15 +17,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.PagedResources;
-import org.springframework.http.*;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.*;
@@ -33,10 +31,7 @@ import java.util.*;
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
-import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
-import static org.springframework.web.bind.annotation.RequestMethod.PUT;
+import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 @RestController
 @RequestMapping(value = "/catalogs")
@@ -81,8 +76,8 @@ public class CatalogController {
      */
     @CrossOrigin
     @RequestMapping(value = "",
-            method = GET,
-            produces = APPLICATION_JSON_UTF8_VALUE)
+        method = GET,
+        produces = APPLICATION_JSON_UTF8_VALUE)
     public HttpEntity<PagedResources<Catalog>> listCatalogs(Pageable pageable,
                                                             PagedResourcesAssembler assembler) {
 
@@ -91,7 +86,7 @@ public class CatalogController {
         Set<String> validCatalogs = new HashSet<>();
 
         for (GrantedAuthority authority : auth.getAuthorities()) {
-                validCatalogs.add(authority.getAuthority());
+            validCatalogs.add(authority.getAuthority());
         }
 
         createCatalogsIfNeeded(validCatalogs);
@@ -110,11 +105,11 @@ public class CatalogController {
     @PreAuthorize("hasPermission(#catalog.id, 'write')")
     @CrossOrigin
     @RequestMapping(value = "", method = POST,
-            consumes = APPLICATION_JSON_VALUE,
-            produces = APPLICATION_JSON_UTF8_VALUE)
+        consumes = APPLICATION_JSON_VALUE,
+        produces = APPLICATION_JSON_UTF8_VALUE)
     public HttpEntity<Catalog> createCatalog(@RequestBody Catalog catalog) {
 
-        logger.info("Create catalog: {}. Details {}", catalog.getId(), catalog.toString() );
+        logger.info("Create catalog: {}. Details {}", catalog.getId(), catalog.toString());
         if (catalog.getId() == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -138,12 +133,12 @@ public class CatalogController {
     Publisher getPublisher(Catalog catalog) {
 
         RestTemplate restTemplate = new RestTemplate();
-        String uri = openDataEnhetsregisteret + catalog.getId() ;
+        String uri = openDataEnhetsregisteret + catalog.getId();
         Enhet enhet;
         try {
             enhet = restTemplate.getForObject(uri + ".json", Enhet.class);
             if (enhet == null) {
-                throw new Exception("Enhetsregisteret svarer ikke eller fant ikke organisasjonsnummeret "  + uri);
+                throw new Exception("Enhetsregisteret svarer ikke eller fant ikke organisasjonsnummeret " + uri);
             }
         } catch (Exception e) {
             logger.error("Failed to get org-unit from enhetsregister for organization number {}. Reason {}", catalog.getId(), e.getLocalizedMessage());
@@ -172,9 +167,9 @@ public class CatalogController {
     @PreAuthorize("hasPermission(#catalog.id, 'write')")
     @CrossOrigin
     @RequestMapping(value = "/{id}",
-            method = PUT,
-            consumes = APPLICATION_JSON_VALUE,
-            produces = APPLICATION_JSON_UTF8_VALUE)
+        method = PUT,
+        consumes = APPLICATION_JSON_VALUE,
+        produces = APPLICATION_JSON_UTF8_VALUE)
     public HttpEntity<Catalog> updateCatalog(@PathVariable("id") String id,
                                              @RequestBody Catalog catalog) {
         logger.info("Modify catalog: " + catalog.toString());
@@ -209,7 +204,7 @@ public class CatalogController {
     @PreAuthorize("hasPermission(#id, 'write')")
     @CrossOrigin
     @RequestMapping(value = "/{id}", method = DELETE,
-            produces = APPLICATION_JSON_UTF8_VALUE)
+        produces = APPLICATION_JSON_UTF8_VALUE)
     public HttpEntity<String> removeCatalog(@PathVariable("id") String id) {
         logger.info("Delete catalog: " + id);
         catalogRepository.deleteById(id);
@@ -228,7 +223,7 @@ public class CatalogController {
     @PreAuthorize("hasPermission(#id, 'read')")
     @CrossOrigin
     @RequestMapping(value = "/{id}", method = GET,
-            produces = APPLICATION_JSON_UTF8_VALUE)
+        produces = APPLICATION_JSON_UTF8_VALUE)
     public HttpEntity<Catalog> getCatalog(@PathVariable("id") String id) {
         Optional<Catalog> catalogOptional = catalogRepository.findById(id);
         if (!catalogOptional.isPresent()) {
@@ -243,7 +238,7 @@ public class CatalogController {
     }
 
     Catalog createCatalogIfNotExists(String orgnr) {
-        if (! orgnr.matches("\\d{9}")) {
+        if (!orgnr.matches("\\d{9}")) {
             return null;
         }
         boolean noIndex = false;
@@ -291,15 +286,15 @@ public class CatalogController {
         logger.info("checking if catalog with url {} already exists as data source", catalogHarvestEndpoint);
 
         for (DcatSourceDto datasourceEntry : existingHarvesterDataSources) {
-            logger.debug("Found exisiting dcatsource entry: {}",  datasourceEntry.getUrl() );
-            if(datasourceEntry.getUrl().equals(catalogHarvestEndpoint)) {
+            logger.debug("Found exisiting dcatsource entry: {}", datasourceEntry.getUrl());
+            if (datasourceEntry.getUrl().equals(catalogHarvestEndpoint)) {
                 logger.info("Catalog already exists as a data source in harvester");
                 catalogFound = true;
             }
         }
 
         //if current catalog does not exist as a dat source, create it
-        if(!catalogFound) {
+        if (!catalogFound) {
             logger.info("Harvest entry not found - create new datasource for catalog in harvester");
             boolean harvestEntryCreated = harvesterService.createHarvestEntry(catalog, catalogHarvestEndpoint);
             logger.info("Harvest entry creation successful: {}", harvestEntryCreated);
