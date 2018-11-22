@@ -5,6 +5,7 @@ import no.dcat.configuration.SpringSecurityContextBean;
 import no.dcat.factory.RegistrationFactory;
 import no.dcat.model.Catalog;
 import no.dcat.service.CatalogRepository;
+import no.dcat.service.EnhetService;
 import no.dcat.service.HarvesterService;
 import no.dcat.shared.Publisher;
 import no.dcat.shared.admin.DcatSourceDto;
@@ -24,7 +25,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.*;
 
@@ -47,6 +47,8 @@ public class CatalogController {
 
     private final HarvesterService harvesterService;
 
+    EnhetService enhetService;
+
     @Value("${saml.sso.context-provider.lb.server-name}")
     private String serverName;
 
@@ -61,11 +63,12 @@ public class CatalogController {
 
 
     @Autowired
-    public CatalogController(CatalogRepository catalogRepository, SpringSecurityContextBean springSecurityContextBean, EntityNameService entityNameService, HarvesterService harvesterService) {
+    public CatalogController(CatalogRepository catalogRepository, SpringSecurityContextBean springSecurityContextBean, EntityNameService entityNameService, HarvesterService harvesterService, EnhetService enhetService) {
         this.catalogRepository = catalogRepository;
         this.springSecurityContextBean = springSecurityContextBean;
         this.entityNameService = entityNameService;
         this.harvesterService = harvesterService;
+        this.enhetService = enhetService;
     }
 
 
@@ -131,23 +134,8 @@ public class CatalogController {
     }
 
     Publisher getPublisher(Catalog catalog) {
-
-        RestTemplate restTemplate = new RestTemplate();
         String uri = openDataEnhetsregisteret + catalog.getId();
-        Enhet enhet;
-        try {
-            enhet = restTemplate.getForObject(uri + ".json", Enhet.class);
-            if (enhet == null) {
-                throw new Exception("Enhetsregisteret svarer ikke eller fant ikke organisasjonsnummeret " + uri);
-            }
-        } catch (Exception e) {
-            logger.error("Failed to get org-unit from enhetsregister for organization number {}. Reason {}", catalog.getId(), e.getLocalizedMessage());
-
-            String organizationName = entityNameService.getOrganizationName(catalog.getId());
-
-            enhet = new Enhet();
-            enhet.setNavn(organizationName);
-        }
+        Enhet enhet = enhetService.getByOrgNr(catalog.getId(), uri, entityNameService);
 
         Publisher publisher = new Publisher();
         publisher.setId(catalog.getId());
