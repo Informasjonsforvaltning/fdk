@@ -135,7 +135,7 @@ export const SearchHitItem = props => {
               nationalComponent={_.get(provenance, 'code') === 'NASJONAL'}
             />
           </header>
-          <p className="fdk-p-search-hit">
+          <p className="fdk-text-size-medium">
             <span className="uu-invisible" aria-hidden="false">
               Beskrivelse av datasettet,
             </span>
