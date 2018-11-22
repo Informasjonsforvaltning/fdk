@@ -10,18 +10,20 @@ export const CompareTerms = props => {
   title = title.charAt(0).toUpperCase() + title.substring(1).toLowerCase();
   return (
     <div className="fdk-container p-4">
-      <button
-        className="float-right btn fdk-text-size-15 fdk-color-blue-dark"
-        onClick={() => {
-          onDeleteTerm(uri);
-        }}
-      >
-        <i className="fa fa-minus-circle" />
-        &nbsp;
-        {localization.terms.removeTerms}
-      </button>
-      <h4 className="clearfix">{title}</h4>
-      {creator && <div>{creator}</div>}
+      <div className="d-flex align-items-baseline justify-content-between">
+        <h4 className="">{title}</h4>
+        <button
+          className="btn fdk-text-size-15 fdk-color-blue-dark"
+          onClick={() => {
+            onDeleteTerm(uri);
+          }}
+        >
+          <i className="fa fa-minus-circle" />
+          &nbsp;
+          {localization.terms.removeTerms}
+        </button>
+      </div>
+      <div>{creator && <div>{creator}</div>}</div>
     </div>
   );
 };
