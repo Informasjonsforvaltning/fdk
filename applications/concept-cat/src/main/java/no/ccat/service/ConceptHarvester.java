@@ -35,7 +35,7 @@ public class ConceptHarvester {
     public void harvestFromSource() {
         logger.info("harvest from source");
 
-        Reader reader =resourceAsReader("jira-example-big.ttl");
+        Reader reader =resourceAsReader("jira-example-minimal.ttl");
         List<ConceptDenormalized> concepts = rdfToModelTransformer.getConceptsFromStream(reader);
 
         Date harvestDate=new Date();
