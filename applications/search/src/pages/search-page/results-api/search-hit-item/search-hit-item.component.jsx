@@ -40,7 +40,7 @@ const renderDescription = description => {
     descriptionText = `${descriptionText.substr(0, 220)}...`;
   }
   return (
-    <p>
+    <p className="fdk-text-size-medium">
       <span className="uu-invisible" aria-hidden="false">
         Beskrivelse av api,
       </span>

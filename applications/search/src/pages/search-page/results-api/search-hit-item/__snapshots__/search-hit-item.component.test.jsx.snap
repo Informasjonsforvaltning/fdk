@@ -33,7 +33,9 @@ exports[`should render api-SearchHitItem correctly 1`] = `
       titleLink="/apis/24fa3668-6ada-4a50-804e-1396f8470a24"
     />
   </header>
-  <p>
+  <p
+    className="fdk-text-size-medium"
+  >
     <span
       aria-hidden="false"
       className="uu-invisible"
@@ -109,7 +111,9 @@ exports[`should render api-SearchHitItem with long description 1`] = `
       titleLink="/apis/32690443-e926-4e52-9988-dbac45085102"
     />
   </header>
-  <p>
+  <p
+    className="fdk-text-size-medium"
+  >
     <span
       aria-hidden="false"
       className="uu-invisible"
