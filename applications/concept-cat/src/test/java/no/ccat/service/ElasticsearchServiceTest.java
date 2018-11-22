@@ -25,7 +25,7 @@ public class ElasticsearchServiceTest {
     ObjectMapper mapper;
 
     @Test
-    @Ignore
+    @Ignore // todo this is springboottest, so it loads entire world. it is very slow, use mocking and unit test instead.
     public void check() throws Throwable {
         ElasticsearchService elasticsearchService = new ElasticsearchService(elasticsearchTemplate, mapper);
     }
