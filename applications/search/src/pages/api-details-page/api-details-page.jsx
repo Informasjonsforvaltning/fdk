@@ -277,16 +277,9 @@ export const ApiDetailsPage = props => {
     return null;
   }
 
-  const { title } = apiItem || {
-    title: null
-  };
-  const { description } = apiItem || {
-    description: null
-  };
-
   const meta = {
-    title: getTranslateText(title),
-    description: getTranslateText(description)
+    title: getTranslateText(apiItem.title),
+    description: getTranslateText(apiItem.description)
   };
 
   return (
@@ -295,14 +288,14 @@ export const ApiDetailsPage = props => {
         <div className="row">
           <div className="col-12 col-lg-8 offset-lg-4">
             <DocumentMeta {...meta} />
-            <HarvestDate harvest={_.get(apiItem, 'harvest')} />
+            <HarvestDate harvest={apiItem.harvest} />
 
             <SearchHitHeader
-              title={getTranslateText(title)}
+              title={getTranslateText(apiItem.title)}
               publisherLabel={localization.api.provider}
-              publisher={_.get(apiItem, 'publisher')}
+              publisher={apiItem.publisher}
               publisherItems={publisherItems}
-              nationalComponent={_.get(apiItem, 'nationalComponent')}
+              nationalComponent={apiItem.nationalComponent}
             />
           </div>
         </div>
@@ -311,14 +304,14 @@ export const ApiDetailsPage = props => {
           <div className="col-12 col-lg-4 ">{renderStickyMenu(apiItem)}</div>
 
           <section className="col-12 col-lg-8 mt-3">
-            {renderDescription(description)}
+            {renderDescription(apiItem.description)}
 
-            {renderFormats(_.get(apiItem, 'formats'))}
+            {renderFormats(apiItem.formats)}
 
             {renderApiEndpoints(
-              _.get(apiItem, ['openApi', 'paths']),
-              _.get(apiItem, 'apiSpecUrl'),
-              _.get(apiItem, 'apiDocUrl')
+              apiItem.openApi && apiItem.openApi.paths,
+              apiItem.apiSpecUrl,
+              apiItem.apiDocUrl
             )}
 
             {renderAPIInfo({})}
@@ -332,9 +325,9 @@ export const ApiDetailsPage = props => {
               _.get(apiItem, 'availability')
             )}
 
-            {renderDatasetReferences(_.get(apiItem, 'datasetReferences'))}
+            {renderDatasetReferences(apiItem.datasetReferences)}
 
-            {renderContactPoints(_.get(apiItem, 'contactPoint'))}
+            {renderContactPoints(apiItem.contactPoint)}
 
             <div style={{ height: '75vh' }} />
           </section>
