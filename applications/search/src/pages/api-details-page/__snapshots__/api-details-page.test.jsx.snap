@@ -72,7 +72,7 @@ exports[`should render ApiDetailsPage correctly with apiItem 1`] = `
         />
         <ApiEndpoints
           apiDocUrl={null}
-          apiSpecUrl={null}
+          apiSpecUrl="/api/apis/c541c305-4e4f-43ed-be3e-5434740ec1b5/spec"
           name="Operations"
           paths={
             Object {

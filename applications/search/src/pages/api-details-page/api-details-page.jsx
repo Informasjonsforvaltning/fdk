@@ -277,6 +277,8 @@ export const ApiDetailsPage = props => {
     return null;
   }
 
+  const internalApiSpecUrl = `/api/apis/${apiItem.id}/spec`;
+
   const meta = {
     title: getTranslateText(apiItem.title),
     description: getTranslateText(apiItem.description)
@@ -310,7 +312,7 @@ export const ApiDetailsPage = props => {
 
             {renderApiEndpoints(
               apiItem.openApi && apiItem.openApi.paths,
-              apiItem.apiSpecUrl,
+              apiItem.apiSpecUrl || internalApiSpecUrl,
               apiItem.apiDocUrl
             )}
 

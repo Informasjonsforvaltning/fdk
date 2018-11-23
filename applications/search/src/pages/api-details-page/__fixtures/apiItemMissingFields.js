@@ -1,4 +1,5 @@
 export const apiItemMissingFields = {
+  id: 'c541c305-4e4f-43ed-be3e-5434740ec1b5',
   uri: 'jar:file:/app.jar!/BOOT-INF/classes!/datakatalog-api.json',
   openApi: {
     openapi: null,
