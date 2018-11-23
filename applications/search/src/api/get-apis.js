@@ -2,7 +2,7 @@ import axios from 'axios';
 import { addOrReplaceParam } from '../lib/addOrReplaceUrlParam';
 
 export const getApis = async search => {
-  const apisURL = `/api-cat/apis/search${search || ''}`;
+  const apisURL = `/api/apis/search${search || ''}`;
   const url = addOrReplaceParam(apisURL, 'size', '50');
 
   const response = await axios
