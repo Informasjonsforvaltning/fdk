@@ -25,7 +25,7 @@ public class RDFToModelTransformer {
 
     public static final String defaultLanguage = "nb";
 
-    @Value("${application.ApiRootExternalURL}")
+    @Value("${application.apiRootExternalURL}")
     public String externalApiRoot;
 
     @Value("${application.conceptsPath}")
