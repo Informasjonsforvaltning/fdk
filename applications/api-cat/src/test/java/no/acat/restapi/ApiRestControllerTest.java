@@ -48,4 +48,19 @@ public class ApiRestControllerTest {
 
         controller.getApiDocument(id);
     }
+
+    @Test
+    public void getApiSpec_ShouldReturnApiSpec() throws Exception {
+        String id = "testid";
+        String testSpec = "testspec";
+
+        ApiDocument testDocument = new ApiDocument();
+        testDocument.setApiSpec(testSpec);
+
+        when(apiDocumentRepository.getById(id)).thenReturn(Optional.of(testDocument));
+
+        String spec = controller.getApiSpec(id);
+
+        Assert.assertSame(testSpec, spec);
+    }
 }

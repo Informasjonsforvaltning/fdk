@@ -25,7 +25,7 @@ public class ApiRestController {
         this.apiDocumentRepository = apiDocumentRepository;
     }
 
-    @ApiOperation(value = "Get a specific api", response = ApiDocument.class)
+    @ApiOperation(value = "Get api by id", response = ApiDocument.class)
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = "application/json")
     public ApiDocument getApiDocument(@PathVariable String id) throws NotFoundException, IOException {
         logger.info("request for {}", id);
@@ -33,5 +33,15 @@ public class ApiRestController {
         Optional<ApiDocument> apiDocumentOptional = apiDocumentRepository.getById(id);
 
         return apiDocumentOptional.orElseThrow(() -> new NotFoundException());
+    }
+
+    @ApiOperation(value = "Get api spec by id", response = ApiDocument.class)
+    @RequestMapping(value = "/{id}/spec", method = RequestMethod.GET, produces = "application/json")
+    public String getApiSpec(@PathVariable String id) throws NotFoundException, IOException {
+        logger.info("request for {}", id);
+
+        Optional<ApiDocument> apiDocumentOptional = apiDocumentRepository.getById(id);
+
+        return apiDocumentOptional.orElseThrow(() -> new NotFoundException()).getApiSpec();
     }
 }
