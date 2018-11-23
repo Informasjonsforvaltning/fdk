@@ -3,7 +3,6 @@ package no.acat.harvester;
 import no.acat.model.ApiDocument;
 import no.acat.repository.ApiDocumentRepository;
 import no.acat.service.ApiDocumentBuilderService;
-import no.acat.service.ElasticsearchService;
 import no.acat.service.RegistrationApiClient;
 import no.dcat.client.registrationapi.ApiRegistrationPublic;
 import org.apache.commons.csv.CSVFormat;
@@ -27,17 +26,16 @@ The purpose of the harvester is to ensure that search index is synchronized to r
 public class ApiHarvester {
     private static final Logger logger = LoggerFactory.getLogger(ApiHarvester.class);
 
-    private ElasticsearchService elasticsearchService;
     private ApiDocumentBuilderService apiDocumentBuilderService;
     private RegistrationApiClient registrationApiClient;
     private ApiDocumentRepository apiDocumentRepository;
 
     @Autowired
-    public ApiHarvester(ElasticsearchService elasticsearchService,
-                        ApiDocumentBuilderService apiDocumentBuilderService,
-                        RegistrationApiClient registrationApiClient,
-                        ApiDocumentRepository apiDocumentRepository) {
-        this.elasticsearchService = elasticsearchService;
+    public ApiHarvester(
+        ApiDocumentBuilderService apiDocumentBuilderService,
+        RegistrationApiClient registrationApiClient,
+        ApiDocumentRepository apiDocumentRepository
+    ) {
         this.registrationApiClient = registrationApiClient;
         this.apiDocumentBuilderService = apiDocumentBuilderService;
         this.apiDocumentRepository = apiDocumentRepository;
