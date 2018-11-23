@@ -4,9 +4,6 @@
       "harvestSourceUri": {
         "type": "keyword"
       },
-      "uri": {
-        "type": "keyword"
-      },
       "identifier": {
         "type" : "keyword"
       },

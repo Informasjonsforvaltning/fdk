@@ -14,7 +14,7 @@ logging:
   level.org.springframework.data.elasticsearch: ${LOG_LEVEL:INFO}
 application:
   apiRootUrl: http://nginx-search:8080/api
-  externalApiRoot: https://fellesdatakatalog.brreg.no/api
+  ApiRootExternalURL: https://fellesdatakatalog.brreg.no/api
   conceptsPath: /concepts
 server:
   port: 8080
@@ -32,7 +32,7 @@ spring:
       clusterName: elasticsearch
 application:
   apiRootUrl: http://localhost:8080/api
-  externalApiRoot: https://fellesdatakatalog.brreg.no/api
+  ApiRootExternalURL: http://localhost:8080/api
   conceptsPath: /concepts
 server:
   port: 8088

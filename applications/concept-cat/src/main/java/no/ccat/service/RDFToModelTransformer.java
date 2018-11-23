@@ -25,7 +25,7 @@ public class RDFToModelTransformer {
 
     public static final String defaultLanguage = "nb";
 
-    @Value("${application.externalApiRoot}")
+    @Value("${application.ApiRootExternalURL}")
     public String externalApiRoot;
 
     @Value("${application.conceptsPath}")
@@ -175,17 +175,17 @@ public class RDFToModelTransformer {
 
     public ConceptDenormalized extractConceptFromModel(Resource conceptResource) {
         ConceptDenormalized concept = new ConceptDenormalized();
-        List<ConceptDenormalized> existingConcepts = conceptDenormalizedRepository.findByIdentifier(conceptResource.getURI());//TODO make find byIdentifier ?
+        List<ConceptDenormalized> existingConcepts = conceptDenormalizedRepository.findByIdentifier(conceptResource.getURI());
 
         if (existingConcepts.size() > 1) {
-            logger.warn("Found multiple concepts for id " + conceptResource.getURI() + ", expected 0 or 1 ");
+            logger.warn("Found multiple concepts for source URI " + conceptResource.getURI() + ", expected 0 or 1 ");
         }
 
         String id = existingConcepts.size() > 0 ? existingConcepts.get(0).getId() : UUID.randomUUID().toString();
 
         concept.setId(id);
 
-        concept.setUri(externalApiRoot+conceptsPath+"/"+id);//So that URI is actually addressable into our system.
+        concept.setUri(buildLocalUri(id));//So that URI is actually addressable into our system.
 
         concept.setIdentifier(conceptResource.getURI());
 
@@ -202,6 +202,10 @@ public class RDFToModelTransformer {
         concept.setDefinition(extractDefinition(conceptResource));
 
         return concept;
+    }
+
+    private String buildLocalUri(String id) {
+        return externalApiRoot+conceptsPath+"/"+id;
     }
 
     public Publisher extractPublisher(Resource resource, Property property) {
