@@ -47,7 +47,6 @@ public class RDFToModelTransformer {
         definition.setText(new HashMap());
         definition.setRemark(new HashMap<>());
         Source source = new Source();
-        source.setPrefLabel(new HashMap());
         definition.setSource(source);
 
         List<Resource> betydningsbeskivelses = getNamedSubPropertiesAsListOfResources(resource, SKOSNO.betydningsbeskrivelse);
@@ -64,11 +63,12 @@ public class RDFToModelTransformer {
                 definition.getRemark().putAll(noteAsLanguageLiteral);
             }
 
-
-
-
             Map<String, String> sourceAsLanguageLiteral = extractLanguageRDFSLabelFromLabel(betydningsbeskrivelse, DCTerms.source);
             if (sourceAsLanguageLiteral != null) {
+                if (source.getPrefLabel() == null) {
+                    source.setPrefLabel(new HashMap());
+                }
+
                 definition.getSource().getPrefLabel().putAll(sourceAsLanguageLiteral);
             }
         }
