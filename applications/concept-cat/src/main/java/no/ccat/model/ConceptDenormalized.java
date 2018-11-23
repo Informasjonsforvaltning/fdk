@@ -33,8 +33,8 @@ public class ConceptDenormalized {
     @ApiModelProperty("The publisher of the concept [dct:publisher]")
     private Publisher publisher;
 
-    @ApiModelProperty("identifiers")
-    private List<String> identifiers;
+    @ApiModelProperty("identifier")
+    private String identifier;
 
     @ApiModelProperty("The definition [skosno:Definisjon]")
     private Definition definition;

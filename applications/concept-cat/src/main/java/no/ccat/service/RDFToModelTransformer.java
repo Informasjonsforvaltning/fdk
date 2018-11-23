@@ -10,6 +10,7 @@ import org.apache.jena.vocabulary.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.Reader;
@@ -23,6 +24,14 @@ import java.util.*;
 public class RDFToModelTransformer {
 
     public static final String defaultLanguage = "nb";
+
+    @Value("${application.apiRootExternalURL}")
+    public String externalApiRoot;
+
+    @Value("${application.conceptsPath}")
+    public String conceptsPath;
+
+
     private static final Logger logger = LoggerFactory.getLogger(RDFToModelTransformer.class);
     private ConceptBuilderService conceptBuilderService;
     private ConceptDenormalizedRepository conceptDenormalizedRepository;
@@ -165,20 +174,20 @@ public class RDFToModelTransformer {
     }
 
     public ConceptDenormalized extractConceptFromModel(Resource conceptResource) {
-
         ConceptDenormalized concept = new ConceptDenormalized();
+        List<ConceptDenormalized> existingConcepts = conceptDenormalizedRepository.findByIdentifier(conceptResource.getURI());
 
-        String uri = conceptResource.getURI();
-
-        List<ConceptDenormalized> existingConcepts = conceptDenormalizedRepository.findByUri(uri);
         if (existingConcepts.size() > 1) {
-            logger.warn("Found multiple concepts for uri " + uri + ", expected 0 or 1 ");
+            logger.warn("Found multiple concepts for source URI " + conceptResource.getURI() + ", expected 0 or 1 ");
         }
+
         String id = existingConcepts.size() > 0 ? existingConcepts.get(0).getId() : UUID.randomUUID().toString();
 
         concept.setId(id);
 
-        concept.setUri(uri);
+        concept.setUri(buildLocalUri(id));//So that URI is actually addressable into our system.
+
+        concept.setIdentifier(conceptResource.getURI());
 
         concept.setPublisher(extractPublisher(conceptResource, DCTerms.publisher));
 
@@ -193,6 +202,10 @@ public class RDFToModelTransformer {
         concept.setDefinition(extractDefinition(conceptResource));
 
         return concept;
+    }
+
+    private String buildLocalUri(String id) {
+        return externalApiRoot+conceptsPath+"/"+id;
     }
 
     public Publisher extractPublisher(Resource resource, Property property) {
