@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export const getApi = async id => {
-  const url = `/api-cat/apis/${id}`;
+  const url = `/api/apis/${id}`;
 
   const response = await axios
     .get(url)
