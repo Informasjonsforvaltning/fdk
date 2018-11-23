@@ -29,7 +29,7 @@ public class ApiRestControllerTest {
     }
 
     @Test
-    public void testGetApiDocumentIfWithIdReturnSuccess() throws Exception {
+    public void getApiDocument_ShouldReturnApiDocument() throws Exception {
         String id = "a";
 
         ApiDocument testDocument = new ApiDocument();
@@ -41,7 +41,7 @@ public class ApiRestControllerTest {
     }
 
     @Test(expected = NotFoundException.class)
-    public void checkIfIdGetResponseNotExistsAndShouldFailed() throws NotFoundException, IOException {
+    public void getApiDocument_WhenInvalidId_ShouldFailWithNotFoundException() throws NotFoundException, IOException {
         String id = "b";
 
         when(apiDocumentRepository.getById(id)).thenReturn(Optional.empty());
