@@ -10,14 +10,13 @@ import { TwoColRow } from '../../../components/list-regular/twoColRow/twoColRow'
 import { LinkExternal } from '../../../components/link-external/link-external.component';
 import './dataset-info.scss';
 import { getReferenceDataByUri } from '../../../redux/modules/referenceData';
-import { REFERENCEDATA_REFERENCETYPES } from '../../../constants/constants';
 
 const renderReferences = (references, referencedItems, referenceData) => {
   const children = items =>
     items.map(item => {
       const referencedType = getReferenceDataByUri(
         referenceData,
-        REFERENCEDATA_REFERENCETYPES,
+        'referencetypes',
         _.get(item, ['referenceType', 'uri'])
       );
 
@@ -38,7 +37,7 @@ const renderReferences = (references, referencedItems, referenceData) => {
         >
           <div className="col-4 pl-0 fdk-text-strong">
             {referencedType && referencedType.length > 0
-              ? getTranslateText(_.get(referencedType[0], ['prefLabel']))
+              ? getTranslateText(_.get(referencedType[0], 'prefLabel'))
               : _.get(item, ['referenceType', 'uri'])}
           </div>
           <div className="col-8">
