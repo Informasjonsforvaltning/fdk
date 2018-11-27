@@ -20,6 +20,7 @@ import org.springframework.data.elasticsearch.core.aggregation.AggregatedPage;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQuery;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 import org.springframework.hateoas.PagedResources;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -57,12 +58,23 @@ public class ConceptSearchController {
         @RequestParam(value = "aggregations", defaultValue = "false", required = false)
             String includeAggregations,
 
+        @ApiParam("The prefLabel text")
+        @RequestParam(value = "preflabel", defaultValue = "", required = false)
+            String prefLabel,
+
         Pageable pageable
     ) {
         logger.debug("GET /concepts?q={}", query);
 
         QueryBuilder searchQuery;
-        if (query.isEmpty()) {
+
+        if (!StringUtils.isEmpty(prefLabel)) {
+            QueryBuilder nbQuery = QueryBuilders.matchPhrasePrefixQuery("prefLabel.nb", prefLabel).analyzer("norwegian").maxExpansions(15);
+            QueryBuilder noQuery = QueryBuilders.matchPhrasePrefixQuery("prefLabel.no", prefLabel).analyzer("norwegian").maxExpansions(15);
+            QueryBuilder nnQuery = QueryBuilders.matchPhrasePrefixQuery("prefLabel.nn", prefLabel).analyzer("norwegian").maxExpansions(15);
+            QueryBuilder enQuery = QueryBuilders.matchPhrasePrefixQuery("prefLabel.en", prefLabel).analyzer("english").maxExpansions(15);
+            searchQuery = QueryBuilders.boolQuery().should(nbQuery).should(noQuery).should(nnQuery).should(enQuery);
+        } else if (query.isEmpty()) {
             searchQuery = QueryBuilders.matchAllQuery();
         } else {
             // add * if query only contains one word
