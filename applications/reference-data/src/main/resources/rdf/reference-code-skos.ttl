@@ -13,67 +13,67 @@
     a skos:ConceptScheme ;
     skos:prefLabel "Referanse typer"@nb .
 
-<dct:references>
+<http://purl.org/dc/terms/references>
     a skos:Concept ;
     at:authority-code "references";
     skos:inScheme   <reference-types> ;
     skos:prefLabel "Refererer"@nb , "Refererar"@nn , "References"@en .
 
-<dct:isReferencedBy>
+<http://purl.org/dc/terms/isReferencedBy>
     a skos:Concept ;
     skos:inScheme   <reference-types> ;
     at:authority-code "isReferencedBy";
     skos:prefLabel "Er referert av"@nb , "Er referert av"@nn , "Is Referenced By"@en .
 
-<dct:isPartOf>
+<http://purl.org/dc/terms/isPartOf>
     a skos:Concept ;
     skos:inScheme   <reference-types> ;
     at:authority-code "isPartOf";
     skos:prefLabel "Er en del av"@nb , "Er del av"@nn , "Is Part Of"@en .
 
-<dct:requires>
+<http://purl.org/dc/terms/requires>
     a skos:Concept ;
     skos:inScheme   <reference-types> ;
     at:authority-code "requires";
     skos:prefLabel "Krever"@nb , "Krevjar"@nn , "Requires"@en .
 
-<dct:isRequiredBy>
+<http://purl.org/dc/terms/isRequiredBy>
     a skos:Concept ;
     skos:inScheme   <reference-types> ;
     at:authority-code "requires";
     skos:prefLabel "Er påkrevd av"@nb , "Er påkravd av"@nn , "Is required by"@en .
 
-<dct:hasVersion>
+<http://purl.org/dc/terms/hasVersion>
     a skos:Concept ;
     skos:inScheme   <reference-types> ;
     at:authority-code "hasVersion";
     skos:prefLabel "Har versjon"@nb , "Har versjon"@nn , "Has version"@en .
 
-<dct:isVersionOf>
+<http://purl.org/dc/terms/isVersionOf>
     a skos:Concept ;
     skos:inScheme   <reference-types> ;
     at:authority-code "isVersionOf";
     skos:prefLabel "Er versjon av"@nb , "Er versjon av"@nn , "Is version of"@en .
 
-<dct:replaces>
+<http://purl.org/dc/terms/replaces>
     a skos:Concept ;
     skos:inScheme   <reference-types> ;
     at:authority-code "replaces";
     skos:prefLabel "Erstatter"@nb , "Erstatter"@nn , "Replaces"@en .
 
-<dct:isReplacedBy>
+<http://purl.org/dc/terms/isReplacedBy>
     a skos:Concept ;
     skos:inScheme   <reference-types> ;
     at:authority-code "isReplacedBy";
     skos:prefLabel "Er erstattet av"@nb , "Er erstatta av"@nn , "Is replaced by"@en .
 
-<dct:source>
+<http://purl.org/dc/terms/source>
     a skos:Concept ;
     skos:inScheme   <reference-types> ;
     at:authority-code "source";
     skos:prefLabel "Er avledet fra"@nb , "Er avleda frå"@nn , "Source"@en .
 
-<dct:relation>
+<http://purl.org/dc/terms/relation>
     a skos:Concept ;
     skos:inScheme   <reference-types> ;
     at:authority-code "relation";
