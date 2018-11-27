@@ -12,7 +12,7 @@ profile=fellesdatakatalog-$environment
 tag=latest
 
 #midlertidig kommentert ut reference-data
-services="registration-react reference-data registration-auth registration-api nginx-search nginx-registration harvester harvester-api api-cat search search-api elasticsearch-copy"
+services="registration-react reference-data registration-auth registration-api nginx-search nginx-registration harvester harvester-api api-cat search search-api"
 
 for i in $services
 do
