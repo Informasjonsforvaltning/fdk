@@ -22,13 +22,6 @@ application:
   harvesterUrl: http://harvester:8080
   openDataEnhet: ${FDK_ENHETSREGISTERET_URL:https://data.brreg.no/enhetsregisteret/api/enheter/}
 
-management:
-  server:
-    port: 8081
-  endpoints:
-      enabled-by-default: true
-      web.exposure.include: "*"
-
 spring:
   jackson:
     default-property-inclusion: non_null

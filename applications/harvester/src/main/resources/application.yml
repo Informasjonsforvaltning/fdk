@@ -8,11 +8,6 @@ logging:
 spring:
   mvc.view.prefix: /WEB-INF/jsp/
   mvc.view.suffix: .jsp
-server:
-  port: 8080
-management:
-  server:
-    port: 8181
 fuseki:
   dcatServiceUri: ${fusekiDcatServiceUri:http://fuseki:8080/fuseki/dcat}
   adminServiceUri: ${fusekiAdminServiceUri:http://fuseki:8080/fuseki/admin}
@@ -31,6 +26,3 @@ application:
   harvesterUrl: http://localhost:8081
 server:
   port: 8082
-management:
-  server:
-    port: 8992

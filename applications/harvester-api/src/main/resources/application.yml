@@ -6,11 +6,6 @@ logging:
   level.org.springframework: ERROR
   level.org.springframework.web: ERROR
   level.org.elasticsearch: WARN
-server:
-  port: 8080
-management:
-  server:
-    port: 8181
 application:
   httpUsername: ${themesHttpUsername:user}
   httpPassword: ${themesHttpPassword:password}
@@ -64,9 +59,6 @@ elastic:
   clusterName: elasticsearch
 server:
   port: 8081
-management:
-  server:
-    port: 8991
 
 ---
 spring:

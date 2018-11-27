@@ -16,11 +16,6 @@ application:
   apiRootUrl: http://nginx-search:8080/api
   apiRootExternalURL: https://fellesdatakatalog.brreg.no/api
   conceptsPath: /concepts
-server:
-  port: 8080
-management:
-  server:
-    port: 8181
 
 ---
 #Utv-miljø lokalt på egen PC
@@ -36,6 +31,3 @@ application:
   conceptsPath: /concepts
 server:
   port: 8088
-management:
-  server:
-    port: 8997

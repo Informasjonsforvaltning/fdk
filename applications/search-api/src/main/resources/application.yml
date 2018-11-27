@@ -6,11 +6,6 @@ application:
 elastic:
   clusterNodes: ${FDK_ES_CLUSTERNODES:elasticsearch5:9300}
   clusterName: ${FDK_ES_CLUSTERNAME:elasticsearch}
-server:
-  port: 8080
-management:
-  server:
-    port: 8181
 
 ---
 #Utv-miljø lokalt på egen PC
@@ -25,6 +20,3 @@ logging:
   level.no.dcat: INFO
 server:
   port: 8093
-management:
-  server:
-    port: 8993
