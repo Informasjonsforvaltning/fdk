@@ -111,7 +111,7 @@ SearchHitHeader.defaultProps = {
   titleLink: null,
   publisherLabel: null,
   publisher: null,
-  publisherTag: 'strong',
+  publisherTag: 'span',
   publisherItems: null,
   theme: null,
   nationalComponent: false
