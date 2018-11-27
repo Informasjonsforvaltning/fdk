@@ -17,7 +17,6 @@ services:
     restart: always
     ports:
     - "8087:8080"
-    - "9087:8181"
     environment:
     - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
     - FDK_ES_CLUSTERNODES=elasticsearch5:9300
@@ -36,7 +35,6 @@ services:
     restart: always
     ports:
     - "8083:8080"
-    - "9083:8181"
     environment:
     - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
     - FDK_ES_CLUSTERNODES=elasticsearch5:9300
@@ -58,7 +56,6 @@ services:
     restart: always
     ports:
     - "8081:8080"
-    - "9081:8181"
     environment:
     - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx1024M -Dspring.profiles.active=docker
     - FDK_ES_CLUSTERNODES=elasticsearch5:9300
@@ -110,7 +107,6 @@ services:
     restart: always
     ports:
     - "8079:8080"
-    - "9079:8081"
     environment:
     - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
     - FDK_ES_CLUSTERNODES=elasticsearch5:9300

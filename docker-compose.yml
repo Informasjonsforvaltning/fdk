@@ -17,7 +17,6 @@ services:
     image: dcatno/api-cat:latest
     expose:
     - "8080"
-    - "8181"
     depends_on:
     - elasticsearch5
     - reference-data
