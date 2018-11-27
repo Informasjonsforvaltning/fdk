@@ -44,7 +44,7 @@ exports[`should render SearchHitHeader with harvest dates 1`] = `
           "valid": true,
         }
       }
-      tag="strong"
+      tag="span"
     />
   </div>
   <div

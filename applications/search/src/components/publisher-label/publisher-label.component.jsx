@@ -23,7 +23,7 @@ export const PublisherLabel = props => {
 
 PublisherLabel.defaultProps = {
   label: null,
-  tag: 'strong',
+  tag: 'span',
   publisherItem: null
 };
 
