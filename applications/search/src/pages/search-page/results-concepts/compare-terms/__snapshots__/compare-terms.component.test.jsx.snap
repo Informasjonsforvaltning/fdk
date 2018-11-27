@@ -2,7 +2,7 @@
 
 exports[`should render CompareTerms correctly 1`] = `
 <div
-  className="fdk-container p-4"
+  className="fdk-container p-4 fdk-container-compare-terms"
 >
   <div
     className="d-flex align-items-baseline justify-content-between"
