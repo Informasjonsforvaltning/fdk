@@ -184,18 +184,6 @@ then
     # todo
     echo Fuseki deploy not implemented yet
 
-elif [ $service = elasticsearch-copy ]
-then
-    if [ $deploymode = recreateServices ]
-    then
-        profile=prod
-        createOpenshiftService elasticsearch-copy
-    else
-        # deploymentmode = onlyDeployImages
-        deployNewDockerImage elasticsearch-copy
-    fi
-
-
 elif [ $service = registration-react ]
 then
     if [ $deploymode = recreateServices ]

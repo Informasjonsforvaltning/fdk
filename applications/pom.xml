@@ -27,7 +27,6 @@
         <module>dev-management</module>
 
         <module>end2end-test</module>
-        <module>elasticsearch-copy</module>
         <module>api-cat</module>
         <module>concept-cat</module>
     </modules>

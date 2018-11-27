@@ -80,7 +80,6 @@ node ('jenkins-maven'){
                  [service:"registration-api",compile: "maven"],
                  [service:"registration-auth", compile: "maven"],
                  [service:"api-cat", compile: "maven"],
-                 [service:"elasticsearch-copy",compile: "maven"],
                  [service:"search-api", compile: "maven"]]
     checksums = do_checksums(list)
 
