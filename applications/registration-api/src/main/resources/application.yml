@@ -1,7 +1,6 @@
 logging:
   level.root: ERROR
-  level.no.brreg: INFO
-  level.no.dcat: INFO
+  level.no: ${LOG_LEVEL:INFO}
   level.org.springframework: INFO
   level.org.springframework.web: ERROR
   level.org.opensaml: INFO
