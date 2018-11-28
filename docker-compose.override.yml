@@ -120,6 +120,7 @@ services:
     - registrationApi_harvesterPassword=password
     - registrationApi_ipKeyPassword=${registrationApi_ipKeyPassword}
     - registrationApi_ipStorePassword=${registrationApi_ipStorePassword}
+    - LOG_LEVEL=${LOG_LEVEL}
 
   registration-react:
     build: ./applications/registration-react
