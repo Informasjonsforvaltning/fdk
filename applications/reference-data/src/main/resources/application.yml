@@ -14,6 +14,8 @@ server:
 application:
   httpUsername: ${themesHttpUsername:user}
   httpPassword: ${themesHttpPassword:password}
+management:
+  endpoints.web.exposure.include: health, readiness
 
 ---
 
