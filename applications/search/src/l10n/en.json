@@ -139,7 +139,7 @@
     "modified": "published date"
   },
   "search_hit": {
-    "owned": "Owned by",
+    "owned": "Owner: ",
     "sample": "Sample data are available",
     "NationalBuildingBlock": "National Building Block",
     "bruker": "User collected data",

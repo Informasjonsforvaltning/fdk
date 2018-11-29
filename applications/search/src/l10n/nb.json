@@ -139,7 +139,7 @@
     "modified": "sist publisert"
   },
   "search_hit": {
-    "owned": "Eies av",
+    "owned": "Eier: ",
     "sample": "Eksempeldata tilgjengelig",
     "NationalBuildingBlock": "Nasjonal felleskomponent",
     "bruker": "Brukerinnsamlede data",
