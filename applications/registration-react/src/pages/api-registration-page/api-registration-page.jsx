@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { parse } from 'qs';
+import axios from 'axios';
 
 import getTranslateText from '../../utils/translateText';
 import localization from '../../utils/localization';
@@ -10,8 +11,9 @@ import { ListRegularItem } from '../../components/list-regular/list-regular-item
 import { AlertMessage } from '../../components/alert-message/alert-message.component';
 import { FormTemplateWithState } from '../../components/form-template/form-template-with-state.component';
 import { ConnectedFormMeta } from './form-meta/connected-form-meta';
-import { ConnectedFormPublish } from './form-publish/connected-form-publish';
 import { ConnectedFormRelatedDatasets } from './form-relatedDatasets/connected-form-related-datasets';
+import { StatusBarWithState } from '../../components/status-bar/status-bar.component';
+import { ConnectedFormPublish } from './connected-form-publish/connected-form-publish';
 
 const renderOpenApiInfo = (info, paths) => {
   if (!info) {
@@ -95,8 +97,13 @@ export const APIRegistrationPage = props => {
     fetchCatalogIfNeeded,
     fetchApisIfNeeded,
     fetchHelptextsIfNeeded,
+    setApiItemStatus,
     catalogItem,
     lastSaved,
+    isSaving,
+    error,
+    justPublishedOrUnPublished,
+    registrationStatus,
     helptextItems,
     item,
     location,
@@ -112,6 +119,29 @@ export const APIRegistrationPage = props => {
   fetchCatalogIfNeeded(catalogId);
   fetchApisIfNeeded(catalogId);
   fetchHelptextsIfNeeded();
+
+  const deleteApi = () => {
+    const { history, match } = props;
+    const api = {
+      Authorization: `Basic user:password`
+    };
+
+    return axios
+      .delete(match.url, { headers: api })
+      .then(() => {
+        setApiItemStatus(catalogId, _.get(item, 'id'), 'DELETED');
+        if (history) {
+          history.push({
+            pathname: `/catalogs/${catalogId}/apis`,
+            state: { confirmDelete: true }
+          });
+        }
+      })
+      .catch(response => {
+        const { error } = response;
+        return Promise.reject(error);
+      });
+  };
 
   return (
     <div className="container">
@@ -184,15 +214,25 @@ export const APIRegistrationPage = props => {
             </div>
           </div>
 
-          <div className="row mb-5">
-            <div className="col-12">
+          <StatusBarWithState
+            type="api"
+            isSaving={isSaving}
+            lastSaved={lastSaved}
+            published={
+              registrationStatus
+                ? !!(registrationStatus === 'PUBLISH')
+                : !!(_.get(item, 'registrationStatus', 'DRAFT') === 'PUBLISH')
+            }
+            error={error}
+            justPublishedOrUnPublished={justPublishedOrUnPublished}
+            onDelete={deleteApi}
+            formComponent={
               <ConnectedFormPublish
-                apiItem={item}
-                lastSaved={lastSaved}
+                initialItemStatus={_.get(item, 'registrationStatus', '')}
                 match={match}
               />
-            </div>
-          </div>
+            }
+          />
         </React.Fragment>
       )}
     </div>
@@ -203,8 +243,13 @@ APIRegistrationPage.defaultProps = {
   fetchCatalogIfNeeded: _.noop(),
   fetchApisIfNeeded: _.noop,
   fetchHelptextsIfNeeded: _.noop(),
+  setApiItemStatus: _.noop(),
   catalogItem: null,
   lastSaved: null,
+  isSaving: false,
+  error: null,
+  justPublishedOrUnPublished: false,
+  registrationStatus: null,
   helptextItems: null,
   item: null,
   location: null,
@@ -217,8 +262,13 @@ APIRegistrationPage.propTypes = {
   fetchCatalogIfNeeded: PropTypes.func,
   fetchApisIfNeeded: PropTypes.func,
   fetchHelptextsIfNeeded: PropTypes.func,
+  setApiItemStatus: PropTypes.func,
   catalogItem: PropTypes.object,
   lastSaved: PropTypes.string,
+  isSaving: PropTypes.bool,
+  error: PropTypes.number,
+  justPublishedOrUnPublished: PropTypes.bool,
+  registrationStatus: PropTypes.string,
   helptextItems: PropTypes.object,
   item: PropTypes.object,
   location: PropTypes.object,
