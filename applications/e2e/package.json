@@ -23,7 +23,8 @@
   },
   "dependencies": {
     "delay": "^3.0.0",
-    "json2csv": "^4.3.1"
+    "json2csv": "^4.3.1",
+    "jest-html-reporter": "^2.4.2"
   },
   "jest": {
     "setupTestFrameworkScriptFile": "<rootDir>/jestsetup.js",
@@ -38,6 +39,17 @@
     "testPathIgnorePatterns": [
       "/node_modules/",
       "<rootDir>/test/fixtures/"
+    ],
+    "reporters": [
+      "default",
+      [
+        "./node_modules/jest-html-reporter",
+        {
+          "pageTitle": "Test Report",
+          "outputPath": "./reports/test-report.html",
+          "includeFailureMsg": true
+        }
+      ]
     ]
   }
 }
