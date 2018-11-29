@@ -6,9 +6,11 @@ import {
   apiFormPatchErrorAction,
   apiFormPatchJustPublishedOrUnPublishedAction
 } from '../../../redux/modules/api-form-status';
+import { setApiItemStatusAction } from '../../../redux/modules/apis';
 
 export const asyncValidate = (values, dispatch, props) => {
   const { match } = props;
+  const catalogId = _.get(match, ['params', 'catalogId']);
   const apiId = _.get(match, ['params', 'id']);
 
   if (dispatch && apiId) {
@@ -30,6 +32,13 @@ export const asyncValidate = (values, dispatch, props) => {
             apiFormPatchJustPublishedOrUnPublishedAction(
               _.get(response, ['data', 'id']),
               true,
+              _.get(values, 'registrationStatus')
+            )
+          );
+          dispatch(
+            setApiItemStatusAction(
+              catalogId,
+              apiId,
               _.get(values, 'registrationStatus')
             )
           );
