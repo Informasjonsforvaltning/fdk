@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import localization from '../../utils/localization';
 import ListItems from '../../components/list-items/list-items.component';
 import getTranslateText from '../../utils/translateText';
+import { AlertMessage } from '../../components/alert-message/alert-message.component';
 
 export const APIListPage = props => {
   const {
@@ -13,7 +14,8 @@ export const APIListPage = props => {
     items,
     fetchCatalogIfNeeded,
     fetchApisIfNeeded,
-    match
+    match,
+    location
   } = props;
 
   const catalogId = _.get(match, ['params', 'catalogId']);
@@ -24,6 +26,16 @@ export const APIListPage = props => {
 
   return (
     <div className="container">
+      {_.get(location, ['state', 'confirmDelete'], false) && (
+        <div className="row mb-5">
+          <div className="col-12">
+            <AlertMessage type="success">
+              {localization.formStatus.type.api}{' '}
+              {localization.formStatus.confirmDeleted}
+            </AlertMessage>
+          </div>
+        </div>
+      )}
       <div className="row mb-5">
         <div className="col-12">
           <h1>{localization.api.register.apiCatalog}</h1>
@@ -63,7 +75,8 @@ APIListPage.defaultProps = {
   items: null,
   fetchCatalogIfNeeded: () => {},
   fetchApisIfNeeded: () => {},
-  match: null
+  match: null,
+  location: null
 };
 
 APIListPage.propTypes = {
@@ -71,5 +84,6 @@ APIListPage.propTypes = {
   items: PropTypes.array,
   fetchCatalogIfNeeded: PropTypes.func,
   fetchApisIfNeeded: PropTypes.func,
-  match: PropTypes.object
+  match: PropTypes.object,
+  location: PropTypes.object
 };
