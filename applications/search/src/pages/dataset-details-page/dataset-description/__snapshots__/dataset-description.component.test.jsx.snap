@@ -116,7 +116,7 @@ exports[`should render DatasetDescription correctly 1`] = `
       }
     }
     publisherItems={null}
-    publisherLabel="Owned by"
+    publisherLabel="Owner: "
     publisherTag="span"
     tag="h1"
     theme={
@@ -188,7 +188,7 @@ exports[`should render DatasetDescription correctly with no props 1`] = `
     nationalComponent={false}
     publisher={null}
     publisherItems={null}
-    publisherLabel="Owned by"
+    publisherLabel="Owner: "
     publisherTag="span"
     tag="h1"
     theme={null}
