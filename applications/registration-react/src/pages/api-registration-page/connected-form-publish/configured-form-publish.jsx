@@ -1,10 +1,8 @@
 import { reduxForm } from 'redux-form';
-import { FormPublish } from './form-publish';
+import { FormPublish } from '../../../components/form-publish/form-publish.component';
 
 import { asyncValidate } from '../async-patch/async-patch';
 import shouldAsyncValidate from '../../../utils/shouldAsyncValidate';
-
-// import validate from './form-title.validations';
 
 const config = {
   form: 'apiMetaPublish',

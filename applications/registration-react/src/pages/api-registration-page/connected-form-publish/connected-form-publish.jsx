@@ -1,15 +1,14 @@
 import { getFormSyncErrors } from 'redux-form';
 import { connect } from 'react-redux';
-import _ from 'lodash';
 
 import { ConfiguredFormPublish } from './configured-form-publish';
 
 const mapStateToProps = ({ form }, ownProps) => {
-  const { apiItem } = ownProps;
+  const { initialItemStatus } = ownProps;
   return {
     syncErrors: getFormSyncErrors('apiMetaPublish')(form),
     initialValues: {
-      registrationStatus: _.get(apiItem, 'registrationStatus', '')
+      registrationStatus: initialItemStatus
     }
   };
 };
