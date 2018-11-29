@@ -10,10 +10,7 @@ const handleChange = (props, registrationStatus) => {
 };
 
 export const ButtonRegistrationStatus = props => {
-  const {
-    input,
-    meta: { touched, error, warning }
-  } = props;
+  const { input } = props;
   const registrationStatus = _.get(input, 'value');
   return (
     <React.Fragment>
@@ -30,28 +27,20 @@ export const ButtonRegistrationStatus = props => {
       {registrationStatus === 'PUBLISH' && (
         <Button
           id="dataset-setDraft-button"
-          className="fdk-button mr-3"
-          color="info"
+          className="fdk-button shadow-none bg-transparent btn-outline-primary mr-3"
           onClick={() => handleChange(props, 'DRAFT')}
         >
           Avpubliser
         </Button>
       )}
-      {touched &&
-        ((error && <div className="alert alert-danger mt-3">{error}</div>) ||
-          (warning && (
-            <div className="alert alert-warning mt-3">{warning}</div>
-          )))}
     </React.Fragment>
   );
 };
 
 ButtonRegistrationStatus.defaultProps = {
-  input: null,
-  meta: null
+  input: null
 };
 
 ButtonRegistrationStatus.propTypes = {
-  input: PropTypes.object,
-  meta: PropTypes.object
+  input: PropTypes.object
 };
