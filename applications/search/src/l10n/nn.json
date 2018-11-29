@@ -139,7 +139,7 @@
     "modified": "sist publisert"
   },
   "search_hit": {
-    "owned": "Eigd av",
+    "owned": "Eigar: ",
     "sample": "Eksempeldata tilgjengeleg",
     "NationalBuildingBlock": "Nasjonal felleskomponent",
     "bruker": "Brukerinnsamla data",
@@ -300,7 +300,7 @@
       "performance": "Kapasitet og Ytelse",
       "availability": "Pålitelegheit"
     },
-    "provider": "Tilbydar:",
+    "provider": "Tilbydar: ",
     "linkDatasetReference": "Lenke til datasettreferanse"
   },
   "concept": {

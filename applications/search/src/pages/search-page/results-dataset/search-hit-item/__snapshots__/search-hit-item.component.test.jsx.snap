@@ -50,7 +50,7 @@ exports[`should render SearchHitItem 1`] = `
             }
           }
           publisherItems={null}
-          publisherLabel="Owned by"
+          publisherLabel="Owner: "
           publisherTag="span"
           tag="h2"
           theme={
