@@ -65,7 +65,7 @@ ReactDOM.render(
         <div className="d-flex flex-column site">
           <Header />
           <Breadcrumbs />
-          <div className="site-content d-flex flex-column">{routes}</div>
+          <div className="site-content d-flex flex-column pt-5">{routes}</div>
           <Footer />
         </div>
       </BrowserRouter>

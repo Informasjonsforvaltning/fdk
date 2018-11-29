@@ -53,10 +53,6 @@ export class ProtectedRoute extends React.Component {
         timeout={27.5 * 60 * 1000} // gir idle warning etter 27,5 minutter
         format="DD.MM.YYYY HH:MM:ss.SSS"
       >
-        <div className="container d-flex justify-content-between">
-          <span />
-          <span>{localization.app.autoSave}</span>
-        </div>
         {!isFetchingUser && (
           <Route
             {...props}
