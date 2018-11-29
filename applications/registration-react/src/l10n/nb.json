@@ -1,4 +1,4 @@
-  {
+{
   "title": "Tittel",
   "description": "Beskrivelse",
   "version": "Versjon",
@@ -390,6 +390,25 @@
       "importFromSpecPart2": "var vellykket!",
       "importFromSpec": "Importert fra spesifikasjon",
       "addInfo": "For at API-beskrivelsen skal være nyttig for brukerne av Felles Datakatalog bør du legge til tilleggsinformasjon. Denne er spesifikk for Datakatalogen og vil kun brukes her."
+    }
+  },
+  "formStatus": {
+    "type": {
+      "dataset": "Datasett-beskrivelsen",
+      "api": "API-beskrivelsen"
+    },
+    "isSaving": "Lagrer",
+    "savedAsDraft": "Lagret som utkast",
+    "changesUpdated": "Endringene er publisert",
+    "publish": "Publiser",
+    "published": "er publisert",
+    "unPublish": "Avpubliser",
+    "unPublished": "er avpublisert",
+    "delete": "Slett",
+    "confirmDeleted": "ble slettet",
+    "error": {
+      "404": "Det ser ikke ut som du er koblet til internett. Koble til for å fortsette",
+      "other": "Det har oppstått problemer med å lagre."
     }
   }
 }
