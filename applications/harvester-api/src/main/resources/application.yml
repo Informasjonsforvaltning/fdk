@@ -12,6 +12,7 @@ application:
   referenceDataUrl: ${referenceDataUrl:http://reference-data:8080}
   notificationMailSenderAddress: fdksystembjg@gmail.com
   openDataEnhet: https://data.brreg.no/enhetsregisteret/api/enheter/
+  harvestRecordRetentionDays: ${harvestRecordRetentionDays:1000}
 crawler:
   threadPoolSize: 2
 elastic:

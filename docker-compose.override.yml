@@ -64,6 +64,7 @@ services:
     - fuseki.dcatServiceUri=http://fuseki:8080/fuseki/dcat
     - fuseki.adminServiceUri=http://fuseki:8080/fuseki/admin
     - application.crawlerThreadPoolSize=2
+    - harvestRecordRetentionDays=30
     volumes:
     - ./logs:/usr/local/tomcat/logs:rw
 
