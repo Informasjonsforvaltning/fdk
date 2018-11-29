@@ -391,5 +391,24 @@
       "importFromSpec": "Importert fra spesifikasjon",
       "addInfo": "To ensure API specification to be useful you are encouraged to add additional information. That information is only used in the National Data Directory"
     }
+  },
+  "formStatus": {
+    "type": {
+      "dataset": "Dataset description",
+      "api": "API description"
+    },
+    "isSaving": "Saving",
+    "savedAsDraft": "Saved as draft",
+    "changesUpdated": "Changes are published",
+    "publish": "Publish",
+    "published": "is published",
+    "unPublish": "Unpublish",
+    "unPublished": "is unpublished",
+    "delete": "Delete",
+    "confirmDeleted": "was deleted",
+    "error": {
+      "404": "You are not connected to internet. Please connect and try again.",
+      "other": "There are some issues saving changes."
+    }
   }
 }
