@@ -20,6 +20,7 @@ import no.dcat.htmlclean.HtmlCleaner;
 import no.dcat.shared.*;
 import org.apache.jena.rdf.model.*;
 import org.apache.jena.vocabulary.RDF;
+import org.elasticsearch.action.ActionListener;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.action.get.GetRequest;
@@ -28,6 +29,9 @@ import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.index.query.*;
+import org.elasticsearch.index.reindex.BulkByScrollResponse;
+import org.elasticsearch.index.reindex.DeleteByQueryAction;
+import org.elasticsearch.index.reindex.DeleteByQueryRequestBuilder;
 import org.elasticsearch.search.sort.SortOrder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,6 +58,8 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
     public static final String DEFAULT_EMAIL_SENDER = "fellesdatakatalog@brreg.no";
     public static final String VALIDATION_EMAIL_RECEIVER = "joe@brreg.no"; //temporary
     public static final String VALIDATION_EMAIL_SUBJECT = "Felles datakatalog harvestlogg";
+    public static final int DEFAULT_HARVESTRECORD_RETENTION_DAYS = 1000; //set  to something large if value is not specified, so records are not deleted inadvertently
+
     private static final Logger logger = LoggerFactory.getLogger(ElasticSearchResultHandler.class);
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
     Elasticsearch5Client elasticClient;
@@ -64,6 +70,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
     String httpUsername;
     String httpPassword;
     String notificationEmailSender;
+    int harvestRecordRetentionDays;
     ch.qos.logback.classic.Logger rootLogger;
     FileAppender<ILoggingEvent> fileAppender;
     Path temporarylogFile;
@@ -81,9 +88,10 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
      * @param httpUsername           username used for posting data to reference-data service
      * @param httpPassword           password used for posting data to reference-data service
      * @param notifactionEmailSender email address used as from: address in emails with validation results
+     * @param harvestRecordRetentionDays number of days harvest records should be kept in database before they are deleted
      */
     public ElasticSearchResultHandler(String clusterNodes, String clusterName, String referenceDataUrl, String httpUsername, String httpPassword,
-                                      String notifactionEmailSender, EmailNotificationService emailNotificationService) {
+                                      String notifactionEmailSender, EmailNotificationService emailNotificationService, int harvestRecordRetentionDays) {
         this.clusterNodes = clusterNodes;
         this.clusterName = clusterName;
         this.referenceDataUrl = referenceDataUrl;
@@ -91,6 +99,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         this.httpPassword = httpPassword;
         this.notificationEmailSender = notifactionEmailSender;
         this.notificationService = emailNotificationService;
+        this.harvestRecordRetentionDays = harvestRecordRetentionDays;
 
         logger.debug("ES clusterName: " + this.clusterName);
 
@@ -100,7 +109,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
     }
 
     public ElasticSearchResultHandler(String clusterNodes, String clusterName, String referenceDataUrl, String httpUsername, String httpPassword) {
-        this(clusterNodes, clusterName, referenceDataUrl, httpUsername, httpPassword, DEFAULT_EMAIL_SENDER, null);
+        this(clusterNodes, clusterName, referenceDataUrl, httpUsername, httpPassword, DEFAULT_EMAIL_SENDER, null, DEFAULT_HARVESTRECORD_RETENTION_DAYS);
     }
 
     // for unit test purposes
@@ -189,6 +198,8 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
             updateDatasets(dcatSource, model, elasticsearch, validationResults, gson, datasets, catalogs);
             updateSubjects(datasets, elasticsearch, gson);
         }
+
+        deleteOldHarvestRecords(elasticsearch);
 
         stopHarvestLogAndReport(dcatSource, validationResults);
     }
@@ -724,6 +735,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
                     lastHarvestRecordWithContent = findLastDatasetHarvestRecordWithContent(dataset, elasticsearch, gson);
                 }
 
+                //BJG:HER forutsetter at datasett er enhdret, inntil det modsatte er bevist. Blir det riktig
                 boolean isChanged = true;
 
                 if (lastHarvestRecordWithContent != null) {
@@ -946,6 +958,34 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
 
         bulkRequest.add(catalogCrawlRequest);
     }
+
+
+
+
+    void deleteOldHarvestRecords(Elasticsearch5Client elasticsearch) {
+        Calendar deleteFromDateTime = Calendar.getInstance();
+        deleteFromDateTime.add(Calendar.DATE, -harvestRecordRetentionDays);
+        Date beforeDate = deleteFromDateTime.getTime();
+        String beforeDateFilterStr = "now/d-" + harvestRecordRetentionDays + "d";
+        logger.info("Deleting dataset harvest records created before {} using Elasticsearch filter expression: {}", beforeDate, beforeDateFilterStr);
+
+        DeleteByQueryAction.INSTANCE.newRequestBuilder(elasticsearch.getClient())
+            .filter(QueryBuilders.rangeQuery("date")
+                .lte(beforeDateFilterStr))
+            .source(HARVEST_INDEX)
+            .execute(new ActionListener<BulkByScrollResponse>() {
+                @Override
+                public void onResponse(BulkByScrollResponse response) {
+                    long deleted = response.getDeleted();
+                    logger.info("Number of dataset harvest records deleted: {}", deleted);
+                }
+                @Override
+                public void onFailure(Exception e) {
+                    logger.error("Deleting harvest records failed. Exception: {}", e);
+                }
+            });
+    }
+
 
     void updateSubjects(List<Dataset> datasets, Elasticsearch5Client elasticsearch, Gson gson) {
 

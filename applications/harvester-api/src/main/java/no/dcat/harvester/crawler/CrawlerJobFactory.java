@@ -21,7 +21,7 @@ import javax.annotation.PostConstruct;
 
 @Component
 public class CrawlerJobFactory {
-	
+
 	@Autowired
 	private FusekiSettings fusekiSettings;
 
@@ -36,10 +36,10 @@ public class CrawlerJobFactory {
 
 	@Autowired
 	private EmailNotificationService emailNotificationService;
-	
+
 	private AdminDataStore adminDataStore;
 	private DcatDataStore dcatDataStore;
-	
+
 	private FusekiResultHandler fusekiResultHandler;
 	private ElasticSearchResultHandler elasticSearchResultHandler;
 	private CrawlerResultHandler publisherHandler;
@@ -53,7 +53,7 @@ public class CrawlerJobFactory {
 		dcatDataStore = new DcatDataStore(new Fuseki(fusekiSettings.getDcatServiceUri()));
 		fusekiResultHandler = new FusekiResultHandler(dcatDataStore, adminDataStore);
 	}
-	
+
 	public CrawlerJob createCrawlerJob(DcatSource dcatSource) {
 
 		logger.debug("elastic.clusterNodes: " + elasticSettings.getClusterNodes());
@@ -62,6 +62,7 @@ public class CrawlerJobFactory {
 		logger.debug("application.httpUsername: " + applicationSettings.getHttpUsername());
 		logger.debug("application.httpPassword: " + applicationSettings.getHttpPassword());
 		logger.debug("application.notificationMailSenderAddress" + applicationSettings.getNotificationMailSenderAddress());
+		logger.debug("application.harvestRecordRetentionDays: " + applicationSettings.getHarvestRecordRetentionDays());
 
 		publisherHandler = new ElasticSearchResultPubHandler(elasticSettings.getClusterNodes(), elasticSettings.getClusterName());
 		elasticSearchResultHandler = new ElasticSearchResultHandler(
@@ -71,7 +72,8 @@ public class CrawlerJobFactory {
 				applicationSettings.getHttpUsername(),
 				applicationSettings.getHttpPassword(),
 				applicationSettings.getNotificationMailSenderAddress(),
-				emailNotificationService);
+				emailNotificationService,
+                applicationSettings.getHarvestRecordRetentionDays());
 
 		return new CrawlerJob(dcatSource, adminDataStore, subjectCrawler, fusekiResultHandler, elasticSearchResultHandler, publisherHandler);
 	}

@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 @EnableConfigurationProperties
 @ConfigurationProperties(prefix="application")
 public class ApplicationSettings {
-	
+
 	private String referenceDataUrl;
 
 	private String httpUsername;
@@ -18,6 +18,7 @@ public class ApplicationSettings {
 
 	private String openDataEnhet;
 
+	private int harvestRecordRetentionDays;
 
 	public String getHttpUsername() {
 		return httpUsername;
@@ -57,5 +58,11 @@ public class ApplicationSettings {
 
 	public void setOpenDataEnhet(String openDataEnhet) {
 		this.openDataEnhet = openDataEnhet;
+	}
+
+	public int getHarvestRecordRetentionDays() { return harvestRecordRetentionDays; }
+
+	public void setHarvestRecordRetentionDays(int harvestRecordRetentionDays) {
+	    this.harvestRecordRetentionDays = harvestRecordRetentionDays;
 	}
 }

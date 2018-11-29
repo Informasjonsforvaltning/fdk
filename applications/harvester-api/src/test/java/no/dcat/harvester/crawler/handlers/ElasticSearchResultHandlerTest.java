@@ -825,4 +825,6 @@ public class ElasticSearchResultHandlerTest {
         resultHandler.isChanged(record, dataset2, gson);
 
     }
+
+
 }
