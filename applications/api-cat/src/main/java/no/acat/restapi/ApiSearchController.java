@@ -57,10 +57,15 @@ public class ApiSearchController {
 
     static void addAllTermsFilter(BoolQueryBuilder boolQuery, String term, String[] values) {
         if (values == null || values.length == 0) return;
-
-        for (String value : values) {
-            boolQuery.filter(QueryBuilders.termQuery(term, value));
+        
+        if (values[0].equals(MISSING)) {
+            boolQuery.filter(QueryBuilders.boolQuery().mustNot(QueryBuilders.existsQuery(term)));
+        } else {
+          for (String value : values) {
+              boolQuery.filter(QueryBuilders.termQuery(term, value));
+          }
         }
+
     }
 
     @ApiOperation(value = "Queries the api catalog for api specifications",
