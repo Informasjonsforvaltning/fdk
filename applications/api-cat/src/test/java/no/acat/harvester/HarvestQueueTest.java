@@ -60,7 +60,7 @@ public class HarvestQueueTest {
 
         queue.addTask(HarvestExecutor.HARVEST_ALL);
 
-        Thread.sleep(1002);
+        Thread.sleep(1300); //Timer is every 1000 ms. Added 300 ms to make the test work on slow or loaded machines.
 
         assertEquals("queue should be empty", queue.poll(), null);
 
