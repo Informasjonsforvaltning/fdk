@@ -83,7 +83,7 @@ The [search api](https://github.com/brreg/openAPI/blob/master/specs/fdk.yaml) ca
       Monitor logs 
       
       ```
-      docker-compose up -d registration
+      docker-compose logs -f registration
       ```
 
   5)  Open solution
@@ -92,31 +92,53 @@ The [search api](https://github.com/brreg/openAPI/blob/master/specs/fdk.yaml) ca
 
       Registration site: [https://localhost:8098](https://localhost:8098)
 
-  6)  Run end2end tests
 
+## Run browser-based end-to-end tests
+
+  In order to have maintainable tests, the tests must equally well run in all environment configurationds: 
+
+  1) Brower in host machine (windowed+headless), services in docker-compose
+      
+      Make sure chromium is installed (for mac, TODO windows)
+      ```
       brew cask install chromium
-
-      cd applications/e2e
+      ```
       
-      // install npm dependencies
-      npm i
-
-      // run tests in chromium
-      npm t
+      Make sure services are running in docker-compose network and exposed to localhost 
+      (beware of port conflicts with services running in intelliJ
       
-      // run tests headless
-      npm test:headless
-
-            
-
-## Run from Docker Hub
-The docker images are also available on [Docker Hub](https://hub.docker.com/u/dcatno/). 
-This means that you do not have to compile the project to run it. But you need docker installed on your computer.
-You need to download the following two files [docker-compose.yml](/docker-compose.yml) and
-[docker-compose.override.yml](/docker-compose.override.yml). And then you can run the following command:
-
-        docker-compose up -d
-
+      ```
+      ./runAll.sh
+      # or
+      docker-compose up -d
+      ```
+         
+      Ensure dependencies are installed
+      ```
+      (cd applications/e2e ; npm i)
+      ```
+      
+      Run tests    
+      
+      ```
+      # run tests in chromim headless (no window, just report) 
+      cd applications/e2e ; npm run test:headless)
+      
+      # run tests in chromium window opened
+      (cd applications/e2e ; npm t)
+      
+      ```
+  2) Browser in container (headless), services in docker-compose
+     
+     ```
+     # run
+     docker-compose run e2e npm run test:in_container
+     
+     # build container (if changes in tests)
+     docker-compose build e2e 
+     
+     ```
+      
 # Modules 
 
 ![Architecture](/images/fdk-architecture-logic.png)

@@ -7,10 +7,9 @@
     "test": "test"
   },
   "scripts": {
-    "test": "BROWSER=chromium jest",
-    "test:headless": "jest",
-    "test:in_container": "BROWSER=google-chrome-unstable HOST_SEARCH=http://nginx-search:8080 jest",
-    "test:e2e": ""
+    "test:browser": "BROWSER=chromium npm t",
+    "test": "./wait_for_dependencies.sh && jest",
+    "test:in_container": "BROWSER=google-chrome-unstable HOST_SEARCH=http://nginx-search:8080 npm t"
   },
   "author": "",
   "license": "ISC",
