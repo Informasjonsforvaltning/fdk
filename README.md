@@ -42,30 +42,58 @@ The [search api](https://github.com/brreg/openAPI/blob/master/specs/fdk.yaml) ca
 
 ## Set up your developement environnement
   1) Clone this repo
+  
   2) Install Java8, Maven and Docker. 
-  If you have a Mac, running this script will install Java8 and Maven automatically: 
+    
+      If you have a Mac, running this script will install Java8 and Maven automatically: 
+      
+      ```
+      ./install-dependencies-mac.sh
+      ```
+  3) Compile, create docker images and run the entire project:
+   
+     ```
+     ./runAll.sh
+     ```  
 
-         ./install-dependencies-mac.sh
-  3) (re)compile the entire project: 
+     If you only want to recompile one module ("search-api" in this example), use the following:     
 
-         ./runAll.sh  
-
-	  If you only want to compile one module ("search-api" in this example), use the following:     
-
-         ./runDocker.sh search-api
+     ```
+     ./runDocker.sh search-api
+     ```
 	 
 	 Frontend applications such as search and registration-react are built and run the following way:
 	 
+	 ```
 	 docker-compose up -d --build registration-react
+	 ```
 
-  4) Run without compiling the entire project using 
+  4) If imagase are already built, project can be run: 
 
-          docker-compose up -d
-	  ...or a specific module  ("registration" in this example) using
+      ```
+      docker-compose up -d
+      ```
+	  
+	  Restart a specific module  after image rebuild,.
 
-            docker-compose up -d registration
-  5) Run end2end tests
+      ```
+      docker-compose up -d registration
+      ```
+            
+      Monitor logs 
       
+      ```
+      docker-compose up -d registration
+      ```
+
+  5)  Open solution
+  
+      Search site: [http://localhost:8080](http://localhost:8080)
+
+      Registration site: [https://localhost:8098](https://localhost:8098)
+
+  6)  Run end2end tests
+
       brew cask install chromium
 
       cd applications/e2e
