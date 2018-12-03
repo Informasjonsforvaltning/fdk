@@ -38,6 +38,23 @@
                                         skosxl:literalForm  "rettsvern"@nb
                                       ] .
 
+<http://data.brreg.no/begrep/28155>
+        a                             skos:Concept ;
+        skosno:betydningsbeskrivelse  [ a               skosno:Definisjon ;
+                                        rdfs:label      "nisifret, informasjonsløst nummer som entydig identifiserer enheter i Enhetsregisteret "@nb ;
+                                        dct:source      [ rdfs:label  "Egendefinert"@nb ] ;
+                                        skos:scopeNote  "Er bygd opp i henhold til modulus 11. Organisasjonsnummeret inneholder ingen informasjon om enhetens organisasjonsform, eierforhold, adresser og lignende."@nb
+                                      ] ;
+        dct:identifier                "https://jira.brreg.no/rest/api/2/issue/28155" ;
+        dct:publisher                 <https://data.brreg.no/enhetsregisteret/api/enheter/974760673> ;
+        dct:subject                   "Grunndata"@nb ;
+        skosxl:hiddenLabel            [ a                   skosxl:Label ;
+                                        skosxl:literalForm  "bedriftsnummer, virksomhetsnummer"@nb
+                                      ] ;
+        skosxl:prefLabel              [ a                   skosxl:Label ;
+                                        skosxl:literalForm  "organisasjonsnummer"@nb
+                                      ] .
+
 <http://data.brreg.no/begrep/52086>
         a                             skos:Concept ;
         skosno:betydningsbeskrivelse  [ a           skosno:Definisjon ;
@@ -49,6 +66,19 @@
         dct:subject                   "Vergemål"@nb ;
         skosxl:prefLabel              [ a                   skosxl:Label ;
                                         skosxl:literalForm  "fremtidsfullmakt"@nb
+                                      ] .
+
+<http://data.brreg.no/begrep/52448>
+        a                             skos:Concept ;
+        skosno:betydningsbeskrivelse  [ a           skosno:Definisjon ;
+                                        rdfs:label  "unik identifikator for vegadresse registrert i matrikkelen "@nb ;
+                                        dct:source  [ rdfs:label  "Egendefinert"@nb ]
+                                      ] ;
+        dct:identifier                "https://jira.brreg.no/rest/api/2/issue/52448" ;
+        dct:publisher                 <https://data.brreg.no/enhetsregisteret/api/enheter/974760673> ;
+        dct:subject                   "Adresse"@nb ;
+        skosxl:prefLabel              [ a                   skosxl:Label ;
+                                        skosxl:literalForm  "vegadresse ID"@nb
                                       ] .
 
 <http://data.brreg.no/begrep/28167>
@@ -107,6 +137,20 @@
                                         skosxl:literalForm  "saksøkt"@nb
                                       ] .
 
+<http://data.brreg.no/begrep/51737>
+        a                             skos:Concept ;
+        skosno:betydningsbeskrivelse  [ a               skosno:Definisjon ;
+                                        rdfs:label      "nedarvet bruksnavn, navn på en institusjon eller bygning eller grend brukt som del av den offisielle adressen"@nb ;
+                                        dct:source      [ rdfs:label  "Direktoratet for forvaltning og IKT. _Adresse - felles informasjonsmodell_. Oppdatert 6. desember 2017. Tilgjengelig fra: https://www.difi.no/fagomrader-og-tjenester/digitalisering-og-samordning/nasjonal-arkitektur/informasjonsforvaltning/adresse-felles-informasjonsmodell"@nb ] ;
+                                        skos:scopeNote  "Eier kan kreve og kommunen kan tildele adressetilleggsnavn til en offisiell adresse etter vilkår i matrikkelforskriften § 54 og § 55. Hvilken regel den er tildelt etter skal registreres i matrikkelen (adressetilleggsnavnkilde)\r\n\r\nFor å kunne ta vare på bruksnavn av kulturvernmessig verdi er det åpnet for at vegadresser kan ha et adressetilleggsnavn som inngår i den offisielle adressen."@nb
+                                      ] ;
+        dct:identifier                "https://jira.brreg.no/rest/api/2/issue/51737" ;
+        dct:publisher                 <https://data.brreg.no/enhetsregisteret/api/enheter/974760673> ;
+        dct:subject                   "Adresse"@nb ;
+        skosxl:prefLabel              [ a                   skosxl:Label ;
+                                        skosxl:literalForm  "adressetilleggsnavn"@nb
+                                      ] .
+
 <http://data.brreg.no/begrep/47126>
         a                             skos:Concept ;
         skosno:betydningsbeskrivelse  [ a               skosno:Definisjon ;
@@ -135,6 +179,19 @@
                                         skosxl:literalForm  "abandonering"@nb
                                       ] .
 
+<http://data.brreg.no/begrep/53474>
+        a                             skos:Concept ;
+        skosno:betydningsbeskrivelse  [ a           skosno:Definisjon ;
+                                        rdfs:label  "firesifret kode som identifiserer et postnummerområde"@nb ;
+                                        dct:source  [ rdfs:label  "Direktoratet for forvaltning og IKT. _Adresse - felles informasjonsmodell_. Oppdatert 6. desember 2017. Tilgjengelig fra: https://www.difi.no/fagomrader-og-tjenester/digitalisering-og-samordning/nasjonal-arkitektur/informasjonsforvaltning/adresse-felles-informasjonsmodell"@nb ]
+                                      ] ;
+        dct:identifier                "https://jira.brreg.no/rest/api/2/issue/53474" ;
+        dct:publisher                 <https://data.brreg.no/enhetsregisteret/api/enheter/974760673> ;
+        dct:subject                   "Adresse"@nb ;
+        skosxl:prefLabel              [ a                   skosxl:Label ;
+                                        skosxl:literalForm  "postnummer"@nb
+                                      ] .
+
 <http://data.brreg.no/begrep/46982>
         a                             skos:Concept ;
         skosno:betydningsbeskrivelse  [ a               skosno:Definisjon ;
@@ -147,6 +204,20 @@
         dct:subject                   "Arkiv"@nb ;
         skosxl:prefLabel              [ a                   skosxl:Label ;
                                         skosxl:literalForm  "kassasjon"@nb
+                                      ] .
+
+<http://data.brreg.no/begrep/43497>
+        a                             skos:Concept ;
+        skosno:betydningsbeskrivelse  [ a               skosno:Definisjon ;
+                                        rdfs:label      "nummer som brukes til å adressere en datamaskin eller annen enhet i et IP-basert nettverk"@nb ;
+                                        dct:source      [ rdfs:label  "Norid (2016) Ordliste internett]. Tilgjengelig fra: [https://www.norid.no/no/ordliste/ [lest 20. november 2018]"@nb ] ;
+                                        skos:scopeNote  "{color:#000000}Et eksempel på en IP-adresse er 158.38.130.37{color}"@nb
+                                      ] ;
+        dct:identifier                "https://jira.brreg.no/rest/api/2/issue/43497" ;
+        dct:publisher                 <https://data.brreg.no/enhetsregisteret/api/enheter/974760673> ;
+        dct:subject                   "IKT"@nb ;
+        skosxl:prefLabel              [ a                   skosxl:Label ;
+                                        skosxl:literalForm  "IP-adresse"@nb
                                       ] .
 
 <http://data.brreg.no/begrep/52093>
@@ -362,6 +433,20 @@
                                         skosxl:literalForm  "DCAT"@nb
                                       ] .
 
+<http://data.brreg.no/begrep/43221>
+        a                             skos:Concept ;
+        skosno:betydningsbeskrivelse  [ a               skosno:Definisjon ;
+                                        rdfs:label      "elektronisk adresse som brukes for å varsle enhet eller person"@nb ;
+                                        dct:source      [ rdfs:label  "Egendefinert"@nb ] ;
+                                        skos:scopeNote  "Alle enheter i Enhetsregisteret har plikt til å melde minst én varslingsadresse. Varslingsadresse er e-postadresse og/eller mobiltelefonnummer. Forvaltningen bruker varslingsadresse når de sender vedtak og andre viktige meldinger elektronisk, og til saksbehandling og forvaltningsoppgaver for øvrig. Forvaltningen har varslingsplikt, jf. eForvaltningsforskriften. Enhetene har meldeplikt, jf. Forskrift om registrering av juridiske personer m.m. i Enhetsregisteret "@nb
+                                      ] ;
+        dct:identifier                "https://jira.brreg.no/rest/api/2/issue/43221" ;
+        dct:publisher                 <https://data.brreg.no/enhetsregisteret/api/enheter/974760673> ;
+        dct:subject                   "Enhetsregisteret"@nb ;
+        skosxl:prefLabel              [ a                   skosxl:Label ;
+                                        skosxl:literalForm  "varslingsadresse"@nb
+                                      ] .
+
 <http://data.brreg.no/begrep/52069>
         a                             skos:Concept ;
         skosno:betydningsbeskrivelse  [ a               skosno:Definisjon ;
@@ -376,20 +461,6 @@
                                         skosxl:literalForm  "arrest"@nb
                                       ] .
 
-<http://data.brreg.no/begrep/53602>
-        a                             skos:Concept ;
-        skosno:betydningsbeskrivelse  [ a               skosno:Definisjon ;
-                                        rdfs:label      "\"En spesifikasjon basert på DCAT for å beskrive offentlige datasett i Europa\""@nb ;
-                                        dct:source      [ rdfs:label  "Direktoratet for forvaltning og IKT. \"Standard for beskrivelse av datasett og datakataloger (DCAT-AP-NO)\". https://doc.difi.no/dcat-ap-no/ [Lest 23.02.2018]"@nb ] ;
-                                        skos:scopeNote  "DCAT-AP er den gjeldende europeiske spesifikasjonen for beskrivelser av datasett og datakataloger. Formålet er å gjøre det enklere å søke etter datasett på tvers av dataportaler i EUs medlemsstater."@nb
-                                      ] ;
-        dct:identifier                "https://jira.brreg.no/rest/api/2/issue/53602" ;
-        dct:publisher                 <https://data.brreg.no/enhetsregisteret/api/enheter/974760673> ;
-        dct:subject                   "Informasjonsforvaltning"@nb ;
-        skosxl:prefLabel              [ a                   skosxl:Label ;
-                                        skosxl:literalForm  "DCAT-AP"@nb
-                                      ] .
-
 <http://data.brreg.no/begrep/28265>
         a                             skos:Concept ;
         skosno:betydningsbeskrivelse  [ a               skosno:Definisjon ;
@@ -402,6 +473,20 @@
         dct:subject                   "Arkiv"@nb ;
         skosxl:prefLabel              [ a                   skosxl:Label ;
                                         skosxl:literalForm  "dokumentbeskrivelse"@nb
+                                      ] .
+
+<http://data.brreg.no/begrep/53602>
+        a                             skos:Concept ;
+        skosno:betydningsbeskrivelse  [ a               skosno:Definisjon ;
+                                        rdfs:label      "\"En spesifikasjon basert på DCAT for å beskrive offentlige datasett i Europa\""@nb ;
+                                        dct:source      [ rdfs:label  "Direktoratet for forvaltning og IKT. \"Standard for beskrivelse av datasett og datakataloger (DCAT-AP-NO)\". https://doc.difi.no/dcat-ap-no/ [Lest 23.02.2018]"@nb ] ;
+                                        skos:scopeNote  "DCAT-AP er den gjeldende europeiske spesifikasjonen for beskrivelser av datasett og datakataloger. Formålet er å gjøre det enklere å søke etter datasett på tvers av dataportaler i EUs medlemsstater."@nb
+                                      ] ;
+        dct:identifier                "https://jira.brreg.no/rest/api/2/issue/53602" ;
+        dct:publisher                 <https://data.brreg.no/enhetsregisteret/api/enheter/974760673> ;
+        dct:subject                   "Informasjonsforvaltning"@nb ;
+        skosxl:prefLabel              [ a                   skosxl:Label ;
+                                        skosxl:literalForm  "DCAT-AP"@nb
                                       ] .
 
 <http://data.brreg.no/begrep/43444>
@@ -443,6 +528,20 @@
         dct:subject                   "Økonomi"@nb ;
         skosxl:prefLabel              [ a                   skosxl:Label ;
                                         skosxl:literalForm  "gebyr"@nb
+                                      ] .
+
+<http://data.brreg.no/begrep/55562>
+        a                             skos:Concept ;
+        skosno:betydningsbeskrivelse  [ a               skosno:Definisjon ;
+                                        rdfs:label      "rettighetshaver viker prioritet for en eller flere konkurrerende rettighetshavere"@nb ;
+                                        dct:source      [ rdfs:label  "Egendefinert"@nb ] ;
+                                        skos:scopeNote  "Ved en prioritetsvikelse endres rekkefølgen for en allerede tinglyst heftelse, eller for en rettsstiftelse som skal tinglyses."@nb
+                                      ] ;
+        dct:identifier                "https://jira.brreg.no/rest/api/2/issue/55562" ;
+        dct:publisher                 <https://data.brreg.no/enhetsregisteret/api/enheter/974760673> ;
+        dct:subject                   "Tinglysing"@nb ;
+        skosxl:prefLabel              [ a                   skosxl:Label ;
+                                        skosxl:literalForm  "prioritetsvikelse"@nb
                                       ] .
 
 <http://data.brreg.no/begrep/41243>
@@ -826,6 +925,23 @@
                                         skosxl:literalForm  "arkiv (permanent dokumentasjon)"@nb
                                       ] .
 
+<http://data.brreg.no/begrep/43608>
+        a                             skos:Concept ;
+        skosno:betydningsbeskrivelse  [ a               skosno:Definisjon ;
+                                        rdfs:label      "unikt navn knyttet til en IP-adresse"@nb ;
+                                        dct:source      [ rdfs:label  "Norid (2016) Ordliste internett]. Tilgjengelig fra: [https://www.norid.no/no/ordliste/ [lest 20. november.2018]"@nb ] ;
+                                        skos:scopeNote  "{color:#333333}Alle datamaskiner på Internett har en IP-adresse som består av tall. For at brukerne skal slippe å huske en lang tallrekke, knytter domenenavnsystemet (DNS) unike domenenavn til IP-adressene.{color}"@nb
+                                      ] ;
+        dct:identifier                "https://jira.brreg.no/rest/api/2/issue/43608" ;
+        dct:publisher                 <https://data.brreg.no/enhetsregisteret/api/enheter/974760673> ;
+        dct:subject                   "IKT"@nb ;
+        skosxl:altLabel               [ a                   skosxl:Label ;
+                                        skosxl:literalForm  "internettadresse"@nb
+                                      ] ;
+        skosxl:prefLabel              [ a                   skosxl:Label ;
+                                        skosxl:literalForm  "domenenavn"@nb
+                                      ] .
+
 <http://data.brreg.no/begrep/28164>
         a                             skos:Concept ;
         skosno:betydningsbeskrivelse  [ a               skosno:Definisjon ;
@@ -852,6 +968,20 @@
         dct:subject                   "Arkiv"@nb ;
         skosxl:prefLabel              [ a                   skosxl:Label ;
                                         skosxl:literalForm  "klassifikasjonssystem"@nb
+                                      ] .
+
+<http://data.brreg.no/begrep/52204>
+        a                             skos:Concept ;
+        skosno:betydningsbeskrivelse  [ a               skosno:Definisjon ;
+                                        rdfs:label      "geografisk inndeling av postmottakere"@nb ;
+                                        dct:source      [ rdfs:label  "Direktoratet for forvaltning og IKT. _Adresse - felles informasjonsmodell_. Oppdatert 6. desember 2017. Tilgjengelig fra: https://www.difi.no/fagomrader-og-tjenester/digitalisering-og-samordning/nasjonal-arkitektur/informasjonsforvaltning/adresse-felles-informasjonsmodell"@nb ] ;
+                                        skos:scopeNote  "Større poststeder kan ha flere forskjellige postnummer, og større virksomheter kan ha eget postnummer. I Norge angis poststedet etter postnummeret i adresser. Poststed kan også betegne et sted som har postkontor."@nb
+                                      ] ;
+        dct:identifier                "https://jira.brreg.no/rest/api/2/issue/52204" ;
+        dct:publisher                 <https://data.brreg.no/enhetsregisteret/api/enheter/974760673> ;
+        dct:subject                   "Adresse"@nb ;
+        skosxl:prefLabel              [ a                   skosxl:Label ;
+                                        skosxl:literalForm  "poststed"@nb
                                       ] .
 
 <http://data.brreg.no/begrep/52572>
@@ -1067,6 +1197,20 @@
                                         skosxl:literalForm  "tingsinnbegrep"@nb
                                       ] .
 
+<http://data.brreg.no/begrep/43434>
+        a                             skos:Concept ;
+        skosno:betydningsbeskrivelse  [ a               skosno:Definisjon ;
+                                        rdfs:label      "{color:#000000}elektronisk pass eller identitetskort som kan brukes som digital legitimasjon{color}"@nb ;
+                                        dct:source      [ rdfs:label  "NSM (2015) Sikkerhetsfaglig råd [internett]. Tilgjengelig fra: [https://www.nsm.stat.no/globalassets/rapporter/nsm-sikkerhetsfaglig_raad_2015_web.pdf] [lest 20.november 2018].\r\n\r\nNSM (2016) Sikkerhetsbloggen internett]. Tilgjengelig fra: [https://www.nsm.stat.no/blogg/hvordan-velge-ssltls-sertifikat/ [lest 20.november 2018]."@nb ] ;
+                                        skos:scopeNote  "Et digitalt sertifikat kan utstedes til en person, en organisasjon, et dataprogram, en gjenstand eller andre enheter som har en unik identitet.  "@nb
+                                      ] ;
+        dct:identifier                "https://jira.brreg.no/rest/api/2/issue/43434" ;
+        dct:publisher                 <https://data.brreg.no/enhetsregisteret/api/enheter/974760673> ;
+        dct:subject                   "IKT"@nb ;
+        skosxl:prefLabel              [ a                   skosxl:Label ;
+                                        skosxl:literalForm  "digitalt sertifikat"@nb
+                                      ] .
+
 <http://data.brreg.no/begrep/39583>
         a                             skos:Concept ;
         skosno:betydningsbeskrivelse  [ a               skosno:Definisjon ;
@@ -1079,6 +1223,20 @@
         dct:subject                   "Informasjonsforvaltning"@nb ;
         skosxl:prefLabel              [ a                   skosxl:Label ;
                                         skosxl:literalForm  "datakatalog"@nb
+                                      ] .
+
+<http://data.brreg.no/begrep/53604>
+        a                             skos:Concept ;
+        skosno:betydningsbeskrivelse  [ a               skosno:Definisjon ;
+                                        rdfs:label      "register over saksdokumenter som behandles i et organ"@nb ;
+                                        dct:source      [ rdfs:label  "Arkivverket (2016) Noark5-standarden [Internett]. Versjon 4.0 Standard for elektronisk arkiv. Tilgjengelig fra https://www.arkivverket.no/ [Lest 11. juni 2018]"@nb ] ;
+                                        skos:scopeNote  "I Brønnøysundregistrenes felles sakarkiv Public 360 (som er Noark-basert), er det en felles journal for alle arkivdelene. \r\n\r\nVår forståelse av dagens fagsystemer (som ikke er Noark-baserte), er at det finnes ulike varianter. For eksempel for Saksys, som er saksbehandlingssystem for flere registre, er det en felles journal for Foretaksregisteret, Enhetsregisteret og Frivillighetsregisteret, mens Konksys derimot, kun inneholder journal for Konkursregisteret.\r\n\r\nEn journal kan også forklares som en innholdsfortegnelse over saksdokumenter, mens en arkivdel omfatter både journalopplysninger og saksdokumenter med filer.\r\n"@nb
+                                      ] ;
+        dct:identifier                "https://jira.brreg.no/rest/api/2/issue/53604" ;
+        dct:publisher                 <https://data.brreg.no/enhetsregisteret/api/enheter/974760673> ;
+        dct:subject                   "Arkiv"@nb ;
+        skosxl:prefLabel              [ a                   skosxl:Label ;
+                                        skosxl:literalForm  "journal"@nb
                                       ] .
 
 <http://data.brreg.no/begrep/48782>
@@ -1109,6 +1267,20 @@
                                         skosxl:literalForm  "rettsvernstid"@nb
                                       ] .
 
+<http://data.brreg.no/begrep/48945>
+        a                             skos:Concept ;
+        skosno:betydningsbeskrivelse  [ a               skosno:Definisjon ;
+                                        rdfs:label      "oversikt over hendelser, som er resultat av en analyse for å avdekke og motvirke uberettiget innsyn i personopplysninger"@nb ;
+                                        dct:source      [ rdfs:label  "Egendefinert"@nb ] ;
+                                        skos:scopeNote  "\"Innsynslogging er et kontrolltiltak i virksomheten\", og formålet er å motvirke uberettiget innsyn i personopplysninger av ansatte eller andre som utfører arbeid på vegne av virksomheten. Med uberettiget innsyn menes at vedkommende ser/gjør seg kjent med, eller har muligheten til å se/gjøre seg kjent med, data og informasjon som ikke er åpent tilgjengelig og som vedkommende ikke har tjenstlig behov for. Innsynslogging omfatter en sammenstilling av mange ulike typer logger. \"Disse dokumenterer blant annet vellykkede og mislykkede innloggingsforsøk, oppnådd adgang til filområder og andre hendelser i systemet\".\r\n\r\nResultatet av sammenstillingen vil være en oversikt over hendelser som må vurderes til å enten være berettiget innsyn eller uberettiget innsyn. Det er listen over uberettiget innsyn ved BR, den registrerte kan begjære innsyn i."@nb
+                                      ] ;
+        dct:identifier                "https://jira.brreg.no/rest/api/2/issue/48945" ;
+        dct:publisher                 <https://data.brreg.no/enhetsregisteret/api/enheter/974760673> ;
+        dct:subject                   "Informasjonssikkerhet"@nb ;
+        skosxl:prefLabel              [ a                   skosxl:Label ;
+                                        skosxl:literalForm  "innsynslogg"@nb
+                                      ] .
+
 <http://data.brreg.no/begrep/52084>
         a                             skos:Concept ;
         skosno:betydningsbeskrivelse  [ a               skosno:Definisjon ;
@@ -1123,18 +1295,18 @@
                                         skosxl:literalForm  "pantebeløp"@nb
                                       ] .
 
-<http://data.brreg.no/begrep/48945>
+<http://data.brreg.no/begrep/55564>
         a                             skos:Concept ;
         skosno:betydningsbeskrivelse  [ a               skosno:Definisjon ;
-                                        rdfs:label      "oversikt over hendelser, som er resultat av en analyse for å avdekke og motvirke uberettiget innsyn i personopplysninger"@nb ;
+                                        rdfs:label      "tinglyse et dokument på nytt"@nb ;
                                         dct:source      [ rdfs:label  "Egendefinert"@nb ] ;
-                                        skos:scopeNote  "\"Innsynslogging er et kontrolltiltak i virksomheten\", og formålet er å motvirke uberettiget innsyn i personopplysninger av ansatte eller andre som utfører arbeid på vegne av virksomheten. Med uberettiget innsyn menes at vedkommende ser/gjør seg kjent med, eller har muligheten til å se/gjøre seg kjent med, data og informasjon som ikke er åpent tilgjengelig og som vedkommende ikke har tjenstlig behov for. Innsynslogging omfatter en sammenstilling av mange ulike typer logger. \"Disse dokumenterer blant annet vellykkede og mislykkede innloggingsforsøk, oppnådd adgang til filområder og andre hendelser i systemet\".\r\n\r\nResultatet av sammenstillingen vil være en oversikt over hendelser som må vurderes til å enten være berettiget innsyn eller uberettiget innsyn. Det er listen over uberettiget innsyn ved BR, den registrerte kan begjære innsyn i."@nb
+                                        skos:scopeNote  "Dette gjøres for å forhindre at virkningen av den opprinnelige tinglysingen faller bort ved foreldelse."@nb
                                       ] ;
-        dct:identifier                "https://jira.brreg.no/rest/api/2/issue/48945" ;
+        dct:identifier                "https://jira.brreg.no/rest/api/2/issue/55564" ;
         dct:publisher                 <https://data.brreg.no/enhetsregisteret/api/enheter/974760673> ;
-        dct:subject                   "Informasjonssikkerhet"@nb ;
+        dct:subject                   "Tinglysing"@nb ;
         skosxl:prefLabel              [ a                   skosxl:Label ;
-                                        skosxl:literalForm  "innsynslogg"@nb
+                                        skosxl:literalForm  "retinglysing"@nb
                                       ] .
 
 <http://data.brreg.no/begrep/45477>
@@ -1207,6 +1379,20 @@
                                         skosxl:literalForm  "fordring"@nb
                                       ] .
 
+<http://data.brreg.no/begrep/51735>
+        a                             skos:Concept ;
+        skosno:betydningsbeskrivelse  [ a               skosno:Definisjon ;
+                                        rdfs:label      "adresse for en bygning, bruksenhet, eiendom eller annet objekt som har adressenavn og adressenummer"@nb ;
+                                        dct:source      [ rdfs:label  "Direktoratet for forvaltning og IKT. _Adresse - felles informasjonsmodell_. Oppdatert 6. desember 2017. Tilgjengelig fra: https://www.difi.no/fagomrader-og-tjenester/digitalisering-og-samordning/nasjonal-arkitektur/informasjonsforvaltning/adresse-felles-informasjonsmodell"@nb ] ;
+                                        skos:scopeNote  "En offisiell vegadresse er en adresse som kommunen har lagt inn i matrikkelen. Adressen tildeles da en vegadresse ID.\r\n\r\nEksempel:  \r\nFjellveien 6\r\n\r\nDer man ikke har vegadresse, er den offisielle adressen en tallrekke som bygger på gårds- og bruksnummeret og som kalles matrikkeladresse."@nb
+                                      ] ;
+        dct:identifier                "https://jira.brreg.no/rest/api/2/issue/51735" ;
+        dct:publisher                 <https://data.brreg.no/enhetsregisteret/api/enheter/974760673> ;
+        dct:subject                   "Adresse"@nb ;
+        skosxl:prefLabel              [ a                   skosxl:Label ;
+                                        skosxl:literalForm  "vegadresse"@nb
+                                      ] .
+
 <http://data.brreg.no/begrep/47124>
         a                             skos:Concept ;
         skosno:betydningsbeskrivelse  [ a               skosno:Definisjon ;
@@ -1233,6 +1419,34 @@
         dct:subject                   "Arkiv"@nb ;
         skosxl:prefLabel              [ a                   skosxl:Label ;
                                         skosxl:literalForm  "sak (abstrakt)"@nb
+                                      ] .
+
+<http://data.brreg.no/begrep/55148>
+        a                             skos:Concept ;
+        skosno:betydningsbeskrivelse  [ a               skosno:Definisjon ;
+                                        rdfs:label      "gjenstander som ikke er fast eiendom eller er realregistrert"@nb ;
+                                        dct:source      [ rdfs:label  "Løsøre, i: Statens innkrevingssentral [Internett]. Tilgjengelig fra https://www.sismo.no/no/pub/ordforklaringer/los-re [Lest 5.4.2018]"@nb ] ;
+                                        skos:scopeNote  "Eksempler på løsøre kan være bil, campingvogn, hest, gyngestol, osv. \r\n\r\nAt gjenstander er realregistert innebærer at de er registrert i for eksempel Skipsregisteret, Statens Kartverk eller Akvakulturregisteret. "@nb
+                                      ] ;
+        dct:identifier                "https://jira.brreg.no/rest/api/2/issue/55148" ;
+        dct:publisher                 <https://data.brreg.no/enhetsregisteret/api/enheter/974760673> ;
+        dct:subject                   "Tinglysing"@nb ;
+        skosxl:prefLabel              [ a                   skosxl:Label ;
+                                        skosxl:literalForm  "løsøre "@nb
+                                      ] .
+
+<http://data.brreg.no/begrep/52200>
+        a                             skos:Concept ;
+        skosno:betydningsbeskrivelse  [ a               skosno:Definisjon ;
+                                        rdfs:label      "navn på gate, veg, sti, plass eller område [...]"@nb ;
+                                        dct:source      [ rdfs:label  "Utledet fra: Direktoratet for forvaltning og IKT. _Adresse - felles informasjonsmodell_. Oppdatert 6. desember 2017. Tilgjengelig fra: https://www.difi.no/fagomrader-og-tjenester/digitalisering-og-samordning/nasjonal-arkitektur/informasjonsforvaltning/adresse-felles-informasjonsmodell"@nb ] ;
+                                        skos:scopeNote  "For vegadresser ført i matrikkelen skal navnet være entydig innen kommune og adresseringsområde (samarbeid mellom flere kommuner)."@nb
+                                      ] ;
+        dct:identifier                "https://jira.brreg.no/rest/api/2/issue/52200" ;
+        dct:publisher                 <https://data.brreg.no/enhetsregisteret/api/enheter/974760673> ;
+        dct:subject                   "Adresse"@nb ;
+        skosxl:prefLabel              [ a                   skosxl:Label ;
+                                        skosxl:literalForm  "adressenavn"@nb
                                       ] .
 
 <http://data.brreg.no/begrep/52091>
@@ -1323,6 +1537,20 @@
         dct:subject                   "Informasjonsforvaltning"@nb ;
         skosxl:prefLabel              [ a                   skosxl:Label ;
                                         skosxl:literalForm  "datasett"@nb
+                                      ] .
+
+<http://data.brreg.no/begrep/43182>
+        a                             skos:Concept ;
+        skosno:betydningsbeskrivelse  [ a               skosno:Definisjon ;
+                                        rdfs:label      "adresse avsender bruker for å nå mottaker i et elektronisk datanettverk"@nb ;
+                                        dct:source      [ rdfs:label  "Egendefinert"@nb ] ;
+                                        skos:scopeNote  "Avledet fra adresse. \r\n\r\nEksempel: \r\nIP-adresser \r\nE-postadresser\r\nKnutepunktadresser \r\nMobiltelefonnummer"@nb
+                                      ] ;
+        dct:identifier                "https://jira.brreg.no/rest/api/2/issue/43182" ;
+        dct:publisher                 <https://data.brreg.no/enhetsregisteret/api/enheter/974760673> ;
+        dct:subject                   "Enhetsregisteret"@nb ;
+        skosxl:prefLabel              [ a                   skosxl:Label ;
+                                        skosxl:literalForm  "digital adresse"@nb
                                       ] .
 
 <http://data.brreg.no/begrep/52085>
@@ -1416,6 +1644,20 @@
         dct:subject                   "Tvangsfullbyrdelse"@nb ;
         skosxl:prefLabel              [ a                   skosxl:Label ;
                                         skosxl:literalForm  "saksøker"@nb
+                                      ] .
+
+<http://data.brreg.no/begrep/55559>
+        a                             skos:Concept ;
+        skosno:betydningsbeskrivelse  [ a               skosno:Definisjon ;
+                                        rdfs:label      "nedjustering av pantebeløp"@nb ;
+                                        dct:source      [ rdfs:label  "Egendefinert"@nb ] ;
+                                        skos:scopeNote  "I praksis skjer dette ved at man for eksempel nedbetaler et billån. Rettighetshaver kan da sende inn en endring til Løsøreregisteret  om at pantebeløpet skal nedkvitteres. "@nb
+                                      ] ;
+        dct:identifier                "https://jira.brreg.no/rest/api/2/issue/55559" ;
+        dct:publisher                 <https://data.brreg.no/enhetsregisteret/api/enheter/974760673> ;
+        dct:subject                   "Tinglysing"@nb ;
+        skosxl:prefLabel              [ a                   skosxl:Label ;
+                                        skosxl:literalForm  "nedkvittering"@nb
                                       ] .
 
 <http://data.brreg.no/begrep/46981>
