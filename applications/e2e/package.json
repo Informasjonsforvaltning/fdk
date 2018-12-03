@@ -18,7 +18,7 @@
     "babel-jest": "^23.0.1",
     "babel-preset-env": "^1.7.0",
     "jest": "^23.1.0",
-    "puppeteer": "^1.5.0"
+    "puppeteer": "^1.11.0"
   },
   "dependencies": {
     "delay": "^3.0.0"
