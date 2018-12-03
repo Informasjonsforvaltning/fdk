@@ -2,8 +2,6 @@ package no.ccat.service;
 
 import no.ccat.SKOSNO;
 import no.ccat.model.ConceptDenormalized;
-import no.ccat.model.Definition;
-import no.ccat.model.Source;
 import no.dcat.shared.Publisher;
 import org.apache.jena.rdf.model.*;
 import org.apache.jena.vocabulary.*;
@@ -16,6 +14,9 @@ import org.springframework.stereotype.Service;
 import java.io.Reader;
 import java.net.URL;
 import java.util.*;
+
+import no.ccat.common.model.Definition;
+import no.ccat.common.model.Source;
 
 /*
     Transform RDF/Turtle into our domain model (ConceptDenormalized and friends)

@@ -21,6 +21,7 @@
         <module>api-cat-client</module>
         <module>publisher-cat-client</module>
         <module>registration-api-client</module>
+        <module>concept-cat-common</module>
     </modules>
 
 </project>
