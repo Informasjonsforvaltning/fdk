@@ -1,10 +1,12 @@
 import _ from 'lodash';
-import {
-  DATASETS_REQUEST,
-  DATASETS_SUCCESS,
-  DATASETS_FAILURE
-} from '../../constants/ActionTypes';
 import { fetchActions } from '../fetchActions';
+
+export const DATASETS_REQUEST = 'DATASETS_REQUEST';
+export const DATASETS_SUCCESS = 'DATASETS_SUCCESS';
+export const DATASETS_FAILURE = 'DATASETS_FAILURE';
+export const DATASETS_ADD_ITEM = 'DATASETS_ADD_ITEM';
+export const DATASETS_ITEM_SET_STATUS = 'DATASETS_ITEM_SET_STATUS';
+export const DATASETS_ITEM_DELETE = 'DATASETS_ITEM_DELETE';
 
 function shouldFetch(metaState) {
   const threshold = 60 * 100; // seconds
@@ -26,6 +28,19 @@ export function fetchDatasetsIfNeeded(catalogId) {
       ])
     );
 }
+
+export const setDatasetItemStatusAction = (catalogId, datasetId, status) => ({
+  type: DATASETS_ITEM_SET_STATUS,
+  catalogId,
+  datasetId,
+  status
+});
+
+export const deleteDatasetItemAction = (catalogId, datasetId) => ({
+  type: DATASETS_ITEM_DELETE,
+  catalogId,
+  datasetId
+});
 
 const initialState = {};
 
@@ -60,6 +75,37 @@ export default function datasets(state = initialState, action) {
             isFetching: false,
             lastFetch: null
           }
+        }
+      };
+    case DATASETS_ITEM_SET_STATUS:
+      return {
+        ...state,
+        [action.catalogId]: {
+          items: [
+            _.get(state, [action.catalogId, 'items'], {}).map(item => {
+              if (item.id === action.datasetId) {
+                return {
+                  ...item,
+                  registrationStatus: action.status
+                };
+              }
+              return item;
+            })
+          ]
+        }
+      };
+    case DATASETS_ITEM_DELETE:
+      return {
+        ...state,
+        [action.catalogId]: {
+          items: [
+            _.get(state, [action.catalogId, 'items'], {}).map(item => {
+              if (item.id !== action.datasetId) {
+                return item;
+              }
+              return null;
+            })
+          ]
         }
       };
     default:

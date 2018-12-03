@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 import localization from '../../utils/localization';
 import { FormTemplateWithState } from '../../components/form-template/form-template-with-state.component';
@@ -15,10 +16,11 @@ import { ConnectedFormType } from './form-type/connected-form-type.component';
 import { ConnectedFormConcept } from './form-concept/connected-form-concept.component';
 import { ConnectedFormAccessRights } from './form-accessRights/connected-form-accessRights.component';
 import { ConnectedFormReference } from './form-reference/connected-form-reference.component';
-import DatasetPublish from './publish/publish.component';
 import { ConnectedFormInformationModel } from './form-informationmodel/connected-form-informationmodel.component';
 import { ConnectedFormContactPoint } from './form-contactPoint/connected-form-contactPoint.component';
 import { ConnectedFormContents } from './form-contents/connected-form-contents.component';
+import { StatusBarWithState } from '../../components/status-bar/status-bar.component';
+import { ConnectedFormPublish } from './connected-form-publish/connected-form-publish';
 import {
   titleValues,
   accessRightsValues,
@@ -36,6 +38,33 @@ import {
 } from './dataset-registration-page.logic';
 import './dataset-registration-page.scss';
 
+const isAllowedToPublish = (
+  registrationStatus,
+  syncErrors,
+  distributionErrors
+) => {
+  let foundDistributionErrors = false;
+  if (distributionErrors) {
+    const { distribution } = distributionErrors;
+    if (distribution) {
+      distribution.forEach(item => {
+        if (JSON.stringify(item) !== '{}') {
+          foundDistributionErrors = true;
+        }
+      });
+    }
+  }
+
+  if (
+    registrationStatus === 'DRAFT' &&
+    (syncErrors || foundDistributionErrors)
+  ) {
+    return false;
+  }
+
+  return true;
+};
+
 export class RegDataset extends React.Component {
   constructor(props) {
     super(props);
@@ -46,6 +75,7 @@ export class RegDataset extends React.Component {
     this.props.fetchThemesIfNeeded();
     this.props.fetchReferenceTypesIfNeeded();
     this.props.fetchOpenLicensesIfNeeded();
+    this.deleteApi = this.deleteApi.bind(this);
   }
 
   componentWillMount() {
@@ -55,6 +85,31 @@ export class RegDataset extends React.Component {
     this.props.fetchReferenceDatasetsIfNeeded(
       `/catalogs/${catalogId}/datasets`
     );
+  }
+
+  deleteApi() {
+    const { history, match, datasetItem, deleteDatasetItem } = this.props;
+    const catalogId = _.get(match, ['params', 'catalogId']);
+
+    const api = {
+      Authorization: `Basic user:password`
+    };
+
+    return axios
+      .delete(match.url, { headers: api })
+      .then(() => {
+        deleteDatasetItem(catalogId, _.get(datasetItem, 'id'));
+        if (history) {
+          history.push({
+            pathname: `/catalogs/${catalogId}/datasets`,
+            state: { confirmDelete: true }
+          });
+        }
+      })
+      .catch(response => {
+        const { error } = response;
+        return Promise.reject(error);
+      });
   }
 
   render() {
@@ -76,18 +131,43 @@ export class RegDataset extends React.Component {
       contactPoint,
       distribution,
       sample,
-      registrationStatus,
-      lastSaved,
       datasetItem,
       referenceTypesItems,
       referenceDatasetsItems,
-      openLicenseItems
+      openLicenseItems,
+      lastSaved,
+      match,
+      isSaving,
+      error,
+      justPublishedOrUnPublished,
+      registrationStatus
     } = this.props;
     const datasetURL = window.location.pathname;
     const catalogDatasetsURL = datasetURL.substring(
       0,
       datasetURL.lastIndexOf('/')
     );
+
+    const syncErrors = !!(
+      (title && title.syncErrors) ||
+      (accessRights && accessRights.syncErrors) ||
+      (formThemes && formThemes.syncErrors) ||
+      (type && type.syncErrors) ||
+      (concept && concept.syncErrors) ||
+      (spatial && spatial.syncErrors) ||
+      (formProvenance && formProvenance.syncErrors) ||
+      (contents && contents.syncErrors) ||
+      (informationModel && informationModel.syncErrors) ||
+      (contactPoint && contactPoint.syncErrors) ||
+      (sample &&
+        sample.syncErrors &&
+        sample.syncErrors.sample &&
+        sample.syncErrors.sample.length > 0)
+    );
+
+    const distributionErrors =
+      distribution && distribution.syncErrors ? distribution.syncErrors : null;
+
     return (
       <div className="container">
         <div className="row mb-2 mb-md-5">
@@ -119,6 +199,7 @@ export class RegDataset extends React.Component {
                   <ConnectedFormTitle
                     datasetItem={datasetItem}
                     helptextItems={helptextItems}
+                    match={match}
                   />
                 </FormTemplateWithState>
 
@@ -131,6 +212,7 @@ export class RegDataset extends React.Component {
                   <ConnectedFormAccessRights
                     datasetItem={datasetItem}
                     helptextItems={helptextItems}
+                    match={match}
                   />
                 </FormTemplateWithState>
 
@@ -144,6 +226,7 @@ export class RegDataset extends React.Component {
                     datasetItem={datasetItem}
                     themesItems={themesItems}
                     helptextItems={helptextItems}
+                    match={match}
                   />
                 </FormTemplateWithState>
 
@@ -155,6 +238,7 @@ export class RegDataset extends React.Component {
                   <ConnectedFormType
                     datasetItem={datasetItem}
                     helptextItems={helptextItems}
+                    match={match}
                   />
                 </FormTemplateWithState>
 
@@ -177,6 +261,7 @@ export class RegDataset extends React.Component {
                   <ConnectedFormSpatial
                     datasetItem={datasetItem}
                     helptextItems={helptextItems}
+                    match={match}
                   />
                 </FormTemplateWithState>
 
@@ -190,6 +275,7 @@ export class RegDataset extends React.Component {
                     provenanceItems={provenanceItems}
                     frequencyItems={frequencyItems}
                     helptextItems={helptextItems}
+                    match={match}
                   />
                 </FormTemplateWithState>
 
@@ -201,6 +287,7 @@ export class RegDataset extends React.Component {
                   <ConnectedFormContents
                     datasetItem={datasetItem}
                     helptextItems={helptextItems}
+                    match={match}
                   />
                 </FormTemplateWithState>
 
@@ -212,6 +299,7 @@ export class RegDataset extends React.Component {
                   <ConnectedFormInformationModel
                     datasetItem={datasetItem}
                     helptextItems={helptextItems}
+                    match={match}
                   />
                 </FormTemplateWithState>
 
@@ -224,6 +312,7 @@ export class RegDataset extends React.Component {
                     referenceTypesItems={referenceTypesItems}
                     referenceDatasetsItems={referenceDatasetsItems}
                     helptextItems={helptextItems}
+                    match={match}
                   />
                 </FormTemplateWithState>
 
@@ -235,6 +324,7 @@ export class RegDataset extends React.Component {
                   <ConnectedFormContactPoint
                     datasetItem={datasetItem}
                     helptextItems={helptextItems}
+                    match={match}
                   />
                 </FormTemplateWithState>
 
@@ -255,6 +345,7 @@ export class RegDataset extends React.Component {
                     datasetItem={datasetItem}
                     openLicenseItems={openLicenseItems}
                     helptextItems={helptextItems}
+                    match={match}
                   />
                 </FormTemplateWithState>
 
@@ -274,39 +365,40 @@ export class RegDataset extends React.Component {
                     datasetItem={datasetItem}
                     openLicenseItems={openLicenseItems}
                     helptextItems={helptextItems}
+                    match={match}
                   />
                 </FormTemplateWithState>
 
-                <DatasetPublish
-                  dispatch={this.props.dispatch}
-                  registrationStatus={
-                    registrationStatus && registrationStatus.length > 0
-                      ? registrationStatus
-                      : datasetItem.registrationStatus
+                <StatusBarWithState
+                  type="dataset"
+                  isSaving={isSaving}
+                  lastSaved={lastSaved}
+                  published={
+                    registrationStatus
+                      ? !!(registrationStatus === 'PUBLISH')
+                      : !!(
+                          _.get(datasetItem, 'registrationStatus', 'DRAFT') ===
+                          'PUBLISH'
+                        )
                   }
-                  lastSaved={lastSaved || datasetItem._lastModified}
-                  syncErrors={
-                    !!(
-                      (title && title.syncErrors) ||
-                      (accessRights && accessRights.syncErrors) ||
-                      (formThemes && formThemes.syncErrors) ||
-                      (type && type.syncErrors) ||
-                      (concept && concept.syncErrors) ||
-                      (spatial && spatial.syncErrors) ||
-                      (formProvenance && formProvenance.syncErrors) ||
-                      (contents && contents.syncErrors) ||
-                      (informationModel && informationModel.syncErrors) ||
-                      (contactPoint && contactPoint.syncErrors) ||
-                      (sample &&
-                        sample.syncErrors &&
-                        sample.syncErrors.sample &&
-                        sample.syncErrors.sample.length > 0)
-                    )
-                  }
-                  distributionErrors={
-                    distribution && distribution.syncErrors
-                      ? distribution.syncErrors
-                      : null
+                  error={error}
+                  justPublishedOrUnPublished={justPublishedOrUnPublished}
+                  onDelete={this.deleteApi}
+                  allowPublish={isAllowedToPublish(
+                    registrationStatus ||
+                      _.get(datasetItem, 'registrationStatus', 'DRAFT'),
+                    syncErrors,
+                    distributionErrors
+                  )}
+                  formComponent={
+                    <ConnectedFormPublish
+                      initialItemStatus={_.get(
+                        datasetItem,
+                        'registrationStatus',
+                        ''
+                      )}
+                      match={match}
+                    />
                   }
                 />
               </div>
@@ -350,12 +442,16 @@ RegDataset.defaultProps = {
   fetchReferenceTypesIfNeeded: _.noop(),
   fetchReferenceDatasetsIfNeeded: _.noop(),
   fetchOpenLicensesIfNeeded: _.noop(),
-  fetchHelptextsIfNeeded: _.noop()
+  fetchHelptextsIfNeeded: _.noop(),
+  isSaving: false,
+  error: null,
+  justPublishedOrUnPublished: false,
+  deleteDatasetItem: _.noop(),
+  history: null
 };
 
 RegDataset.propTypes = {
   match: PropTypes.object,
-  dispatch: PropTypes.func.isRequired,
   helptextItems: PropTypes.object,
   themesItems: PropTypes.array,
   provenanceItems: PropTypes.object,
@@ -386,5 +482,10 @@ RegDataset.propTypes = {
   fetchReferenceTypesIfNeeded: PropTypes.func,
   fetchReferenceDatasetsIfNeeded: PropTypes.func,
   fetchOpenLicensesIfNeeded: PropTypes.func,
-  fetchHelptextsIfNeeded: PropTypes.func
+  fetchHelptextsIfNeeded: PropTypes.func,
+  isSaving: PropTypes.bool,
+  error: PropTypes.number,
+  justPublishedOrUnPublished: PropTypes.bool,
+  deleteDatasetItem: PropTypes.func,
+  history: PropTypes.object
 };
