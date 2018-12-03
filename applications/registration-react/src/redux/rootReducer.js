@@ -16,6 +16,7 @@ import openlicenses from './modules/openlicenses';
 import apis from './modules/apis';
 import { featureToggleReducer } from './modules/featureToggle';
 import apiFormStatus from './modules/api-form-status';
+import { datasetFormStatus } from './modules/dataset-form-status';
 
 const rootReducer = combineReducers({
   form: formReducer,
@@ -34,7 +35,8 @@ const rootReducer = combineReducers({
   catalogs,
   openlicenses,
   apis,
-  apiFormStatus
+  apiFormStatus,
+  datasetFormStatus
 });
 
 export default rootReducer;

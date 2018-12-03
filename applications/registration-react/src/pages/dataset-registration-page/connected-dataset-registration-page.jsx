@@ -12,15 +12,15 @@ import {
 } from '../../actions/index';
 import {
   fetchDatasetsIfNeeded,
-  getDatasetItemByDatasetiId
+  getDatasetItemByDatasetiId,
+  deleteDatasetItemAction
 } from '../../redux/modules/datasets';
 import { fetchHelptextsIfNeeded } from '../../redux/modules/helptexts';
-
+import { getDatasetFormStatusById } from '../../redux/modules/dataset-form-status';
 import { RegDataset } from './dataset-registration-page';
 
 const mapStateToProps = (
   {
-    app,
     datasets,
     helptexts,
     provenance,
@@ -29,7 +29,8 @@ const mapStateToProps = (
     referenceTypes,
     referenceDatasets,
     openlicenses,
-    form
+    form,
+    datasetFormStatus
   },
   ownProps
 ) => {
@@ -95,11 +96,6 @@ const mapStateToProps = (
 
   const sample = form && form.sample ? form.sample : {};
 
-  const { registrationStatus, lastSaved } = app || {
-    registrationStatus: null,
-    lastSaved: null
-  };
-
   return {
     datasetItem,
     helptextItems,
@@ -122,8 +118,23 @@ const mapStateToProps = (
     contactPoint,
     distribution,
     sample,
-    registrationStatus,
-    lastSaved
+    lastSaved: _.get(
+      getDatasetFormStatusById(datasetFormStatus, id),
+      'lastSaved'
+    ),
+    isSaving: _.get(
+      getDatasetFormStatusById(datasetFormStatus, id),
+      'isSaving'
+    ),
+    error: _.get(getDatasetFormStatusById(datasetFormStatus, id), 'error'),
+    justPublishedOrUnPublished: _.get(
+      getDatasetFormStatusById(datasetFormStatus, id),
+      'justPublishedOrUnPublished'
+    ),
+    registrationStatus: _.get(
+      getDatasetFormStatusById(datasetFormStatus, id),
+      'status'
+    )
   };
 };
 
@@ -139,7 +150,8 @@ const mapDispatchToProps = dispatch => ({
     dispatch(fetchReferenceDatasetsIfNeeded(catalogDatasetsURL)),
   fetchOpenLicensesIfNeeded: () => dispatch(fetchOpenLicensesIfNeeded()),
   fetchHelptextsIfNeeded: () => dispatch(fetchHelptextsIfNeeded()),
-  dispatch
+  deleteDatasetItem: (catalogId, id) =>
+    dispatch(deleteDatasetItemAction(catalogId, id))
 });
 
 export const ConnectedDatasetRegistrationPage = connect(

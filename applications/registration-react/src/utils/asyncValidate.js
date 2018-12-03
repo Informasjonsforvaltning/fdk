@@ -1,9 +1,16 @@
 import axios from 'axios';
-import { datasetLastSaved } from '../actions';
+import _ from 'lodash';
+import {
+  datasetFormPatchSuccessAction,
+  datasetFormPatchIsSavingAction,
+  datasetFormPatchErrorAction,
+  datasetFormPatchJustPublishedOrUnPublishedAction
+} from '../redux/modules/dataset-form-status';
 
 /* eslint-disable no-param-reassign */
 const asyncValidate = (values, dispatch, props, blurredField) => {
-  const postURL = window.location.pathname;
+  const { match } = props;
+  const datasetId = _.get(match, ['params', 'id']);
 
   const api = {
     Authorization: `Basic user:password`
@@ -68,15 +75,49 @@ const asyncValidate = (values, dispatch, props, blurredField) => {
     };
   }
 
+  if (dispatch && datasetId) {
+    dispatch(datasetFormPatchIsSavingAction(datasetId));
+  }
+
   return axios
-    .patch(postURL, values, { headers: api })
+    .patch(_.get(match, 'url'), values, { headers: api })
     .then(response => {
       if (dispatch) {
-        dispatch(datasetLastSaved(response.data._lastModified));
+        dispatch(
+          datasetFormPatchSuccessAction(
+            _.get(response, ['data', 'id']),
+            _.get(response, ['data', '_lastModified'])
+          )
+        );
+        if (_.get(values, 'registrationStatus')) {
+          dispatch(
+            datasetFormPatchJustPublishedOrUnPublishedAction(
+              _.get(response, ['data', 'id']),
+              true,
+              _.get(values, 'registrationStatus')
+            )
+          );
+        } else {
+          dispatch(
+            datasetFormPatchJustPublishedOrUnPublishedAction(
+              _.get(response, ['data', 'id']),
+              false,
+              _.get(response, ['data', 'registrationStatus'])
+            )
+          );
+        }
       }
     })
     .catch(response => {
       const { error } = response;
+      if (dispatch) {
+        dispatch(
+          datasetFormPatchErrorAction(
+            datasetId,
+            _.get(response, ['response', 'status'], 404)
+          )
+        );
+      }
       return Promise.reject(error);
     });
 };
