@@ -406,9 +406,18 @@
     "unPublished": "er avpublisert",
     "delete": "Slett",
     "confirmDeleted": "ble slettet",
+    "confirmDelete": "Ja, slett",
+    "cancelDelete": "Nei, avbryt",
     "error": {
       "404": "Det ser ikke ut som du er koblet til internett. Koble til for å fortsette",
       "other": "Det har oppstått problemer med å lagre."
+    },
+    "api": {
+      "confirmDeleteMessage": "Er du sikker på at du vil slette API-beskrivelsen permanent?"
+    },
+    "dataset": {
+      "confirmDeleteMessage": "Er du sikker på at du vil slette datasett-beskrivelsen permanent?",
+      "requiredFieldsMissing": "Datasettet kunne ikke publiseres. Se over felt som er markert med feil og rett disse før du forsøker å publisere på nytt."
     }
   }
 }
