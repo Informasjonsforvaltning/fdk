@@ -83,7 +83,7 @@ FilterOption.defaultProps = {
   label: null,
   count: null,
   active: null,
-  items: null,
+  themesItems: null,
   displayClass: null
 };
 
