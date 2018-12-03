@@ -2,6 +2,7 @@
 
 exports[`should render ResultsApi correctly with hits 1`] = `
 <main
+  data-test-id="apis"
   id="content"
 >
   <div
@@ -197,7 +198,6 @@ exports[`should render ResultsApi correctly with hits 1`] = `
     </aside>
     <div
       className="col-12 col-lg-8"
-      id="apis"
     >
       <SearchHitItem
         fadeInCounter={0}
@@ -2342,6 +2342,7 @@ exports[`should render ResultsApi correctly with hits 1`] = `
 
 exports[`should render ResultsApi correctly with minimum of props and no hits 1`] = `
 <main
+  data-test-id="apis"
   id="content"
 >
   <div
@@ -2398,7 +2399,6 @@ exports[`should render ResultsApi correctly with minimum of props and no hits 1`
     </aside>
     <div
       className="col-12 col-lg-8"
-      id="apis"
     />
   </div>
 </main>

@@ -105,7 +105,7 @@ export const ResultsApi = props => {
   );
 
   return (
-    <main id="content">
+    <main id="content" data-test-id="apis">
       <div className="row mb-3">
         <div className="col-12 d-flex justify-content-between">
           <button
@@ -174,7 +174,7 @@ export const ResultsApi = props => {
             </div>
           )}
         </aside>
-        <div id="apis" className="col-12 col-lg-8">
+        <div className="col-12 col-lg-8">
           {renderHits(apiItems.hits, publishers)}
 
           {_.get(apiItems, 'total', 0) > 50 && (
