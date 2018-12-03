@@ -1,4 +1,4 @@
-package no.ccat.model;
+package no.ccat.common.model;
 
 import lombok.Data;
 
