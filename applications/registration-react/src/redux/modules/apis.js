@@ -6,6 +6,7 @@ export const APIS_SUCCESS = 'APIS_SUCCESS';
 export const APIS_FAILURE = 'APIS_FAILURE';
 export const APIS_ADD_ITEM = 'APIS_ADD_ITEM';
 export const APIS_ITEM_SET_STATUS = 'APIS_ITEM_SET_STATUS';
+export const APIS_ITEM_DELETE = 'APIS_ITEM_DELETE';
 
 function shouldFetch(metaState) {
   const threshold = 60 * 1000; // seconds
@@ -38,6 +39,12 @@ export const setApiItemStatusAction = (catalogId, apiId, status) => ({
   catalogId,
   apiId,
   status
+});
+
+export const deleteApiItemAction = (catalogId, apiId) => ({
+  type: APIS_ITEM_DELETE,
+  catalogId,
+  apiId
 });
 
 const initialState = {};
@@ -97,10 +104,24 @@ export default function apis(state = initialState, action) {
               if (item.id === action.apiId) {
                 return {
                   ...item,
-                  registrationStatus: 'DELETED'
+                  registrationStatus: action.status
                 };
               }
               return item;
+            })
+          ]
+        }
+      };
+    case APIS_ITEM_DELETE:
+      return {
+        ...state,
+        [action.catalogId]: {
+          items: [
+            _.get(state, [action.catalogId, 'items'], {}).map(item => {
+              if (item.id !== action.apiId) {
+                return item;
+              }
+              return null;
             })
           ]
         }

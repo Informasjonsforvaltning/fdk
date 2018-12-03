@@ -3278,7 +3278,7 @@ Eksempel på endring som medfører versjonering:
         </withState(withHandlers(FormTemplate))>
       </div>
     </div>
-    <withState(withHandlers(StatusBar))
+    <withState(withState(withHandlers(StatusBar)))
       error={null}
       formComponent={
         <Connect(ReduxForm)

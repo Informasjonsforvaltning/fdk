@@ -7,9 +7,7 @@ import { APIListPage } from './api-list-page';
 const mapStateToProps = ({ catalog, apis }, ownProps) => {
   const catalogId = _.get(ownProps, ['match', 'params', 'catalogId']);
   const catalogItem = _.get(catalog, ['items', catalogId]);
-  const items = _.reject(_.get(apis, [catalogId, 'items']), {
-    registrationStatus: 'DELETED'
-  });
+  const items = _.get(apis, [catalogId, 'items']);
   return {
     catalogItem,
     items

@@ -97,7 +97,7 @@ export const APIRegistrationPage = props => {
     fetchCatalogIfNeeded,
     fetchApisIfNeeded,
     fetchHelptextsIfNeeded,
-    setApiItemStatus,
+    deleteApiItem,
     catalogItem,
     lastSaved,
     isSaving,
@@ -129,7 +129,7 @@ export const APIRegistrationPage = props => {
     return axios
       .delete(match.url, { headers: api })
       .then(() => {
-        setApiItemStatus(catalogId, _.get(item, 'id'), 'DELETED');
+        deleteApiItem(catalogId, _.get(item, 'id'));
         if (history) {
           history.push({
             pathname: `/catalogs/${catalogId}/apis`,
@@ -243,7 +243,7 @@ APIRegistrationPage.defaultProps = {
   fetchCatalogIfNeeded: _.noop(),
   fetchApisIfNeeded: _.noop,
   fetchHelptextsIfNeeded: _.noop(),
-  setApiItemStatus: _.noop(),
+  deleteApiItem: _.noop(),
   catalogItem: null,
   lastSaved: null,
   isSaving: false,
@@ -262,7 +262,7 @@ APIRegistrationPage.propTypes = {
   fetchCatalogIfNeeded: PropTypes.func,
   fetchApisIfNeeded: PropTypes.func,
   fetchHelptextsIfNeeded: PropTypes.func,
-  setApiItemStatus: PropTypes.func,
+  deleteApiItem: PropTypes.func,
   catalogItem: PropTypes.object,
   lastSaved: PropTypes.string,
   isSaving: PropTypes.bool,

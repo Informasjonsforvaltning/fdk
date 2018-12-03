@@ -4,7 +4,7 @@ import _ from 'lodash';
 import {
   fetchApisIfNeededAction,
   getApiItemsByApiId,
-  setApiItemStatusAction
+  deleteApiItemAction
 } from '../../redux/modules/apis';
 import { getApiFormStatusById } from '../../redux/modules/api-form-status';
 import { fetchHelptextsIfNeeded } from '../../redux/modules/helptexts';
@@ -44,8 +44,8 @@ const mapDispatchToProps = dispatch => ({
   fetchCatalogIfNeeded: catalogId => dispatch(fetchCatalogIfNeeded(catalogId)),
   fetchApisIfNeeded: catalogId => dispatch(fetchApisIfNeededAction(catalogId)),
   fetchHelptextsIfNeeded: () => dispatch(fetchHelptextsIfNeeded()),
-  setApiItemStatus: (catalogId, apiId, status) =>
-    dispatch(setApiItemStatusAction(catalogId, apiId, status))
+  deleteApiItem: (catalogId, apiId) =>
+    dispatch(deleteApiItemAction(catalogId, apiId))
 });
 
 export const ConnectedAPIRegistrationPage = connect(
