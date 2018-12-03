@@ -48,4 +48,26 @@ describe('SUITE: Main page', () => {
       }
     );
   });
+
+  describe('GIVEN: On search page dataset tab', () => {
+    describe('WHEN: Click on "Apis" tab', () => {
+
+        beforeAll(async () => {
+          await page.goto(config.searchHost);
+          const apiTabSelector = '.search-results-tabs a[href="/apis"]';
+          await page.click(apiTabSelector);
+          await page.waitForSelector('#content[data-test-id="apis"]');
+        }, 10000);
+
+        test('Results block is displayed with more than 3 api items in it', async () => {
+          const apiArticleSelector = '#content[data-test-id="apis"] article';
+
+          const count = await page.$$eval(apiArticleSelector, els => els.length);
+
+          expect(count).toBeGreaterThan(3);
+        });
+      }
+    );
+  });
+
 });
