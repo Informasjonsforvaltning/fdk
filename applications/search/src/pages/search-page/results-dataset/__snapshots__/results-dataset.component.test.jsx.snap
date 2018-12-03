@@ -2,6 +2,7 @@
 
 exports[`should render ResultsDataset correctly with hits 1`] = `
 <main
+  data-test-id="datasets"
   id="content"
 >
   <section
@@ -1678,6 +1679,7 @@ Flateobjektene avgrenses uavhengig av de administrative grensene.",
 
 exports[`should render ResultsDataset correctly with minimum of props 1`] = `
 <main
+  data-test-id="datasets"
   id="content"
 >
   <section
@@ -1754,6 +1756,7 @@ exports[`should render ResultsDataset correctly with minimum of props 1`] = `
 
 exports[`should render ResultsDataset correctly with props 1`] = `
 <main
+  data-test-id="datasets"
   id="content"
 >
   <section

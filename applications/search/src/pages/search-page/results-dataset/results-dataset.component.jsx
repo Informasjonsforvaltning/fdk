@@ -132,7 +132,7 @@ export class ResultsDataset extends React.Component {
     );
 
     return (
-      <main id="content">
+      <main id="content" data-test-id="datasets">
         <section className="row mb-3">
           <div className="col-6 col-lg-4">
             <button
