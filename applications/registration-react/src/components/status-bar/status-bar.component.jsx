@@ -22,7 +22,10 @@ const StatusBar = props => {
     onDelete,
     confirmDelete,
     onToggleConfirmDelete,
-    formComponent
+    showDialogRequiredFields,
+    onToggleShowDialogRequiredFields,
+    formComponent,
+    allowPublish
   } = props;
 
   const statusBarClassnames = cx(
@@ -53,9 +56,7 @@ const StatusBar = props => {
       {confirmDelete && (
         <div className="form-status-bar-confirmDelete d-flex align-items-center justify-content-between alert-danger">
           <div>
-            <span>
-              Er du sikker på at du vil slette API-beskrivelsen permanent?
-            </span>
+            <span>{localization.formStatus[type].confirmDeleteMessage}</span>
           </div>
           <div>
             <Button
@@ -63,13 +64,28 @@ const StatusBar = props => {
               color="primary"
               onClick={onDelete}
             >
-              Ja, slett
+              {localization.formStatus.confirmDelete}
             </Button>
             <button
               className="btn bg-transparent fdk-color-blue-dark"
               onClick={onToggleConfirmDelete}
             >
-              Nei, avbryt
+              {localization.formStatus.cancelDelete}
+            </button>
+          </div>
+        </div>
+      )}
+      {showDialogRequiredFields && (
+        <div className="form-status-bar-confirmDelete d-flex align-items-center justify-content-between alert-danger">
+          <div>
+            <span>{localization.formStatus[type].requiredFieldsMissing}</span>
+          </div>
+          <div>
+            <button
+              className="btn bg-transparent fdk-color-blue-dark"
+              onClick={onToggleShowDialogRequiredFields}
+            >
+              {localization.app.cancel}
             </button>
           </div>
         </div>
@@ -124,13 +140,18 @@ const StatusBar = props => {
             )}
         </div>
         <div className="d-flex">
-          {/*! error && (
-            <ConnectedFormPublish
-              initialItemStatus={initialItemStatus}
-              match={match}
-            />
-          ) */}
-          {!error && formComponent}
+          {!error && allowPublish && formComponent}
+          {!error &&
+            !allowPublish && (
+              <Button
+                id="dataset-setPublish-button"
+                className="fdk-button mr-3"
+                color="primary"
+                onClick={onToggleShowDialogRequiredFields}
+              >
+                {localization.formStatus.publish}
+              </Button>
+            )}
           <button
             className="btn bg-transparent fdk-color-blue-dark"
             disabled={published || isSaving || error}
@@ -153,7 +174,10 @@ StatusBar.defaultProps = {
   onDelete: _.noop(),
   confirmDelete: false,
   onToggleConfirmDelete: _.noop(),
-  formComponent: null
+  showDialogRequiredFields: false,
+  onToggleShowDialogRequiredFields: _.noop(),
+  formComponent: null,
+  allowPublish: true
 };
 
 StatusBar.propTypes = {
@@ -166,15 +190,27 @@ StatusBar.propTypes = {
   onDelete: PropTypes.func,
   confirmDelete: PropTypes.bool,
   onToggleConfirmDelete: PropTypes.func,
-  formComponent: PropTypes.object
+  showDialogRequiredFields: PropTypes.bool,
+  onToggleShowDialogRequiredFields: PropTypes.func,
+  formComponent: PropTypes.object,
+  allowPublish: PropTypes.bool
 };
 
 const enhance = compose(
   withState('confirmDelete', 'toggleConfirmDelete', false),
+  withState(
+    'showDialogRequiredFields',
+    'toggleShowDialogRequiredFields',
+    false
+  ),
   withHandlers({
     onToggleConfirmDelete: props => e => {
       e.preventDefault();
       props.toggleConfirmDelete(!props.confirmDelete);
+    },
+    onToggleShowDialogRequiredFields: props => e => {
+      e.preventDefault();
+      props.toggleShowDialogRequiredFields(!props.showDialogRequiredFields);
     }
   })
 );

@@ -406,9 +406,18 @@
     "unPublished": "is unpublished",
     "delete": "Delete",
     "confirmDeleted": "was deleted",
+    "confirmDelete": "Yes, delete",
+    "cancelDelete": "No, cancel",
     "error": {
       "404": "You are not connected to internet. Please connect and try again.",
       "other": "There are some issues saving changes."
+    },
+    "api": {
+      "confirmDeleteMessage": "Are you sure you want to delete API description permanently?"
+    },
+    "dataset": {
+      "confirmDeleteMessage": "Are you sure you want to delete API description permanently?",
+      "requiredFieldsMissing": "Dataset could not be published. Required fields need to be filled out."
     }
   }
 }
