@@ -26,6 +26,11 @@ public class ElasticsearchService {
             elasticClient.registerMapping("reg-api", "api",
                 mapper.readTree(new ClassPathResource("api-mappings.json").getInputStream()).get("api").toString());
             elasticClient.initializeAliasAndIndexMapping("reg-api");
+
+
+            elasticClient.registerSetting("reg-api-catalog", mapper.readTree(new ClassPathResource("reg-api-catalog.settings.json").getInputStream()).toString());
+            elasticClient.registerMapping("reg-api-catalog", "apicatalog", mapper.readTree(new ClassPathResource("apicatalog.mapping.json").getInputStream()).get("apicatalog").toString());
+            elasticClient.initializeAliasAndIndexMapping("reg-api-catalog");
         } catch (IOException e) {
             throw new RuntimeException("Unable to intialize elasticsearch index", e);
         }
