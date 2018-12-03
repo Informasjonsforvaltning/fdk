@@ -1,0 +1,9 @@
+{
+  "apicatalog": {
+    "properties": {
+      "orgNo": {
+        "type": "keyword"
+      }
+    }
+  }
+}
