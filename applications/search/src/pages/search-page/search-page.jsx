@@ -58,8 +58,11 @@ export class SearchPage extends React.Component {
     );
     this.handleFilterFormat = this.handleFilterFormat.bind(this);
 
-    this.handleDatasetSort = this.handleDatasetSort.bind(this);
     this.handlePageChange = this.handlePageChange.bind(this);
+
+    this.sortByTitle = this.sortByTitle.bind(this);
+    this.sortByScore = this.sortByScore.bind(this);
+
     this.close = this.close.bind(this);
     this.open = this.open.bind(this);
 
@@ -368,43 +371,31 @@ export class SearchPage extends React.Component {
     }
   }
 
-  handleDatasetSort(event) {
-    let sortField = event.field;
-
-    ReactGA.event({
-      category: 'Sortere',
-      action: 'Sortere',
-      label: sortField
-    });
-
-    if (sortField === '_score') {
-      this.setState(
-        {
-          searchQuery: {
-            ...this.state.searchQuery,
-            sortfield: undefined,
-            sortdirection: undefined
-          }
-        },
-        () =>
-          this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
-      );
-    } else {
-      if (sortField === 'title') {
-        sortField = sortField.concat('.').concat(localization.getLanguage());
-      }
-      this.setState(
-        {
-          searchQuery: {
-            ...this.state.searchQuery,
-            sortfield: sortField,
-            sortdirection: event.order
-          }
-        },
-        () =>
-          this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
-      );
-    }
+  sortByScore() {
+    this.setState(
+      {
+        searchQuery: {
+          ...this.state.searchQuery,
+          sortfield: undefined,
+          sortdirection: undefined
+        }
+      },
+      () =>
+        this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
+    );
+  }
+  sortByTitle() {
+    this.setState(
+      {
+        searchQuery: {
+          ...this.state.searchQuery,
+          sortfield: 'title.' + localization.getLanguage(),
+          sortdirection: event.order
+        }
+      },
+      () =>
+        this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
+    );
   }
 
   handlePageChange(data) {
@@ -499,7 +490,9 @@ export class SearchPage extends React.Component {
                   }
                   onFilterProvenance={this.handleDatasetFilterProvenance}
                   onFilterSpatial={this.handleDatasetFilterSpatial}
-                  onSort={this.handleDatasetSort}
+                  onPageChange={this.handlePageChange}
+                  onSortByTitle={this.sortByTitle}
+                  onSortByScore={this.sortByScore}
                   onPageChange={this.handlePageChange}
                   searchQuery={this.state.searchQuery}
                   themesItems={themesItems}
@@ -530,8 +523,9 @@ export class SearchPage extends React.Component {
                   onFilterFormat={this.handleFilterFormat}
                   onFilterProvenance={this.handleDatasetFilterProvenance}
                   onFilterSpatial={this.handleDatasetFilterSpatial}
-                  onSort={this.handleDatasetSort}
                   onPageChange={this.handlePageChange}
+                  onSortByTitle={this.sortByTitle}
+                  onSortByScore={this.sortByScore}
                   searchQuery={this.state.searchQuery}
                   themesItems={themesItems}
                   showFilterModal={this.state.showFilterModal}
@@ -552,6 +546,8 @@ export class SearchPage extends React.Component {
                   conceptItems={conceptItems}
                   onClearFilters={this.handleClearFilters}
                   onPageChange={this.handlePageChange}
+                  onSortByTitle={this.sortByTitle}
+                  onSortByScore={this.sortByScore}
                   onFilterPublisherHierarchy={
                     this.handleDatasetFilterPublisherHierarchy
                   }

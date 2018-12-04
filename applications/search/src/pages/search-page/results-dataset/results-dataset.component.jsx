@@ -112,7 +112,9 @@ export class ResultsDataset extends React.Component {
       themesItems,
       hitsPerPage,
       publisherArray,
-      publishers
+      publishers,
+      onSortByScore,
+      onSortByTitle
     } = this.props;
     const page =
       searchQuery && searchQuery.from ? searchQuery.from / hitsPerPage : 0;
@@ -145,33 +147,22 @@ export class ResultsDataset extends React.Component {
           </div>
           <div className="col-6 col-lg-4 offset-lg-4">
             <div className="float-right">
-              <Select
-                items={[
-                  {
-                    label: 'relevance',
-                    field: '_score',
-                    order: 'asc',
-                    defaultOption: true
-                  },
-                  {
-                    label: 'title',
-                    field: 'title',
-                    order: 'asc'
-                  },
-                  {
-                    label: 'modified',
-                    field: 'modified',
-                    order: 'desc'
-                  },
-                  {
-                    label: 'publisher',
-                    field: 'publisher.name',
-                    order: 'asc'
-                  }
-                ]}
-                onChange={onSort}
-                activeSort={searchQuery.sortfield}
-              />
+
+              <Button
+                className="fdk-button"
+                onClick={onSortByTitle}
+                color="primary"
+              >
+                Sort by Last published
+              </Button>
+              <span> </span>
+              <Button
+                className="fdk-button"
+                onClick={onSortByScore}
+                color="primary"
+              >
+                Sort by Score
+              </Button>
             </div>
           </div>
         </section>
@@ -290,7 +281,8 @@ ResultsDataset.propTypes = {
   publishers: PropTypes.object,
   referenceData: PropTypes.object,
   onClearFilters: PropTypes.func,
-  onSort: PropTypes.func.isRequired,
+  onSortByTitle: PropTypes.func.isRequired,
+  onSortByScore: PropTypes.func.isRequired,
   onPageChange: PropTypes.func,
   showClearFilterButton: PropTypes.bool,
   hitsPerPage: PropTypes.number

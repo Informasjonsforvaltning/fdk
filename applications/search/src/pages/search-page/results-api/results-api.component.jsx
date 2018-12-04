@@ -82,10 +82,11 @@ export const ResultsApi = props => {
     publisherArray,
     publishers,
     onClearFilters,
-    onSort,
     onPageChange,
     showClearFilterButton,
-    hitsPerPage
+    hitsPerPage,
+    onSortByScore,
+    onSortByTitle
   } = props;
 
   const page =
@@ -115,28 +116,21 @@ export const ResultsApi = props => {
           >
             {localization.query.clear}
           </button>
-          <Select
-            items={[
-              {
-                label: 'relevance',
-                field: '_score',
-                order: 'asc',
-                defaultOption: true
-              },
-              {
-                label: 'title',
-                field: 'title',
-                order: 'asc'
-              },
-              {
-                label: 'publisher',
-                field: 'publisher.name',
-                order: 'asc'
-              }
-            ]}
-            onChange={onSort}
-            activeSort={searchQuery.sortfield}
-          />
+          <Button
+            className="fdk-button"
+            onClick={onSortByTitle}
+            color="primary"
+          >
+            Sort by Last published
+          </Button>
+          <span> </span>
+          <Button
+            className="fdk-button"
+            onClick={onSortByScore}
+            color="primary"
+          >
+            Sort by Score
+          </Button>
         </div>
       </div>
       <div className="row">
@@ -232,7 +226,8 @@ ResultsApi.propTypes = {
   publisherArray: PropTypes.array,
   publishers: PropTypes.object,
   onClearFilters: PropTypes.func,
-  onSort: PropTypes.func.isRequired,
+  onSortByTitle: PropTypes.func.isRequired,
+  onSortByScore: PropTypes.func.isRequired,
   onPageChange: PropTypes.func,
   showClearFilterButton: PropTypes.bool,
   hitsPerPage: PropTypes.number
