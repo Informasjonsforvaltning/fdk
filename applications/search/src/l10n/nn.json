@@ -133,10 +133,10 @@
   },
   "sort": {
     "by": "Sorter på",
-    "relevance": "relevans",
+    "relevance": "Relevans",
     "title": "tittel A-Å",
     "publisher": "utgivar A-Å",
-    "modified": "sist publisert"
+    "modified": "Sist publisert"
   },
   "search_hit": {
     "owned": "Eigar: ",

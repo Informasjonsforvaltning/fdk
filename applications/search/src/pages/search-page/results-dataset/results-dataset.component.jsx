@@ -7,12 +7,21 @@ import _ from 'lodash';
 
 import localization from '../../../lib/localization';
 import { SearchHitItem } from './search-hit-item/search-hit-item.component';
-import { Select } from '../../../components/select/select.component';
 import { FilterBox } from '../../../components/filter-box/filter-box.component';
 import { SearchPublishersTree } from '../search-publishers-tree/search-publishers-tree.component';
 import { ErrorBoundary } from '../../../components/error-boundary/error-boundary';
 
 export class ResultsDataset extends React.Component {
+  componentWillMount() {
+    if (
+      (this.props.searchQuery.sortfield === undefined ||
+        window.location.href.indexOf('sortfield=modified') === -1) &&
+      this.props.datasetSortValue === 'modified'
+    ) {
+      this.props.onSortByLastModified();
+    }
+  }
+
   _renderFilterModal() {
     const {
       showFilterModal,
@@ -95,7 +104,6 @@ export class ResultsDataset extends React.Component {
     }
     return null;
   }
-
   render() {
     const {
       datasetItems,
@@ -105,14 +113,17 @@ export class ResultsDataset extends React.Component {
       onFilterPublisherHierarchy,
       onFilterProvenance,
       onFilterSpatial,
-      onSort,
       onPageChange,
       showClearFilterButton,
       searchQuery,
       themesItems,
       hitsPerPage,
       publisherArray,
-      publishers
+      publishers,
+      onSortByScore,
+      onSortByLastModified,
+      setDatasetSort,
+      datasetSortValue
     } = this.props;
     const page =
       searchQuery && searchQuery.from ? searchQuery.from / hitsPerPage : 0;
@@ -130,6 +141,25 @@ export class ResultsDataset extends React.Component {
         'd-none': !showClearFilterButton
       }
     );
+    const sortByScoreClass = cx('fdk-button', 'fdk-button-black-toggle', {
+      selected: datasetSortValue === undefined
+    });
+    const sortByLastModifiedClass = cx(
+      'fdk-button',
+      'fdk-button-black-toggle',
+      {
+        selected: datasetSortValue === 'modified'
+      }
+    );
+
+    const onSortByScoreClick = () => {
+      setDatasetSort(undefined);
+      onSortByScore();
+    };
+    const onSortByModifiedClick = () => {
+      setDatasetSort('modified');
+      onSortByLastModified();
+    };
 
     return (
       <main id="content" data-test-id="datasets">
@@ -144,34 +174,21 @@ export class ResultsDataset extends React.Component {
             </button>
           </div>
           <div className="col-6 col-lg-4 offset-lg-4">
-            <div className="float-right">
-              <Select
-                items={[
-                  {
-                    label: 'relevance',
-                    field: '_score',
-                    order: 'asc',
-                    defaultOption: true
-                  },
-                  {
-                    label: 'title',
-                    field: 'title',
-                    order: 'asc'
-                  },
-                  {
-                    label: 'modified',
-                    field: 'modified',
-                    order: 'desc'
-                  },
-                  {
-                    label: 'publisher',
-                    field: 'publisher.name',
-                    order: 'asc'
-                  }
-                ]}
-                onChange={onSort}
-                activeSort={searchQuery.sortfield}
-              />
+            <div className="d-flex justify-content-end">
+              <Button
+                className={sortByScoreClass}
+                onClick={onSortByScoreClick}
+                color="primary"
+              >
+                {localization.sort.relevance}
+              </Button>
+              <Button
+                className={sortByLastModifiedClass}
+                onClick={onSortByModifiedClick}
+                color="primary"
+              >
+                {localization.sort.modified}
+              </Button>
             </div>
           </div>
         </section>
@@ -290,7 +307,8 @@ ResultsDataset.propTypes = {
   publishers: PropTypes.object,
   referenceData: PropTypes.object,
   onClearFilters: PropTypes.func,
-  onSort: PropTypes.func.isRequired,
+  onSortByLastModified: PropTypes.func.isRequired,
+  onSortByScore: PropTypes.func.isRequired,
   onPageChange: PropTypes.func,
   showClearFilterButton: PropTypes.bool,
   hitsPerPage: PropTypes.number

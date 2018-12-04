@@ -133,10 +133,10 @@
   },
   "sort": {
     "by": "Sort by",
-    "relevance": "relevance",
+    "relevance": "Relevance",
     "title": "title A-Z",
     "publisher": "publisher A-Z",
-    "modified": "published date"
+    "modified": "Recently published"
   },
   "search_hit": {
     "owned": "Owner: ",
