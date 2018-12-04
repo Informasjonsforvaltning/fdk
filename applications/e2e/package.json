@@ -24,6 +24,7 @@
     "delay": "^3.0.0"
   },
   "jest": {
+    "setupTestFrameworkScriptFile": "<rootDir>/jestsetup.js",
     "testMatch": [
       "<rootDir>/test/**/*.test.js",
       "**/?(*.)(test).js?(x)"
