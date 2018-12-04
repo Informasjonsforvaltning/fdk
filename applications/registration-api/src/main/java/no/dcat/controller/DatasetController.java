@@ -3,12 +3,15 @@ package no.dcat.controller;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
+import no.ccat.common.model.Concept;
 import no.dcat.factory.RegistrationFactory;
 import no.dcat.model.Catalog;
 import no.dcat.model.Dataset;
 import no.dcat.model.exceptions.CatalogNotFoundException;
 import no.dcat.model.exceptions.ErrorResponse;
 import no.dcat.service.CatalogRepository;
+import no.dcat.service.ConceptCatClient;
 import no.dcat.service.DatasetRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,10 +32,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.Calendar;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
+import java.lang.reflect.Type;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
@@ -50,11 +52,13 @@ public class DatasetController {
 
     private DatasetRepository datasetRepository;
     private CatalogRepository catalogRepository;
+    private ConceptCatClient conceptCatClient;
 
     @Autowired
-    public DatasetController(DatasetRepository datasetRepository, CatalogRepository catalogRepository) {
+    public DatasetController(DatasetRepository datasetRepository, CatalogRepository catalogRepository, ConceptCatClient conceptCatClient) {
         this.datasetRepository = datasetRepository;
         this.catalogRepository = catalogRepository;
+        this.conceptCatClient = conceptCatClient;
     }
 
     /**
@@ -187,20 +191,40 @@ public class DatasetController {
         logger.info("found old dataset: {}" + oldDataset.getTitle().get("nb"));
 
         JsonObject oldDatasetJson = gson.toJsonTree(oldDataset).getAsJsonObject();
+        List<Concept> conceptListFromReq;
+        List<Concept> conceptsGetByIds = new ArrayList<>();
 
         for(Map.Entry<String, Object> entry : updates.entrySet()) {
             logger.debug("update key: {} value: ", entry.getKey(), entry.getValue() );
             JsonElement changes = gson.toJsonTree(entry.getValue());
+
             if(oldDatasetJson.has(entry.getKey())) {
+
                 oldDatasetJson.remove(entry.getKey());
+
             }
-            oldDatasetJson.add(entry.getKey(), changes);
+            if("concepts".equals(entry.getKey())){
+
+                JsonElement jsonElementConcept = gson.toJsonTree(entry.getValue());
+                Type listType = new TypeToken<List<Concept>>() {}.getType();
+                conceptListFromReq = new Gson().fromJson(jsonElementConcept, listType);
+
+                logger.debug("Concept list size: {}" , conceptListFromReq.size());
+                List<String> ids = conceptListFromReq.stream().map(Concept::getId).collect(Collectors.toList());
+
+                conceptsGetByIds = conceptCatClient.getByIds(ids);
+
+            } else{
+
+                oldDatasetJson.add(entry.getKey(), changes);
+            }
         }
 
         logger.debug("Changed dataset Json element: {}", oldDatasetJson.toString());
 
         Dataset newDataset = gson.fromJson(oldDatasetJson.toString(), Dataset.class);
         newDataset.set_lastModified(Calendar.getInstance().getTime());
+        newDataset.setConcepts(conceptsGetByIds);
 
         Dataset savedDataset = datasetRepository.save(newDataset);
         return new ResponseEntity<>(savedDataset, HttpStatus.OK);

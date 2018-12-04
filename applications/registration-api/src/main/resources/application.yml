@@ -20,6 +20,7 @@ application:
   harvesterPassword: ${registrationApi_harvesterPassword:password}
   harvesterUrl: http://harvester:8080
   openDataEnhet: ${FDK_ENHETSREGISTERET_URL:https://data.brreg.no/enhetsregisteret/api/enheter/}
+  apiRootUrl: http://nginx-search:8080/api
 
 spring:
   jackson:
@@ -136,6 +137,7 @@ application:
   harvesterUrl: http://localhost:8082
   altinnServiceUrl: http://localhost:8077
   apiCatUrl: http://localhost:8087
+  apiRootUrl: http://localhost:8080/api
 
 ---
 spring:
