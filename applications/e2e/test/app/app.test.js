@@ -70,4 +70,32 @@ describe('SUITE: Main page', () => {
     );
   });
 
+  describe('GIVEN: On search page apis tab', () => {
+
+    beforeAll(async () => {
+      await page.goto(config.searchHost + '/apis');
+      await page.waitForSelector('#content[data-test-id="apis"]');
+    });
+
+    describe('WHEN: Enter search text \'FS\' + enter', () => {
+
+        beforeAll(async () => {
+          const searchBox = await page.$('input[name=searchBox]');
+          await searchBox.type('fs' + String.fromCharCode(13));
+          await page.waitForSelector('#content[data-test-id="apis"]');
+          await delay(5000);// TODO wait for network success /api/apis/search
+        });
+
+        test('Results block is displayed with exactly 1 api items in it', async () => {
+          const apiArticleSelector = '#content[data-test-id="apis"] article';
+
+          const articleTexts = await page.$$eval(apiArticleSelector, els => els.map(el => el.innerText));
+
+          expect(articleTexts).toHaveLength(1);
+          expect(articleTexts[0]).toContain('FS-API');
+        });
+      }
+    );
+  });
+
 });
