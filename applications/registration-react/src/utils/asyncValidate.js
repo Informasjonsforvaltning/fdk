@@ -114,7 +114,7 @@ const asyncValidate = (values, dispatch, props, blurredField) => {
         dispatch(
           datasetFormPatchErrorAction(
             datasetId,
-            _.get(response, ['response', 'status'], 404)
+            _.get(response, ['response', 'status'], 'network')
           )
         );
       }

@@ -58,7 +58,7 @@ export const asyncValidate = (values, dispatch, props) => {
         dispatch(
           apiFormPatchErrorAction(
             apiId,
-            _.get(response, ['response', 'status'], 404)
+            _.get(response, ['response', 'status'], 'network')
           )
         );
       }

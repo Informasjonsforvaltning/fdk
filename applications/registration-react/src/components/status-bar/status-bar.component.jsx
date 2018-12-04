@@ -123,11 +123,13 @@ const StatusBar = props => {
             !isSaving &&
             published && <span>{localization.formStatus.changesUpdated}.</span>}
 
-          {error === 405 && <span>{localization.formStatus.error[404]}</span>}
+          {error === 'network' && (
+            <span>{localization.formStatus.error.network}</span>
+          )}
           {error &&
-            error === 404 && (
+            error !== 'network' && (
               <span>
-                {localization.formStatus.error.other}
+                {localization.formStatus.error.saving}
                 {lastSaved && (
                   <React.Fragment>
                     {` ${localization.app.lastSaved} `}
