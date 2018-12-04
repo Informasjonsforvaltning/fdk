@@ -52,7 +52,7 @@ public class DatasetControllerTest {
         when(mockCatalogRepository.findById(anyString())).thenReturn(Optional.of(catalog));
 
 
-        datasetController = new DatasetController(mockDatasetRepository, mockCatalogRepository);
+        datasetController = new DatasetController(mockDatasetRepository, mockCatalogRepository, null);
 
     }
 

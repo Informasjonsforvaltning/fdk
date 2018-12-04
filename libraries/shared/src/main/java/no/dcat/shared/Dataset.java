@@ -3,6 +3,7 @@ package no.dcat.shared;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.ToString;
+import no.ccat.common.model.Concept;
 
 import java.util.Collections;
 import java.util.Date;
@@ -137,6 +138,8 @@ public class Dataset {
     //dct:subject
     //Norwegian: begrep
     private List<Subject> subject;
+
+    private List<Concept> concepts;
 
     //adms:identifier
     //Norwegian: annen identifikator

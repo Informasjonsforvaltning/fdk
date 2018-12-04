@@ -24,17 +24,13 @@ public class DatasetTest {
         assertThat(dataset, is(dataset1));
     }
 
-    @Test
+   @Test
     public void toString_makesSense() throws Exception {
         Dataset dataset = new Dataset("1");
         Map languangeDescription = new HashMap();
         languangeDescription.put("no","test");
         dataset.setDescription(languangeDescription);
-        assertThat(dataset.toString(), is("Dataset(1, null, null, null, null, {}, {no=test}, null, {}, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, DRAFT)"));
+        assertThat(dataset.toString(), is("Dataset(1, null, null, null, null, {}, {no=test}, null, {}, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, DRAFT)"));
     }
-
-
-
-
 
 }
