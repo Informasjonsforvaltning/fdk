@@ -23,7 +23,8 @@ export const ResultsTabs = props => {
     countApis
   } = props;
 
-  const search = addOrReplaceParamWithoutURL(searchParam, 'from', '');
+  let search = addOrReplaceParamWithoutURL(searchParam, 'from', '');
+  search = addOrReplaceParamWithoutURL(search, 'sortfield', '');
   return (
     <div className="row">
       <div className="col-12 col-lg-8 offset-lg-4">

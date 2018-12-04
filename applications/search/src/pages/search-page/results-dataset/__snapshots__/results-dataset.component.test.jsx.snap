@@ -23,37 +23,24 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
       className="col-6 col-lg-4 offset-lg-4"
     >
       <div
-        className="float-right"
+        className="d-flex justify-content-end"
       >
-        <Select
-          activeSort={null}
-          items={
-            Array [
-              Object {
-                "defaultOption": true,
-                "field": "_score",
-                "label": "relevance",
-                "order": "asc",
-              },
-              Object {
-                "field": "title",
-                "label": "title",
-                "order": "asc",
-              },
-              Object {
-                "field": "modified",
-                "label": "modified",
-                "order": "desc",
-              },
-              Object {
-                "field": "publisher.name",
-                "label": "publisher",
-                "order": "asc",
-              },
-            ]
-          }
-          onChange={[MockFunction]}
-        />
+        <Button
+          className="fdk-button fdk-button-black-toggle selected"
+          color="primary"
+          onClick={[Function]}
+          tag="button"
+        >
+          Relevance
+        </Button>
+        <Button
+          className="fdk-button fdk-button-black-toggle"
+          color="primary"
+          onClick={[Function]}
+          tag="button"
+        >
+          Recently published
+        </Button>
       </div>
     </div>
   </section>
@@ -1700,37 +1687,24 @@ exports[`should render ResultsDataset correctly with minimum of props 1`] = `
       className="col-6 col-lg-4 offset-lg-4"
     >
       <div
-        className="float-right"
+        className="d-flex justify-content-end"
       >
-        <Select
-          activeSort={null}
-          items={
-            Array [
-              Object {
-                "defaultOption": true,
-                "field": "_score",
-                "label": "relevance",
-                "order": "asc",
-              },
-              Object {
-                "field": "title",
-                "label": "title",
-                "order": "asc",
-              },
-              Object {
-                "field": "modified",
-                "label": "modified",
-                "order": "desc",
-              },
-              Object {
-                "field": "publisher.name",
-                "label": "publisher",
-                "order": "asc",
-              },
-            ]
-          }
-          onChange={[MockFunction]}
-        />
+        <Button
+          className="fdk-button fdk-button-black-toggle selected"
+          color="primary"
+          onClick={[Function]}
+          tag="button"
+        >
+          Relevance
+        </Button>
+        <Button
+          className="fdk-button fdk-button-black-toggle"
+          color="primary"
+          onClick={[Function]}
+          tag="button"
+        >
+          Recently published
+        </Button>
       </div>
     </div>
   </section>
@@ -1777,37 +1751,24 @@ exports[`should render ResultsDataset correctly with props 1`] = `
       className="col-6 col-lg-4 offset-lg-4"
     >
       <div
-        className="float-right"
+        className="d-flex justify-content-end"
       >
-        <Select
-          activeSort={null}
-          items={
-            Array [
-              Object {
-                "defaultOption": true,
-                "field": "_score",
-                "label": "relevance",
-                "order": "asc",
-              },
-              Object {
-                "field": "title",
-                "label": "title",
-                "order": "asc",
-              },
-              Object {
-                "field": "modified",
-                "label": "modified",
-                "order": "desc",
-              },
-              Object {
-                "field": "publisher.name",
-                "label": "publisher",
-                "order": "asc",
-              },
-            ]
-          }
-          onChange={[MockFunction]}
-        />
+        <Button
+          className="fdk-button fdk-button-black-toggle selected"
+          color="primary"
+          onClick={[Function]}
+          tag="button"
+        >
+          Relevance
+        </Button>
+        <Button
+          className="fdk-button fdk-button-black-toggle"
+          color="primary"
+          onClick={[Function]}
+          tag="button"
+        >
+          Recently published
+        </Button>
       </div>
     </div>
   </section>

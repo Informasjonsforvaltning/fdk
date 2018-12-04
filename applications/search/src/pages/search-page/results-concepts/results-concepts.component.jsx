@@ -19,6 +19,16 @@ import { SearchPublishersTree } from '../search-publishers-tree/search-publisher
 import { getTranslateText } from '../../../lib/translateText';
 
 export class ResultsConcepts extends React.Component {
+  componentWillMount() {
+    if (
+      ((this.props.searchQuery &&
+        this.props.searchQuery.sortfield === undefined) ||
+        window.location.href.indexOf('sortfield=modified') === -1) &&
+      this.props.conceptSortValue === 'modified'
+    ) {
+      this.props.onSortByLastModified();
+    }
+  }
   _renderCompareTerms() {
     const { conceptsCompare } = this.props;
     const conceptIdsArray = [];
@@ -121,7 +131,11 @@ export class ResultsConcepts extends React.Component {
       showClearFilterButton,
       hitsPerPage,
       publisherArray,
-      publishers
+      publishers,
+      onSortByScore,
+      onSortByLastModified,
+      conceptSortValue,
+      setConceptSort
     } = this.props;
     const page = _.get(searchQuery, 'from')
       ? searchQuery.from / hitsPerPage
@@ -131,7 +145,6 @@ export class ResultsConcepts extends React.Component {
         ? conceptItems.page.totalElements
         : 1) / hitsPerPage
     );
-
     const clearButtonClass = cx(
       'btn',
       'btn-primary',
@@ -141,11 +154,30 @@ export class ResultsConcepts extends React.Component {
         'd-none': !showClearFilterButton
       }
     );
+    const sortByScoreClass = cx('fdk-button', 'fdk-button-black-toggle', {
+      selected: conceptSortValue === undefined
+    });
+    const sortByLastModifiedClass = cx(
+      'fdk-button',
+      'fdk-button-black-toggle',
+      {
+        selected: conceptSortValue === 'modified'
+      }
+    );
+
+    const onSortByScoreClick = () => {
+      setConceptSort(undefined);
+      onSortByScore();
+    };
+    const onSortByModifiedClick = () => {
+      setConceptSort('modified');
+      onSortByLastModified();
+    };
 
     return (
       <main id="content">
         <section className="row mb-3 fdk-button-row">
-          <div className="col-lg-4">
+          <div className="col-6 col-lg-4">
             <button
               className={clearButtonClass}
               onClick={onClearFilters}
@@ -153,6 +185,24 @@ export class ResultsConcepts extends React.Component {
             >
               {localization.query.clear}
             </button>
+          </div>
+          <div className="col-6 col-lg-4 offset-lg-4">
+            <div className="d-flex justify-content-end">
+              <Button
+                className={sortByScoreClass}
+                onClick={onSortByScoreClick}
+                color="primary"
+              >
+                {localization.sort.relevance}
+              </Button>
+              <Button
+                className={sortByLastModifiedClass}
+                onClick={onSortByModifiedClick}
+                color="primary"
+              >
+                {localization.sort.modified}
+              </Button>
+            </div>
           </div>
         </section>
 

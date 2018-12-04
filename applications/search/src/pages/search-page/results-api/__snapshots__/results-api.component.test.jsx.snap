@@ -9,7 +9,7 @@ exports[`should render ResultsApi correctly with hits 1`] = `
     className="row mb-3"
   >
     <div
-      className="col-12 d-flex justify-content-between"
+      className="col-6 col-lg-4"
     >
       <button
         className="btn btn-primary fdk-button fade-in-500 d-none"
@@ -18,30 +18,30 @@ exports[`should render ResultsApi correctly with hits 1`] = `
       >
         Clear
       </button>
-      <Select
-        activeSort={null}
-        items={
-          Array [
-            Object {
-              "defaultOption": true,
-              "field": "_score",
-              "label": "relevance",
-              "order": "asc",
-            },
-            Object {
-              "field": "title",
-              "label": "title",
-              "order": "asc",
-            },
-            Object {
-              "field": "publisher.name",
-              "label": "publisher",
-              "order": "asc",
-            },
-          ]
-        }
-        onChange={[MockFunction]}
-      />
+    </div>
+    <div
+      className="col-6 col-lg-4 offset-lg-4"
+    >
+      <div
+        className="d-flex justify-content-end"
+      >
+        <Button
+          className="fdk-button fdk-button-black-toggle selected"
+          color="primary"
+          onClick={[Function]}
+          tag="button"
+        >
+          Relevance
+        </Button>
+        <Button
+          className="fdk-button fdk-button-black-toggle"
+          color="primary"
+          onClick={[Function]}
+          tag="button"
+        >
+          Recently published
+        </Button>
+      </div>
     </div>
   </div>
   <div
@@ -198,6 +198,7 @@ exports[`should render ResultsApi correctly with hits 1`] = `
     </aside>
     <div
       className="col-12 col-lg-8"
+      id="apis"
     >
       <SearchHitItem
         fadeInCounter={0}
@@ -2349,7 +2350,7 @@ exports[`should render ResultsApi correctly with minimum of props and no hits 1`
     className="row mb-3"
   >
     <div
-      className="col-12 d-flex justify-content-between"
+      className="col-6 col-lg-4"
     >
       <button
         className="btn btn-primary fdk-button fade-in-500 d-none"
@@ -2358,30 +2359,30 @@ exports[`should render ResultsApi correctly with minimum of props and no hits 1`
       >
         Clear
       </button>
-      <Select
-        activeSort={null}
-        items={
-          Array [
-            Object {
-              "defaultOption": true,
-              "field": "_score",
-              "label": "relevance",
-              "order": "asc",
-            },
-            Object {
-              "field": "title",
-              "label": "title",
-              "order": "asc",
-            },
-            Object {
-              "field": "publisher.name",
-              "label": "publisher",
-              "order": "asc",
-            },
-          ]
-        }
-        onChange={[MockFunction]}
-      />
+    </div>
+    <div
+      className="col-6 col-lg-4 offset-lg-4"
+    >
+      <div
+        className="d-flex justify-content-end"
+      >
+        <Button
+          className="fdk-button fdk-button-black-toggle selected"
+          color="primary"
+          onClick={[Function]}
+          tag="button"
+        >
+          Relevance
+        </Button>
+        <Button
+          className="fdk-button fdk-button-black-toggle"
+          color="primary"
+          onClick={[Function]}
+          tag="button"
+        >
+          Recently published
+        </Button>
+      </div>
     </div>
   </div>
   <div
@@ -2399,6 +2400,7 @@ exports[`should render ResultsApi correctly with minimum of props and no hits 1`
     </aside>
     <div
       className="col-12 col-lg-8"
+      id="apis"
     />
   </div>
 </main>
