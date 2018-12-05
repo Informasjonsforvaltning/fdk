@@ -60,7 +60,7 @@ export class SearchPage extends React.Component {
 
     this.handlePageChange = this.handlePageChange.bind(this);
 
-    this.sortByTitle = this.sortByTitle.bind(this);
+    this.sortByLastModified = this.sortByLastModified.bind(this);
     this.sortByScore = this.sortByScore.bind(this);
 
     this.close = this.close.bind(this);
@@ -384,12 +384,12 @@ export class SearchPage extends React.Component {
         this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
     );
   }
-  sortByTitle() {
+  sortByLastModified() {
     this.setState(
       {
         searchQuery: {
           ...this.state.searchQuery,
-          sortfield: 'title.' + localization.getLanguage(),
+          sortfield: 'modified',
           sortdirection: event.order
         }
       },
@@ -491,7 +491,7 @@ export class SearchPage extends React.Component {
                   onFilterProvenance={this.handleDatasetFilterProvenance}
                   onFilterSpatial={this.handleDatasetFilterSpatial}
                   onPageChange={this.handlePageChange}
-                  onSortByTitle={this.sortByTitle}
+                  onsortByLastModified={this.sortByLastModified}
                   onSortByScore={this.sortByScore}
                   onPageChange={this.handlePageChange}
                   searchQuery={this.state.searchQuery}
@@ -524,7 +524,7 @@ export class SearchPage extends React.Component {
                   onFilterProvenance={this.handleDatasetFilterProvenance}
                   onFilterSpatial={this.handleDatasetFilterSpatial}
                   onPageChange={this.handlePageChange}
-                  onSortByTitle={this.sortByTitle}
+                  onsortByLastModified={this.sortByLastModified}
                   onSortByScore={this.sortByScore}
                   searchQuery={this.state.searchQuery}
                   themesItems={themesItems}
@@ -546,7 +546,7 @@ export class SearchPage extends React.Component {
                   conceptItems={conceptItems}
                   onClearFilters={this.handleClearFilters}
                   onPageChange={this.handlePageChange}
-                  onSortByTitle={this.sortByTitle}
+                  onsortByLastModified={this.sortByLastModified}
                   onSortByScore={this.sortByScore}
                   onFilterPublisherHierarchy={
                     this.handleDatasetFilterPublisherHierarchy
