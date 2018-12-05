@@ -6,6 +6,7 @@ import { withRouter } from 'react-router';
 import { fetchUserIfNeeded } from '../../actions/index';
 import localization from '../../utils/localization';
 import '../../assets/style/bootstrap-override.scss';
+import '../../assets/style/react-tags-override.scss';
 import './styles';
 import './app-header.scss';
 
