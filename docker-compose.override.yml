@@ -152,3 +152,4 @@ services:
     build: ./applications/e2e
     volumes:
     - ./applications/e2e/test:/usr/src/app/test:rw
+    - ./applications/e2e/reports:/usr/src/app/reports:rw

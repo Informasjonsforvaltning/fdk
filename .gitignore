@@ -1,6 +1,6 @@
 values_ut1.yaml
 target/
-**/*.iml
+*.iml
 .idea/
 logs/
 /phantomjsdriver.log
@@ -11,7 +11,7 @@ logs/
 /test/zip/
 .DS_Store
 .hot-update.js
-**/node_modules/
+node_modules/
 tdb
 catalog-v001.xml
 /conf/subjects/
@@ -34,3 +34,4 @@ applications/registration-api/.classpath
 *.prefs
 *.project
 *.classpath
+reports/

@@ -8,7 +8,8 @@
   },
   "scripts": {
     "test:browser": "BROWSER=chromium npm t",
-    "test": "./wait_for_dependencies.sh && jest",
+    "test:skipoutfile": "./wait_for_dependencies.sh && jest",
+    "test": "bash -c \" ./wait_for_dependencies.sh && jest > >(tee ./reports/stdout.log) 2> >(tee ./reports/test-report.txt >&2)\"",
     "test:in_container": "BROWSER=google-chrome-unstable HOST_SEARCH=http://nginx-search:8080 npm t"
   },
   "author": "",
@@ -21,13 +22,18 @@
     "puppeteer": "^1.11.0"
   },
   "dependencies": {
-    "delay": "^3.0.0"
+    "delay": "^3.0.0",
+    "json2csv": "^4.3.1"
   },
   "jest": {
     "setupTestFrameworkScriptFile": "<rootDir>/jestsetup.js",
     "testMatch": [
       "<rootDir>/test/**/*.test.js",
       "**/?(*.)(test).js?(x)"
+    ],
+    "reporters": [
+      "default",
+      "<rootDir>/lib/arts-reporter"
     ],
     "testPathIgnorePatterns": [
       "/node_modules/",
