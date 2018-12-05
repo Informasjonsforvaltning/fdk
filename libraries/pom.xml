@@ -22,6 +22,7 @@
         <module>publisher-cat-client</module>
         <module>registration-api-client</module>
         <module>concept-cat-common</module>
+        <module>harvest-queue</module>
         <module>concept-cat-client</module>
     </modules>
 

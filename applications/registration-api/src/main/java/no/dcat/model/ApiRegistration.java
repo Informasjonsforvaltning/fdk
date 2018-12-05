@@ -23,7 +23,11 @@ public class ApiRegistration extends ApiRegistrationPublic {
     public static final String REGISTRATION_STATUS_DRAFT = "DRAFT";
     public static final String REGISTRATION_STATUS_PUBLISH = "PUBLISH";
 
+    public static final String HARVEST_STATUS_OK = "OK";
+    public static final String HARVEST_STATUS_FAILED = "FAILED";
+
     private String registrationStatus = REGISTRATION_STATUS_DRAFT; // DRAFT is default
+    private String harvestStatus = HARVEST_STATUS_FAILED; //FAILED is default
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZZ")
     private Date _lastModified;
