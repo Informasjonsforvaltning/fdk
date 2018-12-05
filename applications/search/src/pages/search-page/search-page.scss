@@ -16,6 +16,34 @@
 .fdk-button-row {
   height: 3em;
 }
+.fdk-button.fdk-button-black-toggle {
+    background-color: transparent;
+    color: #000;
+    border-color: black;
+    box-shadow: none;
+    width:120px;
+}
+.fdk-button.fdk-button-black-toggle:first-child {
+  border-right:none;
+  border-top-right-radius:0;
+  border-bottom-right-radius:0;
+}
+.fdk-button.fdk-button-black-toggle:nth-child(2) {
+  border-left:none;
+  border-top-left-radius:0;
+  border-bottom-left-radius:0;
+}
+.fdk-button.fdk-button-black-toggle:hover, .fdk-button.fdk-button-black-toggle:not(.disabled):not(.disabled):active {
+  color:black;
+  background: transparent;
+}
+.fdk-button.fdk-button-black-toggle:focus {
+    box-shadow: none;
+}
+.fdk-button.fdk-button-black-toggle.selected {
+  background: black;
+  color: white;
+}
 /*  SEARCHPAGE PAGINATION  */
 .pagination {
   li {

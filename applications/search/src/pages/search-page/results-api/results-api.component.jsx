@@ -86,7 +86,7 @@ export const ResultsApi = props => {
     showClearFilterButton,
     hitsPerPage,
     onSortByScore,
-    onSortByTitle
+    onsortByLastModified
   } = props;
 
   const page =
@@ -104,11 +104,25 @@ export const ResultsApi = props => {
       'd-none': !showClearFilterButton
     }
   );
+  const sortByScoreClass = cx(
+    'fdk-button',
+    'fdk-button-black-toggle',
+    {
+      'selected' : !searchQuery.sortfield
+    }
+  )
+  const sortByLastModifiedClass = cx(
+    'fdk-button',
+    'fdk-button-black-toggle',
+    {
+      'selected' : searchQuery.sortfield === 'modified'
+    }
+  )
 
   return (
     <main id="content" data-test-id="apis">
       <div className="row mb-3">
-        <div className="col-12 d-flex justify-content-between">
+        <div className="col-6 col-lg-4">
           <button
             className={clearButtonClass}
             onClick={onClearFilters}
@@ -116,21 +130,25 @@ export const ResultsApi = props => {
           >
             {localization.query.clear}
           </button>
-          <Button
-            className="fdk-button"
-            onClick={onSortByTitle}
-            color="primary"
-          >
-            Sort by Last published
-          </Button>
-          <span> </span>
-          <Button
-            className="fdk-button"
-            onClick={onSortByScore}
-            color="primary"
-          >
-            Sort by Score
-          </Button>
+        </div>
+        <div className="col-6 col-lg-4 offset-lg-4">
+          <div className="float-right">
+
+            <Button
+              className={sortByScoreClass}
+              onClick={onSortByScore}
+              color="primary"
+            >
+              {localization.sort.relevance}
+            </Button>
+            <Button
+              className={sortByLastModifiedClass}
+              onClick={onsortByLastModified}
+              color="primary"
+            >
+              {localization.sort.modified}
+            </Button>
+          </div>
         </div>
       </div>
       <div className="row">
@@ -226,7 +244,7 @@ ResultsApi.propTypes = {
   publisherArray: PropTypes.array,
   publishers: PropTypes.object,
   onClearFilters: PropTypes.func,
-  onSortByTitle: PropTypes.func.isRequired,
+  onsortByLastModified: PropTypes.func.isRequired,
   onSortByScore: PropTypes.func.isRequired,
   onPageChange: PropTypes.func,
   showClearFilterButton: PropTypes.bool,

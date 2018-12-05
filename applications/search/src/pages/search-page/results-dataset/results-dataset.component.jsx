@@ -114,7 +114,7 @@ export class ResultsDataset extends React.Component {
       publisherArray,
       publishers,
       onSortByScore,
-      onSortByTitle
+      onsortByLastModified
     } = this.props;
     const page =
       searchQuery && searchQuery.from ? searchQuery.from / hitsPerPage : 0;
@@ -132,6 +132,20 @@ export class ResultsDataset extends React.Component {
         'd-none': !showClearFilterButton
       }
     );
+    const sortByScoreClass = cx(
+      'fdk-button',
+      'fdk-button-black-toggle',
+      {
+        'selected' : !searchQuery.sortfield
+      }
+    )
+    const sortByLastModifiedClass = cx(
+      'fdk-button',
+      'fdk-button-black-toggle',
+      {
+        'selected' : searchQuery.sortfield === 'modified'
+      }
+    )
 
     return (
       <main id="content" data-test-id="datasets">
@@ -149,19 +163,18 @@ export class ResultsDataset extends React.Component {
             <div className="float-right">
 
               <Button
-                className="fdk-button"
-                onClick={onSortByTitle}
-                color="primary"
-              >
-                Sort by Last published
-              </Button>
-              <span> </span>
-              <Button
-                className="fdk-button"
+                className={sortByScoreClass}
                 onClick={onSortByScore}
                 color="primary"
               >
-                Sort by Score
+                {localization.sort.relevance}
+              </Button>
+              <Button
+                className={sortByLastModifiedClass}
+                onClick={onsortByLastModified}
+                color="primary"
+              >
+                {localization.sort.modified}
               </Button>
             </div>
           </div>
@@ -281,7 +294,7 @@ ResultsDataset.propTypes = {
   publishers: PropTypes.object,
   referenceData: PropTypes.object,
   onClearFilters: PropTypes.func,
-  onSortByTitle: PropTypes.func.isRequired,
+  onsortByLastModified: PropTypes.func.isRequired,
   onSortByScore: PropTypes.func.isRequired,
   onPageChange: PropTypes.func,
   showClearFilterButton: PropTypes.bool,

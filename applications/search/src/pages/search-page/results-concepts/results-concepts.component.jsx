@@ -121,7 +121,9 @@ export class ResultsConcepts extends React.Component {
       showClearFilterButton,
       hitsPerPage,
       publisherArray,
-      publishers
+      publishers,
+      onSortByScore,
+      onsortByLastModified
     } = this.props;
     const page = _.get(searchQuery, 'from')
       ? searchQuery.from / hitsPerPage
@@ -131,7 +133,6 @@ export class ResultsConcepts extends React.Component {
         ? conceptItems.page.totalElements
         : 1) / hitsPerPage
     );
-
     const clearButtonClass = cx(
       'btn',
       'btn-primary',
@@ -141,11 +142,28 @@ export class ResultsConcepts extends React.Component {
         'd-none': !showClearFilterButton
       }
     );
+    const isSortByScore = !searchQuery.sortfield;
+    const isSortByLastModified = searchQuery.sortfield === 'modified';
+    const sortByScoreClass = cx(
+      'fdk-button',
+      'fdk-button-black-toggle',
+      {
+        'selected' : isSortByScore
+      }
+    )
+    const sortByLastModifiedClass = cx(
+      'fdk-button',
+      'fdk-button-black-toggle',
+      {
+        'selected' : isSortByLastModified
+      }
+    )
 
     return (
       <main id="content">
         <section className="row mb-3 fdk-button-row">
-          <div className="col-lg-4">
+
+          <div className="col-6 col-lg-4">
             <button
               className={clearButtonClass}
               onClick={onClearFilters}
@@ -153,6 +171,25 @@ export class ResultsConcepts extends React.Component {
             >
               {localization.query.clear}
             </button>
+          </div>
+          <div className="col-6 col-lg-4 offset-lg-4">
+            <div className="float-right">
+
+              <Button
+                className={sortByScoreClass}
+                onClick={onSortByScore}
+                color="primary"
+              >
+                {localization.sort.relevance}
+              </Button>
+              <Button
+                className={sortByLastModifiedClass}
+                onClick={onsortByLastModified}
+                color="primary"
+              >
+                {localization.sort.modified}
+              </Button>
+            </div>
           </div>
         </section>
 
