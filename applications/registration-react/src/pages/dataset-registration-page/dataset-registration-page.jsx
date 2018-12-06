@@ -250,6 +250,7 @@ export class RegDataset extends React.Component {
                   <ConnectedFormConcept
                     datasetItem={datasetItem}
                     helptextItems={helptextItems}
+                    match={match}
                   />
                 </FormTemplateWithState>
 

@@ -52,7 +52,7 @@ exports[`should render InputTagsFieldConcepts correctly 1`] = `
         validationRegex={/\\.\\*/}
         value={
           Array [
-            undefined,
+            "enhet",
           ]
         }
       />

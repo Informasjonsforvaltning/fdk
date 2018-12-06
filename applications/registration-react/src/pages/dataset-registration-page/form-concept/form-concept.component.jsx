@@ -18,7 +18,7 @@ export const FormConcept = props => {
           helptextItems={helptextItems.Dataset_content}
         />
         <Field
-          name="subject"
+          name="concepts"
           type="text"
           component={InputTagsFieldConcepts}
           label={localization.schema.concept.conceptLabel}

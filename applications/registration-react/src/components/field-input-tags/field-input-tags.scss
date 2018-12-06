@@ -10,8 +10,18 @@
   background-color: #fff;
   background-clip: padding-box;
   border: 1px solid #ced4da;
-  border-radius: .5em;
   transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+  position: relative;
+
+  span {
+    .react-tagsinput-input {
+      input[type="text"] {
+        border: none;
+        outline: none;
+        min-width: 100%;
+      }
+    }
+  }
 
   .react-tagsinput--focused {
     border-color: #80bdff;
@@ -20,7 +30,8 @@
   }
 
   .react-tagsinput-tag {
-    background-color: $color4;
+    background-color: $color-grey-3;
+    border: 1px solid $color-dark-2;
     border-radius: 2px;
     color: $color1;
     display: inline-block;
@@ -48,4 +59,35 @@
     padding: 5px;
     width: 100px;
   }
+
+  .react-autosuggest__container {
+    display: inline;
+
+    .react-autosuggest__suggestions-list {
+      padding: 0;
+      list-style: none;
+
+      .react-autosuggest__suggestion--highlighted {
+        background-color: $color-grey-2;
+      }
+
+      .react-autosuggest__suggestions-container {
+        margin-top: 50px;
+      }
+    }
+  }
+
+  .react-autosuggest__suggestions-container--open {
+    z-index: 10;
+    box-shadow: 0 3px 12px rgba(35, 55, 65, 0.55);
+    margin-top: 8px;
+    border-top: 1px solid $color-grey-1;
+    padding: 1em;
+
+    .react-autosuggest__suggestion {
+      padding: 0.5em;
+    }
+  }
 }
+
+
