@@ -27,7 +27,7 @@ Et datasett skal lenke til de aktuelle og sentrale begrepene i en begrepskatalog
       component={[Function]}
       fieldLabel="no"
       label="Begrep"
-      name="subject"
+      name="concepts"
       type="text"
     />
   </div>
@@ -91,7 +91,7 @@ Et datasett skal lenke til de aktuelle og sentrale begrepene i en begrepskatalog
       component={[Function]}
       fieldLabel="no"
       label="Begrep"
-      name="subject"
+      name="concepts"
       type="text"
     />
   </div>

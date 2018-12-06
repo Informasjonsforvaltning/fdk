@@ -8,9 +8,9 @@ const mapStateToProps = (state, ownProps) => {
   const { datasetItem } = ownProps;
   return {
     initialValues: {
-      subject:
-        _.get(datasetItem, 'subject', []).length > 0
-          ? _.get(datasetItem, 'subject')
+      concepts:
+        _.get(datasetItem, 'concepts', []).length > 0
+          ? _.get(datasetItem, 'concepts')
           : [],
       keyword:
         _.get(datasetItem, 'keyword', []).length > 0

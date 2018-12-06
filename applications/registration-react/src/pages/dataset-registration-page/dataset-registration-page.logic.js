@@ -125,9 +125,9 @@ export const typeValues = values => {
 export const conceptValues = values => {
   if (values) {
     let retVal = '';
-    const { subject, keyword } = values;
-    if (subject) {
-      subject.forEach(item => {
+    const { concepts, keyword } = values;
+    if (concepts) {
+      concepts.forEach(item => {
         retVal += getTranslateText(item.prefLabel)
           ? `${getTranslateText(item.prefLabel)}. `
           : '';

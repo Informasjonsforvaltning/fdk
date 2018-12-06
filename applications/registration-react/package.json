@@ -54,6 +54,7 @@
     "prop-types": "^15.6.0",
     "qs": "^6.5.2",
     "react": "^16.2.0",
+    "react-autosuggest": "^9.4.2",
     "react-datepicker": "^1.0.4",
     "react-dom": "^16.2.0",
     "react-feature-toggles": "^3.0.3",
