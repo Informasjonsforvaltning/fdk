@@ -394,7 +394,7 @@
   },
   "formStatus": {
     "type": {
-      "dataset": "Datasett-beskrivelsen",
+      "dataset": "Datasettbeskrivelsen",
       "api": "API-beskrivelsen"
     },
     "isSaving": "Lagrer",
@@ -416,7 +416,7 @@
       "confirmDeleteMessage": "Er du sikker på at du vil slette API-beskrivelsen permanent?"
     },
     "dataset": {
-      "confirmDeleteMessage": "Er du sikker på at du vil slette datasett-beskrivelsen permanent?",
+      "confirmDeleteMessage": "Er du sikker på at du vil slette datasettbeskrivelsen permanent?",
       "requiredFieldsMissing": "Datasettet kunne ikke publiseres. Se over felt som er markert med feil og rett disse før du forsøker å publisere på nytt."
     }
   }
