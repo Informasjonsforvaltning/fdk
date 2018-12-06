@@ -13,6 +13,7 @@ import no.dcat.model.exceptions.ErrorResponse;
 import no.dcat.service.CatalogRepository;
 import no.dcat.service.ConceptCatClient;
 import no.dcat.service.DatasetRepository;
+import no.dcat.shared.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -193,6 +194,8 @@ public class DatasetController {
         JsonObject oldDatasetJson = gson.toJsonTree(oldDataset).getAsJsonObject();
         List<Concept> conceptListFromReq;
         List<Concept> conceptsGetByIds = new ArrayList<>();
+        Subject subject = new Subject();
+        List<Subject> subjects = new ArrayList<>();
 
         for(Map.Entry<String, Object> entry : updates.entrySet()) {
             logger.debug("update key: {} value: ", entry.getKey(), entry.getValue() );
@@ -224,7 +227,16 @@ public class DatasetController {
 
         Dataset newDataset = gson.fromJson(oldDatasetJson.toString(), Dataset.class);
         newDataset.set_lastModified(Calendar.getInstance().getTime());
-        newDataset.setConcepts(conceptsGetByIds);
+
+        for (Concept concept:  conceptsGetByIds) {
+            subject.setId(concept.getId());
+            subject.setUri(concept.getUri());
+            subject.setDefinition(concept.getDefinition().getText());
+            subject.setIdentifier(concept.getIdentifier());
+            subjects.add(subject);
+        }
+
+        newDataset.setSubject(subjects);
 
         Dataset savedDataset = datasetRepository.save(newDataset);
         return new ResponseEntity<>(savedDataset, HttpStatus.OK);

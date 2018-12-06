@@ -13,6 +13,7 @@ import java.util.Map;
 @Data
 @ToString(includeFieldNames = false)
 public class Subject implements Serializable{
+    private String id;
     private String uri;
     private String identifier;
     private Map<String, String> prefLabel;
