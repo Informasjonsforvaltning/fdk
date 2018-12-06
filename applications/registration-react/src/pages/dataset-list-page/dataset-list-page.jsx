@@ -6,6 +6,7 @@ import localization from '../../utils/localization';
 import { getDatasetItemsByCatalogId } from '../../redux/modules/datasets';
 import FormCatalog from './form-catalog/connected-form-catalog.component';
 import DatasetItemsList from './items-list/item-list.component';
+import { AlertMessage } from '../../components/alert-message/alert-message.component';
 import './dataset-list-page.scss';
 
 export const DatasetsListPage = props => {
@@ -16,7 +17,8 @@ export const DatasetsListPage = props => {
     fetchHelptextsIfNeeded,
     fetchCatalogIfNeeded,
     fetchDatasetsIfNeeded,
-    match
+    match,
+    location
   } = props;
 
   const catalogId = _.get(match, ['params', 'catalogId']);
@@ -29,6 +31,16 @@ export const DatasetsListPage = props => {
 
   return (
     <div className="container">
+      {_.get(location, ['state', 'confirmDelete'], false) && (
+        <div className="row mb-5">
+          <div className="col-12">
+            <AlertMessage type="success">
+              {localization.formStatus.type.dataset}{' '}
+              {localization.formStatus.confirmDeleted}
+            </AlertMessage>
+          </div>
+        </div>
+      )}
       <div className="row">
         <div className="col-12" />
       </div>
@@ -64,7 +76,8 @@ DatasetsListPage.defaultProps = {
   fetchHelptextsIfNeeded: () => {},
   fetchCatalogIfNeeded: () => {},
   fetchDatasetsIfNeeded: () => {},
-  match: null
+  match: null,
+  location: null
 };
 
 DatasetsListPage.propTypes = {
@@ -74,5 +87,6 @@ DatasetsListPage.propTypes = {
   fetchHelptextsIfNeeded: PropTypes.func,
   fetchCatalogIfNeeded: PropTypes.func,
   fetchDatasetsIfNeeded: PropTypes.func,
-  match: PropTypes.object
+  match: PropTypes.object,
+  location: PropTypes.object
 };
