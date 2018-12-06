@@ -17,8 +17,7 @@ export const FilterOption = props => {
     themesItems,
     displayClass
   } = props;
-
-  const optionLabel = labelRaw || `${_capitalize(label)}`;
+  let optionLabel = labelRaw || label;
 
   let textLabel;
   // if themes, then choose text from themes array, else choose label from localization-file.
@@ -34,8 +33,13 @@ export const FilterOption = props => {
   ) {
     textLabel = localization.unknown;
   } else {
-    textLabel = localization[optionLabel.toLowerCase()] || optionLabel;
+    textLabel = localization[optionLabel] || optionLabel;
   }
+  if (textLabel && textLabel == textLabel.toUpperCase()) {
+    textLabel = `${_capitalize(textLabel)}`;
+  }
+
+
 
   const id = encodeURIComponent(itemKey + value);
 
