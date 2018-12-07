@@ -3,6 +3,11 @@
 exports[`should render Footer correctly 1`] = `
 <footer
   className="fdk-footer"
+  style={
+    Object {
+      "marginBottom": "0",
+    }
+  }
 >
   <div
     className="container"
