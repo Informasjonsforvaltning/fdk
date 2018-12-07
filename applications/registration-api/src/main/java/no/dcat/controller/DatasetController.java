@@ -1,6 +1,7 @@
 package no.dcat.controller;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
@@ -232,17 +233,19 @@ public class DatasetController {
             subject.setId(concept.getId());
             subject.setUri(concept.getUri());
             subject.setDefinition(concept.getDefinition().getText());
+            subject.setPrefLabel(concept.getPrefLabel());
+            subject.setAltLabel(concept.getAltLabel());
             subject.setIdentifier(concept.getIdentifier());
             subjects.add(subject);
         }
 
         newDataset.setSubject(subjects);
+        newDataset.setConcepts(conceptsGetByIds);
 
         Dataset savedDataset = datasetRepository.save(newDataset);
         return new ResponseEntity<>(savedDataset, HttpStatus.OK);
 
     }
-
 
     /**
      * Return list of all datasets in catalog.
