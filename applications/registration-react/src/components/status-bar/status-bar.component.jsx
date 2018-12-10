@@ -154,13 +154,15 @@ const StatusBar = props => {
                 {localization.formStatus.publish}
               </Button>
             )}
-          <button
-            className="btn bg-transparent fdk-color-blue-dark"
-            disabled={published || isSaving || error}
-            onClick={onToggleConfirmDelete}
-          >
-            {localization.formStatus.delete}
-          </button>
+          {!error && (
+            <button
+              className="btn bg-transparent fdk-color-blue-dark"
+              disabled={published || isSaving || error}
+              onClick={onToggleConfirmDelete}
+            >
+              {localization.formStatus.delete}
+            </button>
+          )}
         </div>
       </div>
     </React.Fragment>
