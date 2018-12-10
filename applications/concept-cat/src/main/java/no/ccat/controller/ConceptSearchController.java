@@ -17,8 +17,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 import org.springframework.data.elasticsearch.core.aggregation.AggregatedPage;
+import org.springframework.data.elasticsearch.core.query.FetchSourceFilter;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQuery;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
+import org.springframework.data.elasticsearch.core.query.SourceFilter;
 import org.springframework.hateoas.PagedResources;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -61,6 +63,10 @@ public class ConceptSearchController {
         @ApiParam("The prefLabel text")
         @RequestParam(value = "preflabel", defaultValue = "", required = false)
             String prefLabel,
+
+        @ApiParam("Comma separated list of which fields should be returned. E.g id,")
+        @RequestParam(value = "returnfields", defaultValue = "", required = false)
+            String returnFields,
 
         Pageable pageable
     ) {
@@ -105,6 +111,11 @@ public class ConceptSearchController {
                 .order(Terms.Order.count(false));
 
             finalQuery.addAggregation(aggregationBuilder);
+        }
+
+        if (!StringUtils.isEmpty(returnFields)) {
+            SourceFilter sourceFilter = new FetchSourceFilter(returnFields.concat(",prefLabel").split(","), null);
+            finalQuery.addSourceFilter(sourceFilter);
         }
 
         AggregatedPage<ConceptDenormalized> aggregatedPage = elasticsearchTemplate.queryForPage(finalQuery, ConceptDenormalized.class);
