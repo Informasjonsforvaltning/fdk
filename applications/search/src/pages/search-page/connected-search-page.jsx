@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import { fetchPublishersIfNeededAction } from '../../redux/modules/publishers';
 import { fetchThemesIfNeededAction } from '../../redux/modules/themes';
+import { setDatasetSortAction, setConceptSortAction, setApiSortAction } from '../../redux/modules/settings';
 import {
   addConceptAction,
   removeConceptAction
@@ -15,7 +16,8 @@ const mapStateToProps = ({
   themes,
   publishers,
   referenceData,
-  conceptsCompare
+  conceptsCompare,
+  settings
 }) => {
   const { themesItems, isFetchingThemes } = themes || {
     themesItems: null
@@ -35,7 +37,10 @@ const mapStateToProps = ({
     publisherItems,
     isFetchingPublishers,
     referenceData,
-    conceptsCompare: items
+    conceptsCompare: items,
+    datasetSortValue: settings.datasetSortValue,
+    apiSortValue: settings.apiSortValue,
+    conceptSortValue : settings.conceptSortValue
   };
 };
 
@@ -45,7 +50,10 @@ const mapDispatchToProps = dispatch => ({
   fetchReferenceDataIfNeeded: () =>
     dispatch(fetchReferenceDataIfNeededAction(REFERENCEDATA_DISTRIBUTIONTYPE)),
   addConcept: item => dispatch(addConceptAction(item)),
-  removeConcept: uri => dispatch(removeConceptAction(uri))
+  removeConcept: uri => dispatch(removeConceptAction(uri)),
+  setDatasetSort: val => dispatch(setDatasetSortAction(val)),
+  setApiSort: val => dispatch(setApiSortAction(val)),
+  setConceptSort: val => dispatch(setConceptSortAction(val))
 });
 
 export const ConnectedSearchPage = connect(

@@ -95,6 +95,11 @@ export class ResultsDataset extends React.Component {
     }
     return null;
   }
+  componentWillMount() {
+    if(this.props.searchQuery.sortfield === undefined && this.props.datasetSortValue === "modified") {
+      this.props.onsortByLastModified();
+    }
+  }
 
   render() {
     const {
@@ -114,7 +119,9 @@ export class ResultsDataset extends React.Component {
       publisherArray,
       publishers,
       onSortByScore,
-      onsortByLastModified
+      onsortByLastModified,
+      setDatasetSort,
+      datasetSortValue
     } = this.props;
     const page =
       searchQuery && searchQuery.from ? searchQuery.from / hitsPerPage : 0;
@@ -132,20 +139,34 @@ export class ResultsDataset extends React.Component {
         'd-none': !showClearFilterButton
       }
     );
+    console.log('datasetSortValue is ', datasetSortValue);
+    console.log('searchQuery is ', searchQuery);
     const sortByScoreClass = cx(
       'fdk-button',
       'fdk-button-black-toggle',
       {
-        'selected' : !searchQuery.sortfield
+        'selected' : datasetSortValue === undefined
       }
     )
     const sortByLastModifiedClass = cx(
       'fdk-button',
       'fdk-button-black-toggle',
       {
-        'selected' : searchQuery.sortfield === 'modified'
+        'selected' : datasetSortValue === 'modified'
       }
     )
+    console.log('sortByScoreClass is ', sortByScoreClass);
+
+    console.log('sortByLastModifiedClass is ', sortByLastModifiedClass);
+
+    const onSortByScoreClick = () => {
+      setDatasetSort(undefined);
+      onSortByScore();
+    }
+    const onSortByModifiedClick = () => {
+      setDatasetSort("modified");
+      onsortByLastModified();
+    }
 
     return (
       <main id="content" data-test-id="datasets">
@@ -164,14 +185,14 @@ export class ResultsDataset extends React.Component {
 
               <Button
                 className={sortByScoreClass}
-                onClick={onSortByScore}
+                onClick={onSortByScoreClick}
                 color="primary"
               >
                 {localization.sort.relevance}
               </Button>
               <Button
                 className={sortByLastModifiedClass}
-                onClick={onsortByLastModified}
+                onClick={onSortByModifiedClick}
                 color="primary"
               >
                 {localization.sort.modified}

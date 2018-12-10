@@ -446,7 +446,13 @@ export class SearchPage extends React.Component {
       location,
       conceptsCompare,
       addConcept,
-      removeConcept
+      removeConcept,
+      setDatasetSort,
+      setApiSort,
+      setConceptSort,
+      datasetSortValue,
+      apiSortValue,
+      conceptSortValue
     } = this.props;
     const topSectionClass = cx('top-section-search', 'mb-4', {
       'top-section-search--image': !!(browser && browser.name !== 'ie')
@@ -503,6 +509,8 @@ export class SearchPage extends React.Component {
                   publisherArray={extractPublisherCounts(datasetItems)}
                   publishers={publisherItems}
                   referenceData={referenceData}
+                  setDatasetSort={setDatasetSort}
+                  datasetSortValue={datasetSortValue}
                   {...props}
                 />
               )}
@@ -534,6 +542,8 @@ export class SearchPage extends React.Component {
                   hitsPerPage={50}
                   publisherArray={extractPublisherCounts(apiItems)}
                   publishers={publisherItems}
+                  setApiSort={setApiSort}
+                  apiSortValue={apiSortValue}
                   {...props}
                 />
               )}
@@ -561,6 +571,8 @@ export class SearchPage extends React.Component {
                   conceptsCompare={conceptsCompare}
                   addConcept={addConcept}
                   removeConcept={removeConcept}
+                  setConceptSort={setConceptSort}
+                  conceptSortValue={conceptSortValue}
                   {...props}
                 />
               )}

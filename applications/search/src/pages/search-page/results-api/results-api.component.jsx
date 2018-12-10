@@ -70,6 +70,13 @@ const renderHits = (hits, publishers) => {
   return null;
 };
 
+
+componentWillMount() {
+  if(this.props.searchQuery.sortfield === undefined && this.props.apiSortValue === "modified") {
+    this.props.onsortByLastModified();
+  }
+}
+
 export const ResultsApi = props => {
   const {
     showFilterModal,
@@ -86,7 +93,9 @@ export const ResultsApi = props => {
     showClearFilterButton,
     hitsPerPage,
     onSortByScore,
-    onsortByLastModified
+    onsortByLastModified,
+    apiSortValue,
+    setApiSort
   } = props;
 
   const page =
@@ -108,16 +117,25 @@ export const ResultsApi = props => {
     'fdk-button',
     'fdk-button-black-toggle',
     {
-      'selected' : !searchQuery.sortfield
+      'selected' : !apiSortValue
     }
   )
   const sortByLastModifiedClass = cx(
     'fdk-button',
     'fdk-button-black-toggle',
     {
-      'selected' : searchQuery.sortfield === 'modified'
+      'selected' : apiSortValue === 'modified'
     }
   )
+
+  const onSortByScoreClick = () => {
+    setapiSort(undefined);
+    onSortByScore();
+  }
+  const onSortByModifiedClick = () => {
+    setapiSort("modified");
+    onsortByLastModified();
+  }
 
   return (
     <main id="content" data-test-id="apis">
@@ -136,14 +154,14 @@ export const ResultsApi = props => {
 
             <Button
               className={sortByScoreClass}
-              onClick={onSortByScore}
+              onClick={onSortByScoreClick}
               color="primary"
             >
               {localization.sort.relevance}
             </Button>
             <Button
               className={sortByLastModifiedClass}
-              onClick={onsortByLastModified}
+              onClick={onSortByModifiedClick}
               color="primary"
             >
               {localization.sort.modified}

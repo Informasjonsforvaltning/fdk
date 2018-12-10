@@ -110,6 +110,12 @@ export class ResultsConcepts extends React.Component {
       </Modal>
     );
   }
+  componentWillMount() {
+    if(this.props.searchQuery.sortfield === undefined && this.props.conceptSortValue === "modified") {
+      this.props.onsortByLastModified();
+    }
+  }
+
 
   render() {
     const {
@@ -123,7 +129,9 @@ export class ResultsConcepts extends React.Component {
       publisherArray,
       publishers,
       onSortByScore,
-      onsortByLastModified
+      onsortByLastModified,
+      conceptSortValue,
+      setConceptSort
     } = this.props;
     const page = _.get(searchQuery, 'from')
       ? searchQuery.from / hitsPerPage
@@ -148,16 +156,25 @@ export class ResultsConcepts extends React.Component {
       'fdk-button',
       'fdk-button-black-toggle',
       {
-        'selected' : isSortByScore
+        'selected' : conceptSortValue === undefined
       }
     )
     const sortByLastModifiedClass = cx(
       'fdk-button',
       'fdk-button-black-toggle',
       {
-        'selected' : isSortByLastModified
+        'selected' : conceptSortValue === "modified"
       }
     )
+
+    const onSortByScoreClick = () => {
+      setConceptSort(undefined);
+      onSortByScore();
+    }
+    const onSortByModifiedClick = () => {
+      setConceptSort("modified");
+      onsortByLastModified();
+    }
 
     return (
       <main id="content">
