@@ -497,7 +497,7 @@ export class SearchPage extends React.Component {
                   onFilterProvenance={this.handleDatasetFilterProvenance}
                   onFilterSpatial={this.handleDatasetFilterSpatial}
                   onPageChange={this.handlePageChange}
-                  onsortByLastModified={this.sortByLastModified}
+                  onSortByLastModified={this.sortByLastModified}
                   onSortByScore={this.sortByScore}
                   onPageChange={this.handlePageChange}
                   searchQuery={this.state.searchQuery}
@@ -532,7 +532,7 @@ export class SearchPage extends React.Component {
                   onFilterProvenance={this.handleDatasetFilterProvenance}
                   onFilterSpatial={this.handleDatasetFilterSpatial}
                   onPageChange={this.handlePageChange}
-                  onsortByLastModified={this.sortByLastModified}
+                  onSortByLastModified={this.sortByLastModified}
                   onSortByScore={this.sortByScore}
                   searchQuery={this.state.searchQuery}
                   themesItems={themesItems}
@@ -556,7 +556,7 @@ export class SearchPage extends React.Component {
                   conceptItems={conceptItems}
                   onClearFilters={this.handleClearFilters}
                   onPageChange={this.handlePageChange}
-                  onsortByLastModified={this.sortByLastModified}
+                  onSortByLastModified={this.sortByLastModified}
                   onSortByScore={this.sortByScore}
                   onFilterPublisherHierarchy={
                     this.handleDatasetFilterPublisherHierarchy
