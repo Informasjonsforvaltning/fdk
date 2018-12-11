@@ -15,7 +15,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 import org.springframework.data.elasticsearch.core.aggregation.AggregatedPage;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQuery;
@@ -63,14 +62,6 @@ public class ConceptSearchController {
         @RequestParam(value = "preflabel", defaultValue = "", required = false)
             String prefLabel,
 
-        @ApiParam("Specifies the sort field, at the present we support title, modified and publisher. Default is no value")
-        @RequestParam(value = "sortfield", defaultValue = "", required = false)
-            String sortfield,
-
-        @ApiParam("Specifies the sort direction of the sorted result. The directions are: asc for ascending and desc for descending")
-        @RequestParam(value = "sortdirection", defaultValue = "", required = false)
-            String sortdirection,
-
         Pageable pageable
     ) {
         logger.debug("GET /concepts?q={}", query);
@@ -114,14 +105,6 @@ public class ConceptSearchController {
                 .order(Terms.Order.count(false));
 
             finalQuery.addAggregation(aggregationBuilder);
-        }
-
-        if (StringUtils.isEmpty(sortfield)) {
-            if (StringUtils.isEmpty(query)) {
-                addSortForEmptySearch(finalQuery);
-            }
-        } else {
-            addSort(sortfield, sortdirection, finalQuery);
         }
 
         AggregatedPage<ConceptDenormalized> aggregatedPage = elasticsearchTemplate.queryForPage(finalQuery, ConceptDenormalized.class);
@@ -173,30 +156,6 @@ public class ConceptSearchController {
             return aggregations;
         }
     }
-
-    private void addSortForEmptySearch(NativeSearchQuery searchBuilder) {
-        searchBuilder.addSort(new Sort(Sort.Direction.DESC, "harvest.lastChanged"));
-    }
-
-    private void addSort(String sortfield, String sortdirection, NativeSearchQuery searchBuilder) {
-        if (!sortfield.trim().isEmpty()) {
-
-            Sort.Direction sortOrder = sortdirection.toLowerCase().contains("asc".toLowerCase()) ? Sort.Direction.ASC : Sort.Direction.DESC;
-            StringBuilder sbSortField = new StringBuilder();
-
-            if (!sortfield.equals("modified")) {
-                sbSortField.append(sortfield).append(".nb");
-            } else {
-                sbSortField.append("harvest.firstHarvested");
-            }
-
-            Sort sort = new Sort(sortOrder, sbSortField.toString());
-
-            logger.debug("sort: {}", sort.toString());
-            searchBuilder.addSort(sort);
-        }
-    }
-
 }
 
 
