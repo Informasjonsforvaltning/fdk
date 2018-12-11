@@ -15,10 +15,24 @@ export function setDatasetSortAction(datasetSortValue) {
     datasetSortValue: datasetSortValue
   };
 }
+export function setApiSortAction(apiSortValue) {
+  return {
+    type: SET_API_SORT_PATCH,
+    apiSortValue: apiSortValue
+  };
+}
+export function setConceptSortAction(conceptSortValue) {
+  return {
+    type: SET_CONCEPT_SORT_PATCH,
+    conceptSortValue: conceptSortValue
+  };
+}
 
 const initialState = {
   language: 'nb',
-  datasetSort:undefined
+  datasetSortValue:undefined,
+  apiSortValue:undefined,
+  conceptSortValue:undefined
 };
 
 export function settingsResolver(state = initialState, action) {
@@ -27,6 +41,10 @@ export function settingsResolver(state = initialState, action) {
       return { ...state, ...action.settings };
     case SET_DATASET_SORT_PATCH:
       return { ...state, datasetSortValue: action.datasetSortValue };
+    case SET_API_SORT_PATCH:
+      return { ...state, apiSortValue: action.apiSortValue };
+    case SET_CONCEPT_SORT_PATCH:
+      return { ...state, conceptSortValue: action.conceptSortValue };
     default:
       return state;
   }

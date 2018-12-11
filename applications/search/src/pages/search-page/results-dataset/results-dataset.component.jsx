@@ -96,8 +96,8 @@ export class ResultsDataset extends React.Component {
     return null;
   }
   componentWillMount() {
-    if(this.props.searchQuery.sortfield === undefined && this.props.datasetSortValue === "modified") {
-      this.props.onsortByLastModified();
+    if((this.props.searchQuery.sortfield === undefined || window.location.href.indexOf("sortfield=modified") === -1) && this.props.datasetSortValue === "modified") {
+      this.props.onSortByLastModified();
     }
   }
 
@@ -119,7 +119,7 @@ export class ResultsDataset extends React.Component {
       publisherArray,
       publishers,
       onSortByScore,
-      onsortByLastModified,
+      onSortByLastModified,
       setDatasetSort,
       datasetSortValue
     } = this.props;
@@ -139,8 +139,6 @@ export class ResultsDataset extends React.Component {
         'd-none': !showClearFilterButton
       }
     );
-    console.log('datasetSortValue is ', datasetSortValue);
-    console.log('searchQuery is ', searchQuery);
     const sortByScoreClass = cx(
       'fdk-button',
       'fdk-button-black-toggle',
@@ -155,9 +153,6 @@ export class ResultsDataset extends React.Component {
         'selected' : datasetSortValue === 'modified'
       }
     )
-    console.log('sortByScoreClass is ', sortByScoreClass);
-
-    console.log('sortByLastModifiedClass is ', sortByLastModifiedClass);
 
     const onSortByScoreClick = () => {
       setDatasetSort(undefined);
@@ -165,7 +160,7 @@ export class ResultsDataset extends React.Component {
     }
     const onSortByModifiedClick = () => {
       setDatasetSort("modified");
-      onsortByLastModified();
+      onSortByLastModified();
     }
 
     return (
@@ -315,7 +310,7 @@ ResultsDataset.propTypes = {
   publishers: PropTypes.object,
   referenceData: PropTypes.object,
   onClearFilters: PropTypes.func,
-  onsortByLastModified: PropTypes.func.isRequired,
+  onSortByLastModified: PropTypes.func.isRequired,
   onSortByScore: PropTypes.func.isRequired,
   onPageChange: PropTypes.func,
   showClearFilterButton: PropTypes.bool,

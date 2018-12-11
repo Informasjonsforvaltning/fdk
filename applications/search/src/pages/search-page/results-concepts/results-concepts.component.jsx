@@ -111,11 +111,12 @@ export class ResultsConcepts extends React.Component {
     );
   }
   componentWillMount() {
-    if(this.props.searchQuery.sortfield === undefined && this.props.conceptSortValue === "modified") {
-      this.props.onsortByLastModified();
+    if((this.props.searchQuery.sortfield === undefined || window.location.href.indexOf("sortfield=modified") === -1) && this.props.conceptSortValue === "modified") {
+      this.props.onSortByLastModified();
+    } else if(this.props.conceptSortValue === "modified") {
+
     }
   }
-
 
   render() {
     const {
@@ -129,7 +130,7 @@ export class ResultsConcepts extends React.Component {
       publisherArray,
       publishers,
       onSortByScore,
-      onsortByLastModified,
+      onSortByLastModified,
       conceptSortValue,
       setConceptSort
     } = this.props;
@@ -168,12 +169,13 @@ export class ResultsConcepts extends React.Component {
     )
 
     const onSortByScoreClick = () => {
+
       setConceptSort(undefined);
       onSortByScore();
     }
     const onSortByModifiedClick = () => {
       setConceptSort("modified");
-      onsortByLastModified();
+      onSortByLastModified();
     }
 
     return (
@@ -194,14 +196,14 @@ export class ResultsConcepts extends React.Component {
 
               <Button
                 className={sortByScoreClass}
-                onClick={onSortByScore}
+                onClick={onSortByScoreClick}
                 color="primary"
               >
                 {localization.sort.relevance}
               </Button>
               <Button
                 className={sortByLastModifiedClass}
-                onClick={onsortByLastModified}
+                onClick={onSortByModifiedClick}
                 color="primary"
               >
                 {localization.sort.modified}
