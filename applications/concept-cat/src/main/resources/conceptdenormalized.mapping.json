@@ -51,7 +51,6 @@
       "prefLabel": {
         "properties": {
           "nb": {
-            "fielddata": true,
             "type": "text",
             "analyzer": "norwegian"
           }
