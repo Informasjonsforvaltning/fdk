@@ -31,7 +31,7 @@ exports[`should render Select correctly with active sort 1`] = `
       title=""
       toggle={true}
     >
-      Sort by relevance
+      Sort by Relevance
     </DropdownItem>
     <DropdownItem
       key="1"
@@ -49,7 +49,7 @@ exports[`should render Select correctly with active sort 1`] = `
       title=""
       toggle={true}
     >
-      Sort by published date
+      Sort by Sist publisert
     </DropdownItem>
     <DropdownItem
       key="3"
@@ -66,10 +66,10 @@ exports[`should render Select correctly with active sort 1`] = `
 
 exports[`should render Select correctly with no active sort 1`] = `
 <UncontrolledDropdown
-  aria-label="Sorter søkeresultat, Sort by relevance"
+  aria-label="Sorter søkeresultat, Sort by Relevance"
   className="ml-auto"
   id="search-result-dropdown-1"
-  title="Sort by relevance"
+  title="Sort by Relevance"
 >
   <DropdownToggle
     aria-haspopup={true}
@@ -80,7 +80,7 @@ exports[`should render Select correctly with no active sort 1`] = `
   >
     Sort by
      
-    relevance
+    Relevance
   </DropdownToggle>
   <DropdownMenu
     className="fdk-dropdownmenu"
@@ -95,7 +95,7 @@ exports[`should render Select correctly with no active sort 1`] = `
       title=""
       toggle={true}
     >
-      Sort by relevance
+      Sort by Relevance
     </DropdownItem>
     <DropdownItem
       key="1"
@@ -113,7 +113,7 @@ exports[`should render Select correctly with no active sort 1`] = `
       title=""
       toggle={true}
     >
-      Sort by published date
+      Sort by Sist publisert
     </DropdownItem>
     <DropdownItem
       key="3"

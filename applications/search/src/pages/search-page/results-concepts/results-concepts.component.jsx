@@ -111,7 +111,7 @@ export class ResultsConcepts extends React.Component {
     );
   }
   componentWillMount() {
-    if((this.props.searchQuery.sortfield === undefined || window.location.href.indexOf("sortfield=modified") === -1) && this.props.conceptSortValue === "modified") {
+    if((this.props.searchQuery && this.props.searchQuery.sortfield === undefined || window.location.href.indexOf("sortfield=modified") === -1) && this.props.conceptSortValue === "modified") {
       this.props.onSortByLastModified();
     } else if(this.props.conceptSortValue === "modified") {
 
@@ -151,8 +151,8 @@ export class ResultsConcepts extends React.Component {
         'd-none': !showClearFilterButton
       }
     );
-    const isSortByScore = !searchQuery.sortfield;
-    const isSortByLastModified = searchQuery.sortfield === 'modified';
+    const isSortByScore = searchQuery && !searchQuery.sortfield;
+    const isSortByLastModified = searchQuery && searchQuery.sortfield === 'modified';
     const sortByScoreClass = cx(
       'fdk-button',
       'fdk-button-black-toggle',

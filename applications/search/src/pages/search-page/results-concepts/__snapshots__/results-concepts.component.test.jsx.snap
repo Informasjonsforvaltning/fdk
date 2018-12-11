@@ -8,7 +8,7 @@ exports[`should render ResultsConcepts correctly with minimum of props 1`] = `
     className="row mb-3 fdk-button-row"
   >
     <div
-      className="col-lg-4"
+      className="col-6 col-lg-4"
     >
       <button
         className="btn btn-primary fdk-button fade-in-500 d-none"
@@ -17,6 +17,30 @@ exports[`should render ResultsConcepts correctly with minimum of props 1`] = `
       >
         Clear
       </button>
+    </div>
+    <div
+      className="col-6 col-lg-4 offset-lg-4"
+    >
+      <div
+        className="float-right"
+      >
+        <Button
+          className="fdk-button fdk-button-black-toggle selected"
+          color="primary"
+          onClick={[Function]}
+          tag="button"
+        >
+          Relevance
+        </Button>
+        <Button
+          className="fdk-button fdk-button-black-toggle"
+          color="primary"
+          onClick={[Function]}
+          tag="button"
+        >
+          Sist publisert
+        </Button>
+      </div>
     </div>
   </section>
   <section
@@ -51,7 +75,7 @@ exports[`should render ResultsConcepts correctly with props 1`] = `
     className="row mb-3 fdk-button-row"
   >
     <div
-      className="col-lg-4"
+      className="col-6 col-lg-4"
     >
       <button
         className="btn btn-primary fdk-button fade-in-500 d-none"
@@ -60,6 +84,30 @@ exports[`should render ResultsConcepts correctly with props 1`] = `
       >
         Clear
       </button>
+    </div>
+    <div
+      className="col-6 col-lg-4 offset-lg-4"
+    >
+      <div
+        className="float-right"
+      >
+        <Button
+          className="fdk-button fdk-button-black-toggle selected"
+          color="primary"
+          onClick={[Function]}
+          tag="button"
+        >
+          Relevance
+        </Button>
+        <Button
+          className="fdk-button fdk-button-black-toggle"
+          color="primary"
+          onClick={[Function]}
+          tag="button"
+        >
+          Sist publisert
+        </Button>
+      </div>
     </div>
   </section>
   <section
