@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 import org.springframework.data.elasticsearch.core.aggregation.AggregatedPage;
 import org.springframework.data.elasticsearch.core.query.FetchSourceFilter;
@@ -68,6 +69,14 @@ public class ConceptSearchController {
         @RequestParam(value = "returnfields", defaultValue = "", required = false)
             String returnFields,
 
+        @ApiParam("Specifies the sort field, at the present we support title, modified and publisher. Default is no value")
+        @RequestParam(value = "sortfield", defaultValue = "", required = false)
+            String sortfield,
+
+        @ApiParam("Specifies the sort direction of the sorted result. The directions are: asc for ascending and desc for descending")
+        @RequestParam(value = "sortdirection", defaultValue = "", required = false)
+            String sortdirection,
+
         Pageable pageable
     ) {
         logger.debug("GET /concepts?q={}", query);
@@ -116,6 +125,10 @@ public class ConceptSearchController {
         if (!StringUtils.isEmpty(returnFields)) {
             SourceFilter sourceFilter = new FetchSourceFilter(returnFields.concat(",prefLabel").split(","), null);
             finalQuery.addSourceFilter(sourceFilter);
+        }
+
+        if (!StringUtils.isEmpty(sortfield)) {
+                addSort(sortfield, sortdirection, finalQuery);
         }
 
         AggregatedPage<ConceptDenormalized> aggregatedPage = elasticsearchTemplate.queryForPage(finalQuery, ConceptDenormalized.class);
@@ -167,6 +180,26 @@ public class ConceptSearchController {
             return aggregations;
         }
     }
+
+    private void addSort(String sortfield, String sortdirection, NativeSearchQuery searchBuilder) {
+        if (!sortfield.trim().isEmpty()) {
+
+            Sort.Direction sortOrder = sortdirection.toLowerCase().contains("asc".toLowerCase()) ? Sort.Direction.ASC : Sort.Direction.DESC;
+            StringBuilder sbSortField = new StringBuilder();
+
+            if (!sortfield.equals("modified")) {
+                sbSortField.append(sortfield).append(".nb");
+            } else {
+                sbSortField.append("harvest.firstHarvested");
+            }
+
+            Sort sort = new Sort(sortOrder, sbSortField.toString());
+
+            logger.debug("sort: {}", sort.toString());
+            searchBuilder.addSort(sort);
+        }
+    }
+
 }
 
 
