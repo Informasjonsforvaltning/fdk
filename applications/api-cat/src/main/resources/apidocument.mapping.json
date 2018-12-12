@@ -22,25 +22,13 @@
         "properties": {
           "name": {
             "type": "text",
-            "fielddata": true,
-            "analyzer": "norwegian",
-            "fields": {
-              "raw": {
-                "type": "keyword"
-              }
-            }
+            "analyzer": "norwegian"
           },
           "prefLabel": {
             "properties": {
               "no": {
                 "type": "text",
-                "fielddata": true,
-                "fields": {
-                  "keyword": {
-                    "type": "keyword",
-                    "ignore_above": 256
-                  }
-                }
+                "analyzer": "norwegian"
               }
             }
           },
@@ -52,19 +40,12 @@
         }
       },
       "title": {
-        "analyzer": "norwegian",
         "type": "text",
-        "fielddata": true,
-        "fields": {
-          "raw": {
-            "type": "keyword",
-            "ignore_above": 256
-          }
-        }
+        "analyzer": "norwegian"
       },
       "description": {
-        "analyzer": "norwegian",
-        "type": "text"
+        "type": "text",
+        "analyzer": "norwegian"
       },
       "formats": {
         "type": "keyword"
@@ -77,20 +58,20 @@
         "type": "boolean"
       },
       "cost": {
-        "analyzer": "norwegian",
-        "type": "text"
+        "type": "text",
+        "analyzer": "norwegian"
       },
       "usageLimitation": {
-        "analyzer": "norwegian",
-        "type": "text"
+        "type": "text",
+        "analyzer": "norwegian"
       },
       "performance": {
-        "analyzer": "norwegian",
-        "type": "text"
+        "type": "text",
+        "analyzer": "norwegian"
       },
       "availability": {
-        "analyzer": "norwegian",
-        "type": "text"
+        "type": "text",
+        "analyzer": "norwegian"
       }
     }
   }

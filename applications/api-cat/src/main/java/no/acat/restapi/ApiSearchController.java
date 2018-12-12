@@ -17,6 +17,7 @@ import org.elasticsearch.search.aggregations.Aggregation;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms;
+import org.elasticsearch.search.sort.FieldSortBuilder;
 import org.elasticsearch.search.sort.SortBuilder;
 import org.elasticsearch.search.sort.SortBuilders;
 import org.elasticsearch.search.sort.SortOrder;
@@ -57,13 +58,13 @@ public class ApiSearchController {
 
     static void addAllTermsFilter(BoolQueryBuilder boolQuery, String term, String[] values) {
         if (values == null || values.length == 0) return;
-        
+
         if (values[0].equals(MISSING)) {
             boolQuery.filter(QueryBuilders.boolQuery().mustNot(QueryBuilders.existsQuery(term)));
         } else {
-          for (String value : values) {
-              boolQuery.filter(QueryBuilders.termQuery(term, value));
-          }
+            for (String value : values) {
+                boolQuery.filter(QueryBuilders.termQuery(term, value));
+            }
         }
 
     }
@@ -158,31 +159,17 @@ public class ApiSearchController {
     }
 
     private void addSort(String sortfield, String sortdirection, SearchRequestBuilder searchBuilder) {
+        if ("modified".equals(sortfield)) {
+            SortOrder sortOrder = "asc".equals(sortdirection.toLowerCase()) ? SortOrder.ASC : SortOrder.DESC;
 
-        //Key is search field in request from client
-        //Value is actual search field in acat index, as acat datamodel is different from dcat datamodel
-        //also, sort must use unanalyzed fields
-        Map<String, String> allowedSearchFields = new HashMap<>();
-        // We have shared logic in frontend for sorting fields both for datasets and apis.
-        // It is a major hack to introduce dependency at this level, but I hope we can remove sorting functionality as a whole as soon as possible
-        allowedSearchFields.put("title.nn", "title.raw");
-        allowedSearchFields.put("title.nb", "title.raw");
-        allowedSearchFields.put("title.no", "title.raw");
-        allowedSearchFields.put("publisher.name", "publisher.prefLabel.no.keyword");
+            FieldSortBuilder sortBuilder = SortBuilders.fieldSort("harvest.firstHarvested")
+                .order(sortOrder)
+                .missing("_last");
 
-        //ony allow sorting on field contained in map. Other fields are ignored
-        if (allowedSearchFields.containsKey(sortfield)) {
-            SortOrder sortOrder = sortdirection.toLowerCase().contains("asc".toLowerCase()) ? SortOrder.ASC : SortOrder.DESC;
-            StringBuilder sbSortField = new StringBuilder();
-
-            sbSortField.append(allowedSearchFields.get(sortfield));
-
-            logger.debug("Added sortfield: {} with sort direction {}", sbSortField.toString(), sortOrder.toString());
-
-            searchBuilder.addSort(sbSortField.toString(), sortOrder);
+            logger.debug("sort: {}", sortBuilder.toString());
+            searchBuilder.addSort(sortBuilder);
         }
     }
-
 
     /**
      * create default sort order - national components should appear first
