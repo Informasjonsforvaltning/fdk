@@ -33,6 +33,7 @@
           "text": {
             "properties": {
               "nb": {
+                "fielddata": true,
                 "type": "text",
                 "analyzer": "norwegian"
               }
@@ -43,6 +44,7 @@
       "subject": {
         "properties": {
           "nb": {
+            "fielddata": true,
             "type": "text",
             "analyzer": "norwegian"
           }
@@ -51,6 +53,7 @@
       "prefLabel": {
         "properties": {
           "nb": {
+            "fielddata": true,
             "type": "text",
             "analyzer": "norwegian"
           }
