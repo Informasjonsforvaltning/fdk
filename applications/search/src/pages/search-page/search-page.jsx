@@ -4,7 +4,6 @@ import qs from 'qs';
 import { Route, Switch } from 'react-router-dom';
 import cx from 'classnames';
 import { detect } from 'detect-browser';
-import localization from '../../lib/localization';
 import { ResultsDataset } from './results-dataset/results-dataset.component';
 import { ResultsConcepts } from './results-concepts/results-concepts.component';
 import { ResultsApi } from './results-api/results-api.component';
@@ -380,8 +379,7 @@ export class SearchPage extends React.Component {
           sortdirection: undefined
         }
       },
-      () =>
-        this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
+      () => this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
     );
   }
   sortByLastModified() {
@@ -389,12 +387,10 @@ export class SearchPage extends React.Component {
       {
         searchQuery: {
           ...this.state.searchQuery,
-          sortfield: 'modified',
-          sortdirection: event.order
+          sortfield: 'modified'
         }
       },
-      () =>
-        this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
+      () => this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
     );
   }
 
@@ -499,7 +495,6 @@ export class SearchPage extends React.Component {
                   onPageChange={this.handlePageChange}
                   onSortByLastModified={this.sortByLastModified}
                   onSortByScore={this.sortByScore}
-                  onPageChange={this.handlePageChange}
                   searchQuery={this.state.searchQuery}
                   themesItems={themesItems}
                   showFilterModal={this.state.showFilterModal}

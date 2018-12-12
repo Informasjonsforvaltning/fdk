@@ -7,7 +7,6 @@ import _ from 'lodash';
 
 import localization from '../../../lib/localization';
 import { SearchHitItem } from './search-hit-item/search-hit-item.component';
-import { Select } from '../../../components/select/select.component';
 import { FilterBox } from '../../../components/filter-box/filter-box.component';
 import { SearchPublishersTree } from '../search-publishers-tree/search-publishers-tree.component';
 
@@ -70,11 +69,13 @@ const renderHits = (hits, publishers) => {
   return null;
 };
 
-
 export class ResultsApi extends React.Component {
   componentWillMount() {
-
-    if((this.props.searchQuery.sortfield === undefined || window.location.href.indexOf("sortfield=modified") === -1) && this.props.apiSortValue === "modified") {
+    if (
+      (this.props.searchQuery.sortfield === undefined ||
+        window.location.href.indexOf('sortfield=modified') === -1) &&
+      this.props.apiSortValue === 'modified'
+    ) {
       this.props.onSortByLastModified();
     }
   }
@@ -114,29 +115,25 @@ export class ResultsApi extends React.Component {
         'd-none': !showClearFilterButton
       }
     );
-    const sortByScoreClass = cx(
-      'fdk-button',
-      'fdk-button-black-toggle',
-      {
-        'selected' : !apiSortValue
-      }
-    )
+    const sortByScoreClass = cx('fdk-button', 'fdk-button-black-toggle', {
+      selected: !apiSortValue
+    });
     const sortByLastModifiedClass = cx(
       'fdk-button',
       'fdk-button-black-toggle',
       {
-        'selected' : apiSortValue === 'modified'
+        selected: apiSortValue === 'modified'
       }
-    )
+    );
 
     const onSortByScoreClick = () => {
       setApiSort(undefined);
       onSortByScore();
-    }
+    };
     const onSortByModifiedClick = () => {
-      setApiSort("modified");
+      setApiSort('modified');
       onSortByLastModified();
-    }
+    };
 
     return (
       <main id="content">
@@ -152,7 +149,6 @@ export class ResultsApi extends React.Component {
           </div>
           <div className="col-6 col-lg-4 offset-lg-4">
             <div className="float-right">
-
               <Button
                 className={sortByScoreClass}
                 onClick={onSortByScoreClick}
@@ -235,7 +231,7 @@ export class ResultsApi extends React.Component {
       </main>
     );
   }
-};
+}
 
 ResultsApi.defaultProps = {
   showFilterModal: false,

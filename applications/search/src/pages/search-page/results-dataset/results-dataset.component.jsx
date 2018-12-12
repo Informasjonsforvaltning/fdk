@@ -7,12 +7,21 @@ import _ from 'lodash';
 
 import localization from '../../../lib/localization';
 import { SearchHitItem } from './search-hit-item/search-hit-item.component';
-import { Select } from '../../../components/select/select.component';
 import { FilterBox } from '../../../components/filter-box/filter-box.component';
 import { SearchPublishersTree } from '../search-publishers-tree/search-publishers-tree.component';
 import { ErrorBoundary } from '../../../components/error-boundary/error-boundary';
 
 export class ResultsDataset extends React.Component {
+  componentWillMount() {
+    if (
+      (this.props.searchQuery.sortfield === undefined ||
+        window.location.href.indexOf('sortfield=modified') === -1) &&
+      this.props.datasetSortValue === 'modified'
+    ) {
+      this.props.onSortByLastModified();
+    }
+  }
+
   _renderFilterModal() {
     const {
       showFilterModal,
@@ -95,12 +104,6 @@ export class ResultsDataset extends React.Component {
     }
     return null;
   }
-  componentWillMount() {
-    if((this.props.searchQuery.sortfield === undefined || window.location.href.indexOf("sortfield=modified") === -1) && this.props.datasetSortValue === "modified") {
-      this.props.onSortByLastModified();
-    }
-  }
-
   render() {
     const {
       datasetItems,
@@ -110,7 +113,6 @@ export class ResultsDataset extends React.Component {
       onFilterPublisherHierarchy,
       onFilterProvenance,
       onFilterSpatial,
-      onSort,
       onPageChange,
       showClearFilterButton,
       searchQuery,
@@ -139,29 +141,25 @@ export class ResultsDataset extends React.Component {
         'd-none': !showClearFilterButton
       }
     );
-    const sortByScoreClass = cx(
-      'fdk-button',
-      'fdk-button-black-toggle',
-      {
-        'selected' : datasetSortValue === undefined
-      }
-    )
+    const sortByScoreClass = cx('fdk-button', 'fdk-button-black-toggle', {
+      selected: datasetSortValue === undefined
+    });
     const sortByLastModifiedClass = cx(
       'fdk-button',
       'fdk-button-black-toggle',
       {
-        'selected' : datasetSortValue === 'modified'
+        selected: datasetSortValue === 'modified'
       }
-    )
+    );
 
     const onSortByScoreClick = () => {
       setDatasetSort(undefined);
       onSortByScore();
-    }
+    };
     const onSortByModifiedClick = () => {
-      setDatasetSort("modified");
+      setDatasetSort('modified');
       onSortByLastModified();
-    }
+    };
 
     return (
       <main id="content" data-test-id="datasets">
@@ -177,7 +175,6 @@ export class ResultsDataset extends React.Component {
           </div>
           <div className="col-6 col-lg-4 offset-lg-4">
             <div className="float-right">
-
               <Button
                 className={sortByScoreClass}
                 onClick={onSortByScoreClick}

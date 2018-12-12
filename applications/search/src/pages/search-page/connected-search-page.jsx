@@ -1,7 +1,11 @@
 import { connect } from 'react-redux';
 import { fetchPublishersIfNeededAction } from '../../redux/modules/publishers';
 import { fetchThemesIfNeededAction } from '../../redux/modules/themes';
-import { setDatasetSortAction, setConceptSortAction, setApiSortAction } from '../../redux/modules/settings';
+import {
+  setDatasetSortAction,
+  setConceptSortAction,
+  setApiSortAction
+} from '../../redux/modules/settings';
 import {
   addConceptAction,
   removeConceptAction
@@ -40,7 +44,7 @@ const mapStateToProps = ({
     conceptsCompare: items,
     datasetSortValue: settings.datasetSortValue,
     apiSortValue: settings.apiSortValue,
-    conceptSortValue : settings.conceptSortValue
+    conceptSortValue: settings.conceptSortValue
   };
 };
 

@@ -12,27 +12,27 @@ export function setLanguageAction(language) {
 export function setDatasetSortAction(datasetSortValue) {
   return {
     type: SET_DATASET_SORT_PATCH,
-    datasetSortValue: datasetSortValue
+    datasetSortValue
   };
 }
 export function setApiSortAction(apiSortValue) {
   return {
     type: SET_API_SORT_PATCH,
-    apiSortValue: apiSortValue
+    apiSortValue
   };
 }
 export function setConceptSortAction(conceptSortValue) {
   return {
     type: SET_CONCEPT_SORT_PATCH,
-    conceptSortValue: conceptSortValue
+    conceptSortValue
   };
 }
 
 const initialState = {
   language: 'nb',
-  datasetSortValue:undefined,
-  apiSortValue:undefined,
-  conceptSortValue:undefined
+  datasetSortValue: undefined,
+  apiSortValue: undefined,
+  conceptSortValue: undefined
 };
 
 export function settingsResolver(state = initialState, action) {

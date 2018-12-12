@@ -19,6 +19,16 @@ import { SearchPublishersTree } from '../search-publishers-tree/search-publisher
 import { getTranslateText } from '../../../lib/translateText';
 
 export class ResultsConcepts extends React.Component {
+  componentWillMount() {
+    if (
+      ((this.props.searchQuery &&
+        this.props.searchQuery.sortfield === undefined) ||
+        window.location.href.indexOf('sortfield=modified') === -1) &&
+      this.props.conceptSortValue === 'modified'
+    ) {
+      this.props.onSortByLastModified();
+    }
+  }
   _renderCompareTerms() {
     const { conceptsCompare } = this.props;
     const conceptIdsArray = [];
@@ -110,13 +120,6 @@ export class ResultsConcepts extends React.Component {
       </Modal>
     );
   }
-  componentWillMount() {
-    if((this.props.searchQuery && this.props.searchQuery.sortfield === undefined || window.location.href.indexOf("sortfield=modified") === -1) && this.props.conceptSortValue === "modified") {
-      this.props.onSortByLastModified();
-    } else if(this.props.conceptSortValue === "modified") {
-
-    }
-  }
 
   render() {
     const {
@@ -151,37 +154,29 @@ export class ResultsConcepts extends React.Component {
         'd-none': !showClearFilterButton
       }
     );
-    const isSortByScore = searchQuery && !searchQuery.sortfield;
-    const isSortByLastModified = searchQuery && searchQuery.sortfield === 'modified';
-    const sortByScoreClass = cx(
-      'fdk-button',
-      'fdk-button-black-toggle',
-      {
-        'selected' : conceptSortValue === undefined
-      }
-    )
+    const sortByScoreClass = cx('fdk-button', 'fdk-button-black-toggle', {
+      selected: conceptSortValue === undefined
+    });
     const sortByLastModifiedClass = cx(
       'fdk-button',
       'fdk-button-black-toggle',
       {
-        'selected' : conceptSortValue === "modified"
+        selected: conceptSortValue === 'modified'
       }
-    )
+    );
 
     const onSortByScoreClick = () => {
-
       setConceptSort(undefined);
       onSortByScore();
-    }
+    };
     const onSortByModifiedClick = () => {
-      setConceptSort("modified");
+      setConceptSort('modified');
       onSortByLastModified();
-    }
+    };
 
     return (
       <main id="content">
         <section className="row mb-3 fdk-button-row">
-
           <div className="col-6 col-lg-4">
             <button
               className={clearButtonClass}
@@ -193,7 +188,6 @@ export class ResultsConcepts extends React.Component {
           </div>
           <div className="col-6 col-lg-4 offset-lg-4">
             <div className="float-right">
-
               <Button
                 className={sortByScoreClass}
                 onClick={onSortByScoreClick}
