@@ -22,6 +22,7 @@ services:
     - FDK_ES_CLUSTERNODES=elasticsearch5:9300
     - FDK_ES_CLUSTERNAME=elasticsearch
     - LOG_LEVEL=${LOG_LEVEL}
+    - LOG_FORMAT=compact
 
   concept-cat:
     restart: always
