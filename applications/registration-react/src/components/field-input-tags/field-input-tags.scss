@@ -12,7 +12,6 @@
   border: 1px solid #ced4da;
   transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
   position: relative;
-  margin-top: 5px;
 
   span {
     .react-tagsinput-input {
@@ -38,6 +37,7 @@
     display: inline-block;
     font-weight: 400;
     margin-right: 5px;
+    margin-top: 5px;
     padding: 1px 5px;
   }
 
