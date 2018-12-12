@@ -47,45 +47,6 @@
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
 
-        <!-- TEST -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.vaadin.external.google</groupId>
-                    <artifactId>android-json</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.mockito</groupId>
-                    <artifactId>mockito-core</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-core</artifactId>
-            <version>2.19.0</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>no.dcat</groupId>
-            <artifactId>elasticsearch5-client</artifactId>
-            <version>1.2.0</version>
-        </dependency>
-        <dependency>
-            <groupId>no.dcat</groupId>
-            <artifactId>shared</artifactId>
-            <version>1.3.0</version>
-        </dependency>
-        <dependency>
-            <groupId>no.dcat</groupId>
-            <artifactId>html-cleaner</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
@@ -109,13 +70,11 @@
             <artifactId>lombok</artifactId>
             <version>1.18.2</version>
         </dependency>
-
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-csv</artifactId>
             <version>1.3</version>
         </dependency>
-
         <dependency>
             <groupId>io.swagger.core.v3</groupId>
             <artifactId>swagger-models</artifactId>
@@ -142,14 +101,32 @@
             <version>1.5.21</version>
         </dependency>
         <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+        </dependency>
+
+        <!-- BEGIN LOCAL DEPENDENCIES -->
+        <dependency>
+            <groupId>no.dcat</groupId>
+            <artifactId>elasticsearch5-client</artifactId>
+            <version>1.2.0</version>
+        </dependency>
+        <dependency>
+            <groupId>no.dcat</groupId>
+            <artifactId>shared</artifactId>
+            <version>1.3.0</version>
+        </dependency>
+        <dependency>
             <groupId>no.dcat</groupId>
             <artifactId>webutils-spring</artifactId>
             <version>1.0.3</version>
         </dependency>
         <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
+            <groupId>no.dcat</groupId>
+            <artifactId>html-cleaner</artifactId>
+            <version>1.0.0</version>
         </dependency>
+
         <dependency>
             <groupId>no.dcat</groupId>
             <artifactId>api-cat-client</artifactId>
@@ -165,6 +142,31 @@
             <artifactId>publisher-cat-client</artifactId>
             <version>1.0.0</version>
         </dependency>
+        <!-- END LOCAL DEPENDENCIES -->
+
+        <!-- BEGIN TEST DEPENDENCIES -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.vaadin.external.google</groupId>
+                    <artifactId>android-json</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.mockito</groupId>
+                    <artifactId>mockito-core</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>2.19.0</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- END TEST DEPENDENCIES -->
 
     </dependencies>
 
