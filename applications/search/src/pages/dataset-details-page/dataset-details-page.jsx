@@ -185,7 +185,7 @@ const renderSubjects = subject => {
     items.map(item => (
       <TwoColRow
         key={item.uri}
-        col1={getTranslateText(_.get(item, 'prefLabel'))}
+        col1={_.capitalize(getTranslateText(_.get(item, 'prefLabel')))}
         col2={getTranslateText(_.get(item, 'definition'))}
       />
     ));
