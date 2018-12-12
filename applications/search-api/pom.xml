@@ -100,7 +100,7 @@
         <dependency>
             <groupId>no.dcat</groupId>
             <artifactId>elasticsearch5-client</artifactId>
-            <version>1.1.0</version>
+            <version>1.2.0</version>
         </dependency>
 
         <!-- 2.8 does not work at all. Same problem as 2.7 in 2.6, 2.5. Could't get 2.2.2 to work -->
