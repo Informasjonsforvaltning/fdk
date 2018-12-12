@@ -2,6 +2,7 @@
 
 exports[`should render ResultsApi correctly with hits 1`] = `
 <main
+  data-test-id="apis"
   id="content"
 >
   <div
@@ -22,7 +23,7 @@ exports[`should render ResultsApi correctly with hits 1`] = `
       className="col-6 col-lg-4 offset-lg-4"
     >
       <div
-        className="float-right"
+        className="d-flex justify-content-end"
       >
         <Button
           className="fdk-button fdk-button-black-toggle selected"
@@ -38,7 +39,7 @@ exports[`should render ResultsApi correctly with hits 1`] = `
           onClick={[Function]}
           tag="button"
         >
-          Sist publisert
+          Recently published
         </Button>
       </div>
     </div>
@@ -2342,6 +2343,7 @@ exports[`should render ResultsApi correctly with hits 1`] = `
 
 exports[`should render ResultsApi correctly with minimum of props and no hits 1`] = `
 <main
+  data-test-id="apis"
   id="content"
 >
   <div
@@ -2362,7 +2364,7 @@ exports[`should render ResultsApi correctly with minimum of props and no hits 1`
       className="col-6 col-lg-4 offset-lg-4"
     >
       <div
-        className="float-right"
+        className="d-flex justify-content-end"
       >
         <Button
           className="fdk-button fdk-button-black-toggle selected"
@@ -2378,7 +2380,7 @@ exports[`should render ResultsApi correctly with minimum of props and no hits 1`
           onClick={[Function]}
           tag="button"
         >
-          Sist publisert
+          Recently published
         </Button>
       </div>
     </div>

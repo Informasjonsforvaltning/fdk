@@ -23,7 +23,7 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
       className="col-6 col-lg-4 offset-lg-4"
     >
       <div
-        className="float-right"
+        className="d-flex justify-content-end"
       >
         <Button
           className="fdk-button fdk-button-black-toggle selected"
@@ -39,7 +39,7 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
           onClick={[Function]}
           tag="button"
         >
-          Sist publisert
+          Recently published
         </Button>
       </div>
     </div>
@@ -1687,7 +1687,7 @@ exports[`should render ResultsDataset correctly with minimum of props 1`] = `
       className="col-6 col-lg-4 offset-lg-4"
     >
       <div
-        className="float-right"
+        className="d-flex justify-content-end"
       >
         <Button
           className="fdk-button fdk-button-black-toggle selected"
@@ -1703,7 +1703,7 @@ exports[`should render ResultsDataset correctly with minimum of props 1`] = `
           onClick={[Function]}
           tag="button"
         >
-          Sist publisert
+          Recently published
         </Button>
       </div>
     </div>
@@ -1751,7 +1751,7 @@ exports[`should render ResultsDataset correctly with props 1`] = `
       className="col-6 col-lg-4 offset-lg-4"
     >
       <div
-        className="float-right"
+        className="d-flex justify-content-end"
       >
         <Button
           className="fdk-button fdk-button-black-toggle selected"
@@ -1767,7 +1767,7 @@ exports[`should render ResultsDataset correctly with props 1`] = `
           onClick={[Function]}
           tag="button"
         >
-          Sist publisert
+          Recently published
         </Button>
       </div>
     </div>
