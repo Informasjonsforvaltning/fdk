@@ -230,6 +230,7 @@ public class DatasetController {
         newDataset.set_lastModified(Calendar.getInstance().getTime());
 
         for (Concept concept:  conceptsGetByIds) {
+            subject = new Subject();
             subject.setId(concept.getId());
             subject.setUri(concept.getUri());
             subject.setDefinition(concept.getDefinition().getText());
