@@ -187,7 +187,7 @@ export class ResultsConcepts extends React.Component {
             </button>
           </div>
           <div className="col-6 col-lg-4 offset-lg-4">
-            <div className="float-right">
+            <div className="d-flex justify-content-end">
               <Button
                 className={sortByScoreClass}
                 onClick={onSortByScoreClick}

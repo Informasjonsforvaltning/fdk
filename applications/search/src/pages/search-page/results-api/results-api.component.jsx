@@ -136,7 +136,7 @@ export class ResultsApi extends React.Component {
     };
 
     return (
-      <main id="content">
+      <main data-test-id="apis" id="content">
         <div className="row mb-3">
           <div className="col-6 col-lg-4">
             <button
@@ -148,7 +148,7 @@ export class ResultsApi extends React.Component {
             </button>
           </div>
           <div className="col-6 col-lg-4 offset-lg-4">
-            <div className="float-right">
+            <div className="d-flex justify-content-end">
               <Button
                 className={sortByScoreClass}
                 onClick={onSortByScoreClick}

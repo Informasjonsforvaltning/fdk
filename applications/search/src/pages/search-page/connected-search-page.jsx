@@ -55,9 +55,9 @@ const mapDispatchToProps = dispatch => ({
     dispatch(fetchReferenceDataIfNeededAction(REFERENCEDATA_DISTRIBUTIONTYPE)),
   addConcept: item => dispatch(addConceptAction(item)),
   removeConcept: uri => dispatch(removeConceptAction(uri)),
-  setDatasetSort: val => dispatch(setDatasetSortAction(val)),
-  setApiSort: val => dispatch(setApiSortAction(val)),
-  setConceptSort: val => dispatch(setConceptSortAction(val))
+  setDatasetSort: sortValue => dispatch(setDatasetSortAction(sortValue)),
+  setApiSort: sortValue => dispatch(setApiSortAction(sortValue)),
+  setConceptSort: sortValue => dispatch(setConceptSortAction(sortValue))
 });
 
 export const ConnectedSearchPage = connect(
