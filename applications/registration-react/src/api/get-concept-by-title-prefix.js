@@ -1,7 +1,9 @@
 import axios from 'axios';
 
-export const getConceptByTitlePrefix = async (preflabel = '') => {
-  const queryParams = `preflabel=${preflabel}`;
+export const getConceptByTitlePrefix = async (preflabel = '', returnFields) => {
+  const queryParams = `preflabel=${preflabel}${
+    returnFields ? `&returnfields=${returnFields}` : ''
+  }`;
 
   const url = `/api/concepts?${queryParams}`;
 

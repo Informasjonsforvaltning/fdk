@@ -81,6 +81,7 @@ class InputTagsFieldConcepts extends React.Component {
   }
 
   loadSuggestions(value) {
+    const returnFields = 'uri,definition.text';
     // Cancel the previous request
     if (this.lastRequestId !== null) {
       clearTimeout(this.lastRequestId);
@@ -92,7 +93,7 @@ class InputTagsFieldConcepts extends React.Component {
 
     const concepts = [];
 
-    getConceptByTitlePrefix(value)
+    getConceptByTitlePrefix(value, returnFields)
       .then(responseData => {
         _.get(responseData, ['_embedded', 'concepts'], []).forEach(item => {
           concepts.push(item);
