@@ -248,6 +248,7 @@ public class Elasticsearch5Client implements AutoCloseable {
                 reindex(currentIndexName, newIndexName);
                 swithchAlias(alias, currentIndexName, newIndexName);
                 deleteIndex(currentIndexName);
+                logger.info("Index mapping updated successfully: {}", currentIndexName);
             }
         } else {
             logger.error("Index {} does not exist. Bailing out", currentIndexName);
