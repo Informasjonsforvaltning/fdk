@@ -195,7 +195,7 @@ public class DatasetController {
         JsonObject oldDatasetJson = gson.toJsonTree(oldDataset).getAsJsonObject();
         List<Concept> conceptListFromReq;
         List<Concept> conceptsGetByIds = new ArrayList<>();
-        Subject subject = new Subject();
+        Subject subject;
         List<Subject> subjects = new ArrayList<>();
 
         for(Map.Entry<String, Object> entry : updates.entrySet()) {
@@ -229,7 +229,8 @@ public class DatasetController {
         Dataset newDataset = gson.fromJson(oldDatasetJson.toString(), Dataset.class);
         newDataset.set_lastModified(Calendar.getInstance().getTime());
 
-        for (Concept concept:  conceptsGetByIds) {
+        if (conceptsGetByIds.size() != 0) {
+          for (Concept concept : conceptsGetByIds) {
             subject = new Subject();
             subject.setId(concept.getId());
             subject.setUri(concept.getUri());
@@ -238,10 +239,11 @@ public class DatasetController {
             subject.setAltLabel(concept.getAltLabel());
             subject.setIdentifier(concept.getIdentifier());
             subjects.add(subject);
-        }
+          }
 
-        newDataset.setSubject(subjects);
-        newDataset.setConcepts(conceptsGetByIds);
+          newDataset.setSubject(subjects);
+          newDataset.setConcepts(conceptsGetByIds);
+        }
 
         Dataset savedDataset = datasetRepository.save(newDataset);
         return new ResponseEntity<>(savedDataset, HttpStatus.OK);
