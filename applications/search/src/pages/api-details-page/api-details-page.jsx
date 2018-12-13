@@ -12,6 +12,7 @@ import { ShowMore } from '../../components/show-more/show-more';
 import { StickyMenu } from '../../components/sticky-menu/sticky-menu.component';
 import { ListRegular } from '../../components/list-regular/list-regular.component';
 import { TwoColRow } from '../../components/list-regular/twoColRow/twoColRow';
+import { DatasetReference } from './dataset-reference/dataset-reference.component';
 
 const renderDescription = description => {
   if (!description) {
@@ -66,31 +67,18 @@ const renderAPIInfo = ({ children }) => {
   return <ListRegular title={localization.apiInfo}>{children}</ListRegular>;
 };
 
-const renderDatasetReference = (datasetReference, index) => {
-  const id = _.get(datasetReference, ['id']);
-  const prefLabel = _.get(datasetReference, ['title']);
-
-  return (
-    <React.Fragment key={`${index}-${id}`}>
-      <div className="d-flex list-regular--item mb-4">
-        <a
-          title={localization.api.linkDatasetReference}
-          href={`/datasets/${id}`}
-        >
-          {prefLabel ? getTranslateText(prefLabel) : id}
-        </a>
-      </div>
-    </React.Fragment>
-  );
-};
-
 const renderDatasetReferences = references => {
   if (!references) {
     return null;
   }
   const children = items =>
-    items.map((item, index) => renderDatasetReference(item, index));
-
+    items.map((item, index) => (
+      <DatasetReference
+        key={`${index}-${item.id}`}
+        datasetReference={item}
+        index={index}
+      />
+    ));
   return (
     <ListRegular title={localization.datasetReferences}>
       {children(references)}
@@ -271,7 +259,7 @@ const renderStickyMenu = apiItem => {
 export const ApiDetailsPage = props => {
   props.fetchPublishersIfNeeded();
 
-  const { apiItem, publisherItems } = props;
+  const { apiItem, publisherItems, referencedDatasets } = props;
 
   if (!apiItem) {
     return null;
@@ -327,7 +315,7 @@ export const ApiDetailsPage = props => {
               _.get(apiItem, 'availability')
             )}
 
-            {renderDatasetReferences(apiItem.datasetReferences)}
+            {renderDatasetReferences(referencedDatasets)}
 
             {renderContactPoints(apiItem.contactPoint)}
 
