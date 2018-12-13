@@ -1,4 +1,4 @@
-package no.acat.restapi;
+package no.acat.controller;
 
 import io.swagger.annotations.ApiOperation;
 import no.acat.model.ApiDocument;
