@@ -2,6 +2,7 @@ package no.fdk.harvestqueue;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -16,19 +17,14 @@ public class HarvestExecutor {
 
     private HarvestQueue harvestQueue;
 
+    @Autowired
     public HarvestExecutor(HarvestQueue harvestQueue) {
         this.harvestQueue = harvestQueue;
     }
 
-
-    void someLoop() {
-        executor.execute(() -> {
-        });
-    }
-
     @PostConstruct
     void harvestLoop() {
-
+        logger.info("Harvest Loop for Generalized harvest tasks started.");
         executor.execute(() -> {
 
                 while (true) {
@@ -36,6 +32,7 @@ public class HarvestExecutor {
                 }
             }
         );
+        logger.info("Harvest loop Exiting!");
     }
 
     private void singleLoopStep() {

@@ -5,13 +5,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.LinkedList;
+import java.util.Queue;
 
 @Service
 public class HarvestQueue {
     private static final Logger logger = LoggerFactory.getLogger(HarvestQueue.class);
 
-    private final LinkedList<QueuedTask> scheduledTasks = new LinkedList<QueuedTask>();
-
+    private final Queue<QueuedTask> scheduledTasks = new LinkedList<QueuedTask>();
 
     public void addTask(QueuedTask task) {
         synchronized (scheduledTasks) {
