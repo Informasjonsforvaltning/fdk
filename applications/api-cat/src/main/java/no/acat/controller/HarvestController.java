@@ -1,4 +1,4 @@
-package no.acat.restapi;
+package no.acat.controller;
 
 import no.acat.harvester.HarvestExecutor;
 import no.acat.harvester.HarvestQueue;

@@ -1,4 +1,4 @@
-package no.acat.restapi;
+package no.acat.controller;
 
 import com.google.common.base.Strings;
 import io.swagger.v3.oas.models.OpenAPI;

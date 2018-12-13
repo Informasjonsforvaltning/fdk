@@ -1,4 +1,4 @@
-package no.acat.restapi;
+package no.acat.controller;
 
 import no.acat.model.ApiDocument;
 import no.acat.repository.ApiDocumentRepository;

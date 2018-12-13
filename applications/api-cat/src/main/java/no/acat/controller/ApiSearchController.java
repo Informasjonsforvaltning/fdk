@@ -1,4 +1,4 @@
-package no.acat.restapi;
+package no.acat.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.ApiOperation;
