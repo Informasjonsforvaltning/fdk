@@ -143,7 +143,7 @@ const renderStickyMenu = conceptItem => {
       prefLabel: localization.concept.subjectHeader
     });
   }
-  if (getTranslateText(_.get(conceptItem, 'altLabel[0]'))) {
+  if (_.get(conceptItem, 'altLabel[0]') || _.get(conceptItem, 'hiddenLabel[0]')) {
     menuItems.push({
       name: localization.concept.termHeader,
       prefLabel: localization.concept.termHeader
