@@ -37,7 +37,6 @@ import java.util.Map;
 public class ConceptSearchController {
     public static final String MISSING = "MISSING";
     private static final Logger logger = LoggerFactory.getLogger(ConceptSearchController.class);
-
     private ElasticsearchTemplate elasticsearchTemplate;
 
     @Autowired
