@@ -27,6 +27,6 @@ public class ApiCatalog {
     @ApiModelProperty("The source URI of the catalog of apis")
     private String harvestSourceUri;
 
-    private Status status;
+    private HarvestStatus harvestStatus;
 
 }
