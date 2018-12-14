@@ -29,6 +29,7 @@ exports[`should render SearchBox correctly 1`] = `
         >
           <input
             aria-label="Search for datasets..."
+            autoComplete="off"
             className="fdk-search"
             name="searchBox"
             onChange={[Function]}
