@@ -1,10 +1,9 @@
-package no.acat.harvester;
+package no.fdk.harvestqueue;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -12,19 +11,12 @@ import java.util.Queue;
 public class HarvestQueue {
     private static final Logger logger = LoggerFactory.getLogger(HarvestQueue.class);
 
-    private final Queue<String> scheduledTasks = new LinkedList<>();
+    private final Queue<QueuedTask> scheduledTasks = new LinkedList<QueuedTask>();
 
-    @PostConstruct
-    public void init() {
-        String task = HarvestExecutor.HARVEST_ALL;
-        logger.debug("Initial trigger task {}", task);
-        addTask(task);
-    }
-
-    public void addTask(String task) {
+    public void addTask(QueuedTask task) {
         synchronized (scheduledTasks) {
             if (scheduledTasks.contains(task)) {
-                logger.debug("Task already exists in queue, skipping: {}", task);
+                logger.debug("Task already exists in queue: {}", task);
                 return;
             }
             scheduledTasks.add(task);
@@ -32,7 +24,7 @@ public class HarvestQueue {
         }
     }
 
-    public String poll() {
+    public QueuedTask poll() {
         synchronized (scheduledTasks) {
             return scheduledTasks.poll();
         }
