@@ -5,7 +5,7 @@ import no.dcat.client.apicat.ApiCatClient;
 import no.dcat.factory.ApiRegistrationFactory;
 import no.dcat.model.ApiCatalog;
 import no.dcat.model.ApiRegistration;
-import no.dcat.model.Status;
+import no.dcat.model.HarvestStatus;
 import no.fdk.harvestqueue.HarvestQueue;
 import no.fdk.harvestqueue.QueuedTask;
 import org.apache.jena.rdf.model.Model;
@@ -79,9 +79,7 @@ public class ApiCatalogHarvesterService {
     }
 
     protected void doHarvestSingleCatalog(URL urlToCatalog, ApiCatalog originCatalog) {
-        logger.info("HarvestSingleCatalog called! url " + urlToCatalog + " origin catalog: " + originCatalog);
-        Status status = new Status();
-        status.setSuccess(true);
+        logger.info("HarvestSingleCatalog called. url: " + urlToCatalog + " origin catalog: " + originCatalog);
 
         try {
             BufferedReader reader = new BufferedReader(
@@ -102,42 +100,47 @@ public class ApiCatalogHarvesterService {
                 ApiRegistration apiRegistrationData = new ApiRegistration();
                 apiRegistrationData.setApiSpecUrl(apiSpecUrl);
 
-                //ConvertTo Reference API
-                OpenAPI openAPI = apiCatClient.convert(apiSpecUrl, "");//empty string is api-spec, unknown what this is.
-                apiRegistrationData.setOpenApi(openAPI);
-
-
-                Optional<ApiRegistration> existingApiRegistrationOptional = apiRegistrationRepository.getByCatalogIdAndApiSpecUrl(originCatalog.getOrgNo() ,apiSpecUrl);
+                Optional<ApiRegistration> existingApiRegistrationOptional = apiRegistrationRepository.getByCatalogIdAndApiSpecUrl(originCatalog.getOrgNo(), apiSpecUrl);
                 logger.debug("Found existing {}", existingApiRegistrationOptional.isPresent());
 
                 ApiRegistration apiRegistration;
                 if (existingApiRegistrationOptional.isPresent()) {
-                    logger.debug("Existing {}", existingApiRegistrationOptional.get());
+                    logger.debug("Existing registration {}", existingApiRegistrationOptional.get().getId());
                     apiRegistration = ApiRegistrationFactory.updateApiRegistration(existingApiRegistrationOptional.get(), apiRegistrationData);
                 } else {
                     apiRegistration = ApiRegistrationFactory.createApiRegistration(originCatalog.getOrgNo(), apiRegistrationData);
+                    logger.debug("Created apiRegistration for orgNo: {}, id: {}", originCatalog.getOrgNo(), apiRegistration.getId());
                 }
+                logger.debug("saved apiRegistration {}", apiRegistration.getId());
+                apiRegistration.setHarvestStatus(HarvestStatus.Success());
 
                 apiRegistration.setFromApiCatalog(true);
 
-                logger.debug("create apiRegistration {}", apiRegistration.getId());
+                try {
+                    OpenAPI openAPI = apiCatClient.convert(apiSpecUrl, "");//empty string is api-spec, unknown what this is.
+                    apiRegistrationData.setOpenApi(openAPI);
+                } catch (Exception e) {
+                    String errorMessage = "Failed while trying to fetch and parse API spec " + apiSpecUrl + " " + e.toString();
+                    apiRegistration.setHarvestStatus(HarvestStatus.Error(errorMessage));
+                }
 
                 ApiRegistration savedApiRegistration = apiRegistrationRepository.save(apiRegistration);
-
                 apiCatClient.triggerHarvestApiRegistration(savedApiRegistration.getId());
             }
 
-        } catch (Exception e) {
-            logger.error("Failed while trying to read url {}, exception is  {}", urlToCatalog, e);
-            status.setSuccess(false);
-            status.setErrorMessage("Failed while trying to fetch and parse API Catalog " + urlToCatalog + " " + e.toString());
-        }
+            originCatalog.setHarvestStatus(HarvestStatus.Success());
+            apiCatalogRepository.save(originCatalog);
 
-        originCatalog.setStatus(status);
+        } catch (Exception e) {
+            String errorMessage = "Failed while trying to fetch and parse API Catalog " + urlToCatalog + " " + e.toString();
+            logger.warn(errorMessage);
+            originCatalog.setHarvestStatus(HarvestStatus.Error(errorMessage));
+            apiCatalogRepository.save(originCatalog);
+        }
 
     }
 
-    private class HarvestSingleCatalogTask   implements QueuedTask {
+    private class HarvestSingleCatalogTask implements QueuedTask {
 
         public URL urlLocation;
 
