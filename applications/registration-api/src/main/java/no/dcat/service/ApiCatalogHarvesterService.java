@@ -59,30 +59,20 @@ public class ApiCatalogHarvesterService {
     //TODO: Also trigger this every 24h ? (there exists a spring thing to do that)
     @PostConstruct
     public void initQueue() {
-        logger.info("Survived to PostConstruct");
+
         //Get all the catalogs
         List<ApiCatalog> allApiCatalogs = apiCatalogRepository.findAll().getContent();
 
-
-        if (allApiCatalogs == null || allApiCatalogs.size() == 0) {
-            //Add the single hardcoded API Catalog we know now.
-            allApiCatalogs = new ArrayList<>();
-            ApiCatalog hardcodedCatalog = new ApiCatalog();
-            hardcodedCatalog.setHarvestSourceUri("https://raw.githubusercontent.com/brreg/openAPI/master/specs/API-catalog.ttl");
-            allApiCatalogs.add(hardcodedCatalog);
-        }
-
         //Add them to the queue
         for (ApiCatalog catalog : allApiCatalogs) {
-            QueuedTask task = new QueuedTaskImpl();
-            ((QueuedTaskImpl) task).description = "A catalog";
+            QueuedTask task = new HarvestSingleCatalogTask();
             try {
                 URL catalogURL = new URL(catalog.getHarvestSourceUri());
-                ((QueuedTaskImpl) task).urlLocation = catalogURL;
-                ((QueuedTaskImpl) task).catalog = catalog;
+                ((HarvestSingleCatalogTask) task).urlLocation = catalogURL;
+                ((HarvestSingleCatalogTask) task).catalog = catalog;
                 harvestQueue.addTask(task);
             } catch (MalformedURLException malf) {
-                logger.error("Failed to parse {} as URL. Continuing to next catalog.", catalog.getHarvestSourceUri());
+                logger.warn("Failed to parse {} as URL. Continuing to next catalog.", catalog.getHarvestSourceUri());
             }
         }
     }
@@ -133,17 +123,11 @@ public class ApiCatalogHarvesterService {
 
     }
 
-    private class QueuedTaskImpl implements QueuedTask {
-        public String description;
+    private class HarvestSingleCatalogTask   implements QueuedTask {
 
         public URL urlLocation;
 
         public ApiCatalog catalog;
-
-        @Override
-        public String getDescription() {
-            return description;
-        }
 
         @Override
         public void doIt() {

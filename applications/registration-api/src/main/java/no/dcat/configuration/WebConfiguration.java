@@ -8,7 +8,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.List;
 
-@ComponentScan("no.fdk.harvestqueue")
 @Configuration
 public class WebConfiguration implements WebMvcConfigurer {
 

@@ -13,4 +13,5 @@ public interface ApiCatalogRepository extends ElasticsearchRepository<ApiCatalog
     Optional<ApiCatalog> findByOrgNo(String identifier);
 
     Page<ApiCatalog> findAll(); //Find all returns something that fails to convert to list but does convert well to Page (use .getContent() to get to the list)
+    //See: https://stackoverflow.com/questions/46150275/get-all-documents-from-an-index-using-spring-data-elasticsearch
 }

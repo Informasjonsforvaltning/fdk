@@ -42,10 +42,10 @@ public class HarvestExecutor {
             QueuedTask task = harvestQueue.poll();
 
             if (task != null) {
-                logger.debug("Running task {}", task.getDescription());
+                logger.debug("Running task {}", task );
                 try {
                     task.doIt();
-                } catch (Exception e) {
+                } catch (Throwable e) {
                     logger.warn("Problem with task: {}", e.getMessage());
                 }
             }
