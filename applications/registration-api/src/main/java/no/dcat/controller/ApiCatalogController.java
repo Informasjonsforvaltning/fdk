@@ -6,13 +6,11 @@ import org.apache.jena.shared.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
 import java.util.Optional;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
@@ -62,17 +60,6 @@ public class ApiCatalogController {
         } else {
             throw new NotFoundException("Did not find any Api Catalog for organization number " + organisationNumber);
         }
-    }
-
-    @CrossOrigin
-    @RequestMapping(
-        value = "getall",
-        method = GET,
-        produces = APPLICATION_JSON_UTF8_VALUE)
-    public List<ApiCatalog> getAllApiRegistrations(String organisationNumber) {
-
-        Page<ApiCatalog> cata = apiCatalogRepository.findAll();
-        return cata.getContent();
     }
 
     @CrossOrigin
