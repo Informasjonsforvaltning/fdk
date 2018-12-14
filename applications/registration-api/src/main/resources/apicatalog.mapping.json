@@ -3,6 +3,9 @@
     "properties": {
       "orgNo": {
         "type": "keyword"
+      },
+      "harvestStatus.success": {
+        "type": "boolean"
       }
     }
   }

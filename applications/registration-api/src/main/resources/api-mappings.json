@@ -8,6 +8,9 @@
       "registrationStatus": {
         "type": "keyword"
       },
+      "harvestStatus.success": {
+        "type": "boolean"
+      },
       "apiSpecUrl": {
         "type": "keyword"
       }
