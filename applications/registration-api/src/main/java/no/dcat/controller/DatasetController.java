@@ -1,7 +1,6 @@
 package no.dcat.controller;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
@@ -203,9 +202,10 @@ public class DatasetController {
             JsonElement changes = gson.toJsonTree(entry.getValue());
 
             if(oldDatasetJson.has(entry.getKey())) {
-
                 oldDatasetJson.remove(entry.getKey());
-
+                if(entry.getKey().equals("concepts")){
+                    oldDatasetJson.remove("subject");
+                }
             }
             if("concepts".equals(entry.getKey())){
 
