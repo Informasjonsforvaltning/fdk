@@ -161,7 +161,11 @@
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>no.dcat</groupId>
+            <artifactId>harvest-queue</artifactId>
+            <version>1.0.0</version>
+        </dependency>
         <dependency>
             <groupId>no.dcat</groupId>
             <artifactId>datastore</artifactId>
