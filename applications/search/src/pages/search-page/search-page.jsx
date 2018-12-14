@@ -28,12 +28,8 @@ export class SearchPage extends React.Component {
   constructor(props) {
     super(props);
 
-    const { search } = this.props.location;
-    const searchQuery = qs.parse(search, { ignoreQueryPrefix: true }) || {};
-
     this.state = {
-      showFilterModal: false,
-      searchQuery
+      showFilterModal: false
     };
 
     this.handleClearFilters = this.handleClearFilters.bind(this);
@@ -71,100 +67,64 @@ export class SearchPage extends React.Component {
   }
 
   handleClearFilters() {
-    const searchQuery = _.pick(this.state.searchQuery, [
-      'q',
-      'sortfield',
-      'sortdirection'
-    ]);
-    this.setState(
-      {
-        searchQuery
-      },
-      this.handleSearchSubmit
-    );
+    const { clearQuery, history } = this.props;
+    clearQuery(history);
   }
 
   isFilterNotEmpty() {
     return _.some(
       _.values(
-        _.omit(this.state.searchQuery, ['q', 'sortfield', 'sortdirection'])
+        _.omit(this.props.searchQuery, ['q', 'sortfield', 'sortdirection'])
       )
     );
   }
 
   handleSearchSubmit() {
+    const { searchQuery } = this.props;
     this.props.history.push(
-      `?${qs.stringify(this.state.searchQuery, { skipNulls: true })}`
+      `?${qs.stringify(searchQuery, { skipNulls: true })}`
     );
   }
 
   handleSearchChange(event) {
-    this.setState({
-      searchQuery: {
-        ...this.state.searchQuery,
-        q: event.target.value !== '' ? event.target.value : null,
-        from: undefined
-      }
-    });
+    const { setSearchQuery, history } = this.props;
+    const query = event.target.value !== '' ? event.target.value : null;
+    setSearchQuery(query, history);
   }
 
   handleDatasetFilterThemes(event) {
-    const { theme } = this.state.searchQuery;
+    const { searchQuery, setQueryFilter, history } = this.props;
+    const { theme } = searchQuery;
     if (event.target.checked) {
       ReactGA.event({
         category: 'Fasett',
         action: 'Legge til tema',
         label: event.target.value
       });
-      this.setState(
-        {
-          searchQuery: {
-            ...this.state.searchQuery,
-            theme: addValue(theme, event.target.value),
-            from: undefined
-          }
-        },
-        () =>
-          this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
-      );
+      setQueryFilter('theme', addValue(theme, event.target.value), history);
     } else {
       ReactGA.event({
         category: 'Fasett',
         action: 'Fjerne tema',
         label: event.target.value
       });
-      this.setState(
-        {
-          searchQuery: {
-            ...this.state.searchQuery,
-            theme: removeValue(theme, event.target.value),
-            from: undefined
-          }
-        },
-        () =>
-          this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
-      );
+      setQueryFilter('theme', removeValue(theme, event.target.value), history);
     }
   }
 
   handleDatasetFilterAccessRights(event) {
-    const { accessrights } = this.state.searchQuery;
+    const { searchQuery, setQueryFilter, history } = this.props;
+    const { accessrights } = searchQuery;
     if (event.target.checked) {
       ReactGA.event({
         category: 'Fasett',
         action: 'Legge til tilgang',
         label: event.target.value
       });
-      this.setState(
-        {
-          searchQuery: {
-            ...this.state.searchQuery,
-            accessrights: addValue(accessrights, event.target.value),
-            from: undefined
-          }
-        },
-        () =>
-          this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
+      setQueryFilter(
+        'accessrights',
+        addValue(accessrights, event.target.value),
+        history
       );
     } else {
       ReactGA.event({
@@ -172,105 +132,65 @@ export class SearchPage extends React.Component {
         action: 'Fjerne tilgang',
         label: event.target.value
       });
-      this.setState(
-        {
-          searchQuery: {
-            ...this.state.searchQuery,
-            accessrights: removeValue(accessrights, event.target.value),
-            from: undefined
-          }
-        },
-        () =>
-          this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
+      setQueryFilter(
+        'accessrights',
+        removeValue(accessrights, event.target.value),
+        history
       );
     }
   }
 
   handleDatasetFilterPublisher(event) {
-    const { publisher } = this.state.searchQuery;
+    const { searchQuery, setQueryFilter, history } = this.props;
+    const { publisher } = searchQuery;
     if (event.target.checked) {
-      this.setState(
-        {
-          searchQuery: {
-            ...this.state.searchQuery,
-            publisher: addValue(publisher, event.target.value),
-            from: undefined
-          }
-        },
-        () =>
-          this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
+      setQueryFilter(
+        'publisher',
+        addValue(publisher, event.target.value),
+        history
       );
     } else {
-      this.setState(
-        {
-          searchQuery: {
-            ...this.state.searchQuery,
-            publisher: removeValue(publisher, event.target.value),
-            from: undefined
-          }
-        },
-        () =>
-          this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
+      setQueryFilter(
+        'publisher',
+        removeValue(publisher, event.target.value),
+        history
       );
     }
   }
 
   handleDatasetFilterPublisherHierarchy(event) {
+    const { setQueryFilter, history } = this.props;
+
     if (event.target.checked) {
       ReactGA.event({
         category: 'Fasett',
         action: 'Legge til virksomhet',
         label: event.target.value
       });
-      this.setState(
-        {
-          searchQuery: {
-            ...this.state.searchQuery,
-            orgPath: event.target.value,
-            from: undefined
-          }
-        },
-        () =>
-          this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
-      );
+      setQueryFilter('orgPath', event.target.value, history);
     } else {
       ReactGA.event({
         category: 'Fasett',
         action: 'Fjerne virksomhet',
         label: event.target.value
       });
-      this.setState(
-        {
-          searchQuery: {
-            ...this.state.searchQuery,
-            orgPath: undefined,
-            from: undefined
-          }
-        },
-        () =>
-          this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
-      );
+      setQueryFilter('orgPath', undefined, history);
     }
   }
 
   handleDatasetFilterProvenance(event) {
-    const { provenance } = this.state.searchQuery;
+    const { searchQuery, setQueryFilter, history } = this.props;
+    const { provenance } = searchQuery;
     if (event.target.checked) {
       ReactGA.event({
         category: 'Fasett',
         action: 'Legge til opphav',
         label: event.target.value
       });
-      this.setState(
-        {
-          searchQuery: {
-            ...this.state.searchQuery,
-            provenance: addValue(provenance, event.target.value),
-            from: undefined
-          }
-        },
-        () =>
-          this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
+      setQueryFilter(
+        'provenance',
+        addValue(provenance, event.target.value),
+        history
       );
     } else {
       ReactGA.event({
@@ -278,148 +198,80 @@ export class SearchPage extends React.Component {
         action: 'Fjerne opphav',
         label: event.target.value
       });
-      this.setState(
-        {
-          searchQuery: {
-            ...this.state.searchQuery,
-            provenance: removeValue(provenance, event.target.value),
-            from: undefined
-          }
-        },
-        () =>
-          this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
+      setQueryFilter(
+        'provenance',
+        removeValue(provenance, event.target.value),
+        history
       );
     }
   }
 
   handleDatasetFilterSpatial(event) {
-    const { spatial } = this.state.searchQuery;
+    const { searchQuery, setQueryFilter, history } = this.props;
+    const { spatial } = searchQuery;
     if (event.target.checked) {
       ReactGA.event({
         category: 'Fasett',
         action: 'Legge til geografi',
         label: event.target.value
       });
-      this.setState(
-        {
-          searchQuery: {
-            ...this.state.searchQuery,
-            spatial: addValue(spatial, event.target.value),
-            from: undefined
-          }
-        },
-        () =>
-          this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
-      );
+      setQueryFilter('spatial', addValue(spatial, event.target.value), history);
     } else {
       ReactGA.event({
         category: 'Fasett',
         action: 'Fjerne geografi',
         label: event.target.value
       });
-      this.setState(
-        {
-          searchQuery: {
-            ...this.state.searchQuery,
-            spatial: removeValue(spatial, event.target.value),
-            from: undefined
-          }
-        },
-        () =>
-          this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
+      setQueryFilter(
+        'spatial',
+        removeValue(spatial, event.target.value),
+        history
       );
     }
   }
 
   handleFilterFormat(event) {
-    const { format } = this.state.searchQuery;
+    const { searchQuery, setQueryFilter, history } = this.props;
+    const { format } = searchQuery;
     if (event.target.checked) {
       ReactGA.event({
         category: 'Fasett',
         action: 'Legge til format',
         label: event.target.value
       });
-      this.setState(
-        {
-          searchQuery: {
-            ...this.state.searchQuery,
-            format: addValue(format, event.target.value),
-            from: undefined
-          }
-        },
-        () =>
-          this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
-      );
+      setQueryFilter('format', addValue(format, event.target.value), history);
     } else {
       ReactGA.event({
         category: 'Fasett',
         action: 'Fjerne format',
         label: event.target.value
       });
-      this.setState(
-        {
-          searchQuery: {
-            ...this.state.searchQuery,
-            format: removeValue(format, event.target.value),
-            from: undefined
-          }
-        },
-        () =>
-          this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
+      setQueryFilter(
+        'format',
+        removeValue(format, event.target.value),
+        history
       );
     }
   }
 
   sortByScore() {
-    this.setState(
-      {
-        searchQuery: {
-          ...this.state.searchQuery,
-          sortfield: undefined,
-          sortdirection: undefined
-        }
-      },
-      () => this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
-    );
+    const { setQueryFilter, history } = this.props;
+    setQueryFilter('sortfield', undefined, history);
   }
   sortByLastModified() {
-    this.setState(
-      {
-        searchQuery: {
-          ...this.state.searchQuery,
-          sortfield: 'modified'
-        }
-      },
-      () => this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
-    );
+    const { setQueryFilter, history } = this.props;
+    setQueryFilter('sortfield', 'modified', history);
   }
 
   handlePageChange(data) {
+    const { setQueryFrom, history } = this.props;
     const { selected } = data;
     const offset = Math.ceil(selected * 50);
 
     if (offset === 0) {
-      this.setState(
-        {
-          searchQuery: {
-            ...this.state.searchQuery,
-            from: undefined
-          }
-        },
-        () =>
-          this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
-      );
+      setQueryFrom(undefined, history);
     } else {
-      this.setState(
-        {
-          searchQuery: {
-            ...this.state.searchQuery,
-            from: offset
-          }
-        },
-        () =>
-          this.props.history.push(`?${qs.stringify(this.state.searchQuery)}`)
-      );
+      setQueryFrom(offset, history);
     }
   }
 
@@ -448,7 +300,8 @@ export class SearchPage extends React.Component {
       setConceptSort,
       datasetSortValue,
       apiSortValue,
-      conceptSortValue
+      conceptSortValue,
+      searchQuery
     } = this.props;
     const topSectionClass = cx('top-section-search', 'mb-4', {
       'top-section-search--image': !!(browser && browser.name !== 'ie')
@@ -460,7 +313,7 @@ export class SearchPage extends React.Component {
             <SearchBox
               onSearchSubmit={this.handleSearchSubmit}
               onSearchChange={this.handleSearchChange}
-              searchQuery={this.state.searchQuery.q}
+              searchQuery={searchQuery.q || ''}
               countDatasets={_.get(datasetItems, ['hits', 'total'])}
               countTerms={_.get(conceptItems, ['page', 'totalElements'])}
               countApis={_.get(apiItems, 'total')}
@@ -495,7 +348,7 @@ export class SearchPage extends React.Component {
                   onPageChange={this.handlePageChange}
                   onSortByLastModified={this.sortByLastModified}
                   onSortByScore={this.sortByScore}
-                  searchQuery={this.state.searchQuery}
+                  searchQuery={searchQuery}
                   themesItems={themesItems}
                   showFilterModal={this.state.showFilterModal}
                   showClearFilterButton={this.isFilterNotEmpty()}
@@ -529,7 +382,7 @@ export class SearchPage extends React.Component {
                   onPageChange={this.handlePageChange}
                   onSortByLastModified={this.sortByLastModified}
                   onSortByScore={this.sortByScore}
-                  searchQuery={this.state.searchQuery}
+                  searchQuery={searchQuery}
                   themesItems={themesItems}
                   showFilterModal={this.state.showFilterModal}
                   showClearFilterButton={this.isFilterNotEmpty()}
@@ -556,11 +409,11 @@ export class SearchPage extends React.Component {
                   onFilterPublisherHierarchy={
                     this.handleDatasetFilterPublisherHierarchy
                   }
-                  searchQuery={this.state.searchQuery}
+                  searchQuery={searchQuery}
                   hitsPerPage={50}
                   showFilterModal={this.state.showFilterModal}
                   closeFilterModal={this.close}
-                  showClearFilterButton={!!this.state.searchQuery.orgPath}
+                  showClearFilterButton={!!searchQuery.orgPath}
                   publisherArray={extractPublisherConceptsCounts(conceptItems)}
                   publishers={publisherItems}
                   conceptsCompare={conceptsCompare}
