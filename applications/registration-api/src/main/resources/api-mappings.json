@@ -7,6 +7,9 @@
       },
       "registrationStatus": {
         "type": "keyword"
+      },
+      "apiSpecUrl": {
+        "type": "keyword"
       }
     }
   }

@@ -22,4 +22,21 @@ public class ApiRegistrationFactory {
         return apiRegistration;
 
     }
+
+    public static ApiRegistration updateApiRegistration(ApiRegistration oldApiRegistration, ApiRegistration data) {
+
+        ApiRegistration newApiRegistration = new ApiRegistration();
+
+
+        BeanUtils.copyProperties(data, newApiRegistration);
+
+        newApiRegistration.setId(oldApiRegistration.getId());
+        newApiRegistration.setCatalogId(oldApiRegistration.getCatalogId());
+
+        newApiRegistration.set_lastModified(new Date());
+
+        return newApiRegistration;
+
+    }
+
 }
