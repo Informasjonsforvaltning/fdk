@@ -13,9 +13,11 @@ import { ErrorBoundary } from '../../../components/error-boundary/error-boundary
 
 export class ResultsDataset extends React.Component {
   componentWillMount() {
+    const sortFieldIsModified = this.props.searchQuery.sortfield === 'modified';
+    const urlIsModified =
+      window.location.href.indexOf('sortfield=modified') === -1;
     if (
-      (this.props.searchQuery.sortfield === undefined ||
-        window.location.href.indexOf('sortfield=modified') === -1) &&
+      (sortFieldIsModified || urlIsModified) &&
       this.props.datasetSortValue === 'modified'
     ) {
       this.props.onSortByLastModified();
