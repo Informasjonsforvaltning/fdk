@@ -118,6 +118,8 @@ public class ApiCatalogHarvesterService {
                     apiRegistration = ApiRegistrationFactory.createApiRegistration(originCatalog.getOrgNo(), apiRegistrationData);
                 }
 
+                apiRegistration.setFromApiCatalog(true);
+
                 logger.debug("create apiRegistration {}", apiRegistration.getId());
 
                 ApiRegistration savedApiRegistration = apiRegistrationRepository.save(apiRegistration);
