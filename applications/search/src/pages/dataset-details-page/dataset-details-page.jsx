@@ -193,9 +193,16 @@ const renderSubjects = subject => {
   if (!subject) {
     return null;
   }
+
+  const sortedSubject = _.sortBy(subject, [
+    function sortedSubject(item) {
+      return getTranslateText(_.get(item, ['prefLabel']));
+    }
+  ]);
+
   return (
     <ListRegular title={localization.dataset.subject}>
-      {subjectItems(subject)}
+      {subjectItems(sortedSubject)}
     </ListRegular>
   );
 };
