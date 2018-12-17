@@ -3,7 +3,7 @@ import { addOrReplaceParam } from '../lib/addOrReplaceUrlParam';
 
 export const getApis = async search => {
   const apisURL = `/api/apis/search${search || ''}`;
-  const url = addOrReplaceParam(apisURL, 'size', '50');
+  const url = addOrReplaceParam(apisURL, 'size', '10');
 
   const response = await axios
     .get(url)
