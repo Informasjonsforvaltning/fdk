@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
@@ -39,12 +40,20 @@ public class ApiCatalogController {
     public ApiCatalog storeApiCatalog(
         @RequestBody ApiCatalog apiCatalogData) {
 
-        ApiCatalog newCatalog = new ApiCatalog();
-        newCatalog.setHarvestSourceUri(apiCatalogData.getHarvestSourceUri());
-        newCatalog.setOrgNo(apiCatalogData.getOrgNo());
+        ApiCatalog apiCatalog;
 
-        apiCatalogRepository.save(newCatalog);
-        return newCatalog;
+        Optional<ApiCatalog> apiCatalogOptional = apiCatalogRepository.findByOrgNo(apiCatalogData.getOrgNo());
+        if (apiCatalogOptional.isPresent()) {
+            apiCatalog = apiCatalogOptional.get();
+        } else {
+            apiCatalog = new ApiCatalog();
+            apiCatalog.setId(UUID.randomUUID().toString());
+            apiCatalog.setOrgNo(apiCatalogData.getOrgNo());
+        }
+        apiCatalog.setHarvestSourceUri(apiCatalogData.getHarvestSourceUri());
+
+        apiCatalogRepository.save(apiCatalog);
+        return apiCatalog;
     }
 
     @CrossOrigin
