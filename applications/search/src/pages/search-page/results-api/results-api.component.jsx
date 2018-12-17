@@ -14,6 +14,7 @@ const renderFilterModal = ({
   showFilterModal,
   closeFilterModal,
   apiItems,
+  apiAggregations,
   searchQuery,
   publisherArray,
   publishers,
@@ -24,13 +25,6 @@ const renderFilterModal = ({
     <ModalHeader toggle={closeFilterModal}>{localization.filter}</ModalHeader>
     <ModalBody>
       <div className="search-filters">
-        {/* <FilterBox */}
-        {/* htmlKey={2} */}
-        {/* title={localization.facet.accessRight} */}
-        {/* filter={apiItems.aggregations.accessRights} */}
-        {/* onClick={onFilterAccessRights} */}
-        {/* activeFilter={searchQuery.accessrights} */}
-        {/* /> */}
         <SearchPublishersTree
           title={localization.facet.provider}
           filter={publisherArray}
@@ -41,7 +35,7 @@ const renderFilterModal = ({
         <FilterBox
           htmlKey={2}
           title={localization.facet.format}
-          filter={_.get(apiItems, ['aggregations', 'formats'])}
+          filter={_.get(apiAggregations, 'formats')}
           onClick={onFilterFormat}
           activeFilter={searchQuery.format}
         />
@@ -88,6 +82,8 @@ export class ResultsApi extends React.Component {
       showFilterModal,
       closeFilterModal,
       apiItems,
+      apiTotal,
+      apiAggregations,
       onFilterAccessRights,
       onFilterPublisherHierarchy,
       onFilterFormat,
@@ -107,7 +103,7 @@ export class ResultsApi extends React.Component {
     const page =
       searchQuery && searchQuery.from ? searchQuery.from / hitsPerPage : 0;
     const pageCount = Math.ceil(
-      (apiItems && apiItems.hits ? apiItems.hits.total : 1) / hitsPerPage
+      (apiTotal ? apiTotal : 1) / hitsPerPage
     );
 
     const clearButtonClass = cx(
@@ -175,12 +171,13 @@ export class ResultsApi extends React.Component {
             <span className="uu-invisible" aria-hidden="false">
               Filtrering
             </span>
-            {_.get(apiItems, 'aggregations') && (
+            {apiAggregations && (
               <div>
                 {renderFilterModal({
                   showFilterModal,
                   closeFilterModal,
                   apiItems,
+                  apiAggregations,
                   onFilterAccessRights,
                   searchQuery,
                   publisherArray,
@@ -198,7 +195,7 @@ export class ResultsApi extends React.Component {
                 <FilterBox
                   htmlKey={2}
                   title={localization.facet.format}
-                  filter={_.get(apiItems, ['aggregations', 'formats'])}
+                  filter={_.get(apiAggregations, 'formats')}
                   onClick={onFilterFormat}
                   activeFilter={searchQuery.format}
                 />
@@ -206,7 +203,7 @@ export class ResultsApi extends React.Component {
             )}
           </aside>
           <div id="apis" className="col-12 col-lg-8">
-            {renderHits(apiItems.hits, publishers)}
+            {renderHits(apiItems, publishers)}
 
             {_.get(apiItems, 'total', 0) > 50 && (
               <div className="col-12 d-flex justify-content-center">
@@ -241,6 +238,8 @@ ResultsApi.defaultProps = {
   showFilterModal: false,
   closeFilterModal: null,
   apiItems: [],
+  apiTotal: null,
+  apiAggregations: null,
   onFilterAccessRights: null,
   onFilterPublisherHierarchy: null,
   onFilterFormat: null,
@@ -256,7 +255,9 @@ ResultsApi.defaultProps = {
 ResultsApi.propTypes = {
   showFilterModal: PropTypes.bool,
   closeFilterModal: PropTypes.func,
-  apiItems: PropTypes.object,
+  apiItems: PropTypes.array,
+  apiTotal: PropTypes.number,
+  apiAggregations: PropTypes.object,
   onFilterAccessRights: PropTypes.func,
   onFilterPublisherHierarchy: PropTypes.func,
   onFilterFormat: PropTypes.func,

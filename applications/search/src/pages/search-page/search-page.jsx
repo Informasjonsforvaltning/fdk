@@ -64,6 +64,12 @@ export class SearchPage extends React.Component {
     this.close = this.close.bind(this);
     this.open = this.open.bind(this);
 
+    const { searchQuery } = this.props;
+    const stringifiedQuery = qs.stringify(searchQuery, { skipNulls: true });
+
+    this.props.fetchDatasetsIfNeeded(stringifiedQuery);
+    this.props.fetchApisIfNeeded(stringifiedQuery);
+
     this.props.fetchThemesIfNeeded();
     this.props.fetchPublishersIfNeeded();
     this.props.fetchReferenceDataIfNeeded();
@@ -300,6 +306,8 @@ export class SearchPage extends React.Component {
       datasetTotal,
       conceptItems,
       apiItems,
+      apiTotal,
+      apiAggregations,
       themesItems,
       publisherItems,
       referenceData,
@@ -328,7 +336,7 @@ export class SearchPage extends React.Component {
               searchQuery={searchQuery.q || ''}
               countDatasets={datasetTotal}
               countTerms={_.get(conceptItems, ['page', 'totalElements'])}
-              countApis={_.get(apiItems, 'total')}
+              countApis={apiTotal}
               open={this.open}
             />
             <ResultsTabs
@@ -336,7 +344,7 @@ export class SearchPage extends React.Component {
               searchParam={location.search}
               countDatasets={datasetTotal}
               countTerms={_.get(conceptItems, ['page', 'totalElements'], 0)}
-              countApis={_.get(apiItems, 'total', 0)}
+              countApis={apiTotal}
             />
           </div>
         </section>
@@ -384,7 +392,9 @@ export class SearchPage extends React.Component {
               path={PATHNAME_APIS}
               render={props => (
                 <ResultsApi
-                  apiItems={this.props.apiItems}
+                  apiItems={apiItems}
+                  apiTotal={apiTotal}
+                  apiAggregations={apiAggregations}
                   onClearFilters={this.handleClearFilters}
                   onFilterTheme={this.handleDatasetFilterThemes}
                   onFilterAccessRights={this.handleDatasetFilterAccessRights}
