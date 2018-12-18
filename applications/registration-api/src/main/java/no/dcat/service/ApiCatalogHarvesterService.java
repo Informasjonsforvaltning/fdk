@@ -66,24 +66,20 @@ public class ApiCatalogHarvesterService {
 
         //Add them to the queue
         for (ApiCatalog catalog : allApiCatalogs) {
-            QueuedTask task = new HarvestSingleCatalogTask();
-            try {
-                URL catalogURL = new URL(catalog.getHarvestSourceUri());
-                ((HarvestSingleCatalogTask) task).urlLocation = catalogURL;
-                ((HarvestSingleCatalogTask) task).catalog = catalog;
-                harvestQueue.addTask(task);
-            } catch (MalformedURLException malf) {
-                logger.warn("Failed to parse {} as URL. Continuing to next catalog.", catalog.getHarvestSourceUri());
-            }
+            QueuedTask task = new HarvestSingleCatalogTask(catalog);
+            harvestQueue.addTask(task);
         }
     }
 
-    protected void doHarvestSingleCatalog(URL urlToCatalog, ApiCatalog originCatalog) {
-        logger.info("HarvestSingleCatalog called. url: " + urlToCatalog + " origin catalog: " + originCatalog);
+    protected void doHarvestSingleCatalog(ApiCatalog originCatalog) {
+        logger.info("HarvestSingleCatalog called. Catalog: " + originCatalog);
 
         try {
+
+            URL catalogUrl = new URL(originCatalog.getHarvestSourceUri());
+
             BufferedReader reader = new BufferedReader(
-                new InputStreamReader(urlToCatalog.openStream()));
+                new InputStreamReader(catalogUrl.openStream()));
             final Model model = ModelFactory.createDefaultModel();
             model.read(reader, null, "TURTLE");//Base and lang is just untested dummy values
 
@@ -132,7 +128,7 @@ public class ApiCatalogHarvesterService {
             apiCatalogRepository.save(originCatalog);
 
         } catch (Exception e) {
-            String errorMessage = "Failed while trying to fetch and parse API Catalog " + urlToCatalog + " " + e.toString();
+            String errorMessage = "Failed while trying to fetch and parse API Catalog: " + originCatalog.getHarvestSourceUri() + " " + e.toString();
             logger.warn(errorMessage);
             originCatalog.setHarvestStatus(HarvestStatus.Error(errorMessage));
             apiCatalogRepository.save(originCatalog);
@@ -142,13 +138,15 @@ public class ApiCatalogHarvesterService {
 
     private class HarvestSingleCatalogTask implements QueuedTask {
 
-        public URL urlLocation;
+        HarvestSingleCatalogTask(ApiCatalog catalog) {
+            this.catalog=catalog;
+        }
 
-        public ApiCatalog catalog;
+        private ApiCatalog catalog;
 
         @Override
         public void doIt() {
-            doHarvestSingleCatalog(urlLocation, catalog);
+            doHarvestSingleCatalog(catalog);
         }
 
     }
