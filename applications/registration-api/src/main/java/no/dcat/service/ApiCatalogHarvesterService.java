@@ -21,7 +21,6 @@ import org.springframework.stereotype.Service;
 import javax.annotation.PostConstruct;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -66,9 +65,13 @@ public class ApiCatalogHarvesterService {
 
         //Add them to the queue
         for (ApiCatalog catalog : allApiCatalogs) {
-            QueuedTask task = new HarvestSingleCatalogTask(catalog);
-            harvestQueue.addTask(task);
+            addHarvestSingleCatalogTaskToQueue(catalog);
         }
+    }
+
+    public void addHarvestSingleCatalogTaskToQueue(ApiCatalog catalog) {
+        QueuedTask task = new HarvestSingleCatalogTask(catalog);
+        harvestQueue.addTask(task);
     }
 
     protected void doHarvestSingleCatalog(ApiCatalog originCatalog) {
@@ -138,11 +141,11 @@ public class ApiCatalogHarvesterService {
 
     private class HarvestSingleCatalogTask implements QueuedTask {
 
-        HarvestSingleCatalogTask(ApiCatalog catalog) {
-            this.catalog=catalog;
-        }
-
         private ApiCatalog catalog;
+
+        HarvestSingleCatalogTask(ApiCatalog catalog) {
+            this.catalog = catalog;
+        }
 
         @Override
         public void doIt() {

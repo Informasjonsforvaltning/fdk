@@ -1,6 +1,7 @@
 package no.dcat.controller;
 
 import no.dcat.model.ApiCatalog;
+import no.dcat.service.ApiCatalogHarvesterService;
 import no.dcat.service.ApiCatalogRepository;
 import org.apache.jena.shared.NotFoundException;
 import org.slf4j.Logger;
@@ -26,9 +27,15 @@ public class ApiCatalogController {
 
     private ApiCatalogRepository apiCatalogRepository;
 
+    private ApiCatalogHarvesterService apiCatalogHarvesterService;
+
     @Autowired
-    public ApiCatalogController(ApiCatalogRepository apiDocumentRepository) {
+    public ApiCatalogController(
+        ApiCatalogRepository apiDocumentRepository,
+        ApiCatalogHarvesterService apiCatalogHarvesterService
+    ) {
         this.apiCatalogRepository = apiDocumentRepository;
+        this.apiCatalogHarvesterService = apiCatalogHarvesterService;
     }
 
     @CrossOrigin
@@ -53,6 +60,7 @@ public class ApiCatalogController {
         apiCatalog.setHarvestSourceUri(apiCatalogData.getHarvestSourceUri());
 
         apiCatalogRepository.save(apiCatalog);
+        apiCatalogHarvesterService.addHarvestSingleCatalogTaskToQueue(apiCatalog);
         return apiCatalog;
     }
 
