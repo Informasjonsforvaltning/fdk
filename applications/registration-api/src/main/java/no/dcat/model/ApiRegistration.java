@@ -23,7 +23,7 @@ public class ApiRegistration extends ApiRegistrationPublic {
     public static final String REGISTRATION_STATUS_DRAFT = "DRAFT";
     public static final String REGISTRATION_STATUS_PUBLISH = "PUBLISH";
 
-    private String registrationStatus;
+    private String registrationStatus = REGISTRATION_STATUS_DRAFT; // DRAFT is default
 
     private boolean isFromApiCatalog;
 
