@@ -36,6 +36,9 @@ public class ApiRegistrationPublic {
     @ApiModelProperty("Spec converted to openAPI v3")
     private OpenAPI openApi;
 
+    @ApiModelProperty("True ff this Api has been harvested from an Api Catalog")
+    private boolean isFromApiCatalog;
+
     private String cost;
 
     private String usageLimitation;

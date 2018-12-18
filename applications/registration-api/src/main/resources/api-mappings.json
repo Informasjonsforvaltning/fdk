@@ -8,7 +8,7 @@
       "registrationStatus": {
         "type": "keyword"
       },
-      "isFromApiCatalog": {
+      "fromApiCatalog": {
         "type": "boolean"
       },
       "harvestStatus.success": {

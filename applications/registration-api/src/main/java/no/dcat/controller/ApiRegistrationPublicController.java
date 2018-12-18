@@ -1,8 +1,6 @@
 package no.dcat.controller;
 
 import no.dcat.client.registrationapi.ApiRegistrationPublic;
-import no.dcat.config.BasicAuthConfig;
-import no.dcat.model.ApiHarvestStatus;
 import no.dcat.model.ApiRegistration;
 import no.dcat.service.ApiRegistrationRepository;
 import org.slf4j.Logger;
@@ -18,6 +16,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,10 +24,10 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 /*
-* The controller for public apis provided by the registration service.
-* Authentication and authorization is disabled.
-* Public endpoints are used for example as a sourcing the public search service.
-*/
+ * The controller for public apis provided by the registration service.
+ * Authentication and authorization is disabled.
+ * Public endpoints are used for example as a sourcing the public search service.
+ */
 @RestController
 @RequestMapping(value = "/public")
 public class ApiRegistrationPublicController {
@@ -55,26 +54,31 @@ public class ApiRegistrationPublicController {
         method = GET,
         produces = APPLICATION_JSON_UTF8_VALUE)
     public PagedResources<ApiRegistrationPublic> getPublished(Pageable pageable, PagedResourcesAssembler assembler) {
-        logger.info("Get the stuffs!");
 
         Page<ApiRegistration> apiRegistrationsPagePage =
             apiRegistrationRepository.findByRegistrationStatus(ApiRegistration.REGISTRATION_STATUS_PUBLISH, pageable);
 
-        logger.info("Total elems published" + apiRegistrationsPagePage.getTotalElements());
-        ApiHarvestStatus hStatus =  new ApiHarvestStatus();
-        hStatus.success = true;
 
-        Page<ApiRegistration> apiRegistrationsPage =
-            apiRegistrationRepository.findByRegistrationStatusAndIsFromApiCatalogAndHarvestStatus(ApiRegistration.REGISTRATION_STATUS_PUBLISH, true, hStatus, pageable );
+        List<ApiRegistration> registrationsToFilter = apiRegistrationsPagePage.getContent();
+        List<ApiRegistration> filteredRegistrations = new ArrayList<>();
 
-        logger.info("Total elems published & success " + apiRegistrationsPage.getTotalElements());
-        List<ApiRegistration> apiRegistrationList = apiRegistrationsPage.getContent();
-        List<ApiRegistrationPublic> apiRegistrationPublicList = apiRegistrationList.stream()
+        //All ApiRegistrations in this list are published, due to the filter in the query.
+        for (ApiRegistration apiReg : registrationsToFilter) {
+            if (!apiReg.isFromApiCatalog()) {
+                filteredRegistrations.add(apiReg);
+            } else {
+                if (apiReg.getHarvestStatus() != null && apiReg.getHarvestStatus().getSuccess()) {
+                    filteredRegistrations.add(apiReg);
+                }
+            }
+        }
+
+        //convert to public
+        List<ApiRegistrationPublic> apiRegistrationFilteredPublicList = filteredRegistrations.stream()
             .map(this::convert)
             .collect(Collectors.toList());
 
-        Page<ApiRegistrationPublic> apiRegistrationPublicsPage = new PageImpl<>(apiRegistrationPublicList, pageable, apiRegistrationPublicList.size());
-
+        Page<ApiRegistrationPublic> apiRegistrationPublicsPage = new PageImpl<>(apiRegistrationFilteredPublicList, pageable, apiRegistrationFilteredPublicList.size());
         return assembler.toResource(apiRegistrationPublicsPage);
     }
 
