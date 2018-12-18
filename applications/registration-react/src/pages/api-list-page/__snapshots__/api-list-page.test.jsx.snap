@@ -24,39 +24,18 @@ exports[`should render APIListPageComponent correctly 1`] = `
     className="row mb-5"
   >
     <div
-      className="col-12"
+      className="col-12 d-flex"
     >
-      <Link
-        className="ml-0"
-        replace={false}
-        to="/catalogs/910244132/apis/import"
+      <Button
+        className="mr-3 btn btn-primary fdk-button"
+        color="primary"
+        tag="button"
       >
         <i
-          className="fa fa-plus mr-2"
+          className="fa fa-plus-circle mr-2"
         />
-        Registrer ny API-beskrivelse
-      </Link>
-    </div>
-  </div>
-  <div
-    className="row mb-2 mb-md-5"
-  >
-    <div
-      className="col-12 fdk-reg-datasets-list"
-    >
-      <withState(withState(withHandlers(ListItems)))
-        catalogId="910244132"
-        defaultEmptyListText="Det er ikke registrert noen API-beskrivelser ennå."
-        itemTitleField={
-          Array [
-            "openApi",
-            "info",
-            "title",
-          ]
-        }
-        items={null}
-        prefixPath="/catalogs/910244132/apis"
-      />
+        Høst spesifikasjoner fra katalog
+      </Button>
     </div>
   </div>
 </div>
