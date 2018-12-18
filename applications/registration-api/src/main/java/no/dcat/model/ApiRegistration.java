@@ -23,7 +23,7 @@ public class ApiRegistration extends ApiRegistrationPublic {
     public static final String REGISTRATION_STATUS_DRAFT = "DRAFT";
     public static final String REGISTRATION_STATUS_PUBLISH = "PUBLISH";
 
-    private String registrationStatus = REGISTRATION_STATUS_DRAFT; // DRAFT is default
+    private String registrationStatus;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZZ")
     private Date _lastModified;
