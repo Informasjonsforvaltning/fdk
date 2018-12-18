@@ -24,6 +24,7 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -106,7 +107,8 @@ public class ApiCatalogHarvesterService {
                 ApiRegistration apiRegistration;
                 if (existingApiRegistrationOptional.isPresent()) {
                     logger.debug("Existing registration {}", existingApiRegistrationOptional.get().getId());
-                    apiRegistration = ApiRegistrationFactory.updateApiRegistration(existingApiRegistrationOptional.get(), apiRegistrationData);
+                    apiRegistration= existingApiRegistrationOptional.get();
+                    apiRegistration.set_lastModified(new Date());
                 } else {
                     apiRegistration = ApiRegistrationFactory.createApiRegistration(originCatalog.getOrgNo(), apiRegistrationData);
                     logger.debug("Created apiRegistration for orgNo: {}, id: {}", originCatalog.getOrgNo(), apiRegistration.getId());
