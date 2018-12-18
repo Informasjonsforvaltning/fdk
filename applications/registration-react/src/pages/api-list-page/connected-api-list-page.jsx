@@ -2,15 +2,25 @@ import { connect } from 'react-redux';
 import _ from 'lodash';
 import { fetchApisIfNeededAction } from '../../redux/modules/apis';
 import { fetchCatalogIfNeeded } from '../../redux/modules/catalog';
-import { APIListPage } from './api-list-page';
+import { ResolvedAPIListPage } from './resolved-api-list-page';
 
 const mapStateToProps = ({ catalog, apis }, ownProps) => {
   const catalogId = _.get(ownProps, ['match', 'params', 'catalogId']);
   const catalogItem = _.get(catalog, ['items', catalogId]);
-  const items = _.get(apis, [catalogId, 'items']);
+  const registeredApiItems = _.filter(
+    _.get(apis, [catalogId, 'items']),
+    {
+      fromApiCatalog: false
+    },
+    null
+  );
+  const harvestedApiItems = _.filter(_.get(apis, [catalogId, 'items']), {
+    fromApiCatalog: true
+  });
   return {
     catalogItem,
-    items
+    registeredApiItems,
+    harvestedApiItems
   };
 };
 
@@ -23,4 +33,4 @@ const mapDispatchToProps = dispatch => ({
 export const ConnectedAPIListPage = connect(
   mapStateToProps,
   mapDispatchToProps
-)(APIListPage);
+)(ResolvedAPIListPage);

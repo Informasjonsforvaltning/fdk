@@ -386,11 +386,20 @@
     },
     "register": {
       "apiCatalog": "API-katalog",
-      "registerNew": "Registrer ny API-beskrivelse",
+      "registerNew": "Legg til ny API-beskrivelse",
       "importFromSpecPart1": "Import fra",
       "importFromSpecPart2": "var vellykket!",
+      "importFromSpecPart2Error": "feilet!",
       "importFromSpec": "Importert fra spesifikasjon",
-      "addInfo": "For at API-beskrivelsen skal være nyttig for brukerne av Felles Datakatalog bør du legge til tilleggsinformasjon. Denne er spesifikk for Datakatalogen og vil kun brukes her."
+      "addInfo": "For at API-beskrivelsen skal være nyttig for brukerne av Felles Datakatalog bør du legge til tilleggsinformasjon. Denne er spesifikk for Datakatalogen og vil kun brukes her.",
+      "registeredApiTitle": "Enkeltstående API-beskrivelser"
+    },
+    "harvest": {
+      "harvestFromCatalog": "Høst spesifikasjoner fra katalog",
+      "labelHarvestUrl": "Lenke til API-katalog",
+      "harvestAction": "Høst fra katalog",
+      "harvestedFromCatalogTitle": "Høstet fra katalog",
+      "changeHarvestUrl": "Rediger lenke"
     }
   },
   "formStatus": {
