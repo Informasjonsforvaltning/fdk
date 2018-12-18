@@ -55,6 +55,7 @@ public class ApiRegistrationPublicController {
 
         List<ApiRegistration> apiRegistrationList = apiRegistrationsPage.getContent();
         List<ApiRegistrationPublic> apiRegistrationPublicList = apiRegistrationList.stream()
+            .filter(apiReg -> !apiReg.isFromApiCatalog() || apiReg.getHarvestStatus() != null && apiReg.getHarvestStatus().getSuccess())
             .map(this::convert)
             .collect(Collectors.toList());
 
