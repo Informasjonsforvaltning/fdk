@@ -1,5 +1,6 @@
 package no.dcat.service;
 
+import no.dcat.model.ApiHarvestStatus;
 import no.dcat.model.ApiRegistration;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,5 +25,14 @@ public interface ApiRegistrationRepository
     Optional<ApiRegistration> getByCatalogIdAndApiSpecUrl(String catalogId, String apiSpecUrl);
 
   Page<ApiRegistration> findByRegistrationStatus(String registrationStatus, Pageable pageable);
-  
+
+  Page<ApiRegistration> findByRegistrationStatusAndIsFromApiCatalogAndHarvestStatus(String registrationStatus, boolean isFromApi, ApiHarvestStatus status, Pageable pageable);
+
+
+       /*
+       *  @Query("{\"term\":{\"identifier\":\"?0\"}}")
+    List<ConceptDenormalized> findByIdentifier(String identifier);
+       *
+       *
+       * */
 }

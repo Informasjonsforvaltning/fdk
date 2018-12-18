@@ -124,6 +124,7 @@ public class ApiCatalogHarvesterService {
                     apiRegistration.setHarvestStatus(HarvestStatus.Error(errorMessage));
                 }
 
+                apiRegistration.setFromApiCatalog(true);
                 ApiRegistration savedApiRegistration = apiRegistrationRepository.save(apiRegistration);
                 apiCatClient.triggerHarvestApiRegistration(savedApiRegistration.getId());
             }

@@ -1,8 +1,12 @@
 package no.dcat.controller;
 
 import no.dcat.client.registrationapi.ApiRegistrationPublic;
+import no.dcat.config.BasicAuthConfig;
+import no.dcat.model.ApiHarvestStatus;
 import no.dcat.model.ApiRegistration;
 import no.dcat.service.ApiRegistrationRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -29,6 +33,8 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 @RequestMapping(value = "/public")
 public class ApiRegistrationPublicController {
 
+    private static final Logger logger = LoggerFactory.getLogger(ApiRegistrationPublicController.class);
+
     private ApiRegistrationRepository apiRegistrationRepository;
 
     @Autowired
@@ -49,10 +55,19 @@ public class ApiRegistrationPublicController {
         method = GET,
         produces = APPLICATION_JSON_UTF8_VALUE)
     public PagedResources<ApiRegistrationPublic> getPublished(Pageable pageable, PagedResourcesAssembler assembler) {
+        logger.info("Get the stuffs!");
 
-        Page<ApiRegistration> apiRegistrationsPage =
+        Page<ApiRegistration> apiRegistrationsPagePage =
             apiRegistrationRepository.findByRegistrationStatus(ApiRegistration.REGISTRATION_STATUS_PUBLISH, pageable);
 
+        logger.info("Total elems published" + apiRegistrationsPagePage.getTotalElements());
+        ApiHarvestStatus hStatus =  new ApiHarvestStatus();
+        hStatus.success = true;
+
+        Page<ApiRegistration> apiRegistrationsPage =
+            apiRegistrationRepository.findByRegistrationStatusAndIsFromApiCatalogAndHarvestStatus(ApiRegistration.REGISTRATION_STATUS_PUBLISH, true, hStatus, pageable );
+
+        logger.info("Total elems published & success " + apiRegistrationsPage.getTotalElements());
         List<ApiRegistration> apiRegistrationList = apiRegistrationsPage.getContent();
         List<ApiRegistrationPublic> apiRegistrationPublicList = apiRegistrationList.stream()
             .map(this::convert)
