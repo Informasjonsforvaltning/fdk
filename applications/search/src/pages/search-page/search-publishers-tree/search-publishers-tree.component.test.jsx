@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { SearchPublishersTree } from './search-publishers-tree.component';
 import publishers from '../../../../test/fixtures/publishers';
-import { normalizeAggregations } from '../../../api/normalizeAggregations';
+import { normalizeAggregations } from '../../../lib/normalizeAggregations';
 import { extractPublisherCounts } from '../../../api/get-datasets';
 import datasetsApiResponse from './__fixtures/datasetsApiResponse.json';
 

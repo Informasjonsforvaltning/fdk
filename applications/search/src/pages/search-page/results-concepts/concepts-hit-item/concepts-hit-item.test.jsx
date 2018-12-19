@@ -4,7 +4,7 @@ import _ from 'lodash';
 
 import { ConceptsHitItem } from './concepts-hit-item.component';
 import concepts from '../../__fixtures/conceptsApiResponse.json';
-import { normalizeAggregations } from '../../../../api/normalizeAggregations';
+import { normalizeAggregations } from '../../../../lib/normalizeAggregations';
 import localization from '../../../../lib/localization';
 
 const conceptItems = normalizeAggregations(concepts);

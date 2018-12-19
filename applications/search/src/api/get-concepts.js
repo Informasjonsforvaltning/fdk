@@ -3,7 +3,7 @@ import axios from 'axios';
 import qs from 'qs';
 
 import { addOrReplaceParam } from '../lib/addOrReplaceUrlParam';
-import { normalizeAggregations } from './normalizeAggregations';
+import { normalizeAggregations } from '../lib/normalizeAggregations';
 
 export const getConcepts = async search => {
   let conceptsUrl = `/api/concepts${search}`;
