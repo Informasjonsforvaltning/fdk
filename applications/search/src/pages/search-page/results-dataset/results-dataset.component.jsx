@@ -13,14 +13,17 @@ import { ErrorBoundary } from '../../../components/error-boundary/error-boundary
 
 export class ResultsDataset extends React.Component {
   componentWillMount() {
-    const sortFieldIsModified = this.props.searchQuery.sortfield === 'modified';
-    const urlIsModified =
-      window.location.href.indexOf('sortfield=modified') === -1;
-    if (
-      (sortFieldIsModified || urlIsModified) &&
-      this.props.datasetSortValue === 'modified'
-    ) {
+    const urlHasSortfieldModified =
+      window.location.href.indexOf('sortfield=modified') !== -1;
+    const datasetSortValueIsModified =
+      this.props.datasetSortValue === 'modified';
+
+    if (datasetSortValueIsModified || urlHasSortfieldModified) {
+      this.props.setDatasetSort('modified');
       this.props.onSortByLastModified();
+    } else {
+      this.props.onSortByScore();
+      this.props.setDatasetSort(undefined);
     }
   }
 

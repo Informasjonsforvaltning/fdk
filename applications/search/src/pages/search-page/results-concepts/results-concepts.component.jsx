@@ -20,13 +20,17 @@ import { getTranslateText } from '../../../lib/translateText';
 
 export class ResultsConcepts extends React.Component {
   componentWillMount() {
-    if (
-      ((this.props.searchQuery &&
-        this.props.searchQuery.sortfield === undefined) ||
-        window.location.href.indexOf('sortfield=modified') === -1) &&
-      this.props.conceptSortValue === 'modified'
-    ) {
+    const urlHasSortfieldModified =
+      window.location.href.indexOf('sortfield=modified') !== -1;
+    const conceptSortValueIsModified =
+      this.props.conceptSortValue === 'modified';
+
+    if (conceptSortValueIsModified || urlHasSortfieldModified) {
+      this.props.setConceptSort('modified');
       this.props.onSortByLastModified();
+    } else {
+      this.props.onSortByScore();
+      this.props.setConceptSort(undefined);
     }
   }
   _renderCompareTerms() {

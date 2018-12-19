@@ -71,12 +71,16 @@ const renderHits = (hits, publishers) => {
 
 export class ResultsApi extends React.Component {
   componentWillMount() {
-    if (
-      (this.props.searchQuery.sortfield === undefined ||
-        window.location.href.indexOf('sortfield=modified') === -1) &&
-      this.props.apiSortValue === 'modified'
-    ) {
+    const urlHasSortfieldModified =
+      window.location.href.indexOf('sortfield=modified') !== -1;
+    const apiSortValueIsModified = this.props.apiSortValue === 'modified';
+
+    if (apiSortValueIsModified || urlHasSortfieldModified) {
+      this.props.setApiSort('modified');
       this.props.onSortByLastModified();
+    } else {
+      this.props.onSortByScore();
+      this.props.setApiSort(undefined);
     }
   }
   render() {
