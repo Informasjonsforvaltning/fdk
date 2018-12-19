@@ -215,7 +215,7 @@ export const APIListPage = props => {
                         type="input"
                         className="ml-2 py-2 px-4 flex-grow-1"
                         autoComplete="off"
-                        value={apiCatalogs.harvestSourceUri}
+                        defaultValue={apiCatalogs.harvestSourceUri}
                       />
                     </label>
                     <Button
