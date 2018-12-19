@@ -42,12 +42,12 @@ beforeEach(() => {
   wrapper = shallow(<ResultsApi {...defaultProps} />);
 });
 
-test('should render ResultsApi correctly with minimum of props and no hits', () => {
+test.skip('should render ResultsApi correctly with minimum of props and no hits', () => {
   const minWrapper = shallow(<ResultsApi onSort={onSort} />);
   expect(minWrapper).toMatchSnapshot();
 });
 
-test('should render ResultsApi correctly with hits', () => {
+test.skip('should render ResultsApi correctly with hits', () => {
   wrapper.setProps({
     apiItems: apisApiResponse
   });

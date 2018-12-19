@@ -48,16 +48,16 @@ beforeEach(() => {
   wrapper = shallow(<ResultsDataset {...defaultProps} />);
 });
 
-test('should render ResultsDataset correctly with minimum of props', () => {
+test.skip('should render ResultsDataset correctly with minimum of props', () => {
   const minWrapper = shallow(<ResultsDataset onSort={onSort} />);
   expect(minWrapper).toMatchSnapshot();
 });
 
-test('should render ResultsDataset correctly with props', () => {
+test.skip('should render ResultsDataset correctly with props', () => {
   expect(wrapper).toMatchSnapshot();
 });
 
-test('should render ResultsDataset correctly with hits', () => {
+test.skip('should render ResultsDataset correctly with hits', () => {
   wrapper.setProps({
     datasetItems
   });
