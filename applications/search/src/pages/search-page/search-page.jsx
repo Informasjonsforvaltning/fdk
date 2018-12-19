@@ -266,7 +266,7 @@ export class SearchPage extends React.Component {
   handlePageChange(data) {
     const { setQueryFrom, history } = this.props;
     const { selected } = data;
-    const offset = Math.ceil(selected * 50);
+    const offset = Math.ceil(selected * 10);
 
     if (offset === 0) {
       setQueryFrom(undefined, history);
@@ -353,7 +353,7 @@ export class SearchPage extends React.Component {
                   showFilterModal={this.state.showFilterModal}
                   showClearFilterButton={this.isFilterNotEmpty()}
                   closeFilterModal={this.close}
-                  hitsPerPage={50}
+                  hitsPerPage={10}
                   publisherArray={extractPublisherCounts(datasetItems)}
                   publishers={publisherItems}
                   referenceData={referenceData}
@@ -387,7 +387,7 @@ export class SearchPage extends React.Component {
                   showFilterModal={this.state.showFilterModal}
                   showClearFilterButton={this.isFilterNotEmpty()}
                   closeFilterModal={this.close}
-                  hitsPerPage={50}
+                  hitsPerPage={10}
                   publisherArray={extractPublisherCounts(apiItems)}
                   publishers={publisherItems}
                   setApiSort={setApiSort}
@@ -410,7 +410,7 @@ export class SearchPage extends React.Component {
                     this.handleDatasetFilterPublisherHierarchy
                   }
                   searchQuery={searchQuery}
-                  hitsPerPage={50}
+                  hitsPerPage={10}
                   showFilterModal={this.state.showFilterModal}
                   closeFilterModal={this.close}
                   showClearFilterButton={!!searchQuery.orgPath}
