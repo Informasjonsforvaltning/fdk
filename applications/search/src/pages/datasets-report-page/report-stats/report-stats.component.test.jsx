@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { normalizeAggregations } from '../../../api/normalizeAggregations';
+import { normalizeAggregations } from '../../../lib/normalizeAggregations';
 import { ReportStats } from './report-stats.component';
 import aggregateDatasetApiResponse from './__fixtures/aggregateDatasetApiResponse.json';
 import { extractStats } from '../../../api/get-dataset-stats';

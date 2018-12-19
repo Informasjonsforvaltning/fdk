@@ -12,10 +12,6 @@ const normalizeBucketsObject = buckets =>
     count: buckets[key].doc_count || buckets[key].count // support passing through already normalized data
   }));
 
-/* aggregation types encountered in wild are converted to normal form
-  {count}
-  {buckets:[{key,count}]}
-*/
 const normalizeAggregation = aggregation => {
   if (aggregation.doc_count) {
     return { count: aggregation.doc_count };

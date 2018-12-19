@@ -2,7 +2,7 @@ import React from 'react';
 import _ from 'lodash';
 import { shallow } from 'enzyme';
 
-import { normalizeAggregations } from '../../api/normalizeAggregations';
+import { normalizeAggregations } from '../../lib/normalizeAggregations';
 import { ConceptDetailsPage } from './concept-details-page';
 import concepts from './__fixtures/conceptsApiResponse.json';
 

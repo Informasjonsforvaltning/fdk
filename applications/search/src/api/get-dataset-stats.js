@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import axios from 'axios';
 
-import { normalizeAggregations } from './normalizeAggregations';
+import { normalizeAggregations } from '../lib/normalizeAggregations';
 
 function getFromBucketArray(data, aggregation, key) {
   const buckets = _.get(data, ['aggregations', aggregation, 'buckets'], []);
