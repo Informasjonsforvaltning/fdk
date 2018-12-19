@@ -389,8 +389,17 @@
       "registerNew": "Register API description",
       "importFromSpecPart1": "Import from",
       "importFromSpecPart2": "was successful!",
+      "importFromSpecPart2Error": "failed!",
       "importFromSpec": "Importert fra spesifikasjon",
-      "addInfo": "To ensure API specification to be useful you are encouraged to add additional information. That information is only used in the National Data Directory"
+      "addInfo": "To ensure API specification to be useful you are encouraged to add additional information. That information is only used in the National Data Directory",
+      "registeredApiTitle": "Enkeltstående API-beskrivelser"
+    },
+    "harvest": {
+      "harvestFromCatalog": "Harvest specifications from catalog",
+      "labelHarvestUrl": "Link to API-catalog",
+      "harvestAction": "Harvest from catalog",
+      "harvestedFromCatalogTitle": "Harvested from catalog",
+      "changeHarvestUrl": "Edit link"
     }
   },
   "formStatus": {

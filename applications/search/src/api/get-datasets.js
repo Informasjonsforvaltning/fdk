@@ -7,7 +7,7 @@ import { normalizeAggregations } from './normalizeAggregations';
 
 export const getDatasets = async search => {
   const datasetsUrl = `/datasets${search}`;
-  const url = addOrReplaceParam(datasetsUrl, 'size', '50');
+  const url = addOrReplaceParam(datasetsUrl, 'size', '10');
 
   const response = await axios
     .get(url)

@@ -25,6 +25,10 @@ public class ApiRegistration extends ApiRegistrationPublic {
 
     private String registrationStatus = REGISTRATION_STATUS_DRAFT; // DRAFT is default
 
+    private boolean isFromApiCatalog;
+
+    private HarvestStatus harvestStatus;
+
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZZ")
     private Date _lastModified;
 }

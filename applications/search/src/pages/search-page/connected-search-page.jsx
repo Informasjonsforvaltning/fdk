@@ -2,6 +2,12 @@ import { connect } from 'react-redux';
 import { fetchPublishersIfNeededAction } from '../../redux/modules/publishers';
 import { fetchThemesIfNeededAction } from '../../redux/modules/themes';
 import {
+  setSearchQuery,
+  setQueryFilter,
+  setQueryFrom,
+  clearQuery
+} from '../../redux/modules/search';
+import {
   setDatasetSortAction,
   setConceptSortAction,
   setApiSortAction
@@ -21,7 +27,8 @@ const mapStateToProps = ({
   publishers,
   referenceData,
   conceptsCompare,
-  settings
+  settings,
+  searchQuery
 }) => {
   const { themesItems, isFetchingThemes } = themes || {
     themesItems: null
@@ -44,7 +51,8 @@ const mapStateToProps = ({
     conceptsCompare: items,
     datasetSortValue: settings.datasetSortValue,
     apiSortValue: settings.apiSortValue,
-    conceptSortValue: settings.conceptSortValue
+    conceptSortValue: settings.conceptSortValue,
+    searchQuery
   };
 };
 
@@ -57,7 +65,13 @@ const mapDispatchToProps = dispatch => ({
   removeConcept: uri => dispatch(removeConceptAction(uri)),
   setDatasetSort: sortValue => dispatch(setDatasetSortAction(sortValue)),
   setApiSort: sortValue => dispatch(setApiSortAction(sortValue)),
-  setConceptSort: sortValue => dispatch(setConceptSortAction(sortValue))
+  setConceptSort: sortValue => dispatch(setConceptSortAction(sortValue)),
+  setSearchQuery: query => dispatch(setSearchQuery(query)),
+  setQueryFilter: (filterType, filterValue, history) =>
+    dispatch(setQueryFilter(filterType, filterValue, history)),
+  setQueryFrom: (filterValue, history) =>
+    dispatch(setQueryFrom(filterValue, history)),
+  clearQuery: history => dispatch(clearQuery(history))
 });
 
 export const ConnectedSearchPage = connect(

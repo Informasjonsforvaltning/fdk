@@ -24,7 +24,7 @@ public class HarvestQueue {
     public void addTask(String task) {
         synchronized (scheduledTasks) {
             if (scheduledTasks.contains(task)) {
-                logger.debug("Task already exists in queue: {}", task);
+                logger.debug("Task already exists in queue, skipping: {}", task);
                 return;
             }
             scheduledTasks.add(task);

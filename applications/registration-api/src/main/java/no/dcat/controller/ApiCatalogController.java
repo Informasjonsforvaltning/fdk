@@ -1,6 +1,7 @@
 package no.dcat.controller;
 
 import no.dcat.model.ApiCatalog;
+import no.dcat.service.ApiCatalogHarvesterService;
 import no.dcat.service.ApiCatalogRepository;
 import org.apache.jena.shared.NotFoundException;
 import org.slf4j.Logger;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
@@ -25,9 +27,15 @@ public class ApiCatalogController {
 
     private ApiCatalogRepository apiCatalogRepository;
 
+    private ApiCatalogHarvesterService apiCatalogHarvesterService;
+
     @Autowired
-    public ApiCatalogController(ApiCatalogRepository apiDocumentRepository) {
+    public ApiCatalogController(
+        ApiCatalogRepository apiDocumentRepository,
+        ApiCatalogHarvesterService apiCatalogHarvesterService
+    ) {
         this.apiCatalogRepository = apiDocumentRepository;
+        this.apiCatalogHarvesterService = apiCatalogHarvesterService;
     }
 
     @CrossOrigin
@@ -39,12 +47,21 @@ public class ApiCatalogController {
     public ApiCatalog storeApiCatalog(
         @RequestBody ApiCatalog apiCatalogData) {
 
-        ApiCatalog newCatalog = new ApiCatalog();
-        newCatalog.setHarvestSourceUri(apiCatalogData.getHarvestSourceUri());
-        newCatalog.setOrgNo(apiCatalogData.getOrgNo());
+        ApiCatalog apiCatalog;
 
-        apiCatalogRepository.save(newCatalog);
-        return newCatalog;
+        Optional<ApiCatalog> apiCatalogOptional = apiCatalogRepository.findByOrgNo(apiCatalogData.getOrgNo());
+        if (apiCatalogOptional.isPresent()) {
+            apiCatalog = apiCatalogOptional.get();
+        } else {
+            apiCatalog = new ApiCatalog();
+            apiCatalog.setId(UUID.randomUUID().toString());
+            apiCatalog.setOrgNo(apiCatalogData.getOrgNo());
+        }
+        apiCatalog.setHarvestSourceUri(apiCatalogData.getHarvestSourceUri());
+
+        apiCatalogRepository.save(apiCatalog);
+        apiCatalogHarvesterService.addHarvestSingleCatalogTaskToQueue(apiCatalog);
+        return apiCatalog;
     }
 
     @CrossOrigin

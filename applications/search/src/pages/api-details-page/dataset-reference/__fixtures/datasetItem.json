@@ -1,0 +1,427 @@
+{
+  "id": "43dbbfe0-ae35-43dd-8411-2e8b1e9f9276",
+  "uri": "https://kartkatalog.geonorge.no/Metadata/uuid/45e9ba77-388c-40eb-87df-e34e9d9ab300",
+  "source": "B",
+  "harvest": {
+  "firstHarvested": "2017-12-18T15:51:21+0100",
+    "lastHarvested": "2018-09-27T01:00:16+0200",
+    "lastChanged": "2018-08-30T12:49:49+0200",
+    "changed": [
+    "2018-05-07T01:04:10+0200",
+    "2018-05-07T13:59:37+0200",
+    "2018-06-12T02:12:48+0200",
+    "2018-06-12T10:08:32+0200",
+    "2018-06-12T14:13:21+0200",
+    "2018-06-12T15:58:34+0200",
+    "2018-06-13T01:10:48+0200",
+    "2018-06-14T01:10:46+0200",
+    "2018-06-15T01:10:47+0200",
+    "2018-06-15T14:42:44+0200",
+    "2018-06-16T01:10:45+0200",
+    "2018-06-17T01:10:45+0200",
+    "2018-06-18T01:10:46+0200",
+    "2018-06-19T01:10:45+0200",
+    "2018-06-20T01:10:45+0200",
+    "2018-06-25T16:24:34+0200",
+    "2018-06-26T01:00:16+0200",
+    "2018-06-27T01:00:15+0200",
+    "2018-06-28T01:00:15+0200",
+    "2018-06-29T01:00:19+0200",
+    "2018-06-30T01:00:16+0200",
+    "2018-07-01T01:00:14+0200",
+    "2018-07-02T01:00:16+0200",
+    "2018-07-02T15:41:19+0200",
+    "2018-07-03T01:00:18+0200",
+    "2018-07-04T01:00:16+0200",
+    "2018-07-05T01:00:17+0200",
+    "2018-07-06T01:00:20+0200",
+    "2018-07-07T01:00:14+0200",
+    "2018-07-08T01:00:15+0200",
+    "2018-07-09T01:00:15+0200",
+    "2018-07-10T01:00:21+0200",
+    "2018-07-13T01:00:16+0200",
+    "2018-07-14T01:00:12+0200",
+    "2018-07-15T01:00:15+0200",
+    "2018-07-16T01:00:13+0200",
+    "2018-07-17T01:00:15+0200",
+    "2018-07-18T01:00:16+0200",
+    "2018-07-19T01:00:13+0200",
+    "2018-07-20T01:00:26+0200",
+    "2018-07-21T01:00:12+0200",
+    "2018-07-22T01:00:12+0200",
+    "2018-07-23T01:00:16+0200",
+    "2018-07-24T01:00:12+0200",
+    "2018-07-25T01:00:12+0200",
+    "2018-07-26T01:00:14+0200",
+    "2018-07-27T01:00:14+0200",
+    "2018-07-28T01:00:15+0200",
+    "2018-07-29T01:00:12+0200",
+    "2018-07-30T01:00:15+0200",
+    "2018-07-31T01:00:14+0200",
+    "2018-08-01T01:00:16+0200",
+    "2018-08-02T01:00:15+0200",
+    "2018-08-03T01:00:15+0200",
+    "2018-08-04T01:00:12+0200",
+    "2018-08-05T01:00:15+0200",
+    "2018-08-06T01:00:15+0200",
+    "2018-08-07T01:00:14+0200",
+    "2018-08-08T01:00:19+0200",
+    "2018-08-09T01:00:15+0200",
+    "2018-08-10T01:00:15+0200",
+    "2018-08-11T01:00:12+0200",
+    "2018-08-12T01:00:15+0200",
+    "2018-08-13T01:00:16+0200",
+    "2018-08-14T01:00:20+0200",
+    "2018-08-15T01:00:13+0200",
+    "2018-08-30T12:49:49+0200"
+  ]
+},
+  "provenanceSort": "9UKJENT",
+  "title": {
+  "nb": "Markagrensen"
+},
+  "description": {
+  "nb": "Datasettet avgrenser område for virkeområdet til lov 6. juni 2009 nr. 35 om naturområder i Oslo og nærliggende kommuner (markaloven) som trådte i kraft 1. september 2009. Markalovens virkeområde er fastsatt i forskrift 4. september 2015 nr. 1032 om justering av markagrensen fastlegger markalovens geografiske virkeområde med tilhørende kart."
+},
+  "descriptionFormatted": {
+  "nb": "Datasettet avgrenser område for virkeområdet til lov 6. juni 2009 nr. 35 om naturområder i Oslo og nærliggende kommuner (markaloven) som trådte i kraft 1. september 2009. Markalovens virkeområde er fastsatt i forskrift 4. september 2015 nr. 1032 om justering av markagrensen fastlegger markalovens geografiske virkeområde med tilhørende kart."
+},
+  "contactPoint": [
+  {
+    "uri": "https://register.geonorge.no/register/organisasjoner/kartverket",
+    "email": "kundesenter@kartverket.no",
+    "organizationName": "Kartverket"
+  }
+],
+  "keyword": [
+  {
+    "nb": "Sørmarka"
+  },
+  {
+    "nb": "Gjelleråsmarka"
+  },
+  {
+    "nb": "fellesDatakatalog"
+  },
+  {
+    "nb": "Krokskogen"
+  },
+  {
+    "nb": "Markagrensa"
+  },
+  {
+    "nb": "forskriftsreferanse"
+  },
+  {
+    "nb": "Vardåsmarka"
+  },
+  {
+    "nb": "LovVirkeområde"
+  },
+  {
+    "nb": "Østmarka"
+  },
+  {
+    "nb": "grense"
+  },
+  {
+    "nb": "Markaloven"
+  },
+  {
+    "nb": "Nordmarka"
+  },
+  {
+    "nb": "Norge digitalt"
+  },
+  {
+    "nb": "Plan"
+  },
+  {
+    "nb": "Bærumsmarka"
+  },
+  {
+    "nb": "Lillomarka"
+  },
+  {
+    "nb": "Vestmarka"
+  },
+  {
+    "nb": "lovreferanse"
+  },
+  {
+    "nb": "Det offentlige kartgrunnlaget"
+  },
+  {
+    "nb": "grensestatus"
+  },
+  {
+    "nb": "Marka"
+  },
+  {
+    "nb": "geodataloven"
+  },
+  {
+    "nb": "Kjekstadmarka"
+  },
+  {
+    "nb": "Romeriksåsene"
+  },
+  {
+    "nb": "Oslomarka"
+  },
+  {
+    "nb": "Markagrensen"
+  }
+],
+  "publisher": {
+  "type": "no.dcat.datastore.domain.dcat.Publisher",
+    "overordnetEnhet": "972417858",
+    "organisasjonsform": "ORGL",
+    "naeringskode": {
+    "uri": "http://www.ssb.no/nace/sn2007/71.123",
+      "code": "71.123",
+      "prefLabel": {
+      "no": "Kart og oppmåling"
+    }
+  },
+  "sektorkode": {
+    "uri": "http://www.brreg.no/sektorkode/1110",
+      "code": "1110",
+      "prefLabel": {
+      "no": "Statens forretningsdrift"
+    }
+  },
+  "valid": true,
+    "uri": "http://data.brreg.no/enhetsregisteret/enhet/971040238",
+    "id": "971040238",
+    "name": "STATENS KARTVERK",
+    "orgPath": "/STAT/972417858/971040238",
+    "prefLabel": {
+    "no": "Kartverket"
+  }
+},
+  "landingPage": [],
+  "theme": [
+  {
+    "id": "http://publications.europa.eu/resource/authority/data-theme/GOVE",
+    "code": "GOVE",
+    "startUse": "2015-10-01",
+    "title": {
+      "it": "Governo e settore pubblico",
+      "nb": "Forvaltning og offentlig sektor",
+      "en": "Government and public sector",
+      "hr": "Vlada i javni sektor",
+      "es": "Gobierno y sector público",
+      "de": "Regierung und öffentlicher Sektor",
+      "sk": "Vláda a verejný sektor",
+      "ro": "Guvern şi sector public",
+      "bg": "Правителство и публичен сектор",
+      "et": "Valitsus ja avalik sektor",
+      "el": "Κυβέρνηση και δημόσιος τομέας",
+      "pl": "Rząd i sektor publiczny",
+      "cs": "Vláda a veřejný sektor",
+      "ga": "Rialtas agus earnáil phoiblí",
+      "pt": "Governo e setor público",
+      "lt": "Vyriausybė ir viešasis sektorius",
+      "lv": "Valdība un sabiedriskais sektors",
+      "mt": "Gvern u settur pubbliku",
+      "hu": "Kormányzat és közszféra",
+      "da": "Regeringen og den offentlige sektor",
+      "fi": "Valtioneuvosto ja julkinen sektori",
+      "fr": "Gouvernement et secteur public",
+      "sl": "Vlada in javni sektor",
+      "sv": "Regeringen och den offentliga sektorn",
+      "nl": "Overheid en publieke sector"
+    },
+    "conceptSchema": {
+      "id": "http://publications.europa.eu/resource/authority/data-theme",
+      "title": {
+        "en": "Dataset types Named Authority List"
+      },
+      "versioninfo": "20160921-0",
+      "versionnumber": "20160921-0"
+    }
+  }
+],
+  "distribution": [
+  {
+    "uri": "https://kartkatalog.geonorge.no/Metadata/uuid/45e9ba77-388c-40eb-87df-e34e9d9ab300/GPX",
+    "title": {
+      "nb": "Geonorge nedlastning"
+    },
+    "description": {
+      "nb": "Nedlastning gjennom Geonorge-portalen ved bruk av handlevognsfunksjonalitet"
+    },
+    "downloadURL": [],
+    "accessURL": [
+      "https://kartkatalog.geonorge.no/metadata/uuid/45e9ba77-388c-40eb-87df-e34e9d9ab300"
+    ],
+    "openLicense": false,
+    "format": [
+      "GPX"
+    ]
+  },
+  {
+    "uri": "https://kartkatalog.geonorge.no/Metadata/uuid/bd4c56e8-383f-4048-acd5-86aea32e457c",
+    "title": {
+      "nb": "WFS-tjeneste",
+      "en": "OGC:WFS"
+    },
+    "description": {
+      "nb": "Karttjeneste som returnerer vektordata (OGC Web Feature Service)",
+      "en": "View Service (WFS)"
+    },
+    "downloadURL": [],
+    "accessURL": [
+      "https://wfs.geonorge.no/skwms1/wfs.markagrensa?service=wfs&request=getcapabilities"
+    ],
+    "openLicense": false,
+    "format": [
+      "WFS"
+    ]
+  },
+  {
+    "uri": "https://kartkatalog.geonorge.no/Metadata/uuid/45e9ba77-388c-40eb-87df-e34e9d9ab300/GML",
+    "title": {
+      "nb": "Geonorge nedlastning"
+    },
+    "description": {
+      "nb": "Nedlastning gjennom Geonorge-portalen ved bruk av handlevognsfunksjonalitet"
+    },
+    "downloadURL": [],
+    "accessURL": [
+      "https://kartkatalog.geonorge.no/metadata/uuid/45e9ba77-388c-40eb-87df-e34e9d9ab300"
+    ],
+    "openLicense": false,
+    "format": [
+      "GML"
+    ]
+  },
+  {
+    "uri": "https://kartkatalog.geonorge.no/Metadata/uuid/45e9ba77-388c-40eb-87df-e34e9d9ab300/ESRI+Filgeodatabase",
+    "title": {
+      "nb": "Geonorge nedlastning"
+    },
+    "description": {
+      "nb": "Nedlastning gjennom Geonorge-portalen ved bruk av handlevognsfunksjonalitet"
+    },
+    "downloadURL": [],
+    "accessURL": [
+      "https://kartkatalog.geonorge.no/metadata/uuid/45e9ba77-388c-40eb-87df-e34e9d9ab300"
+    ],
+    "openLicense": false,
+    "format": [
+      "ESRI Filgeodatabase"
+    ]
+  },
+  {
+    "uri": "https://kartkatalog.geonorge.no/Metadata/uuid/4d0fd462-aa69-4d49-b773-52382dc0e450",
+    "title": {
+      "nb": "WMS-tjeneste",
+      "en": "OGC:WMS"
+    },
+    "description": {
+      "nb": "Karttjeneste som returnerer kartbilder (Web Map Service)",
+      "en": "View Service (WMS)"
+    },
+    "downloadURL": [],
+    "accessURL": [
+      "https://wms.geonorge.no/skwms1/wms.markagrensen?request=GetCapabilities&Service=WMS"
+    ],
+    "openLicense": false,
+    "format": [
+      "WMS"
+    ]
+  },
+  {
+    "uri": "https://kartkatalog.geonorge.no/Metadata/uuid/45e9ba77-388c-40eb-87df-e34e9d9ab300/postgis",
+    "title": {
+      "nb": "Geonorge nedlastning"
+    },
+    "description": {
+      "nb": "Nedlastning gjennom Geonorge-portalen ved bruk av handlevognsfunksjonalitet"
+    },
+    "downloadURL": [],
+    "accessURL": [
+      "https://kartkatalog.geonorge.no/metadata/uuid/45e9ba77-388c-40eb-87df-e34e9d9ab300"
+    ],
+    "openLicense": false,
+    "format": [
+      "postgis"
+    ]
+  },
+  {
+    "uri": "https://kartkatalog.geonorge.no/Metadata/uuid/45e9ba77-388c-40eb-87df-e34e9d9ab300/SOSI",
+    "title": {
+      "nb": "Geonorge nedlastning"
+    },
+    "description": {
+      "nb": "Nedlastning gjennom Geonorge-portalen ved bruk av handlevognsfunksjonalitet"
+    },
+    "downloadURL": [],
+    "accessURL": [
+      "https://kartkatalog.geonorge.no/metadata/uuid/45e9ba77-388c-40eb-87df-e34e9d9ab300"
+    ],
+    "openLicense": false,
+    "format": [
+      "SOSI"
+    ]
+  }
+],
+  "accessRights": {
+  "uri": "http://publications.europa.eu/resource/authority/access-right/PUBLIC",
+    "code": "PUBLIC",
+    "prefLabel": {
+    "en": "Public",
+      "nb": "Offentlig",
+      "nn": "Offentlig"
+  }
+},
+  "identifier": [
+  "45e9ba77-388c-40eb-87df-e34e9d9ab300"
+],
+  "catalog": {
+  "uri": "http://www.geonorge.no/geonetwork",
+    "title": {
+    "nb": "Geonorge"
+  },
+  "description": {
+    "nb": "GeoNorge er den nasjonale katalogen for geografisk informasjon"
+  },
+  "publisher": {
+    "type": "no.dcat.datastore.domain.dcat.Publisher",
+      "overordnetEnhet": "972417858",
+      "organisasjonsform": "ORGL",
+      "naeringskode": {
+      "uri": "http://www.ssb.no/nace/sn2007/71.123",
+        "code": "71.123",
+        "prefLabel": {
+        "no": "Kart og oppmåling"
+      }
+    },
+    "sektorkode": {
+      "uri": "http://www.brreg.no/sektorkode/1110",
+        "code": "1110",
+        "prefLabel": {
+        "no": "Statens forretningsdrift"
+      }
+    },
+    "valid": true,
+      "uri": "http://data.brreg.no/enhetsregisteret/enhet/971040238",
+      "id": "971040238",
+      "name": "STATENS KARTVERK",
+      "orgPath": "/STAT/972417858/971040238",
+      "prefLabel": {
+      "no": "Kartverket"
+    }
+  },
+  "issued": "2018-02-13T00:00:00+0100",
+    "modified": "2018-01-19T00:00:00+0100",
+    "language": "http://publications.europa.eu/resource/authority/language/NOR",
+    "themeTaxonomy": [
+    "https://register.geonorge.no/subregister/metadata-kodelister/kartverket/nasjonal-temainndeling",
+    "http://publications.europa.eu/mdr/resource/authority/data-theme/html/data-theme-eng.html",
+    "http://www.eionet.europa.eu/gemet/inspire_themes"
+  ]
+}
+}

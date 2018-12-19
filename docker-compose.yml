@@ -35,6 +35,7 @@ services:
     - search
     - search-api
     - harvester-api
+    - api-cat
 
   fuseki:
     image: dcatno/fuseki:latest
@@ -78,6 +79,7 @@ services:
     - elasticsearch5
     - reference-data
     - registration-auth
+    - api-cat
 
   registration-react:
     image: dcatno/registration-react:latest

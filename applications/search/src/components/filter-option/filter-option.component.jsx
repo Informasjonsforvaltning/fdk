@@ -36,7 +36,8 @@ export const FilterOption = props => {
     textLabel = localization[optionLabel] || optionLabel;
   }
   if (textLabel && textLabel === textLabel.toUpperCase()) {
-    textLabel = `${_capitalize(textLabel)}`;
+    textLabel =
+      localization[textLabel.toLowerCase()] || `${_capitalize(textLabel)}`;
   }
 
   const id = encodeURIComponent(itemKey + value);

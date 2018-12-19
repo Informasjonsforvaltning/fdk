@@ -2,7 +2,6 @@ import { connect } from 'react-redux';
 import _ from 'lodash';
 
 import {
-  fetchUserIfNeeded,
   fetchProvenanceIfNeeded,
   fetchFrequencyIfNeeded,
   fetchThemesIfNeeded,
@@ -10,18 +9,13 @@ import {
   fetchReferenceDatasetsIfNeeded,
   fetchOpenLicensesIfNeeded
 } from '../../actions/index';
-import {
-  fetchDatasetsIfNeeded,
-  getDatasetItemByDatasetiId,
-  deleteDatasetItemAction
-} from '../../redux/modules/datasets';
+import { deleteDatasetItemAction } from '../../redux/modules/datasets';
 import { fetchHelptextsIfNeeded } from '../../redux/modules/helptexts';
 import { getDatasetFormStatusById } from '../../redux/modules/dataset-form-status';
-import { RegDataset } from './dataset-registration-page';
+import { ResolvedRegDataset } from './resolved-dataset-registration-page';
 
 const mapStateToProps = (
   {
-    datasets,
     helptexts,
     provenance,
     frequency,
@@ -34,12 +28,7 @@ const mapStateToProps = (
   },
   ownProps
 ) => {
-  const catalogId = _.get(ownProps, ['match', 'params', 'catalogId']);
   const id = _.get(ownProps, ['match', 'params', 'id']);
-
-  const datasetItem = getDatasetItemByDatasetiId(datasets, catalogId, id) || {
-    datasetItem: null
-  };
 
   const { helptextItems } = helptexts || {
     helptextItems: null
@@ -97,7 +86,6 @@ const mapStateToProps = (
   const sample = form && form.sample ? form.sample : {};
 
   return {
-    datasetItem,
     helptextItems,
     provenanceItems,
     frequencyItems,
@@ -139,9 +127,6 @@ const mapStateToProps = (
 };
 
 const mapDispatchToProps = dispatch => ({
-  fetchUserIfNeeded: () => dispatch(fetchUserIfNeeded()),
-  fetchDatasetsIfNeeded: catalogId =>
-    dispatch(fetchDatasetsIfNeeded(catalogId)),
   fetchProvenanceIfNeeded: () => dispatch(fetchProvenanceIfNeeded()),
   fetchFrequencyIfNeeded: () => dispatch(fetchFrequencyIfNeeded()),
   fetchThemesIfNeeded: () => dispatch(fetchThemesIfNeeded()),
@@ -157,4 +142,4 @@ const mapDispatchToProps = dispatch => ({
 export const ConnectedDatasetRegistrationPage = connect(
   mapStateToProps,
   mapDispatchToProps
-)(RegDataset);
+)(ResolvedRegDataset);

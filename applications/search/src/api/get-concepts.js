@@ -11,12 +11,12 @@ export const getConcepts = async search => {
 
   if (_.get(parsedParameters, 'from')) {
     const { from } = parsedParameters;
-    const page = Math.ceil(from / 50);
+    const page = Math.ceil(from / 10);
     conceptsUrl = addOrReplaceParam(conceptsUrl, 'from', '');
     conceptsUrl = addOrReplaceParam(conceptsUrl, 'page', page);
   }
 
-  conceptsUrl = addOrReplaceParam(conceptsUrl, 'size', '50');
+  conceptsUrl = addOrReplaceParam(conceptsUrl, 'size', '10');
   conceptsUrl = addOrReplaceParam(conceptsUrl, 'aggregations', 'true');
 
   const response = await axios

@@ -51,6 +51,7 @@ export const SearchBox = props => {
                   e.preventDefault();
                   onSearchChange(e);
                 }}
+                autoComplete="off"
               />
             </label>
           </form>
