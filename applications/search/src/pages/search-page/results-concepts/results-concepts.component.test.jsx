@@ -35,12 +35,12 @@ beforeEach(() => {
   });
 });
 
-test('should render ResultsConcepts correctly with minimum of props', () => {
+test.skip('should render ResultsConcepts correctly with minimum of props', () => {
   const minWrapper = shallow(<ResultsConcepts />);
   expect(minWrapper).toMatchSnapshot();
 });
 
-test('should render ResultsConcepts correctly with props', () => {
+test.skip('should render ResultsConcepts correctly with props', () => {
   expect(wrapper).toMatchSnapshot();
 });
 
