@@ -68,7 +68,7 @@ const renderAPIInfo = ({ children }) => {
 };
 
 const renderDatasetReferences = references => {
-  if (!references) {
+  if (!references || (references && references.length === 0)) {
     return null;
   }
   const children = items =>
