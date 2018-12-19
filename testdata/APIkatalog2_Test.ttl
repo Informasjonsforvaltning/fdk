@@ -2,7 +2,7 @@
 @prefix dcterms:   <http://purl.org/dc/terms/> .
 @prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
 @prefix dcat:  <http://www.w3.org/ns/dcat#> .
-<https://github.com/Informasjonsforvaltning/fdk/tree/develop/testdata> a adms:AssetRepository ;
+<https://github.com/Informasjonsforvaltning/fdk/develop/testdata> a adms:AssetRepository ;
   dcterms:created "2018-12-19"^^xsd:date ;
   dcterms:description "A test catalog of API decriptions created by Sindre "@en ;
   dcterms:publisher <https://data.brreg.no/enhetsregisteret/enhet/974760673> ;
