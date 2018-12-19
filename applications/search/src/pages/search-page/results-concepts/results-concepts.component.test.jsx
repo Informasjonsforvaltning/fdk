@@ -22,7 +22,7 @@ beforeEach(() => {
     onPageChange,
     onFilterPublisherHierarchy,
     searchQuery: {},
-    hitsPerPage: 50,
+    hitsPerPage: 10,
     showFilterModal: false,
     closeFilterModal,
     showClearFilterButton: false,
