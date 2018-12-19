@@ -76,8 +76,8 @@ export class ResultsConcepts extends React.Component {
 
   _renderTerms() {
     const { conceptItems, conceptsCompare } = this.props;
-    if (_.get(conceptItems, ['_embedded', 'concepts'])) {
-      return _.get(conceptItems, ['_embedded', 'concepts']).map(item => (
+    if (conceptItems) {
+      return conceptItems.map(item => (
         <ConceptsHitItem
           key={item.id}
           result={item}
