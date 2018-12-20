@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import React from 'react';
+import qs from 'qs';
 import { Route, Switch } from 'react-router-dom';
 import cx from 'classnames';
 import { detect } from 'detect-browser';
@@ -11,7 +12,10 @@ import { ResultsTabs } from './results-tabs/results-tabs.component';
 import { removeValue, addValue } from '../../lib/stringUtils';
 
 import './search-page.scss';
-import { extractPublisherCounts } from '../../api/get-datasets';
+import {
+  extractPublisherCounts,
+  createNestedListOfPublishers
+} from '../../api/get-datasets';
 import { extractPublisherConceptsCounts } from '../../api/get-concepts';
 import {
   PATHNAME_DATASETS,
@@ -24,67 +28,59 @@ const ReactGA = require('react-ga');
 
 const browser = detect();
 
-export class SearchPage extends React.Component {
-  constructor(props) {
-    super(props);
+export const SearchPage = props => {
+  const {
+    searchQuery,
+    setSearchQuery,
+    setQueryFilter,
+    setQueryFrom,
+    fetchDatasetsIfNeeded,
+    fetchThemesIfNeeded,
+    fetchPublishersIfNeeded,
+    fetchReferenceDataIfNeeded,
+    clearQuery,
+    history,
+    datasetItems,
+    datasetAggregations,
+    datasetTotal,
+    conceptItems,
+    apiItems,
+    themesItems,
+    publisherItems,
+    referenceData,
+    location,
+    conceptsCompare,
+    addConcept,
+    removeConcept,
+    setDatasetSort,
+    setApiSort,
+    setConceptSort,
+    datasetSortValue,
+    apiSortValue,
+    conceptSortValue
+  } = props;
 
-    this.state = {
-      showFilterModal: false
-    };
+  const stringifiedQuery = qs.stringify(searchQuery, { skipNulls: true });
 
-    this.handleClearFilters = this.handleClearFilters.bind(this);
-    this.handleSearchSubmit = this.handleSearchSubmit.bind(this);
-    this.handleDatasetFilterThemes = this.handleDatasetFilterThemes.bind(this);
-    this.handleDatasetFilterAccessRights = this.handleDatasetFilterAccessRights.bind(
-      this
-    );
-    this.handleDatasetFilterPublisher = this.handleDatasetFilterPublisher.bind(
-      this
-    );
-    this.handleDatasetFilterPublisherHierarchy = this.handleDatasetFilterPublisherHierarchy.bind(
-      this
-    );
-    this.handleDatasetFilterProvenance = this.handleDatasetFilterProvenance.bind(
-      this
-    );
-    this.handleDatasetFilterSpatial = this.handleDatasetFilterSpatial.bind(
-      this
-    );
-    this.handleFilterFormat = this.handleFilterFormat.bind(this);
+  fetchDatasetsIfNeeded(stringifiedQuery);
+  fetchThemesIfNeeded();
+  fetchPublishersIfNeeded();
+  fetchReferenceDataIfNeeded();
 
-    this.handlePageChange = this.handlePageChange.bind(this);
-
-    this.sortByLastModified = this.sortByLastModified.bind(this);
-    this.sortByScore = this.sortByScore.bind(this);
-
-    this.close = this.close.bind(this);
-    this.open = this.open.bind(this);
-
-    this.props.fetchThemesIfNeeded();
-    this.props.fetchPublishersIfNeeded();
-    this.props.fetchReferenceDataIfNeeded();
-  }
-
-  handleClearFilters() {
-    const { clearQuery, history } = this.props;
+  const handleClearFilters = () => {
     clearQuery(history);
-  }
+  };
 
-  isFilterNotEmpty() {
-    return _.some(
-      _.values(
-        _.omit(this.props.searchQuery, ['q', 'sortfield', 'sortdirection'])
-      )
+  const isFilterNotEmpty = () =>
+    _.some(
+      _.values(_.omit(props.searchQuery, ['q', 'sortfield', 'sortdirection']))
     );
-  }
 
-  handleSearchSubmit(searchField) {
-    const { setSearchQuery, history } = this.props;
+  const handleSearchSubmit = searchField => {
     setSearchQuery(searchField, history);
-  }
+  };
 
-  handleDatasetFilterThemes(event) {
-    const { searchQuery, setQueryFilter, history } = this.props;
+  const handleDatasetFilterThemes = event => {
     const { theme } = searchQuery;
     if (event.target.checked) {
       ReactGA.event({
@@ -101,10 +97,9 @@ export class SearchPage extends React.Component {
       });
       setQueryFilter('theme', removeValue(theme, event.target.value), history);
     }
-  }
+  };
 
-  handleDatasetFilterAccessRights(event) {
-    const { searchQuery, setQueryFilter, history } = this.props;
+  const handleDatasetFilterAccessRights = event => {
     const { accessrights } = searchQuery;
     if (event.target.checked) {
       ReactGA.event({
@@ -129,10 +124,9 @@ export class SearchPage extends React.Component {
         history
       );
     }
-  }
+  };
 
-  handleDatasetFilterPublisher(event) {
-    const { searchQuery, setQueryFilter, history } = this.props;
+  const handleDatasetFilterPublisher = event => {
     const { publisher } = searchQuery;
     if (event.target.checked) {
       setQueryFilter(
@@ -147,11 +141,9 @@ export class SearchPage extends React.Component {
         history
       );
     }
-  }
+  };
 
-  handleDatasetFilterPublisherHierarchy(event) {
-    const { setQueryFilter, history } = this.props;
-
+  const handleDatasetFilterPublisherHierarchy = event => {
     if (event.target.checked) {
       ReactGA.event({
         category: 'Fasett',
@@ -167,10 +159,9 @@ export class SearchPage extends React.Component {
       });
       setQueryFilter('orgPath', undefined, history);
     }
-  }
+  };
 
-  handleDatasetFilterProvenance(event) {
-    const { searchQuery, setQueryFilter, history } = this.props;
+  const handleDatasetFilterProvenance = event => {
     const { provenance } = searchQuery;
     if (event.target.checked) {
       ReactGA.event({
@@ -195,10 +186,9 @@ export class SearchPage extends React.Component {
         history
       );
     }
-  }
+  };
 
-  handleDatasetFilterSpatial(event) {
-    const { searchQuery, setQueryFilter, history } = this.props;
+  const handleDatasetFilterSpatial = event => {
     const { spatial } = searchQuery;
     if (event.target.checked) {
       ReactGA.event({
@@ -219,10 +209,9 @@ export class SearchPage extends React.Component {
         history
       );
     }
-  }
+  };
 
-  handleFilterFormat(event) {
-    const { searchQuery, setQueryFilter, history } = this.props;
+  const handleFilterFormat = event => {
     const { format } = searchQuery;
     if (event.target.checked) {
       ReactGA.event({
@@ -243,19 +232,17 @@ export class SearchPage extends React.Component {
         history
       );
     }
-  }
+  };
 
-  sortByScore() {
-    const { setQueryFilter, history } = this.props;
+  const sortByScore = () => {
     setQueryFilter('sortfield', undefined, history);
-  }
-  sortByLastModified() {
-    const { setQueryFilter, history } = this.props;
+  };
+  const sortByLastModified = () => {
+    const { setQueryFilter, history } = props;
     setQueryFilter('sortfield', 'modified', history);
-  }
+  };
 
-  handlePageChange(data) {
-    const { setQueryFrom, history } = this.props;
+  const handlePageChange = data => {
     const { selected } = data;
     const offset = Math.ceil(selected * HITS_PER_PAGE);
 
@@ -264,160 +251,143 @@ export class SearchPage extends React.Component {
     } else {
       setQueryFrom(offset, history);
     }
-  }
+  };
 
-  close() {
+  const close = () => {
     this.setState({ showFilterModal: false });
-  }
+  };
 
-  open() {
+  const open = () => {
     this.setState({ showFilterModal: true });
-  }
+  };
 
-  render() {
-    const {
-      datasetItems,
-      conceptItems,
-      apiItems,
-      themesItems,
-      publisherItems,
-      referenceData,
-      location,
-      conceptsCompare,
-      addConcept,
-      removeConcept,
-      setDatasetSort,
-      setApiSort,
-      setConceptSort,
-      datasetSortValue,
-      apiSortValue,
-      conceptSortValue,
-      searchQuery
-    } = this.props;
-    const topSectionClass = cx('top-section-search', 'mb-4', {
-      'top-section-search--image': !!(browser && browser.name !== 'ie')
-    });
-    return (
-      <div>
-        <section className={topSectionClass}>
-          <div className="container">
-            <SearchBoxWithState
-              onSearchSubmit={this.handleSearchSubmit}
-              searchQuery={searchQuery.q || ''}
-              countDatasets={_.get(datasetItems, ['hits', 'total'])}
-              countTerms={_.get(conceptItems, ['page', 'totalElements'])}
-              countApis={_.get(apiItems, 'total')}
-              open={this.open}
-            />
-            <ResultsTabs
-              activePath={location.pathname}
-              searchParam={location.search}
-              countDatasets={_.get(datasetItems, ['hits', 'total'], 0)}
-              countTerms={_.get(conceptItems, ['page', 'totalElements'], 0)}
-              countApis={_.get(apiItems, 'total', 0)}
-            />
-          </div>
-        </section>
+  const topSectionClass = cx('top-section-search', 'mb-4', {
+    'top-section-search--image': !!(browser && browser.name !== 'ie')
+  });
+  return (
+    <div>
+      <section className={topSectionClass}>
         <div className="container">
-          <Switch>
-            <Route
-              exact
-              path={PATHNAME_DATASETS}
-              render={props => (
-                <ResultsDataset
-                  datasetItems={datasetItems}
-                  onClearFilters={this.handleClearFilters}
-                  onFilterTheme={this.handleDatasetFilterThemes}
-                  onFilterAccessRights={this.handleDatasetFilterAccessRights}
-                  onFilterPublisher={this.handleDatasetFilterPublisher}
-                  onFilterPublisherHierarchy={
-                    this.handleDatasetFilterPublisherHierarchy
-                  }
-                  onFilterProvenance={this.handleDatasetFilterProvenance}
-                  onFilterSpatial={this.handleDatasetFilterSpatial}
-                  onPageChange={this.handlePageChange}
-                  onSortByLastModified={this.sortByLastModified}
-                  onSortByScore={this.sortByScore}
-                  searchQuery={searchQuery}
-                  themesItems={themesItems}
-                  showFilterModal={this.state.showFilterModal}
-                  showClearFilterButton={this.isFilterNotEmpty()}
-                  closeFilterModal={this.close}
-                  hitsPerPage={HITS_PER_PAGE}
-                  publisherArray={extractPublisherCounts(datasetItems)}
-                  publishers={publisherItems}
-                  referenceData={referenceData}
-                  setDatasetSort={setDatasetSort}
-                  datasetSortValue={datasetSortValue}
-                  {...props}
-                />
-              )}
-            />
-            <Route
-              exact
-              path={PATHNAME_APIS}
-              render={props => (
-                <ResultsApi
-                  apiItems={this.props.apiItems}
-                  onClearFilters={this.handleClearFilters}
-                  onFilterTheme={this.handleDatasetFilterThemes}
-                  onFilterAccessRights={this.handleDatasetFilterAccessRights}
-                  onFilterPublisher={this.handleDatasetFilterPublisher}
-                  onFilterPublisherHierarchy={
-                    this.handleDatasetFilterPublisherHierarchy
-                  }
-                  onFilterFormat={this.handleFilterFormat}
-                  onFilterProvenance={this.handleDatasetFilterProvenance}
-                  onFilterSpatial={this.handleDatasetFilterSpatial}
-                  onPageChange={this.handlePageChange}
-                  onSortByLastModified={this.sortByLastModified}
-                  onSortByScore={this.sortByScore}
-                  searchQuery={searchQuery}
-                  themesItems={themesItems}
-                  showFilterModal={this.state.showFilterModal}
-                  showClearFilterButton={this.isFilterNotEmpty()}
-                  closeFilterModal={this.close}
-                  hitsPerPage={HITS_PER_PAGE}
-                  publisherArray={extractPublisherCounts(apiItems)}
-                  publishers={publisherItems}
-                  setApiSort={setApiSort}
-                  apiSortValue={apiSortValue}
-                  {...props}
-                />
-              )}
-            />
-            <Route
-              exact
-              path={PATHNAME_CONCEPTS}
-              render={props => (
-                <ResultsConcepts
-                  conceptItems={conceptItems}
-                  onClearFilters={this.handleClearFilters}
-                  onPageChange={this.handlePageChange}
-                  onSortByLastModified={this.sortByLastModified}
-                  onSortByScore={this.sortByScore}
-                  onFilterPublisherHierarchy={
-                    this.handleDatasetFilterPublisherHierarchy
-                  }
-                  searchQuery={searchQuery}
-                  hitsPerPage={HITS_PER_PAGE}
-                  showFilterModal={this.state.showFilterModal}
-                  closeFilterModal={this.close}
-                  showClearFilterButton={!!searchQuery.orgPath}
-                  publisherArray={extractPublisherConceptsCounts(conceptItems)}
-                  publishers={publisherItems}
-                  conceptsCompare={conceptsCompare}
-                  addConcept={addConcept}
-                  removeConcept={removeConcept}
-                  setConceptSort={setConceptSort}
-                  conceptSortValue={conceptSortValue}
-                  {...props}
-                />
-              )}
-            />
-          </Switch>
+          <SearchBoxWithState
+            onSearchSubmit={handleSearchSubmit}
+            searchQuery={searchQuery.q || ''}
+            countDatasets={datasetTotal}
+            countTerms={_.get(conceptItems, ['page', 'totalElements'])}
+            countApis={_.get(apiItems, 'total')}
+            open={open}
+          />
+          <ResultsTabs
+            activePath={location.pathname}
+            searchParam={location.search}
+            countDatasets={datasetTotal}
+            countTerms={_.get(conceptItems, ['page', 'totalElements'], 0)}
+            countApis={_.get(apiItems, 'total', 0)}
+          />
         </div>
+      </section>
+      <div className="container">
+        <Switch>
+          <Route
+            exact
+            path={PATHNAME_DATASETS}
+            render={props => (
+              <ResultsDataset
+                datasetItems={datasetItems}
+                datasetAggregations={datasetAggregations}
+                datasetTotal={datasetTotal}
+                onClearFilters={handleClearFilters}
+                onFilterTheme={handleDatasetFilterThemes}
+                onFilterAccessRights={handleDatasetFilterAccessRights}
+                onFilterPublisher={handleDatasetFilterPublisher}
+                onFilterPublisherHierarchy={
+                  handleDatasetFilterPublisherHierarchy
+                }
+                onFilterProvenance={handleDatasetFilterProvenance}
+                onFilterSpatial={handleDatasetFilterSpatial}
+                onPageChange={handlePageChange}
+                onSortByLastModified={sortByLastModified}
+                onSortByScore={sortByScore}
+                searchQuery={searchQuery}
+                themesItems={themesItems}
+                showFilterModal={false}
+                showClearFilterButton={isFilterNotEmpty()}
+                closeFilterModal={close}
+                hitsPerPage={HITS_PER_PAGE}
+                publisherArray={createNestedListOfPublishers(
+                  _.get(datasetAggregations, ['orgPath', 'buckets'], [])
+                )}
+                publishers={publisherItems}
+                referenceData={referenceData}
+                setDatasetSort={setDatasetSort}
+                datasetSortValue={datasetSortValue}
+                {...props}
+              />
+            )}
+          />
+          <Route
+            exact
+            path={PATHNAME_APIS}
+            render={props => (
+              <ResultsApi
+                apiItems={apiItems}
+                onClearFilters={handleClearFilters}
+                onFilterTheme={handleDatasetFilterThemes}
+                onFilterAccessRights={handleDatasetFilterAccessRights}
+                onFilterPublisher={handleDatasetFilterPublisher}
+                onFilterPublisherHierarchy={
+                  handleDatasetFilterPublisherHierarchy
+                }
+                onFilterFormat={handleFilterFormat}
+                onFilterProvenance={handleDatasetFilterProvenance}
+                onFilterSpatial={handleDatasetFilterSpatial}
+                onPageChange={handlePageChange}
+                onSortByLastModified={sortByLastModified}
+                onSortByScore={sortByScore}
+                searchQuery={searchQuery}
+                themesItems={themesItems}
+                showFilterModal={false}
+                showClearFilterButton={isFilterNotEmpty()}
+                closeFilterModal={close}
+                hitsPerPage={HITS_PER_PAGE}
+                publisherArray={extractPublisherCounts(apiItems)}
+                publishers={publisherItems}
+                setApiSort={setApiSort}
+                apiSortValue={apiSortValue}
+                {...props}
+              />
+            )}
+          />
+          <Route
+            exact
+            path={PATHNAME_CONCEPTS}
+            render={props => (
+              <ResultsConcepts
+                conceptItems={conceptItems}
+                onClearFilters={handleClearFilters}
+                onPageChange={handlePageChange}
+                onSortByLastModified={sortByLastModified}
+                onSortByScore={sortByScore}
+                onFilterPublisherHierarchy={
+                  handleDatasetFilterPublisherHierarchy
+                }
+                searchQuery={searchQuery}
+                hitsPerPage={HITS_PER_PAGE}
+                showFilterModal={false}
+                closeFilterModal={close}
+                showClearFilterButton={!!searchQuery.orgPath}
+                publisherArray={extractPublisherConceptsCounts(conceptItems)}
+                publishers={publisherItems}
+                conceptsCompare={conceptsCompare}
+                addConcept={addConcept}
+                removeConcept={removeConcept}
+                setConceptSort={setConceptSort}
+                conceptSortValue={conceptSortValue}
+                {...props}
+              />
+            )}
+          />
+        </Switch>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
