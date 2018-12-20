@@ -15,7 +15,7 @@ export const getDatasets = async search => {
   return response && normalizeAggregations(response.data);
 };
 
-function createNestedListOfPublishers(listOfPublishers) {
+export const createNestedListOfPublishers = listOfPublishers => {
   const nestedListOfPublishers = _(listOfPublishers).forEach(publisherItem => {
     const filteredChildrenOfParentPublishers = _(listOfPublishers)
       .filter(
@@ -37,7 +37,7 @@ function createNestedListOfPublishers(listOfPublishers) {
   return _(nestedListOfPublishers)
     .filter(f => !f.hasParent)
     .value();
-}
+};
 
 export const extractPublisherCounts = datasetsSearchResponse => {
   const publisherBuckets = _.get(

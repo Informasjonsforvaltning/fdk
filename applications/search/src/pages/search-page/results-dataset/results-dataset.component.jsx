@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import ReactPaginate from 'react-paginate';
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import cx from 'classnames';
-import _ from 'lodash';
 
 import localization from '../../../lib/localization';
 import { SearchHitItem } from './search-hit-item/search-hit-item.component';
@@ -31,7 +30,7 @@ export class ResultsDataset extends React.Component {
     const {
       showFilterModal,
       closeFilterModal,
-      datasetItems,
+      datasetAggregations,
       onFilterTheme,
       onFilterAccessRights,
       onFilterPublisherHierarchy,
@@ -50,7 +49,7 @@ export class ResultsDataset extends React.Component {
             <FilterBox
               htmlKey={1}
               title={localization.facet.theme}
-              filter={datasetItems.aggregations.theme_count}
+              filter={datasetAggregations.theme_count}
               onClick={onFilterTheme}
               activeFilter={searchQuery.theme}
               themesItems={themesItems}
@@ -58,7 +57,7 @@ export class ResultsDataset extends React.Component {
             <FilterBox
               htmlKey={2}
               title={localization.facet.accessRight}
-              filter={datasetItems.aggregations.accessRightsCount}
+              filter={datasetAggregations.accessRightsCount}
               onClick={onFilterAccessRights}
               activeFilter={searchQuery.accessrights}
             />
@@ -72,14 +71,14 @@ export class ResultsDataset extends React.Component {
             <FilterBox
               htmlKey={3}
               title={localization.facet.spatial}
-              filter={datasetItems.aggregations.spatial}
+              filter={datasetAggregations.spatial}
               onClick={onFilterSpatial}
               activeFilter={searchQuery.spatial}
             />
             <FilterBox
               htmlKey={4}
               title={localization.facet.provenance}
-              filter={datasetItems.aggregations.provenanceCount}
+              filter={datasetAggregations.provenanceCount}
               onClick={onFilterProvenance}
               activeFilter={searchQuery.provenance}
             />
@@ -100,8 +99,8 @@ export class ResultsDataset extends React.Component {
 
   _renderHits() {
     const { datasetItems, referenceData } = this.props;
-    if (datasetItems && datasetItems.hits && datasetItems.hits.hits) {
-      return datasetItems.hits.hits.map(item => (
+    if (datasetItems) {
+      return datasetItems.map(item => (
         <ErrorBoundary key={item._source.id}>
           <SearchHitItem result={item} referenceData={referenceData} />
         </ErrorBoundary>
@@ -112,6 +111,8 @@ export class ResultsDataset extends React.Component {
   render() {
     const {
       datasetItems,
+      datasetAggregations,
+      datasetTotal,
       onClearFilters,
       onFilterTheme,
       onFilterAccessRights,
@@ -132,10 +133,7 @@ export class ResultsDataset extends React.Component {
     } = this.props;
     const page =
       searchQuery && searchQuery.from ? searchQuery.from / hitsPerPage : 0;
-    const pageCount = Math.ceil(
-      (datasetItems && datasetItems.hits ? datasetItems.hits.total : 1) /
-        hitsPerPage
-    );
+    const pageCount = Math.ceil((datasetTotal || 1) / hitsPerPage);
 
     const clearButtonClass = cx(
       'btn',
@@ -204,13 +202,13 @@ export class ResultsDataset extends React.Component {
               Filtrering tilgang
             </span>
             {datasetItems &&
-              datasetItems.aggregations && (
+              datasetAggregations && (
                 <div>
                   {this._renderFilterModal()}
                   <FilterBox
                     htmlKey={1}
                     title={localization.facet.theme}
-                    filter={datasetItems.aggregations.theme_count}
+                    filter={datasetAggregations.theme_count}
                     onClick={onFilterTheme}
                     activeFilter={searchQuery.theme}
                     themesItems={themesItems}
@@ -218,7 +216,7 @@ export class ResultsDataset extends React.Component {
                   <FilterBox
                     htmlKey={2}
                     title={localization.facet.accessRight}
-                    filter={datasetItems.aggregations.accessRightsCount}
+                    filter={datasetAggregations.accessRightsCount}
                     onClick={onFilterAccessRights}
                     activeFilter={searchQuery.accessrights}
                   />
@@ -232,14 +230,14 @@ export class ResultsDataset extends React.Component {
                   <FilterBox
                     htmlKey={3}
                     title={localization.facet.spatial}
-                    filter={datasetItems.aggregations.spatial}
+                    filter={datasetAggregations.spatial}
                     onClick={onFilterSpatial}
                     activeFilter={searchQuery.spatial}
                   />
                   <FilterBox
                     htmlKey={4}
                     title={localization.facet.provenance}
-                    filter={datasetItems.aggregations.provenanceCount}
+                    filter={datasetAggregations.provenanceCount}
                     onClick={onFilterProvenance}
                     activeFilter={searchQuery.provenance}
                   />
@@ -249,7 +247,7 @@ export class ResultsDataset extends React.Component {
 
           <section className="col-12 col-lg-8">{this._renderHits()}</section>
 
-          {_.get(datasetItems, ['hits', 'total'], 0) > hitsPerPage && (
+          {datasetTotal > 50 && (
             <section className="col-12 col-lg-8 offset-lg-4 d-flex justify-content-center">
               <span className="uu-invisible" aria-hidden="false">
                 Sidepaginering.
@@ -281,6 +279,8 @@ ResultsDataset.defaultProps = {
   showFilterModal: false,
   closeFilterModal: null,
   datasetItems: null,
+  datasetAggregations: null,
+  datasetTotal: 1,
   onFilterTheme: null,
   onFilterAccessRights: null,
   onFilterPublisherHierarchy: null,
@@ -300,7 +300,9 @@ ResultsDataset.defaultProps = {
 ResultsDataset.propTypes = {
   showFilterModal: PropTypes.bool,
   closeFilterModal: PropTypes.func,
-  datasetItems: PropTypes.object,
+  datasetItems: PropTypes.array,
+  datasetAggregations: PropTypes.object,
+  datasetTotal: PropTypes.number,
   onFilterTheme: PropTypes.func,
   onFilterAccessRights: PropTypes.func,
   onFilterPublisherHierarchy: PropTypes.func,
