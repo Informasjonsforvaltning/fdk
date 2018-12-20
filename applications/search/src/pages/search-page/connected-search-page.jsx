@@ -1,5 +1,9 @@
 import { connect } from 'react-redux';
-import { fetchDatasetsIfNeededAction } from '../../redux/modules/datasets';
+import qs from 'qs';
+import {
+  fetchDatasetsIfNeededAction,
+  getDatasetItemByQueryKey
+} from '../../redux/modules/datasets';
 import { fetchPublishersIfNeededAction } from '../../redux/modules/publishers';
 import { fetchThemesIfNeededAction } from '../../redux/modules/themes';
 import {
@@ -32,7 +36,15 @@ const mapStateToProps = ({
   settings,
   searchQuery
 }) => {
-  const { datasetItems, datasetAggregations, datasetTotal } = datasets || {
+  const stringifiedQuery = qs.stringify(searchQuery, { skipNulls: true });
+  const {
+    datasetItems,
+    datasetAggregations,
+    datasetTotal
+  } = getDatasetItemByQueryKey(
+    datasets,
+    encodeURIComponent(stringifiedQuery)
+  ) || {
     datasetItems: null,
     datasetAggregations: null,
     datasetTotal: null
