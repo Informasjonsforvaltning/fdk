@@ -17,7 +17,8 @@ import { extractPublisherConceptsCounts } from '../../api/get-concepts';
 import {
   PATHNAME_DATASETS,
   PATHNAME_APIS,
-  PATHNAME_CONCEPTS
+  PATHNAME_CONCEPTS,
+  HITS_PER_PAGE
 } from '../../constants/constants';
 
 const ReactGA = require('react-ga');
@@ -266,7 +267,7 @@ export class SearchPage extends React.Component {
   handlePageChange(data) {
     const { setQueryFrom, history } = this.props;
     const { selected } = data;
-    const offset = Math.ceil(selected * 10);
+    const offset = Math.ceil(selected * HITS_PER_PAGE);
 
     if (offset === 0) {
       setQueryFrom(undefined, history);
@@ -353,7 +354,7 @@ export class SearchPage extends React.Component {
                   showFilterModal={this.state.showFilterModal}
                   showClearFilterButton={this.isFilterNotEmpty()}
                   closeFilterModal={this.close}
-                  hitsPerPage={10}
+                  hitsPerPage={HITS_PER_PAGE}
                   publisherArray={extractPublisherCounts(datasetItems)}
                   publishers={publisherItems}
                   referenceData={referenceData}
@@ -387,7 +388,7 @@ export class SearchPage extends React.Component {
                   showFilterModal={this.state.showFilterModal}
                   showClearFilterButton={this.isFilterNotEmpty()}
                   closeFilterModal={this.close}
-                  hitsPerPage={10}
+                  hitsPerPage={HITS_PER_PAGE}
                   publisherArray={extractPublisherCounts(apiItems)}
                   publishers={publisherItems}
                   setApiSort={setApiSort}
@@ -410,7 +411,7 @@ export class SearchPage extends React.Component {
                     this.handleDatasetFilterPublisherHierarchy
                   }
                   searchQuery={searchQuery}
-                  hitsPerPage={10}
+                  hitsPerPage={HITS_PER_PAGE}
                   showFilterModal={this.state.showFilterModal}
                   closeFilterModal={this.close}
                   showClearFilterButton={!!searchQuery.orgPath}

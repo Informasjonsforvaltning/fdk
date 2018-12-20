@@ -249,7 +249,7 @@ export class ResultsDataset extends React.Component {
 
           <section className="col-12 col-lg-8">{this._renderHits()}</section>
 
-          {_.get(datasetItems, ['hits', 'total'], 0) > 50 && (
+          {_.get(datasetItems, ['hits', 'total'], 0) > hitsPerPage && (
             <section className="col-12 col-lg-8 offset-lg-4 d-flex justify-content-center">
               <span className="uu-invisible" aria-hidden="false">
                 Sidepaginering.
