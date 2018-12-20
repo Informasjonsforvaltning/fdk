@@ -44,7 +44,7 @@ export const ResultsTabs = props => {
           </li>
           <FeatureToggle featureName={FEATURES.API}>
             <li
-              className={cx('d-flex justify-content-center beta', {
+              className={cx('d-flex justify-content-center', {
                 'li-active': activePath === PATHNAME_APIS
               })}
             >
@@ -58,7 +58,7 @@ export const ResultsTabs = props => {
             </li>
           </FeatureToggle>
           <li
-            className={cx('d-flex justify-content-center beta', {
+            className={cx('d-flex justify-content-center', {
               'li-active': activePath === PATHNAME_CONCEPTS
             })}
           >
