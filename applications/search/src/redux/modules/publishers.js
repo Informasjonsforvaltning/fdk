@@ -5,14 +5,18 @@ export const PUBLISHERS_REQUEST = 'PUBLISHERS_REQUEST';
 export const PUBLISHERS_SUCCESS = 'PUBLISHERS_SUCCESS';
 export const PUBLISHERS_FAILURE = 'PUBLISHERS_FAILURE';
 
-function shouldFetch(state) {
+function shouldFetch(metaState) {
   const threshold = 60 * 1000; // seconds
-  return !state.isFetching && (state.lastFetch || 0) < Date.now() - threshold;
+  return (
+    !metaState ||
+    (!metaState.isFetching &&
+      (metaState.lastFetch || 0) < Date.now() - threshold)
+  );
 }
 
 export function fetchPublishersIfNeededAction() {
   return (dispatch, getState) => {
-    if (shouldFetch(getState().publishers)) {
+    if (shouldFetch(_.get(getState(), ['publishers', 'meta']))) {
       dispatch(
         fetchActions('/publisher', [
           PUBLISHERS_REQUEST,
@@ -24,15 +28,17 @@ export function fetchPublishersIfNeededAction() {
   };
 }
 
-const initialState = { isFetching: false, lastFetch: null, publisherItems: {} };
+const initialState = { meta: {}, publisherItems: {} };
 
 export function publishersReducer(state = initialState, action) {
   switch (action.type) {
     case PUBLISHERS_REQUEST: {
       return {
         ...state,
-        isFetching: true,
-        lastFetch: null
+        meta: {
+          isFetching: true,
+          lastFetch: null
+        }
       };
     }
     case PUBLISHERS_SUCCESS: {
@@ -45,16 +51,20 @@ export function publishersReducer(state = initialState, action) {
       );
       return {
         ...state,
-        isFetching: false,
-        lastFetch: Date.now(),
+        meta: {
+          isFetching: false,
+          lastFetch: Date.now()
+        },
         publisherItems: objFromArray
       };
     }
     case PUBLISHERS_FAILURE: {
       return {
         ...state,
-        isFetching: false,
-        lastFetch: null,
+        meta: {
+          isFetching: false,
+          lastFetch: null
+        },
         publisherItems: null
       };
     }
