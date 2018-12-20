@@ -4,7 +4,7 @@ exports[`should render DatasetInfo correctly 1`] = `
 <React.Fragment>
   <ListRegular
     bottomMargin={true}
-    title="Related datasets"
+    title="Relations"
   >
     <div
       className="d-flex list-regular--item"
