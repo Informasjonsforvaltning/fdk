@@ -8,6 +8,7 @@ import no.dcat.model.ApiRegistration;
 import no.dcat.model.HarvestStatus;
 import no.fdk.harvestqueue.HarvestQueue;
 import no.fdk.harvestqueue.QueuedTask;
+import org.apache.commons.io.input.BOMInputStream;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.Statement;
@@ -81,9 +82,8 @@ public class ApiCatalogHarvesterService {
         try {
 
             URL catalogUrl = new URL(originCatalog.getHarvestSourceUri());
+            BOMInputStream reader = new BOMInputStream(catalogUrl.openStream());
 
-            BufferedReader reader = new BufferedReader(
-                new InputStreamReader(catalogUrl.openStream()));
             final Model model = ModelFactory.createDefaultModel();
             model.read(reader, null, "TURTLE");//Base and lang is just untested dummy values
 
