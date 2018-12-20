@@ -176,11 +176,11 @@ public class ApiRegistrationController {
 
         ApiRegistration apiRegistration = apiRegistrationOptional.get();
 
-        if (!Objects.equals(catalogId, apiRegistration.getCatalogId()) ) {
+        if (!Objects.equals(catalogId, apiRegistration.getCatalogId())) {
             throw new NotFoundException();
         }
 
-        if(apiRegistration.getRegistrationStatus().equals(ApiRegistration.REGISTRATION_STATUS_PUBLISH)){
+        if (apiRegistration.getRegistrationStatus().equals(ApiRegistration.REGISTRATION_STATUS_PUBLISH)) {
             throw new BadRequestException();
         }
 
@@ -225,15 +225,10 @@ public class ApiRegistrationController {
 
         JsonObject oldApiRegistrationJson = gson.toJsonTree(oldApiRegistration).getAsJsonObject();
 
-        updates.forEach((key, value) -> {
-            logger.debug("update key: {} value: ", key, value);
-            if (key != null) {
-                JsonElement changes = gson.toJsonTree(value);
-                if (oldApiRegistrationJson.has(key)) {
-                    oldApiRegistrationJson.remove(key);
-                }
-                oldApiRegistrationJson.add(key, changes);
-            }
+        updates.forEach((key, newValue) -> {
+            logger.debug("update key: {} value: ", key, newValue);
+            JsonElement jsonValue = gson.toJsonTree(newValue);
+            oldApiRegistrationJson.add(key, jsonValue); // JsonObject.add actually replaces value
         });
 
         logger.debug("Changed apiRegistration Json element: {}", oldApiRegistrationJson.toString());
