@@ -1,17 +1,32 @@
 package no.acat.restapi;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import no.acat.model.ApiDocument;
 import no.acat.model.queryresponse.QueryResponse;
 import no.acat.service.ElasticsearchService;
 import no.acat.utils.Utils;
 import no.dcat.shared.testcategories.UnitTest;
+import org.elasticsearch.action.search.SearchAction;
+import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.client.Client;
+import org.elasticsearch.client.ElasticsearchClient;
+import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
+import org.elasticsearch.search.aggregations.AggregationBuilder;
+import org.elasticsearch.search.sort.FieldSortBuilder;
+import org.elasticsearch.search.sort.SortBuilders;
+import org.elasticsearch.search.sort.SortOrder;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.io.IOException;
+
+import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.*;
@@ -298,6 +313,112 @@ public class SearchControllerTest {
         QueryResponse response = spyController.search("", "", "", new String[]{""}, 0, 0, "", "");
 
         assertThat(response, notNullValue());
+
+    }
+
+    @Test
+    public void checkBuildSearchRequest_ifNotNull(){
+
+        ElasticsearchService elasticsearchService = mock(ElasticsearchService.class);
+        ElasticsearchClient elasticsearchClient = mock(ElasticsearchClient.class);
+        SearchAction action = mock(SearchAction.class);
+        AggregationBuilder aggregationBuilder = mock(AggregationBuilder.class);
+        Client client = mock(Client.class);
+        QueryBuilder queryBuilder = mock(QueryBuilder.class);
+
+        ApiSearchController controller =
+            new ApiSearchController(elasticsearchService, Utils.jsonMapper());
+        ApiSearchController spyController = spy(controller);
+
+        SearchRequestBuilder searchRequestBuilder =
+            new SearchRequestBuilder(elasticsearchClient, action);
+        SearchRequestBuilder builder = spy(searchRequestBuilder);
+
+        doCallRealMethod()
+            .when(spyController)
+            .buildSearchRequest(anyString(), anyString(), anyString(), any(), anyInt(), anyInt());
+
+        when(elasticsearchService.getClient()).thenReturn(client);
+        when(client.prepareSearch("acat")).thenReturn(builder);
+        when(builder.setTypes(anyString())).thenReturn(builder);
+        when(builder.setQuery(queryBuilder)).thenReturn(builder);
+        when(builder.setFrom(anyInt())).thenReturn(builder);
+        when(builder.setSize(anyInt())).thenReturn(builder);
+        when(builder.addAggregation(aggregationBuilder)).thenReturn(builder);
+
+        SearchRequestBuilder expected =
+            spyController.buildSearchRequest("query", "", "", new String[] {""}, 0, 0);
+
+        Assert.assertThat(expected, is(notNullValue()));
+    }
+
+    @Test
+    public void checkAddSortForEmptySearch_returnOnce(){
+
+        ElasticsearchService elasticsearchService = mock(ElasticsearchService.class);
+        ApiSearchController controller = new ApiSearchController(elasticsearchService, Utils.jsonMapper());
+        ApiSearchController spyController = spy(controller);
+
+        SearchRequestBuilder builder = mock(SearchRequestBuilder.class);
+        SortBuilders sortBuilders = mock(SortBuilders.class);
+        FieldSortBuilder fieldSortBuilder = mock(FieldSortBuilder.class);
+
+        when(fieldSortBuilder.order(SortOrder.DESC)).thenReturn(fieldSortBuilder);
+        doReturn(builder).when(builder).addSort(fieldSortBuilder);
+
+        doCallRealMethod().when(spyController).addSortForEmptySearch(builder);
+
+        spyController.addSortForEmptySearch(builder);
+
+        verify(spyController, times(1)).addSortForEmptySearch(any(SearchRequestBuilder.class));
+    }
+
+
+    @Test
+    public void checkConvertFromElasticResponse(){
+
+        ElasticsearchService elasticsearchService = mock(ElasticsearchService.class);
+        ApiSearchController controller = new ApiSearchController(elasticsearchService, Utils.jsonMapper());
+        ApiSearchController spyController = spy(controller);
+        SearchResponse searchResponse = mock(SearchResponse.class);
+
+        doNothing().when(spyController).convertHits(any(QueryResponse.class), any(SearchResponse.class));
+        doNothing().when(spyController).convertAggregations(any(QueryResponse.class), any(SearchResponse.class));
+
+        doCallRealMethod().when(spyController).convertFromElasticResponse(any(SearchResponse.class));
+
+        QueryResponse convertResponse = spyController.convertFromElasticResponse(searchResponse);
+
+        assertThat(convertResponse, is(notNullValue()));
+
+    }
+
+
+    @Test
+    public void checkConvertHits_ifOK() throws IOException {
+
+        ElasticsearchService elasticsearchService = mock(ElasticsearchService.class);
+        ApiSearchController controller = new ApiSearchController(elasticsearchService, Utils.jsonMapper());
+        ApiSearchController spyController = spy(controller);
+
+        QueryResponse queryResponse = mock(QueryResponse.class);
+        SearchResponse searchResponse = mock(SearchResponse.class);
+        SearchHits searchHits = mock(SearchHits.class);
+        SearchHit hit = mock(SearchHit.class);
+        SearchHit[] hits = {hit};
+        ObjectMapper objectMapper = mock(ObjectMapper.class);
+        ApiDocument apiDocument = mock(ApiDocument.class);
+
+        when(searchResponse.getHits()).thenReturn(searchHits);
+        when(searchHits.getTotalHits()).thenReturn(100L);
+        when(searchHits.getHits()).thenReturn(hits);
+        when(hit.getSourceAsString()).thenReturn(apiSpecExample);
+        when(objectMapper.readValue(hit.getSourceAsString(), ApiDocument.class)).thenReturn(apiDocument);
+
+        doCallRealMethod().when(spyController).convertHits(queryResponse, searchResponse);
+        spyController.convertHits(queryResponse, searchResponse);
+
+        verify(spyController, times(1)).convertHits(any(QueryResponse.class), any(SearchResponse.class));
 
     }
 
