@@ -66,7 +66,7 @@ const mapDispatchToProps = dispatch => ({
   setDatasetSort: sortValue => dispatch(setDatasetSortAction(sortValue)),
   setApiSort: sortValue => dispatch(setApiSortAction(sortValue)),
   setConceptSort: sortValue => dispatch(setConceptSortAction(sortValue)),
-  setSearchQuery: query => dispatch(setSearchQuery(query)),
+  setSearchQuery: (query, history) => dispatch(setSearchQuery(query, history)),
   setQueryFilter: (filterType, filterValue, history) =>
     dispatch(setQueryFilter(filterType, filterValue, history)),
   setQueryFrom: (filterValue, history) =>

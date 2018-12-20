@@ -1,13 +1,12 @@
 import _ from 'lodash';
 import React from 'react';
-import qs from 'qs';
 import { Route, Switch } from 'react-router-dom';
 import cx from 'classnames';
 import { detect } from 'detect-browser';
 import { ResultsDataset } from './results-dataset/results-dataset.component';
 import { ResultsConcepts } from './results-concepts/results-concepts.component';
 import { ResultsApi } from './results-api/results-api.component';
-import { SearchBox } from './search-box/search-box.component';
+import { SearchBoxWithState } from './search-box/search-box.component';
 import { ResultsTabs } from './results-tabs/results-tabs.component';
 import { removeValue, addValue } from '../../lib/stringUtils';
 
@@ -35,7 +34,6 @@ export class SearchPage extends React.Component {
 
     this.handleClearFilters = this.handleClearFilters.bind(this);
     this.handleSearchSubmit = this.handleSearchSubmit.bind(this);
-    this.handleSearchChange = this.handleSearchChange.bind(this);
     this.handleDatasetFilterThemes = this.handleDatasetFilterThemes.bind(this);
     this.handleDatasetFilterAccessRights = this.handleDatasetFilterAccessRights.bind(
       this
@@ -80,17 +78,9 @@ export class SearchPage extends React.Component {
     );
   }
 
-  handleSearchSubmit() {
-    const { searchQuery } = this.props;
-    this.props.history.push(
-      `?${qs.stringify(searchQuery, { skipNulls: true })}`
-    );
-  }
-
-  handleSearchChange(event) {
+  handleSearchSubmit(searchField) {
     const { setSearchQuery, history } = this.props;
-    const query = event.target.value !== '' ? event.target.value : null;
-    setSearchQuery(query, history);
+    setSearchQuery(searchField, history);
   }
 
   handleDatasetFilterThemes(event) {
@@ -311,9 +301,8 @@ export class SearchPage extends React.Component {
       <div>
         <section className={topSectionClass}>
           <div className="container">
-            <SearchBox
+            <SearchBoxWithState
               onSearchSubmit={this.handleSearchSubmit}
-              onSearchChange={this.handleSearchChange}
               searchQuery={searchQuery.q || ''}
               countDatasets={_.get(datasetItems, ['hits', 'total'])}
               countTerms={_.get(conceptItems, ['page', 'totalElements'])}
