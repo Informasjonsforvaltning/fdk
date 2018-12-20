@@ -36,7 +36,7 @@ exports[`should render ResultsTabs with "Concepts" active correctly 1`] = `
         showOnlyWhenDisabled={false}
       >
         <li
-          className="d-flex justify-content-center beta"
+          className="d-flex justify-content-center"
         >
           <Link
             aria-label="Link til side for api:"
@@ -58,7 +58,7 @@ exports[`should render ResultsTabs with "Concepts" active correctly 1`] = `
         </li>
       </FeatureToggle>
       <li
-        className="d-flex justify-content-center beta li-active"
+        className="d-flex justify-content-center li-active"
       >
         <Link
           aria-label="Link til side for begrep:"
@@ -119,7 +119,7 @@ exports[`should render ResultsTabs with "Dataset" active correctly 1`] = `
         showOnlyWhenDisabled={false}
       >
         <li
-          className="d-flex justify-content-center beta"
+          className="d-flex justify-content-center"
         >
           <Link
             aria-label="Link til side for api:"
@@ -141,7 +141,7 @@ exports[`should render ResultsTabs with "Dataset" active correctly 1`] = `
         </li>
       </FeatureToggle>
       <li
-        className="d-flex justify-content-center beta"
+        className="d-flex justify-content-center"
       >
         <Link
           aria-label="Link til side for begrep:"
