@@ -1,12 +1,22 @@
+import _ from 'lodash';
 import { fetchActions } from '../fetchActions';
 
 export const THEMES_REQUEST = 'THEMES_REQUEST';
 export const THEMES_SUCCESS = 'THEMES_SUCCESS';
 export const THEMES_FAILURE = 'THEMES_FAILURE';
 
+function shouldFetch(metaState) {
+  const threshold = 60 * 1000; // seconds
+  return (
+    !metaState ||
+    (!metaState.isFetching &&
+      (metaState.lastFetch || 0) < Date.now() - threshold)
+  );
+}
+
 export function fetchThemesIfNeededAction() {
   return (dispatch, getState) => {
-    if (!getState().themes.isFetching) {
+    if (shouldFetch(_.get(getState(), ['themes', 'meta']))) {
       dispatch(
         fetchActions('/reference-data/themes', [
           THEMES_REQUEST,
@@ -18,14 +28,18 @@ export function fetchThemesIfNeededAction() {
   };
 }
 
-const initialState = { isFetching: false, themesItems: null };
+const initialState = { items: {}, meta: {} };
 
 export function themesReducer(state = initialState, action) {
   switch (action.type) {
     case THEMES_REQUEST:
       return {
-        ...state,
-        isFetching: true
+        themesItems: { ...state.items },
+        meta: {
+          ...state.meta,
+          isFetching: true,
+          lastFetch: null
+        }
       };
     case THEMES_SUCCESS: {
       const objFromArray = action.payload.reduce((accumulator, current) => {
@@ -34,15 +48,21 @@ export function themesReducer(state = initialState, action) {
       }, {});
       return {
         ...state,
-        isFetching: false,
+        meta: {
+          isFetching: false,
+          lastFetch: Date.now()
+        },
         themesItems: objFromArray
       };
     }
     case THEMES_FAILURE: {
       return {
         ...state,
-        isFetching: false,
-        themesItems: null
+        meta: {
+          ...state.meta,
+          isFetching: false,
+          lastFetch: null
+        }
       };
     }
     default:
