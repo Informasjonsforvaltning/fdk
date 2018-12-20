@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { getParamFromUrl } from '../../../lib/addOrReplaceUrlParam';
+import { withState, withHandlers, compose } from 'recompose';
+import _ from 'lodash';
 
+import { getParamFromUrl } from '../../../lib/addOrReplaceUrlParam';
 import localization from '../../../lib/localization';
 import { CustomHitsStats } from './custom-hits-stats/custom-hits-stats.component';
 import './search-box.scss';
@@ -9,12 +11,14 @@ import './search-box.scss';
 export const SearchBox = props => {
   const {
     onSearchSubmit,
-    onSearchChange,
-    searchQuery,
     countDatasets,
     countTerms,
     countApis,
-    open
+    open,
+    searchQuery,
+    inputText,
+    setInputText,
+    touched
   } = props;
   let refSearchBox; // eslint-disable-line no-unused-vars
   return (
@@ -33,7 +37,7 @@ export const SearchBox = props => {
           <form
             onSubmit={e => {
               e.preventDefault();
-              onSearchSubmit(e.target.value);
+              onSearchSubmit(inputText);
             }}
           >
             <label htmlFor="searchBox">
@@ -46,11 +50,8 @@ export const SearchBox = props => {
                 placeholder={localization.query.intro}
                 aria-label={localization.query.intro}
                 className="fdk-search"
-                value={searchQuery || ''}
-                onChange={e => {
-                  e.preventDefault();
-                  onSearchChange(e);
-                }}
+                value={touched ? inputText : searchQuery}
+                onChange={e => setInputText(e)}
                 autoComplete="off"
               />
             </label>
@@ -58,8 +59,9 @@ export const SearchBox = props => {
         </div>
         <button
           type="button"
-          onClick={refSearchBox => {
-            onSearchSubmit(refSearchBox.target.value);
+          onClick={e => {
+            e.preventDefault();
+            onSearchSubmit(inputText);
           }}
           className="fdk-button-search btn btn-lg"
         >
@@ -90,15 +92,34 @@ SearchBox.defaultProps = {
   searchQuery: null,
   countDatasets: null,
   countTerms: null,
-  countApis: null
+  countApis: null,
+  inputText: null,
+  setInputText: _.noop(),
+  touched: false
 };
 
 SearchBox.propTypes = {
   onSearchSubmit: PropTypes.func.isRequired,
-  onSearchChange: PropTypes.func.isRequired,
   searchQuery: PropTypes.string,
   countDatasets: PropTypes.number,
   countTerms: PropTypes.number,
   countApis: PropTypes.number,
-  open: PropTypes.func.isRequired
+  open: PropTypes.func.isRequired,
+  inputText: PropTypes.string,
+  setInputText: PropTypes.func,
+  touched: PropTypes.bool
 };
+
+const enhance = compose(
+  withState('inputText', 'setInputText', ''),
+  withState('touched', 'setTouched', false),
+  withHandlers({
+    setInputText: props => event => {
+      event.preventDefault();
+      props.setTouched(true);
+      props.setInputText(event.target.value !== '' ? event.target.value : '');
+    }
+  })
+);
+
+export const SearchBoxWithState = enhance(SearchBox);

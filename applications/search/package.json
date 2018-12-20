@@ -72,6 +72,7 @@
     "react-select": "^1.0.1",
     "react-treeview": "^0.4.7",
     "reactstrap": "^6.3.0",
+    "recompose": "^0.30.0",
     "redux": "^3.7.2",
     "redux-api-middleware": "^2.3.0",
     "redux-localstorage": "^0.4.1",

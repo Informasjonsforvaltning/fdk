@@ -3,19 +3,20 @@ import { shallow } from 'enzyme';
 import { SearchBox } from './search-box.component';
 
 let onSearchSubmit;
-let onSearchChange;
+let setInputText;
 let preventDefault;
 let open;
 let defaultProps;
 
 beforeEach(() => {
   onSearchSubmit = jest.fn();
-  onSearchChange = jest.fn();
+  setInputText = jest.fn();
   open = jest.fn();
   preventDefault = jest.fn();
   defaultProps = {
     onSearchSubmit,
-    onSearchChange,
+    setInputText,
+    inputText: 'queryToSubmit',
     searchQuery: 'enhetsregister',
     countDatasets: 100,
     countTerms: 10,
@@ -36,18 +37,17 @@ test('should call onSearchSubmit prop for valid form submission', () => {
   const wrapper = shallow(<SearchBox {...defaultProps} />);
   wrapper.find('form').prop('onSubmit')(mockedEvent);
   expect(preventDefault).toHaveBeenCalled();
-  expect(onSearchSubmit).toHaveBeenLastCalledWith(mockedEvent.target.value);
+  expect(onSearchSubmit).toHaveBeenLastCalledWith('queryToSubmit');
 });
 
-test('should call onSearchChange on change', () => {
+test('should call setInputText on change', () => {
   const mockedEvent = {
     target: { value: 'test value' },
     preventDefault
   };
   const wrapper = shallow(<SearchBox {...defaultProps} />);
   wrapper.find('input').prop('onChange')(mockedEvent);
-  expect(preventDefault).toHaveBeenCalled();
-  expect(onSearchChange).toHaveBeenLastCalledWith(mockedEvent);
+  expect(setInputText).toHaveBeenLastCalledWith(mockedEvent);
 });
 
 test('should call onSearchSubmit prop for valid form submission', () => {
@@ -57,7 +57,7 @@ test('should call onSearchSubmit prop for valid form submission', () => {
   };
   const wrapper = shallow(<SearchBox {...defaultProps} />);
   wrapper.find('button.fdk-button-search').prop('onClick')(mockedEvent);
-  expect(onSearchSubmit).toHaveBeenLastCalledWith(mockedEvent.target.value);
+  expect(onSearchSubmit).toHaveBeenLastCalledWith('queryToSubmit');
 });
 
 test('should call open when filter clicked', () => {
