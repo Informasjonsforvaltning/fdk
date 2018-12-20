@@ -6,3 +6,4 @@ export const PATHNAME_CONCEPTS_COMPARE = '/compare';
 export const PATHNAME_REPORTS = '/reports';
 export const PATHNAME_ABOUT = '/about';
 export const PATHNAME_ABOUT_REGISTRATION = '/about-registration';
+export const HITS_PER_PAGE = 10;

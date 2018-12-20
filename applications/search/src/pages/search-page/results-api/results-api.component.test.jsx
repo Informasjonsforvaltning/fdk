@@ -2,6 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { ResultsApi } from './results-api.component';
 import apisApiResponse from '../__fixtures/apisApiResponse.json';
+import { HITS_PER_PAGE } from '../../../constants/constants';
 
 let closeFilterModal;
 let onFilterTheme;
@@ -30,7 +31,7 @@ beforeEach(() => {
     publisherArray: [],
     publishers: {},
     showClearFilterButton: false,
-    hitsPerPage: 10,
+    hitsPerPage: HITS_PER_PAGE,
     closeFilterModal,
     onFilterTheme,
     onFilterAccessRights,
