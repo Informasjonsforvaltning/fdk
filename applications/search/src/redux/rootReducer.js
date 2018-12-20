@@ -7,6 +7,7 @@ import { catalogsReducer } from './modules/catalogs';
 import { referenceDataReducer } from './modules/referenceData';
 import { conceptsCompareReducer } from './modules/conceptsCompare';
 import { searchReducer } from './modules/search';
+import { datasets } from './modules/datasets';
 
 export const rootReducer = combineReducers({
   themes: themesReducer,
@@ -16,5 +17,6 @@ export const rootReducer = combineReducers({
   catalogs: catalogsReducer,
   referenceData: referenceDataReducer,
   conceptsCompare: conceptsCompareReducer,
-  searchQuery: searchReducer
+  searchQuery: searchReducer,
+  datasets
 });

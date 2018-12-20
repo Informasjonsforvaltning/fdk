@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import React from 'react';
+import qs from 'qs';
 import { Route, Switch } from 'react-router-dom';
 import cx from 'classnames';
 import { detect } from 'detect-browser';
@@ -13,7 +14,10 @@ import { ResultsTabs } from './results-tabs/results-tabs.component';
 import { removeValue, addValue } from '../../lib/stringUtils';
 
 import './search-page.scss';
-import { extractPublisherCounts } from '../../api/get-datasets';
+import {
+  extractPublisherCounts,
+  createNestedListOfPublishers
+} from '../../api/get-datasets';
 import { extractPublisherConceptsCounts } from '../../api/get-concepts';
 import {
   PATHNAME_DATASETS,
@@ -32,12 +36,15 @@ export const SearchPage = props => {
     setSearchQuery,
     setQueryFilter,
     setQueryFrom,
+    fetchDatasetsIfNeeded,
     fetchThemesIfNeeded,
     fetchPublishersIfNeeded,
     fetchReferenceDataIfNeeded,
     clearQuery,
     history,
     datasetItems,
+    datasetAggregations,
+    datasetTotal,
     conceptItems,
     apiItems,
     themesItems,
@@ -58,6 +65,9 @@ export const SearchPage = props => {
     close
   } = props;
 
+  const stringifiedQuery = qs.stringify(searchQuery, { skipNulls: true });
+
+  fetchDatasetsIfNeeded(stringifiedQuery);
   fetchThemesIfNeeded();
   fetchPublishersIfNeeded();
   fetchReferenceDataIfNeeded();
@@ -258,7 +268,7 @@ export const SearchPage = props => {
           <SearchBoxWithState
             onSearchSubmit={handleSearchSubmit}
             searchQuery={searchQuery.q || ''}
-            countDatasets={_.get(datasetItems, ['hits', 'total'])}
+            countDatasets={datasetTotal}
             countTerms={_.get(conceptItems, ['page', 'totalElements'])}
             countApis={_.get(apiItems, 'total')}
             open={open}
@@ -266,7 +276,7 @@ export const SearchPage = props => {
           <ResultsTabs
             activePath={location.pathname}
             searchParam={location.search}
-            countDatasets={_.get(datasetItems, ['hits', 'total'], 0)}
+            countDatasets={datasetTotal}
             countTerms={_.get(conceptItems, ['page', 'totalElements'], 0)}
             countApis={_.get(apiItems, 'total', 0)}
           />
@@ -280,6 +290,8 @@ export const SearchPage = props => {
             render={props => (
               <ResultsDataset
                 datasetItems={datasetItems}
+                datasetAggregations={datasetAggregations}
+                datasetTotal={datasetTotal}
                 onClearFilters={handleClearFilters}
                 onFilterTheme={handleDatasetFilterThemes}
                 onFilterAccessRights={handleDatasetFilterAccessRights}
@@ -298,7 +310,9 @@ export const SearchPage = props => {
                 showClearFilterButton={isFilterNotEmpty()}
                 closeFilterModal={close}
                 hitsPerPage={HITS_PER_PAGE}
-                publisherArray={extractPublisherCounts(datasetItems)}
+                publisherArray={createNestedListOfPublishers(
+                  _.get(datasetAggregations, ['orgPath', 'buckets'], [])
+                )}
                 publishers={publisherItems}
                 referenceData={referenceData}
                 setDatasetSort={setDatasetSort}
