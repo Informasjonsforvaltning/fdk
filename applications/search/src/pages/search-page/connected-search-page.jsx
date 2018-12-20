@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import { fetchDatasetsIfNeededAction } from '../../redux/modules/datasets';
 import { fetchPublishersIfNeededAction } from '../../redux/modules/publishers';
 import { fetchThemesIfNeededAction } from '../../redux/modules/themes';
 import {
@@ -23,6 +24,7 @@ import {
 } from '../../redux/modules/referenceData';
 
 const mapStateToProps = ({
+  datasets,
   themes,
   publishers,
   referenceData,
@@ -30,6 +32,12 @@ const mapStateToProps = ({
   settings,
   searchQuery
 }) => {
+  const { datasetItems, datasetAggregations, datasetTotal } = datasets || {
+    datasetItems: null,
+    datasetAggregations: null,
+    datasetTotal: null
+  };
+
   const { themesItems, isFetchingThemes } = themes || {
     themesItems: null
   };
@@ -43,6 +51,9 @@ const mapStateToProps = ({
   };
 
   return {
+    datasetTotal,
+    datasetItems,
+    datasetAggregations,
     themesItems,
     isFetchingThemes,
     publisherItems,
@@ -57,6 +68,7 @@ const mapStateToProps = ({
 };
 
 const mapDispatchToProps = dispatch => ({
+  fetchDatasetsIfNeeded: query => dispatch(fetchDatasetsIfNeededAction(query)),
   fetchThemesIfNeeded: () => dispatch(fetchThemesIfNeededAction()),
   fetchPublishersIfNeeded: () => dispatch(fetchPublishersIfNeededAction()),
   fetchReferenceDataIfNeeded: () =>

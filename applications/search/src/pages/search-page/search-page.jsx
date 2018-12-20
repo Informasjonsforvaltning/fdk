@@ -12,7 +12,10 @@ import { ResultsTabs } from './results-tabs/results-tabs.component';
 import { removeValue, addValue } from '../../lib/stringUtils';
 
 import './search-page.scss';
-import { extractPublisherCounts } from '../../api/get-datasets';
+import {
+  extractPublisherCounts,
+  createNestedListOfPublishers
+} from '../../api/get-datasets';
 import { extractPublisherConceptsCounts } from '../../api/get-concepts';
 import {
   PATHNAME_DATASETS,
@@ -64,6 +67,13 @@ export class SearchPage extends React.Component {
     this.props.fetchThemesIfNeeded();
     this.props.fetchPublishersIfNeeded();
     this.props.fetchReferenceDataIfNeeded();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { searchQuery } = nextProps;
+    const stringifiedQuery = qs.stringify(searchQuery, { skipNulls: true });
+
+    this.props.fetchDatasetsIfNeeded(stringifiedQuery);
   }
 
   handleClearFilters() {
@@ -286,6 +296,8 @@ export class SearchPage extends React.Component {
   render() {
     const {
       datasetItems,
+      datasetAggregations,
+      datasetTotal,
       conceptItems,
       apiItems,
       themesItems,
@@ -314,7 +326,7 @@ export class SearchPage extends React.Component {
               onSearchSubmit={this.handleSearchSubmit}
               onSearchChange={this.handleSearchChange}
               searchQuery={searchQuery.q || ''}
-              countDatasets={_.get(datasetItems, ['hits', 'total'])}
+              countDatasets={datasetTotal}
               countTerms={_.get(conceptItems, ['page', 'totalElements'])}
               countApis={_.get(apiItems, 'total')}
               open={this.open}
@@ -322,7 +334,7 @@ export class SearchPage extends React.Component {
             <ResultsTabs
               activePath={location.pathname}
               searchParam={location.search}
-              countDatasets={_.get(datasetItems, ['hits', 'total'], 0)}
+              countDatasets={datasetTotal}
               countTerms={_.get(conceptItems, ['page', 'totalElements'], 0)}
               countApis={_.get(apiItems, 'total', 0)}
             />
@@ -336,6 +348,8 @@ export class SearchPage extends React.Component {
               render={props => (
                 <ResultsDataset
                   datasetItems={datasetItems}
+                  datasetAggregations={datasetAggregations}
+                  datasetTotal={datasetTotal}
                   onClearFilters={this.handleClearFilters}
                   onFilterTheme={this.handleDatasetFilterThemes}
                   onFilterAccessRights={this.handleDatasetFilterAccessRights}
@@ -354,7 +368,9 @@ export class SearchPage extends React.Component {
                   showClearFilterButton={this.isFilterNotEmpty()}
                   closeFilterModal={this.close}
                   hitsPerPage={10}
-                  publisherArray={extractPublisherCounts(datasetItems)}
+                  publisherArray={createNestedListOfPublishers(
+                    _.get(datasetAggregations, ['orgPath', 'buckets'], [])
+                  )}
                   publishers={publisherItems}
                   referenceData={referenceData}
                   setDatasetSort={setDatasetSort}
