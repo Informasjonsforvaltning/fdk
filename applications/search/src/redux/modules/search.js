@@ -5,12 +5,15 @@ const SET_QUERY_FIELD = 'SET_QUERY_FIELD';
 const SET_QUERY_FROM = 'SET_QUERY_FROM';
 const CLEAR_QUERY = 'CLEAR_QUERY';
 
-export function setSearchQuery(query) {
-  return dispatch => {
+export function setSearchQuery(query, history) {
+  return (dispatch, getState) => {
     dispatch({
       type: SET_QUERY_QUERYSTRING,
       query
     });
+    history.push(
+      `?${qs.stringify(getState().searchQuery, { skipNulls: true })}`
+    );
   };
 }
 
