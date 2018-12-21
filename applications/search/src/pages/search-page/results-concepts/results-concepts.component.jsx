@@ -76,8 +76,8 @@ export class ResultsConcepts extends React.Component {
 
   _renderTerms() {
     const { conceptItems, conceptsCompare } = this.props;
-    if (_.get(conceptItems, ['_embedded', 'concepts'])) {
-      return _.get(conceptItems, ['_embedded', 'concepts']).map(item => (
+    if (conceptItems) {
+      return conceptItems.map(item => (
         <ConceptsHitItem
           key={item.id}
           result={item}
@@ -127,7 +127,8 @@ export class ResultsConcepts extends React.Component {
 
   render() {
     const {
-      conceptItems,
+      conceptAggregations,
+      conceptTotal,
       onClearFilters,
       onPageChange,
       onFilterPublisherHierarchy,
@@ -144,11 +145,7 @@ export class ResultsConcepts extends React.Component {
     const page = _.get(searchQuery, 'from')
       ? searchQuery.from / hitsPerPage
       : 0;
-    const pageCount = Math.ceil(
-      (_.get(conceptItems, ['page', 'totalElements'])
-        ? conceptItems.page.totalElements
-        : 1) / hitsPerPage
-    );
+    const pageCount = Math.ceil((conceptTotal || 1) / hitsPerPage);
     const clearButtonClass = cx(
       'btn',
       'btn-primary',
@@ -216,7 +213,7 @@ export class ResultsConcepts extends React.Component {
               <span className="uu-invisible" aria-hidden="false">
                 Filtrering tilgang
               </span>
-              {_.get(conceptItems, 'aggregations') && (
+              {conceptAggregations && (
                 <div>
                   {this._renderFilterModal()}
                   <SearchPublishersTree
@@ -234,7 +231,7 @@ export class ResultsConcepts extends React.Component {
 
           <section className="col-lg-8">{this._renderTerms()}</section>
 
-          {_.get(conceptItems, ['page', 'totalElements'], 0) > 50 && (
+          {conceptTotal > 50 && (
             <section className="col-lg-8 offset-lg-4 d-flex justify-content-center">
               <span className="uu-invisible" aria-hidden="false">
                 Sidepaginering.
@@ -279,7 +276,7 @@ ResultsConcepts.defaultProps = {
 };
 
 ResultsConcepts.propTypes = {
-  conceptItems: PropTypes.object,
+  conceptItems: PropTypes.array,
   onClearFilters: PropTypes.func,
   onPageChange: PropTypes.func,
   onFilterPublisherHierarchy: PropTypes.func,

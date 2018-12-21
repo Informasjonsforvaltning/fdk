@@ -15,7 +15,7 @@ import { removeValue, addValue } from '../../lib/stringUtils';
 
 import './search-page.scss';
 import { createNestedListOfPublishers } from '../../api/get-datasets';
-import { extractPublisherConceptsCounts } from '../../api/get-concepts';
+import { createNestedListOfConceptPublishers } from '../../api/get-concepts';
 import {
   PATHNAME_DATASETS,
   PATHNAME_APIS,
@@ -35,6 +35,7 @@ export const SearchPage = props => {
     setQueryFrom,
     fetchDatasetsIfNeeded,
     fetchApisIfNeeded,
+    fetchConceptsIfNeeded,
     fetchThemesIfNeeded,
     fetchPublishersIfNeeded,
     fetchReferenceDataIfNeeded,
@@ -43,10 +44,12 @@ export const SearchPage = props => {
     datasetItems,
     datasetAggregations,
     datasetTotal,
-    conceptItems,
     apiItems,
     apiAggregations,
     apiTotal,
+    conceptItems,
+    conceptAggregations,
+    conceptTotal,
     themesItems,
     publisherItems,
     referenceData,
@@ -69,6 +72,7 @@ export const SearchPage = props => {
 
   fetchDatasetsIfNeeded(stringifiedQuery);
   fetchApisIfNeeded(stringifiedQuery);
+  fetchConceptsIfNeeded(`?${stringifiedQuery}`);
   fetchThemesIfNeeded();
   fetchPublishersIfNeeded();
   fetchReferenceDataIfNeeded();
@@ -270,7 +274,7 @@ export const SearchPage = props => {
             onSearchSubmit={handleSearchSubmit}
             searchQuery={searchQuery.q || ''}
             countDatasets={datasetTotal}
-            countTerms={_.get(conceptItems, ['page', 'totalElements'])}
+            countTerms={conceptTotal}
             countApis={apiTotal}
             open={open}
           />
@@ -278,7 +282,7 @@ export const SearchPage = props => {
             activePath={location.pathname}
             searchParam={location.search}
             countDatasets={datasetTotal}
-            countTerms={_.get(conceptItems, ['page', 'totalElements'], 0)}
+            countTerms={conceptTotal}
             countApis={apiTotal}
           />
         </div>
@@ -365,6 +369,8 @@ export const SearchPage = props => {
             render={props => (
               <ResultsConcepts
                 conceptItems={conceptItems}
+                conceptAggregations={conceptAggregations}
+                conceptTotal={conceptTotal}
                 onClearFilters={handleClearFilters}
                 onPageChange={handlePageChange}
                 onSortByLastModified={sortByLastModified}
@@ -377,7 +383,9 @@ export const SearchPage = props => {
                 showFilterModal={showFilterModal}
                 closeFilterModal={close}
                 showClearFilterButton={!!searchQuery.orgPath}
-                publisherArray={extractPublisherConceptsCounts(conceptItems)}
+                publisherArray={createNestedListOfConceptPublishers(
+                  _.get(conceptAggregations, ['orgPath', 'buckets'], [])
+                )}
                 publishers={publisherItems}
                 conceptsCompare={conceptsCompare}
                 addConcept={addConcept}

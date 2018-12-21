@@ -26,7 +26,7 @@ export const getConcepts = async search => {
   return response && normalizeAggregations(response.data);
 };
 
-function createNestedListOfPublishers(listOfPublishers) {
+export const createNestedListOfConceptPublishers = listOfPublishers => {
   if (!listOfPublishers) {
     return null;
   }
@@ -48,8 +48,8 @@ function createNestedListOfPublishers(listOfPublishers) {
   return _(flat)
     .filter(f => !f.hasParent)
     .value();
-}
+};
 export const extractPublisherConceptsCounts = conceptsSearchResponse =>
-  createNestedListOfPublishers(
+  createNestedListOfConceptPublishers(
     _.get(conceptsSearchResponse, ['aggregations', 'orgPath', 'buckets'])
   );

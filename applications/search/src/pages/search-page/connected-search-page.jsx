@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import { fetchDatasetsIfNeededAction } from '../../redux/modules/datasets';
 import { fetchApisIfNeededAction } from '../../redux/modules/apis';
+import { fetchConceptsIfNeededAction } from '../../redux/modules/concepts';
 import { fetchPublishersIfNeededAction } from '../../redux/modules/publishers';
 import { fetchThemesIfNeededAction } from '../../redux/modules/themes';
 import {
@@ -18,7 +19,7 @@ import {
   addConceptAction,
   removeConceptAction
 } from '../../redux/modules/conceptsCompare';
-import { ResolvedSearchPage } from './resolved-search-page';
+import { SearchPageWithState } from './search-page';
 import {
   fetchReferenceDataIfNeededAction,
   REFERENCEDATA_DISTRIBUTIONTYPE
@@ -27,6 +28,7 @@ import {
 const mapStateToProps = ({
   datasets,
   apis,
+  concepts,
   themes,
   publishers,
   referenceData,
@@ -46,6 +48,12 @@ const mapStateToProps = ({
     apiTotal: null
   };
 
+  const { conceptItems, conceptAggregations, conceptTotal } = concepts || {
+    conceptItems: null,
+    conceptAggregations: null,
+    conceptTotal: null
+  };
+
   const { themesItems, isFetchingThemes } = themes || {
     themesItems: null
   };
@@ -59,12 +67,15 @@ const mapStateToProps = ({
   };
 
   return {
-    datasetTotal,
     datasetItems,
     datasetAggregations,
+    datasetTotal,
     apiItems,
     apiAggregations,
     apiTotal,
+    conceptItems,
+    conceptAggregations,
+    conceptTotal,
     themesItems,
     isFetchingThemes,
     publisherItems,
@@ -81,6 +92,7 @@ const mapStateToProps = ({
 const mapDispatchToProps = dispatch => ({
   fetchDatasetsIfNeeded: query => dispatch(fetchDatasetsIfNeededAction(query)),
   fetchApisIfNeeded: query => dispatch(fetchApisIfNeededAction(query)),
+  fetchConceptsIfNeeded: query => dispatch(fetchConceptsIfNeededAction(query)),
   fetchThemesIfNeeded: () => dispatch(fetchThemesIfNeededAction()),
   fetchPublishersIfNeeded: () => dispatch(fetchPublishersIfNeededAction()),
   fetchReferenceDataIfNeeded: () =>
@@ -101,4 +113,4 @@ const mapDispatchToProps = dispatch => ({
 export const ConnectedSearchPage = connect(
   mapStateToProps,
   mapDispatchToProps
-)(ResolvedSearchPage);
+)(SearchPageWithState);
