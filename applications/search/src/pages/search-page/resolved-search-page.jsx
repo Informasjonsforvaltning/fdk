@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import { resolve } from 'react-resolver';
 import { getDatasets } from '../../api/get-datasets';
-import { SearchPage } from './search-page';
+import { SearchPageWithState } from './search-page';
 import { getConcepts } from '../../api/get-concepts';
 import { getApis } from '../../api/get-apis';
 
@@ -15,4 +15,4 @@ const mapProps = {
   apiItems: props => memoizedGetApis(props.location.search)
 };
 
-export const ResolvedSearchPage = resolve(mapProps)(SearchPage);
+export const ResolvedSearchPage = resolve(mapProps)(SearchPageWithState);
