@@ -237,7 +237,7 @@ public class ApiDocumentRepositoryTest {
 
         spyApiDocumentRepository.deleteApiDocumentByIds(ids);
 
-        Assert.assertTrue(ids.size() == 1);
+        verify(spyApiDocumentRepository, times(1)).deleteApiDocumentByIds(ids);
     }
 
 }
