@@ -14,10 +14,7 @@ import { ResultsTabs } from './results-tabs/results-tabs.component';
 import { removeValue, addValue } from '../../lib/stringUtils';
 
 import './search-page.scss';
-import {
-  extractPublisherCounts,
-  createNestedListOfPublishers
-} from '../../api/get-datasets';
+import { createNestedListOfPublishers } from '../../api/get-datasets';
 import { extractPublisherConceptsCounts } from '../../api/get-concepts';
 import {
   PATHNAME_DATASETS,
@@ -37,6 +34,7 @@ export const SearchPage = props => {
     setQueryFilter,
     setQueryFrom,
     fetchDatasetsIfNeeded,
+    fetchApisIfNeeded,
     fetchThemesIfNeeded,
     fetchPublishersIfNeeded,
     fetchReferenceDataIfNeeded,
@@ -47,6 +45,8 @@ export const SearchPage = props => {
     datasetTotal,
     conceptItems,
     apiItems,
+    apiAggregations,
+    apiTotal,
     themesItems,
     publisherItems,
     referenceData,
@@ -68,6 +68,7 @@ export const SearchPage = props => {
   const stringifiedQuery = qs.stringify(searchQuery, { skipNulls: true });
 
   fetchDatasetsIfNeeded(stringifiedQuery);
+  fetchApisIfNeeded(stringifiedQuery);
   fetchThemesIfNeeded();
   fetchPublishersIfNeeded();
   fetchReferenceDataIfNeeded();
@@ -270,7 +271,7 @@ export const SearchPage = props => {
             searchQuery={searchQuery.q || ''}
             countDatasets={datasetTotal}
             countTerms={_.get(conceptItems, ['page', 'totalElements'])}
-            countApis={_.get(apiItems, 'total')}
+            countApis={apiTotal}
             open={open}
           />
           <ResultsTabs
@@ -278,7 +279,7 @@ export const SearchPage = props => {
             searchParam={location.search}
             countDatasets={datasetTotal}
             countTerms={_.get(conceptItems, ['page', 'totalElements'], 0)}
-            countApis={_.get(apiItems, 'total', 0)}
+            countApis={apiTotal}
           />
         </div>
       </section>
@@ -327,6 +328,8 @@ export const SearchPage = props => {
             render={props => (
               <ResultsApi
                 apiItems={apiItems}
+                apiAggregations={apiAggregations}
+                apiTotal={apiTotal}
                 onClearFilters={handleClearFilters}
                 onFilterTheme={handleDatasetFilterThemes}
                 onFilterAccessRights={handleDatasetFilterAccessRights}
@@ -346,7 +349,9 @@ export const SearchPage = props => {
                 showClearFilterButton={isFilterNotEmpty()}
                 closeFilterModal={close}
                 hitsPerPage={HITS_PER_PAGE}
-                publisherArray={extractPublisherCounts(apiItems)}
+                publisherArray={createNestedListOfPublishers(
+                  _.get(apiAggregations, ['orgPath', 'buckets'], [])
+                )}
                 publishers={publisherItems}
                 setApiSort={setApiSort}
                 apiSortValue={apiSortValue}

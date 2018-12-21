@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import { fetchDatasetsIfNeededAction } from '../../redux/modules/datasets';
+import { fetchApisIfNeededAction } from '../../redux/modules/apis';
 import { fetchPublishersIfNeededAction } from '../../redux/modules/publishers';
 import { fetchThemesIfNeededAction } from '../../redux/modules/themes';
 import {
@@ -25,6 +26,7 @@ import {
 
 const mapStateToProps = ({
   datasets,
+  apis,
   themes,
   publishers,
   referenceData,
@@ -36,6 +38,12 @@ const mapStateToProps = ({
     datasetItems: null,
     datasetAggregations: null,
     datasetTotal: null
+  };
+
+  const { apiItems, apiAggregations, apiTotal } = apis || {
+    apiItems: null,
+    apiAggregations: null,
+    apiTotal: null
   };
 
   const { themesItems, isFetchingThemes } = themes || {
@@ -54,6 +62,9 @@ const mapStateToProps = ({
     datasetTotal,
     datasetItems,
     datasetAggregations,
+    apiItems,
+    apiAggregations,
+    apiTotal,
     themesItems,
     isFetchingThemes,
     publisherItems,
@@ -69,6 +80,7 @@ const mapStateToProps = ({
 
 const mapDispatchToProps = dispatch => ({
   fetchDatasetsIfNeeded: query => dispatch(fetchDatasetsIfNeededAction(query)),
+  fetchApisIfNeeded: query => dispatch(fetchApisIfNeededAction(query)),
   fetchThemesIfNeeded: () => dispatch(fetchThemesIfNeededAction()),
   fetchPublishersIfNeeded: () => dispatch(fetchPublishersIfNeededAction()),
   fetchReferenceDataIfNeeded: () =>
