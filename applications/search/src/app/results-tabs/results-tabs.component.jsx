@@ -4,15 +4,15 @@ import { Link } from 'react-router-dom';
 import { FeatureToggle } from 'react-feature-toggles';
 import cx from 'classnames';
 
-import { addOrReplaceParamWithoutURL } from '../../../lib/addOrReplaceUrlParam';
-import localization from '../../../lib/localization';
+import { addOrReplaceParamWithoutURL } from '../../lib/addOrReplaceUrlParam';
+import localization from '../../lib/localization';
 import './results-tabs.scss';
-import { FEATURES } from '../../../app/features';
+import { FEATURES } from '../features';
 import {
   PATHNAME_DATASETS,
   PATHNAME_APIS,
   PATHNAME_CONCEPTS
-} from '../../../constants/constants';
+} from '../../constants/constants';
 
 export const ResultsTabs = props => {
   const {

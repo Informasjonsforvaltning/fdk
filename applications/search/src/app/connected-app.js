@@ -1,9 +1,43 @@
 import { connect } from 'react-redux';
 import { App } from './app';
+import { setSearchQuery } from '../redux/modules/search';
 
-const mapStateToProps = state => ({
-  // react-localization module designed to be stateful, so we have to re-render the app when the selected language is changed
-  language: state.settings.language
+const mapStateToProps = ({
+  datasets,
+  apis,
+  concepts,
+  settings,
+  searchQuery
+}) => {
+  const { language } = settings || {
+    language: null
+  };
+  const { datasetTotal } = datasets || {
+    datasetTotal: null
+  };
+
+  const { apiTotal } = apis || {
+    apiTotal: null
+  };
+
+  const { conceptTotal } = concepts || {
+    conceptTotal: null
+  };
+
+  return {
+    language,
+    datasetTotal,
+    apiTotal,
+    conceptTotal,
+    searchQuery
+  };
+};
+
+const mapDispatchToProps = dispatch => ({
+  setSearchQuery: (query, history) => dispatch(setSearchQuery(query, history))
 });
 
-export const ConnectedApp = connect(mapStateToProps)(App);
+export const ConnectedApp = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);

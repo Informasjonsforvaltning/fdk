@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { withState, withHandlers, compose } from 'recompose';
 import _ from 'lodash';
 
-import { getParamFromUrl } from '../../../lib/addOrReplaceUrlParam';
-import localization from '../../../lib/localization';
+import { getParamFromUrl } from '../../lib/addOrReplaceUrlParam';
+import localization from '../../lib/localization';
 import { CustomHitsStats } from './custom-hits-stats/custom-hits-stats.component';
 import './search-box.scss';
 

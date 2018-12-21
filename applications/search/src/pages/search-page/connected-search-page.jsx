@@ -5,7 +5,6 @@ import { fetchConceptsIfNeededAction } from '../../redux/modules/concepts';
 import { fetchPublishersIfNeededAction } from '../../redux/modules/publishers';
 import { fetchThemesIfNeededAction } from '../../redux/modules/themes';
 import {
-  setSearchQuery,
   setQueryFilter,
   setQueryFrom,
   clearQuery
@@ -102,7 +101,6 @@ const mapDispatchToProps = dispatch => ({
   setDatasetSort: sortValue => dispatch(setDatasetSortAction(sortValue)),
   setApiSort: sortValue => dispatch(setApiSortAction(sortValue)),
   setConceptSort: sortValue => dispatch(setConceptSortAction(sortValue)),
-  setSearchQuery: (query, history) => dispatch(setSearchQuery(query, history)),
   setQueryFilter: (filterType, filterValue, history) =>
     dispatch(setQueryFilter(filterType, filterValue, history)),
   setQueryFrom: (filterValue, history) =>

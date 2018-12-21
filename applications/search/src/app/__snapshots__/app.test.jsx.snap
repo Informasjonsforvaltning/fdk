@@ -36,6 +36,29 @@ exports[`should render App correctly 1`] = `
       </div>
     </div>
   </div>
+  <section
+    className="top-section-search mb-4"
+  >
+    <div
+      className="container"
+    >
+      <withState(withState(withHandlers(SearchBox)))
+        countApis={1}
+        countDatasets={1}
+        countTerms={1}
+        onSearchSubmit={[Function]}
+        open={[Function]}
+        searchQuery="tester"
+      />
+      <ResultsTabs
+        activePath="blank"
+        countApis={1}
+        countDatasets={1}
+        countTerms={1}
+        searchParam=""
+      />
+    </div>
+  </section>
   <div
     className="app-routes"
   >

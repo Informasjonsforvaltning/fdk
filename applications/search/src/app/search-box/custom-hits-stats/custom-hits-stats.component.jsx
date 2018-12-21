@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import localization from '../../../../lib/localization';
+import localization from '../../../lib/localization';
 
 export const CustomHitsStats = props => {
   const {

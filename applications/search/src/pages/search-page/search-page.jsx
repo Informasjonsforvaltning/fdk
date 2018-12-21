@@ -2,15 +2,11 @@ import _ from 'lodash';
 import React from 'react';
 import qs from 'qs';
 import { Route, Switch } from 'react-router-dom';
-import cx from 'classnames';
-import { detect } from 'detect-browser';
 import { withState, withHandlers, compose } from 'recompose';
 
 import { ResultsDataset } from './results-dataset/results-dataset.component';
 import { ResultsConcepts } from './results-concepts/results-concepts.component';
 import { ResultsApi } from './results-api/results-api.component';
-import { SearchBoxWithState } from './search-box/search-box.component';
-import { ResultsTabs } from './results-tabs/results-tabs.component';
 import { removeValue, addValue } from '../../lib/stringUtils';
 
 import './search-page.scss';
@@ -25,12 +21,9 @@ import {
 
 const ReactGA = require('react-ga');
 
-const browser = detect();
-
 export const SearchPage = props => {
   const {
     searchQuery,
-    setSearchQuery,
     setQueryFilter,
     setQueryFrom,
     fetchDatasetsIfNeeded,
@@ -53,7 +46,6 @@ export const SearchPage = props => {
     themesItems,
     publisherItems,
     referenceData,
-    location,
     conceptsCompare,
     addConcept,
     removeConcept,
@@ -64,7 +56,6 @@ export const SearchPage = props => {
     apiSortValue,
     conceptSortValue,
     showFilterModal,
-    open,
     close
   } = props;
 
@@ -85,10 +76,6 @@ export const SearchPage = props => {
     _.some(
       _.values(_.omit(props.searchQuery, ['q', 'sortfield', 'sortdirection']))
     );
-
-  const handleSearchSubmit = searchField => {
-    setSearchQuery(searchField, history);
-  };
 
   const handleDatasetFilterThemes = event => {
     const { theme } = searchQuery;
@@ -263,30 +250,8 @@ export const SearchPage = props => {
     }
   };
 
-  const topSectionClass = cx('top-section-search', 'mb-4', {
-    'top-section-search--image': !!(browser && browser.name !== 'ie')
-  });
   return (
     <div>
-      <section className={topSectionClass}>
-        <div className="container">
-          <SearchBoxWithState
-            onSearchSubmit={handleSearchSubmit}
-            searchQuery={searchQuery.q || ''}
-            countDatasets={datasetTotal}
-            countTerms={conceptTotal}
-            countApis={apiTotal}
-            open={open}
-          />
-          <ResultsTabs
-            activePath={location.pathname}
-            searchParam={location.search}
-            countDatasets={datasetTotal}
-            countTerms={conceptTotal}
-            countApis={apiTotal}
-          />
-        </div>
-      </section>
       <div className="container">
         <Switch>
           <Route

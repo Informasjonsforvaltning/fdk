@@ -1,8 +1,12 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { detect } from 'detect-browser';
+import cx from 'classnames';
 
 import localization from '../lib/localization';
+import { SearchBoxWithState } from './search-box/search-box.component';
+import { ResultsTabs } from './results-tabs/results-tabs.component';
 import { ConnectedSearchPage } from '../pages/search-page/connected-search-page';
 import { ConnectedDatasetDetailsPage } from '../pages/dataset-details-page/connected-dataset-details-page';
 import { ConnectedApiDetailsPage } from '../pages/api-details-page/connected-api-details-page';
@@ -26,10 +30,27 @@ import {
 import '../assets/css/bootstrap-override.scss';
 import './styles';
 
+const browser = detect();
+
 export function App(props) {
-  // react-localization is a stateful library, so we set the required language on each full-app render
-  // and full-render app each time when the language is changed
-  localization.setLanguage(props.language);
+  const {
+    history,
+    language,
+    datasetTotal,
+    apiTotal,
+    conceptTotal,
+    searchQuery,
+    setSearchQuery
+  } = props;
+
+  const handleSearchSubmit = searchField => {
+    setSearchQuery(searchField, history);
+  };
+
+  localization.setLanguage(language);
+  const topSectionClass = cx('top-section-search', 'mb-4', {
+    'top-section-search--image': !!(browser && browser.name !== 'ie')
+  });
 
   return (
     <div>
@@ -58,6 +79,27 @@ export function App(props) {
           </div>
         </div>
       </div>
+
+      <section className={topSectionClass}>
+        <div className="container">
+          <SearchBoxWithState
+            onSearchSubmit={handleSearchSubmit}
+            searchQuery={searchQuery.q || ''}
+            countDatasets={datasetTotal}
+            countTerms={conceptTotal}
+            countApis={apiTotal}
+            open={open}
+          />
+          <ResultsTabs
+            activePath={location.pathname}
+            searchParam={location.search}
+            countDatasets={datasetTotal}
+            countTerms={conceptTotal}
+            countApis={apiTotal}
+          />
+        </div>
+      </section>
+
       <div className="app-routes">
         <Switch>
           <Route
@@ -170,6 +212,19 @@ export function App(props) {
   );
 }
 
+App.defaultProps = {
+  datasetTotal: null,
+  apiTotal: null,
+  conceptTotal: null,
+  searchQuery: null,
+  setSearchQuery: null
+};
+
 App.propTypes = {
-  language: PropTypes.string.isRequired
+  language: PropTypes.string.isRequired,
+  datasetTotal: PropTypes.number,
+  apiTotal: PropTypes.number,
+  conceptTotal: PropTypes.number,
+  searchQuery: PropTypes.object,
+  setSearchQuery: PropTypes.func
 };

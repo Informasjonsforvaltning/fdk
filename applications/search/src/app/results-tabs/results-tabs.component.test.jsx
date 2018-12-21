@@ -4,7 +4,7 @@ import { ResultsTabs } from './results-tabs.component';
 import {
   PATHNAME_DATASETS,
   PATHNAME_CONCEPTS
-} from '../../../constants/constants';
+} from '../../constants/constants';
 import defaultProps from './__fixtures/defaultProps.json';
 
 let wrapper;
