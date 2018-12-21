@@ -9,6 +9,7 @@ import { conceptsCompareReducer } from './modules/conceptsCompare';
 import { searchReducer } from './modules/search';
 import { datasets } from './modules/datasets';
 import { apis } from './modules/apis';
+import { concepts } from './modules/concepts';
 
 export const rootReducer = combineReducers({
   themes: themesReducer,
@@ -20,5 +21,6 @@ export const rootReducer = combineReducers({
   conceptsCompare: conceptsCompareReducer,
   searchQuery: searchReducer,
   datasets,
-  apis
+  apis,
+  concepts
 });
