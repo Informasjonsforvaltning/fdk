@@ -196,7 +196,29 @@ public class DatasetController {
         List<Concept> conceptsGetByIds = new ArrayList<>();
         Subject subject;
         List<Subject> subjects = new ArrayList<>();
+/* TODO
+Following commits resulted unfinished work that has be fixed some times:
 
+a8f3c7348b198da721e5c74fc8a6702d488639fa
+1096c7c19f763c5cb72de97962249d64e93e2aba
+
+The problem was fixing linking datasets to concepts, after concept had moved out to
+its own separate service - concept-cat.
+
+We had a temporary idea that we could introduce temporary reference field model to
+refer to the new concepts ( Dataset -> List<Concept> concepts).
+It did not quite work out, because due to duplicate data storage, Dataset model has
+to also have RDF schema updated, which was unreasonable.
+It turned out, that we can continue using "List<Subject> subject" field for storing
+the reference to the now new concept location.
+
+Cleanup work of reverting the List<Concept> concepts has not been done.
+
+The reason why instead of fixing it, we have this TODO item here
+is that we are planning to reimplement dataset registration system (a.k.a. "dropping the fuseki")
+and it is quite high in priority list.
+
+ */
         for(Map.Entry<String, Object> entry : updates.entrySet()) {
             logger.debug("update key: {} value: ", entry.getKey(), entry.getValue() );
             JsonElement changes = gson.toJsonTree(entry.getValue());
