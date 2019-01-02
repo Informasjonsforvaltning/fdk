@@ -3,14 +3,11 @@ package no.dcat.controller;
 import no.dcat.model.ApiCatalog;
 import no.dcat.service.ApiCatalogHarvesterService;
 import no.dcat.service.ApiCatalogRepository;
-import org.apache.jena.shared.NotFoundException;
+import no.dcat.webutils.exceptions.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -21,7 +18,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 @CrossOrigin
 @RestController
-@RequestMapping(value = "/apicatalogs")
+@RequestMapping(value = "/catalogs/{catalogId}/apicatalog")
 public class ApiCatalogController {
     private static final Logger logger = LoggerFactory.getLogger(ApiCatalogController.class);
 
@@ -31,77 +28,68 @@ public class ApiCatalogController {
 
     @Autowired
     public ApiCatalogController(
-        ApiCatalogRepository apiDocumentRepository,
+        ApiCatalogRepository apiCatalogRepository,
         ApiCatalogHarvesterService apiCatalogHarvesterService
     ) {
-        this.apiCatalogRepository = apiDocumentRepository;
+        this.apiCatalogRepository = apiCatalogRepository;
         this.apiCatalogHarvesterService = apiCatalogHarvesterService;
     }
 
     @CrossOrigin
     @RequestMapping(
-        value = "save",
+        value = "",
+        method = GET,
+        produces = APPLICATION_JSON_UTF8_VALUE)
+    public ApiCatalog getApiCatalog(@PathVariable("catalogId") String catalogId) throws NotFoundException {
+
+        Optional<ApiCatalog> apiCatalogOptional = apiCatalogRepository.findByOrgNo(catalogId);
+
+        if (!apiCatalogOptional.isPresent()) {
+            throw new NotFoundException("Did not find any Api Catalog for organization number " + catalogId);
+        }
+
+        return apiCatalogOptional.get();
+    }
+
+    @CrossOrigin
+    @RequestMapping(
+        value = "",
         method = POST,
         consumes = APPLICATION_JSON_VALUE,
         produces = APPLICATION_JSON_UTF8_VALUE)
-    public ApiCatalog storeApiCatalog(
+    public ApiCatalog createApiCatalog(
+        @PathVariable("catalogId") String catalogId,
         @RequestBody ApiCatalog apiCatalogData) {
 
         ApiCatalog apiCatalog;
 
-        Optional<ApiCatalog> apiCatalogOptional = apiCatalogRepository.findByOrgNo(apiCatalogData.getOrgNo());
+        Optional<ApiCatalog> apiCatalogOptional = apiCatalogRepository.findByOrgNo(catalogId);
         if (apiCatalogOptional.isPresent()) {
             apiCatalog = apiCatalogOptional.get();
         } else {
             apiCatalog = new ApiCatalog();
             apiCatalog.setId(UUID.randomUUID().toString());
-            apiCatalog.setOrgNo(apiCatalogData.getOrgNo());
+            apiCatalog.setOrgNo(catalogId);
         }
         apiCatalog.setHarvestSourceUri(apiCatalogData.getHarvestSourceUri());
 
-        apiCatalogRepository.save(apiCatalog);
-        apiCatalogHarvesterService.addHarvestSingleCatalogTaskToQueue(apiCatalog);
-        return apiCatalog;
+        ApiCatalog apiCatalogSaved = apiCatalogRepository.save(apiCatalog);
+        apiCatalogHarvesterService.addHarvestSingleCatalogTaskToQueue(apiCatalogSaved);
+
+        return apiCatalogSaved;
     }
 
     @CrossOrigin
     @RequestMapping(
-        value = "get",
-        method = GET,
-        produces = APPLICATION_JSON_UTF8_VALUE)
-    public ApiCatalog getApiRegistration(String organisationNumber) {
-
-        Optional<ApiCatalog> cata = apiCatalogRepository.findByOrgNo(organisationNumber);
-        if (cata.isPresent()) {
-            return cata.get();
-        } else {
-            throw new NotFoundException("Did not find any Api Catalog for organization number " + organisationNumber);
-        }
-    }
-
-    @CrossOrigin
-    @RequestMapping(
-        value = "delete",
+        value = "",
         method = DELETE,
         produces = APPLICATION_JSON_UTF8_VALUE)
-    public ApiCatalog deleteApiRegistration(String orgno) {
+    public void deleteApiCatalog(@PathVariable("catalogId") String catalogId) {
 
-        Optional<ApiCatalog> cata = apiCatalogRepository.findByOrgNo(orgno);
-        apiCatalogRepository.delete(cata.get());
-        return cata.get();
-    }
-
-    @CrossOrigin
-    @RequestMapping(value = "/{id}", method = PUT, consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_UTF8_VALUE)
-    public ApiCatalog updateApiRegistration(@RequestBody ApiCatalog apiCatalog, String orgNo) {
-
-        Optional<ApiCatalog> catatalogForThisOrganisation = apiCatalogRepository.findByOrgNo(orgNo);
-        if (catatalogForThisOrganisation.isPresent()) {
-            apiCatalog.setId(catatalogForThisOrganisation.get().getId());
-            ApiCatalog savedCatalog = apiCatalogRepository.save(apiCatalog);
-            return savedCatalog;
-        } else {
-            throw new NotFoundException("Did not find any Api Catalog for org number " + orgNo);
+        Optional<ApiCatalog> apiCatalogOptional = apiCatalogRepository.findByOrgNo(catalogId);
+        if (apiCatalogOptional.isPresent()) {
+            apiCatalogRepository.delete(apiCatalogOptional.get());
         }
+        // if not found, do not throw NotFoundError, because DELETE means "ensure deleted"
     }
 }

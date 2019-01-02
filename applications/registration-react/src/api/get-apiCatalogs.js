@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export const getAPICatalogsByOrgNr = async orgNr => {
-  const url = `/apicatalogs/get?organisationNumber=${orgNr}`;
+  const url = `/catalogs/${orgNr}/apicatalog`;
 
   const response = await axios
     .get(url)
