@@ -51,6 +51,7 @@ public class RegistrationApiClient {
         } catch (Exception e) {
             logger.info("Error. Cannot read published apis from registration. {}", e.getMessage());
             logger.debug("Error. Stack trace", e);
+            return null;
         }
 
         return result;

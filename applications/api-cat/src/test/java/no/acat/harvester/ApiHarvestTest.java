@@ -10,6 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
@@ -78,5 +79,16 @@ public class ApiHarvestTest {
         harvester.harvestAll();
 
         verify(apiDocumentRepositoryMock, times(8)).createOrReplaceApiDocument(any());
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void shouldGetExceptionWhenHarvestApiFails() throws Throwable {
+        RegistrationApiClient registrationApiClientMock = mock(RegistrationApiClient.class);
+        when(registrationApiClientMock.getPublished()).thenReturn(null);
+
+
+        ApiHarvester harvester = new ApiHarvester(apiDocumentBuilderServiceMock, registrationApiClientMock, apiDocumentRepositoryMock);
+        harvester.RETRY_COUNT_API_RETRIEVAL=5;
+        harvester.harvestAll();//Throws exception.
     }
 }

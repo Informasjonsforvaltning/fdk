@@ -25,7 +25,7 @@ The purpose of the harvester is to ensure that search index is synchronized to r
 @Service
 public class ApiHarvester {
     private static final Logger logger = LoggerFactory.getLogger(ApiHarvester.class);
-
+    public int RETRY_COUNT_API_RETRIEVAL = 100;
     private ApiDocumentBuilderService apiDocumentBuilderService;
     private RegistrationApiClient registrationApiClient;
     private ApiDocumentRepository apiDocumentRepository;
@@ -46,6 +46,7 @@ public class ApiHarvester {
         logger.info("harvestAll");
 
         List<ApiRegistrationPublic> apiRegistrations = getApiRegistrations();
+
         int registrationCount = apiRegistrations != null ? apiRegistrations.size() : 0;
         logger.info("Extracted {} api-registrations", registrationCount);
 
@@ -84,6 +85,30 @@ public class ApiHarvester {
         result.addAll(apiRegistrationsFromCsv);
 
         Collection<ApiRegistrationPublic> apiRegistrationsFromRegistrationApi = registrationApiClient.getPublished();
+        if (apiRegistrationsFromRegistrationApi == null) {
+
+            boolean doneOk = false;
+            int failCounter = 1;
+            while (!doneOk) {
+                logger.debug("Got error while trying to get Published API list");
+                try {
+                    Thread.sleep(1000);
+                    apiRegistrationsFromRegistrationApi = registrationApiClient.getPublished();
+                    doneOk = apiRegistrationsFromRegistrationApi != null;
+
+                    if (!doneOk) {
+                        failCounter++;
+                    }
+
+                    if (failCounter > RETRY_COUNT_API_RETRIEVAL) {
+                        logger.error("Fatal: API Harvester failed to retrieve published APIs from subsystem, shutting down harvester!");
+                        throw new RuntimeException("Failed to load API Registrations after waiting for " + failCounter + " secounds. Terminating");
+                    }
+                } catch (InterruptedException ex) {
+                    Thread.currentThread().interrupt();
+                }
+            }
+        }
 
         logger.info("Loaded {} registrations from registration-api", apiRegistrationsFromRegistrationApi.size());
         result.addAll(apiRegistrationsFromRegistrationApi);
