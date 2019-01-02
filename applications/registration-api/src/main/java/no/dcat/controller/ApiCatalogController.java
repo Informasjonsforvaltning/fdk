@@ -7,6 +7,7 @@ import no.dcat.webutils.exceptions.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -35,6 +36,7 @@ public class ApiCatalogController {
         this.apiCatalogHarvesterService = apiCatalogHarvesterService;
     }
 
+    @PreAuthorize("hasPermission(#catalogId, 'write')")
     @CrossOrigin
     @RequestMapping(
         value = "",
@@ -51,6 +53,7 @@ public class ApiCatalogController {
         return apiCatalogOptional.get();
     }
 
+    @PreAuthorize("hasPermission(#catalogId, 'write')")
     @CrossOrigin
     @RequestMapping(
         value = "",
@@ -79,6 +82,7 @@ public class ApiCatalogController {
         return apiCatalogSaved;
     }
 
+    @PreAuthorize("hasPermission(#catalogId, 'write')")
     @CrossOrigin
     @RequestMapping(
         value = "",
