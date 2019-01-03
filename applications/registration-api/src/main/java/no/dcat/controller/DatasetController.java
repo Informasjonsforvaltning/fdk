@@ -63,6 +63,25 @@ public class DatasetController {
     }
 
     /**
+     * Return list of all datasets in catalog.
+     * Without parameters, the first 20 datasets are returned
+     * The returned data contains paging hyperlinks.
+     * <p>
+     * @param catalogId the id of the catalog
+     * @param pageable number of datasets returned
+     * @return List of data sets, with hyperlinks to other pages in search result
+     */
+    @PreAuthorize("hasPermission(#catalogId, 'write')")
+    @CrossOrigin
+    @RequestMapping(value = "", method = GET, produces = APPLICATION_JSON_UTF8_VALUE)
+    public HttpEntity<PagedResources<Dataset>> listDatasets(@PathVariable("catalogId") String catalogId, Pageable pageable, PagedResourcesAssembler assembler) {
+
+        Page<Dataset> datasets = datasetRepository.findByCatalogId(catalogId, pageable);
+        return new ResponseEntity<>(assembler.toResource(datasets), HttpStatus.OK);
+    }
+
+
+    /**
      * Get complete dataset
      * @param id Identifier of dataset
      * @return complete dataset. HTTP status 200 OK is returned if dataset is found.
@@ -271,25 +290,6 @@ and it is quite high in priority list.
         return new ResponseEntity<>(savedDataset, HttpStatus.OK);
 
     }
-
-    /**
-     * Return list of all datasets in catalog.
-     * Without parameters, the first 20 datasets are returned
-     * The returned data contains paging hyperlinks.
-     * <p>
-     * @param catalogId the id of the catalog
-     * @param pageable number of datasets returned
-     * @return List of data sets, with hyperlinks to other pages in search result
-     */
-    @PreAuthorize("hasPermission(#catalogId, 'write')")
-    @CrossOrigin
-    @RequestMapping(value = "", method = GET, produces = APPLICATION_JSON_UTF8_VALUE)
-    public HttpEntity<PagedResources<Dataset>> listDatasets(@PathVariable("catalogId") String catalogId, Pageable pageable, PagedResourcesAssembler assembler) {
-
-        Page<Dataset> datasets = datasetRepository.findByCatalogId(catalogId, pageable);
-        return new ResponseEntity<>(assembler.toResource(datasets), HttpStatus.OK);
-    }
-
 
     /**
      * Delete dataset
