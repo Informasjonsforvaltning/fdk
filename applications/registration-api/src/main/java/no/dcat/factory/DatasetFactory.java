@@ -1,18 +1,31 @@
 package no.dcat.factory;
 
+import no.dcat.model.Catalog;
 import no.dcat.model.Dataset;
+import org.springframework.beans.BeanUtils;
 
+import java.util.Date;
 import java.util.UUID;
 
 public class DatasetFactory {
 
-    public static Dataset createDataset(String catalogId) {
+
+    public static Dataset createDataset(Catalog catalog, Dataset data) {
         Dataset dataset = new Dataset();
 
-        dataset.setId(UUID.randomUUID().toString());
-        dataset.setUri(getCatalogUri(catalogId) + "/datasets/" + dataset.getId());
-        dataset.setCatalogId(catalogId);
+        BeanUtils.copyProperties(data, dataset);
 
+        // overwrite required fields
+        dataset.setId(UUID.randomUUID().toString());
+        dataset.setCatalogId(catalog.getId());
+        dataset.setUri(getCatalogUri(catalog.getId()) + "/datasets/" + dataset.getId());
+
+        dataset.setPublisher(catalog.getPublisher());
+
+        dataset.setRegistrationStatus(Dataset.REGISTRATION_STATUS_DRAFT);
+
+        //Store metainformation about editing
+        dataset.set_lastModified(new Date());
         return dataset;
     }
 

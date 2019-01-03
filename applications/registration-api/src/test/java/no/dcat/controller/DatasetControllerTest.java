@@ -59,18 +59,16 @@ public class DatasetControllerTest {
     @Test
     public void createDatasetOK() throws Throwable {
         String catalogId = "1234";
+        Catalog catalog =new Catalog();
+        catalog.setId(catalogId);
 
-        Dataset copy = DatasetFactory.createDataset(catalogId);
-        Map<String, String> title = new HashMap<>();
-        title.put("nb", "test");
-        copy.setTitle(title);
+        Dataset data = new Dataset();
 
-        when(mockDatasetRepository.save((Dataset) any())).thenReturn(copy);
+        when(mockDatasetRepository.save(any(Dataset.class))).thenAnswer((invocation) -> invocation.getArguments()[0]);
 
-        HttpEntity<Dataset> actualEntity = datasetController.saveDataset(catalogId, copy);
+        Dataset saveDataset = datasetController.saveDataset(catalogId, data);
 
-        Dataset actual = actualEntity.getBody();
-        assertThat(actual.getCatalogId(), is(catalogId));
+        assertThat(saveDataset.getCatalogId(), is(catalogId));
 
     }
 

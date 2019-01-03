@@ -98,13 +98,13 @@ public class DatasetController {
     /**
      * Create new dataset in catalog. ID for the dataset is created automatically.
      *
-     * @param dataset
+     * @param data
      * @return HTTP 200 OK if dataset could be could be created.
      */
     @PreAuthorize("hasPermission(#catalogId, 'write')")
     @CrossOrigin
     @RequestMapping(value = "/", method = POST, consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_UTF8_VALUE)
-    public HttpEntity<Dataset> saveDataset(@PathVariable("catalogId") String catalogId, @RequestBody Dataset dataset) throws CatalogNotFoundException {
+    public Dataset saveDataset(@PathVariable("catalogId") String catalogId, @RequestBody Dataset data) throws CatalogNotFoundException {
 
         Optional<Catalog> catalogOptional = catalogRepository.findById(catalogId);
 
@@ -112,38 +112,15 @@ public class DatasetController {
             throw new CatalogNotFoundException(String.format("Unable to create dataset, catalog with id %s not found", catalogId));
         }
 
-        Dataset savedDataset = createAndSaveDataset(catalogId, dataset, catalogOptional.get());
+        Catalog catalog = catalogOptional.get();
+        Dataset dataset = DatasetFactory.createDataset(catalog, data);
 
+        logger.debug("create dataset {} at timestamp {}", dataset.getId(), dataset.get_lastModified());
 
-        return new ResponseEntity<>(savedDataset, HttpStatus.OK);
+        Dataset savedDataset = datasetRepository.save(dataset);
+
+        return savedDataset;
     }
-
-    Dataset createAndSaveDataset(String catalogId, Dataset dataset, Catalog catalog) {
-
-        // Create new dataset
-        Dataset datasetWithNewId = DatasetFactory.createDataset(catalogId);
-
-        // force new id, uri and catalogId, to ensure saving
-        dataset.setId(datasetWithNewId.getId());
-        dataset.setUri(datasetWithNewId.getUri());
-        dataset.setCatalogId(datasetWithNewId.getCatalogId());
-
-        // force publisher
-        dataset.setPublisher(catalog.getPublisher());
-
-        dataset.setRegistrationStatus(Dataset.REGISTRATION_STATUS_DRAFT);
-
-        //Store metainformation about editing
-        logger.debug("create dataset {} at timestamp {}", dataset.getId(), Calendar.getInstance().getTime());
-        dataset.set_lastModified(Calendar.getInstance().getTime());
-
-        return save(dataset);
-    }
-
-    Dataset save(Dataset dataset) {
-        return datasetRepository.save(dataset);
-    }
-
 
     @ExceptionHandler(CatalogNotFoundException.class)
     public ResponseEntity<ErrorResponse> exceptionHandler(Exception ex) {
@@ -174,7 +151,7 @@ public class DatasetController {
         }
 
         //Add metainformation about editing
-        dataset.set_lastModified(Calendar.getInstance().getTime());
+        dataset.set_lastModified(new Date());
 
         Dataset savedDataset = datasetRepository.save(dataset);
         return new ResponseEntity<>(savedDataset, HttpStatus.OK);
@@ -266,7 +243,7 @@ and it is quite high in priority list.
         logger.debug("Changed dataset Json element: {}", oldDatasetJson.toString());
 
         Dataset newDataset = gson.fromJson(oldDatasetJson.toString(), Dataset.class);
-        newDataset.set_lastModified(Calendar.getInstance().getTime());
+        newDataset.set_lastModified(new Date());
 
         if (conceptsGetByIds.size() != 0) {
             for (Concept concept : conceptsGetByIds) {

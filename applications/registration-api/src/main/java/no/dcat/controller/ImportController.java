@@ -10,6 +10,7 @@ import no.dcat.model.exceptions.CatalogNotFoundException;
 import no.dcat.model.exceptions.DatasetNotFoundException;
 import no.dcat.model.exceptions.ErrorResponse;
 import no.dcat.service.CatalogRepository;
+import no.dcat.service.DatasetRepository;
 import no.dcat.shared.SkosCode;
 import org.apache.commons.io.IOUtils;
 import org.apache.jena.query.DatasetFactory;
@@ -47,17 +48,17 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 public class ImportController {
 
     private static Logger logger = LoggerFactory.getLogger(ImportController.class);
-    protected final DatasetController datasetController;
-    protected final CatalogRepository catalogRepository;
+    private final DatasetRepository datasetRepository;
+    private final CatalogRepository catalogRepository;
     private final Map<String, Map<String, SkosCode>> allCodes = new HashMap<>();
     private final Set<String> languages = Sets.newHashSet("no", "nb", "nn", "en");
     @Value("${application.themesServiceUrl}")
     private String THEMES_SERVICE_URL = "http://localhost:8100";
 
     @Autowired
-    public ImportController(DatasetController datasetController, CatalogRepository catalogRepository) {
-        this.datasetController = datasetController;
+    public ImportController(DatasetRepository datasetRepository, CatalogRepository catalogRepository) {
         this.catalogRepository = catalogRepository;
+        this.datasetRepository = datasetRepository;
     }
 
     @PreAuthorize("hasPermission(#catalogId, 'write')")
@@ -165,9 +166,11 @@ public class ImportController {
                 dataset.setCatalogId(catalogId);
                 dataset.setCatalog(null);
 
-                Dataset newDataset = datasetController.createAndSaveDataset(catalogId, dataset, catalogToImportTo);
-                importedDatasets.add(newDataset);
-                logger.trace("ds: {}", newDataset);
+                Dataset newDataset = no.dcat.factory.DatasetFactory.createDataset(catalogToImportTo, dataset);
+                Dataset savedDataset = datasetRepository.save(newDataset);
+
+                importedDatasets.add(savedDataset);
+                logger.trace("ds: {}", savedDataset);
             }
         }
 
