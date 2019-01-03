@@ -83,7 +83,6 @@ export class ResultsApi extends React.Component {
       apiItems,
       apiTotal,
       apiAggregations,
-      onFilterAccessRights,
       onFilterPublisherHierarchy,
       onFilterFormat,
       searchQuery,
@@ -173,9 +172,7 @@ export class ResultsApi extends React.Component {
                 {renderFilterModal({
                   showFilterModal,
                   closeFilterModal,
-                  apiItems,
                   apiAggregations,
-                  onFilterAccessRights,
                   searchQuery,
                   publisherArray,
                   publishers,
