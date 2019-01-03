@@ -4,9 +4,7 @@ import no.dcat.datastore.ElasticDockerRule;
 import no.dcat.model.Catalog;
 import no.dcat.model.Dataset;
 import no.dcat.model.exceptions.CatalogNotFoundException;
-import no.dcat.model.exceptions.DatasetNotFoundException;
 import no.dcat.service.CatalogRepository;
-import no.dcat.shared.Subject;
 import no.dcat.shared.testcategories.IntegrationTest;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.util.FileManager;
@@ -15,32 +13,22 @@ import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.List;
 
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
 @ActiveProfiles("unit-integration")
@@ -49,24 +37,19 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @Category(IntegrationTest.class)
 public class ImportControllerIT {
+    @ClassRule
+    public static ElasticDockerRule elasticRule = new ElasticDockerRule();
     private static Logger logger = LoggerFactory.getLogger(ImportControllerIT.class);
-
     Model model;
-
     @Autowired
-    private MockMvc mockMvc;
-
-    @Autowired
-    ImportController importController ;
+    ImportController importController;
 
     @Autowired
     CatalogController catalogController;
-
+    @Autowired
+    private MockMvc mockMvc;
     @Autowired
     private CatalogRepository catalogRepository;
-
-    @ClassRule
-    public static ElasticDockerRule elasticRule = new ElasticDockerRule();
 
     @Before
     public void before() {
@@ -132,21 +115,21 @@ public class ImportControllerIT {
         List<Dataset> ds = importController.parseDatasets(model);
 
         long countDatasetWithSubjects = ds.stream()
-                .filter(dataset -> {
-                    if (dataset.getSubject() != null) return dataset.getSubject().size() > 0;
-                    else return false;
-                })
-                .peek(dataset -> {
-                    dataset.getSubject().forEach(subject -> {
-                        assertThat(subject.getUri(), is(notNullValue()));
-                    });
-                })
-                .count();
+            .filter(dataset -> {
+                if (dataset.getSubject() != null) return dataset.getSubject().size() > 0;
+                else return false;
+            })
+            .peek(dataset -> {
+                dataset.getSubject().forEach(subject -> {
+                    assertThat(subject.getUri(), is(notNullValue()));
+                });
+            })
+            .count();
 
         logger.info("gdoc {} datasets, wheras {} has subject", ds.size(), countDatasetWithSubjects);
 
-        assertThat(countDatasetWithSubjects, is (17L));
-        assertThat(ds.size(), is (132));
+        assertThat(countDatasetWithSubjects, is(17L));
+        assertThat(ds.size(), is(132));
     }
 
 /*  Commented out. Need to import from an url. And travis do not like that.
