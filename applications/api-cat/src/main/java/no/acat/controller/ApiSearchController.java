@@ -143,12 +143,15 @@ public class ApiSearchController {
 
         logger.debug("Built query:{}", boolQuery);
 
+        String[] returnFields = {"id", "title", "titleFormatted", "description", "descriptionFormatted", "nationalComponent", "formats", "publisher.id", "publisher.orgPath", "publisher.name", "publisher.prefLabel.*"};
+
         return elasticsearch.getClient()
             .prepareSearch("acat")
             .setTypes("apidocument")
             .setQuery(boolQuery)
             .setFrom(checkAndAdjustFrom(from))
             .setSize(checkAndAdjustSize(size))
+            .setFetchSource(returnFields, null)
             .addAggregation(createTermsAggregation("formats", "formats"))
             .addAggregation(createTermsAggregation("orgPath", "publisher.orgPath"));
 
