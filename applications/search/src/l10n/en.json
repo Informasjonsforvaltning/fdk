@@ -145,7 +145,8 @@
     "bruker": "User collected data",
     "nasjonal": "National Building Block",
     "tredjepart": "Third party",
-    "vedtak": "Decision"
+    "vedtak": "Decision",
+    "distributionType": "Distribution type"
   },
   "dataset": {
     "keyInfo": "Use of dataset",
