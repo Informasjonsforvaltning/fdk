@@ -2,12 +2,11 @@ package no.dcat.controller;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import no.dcat.factory.DatasetFactory;
+import no.dcat.datastore.domain.dcat.smoke.TestCompleteCatalog;
 import no.dcat.model.Catalog;
 import no.dcat.model.Dataset;
 import no.dcat.service.CatalogRepository;
 import no.dcat.service.DatasetRepository;
-import no.dcat.datastore.domain.dcat.smoke.TestCompleteCatalog;
 import no.dcat.shared.testcategories.UnitTest;
 import no.dcat.webutils.exceptions.NotFoundException;
 import org.junit.Before;
@@ -16,10 +15,7 @@ import org.junit.experimental.categories.Category;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.BeanUtils;
-import org.springframework.http.HttpEntity;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 
 import static org.hamcrest.Matchers.is;
@@ -60,17 +56,16 @@ public class DatasetControllerTest {
     @Test
     public void createDatasetOK() throws NotFoundException {
         String catalogId = "1234";
+        Catalog catalog = new Catalog();
+        catalog.setId(catalogId);
 
-        Dataset copy = DatasetFactory.createDataset(catalogId);
-        Map<String, String> title = new HashMap<>();
-        title.put("nb", "test");
-        copy.setTitle(title);
+        Dataset data = new Dataset();
 
-        when(mockDatasetRepository.save((Dataset) any())).thenReturn(copy);
+        when(mockDatasetRepository.save(any(Dataset.class))).thenAnswer((invocation) -> invocation.getArguments()[0]);
 
-        Dataset actual = datasetController.saveDataset(catalogId, copy);
+        Dataset saveDataset = datasetController.saveDataset(catalogId, data);
 
-        assertThat(actual.getCatalogId(), is(catalogId));
+        assertThat(saveDataset.getCatalogId(), is(catalogId));
     }
 
     @Test
@@ -90,7 +85,7 @@ public class DatasetControllerTest {
         Dataset actual = new GsonBuilder().create().fromJson(json, Dataset.class);
 
         assertThat(actual, is(expected));
-        assertThat(actual.getReferences(), is (expected.getReferences()));
+        assertThat(actual.getReferences(), is(expected.getReferences()));
 
     }
 }
