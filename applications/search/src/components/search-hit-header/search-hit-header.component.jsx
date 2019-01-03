@@ -77,19 +77,16 @@ export const SearchHitHeader = props => {
   return (
     <React.Fragment>
       {title && (
-        <div className="mb-2 d-flex flex-wrap align-items-baseline">
+        <div className="mb-2 d-flex flex-wrap align-items-baseline justify-content-between">
           {renderTitle(Tag, title, titleLink)}
           {nationalComponent && <LabelNational />}
         </div>
       )}
 
-      {publisherItems && (
-        <div className="mb-4">
-          {renderPublisher(publisherLabel, publisher, publisherItems)}
-        </div>
-      )}
+      <div className="mb-4 d-flex flex-wrap align-items-baseline">
+        {publisherItems &&
+          renderPublisher(publisherLabel, publisher, publisherItems)}
 
-      <div className="mb-4">
         {!publisherItems &&
           publisher && (
             <PublisherLabel
@@ -98,9 +95,9 @@ export const SearchHitHeader = props => {
               publisherItem={publisher}
             />
           )}
-      </div>
 
-      {theme && <div className="mb-4">{renderThemes(theme)}</div>}
+        {theme && renderThemes(theme)}
+      </div>
     </React.Fragment>
   );
 };
