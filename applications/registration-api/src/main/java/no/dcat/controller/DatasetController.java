@@ -93,43 +93,21 @@ public class DatasetController {
     /**
      * Create new dataset in catalog. ID for the dataset is created automatically.
      *
-     * @param dataset
+     * @param data
      * @return HTTP 200 OK if dataset could be could be created.
      */
     @PreAuthorize("hasPermission(#catalogId, 'write')")
     @RequestMapping(value = "/", method = POST, consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_UTF8_VALUE)
-    public Dataset saveDataset(@PathVariable("catalogId") String catalogId, @RequestBody Dataset dataset) throws NotFoundException {
+    public Dataset saveDataset(@PathVariable("catalogId") String catalogId, @RequestBody Dataset data) throws NotFoundException {
 
         Optional<Catalog> catalogOptional = catalogRepository.findById(catalogId);
 
         Catalog catalog = catalogOptional.orElseThrow(() -> new NotFoundException("Catalog not found"));
 
-        return createAndSaveDataset(catalogId, dataset, catalog);
-    }
+        Dataset dataset = DatasetFactory.createDataset(catalog, data);
 
-    Dataset createAndSaveDataset(String catalogId, Dataset dataset, Catalog catalog) {
+        logger.debug("create dataset {} at timestamp {}", dataset.getId(), dataset.get_lastModified());
 
-        // Create new dataset
-        Dataset datasetWithNewId = DatasetFactory.createDataset(catalogId);
-
-        // force new id, uri and catalogId, to ensure saving
-        dataset.setId(datasetWithNewId.getId());
-        dataset.setUri(datasetWithNewId.getUri());
-        dataset.setCatalogId(datasetWithNewId.getCatalogId());
-
-        // force publisher
-        dataset.setPublisher(catalog.getPublisher());
-
-        dataset.setRegistrationStatus(Dataset.REGISTRATION_STATUS_DRAFT);
-
-        //Store metainformation about editing
-        logger.debug("create dataset {} at timestamp {}", dataset.getId(), Calendar.getInstance().getTime());
-        dataset.set_lastModified(Calendar.getInstance().getTime());
-
-        return save(dataset);
-    }
-
-    Dataset save(Dataset dataset) {
         return datasetRepository.save(dataset);
     }
 
@@ -153,7 +131,7 @@ public class DatasetController {
             throw new NotFoundException();
         }
         //Add metainformation about editing
-        dataset.set_lastModified(Calendar.getInstance().getTime());
+        dataset.set_lastModified(new Date());
 
         return datasetRepository.save(dataset);
     }
@@ -243,7 +221,7 @@ and it is quite high in priority list.
         logger.debug("Changed dataset Json element: {}", oldDatasetJson.toString());
 
         Dataset newDataset = gson.fromJson(oldDatasetJson.toString(), Dataset.class);
-        newDataset.set_lastModified(Calendar.getInstance().getTime());
+        newDataset.set_lastModified(new Date());
 
         if (conceptsGetByIds.size() != 0) {
             for (Concept concept : conceptsGetByIds) {

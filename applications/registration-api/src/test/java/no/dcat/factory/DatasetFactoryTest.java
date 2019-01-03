@@ -1,5 +1,6 @@
 package no.dcat.factory;
 
+import no.dcat.model.Catalog;
 import no.dcat.model.Dataset;
 import no.dcat.shared.testcategories.UnitTest;
 import org.junit.Test;
@@ -17,9 +18,11 @@ public class DatasetFactoryTest {
     @Test
     public void datasetCreatedWithCorrectUri() {
         String catalogId = "12345";
-        Dataset result = DatasetFactory.createDataset(catalogId);
+        Catalog catalog = new Catalog();
+        catalog.setId(catalogId);
+        Dataset data = new Dataset();
+        Dataset result = DatasetFactory.createDataset(catalog, data);
 
         assertThat(result.getUri(), containsString("http://brreg.no/catalogs/" + catalogId + "/datasets/"));
-
     }
 }
