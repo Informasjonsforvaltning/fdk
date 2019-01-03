@@ -1,7 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`should render PublisherLabel with no prefLabel 1`] = `
-<span>
+<span
+  className="mr-3"
+>
   Eies av
    
   <span>
@@ -13,7 +15,9 @@ exports[`should render PublisherLabel with no prefLabel 1`] = `
 exports[`should render PublisherLabel with no props 1`] = `""`;
 
 exports[`should render PublisherLabel with publisher 1`] = `
-<span>
+<span
+  className="mr-3"
+>
   Eies av
    
   <span>
