@@ -2,7 +2,6 @@ package no.dcat.controller;
 
 import no.dcat.authorization.EntityNameService;
 import no.dcat.configuration.SpringSecurityContextBean;
-import no.dcat.factory.DatasetFactory;
 import no.dcat.model.Catalog;
 import no.dcat.service.CatalogRepository;
 import no.dcat.service.EnhetService;
@@ -127,7 +126,7 @@ public class CatalogController {
         catalog.setPublisher(getPublisher(catalog));
 
         if (catalog.getUri() == null) {
-            catalog.setUri(DatasetFactory.getCatalogUri(catalog.getId()));
+            catalog.setUri(getCatalogUri(catalog.getId()));
         }
 
         return catalogRepository.save(catalog);
@@ -175,7 +174,7 @@ public class CatalogController {
         }
 
         if (catalog.getUri() == null) {
-            catalog.setUri(DatasetFactory.getCatalogUri(catalog.getId()));
+            catalog.setUri(getCatalogUri(catalog.getId()));
         }
 
         Catalog savedCatalog = catalogRepository.save(catalog);
@@ -268,7 +267,7 @@ public class CatalogController {
         //Get existing harvester entries from harvester
         List<DcatSourceDto> existingHarvesterDataSources = harvesterService.getHarvestEntries();
 
-        String catalogHarvestEndpoint = getRegistrationBaseUrl() + "/catalogs/" + catalog.getId();
+        String catalogHarvestEndpoint = getCatalogUri(catalog.getId());
         boolean catalogFound = false;
 
         logger.info("checking if catalog with url {} already exists as data source", catalogHarvestEndpoint);
@@ -310,6 +309,23 @@ public class CatalogController {
         return host.toString();
         */
         return "http://registration-api:8080";
+    }
+
+    String getCatalogUri(String catalogId) {
+        /*
+            Limitation
+            Catalog url works differently accoding to the media tyoe (Accepts header)
+            Only  RDF is public without authorization ({"text/turtle", "application/ld+json", "application/rdf+xml"}) (see RdfCatalogController:44)
+            This endpoint is implemented with registrationstatus=PUBLIC filter is applied and authentication is not required.
+
+            If json format is requested, then authorization is required and response is withoug status filter
+            then json-hal is returned and query is run without filter (see CatalogController:219),
+
+            Proposed solution to overcome this discrepancy:
+            Have a different endpoint for public catalogs (like we have for public api registrations /public/apis).
+            This way we can have status=public-filtered result in all formats.
+        */
+        return getRegistrationBaseUrl() + "/catalogs/" + catalogId;
     }
 
 }
