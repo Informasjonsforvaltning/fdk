@@ -27,11 +27,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.lang.reflect.Type;
 import java.util.*;
@@ -39,11 +35,7 @@ import java.util.stream.Collectors;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
-import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-import static org.springframework.web.bind.annotation.RequestMethod.PATCH;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
-import static org.springframework.web.bind.annotation.RequestMethod.PUT;
+import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 @Controller
 @RequestMapping("/catalogs/{catalogId}/datasets")
@@ -67,8 +59,9 @@ public class DatasetController {
      * Without parameters, the first 20 datasets are returned
      * The returned data contains paging hyperlinks.
      * <p>
+     *
      * @param catalogId the id of the catalog
-     * @param pageable number of datasets returned
+     * @param pageable  number of datasets returned
      * @return List of data sets, with hyperlinks to other pages in search result
      */
     @PreAuthorize("hasPermission(#catalogId, 'write')")
@@ -83,6 +76,7 @@ public class DatasetController {
 
     /**
      * Get complete dataset
+     *
      * @param id Identifier of dataset
      * @return complete dataset. HTTP status 200 OK is returned if dataset is found.
      * If dataset is not found, HTTP 404 Not found is returned, with an empty body.
@@ -103,6 +97,7 @@ public class DatasetController {
 
     /**
      * Create new dataset in catalog. ID for the dataset is created automatically.
+     *
      * @param dataset
      * @return HTTP 200 OK if dataset could be could be created.
      */
@@ -162,6 +157,7 @@ public class DatasetController {
 
     /**
      * Modify dataset in catalog.
+     *
      * @param dataset
      * @return HTTP 200 OK if dataset could be could be created.
      */
@@ -173,7 +169,7 @@ public class DatasetController {
         dataset.setId(datasetId);
         dataset.setCatalogId(catalogId);
 
-        if(!datasetRepository.findById(dataset.getId()).isPresent()){
+        if (!datasetRepository.findById(dataset.getId()).isPresent()) {
             return ResponseEntity.notFound().build();
         }
 
@@ -187,6 +183,7 @@ public class DatasetController {
 
     /**
      * Modify dataset in catalog.
+     *
      * @param updates Objects in datatset to be updated
      * @return HTTP 200 OK if dataset could be could be updated.
      */
@@ -238,28 +235,29 @@ is that we are planning to reimplement dataset registration system (a.k.a. "drop
 and it is quite high in priority list.
 
  */
-        for(Map.Entry<String, Object> entry : updates.entrySet()) {
-            logger.debug("update key: {} value: ", entry.getKey(), entry.getValue() );
+        for (Map.Entry<String, Object> entry : updates.entrySet()) {
+            logger.debug("update key: {} value: ", entry.getKey(), entry.getValue());
             JsonElement changes = gson.toJsonTree(entry.getValue());
 
-            if(oldDatasetJson.has(entry.getKey())) {
+            if (oldDatasetJson.has(entry.getKey())) {
                 oldDatasetJson.remove(entry.getKey());
-                if(entry.getKey().equals("concepts")){
+                if (entry.getKey().equals("concepts")) {
                     oldDatasetJson.remove("subject");
                 }
             }
-            if("concepts".equals(entry.getKey())){
+            if ("concepts".equals(entry.getKey())) {
 
                 JsonElement jsonElementConcept = gson.toJsonTree(entry.getValue());
-                Type listType = new TypeToken<List<Concept>>() {}.getType();
+                Type listType = new TypeToken<List<Concept>>() {
+                }.getType();
                 conceptListFromReq = new Gson().fromJson(jsonElementConcept, listType);
 
-                logger.debug("Concept list size: {}" , conceptListFromReq.size());
+                logger.debug("Concept list size: {}", conceptListFromReq.size());
                 List<String> ids = conceptListFromReq.stream().map(Concept::getId).collect(Collectors.toList());
 
                 conceptsGetByIds = conceptCatClient.getByIds(ids);
 
-            } else{
+            } else {
 
                 oldDatasetJson.add(entry.getKey(), changes);
             }
@@ -271,19 +269,19 @@ and it is quite high in priority list.
         newDataset.set_lastModified(Calendar.getInstance().getTime());
 
         if (conceptsGetByIds.size() != 0) {
-          for (Concept concept : conceptsGetByIds) {
-            subject = new Subject();
-            subject.setId(concept.getId());
-            subject.setUri(concept.getUri());
-            subject.setDefinition(concept.getDefinition().getText());
-            subject.setPrefLabel(concept.getPrefLabel());
-            subject.setAltLabel(concept.getAltLabel());
-            subject.setIdentifier(concept.getIdentifier());
-            subjects.add(subject);
-          }
+            for (Concept concept : conceptsGetByIds) {
+                subject = new Subject();
+                subject.setId(concept.getId());
+                subject.setUri(concept.getUri());
+                subject.setDefinition(concept.getDefinition().getText());
+                subject.setPrefLabel(concept.getPrefLabel());
+                subject.setAltLabel(concept.getAltLabel());
+                subject.setIdentifier(concept.getIdentifier());
+                subjects.add(subject);
+            }
 
-          newDataset.setSubject(subjects);
-          newDataset.setConcepts(conceptsGetByIds);
+            newDataset.setSubject(subjects);
+            newDataset.setConcepts(conceptsGetByIds);
         }
 
         Dataset savedDataset = datasetRepository.save(newDataset);
@@ -293,6 +291,7 @@ and it is quite high in priority list.
 
     /**
      * Delete dataset
+     *
      * @param id Identifier of dataset
      * @return HTTP status 200 OK is returned if dataset was successfully deleted. Body empty.
      * If dataset is not found, HTTP 404 Not found is returned, with an empty body.
@@ -311,8 +310,6 @@ and it is quite high in priority list.
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
-
 
 
 }
