@@ -114,13 +114,13 @@ public class ImportController {
             throw new CatalogNotFoundException(String.format("Catalog %s does not exist in registration database", catalogId));
         }
 
-        Catalog catalogToImportTo = parseCatalog(model, existingCatalogOptional.get(), catalogId);
+        Catalog catalogToImportTo = parseCatalog(model, existingCatalogOptional.get());
 
         if (catalogToImportTo == null) {
             throw new CatalogNotFoundException(String.format("Catalog %s is not found in imported data", catalogId));
         }
 
-        List<Dataset> importedDatasets = parseAndSaveDatasets(model, catalogToImportTo, catalogId);
+        List<Dataset> importedDatasets = parseAndSaveDatasets(model, catalogToImportTo);
 
         if (importedDatasets.isEmpty()) {
             throw new DatasetNotFoundException(String.format("No datasets found in import data that is part of catalog %s", catalogId));
@@ -134,8 +134,9 @@ public class ImportController {
         return catalogToImportTo;
     }
 
-    Catalog parseCatalog(Model model, Catalog existingCatalog, String catalogId) throws IOException, CatalogNotFoundException {
+    Catalog parseCatalog(Model model, Catalog existingCatalog) throws IOException, CatalogNotFoundException {
         List<Catalog> catalogs = parseCatalogs(model);
+        String catalogId = existingCatalog.getId();
 
         Catalog catalogToImportTo = catalogs
             .stream()
@@ -153,8 +154,9 @@ public class ImportController {
         return catalogToImportTo;
     }
 
-    List<Dataset> parseAndSaveDatasets(Model model, Catalog catalogToImportTo, String catalogId) throws IOException {
+    List<Dataset> parseAndSaveDatasets(Model model, Catalog catalogToImportTo) throws IOException {
         List<Dataset> importedDatasets = new ArrayList<>();
+        String catalogId = catalogToImportTo.getId();
 
         List<Dataset> datasets = parseDatasets(model);
 

@@ -82,7 +82,7 @@ public class ImportControllerIT {
         model = FileManager.get().loadModel("export.jsonld");
         Catalog existingCat = new Catalog();
         existingCat.setId("http://data.brreg.no/datakatalog/katalog/974760673/1");
-        Catalog resultCat = importController.parseCatalog(model, existingCat, "http://data.brreg.no/datakatalog/katalog/974760673/1");
+        Catalog resultCat = importController.parseCatalog(model, existingCat);
 
         assertThat(resultCat.getId(), is(existingCat.getId()));
     }
@@ -93,7 +93,7 @@ public class ImportControllerIT {
         model = FileManager.get().loadModel("export.jsonld");
         Catalog existingCat = new Catalog();
         existingCat.setId("doesNotExist");
-        Catalog resultCat = importController.parseCatalog(model, existingCat, "doesNotExist");
+        Catalog resultCat = importController.parseCatalog(model, existingCat);
     }
 
 
@@ -102,7 +102,7 @@ public class ImportControllerIT {
         model = FileManager.get().loadModel("export.jsonld");
         Catalog existingCat = new Catalog();
         existingCat.setId("974760673");
-        List<Dataset> result = importController.parseAndSaveDatasets(model, existingCat, "974760673");
+        List<Dataset> result = importController.parseAndSaveDatasets(model, existingCat);
 
         assertThat(result.size(), is(27));
     }
