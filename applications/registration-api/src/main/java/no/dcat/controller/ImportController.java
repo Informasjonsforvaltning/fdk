@@ -10,7 +10,6 @@ import no.dcat.model.exceptions.CatalogNotFoundException;
 import no.dcat.model.exceptions.DatasetNotFoundException;
 import no.dcat.model.exceptions.ErrorResponse;
 import no.dcat.service.CatalogRepository;
-import no.dcat.shared.DataTheme;
 import no.dcat.shared.SkosCode;
 import org.apache.commons.io.IOUtils;
 import org.apache.jena.query.DatasetFactory;
@@ -47,20 +46,16 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 @RequestMapping(value = "/catalogs/{id}/import")
 public class ImportController {
 
-    private final static Model owlSchema = FileManager.get().loadModel("frames/schema.ttl");
     private static Logger logger = LoggerFactory.getLogger(ImportController.class);
-    protected final CatalogController catalogController;
     protected final DatasetController datasetController;
     protected final CatalogRepository catalogRepository;
-    final Map<String, DataTheme> allThemes = new HashMap<>();
     private final Map<String, Map<String, SkosCode>> allCodes = new HashMap<>();
     private final Set<String> languages = Sets.newHashSet("no", "nb", "nn", "en");
     @Value("${application.themesServiceUrl}")
     private String THEMES_SERVICE_URL = "http://localhost:8100";
 
     @Autowired
-    public ImportController(CatalogController catalogController, DatasetController datasetController, CatalogRepository catalogRepository) {
-        this.catalogController = catalogController;
+    public ImportController(DatasetController datasetController, CatalogRepository catalogRepository) {
         this.datasetController = datasetController;
         this.catalogRepository = catalogRepository;
     }
