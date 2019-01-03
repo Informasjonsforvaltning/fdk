@@ -27,6 +27,7 @@ COPY webpack.* /usr/src/app/
 # most volatile directory latest, in order to reuse layers.
 COPY src /usr/src/app/src
 
+RUN npm run lint
 RUN npm run build
 
 EXPOSE 3000

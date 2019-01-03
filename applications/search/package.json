@@ -3,7 +3,6 @@
   "repository": "https://github.com/Informasjonsforvaltning/fdk/tree/develop/applications/search",
   "description": "Search",
   "scripts": {
-    "precommit": "lint-staged",
     "start": "node start.js",
     "dev": "webpack-dev-server --config webpack.dev.config.js",
     "build": "webpack --config webpack.prod.config.js -p",
@@ -11,15 +10,6 @@
     "test": "jest --coverage",
     "tdd": "jest --watch",
     "lint": "eslint ./ --ext=.js,.jsx --fix"
-  },
-  "lint-staged": {
-    "gitDir": "../../",
-    "linters": {
-      "*.{js,jsx}": [
-        "lint",
-        "git add"
-      ]
-    }
   },
   "license": "ISC",
   "dependencies": {
@@ -99,10 +89,8 @@
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-prettier": "^2.5.0",
     "eslint-plugin-react": "^7.5.1",
-    "husky": "^0.14.3",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^22.4.3",
-    "lint-staged": "^4.3.0",
     "prettier": "1.13.7"
   },
   "prettier": {
