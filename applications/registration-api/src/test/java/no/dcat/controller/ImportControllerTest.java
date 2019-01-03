@@ -1,9 +1,9 @@
 package no.dcat.controller;
 
 
+import no.dcat.datastore.domain.dcat.builders.DcatReader;
 import no.dcat.model.Dataset;
 import no.dcat.shared.SkosCode;
-import no.dcat.datastore.domain.dcat.builders.DcatReader;
 import no.dcat.shared.testcategories.UnitTest;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.util.FileManager;
@@ -19,12 +19,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
-import static org.hamcrest.Matchers.nullValue;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doReturn;
@@ -40,7 +36,7 @@ public class ImportControllerTest {
     public void setup() {
         model = FileManager.get().loadModel("export.jsonld");
 
-        ImportController imp = new ImportController(null, null, null);
+        ImportController imp = new ImportController(null, null);
         importController = Mockito.spy(imp);
     }
 
@@ -48,9 +44,9 @@ public class ImportControllerTest {
     public void publisherContainsMultipleNamesWhenOnlyOneIsExpected() throws Throwable {
         model = FileManager.get().loadModel("ut1-export.ttl");
 
-        ImportController impController = new ImportController(null,null,null);
+        ImportController impController = new ImportController(null, null);
         ImportController iController = Mockito.spy(impController);
-        Map<String,String> prefLabel = new HashMap<>();
+        Map<String, String> prefLabel = new HashMap<>();
         prefLabel.put("no", "test");
 
         doReturn(prefLabel).when(iController).getLabelForCode(anyString(), anyString());
@@ -65,9 +61,9 @@ public class ImportControllerTest {
     public void parseSetsPublisher() throws Throwable {
         model = FileManager.get().loadModel("ut1-export.ttl");
 
-        ImportController importController = new ImportController(null, null, null);
+        ImportController importController = new ImportController(null, null);
         ImportController iController = Mockito.spy(importController);
-        Map<String,String> prefLabel = new HashMap<>();
+        Map<String, String> prefLabel = new HashMap<>();
         prefLabel.put("no", "test");
 
         doReturn(prefLabel).when(iController).getLabelForCode(anyString(), anyString());
@@ -75,7 +71,7 @@ public class ImportControllerTest {
 
         List<Dataset> ds = iController.parseDatasets(model);
 
-        ds.forEach( dataset -> {
+        ds.forEach(dataset -> {
             assertThat(String.format("dataset %s has null publisher", dataset.getId()), dataset.getPublisher(), is(not(nullValue())));
         });
     }
@@ -114,7 +110,7 @@ public class ImportControllerTest {
 */
 
     @Test
-    public void testLanguagePruning(){
+    public void testLanguagePruning() {
 
         SkosCode skosCode1 = new SkosCode();
 
@@ -129,7 +125,7 @@ public class ImportControllerTest {
 
         List<SkosCode> skosCodes = Arrays.asList(skosCode1, skosCode2, skosCode1, skosCode2);
 
-        new ImportController(null,null,null).pruneLanguages(skosCodes);
+        new ImportController(null, null).pruneLanguages(skosCodes);
 
         assertNull(skosCode1.getPrefLabel().get("fi"));
 
