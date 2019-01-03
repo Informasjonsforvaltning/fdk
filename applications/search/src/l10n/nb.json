@@ -145,7 +145,8 @@
     "bruker": "Brukerinnsamlede data",
     "nasjonal": "Nasjonal felleskomponent",
     "tredjepart": "Tredjepart",
-    "vedtak": "Vedtak"
+    "vedtak": "Vedtak",
+    "distributionType": "Distribusjonstype"
   },
   "dataset": {
     "keyInfo": "Bruk av datasettet",

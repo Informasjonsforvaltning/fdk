@@ -2,11 +2,9 @@
 
 exports[`should render SearchHitItem 1`] = `
 <article>
-  <Link
-    className="fdk-a-search-hit"
-    replace={false}
+  <article
+    className="fdk-a-search-hitx search-hit"
     title="Dataset: Markagrensen"
-    to="/datasets/43dbbfe0-ae35-43dd-8411-2e8b1e9f9276"
   >
     <span
       aria-hidden="false"
@@ -14,156 +12,124 @@ exports[`should render SearchHitItem 1`] = `
     >
       Søketreff.
     </span>
-    <div
-      className="fdk-container-search-hit"
-    >
-      <header>
-        <SearchHitHeader
-          nationalComponent={true}
-          publisher={
-            Object {
-              "id": "971040238",
-              "naeringskode": Object {
-                "code": "71.123",
-                "prefLabel": Object {
-                  "no": "Kart og oppmåling",
-                },
-                "uri": "http://www.ssb.no/nace/sn2007/71.123",
-              },
-              "name": "STATENS KARTVERK",
-              "orgPath": "/STAT/972417858/971040238",
-              "organisasjonsform": "ORGL",
-              "overordnetEnhet": "972417858",
+    <header>
+      <SearchHitHeader
+        nationalComponent={true}
+        publisher={
+          Object {
+            "id": "971040238",
+            "naeringskode": Object {
+              "code": "71.123",
               "prefLabel": Object {
-                "no": "Kartverket",
+                "no": "Kart og oppmåling",
               },
-              "sektorkode": Object {
-                "code": "1110",
-                "prefLabel": Object {
-                  "no": "Statens forretningsdrift",
-                },
-                "uri": "http://www.brreg.no/sektorkode/1110",
+              "uri": "http://www.ssb.no/nace/sn2007/71.123",
+            },
+            "name": "STATENS KARTVERK",
+            "orgPath": "/STAT/972417858/971040238",
+            "organisasjonsform": "ORGL",
+            "overordnetEnhet": "972417858",
+            "prefLabel": Object {
+              "no": "Kartverket",
+            },
+            "sektorkode": Object {
+              "code": "1110",
+              "prefLabel": Object {
+                "no": "Statens forretningsdrift",
               },
-              "type": "no.dcat.datastore.domain.dcat.Publisher",
-              "uri": "http://data.brreg.no/enhetsregisteret/enhet/971040238",
-              "valid": true,
-            }
+              "uri": "http://www.brreg.no/sektorkode/1110",
+            },
+            "type": "no.dcat.datastore.domain.dcat.Publisher",
+            "uri": "http://data.brreg.no/enhetsregisteret/enhet/971040238",
+            "valid": true,
           }
-          publisherItems={null}
-          publisherLabel="Owner: "
-          publisherTag="span"
-          tag="h2"
-          theme={
-            Array [
-              Object {
-                "code": "GOVE",
-                "conceptSchema": Object {
-                  "id": "http://publications.europa.eu/resource/authority/data-theme",
-                  "title": Object {
-                    "en": "Dataset types Named Authority List",
-                  },
-                  "versioninfo": "20160921-0",
-                  "versionnumber": "20160921-0",
-                },
-                "id": "http://publications.europa.eu/resource/authority/data-theme/GOVE",
-                "startUse": "2015-10-01",
+        }
+        publisherItems={null}
+        publisherLabel="Owner: "
+        publisherTag="span"
+        tag="h2"
+        theme={
+          Array [
+            Object {
+              "code": "GOVE",
+              "conceptSchema": Object {
+                "id": "http://publications.europa.eu/resource/authority/data-theme",
                 "title": Object {
-                  "bg": "Правителство и публичен сектор",
-                  "cs": "Vláda a veřejný sektor",
-                  "da": "Regeringen og den offentlige sektor",
-                  "de": "Regierung und öffentlicher Sektor",
-                  "el": "Κυβέρνηση και δημόσιος τομέας",
-                  "en": "Government and public sector",
-                  "es": "Gobierno y sector público",
-                  "et": "Valitsus ja avalik sektor",
-                  "fi": "Valtioneuvosto ja julkinen sektori",
-                  "fr": "Gouvernement et secteur public",
-                  "ga": "Rialtas agus earnáil phoiblí",
-                  "hr": "Vlada i javni sektor",
-                  "hu": "Kormányzat és közszféra",
-                  "it": "Governo e settore pubblico",
-                  "lt": "Vyriausybė ir viešasis sektorius",
-                  "lv": "Valdība un sabiedriskais sektors",
-                  "mt": "Gvern u settur pubbliku",
-                  "nb": "Forvaltning og offentlig sektor",
-                  "nl": "Overheid en publieke sector",
-                  "pl": "Rząd i sektor publiczny",
-                  "pt": "Governo e setor público",
-                  "ro": "Guvern şi sector public",
-                  "sk": "Vláda a verejný sektor",
-                  "sl": "Vlada in javni sektor",
-                  "sv": "Regeringen och den offentliga sektorn",
+                  "en": "Dataset types Named Authority List",
                 },
+                "versioninfo": "20160921-0",
+                "versionnumber": "20160921-0",
               },
-            ]
-          }
-          title="Markagrensen"
-          titleLink={null}
-        />
-      </header>
-      <p
-        className="fdk-text-size-medium"
+              "id": "http://publications.europa.eu/resource/authority/data-theme/GOVE",
+              "startUse": "2015-10-01",
+              "title": Object {
+                "bg": "Правителство и публичен сектор",
+                "cs": "Vláda a veřejný sektor",
+                "da": "Regeringen og den offentlige sektor",
+                "de": "Regierung und öffentlicher Sektor",
+                "el": "Κυβέρνηση και δημόσιος τομέας",
+                "en": "Government and public sector",
+                "es": "Gobierno y sector público",
+                "et": "Valitsus ja avalik sektor",
+                "fi": "Valtioneuvosto ja julkinen sektori",
+                "fr": "Gouvernement et secteur public",
+                "ga": "Rialtas agus earnáil phoiblí",
+                "hr": "Vlada i javni sektor",
+                "hu": "Kormányzat és közszféra",
+                "it": "Governo e settore pubblico",
+                "lt": "Vyriausybė ir viešasis sektorius",
+                "lv": "Valdība un sabiedriskais sektors",
+                "mt": "Gvern u settur pubbliku",
+                "nb": "Forvaltning og offentlig sektor",
+                "nl": "Overheid en publieke sector",
+                "pl": "Rząd i sektor publiczny",
+                "pt": "Governo e setor público",
+                "ro": "Guvern şi sector public",
+                "sk": "Vláda a verejný sektor",
+                "sl": "Vlada in javni sektor",
+                "sv": "Regeringen och den offentliga sektorn",
+              },
+            },
+          ]
+        }
+        title="Markagrensen"
+        titleLink="/datasets/43dbbfe0-ae35-43dd-8411-2e8b1e9f9276"
+      />
+    </header>
+    <p
+      className="fdk-text-size-medium"
+    >
+      <span
+        aria-hidden="false"
+        className="uu-invisible"
       >
-        <span
-          aria-hidden="false"
-          className="uu-invisible"
-        >
-          Beskrivelse av datasettet,
-        </span>
-        Datasettet avgrenser område for virkeområdet til lov 6. juni 2009 nr. 35 om naturområder i Oslo og nærliggende kommuner (markaloven) som trådte i kraft 1. september 2009. Markalovens virkeområde er fastsatt i forskrift 4...
-      </p>
-      <div
-        className="fdk-container-distributions fdk-distributions-green"
-      >
-        <strong>
-          Public
-        </strong>
-        <div>
-          <DistributionFormat
-            code="PUBLIC"
-            key="dataset-distribution-format0"
-            text="GPX"
-            type="Nedlastbar fil"
-          />
-          <DistributionFormat
-            code="PUBLIC"
-            key="dataset-distribution-format0"
-            text="WFS"
-            type={null}
-          />
-          <DistributionFormat
-            code="PUBLIC"
-            key="dataset-distribution-format0"
-            text="GML"
-            type={null}
-          />
-          <DistributionFormat
-            code="PUBLIC"
-            key="dataset-distribution-format0"
-            text="ESRI Filgeodatabase"
-            type={null}
-          />
-          <DistributionFormat
-            code="PUBLIC"
-            key="dataset-distribution-format0"
-            text="WMS"
-            type={null}
-          />
-          <DistributionFormat
-            code="PUBLIC"
-            key="dataset-distribution-format0"
-            text="postgis"
-            type={null}
-          />
-          <DistributionFormat
-            code="PUBLIC"
-            key="dataset-distribution-format0"
-            text="SOSI"
-            type={null}
-          />
-        </div>
-      </div>
+        Beskrivelse av datasettet,
+      </span>
+      Datasettet avgrenser område for virkeområdet til lov 6. juni 2009 nr. 35 om naturområder i Oslo og nærliggende kommuner (markaloven) som trådte i kraft 1. september 2009. Markalovens virkeområde er fastsatt i forskrift 4...
+    </p>
+    <div
+      className="d-flex align-items-center mb-4"
+    >
+      <i
+        className="fa fa-2x mr-2 fdk-color-offentlig fa-unlock"
+      />
+      <strong>
+        Dataset is public
+      </strong>
     </div>
-  </Link>
+    <div
+      className="d-flex flex-wrap mb-4"
+    >
+      Distribution type
+      :
+       Nedlastbar fil (GPX)
+       undefined (WFS)
+       undefined (GML)
+       undefined (ESRI Filgeodatabase)
+       undefined (WMS)
+       undefined (postgis)
+       undefined (SOSI)
+    </div>
+  </article>
 </article>
 `;
