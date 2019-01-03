@@ -2,7 +2,7 @@ package no.dcat.controller;
 
 import no.dcat.authorization.EntityNameService;
 import no.dcat.configuration.SpringSecurityContextBean;
-import no.dcat.factory.RegistrationFactory;
+import no.dcat.factory.DatasetFactory;
 import no.dcat.model.Catalog;
 import no.dcat.service.CatalogRepository;
 import no.dcat.service.EnhetService;
@@ -127,7 +127,7 @@ public class CatalogController {
         catalog.setPublisher(getPublisher(catalog));
 
         if (catalog.getUri() == null) {
-            catalog.setUri(RegistrationFactory.getCatalogUri(catalog.getId()));
+            catalog.setUri(DatasetFactory.getCatalogUri(catalog.getId()));
         }
 
         return catalogRepository.save(catalog);
@@ -175,7 +175,7 @@ public class CatalogController {
         }
 
         if (catalog.getUri() == null) {
-            catalog.setUri(RegistrationFactory.getCatalogUri(catalog.getId()));
+            catalog.setUri(DatasetFactory.getCatalogUri(catalog.getId()));
         }
 
         Catalog savedCatalog = catalogRepository.save(catalog);

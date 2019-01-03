@@ -2,7 +2,7 @@ package no.dcat.controller;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import no.dcat.factory.RegistrationFactory;
+import no.dcat.factory.DatasetFactory;
 import no.dcat.model.Catalog;
 import no.dcat.model.Dataset;
 import no.dcat.service.CatalogRepository;
@@ -61,7 +61,7 @@ public class DatasetControllerTest {
     public void createDatasetOK() throws NotFoundException {
         String catalogId = "1234";
 
-        Dataset copy = RegistrationFactory.createDataset(catalogId);
+        Dataset copy = DatasetFactory.createDataset(catalogId);
         Map<String, String> title = new HashMap<>();
         title.put("nb", "test");
         copy.setTitle(title);

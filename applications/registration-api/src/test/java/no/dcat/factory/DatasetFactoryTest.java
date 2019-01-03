@@ -12,12 +12,12 @@ import static org.junit.Assert.assertThat;
  * Created by bjg on 02.05.2018.
  */
 @Category(UnitTest.class)
-public class RegistrationFactoryTest {
+public class DatasetFactoryTest {
 
     @Test
     public void datasetCreatedWithCorrectUri() {
         String catalogId = "12345";
-        Dataset result = RegistrationFactory.createDataset(catalogId);
+        Dataset result = DatasetFactory.createDataset(catalogId);
 
         assertThat(result.getUri(), containsString("http://brreg.no/catalogs/" + catalogId + "/datasets/"));
 
