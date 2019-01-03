@@ -3,6 +3,7 @@ package no.dcat.controller;
 import com.google.common.collect.Sets;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import no.dcat.datastore.domain.dcat.builders.DcatReader;
 import no.dcat.model.Catalog;
 import no.dcat.model.Dataset;
 import no.dcat.model.exceptions.CatalogNotFoundException;
@@ -11,7 +12,6 @@ import no.dcat.model.exceptions.ErrorResponse;
 import no.dcat.service.CatalogRepository;
 import no.dcat.shared.DataTheme;
 import no.dcat.shared.SkosCode;
-import no.dcat.datastore.domain.dcat.builders.DcatReader;
 import org.apache.commons.io.IOUtils;
 import org.apache.jena.query.DatasetFactory;
 import org.apache.jena.rdf.model.Model;
@@ -47,20 +47,16 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 @RequestMapping(value = "/catalogs/{id}/import")
 public class ImportController {
 
-    private static Logger logger = LoggerFactory.getLogger(ImportController.class);
-
-    protected final CatalogController catalogController;
-
-    protected final DatasetController datasetController;
-
-    protected final CatalogRepository catalogRepository;
-
-    @Value("${application.themesServiceUrl}")
-    private String  THEMES_SERVICE_URL = "http://localhost:8100";
-
-    private final Map<String,Map<String,SkosCode>> allCodes = new HashMap<>();
-    final Map<String,DataTheme> allThemes = new HashMap<>();
     private final static Model owlSchema = FileManager.get().loadModel("frames/schema.ttl");
+    private static Logger logger = LoggerFactory.getLogger(ImportController.class);
+    protected final CatalogController catalogController;
+    protected final DatasetController datasetController;
+    protected final CatalogRepository catalogRepository;
+    final Map<String, DataTheme> allThemes = new HashMap<>();
+    private final Map<String, Map<String, SkosCode>> allCodes = new HashMap<>();
+    private final Set<String> languages = Sets.newHashSet("no", "nb", "nn", "en");
+    @Value("${application.themesServiceUrl}")
+    private String THEMES_SERVICE_URL = "http://localhost:8100";
 
     @Autowired
     public ImportController(CatalogController catalogController, DatasetController datasetController, CatalogRepository catalogRepository) {
@@ -72,11 +68,11 @@ public class ImportController {
     @PreAuthorize("hasPermission(#catalogId, 'write')")
     @CrossOrigin
     @RequestMapping(value = "",
-            method = POST,
-            produces = APPLICATION_JSON_UTF8_VALUE)
+        method = POST,
+        produces = APPLICATION_JSON_UTF8_VALUE)
     public HttpEntity<Catalog> importCatalog(
-            @PathVariable(value = "id") String catalogId,
-            @RequestBody String url) throws DatasetNotFoundException, CatalogNotFoundException, IOException {
+        @PathVariable(value = "id") String catalogId,
+        @RequestBody String url) throws DatasetNotFoundException, CatalogNotFoundException, IOException {
         logger.info("import requested for {} starts", url);
         Catalog catalog;
 
@@ -95,7 +91,7 @@ public class ImportController {
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(value = {CatalogNotFoundException.class, DatasetNotFoundException.class })
+    @ExceptionHandler(value = {CatalogNotFoundException.class, DatasetNotFoundException.class})
     public ResponseEntity<ErrorResponse> notFoundException(Exception ex) {
         ErrorResponse error = new ErrorResponse();
         error.setErrorCode(HttpStatus.NOT_FOUND.value());
@@ -105,7 +101,7 @@ public class ImportController {
     }
 
     Catalog importDatasets(String catalogId, URL url) throws IOException, CatalogNotFoundException, DatasetNotFoundException {
-        if(!(url.getProtocol().equals("http") || url.getProtocol().equals("https"))){
+        if (!(url.getProtocol().equals("http") || url.getProtocol().equals("https"))) {
             throw new MalformedURLException("Supports only http and https");
         }
 
@@ -114,7 +110,7 @@ public class ImportController {
         try {
             model = FileManager.get().loadModel(url.toString());
         } catch (NullPointerException e) {
-            throw new IOException(String.format("Cannot open import url %s",url));
+            throw new IOException(String.format("Cannot open import url %s", url));
         }
 
         Optional<Catalog> existingCatalogOptional = catalogRepository.findById(catalogId);
@@ -132,7 +128,7 @@ public class ImportController {
         List<Dataset> importedDatasets = parseAndSaveDatasets(model, catalogToImportTo, catalogId);
 
         if (importedDatasets.isEmpty()) {
-            throw new DatasetNotFoundException(String.format("No datasets found in import data that is part of catalog %s", catalogId ));
+            throw new DatasetNotFoundException(String.format("No datasets found in import data that is part of catalog %s", catalogId));
         }
 
         List<no.dcat.shared.Dataset> theList = new ArrayList<>();
@@ -143,15 +139,15 @@ public class ImportController {
         return catalogToImportTo;
     }
 
-    Catalog parseCatalog(Model model, Catalog existingCatalog, String catalogId) throws  IOException, CatalogNotFoundException {
+    Catalog parseCatalog(Model model, Catalog existingCatalog, String catalogId) throws IOException, CatalogNotFoundException {
         List<Catalog> catalogs = parseCatalogs(model);
 
         Catalog catalogToImportTo = catalogs
-                .stream()
-                .filter(cat -> cat.getUri().contains(catalogId))
-                .peek(cat -> logger.debug("Found catalog {} in external data", cat.toString()))
-                .findFirst()
-                .orElseThrow(() -> new CatalogNotFoundException(String.format("Catalog %s is not found in import data", catalogId)));
+            .stream()
+            .filter(cat -> cat.getUri().contains(catalogId))
+            .peek(cat -> logger.debug("Found catalog {} in external data", cat.toString()))
+            .findFirst()
+            .orElseThrow(() -> new CatalogNotFoundException(String.format("Catalog %s is not found in import data", catalogId)));
 
         // Ignore imported catalog attributes, i.e. copy over stored values to result
         catalogToImportTo.setId(existingCatalog.getId());
@@ -168,7 +164,7 @@ public class ImportController {
         List<Dataset> datasets = parseDatasets(model);
 
         for (Dataset dataset : datasets) {
-            if (dataset.getCatalog() != null && dataset.getCatalog().getId().contains(catalogId) ) {
+            if (dataset.getCatalog() != null && dataset.getCatalog().getId().contains(catalogId)) {
                 dataset.setCatalogId(catalogId);
                 dataset.setCatalog(null);
 
@@ -198,10 +194,10 @@ public class ImportController {
 
         List<no.dcat.shared.Dataset> firstResult = reader.getDatasets();
         List<Dataset> result = new ArrayList<>();
-        firstResult.forEach( dataset -> {
+        firstResult.forEach(dataset -> {
             Dataset d = new Dataset();
-            BeanUtils.copyProperties(dataset,d);
-            logger.debug ("dataset {}", d.getUri());
+            BeanUtils.copyProperties(dataset, d);
+            logger.debug("dataset {}", d.getUri());
             result.add(d);
         });
 
@@ -211,14 +207,11 @@ public class ImportController {
         return result;
     }
 
-    private final Set<String> languages = Sets.newHashSet("no", "nb", "nn", "en");
-
-
     void pruneLanguages(List<SkosCode> codelist) {
         codelist.forEach(skosCode -> skosCode.getPrefLabel().keySet().removeIf(lang -> !languages.contains(lang)));
     }
 
-    Map<String,String> getLabelForCode(String codeType, String code) {
+    Map<String, String> getLabelForCode(String codeType, String code) {
         SkosCode skosCode = allCodes.get(codeType).get(code);
 
         if (skosCode != null) {
