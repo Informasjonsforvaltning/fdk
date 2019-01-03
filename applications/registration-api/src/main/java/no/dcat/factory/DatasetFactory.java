@@ -4,7 +4,7 @@ import no.dcat.model.Dataset;
 
 import java.util.UUID;
 
-public class RegistrationFactory {
+public class DatasetFactory {
 
     public static Dataset createDataset(String catalogId) {
         Dataset dataset = new Dataset();

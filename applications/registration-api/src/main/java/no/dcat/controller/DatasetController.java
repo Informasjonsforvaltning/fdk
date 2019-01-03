@@ -5,7 +5,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import no.ccat.common.model.Concept;
-import no.dcat.factory.RegistrationFactory;
+import no.dcat.factory.DatasetFactory;
 import no.dcat.model.Catalog;
 import no.dcat.model.Dataset;
 import no.dcat.model.exceptions.CatalogNotFoundException;
@@ -121,7 +121,7 @@ public class DatasetController {
     Dataset createAndSaveDataset(String catalogId, Dataset dataset, Catalog catalog) {
 
         // Create new dataset
-        Dataset datasetWithNewId = RegistrationFactory.createDataset(catalogId);
+        Dataset datasetWithNewId = DatasetFactory.createDataset(catalogId);
 
         // force new id, uri and catalogId, to ensure saving
         dataset.setId(datasetWithNewId.getId());
