@@ -1,0 +1,39 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    fdk.service: registration-react
+  name: registration-react
+  namespace: {{ required "Missing value" .Values.NAMESPACE }}
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        fdk.service: registration-react
+    spec:
+      containers:
+      - args:
+        - npm
+        - start
+        env:
+        - name: NODE_ENV
+          value: {{ required "Missing value" .Values.FDK_REGISTRATION_REACT_NODE_ENV }}
+        - name: PORT
+          value: "4300"
+        - name: REG_API_URL
+          value: {{ required "Missing value" .Values.FDK_REGISTRATION_REACT_API_URL  }}
+        image: {{ required "Missing value" .Values.REGISTRATION_REACT_IMAGE }}
+        imagePullPolicy: Always
+        name: registration-react
+        ports:
+        - containerPort: 4300
+        resources: 
+          requests:
+            memory: {{  required "Missing value" .Values.FDK_REGISTRATION_REACT_MEMORY | quote }}
+      restartPolicy: Always
+status: {}

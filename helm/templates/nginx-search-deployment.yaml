@@ -1,0 +1,28 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    fdk.service: nginx-search
+  name: nginx-search
+  namespace: {{ required "Missing value" .Values.NAMESPACE }}
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        fdk.service: nginx-search
+    spec:
+      containers:
+      - image: {{ required "Missing value" .Values.NGINX_SEARCH_IMAGE }}
+        imagePullPolicy: Always
+        name: nginx-search
+        ports:
+        - containerPort: 8080
+        resources: 
+          requests:
+            memory: {{ required "Missing value" .Values.FDK_NGINX_SEARCH_MEMORY | quote }}
+      restartPolicy: Always
+status: {}

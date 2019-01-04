@@ -1,0 +1,42 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    fdk.service: reference-data
+  name: reference-data
+  namespace: {{ required "Missing value" .Values.NAMESPACE }}
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        fdk.service: reference-data
+    spec:
+      containers:
+      - env:
+        - name: SPRING_PROFILES_ACTIVE
+          value: {{ required "Missing value" .Values.SPRING_PROFILES_ACTIVE }}
+        - name: themesHttpUsername
+          value: {{ required "Missing value" .Values.FDK_REFERENCE_DATA_THEMESHTTPUSERNAME }}
+        - name: themesHttpPassword
+          value: {{ required "Missing value" .Values.FDK_REFERENCE_DATA_THEMESHTTPPASSWORD }}
+        image: {{ required "Missing value" .Values.REFERENCE_DATA_IMAGE }}
+        imagePullPolicy: Always
+        name: reference-data
+        ports:
+        - containerPort: 8080
+        resources: 
+          requests:
+            memory: {{ required "Missing value" .Values.FDK_REFERENCE_DATA_MEMORY | quote }}
+        volumeMounts:
+        - mountPath: /tdb
+          name: reference-data-claim0
+      restartPolicy: Always
+      volumes:
+      - name: reference-data-claim0
+        persistentVolumeClaim:
+          claimName: reference-data-claim0
+status: {}

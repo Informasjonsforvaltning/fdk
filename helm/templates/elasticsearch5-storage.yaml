@@ -1,0 +1,32 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  creationTimestamp: null
+  labels:
+    fdk.service: elasticsearch5-claim0
+  name: elasticsearch5-claim0
+  namespace: {{ required "Missing value" .Values.NAMESPACE }}
+spec:
+  storageClassName: ""
+  volumeName: {{ required "Missing value" .Values.FDK_ES_VOLUMENAME }}
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ required "Missing value" .Values.FDK_ES_STORAGESIZE }}
+status: {}
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: {{ required "Missing value" .Values.FDK_ES_VOLUMENAME }}
+  namespace: {{ required "Missing value" .Values.NAMESPACE }}
+spec:
+  storageClassName: ""
+  capacity:
+    storage: {{ required "Missing value" .Values.FDK_ES_STORAGESIZE }}
+  accessModes:
+    - ReadWriteOnce
+  gcePersistentDisk:
+    pdName: {{ required "Missing value" .Values.FDK_ES_VOLUMENAME }}
+    fsType: ext4

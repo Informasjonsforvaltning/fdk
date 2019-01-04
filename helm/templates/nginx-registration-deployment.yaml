@@ -1,0 +1,44 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    fdk.service: nginx-registration
+  name: nginx-registration
+  namespace: {{ required "Missing value" .Values.NAMESPACE }}
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        fdk.service: nginx-registration
+    spec:
+      containers:
+      - image: {{ required "Missing value" .Values.NGINX_REGISTRATION_IMAGE }}
+        imagePullPolicy: Always
+        name: nginx-registration
+        ports:
+        - containerPort: 8080
+        resources:
+          requests:
+            memory: {{ required "Missing value" .Values.FDK_NGINX_REGISTRATION_MEMORY | quote }}
+        livenessProbe:
+          httpGet:
+            path: /login
+            port: 8080
+          initialDelaySeconds: 120
+          periodSeconds: 30
+          successThreshold: 1
+          failureThreshold: 5
+        readinessProbe:
+          httpGet:
+            path: /login
+            port: 8080
+          initialDelaySeconds: 120
+          periodSeconds: 30
+          successThreshold: 1
+          failureThreshold: 5
+      restartPolicy: Always
+status: {}
