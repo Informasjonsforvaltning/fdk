@@ -35,8 +35,9 @@ public class ImportControllerTest {
     @Before
     public void setup() {
         model = FileManager.get().loadModel("export.jsonld");
+        no.dcat.model.DatasetFactory datasetFactory = new no.dcat.model.DatasetFactory("testUrlBase");
 
-        ImportController imp = new ImportController(null, null);
+        ImportController imp = new ImportController(null, null, datasetFactory);
         importController = Mockito.spy(imp);
     }
 
@@ -44,15 +45,13 @@ public class ImportControllerTest {
     public void publisherContainsMultipleNamesWhenOnlyOneIsExpected() throws Throwable {
         model = FileManager.get().loadModel("ut1-export.ttl");
 
-        ImportController impController = new ImportController(null, null);
-        ImportController iController = Mockito.spy(impController);
         Map<String, String> prefLabel = new HashMap<>();
         prefLabel.put("no", "test");
 
-        doReturn(prefLabel).when(iController).getLabelForCode(anyString(), anyString());
-        doReturn(new DcatReader(model)).when(iController).getDcatReader(any());
+        doReturn(prefLabel).when(importController).getLabelForCode(anyString(), anyString());
+        doReturn(new DcatReader(model)).when(importController).getDcatReader(any());
 
-        List<Dataset> ds = iController.parseDatasets(model);
+        List<Dataset> ds = importController.parseDatasets(model);
 
         assertThat(ds.size(), is(27));
     }
@@ -61,15 +60,14 @@ public class ImportControllerTest {
     public void parseSetsPublisher() throws Throwable {
         model = FileManager.get().loadModel("ut1-export.ttl");
 
-        ImportController importController = new ImportController(null, null);
-        ImportController iController = Mockito.spy(importController);
+
         Map<String, String> prefLabel = new HashMap<>();
         prefLabel.put("no", "test");
 
-        doReturn(prefLabel).when(iController).getLabelForCode(anyString(), anyString());
-        doReturn(new DcatReader(model)).when(iController).getDcatReader(any());
+        doReturn(prefLabel).when(importController).getLabelForCode(anyString(), anyString());
+        doReturn(new DcatReader(model)).when(importController).getDcatReader(any());
 
-        List<Dataset> ds = iController.parseDatasets(model);
+        List<Dataset> ds = importController.parseDatasets(model);
 
         ds.forEach(dataset -> {
             assertThat(String.format("dataset %s has null publisher", dataset.getId()), dataset.getPublisher(), is(not(nullValue())));
@@ -125,7 +123,7 @@ public class ImportControllerTest {
 
         List<SkosCode> skosCodes = Arrays.asList(skosCode1, skosCode2, skosCode1, skosCode2);
 
-        new ImportController(null, null).pruneLanguages(skosCodes);
+        new ImportController(null, null,null).pruneLanguages(skosCodes);
 
         assertNull(skosCode1.getPrefLabel().get("fi"));
 

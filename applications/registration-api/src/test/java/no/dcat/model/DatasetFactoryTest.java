@@ -1,13 +1,12 @@
 package no.dcat.model;
 
-import no.dcat.model.Catalog;
-import no.dcat.model.Dataset;
-import no.dcat.model.DatasetFactory;
 import no.dcat.shared.testcategories.UnitTest;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
 import static org.hamcrest.Matchers.containsString;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
 /**
@@ -15,6 +14,12 @@ import static org.junit.Assert.assertThat;
  */
 @Category(UnitTest.class)
 public class DatasetFactoryTest {
+    DatasetFactory datasetFactory;
+    String urlBase="urlbase";
+    @Before
+    public void setup() {
+        datasetFactory = new DatasetFactory(urlBase);
+    }
 
     @Test
     public void datasetCreatedWithCorrectUri() {
@@ -22,8 +27,8 @@ public class DatasetFactoryTest {
         Catalog catalog = new Catalog();
         catalog.setId(catalogId);
         Dataset data = new Dataset();
-        Dataset result = DatasetFactory.createDataset(catalog, data);
+        Dataset dataset = datasetFactory.createDataset(catalog, data);
 
-        assertThat(result.getUri(), containsString("http://brreg.no/catalogs/" + catalogId + "/datasets/"));
+        assertEquals(dataset.getUri(), urlBase+"/datasets/" + dataset.getId());
     }
 }

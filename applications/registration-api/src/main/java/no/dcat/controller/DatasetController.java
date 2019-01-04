@@ -38,14 +38,16 @@ public class DatasetController {
 
     private static Logger logger = LoggerFactory.getLogger(DatasetController.class);
 
-    private DatasetRepository datasetRepository;
-    private CatalogRepository catalogRepository;
-    private ConceptCatClient conceptCatClient;
+    private final DatasetRepository datasetRepository;
+    private final CatalogRepository catalogRepository;
+    private final DatasetFactory datasetFactory;
+    private final ConceptCatClient conceptCatClient;
 
     @Autowired
-    public DatasetController(DatasetRepository datasetRepository, CatalogRepository catalogRepository, ConceptCatClient conceptCatClient) {
+    public DatasetController(DatasetRepository datasetRepository, CatalogRepository catalogRepository, ConceptCatClient conceptCatClient, DatasetFactory datasetFactory) {
         this.datasetRepository = datasetRepository;
         this.catalogRepository = catalogRepository;
+        this.datasetFactory = datasetFactory;
         this.conceptCatClient = conceptCatClient;
     }
 
@@ -104,7 +106,7 @@ public class DatasetController {
 
         Catalog catalog = catalogOptional.orElseThrow(() -> new NotFoundException("Catalog not found"));
 
-        Dataset dataset = DatasetFactory.createDataset(catalog, data);
+        Dataset dataset = datasetFactory.createDataset(catalog, data);
 
         logger.debug("create dataset {} at timestamp {}", dataset.getId(), dataset.get_lastModified());
 

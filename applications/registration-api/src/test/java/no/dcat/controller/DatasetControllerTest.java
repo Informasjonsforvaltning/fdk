@@ -9,6 +9,7 @@ import no.dcat.service.CatalogRepository;
 import no.dcat.service.DatasetRepository;
 import no.dcat.shared.testcategories.UnitTest;
 import no.dcat.webutils.exceptions.NotFoundException;
+import org.apache.jena.query.DatasetFactory;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -48,8 +49,10 @@ public class DatasetControllerTest {
         catalog.setId(catalogId);
         when(mockCatalogRepository.findById(anyString())).thenReturn(Optional.of(catalog));
 
+        no.dcat.model.DatasetFactory datasetFactory = new no.dcat.model.DatasetFactory("testUrlBase");
 
-        datasetController = new DatasetController(mockDatasetRepository, mockCatalogRepository, null);
+
+        datasetController = new DatasetController(mockDatasetRepository, mockCatalogRepository, null, datasetFactory);
 
     }
 

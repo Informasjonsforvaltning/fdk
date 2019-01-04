@@ -1,22 +1,31 @@
 package no.dcat.model;
 
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import java.util.Date;
 import java.util.UUID;
 
+@Component
 public class DatasetFactory {
 
+    private String searchPublicUrl;
 
-    public static Dataset createDataset(Catalog catalog, Dataset data) {
+    public DatasetFactory(@Value("${application.searchPublicUrl}") String searchPublicUrl) {
+        this.searchPublicUrl = searchPublicUrl;
+    }
+
+    public Dataset createDataset(Catalog catalog, Dataset data) {
         Dataset dataset = new Dataset();
 
         BeanUtils.copyProperties(data, dataset);
 
         // overwrite required fields
-        dataset.setId(UUID.randomUUID().toString());
+        String id = UUID.randomUUID().toString();
+        dataset.setId(id);
         dataset.setCatalogId(catalog.getId());
-        dataset.setUri(getCatalogUri(catalog.getId()) + "/datasets/" + dataset.getId());
+        dataset.setUri(generateDatasetUri(id));
 
         dataset.setPublisher(catalog.getPublisher());
 
@@ -27,8 +36,8 @@ public class DatasetFactory {
         return dataset;
     }
 
-    public static String getCatalogUri(String catalogId) {
-        return "http://brreg.no" + "/catalogs/" + catalogId;
+    String generateDatasetUri(String id) {
+        return searchPublicUrl + "/datasets/" + id;
     }
 
 }

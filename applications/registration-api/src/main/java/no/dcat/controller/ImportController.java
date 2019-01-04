@@ -48,15 +48,17 @@ public class ImportController {
     private static Logger logger = LoggerFactory.getLogger(ImportController.class);
     private final DatasetRepository datasetRepository;
     private final CatalogRepository catalogRepository;
+    private final no.dcat.model.DatasetFactory datasetFactory;
     private final Map<String, Map<String, SkosCode>> allCodes = new HashMap<>();
     private final Set<String> languages = Sets.newHashSet("no", "nb", "nn", "en");
     @Value("${application.themesServiceUrl}")
     private String THEMES_SERVICE_URL = "http://localhost:8100";
 
     @Autowired
-    public ImportController(DatasetRepository datasetRepository, CatalogRepository catalogRepository) {
+    public ImportController(DatasetRepository datasetRepository, CatalogRepository catalogRepository, no.dcat.model.DatasetFactory datasetFactory) {
         this.catalogRepository = catalogRepository;
         this.datasetRepository = datasetRepository;
+        this.datasetFactory = datasetFactory;
     }
 
     @PreAuthorize("hasPermission(#catalogId, 'write')")
@@ -146,7 +148,7 @@ public class ImportController {
                 dataset.setCatalogId(catalogId);
                 dataset.setCatalog(null);
 
-                Dataset newDataset = no.dcat.model.DatasetFactory.createDataset(catalogToImportTo, dataset);
+                Dataset newDataset = datasetFactory.createDataset(catalogToImportTo, dataset);
                 Dataset savedDataset = datasetRepository.save(newDataset);
 
                 importedDatasets.add(savedDataset);

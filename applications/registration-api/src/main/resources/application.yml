@@ -7,7 +7,6 @@ logging:
   level.org.opensaml: INFO
 application:
   themesServiceUrl: http://reference-data:8080
-  catalogUriPrefix: http://localhost:8099
   apikey: ${registrationApi_apikey:12345-ABCDE-67890-FGHIJ}
   altinnServiceUrl: ${registrationApi_altinnServiceUrl:http://registration-auth:8080}
   altinnServiceCode: ${registrationApi_altinnServiceCode:4814}
@@ -21,6 +20,7 @@ application:
   harvesterUrl: http://harvester:8080
   openDataEnhet: ${FDK_ENHETSREGISTERET_URL:https://data.brreg.no/enhetsregisteret/api/enheter/}
   apiRootUrl: http://nginx-search:8080/api
+  searchPublicUrl: ${registrationApi_searchPublicUrl}
 
 spring:
   jackson:
@@ -137,6 +137,7 @@ application:
   harvesterUrl: http://localhost:8082
   altinnServiceUrl: http://localhost:8077
   apiRootUrl: http://localhost:8080/api
+  searchPublicUrl: http://localhost:8080
 
 ---
 spring:
@@ -157,6 +158,7 @@ application:
   altinnServiceEdition: 42
   apiKey: 1234-abcde-56789-fghij
   harvesterUrl: http://localhost:8082
+  searchPublicUrl: http://testhost:8080
 
 
 ---

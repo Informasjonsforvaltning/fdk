@@ -131,6 +131,7 @@ services:
     - registrationApi_harvesterPassword=password
     - registrationApi_ipKeyPassword=${registrationApi_ipKeyPassword}
     - registrationApi_ipStorePassword=${registrationApi_ipStorePassword}
+    - registrationApi_searchPublicUrl=http://localhost:8080
     - LOG_LEVEL=${LOG_LEVEL}
 
   registration-react:
