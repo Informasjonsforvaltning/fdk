@@ -5,7 +5,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import io.swagger.v3.oas.models.OpenAPI;
 import no.dcat.client.apicat.ApiCatClient;
-import no.dcat.factory.ApiRegistrationFactory;
+import no.dcat.model.ApiRegistrationFactory;
 import no.dcat.model.ApiRegistration;
 import no.dcat.model.Catalog;
 import no.dcat.service.ApiCatService;

@@ -2,7 +2,7 @@ package no.dcat.service;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import no.dcat.client.apicat.ApiCatClient;
-import no.dcat.factory.ApiRegistrationFactory;
+import no.dcat.model.ApiRegistrationFactory;
 import no.dcat.model.ApiCatalog;
 import no.dcat.model.ApiRegistration;
 import no.dcat.model.HarvestStatus;

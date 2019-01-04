@@ -146,7 +146,7 @@ public class ImportController {
                 dataset.setCatalogId(catalogId);
                 dataset.setCatalog(null);
 
-                Dataset newDataset = no.dcat.factory.DatasetFactory.createDataset(catalogToImportTo, dataset);
+                Dataset newDataset = no.dcat.model.DatasetFactory.createDataset(catalogToImportTo, dataset);
                 Dataset savedDataset = datasetRepository.save(newDataset);
 
                 importedDatasets.add(savedDataset);

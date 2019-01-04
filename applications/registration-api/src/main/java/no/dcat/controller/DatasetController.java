@@ -5,7 +5,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import no.ccat.common.model.Concept;
-import no.dcat.factory.DatasetFactory;
+import no.dcat.model.DatasetFactory;
 import no.dcat.model.Catalog;
 import no.dcat.model.Dataset;
 import no.dcat.service.CatalogRepository;
