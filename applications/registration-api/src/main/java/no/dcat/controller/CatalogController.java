@@ -230,7 +230,7 @@ public class CatalogController {
             return null;
         }
         boolean noIndex = false;
-        Optional<Catalog> catalogOptional = null;
+        Optional<Catalog> catalogOptional = Optional.empty();
 
         try {
             catalogOptional = catalogRepository.findById(orgnr);
@@ -239,7 +239,7 @@ public class CatalogController {
         }
 
 
-        if (noIndex || (catalogOptional != null && !catalogOptional.isPresent())) {
+        if (noIndex || (!catalogOptional.isPresent())) {
 
             Catalog newCatalog = new Catalog(orgnr);
 
