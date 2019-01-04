@@ -2,7 +2,6 @@ package no.dcat.controller;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import no.dcat.factory.DatasetFactory;
 import no.dcat.model.Catalog;
 import no.dcat.model.Dataset;
 import no.dcat.service.CatalogRepository;
@@ -15,10 +14,7 @@ import org.junit.experimental.categories.Category;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.BeanUtils;
-import org.springframework.http.HttpEntity;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 
 import static org.hamcrest.Matchers.is;
