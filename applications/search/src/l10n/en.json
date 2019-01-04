@@ -50,7 +50,9 @@
   "query": {
     "intro": "Search for datasets...",
     "do": "Search",
-    "clear": "Clear"
+    "clear": "Clear",
+    "show": "Show",
+    "hitsPerPage": "hits per page"
   },
   "about": {
     "about": "About The National Data Catalog",

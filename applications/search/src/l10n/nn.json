@@ -50,7 +50,9 @@
   "query": {
     "intro": "Søk etter innhald",
     "do": "Søk",
-    "clear": "Fjern alle filter"
+    "clear": "Fjern alle filter",
+    "show": "Vis",
+    "hitsPerPage": "treff per side"
   },
   "about": {
     "about": "Om felles Datakatalog",

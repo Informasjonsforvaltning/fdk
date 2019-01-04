@@ -1,7 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ReactPaginate from 'react-paginate';
-import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
+import {
+  Button,
+  Modal,
+  ModalBody,
+  ModalFooter,
+  ModalHeader,
+  Dropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem
+} from 'reactstrap';
 import cx from 'classnames';
 
 import localization from '../../../lib/localization';
@@ -10,7 +20,19 @@ import { FilterBox } from '../../../components/filter-box/filter-box.component';
 import { SearchPublishersTree } from '../search-publishers-tree/search-publishers-tree.component';
 import { ErrorBoundary } from '../../../components/error-boundary/error-boundary';
 
+import { addOrReplaceParam } from '../../../lib/addOrReplaceUrlParam';
+
 export class ResultsDataset extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.toggle = this.toggle.bind(this);
+    this.select = this.select.bind(this);
+    this.state = {
+      dropdownOpen: false
+    };
+  }
+
   componentWillMount() {
     const urlHasSortfieldModified =
       window.location.href.indexOf('sortfield=modified') !== -1;
@@ -26,6 +48,11 @@ export class ResultsDataset extends React.Component {
     }
   }
 
+  toggle() {
+    this.setState(prevState => ({
+      dropdownOpen: !prevState.dropdownOpen
+    }));
+  }
   _renderFilterModal() {
     const {
       showFilterModal,
@@ -108,6 +135,19 @@ export class ResultsDataset extends React.Component {
     }
     return null;
   }
+  select(event) {
+    const pickedValue = event.target.innerText;
+    this.setState({
+      dropdownOpen: !this.state.dropdownOpen
+    });
+    if (this.props.searchQuery.size !== pickedValue) {
+      window.location.href = addOrReplaceParam(
+        window.location.href,
+        'size',
+        pickedValue
+      );
+    }
+  }
   render() {
     const {
       datasetItems,
@@ -177,6 +217,38 @@ export class ResultsDataset extends React.Component {
           </div>
           <div className="col-6 col-lg-4 offset-lg-4">
             <div className="d-flex justify-content-end">
+              <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
+                <DropdownToggle caret>
+                  {localization.query.show} {this.props.searchQuery.size}{' '}
+                  {localization.query.hitsPerPage}
+                </DropdownToggle>
+                <DropdownMenu>
+                  <DropdownItem
+                    onClick={this.select}
+                    active={this.props.searchQuery.size === 10}
+                  >
+                    10
+                  </DropdownItem>
+                  <DropdownItem
+                    onClick={this.select}
+                    active={this.props.searchQuery.size === 25}
+                  >
+                    25
+                  </DropdownItem>
+                  <DropdownItem
+                    onClick={this.select}
+                    active={this.props.searchQuery.size === 50}
+                  >
+                    50
+                  </DropdownItem>
+                  <DropdownItem
+                    onClick={this.select}
+                    active={this.props.searchQuery.size === 100}
+                  >
+                    100
+                  </DropdownItem>
+                </DropdownMenu>
+              </Dropdown>
               <Button
                 className={sortByScoreClass}
                 onClick={onSortByScoreClick}
