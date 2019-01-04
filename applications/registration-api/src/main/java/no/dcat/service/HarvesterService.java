@@ -60,8 +60,12 @@ public class HarvesterService {
                     new HttpEntity<>(createHeaders(harvesterUsername, harvesterPassword)),
                     new ParameterizedTypeReference<List<DcatSourceDto>>() {});
         } catch (Exception e) {
+            String possibleResponse = "";
+            if (response!= null) {
+                possibleResponse = response.toString();
+            }
             logger.error("Failed to get list of dcat sources from harvester-api: {}", e.getLocalizedMessage());
-            logger.error("response from harvester: {}", response.toString());
+            logger.error("response from harvester: {}", possibleResponse);
         }
 
         logger.debug("response status code: {}", response.getStatusCode());
