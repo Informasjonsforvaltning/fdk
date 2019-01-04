@@ -1,4 +1,7 @@
 @import '../../../node_modules/designsystemet/fdk-designsystem-bootstrap4/scss/colors.scss';
+:global {
+    @import "~/react-select/dist/react-select.css";
+}
 /* ==========================================================================
    Author's custom styles
    ========================================================================== */
@@ -21,14 +24,14 @@
     color: #000;
     border-color: black;
     box-shadow: none;
-    min-width:120px;
 }
-.fdk-button.fdk-button-black-toggle:first-child {
+.fdk-button.fdk-button-black-toggle:nth-child(2) {
   border-right:none;
   border-top-right-radius:0;
   border-bottom-right-radius:0;
+  padding:0 25px;
 }
-.fdk-button.fdk-button-black-toggle:nth-child(2) {
+.fdk-button.fdk-button-black-toggle:nth-child(3) {
   border-left:none;
   border-top-left-radius:0;
   border-bottom-left-radius:0;
@@ -158,7 +161,23 @@
     }
   }
 }
-
+.dropdown button{
+  background-color: transparent;
+  color: #000;
+  font-size: 15px;
+  padding: 9px 16px;
+  margin: 0 10px 0 0;
+}
+.dropdown .dropdown-item.active,
+.dropdown .dropdown-item:active {
+  background: black;
+      color: white;
+}
+.dropdown.show > .btn-secondary.dropdown-toggle,
+.dropdown .btn-secondary:hover {
+    color: black;
+    background-color: transparent;
+}
 /*==========  Media Queries  ==========*/
 /* Custom, iPhone Retina */
 @media only screen and (min-width : 320px) {
