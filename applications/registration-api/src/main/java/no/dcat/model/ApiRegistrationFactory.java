@@ -1,6 +1,5 @@
-package no.dcat.factory;
+package no.dcat.model;
 
-import no.dcat.model.ApiRegistration;
 import org.springframework.beans.BeanUtils;
 
 import java.util.Date;

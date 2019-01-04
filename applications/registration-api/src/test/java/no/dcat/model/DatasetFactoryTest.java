@@ -1,7 +1,8 @@
-package no.dcat.factory;
+package no.dcat.model;
 
 import no.dcat.model.Catalog;
 import no.dcat.model.Dataset;
+import no.dcat.model.DatasetFactory;
 import no.dcat.shared.testcategories.UnitTest;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
