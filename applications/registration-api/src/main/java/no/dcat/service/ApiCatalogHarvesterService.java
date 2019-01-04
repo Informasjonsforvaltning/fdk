@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
@@ -76,11 +77,11 @@ public class ApiCatalogHarvesterService {
 
     protected void doHarvestSingleCatalog(ApiCatalog originCatalog) {
         logger.info("HarvestSingleCatalog called. Catalog: " + originCatalog);
-
+        BOMInputStream reader = null;
         try {
 
             URL catalogUrl = new URL(originCatalog.getHarvestSourceUri());
-            BOMInputStream reader = new BOMInputStream(catalogUrl.openStream());
+            reader = new BOMInputStream(catalogUrl.openStream());
 
             final Model model = ModelFactory.createDefaultModel();
             model.read(reader, null, "TURTLE");//Base and lang is just untested dummy values
@@ -135,6 +136,14 @@ public class ApiCatalogHarvesterService {
             logger.warn(errorMessage);
             originCatalog.setHarvestStatus(HarvestStatus.Error(errorMessage));
             apiCatalogRepository.save(originCatalog);
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException ioe) {
+                    logger.debug("Got exception while closing Harvest Input stream ", ioe);
+                }
+            }
         }
 
     }
