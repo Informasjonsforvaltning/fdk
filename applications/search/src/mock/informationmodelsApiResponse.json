@@ -1,0 +1,228 @@
+{
+  "total": 1,
+  "hits": [
+    {
+      "id": "eadda99c-781e-4900-8f54-8dd298168382",
+      "uri": "http://localhost:8080/informationmodels/eadda99c-781e-4900-8f54-8dd298168382",
+      "title": "Enhetsregisteret",
+      "publisher": {
+        "uri": "http://data.brreg.no/enhetsregisteret/enhet/970018131",
+        "id": "970018131",
+        "name": "UTDANNINGSDIREKTORATET",
+        "orgPath": "/STAT/872417842/970018131",
+        "prefLabel": {
+          "no": "Utdanningsdirektoratet"
+        }
+      },
+      "schema": {
+        "$id": "http://localhost:8080/informationmodels/eadda99c-781e-4900-8f54-8dd298168382/schema",
+        "definitions": {
+          "Enhet": {
+            "properties": {
+              "organisasjonsnummer": {
+                "type": "string"
+              },
+              "navn": {
+                "type": "string"
+              },
+              "organisasjonsform": {
+                "$ref": "#/definitions/Organisasjonsform"
+              },
+              "postadresse": {
+                "$ref": "#/definitions/Adresse"
+              },
+              "registreringsdatoEnhetsregisteret": {
+                "type": "string"
+              },
+              "registrertIMvaregisteret": {
+                "type": "boolean"
+              },
+              "naeringskode1": {
+                "$ref": "#/definitions/Naeringskode"
+              },
+              "naeringskode2": {
+                "$ref": "#/definitions/Naeringskode"
+              },
+              "naeringskode3": {
+                "$ref": "#/definitions/Naeringskode"
+              },
+              "antallAnsatte": {
+                "type": "integer"
+              },
+              "forretningsadresse": {
+                "$ref": "#/definitions/Adresse"
+              },
+              "stiftelsedato": {
+                "type": "string"
+              },
+              "institusjonellSektorkode": {
+                "$ref": "#/definitions/Sektorkode"
+              },
+              "registrertIForetaksregisteret": {
+                "type": "boolean"
+              },
+              "registrertIStiftelsesregisteret": {
+                "type": "boolean"
+              },
+              "registrertIFrivillighetsregisteret": {
+                "type": "boolean"
+              },
+              "sisteInnsendteAarsregnskap": {
+                "type": "string"
+              },
+              "konkurs": {
+                "type": "boolean"
+              },
+              "underAvvikling": {
+                "type": "boolean"
+              },
+              "underTvangsavviklingEllerTvangsopplosning": {
+                "type": "boolean"
+              },
+              "maalform": {
+                "type": "string"
+              },
+              "_links": {
+                "$ref": "#/definitions/Self"
+              }
+            }
+          },
+          "Adresse": {
+            "properties": {
+              "land": {
+                "type": "string"
+              },
+              "landkode": {
+                "type": "string"
+              },
+              "postnummer": {
+                "type": "string"
+              },
+              "poststed": {
+                "type": "string"
+              },
+              "adresse": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "kommune": {
+                "type": "string"
+              },
+              "kommunenummer": {
+                "type": "string"
+              }
+            }
+          },
+          "Naeringskode": {
+            "properties": {
+              "kode": {
+                "type": "string"
+              },
+              "beskrivelse": {
+                "type": "string"
+              }
+            }
+          },
+          "Sektorkode": {
+            "properties": {
+              "kode": {
+                "type": "string"
+              },
+              "beskrivelse": {
+                "type": "string"
+              }
+            }
+          },
+          "_Organisasjonsformer": {
+            "properties": {
+              "embedded": {
+                "$ref": "#/definitions/Organisasjonsformer"
+              }
+            }
+          },
+          "Organisasjonsformer": {
+            "properties": {
+              "organisasjonsformer": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/Organisasjonsform"
+                }
+              }
+            }
+          },
+          "Organisasjonsform": {
+            "properties": {
+              "kode": {
+                "type": "string"
+              },
+              "beskrivelse": {
+                "type": "string"
+              },
+              "_links": {
+                "$ref": "#/definitions/Self"
+              }
+            }
+          },
+          "Self": {
+            "properties": {
+              "self": {
+                "$ref": "#/definitions/Href"
+              }
+            }
+          },
+          "Href": {
+            "properties": {
+              "href": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "aggregations": {
+    "formats": {
+      "buckets": [
+        {
+          "key": "MISSING",
+          "count": 1
+        },
+        {
+          "key": "application/json",
+          "count": 1
+        },
+        {
+          "key": "application/xml",
+          "count": 1
+        },
+        {
+          "key": "text/json",
+          "count": 1
+        },
+        {
+          "key": "text/xml",
+          "count": 1
+        }
+      ]
+    },
+    "orgPath": {
+      "buckets": [
+        {
+          "key": "/STAT",
+          "count": 2
+        },
+        {
+          "key": "/STAT/872417842",
+          "count": 2
+        },
+        {
+          "key": "/STAT/872417842/970018131",
+          "count": 2
+        }
+      ]
+    }
+  }
+}
