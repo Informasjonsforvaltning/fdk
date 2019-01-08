@@ -3,9 +3,9 @@ package no.dcat.controller;
 import no.dcat.datastore.ElasticDockerRule;
 import no.dcat.model.Catalog;
 import no.dcat.model.Dataset;
-import no.dcat.model.exceptions.CatalogNotFoundException;
 import no.dcat.service.CatalogRepository;
 import no.dcat.shared.testcategories.IntegrationTest;
+import no.dcat.webutils.exceptions.NotFoundException;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.util.FileManager;
 import org.junit.Before;
@@ -78,7 +78,7 @@ public class ImportControllerIT {
     }
 
     @Test
-    public void parseCatalogFindsExistingCatalogInExternalData() throws IOException, CatalogNotFoundException {
+    public void parseCatalogFindsExistingCatalogInExternalData() throws IOException, NotFoundException {
         model = FileManager.get().loadModel("export.jsonld");
         Catalog existingCat = new Catalog();
         existingCat.setId("http://data.brreg.no/datakatalog/katalog/974760673/1");
@@ -88,12 +88,12 @@ public class ImportControllerIT {
     }
 
 
-    @Test(expected = CatalogNotFoundException.class)
-    public void parseCatalogNonexistingCatalogThrowsException() throws IOException, CatalogNotFoundException {
+    @Test(expected = NotFoundException.class)
+    public void parseCatalogNonexistingCatalogThrowsException() throws IOException, NotFoundException {
         model = FileManager.get().loadModel("export.jsonld");
         Catalog existingCat = new Catalog();
         existingCat.setId("doesNotExist");
-        Catalog resultCat = importController.parseCatalog(model, existingCat, "doesNotExist");
+        importController.parseCatalog(model, existingCat, "doesNotExist");
     }
 
 

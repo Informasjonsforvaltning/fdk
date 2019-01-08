@@ -8,12 +8,11 @@ import no.ccat.common.model.Concept;
 import no.dcat.factory.RegistrationFactory;
 import no.dcat.model.Catalog;
 import no.dcat.model.Dataset;
-import no.dcat.model.exceptions.CatalogNotFoundException;
-import no.dcat.model.exceptions.ErrorResponse;
 import no.dcat.service.CatalogRepository;
 import no.dcat.service.ConceptCatClient;
 import no.dcat.service.DatasetRepository;
 import no.dcat.shared.Subject;
+import no.dcat.webutils.exceptions.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +26,10 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.lang.reflect.Type;
 import java.util.*;
@@ -104,12 +106,12 @@ public class DatasetController {
     @PreAuthorize("hasPermission(#catalogId, 'write')")
     @CrossOrigin
     @RequestMapping(value = "/", method = POST, consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_UTF8_VALUE)
-    public HttpEntity<Dataset> saveDataset(@PathVariable("catalogId") String catalogId, @RequestBody Dataset dataset) throws CatalogNotFoundException {
+    public HttpEntity<Dataset> saveDataset(@PathVariable("catalogId") String catalogId, @RequestBody Dataset dataset) throws NotFoundException {
 
         Optional<Catalog> catalogOptional = catalogRepository.findById(catalogId);
 
         if (!catalogOptional.isPresent()) {
-            throw new CatalogNotFoundException(String.format("Unable to create dataset, catalog with id %s not found", catalogId));
+            throw new NotFoundException(String.format("Unable to create dataset, catalog with id %s not found", catalogId));
         }
 
         Dataset savedDataset = createAndSaveDataset(catalogId, dataset, catalogOptional.get());
@@ -143,17 +145,6 @@ public class DatasetController {
     Dataset save(Dataset dataset) {
         return datasetRepository.save(dataset);
     }
-
-
-    @ExceptionHandler(CatalogNotFoundException.class)
-    public ResponseEntity<ErrorResponse> exceptionHandler(Exception ex) {
-        ErrorResponse error = new ErrorResponse();
-        error.setErrorCode(HttpStatus.NOT_FOUND.value());
-        error.setMessage(ex.getMessage());
-
-        return new ResponseEntity<ErrorResponse>(error, HttpStatus.NOT_FOUND);
-    }
-
 
     /**
      * Modify dataset in catalog.
