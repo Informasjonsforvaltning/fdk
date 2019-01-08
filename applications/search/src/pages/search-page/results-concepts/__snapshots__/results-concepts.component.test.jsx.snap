@@ -1,5 +1,145 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`should render ResultsConcepts correctly with hits 1`] = `
+<main
+  id="content"
+>
+  <section
+    className="row mb-3 fdk-button-row"
+  >
+    <div
+      className="col-6 col-lg-4"
+    >
+      <button
+        className="btn btn-primary fdk-button fade-in-500 d-none"
+        onClick={[MockFunction]}
+        type="button"
+      >
+        Clear
+      </button>
+    </div>
+    <div
+      className="col-6 col-lg-4 offset-lg-4"
+    >
+      <div
+        className="d-flex justify-content-end"
+      >
+        <Button
+          className="fdk-button fdk-button-black-toggle selected"
+          color="primary"
+          onClick={[Function]}
+          tag="button"
+        >
+          Relevance
+        </Button>
+        <Button
+          className="fdk-button fdk-button-black-toggle"
+          color="primary"
+          onClick={[Function]}
+          tag="button"
+        >
+          Recently published
+        </Button>
+      </div>
+    </div>
+  </section>
+  <section
+    className="row"
+  >
+    <aside
+      className="search-filters col-lg-4"
+    >
+      <div
+        className="d-none d-lg-block"
+      >
+        <span
+          aria-hidden="false"
+          className="uu-invisible"
+        >
+          Filtrering tilgang
+        </span>
+        <div>
+          <Modal
+            autoFocus={true}
+            backdrop={true}
+            backdropTransition={
+              Object {
+                "mountOnEnter": true,
+                "timeout": 150,
+              }
+            }
+            centered={false}
+            fade={true}
+            isOpen={false}
+            keyboard={true}
+            modalTransition={
+              Object {
+                "timeout": 300,
+              }
+            }
+            onClosed={[Function]}
+            onOpened={[Function]}
+            role="dialog"
+            toggle={[MockFunction]}
+            zIndex={1050}
+          >
+            <ModalHeader
+              closeAriaLabel="Close"
+              tag="h5"
+              toggle={[MockFunction]}
+              wrapTag="div"
+            >
+              Filter
+            </ModalHeader>
+            <ModalBody
+              tag="div"
+            >
+              <div
+                className="search-filters"
+              >
+                <SearchPublishersTree
+                  activeFilter={null}
+                  filter={null}
+                  onFilterPublisherHierarchy={[MockFunction]}
+                  onSearch={null}
+                  orgPath={null}
+                  publishers={null}
+                  title="Organization"
+                />
+              </div>
+            </ModalBody>
+            <ModalFooter
+              tag="div"
+            >
+              <Button
+                className="fdk-button-default fdk-button"
+                color="secondary"
+                onClick={[MockFunction]}
+                tag="button"
+              >
+                Close
+              </Button>
+            </ModalFooter>
+          </Modal>
+          <SearchPublishersTree
+            activeFilter={null}
+            filter={null}
+            onFilterPublisherHierarchy={[MockFunction]}
+            onSearch={null}
+            orgPath={null}
+            publishers={null}
+            title="Organization"
+          />
+        </div>
+      </div>
+    </aside>
+    <section
+      className="col-lg-8"
+    />
+  </section>
+</main>
+`;
+
 exports[`should render ResultsConcepts correctly with minimum of props 1`] = `
 <main
   id="content"
