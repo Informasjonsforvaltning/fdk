@@ -93,10 +93,13 @@
     "conceptHits": "hit(s) among concepts",
     "noHits": "Sorry, no hits",
     "concepts": "concepts",
+    "informationModels": "information models",
     "and": "and",
     "but": "but",
     "apis": "APIs",
-    "apiHits": "hit(s) among APIs"
+    "apiHits": "hit(s) among APIs",
+    "informationModels": "information models",
+    "informationModelsHits": "hit(s) among information models"
   },
   "facet": {
     "organisation":"Organization",

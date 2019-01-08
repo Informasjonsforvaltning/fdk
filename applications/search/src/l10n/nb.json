@@ -90,13 +90,15 @@
     },
     "search": "Søket ga",
     "datasetHits": "treff i datasett",
-    "conceptHits": "treff i begrep",
+    "conceptHits": "treff i begreper",
     "noHits": "Søket ga dessverre ingen treff",
-    "concepts": "begrep",
+    "concepts": "begreper",
     "and": "og",
     "but": "men",
     "apis": "API-er",
-    "apiHits": "treff i API-er"
+    "apiHits": "treff i API-er",
+    "informationModels": "informasjonsmodeller",
+    "informationModelsHits": "treff i informasjonsmodeller"
   },
   "facet": {
     "organisation":"Virksomhet",

@@ -14,6 +14,7 @@ export const SearchBox = props => {
     countDatasets,
     countTerms,
     countApis,
+    countInformationModels,
     open,
     searchQuery,
     inputText,
@@ -74,6 +75,7 @@ export const SearchBox = props => {
           countDatasets={countDatasets}
           countTerms={countTerms}
           countApis={countApis}
+          countInformationModels={countInformationModels}
           filteringOrTextSearchPerformed={
             !!(
               getParamFromUrl('q') ||
@@ -93,6 +95,7 @@ SearchBox.defaultProps = {
   countDatasets: null,
   countTerms: null,
   countApis: null,
+  countInformationModels: null,
   inputText: null,
   setInputText: _.noop(),
   touched: false
@@ -104,6 +107,7 @@ SearchBox.propTypes = {
   countDatasets: PropTypes.number,
   countTerms: PropTypes.number,
   countApis: PropTypes.number,
+  countInformationModels: PropTypes.number,
   open: PropTypes.func.isRequired,
   inputText: PropTypes.string,
   setInputText: PropTypes.func,

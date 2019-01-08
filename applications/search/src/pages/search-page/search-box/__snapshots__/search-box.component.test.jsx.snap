@@ -57,6 +57,7 @@ exports[`should render SearchBox correctly 1`] = `
     <CustomHitsStats
       countApis={null}
       countDatasets={100}
+      countInformationModels={null}
       countTerms={10}
       filteringOrTextSearchPerformed={false}
     />
