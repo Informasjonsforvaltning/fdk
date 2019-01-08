@@ -49,7 +49,7 @@ const renderFilterModal = ({
 );
 
 const renderHits = (hits, publishers) => {
-  if (hits) {
+  if (hits && Array.isArray(hits)) {
     return hits.map((item, index) => (
       <SearchHitItem
         key={item.id}
