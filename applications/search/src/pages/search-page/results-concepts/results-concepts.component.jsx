@@ -76,7 +76,7 @@ export class ResultsConcepts extends React.Component {
 
   _renderTerms() {
     const { conceptItems, conceptsCompare } = this.props;
-    if (conceptItems) {
+    if (conceptItems && Array.isArray(conceptItems)) {
       return conceptItems.map(item => (
         <ConceptsHitItem
           key={item.id}
@@ -272,7 +272,8 @@ ResultsConcepts.defaultProps = {
   publisherArray: null,
   publishers: null,
   conceptsCompare: null,
-  addConcept: _.noop
+  addConcept: _.noop,
+  setConceptSort: null
 };
 
 ResultsConcepts.propTypes = {
@@ -288,5 +289,8 @@ ResultsConcepts.propTypes = {
   publisherArray: PropTypes.array,
   publishers: PropTypes.object,
   conceptsCompare: PropTypes.object,
-  addConcept: PropTypes.func
+  addConcept: PropTypes.func,
+  setConceptSort: PropTypes.func,
+  onSortByLastModified: PropTypes.func.isRequired,
+  onSortByScore: PropTypes.func.isRequired
 };
