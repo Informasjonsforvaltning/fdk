@@ -20,16 +20,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.PagedResources;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.lang.reflect.Type;
 import java.util.*;
@@ -39,7 +31,8 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.web.bind.annotation.RequestMethod.*;
 
-@Controller
+@CrossOrigin
+@RestController
 @RequestMapping("/catalogs/{catalogId}/datasets")
 public class DatasetController {
 
@@ -67,12 +60,11 @@ public class DatasetController {
      * @return List of data sets, with hyperlinks to other pages in search result
      */
     @PreAuthorize("hasPermission(#catalogId, 'write')")
-    @CrossOrigin
     @RequestMapping(value = "", method = GET, produces = APPLICATION_JSON_UTF8_VALUE)
-    public HttpEntity<PagedResources<Dataset>> listDatasets(@PathVariable("catalogId") String catalogId, Pageable pageable, PagedResourcesAssembler assembler) {
+    public PagedResources<Dataset> listDatasets(@PathVariable("catalogId") String catalogId, Pageable pageable, PagedResourcesAssembler assembler) {
 
         Page<Dataset> datasets = datasetRepository.findByCatalogId(catalogId, pageable);
-        return new ResponseEntity<>(assembler.toResource(datasets), HttpStatus.OK);
+        return assembler.toResource(datasets);
     }
 
 
@@ -84,16 +76,17 @@ public class DatasetController {
      * If dataset is not found, HTTP 404 Not found is returned, with an empty body.
      */
     @PreAuthorize("hasPermission(#catalogId, 'write')")
-    @CrossOrigin
     @RequestMapping(value = "/{id}", method = GET, produces = APPLICATION_JSON_UTF8_VALUE)
-    public HttpEntity<Dataset> getDataset(@PathVariable("catalogId") String catalogId, @PathVariable("id") String id) {
-        Optional<Dataset> datasetOptional = datasetRepository.findById(id);
-        Dataset dataset = datasetOptional.isPresent() ? datasetOptional.get() : null;
+    public Dataset getDataset(@PathVariable("catalogId") String catalogId, @PathVariable("id") String id) throws NotFoundException {
 
-        if (dataset == null || !Objects.equals(catalogId, dataset.getCatalogId())) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        Optional<Dataset> datasetOptional = datasetRepository.findById(id);
+        Dataset dataset = datasetOptional.orElseThrow(() -> new NotFoundException());
+
+        if (!catalogId.equals(dataset.getCatalogId())) {
+            throw new NotFoundException();
         }
-        return new ResponseEntity<>(dataset, HttpStatus.OK);
+
+        return dataset;
     }
 
 
@@ -104,20 +97,14 @@ public class DatasetController {
      * @return HTTP 200 OK if dataset could be could be created.
      */
     @PreAuthorize("hasPermission(#catalogId, 'write')")
-    @CrossOrigin
     @RequestMapping(value = "/", method = POST, consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_UTF8_VALUE)
-    public HttpEntity<Dataset> saveDataset(@PathVariable("catalogId") String catalogId, @RequestBody Dataset dataset) throws NotFoundException {
+    public Dataset saveDataset(@PathVariable("catalogId") String catalogId, @RequestBody Dataset dataset) throws NotFoundException {
 
         Optional<Catalog> catalogOptional = catalogRepository.findById(catalogId);
 
-        if (!catalogOptional.isPresent()) {
-            throw new NotFoundException(String.format("Unable to create dataset, catalog with id %s not found", catalogId));
-        }
+        Catalog catalog = catalogOptional.orElseThrow(() -> new NotFoundException("Catalog not found"));
 
-        Dataset savedDataset = createAndSaveDataset(catalogId, dataset, catalogOptional.get());
-
-
-        return new ResponseEntity<>(savedDataset, HttpStatus.OK);
+        return createAndSaveDataset(catalogId, dataset, catalog);
     }
 
     Dataset createAndSaveDataset(String catalogId, Dataset dataset, Catalog catalog) {
@@ -153,22 +140,22 @@ public class DatasetController {
      * @return HTTP 200 OK if dataset could be could be created.
      */
     @PreAuthorize("hasPermission(#catalogId, 'write')")
-    @CrossOrigin
-    @RequestMapping(value = "/{id}", method = PUT, consumes = APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public HttpEntity<Dataset> saveDataset(@PathVariable("catalogId") String catalogId, @PathVariable("id") String datasetId, @RequestBody Dataset dataset) {
+    @RequestMapping(value = "/{id}", method = PUT, consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_UTF8_VALUE)
+    public Dataset saveDataset(@PathVariable("catalogId") String catalogId, @PathVariable("id") String datasetId, @RequestBody Dataset dataset) throws NotFoundException {
         logger.info("PUT requestbody dataset: " + dataset.toString());
         dataset.setId(datasetId);
         dataset.setCatalogId(catalogId);
 
-        if (!datasetRepository.findById(dataset.getId()).isPresent()) {
-            return ResponseEntity.notFound().build();
-        }
+        Optional<Dataset> oldDatasetOptional = datasetRepository.findById(datasetId);
+        Dataset oldDataset = oldDatasetOptional.orElseThrow(() -> new NotFoundException());
 
+        if (!catalogId.equals(oldDataset.getCatalogId())) {
+            throw new NotFoundException();
+        }
         //Add metainformation about editing
         dataset.set_lastModified(Calendar.getInstance().getTime());
 
-        Dataset savedDataset = datasetRepository.save(dataset);
-        return new ResponseEntity<>(savedDataset, HttpStatus.OK);
+        return datasetRepository.save(dataset);
     }
 
 
@@ -179,21 +166,20 @@ public class DatasetController {
      * @return HTTP 200 OK if dataset could be could be updated.
      */
     @PreAuthorize("hasPermission(#catalogId, 'write')")
-    @CrossOrigin
-    @RequestMapping(value = "/{id}", method = PATCH, consumes = APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public HttpEntity<Dataset> updateDataset(@PathVariable("catalogId") String catalogId,
-                                             @PathVariable("id") String datasetId,
-                                             @RequestBody Map<String, Object> updates) {
+    @RequestMapping(value = "/{id}", method = PATCH, consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_UTF8_VALUE)
+    public Dataset updateDataset(@PathVariable("catalogId") String catalogId,
+                                 @PathVariable("id") String datasetId,
+                                 @RequestBody Map<String, Object> updates) throws NotFoundException {
         logger.info("PATCH requestbody update dataset: " + updates.toString());
 
         Gson gson = new Gson();
 
         //get already saved dataset
         Optional<Dataset> oldDatasetOptional = datasetRepository.findById(datasetId);
-        Dataset oldDataset = oldDatasetOptional.isPresent() ? oldDatasetOptional.get() : null;
+        Dataset oldDataset = oldDatasetOptional.orElseThrow(() -> new NotFoundException());
 
-        if (oldDataset == null || !Objects.equals(catalogId, oldDataset.getCatalogId())) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        if (!catalogId.equals(oldDataset.getCatalogId())) {
+            throw new NotFoundException();
         }
 
         logger.info("found old dataset: {}" + oldDataset.getTitle().get("nb"));
@@ -275,9 +261,7 @@ and it is quite high in priority list.
             newDataset.setConcepts(conceptsGetByIds);
         }
 
-        Dataset savedDataset = datasetRepository.save(newDataset);
-        return new ResponseEntity<>(savedDataset, HttpStatus.OK);
-
+        return datasetRepository.save(newDataset);
     }
 
     /**
@@ -290,16 +274,15 @@ and it is quite high in priority list.
     @PreAuthorize("hasPermission(#catalogId, 'write')")
     @CrossOrigin
     @RequestMapping(value = "/{id}", method = DELETE, produces = APPLICATION_JSON_UTF8_VALUE)
-    public HttpEntity<Dataset> deleteDataset(@PathVariable("catalogId") String catalogId, @PathVariable("id") String id) {
-        Optional<Dataset> datasetOptional = datasetRepository.findById(id);
-        Dataset dataset = datasetOptional.isPresent() ? datasetOptional.get() : null;
+    public void deleteDataset(@PathVariable("catalogId") String catalogId, @PathVariable("id") String id) throws NotFoundException {
+        Optional<Dataset> oldDatasetOptional = datasetRepository.findById(id);
+        Dataset dataset = oldDatasetOptional.orElseThrow(() -> new NotFoundException());
 
-        if (dataset == null || !Objects.equals(catalogId, dataset.getCatalogId())) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        if (!catalogId.equals(dataset.getCatalogId())) {
+            throw new NotFoundException();
         }
-        datasetRepository.delete(dataset);
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        datasetRepository.delete(dataset);
     }
 
 

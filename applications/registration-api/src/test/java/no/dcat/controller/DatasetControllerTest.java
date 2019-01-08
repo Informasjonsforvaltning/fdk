@@ -9,6 +9,7 @@ import no.dcat.service.CatalogRepository;
 import no.dcat.service.DatasetRepository;
 import no.dcat.datastore.domain.dcat.smoke.TestCompleteCatalog;
 import no.dcat.shared.testcategories.UnitTest;
+import no.dcat.webutils.exceptions.NotFoundException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -57,7 +58,7 @@ public class DatasetControllerTest {
     }
 
     @Test
-    public void createDatasetOK() throws Throwable {
+    public void createDatasetOK() throws NotFoundException {
         String catalogId = "1234";
 
         Dataset copy = RegistrationFactory.createDataset(catalogId);
@@ -67,11 +68,9 @@ public class DatasetControllerTest {
 
         when(mockDatasetRepository.save((Dataset) any())).thenReturn(copy);
 
-        HttpEntity<Dataset> actualEntity = datasetController.saveDataset(catalogId, copy);
+        Dataset actual = datasetController.saveDataset(catalogId, copy);
 
-        Dataset actual = actualEntity.getBody();
         assertThat(actual.getCatalogId(), is(catalogId));
-
     }
 
     @Test
