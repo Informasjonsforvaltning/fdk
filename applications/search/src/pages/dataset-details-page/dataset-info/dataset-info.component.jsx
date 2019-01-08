@@ -36,8 +36,8 @@ const renderReferences = (references, referencedItems, referenceData) => {
           className="d-flex list-regular--item"
         >
           <div className="col-4 pl-0 fdk-text-strong">
-            {referencedType && referencedType.length > 0
-              ? getTranslateText(_.get(referencedType[0], 'prefLabel'))
+            {referencedType
+              ? getTranslateText(_.get(referencedType, 'prefLabel'))
               : _.get(item, ['referenceType', 'uri'])}
           </div>
           <div className="col-8">

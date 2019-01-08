@@ -75,9 +75,5 @@ export function referenceDataReducer(state = initialState, action) {
   }
 }
 
-export const getReferenceDataByUri = (referenceData, code, uri) => {
-  if (Array.isArray(_.get(referenceData, ['items', code]))) {
-    return referenceData.items[code].filter(item => item.uri === uri);
-  }
-  return null;
-};
+export const getReferenceDataByUri = (referenceData, code, uri) =>
+  _.find(_.get(referenceData, ['items', code]), { uri });
