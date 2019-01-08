@@ -284,6 +284,7 @@ export const SearchPage = props => {
             countDatasets={datasetTotal}
             countTerms={conceptTotal}
             countApis={apiTotal}
+            countInformationModels={informationModelTotal}
           />
         </div>
       </section>
