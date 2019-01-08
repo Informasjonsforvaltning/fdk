@@ -20,7 +20,7 @@ exports[`should render DatasetInfo correctly 1`] = `
       >
         <LinkExternal
           prefLabel="http://referenced/dataset"
-          uri=""
+          uri="http://referenced/dataset"
         />
       </div>
     </div>

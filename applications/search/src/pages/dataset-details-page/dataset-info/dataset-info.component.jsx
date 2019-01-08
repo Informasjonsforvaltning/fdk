@@ -35,7 +35,9 @@ const renderReferences = (references, referencedItems, referenceData) => {
           </div>
           <div className="col-8">
             <LinkExternal
-              uri={item.uri}
+              uri={
+                referencedItem ? `/datasets/${referencedItem.id}` : referenceUri
+              }
               prefLabel={
                 getTranslateText(_.get(referencedItem, 'title')) || referenceUri
               }
