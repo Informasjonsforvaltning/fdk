@@ -212,16 +212,13 @@ Dersom et datasett inneholder personopplysninger skal det være et grunnlag for 
     
 # Dataset_conformsTo (i samsvar med)
 :Dataset_conformsTo
-    dct:abstract """Angi at et datasett er i samsvar med en standard, spesifikasjon eller implementasjonsregel."""@no ;
-    dct:description """Det er behov for å vite om et datasett er i henhold til gitt(e) standard(er).
-* Benyttes til å angi at et datasett er i samsvar med en standard, spesifikasjon eller implementasjonsregel. Eksempel: Et datasett er i samsvar med SOSI 4.5 som  innholdsstandard. 
-* For referanser til maskinlesbare informasjonsmodeller, skal egenskapen “innholdsspesifikasjon benyttes.”"""@no .
+    dct:abstract """Oppgi om datasettet er i henhold til gitt(e) standard(er), spesifikasjon(er) eller implementasjonsregler."""@no ;
+    dct:description """Eksempel: Et datasett er i samsvar med SOSI 4.5 som  innholdsstandard."""@no .
 
 # Dataset_informationModel (informasjonsmodell)
 :Dataset_informationModel
-    dct:abstract """Refereranse til datasettets informasjonsmodell"""@no ;
-    dct:description """En eksplisitt referanse til informasjonsmodell
-Benyttes til å angi en maskinlesbar referanse til informasjonsmodell."""@no .
+    dct:abstract """Oppgi referanse til datasettets informasjonsmodell."""@no ;
+    dct:description """ """@no .
 
 
 # Dataset_accruralPeriodicity (frekvens)
@@ -232,17 +229,16 @@ For eksempel oppdateres Enhetsregisteret med nye enheter og sletting av enheter 
 
 # Dataset_hasQualityAnnotation_accuracy (nøyaktighet)
 :Dataset_hasQualityAnnotation_accuracy
-    dct:abstract """I hvilken grad er innholdet i samsvar med formålet."""@no ;
-    dct:description """I hvilken grad datasettet korrekt representerer intensjonen som er angitt av dataeier i formålet
-Nøyaktighet skal tolkes i forhold til formålet. 
+    dct:abstract """Dersom datasettets innhold ikke er i samsvar med formålet, bør det oppgis her."""@no ;
+    dct:description """Eksempel: Formålet med Kontakt- og reservasjonsregisteret er å kunne benytte det til varsling. Kan benyttes i forbindelse med saksbehandling og utføring av forvaltningsoppgaver for øvrig.
+Eksempel på utfylling: "Brukere har selv oppgitt informasjon, sjekkes med SMS." 
 """@no .
 
 # Dataset_hasQualityAnnotation_completeness (kompletthet)
 :Dataset_hasQualityAnnotation_completeness
-    dct:abstract """I hvilken grad inneholder datasettet alle objekter som nevnt i formålet"""@no ;
-    dct:description """I hvilken grad inneholder datasettet forventede opplysninger
-* Kompletthet tolkes i forhold til formålet (utvalget).
-* Inneholder datasettet de objekter som nevnt i formålet? """@no .
+    dct:abstract """Dersom datasettet ikke innholder alle objekter som nevnt i formålet, bør det oppgis her."""@no ;
+    dct:description """Eksempel: Formålet med Enhetsregisteret er effektiv utnyttelse og samordning av offentlige opplysninger om juridiske personer, enkeltpersonforetak og andre registreringsenheter.
+Eksempel på utfylling: "Enhetsregisteret inneholder ikke slettede selskaper før 1994." """@no .
 
 
 # Dataset_hasQualityAnnotation_currentness (aktualitet)
@@ -254,19 +250,16 @@ Er opplysninger om “oppdateringsfrekvens” og “sist oppdatert” alltid gyl
 
 # Dataset_hasQualityAnnotation_avaliability (tilgjengelighet)
 :Dataset_hasQualityAnnotation_availability
-    dct:abstract """Avvik eller tilleggsopplysninger knyttet til datasettes tilgjengelighet."""@no ;
-    dct:description """Avvik eller tilleggsopplysninger knyttet til datasettets tilgjengelighet
-* Tilgjengelighet tolkes i forhold til tilgangsnivå og ev. begrensninger utover det som er angitt i behandlingsgrunnlag, skjermings- og utleveringshjemmel.
-* Dersom datasettet er åpent men mangler distribusjoner bør årsaken angis her.
+    dct:abstract """Dersom datasettets tilgangsnivå har avvik eller tilleggsopplysninger, bør det oppgis her."""@no ;
+    dct:description """Eksempel: "Regnskapsregisteret kan kun hentes ut på forespørsel."
 """@no .
 
 
 # Dataset_hasQualityAnnotation_relevance (relevans)
 :Dataset_hasQualityAnnotation_relevance
-    dct:abstract """Avvik eller tilleggsopplysninger knyttet til datasettes relevans i ulike brukskontekster
+    dct:abstract """Dersom det er bruksområder datasettet er spesielt egnet for eller ikke egnet for, bør det oppgis her.
 """@no ;
-    dct:description """Avvik eller tilleggsopplysninger knyttet til datasettes relevans i ulike brukskontekster
-En vurdering om det er bruksområder datasettet er spesielt velegnet eller ikke bør brukes."""@no .
+    dct:description """ """@no .
     
     
 # Dataset_distribution (datasettdistribusjon)
