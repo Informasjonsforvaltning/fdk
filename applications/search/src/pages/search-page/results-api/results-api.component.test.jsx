@@ -1,5 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+import _ from 'lodash';
 import { ResultsApi } from './results-api.component';
 import apisApiResponse from '../__fixtures/apisApiResponse.json';
 import { HITS_PER_PAGE } from '../../../constants/constants';
@@ -9,7 +10,9 @@ let onFilterTheme;
 let onFilterAccessRights;
 let onFilterPublisherHierarchy;
 let onClearFilters;
-let onSort;
+let setApiSort;
+let onSortByLastModified;
+let onSortByScore;
 let onPageChange;
 let defaultProps;
 let wrapper;
@@ -20,7 +23,9 @@ beforeEach(() => {
   onFilterAccessRights = jest.fn();
   onFilterPublisherHierarchy = jest.fn();
   onClearFilters = jest.fn();
-  onSort = jest.fn();
+  setApiSort = jest.fn();
+  onSortByLastModified = jest.fn();
+  onSortByScore = jest.fn();
   onPageChange = jest.fn();
 
   defaultProps = {
@@ -37,20 +42,30 @@ beforeEach(() => {
     onFilterAccessRights,
     onFilterPublisherHierarchy,
     onClearFilters,
-    onSort,
+    setApiSort,
+    onSortByLastModified,
+    onSortByScore,
     onPageChange
   };
   wrapper = shallow(<ResultsApi {...defaultProps} />);
 });
 
-test.skip('should render ResultsApi correctly with minimum of props and no hits', () => {
-  const minWrapper = shallow(<ResultsApi onSort={onSort} />);
+test('should render ResultsApi correctly with minimum of props and no hits', () => {
+  const minWrapper = shallow(
+    <ResultsApi
+      setApiSort={setApiSort}
+      onSortByLastModified={onSortByLastModified}
+      onSortByScore={onSortByScore}
+    />
+  );
   expect(minWrapper).toMatchSnapshot();
 });
 
-test.skip('should render ResultsApi correctly with hits', () => {
+test('should render ResultsApi correctly with hits', () => {
   wrapper.setProps({
-    apiItems: apisApiResponse
+    apiItems: _.get(apisApiResponse, 'hits'),
+    apiAggregations: _.get(apisApiResponse, 'aggregations'),
+    apiTotal: _.get(apisApiResponse, 'total')
   });
   expect(wrapper).toMatchSnapshot();
 });
