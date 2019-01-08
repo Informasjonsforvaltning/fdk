@@ -10,44 +10,28 @@
 :Dataset_title  
     dct:abstract """Tittelen skal være kortfattet, kunne stå alene og gi mening. Forkortelser skal skrives helt ut."""@no ;
     dct:description """• Lov- eller forskriftshjemlede navn bør inkluderes. Eksempel: «Jegerregisteret».
-* Dersom datasettet har avgrensninger i populasjon bør dette gjenspeiles i tittelen. Eksempel: «Folketellingen av 1910», «Naturområder i Oslo og nærliggende områder».
+• Dersom datasettet har avgrensninger i populasjon bør dette gjenspeiles i tittelen. Eksempel: «Folketellingen av 1910», «Naturområder i Oslo og nærliggende områder».
 • Bruk offisielle navn og benevnelser fremfor interne.
-* Eier/virksomhet skal ikke tas med.
+• Eier/virksomhet skal ikke tas med.
 • Alternative titler kan registreres i eget felt under søkeord."""@no .
 
 
 # Dataset_description
 :Dataset_description
-	dct:abstract """Beskrivelsen skal være kortfattet. Hensikten med datasettet bør komme fram. Hvilke opplysninger som utgjør kjernen i datasettet bør angis. Bruk folkelige ord. Beskriv avgrensninger, hva dataettet ikke inneholder. Begrens lenker og markup."""@no ;
-	dct:description """En kort og presis beskrivelse av datasettet skal gjøre det lett for andre å se hva det inneholder. Beskrivelse er et obligatorisk felt.
-* Beskrivelsen skal være kortfattet slik at lister over datasett forståes ved å lese de første linjene.
-* Hensikten med datasettet bør komme fram (f.eks. “Løsøreregisteret inneholder tinglyste flyttbare eiendeler”). For datasett som er omfattet av Personopplysningsloven, skal behandlingsformålet beskrives.
-* Beskriv hva datasettet inneholder. Hvilke opplysninger som utgjør kjernen i datasettet bør angis.
-* Feltinnhold skal ikke listes, men listes i emneord eller begreper.
-* Beskrivelsen er ikke en gjentakelse av tittel.
-* Bruk folkelige ord (f.eks.”Løsøre” må forklares. F.eks. “flyttbare eiendeler (Løsøre)”, ev. bare folkelige uttrykk mens faguttrykket tas med som stikkord slik at det gir treff i søk).
-* Beskriv avgrensninger, hva datasettet ikke inneholder, dersom dette kan misforstås ut fra tittelen.
-* Begrens lenker og markup (formatering) i teksten. Skal man angi språk må teksten formelt sett være fri for lenker og formatering (HTML).
-* Der målform er kjent skal "nb" eller "nn" brukes, "no" brukes ellers."""@no . 
+	dct:abstract """Beskrivelsen skal være kortfattet. Det bør fremgå hvilke opplysninger som utgjør kjernen i datasettet."""@no ;
+	dct:description """Tittel skal ikke gjentas. Dersom tittelen kan gi inntrykk av at datasettet omfatter mer enn det faktisk gjør bør du oppgi begrensninger. Bruk offisielle navn og benevnelser. Formål beskrives ikke her, men i eget felt."""@no . 
 
 
 # Dataset_objective
 :Dataset_objective
-	dct:abstract """Beskrivelsen skal være kortfattet og skal ikke gjenta det som er beskrevet i beskrivelsesfeltet."""@no ;
-	dct:description """En setnings-beskrivelse av formålet til datasettet.
-* Beskrivelsen skal være kortfattet og ikke gjentas i Beskrivelsesfeltet. 
-* Dersom datasettet inneholder personopplysninger skal behandlingsformålet for personopplysninger etter Personopplysningsloven beskrives her."""@no .
+	dct:abstract """Oppsummer formålet i én setning."""@no ;
+	dct:description """Hvis datasettet inneholder personopplysninger må formålet med dette oppgis."""@no .
 
 
 # Dataset_spatial
 :Dataset_spatial
-	dct:abstract """Angi geografisk avgrensning dersom datasett kun har innhold fra visse områder. Referer til geografiske områder angitt med URI fra GeoNames."""@no ;
-	dct:description """Det er ønskelig å synliggjøre om datasettets utvalg er begrenset til bestemte geografiske områder.
-* Angi geografisk avgrensning dersom datasett kun har innhold fra visse områder. “Observert hekking av grågås i Oppdal” er datasettets geografiske omfang begrenset til kommunen Oppdal. 
-* Benytt eksisterende avgrensninger som kommuner, fylker m.v. 
-* Bør referere til geografiske områder angitt med URI-er. (f.eks. Sentralt Stedsnavnsregister eller Administrative grenser fra Kartverket) 
-* Flere områder kan angis om relevant.
-* Dersom det finnes en tilsvarende landsdekkende oversikt, bør dette beskrives som et separat datasett, og disse relateres. (se også “relasjoner mellom datasett”).  f.eks. Observert hekking av grågås i Norge."""@no .
+	dct:abstract """Dersom datasettet kun har innhold fra visse geografiske områder angis dette med lenke til Administrative enheter fra Kartverket eller GeoNames."""@no ;
+	dct:description """Eksempler: Land, fylker, kommuner, byer, bydeler eller stedsnavn som innholdet i datasettet er begrenset til. """@no .
 
 # Dataset_temporal
 :Dataset_temporal
@@ -76,27 +60,21 @@ Datasettets URI bør benytte en av de globalt unike identifikatorene i dct:ident
 
 # Dataset_theme (tema)
 :Dataset_theme
-    dct:abstract """Ett eller flere temaer velges fra den kontrollerte listen av EU-temaer"""@no ;
-    dct:description """For å kunne sortere datasettet inn under gitte kategorier er det behov for tema
-* Ett eller flere temaer velges fra den kontrollerte listen av EU-temaer."""@no .
+    dct:abstract """Velg tema som beskriver innholdet i datasettet. """@no ;
+    dct:description """Listen kommer fra EU publication office og tematisering blir blant annet benyttet for innrapportering til EU."""@no .
 
 
 # Dataset_content (begreper)
 :Dataset_content
-    dct:abstract """Innholdstyper i datasettet beskrives med referanse til begreper i begrepskatalog"""@no ;
-    dct:description """For å beskrive viktigste typer innhold i datasettet refereres det til begreper i begrepskataloger som også gir mulighet til å utnytte synonymer
-* Innholdstyper i datasettet beskrives med referanse til begreper i begrepskatalog. 
-* Dersom det ikke kan benyttes en begrepskatalog brukes emneord. 
-Et datasett skal lenke til de aktuelle og sentrale begrepene i en begrepskatalog. Ved å henvise til gjennomarbeidede definisjoner som virksomheten selv er ansvarlig for å vedlikeholde, sikrer vi at det er tydelig hvordan et begrep brukt i datasettet skal forstås og at denne forståelsen til en hver tid er riktig og oppdatert. Vi ønsker at alle datasettene skal ha lenker til de aktuelle begrepene i virksomhetens katalog, slik at det er tydelig definert hva begrepene innebærer."""@no .
+    dct:abstract """Søk etter begrep og velg fra nedtrekksliste. 
+Et datasett skal lenke til de aktuelle og sentrale begrepene i Felles begrepskatalog og brukes til å beskrive innholdet i datasettet. """@no ;
+    dct:description """Ved å henvise til gjennomarbeidede definisjoner som virksomheten selv er ansvarlig for å vedlikeholde, sikrer vi at det er tydelig hvordan et begrep brukt i datasettet skal forstås og at denne forståelsen til en hver tid er riktig og oppdatert. """@no .
 
 
 # Dataset_keyword (søkeord)
 :Dataset_keyword
-    dct:abstract """Angi synonymer og andre ord som kan hjelpe i søk. Sentralt innhold i datasettet som ikke ennå har begrepsdefinisjoner."""@no ;
-    dct:description """Ord og uttrykk som hjelper brukeren til å finne datasettet inkluderes der det ikke er eksplisitt angitt referanser til begreper.  
-* Angi synonymer til hjelp i søk. 
-* Angi sentralt innhold i datasettet som ikke finnes begrepsdefinisjoner for enda. 
-I noen tilfeller mangler noen av begrepsdefinisjonene som er sentrale for å beskrive datasettet, eller man har et ord som ikke formelt forbindes med datasettet men som man vet at mange likevel bruker. Da kan vi bruke dette feltet for å sørge for at disse søkeordene likevel gir treff i søkemotoren.
+    dct:abstract """Sentralt innhold i datasettet som ennå ikke har begrepsdefinisjoner."""@no ;
+    dct:description """I noen tilfeller mangler noen av begrepsdefinisjonene som er sentrale for å beskrive datasettet, eller man har et ord som ikke formelt forbindes med datasettet, men som man vet at mange likevel bruker. Da kan dette feltet brukes til å sørge for at disse søkeordene likevel gir treff i søkemotoren, som f. eks. ord og uttrykk som beskriver sentralt innhold i datasettet.
 """@no .
 
 
@@ -144,7 +122,7 @@ I noen tilfeller mangler noen av begrepsdefinisjonene som er sentrale for å bes
 * Bruke unntaksvis der det er datasett som er satt sammen av data som andre er ansvarlige for
 * Skaper vil ikke angis med organisasjonsnummer siden det typisk vil være en sammensatt gruppe."""@no .
 
-# Dataset_contactPoint (kontaktpunkt)
+# Dataset_contactPoint (kontaktpunkt)Refererer til EU publication office sine datasett-typerbegrep
 :Dataset_contactPoint
     dct:abstract """Angi kontaktinformasjonen som kan brukes ved henvendelser om et datasett."""@no ;
     dct:description """Egenskapen kontaktpunkt angis for å komme i dialog med eieren av datasettet.
@@ -161,47 +139,33 @@ I noen tilfeller mangler noen av begrepsdefinisjonene som er sentrale for å bes
     
 # Dataset_landingpage (landingsside)
 :Dataset_landingpage
-    dct:abstract """Referanse til en side som beskriver datasettets innhold, struktur og tilgang."""@no ;
-    dct:description """Dokumentasjon om datasettet på en landingsside hos datasetteieren som kan beskrive registeret, innhold, struktur og tilgang.
-* kan referere til registerets hjemmeside
-* kan referere til en samleside som beskriver innhold og struktur 
-* kan referere til en samleside om nedlasting/bruk/søk (tjenestene)
-* kan referere til flere sider"""@no .
+    dct:abstract """Lenken kan referere til registerets hjemmeside, eller en samleside som beskriver innhold, struktur, tilgang, nedlasting, bruk og/eller søk. """@no ;
+    dct:description """ """@no .
 
 # Dataset_accessRights (tilgangsnivå)
 :Dataset_accessRights
-    dct:abstract """Angi om datasettet offentlig åpne data, eller er helt eller delvis skjermet for innsyn"""@no ;
-    dct:description """Det er behov for å angi i hvilken grad datasettet kan bli gjort tilgjengelig for allmennheten, uten hensyn til om det er publisert eller ikke
-* Angi om datasettet er helt eller delvis skjermet for innsyn. Offentlig, begrenset offentlighet og unntatt offentlighet. 
-* Skal gjenspeile det mest begrensede feltet/opplysningen i datasettet.
-“Offentlig” betyr at datasettet ikke inneholder begrensede opplysninger og kan legges ut som åpne data, selv om det ikke er laget en løsning for tilgang. Se Difis veileder for åpne data. 
-* “Begrenset offentlighet” betyr at tilgangen til opplysningene avhenger av hvilket formål opplysningene er innsamlet til, og hvilket lovhjemmel den som skal bruke dataene har. Begrensningen kan skyldes innhold som personopplysninger. Når noen ønsker å benytte datasettet må man foreta en konkret vurdering av tilgangen. 
-* “Unntatt offentlighet” betyr saksbehandler har med referanse til lov eller forskrift valgt at  datasett (dokumenter eller saksopplysninger) kan unndras fra offentlighet. Typiske eksempler er interne dokumenter, styringsdialog, ansettelser, gradert informasjon, forretningshemmeligheter eller data som andre eier. 
-* Varianter av datasettet kan være offentlig ved at det utelater de felt som gjør at det opprinnelige datasettet er begrenset teller unntatt offentlighet. (se relasjoner mellom datasett)
-* Ved bruk av verdiene "begrenset offentlighet" og "unntatt offentlighet" er egenskapen skjermingshjemmel anbefalt
+    dct:abstract """Skal gjenspeile det mest begrensede feltet/opplysningen i datasettet."""@no ;
+    dct:description """“Offentlig” betyr at datasettet ikke inneholder begrensede opplysninger og kan legges ut som åpne data, selv om det ikke er laget en løsning for tilgang. Se Difis veileder for åpne data.
+
+“Begrenset offentlighet” betyr at tilgangen til opplysningene avhenger av hvilket formål opplysningene er innsamlet til, og hvilken lovhjemmel den som skal bruke dataene har. Begrensningen kan skyldes innhold som personopplysninger. Når noen ønsker å benytte datasettet må man foreta en konkret vurdering av tilgangen.
+
+“Unntatt offentlighet” betyr at saksbehandler, med referanse til lov eller forskrift, har valgt at datasettet kan unndras fra offentlighet. Typiske eksempler er interne dokumenter, styringsdialog, ansettelser, gradert informasjon, forretningshemmeligheter eller data som andre eier.
 """@no .
 
 # Dataset_legalBasisForRestriction (skjermingshjemmel)
 :Dataset_legalBasisForRestriction
-    dct:abstract """Angi referanse til relevant lov eller forskrift."""@no ;
-    dct:description """Dersom datasettet har begrensninger på deling trenger vi å vite hva skjermingen gjelder. Det kan være hjemmel (kilde for påstand) i offentlighetsloven, sikkerhetsloven, beskyttelsesinstruksen eller annet lovverk som ligger til grunn for vurdering av tilgangsnivå.
-* Angi referanse til relevant lov eller forskrift. Helst til lovdata på paragrafnivå. 
-* Egenskapen er anbefalt dersom «tilgangsnivå» har verdiene «begrenset» eller «ikke-offentlig»"""@no .
+    dct:abstract """Angi referanse til relevant lov eller forskrift. Helst til lovdata på paragrafnivå."""@no ;
+    dct:description """Dersom datasettet har begrensninger på deling trenger vi å vite hva skjermingen gjelder. Det kan være hjemmel (kilde for påstand) i offentlighetsloven, sikkerhetsloven, beskyttelsesinstruksen eller annet lovverk som ligger til grunn for vurdering av tilgangsnivå."""@no .
 
 # Dataset_legalBasisForProcessing (behandlingsgrunnlag)
 :Dataset_legalBasisForProcessing
-    dct:abstract """Behandlingsgrunnlag knyttes enten til angitt lovhjemmel, samtykke eller nødvendighetsvurdering."""@no ;
-    dct:description """Etter personopplysningsloven § 8 og 9 skal det foreligge et grunnlag for behandling av personopplysninger. 
-Dersom et datasett inneholder personopplysninger skal det være et grunnlag for behandlingen.
-* Behandlingsgrunnlag knyttes enten til lovhjemmel, samtykke eller nødvendighetsvurdering. Angi dette i tekst.
-* Dersom behandlingsgrunnlaget er knyttet til lovhjemmel angis en referanse til dette."""@no .
+    dct:abstract """Angi referanse til relevant lov eller forskrift, samtykke eller nødvendighetsvurdering."""@no ;
+    dct:description """Dersom et datasett inneholder personopplysninger skal det være et grunnlag for behandlingen."""@no .
 
 # Dataset_legalBasisForAccess (utleveringshjemmel)
 :Dataset_legalBasisForAccess
-    dct:abstract """Henvisning til regelverk som begrunner en offentlig virksomhet sin rett eller plikt til å utlevere opplysninger til andre private personer eller juridiske personer."""@no ;
-    dct:description """Informasjon om utleveringshjemmel gjør det enklere for brukere av datasettet å se om det er nødvendig med egen hjemmel for innhenting eller om de kan få tillatelse til å bruke opplysninger etter søknad til dataeier.
-* Henvisning til regelverk som begrunner en offentlig virksomhet sin rett eller plikt til å utlevere opplysninger til andre private personer eller juridiske personer.
-* Henvisningen gjøres til lovdata på paragraf-nivå."""@no .
+    dct:abstract """Angi referanse til relevant lov eller forskrift. Helst til lovdata på paragrafnivå."""@no ;
+    dct:description """Henvisning til regelverk som begrunner en offentlig virksomhet sin rett eller plikt til å utlevere opplysninger til andre private personer eller juridiske personer. Informasjon om utleveringshjemmel gjør det enklere for brukere av datasettet å se om det er nødvendig med egen hjemmel for innhenting."""@no .
 
 # Dataset_provenance (opphav)
 :Dataset_provenance
@@ -286,11 +250,17 @@ En vurdering om det er bruksområder datasettet er spesielt velegnet eller ikke 
  
 # Dataset_type (type)
 :Dataset_type
-    dct:abstract """Referanse til en klassifisering av datasettets type innhold. Refererer til EU publication office sine datasett-typer."""@no ;
-    dct:description """Referanse til en klassifisering av datasettets type innhold. Refererer til EU publication office sine datasett-typer.
-* Datasett som anses som å inneholde data angis med “Data”.
-* Datasett som anses som metadata (f.eks. Kodelister, Taksonomier og Tesauri) skal angis tilsvarende.
-* Datasett som anses som testdata angis som “Testdata.”"""@no .
+    dct:abstract """Velg "Data" dersom datasettbeskrivelsen omhandler fysisk representasjon eller sammenstilling av opplysninger
+
+Velg "Testdata" dersom datasettbeskrivelsen omhandler anonymiserte eller pseudonymiserte data for testformål
+
+Velg "Kodelister" dersom datasettbeskrivelsen omhandler tabeller hvor koder beskrives ved hjelp av relevant informasjon
+
+Velg "Taksonomi" dersom datasettbeskrivelsen omhandler en hierarkisk strukturering av begreper
+
+Velg "Tesauri" dersom datasettbeskrivelsen omhandler en hierarkisk og  assosiativ strukturering av begreper
+"""@no ;
+    dct:description """Refererer til EU publication office sine datasett-typer."""@no .
 
 # Dataset_source (kilde)
 :Dataset_source
