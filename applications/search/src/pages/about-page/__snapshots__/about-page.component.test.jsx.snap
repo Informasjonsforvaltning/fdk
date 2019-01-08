@@ -5,7 +5,7 @@ exports[`should render AboutPage correctly 1`] = `
   className="container"
 >
   <SideEffect(DocumentMeta)
-    description="The National Data Catalog is an overview showing which data the various public agencies have registered, how they are connected and what they mean. The National Data Directory makes it possible for you to search in the information registered with the public agencies and use the information for analytic purposes."
+    description="The National Data Catalog is an overview showing which data the various public agencies have registered, how they are connected and what they mean. The National Data Catalog makes it possible for you to search in the information registered with the public agencies and use the information for analytic purposes."
     title="Om The National Data Catalog"
   />
   <div
@@ -31,7 +31,7 @@ exports[`should render AboutPage correctly 1`] = `
         <p
           className="fdk-ingress"
         >
-          The National Data Catalog is an overview showing which data the various public agencies have registered, how they are connected and what they mean. The National Data Directory makes it possible for you to search in the information registered with the public agencies and use the information for analytic purposes.
+          The National Data Catalog is an overview showing which data the various public agencies have registered, how they are connected and what they mean. The National Data Catalog makes it possible for you to search in the information registered with the public agencies and use the information for analytic purposes.
         </p>
       </div>
       <div
@@ -47,7 +47,7 @@ exports[`should render AboutPage correctly 1`] = `
         <p
           dangerouslySetInnerHTML={
             Object {
-              "__html": "<b>Import datasets from data.norge.no, geonorge.no with more</b><br>The National Data Directory imports dataset descriptions from other catalogs, for instance <a href='https://data.norge.no' target='blank'>data.norge.no</a> (<a href='https://data.norge.no/data/direktoratet-forvaltning-og-ikt/datanorgeno-nasjonal-katalog-over-åpne-offentlige-datasett' target='blank'>API</a>) and geonorge.no. This is done by using the DCAT-AP-NO standard as a basis to exchange dataset descriptions.",
+              "__html": "<b>Import datasets from data.norge.no, geonorge.no with more</b><br>The National Data Catalog imports dataset descriptions from other catalogs, for instance <a href='https://data.norge.no' target='blank'>data.norge.no</a> (<a href='https://data.norge.no/data/direktoratet-forvaltning-og-ikt/datanorgeno-nasjonal-katalog-over-åpne-offentlige-datasett' target='blank'>API</a>) and geonorge.no. This is done by using the DCAT-AP-NO standard as a basis to exchange dataset descriptions.",
             }
           }
         />
