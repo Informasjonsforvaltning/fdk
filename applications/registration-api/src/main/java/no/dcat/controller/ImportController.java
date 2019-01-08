@@ -6,11 +6,9 @@ import com.google.gson.GsonBuilder;
 import no.dcat.datastore.domain.dcat.builders.DcatReader;
 import no.dcat.model.Catalog;
 import no.dcat.model.Dataset;
-import no.dcat.model.exceptions.CatalogNotFoundException;
-import no.dcat.model.exceptions.DatasetNotFoundException;
-import no.dcat.model.exceptions.ErrorResponse;
 import no.dcat.service.CatalogRepository;
 import no.dcat.shared.SkosCode;
+import no.dcat.webutils.exceptions.NotFoundException;
 import org.apache.commons.io.IOUtils;
 import org.apache.jena.query.DatasetFactory;
 import org.apache.jena.rdf.model.Model;
@@ -67,7 +65,7 @@ public class ImportController {
         produces = APPLICATION_JSON_UTF8_VALUE)
     public HttpEntity<Catalog> importCatalog(
         @PathVariable(value = "id") String catalogId,
-        @RequestBody String url) throws DatasetNotFoundException, CatalogNotFoundException, IOException {
+        @RequestBody String url) throws NotFoundException, IOException {
         logger.info("import requested for {} starts", url);
         Catalog catalog;
 
@@ -77,25 +75,7 @@ public class ImportController {
         return new ResponseEntity<>(catalog, HttpStatus.OK);
     }
 
-    @ExceptionHandler(IOException.class)
-    public ResponseEntity<ErrorResponse> exceptionHandler(Exception ex) {
-        ErrorResponse error = new ErrorResponse();
-        error.setErrorCode(HttpStatus.BAD_REQUEST.value());
-        error.setMessage(ex.getMessage());
-
-        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler(value = {CatalogNotFoundException.class, DatasetNotFoundException.class})
-    public ResponseEntity<ErrorResponse> notFoundException(Exception ex) {
-        ErrorResponse error = new ErrorResponse();
-        error.setErrorCode(HttpStatus.NOT_FOUND.value());
-        error.setMessage(ex.getMessage());
-
-        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
-    }
-
-    Catalog importDatasets(String catalogId, URL url) throws IOException, CatalogNotFoundException, DatasetNotFoundException {
+    Catalog importDatasets(String catalogId, URL url) throws IOException, NotFoundException {
         if (!(url.getProtocol().equals("http") || url.getProtocol().equals("https"))) {
             throw new MalformedURLException("Supports only http and https");
         }
@@ -111,19 +91,19 @@ public class ImportController {
         Optional<Catalog> existingCatalogOptional = catalogRepository.findById(catalogId);
 
         if (!existingCatalogOptional.isPresent()) {
-            throw new CatalogNotFoundException(String.format("Catalog %s does not exist in registration database", catalogId));
+            throw new NotFoundException(String.format("Catalog %s does not exist in registration database", catalogId));
         }
 
         Catalog catalogToImportTo = parseCatalog(model, existingCatalogOptional.get(), catalogId);
 
         if (catalogToImportTo == null) {
-            throw new CatalogNotFoundException(String.format("Catalog %s is not found in imported data", catalogId));
+            throw new NotFoundException(String.format("Catalog %s is not found in imported data", catalogId));
         }
 
         List<Dataset> importedDatasets = parseAndSaveDatasets(model, catalogToImportTo, catalogId);
 
         if (importedDatasets.isEmpty()) {
-            throw new DatasetNotFoundException(String.format("No datasets found in import data that is part of catalog %s", catalogId));
+            throw new NotFoundException(String.format("No datasets found in import data that is part of catalog %s", catalogId));
         }
 
         List<no.dcat.shared.Dataset> theList = new ArrayList<>();
@@ -134,7 +114,7 @@ public class ImportController {
         return catalogToImportTo;
     }
 
-    Catalog parseCatalog(Model model, Catalog existingCatalog, String catalogId) throws IOException, CatalogNotFoundException {
+    Catalog parseCatalog(Model model, Catalog existingCatalog, String catalogId) throws IOException, NotFoundException {
         List<Catalog> catalogs = parseCatalogs(model);
 
         Catalog catalogToImportTo = catalogs
@@ -142,7 +122,7 @@ public class ImportController {
             .filter(cat -> cat.getUri().contains(catalogId))
             .peek(cat -> logger.debug("Found catalog {} in external data", cat.toString()))
             .findFirst()
-            .orElseThrow(() -> new CatalogNotFoundException(String.format("Catalog %s is not found in import data", catalogId)));
+            .orElseThrow(() -> new NotFoundException(String.format("Catalog %s is not found in import data", catalogId)));
 
         // Ignore imported catalog attributes, i.e. copy over stored values to result
         catalogToImportTo.setId(existingCatalog.getId());
