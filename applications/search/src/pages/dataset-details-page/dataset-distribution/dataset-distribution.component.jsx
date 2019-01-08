@@ -53,8 +53,8 @@ export class DatasetDistribution extends React.Component {
           REFERENCEDATA_DISTRIBUTIONTYPE,
           type
         );
-        if (distributionType !== null && distributionType.length > 0) {
-          typeText = getTranslateText(distributionType[0].prefLabel);
+        if (distributionType) {
+          typeText = getTranslateText(distributionType.prefLabel);
         }
         return typeText;
       }

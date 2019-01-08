@@ -29,8 +29,8 @@ const renderFormats = (source, referenceData) => {
           REFERENCEDATA_DISTRIBUTIONTYPE,
           type
         );
-        if (distributionType !== null && distributionType.length > 0) {
-          type = getTranslateText(distributionType[0].prefLabel);
+        if (distributionType) {
+          type = getTranslateText(distributionType.prefLabel);
         } else {
           type = null;
         }
