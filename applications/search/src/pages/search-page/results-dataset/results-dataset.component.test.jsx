@@ -1,18 +1,19 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+import _ from 'lodash';
 import { ResultsDataset } from './results-dataset.component';
 import datasetsResponse from '../__fixtures/datasetsApiResponse.json';
 import { normalizeAggregations } from '../../../lib/normalizeAggregations';
 import { HITS_PER_PAGE } from '../../../constants/constants';
-
-const datasetItems = normalizeAggregations(datasetsResponse);
 
 let closeFilterModal;
 let onFilterTheme;
 let onFilterAccessRights;
 let onFilterPublisherHierarchy;
 let onClearFilters;
-let onSort;
+let setDatasetSort;
+let onSortByLastModified;
+let onSortByScore;
 let onPageChange;
 let defaultProps;
 let wrapper;
@@ -23,12 +24,11 @@ beforeEach(() => {
   onFilterAccessRights = jest.fn();
   onFilterPublisherHierarchy = jest.fn();
   onClearFilters = jest.fn();
-  onSort = jest.fn();
+  setDatasetSort = jest.fn();
+  onSortByLastModified = jest.fn();
+  onSortByScore = jest.fn();
   onPageChange = jest.fn();
 
-  defaultProps = {
-    onSort
-  };
   defaultProps = {
     showFilterModal: true,
     datasetItems: {},
@@ -43,24 +43,36 @@ beforeEach(() => {
     onFilterAccessRights,
     onFilterPublisherHierarchy,
     onClearFilters,
-    onSort,
+    setDatasetSort,
+    onSortByLastModified,
+    onSortByScore,
     onPageChange
   };
   wrapper = shallow(<ResultsDataset {...defaultProps} />);
 });
 
-test.skip('should render ResultsDataset correctly with minimum of props', () => {
-  const minWrapper = shallow(<ResultsDataset onSort={onSort} />);
+test('should render ResultsDataset correctly with minimum of props', () => {
+  const minWrapper = shallow(
+    <ResultsDataset
+      setDatasetSort={setDatasetSort}
+      onSortByLastModified={onSortByLastModified}
+      onSortByScore={onSortByScore}
+    />
+  );
   expect(minWrapper).toMatchSnapshot();
 });
 
-test.skip('should render ResultsDataset correctly with props', () => {
+test('should render ResultsDataset correctly with props', () => {
   expect(wrapper).toMatchSnapshot();
 });
 
-test.skip('should render ResultsDataset correctly with hits', () => {
+test('should render ResultsDataset correctly with hits', () => {
   wrapper.setProps({
-    datasetItems
+    datasetItems: _.get(datasetsResponse, ['hits', 'hits']),
+    datasetAggregations: _.get(normalizeAggregations(datasetsResponse), [
+      'aggregations'
+    ]),
+    datasetTotal: _.get(datasetsResponse, ['hits', 'total'])
   });
   expect(wrapper).toMatchSnapshot();
 });

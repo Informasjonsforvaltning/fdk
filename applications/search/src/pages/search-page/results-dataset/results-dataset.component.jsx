@@ -99,7 +99,7 @@ export class ResultsDataset extends React.Component {
 
   _renderHits() {
     const { datasetItems, referenceData } = this.props;
-    if (datasetItems) {
+    if (datasetItems && Array.isArray(datasetItems)) {
       return datasetItems.map(item => (
         <ErrorBoundary key={item._source.id}>
           <SearchHitItem result={item} referenceData={referenceData} />
@@ -293,6 +293,7 @@ ResultsDataset.defaultProps = {
   referenceData: null,
   onClearFilters: null,
   onPageChange: null,
+  setDatasetSort: null,
   showClearFilterButton: null,
   hitsPerPage: null
 };
@@ -314,6 +315,7 @@ ResultsDataset.propTypes = {
   publishers: PropTypes.object,
   referenceData: PropTypes.object,
   onClearFilters: PropTypes.func,
+  setDatasetSort: PropTypes.func,
   onSortByLastModified: PropTypes.func.isRequired,
   onSortByScore: PropTypes.func.isRequired,
   onPageChange: PropTypes.func,
