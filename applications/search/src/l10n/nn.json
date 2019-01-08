@@ -96,7 +96,9 @@
     "and": "og",
     "but": "men",
     "apis": "API",
-    "apiHits": "treff i API"
+    "apiHits": "treff i API",
+    "informationModels": "informasjonsmodellar",
+    "informationModelsHits": "treff i informasjonsmodellar"
   },
   "facet": {
     "organisation":"Verksemd",
