@@ -9,6 +9,7 @@ import { withState, withHandlers, compose } from 'recompose';
 import { ResultsDataset } from './results-dataset/results-dataset.component';
 import { ResultsConcepts } from './results-concepts/results-concepts.component';
 import { ResultsApi } from './results-api/results-api.component';
+import { ResultsInformationModel } from './results-informationmodel/results-informationmodel.component';
 import { SearchBoxWithState } from './search-box/search-box.component';
 import { ResultsTabs } from './results-tabs/results-tabs.component';
 import { removeValue, addValue } from '../../lib/stringUtils';
@@ -20,6 +21,7 @@ import {
   PATHNAME_DATASETS,
   PATHNAME_APIS,
   PATHNAME_CONCEPTS,
+  PATHNAME_INFORMATIONMODELS,
   HITS_PER_PAGE
 } from '../../constants/constants';
 
@@ -39,6 +41,7 @@ export const SearchPage = props => {
     fetchThemesIfNeeded,
     fetchPublishersIfNeeded,
     fetchReferenceDataIfNeeded,
+    fetchInformationModelsIfNeeded,
     clearQuery,
     history,
     datasetItems,
@@ -50,6 +53,9 @@ export const SearchPage = props => {
     conceptItems,
     conceptAggregations,
     conceptTotal,
+    informationModelItems,
+    informationModelAggregations,
+    informationModelTotal,
     themesItems,
     publisherItems,
     referenceData,
@@ -76,6 +82,7 @@ export const SearchPage = props => {
   fetchThemesIfNeeded();
   fetchPublishersIfNeeded();
   fetchReferenceDataIfNeeded();
+  fetchInformationModelsIfNeeded(stringifiedQuery);
 
   const handleClearFilters = () => {
     clearQuery(history);
@@ -266,6 +273,7 @@ export const SearchPage = props => {
   const topSectionClass = cx('top-section-search', 'mb-4', {
     'top-section-search--image': !!(browser && browser.name !== 'ie')
   });
+
   return (
     <div>
       <section className={topSectionClass}>
@@ -392,6 +400,47 @@ export const SearchPage = props => {
                 removeConcept={removeConcept}
                 setConceptSort={setConceptSort}
                 conceptSortValue={conceptSortValue}
+                {...props}
+              />
+            )}
+          />
+          <Route
+            exact
+            path={PATHNAME_INFORMATIONMODELS}
+            render={props => (
+              <ResultsInformationModel
+                informationModelItems={informationModelItems}
+                informationModelAggregations={informationModelAggregations}
+                informationModelTotal={informationModelTotal}
+                onClearFilters={handleClearFilters}
+                onFilterTheme={handleDatasetFilterThemes}
+                onFilterAccessRights={handleDatasetFilterAccessRights}
+                onFilterPublisher={handleDatasetFilterPublisher}
+                onFilterPublisherHierarchy={
+                  handleDatasetFilterPublisherHierarchy
+                }
+                onFilterFormat={handleFilterFormat}
+                onFilterProvenance={handleDatasetFilterProvenance}
+                onFilterSpatial={handleDatasetFilterSpatial}
+                onPageChange={handlePageChange}
+                onSortByLastModified={sortByLastModified}
+                onSortByScore={sortByScore}
+                searchQuery={searchQuery}
+                themesItems={themesItems}
+                showFilterModal={showFilterModal}
+                showClearFilterButton={isFilterNotEmpty()}
+                closeFilterModal={close}
+                hitsPerPage={HITS_PER_PAGE}
+                publisherArray={createNestedListOfPublishers(
+                  _.get(
+                    informationModelAggregations,
+                    ['orgPath', 'buckets'],
+                    []
+                  )
+                )}
+                publishers={publisherItems}
+                setApiSort={setApiSort}
+                apiSortValue={apiSortValue}
                 {...props}
               />
             )}

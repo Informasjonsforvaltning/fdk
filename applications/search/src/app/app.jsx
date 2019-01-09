@@ -19,6 +19,7 @@ import {
   PATHNAME_APIS,
   PATHNAME_CONCEPTS,
   PATHNAME_CONCEPTS_COMPARE,
+  PATHNAME_INFORMATIONMODELS,
   PATHNAME_REPORTS,
   PATHNAME_ABOUT,
   PATHNAME_ABOUT_REGISTRATION
@@ -69,6 +70,11 @@ export function App(props) {
           <Route
             exact
             path={PATHNAME_CONCEPTS}
+            component={ConnectedSearchPage}
+          />
+          <Route
+            exact
+            path={PATHNAME_INFORMATIONMODELS}
             component={ConnectedSearchPage}
           />
           <Route
