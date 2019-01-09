@@ -2,6 +2,8 @@ export const SETTINGS_PATCH = 'SETTINGS_PATCH';
 export const SET_DATASET_SORT_PATCH = 'SET_DATASET_SORT_PATCH';
 export const SET_API_SORT_PATCH = 'SET_API_SORT_PATCH';
 export const SET_CONCEPT_SORT_PATCH = 'SET_CONCEPT_SORT_PATCH';
+export const SET_INFORMATIONMODEL_SORT_PATCH =
+  'SET_INFORMATIONMODEL_SORT_PATCH';
 
 export function setLanguageAction(language) {
   return {
@@ -27,6 +29,12 @@ export function setConceptSortAction(conceptSortValue) {
     conceptSortValue
   };
 }
+export function setInformationModelSortAction(informationModelSortValue) {
+  return {
+    type: SET_INFORMATIONMODEL_SORT_PATCH,
+    informationModelSortValue
+  };
+}
 
 const initialState = {
   language: 'nb',
@@ -45,6 +53,11 @@ export function settingsResolver(state = initialState, action) {
       return { ...state, apiSortValue: action.apiSortValue };
     case SET_CONCEPT_SORT_PATCH:
       return { ...state, conceptSortValue: action.conceptSortValue };
+    case SET_INFORMATIONMODEL_SORT_PATCH:
+      return {
+        ...state,
+        informationModelSortValue: action.informationModelSortValue
+      };
     default:
       return state;
   }
