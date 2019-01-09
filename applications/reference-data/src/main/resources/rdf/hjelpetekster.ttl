@@ -164,16 +164,13 @@ Innsamlet fra tredjepart betyr data innhentet fra f. eks. banker og forsikringss
     
 # Dataset_conformsTo (i samsvar med)
 :Dataset_conformsTo
-    dct:abstract """Angi at et datasett er i samsvar med en standard, spesifikasjon eller implementasjonsregel."""@no ;
-    dct:description """Det er behov for å vite om et datasett er i henhold til gitt(e) standard(er).
-* Benyttes til å angi at et datasett er i samsvar med en standard, spesifikasjon eller implementasjonsregel. Eksempel: Et datasett er i samsvar med SOSI 4.5 som  innholdsstandard. 
-* For referanser til maskinlesbare informasjonsmodeller, skal egenskapen “innholdsspesifikasjon benyttes.”"""@no .
+    dct:abstract """Oppgi om datasettet er i henhold til gitt(e) standard(er), spesifikasjon(er) eller implementasjonsregler."""@no ;
+    dct:description """ """@no .
 
 # Dataset_informationModel (informasjonsmodell)
 :Dataset_informationModel
-    dct:abstract """Refereranse til datasettets informasjonsmodell"""@no ;
-    dct:description """En eksplisitt referanse til informasjonsmodell
-Benyttes til å angi en maskinlesbar referanse til informasjonsmodell."""@no .
+    dct:abstract """Oppgi referanse til datasettets informasjonsmodell."""@no ;
+    dct:description """ """@no .
 
 
 # Dataset_accruralPeriodicity (frekvens)
@@ -186,17 +183,15 @@ Benyttes til å angi en maskinlesbar referanse til informasjonsmodell."""@no .
 
 # Dataset_hasQualityAnnotation_accuracy (nøyaktighet)
 :Dataset_hasQualityAnnotation_accuracy
-    dct:abstract """I hvilken grad er innholdet i samsvar med formålet."""@no ;
-    dct:description """I hvilken grad datasettet korrekt representerer intensjonen som er angitt av dataeier i formålet
-Nøyaktighet skal tolkes i forhold til formålet. 
+    dct:abstract """Dersom datasettets innhold ikke er i samsvar med formålet, bør det oppgis her."""@no ;
+    dct:description """Eksempel: Formålet med Kontakt- og reservasjonsregisteret er å kunne benytte det til varsling. Kan benyttes i forbindelse med saksbehandling og utføring av forvaltningsoppgaver for øvrig.
+Eksempel på utfylling: "Brukere har selv oppgitt informasjon, sjekkes med SMS." 
 """@no .
 
 # Dataset_hasQualityAnnotation_completeness (kompletthet)
 :Dataset_hasQualityAnnotation_completeness
-    dct:abstract """I hvilken grad inneholder datasettet alle objekter som nevnt i formålet"""@no ;
-    dct:description """I hvilken grad inneholder datasettet forventede opplysninger
-* Kompletthet tolkes i forhold til formålet (utvalget).
-* Inneholder datasettet de objekter som nevnt i formålet? """@no .
+    dct:abstract """Dersom datasettet ikke innholder alle objekter som nevnt i formålet, bør det oppgis her."""@no ;
+    dct:description """Eksempel: Formålet med Enhetsregisteret er effektiv utnyttelse og samordning av offentlige opplysninger om juridiske personer, enkeltpersonforetak og andre registreringsenheter. Eksempel på utfylling: "Enhetsregisteret inneholder ikke slettede selskaper før 1994." """@no .
 
 
 # Dataset_hasQualityAnnotation_currentness (aktualitet)
@@ -207,16 +202,14 @@ Nøyaktighet skal tolkes i forhold til formålet.
 
 # Dataset_hasQualityAnnotation_avaliability (tilgjengelighet)
 :Dataset_hasQualityAnnotation_availability
-    dct:abstract """Avvik eller tilleggsopplysninger fra oppdateringsfrekvens"""@no ;
-    dct:description """Avvik eller tilleggsopplysninger knyttet til datasettets tilgjengelighet
-* Tilgjengelighet tolkes i forhold til tilgangsnivå og ev. begrensninger utover det som er angitt i behandlingsgrunnlag, skjermings- og utleveringshjemmel.
-* Dersom datasettet er åpent men mangler distribusjoner bør årsaken angis her.
+    dct:abstract """Dersom datasettets tilgangsnivå har avvik eller tilleggsopplysninger, bør det oppgis her."""@no ;
+    dct:description """
 """@no .
 
 
 # Dataset_hasQualityAnnotation_relevance (relevans)
 :Dataset_hasQualityAnnotation_relevance
-    dct:abstract """Avvik eller tilleggsopplysninger knyttet til datasettes relevans i ulike brukskontekster
+    dct:abstract """Dersom det er bruksområder datasettet er spesielt egnet for eller ikke egnet for, bør det oppgis her.
 """@no ;
     dct:description """Avvik eller tilleggsopplysninger knyttet til datasettes relevans i ulike brukskontekster
 En vurdering om det er bruksområder datasettet er spesielt velegnet eller ikke bør brukes."""@no .
@@ -294,7 +287,7 @@ Velg "Tesauri" dersom datasettbeskrivelsen omhandler en hierarkisk og  assosiati
 
 # Dataset_ (relatert)
 :Dataset_relation
-    dct:abstract """Referanse til andre datasett som gir supplerende informasjon om innholdet, f.eks. et kodeverk."""@no ;
+    dct:abstract """Oppgi relaterte datasett."""@no ;
     dct:description """En generell relasjon som peker til ressurser som er relatert til datasettet.
 
 Angi referanser til andre datasett som gir supplerende informasjon om innholdet. Kan f.eks. være å relatere til et kodeverk."""@no .
@@ -318,25 +311,23 @@ Angi referanser til andre datasett som gir supplerende informasjon om innholdet.
 
 # ContactPoint organization (Kontaktpunkt organisasjonsenhet)
 :ContactPoint_organizational-unit 
-    dct:abstract """Kontaktpunkt angis med organisasjonsenhet.
-Dette kan være navnet til en gruppe, avdeling, seksjon eller liknende i organisasjonen."""@no ;
-    dct:description """Kontaktpunkt angis med organisasjonsenhet
-Dette kan være navnet til en gruppe, avdeling, seksjon eller liknende i organisasjonen. """@no .
+    dct:abstract """Kontaktpunkt kan være navnet til en gruppe, avdeling, seksjon eller lignende i organisasjonen. Skal ikke være enkeltpersoner."""@no ;
+    dct:description """ """@no .
     
 # ContactPoint e-post (Kontaktpunkt e-post)
 :ContactPoint_hasEmail
-    dct:abstract """Angi e-postadresse for kontaktpunktet dersom dette er en ønsket kontaktform."""@no ;
-    dct:description """Angi e-postadresse for kontaktpunktet dersom dette er en ønsket kontaktform."""@no .
+    dct:abstract """ """@no ;
+    dct:description """ """@no .
 
 # ContactPoint_hasTelephone (Kontakt telefon)
 :ContactPoint_hasTelephone
-    dct:abstract """Angi telefonnummer for kontaktpunktet dersom dette er en ønsket kontaktform."""@no ;
-    dct:description """Angi telefonnummer for kontaktpunktet dersom dette er en ønsket kontaktform."""@no .
+    dct:abstract """ """@no ;
+    dct:description """ """@no .
     
 # ContactPoint_hasURL (Kontakt kontaktskjema)
 :ContactPoint_hasURL 
-    dct:abstract """Angi referanse til kontaktskjema på web dersom dette er en ønsket kontaktform"""@no ;
-    dct:description """Angi referanse til kontaktskjema på web dersom dette er en ønsket kontaktform"""@no .
+    dct:abstract """ """@no ;
+    dct:description """ """@no .
 
 # Traffic_Limits (Trafikkbegrensninger)
 :Traffic_Limits
@@ -360,40 +351,26 @@ Dette kan være navnet til en gruppe, avdeling, seksjon eller liknende i organis
 
 # Distribution description (beskrivelse)
 :Distribution_description 
-    dct:abstract """Beskrivelse skal uttrykke de ulike distribusjonene"""@no ;
-    dct:description """Beskrivelse skal uttrykke de ulike distribusjonene
-* Er det kun én distribusjon kan beskrivelsen utelates.
-* Ved flere distribusjoner bør beskrivelsen benyttes for å skille dem.
-* Dersom det er et utsnitt spesifikt for distribusjonen/formål til distribusjonen benyttes beskrivelse.
+    dct:abstract """Ved flere enn én distribusjon bør forskjellene i innholdet beskrives."""@no ;
+    dct:description """ 
 """@no .    
 
 # Distribusjon_type (distribusjonstype)
 :Distribution_type
-    dct:abstract """En distribusjon kan bli levert på ulike vis
-* Angi distribusjonens type (Nedlastbar fil, API, Feed)"""@no ;
-    dct:description """En distribusjon kan bli levert på ulike vis
-
-Det skal angis distribusjonens type 
-* Bruk Nedlastbar fil dersom hele distribusjonen kan hentes ned
-* Bruk API dersom deler av datasettet lastes ned gjennom et programmeringsgrensesnitt, typisk REST-API
-* Bruk Feed dersom det i prinsippet er endringer som hentes gjennom f.eks. RSS, Atom eller medlingsformidling 
-* Se EU publication office (http://publications.europa.eu/mdr/resource/authority/distribution-type/html/distribution-types-eng.html)"""@no .    
+    dct:abstract """ """@no ;
+    dct:description """Velg Nedlastbar fil dersom distribusjonen kan lastes ned i maskinlesbart format.
+Velg API dersom distribusjonen hentes gjennom et programmeringsgrensesnitt, typisk REST-API.
+Velg Feed dersom det er en distribusjon hvor endringer hentes gjennom f.eks. RSS, Atom eller andre meldingsformidlinger."""@no .    
 
 # Distribusjon_format (format)
 :Distribution_format
-    dct:abstract """Hver distribusjon har format for utveksling. Format er et obligatorisk felt for en distribusjon."""@no ;
-    dct:description """Hver distribusjon har format for utveksling. Format er et obligatorisk felt for en distribusjon.
-* Det skal angis mediatype (e.g. application/json) fra (https://www.iana.org/assignments/media-types/media-types.xhtml).
-* Det kan angis mediatyper utover denne listen, f.eks. “application/x.sosi”. 
-* Flere formater skal kun brukes når et og samme API eller sluttbrukerapplikasjoner som tilbyr flere formater."""@no .    
+    dct:abstract """Velg format(er) fra IANAs liste over offisielle medietyper. Dersom formatet ikke finnes i listen kan du angi eget."""@no ;
+    dct:description """ """@no .
 
 # Distribusjon_accessURL (tilgangsurl)
 :Distribution_accessURL
-    dct:abstract """Lenke til utfyllende informasjon om hvordan en kan få tilgang til i datasettet."""@no ;
-    dct:description """Lenke til informasjon om hvordan en kan få tilgang til i datasettet. TilgangsURL er et obligatorisk felt.
-* Bør i så stor grad som mulig peke direkte til en distribusjon av data. 
-* Skal benyttes for tjenesteendepunkter eller lenke til filnedlasting.
-* Kan peke til en nettside med informasjon om hvordan man får tilgang til distribusjonen."""@no .
+    dct:abstract """Lenke til selve distribusjonen eller til mer informasjon om hvordan man får tilgang."""@no ;
+    dct:description """ """@no .
 
 # Distribusjon_downloadURL (nedlastingslenke)
 :Distribution_downloadURL
@@ -410,13 +387,13 @@ Det skal angis distribusjonens type
 
 # Distribusjon (i samsvar med)
 :Distribution_conformsTo
-    dct:abstract """Benyttes for å angi et etablert skjema som distribusjonen er i samsvar med, for eksempel et XSD-dokument."""@no ;
-    dct:description """Benyttes for å angi et etablert skjema som distribusjonen er i samsvar med, for eksempel et XSD-dokument."""@no .
+    dct:abstract """ """@no ;
+    dct:description """ """@no .
 
 # Distribusjon (dokumentasjon)
 :Distribution_documentation
-    dct:abstract """Referanse til en side eller et dokument som beskriver og dokumenterer innhold og struktur spesifikk for distribusjonen."""@no ;
-    dct:description """Referanse til en side eller et dokument som beskriver og dokumenterer innhold og struktur spesifikk for distribusjonen."""@no .
+    dct:abstract """Lenke til informasjon som beskriver distribusjonens innhold og struktur."""@no ;
+    dct:description """ """@no .
 
 # Distribusjon (distribusjonsdato)
 :Distribution_issued
