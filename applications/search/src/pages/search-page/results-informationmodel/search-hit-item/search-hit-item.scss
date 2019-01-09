@@ -1,0 +1,9 @@
+@import '../../../../../node_modules/designsystemet/fdk-designsystem-bootstrap4/scss/colors.scss';
+
+.search-hit {
+  background-color: $color0;
+  border-radius: 5px;
+  color: $color1;
+  padding: 1.5em 2em;
+  margin-bottom: 1em;
+}
