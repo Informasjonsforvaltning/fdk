@@ -35,16 +35,12 @@
 
 # Dataset_temporal
 :Dataset_temporal
-	dct:abstract """Angi tidsmessig avgrensning dersom datasett kun har innhold fra visse perioder. Dersom det finnes en tilsvarende komplett oversikt, bør også dette beskrives som et eget datasett."""@no ;
-	dct:description """En tidsromangivelse er nødvendig for datasett hvor innholdet dekker et avgrenset tidsrom. 
-* Angi tidsmessig  avgrensning dersom datasett kun har innhold fra visse perioder. For mange datasett knyttet til registerfunksjoner vil tidsrom være direkte koblet mot oppdateringsfrekvens. For andre datasett vil tidsrom være vesentlig i forhold til forståelse av bruk av dataene, f.eks folketellinger.
-* Dersom det er angitt en periode med årstall, tolkes dette som fra og med 1. januar første år til og med 31. desember siste år. 
-* Ved ett årstall på begynnelse, men ikke angitt slutt, tolkes det at datasettet har data også i en ubestemt fremtid og tilsvarende om startdatoen mangler antas det at det er ikke angitt om datasettet har en start. 
-* Dersom det finnes en tilsvarende komplett oversikt, bør også dette beskrives som et eget datasett, og disse relateres.  (se også “4.25 Relasjoner mellom datasett”)
-* Dersom datasettet er en av flere i en tidsserie anbefales det at det lages et overordnet datasett for tidsserien uten distribusjoner som peker på hver datasett.
-* Det benyttes tidsstempel for registreringen av første og siste dataelement i datasettet. 
-* Det kan angis flere tidsperioder per datasett, men det anbefales at periodene ikke er overlappende.
-* Relativ avgrensning i tid fra tidspunkt for uttrekk (eksempelvis fra og med dato for forrige påbegynte semester og til og med avslutning av påfølgende semester.)"""@no .
+	dct:abstract """Tidsrommet datasettet dekker dersom det kun har innhold fra visse perioder. """@no ;
+	dct:description """Tidspunkt kan angis som dato eller årstall. Fradato oppgitt som årstall tolkes som fra og med 1. januar. Tildato oppgitt som årstall tolkes som til og med 31. desember.
+
+Det kan angis flere tidsperioder per datasett.
+
+Dersom datasettet er ett av flere i en tidsserie anbefales det at det lages et overordnet datasett for tidsserien som dette datasettet kan relateres til. """@no .
 
 # Dataset_identifier (identifikator)
 :Dataset_identifier
@@ -80,31 +76,21 @@ Et datasett skal lenke til de aktuelle og sentrale begrepene i Felles begrepskat
 
 # Dataset_language (språk)
 :Dataset_language
-    dct:abstract """Hovedspråket benyttet i datasettets innhold angis"""@no ;
-    dct:description """For å forstå hvilket språk innholdet til datasettet har angis dette.
-* Det er hovedspråket benyttet i datasettets innhold som skal angis. 
-* Er datasettet uten språklige tekster angis ikke språk.
-* Inneholder datasett tekster på flere språk, og det ikke er tydelig hva som er hovedspråket, angis ikke språk.
-* Språk angis fra en liste av gyldige språk fra EUs autoritetsliste.
-"""@no .
+    dct:abstract """Hovedspråket innholdet i datasettet er skrevet på."""@no ;
+    dct:description """FAngis ikke dersom:
+* Datasettet er uten språklige tekster
+* Dersom det ikke er tydelig hva som er hovedspråket, for eksempel hvis datasettet har flere språk"""@no .
 
 
 # Dataset_issued (utgivelse)
 :Dataset_issued
-    dct:abstract """Tidspunktet angir når innholdet i datasettet gjøres tilgjengelig."""@no ;
-    dct:description """For å forstå når datasettet er operativt og tilgjengelig angis tidspunkt for utgivelse. 
-* Angis som tidspunkt (dato alene tolkes som kl. 00:00)
-* Tidspunktet angir når innholdet i datasettet gjøres tilgjengelig. Dette er ikke alltid  samsvarende med når den enkelte distribusjonen er tilgjengelig, og heller ikke når beskrivelsen om datasettet utgis (katalogpostens utgivelse).
-* Tidspunkt angis med xsd:dateTime. Dette inkluderer utvidelser av kapittel 5.4 i ISO 8601 med tidssoner) [-]CCYY-MM-DDThh:mm:ss[Z|(+|-)hh:mm]"""@no .
+    dct:abstract """Når innholdet i datasettet ble/blir tilgjengeliggjort."""@no ;
+    dct:description """ """@no .
 
 # Dataset_modified (modifisert)
 :Dataset_modified
-    dct:abstract """Tidspunktet angir når innholdet i datasettet sist er endret."""@no ;
-    dct:description """For å forstå når datasettet sist ble oppdatert angis tidspunkt for siste endring
-* Angis som tidspunkt. (Dato alene tolkes som kl. 00:00:00 norsk tid.)
-* Tidspunktet angir når innholdet i datasettet sist er endret.
-* Tidspunkt angis med xsd:dateTime etter kapittel 5.4 i ISO 8601 utvidet med tidssoner [-]CCYY-MM-DDThh:mm:ss[Z|(+|-)hh:mm].
-"""@no .
+    dct:abstract """Dato for når innholdet i datasettet sist er endret."""@no ;
+    dct:description """ """@no .
 
 # Dataset_publisher (utgiver/eier)
 :Dataset_publisher
@@ -169,10 +155,12 @@ Et datasett skal lenke til de aktuelle og sentrale begrepene i Felles begrepskat
 
 # Dataset_provenance (opphav)
 :Dataset_provenance
-    dct:abstract """Angi om opplysningene i datasettet er resultat av vedtak eller innsamlet fra bruker eller tredjepart."""@no ;
-    dct:description """Det er behov for en sortering om innholdet er basert på avgjørelse truffet under utøvelse av offentlig myndighet (vedtak) eller er kommer fra andre kilder (bruker eller tredjepart). Vedtak anses å være autoritative kilder for hele forvaltningen. 
-* Angi om opplysningene i datasettet er resultat av vedtak eller innsamlet fra bruker eller tredjepart
-* Det skal velges en verdi fra et kontrollert vokabular med verdiene :Vedtak, :Bruker, :Tredjepart"""@no .
+    dct:abstract """Hvor opplysningene er hentet fra."""@no ;
+    dct:description """Vedtak betyr at innholdet i datasettet er vedtatt av en offentlig myndighet og anses som autoritative kilder.
+
+Brukerinnsamlede data betyr data innhentet fra brukerne.
+
+Innsamlet fra tredjepart betyr data innhentet fra f. eks. banker og forsikringsselskaper."""@no .
     
 # Dataset_conformsTo (i samsvar med)
 :Dataset_conformsTo
@@ -190,9 +178,11 @@ Benyttes til å angi en maskinlesbar referanse til informasjonsmodell."""@no .
 
 # Dataset_accruralPeriodicity (frekvens)
 :Dataset_accruralPeriodicity 
-    dct:abstract """Beskriv hvor ofte datasettet har nytt innhold."""@no ;
-    dct:description """En angivelse hvor ofte datasettet blir oppdatert. 
-For eksempel oppdateres Enhetsregisteret med nye enheter og sletting av enheter kontinuerlig, mens Inntektsdata fra likningen (Skattemelding) er årlig og Folketelling fra 1910 oppdateres aldri."""@no .
+    dct:abstract """Hvor ofte datasettet har nytt innhold."""@no ;
+    dct:description """For eksempel:
+* Enhetsregisteret oppdateres med nye enheter og sletting av enheter kontinuerlig
+* Inntektsdata fra likningen (Skattemelding) er årlig 
+* Folketelling fra 1910 oppdateres aldri"""@no .
 
 # Dataset_hasQualityAnnotation_accuracy (nøyaktighet)
 :Dataset_hasQualityAnnotation_accuracy
@@ -212,13 +202,12 @@ Nøyaktighet skal tolkes i forhold til formålet.
 # Dataset_hasQualityAnnotation_currentness (aktualitet)
 :Dataset_hasQualityAnnotation_currentness
     dct:abstract """Avvik eller tilleggsopplysninger om “oppdateringsfrekvens” og “sist oppdatert”"""@no ;
-    dct:description """Avvik eller tilleggsopplysninger om “oppdateringsfrekvens” og “sist oppdatert” 
-Er opplysninger om “oppdateringsfrekvens” og “sist oppdatert” alltid gyldig? Er det opplysninger i datasettet som har annen oppdateringsfrekvens?"""@no .
+    dct:description """F. eks. dersom noen av opplysningene har annen oppdateringsfrekvens enn hovedinnholdet."""@no .
 
 
 # Dataset_hasQualityAnnotation_avaliability (tilgjengelighet)
 :Dataset_hasQualityAnnotation_availability
-    dct:abstract """Avvik eller tilleggsopplysninger knyttet til datasettes tilgjengelighet."""@no ;
+    dct:abstract """Avvik eller tilleggsopplysninger fra oppdateringsfrekvens"""@no ;
     dct:description """Avvik eller tilleggsopplysninger knyttet til datasettets tilgjengelighet
 * Tilgjengelighet tolkes i forhold til tilgangsnivå og ev. begrensninger utover det som er angitt i behandlingsgrunnlag, skjermings- og utleveringshjemmel.
 * Dersom datasettet er åpent men mangler distribusjoner bør årsaken angis her.
