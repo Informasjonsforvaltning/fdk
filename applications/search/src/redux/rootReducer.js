@@ -10,6 +10,7 @@ import { searchReducer } from './modules/search';
 import { datasets } from './modules/datasets';
 import { apis } from './modules/apis';
 import { concepts } from './modules/concepts';
+import { informationModelsReducer } from './modules/informationModels';
 
 export const rootReducer = combineReducers({
   themes: themesReducer,
@@ -22,5 +23,6 @@ export const rootReducer = combineReducers({
   searchQuery: searchReducer,
   datasets,
   apis,
-  concepts
+  concepts,
+  informationModels: informationModelsReducer
 });
