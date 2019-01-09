@@ -43,19 +43,8 @@ public class ConceptHarvester {
     public void harvestFromSource() {
         Reader reader;
 
-        try {
-            URL url = new URL(harvestSourceUri);
-            logger.info("Start harvest from url: {}", url);
-            URLConnection urlConnection = url.openConnection();
-            urlConnection.setRequestProperty("Accept", "text/turtle");
-
-            InputStream inputStream = urlConnection.getInputStream();
-
-            reader = new InputStreamReader(inputStream);
-        } catch (IOException e) {
-            logger.warn("Downloading concepts from url failed:" + harvestSourceUri);
-            return;
-        }
+        reader = getReaderFromURL(harvestSourceUri);
+        if (reader == null) return;
 
         List<ConceptDenormalized> concepts = rdfToModelTransformer.getConceptsFromStream(reader);
 
@@ -68,6 +57,24 @@ public class ConceptHarvester {
             concept.setHarvest(harvest);
             conceptDenormalizedRepository.save(concept);
         });
+    }
+
+    private Reader getReaderFromURL(String harvestSourceUri) {
+        Reader reader;
+        try {
+            URL url = new URL(harvestSourceUri);
+            logger.info("Start harvest from url: {}", url);
+            URLConnection urlConnection = url.openConnection();
+            urlConnection.setRequestProperty("Accept", "text/turtle");
+
+            InputStream inputStream = urlConnection.getInputStream();
+
+            reader = new InputStreamReader(inputStream);
+        } catch (IOException e) {
+            logger.warn("Downloading concepts from url failed:" + harvestSourceUri);
+            return null;
+        }
+        return reader;
     }
 
     private Reader resourceAsReader(final String resourceName) {
