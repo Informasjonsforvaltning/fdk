@@ -5,7 +5,7 @@ exports[`should render ResultsConcepts correctly with hits 1`] = `
   id="content"
 >
   <section
-    className="row mb-3 fdk-button-row"
+    className="row mb-3"
   >
     <div
       className="col-6 col-lg-4"
@@ -145,7 +145,7 @@ exports[`should render ResultsConcepts correctly with minimum of props 1`] = `
   id="content"
 >
   <section
-    className="row mb-3 fdk-button-row"
+    className="row mb-3"
   >
     <div
       className="col-6 col-lg-4"
@@ -212,7 +212,7 @@ exports[`should render ResultsConcepts correctly with props 1`] = `
   id="content"
 >
   <section
-    className="row mb-3 fdk-button-row"
+    className="row mb-3"
   >
     <div
       className="col-6 col-lg-4"
