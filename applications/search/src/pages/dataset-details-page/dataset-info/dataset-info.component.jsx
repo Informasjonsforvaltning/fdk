@@ -14,38 +14,30 @@ import { getReferenceDataByUri } from '../../../redux/modules/referenceData';
 const renderReferences = (references, referencedItems, referenceData) => {
   const children = items =>
     items.map(item => {
+      const referenceTypeUri = _.get(item, ['referenceType', 'uri']);
       const referencedType = getReferenceDataByUri(
         referenceData,
         'referencetypes',
-        _.get(item, ['referenceType', 'uri'])
+        referenceTypeUri
       );
 
-      let referencedItem;
-      if (referencedItems) {
-        referencedItem = referencedItems.filter(referencedItem => {
-          if (_.get(referencedItem, 'uri')) {
-            return referencedItem.uri === _.get(item, ['source', 'uri']);
-          }
-          return null;
-        });
-      }
+      const referenceUri = _.get(item, ['source', 'uri']);
+      const referencedItem = _.find(referencedItems, { uri: referenceUri });
 
       return (
         <div
-          key={`reference-${_.get(item, ['source', 'uri'])}`}
+          key={`reference-${referenceUri}`}
           className="d-flex list-regular--item"
         >
           <div className="col-4 pl-0 fdk-text-strong">
-            {referencedType
-              ? getTranslateText(_.get(referencedType, 'prefLabel'))
-              : _.get(item, ['referenceType', 'uri'])}
+            {getTranslateText(_.get(referencedType, 'prefLabel')) ||
+              referenceTypeUri}
           </div>
           <div className="col-8">
             <LinkExternal
               uri={item.uri}
               prefLabel={
-                getTranslateText(_.get(referencedItem, [0, 'title'])) ||
-                _.get(item, ['source', 'uri'])
+                getTranslateText(_.get(referencedItem, 'title')) || referenceUri
               }
             />
           </div>
