@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 import { fetchDatasetsIfNeededAction } from '../../redux/modules/datasets';
 import { fetchApisIfNeededAction } from '../../redux/modules/apis';
 import { fetchConceptsIfNeededAction } from '../../redux/modules/concepts';
+import { fetchInformationModelsIfNeededAction } from '../../redux/modules/informationModels';
 import { fetchPublishersIfNeededAction } from '../../redux/modules/publishers';
 import { fetchThemesIfNeededAction } from '../../redux/modules/themes';
 import {
@@ -29,6 +30,7 @@ const mapStateToProps = ({
   datasets,
   apis,
   concepts,
+  informationModels,
   themes,
   publishers,
   referenceData,
@@ -54,6 +56,16 @@ const mapStateToProps = ({
     conceptTotal: null
   };
 
+  const {
+    informationModelItems,
+    informationModelAggregations,
+    informationModelTotal
+  } = informationModels || {
+    informationModelItems: null,
+    informationModelAggregations: null,
+    informationModelTotal: null
+  };
+
   const { themesItems, isFetchingThemes } = themes || {
     themesItems: null
   };
@@ -76,6 +88,9 @@ const mapStateToProps = ({
     conceptItems,
     conceptAggregations,
     conceptTotal,
+    informationModelItems,
+    informationModelAggregations,
+    informationModelTotal,
     themesItems,
     isFetchingThemes,
     publisherItems,
@@ -107,7 +122,9 @@ const mapDispatchToProps = dispatch => ({
     dispatch(setQueryFilter(filterType, filterValue, history)),
   setQueryFrom: (filterValue, history) =>
     dispatch(setQueryFrom(filterValue, history)),
-  clearQuery: history => dispatch(clearQuery(history))
+  clearQuery: history => dispatch(clearQuery(history)),
+  fetchInformationModelsIfNeeded: query =>
+    dispatch(fetchInformationModelsIfNeededAction(query))
 });
 
 export const ConnectedSearchPage = connect(
