@@ -77,7 +77,7 @@ Et datasett skal lenke til de aktuelle og sentrale begrepene i Felles begrepskat
 # Dataset_language (språk)
 :Dataset_language
     dct:abstract """Hovedspråket innholdet i datasettet er skrevet på."""@no ;
-    dct:description """FAngis ikke dersom:
+    dct:description """Angis ikke dersom:
 * Datasettet er uten språklige tekster
 * Dersom det ikke er tydelig hva som er hovedspråket, for eksempel hvis datasettet har flere språk"""@no .
 
@@ -196,23 +196,20 @@ Eksempel på utfylling: "Brukere har selv oppgitt informasjon, sjekkes med SMS."
 
 # Dataset_hasQualityAnnotation_currentness (aktualitet)
 :Dataset_hasQualityAnnotation_currentness
-    dct:abstract """Avvik eller tilleggsopplysninger om “oppdateringsfrekvens” og “sist oppdatert”"""@no ;
+    dct:abstract """Avvik eller tilleggsopplysninger om oppdateringsfrekvens """@no ;
     dct:description """F. eks. dersom noen av opplysningene har annen oppdateringsfrekvens enn hovedinnholdet."""@no .
 
 
 # Dataset_hasQualityAnnotation_avaliability (tilgjengelighet)
 :Dataset_hasQualityAnnotation_availability
     dct:abstract """Dersom datasettets tilgangsnivå har avvik eller tilleggsopplysninger, bør det oppgis her."""@no ;
-    dct:description """
-"""@no .
+    dct:description """ Eksempel: “Regnskapsregisteret kan kun hentes ut på forespørsel.” """@no .
 
 
 # Dataset_hasQualityAnnotation_relevance (relevans)
 :Dataset_hasQualityAnnotation_relevance
-    dct:abstract """Dersom det er bruksområder datasettet er spesielt egnet for eller ikke egnet for, bør det oppgis her.
-"""@no ;
-    dct:description """Avvik eller tilleggsopplysninger knyttet til datasettes relevans i ulike brukskontekster
-En vurdering om det er bruksområder datasettet er spesielt velegnet eller ikke bør brukes."""@no .
+    dct:abstract """Dersom det er bruksområder datasettet er spesielt egnet for eller ikke egnet for, bør det oppgis her."""@no ;
+    dct:description """ """@no .
     
     
 # Dataset_distribution (datasettdistribusjon)
@@ -232,7 +229,8 @@ En vurdering om det er bruksområder datasettet er spesielt velegnet eller ikke 
  
 # Dataset_type (type)
 :Dataset_type
-    dct:abstract """Velg "Data" dersom datasettbeskrivelsen omhandler fysisk representasjon eller sammenstilling av opplysninger
+    dct:abstract """Refererer til EU publication office sine datasett-typer."""@no ;
+    dct:description """Velg "Data" dersom datasettbeskrivelsen omhandler fysisk representasjon eller sammenstilling av opplysninger
 
 Velg "Testdata" dersom datasettbeskrivelsen omhandler anonymiserte eller pseudonymiserte data for testformål
 
@@ -240,9 +238,7 @@ Velg "Kodelister" dersom datasettbeskrivelsen omhandler tabeller hvor koder besk
 
 Velg "Taksonomi" dersom datasettbeskrivelsen omhandler en hierarkisk strukturering av begreper
 
-Velg "Tesauri" dersom datasettbeskrivelsen omhandler en hierarkisk og  assosiativ strukturering av begreper
-"""@no ;
-    dct:description """Refererer til EU publication office sine datasett-typer."""@no .
+Velg "Tesauri" dersom datasettbeskrivelsen omhandler en hierarkisk og  assosiativ strukturering av begreper"""@no .
 
 # Dataset_source (kilde)
 :Dataset_source
@@ -288,9 +284,7 @@ Velg "Tesauri" dersom datasettbeskrivelsen omhandler en hierarkisk og  assosiati
 # Dataset_ (relatert)
 :Dataset_relation
     dct:abstract """Oppgi relaterte datasett."""@no ;
-    dct:description """En generell relasjon som peker til ressurser som er relatert til datasettet.
-
-Angi referanser til andre datasett som gir supplerende informasjon om innholdet. Kan f.eks. være å relatere til et kodeverk."""@no .
+    dct:description """ """@no .
 
 
 # Agent_name (Enhet enhetsnavn)
@@ -352,8 +346,7 @@ Angi referanser til andre datasett som gir supplerende informasjon om innholdet.
 # Distribution description (beskrivelse)
 :Distribution_description 
     dct:abstract """Ved flere enn én distribusjon bør forskjellene i innholdet beskrives."""@no ;
-    dct:description """ 
-"""@no .    
+    dct:description """ """@no .    
 
 # Distribusjon_type (distribusjonstype)
 :Distribution_type
@@ -402,8 +395,8 @@ Velg Feed dersom det er en distribusjon hvor endringer hentes gjennom f.eks. RSS
     
 # Distribusjon (modifisert)
 :Distribution_modified
-    dct:abstract """DDato/tid sist distribusjonen (API-et, filen eller feeden) sist ble endret."""@no ;
-    dct:description """Dato/tid sist distribusjonen (API-et, filen eller feeden) sist ble endret."""@no .
+    dct:abstract """Dersom distribusjonen har åpne, offentlige data skal lisens oppgis."""@no ;
+    dct:description """ """@no .
 
 
 # Katalog (tittel)
