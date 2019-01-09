@@ -19,6 +19,30 @@ exports[`should render ResultsInformationModel correctly with hits 1`] = `
         Clear
       </button>
     </div>
+    <div
+      className="col-6 col-lg-4 offset-lg-4"
+    >
+      <div
+        className="d-flex justify-content-end"
+      >
+        <Button
+          className="fdk-button fdk-button-black-toggle selected"
+          color="primary"
+          onClick={[Function]}
+          tag="button"
+        >
+          Relevance
+        </Button>
+        <Button
+          className="fdk-button fdk-button-black-toggle"
+          color="primary"
+          onClick={[Function]}
+          tag="button"
+        >
+          Recently published
+        </Button>
+      </div>
+    </div>
   </div>
   <div
     className="row"
@@ -321,6 +345,30 @@ exports[`should render ResultsInformationModel correctly with minimum of props a
       >
         Clear
       </button>
+    </div>
+    <div
+      className="col-6 col-lg-4 offset-lg-4"
+    >
+      <div
+        className="d-flex justify-content-end"
+      >
+        <Button
+          className="fdk-button fdk-button-black-toggle selected"
+          color="primary"
+          onClick={[Function]}
+          tag="button"
+        >
+          Relevance
+        </Button>
+        <Button
+          className="fdk-button fdk-button-black-toggle"
+          color="primary"
+          onClick={[Function]}
+          tag="button"
+        >
+          Recently published
+        </Button>
+      </div>
     </div>
   </div>
   <div

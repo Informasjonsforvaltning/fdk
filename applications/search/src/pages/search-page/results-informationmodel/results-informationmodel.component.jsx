@@ -54,6 +54,25 @@ const renderHits = (hits, publishers) => {
 
 // eslint-disable-next-line react/prefer-stateless-function
 export class ResultsInformationModel extends React.Component {
+  componentWillMount() {
+    const {
+      informationModelSortValue,
+      setInformationModelSort,
+      onSortByLastModified,
+      onSortByScore
+    } = this.props;
+    const urlHasSortfieldModified =
+      window.location.href.indexOf('sortfield=modified') !== -1;
+    const informationModelIsModified = informationModelSortValue === 'modified';
+
+    if (informationModelIsModified || urlHasSortfieldModified) {
+      setInformationModelSort('modified');
+      onSortByLastModified();
+    } else {
+      onSortByScore();
+      setInformationModelSort(undefined);
+    }
+  }
   render() {
     const {
       showFilterModal,
@@ -121,26 +140,24 @@ export class ResultsInformationModel extends React.Component {
               {localization.query.clear}
             </button>
           </div>
-          {false && (
-            <div className="col-6 col-lg-4 offset-lg-4">
-              <div className="d-flex justify-content-end">
-                <Button
-                  className={sortByScoreClass}
-                  onClick={onSortByScoreClick}
-                  color="primary"
-                >
-                  {localization.sort.relevance}
-                </Button>
-                <Button
-                  className={sortByLastModifiedClass}
-                  onClick={onSortByModifiedClick}
-                  color="primary"
-                >
-                  {localization.sort.modified}
-                </Button>
-              </div>
+          <div className="col-6 col-lg-4 offset-lg-4">
+            <div className="d-flex justify-content-end">
+              <Button
+                className={sortByScoreClass}
+                onClick={onSortByScoreClick}
+                color="primary"
+              >
+                {localization.sort.relevance}
+              </Button>
+              <Button
+                className={sortByLastModifiedClass}
+                onClick={onSortByModifiedClick}
+                color="primary"
+              >
+                {localization.sort.modified}
+              </Button>
             </div>
-          )}
+          </div>
         </div>
         <div className="row">
           <aside className="search-filters col-lg-4 d-none d-lg-block">

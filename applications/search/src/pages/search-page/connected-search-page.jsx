@@ -14,7 +14,8 @@ import {
 import {
   setDatasetSortAction,
   setConceptSortAction,
-  setApiSortAction
+  setApiSortAction,
+  setInformationModelSortAction
 } from '../../redux/modules/settings';
 import {
   addConceptAction,
@@ -100,6 +101,7 @@ const mapStateToProps = ({
     datasetSortValue: settings.datasetSortValue,
     apiSortValue: settings.apiSortValue,
     conceptSortValue: settings.conceptSortValue,
+    informationModelSortValue: settings.informationModelSortValue,
     searchQuery
   };
 };
@@ -124,7 +126,9 @@ const mapDispatchToProps = dispatch => ({
     dispatch(setQueryFrom(filterValue, history)),
   clearQuery: history => dispatch(clearQuery(history)),
   fetchInformationModelsIfNeeded: query =>
-    dispatch(fetchInformationModelsIfNeededAction(query))
+    dispatch(fetchInformationModelsIfNeededAction(query)),
+  setInformationModelSort: sortValue =>
+    dispatch(setInformationModelSortAction(sortValue))
 });
 
 export const ConnectedSearchPage = connect(

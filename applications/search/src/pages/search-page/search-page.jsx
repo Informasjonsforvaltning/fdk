@@ -66,9 +66,11 @@ export const SearchPage = props => {
     setDatasetSort,
     setApiSort,
     setConceptSort,
+    setInformationModelSort,
     datasetSortValue,
     apiSortValue,
     conceptSortValue,
+    informationModelSortValue,
     showFilterModal,
     open,
     close
@@ -441,8 +443,8 @@ export const SearchPage = props => {
                   )
                 )}
                 publishers={publisherItems}
-                setApiSort={setApiSort}
-                apiSortValue={apiSortValue}
+                setInformationModelSort={setInformationModelSort}
+                informationModelSortValue={informationModelSortValue}
                 {...props}
               />
             )}
