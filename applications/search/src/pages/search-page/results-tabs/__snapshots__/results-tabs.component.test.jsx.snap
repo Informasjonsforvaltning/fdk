@@ -31,32 +31,27 @@ exports[`should render ResultsTabs with "Concepts" active correctly 1`] = `
           </span>
         </Link>
       </li>
-      <FeatureToggle
-        featureName="API"
-        showOnlyWhenDisabled={false}
+      <li
+        className="d-flex justify-content-center beta"
       >
-        <li
-          className="d-flex justify-content-center beta"
-        >
-          <Link
-            aria-label="Link til side for api:"
-            replace={false}
-            to={
-              Object {
-                "pathname": "/apis",
-                "search": "?",
-              }
+        <Link
+          aria-label="Link til side for api:"
+          replace={false}
+          to={
+            Object {
+              "pathname": "/apis",
+              "search": "?",
             }
-          >
-            Api
-            <span>
-               (
-              4
-              )
-            </span>
-          </Link>
-        </li>
-      </FeatureToggle>
+          }
+        >
+          Api
+          <span>
+             (
+            4
+            )
+          </span>
+        </Link>
+      </li>
       <li
         className="d-flex justify-content-center li-active"
       >
@@ -114,32 +109,27 @@ exports[`should render ResultsTabs with "Dataset" active correctly 1`] = `
           </span>
         </Link>
       </li>
-      <FeatureToggle
-        featureName="API"
-        showOnlyWhenDisabled={false}
+      <li
+        className="d-flex justify-content-center beta"
       >
-        <li
-          className="d-flex justify-content-center beta"
-        >
-          <Link
-            aria-label="Link til side for api:"
-            replace={false}
-            to={
-              Object {
-                "pathname": "/apis",
-                "search": "?",
-              }
+        <Link
+          aria-label="Link til side for api:"
+          replace={false}
+          to={
+            Object {
+              "pathname": "/apis",
+              "search": "?",
             }
-          >
-            Api
-            <span>
-               (
-              4
-              )
-            </span>
-          </Link>
-        </li>
-      </FeatureToggle>
+          }
+        >
+          Api
+          <span>
+             (
+            4
+            )
+          </span>
+        </Link>
+      </li>
       <li
         className="d-flex justify-content-center"
       >
