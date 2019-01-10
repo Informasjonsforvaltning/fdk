@@ -1,1 +1,3 @@
-export const FEATURES = {};
+export const FEATURES = {
+  INFORMATIONMODEL: 'INFORMATIONMODEL'
+};

@@ -79,7 +79,8 @@
     "nosearch.descriptions":"datasettbeskrivelser",
     "datasetTab": "Datasett",
     "apiTab": "Api",
-    "termTab": "Begrep",
+    "termTab": "Begreper",
+    "informationModelTab": "Informasjonsmodeller",
     "nosearch.concepts":"begreper"
   },
   "hitstats": {

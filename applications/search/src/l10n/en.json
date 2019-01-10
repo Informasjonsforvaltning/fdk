@@ -80,6 +80,7 @@
     "datasetTab": "Dataset",
     "apiTab": "Api",
     "termTab": "Concepts",
+    "informationModelTab": "Information models",
     "nosearch.concepts":"begreper"
   },
   "hitstats": {
