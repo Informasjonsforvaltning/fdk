@@ -80,6 +80,7 @@
     "datasetTab": "Datasett",
     "apiTab": "Api",
     "termTab": "Omgrep",
+    "informationModelTab": "Informasjonsmodellar",
     "nosearch.concepts":"omgrep"
   },
   "hitstats": {

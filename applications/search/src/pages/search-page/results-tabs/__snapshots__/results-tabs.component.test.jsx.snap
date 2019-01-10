@@ -5,10 +5,10 @@ exports[`should render ResultsTabs with "Concepts" active correctly 1`] = `
   className="row"
 >
   <div
-    className="col-12 col-lg-8 offset-lg-4"
+    className="col-12"
   >
     <ul
-      className="search-results-tabs d-flex align-items-center"
+      className="search-results-tabs d-flex align-items-center justify-content-center flex-wrap"
     >
       <li
         className="d-flex justify-content-center"
@@ -73,6 +73,31 @@ exports[`should render ResultsTabs with "Concepts" active correctly 1`] = `
           </span>
         </Link>
       </li>
+      <FeatureToggle
+        featureName="INFORMATIONMODEL"
+        showOnlyWhenDisabled={false}
+      >
+        <li
+          className="d-flex justify-content-center beta"
+        >
+          <Link
+            aria-label="Link til side for informasjonsmodell:"
+            replace={false}
+            to={
+              Object {
+                "pathname": "/informationmodels",
+                "search": "?",
+              }
+            }
+          >
+            Information models
+            <span>
+               (
+              )
+            </span>
+          </Link>
+        </li>
+      </FeatureToggle>
     </ul>
   </div>
 </div>
@@ -83,10 +108,10 @@ exports[`should render ResultsTabs with "Dataset" active correctly 1`] = `
   className="row"
 >
   <div
-    className="col-12 col-lg-8 offset-lg-4"
+    className="col-12"
   >
     <ul
-      className="search-results-tabs d-flex align-items-center"
+      className="search-results-tabs d-flex align-items-center justify-content-center flex-wrap"
     >
       <li
         className="d-flex justify-content-center li-active"
@@ -151,6 +176,31 @@ exports[`should render ResultsTabs with "Dataset" active correctly 1`] = `
           </span>
         </Link>
       </li>
+      <FeatureToggle
+        featureName="INFORMATIONMODEL"
+        showOnlyWhenDisabled={false}
+      >
+        <li
+          className="d-flex justify-content-center beta"
+        >
+          <Link
+            aria-label="Link til side for informasjonsmodell:"
+            replace={false}
+            to={
+              Object {
+                "pathname": "/informationmodels",
+                "search": "?",
+              }
+            }
+          >
+            Information models
+            <span>
+               (
+              )
+            </span>
+          </Link>
+        </li>
+      </FeatureToggle>
     </ul>
   </div>
 </div>
