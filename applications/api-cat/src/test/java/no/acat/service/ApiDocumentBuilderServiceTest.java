@@ -42,7 +42,7 @@ public class ApiDocumentBuilderServiceTest {
     }
 
     @Test
-    public void checkIfApiDocumentIsCreated() throws IOException, ParseException {
+    public void checkIfApiDocumentIsCreated() throws IOException, ParseException, no.fdk.acat.converters.apispecificationparser.ParseException {
         String spec = Utils.getStringFromResource("raw-enhet-api.json");
         ApiRegistrationPublic apiRegistrationPublic = new ApiRegistrationPublic();
         apiRegistrationPublic.setApiSpec(spec);
@@ -56,7 +56,7 @@ public class ApiDocumentBuilderServiceTest {
     }
 
     @Test
-    public void checkIfExistingApiDocumentIsUpdated() throws IOException, ParseException {
+    public void checkIfExistingApiDocumentIsUpdated() throws IOException, ParseException, no.fdk.acat.converters.apispecificationparser.ParseException {
         String spec = Utils.getStringFromResource("raw-enhet-api.json");
         ApiRegistrationPublic apiRegistrationPublic = new ApiRegistrationPublic();
         apiRegistrationPublic.setApiSpec(spec);

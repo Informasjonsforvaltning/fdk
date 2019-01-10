@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import io.swagger.v3.oas.models.OpenAPI;
 import lombok.*;
 import no.dcat.shared.*;
+import no.fdk.acat.common.model.apispecification.ApiSpecification;
 
 import java.util.List;
 import java.util.Set;
@@ -31,12 +32,14 @@ public class ApiDocument {
     @ApiModelProperty("Spec converted to openAPI v3")
     private OpenAPI openApi;
 
+    @ApiModelProperty("Parsed api specification")
+    private ApiSpecification apiSpecification;
+
     @ApiModelProperty("information about when the api was first and last harvested by the system")
     private HarvestMetadata harvest;
 
     @ApiModelProperty("the title of the api, can be specified in multiple langauges [dct:title]")
     private String title;
-    private String titleFormatted;
 
     @ApiModelProperty("the description of the api, can be specified in multiple languages [dct:description]")
     private String description;

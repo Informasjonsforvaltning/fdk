@@ -1,12 +1,6 @@
 package no.acat.service;
 
-import io.swagger.v3.oas.models.ExternalDocumentation;
 import io.swagger.v3.oas.models.OpenAPI;
-import io.swagger.v3.oas.models.Operation;
-import io.swagger.v3.oas.models.Paths;
-import io.swagger.v3.oas.models.media.Content;
-import io.swagger.v3.oas.models.responses.ApiResponse;
-import io.swagger.v3.oas.models.responses.ApiResponses;
 import no.acat.model.ApiDocument;
 import no.acat.repository.ApiDocumentRepository;
 import no.acat.spec.ParseException;
@@ -14,6 +8,9 @@ import no.dcat.client.publishercat.PublisherCatClient;
 import no.dcat.client.registrationapi.ApiRegistrationPublic;
 import no.dcat.htmlclean.HtmlCleaner;
 import no.dcat.shared.*;
+import no.fdk.acat.common.model.apispecification.ApiSpecification;
+import no.fdk.acat.common.model.apispecification.ExternalDocumentation;
+import no.fdk.acat.converters.apispecificationparser.UniversalParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -46,10 +43,11 @@ public class ApiDocumentBuilderService {
         this.datasetCatClient = datasetCatClient;
     }
 
-    public ApiDocument createFromApiRegistration(ApiRegistrationPublic apiRegistration, String harvestSourceUri, Date harvestDate) throws IOException, ParseException {
+    public ApiDocument createFromApiRegistration(ApiRegistrationPublic apiRegistration, String harvestSourceUri, Date harvestDate) throws IOException, ParseException, no.fdk.acat.converters.apispecificationparser.ParseException {
         String apiSpecUrl = apiRegistration.getApiSpecUrl();
         String apiSpec = getApiSpec(apiRegistration);
         OpenAPI openApi = parserService.parse(apiSpec);
+        ApiSpecification apiSpecification = new UniversalParser().parse(apiSpec);
 
         Optional<ApiDocument> existingApiDocumentOptional = apiDocumentRepository.getApiDocumentByHarvestSourceUri(harvestSourceUri);
         String id = existingApiDocumentOptional.isPresent() ? existingApiDocumentOptional.get().getId() : UUID.randomUUID().toString();
@@ -59,10 +57,12 @@ public class ApiDocumentBuilderService {
             .harvestSourceUri(harvestSourceUri)
             .apiSpecUrl(apiSpecUrl)
             .apiSpec(apiSpec)
+            .openApi(openApi)
+            .apiSpecification(apiSpecification)
             .build();
 
         populateFromApiRegistration(apiDocument, apiRegistration);
-        populateFromOpenApi(apiDocument, openApi);
+        populateFromApiSpecification(apiDocument, apiSpecification);
         updateHarvestMetadata(apiDocument, harvestDate, existingApiDocumentOptional.orElse(null));
 
         logger.info("ApiDocument is created. id={}, harvestSourceUri={}", apiDocument.getId(), apiDocument.getHarvestSourceUri());
@@ -91,7 +91,7 @@ public class ApiDocumentBuilderService {
     }
 
     boolean isEqualContent(ApiDocument first, ApiDocument second) {
-        String[] ignoredProperties = {"id", "harvest", "openApi"};
+        String[] ignoredProperties = {"id", "harvest", "openApi", "apiSpecification"};
         ApiDocument firstContent = new ApiDocument();
         ApiDocument secondContent = new ApiDocument();
 
@@ -141,43 +141,40 @@ public class ApiDocumentBuilderService {
         return datasetReferences.isEmpty() ? null : datasetReferences;
     }
 
-    void populateFromOpenApi(ApiDocument apiDocument, OpenAPI openApi) {
+    void populateFromApiSpecification(ApiDocument apiDocument, ApiSpecification apiSpecification) {
 
-        if (openApi == null) {
+        if (apiSpecification == null) {
             return;
         }
 
-        apiDocument.setOpenApi(openApi);
-
-        if (openApi.getInfo() != null) {
-            if (openApi.getInfo().getTitle() != null) {
-                apiDocument.setTitle(HtmlCleaner.cleanAllHtmlTags(openApi.getInfo().getTitle()));
-                apiDocument.setTitleFormatted(HtmlCleaner.clean(openApi.getInfo().getTitle()));
+        if (apiSpecification.getInfo() != null) {
+            if (apiSpecification.getInfo().getTitle() != null) {
+                apiDocument.setTitle(apiSpecification.getInfo().getTitle());
             }
 
-            if (openApi.getInfo().getDescription() != null) {
-                apiDocument.setDescription(HtmlCleaner.cleanAllHtmlTags(openApi.getInfo().getDescription()));
-                apiDocument.setDescriptionFormatted(HtmlCleaner.clean(openApi.getInfo().getDescription()));
+            if (apiSpecification.getInfo().getDescription() != null) {
+                apiDocument.setDescription(HtmlCleaner.cleanAllHtmlTags(apiSpecification.getInfo().getDescription()));
+                apiDocument.setDescriptionFormatted(apiSpecification.getInfo().getDescription());
             }
 
-            if (openApi.getInfo().getContact() != null) {
+            if (apiSpecification.getInfo().getContact() != null) {
                 apiDocument.setContactPoint(new ArrayList<>());
                 Contact contact = new Contact();
-                if (openApi.getInfo().getContact().getEmail() != null) {
-                    contact.setEmail(HtmlCleaner.cleanAllHtmlTags(openApi.getInfo().getContact().getEmail()));
+                if (apiSpecification.getInfo().getContact().getEmail() != null) {
+                    contact.setEmail(apiSpecification.getInfo().getContact().getEmail());
                 }
-                if (openApi.getInfo().getContact().getName() != null) {
-                    contact.setOrganizationName(HtmlCleaner.cleanAllHtmlTags(openApi.getInfo().getContact().getName()));
+                if (apiSpecification.getInfo().getContact().getName() != null) {
+                    contact.setOrganizationName(apiSpecification.getInfo().getContact().getName());
                 }
-                if (openApi.getInfo().getContact().getUrl() != null) {
-                    contact.setUri(HtmlCleaner.cleanAllHtmlTags(openApi.getInfo().getContact().getUrl()));
+                if (apiSpecification.getInfo().getContact().getUrl() != null) {
+                    contact.setUri(apiSpecification.getInfo().getContact().getUrl());
                 }
                 apiDocument.getContactPoint().add(contact);
             }
         }
 
         if (isNullOrEmpty(apiDocument.getApiDocUrl())) {
-            ExternalDocumentation externalDocs = openApi.getExternalDocs();
+            ExternalDocumentation externalDocs = apiSpecification.getExternalDocs();
             if (externalDocs != null) {
                 String docUrl = externalDocs.getUrl();
                 if (!isNullOrEmpty(docUrl)) {
@@ -186,35 +183,7 @@ public class ApiDocumentBuilderService {
             }
         }
 
-        apiDocument.setFormats(getFormatsFromOpenApi(openApi));
-    }
-
-    Set<String> getFormatsFromOpenApi(OpenAPI openAPI) {
-        Set<String> formats = new HashSet<>();
-        Paths paths = openAPI.getPaths();
-        paths.forEach((path, pathItem) -> {
-            List<Operation> operations = pathItem.readOperations();
-            operations.forEach((operation -> {
-                if (operation == null) return;
-
-                /*as of now, request body formats are not included
-                RequestBody requestBody = operation.getRequestBody();
-                if (requestBody == null) return;
-                Content requestBodyContent = requestBody.getContent();
-                if (requestBodyContent==null) return;
-                formats.addAll(requestBodyContent.keySet());
-                */
-                ApiResponses apiResponses = operation.getResponses();
-                if (apiResponses == null) return;
-                List<ApiResponse> apiResponseList = new ArrayList<>(apiResponses.values());
-                apiResponseList.forEach(apiResponse -> {
-                    Content responseContent = apiResponse.getContent();
-                    if (responseContent == null) return;
-                    formats.addAll(responseContent.keySet());
-                });
-            }));
-        });
-        return formats;
+        apiDocument.setFormats(apiSpecification.getFormats());
     }
 
 }
