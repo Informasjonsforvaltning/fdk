@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -74,7 +75,11 @@ public class ApiCatalogController {
             apiCatalog.setId(UUID.randomUUID().toString());
             apiCatalog.setOrgNo(catalogId);
         }
-        apiCatalog.setHarvestSourceUri(apiCatalogData.getHarvestSourceUri());
+
+        if (!Objects.equals(apiCatalog.getHarvestSourceUri(), apiCatalogData.getHarvestSourceUri())) {
+            apiCatalog.setHarvestSourceUri(apiCatalogData.getHarvestSourceUri());
+            apiCatalog.setHarvestStatus(null);
+        }
 
         ApiCatalog apiCatalogSaved = apiCatalogRepository.save(apiCatalog);
         apiCatalogHarvesterService.addHarvestSingleCatalogTaskToQueue(apiCatalogSaved);
