@@ -27,7 +27,8 @@ const mapStateToProps = ({ catalog, apis }, ownProps) => {
 const mapDispatchToProps = dispatch => ({
   fetchCatalogIfNeeded: catalogURL =>
     dispatch(fetchCatalogIfNeeded(catalogURL)),
-  fetchApisIfNeeded: catalogId => dispatch(fetchApisIfNeededAction(catalogId))
+  fetchApisIfNeeded: (catalogId, forceFetch) =>
+    dispatch(fetchApisIfNeededAction(catalogId, forceFetch))
 });
 
 export const ConnectedAPIListPage = connect(

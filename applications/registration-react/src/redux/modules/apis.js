@@ -17,9 +17,10 @@ function shouldFetch(metaState) {
   );
 }
 
-export function fetchApisIfNeededAction(catalogId) {
+export function fetchApisIfNeededAction(catalogId, forceFetch = false) {
   return (dispatch, getState) =>
-    shouldFetch(_.get(getState(), ['apis', catalogId, 'meta'])) &&
+    (shouldFetch(_.get(getState(), ['apis', catalogId, 'meta'])) ||
+      forceFetch) &&
     dispatch(
       fetchActions(`/catalogs/${catalogId}/apis?size=1000`, [
         { type: APIS_REQUEST, meta: { catalogId } },

@@ -399,7 +399,8 @@
       "labelHarvestUrl": "Lenke til API-katalog",
       "harvestAction": "Høst fra katalog",
       "harvestedFromCatalogTitle": "Høstet fra katalog",
-      "changeHarvestUrl": "Rediger lenke"
+      "changeHarvestUrl": "Rediger lenke",
+      "importFromCatalogSpecPart1": "API-katalog import fra"
     }
   },
   "formStatus": {

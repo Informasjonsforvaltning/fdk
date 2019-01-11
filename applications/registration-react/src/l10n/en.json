@@ -399,7 +399,8 @@
       "labelHarvestUrl": "Link to API-catalog",
       "harvestAction": "Harvest from catalog",
       "harvestedFromCatalogTitle": "Harvested from catalog",
-      "changeHarvestUrl": "Edit link"
+      "changeHarvestUrl": "Edit link",
+      "importFromCatalogSpecPart1": "API-catalog import from"
     }
   },
   "formStatus": {
