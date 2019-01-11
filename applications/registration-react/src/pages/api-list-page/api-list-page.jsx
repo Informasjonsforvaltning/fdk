@@ -13,11 +13,18 @@ import { postApiCatalogLink } from '../../api/post-apiCatalog-link';
 import { AlertMessage } from '../../components/alert-message/alert-message.component';
 
 const harvestApiSpec = props => {
-  const { harvestUrl, match } = props;
+  const {
+    harvestUrl,
+    match,
+    invalidateApiCatalogItemAction,
+    invalidateApiItemAction
+  } = props;
   const catalogId = _.get(match, ['params', 'catalogId']);
 
   postApiCatalogLink(catalogId, harvestUrl)
     .then(() => {
+      invalidateApiCatalogItemAction(catalogId);
+      invalidateApiItemAction(catalogId);
       props.setHarvestApiSuccess(true);
     })
     .catch(error => {
@@ -84,6 +91,9 @@ export const APIListPage = props => {
     harvestedApiItems,
     fetchCatalogIfNeeded,
     fetchApisIfNeeded,
+    fetchApiCatalogIfNeeded,
+    invalidateApiCatalogItemAction,
+    invalidateApiItemAction,
     match,
     showHarvestLink,
     onToggle,
@@ -100,6 +110,20 @@ export const APIListPage = props => {
   if (catalogId) {
     fetchCatalogIfNeeded(catalogId);
     fetchApisIfNeeded(catalogId);
+    fetchApiCatalogIfNeeded(catalogId);
+  }
+
+  if (
+    _.get(apiCatalogs, 'harvestSourceUri') &&
+    !(
+      _.get(apiCatalogs, 'harvestStatus') ||
+      (_.get(apiCatalogs, ['harvestStatus', 'success']) === false &&
+        !_.get(apiCatalogs, ['harvestStatus', 'errorMessage']))
+    )
+  ) {
+    invalidateApiCatalogItemAction(catalogId);
+    invalidateApiItemAction(catalogId);
+    fetchApiCatalogIfNeeded(catalogId);
   }
 
   return (
@@ -292,6 +316,9 @@ APIListPage.defaultProps = {
   catalogItem: null,
   fetchCatalogIfNeeded: _.noop(),
   fetchApisIfNeeded: _.noop(),
+  fetchApiCatalogIfNeeded: _.noop(),
+  invalidateApiCatalogItemAction: _.noop(),
+  invalidateApiItemAction: _.noop(),
   match: null,
   registeredApiItems: null,
   harvestedApiItems: null,
@@ -313,6 +340,9 @@ APIListPage.propTypes = {
   harvestedApiItems: PropTypes.array,
   fetchCatalogIfNeeded: PropTypes.func,
   fetchApisIfNeeded: PropTypes.func,
+  fetchApiCatalogIfNeeded: PropTypes.func,
+  invalidateApiCatalogItemAction: PropTypes.func,
+  invalidateApiItemAction: PropTypes.func,
   match: PropTypes.object,
   showHarvestLink: PropTypes.bool,
   onToggle: PropTypes.func,

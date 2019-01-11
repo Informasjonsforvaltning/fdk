@@ -7,6 +7,7 @@ export const APIS_FAILURE = 'APIS_FAILURE';
 export const APIS_ADD_ITEM = 'APIS_ADD_ITEM';
 export const APIS_ITEM_SET_STATUS = 'APIS_ITEM_SET_STATUS';
 export const APIS_ITEM_DELETE = 'APIS_ITEM_DELETE';
+export const APIS_ITEM_INVALIDATE = 'APIS_ITEM_INVALIDATE';
 
 function shouldFetch(metaState) {
   const threshold = 60 * 1000; // seconds
@@ -45,6 +46,11 @@ export const deleteApiItemAction = (catalogId, apiId) => ({
   type: APIS_ITEM_DELETE,
   catalogId,
   apiId
+});
+
+export const invalidateApiItemAction = catalogId => ({
+  type: APIS_ITEM_INVALIDATE,
+  catalogId
 });
 
 const initialState = {};
@@ -124,6 +130,17 @@ export default function apis(state = initialState, action) {
               return null;
             })
           ]
+        }
+      };
+    case APIS_ITEM_INVALIDATE:
+      return {
+        ...state,
+        [action.catalogId]: {
+          items: [..._.get(state, [action.catalogId, 'items'], [])],
+          meta: {
+            isFetching: false,
+            lastFetch: null
+          }
         }
       };
     default:

@@ -7,10 +7,12 @@ let defaultProps;
 let wrapper;
 let fetchCatalogIfNeeded;
 let fetchApisIfNeeded;
+let fetchApiCatalogIfNeeded;
 
 beforeEach(() => {
   fetchCatalogIfNeeded = jest.fn();
   fetchApisIfNeeded = jest.fn();
+  fetchApiCatalogIfNeeded = jest.fn();
   const catalogItem = {
     id: '910244132',
     uri: 'http://brreg.no/catalogs/910244132',
@@ -33,6 +35,7 @@ beforeEach(() => {
     catalogItem,
     fetchCatalogIfNeeded,
     fetchApisIfNeeded,
+    fetchApiCatalogIfNeeded,
     match
   };
   wrapper = shallow(<APIListPage {...defaultProps} />);
