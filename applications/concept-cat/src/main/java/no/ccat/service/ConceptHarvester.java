@@ -10,10 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
+import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
@@ -43,7 +40,10 @@ public class ConceptHarvester {
     public void harvestFromSource() {
         Reader reader;
 
-        reader = getReaderFromURL(harvestSourceUri);
+        String theEntireDocument = readURLFully(harvestSourceUri);
+
+        reader = new StringReader(theEntireDocument);
+
         if (reader == null) return;
 
         List<ConceptDenormalized> concepts = rdfToModelTransformer.getConceptsFromStream(reader);
@@ -59,8 +59,7 @@ public class ConceptHarvester {
         });
     }
 
-    private Reader getReaderFromURL(String harvestSourceUri) {
-        Reader reader;
+    private String readURLFully(String harvestSourceUri) {
         try {
             URL url = new URL(harvestSourceUri);
             logger.info("Start harvest from url: {}", url);
@@ -69,13 +68,15 @@ public class ConceptHarvester {
 
             InputStream inputStream = urlConnection.getInputStream();
 
-            reader = new InputStreamReader(inputStream);
+            java.util.Scanner s = new java.util.Scanner(inputStream).useDelimiter("\\A");
+            String someString = s.hasNext() ? s.next() : "";
+            return someString;
+
         } catch (IOException e) {
             logger.warn("Downloading concepts from url failed:" + harvestSourceUri);
-            return null;
         }
-        return reader;
-    }
+            return "";
+        }
 
     private Reader resourceAsReader(final String resourceName) {
         return new InputStreamReader(getClass().getClassLoader().getResourceAsStream(resourceName), StandardCharsets.UTF_8);
