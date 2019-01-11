@@ -66,6 +66,10 @@ exports[`should render ConceptDetailsPage correctly with conceptItem 1`] = `
                 "name": "Identifier",
                 "prefLabel": "Identifier",
               },
+              Object {
+                "name": "Contact information",
+                "prefLabel": "Contact information",
+              },
             ]
           }
         />
@@ -92,6 +96,27 @@ exports[`should render ConceptDetailsPage correctly with conceptItem 1`] = `
               null/api/concepts/14
             </a>
           </div>
+        </ListRegular>
+        <ListRegular
+          bottomMargin={true}
+          title="Contact information"
+        >
+          <TwoColRow
+            col1="Email"
+            col2={
+              <a
+                href="mailto:mailto:informasjonsforvaltning@brreg.no"
+                rel="noopener noreferrer"
+                title="mailto:informasjonsforvaltning@brreg.no"
+              >
+                mailto:informasjonsforvaltning@brreg.no
+              </a>
+            }
+          />
+          <TwoColRow
+            col1="Phone"
+            col2="47 750 07 500"
+          />
         </ListRegular>
         <div
           style={
