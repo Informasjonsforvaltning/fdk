@@ -284,7 +284,7 @@ Velg "Tesauri" dersom datasettbeskrivelsen omhandler en hierarkisk og  assosiati
 # Dataset_ (relatert)
 :Dataset_relation
     dct:abstract """Oppgi relaterte datasett."""@no ;
-    dct:description """ """@no .
+    dct:description """lenke til veileder: <a href='https://doc.difi.no/data/veileder-for-beskrivelse-av-datasett/#_kilde_datasett_avledet_fra'>https://doc.difi.no/data/veileder-for-beskrivelse-av-datasett/#_kilde_datasett_avledet_fra</a>"""@no .
 
 
 # Agent_name (Enhet enhetsnavn)
@@ -358,7 +358,7 @@ Velg Feed dersom det er en distribusjon hvor endringer hentes gjennom f.eks. RSS
 # Distribusjon_format (format)
 :Distribution_format
     dct:abstract """Velg format(er) fra IANAs liste over offisielle medietyper. Dersom formatet ikke finnes i listen kan du angi eget."""@no ;
-    dct:description """ """@no .
+    dct:description """Lenke til IANAs liste over offisielle medietyper: <a href='http://www.iana.org/assignments/media-types/media-types.xhtml'>http://www.iana.org/assignments/media-types/media-types.xhtml</a>"""@no .
 
 # Distribusjon_accessURL (tilgangsurl)
 :Distribution_accessURL
