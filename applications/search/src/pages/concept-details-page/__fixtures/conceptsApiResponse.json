@@ -41,6 +41,10 @@
       "prefLabel" : {
         "no" : "norsk preflabel14",
         "en" : "engelsk preflabel14"
+      },
+      "contactPoint": {
+        "email": "mailto:informasjonsforvaltning@brreg.no",
+        "telephone": "47 750 07 500"
       }
     }, {
       "id" : "19",

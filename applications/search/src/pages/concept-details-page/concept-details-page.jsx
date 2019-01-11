@@ -125,6 +125,29 @@ const renderIdentifiers = id => {
   );
 };
 
+const renderContactPoint = contactPoint => {
+  const { email, telephone } = contactPoint;
+
+  if (!(email || telephone)) {
+    return null;
+  }
+  return (
+    <ListRegular title={localization.contactInfo}>
+      {email && (
+        <TwoColRow
+          col1={localization.email}
+          col2={
+            <a title={email} href={`mailto:${email}`} rel="noopener noreferrer">
+              {email}
+            </a>
+          }
+        />
+      )}
+      {telephone && <TwoColRow col1={localization.phone} col2={telephone} />}
+    </ListRegular>
+  );
+};
+
 const renderStickyMenu = conceptItem => {
   const menuItems = [];
   menuItems.push({
@@ -157,6 +180,13 @@ const renderStickyMenu = conceptItem => {
     name: localization.concept.identifier,
     prefLabel: localization.concept.identifier
   });
+
+  if (_.get(conceptItem, 'contactPoint')) {
+    menuItems.push({
+      name: localization.contactInfo,
+      prefLabel: localization.contactInfo
+    });
+  }
 
   return <StickyMenu menuItems={menuItems} />;
 };
@@ -209,6 +239,7 @@ export const ConceptDetailsPage = props => {
               _.get(conceptItem, 'hiddenLabel')
             )}
             {renderIdentifiers(_.get(conceptItem, 'id'))}
+            {renderContactPoint(_.get(conceptItem, 'contactPoint'))}
             <div style={{ height: '75vh' }} />
           </section>
         </div>
