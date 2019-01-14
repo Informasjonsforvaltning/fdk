@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import { fetchActions } from '../fetchActions';
+import { isApiCatalogHarvestPending } from './apiCatalogs.js';
 
 export const APIS_REQUEST = 'APIS_REQUEST';
 export const APIS_SUCCESS = 'APIS_SUCCESS';
@@ -9,18 +10,22 @@ export const APIS_ITEM_SET_STATUS = 'APIS_ITEM_SET_STATUS';
 export const APIS_ITEM_DELETE = 'APIS_ITEM_DELETE';
 export const APIS_ITEM_INVALIDATE = 'APIS_ITEM_INVALIDATE';
 
-function shouldFetch(metaState) {
+function shouldFetch(metaState, apiCatalogItemState) {
   const threshold = 60 * 1000; // seconds
   return (
     !metaState ||
     (!metaState.isFetching &&
-      (metaState.lastFetch || 0) < Date.now() - threshold)
+      (metaState.lastFetch || 0) < Date.now() - threshold) ||
+    isApiCatalogHarvestPending(apiCatalogItemState)
   );
 }
 
 export function fetchApisIfNeededAction(catalogId) {
   return (dispatch, getState) =>
-    shouldFetch(_.get(getState(), ['apis', catalogId, 'meta'])) &&
+    shouldFetch(
+      _.get(getState(), ['apis', catalogId, 'meta']),
+      _.get(getState(), ['apiCatalog', catalogId, 'item'])
+    ) &&
     dispatch(
       fetchActions(`/catalogs/${catalogId}/apis?size=1000`, [
         { type: APIS_REQUEST, meta: { catalogId } },

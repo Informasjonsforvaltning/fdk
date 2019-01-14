@@ -6,18 +6,26 @@ export const API_CATALOG_SUCCESS = 'API_CATALOG_SUCCESS';
 export const API_CATALOG_FAILURE = 'API_CATALOG_FAILURE';
 export const API_CATALOG_INVALIDATE = 'API_CATALOG_INVALIDATE';
 
-function shouldFetch(metaState) {
+export function isApiCatalogHarvestPending(itemState) {
+  return itemState && itemState.harvestSourceUri && !itemState.harvestStatus;
+}
+
+function shouldFetch(metaState, itemState) {
   const threshold = 60 * 1000; // seconds
   return (
     !metaState ||
     (!metaState.isFetching &&
-      (metaState.lastFetch || 0) < Date.now() - threshold)
+      (metaState.lastFetch || 0) < Date.now() - threshold) ||
+    isApiCatalogHarvestPending(itemState)
   );
 }
 
 export function fetchApiCatalogIfNeededAction(catalogId) {
   return (dispatch, getState) =>
-    shouldFetch(_.get(getState(), ['apiCatalog', catalogId, 'meta'])) &&
+    shouldFetch(
+      _.get(getState(), ['apiCatalog', catalogId, 'meta']),
+      _.get(getState(), ['apiCatalog', catalogId, 'item'])
+    ) &&
     dispatch(
       fetchActions(`/catalogs/${catalogId}/apicatalog`, [
         { type: API_CATALOG_REQUEST, meta: { catalogId } },

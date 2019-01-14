@@ -23,8 +23,8 @@ const harvestApiSpec = props => {
 
   postApiCatalogLink(catalogId, harvestUrl)
     .then(() => {
-      invalidateApiCatalogItemAction(catalogId);
-      invalidateApiItemAction(catalogId);
+      // invalidateApiCatalogItemAction(catalogId);
+      // invalidateApiItemAction(catalogId);
       props.setHarvestApiSuccess(true);
     })
     .catch(error => {
@@ -113,6 +113,7 @@ export const APIListPage = props => {
     fetchApiCatalogIfNeeded(catalogId);
   }
 
+  /*
   if (
     _.get(apiCatalogs, 'harvestSourceUri') &&
     !(
@@ -121,10 +122,11 @@ export const APIListPage = props => {
         !_.get(apiCatalogs, ['harvestStatus', 'errorMessage']))
     )
   ) {
-    invalidateApiCatalogItemAction(catalogId);
+    //invalidateApiCatalogItemAction(catalogId);
     invalidateApiItemAction(catalogId);
     fetchApiCatalogIfNeeded(catalogId);
   }
+  */
 
   return (
     <div className="container">
