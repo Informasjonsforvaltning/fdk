@@ -159,9 +159,10 @@ export const APIRegistrationPage = props => {
         <div className="row mb-5">
           <div className="col-12">
             <AlertMessage type="success">
-              {localization.api.register.importFromSpecPart1}{' '}
-              {_.get(searchQuery, 'importSuccess')}{' '}
-              {localization.api.register.importFromSpecPart2}
+              {localization.formatString(
+                localization.api.register.importFromSpecSuccess,
+                _.get(searchQuery, 'importSuccess')
+              )}
             </AlertMessage>
           </div>
         </div>

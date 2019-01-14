@@ -387,9 +387,8 @@
     "register": {
       "apiCatalog": "API-katalog",
       "registerNew": "Legg til ny API-beskrivelse",
-      "importFromSpecPart1": "Import fra",
-      "importFromSpecPart2": "var vellykket!",
-      "importFromSpecPart2Error": "feilet!",
+      "importFromSpecSuccess": "Import fra {0} var vellykket",
+      "importFromSpecError": "Import fra {0} feilet!",
       "importFromSpec": "Importert fra spesifikasjon",
       "addInfo": "For at API-beskrivelsen skal være nyttig for brukerne av Felles Datakatalog bør du legge til tilleggsinformasjon. Denne er spesifikk for Datakatalogen og vil kun brukes her.",
       "registeredApiTitle": "Enkeltstående API-beskrivelser"

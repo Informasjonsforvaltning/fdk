@@ -31,8 +31,10 @@ const alertHarvestSuccess = harvestUrl => (
   <div className="row mb-5">
     <div className="col-12">
       <AlertMessage type="success">
-        {localization.api.register.importFromSpecPart1} {`${harvestUrl} `}
-        {localization.api.register.importFromSpecPart2}
+        {localization.formatString(
+          localization.api.register.importFromSpecSuccess,
+          harvestUrl
+        )}
       </AlertMessage>
     </div>
   </div>
@@ -42,8 +44,10 @@ const alertHarvestError = harvestUrl => (
   <div className="row mb-5">
     <div className="col-12">
       <AlertMessage type="danger">
-        {localization.api.harvest.importFromCatalogSpecPart1} {`${harvestUrl} `}
-        {localization.api.register.importFromSpecPart2Error}
+        {localization.formatString(
+          localization.api.register.importFromSpecError,
+          harvestUrl
+        )}
       </AlertMessage>
     </div>
   </div>

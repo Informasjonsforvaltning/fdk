@@ -387,9 +387,8 @@
     "register": {
       "apiCatalog": "API catalog",
       "registerNew": "Register API description",
-      "importFromSpecPart1": "Import from",
-      "importFromSpecPart2": "was successful!",
-      "importFromSpecPart2Error": "failed!",
+      "importFromSpecSuccess": "Import from {0} was successful!",
+      "importFromSpecError": "Import from {0} failed!",
       "importFromSpec": "Importert fra spesifikasjon",
       "addInfo": "To ensure API specification to be useful you are encouraged to add additional information. That information is only used in the National Data Directory",
       "registeredApiTitle": "Enkeltstående API-beskrivelser"
