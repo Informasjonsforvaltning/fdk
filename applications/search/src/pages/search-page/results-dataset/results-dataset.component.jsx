@@ -19,20 +19,9 @@ import { SearchHitItem } from './search-hit-item/search-hit-item.component';
 import { FilterBox } from '../../../components/filter-box/filter-box.component';
 import { SearchPublishersTree } from '../search-publishers-tree/search-publishers-tree.component';
 import { ErrorBoundary } from '../../../components/error-boundary/error-boundary';
-
-import { addOrReplaceParam } from '../../../lib/addOrReplaceUrlParam';
+import { HITS_PER_PAGE } from '../../../constants/constants';
 
 export class ResultsDataset extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.toggle = this.toggle.bind(this);
-    this.select = this.select.bind(this);
-    this.state = {
-      dropdownOpen: false
-    };
-  }
-
   componentWillMount() {
     const urlHasSortfieldModified =
       window.location.href.indexOf('sortfield=modified') !== -1;
@@ -46,12 +35,47 @@ export class ResultsDataset extends React.Component {
       this.props.onSortByScore();
       this.props.setDatasetSort(undefined);
     }
+
+    const urlHasHitsPerPagefieldModified =
+      window.location.href.indexOf('size=') !== -1;
+
+    if (
+      this.props.datasetHitsPerPageValue === undefined ||
+      urlHasHitsPerPagefieldModified
+    ) {
+      const href = window.location.href;
+      const isHundred = href.substr(href.indexOf('size=') + 7, 1) === '0';
+      const numberOfDigits = isHundred ? 3 : 2;
+      const hitsPerPageUrlValue = href.substr(
+        href.indexOf('size=') + 5,
+        numberOfDigits
+      );
+      this.props.setDatasetHitsPerPage(hitsPerPageUrlValue);
+      this.props.onSetHitsPerPage(hitsPerPageUrlValue);
+    } else {
+      this.props.onHitsPerPageByScore();
+      this.props.setDatasetHitsPerPage(undefined);
+    }
+    this.toggle = this.toggle.bind(this);
+    this.select = this.select.bind(this);
+
+    this.setState({
+      dropdownOpen: false
+    });
   }
 
   toggle() {
     this.setState(prevState => ({
       dropdownOpen: !prevState.dropdownOpen
     }));
+  }
+
+  select(event) {
+    const pickedValue = event.target.innerText;
+    if (this.props.searchQuery.size !== pickedValue) {
+      this.props.onSetHitsPerPage(pickedValue);
+      this.props.setDatasetHitsPerPage(pickedValue);
+    }
   }
   _renderFilterModal() {
     const {
@@ -135,19 +159,6 @@ export class ResultsDataset extends React.Component {
     }
     return null;
   }
-  select(event) {
-    const pickedValue = event.target.innerText;
-    this.setState({
-      dropdownOpen: !this.state.dropdownOpen
-    });
-    if (this.props.searchQuery.size !== pickedValue) {
-      window.location.href = addOrReplaceParam(
-        window.location.href,
-        'size',
-        pickedValue
-      );
-    }
-  }
   render() {
     const {
       datasetItems,
@@ -202,7 +213,7 @@ export class ResultsDataset extends React.Component {
       setDatasetSort('modified');
       onSortByLastModified();
     };
-
+    const currentHitsPerPage = this.props.searchQuery.size || HITS_PER_PAGE;
     return (
       <main id="content" data-test-id="datasets">
         <section className="row mb-3">
@@ -219,13 +230,16 @@ export class ResultsDataset extends React.Component {
             <div className="d-flex justify-content-end">
               <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
                 <DropdownToggle caret>
-                  {localization.query.show} {this.props.searchQuery.size}{' '}
+                  {localization.query.show} {currentHitsPerPage}{' '}
                   {localization.query.hitsPerPage}
                 </DropdownToggle>
                 <DropdownMenu>
                   <DropdownItem
                     onClick={this.select}
-                    active={this.props.searchQuery.size === 10}
+                    active={
+                      this.props.searchQuery.size === 10 ||
+                      !this.props.searchQuery.size
+                    }
                   >
                     10
                   </DropdownItem>

@@ -15,7 +15,10 @@ import {
   setDatasetSortAction,
   setConceptSortAction,
   setApiSortAction,
-  setInformationModelSortAction
+  setInformationModelSortAction,
+  setDatasetHitsPerPageAction,
+  setConceptHitsPerPageAction,
+  setApiHitsPerPageAction
 } from '../../redux/modules/settings';
 import {
   addConceptAction,
@@ -102,6 +105,9 @@ const mapStateToProps = ({
     apiSortValue: settings.apiSortValue,
     conceptSortValue: settings.conceptSortValue,
     informationModelSortValue: settings.informationModelSortValue,
+    datasetHitsPerPageValue: settings.datasetHitsPerPageValue,
+    apiHitsPerPageValue: settings.apiHitsPerPageValue,
+    conceptHitsPerPageValue: settings.conceptHitsPerPageValue,
     searchQuery
   };
 };
@@ -117,8 +123,14 @@ const mapDispatchToProps = dispatch => ({
   addConcept: item => dispatch(addConceptAction(item)),
   removeConcept: uri => dispatch(removeConceptAction(uri)),
   setDatasetSort: sortValue => dispatch(setDatasetSortAction(sortValue)),
+  setDatasetHitsPerPage: hitsPerPage =>
+    dispatch(setDatasetHitsPerPageAction(hitsPerPage)),
   setApiSort: sortValue => dispatch(setApiSortAction(sortValue)),
+  setApiHitsPerPage: hitsPerPage =>
+    dispatch(setApiHitsPerPageAction(hitsPerPage)),
   setConceptSort: sortValue => dispatch(setConceptSortAction(sortValue)),
+  setConceptHitsPerPage: hitsPerPage =>
+    dispatch(setConceptHitsPerPageAction(hitsPerPage)),
   setSearchQuery: (query, history) => dispatch(setSearchQuery(query, history)),
   setQueryFilter: (filterType, filterValue, history) =>
     dispatch(setQueryFilter(filterType, filterValue, history)),

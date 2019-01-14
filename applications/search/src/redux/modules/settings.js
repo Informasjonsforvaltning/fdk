@@ -4,6 +4,11 @@ export const SET_API_SORT_PATCH = 'SET_API_SORT_PATCH';
 export const SET_CONCEPT_SORT_PATCH = 'SET_CONCEPT_SORT_PATCH';
 export const SET_INFORMATIONMODEL_SORT_PATCH =
   'SET_INFORMATIONMODEL_SORT_PATCH';
+export const SET_DATASET_HITS_PER_PAGE_PATCH =
+  'SET_DATASET_HITS_PER_PAGE_PATCH';
+export const SET_API_HITS_PER_PAGE_PATCH = 'SET_API_HITS_PER_PAGE_PATCH';
+export const SET_CONCEPT_HITS_PER_PAGE_PATCH =
+  'SET_CONCEPT_HITS_PER_PAGE_PATCH';
 
 export function setLanguageAction(language) {
   return {
@@ -15,6 +20,24 @@ export function setDatasetSortAction(datasetSortValue) {
   return {
     type: SET_DATASET_SORT_PATCH,
     datasetSortValue
+  };
+}
+export function setDatasetHitsPerPageAction(datasetHitsPerPageValue) {
+  return {
+    type: SET_DATASET_HITS_PER_PAGE_PATCH,
+    datasetHitsPerPageValue
+  };
+}
+export function setApiHitsPerPageAction(apiHitsPerPageValue) {
+  return {
+    type: SET_API_HITS_PER_PAGE_PATCH,
+    apiHitsPerPageValue
+  };
+}
+export function setConceptHitsPerPageAction(conceptHitsPerPageValue) {
+  return {
+    type: SET_CONCEPT_HITS_PER_PAGE_PATCH,
+    conceptHitsPerPageValue
   };
 }
 export function setApiSortAction(apiSortValue) {
@@ -40,7 +63,10 @@ const initialState = {
   language: 'nb',
   datasetSortValue: undefined,
   apiSortValue: undefined,
-  conceptSortValue: undefined
+  conceptSortValue: undefined,
+  datasetHitsPerPageValue: undefined,
+  apiHitsPerPageValue: undefined,
+  conceptHitsPerPageValue: undefined
 };
 
 export function settingsResolver(state = initialState, action) {
@@ -57,6 +83,18 @@ export function settingsResolver(state = initialState, action) {
       return {
         ...state,
         informationModelSortValue: action.informationModelSortValue
+      };
+    case SET_DATASET_HITS_PER_PAGE_PATCH:
+      return {
+        ...state,
+        datasetHitsPerPageValue: action.datasetHitsPerPageValue
+      };
+    case SET_API_HITS_PER_PAGE_PATCH:
+      return { ...state, apiHitsPerPageValue: action.apiHitsPerPageValue };
+    case SET_CONCEPT_HITS_PER_PAGE_PATCH:
+      return {
+        ...state,
+        conceptHitsPerPageValue: action.conceptHitsPerPageValue
       };
     default:
       return state;
