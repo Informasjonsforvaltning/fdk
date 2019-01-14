@@ -389,9 +389,9 @@
       "registerNew": "Register API description",
       "importFromSpecSuccess": "Import from {0} was successful!",
       "importFromSpecError": "Import from {0} failed!",
-      "importFromSpec": "Importert fra spesifikasjon",
+      "importFromSpec": "Imported from specification",
       "addInfo": "To ensure API specification to be useful you are encouraged to add additional information. That information is only used in the National Data Directory",
-      "registeredApiTitle": "Enkeltstående API-beskrivelser"
+      "registeredApiTitle": "Single API descriptions"
     },
     "harvest": {
       "harvestFromCatalog": "Harvest specifications from catalog",
