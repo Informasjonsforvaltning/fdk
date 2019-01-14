@@ -1,6 +1,9 @@
 package no.ccat.service;
 
 import no.ccat.SKOSNO;
+import no.ccat.common.model.ContactPoint;
+import no.ccat.common.model.Definition;
+import no.ccat.common.model.Source;
 import no.ccat.model.ConceptDenormalized;
 import no.dcat.shared.Publisher;
 import org.apache.jena.rdf.model.*;
@@ -15,9 +18,6 @@ import java.io.Reader;
 import java.net.URL;
 import java.util.*;
 
-import no.ccat.common.model.Definition;
-import no.ccat.common.model.Source;
-
 /*
     Transform RDF/Turtle into our domain model (ConceptDenormalized and friends)
 */
@@ -25,15 +25,12 @@ import no.ccat.common.model.Source;
 public class RDFToModelTransformer {
 
     public static final String defaultLanguage = "nb";
-
+    private static final Logger logger = LoggerFactory.getLogger(RDFToModelTransformer.class);
     @Value("${application.apiRootExternalURL}")
     public String externalApiRoot;
-
     @Value("${application.conceptsPath}")
     public String conceptsPath;
 
-
-    private static final Logger logger = LoggerFactory.getLogger(RDFToModelTransformer.class);
     private ConceptBuilderService conceptBuilderService;
     private ConceptDenormalizedRepository conceptDenormalizedRepository;
 
@@ -202,11 +199,34 @@ public class RDFToModelTransformer {
 
         concept.setDefinition(extractDefinition(conceptResource));
 
+        concept.setContactPoint(extractContactPoint(conceptResource));
+
         return concept;
     }
 
+    private ContactPoint extractContactPoint(Resource resource) {
+        ContactPoint contactPoint = new ContactPoint();
+
+        try {
+            Statement propertyStmnt = resource.getProperty(DCAT.contactPoint);
+
+            Resource contactPointResource = propertyStmnt.getObject().asResource();
+
+            Statement phoneStatement = contactPointResource.getProperty(VCARD4.hasTelephone);
+            contactPoint.setTelephone(phoneStatement.getObject().toString());
+
+            Statement emailStatement = contactPointResource.getProperty(VCARD4.hasEmail);
+            contactPoint.setEmail(emailStatement.getObject().toString());
+
+        } catch (Exception e) {
+            logger.warn("Error when extracting property {} from resource {}", DCAT.contactPoint, resource.getURI(), e);
+        }
+
+        return contactPoint;
+    }
+
     private String buildLocalUri(String id) {
-        return externalApiRoot+conceptsPath+"/"+id;
+        return externalApiRoot + conceptsPath + "/" + id;
     }
 
     public Publisher extractPublisher(Resource resource, Property property) {

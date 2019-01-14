@@ -1,9 +1,10 @@
 package no.ccat.common.model;
 
-import java.util.List;
-import java.util.Map;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+
+import java.util.List;
+import java.util.Map;
 
 @Data
 public class Concept {
@@ -34,5 +35,9 @@ public class Concept {
 
     @ApiModelProperty("Hidden labels [skos:hiddenLabel]")
     private List<Map<String, String>> hiddenLabel;
+
+    @ApiModelProperty("Contact point [dcat:contactPoint]")
+    private ContactPoint contactPoint;
+
 
 }

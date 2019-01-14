@@ -10,10 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
+import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
@@ -43,19 +40,11 @@ public class ConceptHarvester {
     public void harvestFromSource() {
         Reader reader;
 
-        try {
-            URL url = new URL(harvestSourceUri);
-            logger.info("Start harvest from url: {}", url);
-            URLConnection urlConnection = url.openConnection();
-            urlConnection.setRequestProperty("Accept", "text/turtle");
+        String theEntireDocument = readURLFully(harvestSourceUri);
 
-            InputStream inputStream = urlConnection.getInputStream();
+        reader = new StringReader(theEntireDocument);
 
-            reader = new InputStreamReader(inputStream);
-        } catch (IOException e) {
-            logger.warn("Downloading concepts from url failed:" + harvestSourceUri);
-            return;
-        }
+        if (reader == null) return;
 
         List<ConceptDenormalized> concepts = rdfToModelTransformer.getConceptsFromStream(reader);
 
@@ -69,6 +58,25 @@ public class ConceptHarvester {
             conceptDenormalizedRepository.save(concept);
         });
     }
+
+    private String readURLFully(String harvestSourceUri) {
+        try {
+            URL url = new URL(harvestSourceUri);
+            logger.info("Start harvest from url: {}", url);
+            URLConnection urlConnection = url.openConnection();
+            urlConnection.setRequestProperty("Accept", "text/turtle");
+
+            InputStream inputStream = urlConnection.getInputStream();
+
+            java.util.Scanner s = new java.util.Scanner(inputStream).useDelimiter("\\A");
+            String someString = s.hasNext() ? s.next() : "";
+            return someString;
+
+        } catch (IOException e) {
+            logger.warn("Downloading concepts from url failed:" + harvestSourceUri);
+        }
+            return "";
+        }
 
     private Reader resourceAsReader(final String resourceName) {
         return new InputStreamReader(getClass().getClassLoader().getResourceAsStream(resourceName), StandardCharsets.UTF_8);
