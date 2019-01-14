@@ -231,7 +231,7 @@ export class ResultsConcepts extends React.Component {
 
           <section className="col-lg-8">{this._renderTerms()}</section>
 
-          {conceptTotal > 50 && (
+          {conceptTotal > 10 && (
             <section className="col-lg-8 offset-lg-4 d-flex justify-content-center">
               <span className="uu-invisible" aria-hidden="false">
                 Sidepaginering.

@@ -202,7 +202,7 @@ export class ResultsApi extends React.Component {
           <div id="apis" className="col-12 col-lg-8">
             {renderHits(apiItems, publishers)}
 
-            {_.get(apiItems, 'total', 0) > 50 && (
+            {_.get(apiItems, 'total', 0) > 10 && (
               <div className="col-12 d-flex justify-content-center">
                 <span className="uu-invisible" aria-hidden="false">
                   Sidepaginering.
