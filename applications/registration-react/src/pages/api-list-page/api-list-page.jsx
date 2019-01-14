@@ -27,37 +27,27 @@ const alertDeleted = confirmDelete => {
   );
 };
 
-const alertHarvestSuccess = (harvestApiSuccess, harvestUrl) => {
-  if (!harvestApiSuccess) {
-    return null;
-  }
-  return (
-    <div className="row mb-5">
-      <div className="col-12">
-        <AlertMessage type="success">
-          {localization.api.register.importFromSpecPart1} {`${harvestUrl} `}
-          {localization.api.register.importFromSpecPart2}
-        </AlertMessage>
-      </div>
+const alertHarvestSuccess = harvestUrl => (
+  <div className="row mb-5">
+    <div className="col-12">
+      <AlertMessage type="success">
+        {localization.api.register.importFromSpecPart1} {`${harvestUrl} `}
+        {localization.api.register.importFromSpecPart2}
+      </AlertMessage>
     </div>
-  );
-};
+  </div>
+);
 
-const alertHarvestError = (harvestApiError, harvestUrl) => {
-  if (!harvestApiError) {
-    return null;
-  }
-  return (
-    <div className="row mb-5">
-      <div className="col-12">
-        <AlertMessage type="danger">
-          {localization.api.register.importFromSpecPart1} {`${harvestUrl} `}
-          {localization.api.register.importFromSpecPart2Error}
-        </AlertMessage>
-      </div>
+const alertHarvestError = harvestUrl => (
+  <div className="row mb-5">
+    <div className="col-12">
+      <AlertMessage type="danger">
+        {localization.api.harvest.importFromCatalogSpecPart1} {`${harvestUrl} `}
+        {localization.api.register.importFromSpecPart2Error}
+      </AlertMessage>
     </div>
-  );
-};
+  </div>
+);
 
 export const APIListPage = props => {
   const {
@@ -73,8 +63,8 @@ export const APIListPage = props => {
     showHarvestLink,
     onToggle,
     handleChangeUrl,
+    recentlyPostedHarvestUrl,
     harvestUrl,
-    harvestApiSuccess,
     harvestApiError,
     touched,
     error,
@@ -96,8 +86,18 @@ export const APIListPage = props => {
   return (
     <div className="container">
       {alertDeleted(_.get(location, ['state', 'confirmDelete'], false))}
-      {alertHarvestSuccess(harvestApiSuccess, harvestUrl)}
-      {alertHarvestError(harvestApiError, harvestUrl)}
+
+      {_.get(apiCatalogs, ['harvestStatus', 'success'], false) === true &&
+        alertHarvestSuccess(
+          _.get(apiCatalogs, 'harvestSourceUri', recentlyPostedHarvestUrl)
+        )}
+
+      {((_.get(apiCatalogs, ['harvestStatus', 'success']) === false &&
+        _.get(apiCatalogs, ['harvestStatus', 'errorMessage'])) ||
+        harvestApiError) &&
+        alertHarvestError(
+          _.get(apiCatalogs, 'harvestSourceUri', recentlyPostedHarvestUrl)
+        )}
 
       <div className="row mb-5">
         <div className="col-12">
@@ -165,7 +165,8 @@ export const APIListPage = props => {
               </React.Fragment>
             )}
         </div>
-        {touched &&
+        {!apiCatalogs &&
+          touched &&
           error && (
             <div className="col-12 mt-3">
               <div className="alert alert-danger">{error}</div>
@@ -226,20 +227,29 @@ export const APIListPage = props => {
                   </div>
                 )}
               </div>
-            </div>
-
-            <div className="row mb-2 mb-5">
-              <div className="col-12 fdk-reg-datasets-list">
-                <ListItems
-                  catalogId={catalogId}
-                  items={harvestedApiItems}
-                  itemTitleField={['openApi', 'info', 'title']}
-                  prefixPath={`/catalogs/${catalogId}/apis`}
-                  defaultEmptyListText={localization.listItems.missingApiItems}
-                />
-              </div>
+              {touched &&
+                error && (
+                  <div className="col-12 mt-3">
+                    <div className="alert alert-danger">{error}</div>
+                  </div>
+                )}
             </div>
           </React.Fragment>
+        )}
+
+      {harvestedApiItems &&
+        harvestedApiItems.length > 0 && (
+          <div className="row mb-2 mb-5">
+            <div className="col-12 fdk-reg-datasets-list">
+              <ListItems
+                catalogId={catalogId}
+                items={harvestedApiItems}
+                itemTitleField={['openApi', 'info', 'title']}
+                prefixPath={`/catalogs/${catalogId}/apis`}
+                defaultEmptyListText={localization.listItems.missingApiItems}
+              />
+            </div>
+          </div>
         )}
 
       {catalogItem &&
@@ -291,8 +301,8 @@ APIListPage.defaultProps = {
   showHarvestLink: false,
   onToggle: _.noop(),
   handleChangeUrl: _.noop(),
+  recentlyPostedHarvestUrl: null,
   harvestUrl: null,
-  harvestApiSuccess: false,
   harvestApiError: false,
   touched: false,
   error: null,
@@ -312,8 +322,8 @@ APIListPage.propTypes = {
   showHarvestLink: PropTypes.bool,
   onToggle: PropTypes.func,
   handleChangeUrl: PropTypes.func,
+  recentlyPostedHarvestUrl: PropTypes.string,
   harvestUrl: PropTypes.string,
-  harvestApiSuccess: PropTypes.bool,
   harvestApiError: PropTypes.bool,
   touched: PropTypes.bool,
   error: PropTypes.string,
@@ -322,8 +332,8 @@ APIListPage.propTypes = {
 
 const enhance = compose(
   withState('showHarvestLink', 'toggleShowHarvestLink', false),
+  withState('recentlyPostedHarvestUrl', 'setRecentlyPostedHarvestUrl', ''),
   withState('harvestUrl', 'setHarvestUrl', ''),
-  withState('harvestApiSuccess', 'setHarvestApiSuccess', false),
   withState('harvestApiError', 'setHarvestApiError', false),
   withState('touched', 'setTouched', false),
   withState('error', 'setError', ''),
