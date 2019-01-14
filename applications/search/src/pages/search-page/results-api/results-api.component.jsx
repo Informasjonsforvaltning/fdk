@@ -1,7 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ReactPaginate from 'react-paginate';
-import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
+import {
+  Button,
+  Modal,
+  ModalBody,
+  ModalFooter,
+  ModalHeader,
+  Dropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem
+} from 'reactstrap';
 import cx from 'classnames';
 import _ from 'lodash';
 
@@ -9,6 +19,7 @@ import localization from '../../../lib/localization';
 import { SearchHitItem } from './search-hit-item/search-hit-item.component';
 import { FilterBox } from '../../../components/filter-box/filter-box.component';
 import { SearchPublishersTree } from '../search-publishers-tree/search-publishers-tree.component';
+import { HITS_PER_PAGE } from '../../../constants/constants';
 
 const renderFilterModal = ({
   showFilterModal,
@@ -75,6 +86,45 @@ export class ResultsApi extends React.Component {
       this.props.onSortByScore();
       this.props.setApiSort(undefined);
     }
+
+    const urlHasHitsPerPagefieldModified =
+      window.location.href.indexOf('size=') !== -1;
+    const apiHitsPerPageValueIsModified =
+      this.props.apiHitsPerPageValue !== HITS_PER_PAGE;
+
+    if (apiHitsPerPageValueIsModified || urlHasHitsPerPagefieldModified) {
+      const href = window.location.href;
+      const isHundred = href.substr(href.indexOf('size=') + 7, 1) === '0';
+      const numberOfDigits = isHundred ? 3 : 2;
+      const hitsPerPageUrlValue = href.substr(
+        href.indexOf('size=') + 5,
+        numberOfDigits
+      );
+      this.props.setApiHitsPerPage(hitsPerPageUrlValue);
+      this.props.onSetHitsPerPage(hitsPerPageUrlValue);
+    } else {
+      this.props.onHitsPerPageByScore();
+      this.props.setApiHitsPerPage(undefined);
+    }
+
+    this.toggle = this.toggle.bind(this);
+    this.select = this.select.bind(this);
+    this.setState({
+      dropdownOpen: false
+    });
+  }
+
+  toggle() {
+    this.setState(prevState => ({
+      dropdownOpen: !prevState.dropdownOpen
+    }));
+  }
+
+  select(event) {
+    const pickedValue = event.target.innerText;
+    if (this.props.searchQuery.size !== pickedValue) {
+      this.props.onSetHitsPerPage(pickedValue);
+    }
   }
   render() {
     const {
@@ -132,6 +182,7 @@ export class ResultsApi extends React.Component {
       onSortByLastModified();
     };
 
+    const currentHitsPerPage = this.props.searchQuery.size || HITS_PER_PAGE;
     return (
       <main data-test-id="apis" id="content">
         <div className="row mb-3">
@@ -146,6 +197,41 @@ export class ResultsApi extends React.Component {
           </div>
           <div className="col-6 col-lg-4 offset-lg-4">
             <div className="d-flex justify-content-end">
+              <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
+                <DropdownToggle caret>
+                  {localization.query.show} {currentHitsPerPage}{' '}
+                  {localization.query.hitsPerPage}
+                </DropdownToggle>
+                <DropdownMenu>
+                  <DropdownItem
+                    onClick={this.select}
+                    active={
+                      this.props.searchQuery.size === 10 ||
+                      !this.props.searchQuery.size
+                    }
+                  >
+                    10
+                  </DropdownItem>
+                  <DropdownItem
+                    onClick={this.select}
+                    active={this.props.searchQuery.size === 25}
+                  >
+                    25
+                  </DropdownItem>
+                  <DropdownItem
+                    onClick={this.select}
+                    active={this.props.searchQuery.size === 50}
+                  >
+                    50
+                  </DropdownItem>
+                  <DropdownItem
+                    onClick={this.select}
+                    active={this.props.searchQuery.size === 100}
+                  >
+                    100
+                  </DropdownItem>
+                </DropdownMenu>
+              </Dropdown>
               <Button
                 className={sortByScoreClass}
                 onClick={onSortByScoreClick}

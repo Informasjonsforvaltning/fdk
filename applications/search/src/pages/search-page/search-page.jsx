@@ -63,6 +63,12 @@ export const SearchPage = props => {
     datasetSortValue,
     apiSortValue,
     conceptSortValue,
+    setDatasetHitsPerPage,
+    setApiHitsPerPage,
+    setConceptHitsPerPage,
+    datasetHitsPerPageValue,
+    apiHitsPerPageValue,
+    conceptHitsPerPageValue,
     showFilterModal,
     open,
     close
@@ -251,6 +257,10 @@ export const SearchPage = props => {
     const { setQueryFilter, history } = props;
     setQueryFilter('sortfield', 'modified', history);
   };
+  const setHitsPerPage = hitsPerPage => {
+    const { setQueryFilter, history } = props;
+    setQueryFilter('size', hitsPerPage, history);
+  };
 
   const handlePageChange = data => {
     const { selected } = data;
@@ -309,6 +319,7 @@ export const SearchPage = props => {
                 onPageChange={handlePageChange}
                 onSortByLastModified={sortByLastModified}
                 onSortByScore={sortByScore}
+                onSetHitsPerPage={setHitsPerPage}
                 searchQuery={searchQuery}
                 themesItems={themesItems}
                 showFilterModal={showFilterModal}
@@ -322,6 +333,8 @@ export const SearchPage = props => {
                 referenceData={referenceData}
                 setDatasetSort={setDatasetSort}
                 datasetSortValue={datasetSortValue}
+                setDatasetHitsPerPage={setDatasetHitsPerPage}
+                datasetHitsPerPageValue={datasetHitsPerPageValue}
                 {...props}
               />
             )}
@@ -347,6 +360,7 @@ export const SearchPage = props => {
                 onPageChange={handlePageChange}
                 onSortByLastModified={sortByLastModified}
                 onSortByScore={sortByScore}
+                onSetHitsPerPage={setHitsPerPage}
                 searchQuery={searchQuery}
                 themesItems={themesItems}
                 showFilterModal={showFilterModal}
@@ -359,6 +373,8 @@ export const SearchPage = props => {
                 publishers={publisherItems}
                 setApiSort={setApiSort}
                 apiSortValue={apiSortValue}
+                setApiHitsPerPage={setApiHitsPerPage}
+                apiHitsPerPageValue={apiHitsPerPageValue}
                 {...props}
               />
             )}
@@ -375,6 +391,7 @@ export const SearchPage = props => {
                 onPageChange={handlePageChange}
                 onSortByLastModified={sortByLastModified}
                 onSortByScore={sortByScore}
+                onSetHitsPerPage={setHitsPerPage}
                 onFilterPublisherHierarchy={
                   handleDatasetFilterPublisherHierarchy
                 }
@@ -392,6 +409,8 @@ export const SearchPage = props => {
                 removeConcept={removeConcept}
                 setConceptSort={setConceptSort}
                 conceptSortValue={conceptSortValue}
+                setConceptHitsPerPage={setConceptHitsPerPage}
+                conceptHitsPerPageValue={conceptHitsPerPageValue}
                 {...props}
               />
             )}
