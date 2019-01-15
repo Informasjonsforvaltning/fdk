@@ -13,9 +13,9 @@ public class RDFTOModelTransformerTest {
     @Test
     public void verifySanitization() throws Throwable {
         String unsanitizedPhone = "tel: +4755555555";
-        String sanitizedPhone = " +4755555555";
+        String sanitizedPhone = "+4755555555";
         String unsanitizedEmail = "mailto: somemail@somewhere.com";
-        String sanitizedEmail = " somemail@somewhere.com";
+        String sanitizedEmail = "somemail@somewhere.com";
 
         Assert.assertTrue("Sanitization was not done as expected", sanitizedEmail.equalsIgnoreCase(RDFToModelTransformer.sanitizeField(unsanitizedEmail)));
         Assert.assertTrue("Sanitization was not done as expected", sanitizedPhone.equalsIgnoreCase(RDFToModelTransformer.sanitizeField(unsanitizedPhone)));

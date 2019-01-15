@@ -233,7 +233,7 @@ public class RDFToModelTransformer {
         //Strip everything before the :
         if (incoming.indexOf(':') > 0 ) {
             int placeToStrip = incoming.indexOf(':');
-            return incoming.substring(placeToStrip+1);
+            return incoming.substring(placeToStrip+1).trim();
         }
         return incoming;
     }
