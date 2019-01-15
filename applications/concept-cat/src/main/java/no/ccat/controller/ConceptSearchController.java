@@ -64,6 +64,14 @@ public class ConceptSearchController {
         @RequestParam(value = "preflabel", defaultValue = "", required = false)
             String prefLabel,
 
+        @ApiParam("Returns datatasets from position x in the result set, 0 is the default value. A value of 150 will return the 150th dataset in the resultset")
+        @RequestParam(value = "from", defaultValue = "0", required = false)
+            int from,
+
+        @ApiParam("Specifies the size, i.e. the number of datasets to return in one request. The default is 10, the maximum number of datasets returned is 100")
+        @RequestParam(value = "size", defaultValue = "10", required = false)
+            int size,
+
         @ApiParam("Comma separated list of which fields should be returned. E.g id,")
         @RequestParam(value = "returnfields", defaultValue = "", required = false)
             String returnFields,
@@ -107,7 +115,7 @@ public class ConceptSearchController {
         NativeSearchQuery finalQuery = new NativeSearchQueryBuilder()
             .withQuery(composedQuery)
             .withIndices("ccat").withTypes("concept")
-            .withPageable(pageable)
+            .withPageable(new PageRequest(from, size))
             .build();
 
         if ("true".equals(includeAggregations)) {
@@ -199,6 +207,3 @@ public class ConceptSearchController {
         }
     }
 }
-
-
-
