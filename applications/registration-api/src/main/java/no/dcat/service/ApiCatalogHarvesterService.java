@@ -117,7 +117,7 @@ public class ApiCatalogHarvesterService {
                 apiRegistration.setFromApiCatalog(true);
 
                 try {
-                    OpenAPI openAPI = apiCat.convert(apiSpecUrl, "");//empty string is api-spec, unknown what this is.
+                    OpenAPI openAPI = apiCat.convertSpecUrlToOpenApi(apiSpecUrl);
                     apiRegistration.setOpenApi(openAPI);
                 } catch (Exception e) {
                     String errorMessage = "Failed while trying to fetch and parse API spec " + apiSpecUrl + " " + e.toString();

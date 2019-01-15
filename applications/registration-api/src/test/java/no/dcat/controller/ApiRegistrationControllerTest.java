@@ -60,7 +60,7 @@ public class ApiRegistrationControllerTest {
             new Gson().fromJson(IOUtils.toString(apiResource.getInputStream(), "UTF-8"), OpenAPI.class);
 
         when(catalogRepository.findById(anyString())).thenReturn(Optional.of(catalog));
-        when(apiCatMock.convert(apiResource.getURL().toString(), null)).thenReturn(openApi);
+        when(apiCatMock.convertSpecUrlToOpenApi(apiResource.getURL().toString())).thenReturn(openApi);
 
         ApiRegistration apiRegData = mock(ApiRegistration.class);
         when(apiRegData.getId()).thenReturn("id");
