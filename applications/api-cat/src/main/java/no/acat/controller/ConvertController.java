@@ -15,6 +15,7 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
+@RequestMapping(value = "/apis")
 public class ConvertController {
     private ParserService parserService;
 

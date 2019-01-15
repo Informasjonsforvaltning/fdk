@@ -1,16 +1,18 @@
 package no.dcat.service;
 
 import no.dcat.client.apicat.ApiCatClient;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
 
 @Service
-public class ApiCatService {
-    @Value("${application.apiCatUrl}")
-    private String apiCatUrl;
+public class ApiCatService extends ApiCatClient {
+    @Autowired
+    private Environment env;
 
-    public ApiCatClient getClient() {
-        return new ApiCatClient(this.apiCatUrl);
+    @Override
+    public String getApiRootUrl(){
+        return env.getProperty("application.apiRootUrl");
     }
 }

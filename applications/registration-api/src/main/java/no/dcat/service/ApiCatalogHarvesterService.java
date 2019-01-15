@@ -45,7 +45,7 @@ public class ApiCatalogHarvesterService {
 
     private ApiRegistrationRepository apiRegistrationRepository;
 
-    private ApiCatClient apiCatClient;
+    private ApiCatClient apiCat;
 
     private HarvestQueue harvestQueue;
 
@@ -54,7 +54,7 @@ public class ApiCatalogHarvesterService {
         this.apiRegistrationRepository = apiRegistrationRepository;
         this.apiCatalogRepository = apiCatalogRepository;
         this.harvestQueue = harvestQueue;
-        this.apiCatClient = apiCatService.getClient();
+        this.apiCat = apiCatService;
     }
 
     //TODO: Also trigger this every 24h ? (there exists a spring thing to do that)
@@ -117,7 +117,7 @@ public class ApiCatalogHarvesterService {
                 apiRegistration.setFromApiCatalog(true);
 
                 try {
-                    OpenAPI openAPI = apiCatClient.convert(apiSpecUrl, "");//empty string is api-spec, unknown what this is.
+                    OpenAPI openAPI = apiCat.convert(apiSpecUrl, "");//empty string is api-spec, unknown what this is.
                     apiRegistration.setOpenApi(openAPI);
                 } catch (Exception e) {
                     String errorMessage = "Failed while trying to fetch and parse API spec " + apiSpecUrl + " " + e.toString();
@@ -125,7 +125,7 @@ public class ApiCatalogHarvesterService {
                 }
 
                 ApiRegistration savedApiRegistration = apiRegistrationRepository.save(apiRegistration);
-                apiCatClient.triggerHarvestApiRegistration(savedApiRegistration.getId());
+                apiCat.triggerHarvestApiRegistration(savedApiRegistration.getId());
             }
 
             originCatalog.setHarvestStatus(HarvestStatus.Success());
