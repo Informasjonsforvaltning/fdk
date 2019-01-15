@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import io.swagger.v3.oas.models.OpenAPI;
 import lombok.Data;
 import lombok.ToString;
+import no.fdk.acat.common.model.apispecification.ApiSpecification;
 
 import java.util.List;
 
@@ -35,6 +36,8 @@ public class ApiRegistrationPublic {
 
     @ApiModelProperty("Spec converted to openAPI v3")
     private OpenAPI openApi;
+
+    private ApiSpecification apiSpecification;
 
     private String cost;
 

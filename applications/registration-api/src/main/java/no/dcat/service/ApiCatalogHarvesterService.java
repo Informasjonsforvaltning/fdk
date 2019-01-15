@@ -6,6 +6,7 @@ import no.dcat.model.ApiRegistrationFactory;
 import no.dcat.model.ApiCatalog;
 import no.dcat.model.ApiRegistration;
 import no.dcat.model.HarvestStatus;
+import no.fdk.acat.common.model.apispecification.ApiSpecification;
 import no.fdk.harvestqueue.HarvestQueue;
 import no.fdk.harvestqueue.QueuedTask;
 import org.apache.commons.io.input.BOMInputStream;
@@ -118,7 +119,9 @@ public class ApiCatalogHarvesterService {
 
                 try {
                     OpenAPI openAPI = apiCat.convertSpecUrlToOpenApi(apiSpecUrl);
+                    ApiSpecification apiSpecification = apiCat.convertSpecUrlToApiSpecification(apiSpecUrl);
                     apiRegistration.setOpenApi(openAPI);
+                    apiRegistration.setApiSpecification(apiSpecification);
                 } catch (Exception e) {
                     String errorMessage = "Failed while trying to fetch and parse API spec " + apiSpecUrl + " " + e.toString();
                     apiRegistration.setHarvestStatus(HarvestStatus.Error(errorMessage));

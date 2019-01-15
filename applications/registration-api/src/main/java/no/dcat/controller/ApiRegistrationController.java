@@ -13,6 +13,7 @@ import no.dcat.service.CatalogRepository;
 import no.dcat.webutils.exceptions.BadRequestException;
 import no.dcat.webutils.exceptions.NotFoundException;
 import no.fdk.acat.bindings.ApiCatBindings;
+import no.fdk.acat.common.model.apispecification.ApiSpecification;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -136,12 +137,16 @@ public class ApiRegistrationController {
             String apiSpec = apiRegistrationData.getApiSpec();
 
             OpenAPI openAPI = null;
+            ApiSpecification apiSpecification = null;
             if (!StringUtils.isEmpty(apiSpecUrl)) {
                 openAPI = apiCat.convertSpecUrlToOpenApi(apiSpecUrl);
+                apiSpecification = apiCat.convertSpecUrlToApiSpecification(apiSpecUrl);
             } else if (!StringUtils.isEmpty(apiSpec)) {
                 openAPI = apiCat.convertSpecToOpenApi(apiSpec);
+                apiSpecification = apiCat.convertSpecToApiSpecification(apiSpec);
             }
             apiRegistrationData.setOpenApi(openAPI);
+            apiRegistrationData.setApiSpecification(apiSpecification);
         } catch (Exception e) {
             throw new BadRequestException(e.getMessage());
         }
