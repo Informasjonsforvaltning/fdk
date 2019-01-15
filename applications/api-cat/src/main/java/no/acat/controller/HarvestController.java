@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin
 @RestController
-@RequestMapping(value = "/trigger/harvest")
+@RequestMapping(value = "/apis/trigger/harvest")
 public class HarvestController {
 
     private static final Logger logger = LoggerFactory.getLogger(HarvestController.class);
@@ -22,12 +22,6 @@ public class HarvestController {
     @Autowired
     public HarvestController(HarvestQueue harvestQueue) {
         this.harvestQueue = harvestQueue;
-    }
-
-    @RequestMapping(value = "/all", method = RequestMethod.POST, produces = "application/json")
-    public void triggerHarvestAll() {
-        logger.info("Trigger harvestAll");
-        this.harvestQueue.addTask(HarvestExecutor.HARVEST_ALL);
     }
 
     @RequestMapping(value = "/apiregistration/{apiRegistrationId}", method = RequestMethod.POST, produces = "application/json")

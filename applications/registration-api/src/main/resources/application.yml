@@ -6,7 +6,6 @@ logging:
   level.org.springframework.data.elasticsearch.core: ${LOG_LEVEL:INFO}
   level.org.opensaml: INFO
 application:
-  apiCatUrl: http://api-cat:8080
   themesServiceUrl: http://reference-data:8080
   catalogUriPrefix: http://localhost:8099
   apikey: ${registrationApi_apikey:12345-ABCDE-67890-FGHIJ}
@@ -137,7 +136,6 @@ server:
 application:
   harvesterUrl: http://localhost:8082
   altinnServiceUrl: http://localhost:8077
-  apiCatUrl: http://localhost:8087
   apiRootUrl: http://localhost:8080/api
 
 ---

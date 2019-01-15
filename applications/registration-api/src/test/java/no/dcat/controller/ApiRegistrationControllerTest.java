@@ -47,10 +47,7 @@ public class ApiRegistrationControllerTest {
     private ApiRegistrationRepository apiRegistrationRepository;
 
     @Mock
-    private ApiCatService apiCatService;
-
-    @Mock
-    private ApiCatClient apiCatClient;
+    private ApiCatService apiCatMock;
 
     @Before
     public void setup() throws IOException {
@@ -63,15 +60,14 @@ public class ApiRegistrationControllerTest {
             new Gson().fromJson(IOUtils.toString(apiResource.getInputStream(), "UTF-8"), OpenAPI.class);
 
         when(catalogRepository.findById(anyString())).thenReturn(Optional.of(catalog));
-        when(apiCatService.getClient()).thenReturn(apiCatClient);
-        when(apiCatClient.convert(apiResource.getURL().toString(), null)).thenReturn(openApi);
+        when(apiCatMock.convert(apiResource.getURL().toString(), null)).thenReturn(openApi);
 
         ApiRegistration apiRegData = mock(ApiRegistration.class);
         when(apiRegData.getId()).thenReturn("id");
         when(apiRegistrationRepository.save(anyObject())).thenReturn(apiRegData);
 
         apiRegistrationController =
-            new ApiRegistrationController(apiRegistrationRepository, catalogRepository, apiCatService);
+            new ApiRegistrationController(apiRegistrationRepository, catalogRepository, apiCatMock);
     }
 
     @Test
@@ -138,6 +134,6 @@ public class ApiRegistrationControllerTest {
         doNothing().when(apiRegistrationRepository).delete(apiRegistration);
 
         verify(apiRegistrationRepository, times(1)).delete(apiRegistration);
-        verify(apiCatClient, times(1)).triggerHarvestApiRegistration(id);
+        verify(apiCatMock, times(1)).triggerHarvestApiRegistration(id);
     }
 }

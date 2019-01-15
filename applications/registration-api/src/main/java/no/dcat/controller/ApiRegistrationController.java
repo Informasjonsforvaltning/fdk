@@ -42,7 +42,7 @@ public class ApiRegistrationController {
 
     private ApiRegistrationRepository apiRegistrationRepository;
     private CatalogRepository catalogRepository;
-    private ApiCatClient apiCatClient;
+    private ApiCatClient apiCat;
 
     @Autowired
     public ApiRegistrationController(
@@ -52,7 +52,7 @@ public class ApiRegistrationController {
     ) {
         this.apiRegistrationRepository = apiRegistrationRepository;
         this.catalogRepository = catalogRepository;
-        this.apiCatClient = apiCatService.getClient();
+        this.apiCat = apiCatService;
     }
 
     /**
@@ -133,7 +133,7 @@ public class ApiRegistrationController {
         try {
             String apiSpecUrl = apiRegistrationData.getApiSpecUrl();
             String apiSpec = apiRegistrationData.getApiSpec();
-            OpenAPI openAPI = apiCatClient.convert(apiSpecUrl, apiSpec);
+            OpenAPI openAPI = apiCat.convert(apiSpecUrl, apiSpec);
             apiRegistrationData.setOpenApi(openAPI);
         } catch (Exception e) {
             throw new BadRequestException(e.getMessage());
@@ -145,7 +145,7 @@ public class ApiRegistrationController {
 
         ApiRegistration savedApiRegistration = apiRegistrationRepository.save(apiRegistration);
 
-        apiCatClient.triggerHarvestApiRegistration(savedApiRegistration.getId());
+        apiCat.triggerHarvestApiRegistration(savedApiRegistration.getId());
 
         return savedApiRegistration;
     }
@@ -186,7 +186,7 @@ public class ApiRegistrationController {
 
         apiRegistrationRepository.delete(apiRegistration);
 
-        apiCatClient.triggerHarvestApiRegistration(id);
+        apiCat.triggerHarvestApiRegistration(id);
     }
 
     /**
@@ -239,7 +239,7 @@ public class ApiRegistrationController {
 
         ApiRegistration savedApiRegistration = apiRegistrationRepository.save(newApiRegistration);
 
-        apiCatClient.triggerHarvestApiRegistration(id);
+        apiCat.triggerHarvestApiRegistration(id);
 
         return savedApiRegistration;
     }
