@@ -17,16 +17,26 @@ function shouldFetch(metaState) {
   );
 }
 
-export function fetchApisIfNeededAction(catalogId) {
-  return (dispatch, getState) =>
-    shouldFetch(_.get(getState(), ['apis', catalogId, 'meta'])) &&
+export function fetchApisIfNeededAction(catalogId, force) {
+  return (dispatch, getState) => {
+    if (
+      !force &&
+      !shouldFetch(
+        _.get(getState(), ['apis', catalogId, 'meta']),
+        _.get(getState(), ['apiCatalog', catalogId, 'item'])
+      )
+    ) {
+      return;
+    }
+
     dispatch(
       fetchActions(`/catalogs/${catalogId}/apis?size=1000`, [
-        { type: APIS_REQUEST, meta: { catalogId } },
-        { type: APIS_SUCCESS, meta: { catalogId } },
-        { type: APIS_FAILURE, meta: { catalogId } }
+        { type: APIS_REQUEST, meta: { catalogId, force } },
+        { type: APIS_SUCCESS, meta: { catalogId, force } },
+        { type: APIS_FAILURE, meta: { catalogId, force } }
       ])
     );
+  };
 }
 
 export const addApiItemAction = payload => ({
