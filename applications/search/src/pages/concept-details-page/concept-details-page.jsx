@@ -126,24 +126,31 @@ const renderIdentifiers = id => {
 };
 
 const renderContactPoint = contactPoint => {
-  const { email, telephone } = contactPoint;
-
-  if (!(email || telephone)) {
+  if (!(_.get(contactPoint, 'email') || _.get(contactPoint, 'telephone'))) {
     return null;
   }
   return (
     <ListRegular title={localization.contactInfo}>
-      {email && (
+      {_.get(contactPoint, 'email') && (
         <TwoColRow
           col1={localization.email}
           col2={
-            <a title={email} href={`mailto:${email}`} rel="noopener noreferrer">
-              {email}
+            <a
+              title={_.get(contactPoint, 'email')}
+              href={`mailto:${_.get(contactPoint, 'email')}`}
+              rel="noopener noreferrer"
+            >
+              {_.get(contactPoint, 'email')}
             </a>
           }
         />
       )}
-      {telephone && <TwoColRow col1={localization.phone} col2={telephone} />}
+      {_.get(contactPoint, 'telephone') && (
+        <TwoColRow
+          col1={localization.phone}
+          col2={_.get(contactPoint, 'telephone')}
+        />
+      )}
     </ListRegular>
   );
 };
