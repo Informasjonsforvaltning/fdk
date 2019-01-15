@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import no.fdk.acat.common.model.apispecification.ApiSpecification;
 import org.springframework.http.HttpEntity;
 import org.springframework.web.client.RestTemplate;
 
@@ -40,7 +41,7 @@ public class ApiCatBindings {
         restTemplate.exchange(getApisApiRootUrl() + "/trigger/harvest/apiregistration/" + apiRegistrationId, POST, null, Void.class);
     }
 
-    private OpenAPI convert(String url, String spec) {
+    private ConvertResponse convert(String url, String spec) {
         RestTemplate restTemplate = new RestTemplate();
 
         ConvertRequest request = ConvertRequest.builder()
@@ -52,22 +53,45 @@ public class ApiCatBindings {
 
         ConvertResponse convertResponse = restTemplate.exchange(getApisApiRootUrl() + "/convert", POST, requestEntity, ConvertResponse.class).getBody();
 
+        return convertResponse;
+    }
+
+    private OpenAPI convertToOpenApi(String url, String spec) {
+        ConvertResponse convertResponse = convert(url, spec);
         OpenAPI openAPI = convertResponse.openApi;
 
         if (openAPI == null) {
             throw new Error("Conversion error: " + getMessage(convertResponse));
         }
-
         return openAPI;
     }
 
     public OpenAPI convertSpecToOpenApi(String spec) {
-        return convert("", spec);
+        return convertToOpenApi("", spec);
     }
 
     public OpenAPI convertSpecUrlToOpenApi(String url) {
-        return convert(url, "");
+        return convertToOpenApi(url, "");
     }
+
+    private ApiSpecification convertToApiSpecification(String url, String spec) {
+        ConvertResponse convertResponse = convert(url, spec);
+        ApiSpecification apiSpecification = convertResponse.apiSpecification;
+
+        if (apiSpecification == null) {
+            throw new Error("Conversion error: " + getMessage(convertResponse));
+        }
+        return apiSpecification;
+    }
+
+    public ApiSpecification convertSpecToApiSpecification(String spec) {
+        return convertToApiSpecification("", spec);
+    }
+
+    public ApiSpecification convertSpecUrlToApiSpecification(String url) {
+        return convertToApiSpecification(url, "");
+    }
+
 
 }
 

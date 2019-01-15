@@ -7,6 +7,8 @@ import no.acat.spec.ParseException;
 import no.fdk.acat.bindings.ConvertRequest;
 import no.fdk.acat.bindings.ConvertResponse;
 import no.dcat.webutils.exceptions.BadRequestException;
+import no.fdk.acat.common.model.apispecification.ApiSpecification;
+import no.fdk.acat.converters.apispecificationparser.UniversalParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -48,6 +50,13 @@ public class ConvertController {
             OpenAPI openAPI = parserService.parse(spec);
             responseBody.setOpenApi(openAPI);
         } catch (ParseException e) {
+            messages.add(e.getMessage());
+        }
+
+        try {
+            ApiSpecification apiSpecification = new UniversalParser().parse(spec);
+            responseBody.setApiSpecification(apiSpecification);
+        } catch (no.fdk.acat.converters.apispecificationparser.ParseException e) {
             messages.add(e.getMessage());
         }
 
