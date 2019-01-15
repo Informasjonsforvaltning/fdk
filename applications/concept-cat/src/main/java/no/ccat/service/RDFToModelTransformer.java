@@ -216,7 +216,7 @@ public class RDFToModelTransformer {
             contactPoint.setTelephone(sanitizeField(phoneStatement.getObject().toString()));
 
             Statement emailStatement = contactPointResource.getProperty(VCARD4.hasEmail);
-            contactPoint.setEmail(emailStatement.getObject().toString());
+            contactPoint.setEmail(sanitizeField(emailStatement.getObject().toString()));
 
         } catch (Exception e) {
             logger.warn("Error when extracting property {} from resource {}", DCAT.contactPoint, resource.getURI(), e);
