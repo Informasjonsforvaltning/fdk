@@ -155,10 +155,7 @@
     }
   }
 }
-.first-page > .previous {
-  display: none;
-}
-.last-page > .next {
+.disabled.previous, .disabled.next {
   display: none;
 }
 

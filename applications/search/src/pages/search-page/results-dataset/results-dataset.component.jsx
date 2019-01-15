@@ -260,11 +260,7 @@ export class ResultsDataset extends React.Component {
                 nextLabel={localization.page.next}
                 breakLabel={<span>...</span>}
                 breakClassName="break-me"
-                containerClassName={`pagination ${
-                  pageCount < hitsPerPage ? 'hidden' : ''
-                }${page === 0 ? 'first-page' : ''}${
-                  page + 1 === pageCount ? 'last-page' : ''
-                }`}
+                containerClassName="pagination"
                 onPageChange={onPageChange}
                 subContainerClassName="pages pagination"
                 activeClassName="active"
