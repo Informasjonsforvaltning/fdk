@@ -1,7 +1,7 @@
 package no.dcat.service;
 
 import io.swagger.v3.oas.models.OpenAPI;
-import no.dcat.client.apicat.ApiCatClient;
+import no.fdk.acat.bindings.ApiCatBindings;
 import no.dcat.model.ApiRegistrationFactory;
 import no.dcat.model.ApiCatalog;
 import no.dcat.model.ApiRegistration;
@@ -45,7 +45,7 @@ public class ApiCatalogHarvesterService {
 
     private ApiRegistrationRepository apiRegistrationRepository;
 
-    private ApiCatClient apiCat;
+    private ApiCatBindings apiCat;
 
     private HarvestQueue harvestQueue;
 

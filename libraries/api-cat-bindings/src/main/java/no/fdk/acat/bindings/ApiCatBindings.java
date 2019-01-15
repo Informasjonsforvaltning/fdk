@@ -1,4 +1,4 @@
-package no.dcat.client.apicat;
+package no.fdk.acat.bindings;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import lombok.AllArgsConstructor;
@@ -14,16 +14,12 @@ import static org.springframework.http.HttpMethod.POST;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ApiCatClient {
+public class ApiCatBindings {
     private String apiRootUrl;
 
-    private String getApisApiRootUrl(){
-        return getApiRootUrl()+"/apis";
-    }
-
-    static String getMessage(ConvertResponse response) {
+    private static String getMessage(ConvertResponse response) {
         if (response.getMessages() != null) {
-            if (response.getMessages().size() == 1) {
+            if (response.getMessages().size() > 0) {
                 return response.getMessages().get(0);
             } else {
                 return response.getMessages().toString();
@@ -32,6 +28,10 @@ public class ApiCatClient {
             return "Unknown error";
         }
 
+    }
+
+    private String getApisApiRootUrl() {
+        return getApiRootUrl() + "/apis";
     }
 
     public void triggerHarvestApiRegistration(String apiRegistrationId) {

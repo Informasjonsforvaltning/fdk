@@ -4,15 +4,15 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import io.swagger.v3.oas.models.OpenAPI;
-import no.dcat.client.apicat.ApiCatClient;
-import no.dcat.model.ApiRegistrationFactory;
 import no.dcat.model.ApiRegistration;
+import no.dcat.model.ApiRegistrationFactory;
 import no.dcat.model.Catalog;
 import no.dcat.service.ApiCatService;
 import no.dcat.service.ApiRegistrationRepository;
 import no.dcat.service.CatalogRepository;
 import no.dcat.webutils.exceptions.BadRequestException;
 import no.dcat.webutils.exceptions.NotFoundException;
+import no.fdk.acat.bindings.ApiCatBindings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +42,7 @@ public class ApiRegistrationController {
 
     private ApiRegistrationRepository apiRegistrationRepository;
     private CatalogRepository catalogRepository;
-    private ApiCatClient apiCat;
+    private ApiCatBindings apiCat;
 
     @Autowired
     public ApiRegistrationController(
