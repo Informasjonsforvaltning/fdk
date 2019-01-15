@@ -155,6 +155,9 @@
     }
   }
 }
+.disabled.previous, .disabled.next {
+  display: none;
+}
 
 /*==========  Media Queries  ==========*/
 /* Custom, iPhone Retina */
