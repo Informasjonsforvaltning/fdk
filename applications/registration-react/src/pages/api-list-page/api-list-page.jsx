@@ -9,24 +9,7 @@ import localization from '../../utils/localization';
 import ListItems from '../../components/list-items/list-items.component';
 import getTranslateText from '../../utils/translateText';
 import { validateURL } from '../../validation/validation';
-import { postApiCatalogLink } from '../../api/post-apiCatalog-link';
 import { AlertMessage } from '../../components/alert-message/alert-message.component';
-
-const harvestApiSpec = props => {
-  const { harvestUrl, match } = props;
-  const catalogId = _.get(match, ['params', 'catalogId']);
-
-  postApiCatalogLink(catalogId, harvestUrl)
-    .then(() => {
-      props.setHarvestApiSuccess(true);
-    })
-    .catch(error => {
-      if (process.env.NODE_ENV !== 'production') {
-        console.log('error', error); // eslint-disable-line no-console
-      }
-      props.setHarvestApiError(true);
-    });
-};
 
 const alertDeleted = confirmDelete => {
   if (!confirmDelete) {
@@ -84,6 +67,8 @@ export const APIListPage = props => {
     harvestedApiItems,
     fetchCatalogIfNeeded,
     fetchApisIfNeeded,
+    fetchApiCatalogIfNeeded,
+    postApiCatalogAction,
     match,
     showHarvestLink,
     onToggle,
@@ -96,10 +81,16 @@ export const APIListPage = props => {
     location
   } = props;
 
+  const setApiCatalogUrl = () => {
+    const catalogId = _.get(match, ['params', 'catalogId']);
+    postApiCatalogAction(catalogId, { harvestSourceUri: harvestUrl });
+  };
+
   const catalogId = _.get(match, ['params', 'catalogId']);
   if (catalogId) {
     fetchCatalogIfNeeded(catalogId);
     fetchApisIfNeeded(catalogId);
+    fetchApiCatalogIfNeeded(catalogId);
   }
 
   return (
@@ -161,7 +152,7 @@ export const APIListPage = props => {
                   className="ml-3 btn btn-primary fdk-button"
                   color="primary"
                   disabled={!touched || !!error || harvestUrl === ''}
-                  onClick={() => harvestApiSpec(props)}
+                  onClick={() => setApiCatalogUrl()}
                 >
                   {localization.api.harvest.harvestAction}
                 </Button>
@@ -222,7 +213,7 @@ export const APIListPage = props => {
                       className="ml-3 btn btn-primary fdk-button"
                       color="primary"
                       disabled={!touched || !!error || harvestUrl === ''}
-                      onClick={() => harvestApiSpec(props)}
+                      onClick={() => setApiCatalogUrl()}
                     >
                       {localization.api.harvest.harvestAction}
                     </Button>
@@ -292,6 +283,8 @@ APIListPage.defaultProps = {
   catalogItem: null,
   fetchCatalogIfNeeded: _.noop(),
   fetchApisIfNeeded: _.noop(),
+  fetchApiCatalogIfNeeded: _.noop(),
+  postApiCatalogAction: _.noop(),
   match: null,
   registeredApiItems: null,
   harvestedApiItems: null,
@@ -313,6 +306,8 @@ APIListPage.propTypes = {
   harvestedApiItems: PropTypes.array,
   fetchCatalogIfNeeded: PropTypes.func,
   fetchApisIfNeeded: PropTypes.func,
+  fetchApiCatalogIfNeeded: PropTypes.func,
+  postApiCatalogAction: _.noop(),
   match: PropTypes.object,
   showHarvestLink: PropTypes.bool,
   onToggle: PropTypes.func,

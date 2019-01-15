@@ -5,12 +5,12 @@ import { APIListPage } from './api-list-page';
 
 let defaultProps;
 let wrapper;
-let fetchCatalogIfNeeded;
-let fetchApisIfNeeded;
 
 beforeEach(() => {
-  fetchCatalogIfNeeded = jest.fn();
-  fetchApisIfNeeded = jest.fn();
+  const fetchCatalogIfNeeded = jest.fn();
+  const fetchApisIfNeeded = jest.fn();
+  const fetchApiCatalogIfNeeded = jest.fn();
+
   const catalogItem = {
     id: '910244132',
     uri: 'http://brreg.no/catalogs/910244132',
@@ -31,9 +31,10 @@ beforeEach(() => {
   };
   defaultProps = {
     catalogItem,
+    match,
     fetchCatalogIfNeeded,
     fetchApisIfNeeded,
-    match
+    fetchApiCatalogIfNeeded
   };
   wrapper = shallow(<APIListPage {...defaultProps} />);
 });
