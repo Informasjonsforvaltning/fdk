@@ -40,7 +40,7 @@ public class ApiCatBindings {
         restTemplate.exchange(getApisApiRootUrl() + "/trigger/harvest/apiregistration/" + apiRegistrationId, POST, null, Void.class);
     }
 
-    public OpenAPI convert(String url, String spec) {
+    private OpenAPI convert(String url, String spec) {
         RestTemplate restTemplate = new RestTemplate();
 
         ConvertRequest request = ConvertRequest.builder()
@@ -60,5 +60,14 @@ public class ApiCatBindings {
 
         return openAPI;
     }
+
+    public OpenAPI convertSpecToOpenApi(String spec) {
+        return convert("", spec);
+    }
+
+    public OpenAPI convertSpecUrlToOpenApi(String url) {
+        return convert(url, "");
+    }
+
 }
 
