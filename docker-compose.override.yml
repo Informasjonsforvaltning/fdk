@@ -32,6 +32,15 @@ services:
     - JAVA_OPTS=-Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
     - LOG_LEVEL=${LOG_LEVEL}
 
+  informationmodel-cat:
+    restart: always
+    ports:
+    - "8089:8080"
+    environment:
+    - JAVA_OPTS=-Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
+    - LOG_LEVEL=${LOG_LEVEL}
+
+
   search-api:
     restart: always
     ports:
