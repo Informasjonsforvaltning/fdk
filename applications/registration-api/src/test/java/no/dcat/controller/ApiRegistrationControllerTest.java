@@ -2,7 +2,7 @@ package no.dcat.controller;
 
 import com.google.gson.Gson;
 import io.swagger.v3.oas.models.OpenAPI;
-import no.dcat.client.apicat.ApiCatClient;
+import no.fdk.acat.bindings.ApiCatBindings;
 import no.dcat.model.ApiRegistration;
 import no.dcat.model.Catalog;
 import no.dcat.service.ApiCatService;

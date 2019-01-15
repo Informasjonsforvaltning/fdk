@@ -13,7 +13,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>no.dcat</groupId>
-    <artifactId>api-cat-client</artifactId>
+    <artifactId>api-cat-bindings</artifactId>
     <version>1.1.0</version>
 
     <dependencies>

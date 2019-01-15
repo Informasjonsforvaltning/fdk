@@ -1,4 +1,4 @@
-package no.dcat.client.apicat;
+package no.fdk.acat.bindings;
 
 
 import lombok.Builder;

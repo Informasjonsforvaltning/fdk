@@ -18,7 +18,7 @@
         <module>html-cleaner</module>
         <module>referencedata-client</module>
         <module>webutils-spring</module>
-        <module>api-cat-client</module>
+        <module>api-cat-bindings</module>
         <module>publisher-cat-client</module>
         <module>registration-api-client</module>
         <module>concept-cat-common</module>

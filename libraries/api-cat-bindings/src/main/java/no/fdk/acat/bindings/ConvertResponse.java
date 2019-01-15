@@ -1,4 +1,4 @@
-package no.dcat.client.apicat;
+package no.fdk.acat.bindings;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import lombok.Data;
