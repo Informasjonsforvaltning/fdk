@@ -213,7 +213,7 @@ public class RDFToModelTransformer {
             Resource contactPointResource = propertyStmnt.getObject().asResource();
 
             Statement phoneStatement = contactPointResource.getProperty(VCARD4.hasTelephone);
-            contactPoint.setTelephone(phoneStatement.getObject().toString());
+            contactPoint.setTelephone(sanitizeField(phoneStatement.getObject().toString()));
 
             Statement emailStatement = contactPointResource.getProperty(VCARD4.hasEmail);
             contactPoint.setEmail(emailStatement.getObject().toString());
@@ -223,6 +223,19 @@ public class RDFToModelTransformer {
         }
 
         return contactPoint;
+    }
+
+    protected static String sanitizeField(String incoming) {
+        if (incoming == null || "".equals(incoming)) {
+            return incoming;
+        }
+
+        //Strip everything before the :
+        if (incoming.indexOf(':') > 0 ) {
+            int placeToStrip = incoming.indexOf(':');
+            return incoming.substring(placeToStrip+1).trim();
+        }
+        return incoming;
     }
 
     private String buildLocalUri(String id) {
