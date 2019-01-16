@@ -1,0 +1,128 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render InformationModelDetailsPage correctly with informationModelItem 1`] = `
+<main
+  className="container"
+  id="content"
+>
+  <article>
+    <div
+      className="row"
+    >
+      <div
+        className="col-12 col-lg-8 offset-lg-4"
+      >
+        <SideEffect(DocumentMeta)
+          description={null}
+          title="Enhetsregisteret"
+        />
+        <HarvestDate
+          harvest={
+            Object {
+              "firstHarvested": "2019-01-14T06:40:56.173Z",
+              "lastHarvested": "2019-01-14T06:40:56.173Z",
+            }
+          }
+        />
+        <SearchHitHeader
+          nationalComponent={false}
+          publisher={
+            Object {
+              "id": "970018131",
+              "name": "UTDANNINGSDIREKTORATET",
+              "orgPath": "/STAT/872417842/970018131",
+              "prefLabel": Object {
+                "no": "Utdanningsdirektoratet",
+              },
+              "uri": "http://data.brreg.no/enhetsregisteret/enhet/970018131",
+            }
+          }
+          publisherItems={null}
+          publisherLabel="Provider:"
+          publisherTag="span"
+          tag="h1"
+          theme={null}
+          title="Enhetsregisteret"
+          titleLink={null}
+        />
+      </div>
+    </div>
+    <div
+      className="row"
+    >
+      <div
+        className="col-12 col-lg-4 "
+      >
+        <StickyMenu
+          menuItems={
+            Array [
+              Object {
+                "name": "Information models",
+                "prefLabel": "Information models",
+              },
+              Object {
+                "name": "Belongs to API",
+                "prefLabel": "Belongs to API",
+              },
+            ]
+          }
+        />
+      </div>
+      <section
+        className="col-12 col-lg-8 mt-3"
+      >
+        <ListRegular
+          bottomMargin={true}
+          title="Information models"
+        >
+          <div
+            className="d-flex list-regular--item"
+          />
+          <Tabs
+            tabContent={null}
+          />
+        </ListRegular>
+        <ListRegular
+          bottomMargin={true}
+          title="Belongs to API"
+        >
+          <div
+            className="list-regular--item"
+          >
+            <SearchHitHeader
+              nationalComponent={false}
+              publisher={
+                Object {
+                  "id": "970018131",
+                  "name": "UTDANNINGSDIREKTORATET",
+                  "orgPath": "/STAT/872417842/970018131",
+                  "prefLabel": Object {
+                    "no": "Utdanningsdirektoratet",
+                  },
+                  "uri": "http://data.brreg.no/enhetsregisteret/enhet/970018131",
+                }
+              }
+              publisherItems={null}
+              publisherLabel="Provider:"
+              publisherTag="span"
+              tag="h4"
+              theme={null}
+              title="Enhetsregisteret"
+              titleLink="/apis/eadda99c-781e-4900-8f54-8dd298168382"
+            />
+          </div>
+        </ListRegular>
+        <div
+          style={
+            Object {
+              "height": "75vh",
+            }
+          }
+        />
+      </section>
+    </div>
+  </article>
+</main>
+`;
+
+exports[`should render InformationModelDetailsPage correctly with no informationModelItem 1`] = `""`;
