@@ -3,7 +3,6 @@ package no.dcat.controller;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import io.swagger.v3.oas.models.OpenAPI;
 import no.dcat.model.ApiRegistration;
 import no.dcat.model.ApiRegistrationFactory;
 import no.dcat.model.Catalog;
@@ -136,16 +135,12 @@ public class ApiRegistrationController {
             String apiSpecUrl = apiRegistrationData.getApiSpecUrl();
             String apiSpec = apiRegistrationData.getApiSpec();
 
-            OpenAPI openAPI = null;
             ApiSpecification apiSpecification = null;
             if (!StringUtils.isEmpty(apiSpecUrl)) {
-                openAPI = apiCat.convertSpecUrlToOpenApi(apiSpecUrl);
                 apiSpecification = apiCat.convertSpecUrlToApiSpecification(apiSpecUrl);
             } else if (!StringUtils.isEmpty(apiSpec)) {
-                openAPI = apiCat.convertSpecToOpenApi(apiSpec);
                 apiSpecification = apiCat.convertSpecToApiSpecification(apiSpec);
             }
-            apiRegistrationData.setOpenApi(openAPI);
             apiRegistrationData.setApiSpecification(apiSpecification);
         } catch (Exception e) {
             throw new BadRequestException(e.getMessage());
