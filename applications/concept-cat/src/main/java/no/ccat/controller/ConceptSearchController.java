@@ -25,6 +25,7 @@ import org.springframework.data.elasticsearch.core.query.SourceFilter;
 import org.springframework.hateoas.PagedResources;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.data.domain.PageRequest;
 
 import java.util.ArrayList;
 import java.util.HashMap;
