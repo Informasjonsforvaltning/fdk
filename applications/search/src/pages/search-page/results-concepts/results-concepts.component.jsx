@@ -231,28 +231,26 @@ export class ResultsConcepts extends React.Component {
 
           <section className="col-lg-8">{this._renderTerms()}</section>
 
-          {conceptTotal > 10 && (
-            <section className="col-lg-8 offset-lg-4 d-flex justify-content-center">
-              <span className="uu-invisible" aria-hidden="false">
-                Sidepaginering.
-              </span>
-              <ReactPaginate
-                pageCount={pageCount}
-                pageRangeDisplayed={2}
-                marginPagesDisplayed={1}
-                previousLabel={localization.page.prev}
-                nextLabel={localization.page.next}
-                breakLabel={<span>...</span>}
-                breakClassName="break-me"
-                containerClassName="pagination"
-                onPageChange={onPageChange}
-                subContainerClassName="pages pagination"
-                activeClassName="active"
-                initialPage={page}
-                disableInitialCallback
-              />
-            </section>
-          )}
+          <section className="col-lg-8 offset-lg-4 d-flex justify-content-center">
+            <span className="uu-invisible" aria-hidden="false">
+              Sidepaginering.
+            </span>
+            <ReactPaginate
+              pageCount={pageCount}
+              pageRangeDisplayed={2}
+              marginPagesDisplayed={1}
+              previousLabel={localization.page.prev}
+              nextLabel={localization.page.next}
+              breakLabel={<span>...</span>}
+              breakClassName="break-me"
+              containerClassName="pagination"
+              onPageChange={onPageChange}
+              subContainerClassName="pages pagination"
+              activeClassName="active"
+              initialPage={page}
+              disableInitialCallback
+            />
+          </section>
         </section>
       </main>
     );
