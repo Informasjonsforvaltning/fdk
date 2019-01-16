@@ -65,11 +65,11 @@ public class ConceptSearchController {
         @RequestParam(value = "preflabel", defaultValue = "", required = false)
             String prefLabel,
 
-        @ApiParam("Returns datatasets from position x in the result set, 0 is the default value. A value of 150 will return the 150th dataset in the resultset")
+        @ApiParam("Returns datatasets from position x in the result set, 0 is the default value. A value of 150 will return the 150th concept in the resultset")
         @RequestParam(value = "from", defaultValue = "0", required = false)
             int from,
 
-        @ApiParam("Specifies the size, i.e. the number of datasets to return in one request. The default is 10, the maximum number of datasets returned is 100")
+        @ApiParam("Specifies the size, i.e. the number of concepts to return in one request. The default is 10, the maximum number of concepts returned is 100")
         @RequestParam(value = "size", defaultValue = "10", required = false)
             int size,
 
