@@ -27,6 +27,11 @@ services:
     expose:
     - "8080"
 
+  informationmodel-cat:
+      image: dcatno/informationmodel-cat:latest
+      expose:
+      - "8080"
+
   nginx-search:
     image: dcatno/nginx-search:latest
     expose:
