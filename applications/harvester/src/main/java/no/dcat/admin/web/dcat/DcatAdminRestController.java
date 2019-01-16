@@ -73,6 +73,7 @@ public class DcatAdminRestController {
         }
 
         adminDataStore.addDcatSource(dcatSource);
+        logger.debug("Added Dcat source: {}" + dcatSource.toString());
 
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
@@ -84,6 +85,7 @@ public class DcatAdminRestController {
         }
         try {
             adminDcatDataService.deleteDcatSource(dcatName, adminDataStore.getUserObject(principal.getName()));
+            logger.debug("Deleted dcat source with id: {}", dcatName);
         } catch (UserNotFoundException e) {
             throw e;
         }
