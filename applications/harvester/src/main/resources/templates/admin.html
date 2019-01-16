@@ -106,10 +106,11 @@
                                role="button"> <span
                                 class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                         </a></td>
-                        <td><a class="btn btn-default" th:onclick="'deleteDcatSource(\'' + ${dcatSource.id} + '\');'"
+                        <td><a class="btn btn-default" th:onclick="deleteDcatSource([[${dcatSource.id}]]);"
                                role="button"> <span
                                 class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                         </a></td>
+                        <input type="hidden" id="dcatSourceId" th:attr="value=${dcatSource?.id}"/>
                     </tr>
                 </tbody>
             </table>
