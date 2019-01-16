@@ -1,4 +1,4 @@
-package no.dmcat;
+package no.fdk.imcat;
 
 import com.google.common.base.Predicates;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,12 +21,12 @@ import java.util.Set;
 @SpringBootApplication
 @PropertySource("classpath:swagger.properties")
 @EnableSwagger2
-public class DmcatApiApplication {
+public class ImcatApiApplication {
     @Value("${springfox.documentation.swagger.v2.path}")
     private String swagger2Endpoint;
 
     public static void main(String[] args) {
-        SpringApplication.run(DmcatApiApplication.class, args);
+        SpringApplication.run(ImcatApiApplication.class, args);
     }
 
     @Bean

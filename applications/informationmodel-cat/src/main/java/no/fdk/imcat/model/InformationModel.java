@@ -1,4 +1,4 @@
-package no.dmcat.model;
+package no.fdk.imcat.model;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
