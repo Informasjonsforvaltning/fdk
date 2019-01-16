@@ -8,6 +8,7 @@ import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Mapping;
 
 import java.util.Date;
+import java.util.List;
 
 @Setter
 @Getter
@@ -28,6 +29,9 @@ public class ApiRegistration extends ApiRegistrationPublic {
     private boolean isFromApiCatalog;
 
     private HarvestStatus harvestStatus;
+
+    // todo remove this after migrating to datasetUris
+    private List<String> datasetReferences;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZZ")
     private Date _lastModified;
