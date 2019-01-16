@@ -15,6 +15,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.Reader;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.*;
 
@@ -213,10 +215,12 @@ public class RDFToModelTransformer {
             Resource contactPointResource = propertyStmnt.getObject().asResource();
 
             Statement phoneStatement = contactPointResource.getProperty(VCARD4.hasTelephone);
-            contactPoint.setTelephone(sanitizeField(phoneStatement.getObject().toString()));
+            String parsedPhoneNumber = parseURIFromStatement(phoneStatement);
+            contactPoint.setTelephone(parsedPhoneNumber);
 
             Statement emailStatement = contactPointResource.getProperty(VCARD4.hasEmail);
-            contactPoint.setEmail(sanitizeField(emailStatement.getObject().toString()));
+            String parsedEmailAddress = parseURIFromStatement(emailStatement);
+            contactPoint.setEmail(parsedEmailAddress);
 
         } catch (Exception e) {
             logger.warn("Error when extracting property {} from resource {}", DCAT.contactPoint, resource.getURI(), e);
@@ -225,17 +229,17 @@ public class RDFToModelTransformer {
         return contactPoint;
     }
 
-    protected static String sanitizeField(String incoming) {
-        if (incoming == null || "".equals(incoming)) {
-            return incoming;
+    private String parseURIFromStatement(Statement statement) {
+        if (statement.getResource().isURIResource()) {
+            try {
+                URI uri = new URI (statement.getResource().getURI());
+                return uri.getSchemeSpecificPart();
+                //contactPoint.setEmail(uri.getSchemeSpecificPart());
+            } catch (URISyntaxException use) {
+                logger.error("Email URI not parsable :" +statement.getObject().toString() );
+            }
         }
-
-        //Strip everything before the :
-        if (incoming.indexOf(':') > 0 ) {
-            int placeToStrip = incoming.indexOf(':');
-            return incoming.substring(placeToStrip+1).trim();
-        }
-        return incoming;
+        return "";
     }
 
     private String buildLocalUri(String id) {
