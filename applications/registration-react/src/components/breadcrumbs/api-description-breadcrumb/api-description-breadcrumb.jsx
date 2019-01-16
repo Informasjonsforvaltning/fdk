@@ -7,7 +7,11 @@ import { getApiItemsByApiId } from '../../../redux/modules/apis';
 
 export const PureapiDescriptionBreadcrumb = props => {
   const { apiDescriptionItem } = props;
-  return <span>{_.get(apiDescriptionItem, ['openApi', 'info', 'title'])}</span>;
+  return (
+    <span>
+      {_.get(apiDescriptionItem, ['apiSpecification', 'info', 'title'])}
+    </span>
+  );
 };
 
 const mapStateToProps = ({ apis }, ownProps) => {

@@ -15,7 +15,7 @@ import { ConnectedFormRelatedDatasets } from './form-relatedDatasets/connected-f
 import { StatusBarWithState } from '../../components/status-bar/status-bar.component';
 import { ConnectedFormPublish } from './connected-form-publish/connected-form-publish';
 
-const renderOpenApiInfo = (info, paths) => {
+const renderApiSpecificationInfo = (info, paths) => {
   if (!info) {
     return null;
   }
@@ -114,7 +114,7 @@ export const APIRegistrationPage = props => {
   const catalogId = _.get(match, ['params', 'catalogId']);
   const searchQuery =
     parse(_.get(location, 'search'), { ignoreQueryPrefix: true }) || {};
-  const info = _.get(item, ['openApi', 'info']);
+  const info = _.get(item, ['apiSpecification', 'info']);
 
   fetchCatalogIfNeeded(catalogId);
   fetchApisIfNeeded(catalogId);
@@ -170,7 +170,10 @@ export const APIRegistrationPage = props => {
 
       <div className="row mb-5">
         <div className="col-12">
-          {renderOpenApiInfo(info, _.get(item, ['openApi', 'paths']))}
+          {renderApiSpecificationInfo(
+            info,
+            _.get(item, ['apiSpecification', 'paths'])
+          )}
         </div>
       </div>
 
