@@ -2336,6 +2336,38 @@ exports[`should render ResultsApi correctly with hits 1`] = `
         key="703e2bdf-aecd-401a-80bd-e0d8a7538bed"
         publishers={Object {}}
       />
+      <div
+        className="col-12 d-flex justify-content-center"
+      >
+        <span
+          aria-hidden="false"
+          className="uu-invisible"
+        >
+          Sidepaginering.
+        </span>
+        <PaginationBoxView
+          activeClassName="active"
+          breakClassName="break-me"
+          breakLabel={
+            <span>
+              ...
+            </span>
+          }
+          containerClassName="pagination"
+          disableInitialCallback={true}
+          disabledClassName="disabled"
+          initialPage={0}
+          marginPagesDisplayed={1}
+          nextClassName="next"
+          nextLabel="Neste side"
+          onPageChange={[MockFunction]}
+          pageCount={1}
+          pageRangeDisplayed={2}
+          previousClassName="previous"
+          previousLabel="Forrige side"
+          subContainerClassName="pages pagination"
+        />
+      </div>
     </div>
   </div>
 </main>
@@ -2401,7 +2433,40 @@ exports[`should render ResultsApi correctly with minimum of props and no hits 1`
     <div
       className="col-12 col-lg-8"
       id="apis"
-    />
+    >
+      <div
+        className="col-12 d-flex justify-content-center"
+      >
+        <span
+          aria-hidden="false"
+          className="uu-invisible"
+        >
+          Sidepaginering.
+        </span>
+        <PaginationBoxView
+          activeClassName="active"
+          breakClassName="break-me"
+          breakLabel={
+            <span>
+              ...
+            </span>
+          }
+          containerClassName="pagination"
+          disableInitialCallback={true}
+          disabledClassName="disabled"
+          initialPage={0}
+          marginPagesDisplayed={1}
+          nextClassName="next"
+          nextLabel="Neste side"
+          onPageChange={null}
+          pageCount={Infinity}
+          pageRangeDisplayed={2}
+          previousClassName="previous"
+          previousLabel="Forrige side"
+          subContainerClassName="pages pagination"
+        />
+      </div>
+    </div>
   </div>
 </main>
 `;
