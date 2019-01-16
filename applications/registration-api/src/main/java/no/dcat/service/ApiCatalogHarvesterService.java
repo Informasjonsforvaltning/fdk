@@ -1,11 +1,10 @@
 package no.dcat.service;
 
-import io.swagger.v3.oas.models.OpenAPI;
-import no.fdk.acat.bindings.ApiCatBindings;
-import no.dcat.model.ApiRegistrationFactory;
 import no.dcat.model.ApiCatalog;
 import no.dcat.model.ApiRegistration;
+import no.dcat.model.ApiRegistrationFactory;
 import no.dcat.model.HarvestStatus;
+import no.fdk.acat.bindings.ApiCatBindings;
 import no.fdk.acat.common.model.apispecification.ApiSpecification;
 import no.fdk.harvestqueue.HarvestQueue;
 import no.fdk.harvestqueue.QueuedTask;
@@ -106,7 +105,7 @@ public class ApiCatalogHarvesterService {
                 ApiRegistration apiRegistration;
                 if (existingApiRegistrationOptional.isPresent()) {
                     logger.debug("Existing registration {}", existingApiRegistrationOptional.get().getId());
-                    apiRegistration= existingApiRegistrationOptional.get();
+                    apiRegistration = existingApiRegistrationOptional.get();
                     apiRegistration.set_lastModified(new Date());
                 } else {
                     apiRegistration = ApiRegistrationFactory.createApiRegistration(originCatalog.getOrgNo(), apiRegistrationData);
@@ -118,9 +117,7 @@ public class ApiCatalogHarvesterService {
                 apiRegistration.setFromApiCatalog(true);
 
                 try {
-                    OpenAPI openAPI = apiCat.convertSpecUrlToOpenApi(apiSpecUrl);
                     ApiSpecification apiSpecification = apiCat.convertSpecUrlToApiSpecification(apiSpecUrl);
-                    apiRegistration.setOpenApi(openAPI);
                     apiRegistration.setApiSpecification(apiSpecification);
                 } catch (Exception e) {
                     String errorMessage = "Failed while trying to fetch and parse API spec " + apiSpecUrl + " " + e.toString();
