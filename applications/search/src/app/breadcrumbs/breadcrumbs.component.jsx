@@ -4,11 +4,13 @@ import withBreadcrumbs from 'react-router-breadcrumbs-hoc';
 
 import {
   PATHNAME_CONCEPTS,
-  PATHNAME_CONCEPTS_COMPARE
+  PATHNAME_CONCEPTS_COMPARE,
+  PATHNAME_INFORMATIONMODELS
 } from '../../constants/constants';
 import { DatasetBreadcrumb } from './dataset-breadcrumb/dataset-breadcrumb';
 import { ApiBreadcrumb } from './api-breadcrumb/api-breadcrumb';
 import { ConceptBreadcrumb } from './concept-breadcrumb/concept-breadcrumb';
+import { InformationModelBreadcrumb } from './informationModel-breadbrumb/information-breadcrumb';
 import { PathNameBreadcrumb } from './pathname-breadcrumb/pathname-breadcrumb';
 import './breadcrumbs.scss';
 
@@ -22,6 +24,10 @@ const routes = [
     breadcrumb: <PathNameBreadcrumb pathName="conceptsCompare" />
   },
   { path: '/concepts/:id', breadcrumb: ConceptBreadcrumb },
+  {
+    path: `${PATHNAME_INFORMATIONMODELS}/:id`,
+    breadcrumb: InformationModelBreadcrumb
+  },
   { path: '/about', breadcrumb: <PathNameBreadcrumb pathName="about" /> },
   {
     path: '/about-registration',
