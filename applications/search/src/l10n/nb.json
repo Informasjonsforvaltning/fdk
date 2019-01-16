@@ -316,5 +316,13 @@
     "hiddenLabel": "Frarådet term",
     "definition": "Definisjon",
     "identifier": "Identifikator"
+  },
+  "infoMod": {
+    "infoModHeader": "Informasjonsmodeller",
+    "tabs": {
+      "structure": "Struktur",
+      "json": "JSON Schema"
+    },
+    "relatedAPIHeader": "Tilhører API"
   }
 }

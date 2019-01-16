@@ -317,5 +317,13 @@
     "hiddenLabel": "Hidden term",
     "definition": "Definition",
     "identifier": "Identifier"
+  },
+  "infoMod": {
+    "infoModHeader": "Information models",
+    "tabs": {
+      "structure": "Structure",
+      "json": "JSON Schema"
+    },
+    "relatedAPIHeader": "Belongs to API"
   }
 }

@@ -1,6 +1,10 @@
 {
   "id": "eadda99c-781e-4900-8f54-8dd298168382",
   "uri": "http://localhost:8080/informationmodels/eadda99c-781e-4900-8f54-8dd298168382",
+  "harvest": {
+    "firstHarvested": "2019-01-14T06:40:56.173Z",
+    "lastHarvested": "2019-01-14T06:40:56.173Z"
+  },
   "title": "Enhetsregisteret",
   "publisher": {
     "uri": "http://data.brreg.no/enhetsregisteret/enhet/970018131",
