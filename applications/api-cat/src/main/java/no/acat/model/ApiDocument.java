@@ -25,6 +25,12 @@ public class ApiDocument {
     @ApiModelProperty("The url of the specification which are used to harvest the specification ")
     private String apiSpecUrl;
 
+    @ApiModelProperty("Original API spec")
+    private String apiSpec;
+
+    @ApiModelProperty("Spec converted to openAPI v3")
+    private OpenAPI openApi;
+
     @ApiModelProperty("information about when the api was first and last harvested by the system")
     private HarvestMetadata harvest;
 
@@ -36,6 +42,9 @@ public class ApiDocument {
     private String description;
     private String descriptionFormatted;
 
+    @ApiModelProperty("An overview of the formats returned by the api")
+    private Set<String> formats;
+
     @ApiModelProperty("Indication if the api is National Component")
     private boolean nationalComponent;
 
@@ -45,17 +54,8 @@ public class ApiDocument {
     @ApiModelProperty("The contact point [dcat:contactPoint]")
     private List<Contact> contactPoint;
 
-    @ApiModelProperty("An overview of the formats returned by the api")
-    private Set<String> formats;
-
     @ApiModelProperty("A list of references to the datasets that can be returned by the api")
     private Set<DatasetReference> datasetReferences;
-
-    @ApiModelProperty("Spec converted to openAPI v3")
-    private OpenAPI openApi;
-
-    @ApiModelProperty("Original API spec")
-    private String apiSpec;
 
     @ApiModelProperty("The url of the API documentation")
     private String apiDocUrl;
