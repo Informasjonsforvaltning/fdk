@@ -1,8 +1,16 @@
 {
   "apidocument": {
+    "dynamic": "false",
     "properties": {
+      "id": {
+        "type": "keyword"
+      },
       "harvestSourceUri": {
         "type": "keyword"
+      },
+      "apiSpec": {
+        "type": "text",
+        "analyzer": "norwegian"
       },
       "harvest": {
         "dynamic": "false",
@@ -17,6 +25,20 @@
             "type": "date"
           }
         }
+      },
+      "title": {
+        "type": "text",
+        "analyzer": "norwegian"
+      },
+      "description": {
+        "type": "text",
+        "analyzer": "norwegian"
+      },
+      "formats": {
+        "type": "keyword"
+      },
+      "nationalComponent": {
+        "type": "boolean"
       },
       "publisher": {
         "properties": {
@@ -39,23 +61,18 @@
           }
         }
       },
-      "title": {
-        "type": "text",
-        "analyzer": "norwegian"
-      },
-      "description": {
-        "type": "text",
-        "analyzer": "norwegian"
-      },
-      "formats": {
-        "type": "keyword"
-      },
-      "openApi": {
+      "contactPoint": {
         "type": "object",
-        "enabled": false
+        "dynamic": "true"
       },
-      "nationalComponent": {
-        "type": "boolean"
+      "datasetReferences": {
+        "dynamic": "false",
+        "properties": {
+          "title": {
+            "type": "object",
+            "dynamic": "true"
+          }
+        }
       },
       "cost": {
         "type": "text",
