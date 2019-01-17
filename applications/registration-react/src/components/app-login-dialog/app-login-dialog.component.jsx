@@ -61,12 +61,11 @@ export class LoginDialog extends React.Component {
                   <strong>
                     {localization.catalogs.missingCatalogs.accessTitle}
                   </strong>
-                  <p>{localization.catalogs.missingCatalogs.accessText}</p>
-                  <strong>
-                    {localization.catalogs.missingCatalogs.assignAccessTitle}
-                  </strong>
                   <p>
-                    {localization.catalogs.missingCatalogs.assignAccessText}
+                    <a href="https://fellesdatakatalog.brreg.no/about-registration">
+                      {localization.catalogs.missingCatalogs.accessText}
+                      <i className="fa fa-external-link fdk-fa-right" />
+                    </a>
                   </p>
                 </div>
               </div>
