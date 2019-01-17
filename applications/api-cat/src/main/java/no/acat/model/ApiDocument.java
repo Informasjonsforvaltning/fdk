@@ -28,12 +28,6 @@ public class ApiDocument {
     @ApiModelProperty("information about when the api was first and last harvested by the system")
     private HarvestMetadata harvest;
 
-    @ApiModelProperty("the time period the api is open for business and can be used by clients, [start-date, end-date)")
-    private List<PeriodOfTime> online;
-
-    @ApiModelProperty("if the api is replaced or are going to be closed the deprecation field should be present")
-    private Deprecation deprecation;
-
     @ApiModelProperty("the title of the api, can be specified in multiple langauges [dct:title]")
     private String title;
     private String titleFormatted;
@@ -65,8 +59,6 @@ public class ApiDocument {
 
     @ApiModelProperty("The url of the API documentation")
     private String apiDocUrl;
-
-    @ApiModelProperty("Transformed version of provenance property that allows sorting on provenance by using simple string sort")
 
     private String cost;
 
