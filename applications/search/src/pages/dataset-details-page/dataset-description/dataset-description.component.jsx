@@ -53,9 +53,10 @@ export class DatasetDescription extends React.Component {
         {objective && (
           <ShowMore
             showMoreButtonText={localization.showFullObjective}
-            label={localization.objective}
             contentHtml={objective}
-          />
+          >
+            <strong>{localization.objective}: </strong>
+          </ShowMore>
         )}
       </header>
     );

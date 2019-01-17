@@ -12,12 +12,12 @@ export const ShowMorePure = ({
   toggleShowAll,
   showAll,
   contentHtml,
-  label
+  children
 }) => {
   function _renderContent() {
     return (
       <span className="fdk-ingress">
-        {label && <strong>{label}: </strong>}
+        {children}
         <span
           dangerouslySetInnerHTML={{
             __html: contentHtml
@@ -53,15 +53,10 @@ export const ShowMorePure = ({
       </React.Fragment>
     );
   }
-  return (
-    <div className="mb-5" name={label}>
-      {content}
-    </div>
-  );
+  return <div className="mb-5">{content}</div>;
 };
 
 ShowMorePure.defaultProps = {
-  label: '',
   contentHtml: '',
   showMoreButtonText: localization.showLess,
   showLessButtonText: localization.showLess,
@@ -70,7 +65,6 @@ ShowMorePure.defaultProps = {
 };
 
 ShowMorePure.propTypes = {
-  label: PropTypes.string,
   contentHtml: PropTypes.string,
   showMoreButtonText: PropTypes.string,
   showLessButtonText: PropTypes.string,
