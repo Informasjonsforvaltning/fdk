@@ -17,6 +17,7 @@ public class RepositoryRestConfig extends RepositoryRestConfigurerAdapter {
             @Override
             public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config) {
                 config.exposeIdsFor(ConceptDenormalized.class);
+                config.setDefaultPageSize(10);
             }
         };
     }
