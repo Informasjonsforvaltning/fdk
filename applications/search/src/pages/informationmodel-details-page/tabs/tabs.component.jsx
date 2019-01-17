@@ -11,7 +11,7 @@ const renderTabContent = (tabContent, activeTab) => {
   const items = items =>
     items.map((item, index) => (
       <TabPane key={index} tabId={index}>
-        {item.data}
+        {item.body}
       </TabPane>
     ));
 

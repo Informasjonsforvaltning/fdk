@@ -40,16 +40,12 @@ exports[`should render Tabs correctly 1`] = `
       key="0"
       tabId={0}
       tag="div"
-    >
-      Data tab content 1
-    </TabPane>
+    />
     <TabPane
       key="1"
       tabId={1}
       tag="div"
-    >
-      Data tab content 2
-    </TabPane>
+    />
   </TabContent>
 </React.Fragment>
 `;
