@@ -350,9 +350,7 @@
       "title": "Hello",
       "ingress": "You do not have access to any catalogs just yet.",
       "accessTitle": "Do you need access?",
-      "accessText": "Read more about how you get access here",
-      "assignAccessTitle": "Are you assigning access to others?",
-      "assignAccessText": "You can grant other users access to edit datasets through Altinn. Read more on how to do this."
+      "accessText": "Read more about how you get access here"
     },
     "datasets": "Datasettkatalog",
     "apis": "API-katalog",
