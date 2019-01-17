@@ -46,13 +46,14 @@ exports[`should render LoginDialog correctly 1`] = `
               Trenger du tilgang?
             </strong>
             <p>
-              Kontakt din leder for å få tilgang til å registrere datasett og API-beskrivelser.
-            </p>
-            <strong>
-              Skal du gi andre tilgang?
-            </strong>
-            <p>
-              Du kan gi andre tilgang til å redigere datasett og API-beskrivelser for din virksomhet via Altinn. Les mer om hvordan du gir andre tilgang.
+              <a
+                href="https://fellesdatakatalog.brreg.no/about-registration"
+              >
+                Les mer om hvordan du får tilgang her
+                <i
+                  className="fa fa-external-link fdk-fa-right"
+                />
+              </a>
             </p>
           </div>
         </div>
