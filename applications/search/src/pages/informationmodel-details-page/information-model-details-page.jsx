@@ -26,6 +26,18 @@ const renderRelatedApiDescription = description => {
   );
 };
 
+const renderJSONSchema = schema => {
+  if (!schema) {
+    return null;
+  }
+
+  return (
+    <div>
+      <pre className="whitespace">{JSON.stringify(schema, null, 2)}</pre>
+    </div>
+  );
+};
+
 const renderModels = schema => {
   if (!schema) {
     return null;
@@ -34,7 +46,14 @@ const renderModels = schema => {
   return (
     <ListRegular title={localization.infoMod.infoModHeader}>
       <div className="d-flex list-regular--item" />
-      <Tabs />
+      <Tabs
+        tabContent={[
+          {
+            title: localization.infoMod.tabs.json,
+            body: renderJSONSchema(schema)
+          }
+        ]}
+      />
     </ListRegular>
   );
 };
