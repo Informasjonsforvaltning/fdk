@@ -77,10 +77,8 @@ exports[`should render ConceptDetailsPage correctly with conceptItem 1`] = `
       <section
         className="col-12 col-lg-8 mt-3"
       >
-        <ShowMore
+        <withStateHandlers(ShowMorePure)
           contentHtml="engelsk definition14"
-          label=""
-          showLessButtonText="Show less"
           showMoreButtonText="Show the full description"
         />
         <ListRegular
