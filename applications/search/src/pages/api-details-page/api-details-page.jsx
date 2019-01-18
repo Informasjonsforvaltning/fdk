@@ -231,15 +231,15 @@ const renderStickyMenu = apiItem => {
       prefLabel: localization.format
     });
   }
-  if (_.get(apiItem, ['openApi', 'paths'])) {
+  if (_.get(apiItem, ['apiSpecification', 'paths'])) {
     menuItems.push({
       name: localization.api.endpoints.operations,
       prefLabel: localization.api.endpoints.operations
     });
   }
   if (
-    _.get(apiItem, ['openApi', 'info', 'termsOfService']) ||
-    _.get(apiItem, ['openApi', 'info', 'license']) ||
+    _.get(apiItem, ['apiSpecification', 'info', 'termsOfService']) ||
+    _.get(apiItem, ['apiSpecification', 'info', 'license']) ||
     _.get(apiItem, 'cost') ||
     _.get(apiItem, 'usageLimitation') ||
     _.get(apiItem, 'performance') ||
@@ -310,7 +310,7 @@ export const ApiDetailsPage = props => {
             {renderFormats(apiItem.formats)}
 
             {renderApiEndpoints(
-              apiItem.openApi && apiItem.openApi.paths,
+              apiItem.apiSpecification && apiItem.apiSpecification.paths,
               apiItem.apiSpecUrl || internalApiSpecUrl,
               apiItem.apiDocUrl
             )}
@@ -318,8 +318,8 @@ export const ApiDetailsPage = props => {
             {renderAPIInfo({})}
 
             {renderTermsAndRestrictions(
-              _.get(apiItem, ['openApi', 'info', 'termsOfService']),
-              _.get(apiItem, ['openApi', 'info', 'license']),
+              _.get(apiItem, ['apiSpecification', 'info', 'termsOfService']),
+              _.get(apiItem, ['apiSpecification', 'info', 'license']),
               _.get(apiItem, 'cost'),
               _.get(apiItem, 'usageLimitation'),
               _.get(apiItem, 'performance'),

@@ -46,8 +46,7 @@
       }
     }
   ],
-  "openApi": {
-    "openapi": "3.0.1",
+  "apiSpecification": {
     "info": {
       "title": "National API Directory Search API",
       "description": "Provides a basic search api against the National API Directory of Norway",
@@ -63,127 +62,18 @@
       },
       "version": "1.0"
     },
-    "servers": [
-      {
-        "url": "https://fellesdatakatalog.brreg.no/api-cat/apis",
-        "description": "The production API server"
-      }
-    ],
-    "tags": [
-      {
-        "name": "get-controller",
-        "description": "Get Controller"
-      },
-      {
-        "name": "search-controller",
-        "description": "Search Controller"
-      }
-    ],
     "paths": {
       "/search": {
         "get": {
-          "tags": [
-            "search-controller"
-          ],
           "summary": "Queries the api catalog for api specifications",
-          "description": "So far only simple queries is supported",
-          "operationId": "searchUsingGET",
-          "parameters": [
-            {
-              "name": "q",
-              "in": "query",
-              "description": "the query string",
-              "required": false,
-              "style": "FORM",
-              "explode": true,
-              "schema": {
-                "type": "string"
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "OK",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/QueryResponse"
-                  }
-                }
-              }
-            }
-          }
+          "description": "So far only simple queries is supported"
         }
       },
       "/{id}": {
         "get": {
-          "tags": [
-            "get-controller"
-          ],
-          "summary": "Get a specific api",
-          "operationId": "getApiDocumentUsingGET",
-          "parameters": [
-            {
-              "name": "id",
-              "in": "path",
-              "description": "id",
-              "required": true,
-              "style": "SIMPLE",
-              "explode": false,
-              "schema": {
-                "type": "string"
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "OK",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/ApiDocument"
-                  }
-                }
-              }
-            },
-            "401": {
-              "description": "Unauthorized"
-            },
-            "403": {
-              "description": "Forbidden"
-            },
-            "404": {
-              "description": "Not Found"
-            }
-          }
+          "summary": "Get a specific api"
         }
       }
-    },
-    "components": {
-      "schemas": {
-        "QueryResponse": {
-          "type": "object",
-          "properties": {
-            "aggregations": {
-              "$ref": "#/components/schemas/Aggregation"
-            },
-            "hits": {
-              "type": "array"
-            },
-            "total": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        },
-        "Aggregation": {
-          "type": "object"
-        },
-        "ApiDocument": {
-          "type": "object"
-        }
-      },
-      "extensions": {}
     }
   },
   "apiSpec": "{\n  \"openapi\": \"3.0.1\",\n  \"info\": {\n    \"description\": \"Provides a basic search api against the National API Directory of Norway\",\n    \"version\": \"1.0\",\n    \"title\": \"National API Directory Search API\",\n    \"termsOfService\": \"https://fellesdatakatalog.brreg.no/about\",\n    \"contact\": {\n      \"name\": \"Brønnøysundregistrene\",\n      \"url\": \"https://fellesdatakatalog.brreg.no\",\n      \"email\": \"fellesdatakatalog@brreg.no\"\n    },\n    \"license\": {\n      \"name\": \"License of API\",\n      \"url\": \"http://data.norge.no/nlod/no/2.0\"\n    }\n  },\n  \"servers\": [\n    {\n      \"url\": \"https://fellesdatakatalog.brreg.no/api-cat/apis\",\n      \"description\": \"The production API server\"\n    }\n  ],\n  \"tags\": [\n    {\n      \"name\": \"get-controller\",\n      \"description\": \"Get Controller\"\n    },\n    {\n      \"name\": \"search-controller\",\n      \"description\": \"Search Controller\"\n    }\n  ],\n  \"paths\": {\n    \"/search\": {\n      \"get\": {\n        \"tags\": [\n          \"search-controller\"\n        ],\n        \"summary\": \"Queries the api catalog for api specifications\",\n        \"description\": \"So far only simple queries is supported\",\n        \"operationId\": \"searchUsingGET\",\n        \"parameters\": [\n          {\n            \"name\": \"q\",\n            \"in\": \"query\",\n            \"description\": \"the query string\",\n            \"required\": false,\n            \"schema\": {\n              \"type\": \"string\"\n            }\n          }\n        ],\n        \"responses\": {\n          \"200\": {\n            \"description\": \"OK\",\n            \"content\": {\n              \"application/json\": {\n                \"schema\": {\n                  \"$ref\": \"#/components/schemas/QueryResponse\"\n                }\n              }\n            }\n          }\n        }\n      }\n    },\n    \"/{id}\": {\n      \"get\": {\n        \"tags\": [\n          \"get-controller\"\n        ],\n        \"summary\": \"Get a specific api\",\n        \"operationId\": \"getApiDocumentUsingGET\",\n        \"parameters\": [\n          {\n            \"name\": \"id\",\n            \"in\": \"path\",\n            \"description\": \"id\",\n            \"required\": true,\n            \"schema\": {\n              \"type\": \"string\"\n            }\n          }\n        ],\n        \"responses\": {\n          \"200\": {\n            \"description\": \"OK\",\n            \"content\": {\n              \"application/json\": {\n                \"schema\": {\n                  \"$ref\": \"#/components/schemas/ApiDocument\"\n                }\n              }\n            }\n          },\n          \"401\": {\n            \"description\": \"Unauthorized\"\n          },\n          \"403\": {\n            \"description\": \"Forbidden\"\n          },\n          \"404\": {\n            \"description\": \"Not Found\"\n          }\n        }\n      }\n    }\n  },\n  \"components\": {\n    \"schemas\": {\n      \"QueryResponse\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"aggregations\": {\n            \"$ref\": \"#/components/schemas/Aggregation\"\n          },\n          \"hits\": {\n            \"type\": \"array\",\n            \"items\": {\n              \"$ref\": \"#/components/schemas/ApiDocument\"\n            }\n          },\n          \"total\": {\n            \"type\": \"integer\",\n            \"format\": \"int64\"\n          }\n        }\n      },\n      \"Aggregation\": {\n        \"type\": \"object\"\n      },\n      \"ApiDocument\": {\n        \"type\": \"object\"\n      }\n    }\n  }\n}",
