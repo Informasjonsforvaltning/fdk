@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import DocumentMeta from 'react-document-meta';
+import sanitizeHtml from 'sanitize-html';
 
 import localization from '../../lib/localization';
 import { getTranslateText } from '../../lib/translateText';
@@ -22,7 +23,7 @@ const renderDescription = descriptionFormatted => {
     <ShowMore showMoreButtonText={localization.showFullDescription}>
       <span
         dangerouslySetInnerHTML={{
-          __html: descriptionFormatted
+          __html: sanitizeHtml(descriptionFormatted)
         }}
       />
     </ShowMore>

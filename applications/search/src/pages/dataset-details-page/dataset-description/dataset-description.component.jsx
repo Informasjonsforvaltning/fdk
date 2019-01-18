@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
+import sanitizeHtml from 'sanitize-html';
 
 import localization from '../../../lib/localization';
 import { ShowMore } from '../../../components/show-more/show-more';
@@ -47,7 +48,7 @@ export class DatasetDescription extends React.Component {
           <ShowMore showMoreButtonText={localization.showFullDescription}>
             <span
               dangerouslySetInnerHTML={{
-                __html: descriptionFormatted
+                __html: sanitizeHtml(descriptionFormatted)
               }}
             />
           </ShowMore>
