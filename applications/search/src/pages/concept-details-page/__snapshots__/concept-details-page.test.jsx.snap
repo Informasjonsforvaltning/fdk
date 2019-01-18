@@ -78,9 +78,10 @@ exports[`should render ConceptDetailsPage correctly with conceptItem 1`] = `
         className="col-12 col-lg-8 mt-3"
       >
         <withStateHandlers(ShowMorePure)
-          contentHtml="engelsk definition14"
           showMoreButtonText="Show the full description"
-        />
+        >
+          engelsk definition14
+        </withStateHandlers(ShowMorePure)>
         <ListRegular
           bottomMargin={true}
           title="Identifier"

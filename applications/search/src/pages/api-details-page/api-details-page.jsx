@@ -14,17 +14,18 @@ import { ListRegular } from '../../components/list-regular/list-regular.componen
 import { TwoColRow } from '../../components/list-regular/twoColRow/twoColRow';
 import { DatasetReference } from './dataset-reference/dataset-reference.component';
 
-const renderDescription = description => {
-  if (!description) {
+const renderDescription = descriptionFormatted => {
+  if (!descriptionFormatted) {
     return null;
   }
-
-  const descriptionText = getTranslateText(description);
   return (
-    <ShowMore
-      showMoreButtonText={localization.showFullDescription}
-      contentHtml={descriptionText}
-    />
+    <ShowMore showMoreButtonText={localization.showFullDescription}>
+      <span
+        dangerouslySetInnerHTML={{
+          __html: descriptionFormatted
+        }}
+      />
+    </ShowMore>
   );
 };
 
@@ -294,7 +295,9 @@ export const ApiDetailsPage = props => {
           <div className="col-12 col-lg-4 ">{renderStickyMenu(apiItem)}</div>
 
           <section className="col-12 col-lg-8 mt-3">
-            {renderDescription(apiItem.description)}
+            {renderDescription(
+              apiItem.descriptionFormatted || apiItem.description
+            )}
 
             {renderFormats(apiItem.formats)}
 
