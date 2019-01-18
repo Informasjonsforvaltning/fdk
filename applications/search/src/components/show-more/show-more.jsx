@@ -38,7 +38,7 @@ export const ShowMorePure = ({
         <div className="show-more__cropped-box">{_renderContent()}</div>
         <button className="fdk-button-small" onClick={toggleShowAll}>
           <i className="fa mr-2 fa-angle-double-down" />
-          <span>{showMoreButtonText}</span>
+          <span>{showMoreButtonText || localization.showMore}</span>
         </button>
       </React.Fragment>
     );
@@ -48,7 +48,7 @@ export const ShowMorePure = ({
         <div>{_renderContent()}</div>
         <button className="fdk-button-small" onClick={toggleShowAll}>
           <i className="fa mr-2 fa-angle-double-up" />
-          <span>{showLessButtonText}</span>
+          <span>{showLessButtonText || localization.showLess}</span>
         </button>
       </React.Fragment>
     );
@@ -58,8 +58,8 @@ export const ShowMorePure = ({
 
 ShowMorePure.defaultProps = {
   contentHtml: '',
-  showMoreButtonText: localization.showLess,
-  showLessButtonText: localization.showLess,
+  showMoreButtonText: '',
+  showLessButtonText: '',
   toggleShowAll: _.noop,
   showAll: false
 };
