@@ -127,79 +127,12 @@ exports[`should render ApiDetailsPage correctly with apiItem 1`] = `
               "/search": Object {
                 "get": Object {
                   "description": "So far only simple queries is supported",
-                  "operationId": "searchUsingGET",
-                  "parameters": Array [
-                    Object {
-                      "description": "the query string",
-                      "explode": true,
-                      "in": "query",
-                      "name": "q",
-                      "required": false,
-                      "schema": Object {
-                        "type": "string",
-                      },
-                      "style": "FORM",
-                    },
-                  ],
-                  "responses": Object {
-                    "200": Object {
-                      "content": Object {
-                        "application/json": Object {
-                          "schema": Object {
-                            "$ref": "#/components/schemas/QueryResponse",
-                          },
-                        },
-                      },
-                      "description": "OK",
-                    },
-                  },
                   "summary": "Queries the api catalog for api specifications",
-                  "tags": Array [
-                    "search-controller",
-                  ],
                 },
               },
               "/{id}": Object {
                 "get": Object {
-                  "operationId": "getApiDocumentUsingGET",
-                  "parameters": Array [
-                    Object {
-                      "description": "id",
-                      "explode": false,
-                      "in": "path",
-                      "name": "id",
-                      "required": true,
-                      "schema": Object {
-                        "type": "string",
-                      },
-                      "style": "SIMPLE",
-                    },
-                  ],
-                  "responses": Object {
-                    "200": Object {
-                      "content": Object {
-                        "application/json": Object {
-                          "schema": Object {
-                            "$ref": "#/components/schemas/ApiDocument",
-                          },
-                        },
-                      },
-                      "description": "OK",
-                    },
-                    "401": Object {
-                      "description": "Unauthorized",
-                    },
-                    "403": Object {
-                      "description": "Forbidden",
-                    },
-                    "404": Object {
-                      "description": "Not Found",
-                    },
-                  },
                   "summary": "Get a specific api",
-                  "tags": Array [
-                    "get-controller",
-                  ],
                 },
               },
             }
