@@ -99,7 +99,7 @@ exports[`should render ApiDetailsPage correctly with apiItem 1`] = `
           <span
             dangerouslySetInnerHTML={
               Object {
-                "__html": "Provides a basic search api against the National API Directory of Norway",
+                "__html": "<p>Provides a basic search api against the National API Directory of Norway</p>",
               }
             }
           />
