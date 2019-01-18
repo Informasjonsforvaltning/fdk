@@ -93,12 +93,17 @@ exports[`should render ApiDetailsPage correctly with apiItem 1`] = `
       <section
         className="col-12 col-lg-8 mt-3"
       >
-        <ShowMore
-          contentHtml="Provides a basic search api against the National API Directory of Norway"
-          label=""
-          showLessButtonText="Show less"
+        <withStateHandlers(ShowMorePure)
           showMoreButtonText="Show the full description"
-        />
+        >
+          <span
+            dangerouslySetInnerHTML={
+              Object {
+                "__html": "Provides a basic search api against the National API Directory of Norway",
+              }
+            }
+          />
+        </withStateHandlers(ShowMorePure)>
         <ListRegular
           bottomMargin={true}
           title="Format"

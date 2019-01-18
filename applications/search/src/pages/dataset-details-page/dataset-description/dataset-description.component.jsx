@@ -44,18 +44,19 @@ export class DatasetDescription extends React.Component {
         />
 
         {descriptionFormatted && (
-          <ShowMore
-            showMoreButtonText={localization.showFullDescription}
-            contentHtml={descriptionFormatted}
-          />
+          <ShowMore showMoreButtonText={localization.showFullDescription}>
+            <span
+              dangerouslySetInnerHTML={{
+                __html: descriptionFormatted
+              }}
+            />
+          </ShowMore>
         )}
 
         {objective && (
-          <ShowMore
-            showMoreButtonText={localization.showFullObjective}
-            contentHtml={objective}
-          >
+          <ShowMore showMoreButtonText={localization.showFullObjective}>
             <strong>{localization.objective}: </strong>
+            {objective}
           </ShowMore>
         )}
       </header>

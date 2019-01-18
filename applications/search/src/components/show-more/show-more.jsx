@@ -21,7 +21,6 @@ export const ShowMorePure = ({
   contentHeight,
   showAll,
   setContentHeight,
-  contentHtml,
   children
 }) => {
   function onRef(element) {
@@ -34,19 +33,12 @@ export const ShowMorePure = ({
   }
   function _renderContent(extraClass) {
     return (
-      <div className={cx('fdk-ingress', extraClass)}>
+      <div className={cx('fdk-ingress', extraClass)} ref={onRef}>
         {children}
-        <span
-          ref={onRef}
-          dangerouslySetInnerHTML={{
-            __html: contentHtml
-          }}
-        />
       </div>
     );
   }
   let content;
-
   if (!contentHeight) {
     // content height not measured, render with measuring box
     content = _renderContent('show-more__cropped-box-measure');
@@ -80,7 +72,6 @@ export const ShowMorePure = ({
 };
 
 ShowMorePure.defaultProps = {
-  contentHtml: '',
   showMoreButtonText: '',
   showLessButtonText: '',
   toggleShowAll: _.noop,
@@ -89,7 +80,6 @@ ShowMorePure.defaultProps = {
 };
 
 ShowMorePure.propTypes = {
-  contentHtml: PropTypes.string,
   showMoreButtonText: PropTypes.string,
   showLessButtonText: PropTypes.string,
   toggleShowAll: PropTypes.func,
