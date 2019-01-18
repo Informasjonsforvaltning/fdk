@@ -41,6 +41,8 @@ services:
     - search-api
     - harvester-api
     - api-cat
+    - concept-cat
+    - informationmodel-cat
 
   fuseki:
     image: dcatno/fuseki:latest
