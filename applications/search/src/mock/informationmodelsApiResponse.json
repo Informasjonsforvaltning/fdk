@@ -4,7 +4,8 @@
     {
       "id": "eadda99c-781e-4900-8f54-8dd298168382",
       "uri": "http://localhost:8080/informationmodels/eadda99c-781e-4900-8f54-8dd298168382",
-      "title": "Enhetsregisteret",
+      "title": "Informasjonsmodell høstet fra Enhetsregisteret",
+      "description": "Modell høstet fra https://data.brreg.no/enhetsregisteret/api/",
       "publisher": {
         "uri": "http://data.brreg.no/enhetsregisteret/enhet/970018131",
         "id": "970018131",
