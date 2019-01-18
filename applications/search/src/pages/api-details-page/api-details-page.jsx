@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import DocumentMeta from 'react-document-meta';
 import sanitizeHtml from 'sanitize-html';
+import showdown from 'showdown';
 
 import localization from '../../lib/localization';
 import { getTranslateText } from '../../lib/translateText';
@@ -15,15 +16,21 @@ import { ListRegular } from '../../components/list-regular/list-regular.componen
 import { TwoColRow } from '../../components/list-regular/twoColRow/twoColRow';
 import { DatasetReference } from './dataset-reference/dataset-reference.component';
 
+const showDownConverter = new showdown.Converter();
+
 const renderDescription = descriptionFormatted => {
   if (!descriptionFormatted) {
     return null;
   }
+
+  const unsanitizedHtml = showDownConverter.makeHtml(descriptionFormatted);
+  const sanitizedHtml = sanitizeHtml(unsanitizedHtml);
+
   return (
     <ShowMore showMoreButtonText={localization.showFullDescription}>
       <span
         dangerouslySetInnerHTML={{
-          __html: sanitizeHtml(descriptionFormatted)
+          __html: sanitizedHtml
         }}
       />
     </ShowMore>
