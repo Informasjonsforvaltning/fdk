@@ -4,9 +4,9 @@ import com.google.common.base.Strings;
 import io.swagger.v3.oas.models.OpenAPI;
 import no.acat.service.ParserService;
 import no.acat.spec.ParseException;
+import no.dcat.webutils.exceptions.BadRequestException;
 import no.fdk.acat.bindings.ConvertRequest;
 import no.fdk.acat.bindings.ConvertResponse;
-import no.dcat.webutils.exceptions.BadRequestException;
 import no.fdk.acat.common.model.apispecification.ApiSpecification;
 import no.fdk.acat.converters.apispecificationparser.UniversalParser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +26,7 @@ public class ConvertController {
         this.parserService = parserService;
     }
 
-    @RequestMapping("/convert")
-    @PostMapping(produces = "application/json")
+    @RequestMapping(value = "/convert", method = RequestMethod.POST, produces = "application/json")
     public ConvertResponse convert(@RequestBody ConvertRequest request) throws BadRequestException {
         ConvertResponse responseBody = new ConvertResponse();
         List<String> messages = new ArrayList();
