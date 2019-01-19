@@ -1,9 +1,7 @@
 package no.acat.controller;
 
 import com.google.common.base.Strings;
-import io.swagger.v3.oas.models.OpenAPI;
 import no.acat.service.ParserService;
-import no.acat.spec.ParseException;
 import no.dcat.webutils.exceptions.BadRequestException;
 import no.fdk.acat.bindings.ConvertRequest;
 import no.fdk.acat.bindings.ConvertResponse;
@@ -43,13 +41,6 @@ public class ConvertController {
             } catch (Exception e) {
                 throw new BadRequestException("Error downloading spec: " + e.getMessage());
             }
-        }
-
-        try {
-            OpenAPI openAPI = parserService.parse(spec);
-            responseBody.setOpenApi(openAPI);
-        } catch (ParseException e) {
-            messages.add(e.getMessage());
         }
 
         try {

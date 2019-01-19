@@ -47,7 +47,7 @@ public class ConvertControllerTest {
         ConvertResponse convertResponse = convertController.convert(convertRequest);
 
         Assert.assertEquals(
-            convertResponse.getOpenApi().getInfo().getTitle(),
+            convertResponse.getApiSpecification().getInfo().getTitle(),
             "Åpne Data fra Enhetsregisteret - API Dokumentasjon");
     }
 
@@ -59,7 +59,7 @@ public class ConvertControllerTest {
         ConvertResponse convertResponse = convertController.convert(convertRequest);
 
         Assert.assertEquals(
-            convertResponse.getOpenApi().getInfo().getTitle(),
+            convertResponse.getApiSpecification().getInfo().getTitle(),
             "Åpne Data fra Enhetsregisteret - API Dokumentasjon");
     }
 
