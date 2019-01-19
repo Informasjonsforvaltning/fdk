@@ -17,7 +17,7 @@ public class SwaggerJsonSpecConverterTest {
 
   @Before
   public void setup() throws IOException {
-    spec = Utils.getStringFromResource("swagger-raw-enhet-api.json");
+    spec = Utils.getStringFromResource("fs-api-swagger.json");
   }
 
   @Test

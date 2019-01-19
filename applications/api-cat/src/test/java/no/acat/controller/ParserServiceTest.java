@@ -26,7 +26,7 @@ public class ParserServiceTest {
 
     @Test
     public void readAndCheckUtf8() throws Throwable {
-        ClassPathResource resource = new ClassPathResource("raw-enhet-api.json");
+        ClassPathResource resource = new ClassPathResource("enhetsregisteret-openapi3.json");
 
         String resourceUrl = resource.getURL().toString();
 

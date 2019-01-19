@@ -41,7 +41,7 @@ public class ConvertControllerTest {
     @Test
     public void checkIfReturnResponsebodySuccess() throws IOException, BadRequestException {
 
-        String spec = Utils.getStringFromResource("raw-enhet-api.json");
+        String spec = Utils.getStringFromResource("enhetsregisteret-openapi3.json");
         ConvertRequest convertRequest = ConvertRequest.builder().spec(spec).build();
 
         ConvertResponse convertResponse = convertController.convert(convertRequest);
@@ -53,7 +53,7 @@ public class ConvertControllerTest {
 
     @Test
     public void checkIfGettingSpecFromUrlSuccess() throws Exception {
-        String url = Utils.getResourceUrl("raw-enhet-api.json");
+        String url = Utils.getResourceUrl("enhetsregisteret-openapi3.json");
         ConvertRequest convertRequest = ConvertRequest.builder().url(url).build();
 
         ConvertResponse convertResponse = convertController.convert(convertRequest);

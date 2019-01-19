@@ -43,7 +43,7 @@ public class ApiDocumentBuilderServiceTest {
 
     @Test
     public void checkIfApiDocumentIsCreated() throws IOException, ParseException {
-        String spec = Utils.getStringFromResource("raw-enhet-api.json");
+        String spec = Utils.getStringFromResource("enhetsregisteret-openapi3.json");
         ApiRegistrationPublic apiRegistrationPublic = new ApiRegistrationPublic();
         apiRegistrationPublic.setApiSpec(spec);
         String harvestSourceUri = "x";
@@ -57,7 +57,7 @@ public class ApiDocumentBuilderServiceTest {
 
     @Test
     public void checkIfExistingApiDocumentIsUpdated() throws IOException, ParseException {
-        String spec = Utils.getStringFromResource("raw-enhet-api.json");
+        String spec = Utils.getStringFromResource("enhetsregisteret-openapi3.json");
         ApiRegistrationPublic apiRegistrationPublic = new ApiRegistrationPublic();
         apiRegistrationPublic.setApiSpec(spec);
         String harvestSourceUri = "x";
