@@ -2,9 +2,11 @@ package no.acat.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModelProperty;
-import io.swagger.v3.oas.models.OpenAPI;
 import lombok.*;
-import no.dcat.shared.*;
+import no.dcat.shared.Contact;
+import no.dcat.shared.DatasetReference;
+import no.dcat.shared.HarvestMetadata;
+import no.dcat.shared.Publisher;
 import no.fdk.acat.common.model.apispecification.ApiSpecification;
 
 import java.util.List;
@@ -28,9 +30,6 @@ public class ApiDocument {
 
     @ApiModelProperty("Original API spec")
     private String apiSpec;
-
-    @ApiModelProperty("Spec converted to openAPI v3")
-    private OpenAPI openApi;
 
     @ApiModelProperty("Parsed api specification")
     private ApiSpecification apiSpecification;

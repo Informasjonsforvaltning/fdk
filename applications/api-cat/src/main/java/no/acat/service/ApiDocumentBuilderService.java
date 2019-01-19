@@ -1,16 +1,16 @@
 package no.acat.service;
 
-import io.swagger.v3.oas.models.OpenAPI;
 import no.acat.model.ApiDocument;
 import no.acat.repository.ApiDocumentRepository;
-import no.acat.spec.ParseException;
 import no.dcat.client.publishercat.PublisherCatClient;
 import no.dcat.client.registrationapi.ApiRegistrationPublic;
 import no.dcat.htmlclean.HtmlCleaner;
 import no.dcat.shared.*;
 import no.fdk.acat.common.model.apispecification.ApiSpecification;
 import no.fdk.acat.common.model.apispecification.ExternalDocumentation;
+import no.fdk.acat.converters.apispecificationparser.ParseException;
 import no.fdk.acat.converters.apispecificationparser.UniversalParser;
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -18,10 +18,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.google.common.base.Strings.isNullOrEmpty;
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 /*
 ApiDocumentBuilder service is enriching api registrations with related data and
@@ -31,22 +33,19 @@ denormalizes it for indexing and display purpose in search service
 public class ApiDocumentBuilderService {
     private static final Logger logger = LoggerFactory.getLogger(ApiDocumentBuilderService.class);
     private ApiDocumentRepository apiDocumentRepository;
-    private ParserService parserService;
     private PublisherCatClient publisherCatClient;
     private DatasetCatClient datasetCatClient;
 
     @Autowired
-    public ApiDocumentBuilderService(ApiDocumentRepository apiDocumentRepository, ParserService parserService, PublisherCatClient publisherCatClient, DatasetCatClient datasetCatClient) {
+    public ApiDocumentBuilderService(ApiDocumentRepository apiDocumentRepository, PublisherCatClient publisherCatClient, DatasetCatClient datasetCatClient) {
         this.apiDocumentRepository = apiDocumentRepository;
-        this.parserService = parserService;
         this.publisherCatClient = publisherCatClient;
         this.datasetCatClient = datasetCatClient;
     }
 
-    public ApiDocument createFromApiRegistration(ApiRegistrationPublic apiRegistration, String harvestSourceUri, Date harvestDate) throws IOException, ParseException, no.fdk.acat.converters.apispecificationparser.ParseException {
+    public ApiDocument createFromApiRegistration(ApiRegistrationPublic apiRegistration, String harvestSourceUri, Date harvestDate) throws IOException, ParseException {
         String apiSpecUrl = apiRegistration.getApiSpecUrl();
         String apiSpec = getApiSpec(apiRegistration);
-        OpenAPI openApi = parserService.parse(apiSpec);
         ApiSpecification apiSpecification = new UniversalParser().parse(apiSpec);
 
         Optional<ApiDocument> existingApiDocumentOptional = apiDocumentRepository.getApiDocumentByHarvestSourceUri(harvestSourceUri);
@@ -57,7 +56,6 @@ public class ApiDocumentBuilderService {
             .harvestSourceUri(harvestSourceUri)
             .apiSpecUrl(apiSpecUrl)
             .apiSpec(apiSpec)
-            .openApi(openApi)
             .apiSpecification(apiSpecification)
             .build();
 
@@ -85,13 +83,13 @@ public class ApiDocumentBuilderService {
         String apiSpec = apiRegistration.getApiSpec();
 
         if (isNullOrEmpty(apiSpec) && !isNullOrEmpty(apiSpecUrl)) {
-            apiSpec = parserService.getSpecFromUrl(apiSpecUrl);
+            apiSpec = IOUtils.toString(new URL(apiSpecUrl).openStream(), UTF_8);
         }
         return apiSpec;
     }
 
     boolean isEqualContent(ApiDocument first, ApiDocument second) {
-        String[] ignoredProperties = {"id", "harvest", "openApi", "apiSpecification"};
+        String[] ignoredProperties = {"id", "harvest", "apiSpecification"};
         ApiDocument firstContent = new ApiDocument();
         ApiDocument secondContent = new ApiDocument();
 
