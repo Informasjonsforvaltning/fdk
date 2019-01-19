@@ -215,19 +215,16 @@
             <groupId>no.dcat</groupId>
             <artifactId>concept-cat-common</artifactId>
             <version>1.0</version>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>no.dcat</groupId>
             <artifactId>concept-cat-client</artifactId>
             <version>1.0</version>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>no.dcat</groupId>
             <artifactId>api-cat-converters</artifactId>
             <version>1.0.0</version>
-            <scope>compile</scope>
         </dependency>
     </dependencies>
 

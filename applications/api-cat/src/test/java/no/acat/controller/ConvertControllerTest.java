@@ -1,12 +1,10 @@
 package no.acat.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import no.acat.service.ParserService;
 import no.acat.utils.Utils;
-import no.fdk.acat.bindings.ConvertRequest;
-import no.fdk.acat.bindings.ConvertResponse;
 import no.dcat.shared.testcategories.UnitTest;
 import no.dcat.webutils.exceptions.BadRequestException;
+import no.fdk.acat.bindings.ConvertRequest;
+import no.fdk.acat.bindings.ConvertResponse;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,9 +22,7 @@ public class ConvertControllerTest {
 
     @Before
     public void setup() {
-        ObjectMapper mapper = Utils.jsonMapper();
-        ParserService parserService = new ParserService(mapper);
-        convertController = new ConvertController(parserService);
+        convertController = new ConvertController();
     }
 
     @Test(expected = BadRequestException.class)

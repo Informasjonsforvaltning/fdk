@@ -1,6 +1,5 @@
 package no.acat.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import no.acat.model.ApiDocument;
 import no.acat.repository.ApiDocumentRepository;
 import no.acat.utils.Utils;
@@ -34,8 +33,6 @@ public class ApiDocumentBuilderServiceTest {
         apiDocumentRepositoryMock = mock(ApiDocumentRepository.class);
         publisherCatClientMock = mock(PublisherCatClient.class);
         datasetCatClientMock = mock(DatasetCatClient.class);
-
-        ObjectMapper mapper = Utils.jsonMapper();
 
         apiDocumentBuilderService = new ApiDocumentBuilderService(apiDocumentRepositoryMock, publisherCatClientMock, datasetCatClientMock);
     }
