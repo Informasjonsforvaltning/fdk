@@ -176,12 +176,6 @@
             <version>2.19.0</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>no.dcat</groupId>
-            <artifactId>api-cat-converters</artifactId>
-            <version>1.0.0</version>
-            <scope>compile</scope>
-        </dependency>
         <!-- END TEST DEPENDENCIES -->
 
     </dependencies>
