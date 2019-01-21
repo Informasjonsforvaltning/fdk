@@ -13,8 +13,8 @@ import org.springframework.hateoas.core.Relation;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
-@Relation(value = "informationmoden", collectionRelation = "informationmodels")
-@Document(indexName = "imcat", type = "informationomdel")
+@Relation(value = "informationmodel", collectionRelation = "informationmodels")
+@Document(indexName = "imcat", type = "informationmodel")
 @Setting(settingPath = "imcat.settings.json")
 @Mapping(mappingPath = "informationmodel.mapping.json")
 public class InformationModel extends Concept {
@@ -33,6 +33,5 @@ public class InformationModel extends Concept {
 
     @ApiModelProperty("The model itself, expressed in JSON-SCHEMA")
     private String schema;//TODO: Find better name
-
 
 }
