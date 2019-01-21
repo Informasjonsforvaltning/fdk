@@ -95,10 +95,17 @@ const renderDatasetReferences = references => {
   );
 };
 
+const getContactPointKey = contactPoint =>
+  contactPoint &&
+  (contactPoint.uri ||
+    contactPoint.organizationName ||
+    contactPoint.email ||
+    contactPoint.phone);
+
 const renderContactPoint = contactPoint => {
   const { uri, organizationName, email, phone } = contactPoint;
   return (
-    <React.Fragment key={uri || organizationName}>
+    <React.Fragment key={getContactPointKey(contactPoint)}>
       {uri && (
         <TwoColRow
           col1={localization.contactPoint}
@@ -130,9 +137,15 @@ const renderContactPoint = contactPoint => {
 };
 
 const renderContactPoints = contactPoints => {
-  if (!contactPoints) {
+  if (
+    !contactPoints ||
+    !Array.isArray(contactPoints) ||
+    contactPoints.length < 1 ||
+    !contactPoints.some(getContactPointKey)
+  ) {
     return null;
   }
+
   const children = items => items.map(item => renderContactPoint(item));
 
   return (
