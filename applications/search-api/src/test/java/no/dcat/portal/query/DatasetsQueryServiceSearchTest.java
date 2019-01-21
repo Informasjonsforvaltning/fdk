@@ -15,6 +15,8 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -47,7 +49,7 @@ public class DatasetsQueryServiceSearchTest {
      */
     @Test
     public void testValidWithSortdirection() {
-        ResponseEntity<String> actual = sqs.search("query","", "", "", "","",0, 0,0, 1, 10, "nb", "title.nb", "ascending", "", "", "", "", "", "","");
+        ResponseEntity<String> actual = sqs.search("query","", "", "", "","",0, 0,0, "nb", "title.nb", "ascending", "", "", "", "", "", "","", PageRequest.of(0,10));
 
         verify(client.prepareSearch("dcat")
                 .setTypes("dataset")
@@ -56,7 +58,7 @@ public class DatasetsQueryServiceSearchTest {
                 .addSort(SortBuilders.fieldSort("title.nb.raw").order(SortOrder.ASC).missing("_last"));
         assertThat(actual.getStatusCodeValue()).isEqualTo(HttpStatus.OK.value());
 
-        sqs.search("query", "","", "", "","",0, 0,0, 1, 10, "nb", "title.nb", "ascending", "", "", "", "", "", "","");
+        sqs.search("query", "","", "", "","",0, 0,0, "nb", "title.nb", "ascending", "", "", "", "", "", "","", PageRequest.of(0,10));
     }
 
     /**
@@ -64,7 +66,7 @@ public class DatasetsQueryServiceSearchTest {
      */
     @Test
     public void testValidWithDefaultSortdirection() {
-        ResponseEntity<String> actual = sqs.search("query","","",  "", "", "",0,0,0, 1,  10, "nb", "", "", "", "", "", "", "", "","");
+        ResponseEntity<String> actual = sqs.search("query","","",  "", "", "",0,0,0, "nb", "", "", "", "", "", "", "", "","", PageRequest.of(0,10));
 
         verify(client.prepareSearch("dcat").setTypes("dataset").setQuery(any(QueryBuilder.class)).setFrom(1)).setSize(10);
         verify(client.prepareSearch("dcat").setTypes("dataset").setQuery(any(QueryBuilder.class)).setFrom(1).setSize(10), never()).addSort("", SortOrder.ASC);
@@ -76,12 +78,12 @@ public class DatasetsQueryServiceSearchTest {
      */
     @Test
     public void testValidWithTema() {
-        ResponseEntity<String> actual = sqs.search("query","", "GOVE", "", "", "", 0,0,0, 1, 10, "nb", "", "", "", "", "", "", "", "","");
+        ResponseEntity<String> actual = sqs.search("query","", "GOVE", "", "", "", 0,0,0, "nb", "", "", "", "", "", "", "", "","", PageRequest.of(0,10));
 
         verify(client.prepareSearch("dcat").setTypes("dataset").setQuery(any(QueryBuilder.class)).setFrom(1)).setSize(10);
         assertThat(actual.getStatusCodeValue()).isEqualTo(HttpStatus.OK.value());
 
-        sqs.search("", "","Ukjent","", "", "", 0,0,0, 1, 10, "nb", "", "", "", "", "", "", "", "","");
+        sqs.search("", "","Ukjent","", "", "", 0,0,0, "nb", "", "", "", "", "", "", "", "","", PageRequest.of(0,10));
     }
 
     /**
@@ -89,19 +91,9 @@ public class DatasetsQueryServiceSearchTest {
      */
     @Test
     public void testValidWithPublisher() {
-        ResponseEntity<String> actual = sqs.search("query", "","", "REGISTERENHETEN I BRØNNØYSUND", "", "",0,0,0,1, 10, "nb", "", "", "", "", "", "", "", "","");
+        ResponseEntity<String> actual = sqs.search("query", "","", "REGISTERENHETEN I BRØNNØYSUND", "", "",0,0,0, "nb", "", "", "", "", "", "", "", "","",PageRequest.of(0,10));
 
         verify(client.prepareSearch("dcat").setTypes("dataset").setQuery(any(QueryBuilder.class)).setFrom(1)).setSize(10);
-        assertThat(actual.getStatusCodeValue()).isEqualTo(HttpStatus.OK.value());
-    }
-
-    /**
-     * Inputparameter validation. Minus from value shall throw http-error bad request.
-     */
-    @Test
-    public void return200IfFromIsBelowZero() {
-        ResponseEntity<String> actual = sqs.search("", "","", "", "", "",0,0,0, -10, 1000, "nb", "", "", "", "", "", "", "", "","");
-
         assertThat(actual.getStatusCodeValue()).isEqualTo(HttpStatus.OK.value());
     }
 
@@ -110,57 +102,52 @@ public class DatasetsQueryServiceSearchTest {
      */
     @Test
     public void return200IfSizeIsLargerThan100() {
-        ResponseEntity<String> actual = sqs.search("", "","", "", "","",0,0, 0,10, 101, "nb", "", "", "", "", "", "", "", "","");
+        ResponseEntity<String> actual = sqs.search("", "","", "", "","",0,0, 0, "nb", "", "", "", "", "", "", "", "","",PageRequest.of(1,101));
 
         assertThat(actual.getStatusCodeValue()).isEqualTo(HttpStatus.OK.value());
     }
 
     @Test
     public void checkSortfields() {
-        sqs.search("","","","","","", 0,0, 0 , 0, 20,"en", "modified","", "", "", "", "", "", "","");
-        sqs.search("","","","","","", 0,0, 0 , 0, 20,"", "noe annet","asc", "", "", "", "", "", "","");
-        sqs.search("","","","","","", 0,0, 0 , 0, 20,"", "noe annet","desc", "", "", "", "", "", "","");
+        sqs.search("","","","","","", 0,0, 0 , "en", "modified","", "", "", "", "", "", "","",PageRequest.of(0,10));
+        sqs.search("","","","","","", 0,0, 0 , "", "noe annet","asc", "", "", "", "", "", "","",PageRequest.of(0,10));
+        sqs.search("","","","","","", 0,0, 0 , "", "noe annet","desc", "", "", "", "", "", "","",PageRequest.of(0,10));
 
-    }
-
-    @Test
-    public void checkAndAdjustSizeLessThanZero() {
-        sqs.search("","","","","","", 0, 0,0 , 0, -200,"", "","", "", "", "", "", "", "","");
     }
 
     @Test
     public void checkAccessRights() {
-        sqs.search("","","","","Ukjent","", 0, 0,0 , 0, 20,"", "","", "", "", "", "", "", "","");
-        sqs.search("","","","","OPEN","", 0, 0,0 , 0, 20,"", "","", "", "", "", "", "", "","");
+        sqs.search("","","","","Ukjent","", 0, 0,0 ,"", "","", "", "", "", "", "", "","",PageRequest.of(0,10));
+        sqs.search("","","","","OPEN","", 0, 0,0 ,"", "","", "", "", "", "", "", "","",PageRequest.of(0,10));
     }
 
     @Test
     public void checkHarvestMetadata() {
-        sqs.search("","","","","","", 3, 0 , 0,0, 20,"", "","", "", "", "", "", "", "","");
-        sqs.search("","","","","","", 0, 3 ,0, 0, 20,"", "","", "", "", "", "", "", "","");
-        sqs.search("","","","","","", 0, 0 ,3, 0, 20,"", "","", "", "", "", "", "", "","");
+        sqs.search("","","","","","", 3, 0 , 0,"", "","", "", "", "", "", "", "","",PageRequest.of(0,10));
+        sqs.search("","","","","","", 0, 3 ,0, "", "","", "", "", "", "", "", "","",PageRequest.of(0,10));
+        sqs.search("","","","","","", 0, 0 ,3, "", "","", "", "", "", "", "", "","",PageRequest.of(0,10));
     }
 
     @Test
     public void checkPublisherValue() {
-        sqs.search("", "","", "Torsken", "", "", 0, 0, 0,0, 20, "", "", "", "", "", "", "", "", "","");
-        sqs.search("", "","", "Ukjent", "", "", 0, 0, 0,0, 20, "", "", "", "", "", "", "", "", "","");
+        sqs.search("", "","", "Torsken", "", "", 0, 0, 0, "", "", "", "", "", "", "", "", "","",PageRequest.of(0,10));
+        sqs.search("", "","", "Ukjent", "", "", 0, 0, 0,"", "", "", "", "", "", "", "", "","",PageRequest.of(0,10));
     }
 
     @Test
     public void checkOrgpath() {
-        sqs.search("","","","","","/ANNET", 0,0, 0 , 0, 20,"", "","", "", "", "", "", "", "","");
+        sqs.search("","","","","","/ANNET", 0,0, 0 , "", "","", "", "", "", "", "", "","",PageRequest.of(0,10));
     }
 
 
     @Test
     public void checkTitle() {
-        sqs.search("","TITLE","","","","/ANNET", 0,0, 0 , 0, 20,"", "","", "", "", "", "", "", "","");
+        sqs.search("","TITLE","","","","/ANNET", 0,0, 0 , "", "","", "", "", "", "", "", "","",PageRequest.of(0,10));
     }
 
     @Test
     public void testTitle() {
-        ResponseEntity<String> actual = sqs.search("", "TITLE","", "", "", "/ANNET",0,0,0,1, 10, "nb", "", "", "", "", "", "", "", "","");
+        ResponseEntity<String> actual = sqs.search("", "TITLE","", "", "", "/ANNET",0,0,0, "nb", "", "", "", "", "", "", "", "","",PageRequest.of(0,10));
 
         verify(client.prepareSearch("dcat").setTypes("dataset").setQuery(any(QueryBuilder.class)).setFrom(1)).setSize(10);
         assertThat(actual.getStatusCodeValue()).isEqualTo(HttpStatus.OK.value());
@@ -170,51 +157,51 @@ public class DatasetsQueryServiceSearchTest {
     @Test
     public void checkSubject() {
 
-        sqs.search("","","","","","", 0, 0, 0, 0, 20,"", "","", "http://chebang.no", "", "", "", "", "","");
-        sqs.search("","","","","","", 0, 0, 0,0, 20,"", "","", "http://chebang.no,https://kokko.no", "", "", "", "", "","");
-        sqs.search("","","","","","", 0, 0, 0,0, 20,"", "","", "Barebare", "", "", "", "", "","");
-        sqs.search("","","","","","", 0, 0, 0, 0, 20,"", "","", "Barebare,Endabare", "", "", "", "", "","");
+        sqs.search("","","","","","", 0, 0, 0, "", "","", "http://chebang.no", "", "", "", "", "","",PageRequest.of(0,10));
+        sqs.search("","","","","","", 0, 0, 0,"", "","", "http://chebang.no,https://kokko.no", "", "", "", "", "","",PageRequest.of(0,10));
+        sqs.search("","","","","","", 0, 0, 0,"", "","", "Barebare", "", "", "", "", "","",PageRequest.of(0,10));
+        sqs.search("","","","","","", 0, 0, 0, "", "","", "Barebare,Endabare", "", "", "", "", "","",PageRequest.of(0,10));
     }
 
     @Test
     public void checkSpatial() {
 
-        sqs.search("","","","","","", 0, 0, 0, 0, 20,"", "","", "", "", "Ukjent", "", "", "","");
-        sqs.search("","","","","","", 0, 0, 0,0, 20,"", "","", "", "", "Norge", "", "", "","");
-        sqs.search("","","","","","", 0, 0, 0,0, 20,"", "","", "", "", "Oslo", "", "", "","");
-        sqs.search("","","","","","", 0, 0, 0, 0, 20,"", "","", "", "", "barbara", "", "", "","");
-        sqs.search("","","","","","", 0, 0, 0, 0, 20,"", "","", "", "", "http://tulletse", "", "", "","");
+        sqs.search("","","","","","", 0, 0, 0, "", "","", "", "", "Ukjent", "", "", "","",PageRequest.of(0,10));
+        sqs.search("","","","","","", 0, 0, 0,"", "","", "", "", "Norge", "", "", "","",PageRequest.of(0,10));
+        sqs.search("","","","","","", 0, 0, 0,"", "","", "", "", "Oslo", "", "", "","",PageRequest.of(0,10));
+        sqs.search("","","","","","", 0, 0, 0, "", "","", "", "", "barbara", "", "", "","",PageRequest.of(0,10));
+        sqs.search("","","","","","", 0, 0, 0, "", "","", "", "", "http://tulletse", "", "", "","",PageRequest.of(0,10));
     }
     @Test
     public void checkDistributionLicence(){
-        sqs.search("","","","","","", 0, 0, 0, 0, 20,"", "","", "", "", "", "true", "", "","");
-        sqs.search("","","","","","", 0, 0, 0, 0, 20,"", "","", "", "", "", "false", "", "","");
+        sqs.search("","","","","","", 0, 0, 0, "", "","", "", "", "", "true", "", "","",PageRequest.of(0,10));
+        sqs.search("","","","","","", 0, 0, 0, "", "","", "", "", "", "false", "", "","",PageRequest.of(0,10));
 
     }
 
     @Test
     public void checkMultipleSpatialLabels() {
-        sqs.search("","","","","","", 0, 0, 0, 0, 20,"", "","", "", "", "Ukjent,Oslo Fylke", "", "", "","");
+        sqs.search("","","","","","", 0, 0, 0, "", "","", "", "", "Ukjent,Oslo Fylke", "", "", "","",PageRequest.of(0,10));
     }
 
     @Test
     public void checkProvenance() {
 
-        sqs.search("","","","","","", 0, 0 ,0, 0, 20,"", "","", "", "NASJONAL", "", "", "", "","");
-        sqs.search("","","","","","", 0, 0 , 0,0, 20,"", "","", "", "", "", "", "", "","");
-        sqs.search("","","","","","", 0, 0 ,0, 0, 20,"", "","", "", "VEDTAK", "", "", "", "","");
+        sqs.search("","","","","","", 0, 0 ,0, "", "","", "", "NASJONAL", "", "", "", "","",PageRequest.of(0,10));
+        sqs.search("","","","","","", 0, 0 , 0,"", "","", "", "", "", "", "", "","",PageRequest.of(0,10));
+        sqs.search("","","","","","", 0, 0 ,0, "", "","", "", "VEDTAK", "", "", "", "","",PageRequest.of(0,10));
     }
 
     @Test
     public void checkOpendata(){
-        sqs.search("","","","","","", 0, 0 ,0, 0, 20,"", "","", "", "", "", "true", "", "","");
-        sqs.search("","","","","","", 0, 0 ,0, 0, 20,"", "","", "", "", "", "false", "", "","");
+        sqs.search("","","","","","", 0, 0 ,0, "", "","", "", "", "", "true", "", "","",PageRequest.of(0,10));
+        sqs.search("","","","","","", 0, 0 ,0, "", "","", "", "", "", "false", "", "","",PageRequest.of(0,10));
     }
 
     @Test
     public void checkCatalog(){
-        sqs.search("","","","","","", 0, 0 ,0, 0, 20,"", "","", "", "", "", "", "http://catalog.url", "","");
-        sqs.search("","","","","","", 0, 0 ,0, 0, 20,"", "","", "", "", "", "", "Katalog for Brønnøysundregistrene", "","");
+        sqs.search("","","","","","", 0, 0 ,0, "", "","", "", "", "", "", "http://catalog.url", "","",PageRequest.of(0,10));
+        sqs.search("","","","","","", 0, 0 ,0, "", "","", "", "", "", "", "Katalog for Brønnøysundregistrene", "","",PageRequest.of(0,10));
     }
 
     @Test
