@@ -46,7 +46,7 @@ public class ApiHarvestTest {
 
         harvester.harvestAll();
 
-        verify(apiDocumentRepositoryMock, times(9)).createOrReplaceApiDocument(any());
+        verify(apiDocumentRepositoryMock, times(8)).createOrReplaceApiDocument(any());
     }
 
 
@@ -78,11 +78,11 @@ public class ApiHarvestTest {
 
         harvester.harvestAll();
 
-        verify(apiDocumentRepositoryMock, times(8)).createOrReplaceApiDocument(any());
+        verify(apiDocumentRepositoryMock, times(7)).createOrReplaceApiDocument(any());
     }
 
     @Test(expected = RuntimeException.class)
-    public void shouldGetExceptionWhenHarvestApiFails() throws Throwable {
+    public void shouldGetExceptionWhenHarvestApiFails() {
         RegistrationApiClient registrationApiClientMock = mock(RegistrationApiClient.class);
         when(registrationApiClientMock.getPublished()).thenReturn(null);
 
