@@ -8,7 +8,8 @@ spring:
 
 logging:
   level.root: WARN
-  level.no.ccat: ${LOG_LEVEL:INFO}
+  level.no.fdk.imcat: DEBUG
+  level.no.fdk.imcat.service: DEBUG
   level.org.springframework: WARN
   level.org.springframework.web: WARN
   level.org.springframework.data.elasticsearch: ${LOG_LEVEL:INFO}
