@@ -80,7 +80,7 @@ export const SearchPage = props => {
 
   fetchDatasetsIfNeeded(stringifiedQuery);
   fetchApisIfNeeded(stringifiedQuery);
-  fetchConceptsIfNeeded(`?${stringifiedQuery}`);
+  fetchConceptsIfNeeded(stringifiedQuery);
   fetchThemesIfNeeded();
   fetchPublishersIfNeeded();
   fetchReferenceDataIfNeeded();
