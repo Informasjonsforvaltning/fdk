@@ -24,6 +24,8 @@ import org.elasticsearch.search.sort.SortOrder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -85,25 +87,19 @@ public class ApiSearchController {
         @RequestParam(value = "format", defaultValue = "", required = false)
             String[] formats,
 
-        @ApiParam("Returns datatasets from position x in the result set, 0 is the default value. A value of 150 will return the 150th dataset in the resultset")
-        @RequestParam(value = "from", defaultValue = "0", required = false)
-            int from,
-
-        @ApiParam("Specifies the size, i.e. the number of datasets to return in one request. The default is 10, the maximum number of datasets returned is 100")
-        @RequestParam(value = "size", defaultValue = "10", required = false)
-            int size,
-
         @ApiParam("Specifies the sort field, at the present we support title, modified and publisher. Default is no value")
         @RequestParam(value = "sortfield", defaultValue = "", required = false)
             String sortfield,
 
         @ApiParam("Specifies the sort direction of the sorted result. The directions are: asc for ascending and desc for descending")
         @RequestParam(value = "sortdirection", defaultValue = "", required = false)
-            String sortdirection
+            String sortdirection,
 
+        @PageableDefault()
+            Pageable pageable
     ) {
         try {
-            SearchRequestBuilder searchRequest = buildSearchRequest(query, orgPath, formats, from, size);
+            SearchRequestBuilder searchRequest = buildSearchRequest(query, orgPath, formats, pageable);
             addSort(sortfield, sortdirection, searchRequest);
             if (query.isEmpty()) {
                 addSortForEmptySearch(searchRequest);
@@ -118,7 +114,7 @@ public class ApiSearchController {
         return null;
     }
 
-    SearchRequestBuilder buildSearchRequest(String query, String orgPath, String[] formats, int from, int size) {
+    SearchRequestBuilder buildSearchRequest(String query, String orgPath, String[] formats, Pageable pageable) {
 
         QueryBuilder search;
 
@@ -141,12 +137,14 @@ public class ApiSearchController {
 
         String[] returnFields = {"id", "title", "titleFormatted", "description", "descriptionFormatted", "nationalComponent", "formats", "publisher.id", "publisher.orgPath", "publisher.name", "publisher.prefLabel.*"};
 
+        int from = (int) pageable.getOffset();
+
         return elasticsearch.getClient()
             .prepareSearch("acat")
             .setTypes("apidocument")
             .setQuery(boolQuery)
             .setFrom(checkAndAdjustFrom(from))
-            .setSize(checkAndAdjustSize(size))
+            .setSize(checkAndAdjustSize(pageable.getPageSize()))
             .setFetchSource(returnFields, null)
             .addAggregation(createTermsAggregation("formats", "formats"))
             .addAggregation(createTermsAggregation("orgPath", "publisher.orgPath"));
