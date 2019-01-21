@@ -83,6 +83,18 @@
             <artifactId>elasticsearch5-client</artifactId>
             <version>1.2.0</version>
         </dependency>
+        <dependency>
+            <groupId>io.swagger.core.v3</groupId>
+            <artifactId>swagger-models</artifactId>
+            <version>2.0.3</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>no.dcat</groupId>
+            <artifactId>registration-api-client</artifactId>
+            <version>1.4.0</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
     <profiles>
         <profile>
