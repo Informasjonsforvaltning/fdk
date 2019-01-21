@@ -6,22 +6,17 @@ import no.acat.model.queryresponse.QueryResponse;
 import no.acat.service.ElasticsearchService;
 import no.acat.utils.Utils;
 import no.dcat.shared.testcategories.UnitTest;
-import org.elasticsearch.action.search.SearchAction;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
-import org.elasticsearch.client.Client;
-import org.elasticsearch.client.ElasticsearchClient;
-import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
-import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.sort.FieldSortBuilder;
 import org.elasticsearch.search.sort.SortBuilders;
 import org.elasticsearch.search.sort.SortOrder;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.IOException;
@@ -301,7 +296,7 @@ public class SearchControllerTest {
         SearchResponse searchResponse = mock(SearchResponse.class);
         when(searchResponse.getHits()).thenReturn(searchHits);
 
-        doReturn(null).when(spyController).buildSearchRequest(anyString(), anyString(), anyString(), any(), anyInt(), anyInt());
+        doReturn(null).when(spyController).buildSearchRequest(anyString(), anyString(), anyString(), any(), any());
         doReturn(searchResponse).when(spyController).doQuery(anyObject());
         doNothing().when(spyController).addSortForEmptySearch(anyObject());
         // todo this is nonsense, we do not test anything
@@ -310,46 +305,10 @@ public class SearchControllerTest {
         when(hit.getSourceAsString()).thenReturn(apiSpecExample);
         when(hit.getId()).thenReturn("http://testtesttset");
 
-        QueryResponse response = spyController.search("", "", "", new String[]{""}, 0, 0, "", "");
+        QueryResponse response = spyController.search("", "", "", new String[]{""}, "", "", PageRequest.of(0, 10));
 
         assertThat(response, notNullValue());
 
-    }
-
-    @Test
-    public void checkBuildSearchRequest_ifNotNull(){
-
-        ElasticsearchService elasticsearchService = mock(ElasticsearchService.class);
-        ElasticsearchClient elasticsearchClient = mock(ElasticsearchClient.class);
-        SearchAction action = mock(SearchAction.class);
-        AggregationBuilder aggregationBuilder = mock(AggregationBuilder.class);
-        Client client = mock(Client.class);
-        QueryBuilder queryBuilder = mock(QueryBuilder.class);
-
-        ApiSearchController controller =
-            new ApiSearchController(elasticsearchService, Utils.jsonMapper());
-        ApiSearchController spyController = spy(controller);
-
-        SearchRequestBuilder searchRequestBuilder =
-            new SearchRequestBuilder(elasticsearchClient, action);
-        SearchRequestBuilder builder = spy(searchRequestBuilder);
-
-        doCallRealMethod()
-            .when(spyController)
-            .buildSearchRequest(anyString(), anyString(), anyString(), any(), anyInt(), anyInt());
-
-        when(elasticsearchService.getClient()).thenReturn(client);
-        when(client.prepareSearch("acat")).thenReturn(builder);
-        when(builder.setTypes(anyString())).thenReturn(builder);
-        when(builder.setQuery(queryBuilder)).thenReturn(builder);
-        when(builder.setFrom(anyInt())).thenReturn(builder);
-        when(builder.setSize(anyInt())).thenReturn(builder);
-        when(builder.addAggregation(aggregationBuilder)).thenReturn(builder);
-
-        SearchRequestBuilder expected =
-            spyController.buildSearchRequest("query", "", "", new String[] {""}, 0, 0);
-
-        Assert.assertThat(expected, is(notNullValue()));
     }
 
     @Test
