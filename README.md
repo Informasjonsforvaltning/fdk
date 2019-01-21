@@ -47,15 +47,20 @@ The [search api](https://github.com/brreg/openAPI/blob/master/specs/fdk.yaml) ca
   1) Clone this repo
   
   2) Install Java8, Maven and Docker. 
-   	If you are running Windows. Make sure you manually add the correct Maven path in windows "environment Variables"
-   
+   	
+	```
+	If you are running Windows. Make sure you manually add the correct Maven path in windows "environment Variables"
+	```
+
      	If you have a Mac, running this script will install Java8 and Maven automatically: 
       	```
 	./install-dependencies-mac.sh
 	```
   3) Compile, create docker images and run the entire project:
-  	If you are running windows, you also need to make sure you have installed node.js:
+  	```
+	If you are running windows, you also need to make sure you have installed node.js:
 	https://nodejs.org/en/download/
+	```
 
    
      ```
