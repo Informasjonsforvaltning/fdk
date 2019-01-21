@@ -7,7 +7,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import java.util.List;
 
-@RepositoryRestResource(itemResourceRel = "concept", collectionResourceRel = "concepts", exported = false)
+@RepositoryRestResource(itemResourceRel = "concept", collectionResourceRel = "concepts")
 public interface ConceptDenormalizedRepository
     extends ElasticsearchRepository<ConceptDenormalized, String> {
 
