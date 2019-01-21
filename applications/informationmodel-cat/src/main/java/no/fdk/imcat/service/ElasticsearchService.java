@@ -31,7 +31,7 @@ public class ElasticsearchService {
         Elasticsearch5Client elasticClient = new Elasticsearch5Client(elasticsearchTemplate.getClient());
         try {
             elasticClient.registerSetting("imcat", mapper.readTree(new ClassPathResource("imcat.settings.json").getInputStream()).toString());
-            elasticClient.registerMapping("imcat", "concept", mapper.readTree(new ClassPathResource("informationmodel.mapping.json").getInputStream()).get("concept").toString());
+            elasticClient.registerMapping("imcat", "informationmodel", mapper.readTree(new ClassPathResource("informationmodel.mapping.json").getInputStream()).get("informationmodel").toString());
             elasticClient.initializeAliasAndIndexMapping("imcat");
         } catch (IOException e) {
             throw new RuntimeException("Unable to initialize elasticsearch index for Informationmodel-cat", e);
