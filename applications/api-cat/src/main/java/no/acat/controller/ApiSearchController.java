@@ -77,10 +77,6 @@ public class ApiSearchController {
         @RequestParam(value = "q", defaultValue = "", required = false)
             String query,
 
-        @ApiParam("Filters on accessrights, codes are PUBLIC, RESTRICTED or NON_PUBLIC")
-        @RequestParam(value = "accessrights", defaultValue = "", required = false)
-            String accessRights,
-
         @ApiParam("Filters on publisher's organization path (orgPath), e.g. /STAT/972417858/971040238")
         @RequestParam(value = "orgPath", defaultValue = "", required = false)
             String orgPath,
@@ -107,7 +103,7 @@ public class ApiSearchController {
 
     ) {
         try {
-            SearchRequestBuilder searchRequest = buildSearchRequest(query, accessRights, orgPath, formats, from, size);
+            SearchRequestBuilder searchRequest = buildSearchRequest(query, orgPath, formats, from, size);
             addSort(sortfield, sortdirection, searchRequest);
             if (query.isEmpty()) {
                 addSortForEmptySearch(searchRequest);
@@ -122,7 +118,7 @@ public class ApiSearchController {
         return null;
     }
 
-    SearchRequestBuilder buildSearchRequest(String query, String accessRights, String orgPath, String[] formats, int from, int size) {
+    SearchRequestBuilder buildSearchRequest(String query, String orgPath, String[] formats, int from, int size) {
 
         QueryBuilder search;
 
