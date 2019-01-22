@@ -4,7 +4,6 @@ import com.google.common.base.Predicates;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.data.rest.RepositoryRestMvcAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.PropertySource;
 import springfox.documentation.builders.PathSelectors;
@@ -19,7 +18,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-@SpringBootApplication(exclude = RepositoryRestMvcAutoConfiguration.class)
+@SpringBootApplication
 @PropertySource("classpath:swagger.properties")
 @EnableSwagger2
 public class CcatApiApplication {
