@@ -49,8 +49,9 @@ The [search api](https://github.com/brreg/openAPI/blob/master/specs/fdk.yaml) ca
   2) Install Java8, Maven and Docker. 
    	
 	```
-	If you are running Windows. Make sure you manually add the correct Maven path in windows "environment Variables"
-	Also make sure you have set correct JAVA_HOME path to environment variables.
+	- If you are running Windows. Make sure you manually add the correct Maven path in windows "environment Variables"
+	- Also make sure you have set correct JAVA_HOME path to environment variables.
+	- After having installed Docker. Make sure you update the resource limits at Settings-Advanced. You need at least 4 CPU's and 		more than 8k MB of Memory.
 	```
 
      	If you have a Mac, running this script will install Java8 and Maven automatically: 
