@@ -30,6 +30,7 @@ import static no.fdk.imcat.service.InformationmodelHarvester.RETRY_COUNT_API_RET
 public class APIHarvest {
 
     private static final Logger logger = LoggerFactory.getLogger(APIHarvest.class);
+    public static String INFORMATIONMODEL_ROOT = "https://fellesdatakatalog.brreg.no/informationmodels/";
     private ObjectMapper mapper;
     private RegistrationApiClient registrationApiClient;
 
@@ -48,8 +49,10 @@ public class APIHarvest {
     }
 
     InformationModel getInformationModel(InformationModelHarvestSource source) {
+
         InformationModel newModel = new InformationModel();
         newModel.setHarvestSourceUri(source.URI);
+        newModel.setId(source.id);
         ObjectWriter writer = mapper.writer(new DefaultPrettyPrinter());
         try {
             mapper.enable(SerializationFeature.INDENT_OUTPUT);
@@ -67,7 +70,8 @@ public class APIHarvest {
         for (ApiRegistrationPublic apiId : apiReg) {
             //TODO: Change this when our own class for API Storage is available
             InformationModelHarvestSource hs = new InformationModelHarvestSource();
-            hs.URI = apiId.getId();
+            hs.URI = INFORMATIONMODEL_ROOT + apiId.getId();
+            hs.id = apiId.getId();
             hs.sourceType = API_TYPE;
             hs.schema = ConvertFromOpenApiSchemasToJSONSchema(apiId.getOpenApi().getComponents().getSchemas(), apiId.getId());
             sourceList.add(hs);
