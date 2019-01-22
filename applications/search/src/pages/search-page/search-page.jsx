@@ -4,7 +4,7 @@ import qs from 'qs';
 import { Route, Switch } from 'react-router-dom';
 import cx from 'classnames';
 import { detect } from 'detect-browser';
-import { withState, withHandlers, compose } from 'recompose';
+import { compose, withHandlers, withState } from 'recompose';
 
 import { ResultsDataset } from './results-dataset/results-dataset.component';
 import { ResultsConcepts } from './results-concepts/results-concepts.component';
@@ -12,17 +12,17 @@ import { ResultsApi } from './results-api/results-api.component';
 import { ResultsInformationModel } from './results-informationmodel/results-informationmodel.component';
 import { SearchBoxWithState } from './search-box/search-box.component';
 import { ResultsTabs } from './results-tabs/results-tabs.component';
-import { removeValue, addValue } from '../../lib/stringUtils';
+import { addValue, removeValue } from '../../lib/stringUtils';
 
 import './search-page.scss';
 import { createNestedListOfPublishers } from '../../api/get-datasets';
 import { createNestedListOfConceptPublishers } from '../../api/get-concepts';
 import {
-  PATHNAME_DATASETS,
+  HITS_PER_PAGE,
   PATHNAME_APIS,
   PATHNAME_CONCEPTS,
-  PATHNAME_INFORMATIONMODELS,
-  HITS_PER_PAGE
+  PATHNAME_DATASETS,
+  PATHNAME_INFORMATIONMODELS
 } from '../../constants/constants';
 
 const ReactGA = require('react-ga');
@@ -34,7 +34,7 @@ export const SearchPage = props => {
     searchQuery,
     setSearchQuery,
     setQueryFilter,
-    setQueryFrom,
+    setQueryPage,
     fetchDatasetsIfNeeded,
     fetchApisIfNeeded,
     fetchConceptsIfNeeded,
@@ -92,7 +92,9 @@ export const SearchPage = props => {
 
   const isFilterNotEmpty = () =>
     _.some(
-      _.values(_.omit(props.searchQuery, ['q', 'sortfield', 'sortdirection']))
+      _.values(
+        _.omit(props.searchQuery, ['q', 'page', 'sortfield', 'sortdirection'])
+      )
     );
 
   const handleSearchSubmit = searchField => {
@@ -263,13 +265,8 @@ export const SearchPage = props => {
 
   const handlePageChange = data => {
     const { selected } = data;
-    const offset = Math.ceil(selected * HITS_PER_PAGE);
 
-    if (offset === 0) {
-      setQueryFrom(undefined, history);
-    } else {
-      setQueryFrom(offset, history);
-    }
+    setQueryPage(selected || undefined, history);
   };
 
   const topSectionClass = cx('top-section-search', 'mb-4', {
@@ -394,7 +391,7 @@ export const SearchPage = props => {
                 hitsPerPage={HITS_PER_PAGE}
                 showFilterModal={showFilterModal}
                 closeFilterModal={close}
-                showClearFilterButton={!!searchQuery.orgPath}
+                showClearFilterButton={isFilterNotEmpty()}
                 publisherArray={createNestedListOfConceptPublishers(
                   _.get(conceptAggregations, ['orgPath', 'buckets'], [])
                 )}
