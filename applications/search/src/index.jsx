@@ -2,11 +2,12 @@ import 'whatwg-fetch';
 import React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { Route } from 'react-router';
+import { ConnectedRouter } from 'connected-react-router';
 import ReactGA from 'react-ga';
 import { hotjar } from 'react-hotjar';
 
-import { configureStore } from './redux/configureStore';
+import { configureStore, history } from './redux/configureStore';
 import { ConnectedFeatureToggleProvider } from './components/connected-feature-toggle-provider';
 import { ConnectedApp } from './app/connected-app';
 import { ErrorBoundary } from './components/error-boundary/error-boundary';
@@ -60,12 +61,12 @@ ReactDOM.render(
   <ErrorBoundary>
     <Provider store={store}>
       <ConnectedFeatureToggleProvider>
-        <BrowserRouter>
+        <ConnectedRouter history={history}>
           <ScrollToTop>
             <Route path="/" component={Analytics} />
             <Route path="/" component={ConnectedApp} />
           </ScrollToTop>
-        </BrowserRouter>
+        </ConnectedRouter>
       </ConnectedFeatureToggleProvider>
     </Provider>
   </ErrorBoundary>,

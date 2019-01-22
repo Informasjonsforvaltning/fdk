@@ -3,6 +3,8 @@ import thunk from 'redux-thunk';
 import { createLogger } from 'redux-logger';
 import persistState from 'redux-localstorage';
 import { apiMiddleware } from 'redux-api-middleware';
+import { createBrowserHistory } from 'history';
+import { routerMiddleware } from 'connected-react-router';
 
 import { config } from '../config';
 import { rootReducer } from './rootReducer';
@@ -11,8 +13,10 @@ function selectCompose() {
   return window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 }
 
+export const history = createBrowserHistory();
+
 export function configureStore() {
-  const middlewares = [thunk, apiMiddleware];
+  const middlewares = [thunk, apiMiddleware, routerMiddleware(history)];
   if (config.reduxLog) {
     middlewares.push(createLogger());
   }
@@ -24,7 +28,10 @@ export function configureStore() {
     persistState(['featureToggle', 'settings'], { key: 'redux' })
   );
 
-  const store = createStore(rootReducer, /* preloadedState, */ enhancer);
+  const store = createStore(
+    rootReducer(history),
+    /* preloadedState, */ enhancer
+  );
   store.dispatch({ type: 'STORE_INIT' });
 
   if (module.hot) {

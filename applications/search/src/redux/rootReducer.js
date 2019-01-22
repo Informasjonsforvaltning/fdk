@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import { connectRouter } from 'connected-react-router';
 import { themesReducer } from './modules/themes';
 import { publishersReducer } from './modules/publishers';
 import { featureToggleResolver } from './modules/featureToggle';
@@ -12,17 +13,19 @@ import { apis } from './modules/apis';
 import { concepts } from './modules/concepts';
 import { informationModelsReducer } from './modules/informationModels';
 
-export const rootReducer = combineReducers({
-  themes: themesReducer,
-  publishers: publishersReducer,
-  featureToggle: featureToggleResolver,
-  settings: settingsResolver,
-  catalogs: catalogsReducer,
-  referenceData: referenceDataReducer,
-  conceptsCompare: conceptsCompareReducer,
-  searchQuery: searchReducer,
-  datasets,
-  apis,
-  concepts,
-  informationModels: informationModelsReducer
-});
+export const rootReducer = history =>
+  combineReducers({
+    router: connectRouter(history),
+    themes: themesReducer,
+    publishers: publishersReducer,
+    featureToggle: featureToggleResolver,
+    settings: settingsResolver,
+    catalogs: catalogsReducer,
+    referenceData: referenceDataReducer,
+    conceptsCompare: conceptsCompareReducer,
+    searchQuery: searchReducer,
+    datasets,
+    apis,
+    concepts,
+    informationModels: informationModelsReducer
+  });
