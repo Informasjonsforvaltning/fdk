@@ -14,7 +14,7 @@ logging:
   level.org.springframework.web: WARN
   level.org.springframework.data.elasticsearch: ${LOG_LEVEL:INFO}
 application:
-  apiRootUrl: http://nginx-search:8080/datamodel
+  apiRootUrl: http://nginx-search:8080/api
   apiRootExternalURL: https://fellesdatakatalog.brreg.no/datamodel
   conceptsPath: /concepts
   harvestSourceUri: https://fellesdatakatalog.brreg.no/api #TODO:Verify if this makes sense
