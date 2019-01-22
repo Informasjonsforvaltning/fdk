@@ -26,7 +26,7 @@ export function fetchConceptsIfNeededAction(query, aggregations = true) {
   return (dispatch, getState) =>
     shouldFetch(_.get(getState(), ['concepts', 'meta']), queryReplaced) &&
     dispatch(
-      fetchActions(`/api/concepts${queryReplaced}`, [
+      fetchActions(`/api/concepts?${queryReplaced}`, [
         { type: CONCEPTS_REQUEST, meta: { query: queryReplaced } },
         { type: CONCEPTS_SUCCESS, meta: { query: queryReplaced } },
         CONCEPTS_FAILURE
