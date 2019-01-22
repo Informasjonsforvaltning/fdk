@@ -9,6 +9,4 @@ import java.util.Optional;
 @RepositoryRestResource(itemResourceRel = "informationmodel", collectionResourceRel = "informationmodels", exported = false)
 public interface InformationmodelRepository
     extends ElasticsearchRepository<InformationModel, String> {
-
-    Optional<InformationModel> findById(String id);
 }

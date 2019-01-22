@@ -1,11 +1,9 @@
 package no.fdk.imcat.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import io.swagger.v3.oas.models.media.Schema;
 import no.dcat.client.registrationapi.ApiRegistrationPublic;
@@ -53,9 +51,8 @@ public class APIHarvest {
         InformationModel newModel = new InformationModel();
         newModel.setHarvestSourceUri(source.URI);
         newModel.setId(source.id);
-        ObjectWriter writer = mapper.writer(new DefaultPrettyPrinter());
+        ObjectWriter writer = mapper.writer();
         try {
-            mapper.enable(SerializationFeature.INDENT_OUTPUT);
             newModel.setSchema(writer.writeValueAsString(source.schema));
         } catch (JsonProcessingException e) {
             logger.error("Jackson fail!");
@@ -88,7 +85,7 @@ public class APIHarvest {
 
         JSONSchemaRootNode.put("$schema", "http://json-schema.org/draft-06/schema#");
 
-        String schemaId = "https://fellesdatakatalog.brreg.no/informationmodels/" + id + "/schema";
+        String schemaId = INFORMATIONMODEL_ROOT + id + "/schema";
 
         JSONSchemaRootNode.put("$id", schemaId);
 
