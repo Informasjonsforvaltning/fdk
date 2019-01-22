@@ -326,22 +326,22 @@ Velg "Tesauri" dersom datasettbeskrivelsen omhandler en hierarkisk og  assosiati
 # Traffic_Limits (Trafikkbegrensninger)
 :Traffic_Limits
     dct:abstract """Begrensninger på antall kall til API e.l. per bruker."""@no ;
-    dct:description """Begrensninger på antall kall til API e.l. per bruker."""@no .
+    dct:description """ """@no .
 
 # Performance (Kapasitet og ytelse)
 :Performance
     dct:abstract """Oppgi responstiden til API-et. Typisk angitt i ms. Er det begrensinger på antall samtidige brukere?"""@no ;
-    dct:description """Oppgi responstiden til API-et. Typisk angitt i ms. Er det begrensinger på antall samtidige brukere?"""@no .
+    dct:description """ """@no .
 
 # Availability (Pålitelighet)
 :Availability
     dct:abstract """Oppgi oppetiden til API-et."""@no ;
-    dct:description """Oppgi oppetiden til API-et."""@no .
+    dct:description """ """@no .
 
 # Cost (Kostnader)
 :Cost
     dct:abstract """Kostnader forbundet med å bruke API-et. Transaksjonskostnader, abonnement e.l."""@no ;
-    dct:description """Kostnader forbundet med å bruke API-et. Transaksjonskostnader, abonnement e.l."""@no .
+    dct:description """ """@no .
 
 # Distribution description (beskrivelse)
 :Distribution_description 
