@@ -99,8 +99,7 @@ export class ResultsApi extends React.Component {
       setApiSort
     } = this.props;
 
-    const page =
-      searchQuery && searchQuery.from ? searchQuery.from / hitsPerPage : 0;
+    const page = (searchQuery && searchQuery.page) || 0;
     const pageCount = Math.ceil((apiTotal || 1) / hitsPerPage);
 
     const clearButtonClass = cx(

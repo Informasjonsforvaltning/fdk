@@ -8,7 +8,7 @@ import { fetchThemesIfNeededAction } from '../../redux/modules/themes';
 import {
   setSearchQuery,
   setQueryFilter,
-  setQueryFrom,
+  setQueryPage,
   clearQuery
 } from '../../redux/modules/search';
 import {
@@ -122,8 +122,8 @@ const mapDispatchToProps = dispatch => ({
   setSearchQuery: (query, history) => dispatch(setSearchQuery(query, history)),
   setQueryFilter: (filterType, filterValue, history) =>
     dispatch(setQueryFilter(filterType, filterValue, history)),
-  setQueryFrom: (filterValue, history) =>
-    dispatch(setQueryFrom(filterValue, history)),
+  setQueryPage: (filterValue, history) =>
+    dispatch(setQueryPage(filterValue, history)),
   clearQuery: history => dispatch(clearQuery(history)),
   fetchInformationModelsIfNeeded: query =>
     dispatch(fetchInformationModelsIfNeededAction(query)),
