@@ -94,8 +94,7 @@ export class ResultsInformationModel extends React.Component {
       setInformationModelSort
     } = this.props;
 
-    const page =
-      searchQuery && searchQuery.from ? searchQuery.from / hitsPerPage : 0;
+    const page = (searchQuery && searchQuery.page) || 0;
     const pageCount = Math.ceil((informationModelTotal || 1) / hitsPerPage);
 
     const clearButtonClass = cx(
@@ -188,7 +187,6 @@ export class ResultsInformationModel extends React.Component {
           </aside>
           <div id="informationModels" className="col-12 col-lg-8">
             {renderHits(informationModelItems, publishers)}
-
             <div className="col-12 d-flex justify-content-center">
               <span className="uu-invisible" aria-hidden="false">
                 Sidepaginering.

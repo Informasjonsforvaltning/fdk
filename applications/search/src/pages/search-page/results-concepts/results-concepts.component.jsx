@@ -142,9 +142,7 @@ export class ResultsConcepts extends React.Component {
       conceptSortValue,
       setConceptSort
     } = this.props;
-    const page = _.get(searchQuery, 'from')
-      ? searchQuery.from / hitsPerPage
-      : 0;
+    const page = (searchQuery && searchQuery.page) || 0;
     const pageCount = Math.ceil((conceptTotal || 1) / hitsPerPage);
     const clearButtonClass = cx(
       'btn',
