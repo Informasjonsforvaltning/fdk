@@ -1,0 +1,59 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render SchemaCollapsePure correctly with no props 1`] = `""`;
+
+exports[`should render SchemaCollapsePure with props 1`] = `
+<React.Fragment>
+  <React.Fragment>
+    <button
+      className="bg-transparent border-0 p-0 w-100"
+      name="Tittel"
+      style={
+        Object {
+          "marginLeft": "16",
+        }
+      }
+    >
+      <div
+        className="d-flex align-items-center"
+      >
+        <div
+          className="d-flex justify-content-start w-50"
+        >
+          <i
+            className="fa font-weight-bold mr-2 fdk-color-blue-dark fa-angle-down"
+          />
+          <span
+            className="fdk-text-extra-strong"
+          >
+            Tittel
+          </span>
+        </div>
+        <span
+          className="d-flex w-50"
+        >
+          Type
+        </span>
+      </div>
+    </button>
+    <Collapse
+      appear={false}
+      className="mt-2"
+      enter={true}
+      exit={true}
+      in={false}
+      isOpen={false}
+      mountOnEnter={false}
+      onEnter={[Function]}
+      onEntered={[Function]}
+      onEntering={[Function]}
+      onExit={[Function]}
+      onExited={[Function]}
+      onExiting={[Function]}
+      tag="div"
+      timeout={350}
+      unmountOnExit={false}
+    />
+  </React.Fragment>
+</React.Fragment>
+`;

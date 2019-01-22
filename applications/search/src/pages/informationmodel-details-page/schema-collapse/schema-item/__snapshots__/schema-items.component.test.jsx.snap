@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render SchemaItem with props 1`] = `
+<div
+  className="d-flex schema-collapse--item"
+  name="Tittel"
+  style={
+    Object {
+      "marginLeft": "16",
+    }
+  }
+>
+  <div
+    className="w-50 pl-0"
+  >
+    Tittel
+  </div>
+  <div
+    className="w-50"
+  >
+    Type
+  </div>
+</div>
+`;
