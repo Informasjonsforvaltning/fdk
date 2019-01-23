@@ -11,6 +11,7 @@ import { StickyMenu } from '../../components/sticky-menu/sticky-menu.component';
 import { ShowMore } from '../../components/show-more/show-more';
 import { ListRegular } from '../../components/list-regular/list-regular.component';
 import { Tabs } from './tabs/tabs.component';
+import { Structure } from './structure/structure.component';
 
 const renderRelatedApiDescription = description => {
   if (!description) {
@@ -48,6 +49,10 @@ const renderModels = schema => {
       <div className="d-flex list-regular--item" />
       <Tabs
         tabContent={[
+          {
+            title: localization.infoMod.tabs.structure,
+            body: <Structure definitions={schema.definitions} />
+          },
           {
             title: localization.infoMod.tabs.json,
             body: renderJSONSchema(schema)

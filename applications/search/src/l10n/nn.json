@@ -24,6 +24,8 @@
   "unknown": "Ukjend",
   "deprecated": "under avvikling",
   "responsible": "Ansvarleg",
+  "name": "Namn",
+  "type": "Type",
   "app": {
     "menu": "Meny"
   },

@@ -1,0 +1,113 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render ModelComponentPure correctly with no props 1`] = `""`;
+
+exports[`should render ModelComponentPure with props 1`] = `
+<React.Fragment>
+  <div
+    className="d-flex"
+  >
+    <button
+      className="bg-transparent border-0 p-0 d-flex align-items-center w-50"
+      name="Eiendom"
+    >
+      <div
+        className="d-flex align-items-center"
+      >
+        <i
+          className="fa font-weight-bold mr-2 fdk-color-blue-dark fa-angle-down"
+        />
+        <span
+          className="d-flex w-50 fdk-text-extra-strong"
+        >
+          Eiendom
+        </span>
+      </div>
+    </button>
+    <div
+      className="d-flex w-50"
+      style={
+        Object {
+          "marginLeft": "16px",
+        }
+      }
+    >
+      <Link
+        duration={1500}
+        isDynamic={true}
+        key="Spesifisering"
+        offset={-10}
+        smooth={true}
+        spy={true}
+        tabIndex="0"
+        to="Spesifisering"
+      >
+        <span>
+          Spesifisering
+        </span>
+      </Link>
+    </div>
+  </div>
+  <Collapse
+    appear={false}
+    className="mt-2"
+    enter={true}
+    exit={true}
+    in={false}
+    isOpen={false}
+    mountOnEnter={false}
+    onEnter={[Function]}
+    onEntered={[Function]}
+    onEntering={[Function]}
+    onExit={[Function]}
+    onExited={[Function]}
+    onExiting={[Function]}
+    tag="div"
+    timeout={350}
+    unmountOnExit={false}
+  >
+    <ModelComponentProperty
+      key="bruksnummer"
+      name="bruksnummer"
+      oneOfTypeRefs={null}
+      type={null}
+      typeRef="#/definitions/Tekst"
+    />
+    <ModelComponentProperty
+      key="gaardsnummer"
+      name="gaardsnummer"
+      oneOfTypeRefs={null}
+      type={null}
+      typeRef="#/definitions/Tekst"
+    />
+    <ModelComponentProperty
+      key="kommunenummer"
+      name="kommunenummer"
+      oneOfTypeRefs={null}
+      type={null}
+      typeRef="#/definitions/Tekst"
+    />
+    <ModelComponentProperty
+      key="festenummer"
+      name="festenummer"
+      oneOfTypeRefs={null}
+      type={null}
+      typeRef="#/definitions/Tekst"
+    />
+    <ModelComponentProperty
+      key="seksjonsnummer"
+      name="seksjonsnummer"
+      oneOfTypeRefs={null}
+      type={null}
+      typeRef="#/definitions/Tekst"
+    />
+    <ModelComponentProperty
+      key="tekniskNavn"
+      name="tekniskNavn"
+      oneOfTypeRefs={null}
+      type={null}
+      typeRef="#/definitions/Tekst"
+    />
+  </Collapse>
+</React.Fragment>
+`;
