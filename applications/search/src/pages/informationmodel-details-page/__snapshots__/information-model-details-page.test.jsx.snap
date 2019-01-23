@@ -82,6 +82,325 @@ exports[`should render InformationModelDetailsPage correctly with informationMod
             tabContent={
               Array [
                 Object {
+                  "body": <Structure
+                    definitions={
+                      Object {
+                        "Adresse": Object {
+                          "properties": Object {
+                            "adresse": Object {
+                              "items": Object {
+                                "type": "string",
+                              },
+                              "type": "array",
+                            },
+                            "kommune": Object {
+                              "type": "string",
+                            },
+                            "kommunenummer": Object {
+                              "type": "string",
+                            },
+                            "land": Object {
+                              "type": "string",
+                            },
+                            "landkode": Object {
+                              "type": "string",
+                            },
+                            "postnummer": Object {
+                              "type": "string",
+                            },
+                            "poststed": Object {
+                              "type": "string",
+                            },
+                          },
+                        },
+                        "Eiendom": Object {
+                          "allOf": Array [
+                            Object {
+                              "$ref": "#/definitions/Spesifisering",
+                            },
+                            Object {
+                              "properties": Object {
+                                "bruksnummer": Object {
+                                  "$ref": "#/definitions/Tekst",
+                                },
+                                "festenummer": Object {
+                                  "$ref": "#/definitions/Tekst",
+                                },
+                                "gaardsnummer": Object {
+                                  "$ref": "#/definitions/Tekst",
+                                },
+                                "kommunenummer": Object {
+                                  "$ref": "#/definitions/Tekst",
+                                },
+                                "seksjonsnummer": Object {
+                                  "$ref": "#/definitions/Tekst",
+                                },
+                                "tekniskNavn": Object {
+                                  "allOf": Array [
+                                    Object {
+                                      "$ref": "#/definitions/Tekst",
+                                    },
+                                  ],
+                                  "description": "Feltets lovlige verdier er bestemt av kodelisten 2017_summertSkattegrunnlagForEksterne",
+                                },
+                              },
+                              "type": "object",
+                            },
+                          ],
+                        },
+                        "Enhet": Object {
+                          "properties": Object {
+                            "_links": Object {
+                              "$ref": "#/definitions/Self",
+                            },
+                            "antallAnsatte": Object {
+                              "type": "integer",
+                            },
+                            "forretningsadresse": Object {
+                              "$ref": "#/definitions/Adresse",
+                            },
+                            "institusjonellSektorkode": Object {
+                              "$ref": "#/definitions/Sektorkode",
+                            },
+                            "konkurs": Object {
+                              "type": "boolean",
+                            },
+                            "maalform": Object {
+                              "type": "string",
+                            },
+                            "naeringskode1": Object {
+                              "$ref": "#/definitions/Naeringskode",
+                            },
+                            "naeringskode2": Object {
+                              "$ref": "#/definitions/Naeringskode",
+                            },
+                            "naeringskode3": Object {
+                              "$ref": "#/definitions/Naeringskode",
+                            },
+                            "navn": Object {
+                              "type": "string",
+                            },
+                            "organisasjonsform": Object {
+                              "$ref": "#/definitions/Organisasjonsform",
+                            },
+                            "organisasjonsnummer": Object {
+                              "type": "string",
+                            },
+                            "postadresse": Object {
+                              "$ref": "#/definitions/Adresse",
+                            },
+                            "registreringsdatoEnhetsregisteret": Object {
+                              "type": "string",
+                            },
+                            "registrertIForetaksregisteret": Object {
+                              "type": "boolean",
+                            },
+                            "registrertIFrivillighetsregisteret": Object {
+                              "type": "boolean",
+                            },
+                            "registrertIMvaregisteret": Object {
+                              "type": "boolean",
+                            },
+                            "registrertIStiftelsesregisteret": Object {
+                              "type": "boolean",
+                            },
+                            "sisteInnsendteAarsregnskap": Object {
+                              "type": "string",
+                            },
+                            "stiftelsedato": Object {
+                              "type": "string",
+                            },
+                            "underAvvikling": Object {
+                              "type": "boolean",
+                            },
+                            "underTvangsavviklingEllerTvangsopplosning": Object {
+                              "type": "boolean",
+                            },
+                          },
+                        },
+                        "Href": Object {
+                          "properties": Object {
+                            "href": Object {
+                              "type": "string",
+                            },
+                          },
+                        },
+                        "Naeringskode": Object {
+                          "properties": Object {
+                            "beskrivelse": Object {
+                              "type": "string",
+                            },
+                            "kode": Object {
+                              "type": "string",
+                            },
+                          },
+                        },
+                        "Organisasjonsform": Object {
+                          "properties": Object {
+                            "_links": Object {
+                              "$ref": "#/definitions/Self",
+                            },
+                            "beskrivelse": Object {
+                              "type": "string",
+                            },
+                            "kode": Object {
+                              "type": "string",
+                            },
+                          },
+                        },
+                        "Organisasjonsformer": Object {
+                          "properties": Object {
+                            "organisasjonsformer": Object {
+                              "items": Object {
+                                "$ref": "#/definitions/Organisasjonsform",
+                              },
+                              "type": "array",
+                            },
+                          },
+                        },
+                        "Sektorkode": Object {
+                          "properties": Object {
+                            "beskrivelse": Object {
+                              "type": "string",
+                            },
+                            "kode": Object {
+                              "type": "string",
+                            },
+                          },
+                        },
+                        "Self": Object {
+                          "properties": Object {
+                            "self": Object {
+                              "$ref": "#/definitions/Href",
+                            },
+                          },
+                        },
+                        "Spesifisering": Object {
+                          "discriminator": Object {
+                            "propertyName": "type",
+                          },
+                          "properties": Object {
+                            "beloep": Object {
+                              "$ref": "#/definitions/Beloep",
+                            },
+                            "type": Object {
+                              "type": "string",
+                            },
+                          },
+                          "required": Array [
+                            "type",
+                          ],
+                          "type": "object",
+                        },
+                        "SpesifisertSummertSkattegrunnlag": Object {
+                          "description": "SpesifiserSummertSkattegrunnlag inneholder skattegrunnlag med spesifisering av disse.",
+                          "properties": Object {
+                            "grunnlag": Object {
+                              "items": Object {
+                                "$ref": "#/definitions/SummertSkattegrunnlagsobjekt",
+                              },
+                              "minItems": 0,
+                              "type": "array",
+                            },
+                            "inntektsaar": Object {
+                              "$ref": "#/definitions/Aarstall",
+                            },
+                            "personidentifikator": Object {
+                              "$ref": "#/definitions/Foedselsnummer",
+                            },
+                            "skatteoppgjoersdato": Object {
+                              "$ref": "#/definitions/Dato",
+                            },
+                            "skjermet": Object {
+                              "$ref": "#/definitions/Boolsk",
+                            },
+                            "skjoennsfastsatt": Object {
+                              "$ref": "#/definitions/Boolsk",
+                            },
+                            "svalbardGrunnlag": Object {
+                              "items": Object {
+                                "$ref": "#/definitions/SummertSkattegrunnlagsobjekt",
+                              },
+                              "minItems": 0,
+                              "type": "array",
+                            },
+                            "svalbardSkjoennsfastsatt": Object {
+                              "$ref": "#/definitions/Boolsk",
+                            },
+                          },
+                          "required": Array [
+                            "personidentifikator",
+                            "inntektsaar",
+                            "skjermet",
+                          ],
+                          "type": "object",
+                          "xml": Object {
+                            "name": "spesifisertSummertSkattegrunnlag",
+                          },
+                        },
+                        "SummertSkattegrunnlagsobjekt": Object {
+                          "description": "Myndighetsfastsatte opplysninger om den skattepliktige, den skattepliktiges økonomi (inntekt/fradrag/formue/gjeld), innførsel, omsetning og uttak og den skattepliktiges produksjon og varehåndtering, klassifisert, verdisatt og korrekt periodisert. Den skattepliktige skal kunne observere skattegrunnlaget i sine omgivelser.",
+                          "properties": Object {
+                            "beloep": Object {
+                              "$ref": "#/definitions/Beloep",
+                            },
+                            "kategori": Object {
+                              "items": Object {
+                                "$ref": "#/definitions/Tekst",
+                              },
+                              "minItems": 0,
+                              "type": "array",
+                            },
+                            "spesifisering": Object {
+                              "items": Object {
+                                "oneOf": Array [
+                                  Object {
+                                    "$ref": "#/definitions/Eiendom",
+                                  },
+                                  Object {
+                                    "$ref": "#/definitions/Kjoeretoey",
+                                  },
+                                  Object {
+                                    "$ref": "#/definitions/Generisk",
+                                  },
+                                ],
+                              },
+                              "minItems": 0,
+                              "type": "array",
+                            },
+                            "tekniskNavn": Object {
+                              "allOf": Array [
+                                Object {
+                                  "$ref": "#/definitions/Tekst",
+                                },
+                              ],
+                              "description": "Feltets lovlige verdier er bestemt av kodelisten 2017_summertSkattegrunnlagForEksterne",
+                            },
+                          },
+                          "required": Array [
+                            "tekniskNavn",
+                            "beloep",
+                          ],
+                          "type": "object",
+                        },
+                        "Tekst": Object {
+                          "description": "vilkårlig lang sekvens av tegn inkludert aksenter og spesielle tegn fra standardiserte tegnsett",
+                          "maxLength": 4000,
+                          "type": "string",
+                        },
+                        "_Organisasjonsformer": Object {
+                          "properties": Object {
+                            "embedded": Object {
+                              "$ref": "#/definitions/Organisasjonsformer",
+                            },
+                          },
+                        },
+                      }
+                    }
+                  />,
+                  "title": "Structure",
+                },
+                Object {
                   "body": <div>
                     <pre
                       style={

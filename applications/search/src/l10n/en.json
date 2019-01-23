@@ -24,6 +24,8 @@
   "unknown": "Unknown",
   "deprecated": "deprecated",
   "responsible": "Responsible",
+  "name": "Name",
+  "type": "Type",
   "app": {
     "menu": "Menu"
   },
