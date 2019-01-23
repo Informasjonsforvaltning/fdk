@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import { resolve } from 'react-resolver';
 import { ApiDetailsPage } from './api-details-page';
-import { getApi } from '../../api/get-api';
+import { getApi } from '../../api/apis';
 import { getDatasetByURI } from '../../api/get-dataset';
 
 const memoizedGetApi = _.memoize(getApi);
