@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import { resolve } from 'react-resolver';
 import { ConceptDetailsPage } from './concept-details-page';
-import { getConcept } from '../../api/get-concept';
+import { getConcept } from '../../api/concepts';
 
 const memoizedGetConcept = _.memoize(getConcept);
 
