@@ -1,11 +1,18 @@
+import _ from 'lodash';
 import React from 'react';
 import { shallow } from 'enzyme';
 import { SearchPublishersTree } from './search-publishers-tree.component';
 import publishers from '../../../../test/fixtures/publishers';
 import { normalizeAggregations } from '../../../lib/normalizeAggregations';
-import { extractPublisherCounts } from '../../../api/get-datasets';
 import datasetsApiResponse from './__fixtures/datasetsApiResponse.json';
 
+const normalizedDatasetsApiResponse = normalizeAggregations(
+  datasetsApiResponse
+);
+const publisherCounts = _.get(
+  normalizedDatasetsApiResponse,
+  'aggregations.orgPath.buckets'
+);
 let onFilterPublisherHierarchy;
 let defaultProps;
 let wrapper;
@@ -15,9 +22,7 @@ beforeEach(() => {
 
   defaultProps = {
     title: 'title',
-    publisherCounts: extractPublisherCounts(
-      normalizeAggregations(datasetsApiResponse)
-    ),
+    publisherCounts,
     onFilterPublisherHierarchy,
     publishers
   };

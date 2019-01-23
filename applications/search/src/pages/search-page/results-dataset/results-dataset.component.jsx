@@ -38,7 +38,7 @@ export class ResultsDataset extends React.Component {
       onFilterSpatial,
       searchQuery,
       themesItems,
-      publisherArray,
+      publisherCounts,
       publishers
     } = this.props;
     return (
@@ -63,7 +63,7 @@ export class ResultsDataset extends React.Component {
             />
             <SearchPublishersTree
               title={localization.facet.organisation}
-              publisherCounts={publisherArray}
+              publisherCounts={publisherCounts}
               onFilterPublisherHierarchy={onFilterPublisherHierarchy}
               activeFilter={searchQuery.orgPath}
               publishers={publishers}
@@ -124,7 +124,7 @@ export class ResultsDataset extends React.Component {
       searchQuery,
       themesItems,
       hitsPerPage,
-      publisherArray,
+      publisherCounts,
       publishers,
       onSortByScore,
       onSortByLastModified,
@@ -221,7 +221,7 @@ export class ResultsDataset extends React.Component {
                   />
                   <SearchPublishersTree
                     title={localization.facet.organisation}
-                    publisherCounts={publisherArray}
+                    publisherCounts={publisherCounts}
                     onFilterPublisherHierarchy={onFilterPublisherHierarchy}
                     activeFilter={searchQuery.orgPath}
                     publishers={publishers}
@@ -285,7 +285,7 @@ ResultsDataset.defaultProps = {
   onFilterSpatial: null,
   searchQuery: {},
   themesItems: null,
-  publisherArray: null,
+  publisherCounts: null,
   publishers: null,
   referenceData: null,
   onClearFilters: null,
@@ -308,7 +308,7 @@ ResultsDataset.propTypes = {
   onFilterSpatial: PropTypes.func,
   searchQuery: PropTypes.object,
   themesItems: PropTypes.object,
-  publisherArray: PropTypes.array,
+  publisherCounts: PropTypes.array,
   publishers: PropTypes.object,
   referenceData: PropTypes.object,
   onClearFilters: PropTypes.func,

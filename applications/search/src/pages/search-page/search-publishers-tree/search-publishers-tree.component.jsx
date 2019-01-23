@@ -11,6 +11,7 @@ import { FilterOption } from '../../../components/filter-option/filter-option.co
 import localization from '../../../lib/localization';
 import { getTranslateText } from '../../../lib/translateText';
 import './search-publishers-tree.scss';
+import { keyPrefixForest } from '../../../lib/key-prefix-forest';
 
 const isItemCollapsed = (itemOrgPath, chosenOrgPath) => {
   if (chosenOrgPath && chosenOrgPath !== undefined) {
@@ -90,13 +91,13 @@ const subTree = ({
   });
 
 const mainTree = ({
-  publisherCounts,
+  publisherCountsForest,
   activeFilter,
   publishers,
   onFilterPublisherHierarchy
 }) =>
-  Array.isArray(publisherCounts) &&
-  publisherCounts.map((node, i) => {
+  Array.isArray(publisherCountsForest) &&
+  publisherCountsForest.map((node, i) => {
     let active = false;
     if (activeFilter === node.key) {
       active = true;
@@ -197,6 +198,9 @@ export class SearchPublishersTree extends React.Component {
       activeFilter,
       publishers
     } = this.props;
+
+    const publisherCountsForest = keyPrefixForest(publisherCounts);
+
     const collapseIconClass = cx('fa', 'mr-2', {
       'fa-angle-down': !this.state.openFilter,
       'fa-angle-up': this.state.openFilter
@@ -217,7 +221,7 @@ export class SearchPublishersTree extends React.Component {
             <div className="fdk-panel__content">
               <div className="fdk-items-list">
                 {mainTree({
-                  publisherCounts,
+                  publisherCountsForest,
                   activeFilter,
                   publishers,
                   onFilterPublisherHierarchy
