@@ -1,6 +1,5 @@
 import _ from 'lodash';
 import React from 'react';
-import qs from 'qs';
 import { Route, Switch } from 'react-router-dom';
 import cx from 'classnames';
 import { detect } from 'detect-browser';
@@ -74,15 +73,14 @@ export const SearchPage = props => {
     close
   } = props;
 
-  const stringifiedQuery = qs.stringify(searchQuery, { skipNulls: true });
-
   fetchDatasetsIfNeeded(searchQuery);
   fetchApisIfNeeded(searchQuery);
   fetchConceptsIfNeeded(searchQuery);
+  fetchInformationModelsIfNeeded(searchQuery);
+
   fetchThemesIfNeeded();
   fetchPublishersIfNeeded();
   fetchReferenceDataIfNeeded();
-  fetchInformationModelsIfNeeded(stringifiedQuery);
 
   const handleClearFilters = () => {
     clearQuery(history);
