@@ -78,7 +78,7 @@ export const SearchPage = props => {
 
   fetchDatasetsIfNeeded(searchQuery);
   fetchApisIfNeeded(searchQuery);
-  fetchConceptsIfNeeded(stringifiedQuery);
+  fetchConceptsIfNeeded(searchQuery);
   fetchThemesIfNeeded();
   fetchPublishersIfNeeded();
   fetchReferenceDataIfNeeded();
