@@ -12,20 +12,172 @@ import localization from '../../../lib/localization';
 import { getTranslateText } from '../../../lib/translateText';
 import './search-publishers-tree.scss';
 
-export class SearchPublishersTree extends React.Component {
-  static isItemCollapsed(itemOrgPath, chosenOrgPath) {
-    if (chosenOrgPath && chosenOrgPath !== undefined) {
-      const parentOrgPath = chosenOrgPath.substr(
-        0,
-        chosenOrgPath.lastIndexOf('/')
+const isItemCollapsed = (itemOrgPath, chosenOrgPath) => {
+  if (chosenOrgPath && chosenOrgPath !== undefined) {
+    const parentOrgPath = chosenOrgPath.substr(
+      0,
+      chosenOrgPath.lastIndexOf('/')
+    );
+    if (parentOrgPath.indexOf(itemOrgPath) !== -1) {
+      return false;
+    }
+  }
+  return true;
+};
+
+const subTree = ({
+  hits,
+  activeFilter,
+  orgPath,
+  publishers,
+  filters,
+  onFilterPublisherHierarchy
+}) => {
+  let nodeOnSameLevelHasChildren = false;
+  return hits.map((node, i) => {
+    let active = false;
+    if (filters && filters === node.key) {
+      active = true;
+    }
+    const chosenClass = cx({
+      'tree-item_chosen': node.key === orgPath
+    });
+
+    const name =
+      getTranslateText(_get(publishers, [node.key, 'prefLabel'])) ||
+      _capitalize(_get(publishers, [node.key, 'name'], node.key));
+
+    const label = (
+      <FilterOption
+        key={`${node.key}|${i}`}
+        itemKey={0.5}
+        value={node.key}
+        labelRaw={name}
+        count={node.count}
+        onClick={onFilterPublisherHierarchy}
+        active={active}
+        displayClass="inline-block"
+      />
+    );
+    const collapsed = isItemCollapsed(node.key, activeFilter);
+    if (node.children && node.children.length > 0) {
+      nodeOnSameLevelHasChildren = true;
+      return (
+        <TreeView
+          key={`${node.key}|${i}`}
+          nodeLabel={label}
+          defaultCollapsed={collapsed}
+          itemClassName={chosenClass}
+        >
+          {subTree({
+            hits: node.children,
+            activeFilter,
+            orgPath,
+            publishers,
+            filters,
+            onFilterPublisherHierarchy
+          })}
+        </TreeView>
       );
-      if (parentOrgPath.indexOf(itemOrgPath) !== -1) {
-        return false;
+    }
+    return (
+      <FilterOption
+        key={`${node.key}|${i}`}
+        itemKey={0.5}
+        value={node.key}
+        labelRaw={name}
+        count={node.count}
+        onClick={onFilterPublisherHierarchy}
+        active={active}
+        displayClass={nodeOnSameLevelHasChildren ? 'indent' : ''}
+      />
+    );
+  });
+};
+
+const mainTree = ({
+  hits,
+  activeFilter,
+  orgPath,
+  publishers,
+  filters,
+  onFilterPublisherHierarchy
+}) =>
+  hits.map((node, i) => {
+    let active = false;
+    if (filters && filters === node.key) {
+      active = true;
+    }
+    const chosenClass = cx('tree-view_main', {
+      'tree-item_chosen': node.key === orgPath
+    });
+    const collapsed = isItemCollapsed(node.key, activeFilter);
+
+    let name = node.key;
+    if (publishers) {
+      const currentPublisher = publishers[node.key];
+      if (currentPublisher) {
+        name =
+          currentPublisher.id === 'STAT' ||
+          currentPublisher.id === 'FYLKE' ||
+          currentPublisher.id === 'KOMMUNE' ||
+          currentPublisher.id === 'PRIVAT' ||
+          currentPublisher.id === 'ANNET'
+            ? localization.facet.publishers[currentPublisher.name]
+            : currentPublisher.name;
       }
     }
-    return true;
-  }
 
+    const label = (
+      <FilterOption
+        key={`${node.key}|${i}`}
+        itemKey={0.5}
+        value={node.key}
+        label={name}
+        count={node.count}
+        onClick={onFilterPublisherHierarchy}
+        active={active}
+        displayClass="inline-block"
+      />
+    );
+    if (node.key !== 'ukjent' && node.key !== 'MISSING') {
+      return (
+        <div key={`panel${i}`} className="section">
+          <TreeView
+            key={`${node.key}|${i}`}
+            nodeLabel={label}
+            defaultCollapsed={collapsed}
+            itemClassName={chosenClass}
+          >
+            {node.children &&
+              node.children.length > 0 &&
+              subTree({
+                hits: node.children,
+                activeFilter,
+                orgPath,
+                publishers,
+                filters,
+                onFilterPublisherHierarchy
+              })}
+          </TreeView>
+        </div>
+      );
+    }
+    name = localization.unknown;
+    return (
+      <FilterOption
+        key={`${node.key}|${i}`}
+        itemKey={0.5}
+        value={node.key}
+        label={name}
+        count={node.count}
+        onClick={onFilterPublisherHierarchy}
+        active={active}
+      />
+    );
+  });
+
+export class SearchPublishersTree extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -52,144 +204,24 @@ export class SearchPublishersTree extends React.Component {
       filter,
       onFilterPublisherHierarchy,
       activeFilter,
-      publishers
+      publishers,
+      orgPath
     } = this.props;
     const filters = activeFilter;
 
-    const subTree = (hits, activeFilter) => {
-      let nodeOnSameLevelHasChildren = false;
-      return hits.map((node, i) => {
-        let active = false;
-        if (filters && filters === node.key) {
-          active = true;
-        }
-        const { orgPath } = this.props;
-        const chosenClass = cx({
-          'tree-item_chosen': node.key === orgPath
-        });
-
-        const name =
-          getTranslateText(_get(publishers, [node.key, 'prefLabel'])) ||
-          _capitalize(_get(publishers, [node.key, 'name'], node.key));
-
-        const label = (
-          <FilterOption
-            key={`${node.key}|${i}`}
-            itemKey={0.5}
-            value={node.key}
-            labelRaw={name}
-            count={node.count}
-            onClick={onFilterPublisherHierarchy}
-            active={active}
-            displayClass="inline-block"
-          />
-        );
-        const collapsed = SearchPublishersTree.isItemCollapsed(
-          node.key,
-          activeFilter
-        );
-        if (node.children && node.children.length > 0) {
-          nodeOnSameLevelHasChildren = true;
-          return (
-            <TreeView
-              key={`${node.key}|${i}`}
-              nodeLabel={label}
-              defaultCollapsed={collapsed}
-              itemClassName={chosenClass}
-            >
-              {subTree(node.children, activeFilter)}
-            </TreeView>
-          );
-        }
-        return (
-          <FilterOption
-            key={`${node.key}|${i}`}
-            itemKey={0.5}
-            value={node.key}
-            labelRaw={name}
-            count={node.count}
-            onClick={onFilterPublisherHierarchy}
-            active={active}
-            displayClass={nodeOnSameLevelHasChildren ? 'indent' : ''}
-          />
-        );
-      });
-    };
-
-    const mainTree = (hits, activeFilter) =>
-      hits.map((node, i) => {
-        const { orgPath } = this.props;
-        let active = false;
-        if (filters && filters === node.key) {
-          active = true;
-        }
-        const chosenClass = cx('tree-view_main', {
-          'tree-item_chosen': node.key === orgPath
-        });
-        const collapsed = SearchPublishersTree.isItemCollapsed(
-          node.key,
-          activeFilter
-        );
-
-        let name = node.key;
-        if (publishers) {
-          const currentPublisher = publishers[node.key];
-          if (currentPublisher) {
-            name =
-              currentPublisher.id === 'STAT' ||
-              currentPublisher.id === 'FYLKE' ||
-              currentPublisher.id === 'KOMMUNE' ||
-              currentPublisher.id === 'PRIVAT' ||
-              currentPublisher.id === 'ANNET'
-                ? localization.facet.publishers[currentPublisher.name]
-                : currentPublisher.name;
-          }
-        }
-
-        const label = (
-          <FilterOption
-            key={`${node.key}|${i}`}
-            itemKey={0.5}
-            value={node.key}
-            label={name}
-            count={node.count}
-            onClick={onFilterPublisherHierarchy}
-            active={active}
-            displayClass="inline-block"
-          />
-        );
-        if (node.key !== 'ukjent' && node.key !== 'MISSING') {
-          return (
-            <div key={`panel${i}`} className="section">
-              <TreeView
-                key={`${node.key}|${i}`}
-                nodeLabel={label}
-                defaultCollapsed={collapsed}
-                itemClassName={chosenClass}
-              >
-                {node.children &&
-                  node.children.length > 0 &&
-                  subTree(node.children, activeFilter)}
-              </TreeView>
-            </div>
-          );
-        }
-        name = localization.unknown;
-        return (
-          <FilterOption
-            key={`${node.key}|${i}`}
-            itemKey={0.5}
-            value={node.key}
-            label={name}
-            count={node.count}
-            onClick={onFilterPublisherHierarchy}
-            active={active}
-          />
-        );
-      });
-
     if (filter && typeof filter !== 'undefined' && filter.length > 0) {
-      return <div>{mainTree(filter, activeFilter)}</div>;
+      return (
+        <div>
+          {mainTree({
+            hits: filter,
+            activeFilter,
+            orgPath,
+            publishers,
+            filters,
+            onFilterPublisherHierarchy
+          })}
+        </div>
+      );
     }
     return null;
   }
