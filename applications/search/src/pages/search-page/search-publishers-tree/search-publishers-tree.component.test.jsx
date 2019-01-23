@@ -7,22 +7,19 @@ import { extractPublisherCounts } from '../../../api/get-datasets';
 import datasetsApiResponse from './__fixtures/datasetsApiResponse.json';
 
 let onFilterPublisherHierarchy;
-let onSearch;
 let defaultProps;
 let wrapper;
 
 beforeEach(() => {
   onFilterPublisherHierarchy = jest.fn();
-  onSearch = jest.fn();
 
   defaultProps = {
     title: 'title',
-    filter: extractPublisherCounts(normalizeAggregations(datasetsApiResponse)),
+    publisherCounts: extractPublisherCounts(
+      normalizeAggregations(datasetsApiResponse)
+    ),
     onFilterPublisherHierarchy,
-    activeFilter: null,
-    publishers,
-    onSearch,
-    orgPath: '/STAT/872417842/960885406' // publishers[1].orgPath
+    publishers
   };
   wrapper = shallow(<SearchPublishersTree {...defaultProps} />);
 });

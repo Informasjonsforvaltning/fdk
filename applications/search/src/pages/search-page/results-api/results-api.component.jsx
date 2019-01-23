@@ -26,7 +26,7 @@ const renderFilterModal = ({
       <div className="search-filters">
         <SearchPublishersTree
           title={localization.facet.provider}
-          filter={publisherArray}
+          publisherCounts={publisherArray}
           onFilterPublisherHierarchy={onFilterPublisherHierarchy}
           activeFilter={searchQuery.orgPath}
           publishers={publishers}
@@ -183,7 +183,7 @@ export class ResultsApi extends React.Component {
                 })}
                 <SearchPublishersTree
                   title={localization.facet.provider}
-                  filter={publisherArray}
+                  publisherCounts={publisherArray}
                   onFilterPublisherHierarchy={onFilterPublisherHierarchy}
                   activeFilter={searchQuery.orgPath}
                   publishers={publishers}

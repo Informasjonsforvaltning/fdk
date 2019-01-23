@@ -106,7 +106,7 @@ export class ResultsConcepts extends React.Component {
           <div className="search-filters">
             <SearchPublishersTree
               title={localization.facet.organisation}
-              filter={publisherArray}
+              publisherCounts={publisherArray}
               onFilterPublisherHierarchy={onFilterPublisherHierarchy}
               activeFilter={searchQuery.orgPath}
               publishers={publishers}
@@ -216,7 +216,7 @@ export class ResultsConcepts extends React.Component {
                   {this._renderFilterModal()}
                   <SearchPublishersTree
                     title={localization.facet.organisation}
-                    filter={publisherArray}
+                    publisherCounts={publisherArray}
                     onFilterPublisherHierarchy={onFilterPublisherHierarchy}
                     activeFilter={_.get(searchQuery, 'orgPath')}
                     publishers={publishers}

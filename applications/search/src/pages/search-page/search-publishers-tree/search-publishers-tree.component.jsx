@@ -25,14 +25,18 @@ const isItemCollapsed = (itemOrgPath, chosenOrgPath) => {
   return true;
 };
 
+const hasSomeChildren = node =>
+  node && Array.isArray(node.children) && node.children.length > 0;
+const hasSomeSiblingChildren = siblings =>
+  Array.isArray(siblings) && siblings.some(hasSomeChildren);
+
 const subTree = ({
-  hits,
+  publisherCounts,
   activeFilter,
   publishers,
   onFilterPublisherHierarchy
-}) => {
-  let nodeOnSameLevelHasChildren = false;
-  return hits.map((node, i) => {
+}) =>
+  publisherCounts.map((node, i) => {
     let active = false;
     if (activeFilter === node.key) {
       active = true;
@@ -55,8 +59,7 @@ const subTree = ({
       />
     );
     const collapsed = isItemCollapsed(node.key, activeFilter);
-    if (node.children && node.children.length > 0) {
-      nodeOnSameLevelHasChildren = true;
+    if (hasSomeChildren(node)) {
       return (
         <TreeView
           key={`${node.key}|${i}`}
@@ -64,7 +67,7 @@ const subTree = ({
           defaultCollapsed={collapsed}
         >
           {subTree({
-            hits: node.children,
+            publisherCounts: node.children,
             activeFilter,
             publishers,
             onFilterPublisherHierarchy
@@ -81,19 +84,19 @@ const subTree = ({
         count={node.count}
         onClick={onFilterPublisherHierarchy}
         active={active}
-        displayClass={nodeOnSameLevelHasChildren ? 'indent' : ''}
+        displayClass={hasSomeSiblingChildren(publisherCounts) ? 'indent' : ''}
       />
     );
   });
-};
 
 const mainTree = ({
-  hits,
+  publisherCounts,
   activeFilter,
   publishers,
   onFilterPublisherHierarchy
 }) =>
-  hits.map((node, i) => {
+  Array.isArray(publisherCounts) &&
+  publisherCounts.map((node, i) => {
     let active = false;
     if (activeFilter === node.key) {
       active = true;
@@ -140,7 +143,7 @@ const mainTree = ({
             {node.children &&
               node.children.length > 0 &&
               subTree({
-                hits: node.children,
+                publisherCounts: node.children,
                 activeFilter,
                 publishers,
                 onFilterPublisherHierarchy
@@ -167,7 +170,7 @@ export class SearchPublishersTree extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      openFilter: true // (props.activeFilter && props.activeFilter !== '') ? true : false,
+      openFilter: true
     };
     this.toggleFilter = this.toggleFilter.bind(this);
     this.onChange = this.onChange.bind(this);
@@ -184,37 +187,21 @@ export class SearchPublishersTree extends React.Component {
   toggleFilter() {
     this.setState({ openFilter: !this.state.openFilter });
   }
-  _renderTree() {
+
+  render() {
+    const { openFilter } = this.state;
     const {
-      filter,
+      title,
+      publisherCounts,
       onFilterPublisherHierarchy,
       activeFilter,
       publishers
     } = this.props;
-
-    if (filter && typeof filter !== 'undefined' && filter.length > 0) {
-      return (
-        <div>
-          {mainTree({
-            hits: filter,
-            activeFilter,
-            publishers,
-            onFilterPublisherHierarchy
-          })}
-        </div>
-      );
-    }
-    return null;
-  }
-
-  render() {
-    const { openFilter } = this.state;
-    const { title, filter } = this.props;
     const collapseIconClass = cx('fa', 'mr-2', {
       'fa-angle-down': !this.state.openFilter,
       'fa-angle-up': this.state.openFilter
     });
-    if (filter && filter.length > 0) {
+    if (Array.isArray(publisherCounts) && publisherCounts.length > 0) {
       return (
         <div className="search-filter-publisher">
           <div className="fdk-panel__header">
@@ -228,7 +215,14 @@ export class SearchPublishersTree extends React.Component {
           </div>
           <Collapse isOpen={openFilter}>
             <div className="fdk-panel__content">
-              <div className="fdk-items-list">{this._renderTree()}</div>
+              <div className="fdk-items-list">
+                {mainTree({
+                  publisherCounts,
+                  activeFilter,
+                  publishers,
+                  onFilterPublisherHierarchy
+                })}
+              </div>
             </div>
           </Collapse>
         </div>
@@ -240,14 +234,14 @@ export class SearchPublishersTree extends React.Component {
 
 SearchPublishersTree.defaultProps = {
   title: null,
-  filter: null,
+  publisherCounts: null,
   activeFilter: null,
   publishers: null
 };
 
 SearchPublishersTree.propTypes = {
   title: PropTypes.string,
-  filter: PropTypes.array,
+  publisherCounts: PropTypes.array,
   onFilterPublisherHierarchy: PropTypes.func.isRequired,
   activeFilter: PropTypes.string,
   publishers: PropTypes.object

@@ -143,8 +143,8 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
               />
               <SearchPublishersTree
                 activeFilter={null}
-                filter={Array []}
                 onFilterPublisherHierarchy={[MockFunction]}
+                publisherCounts={Array []}
                 publishers={Object {}}
                 title="Organization"
               />
@@ -245,8 +245,8 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
         />
         <SearchPublishersTree
           activeFilter={null}
-          filter={Array []}
           onFilterPublisherHierarchy={[MockFunction]}
+          publisherCounts={Array []}
           publishers={Object {}}
           title="Organization"
         />

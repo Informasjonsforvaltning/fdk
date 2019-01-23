@@ -63,7 +63,7 @@ export class ResultsDataset extends React.Component {
             />
             <SearchPublishersTree
               title={localization.facet.organisation}
-              filter={publisherArray}
+              publisherCounts={publisherArray}
               onFilterPublisherHierarchy={onFilterPublisherHierarchy}
               activeFilter={searchQuery.orgPath}
               publishers={publishers}
@@ -221,7 +221,7 @@ export class ResultsDataset extends React.Component {
                   />
                   <SearchPublishersTree
                     title={localization.facet.organisation}
-                    filter={publisherArray}
+                    publisherCounts={publisherArray}
                     onFilterPublisherHierarchy={onFilterPublisherHierarchy}
                     activeFilter={searchQuery.orgPath}
                     publishers={publishers}
