@@ -67,7 +67,6 @@ exports[`should render SearchPublishersTree correctly with active filter 1`] = `
             >
               <TreeView
                 defaultCollapsed={true}
-                itemClassName=""
                 key="/STAT/972417858|0"
                 nodeLabel={
                   <FilterOption
@@ -146,7 +145,6 @@ exports[`should render SearchPublishersTree correctly with active filter 1`] = `
               </TreeView>
               <TreeView
                 defaultCollapsed={true}
-                itemClassName=""
                 key="/STAT/972417874|1"
                 nodeLabel={
                   <FilterOption
@@ -201,7 +199,6 @@ exports[`should render SearchPublishersTree correctly with active filter 1`] = `
               </TreeView>
               <TreeView
                 defaultCollapsed={true}
-                itemClassName=""
                 key="/STAT/977161630|2"
                 nodeLabel={
                   <FilterOption
@@ -244,7 +241,6 @@ exports[`should render SearchPublishersTree correctly with active filter 1`] = `
               </TreeView>
               <TreeView
                 defaultCollapsed={true}
-                itemClassName=""
                 key="/STAT/972417882|3"
                 nodeLabel={
                   <FilterOption
@@ -311,7 +307,6 @@ exports[`should render SearchPublishersTree correctly with active filter 1`] = `
               </TreeView>
               <TreeView
                 defaultCollapsed={true}
-                itemClassName=""
                 key="/STAT/912660680|4"
                 nodeLabel={
                   <FilterOption
@@ -402,7 +397,6 @@ exports[`should render SearchPublishersTree correctly with active filter 1`] = `
               </TreeView>
               <TreeView
                 defaultCollapsed={true}
-                itemClassName=""
                 key="/STAT/972417904|5"
                 nodeLabel={
                   <FilterOption
@@ -457,7 +451,6 @@ exports[`should render SearchPublishersTree correctly with active filter 1`] = `
               </TreeView>
               <TreeView
                 defaultCollapsed={true}
-                itemClassName=""
                 key="/STAT/872417842|6"
                 nodeLabel={
                   <FilterOption
@@ -536,7 +529,6 @@ exports[`should render SearchPublishersTree correctly with active filter 1`] = `
               </TreeView>
               <TreeView
                 defaultCollapsed={true}
-                itemClassName=""
                 key="/STAT/972417807|7"
                 nodeLabel={
                   <FilterOption
@@ -579,7 +571,6 @@ exports[`should render SearchPublishersTree correctly with active filter 1`] = `
               </TreeView>
               <TreeView
                 defaultCollapsed={true}
-                itemClassName=""
                 key="/STAT/983887457|8"
                 nodeLabel={
                   <FilterOption
@@ -622,7 +613,6 @@ exports[`should render SearchPublishersTree correctly with active filter 1`] = `
               </TreeView>
               <TreeView
                 defaultCollapsed={true}
-                itemClassName=""
                 key="/STAT/972417866|9"
                 nodeLabel={
                   <FilterOption
@@ -677,7 +667,6 @@ exports[`should render SearchPublishersTree correctly with active filter 1`] = `
               </TreeView>
               <TreeView
                 defaultCollapsed={true}
-                itemClassName=""
                 key="/STAT/983887406|10"
                 nodeLabel={
                   <FilterOption
@@ -695,7 +684,6 @@ exports[`should render SearchPublishersTree correctly with active filter 1`] = `
               >
                 <TreeView
                   defaultCollapsed={true}
-                  itemClassName=""
                   key="/STAT/983887406/983544622|0"
                   nodeLabel={
                     <FilterOption
@@ -763,7 +751,6 @@ exports[`should render SearchPublishersTree correctly with active filter 1`] = `
               </TreeView>
               <TreeView
                 defaultCollapsed={true}
-                itemClassName=""
                 key="/STAT/972417831|11"
                 nodeLabel={
                   <FilterOption
@@ -794,7 +781,6 @@ exports[`should render SearchPublishersTree correctly with active filter 1`] = `
               </TreeView>
               <TreeView
                 defaultCollapsed={true}
-                itemClassName=""
                 key="/STAT/972417920|12"
                 nodeLabel={
                   <FilterOption
@@ -825,7 +811,6 @@ exports[`should render SearchPublishersTree correctly with active filter 1`] = `
               </TreeView>
               <TreeView
                 defaultCollapsed={true}
-                itemClassName=""
                 key="/STAT/972417823|13"
                 nodeLabel={
                   <FilterOption
@@ -880,7 +865,6 @@ exports[`should render SearchPublishersTree correctly with active filter 1`] = `
               />
               <TreeView
                 defaultCollapsed={true}
-                itemClassName=""
                 key="/STAT/972417793|15"
                 nodeLabel={
                   <FilterOption
@@ -1559,7 +1543,6 @@ exports[`should render SearchPublishersTree correctly with active filter 1`] = `
             >
               <TreeView
                 defaultCollapsed={true}
-                itemClassName=""
                 key="/FYLKE/941388841|0"
                 nodeLabel={
                   <FilterOption
@@ -1688,7 +1671,6 @@ exports[`should render SearchPublishersTree correctly with active sub filter 1`]
             >
               <TreeView
                 defaultCollapsed={true}
-                itemClassName=""
                 key="/STAT/972417858|0"
                 nodeLabel={
                   <FilterOption
@@ -1767,7 +1749,6 @@ exports[`should render SearchPublishersTree correctly with active sub filter 1`]
               </TreeView>
               <TreeView
                 defaultCollapsed={true}
-                itemClassName=""
                 key="/STAT/972417874|1"
                 nodeLabel={
                   <FilterOption
@@ -1822,7 +1803,6 @@ exports[`should render SearchPublishersTree correctly with active sub filter 1`]
               </TreeView>
               <TreeView
                 defaultCollapsed={true}
-                itemClassName=""
                 key="/STAT/977161630|2"
                 nodeLabel={
                   <FilterOption
@@ -1865,7 +1845,6 @@ exports[`should render SearchPublishersTree correctly with active sub filter 1`]
               </TreeView>
               <TreeView
                 defaultCollapsed={true}
-                itemClassName=""
                 key="/STAT/972417882|3"
                 nodeLabel={
                   <FilterOption
@@ -1932,7 +1911,6 @@ exports[`should render SearchPublishersTree correctly with active sub filter 1`]
               </TreeView>
               <TreeView
                 defaultCollapsed={true}
-                itemClassName=""
                 key="/STAT/912660680|4"
                 nodeLabel={
                   <FilterOption
@@ -2023,7 +2001,6 @@ exports[`should render SearchPublishersTree correctly with active sub filter 1`]
               </TreeView>
               <TreeView
                 defaultCollapsed={true}
-                itemClassName=""
                 key="/STAT/972417904|5"
                 nodeLabel={
                   <FilterOption
@@ -2078,7 +2055,6 @@ exports[`should render SearchPublishersTree correctly with active sub filter 1`]
               </TreeView>
               <TreeView
                 defaultCollapsed={true}
-                itemClassName=""
                 key="/STAT/872417842|6"
                 nodeLabel={
                   <FilterOption
@@ -2157,7 +2133,6 @@ exports[`should render SearchPublishersTree correctly with active sub filter 1`]
               </TreeView>
               <TreeView
                 defaultCollapsed={true}
-                itemClassName=""
                 key="/STAT/972417807|7"
                 nodeLabel={
                   <FilterOption
@@ -2200,7 +2175,6 @@ exports[`should render SearchPublishersTree correctly with active sub filter 1`]
               </TreeView>
               <TreeView
                 defaultCollapsed={true}
-                itemClassName=""
                 key="/STAT/983887457|8"
                 nodeLabel={
                   <FilterOption
@@ -2243,7 +2217,6 @@ exports[`should render SearchPublishersTree correctly with active sub filter 1`]
               </TreeView>
               <TreeView
                 defaultCollapsed={true}
-                itemClassName=""
                 key="/STAT/972417866|9"
                 nodeLabel={
                   <FilterOption
@@ -2298,7 +2271,6 @@ exports[`should render SearchPublishersTree correctly with active sub filter 1`]
               </TreeView>
               <TreeView
                 defaultCollapsed={true}
-                itemClassName=""
                 key="/STAT/983887406|10"
                 nodeLabel={
                   <FilterOption
@@ -2316,7 +2288,6 @@ exports[`should render SearchPublishersTree correctly with active sub filter 1`]
               >
                 <TreeView
                   defaultCollapsed={true}
-                  itemClassName=""
                   key="/STAT/983887406/983544622|0"
                   nodeLabel={
                     <FilterOption
@@ -2384,7 +2355,6 @@ exports[`should render SearchPublishersTree correctly with active sub filter 1`]
               </TreeView>
               <TreeView
                 defaultCollapsed={true}
-                itemClassName=""
                 key="/STAT/972417831|11"
                 nodeLabel={
                   <FilterOption
@@ -2415,7 +2385,6 @@ exports[`should render SearchPublishersTree correctly with active sub filter 1`]
               </TreeView>
               <TreeView
                 defaultCollapsed={true}
-                itemClassName=""
                 key="/STAT/972417920|12"
                 nodeLabel={
                   <FilterOption
@@ -2446,7 +2415,6 @@ exports[`should render SearchPublishersTree correctly with active sub filter 1`]
               </TreeView>
               <TreeView
                 defaultCollapsed={true}
-                itemClassName=""
                 key="/STAT/972417823|13"
                 nodeLabel={
                   <FilterOption
@@ -2501,7 +2469,6 @@ exports[`should render SearchPublishersTree correctly with active sub filter 1`]
               />
               <TreeView
                 defaultCollapsed={true}
-                itemClassName=""
                 key="/STAT/972417793|15"
                 nodeLabel={
                   <FilterOption
@@ -3180,7 +3147,6 @@ exports[`should render SearchPublishersTree correctly with active sub filter 1`]
             >
               <TreeView
                 defaultCollapsed={true}
-                itemClassName=""
                 key="/FYLKE/941388841|0"
                 nodeLabel={
                   <FilterOption
@@ -3311,7 +3277,6 @@ exports[`should render SearchPublishersTree correctly with props 1`] = `
             >
               <TreeView
                 defaultCollapsed={true}
-                itemClassName=""
                 key="/STAT/972417858|0"
                 nodeLabel={
                   <FilterOption
@@ -3390,7 +3355,6 @@ exports[`should render SearchPublishersTree correctly with props 1`] = `
               </TreeView>
               <TreeView
                 defaultCollapsed={true}
-                itemClassName=""
                 key="/STAT/972417874|1"
                 nodeLabel={
                   <FilterOption
@@ -3445,7 +3409,6 @@ exports[`should render SearchPublishersTree correctly with props 1`] = `
               </TreeView>
               <TreeView
                 defaultCollapsed={true}
-                itemClassName=""
                 key="/STAT/977161630|2"
                 nodeLabel={
                   <FilterOption
@@ -3488,7 +3451,6 @@ exports[`should render SearchPublishersTree correctly with props 1`] = `
               </TreeView>
               <TreeView
                 defaultCollapsed={true}
-                itemClassName=""
                 key="/STAT/972417882|3"
                 nodeLabel={
                   <FilterOption
@@ -3555,7 +3517,6 @@ exports[`should render SearchPublishersTree correctly with props 1`] = `
               </TreeView>
               <TreeView
                 defaultCollapsed={true}
-                itemClassName=""
                 key="/STAT/912660680|4"
                 nodeLabel={
                   <FilterOption
@@ -3646,7 +3607,6 @@ exports[`should render SearchPublishersTree correctly with props 1`] = `
               </TreeView>
               <TreeView
                 defaultCollapsed={true}
-                itemClassName=""
                 key="/STAT/972417904|5"
                 nodeLabel={
                   <FilterOption
@@ -3701,7 +3661,6 @@ exports[`should render SearchPublishersTree correctly with props 1`] = `
               </TreeView>
               <TreeView
                 defaultCollapsed={true}
-                itemClassName=""
                 key="/STAT/872417842|6"
                 nodeLabel={
                   <FilterOption
@@ -3780,7 +3739,6 @@ exports[`should render SearchPublishersTree correctly with props 1`] = `
               </TreeView>
               <TreeView
                 defaultCollapsed={true}
-                itemClassName=""
                 key="/STAT/972417807|7"
                 nodeLabel={
                   <FilterOption
@@ -3823,7 +3781,6 @@ exports[`should render SearchPublishersTree correctly with props 1`] = `
               </TreeView>
               <TreeView
                 defaultCollapsed={true}
-                itemClassName=""
                 key="/STAT/983887457|8"
                 nodeLabel={
                   <FilterOption
@@ -3866,7 +3823,6 @@ exports[`should render SearchPublishersTree correctly with props 1`] = `
               </TreeView>
               <TreeView
                 defaultCollapsed={true}
-                itemClassName=""
                 key="/STAT/972417866|9"
                 nodeLabel={
                   <FilterOption
@@ -3921,7 +3877,6 @@ exports[`should render SearchPublishersTree correctly with props 1`] = `
               </TreeView>
               <TreeView
                 defaultCollapsed={true}
-                itemClassName=""
                 key="/STAT/983887406|10"
                 nodeLabel={
                   <FilterOption
@@ -3939,7 +3894,6 @@ exports[`should render SearchPublishersTree correctly with props 1`] = `
               >
                 <TreeView
                   defaultCollapsed={true}
-                  itemClassName=""
                   key="/STAT/983887406/983544622|0"
                   nodeLabel={
                     <FilterOption
@@ -4007,7 +3961,6 @@ exports[`should render SearchPublishersTree correctly with props 1`] = `
               </TreeView>
               <TreeView
                 defaultCollapsed={true}
-                itemClassName=""
                 key="/STAT/972417831|11"
                 nodeLabel={
                   <FilterOption
@@ -4038,7 +3991,6 @@ exports[`should render SearchPublishersTree correctly with props 1`] = `
               </TreeView>
               <TreeView
                 defaultCollapsed={true}
-                itemClassName=""
                 key="/STAT/972417920|12"
                 nodeLabel={
                   <FilterOption
@@ -4069,7 +4021,6 @@ exports[`should render SearchPublishersTree correctly with props 1`] = `
               </TreeView>
               <TreeView
                 defaultCollapsed={true}
-                itemClassName=""
                 key="/STAT/972417823|13"
                 nodeLabel={
                   <FilterOption
@@ -4124,7 +4075,6 @@ exports[`should render SearchPublishersTree correctly with props 1`] = `
               />
               <TreeView
                 defaultCollapsed={true}
-                itemClassName=""
                 key="/STAT/972417793|15"
                 nodeLabel={
                   <FilterOption
@@ -4803,7 +4753,6 @@ exports[`should render SearchPublishersTree correctly with props 1`] = `
             >
               <TreeView
                 defaultCollapsed={true}
-                itemClassName=""
                 key="/FYLKE/941388841|0"
                 nodeLabel={
                   <FilterOption
