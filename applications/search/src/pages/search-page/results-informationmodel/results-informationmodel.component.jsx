@@ -12,7 +12,7 @@ const renderFilterModal = ({
   showFilterModal,
   closeFilterModal,
   searchQuery,
-  publisherArray,
+  publisherCounts,
   publishers,
   onFilterPublisherHierarchy
 }) => (
@@ -22,7 +22,7 @@ const renderFilterModal = ({
       <div className="search-filters">
         <SearchPublishersTree
           title={localization.facet.provider}
-          publisherCounts={publisherArray}
+          publisherCounts={publisherCounts}
           onFilterPublisherHierarchy={onFilterPublisherHierarchy}
           activeFilter={searchQuery.orgPath}
           publishers={publishers}
@@ -82,7 +82,7 @@ export class ResultsInformationModel extends React.Component {
       onFilterAccessRights,
       onFilterPublisherHierarchy,
       searchQuery,
-      publisherArray,
+      publisherCounts,
       publishers,
       onClearFilters,
       onPageChange,
@@ -171,13 +171,13 @@ export class ResultsInformationModel extends React.Component {
                   informationModelAggregations,
                   onFilterAccessRights,
                   searchQuery,
-                  publisherArray,
+                  publisherCounts,
                   publishers,
                   onFilterPublisherHierarchy
                 })}
                 <SearchPublishersTree
                   title={localization.facet.provider}
-                  publisherCounts={publisherArray}
+                  publisherCounts={publisherCounts}
                   onFilterPublisherHierarchy={onFilterPublisherHierarchy}
                   activeFilter={searchQuery.orgPath}
                   publishers={publishers}
@@ -223,7 +223,7 @@ ResultsInformationModel.defaultProps = {
   onFilterAccessRights: null,
   onFilterPublisherHierarchy: null,
   searchQuery: {},
-  publisherArray: null,
+  publisherCounts: null,
   publishers: null,
   onClearFilters: null,
   setInformationModelSort: null,
@@ -241,7 +241,7 @@ ResultsInformationModel.propTypes = {
   onFilterAccessRights: PropTypes.func,
   onFilterPublisherHierarchy: PropTypes.func,
   searchQuery: PropTypes.object,
-  publisherArray: PropTypes.array,
+  publisherCounts: PropTypes.array,
   publishers: PropTypes.object,
   onClearFilters: PropTypes.func,
   setInformationModelSort: PropTypes.func,

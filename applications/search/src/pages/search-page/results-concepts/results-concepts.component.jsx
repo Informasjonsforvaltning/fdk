@@ -96,7 +96,7 @@ export class ResultsConcepts extends React.Component {
       closeFilterModal,
       onFilterPublisherHierarchy,
       searchQuery,
-      publisherArray,
+      publisherCounts,
       publishers
     } = this.props;
     return (
@@ -106,7 +106,7 @@ export class ResultsConcepts extends React.Component {
           <div className="search-filters">
             <SearchPublishersTree
               title={localization.facet.organisation}
-              publisherCounts={publisherArray}
+              publisherCounts={publisherCounts}
               onFilterPublisherHierarchy={onFilterPublisherHierarchy}
               activeFilter={searchQuery.orgPath}
               publishers={publishers}
@@ -135,7 +135,7 @@ export class ResultsConcepts extends React.Component {
       searchQuery,
       showClearFilterButton,
       hitsPerPage,
-      publisherArray,
+      publisherCounts,
       publishers,
       onSortByScore,
       onSortByLastModified,
@@ -216,7 +216,7 @@ export class ResultsConcepts extends React.Component {
                   {this._renderFilterModal()}
                   <SearchPublishersTree
                     title={localization.facet.organisation}
-                    publisherCounts={publisherArray}
+                    publisherCounts={publisherCounts}
                     onFilterPublisherHierarchy={onFilterPublisherHierarchy}
                     activeFilter={_.get(searchQuery, 'orgPath')}
                     publishers={publishers}
@@ -265,7 +265,7 @@ ResultsConcepts.defaultProps = {
   showFilterModal: null,
   closeFilterModal: null,
   showClearFilterButton: null,
-  publisherArray: null,
+  publisherCounts: null,
   publishers: null,
   conceptsCompare: null,
   addConcept: _.noop,
@@ -282,7 +282,7 @@ ResultsConcepts.propTypes = {
   showFilterModal: PropTypes.bool,
   closeFilterModal: PropTypes.func,
   showClearFilterButton: PropTypes.bool,
-  publisherArray: PropTypes.array,
+  publisherCounts: PropTypes.array,
   publishers: PropTypes.object,
   conceptsCompare: PropTypes.object,
   addConcept: PropTypes.func,

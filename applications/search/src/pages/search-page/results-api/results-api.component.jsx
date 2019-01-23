@@ -15,7 +15,7 @@ const renderFilterModal = ({
   closeFilterModal,
   apiAggregations,
   searchQuery,
-  publisherArray,
+  publisherCounts,
   publishers,
   onFilterFormat,
   onFilterPublisherHierarchy
@@ -26,7 +26,7 @@ const renderFilterModal = ({
       <div className="search-filters">
         <SearchPublishersTree
           title={localization.facet.provider}
-          publisherCounts={publisherArray}
+          publisherCounts={publisherCounts}
           onFilterPublisherHierarchy={onFilterPublisherHierarchy}
           activeFilter={searchQuery.orgPath}
           publishers={publishers}
@@ -87,7 +87,7 @@ export class ResultsApi extends React.Component {
       onFilterPublisherHierarchy,
       onFilterFormat,
       searchQuery,
-      publisherArray,
+      publisherCounts,
       publishers,
       onClearFilters,
       onPageChange,
@@ -176,14 +176,14 @@ export class ResultsApi extends React.Component {
                   apiAggregations,
                   onFilterAccessRights,
                   searchQuery,
-                  publisherArray,
+                  publisherCounts,
                   publishers,
                   onFilterFormat,
                   onFilterPublisherHierarchy
                 })}
                 <SearchPublishersTree
                   title={localization.facet.provider}
-                  publisherCounts={publisherArray}
+                  publisherCounts={publisherCounts}
                   onFilterPublisherHierarchy={onFilterPublisherHierarchy}
                   activeFilter={searchQuery.orgPath}
                   publishers={publishers}
@@ -238,7 +238,7 @@ ResultsApi.defaultProps = {
   onFilterPublisherHierarchy: null,
   onFilterFormat: null,
   searchQuery: {},
-  publisherArray: null,
+  publisherCounts: null,
   publishers: null,
   onClearFilters: null,
   onPageChange: null,
@@ -256,7 +256,7 @@ ResultsApi.propTypes = {
   onFilterPublisherHierarchy: PropTypes.func,
   onFilterFormat: PropTypes.func,
   searchQuery: PropTypes.object,
-  publisherArray: PropTypes.array,
+  publisherCounts: PropTypes.array,
   publishers: PropTypes.object,
   onClearFilters: PropTypes.func,
   onSortByLastModified: PropTypes.func.isRequired,

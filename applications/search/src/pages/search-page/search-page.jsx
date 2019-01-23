@@ -15,8 +15,6 @@ import { ResultsTabs } from './results-tabs/results-tabs.component';
 import { addValue, removeValue } from '../../lib/stringUtils';
 
 import './search-page.scss';
-import { createNestedListOfPublishers } from '../../api/get-datasets';
-import { createNestedListOfConceptPublishers } from '../../api/get-concepts';
 import {
   HITS_PER_PAGE,
   PATHNAME_APIS,
@@ -324,9 +322,7 @@ export const SearchPage = props => {
                 showClearFilterButton={isFilterNotEmpty()}
                 closeFilterModal={close}
                 hitsPerPage={HITS_PER_PAGE}
-                publisherArray={createNestedListOfPublishers(
-                  _.get(datasetAggregations, ['orgPath', 'buckets'], [])
-                )}
+                publisherCounts={_.get(datasetAggregations, 'orgPath.buckets')}
                 publishers={publisherItems}
                 referenceData={referenceData}
                 setDatasetSort={setDatasetSort}
@@ -362,9 +358,7 @@ export const SearchPage = props => {
                 showClearFilterButton={isFilterNotEmpty()}
                 closeFilterModal={close}
                 hitsPerPage={HITS_PER_PAGE}
-                publisherArray={createNestedListOfPublishers(
-                  _.get(apiAggregations, ['orgPath', 'buckets'], [])
-                )}
+                publisherCounts={_.get(apiAggregations, 'orgPath.buckets')}
                 publishers={publisherItems}
                 setApiSort={setApiSort}
                 apiSortValue={apiSortValue}
@@ -392,9 +386,7 @@ export const SearchPage = props => {
                 showFilterModal={showFilterModal}
                 closeFilterModal={close}
                 showClearFilterButton={isFilterNotEmpty()}
-                publisherArray={createNestedListOfConceptPublishers(
-                  _.get(conceptAggregations, ['orgPath', 'buckets'], [])
-                )}
+                publisherCounts={_.get(conceptAggregations, 'orgPath.buckets')}
                 publishers={publisherItems}
                 conceptsCompare={conceptsCompare}
                 addConcept={addConcept}
@@ -432,12 +424,9 @@ export const SearchPage = props => {
                 showClearFilterButton={isFilterNotEmpty()}
                 closeFilterModal={close}
                 hitsPerPage={HITS_PER_PAGE}
-                publisherArray={createNestedListOfPublishers(
-                  _.get(
-                    informationModelAggregations,
-                    ['orgPath', 'buckets'],
-                    []
-                  )
+                publisherCounts={_.get(
+                  informationModelAggregations,
+                  'orgPath.buckets'
                 )}
                 publishers={publisherItems}
                 setInformationModelSort={setInformationModelSort}
