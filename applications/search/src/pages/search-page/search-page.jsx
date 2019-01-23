@@ -76,7 +76,7 @@ export const SearchPage = props => {
 
   const stringifiedQuery = qs.stringify(searchQuery, { skipNulls: true });
 
-  fetchDatasetsIfNeeded(stringifiedQuery);
+  fetchDatasetsIfNeeded(searchQuery);
   fetchApisIfNeeded(searchQuery);
   fetchConceptsIfNeeded(stringifiedQuery);
   fetchThemesIfNeeded();

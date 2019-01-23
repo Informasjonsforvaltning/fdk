@@ -1,29 +1,35 @@
 import _ from 'lodash';
+import qs from 'qs';
+
 import { normalizeAggregations } from '../../lib/normalizeAggregations';
 import { fetchActions } from '../fetchActions';
+import { datasetsSearchUrl } from '../../api/datasets';
 
 export const DATASETS_REQUEST = 'DATASETS_REQUEST';
 export const DATASETS_SUCCESS = 'DATASETS_SUCCESS';
 export const DATASETS_FAILURE = 'DATASETS_FAILURE';
 
-function shouldFetch(metaState, query) {
+const generateQueryKey = query => qs.stringify(query, { skipNulls: true });
+
+function shouldFetch(metaState, queryKey) {
   const threshold = 60 * 100; // seconds
   return (
     !metaState ||
     (!metaState.isFetching &&
       ((metaState.lastFetch || 0) < Date.now() - threshold ||
-        metaState.cachedQuery !== query))
+        metaState.queryKey !== queryKey))
   );
 }
 
 export function fetchDatasetsIfNeededAction(query) {
+  const queryKey = generateQueryKey(query);
   return (dispatch, getState) =>
-    shouldFetch(_.get(getState(), ['datasets', 'meta']), query) &&
+    shouldFetch(_.get(getState(), ['datasets', 'meta']), queryKey) &&
     dispatch(
-      fetchActions(`/datasets?${query}`, [
-        DATASETS_REQUEST,
-        { type: DATASETS_SUCCESS, meta: { query } },
-        DATASETS_FAILURE
+      fetchActions(datasetsSearchUrl(query), [
+        { type: DATASETS_REQUEST, meta: { queryKey } },
+        { type: DATASETS_SUCCESS, meta: { queryKey } },
+        { type: DATASETS_FAILURE, meta: { queryKey } }
       ])
     );
 }
@@ -38,7 +44,7 @@ export function datasets(state = initialState, action) {
         meta: {
           isFetching: true,
           lastFetch: null,
-          cachedQuery: null
+          queryKey: action.meta.queryKey
         }
       };
     case DATASETS_SUCCESS:
@@ -52,7 +58,7 @@ export function datasets(state = initialState, action) {
         meta: {
           isFetching: false,
           lastFetch: Date.now(),
-          cachedQuery: action.meta.query
+          queryKey: action.meta.queryKey
         }
       };
     case DATASETS_FAILURE:
@@ -63,8 +69,9 @@ export function datasets(state = initialState, action) {
         datasetTotal: null,
         meta: {
           isFetching: false,
-          lastFetch: null,
-          cachedQuery: null
+          lastFetch: null, // retry on error
+          queryKey: action.meta.queryKey,
+          error: action.payload
         }
       };
     default:
