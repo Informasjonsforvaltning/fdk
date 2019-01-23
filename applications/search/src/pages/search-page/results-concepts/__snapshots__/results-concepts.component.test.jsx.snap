@@ -99,8 +99,8 @@ exports[`should render ResultsConcepts correctly with hits 1`] = `
               >
                 <SearchPublishersTree
                   activeFilter={null}
-                  filter={null}
                   onFilterPublisherHierarchy={[MockFunction]}
+                  publisherCounts={null}
                   publishers={null}
                   title="Organization"
                 />
@@ -121,8 +121,8 @@ exports[`should render ResultsConcepts correctly with hits 1`] = `
           </Modal>
           <SearchPublishersTree
             activeFilter={null}
-            filter={null}
             onFilterPublisherHierarchy={[MockFunction]}
+            publisherCounts={null}
             publishers={null}
             title="Organization"
           />

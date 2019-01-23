@@ -97,8 +97,8 @@ exports[`should render ResultsApi correctly with hits 1`] = `
             >
               <SearchPublishersTree
                 activeFilter={null}
-                filter={Array []}
                 onFilterPublisherHierarchy={[MockFunction]}
+                publisherCounts={Array []}
                 publishers={Object {}}
                 title="Provider"
               />
@@ -152,8 +152,8 @@ exports[`should render ResultsApi correctly with hits 1`] = `
         </Modal>
         <SearchPublishersTree
           activeFilter={null}
-          filter={Array []}
           onFilterPublisherHierarchy={[MockFunction]}
+          publisherCounts={Array []}
           publishers={Object {}}
           title="Provider"
         />
