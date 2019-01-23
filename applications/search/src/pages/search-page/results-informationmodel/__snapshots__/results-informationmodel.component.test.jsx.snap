@@ -99,8 +99,6 @@ exports[`should render ResultsInformationModel correctly with hits 1`] = `
                 activeFilter={null}
                 filter={Array []}
                 onFilterPublisherHierarchy={[MockFunction]}
-                onSearch={null}
-                orgPath={null}
                 publishers={Object {}}
                 title="Provider"
               />
@@ -123,8 +121,6 @@ exports[`should render ResultsInformationModel correctly with hits 1`] = `
           activeFilter={null}
           filter={Array []}
           onFilterPublisherHierarchy={[MockFunction]}
-          onSearch={null}
-          orgPath={null}
           publishers={Object {}}
           title="Provider"
         />

@@ -101,8 +101,6 @@ exports[`should render ResultsConcepts correctly with hits 1`] = `
                   activeFilter={null}
                   filter={null}
                   onFilterPublisherHierarchy={[MockFunction]}
-                  onSearch={null}
-                  orgPath={null}
                   publishers={null}
                   title="Organization"
                 />
@@ -125,8 +123,6 @@ exports[`should render ResultsConcepts correctly with hits 1`] = `
             activeFilter={null}
             filter={null}
             onFilterPublisherHierarchy={[MockFunction]}
-            onSearch={null}
-            orgPath={null}
             publishers={null}
             title="Organization"
           />

@@ -145,8 +145,6 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
                 activeFilter={null}
                 filter={Array []}
                 onFilterPublisherHierarchy={[MockFunction]}
-                onSearch={null}
-                orgPath={null}
                 publishers={Object {}}
                 title="Organization"
               />
@@ -249,8 +247,6 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
           activeFilter={null}
           filter={Array []}
           onFilterPublisherHierarchy={[MockFunction]}
-          onSearch={null}
-          orgPath={null}
           publishers={Object {}}
           title="Organization"
         />

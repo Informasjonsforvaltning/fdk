@@ -28,20 +28,15 @@ const isItemCollapsed = (itemOrgPath, chosenOrgPath) => {
 const subTree = ({
   hits,
   activeFilter,
-  orgPath,
   publishers,
-  filters,
   onFilterPublisherHierarchy
 }) => {
   let nodeOnSameLevelHasChildren = false;
   return hits.map((node, i) => {
     let active = false;
-    if (filters && filters === node.key) {
+    if (activeFilter === node.key) {
       active = true;
     }
-    const chosenClass = cx({
-      'tree-item_chosen': node.key === orgPath
-    });
 
     const name =
       getTranslateText(_get(publishers, [node.key, 'prefLabel'])) ||
@@ -67,14 +62,11 @@ const subTree = ({
           key={`${node.key}|${i}`}
           nodeLabel={label}
           defaultCollapsed={collapsed}
-          itemClassName={chosenClass}
         >
           {subTree({
             hits: node.children,
             activeFilter,
-            orgPath,
             publishers,
-            filters,
             onFilterPublisherHierarchy
           })}
         </TreeView>
@@ -98,19 +90,15 @@ const subTree = ({
 const mainTree = ({
   hits,
   activeFilter,
-  orgPath,
   publishers,
-  filters,
   onFilterPublisherHierarchy
 }) =>
   hits.map((node, i) => {
     let active = false;
-    if (filters && filters === node.key) {
+    if (activeFilter === node.key) {
       active = true;
     }
-    const chosenClass = cx('tree-view_main', {
-      'tree-item_chosen': node.key === orgPath
-    });
+
     const collapsed = isItemCollapsed(node.key, activeFilter);
 
     let name = node.key;
@@ -147,16 +135,14 @@ const mainTree = ({
             key={`${node.key}|${i}`}
             nodeLabel={label}
             defaultCollapsed={collapsed}
-            itemClassName={chosenClass}
+            itemClassName="tree-view_main"
           >
             {node.children &&
               node.children.length > 0 &&
               subTree({
                 hits: node.children,
                 activeFilter,
-                orgPath,
                 publishers,
-                filters,
                 onFilterPublisherHierarchy
               })}
           </TreeView>
@@ -198,16 +184,13 @@ export class SearchPublishersTree extends React.Component {
   toggleFilter() {
     this.setState({ openFilter: !this.state.openFilter });
   }
-
   _renderTree() {
     const {
       filter,
       onFilterPublisherHierarchy,
       activeFilter,
-      publishers,
-      orgPath
+      publishers
     } = this.props;
-    const filters = activeFilter;
 
     if (filter && typeof filter !== 'undefined' && filter.length > 0) {
       return (
@@ -215,9 +198,7 @@ export class SearchPublishersTree extends React.Component {
           {mainTree({
             hits: filter,
             activeFilter,
-            orgPath,
             publishers,
-            filters,
             onFilterPublisherHierarchy
           })}
         </div>
@@ -261,9 +242,7 @@ SearchPublishersTree.defaultProps = {
   title: null,
   filter: null,
   activeFilter: null,
-  publishers: null,
-  onSearch: null,
-  orgPath: null
+  publishers: null
 };
 
 SearchPublishersTree.propTypes = {
@@ -271,7 +250,5 @@ SearchPublishersTree.propTypes = {
   filter: PropTypes.array,
   onFilterPublisherHierarchy: PropTypes.func.isRequired,
   activeFilter: PropTypes.string,
-  publishers: PropTypes.object,
-  onSearch: PropTypes.func,
-  orgPath: PropTypes.string
+  publishers: PropTypes.object
 };
