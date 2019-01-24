@@ -93,6 +93,41 @@ exports[`should render InformationModelDetailsPage correctly with informationMod
                       {
   "$id": "http://localhost:8080/informationmodels/eadda99c-781e-4900-8f54-8dd298168382/schema",
   "definitions": {
+    "Eiendom": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/Spesifisering"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "bruksnummer": {
+              "$ref": "#/definitions/Tekst"
+            },
+            "gaardsnummer": {
+              "$ref": "#/definitions/Tekst"
+            },
+            "kommunenummer": {
+              "$ref": "#/definitions/Tekst"
+            },
+            "festenummer": {
+              "$ref": "#/definitions/Tekst"
+            },
+            "seksjonsnummer": {
+              "$ref": "#/definitions/Tekst"
+            },
+            "tekniskNavn": {
+              "description": "Feltets lovlige verdier er bestemt av kodelisten 2017_summertSkattegrunnlagForEksterne",
+              "allOf": [
+                {
+                  "$ref": "#/definitions/Tekst"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
     "Enhet": {
       "properties": {
         "organisasjonsnummer": {
@@ -253,6 +288,119 @@ exports[`should render InformationModelDetailsPage correctly with informationMod
         "href": {
           "type": "string"
         }
+      }
+    },
+    "Spesifisering": {
+      "type": "object",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "beloep": {
+          "$ref": "#/definitions/Beloep"
+        },
+        "type": {
+          "type": "string"
+        }
+      },
+      "discriminator": {
+        "propertyName": "type"
+      }
+    },
+    "Tekst": {
+      "type": "string",
+      "maxLength": 4000,
+      "description": "vilkårlig lang sekvens av tegn inkludert aksenter og spesielle tegn fra standardiserte tegnsett"
+    },
+    "SummertSkattegrunnlagsobjekt": {
+      "description": "Myndighetsfastsatte opplysninger om den skattepliktige, den skattepliktiges økonomi (inntekt/fradrag/formue/gjeld), innførsel, omsetning og uttak og den skattepliktiges produksjon og varehåndtering, klassifisert, verdisatt og korrekt periodisert. Den skattepliktige skal kunne observere skattegrunnlaget i sine omgivelser.",
+      "required": [
+        "tekniskNavn",
+        "beloep"
+      ],
+      "type": "object",
+      "properties": {
+        "tekniskNavn": {
+          "description": "Feltets lovlige verdier er bestemt av kodelisten 2017_summertSkattegrunnlagForEksterne",
+          "allOf": [
+            {
+              "$ref": "#/definitions/Tekst"
+            }
+          ]
+        },
+        "beloep": {
+          "$ref": "#/definitions/Beloep"
+        },
+        "spesifisering": {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {
+                "$ref": "#/definitions/Eiendom"
+              },
+              {
+                "$ref": "#/definitions/Kjoeretoey"
+              },
+              {
+                "$ref": "#/definitions/Generisk"
+              }
+            ]
+          },
+          "minItems": 0
+        },
+        "kategori": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Tekst"
+          },
+          "minItems": 0
+        }
+      }
+    },
+    "SpesifisertSummertSkattegrunnlag": {
+      "description": "SpesifiserSummertSkattegrunnlag inneholder skattegrunnlag med spesifisering av disse.",
+      "required": [
+        "personidentifikator",
+        "inntektsaar",
+        "skjermet"
+      ],
+      "type": "object",
+      "properties": {
+        "personidentifikator": {
+          "$ref": "#/definitions/Foedselsnummer"
+        },
+        "inntektsaar": {
+          "$ref": "#/definitions/Aarstall"
+        },
+        "grunnlag": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SummertSkattegrunnlagsobjekt"
+          },
+          "minItems": 0
+        },
+        "skjermet": {
+          "$ref": "#/definitions/Boolsk"
+        },
+        "skatteoppgjoersdato": {
+          "$ref": "#/definitions/Dato"
+        },
+        "skjoennsfastsatt": {
+          "$ref": "#/definitions/Boolsk"
+        },
+        "svalbardSkjoennsfastsatt": {
+          "$ref": "#/definitions/Boolsk"
+        },
+        "svalbardGrunnlag": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SummertSkattegrunnlagsobjekt"
+          },
+          "minItems": 0
+        }
+      },
+      "xml": {
+        "name": "spesifisertSummertSkattegrunnlag"
       }
     }
   }
