@@ -33,7 +33,7 @@ const renderJSONSchema = schema => {
 
   return (
     <div>
-      <pre className="whitespace">{JSON.stringify(schema, null, 2)}</pre>
+      <pre style={{ whiteSpace: 'pre' }}>{JSON.stringify(schema, null, 2)}</pre>
     </div>
   );
 };
@@ -117,7 +117,7 @@ export const InformationModelDetailsPage = props => {
     <main id="content" className="container">
       <article>
         <div className="row">
-          <div className="col-12 col-lg-8 offset-lg-4">
+          <div className="col-12 col-lg-9 offset-lg-3">
             <DocumentMeta {...meta} />
             <HarvestDate harvest={informationModelItem.harvest} />
 
@@ -132,11 +132,11 @@ export const InformationModelDetailsPage = props => {
         </div>
 
         <div className="row">
-          <div className="col-12 col-lg-4 ">
+          <div className="col-12 col-lg-3 ">
             {renderStickyMenu(informationModelItem)}
           </div>
 
-          <section className="col-12 col-lg-8 mt-3">
+          <section className="col-12 col-lg-9 mt-3">
             {renderModels(_.get(informationModelItem, 'schema'))}
 
             {renderRelatedApi(informationModelItem, publisherItems)}
