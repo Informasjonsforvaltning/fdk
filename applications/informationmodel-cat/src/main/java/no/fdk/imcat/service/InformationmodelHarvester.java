@@ -38,10 +38,9 @@ public class InformationmodelHarvester {
         this.harvest = harvest;
     }
 
-    @PostConstruct
     public void harvestFromSource() {
 
-        logger.debug("In postconstruct: Starting harvest from our APIs ");
+        logger.debug("Starting harvest of Information Models from our APIs");
         List<InformationModelHarvestSource> modelSources = getTheHarvestSources();
 
         for (InformationModelHarvestSource source : modelSources) {
