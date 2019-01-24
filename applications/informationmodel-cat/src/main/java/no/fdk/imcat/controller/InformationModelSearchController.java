@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import no.fdk.imcat.model.InformationModel;
 import no.fdk.imcat.model.InformationModelForOutput;
+import no.fdk.imcat.service.InformationModelForOutputFactory;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
@@ -123,21 +124,11 @@ public class InformationModelSearchController {
         //So we must have a separate class with the @JsonRawValue field.
         List<InformationModelForOutput> informationModelForOutput = new ArrayList<>();
         for (InformationModel model : informationModels) {
-            InformationModelForOutput modelForOutput = new InformationModelForOutput();
-            modelForOutput.setId(model.getId());
-            modelForOutput.setPublisher(model.getPublisher());
-            modelForOutput.setHarvestSourceUri(model.getHarvestSourceUri());
-            modelForOutput.setHarvest(model.getHarvest());
-            modelForOutput.setTitle(model.getTitle());
-            modelForOutput.theSchema = model.getSchema();
+            InformationModelForOutput modelForOutput = InformationModelForOutputFactory.getInformationModelForOutput(model);
             informationModelForOutput.add(modelForOutput);
         }
 
-        //PagedResources<InformationModel> InformationModelResources = new PagedResources<>(informationModels, pageMetadata);
-
         PagedResources<InformationModelForOutput> InformationModeConvertedResources = new PagedResources<>(informationModelForOutput, pageMetadata);
-
-
         return InformationModeConvertedResources;
     }
 
@@ -147,9 +138,7 @@ public class InformationModelSearchController {
             Sort.Direction sortOrder = sortdirection.toLowerCase().contains("asc".toLowerCase()) ? Sort.Direction.ASC : Sort.Direction.DESC;
             StringBuilder sbSortField = new StringBuilder();
 
-            if (!sortfield.equals("modified")) {
-                sbSortField.append(sortfield).append(".nb");
-            } else {
+            if (sortfield.equals("modified")) {
                 sbSortField.append("harvest.firstHarvested");
             }
 

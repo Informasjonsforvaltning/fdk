@@ -25,5 +25,5 @@ public class InformationModelForOutput {
     private String title;
 
     @JsonRawValue
-    public String theSchema;
+    public String schema;
 }

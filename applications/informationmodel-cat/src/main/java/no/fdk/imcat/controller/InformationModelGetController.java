@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiOperation;
 import no.dcat.webutils.exceptions.NotFoundException;
 import no.fdk.imcat.model.InformationModel;
 import no.fdk.imcat.model.InformationModelForOutput;
+import no.fdk.imcat.service.InformationModelForOutputFactory;
 import no.fdk.imcat.service.InformationmodelRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,19 +34,12 @@ public class InformationModelGetController {
         if (!informationModelOptional.isPresent()) {
             throw new NotFoundException();
         }
-
-        InformationModel model = informationModelOptional.get();
-
         //In order to not experience double escaping of the schemas, we need to annotate a field with @JsonRawValue, but this only works on output.
         //So we must have a separate class with the @JsonRawValue field.
-        InformationModelForOutput modelForOutput = new InformationModelForOutput();
-        modelForOutput.setId(model.getId());
-        modelForOutput.setPublisher(model.getPublisher());
-        modelForOutput.setHarvestSourceUri(model.getHarvestSourceUri());
-        modelForOutput.setHarvest(model.getHarvest());
-        modelForOutput.setTitle(model.getTitle());
-        modelForOutput.theSchema = model.getSchema();
+        InformationModelForOutput modelForOutput = InformationModelForOutputFactory.getInformationModelForOutput(informationModelOptional.get());
 
         return modelForOutput;
     }
+
+
 }
