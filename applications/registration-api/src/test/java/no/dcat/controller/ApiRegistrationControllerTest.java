@@ -6,10 +6,13 @@ import no.dcat.model.Catalog;
 import no.dcat.service.ApiCatService;
 import no.dcat.service.ApiRegistrationRepository;
 import no.dcat.service.CatalogRepository;
+import no.dcat.service.InformationmodelCatService;
 import no.dcat.shared.testcategories.UnitTest;
 import no.dcat.webutils.exceptions.BadRequestException;
 import no.dcat.webutils.exceptions.NotFoundException;
+import no.fdk.acat.bindings.ApiCatBindings;
 import no.fdk.acat.common.model.apispecification.ApiSpecification;
+import no.fdk.imcat.bindings.InformationmodelCatBindings;
 import org.apache.commons.io.IOUtils;
 import org.junit.Before;
 import org.junit.Test;
@@ -46,6 +49,9 @@ public class ApiRegistrationControllerTest {
     @Mock
     private ApiCatService apiCatMock;
 
+    @Mock
+    private InformationmodelCatService informationmodelCatMock;
+
     @Before
     public void setup() throws IOException {
         MockitoAnnotations.initMocks(this);
@@ -64,7 +70,7 @@ public class ApiRegistrationControllerTest {
         when(apiRegistrationRepository.save(any(ApiRegistration.class))).thenAnswer((invocation) -> invocation.getArguments()[0]);
 
         apiRegistrationController =
-            new ApiRegistrationController(apiRegistrationRepository, catalogRepository, apiCatMock);
+            new ApiRegistrationController(apiRegistrationRepository, catalogRepository, apiCatMock, informationmodelCatMock);
     }
 
     @Test
