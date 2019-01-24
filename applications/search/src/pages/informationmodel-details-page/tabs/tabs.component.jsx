@@ -15,7 +15,11 @@ const renderTabContent = (tabContent, activeTab) => {
       </TabPane>
     ));
 
-  return <TabContent activeTab={activeTab}>{items(tabContent)}</TabContent>;
+  return (
+    <TabContent className="pt-4 pb-4" activeTab={activeTab}>
+      {items(tabContent)}
+    </TabContent>
+  );
 };
 
 export class Tabs extends React.Component {

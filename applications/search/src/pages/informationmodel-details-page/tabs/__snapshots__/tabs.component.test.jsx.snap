@@ -34,6 +34,7 @@ exports[`should render Tabs correctly 1`] = `
   </Nav>
   <TabContent
     activeTab={0}
+    className="pt-4 pb-4"
     tag="div"
   >
     <TabPane
