@@ -3,6 +3,7 @@ package no.fdk.imcat.controller;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import no.fdk.imcat.model.InformationModel;
+import no.fdk.imcat.model.InformationModelForOutput;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
@@ -22,11 +23,12 @@ import org.springframework.hateoas.PagedResources;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin
 @RestController
-@RequestMapping(value = "/informationmodels2")
+@RequestMapping(value = "/informationmodels")
 public class InformationModelSearchController {
     public static final String MISSING = "MISSING";
     private static final Logger logger = LoggerFactory.getLogger(InformationModelSearchController.class);
@@ -40,7 +42,7 @@ public class InformationModelSearchController {
 
     @ApiOperation(value = "Search in Information Model catalog")
     @RequestMapping(value = "", method = RequestMethod.GET, produces = "application/json")
-    public PagedResources<InformationModel> search(
+    public PagedResources<InformationModelForOutput> search(
         @ApiParam("The query text")
         @RequestParam(value = "q", defaultValue = "", required = false)
             String query,
@@ -107,6 +109,7 @@ public class InformationModelSearchController {
         }
 
         AggregatedPage<InformationModel> aggregatedPage = elasticsearchTemplate.queryForPage(finalQuery, InformationModel.class);
+
         List<InformationModel> informationModels = aggregatedPage.getContent();
 
         PagedResources.PageMetadata pageMetadata = new PagedResources.PageMetadata(
@@ -116,9 +119,26 @@ public class InformationModelSearchController {
             aggregatedPage.getTotalPages()
         );
 
-        PagedResources<InformationModel> InformationModelResources = new PagedResources<>(informationModels, pageMetadata);
+        //In order to not experience double escaping of the schemas, we need to annotate a field with @JsonRawValue, but this only works on output.
+        //So we must have a separate class with the @JsonRawValue field.
+        List<InformationModelForOutput> informationModelForOutput = new ArrayList<>();
+        for (InformationModel model : informationModels) {
+            InformationModelForOutput modelForOutput = new InformationModelForOutput();
+            modelForOutput.setId(model.getId());
+            modelForOutput.setPublisher(model.getPublisher());
+            modelForOutput.setHarvestSourceUri(model.getHarvestSourceUri());
+            modelForOutput.setHarvest(model.getHarvest());
+            modelForOutput.setTitle(model.getTitle());
+            modelForOutput.theSchema = model.getSchema();
+            informationModelForOutput.add(modelForOutput);
+        }
 
-        return InformationModelResources;
+        //PagedResources<InformationModel> InformationModelResources = new PagedResources<>(informationModels, pageMetadata);
+
+        PagedResources<InformationModelForOutput> InformationModeConvertedResources = new PagedResources<>(informationModelForOutput, pageMetadata);
+
+
+        return InformationModeConvertedResources;
     }
 
     private void addSort(String sortfield, String sortdirection, NativeSearchQuery searchBuilder) {
