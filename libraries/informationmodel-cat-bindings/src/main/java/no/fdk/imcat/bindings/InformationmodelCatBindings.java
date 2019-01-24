@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.client.RestTemplate;
 
 import static org.springframework.http.HttpMethod.POST;
@@ -13,16 +15,25 @@ import static org.springframework.http.HttpMethod.POST;
 @NoArgsConstructor
 @AllArgsConstructor
 public class InformationmodelCatBindings {
+    private static Logger logger = LoggerFactory.getLogger(InformationmodelCatBindings.class);
+
     private String apiRootUrl;
 
-    private String getApisApiRootUrl() {
+    private String getInformationmodelsApiRootUrl() {
         return getApiRootUrl() + "/informationmodels";
     }
 
     public void triggerHarvestApiRegistration(String apiRegistrationId) {
+        String triggerUrl = getInformationmodelsApiRootUrl() + "/trigger/harvest/apiregistration/" + apiRegistrationId;
         RestTemplate restTemplate = new RestTemplate();
 
-        restTemplate.exchange(getApisApiRootUrl() + "/trigger/harvest/apiregistration/" + apiRegistrationId, POST, null, Void.class);
+        try {
+            restTemplate.exchange(triggerUrl, POST, null, Void.class);
+        } catch (Exception e) {
+            String errorMessage = "Failed sending harvest trigger message " + triggerUrl;
+            logger.error(errorMessage, e);
+        }
+
     }
 }
 
