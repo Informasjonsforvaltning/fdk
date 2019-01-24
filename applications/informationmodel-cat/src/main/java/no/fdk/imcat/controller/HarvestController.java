@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin
 @RestController
-@RequestMapping(value = "/apis/trigger/harvest")
+@RequestMapping(value = "/informationmodels/trigger/harvest")
 public class HarvestController {
 
     private static final Logger logger = LoggerFactory.getLogger(HarvestController.class);
