@@ -10,7 +10,7 @@ exports[`should render InformationModelDetailsPage correctly with informationMod
       className="row"
     >
       <div
-        className="col-12 col-lg-8 offset-lg-4"
+        className="col-12 col-lg-9 offset-lg-3"
       >
         <SideEffect(DocumentMeta)
           description={null}
@@ -51,7 +51,7 @@ exports[`should render InformationModelDetailsPage correctly with informationMod
       className="row"
     >
       <div
-        className="col-12 col-lg-4 "
+        className="col-12 col-lg-3 "
       >
         <StickyMenu
           menuItems={
@@ -69,7 +69,7 @@ exports[`should render InformationModelDetailsPage correctly with informationMod
         />
       </div>
       <section
-        className="col-12 col-lg-8 mt-3"
+        className="col-12 col-lg-9 mt-3"
       >
         <ListRegular
           bottomMargin={true}
@@ -84,7 +84,11 @@ exports[`should render InformationModelDetailsPage correctly with informationMod
                 Object {
                   "body": <div>
                     <pre
-                      className="whitespace"
+                      style={
+                        Object {
+                          "whiteSpace": "pre",
+                        }
+                      }
                     >
                       {
   "$id": "http://localhost:8080/informationmodels/eadda99c-781e-4900-8f54-8dd298168382/schema",
