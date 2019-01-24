@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import no.fdk.acat.common.model.apispecification.ApiSpecification;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpEntity;
 import org.springframework.web.client.RestTemplate;
 
@@ -15,6 +17,8 @@ import static org.springframework.http.HttpMethod.POST;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ApiCatBindings {
+    private static Logger logger = LoggerFactory.getLogger(ApiCatBindings.class);
+
     private String apiRootUrl;
 
     private static String getMessage(ConvertResponse response) {
@@ -36,8 +40,14 @@ public class ApiCatBindings {
 
     public void triggerHarvestApiRegistration(String apiRegistrationId) {
         RestTemplate restTemplate = new RestTemplate();
+        String triggerUrl = getApisApiRootUrl() + "/trigger/harvest/apiregistration/" + apiRegistrationId;
 
-        restTemplate.exchange(getApisApiRootUrl() + "/trigger/harvest/apiregistration/" + apiRegistrationId, POST, null, Void.class);
+        try {
+            restTemplate.exchange(triggerUrl, POST, null, Void.class);
+        } catch (Exception e) {
+            String errorMessage = "Failed sending harvest trigger message " + triggerUrl;
+            logger.error(errorMessage, e);
+        }
     }
 
     private ConvertResponse convert(String url, String spec) {
