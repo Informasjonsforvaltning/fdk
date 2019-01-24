@@ -8,6 +8,7 @@ import no.fdk.acat.bindings.ApiCatBindings;
 import no.fdk.acat.common.model.apispecification.ApiSpecification;
 import no.fdk.harvestqueue.HarvestQueue;
 import no.fdk.harvestqueue.QueuedTask;
+import no.fdk.imcat.bindings.InformationmodelCatBindings;
 import org.apache.commons.io.input.BOMInputStream;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
@@ -47,14 +48,24 @@ public class ApiCatalogHarvesterService {
 
     private ApiCatBindings apiCat;
 
+    private InformationmodelCatBindings informationmodelCat;
+
     private HarvestQueue harvestQueue;
 
+
     @Autowired
-    public ApiCatalogHarvesterService(ApiRegistrationRepository apiRegistrationRepository, ApiCatalogRepository apiCatalogRepository, HarvestQueue harvestQueue, ApiCatService apiCatService) {
+    public ApiCatalogHarvesterService(
+        ApiRegistrationRepository apiRegistrationRepository,
+        ApiCatalogRepository apiCatalogRepository,
+        HarvestQueue harvestQueue,
+        ApiCatService apiCatService,
+        InformationmodelCatService informationmodelCatService
+    ) {
         this.apiRegistrationRepository = apiRegistrationRepository;
         this.apiCatalogRepository = apiCatalogRepository;
         this.harvestQueue = harvestQueue;
         this.apiCat = apiCatService;
+        this.informationmodelCat = informationmodelCatService;
     }
 
     //TODO: Also trigger this every 24h ? (there exists a spring thing to do that)
@@ -126,6 +137,8 @@ public class ApiCatalogHarvesterService {
 
                 ApiRegistration savedApiRegistration = apiRegistrationRepository.save(apiRegistration);
                 apiCat.triggerHarvestApiRegistration(savedApiRegistration.getId());
+                informationmodelCat.triggerHarvestApiRegistration(savedApiRegistration.getId());
+
             }
 
             originCatalog.setHarvestStatus(HarvestStatus.Success());
