@@ -40,7 +40,7 @@ public class HarvestExecutor {
                                 try {
                                     informationmodelHarvester.harvestFromSource();
                                 } catch (Exception e) {
-                                    logger.warn("Problem with harvestAll: {}", e.getMessage());
+                                    logger.warn("Problem with harvestAll", e);
                                 }
                         }
                     }
