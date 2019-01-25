@@ -63,14 +63,15 @@ public class APIHarvest {
 
     List<InformationModelHarvestSource> getHarvestSourcesFromAPIs() {
         List<InformationModelHarvestSource> sourceList = new ArrayList<>();
-        List<ApiRegistrationPublic> apiReg = getApiRegistrations();
-        for (ApiRegistrationPublic apiId : apiReg) {
+        List<ApiRegistrationPublic> apiRegistrations = getApiRegistrations();
+        for (ApiRegistrationPublic apiRegistration : apiRegistrations) {
+            logger.info("Importing from ApiRegistration", apiRegistration.getId());
             //TODO: Change this when our own class for API Storage is available
             InformationModelHarvestSource hs = new InformationModelHarvestSource();
-            hs.URI = INFORMATIONMODEL_ROOT + apiId.getId();
-            hs.id = apiId.getId();
+            hs.URI = INFORMATIONMODEL_ROOT + apiRegistration.getId();
+            hs.id = apiRegistration.getId();
             hs.sourceType = API_TYPE;
-            hs.schema = ConvertFromOpenApiSchemasToJSONSchema(apiId.getOpenApi().getComponents().getSchemas(), apiId.getId());
+            hs.schema = ConvertFromOpenApiSchemasToJSONSchema(apiRegistration.getOpenApi().getComponents().getSchemas(), apiRegistration.getId());
             sourceList.add(hs);
         }
         return sourceList;
