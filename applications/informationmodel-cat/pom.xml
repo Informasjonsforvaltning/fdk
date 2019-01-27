@@ -95,6 +95,12 @@
             <version>1.4.0</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>no.dcat</groupId>
+            <artifactId>api-cat-converters</artifactId>
+            <version>1.0.0</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
     <profiles>
         <profile>
