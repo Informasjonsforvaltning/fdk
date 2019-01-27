@@ -5,19 +5,26 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.media.Schema;
 import no.dcat.client.registrationapi.ApiRegistrationPublic;
+import no.fdk.acat.converters.apispecificationparser.OpenApiV3JsonParser;
 import no.fdk.imcat.model.InformationModel;
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import static com.google.common.base.Strings.isNullOrEmpty;
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static no.fdk.imcat.service.InformationmodelHarvester.API_TYPE;
 import static no.fdk.imcat.service.InformationmodelHarvester.RETRY_COUNT_API_RETRIEVAL;
 
@@ -61,23 +68,53 @@ public class APIHarvest {
         return newModel;
     }
 
+    String getApiSpec(ApiRegistrationPublic apiRegistration) throws IOException {
+        String apiSpecUrl = apiRegistration.getApiSpecUrl();
+        String apiSpec = apiRegistration.getApiSpec();
+
+        if (isNullOrEmpty(apiSpec) && !isNullOrEmpty(apiSpecUrl)) {
+            apiSpec = IOUtils.toString(new URL(apiSpecUrl).openStream(), UTF_8);
+        }
+        return apiSpec;
+    }
+
     List<InformationModelHarvestSource> getHarvestSourcesFromAPIs() {
         List<InformationModelHarvestSource> sourceList = new ArrayList<>();
         List<ApiRegistrationPublic> apiRegistrations = getApiRegistrations();
         for (ApiRegistrationPublic apiRegistration : apiRegistrations) {
-            logger.info("Importing from ApiRegistration", apiRegistration.getId());
-            //TODO: Change this when our own class for API Storage is available
-            InformationModelHarvestSource hs = new InformationModelHarvestSource();
-            hs.URI = INFORMATIONMODEL_ROOT + apiRegistration.getId();
-            hs.id = apiRegistration.getId();
-            hs.sourceType = API_TYPE;
-            hs.schema = ConvertFromOpenApiSchemasToJSONSchema(apiRegistration.getOpenApi().getComponents().getSchemas(), apiRegistration.getId());
-            sourceList.add(hs);
+            logger.debug("Start importing from ApiRegistration, id={}", apiRegistration.getId());
+
+//            1) get spec
+//            2) parse spec to OpenApi
+//            3) if contains schemas
+//            4) recursively replace refs in schemas.
+
+            try {
+                String apiSpec = getApiSpec(apiRegistration);
+                OpenApiV3JsonParser parser = new OpenApiV3JsonParser();
+                OpenAPI openAPI = parser.parseToOpenAPI(apiSpec);
+
+                if (openAPI.getComponents() == null || openAPI.getComponents().getSchemas() == null) {
+                    logger.info("Skip import, no component schemas found in api spec id={}", apiRegistration.getId());
+                    continue;
+                }
+                // we only use OpenAPI library to validate the spec, the actual jsonSchema processing is done on raw json
+                Map<String, Schema> openApiSchemas = openAPI.getComponents().getSchemas();
+                InformationModelHarvestSource hs = new InformationModelHarvestSource();
+                hs.URI = INFORMATIONMODEL_ROOT + apiRegistration.getId();
+                hs.id = apiRegistration.getId();
+                hs.sourceType = API_TYPE;
+                hs.schema = ConvertFromOpenApiSchemasToJsonSchema(openApiSchemas, apiRegistration.getId());
+                sourceList.add(hs);
+
+            } catch (Exception e) {
+                logger.info("Skipping api registration, id={}, reason:{}", apiRegistration.getId(), e.getMessage());
+            }
         }
         return sourceList;
     }
 
-    private JsonNode ConvertFromOpenApiSchemasToJSONSchema(Map<String, Schema> openApiSchemas, String id) {
+    private JsonNode ConvertFromOpenApiSchemasToJsonSchema(Map<String, Schema> openApiSchemas, String id) {
 
         if (openApiSchemas == null || openApiSchemas.size() < 1) {
             return null;
