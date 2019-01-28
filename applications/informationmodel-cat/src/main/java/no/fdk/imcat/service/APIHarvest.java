@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import io.swagger.v3.oas.models.OpenAPI;
-import io.swagger.v3.oas.models.media.Schema;
 import no.dcat.client.registrationapi.ApiRegistrationPublic;
 import no.fdk.acat.converters.apispecificationparser.OpenApiV3JsonParser;
 import no.fdk.imcat.model.InformationModel;
@@ -21,7 +20,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
 import static com.google.common.base.Strings.isNullOrEmpty;
 import static java.nio.charset.StandardCharsets.UTF_8;
@@ -43,14 +41,6 @@ public class APIHarvest {
     APIHarvest(RegistrationApiClient client, ObjectMapper mapper) {
         this.mapper = mapper;
         this.registrationApiClient = client;
-    }
-
-    private static String transformRef(String reference) {
-        if (reference == null || reference.trim().isEmpty()) {
-            return reference;
-        }
-
-        return reference.replaceFirst("components/schemas", "definitions");
     }
 
     InformationModel getInformationModel(InformationModelHarvestSource source) {
@@ -101,6 +91,7 @@ public class APIHarvest {
                 }
                 InformationModelHarvestSource hs = new InformationModelHarvestSource();
                 hs.URI = INFORMATIONMODEL_ROOT + apiRegistration.getId();
+                hs.publisherOrgNr = apiRegistration.getCatalogId();
                 hs.id = apiRegistration.getId();
                 hs.sourceType = API_TYPE;
                 hs.title = openAPI.getInfo().getTitle();
@@ -114,7 +105,7 @@ public class APIHarvest {
         return sourceList;
     }
 
-    private JsonNode extractSchemaFromOpenApi(String openApiSpec, String id) throws  IOException {
+    private JsonNode extractSchemaFromOpenApi(String openApiSpec, String id) throws IOException {
 
         /*
         informationmodel schema is defined as:
@@ -125,15 +116,15 @@ public class APIHarvest {
         }
          */
 
-        JsonNode componentsSchemasNode=mapper.readTree(openApiSpec).path("components").path("schemas");
+        JsonNode componentsSchemasNode = mapper.readTree(openApiSpec).path("components").path("schemas");
 
         if (componentsSchemasNode == null || componentsSchemasNode.size() < 1) {
             return null;
         }
 
-        String componentsSchemasJson=mapper.writeValueAsString(componentsSchemasNode);
+        String componentsSchemasJson = mapper.writeValueAsString(componentsSchemasNode);
         String definitionsJson = componentsSchemasJson.replace("#/components/schemas/", "#/definitions/");
-        JsonNode definitionsNode=mapper.readTree(definitionsJson);
+        JsonNode definitionsNode = mapper.readTree(definitionsJson);
 
         ObjectNode JSONSchemaRootNode = mapper.createObjectNode();
         String schemaId = INFORMATIONMODEL_ROOT + id + "/schema";
