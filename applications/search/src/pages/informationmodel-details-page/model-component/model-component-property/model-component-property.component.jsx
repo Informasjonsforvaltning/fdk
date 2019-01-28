@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Scroll from 'react-scroll';
 
-import { getTypeFromTypeRef } from '../../../../lib/informationmodel';
+import { getTypeFromTypeRef } from '../../../../lib/informationmodel/informationmodel';
 
 const ScrollLink = Scroll.Link;
 
