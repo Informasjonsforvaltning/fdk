@@ -99,14 +99,12 @@ public class APIHarvest {
                     logger.info("Skip import, no component schemas found in api spec id={}", apiRegistration.getId());
                     continue;
                 }
-                // we only use OpenAPI library to validate the spec, the actual jsonSchema processing is done on raw json
-                Map<String, Schema> openApiSchemas = openAPI.getComponents().getSchemas();
                 InformationModelHarvestSource hs = new InformationModelHarvestSource();
                 hs.URI = INFORMATIONMODEL_ROOT + apiRegistration.getId();
                 hs.id = apiRegistration.getId();
                 hs.sourceType = API_TYPE;
                 hs.title = openAPI.getInfo().getTitle();
-                hs.schema = ConvertFromOpenApiSchemasToJsonSchema(openApiSchemas, apiRegistration.getId());
+                hs.schema = extractSchemaFromOpenApi(apiSpec, apiRegistration.getId());
                 sourceList.add(hs);
 
             } catch (Exception e) {
@@ -116,37 +114,32 @@ public class APIHarvest {
         return sourceList;
     }
 
-    private JsonNode ConvertFromOpenApiSchemasToJsonSchema(Map<String, Schema> openApiSchemas, String id) {
+    private JsonNode extractSchemaFromOpenApi(String openApiSpec, String id) throws  IOException {
 
-        if (openApiSchemas == null || openApiSchemas.size() < 1) {
+        /*
+        informationmodel schema is defined as:
+        {
+            $schema:<jsonschema version ref>
+            $id:<url>
+            definitions:{[name]:<schema>}
+        }
+         */
+
+        JsonNode componentsSchemasNode=mapper.readTree(openApiSpec).path("components").path("schemas");
+
+        if (componentsSchemasNode == null || componentsSchemasNode.size() < 1) {
             return null;
         }
+
+        String componentsSchemasJson=mapper.writeValueAsString(componentsSchemasNode);
+        String definitionsJson = componentsSchemasJson.replace("#/components/schemas/", "#/definitions/");
+        JsonNode definitionsNode=mapper.readTree(definitionsJson);
+
         ObjectNode JSONSchemaRootNode = mapper.createObjectNode();
-
-        JSONSchemaRootNode.put("$schema", "http://json-schema.org/draft-06/schema#");
-
         String schemaId = INFORMATIONMODEL_ROOT + id + "/schema";
 
+        JSONSchemaRootNode.put("$schema", "http://json-schema.org/draft-06/schema#");
         JSONSchemaRootNode.put("$id", schemaId);
-
-        ObjectNode definitionsNode = mapper.createObjectNode();
-
-        openApiSchemas.forEach((k, v) -> {
-            ObjectNode containerForSingleSchema = mapper.createObjectNode();
-
-            ObjectNode containerForProperties = mapper.createObjectNode();
-            Map<String, Schema> props = v.getProperties();
-            if (props != null) {
-                props.forEach((pk, pv) -> {
-                    if (pv != null) {
-                        containerForProperties.put(pk, transformRef(pv.get$ref()));
-                    }
-                });
-            }
-            containerForSingleSchema.set("properties", containerForProperties);
-            definitionsNode.set(k, containerForSingleSchema);
-        });
-
         JSONSchemaRootNode.set("definitions", definitionsNode);
         return JSONSchemaRootNode;
     }
