@@ -58,6 +58,7 @@ public class APIHarvest {
         InformationModel newModel = new InformationModel();
         newModel.setHarvestSourceUri(source.URI);
         newModel.setId(source.id);
+        newModel.setTitle(source.title);
         ObjectWriter writer = mapper.writer();
         try {
             newModel.setSchema(writer.writeValueAsString(source.schema));
@@ -104,6 +105,7 @@ public class APIHarvest {
                 hs.URI = INFORMATIONMODEL_ROOT + apiRegistration.getId();
                 hs.id = apiRegistration.getId();
                 hs.sourceType = API_TYPE;
+                hs.title = openAPI.getInfo().getTitle();
                 hs.schema = ConvertFromOpenApiSchemasToJsonSchema(openApiSchemas, apiRegistration.getId());
                 sourceList.add(hs);
 
