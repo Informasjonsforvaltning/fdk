@@ -1,4 +1,4 @@
-package no.ccat.model;
+package no.fdk.webutils.aggregation;
 
 import lombok.Data;
 
