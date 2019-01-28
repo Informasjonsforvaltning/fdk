@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { resolve } from 'react-resolver';
-import { getInformationModel } from '../../../api/get-information-model';
 import { getTranslateText } from '../../../lib/translateText';
+import { getInformationmodel } from '../../../api/informationmodels';
 
-const memoizedGetInformationModel = _.memoize(getInformationModel);
+const memoizedGetInformationModel = _.memoize(getInformationmodel);
 
 export const PureInformationModelBreadcrumb = props => {
   const { informationModelItem } = props;

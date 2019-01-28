@@ -9,7 +9,7 @@ exports[`should render ModelComponentPure with props 1`] = `
   >
     <button
       className="bg-transparent border-0 p-0 d-flex align-items-center w-50"
-      name="Eiendom"
+      name="Enhet"
     >
       <div
         className="d-flex align-items-center"
@@ -20,33 +20,10 @@ exports[`should render ModelComponentPure with props 1`] = `
         <span
           className="d-flex w-50 fdk-text-extra-strong"
         >
-          Eiendom
+          Enhet
         </span>
       </div>
     </button>
-    <div
-      className="d-flex w-50"
-      style={
-        Object {
-          "marginLeft": "16px",
-        }
-      }
-    >
-      <Link
-        duration={1500}
-        isDynamic={true}
-        key="Spesifisering"
-        offset={-10}
-        smooth={true}
-        spy={true}
-        tabIndex="0"
-        to="Spesifisering"
-      >
-        <span>
-          Spesifisering
-        </span>
-      </Link>
-    </div>
   </div>
   <Collapse
     appear={false}
@@ -67,46 +44,158 @@ exports[`should render ModelComponentPure with props 1`] = `
     unmountOnExit={false}
   >
     <ModelComponentProperty
-      key="bruksnummer"
-      name="bruksnummer"
+      key="organisasjonsnummer"
+      name="organisasjonsnummer"
       oneOfTypeRefs={null}
-      type={null}
-      typeRef="#/definitions/Tekst"
+      type="string"
+      typeRef={null}
     />
     <ModelComponentProperty
-      key="gaardsnummer"
-      name="gaardsnummer"
+      key="navn"
+      name="navn"
       oneOfTypeRefs={null}
-      type={null}
-      typeRef="#/definitions/Tekst"
+      type="string"
+      typeRef={null}
     />
     <ModelComponentProperty
-      key="kommunenummer"
-      name="kommunenummer"
+      key="organisasjonsform"
+      name="organisasjonsform"
       oneOfTypeRefs={null}
       type={null}
-      typeRef="#/definitions/Tekst"
+      typeRef="#/definitions/Organisasjonsform"
     />
     <ModelComponentProperty
-      key="festenummer"
-      name="festenummer"
+      key="postadresse"
+      name="postadresse"
       oneOfTypeRefs={null}
       type={null}
-      typeRef="#/definitions/Tekst"
+      typeRef="#/definitions/Adresse"
     />
     <ModelComponentProperty
-      key="seksjonsnummer"
-      name="seksjonsnummer"
+      key="registreringsdatoEnhetsregisteret"
+      name="registreringsdatoEnhetsregisteret"
       oneOfTypeRefs={null}
-      type={null}
-      typeRef="#/definitions/Tekst"
+      type="string"
+      typeRef={null}
     />
     <ModelComponentProperty
-      key="tekniskNavn"
-      name="tekniskNavn"
+      key="registrertIMvaregisteret"
+      name="registrertIMvaregisteret"
+      oneOfTypeRefs={null}
+      type="boolean"
+      typeRef={null}
+    />
+    <ModelComponentProperty
+      key="naeringskode1"
+      name="naeringskode1"
       oneOfTypeRefs={null}
       type={null}
-      typeRef="#/definitions/Tekst"
+      typeRef="#/definitions/Naeringskode"
+    />
+    <ModelComponentProperty
+      key="naeringskode2"
+      name="naeringskode2"
+      oneOfTypeRefs={null}
+      type={null}
+      typeRef="#/definitions/Naeringskode"
+    />
+    <ModelComponentProperty
+      key="naeringskode3"
+      name="naeringskode3"
+      oneOfTypeRefs={null}
+      type={null}
+      typeRef="#/definitions/Naeringskode"
+    />
+    <ModelComponentProperty
+      key="antallAnsatte"
+      name="antallAnsatte"
+      oneOfTypeRefs={null}
+      type="integer"
+      typeRef={null}
+    />
+    <ModelComponentProperty
+      key="forretningsadresse"
+      name="forretningsadresse"
+      oneOfTypeRefs={null}
+      type={null}
+      typeRef="#/definitions/Adresse"
+    />
+    <ModelComponentProperty
+      key="stiftelsedato"
+      name="stiftelsedato"
+      oneOfTypeRefs={null}
+      type="string"
+      typeRef={null}
+    />
+    <ModelComponentProperty
+      key="institusjonellSektorkode"
+      name="institusjonellSektorkode"
+      oneOfTypeRefs={null}
+      type={null}
+      typeRef="#/definitions/Sektorkode"
+    />
+    <ModelComponentProperty
+      key="registrertIForetaksregisteret"
+      name="registrertIForetaksregisteret"
+      oneOfTypeRefs={null}
+      type="boolean"
+      typeRef={null}
+    />
+    <ModelComponentProperty
+      key="registrertIStiftelsesregisteret"
+      name="registrertIStiftelsesregisteret"
+      oneOfTypeRefs={null}
+      type="boolean"
+      typeRef={null}
+    />
+    <ModelComponentProperty
+      key="registrertIFrivillighetsregisteret"
+      name="registrertIFrivillighetsregisteret"
+      oneOfTypeRefs={null}
+      type="boolean"
+      typeRef={null}
+    />
+    <ModelComponentProperty
+      key="sisteInnsendteAarsregnskap"
+      name="sisteInnsendteAarsregnskap"
+      oneOfTypeRefs={null}
+      type="string"
+      typeRef={null}
+    />
+    <ModelComponentProperty
+      key="konkurs"
+      name="konkurs"
+      oneOfTypeRefs={null}
+      type="boolean"
+      typeRef={null}
+    />
+    <ModelComponentProperty
+      key="underAvvikling"
+      name="underAvvikling"
+      oneOfTypeRefs={null}
+      type="boolean"
+      typeRef={null}
+    />
+    <ModelComponentProperty
+      key="underTvangsavviklingEllerTvangsopplosning"
+      name="underTvangsavviklingEllerTvangsopplosning"
+      oneOfTypeRefs={null}
+      type="boolean"
+      typeRef={null}
+    />
+    <ModelComponentProperty
+      key="maalform"
+      name="maalform"
+      oneOfTypeRefs={null}
+      type="string"
+      typeRef={null}
+    />
+    <ModelComponentProperty
+      key="_links"
+      name="_links"
+      oneOfTypeRefs={null}
+      type={null}
+      typeRef="#/definitions/Self"
     />
   </Collapse>
 </React.Fragment>

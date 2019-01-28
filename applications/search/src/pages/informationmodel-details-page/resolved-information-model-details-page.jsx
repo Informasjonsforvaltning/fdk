@@ -1,9 +1,9 @@
 import _ from 'lodash';
 import { resolve } from 'react-resolver';
 import { InformationModelDetailsPage } from './information-model-details-page';
-import { getInformationModel } from '../../api/get-information-model';
+import { getInformationmodel } from '../../api/informationmodels';
 
-const memoizedGetInformationModel = _.memoize(getInformationModel);
+const memoizedGetInformationModel = _.memoize(getInformationmodel);
 
 const mapProps = {
   informationModelItem: props =>
