@@ -1,7 +1,6 @@
-package no.ccat.hateoas;
+package no.fdk.webutils.aggregation;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import no.ccat.model.Aggregation;
 import org.springframework.hateoas.PagedResources;
 
 import java.util.Map;
