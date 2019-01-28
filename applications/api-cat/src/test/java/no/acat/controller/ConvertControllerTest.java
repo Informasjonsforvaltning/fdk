@@ -2,7 +2,7 @@ package no.acat.controller;
 
 import no.acat.utils.Utils;
 import no.dcat.shared.testcategories.UnitTest;
-import no.dcat.webutils.exceptions.BadRequestException;
+import no.fdk.webutils.exceptions.BadRequestException;
 import no.fdk.acat.bindings.ConvertRequest;
 import no.fdk.acat.bindings.ConvertResponse;
 import org.junit.Assert;

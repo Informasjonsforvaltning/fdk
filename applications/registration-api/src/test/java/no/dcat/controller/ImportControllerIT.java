@@ -5,7 +5,7 @@ import no.dcat.model.Catalog;
 import no.dcat.model.Dataset;
 import no.dcat.service.CatalogRepository;
 import no.dcat.shared.testcategories.IntegrationTest;
-import no.dcat.webutils.exceptions.NotFoundException;
+import no.fdk.webutils.exceptions.NotFoundException;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.util.FileManager;
 import org.junit.Before;

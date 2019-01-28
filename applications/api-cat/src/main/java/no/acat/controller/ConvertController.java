@@ -1,7 +1,7 @@
 package no.acat.controller;
 
 import com.google.common.base.Strings;
-import no.dcat.webutils.exceptions.BadRequestException;
+import no.fdk.webutils.exceptions.BadRequestException;
 import no.fdk.acat.bindings.ConvertRequest;
 import no.fdk.acat.bindings.ConvertResponse;
 import no.fdk.acat.common.model.apispecification.ApiSpecification;
