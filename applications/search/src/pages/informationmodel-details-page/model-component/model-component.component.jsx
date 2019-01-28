@@ -10,7 +10,7 @@ import {
   getOwnProperties,
   getParentTypeRef,
   getTypeFromTypeRef
-} from '../../../lib/informationmodel';
+} from '../../../lib/informationmodel/informationmodel';
 import { ModelComponentProperty } from './model-component-property/model-component-property.component';
 import './model-component.scss';
 
