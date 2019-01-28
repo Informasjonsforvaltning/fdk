@@ -1,4 +1,4 @@
-package no.dcat.webutils.exceptions;
+package no.fdk.webutils.exceptions;
 
 public class NotFoundException extends Exception {
 

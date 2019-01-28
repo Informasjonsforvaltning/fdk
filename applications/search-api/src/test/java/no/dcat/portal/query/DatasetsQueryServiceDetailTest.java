@@ -2,12 +2,11 @@ package no.dcat.portal.query;
 
 import no.dcat.shared.Dataset;
 import no.dcat.shared.testcategories.UnitTest;
-import no.dcat.webutils.exceptions.NotFoundException;
+import no.fdk.webutils.exceptions.NotFoundException;
 import org.elasticsearch.action.ListenableActionFuture;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Client;
-import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
 import org.junit.Before;

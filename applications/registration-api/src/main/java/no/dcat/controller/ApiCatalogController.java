@@ -3,7 +3,7 @@ package no.dcat.controller;
 import no.dcat.model.ApiCatalog;
 import no.dcat.service.ApiCatalogHarvesterService;
 import no.dcat.service.ApiCatalogRepository;
-import no.dcat.webutils.exceptions.NotFoundException;
+import no.fdk.webutils.exceptions.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

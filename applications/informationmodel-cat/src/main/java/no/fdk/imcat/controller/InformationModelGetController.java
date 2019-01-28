@@ -1,7 +1,7 @@
 package no.fdk.imcat.controller;
 
 import io.swagger.annotations.ApiOperation;
-import no.dcat.webutils.exceptions.NotFoundException;
+import no.fdk.webutils.exceptions.NotFoundException;
 import no.fdk.imcat.model.InformationModel;
 import no.fdk.imcat.service.InformationmodelRepository;
 import org.slf4j.Logger;

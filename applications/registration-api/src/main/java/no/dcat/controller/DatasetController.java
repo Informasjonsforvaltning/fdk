@@ -12,7 +12,7 @@ import no.dcat.service.CatalogRepository;
 import no.dcat.service.ConceptCatClient;
 import no.dcat.service.DatasetRepository;
 import no.dcat.shared.Subject;
-import no.dcat.webutils.exceptions.NotFoundException;
+import no.fdk.webutils.exceptions.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

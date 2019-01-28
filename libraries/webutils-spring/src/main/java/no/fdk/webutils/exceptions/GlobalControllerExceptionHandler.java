@@ -1,4 +1,4 @@
-package no.dcat.webutils.exceptions;
+package no.fdk.webutils.exceptions;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
