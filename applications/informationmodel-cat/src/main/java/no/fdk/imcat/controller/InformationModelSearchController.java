@@ -3,8 +3,6 @@ package no.fdk.imcat.controller;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import no.fdk.imcat.model.InformationModel;
-import no.fdk.imcat.model.InformationModelForOutput;
-import no.fdk.imcat.service.InformationModelForOutputFactory;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
@@ -24,7 +22,6 @@ import org.springframework.hateoas.PagedResources;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin
@@ -43,7 +40,7 @@ public class InformationModelSearchController {
 
     @ApiOperation(value = "Search in Information Model catalog")
     @RequestMapping(value = "", method = RequestMethod.GET, produces = "application/json")
-    public PagedResources<InformationModelForOutput> search(
+    public PagedResources<InformationModel> search(
         @ApiParam("The query text")
         @RequestParam(value = "q", defaultValue = "", required = false)
             String query,
@@ -120,15 +117,7 @@ public class InformationModelSearchController {
             aggregatedPage.getTotalPages()
         );
 
-        //In order to not experience double escaping of the schemas, we need to annotate a field with @JsonRawValue, but this only works on output.
-        //So we must have a separate class with the @JsonRawValue field.
-        List<InformationModelForOutput> informationModelForOutput = new ArrayList<>();
-        for (InformationModel model : informationModels) {
-            InformationModelForOutput modelForOutput = InformationModelForOutputFactory.getInformationModelForOutput(model);
-            informationModelForOutput.add(modelForOutput);
-        }
-
-        PagedResources<InformationModelForOutput> InformationModeConvertedResources = new PagedResources<>(informationModelForOutput, pageMetadata);
+        PagedResources<InformationModel> InformationModeConvertedResources = new PagedResources<>(informationModels, pageMetadata);
         return InformationModeConvertedResources;
     }
 
