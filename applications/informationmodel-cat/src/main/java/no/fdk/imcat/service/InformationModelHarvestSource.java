@@ -6,5 +6,6 @@ class InformationModelHarvestSource {
     public String URI;
     public String id;
     public String sourceType;
+    public String title;
     public JsonNode schema;
 }
