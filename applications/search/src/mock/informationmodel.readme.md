@@ -1,4 +1,4 @@
-Algorithm for importing InformationModel from OpenApi spec.
+## Algorithm for importing InformationModel from OpenApi spec.
 
 
 1) generate metadata fields, (id, uri, title, publisher)
@@ -21,8 +21,9 @@ for example, if in OpenApi, there is reference,
 "$ref": "#/components/schemas/Organisasjonsform", 
 then it will be translated in JsonSchema to "$ref": "#/definitions/Organisasjonsform"
 
-(when i did it manuyally, I jused find/replace, hint-hint)
 
+## Recommended way to regenerate mock, is to download actual server response from production system.
 
+curl 'http://localhost:8080/api/informationmodels?aggregations=true' -o ./src/mock/informationmodels.response.json
 
-
+curl 'http://localhost:8080/api/informationmodels/936c581f-9d95-418b-8fce-e452f6bdfd5e' -o ./src/mock/informationmodel.response.json

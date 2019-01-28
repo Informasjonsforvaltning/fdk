@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { InformationModelDetailsPage } from './information-model-details-page';
-import informationModelApiResponse from '../../mock/informationmodelApiResponse.json';
+import informationModelApiResponse from '../../mock/informationmodel.response.json';
 
 let wrapper;
 

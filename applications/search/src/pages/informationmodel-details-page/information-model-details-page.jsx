@@ -104,6 +104,11 @@ const renderStickyMenu = informationModelItem => {
   return <StickyMenu menuItems={menuItems} />;
 };
 
+function getSchema(model) {
+  const schemaJson = _.get(model, 'schema');
+  return JSON.parse(schemaJson);
+}
+
 export const InformationModelDetailsPage = props => {
   props.fetchPublishersIfNeeded();
 
@@ -142,7 +147,7 @@ export const InformationModelDetailsPage = props => {
           </div>
 
           <section className="col-12 col-lg-9 mt-3">
-            {renderModels(_.get(informationModelItem, 'schema'))}
+            {renderModels(getSchema(informationModelItem))}
 
             {renderRelatedApi(informationModelItem, publisherItems)}
             <div style={{ height: '75vh' }} />

@@ -14,35 +14,30 @@ exports[`should render InformationModelDetailsPage correctly with informationMod
       >
         <SideEffect(DocumentMeta)
           description={null}
-          title="Enhetsregisteret"
+          title="Åpne Data fra Enhetsregisteret - API Dokumentasjon"
         />
         <HarvestDate
           harvest={
             Object {
-              "firstHarvested": "2019-01-14T06:40:56.173Z",
-              "lastHarvested": "2019-01-14T06:40:56.173Z",
+              "changed": Array [
+                "2019-01-28T11:31:59.499+0000",
+                "2019-01-28T13:07:29.496+0000",
+              ],
+              "firstHarvested": "2019-01-26T12:11:59.193+0000",
+              "lastChanged": "2019-01-28T13:07:29.496+0000",
+              "lastHarvested": "2019-01-28T13:07:29.496+0000",
             }
           }
         />
         <SearchHitHeader
           nationalComponent={false}
-          publisher={
-            Object {
-              "id": "970018131",
-              "name": "UTDANNINGSDIREKTORATET",
-              "orgPath": "/STAT/872417842/970018131",
-              "prefLabel": Object {
-                "no": "Utdanningsdirektoratet",
-              },
-              "uri": "http://data.brreg.no/enhetsregisteret/enhet/970018131",
-            }
-          }
+          publisher={null}
           publisherItems={null}
           publisherLabel="Provider:"
           publisherTag="span"
           tag="h1"
           theme={null}
-          title="Enhetsregisteret"
+          title="Åpne Data fra Enhetsregisteret - API Dokumentasjon"
           titleLink={null}
         />
       </div>
@@ -112,41 +107,6 @@ exports[`should render InformationModelDetailsPage correctly with informationMod
                               "type": "string",
                             },
                           },
-                        },
-                        "Eiendom": Object {
-                          "allOf": Array [
-                            Object {
-                              "$ref": "#/definitions/Spesifisering",
-                            },
-                            Object {
-                              "properties": Object {
-                                "bruksnummer": Object {
-                                  "$ref": "#/definitions/Tekst",
-                                },
-                                "festenummer": Object {
-                                  "$ref": "#/definitions/Tekst",
-                                },
-                                "gaardsnummer": Object {
-                                  "$ref": "#/definitions/Tekst",
-                                },
-                                "kommunenummer": Object {
-                                  "$ref": "#/definitions/Tekst",
-                                },
-                                "seksjonsnummer": Object {
-                                  "$ref": "#/definitions/Tekst",
-                                },
-                                "tekniskNavn": Object {
-                                  "allOf": Array [
-                                    Object {
-                                      "$ref": "#/definitions/Tekst",
-                                    },
-                                  ],
-                                  "description": "Feltets lovlige verdier er bestemt av kodelisten 2017_summertSkattegrunnlagForEksterne",
-                                },
-                              },
-                              "type": "object",
-                            },
-                          ],
                         },
                         "Enhet": Object {
                           "properties": Object {
@@ -275,119 +235,6 @@ exports[`should render InformationModelDetailsPage correctly with informationMod
                             },
                           },
                         },
-                        "Spesifisering": Object {
-                          "discriminator": Object {
-                            "propertyName": "type",
-                          },
-                          "properties": Object {
-                            "beloep": Object {
-                              "$ref": "#/definitions/Beloep",
-                            },
-                            "type": Object {
-                              "type": "string",
-                            },
-                          },
-                          "required": Array [
-                            "type",
-                          ],
-                          "type": "object",
-                        },
-                        "SpesifisertSummertSkattegrunnlag": Object {
-                          "description": "SpesifiserSummertSkattegrunnlag inneholder skattegrunnlag med spesifisering av disse.",
-                          "properties": Object {
-                            "grunnlag": Object {
-                              "items": Object {
-                                "$ref": "#/definitions/SummertSkattegrunnlagsobjekt",
-                              },
-                              "minItems": 0,
-                              "type": "array",
-                            },
-                            "inntektsaar": Object {
-                              "$ref": "#/definitions/Aarstall",
-                            },
-                            "personidentifikator": Object {
-                              "$ref": "#/definitions/Foedselsnummer",
-                            },
-                            "skatteoppgjoersdato": Object {
-                              "$ref": "#/definitions/Dato",
-                            },
-                            "skjermet": Object {
-                              "$ref": "#/definitions/Boolsk",
-                            },
-                            "skjoennsfastsatt": Object {
-                              "$ref": "#/definitions/Boolsk",
-                            },
-                            "svalbardGrunnlag": Object {
-                              "items": Object {
-                                "$ref": "#/definitions/SummertSkattegrunnlagsobjekt",
-                              },
-                              "minItems": 0,
-                              "type": "array",
-                            },
-                            "svalbardSkjoennsfastsatt": Object {
-                              "$ref": "#/definitions/Boolsk",
-                            },
-                          },
-                          "required": Array [
-                            "personidentifikator",
-                            "inntektsaar",
-                            "skjermet",
-                          ],
-                          "type": "object",
-                          "xml": Object {
-                            "name": "spesifisertSummertSkattegrunnlag",
-                          },
-                        },
-                        "SummertSkattegrunnlagsobjekt": Object {
-                          "description": "Myndighetsfastsatte opplysninger om den skattepliktige, den skattepliktiges økonomi (inntekt/fradrag/formue/gjeld), innførsel, omsetning og uttak og den skattepliktiges produksjon og varehåndtering, klassifisert, verdisatt og korrekt periodisert. Den skattepliktige skal kunne observere skattegrunnlaget i sine omgivelser.",
-                          "properties": Object {
-                            "beloep": Object {
-                              "$ref": "#/definitions/Beloep",
-                            },
-                            "kategori": Object {
-                              "items": Object {
-                                "$ref": "#/definitions/Tekst",
-                              },
-                              "minItems": 0,
-                              "type": "array",
-                            },
-                            "spesifisering": Object {
-                              "items": Object {
-                                "oneOf": Array [
-                                  Object {
-                                    "$ref": "#/definitions/Eiendom",
-                                  },
-                                  Object {
-                                    "$ref": "#/definitions/Kjoeretoey",
-                                  },
-                                  Object {
-                                    "$ref": "#/definitions/Generisk",
-                                  },
-                                ],
-                              },
-                              "minItems": 0,
-                              "type": "array",
-                            },
-                            "tekniskNavn": Object {
-                              "allOf": Array [
-                                Object {
-                                  "$ref": "#/definitions/Tekst",
-                                },
-                              ],
-                              "description": "Feltets lovlige verdier er bestemt av kodelisten 2017_summertSkattegrunnlagForEksterne",
-                            },
-                          },
-                          "required": Array [
-                            "tekniskNavn",
-                            "beloep",
-                          ],
-                          "type": "object",
-                        },
-                        "Tekst": Object {
-                          "description": "vilkårlig lang sekvens av tegn inkludert aksenter og spesielle tegn fra standardiserte tegnsett",
-                          "maxLength": 4000,
-                          "type": "string",
-                        },
                         "_Organisasjonsformer": Object {
                           "properties": Object {
                             "embedded": Object {
@@ -410,43 +257,9 @@ exports[`should render InformationModelDetailsPage correctly with informationMod
                       }
                     >
                       {
-  "$id": "http://localhost:8080/informationmodels/eadda99c-781e-4900-8f54-8dd298168382/schema",
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "https://fellesdatakatalog.brreg.no/informationmodels/936c581f-9d95-418b-8fce-e452f6bdfd5e/schema",
   "definitions": {
-    "Eiendom": {
-      "allOf": [
-        {
-          "$ref": "#/definitions/Spesifisering"
-        },
-        {
-          "type": "object",
-          "properties": {
-            "bruksnummer": {
-              "$ref": "#/definitions/Tekst"
-            },
-            "gaardsnummer": {
-              "$ref": "#/definitions/Tekst"
-            },
-            "kommunenummer": {
-              "$ref": "#/definitions/Tekst"
-            },
-            "festenummer": {
-              "$ref": "#/definitions/Tekst"
-            },
-            "seksjonsnummer": {
-              "$ref": "#/definitions/Tekst"
-            },
-            "tekniskNavn": {
-              "description": "Feltets lovlige verdier er bestemt av kodelisten 2017_summertSkattegrunnlagForEksterne",
-              "allOf": [
-                {
-                  "$ref": "#/definitions/Tekst"
-                }
-              ]
-            }
-          }
-        }
-      ]
-    },
     "Enhet": {
       "properties": {
         "organisasjonsnummer": {
@@ -608,119 +421,6 @@ exports[`should render InformationModelDetailsPage correctly with informationMod
           "type": "string"
         }
       }
-    },
-    "Spesifisering": {
-      "type": "object",
-      "required": [
-        "type"
-      ],
-      "properties": {
-        "beloep": {
-          "$ref": "#/definitions/Beloep"
-        },
-        "type": {
-          "type": "string"
-        }
-      },
-      "discriminator": {
-        "propertyName": "type"
-      }
-    },
-    "Tekst": {
-      "type": "string",
-      "maxLength": 4000,
-      "description": "vilkårlig lang sekvens av tegn inkludert aksenter og spesielle tegn fra standardiserte tegnsett"
-    },
-    "SummertSkattegrunnlagsobjekt": {
-      "description": "Myndighetsfastsatte opplysninger om den skattepliktige, den skattepliktiges økonomi (inntekt/fradrag/formue/gjeld), innførsel, omsetning og uttak og den skattepliktiges produksjon og varehåndtering, klassifisert, verdisatt og korrekt periodisert. Den skattepliktige skal kunne observere skattegrunnlaget i sine omgivelser.",
-      "required": [
-        "tekniskNavn",
-        "beloep"
-      ],
-      "type": "object",
-      "properties": {
-        "tekniskNavn": {
-          "description": "Feltets lovlige verdier er bestemt av kodelisten 2017_summertSkattegrunnlagForEksterne",
-          "allOf": [
-            {
-              "$ref": "#/definitions/Tekst"
-            }
-          ]
-        },
-        "beloep": {
-          "$ref": "#/definitions/Beloep"
-        },
-        "spesifisering": {
-          "type": "array",
-          "items": {
-            "oneOf": [
-              {
-                "$ref": "#/definitions/Eiendom"
-              },
-              {
-                "$ref": "#/definitions/Kjoeretoey"
-              },
-              {
-                "$ref": "#/definitions/Generisk"
-              }
-            ]
-          },
-          "minItems": 0
-        },
-        "kategori": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/Tekst"
-          },
-          "minItems": 0
-        }
-      }
-    },
-    "SpesifisertSummertSkattegrunnlag": {
-      "description": "SpesifiserSummertSkattegrunnlag inneholder skattegrunnlag med spesifisering av disse.",
-      "required": [
-        "personidentifikator",
-        "inntektsaar",
-        "skjermet"
-      ],
-      "type": "object",
-      "properties": {
-        "personidentifikator": {
-          "$ref": "#/definitions/Foedselsnummer"
-        },
-        "inntektsaar": {
-          "$ref": "#/definitions/Aarstall"
-        },
-        "grunnlag": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/SummertSkattegrunnlagsobjekt"
-          },
-          "minItems": 0
-        },
-        "skjermet": {
-          "$ref": "#/definitions/Boolsk"
-        },
-        "skatteoppgjoersdato": {
-          "$ref": "#/definitions/Dato"
-        },
-        "skjoennsfastsatt": {
-          "$ref": "#/definitions/Boolsk"
-        },
-        "svalbardSkjoennsfastsatt": {
-          "$ref": "#/definitions/Boolsk"
-        },
-        "svalbardGrunnlag": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/SummertSkattegrunnlagsobjekt"
-          },
-          "minItems": 0
-        }
-      },
-      "xml": {
-        "name": "spesifisertSummertSkattegrunnlag"
-      }
     }
   }
 }
@@ -741,24 +441,14 @@ exports[`should render InformationModelDetailsPage correctly with informationMod
           >
             <SearchHitHeader
               nationalComponent={false}
-              publisher={
-                Object {
-                  "id": "970018131",
-                  "name": "UTDANNINGSDIREKTORATET",
-                  "orgPath": "/STAT/872417842/970018131",
-                  "prefLabel": Object {
-                    "no": "Utdanningsdirektoratet",
-                  },
-                  "uri": "http://data.brreg.no/enhetsregisteret/enhet/970018131",
-                }
-              }
+              publisher={null}
               publisherItems={null}
               publisherLabel="Provider:"
               publisherTag="span"
               tag="h4"
               theme={null}
-              title="Enhetsregisteret"
-              titleLink="/apis/eadda99c-781e-4900-8f54-8dd298168382"
+              title="Åpne Data fra Enhetsregisteret - API Dokumentasjon"
+              titleLink="/apis/936c581f-9d95-418b-8fce-e452f6bdfd5e"
             />
           </div>
         </ListRegular>

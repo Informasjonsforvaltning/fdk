@@ -1,7 +1,8 @@
 import _ from 'lodash';
 import qs from 'qs';
 
-import mockedResponse from '../../mock/informationmodelsApiResponse.json';
+import { informationmodelsSearchUrl } from '../../api/informationmodels';
+import { fetchActions } from '../fetchActions';
 
 export const INFORMATIONMODELS_REQUEST = 'INFORMATIONMODELS_REQUEST';
 export const INFORMATIONMODELS_SUCCESS = 'INFORMATIONMODELS_SUCCESS';
@@ -24,20 +25,13 @@ export function fetchInformationModelsIfNeededAction(query) {
 
   return (dispatch, getState) =>
     shouldFetch(_.get(getState(), ['informationModels', 'meta']), queryKey) &&
-    /*
     dispatch(
-      fetchActions(`/api/informationmodels?${query}`, [
+      fetchActions(informationmodelsSearchUrl(query), [
         { type: INFORMATIONMODELS_REQUEST, meta: { queryKey } },
         { type: INFORMATIONMODELS_SUCCESS, meta: { queryKey } },
         { type: INFORMATIONMODELS_FAILURE, meta: { queryKey } }
       ])
     );
-    */
-    dispatch({
-      type: INFORMATIONMODELS_SUCCESS,
-      meta: { queryKey },
-      payload: mockedResponse
-    });
 }
 
 const initialState = {};
@@ -56,7 +50,10 @@ export function informationModelsReducer(state = initialState, action) {
     case INFORMATIONMODELS_SUCCESS:
       return {
         ...state,
-        informationModelItems: _.get(action.payload, 'hits'),
+        informationModelItems: _.get(
+          action.payload,
+          '_embedded.informationmodels'
+        ),
         informationModelAggregations: _.get(action.payload, 'aggregations'),
         informationModelTotal: _.get(action.payload, 'total'),
         meta: {
