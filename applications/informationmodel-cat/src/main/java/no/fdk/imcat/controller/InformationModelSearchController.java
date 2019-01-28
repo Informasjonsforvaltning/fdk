@@ -3,9 +3,13 @@ package no.fdk.imcat.controller;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import no.fdk.imcat.model.InformationModel;
+import no.fdk.webutils.aggregation.ResponseUtil;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.aggregations.AbstractAggregationBuilder;
+import org.elasticsearch.search.aggregations.AggregationBuilders;
+import org.elasticsearch.search.aggregations.bucket.terms.Terms;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,6 +61,10 @@ public class InformationModelSearchController {
         @RequestParam(value = "size", defaultValue = "10", required = false)
             int size,
 
+        @ApiParam("Calculate aggregations")
+        @RequestParam(value = "aggregations", defaultValue = "false", required = false)
+            String includeAggregations,
+
         @ApiParam("Comma separated list of which fields should be returned. E.g id,")
         @RequestParam(value = "returnfields", defaultValue = "", required = false)
             String returnFields,
@@ -97,6 +105,17 @@ public class InformationModelSearchController {
             .withPageable(new PageRequest(from, size))
             .build();
 
+        if ("true".equals(includeAggregations)) {
+            AbstractAggregationBuilder aggregationBuilder = AggregationBuilders
+                .terms("orgPath")
+                .field("publisher.orgPath")
+                .missing(MISSING)
+                .size(Integer.MAX_VALUE)
+                .order(Terms.Order.count(false));
+
+            finalQuery.addAggregation(aggregationBuilder);
+        }
+
         if (!StringUtils.isEmpty(returnFields)) {
             SourceFilter sourceFilter = new FetchSourceFilter(returnFields.concat(",prefLabel").split(","), null);
             finalQuery.addSourceFilter(sourceFilter);//TODO: Understand
@@ -117,8 +136,12 @@ public class InformationModelSearchController {
             aggregatedPage.getTotalPages()
         );
 
-        PagedResources<InformationModel> InformationModeConvertedResources = new PagedResources<>(informationModels, pageMetadata);
-        return InformationModeConvertedResources;
+        PagedResources<InformationModel> informationModelResources = new PagedResources<>(informationModels, pageMetadata);
+        if (aggregatedPage.hasAggregations()) {
+            return ResponseUtil.addAggregations(informationModelResources, aggregatedPage);
+        } else {
+            return informationModelResources;
+        }
     }
 
     private void addSort(String sortfield, String sortdirection, NativeSearchQuery searchBuilder) {
