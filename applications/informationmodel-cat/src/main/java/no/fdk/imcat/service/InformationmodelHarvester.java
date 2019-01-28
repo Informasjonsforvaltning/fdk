@@ -2,6 +2,7 @@ package no.fdk.imcat.service;
 
 import no.dcat.shared.HarvestMetadata;
 import no.dcat.shared.HarvestMetadataUtil;
+import no.dcat.shared.Publisher;
 import no.fdk.imcat.model.InformationModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,10 +34,13 @@ public class InformationmodelHarvester {
     private InformationmodelRepository informationmodelRepository;
     private APIHarvest harvest;
 
+    private PublisherCatClient publisherCatClient;
+
     @Autowired
-    public InformationmodelHarvester(InformationmodelRepository repo, APIHarvest harvest) {
+    public InformationmodelHarvester(InformationmodelRepository repo, APIHarvest harvest, PublisherCatClient publisherCatClient) {
         this.informationmodelRepository = repo;
         this.harvest = harvest;
+        this.publisherCatClient = publisherCatClient;
     }
 
     public void harvestFromSource() {
@@ -52,11 +56,21 @@ public class InformationmodelHarvester {
                 Optional<InformationModel> existingModelOptional = informationmodelRepository.findById(source.id);
 
                 InformationModel model = harvest.getInformationModel(source);
+                model.setPublisher(lookupPublisher(source.publisherOrgNr));
+
                 updateHarvestMetadata(model, harvestDate, existingModelOptional.orElse(null));
                 informationmodelRepository.save(model);
-
             }
         }
+    }
+
+    Publisher lookupPublisher(String orgNr) {
+        try {
+            return publisherCatClient.getByOrgNr(orgNr);
+        } catch (Exception e) {
+            logger.warn("Publisher lookup failed for orgNr={}. Error: {}", orgNr, e.getMessage());
+        }
+        return null;
     }
 
     void updateHarvestMetadata(InformationModel informationModel, Date harvestDate, InformationModel existingInformationModel) {
