@@ -22,6 +22,7 @@ import org.springframework.data.elasticsearch.core.query.FetchSourceFilter;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQuery;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 import org.springframework.data.elasticsearch.core.query.SourceFilter;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.hateoas.PagedResources;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -53,14 +54,6 @@ public class InformationModelSearchController {
         @RequestParam(value = "orgPath", defaultValue = "", required = false)
             String orgPath,
 
-        @ApiParam("Returns Information Models from position x in the result set, 0 is the default value. A value of 150 will return the 150th Information Model in the resultset")
-        @RequestParam(value = "from", defaultValue = "0", required = false)
-            int from,
-
-        @ApiParam("Specifies the size, i.e. the number of Information Models to return in one request. The default is 10, the maximum number of Information Models returned is 100")
-        @RequestParam(value = "size", defaultValue = "10", required = false)
-            int size,
-
         @ApiParam("Calculate aggregations")
         @RequestParam(value = "aggregations", defaultValue = "false", required = false)
             String includeAggregations,
@@ -77,7 +70,8 @@ public class InformationModelSearchController {
         @RequestParam(value = "sortdirection", defaultValue = "", required = false)
             String sortdirection,
 
-        Pageable pageable
+        @PageableDefault()
+            Pageable pageable
     ) {
         logger.debug("GET /informationmodels?q={}", query);
 
@@ -102,7 +96,7 @@ public class InformationModelSearchController {
         NativeSearchQuery finalQuery = new NativeSearchQueryBuilder()
             .withQuery(composedQuery)
             .withIndices("imcat").withTypes("informationmodel")
-            .withPageable(new PageRequest(from, size))
+            .withPageable(pageable)
             .build();
 
         if ("true".equals(includeAggregations)) {
