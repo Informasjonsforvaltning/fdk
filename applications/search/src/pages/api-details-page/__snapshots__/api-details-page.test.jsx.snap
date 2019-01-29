@@ -30,6 +30,17 @@ exports[`should render ApiDetailsPage correctly with apiItem 1`] = `
           title="National Data Directory Search API"
           titleLink={null}
         />
+        <CommentCount
+          config={
+            Object {
+              "identifier": "c541c305-4e4f-43ed-be3e-5434740ec1b5",
+              "title": "National Data Directory Search API",
+              "url": "about:blank",
+            }
+          }
+        >
+          Kommentarer
+        </CommentCount>
       </div>
     </div>
     <div
@@ -312,6 +323,16 @@ exports[`should render ApiDetailsPage correctly with apiItem 1`] = `
             />
           </React.Fragment>
         </ListRegular>
+        Environment variable for Disqus not set!
+        <DiscussionEmbed
+          config={
+            Object {
+              "identifier": "c541c305-4e4f-43ed-be3e-5434740ec1b5",
+              "title": "National Data Directory Search API",
+              "url": "about:blank",
+            }
+          }
+        />
         <div
           style={
             Object {
@@ -355,6 +376,17 @@ exports[`should render ApiDetailsPage correctly with missing api-properties 1`] 
           title={null}
           titleLink={null}
         />
+        <CommentCount
+          config={
+            Object {
+              "identifier": "c541c305-4e4f-43ed-be3e-5434740ec1b5",
+              "title": null,
+              "url": "about:blank",
+            }
+          }
+        >
+          Kommentarer
+        </CommentCount>
       </div>
     </div>
     <div
@@ -408,6 +440,16 @@ exports[`should render ApiDetailsPage correctly with missing api-properties 1`] 
             }
           />
         </ListRegular>
+        Environment variable for Disqus not set!
+        <DiscussionEmbed
+          config={
+            Object {
+              "identifier": "c541c305-4e4f-43ed-be3e-5434740ec1b5",
+              "title": null,
+              "url": "about:blank",
+            }
+          }
+        />
         <div
           style={
             Object {

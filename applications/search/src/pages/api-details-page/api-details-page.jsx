@@ -14,7 +14,7 @@ import { StickyMenu } from '../../components/sticky-menu/sticky-menu.component';
 import { ListRegular } from '../../components/list-regular/list-regular.component';
 import { TwoColRow } from '../../components/list-regular/twoColRow/twoColRow';
 import { DatasetReference } from './dataset-reference/dataset-reference.component';
-
+import { config } from '../../config';
 const renderDescription = description => {
   if (!description) {
     return null;
@@ -273,13 +273,12 @@ export const ApiDetailsPage = props => {
     description: getTranslateText(apiItem.description)
   };
 
-  const disqusShortname = 'felles-datakatalog';
   const disqusConfig = {
     url: window.location.href,
     identifier: apiItem.id,
     title: meta.title
   };
-
+  console.log('config is', config);
   return (
     <main id="content" className="container">
       <article>
@@ -296,7 +295,7 @@ export const ApiDetailsPage = props => {
               nationalComponent={apiItem.nationalComponent}
             />
             <Disqus.CommentCount
-              shortname={disqusShortname}
+              shortname={config.disqusShortname}
               config={disqusConfig}
             >
               Kommentarer
@@ -332,9 +331,9 @@ export const ApiDetailsPage = props => {
             {renderDatasetReferences(referencedDatasets)}
 
             {renderContactPoints(apiItem.contactPoint)}
-
+            {!config.disqusShortname && "Environment variable for Disqus not set!"}
             <Disqus.DiscussionEmbed
-              shortname={disqusShortname}
+              shortname={config.disqusShortname}
               config={disqusConfig}
             />
             <div style={{ height: '75vh' }} />

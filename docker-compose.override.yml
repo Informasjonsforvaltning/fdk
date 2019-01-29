@@ -12,6 +12,7 @@ services:
     environment:
     - REDUX_LOG=${REDUX_LOG}
     - NODE_ENV=${NODE_ENV}
+    - DISQUS_SHORTNAME=felles-datakatalog-test-34807898934
 
   api-cat:
     restart: always
