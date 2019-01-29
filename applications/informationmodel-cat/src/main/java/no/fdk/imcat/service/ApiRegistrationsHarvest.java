@@ -28,18 +28,18 @@ import static no.fdk.imcat.service.InformationmodelHarvester.API_TYPE;
 import static no.fdk.imcat.service.InformationmodelHarvester.RETRY_COUNT_API_RETRIEVAL;
 
 /**
- * Harvest our own APIS so we can create Information Models from those that have schema
+ * Harvest our own ApiRegistration system so we can create Information Models from those that have schema
  */
 @Service
-public class APIHarvest {
+public class ApiRegistrationsHarvest {
 
-    private static final Logger logger = LoggerFactory.getLogger(APIHarvest.class);
+    private static final Logger logger = LoggerFactory.getLogger(ApiRegistrationsHarvest.class);
     public static String INFORMATIONMODEL_ROOT = "https://fellesdatakatalog.brreg.no/informationmodels/";
     private ObjectMapper mapper;
     private RegistrationApiClient registrationApiClient;
 
     @Autowired
-    APIHarvest(RegistrationApiClient client, ObjectMapper mapper) {
+    ApiRegistrationsHarvest(RegistrationApiClient client, ObjectMapper mapper) {
         this.mapper = mapper;
         this.registrationApiClient = client;
     }
@@ -70,7 +70,7 @@ public class APIHarvest {
         return apiSpec;
     }
 
-    List<InformationModelHarvestSource> getHarvestSourcesFromAPIs() {
+    List<InformationModelHarvestSource> getHarvestSources() {
         List<InformationModelHarvestSource> sourceList = new ArrayList<>();
         List<ApiRegistrationPublic> apiRegistrations = getApiRegistrations();
         for (ApiRegistrationPublic apiRegistration : apiRegistrations) {
