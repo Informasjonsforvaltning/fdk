@@ -16,6 +16,7 @@ const createTypeRefScrollLink = typeRef => (
     offset={-10}
     duration={1500}
     tabIndex="0"
+    className="node"
   >
     <span>{typeRef}</span>
   </ScrollLink>
