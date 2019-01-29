@@ -38,7 +38,7 @@ public class HarvestExecutor {
                         switch (task) {
                             case HARVEST_ALL:
                                 try {
-                                    informationmodelHarvester.harvestFromSource();
+                                    informationmodelHarvester.harvestAll();
                                 } catch (Exception e) {
                                     logger.warn("Problem with harvestAll", e);
                                 }

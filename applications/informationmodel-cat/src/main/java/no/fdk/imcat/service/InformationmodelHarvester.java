@@ -33,21 +33,21 @@ public class InformationmodelHarvester {
 
 
     private InformationmodelRepository informationmodelRepository;
-    private APIHarvest harvest;
+    private ApiRegistrationsHarvest apiRegistrationsHarvest;
 
     private PublisherCatClient publisherCatClient;
 
     @Autowired
-    public InformationmodelHarvester(InformationmodelRepository repo, APIHarvest harvest, PublisherCatClient publisherCatClient) {
+    public InformationmodelHarvester(InformationmodelRepository repo, ApiRegistrationsHarvest apiRegistrationsHarvest, PublisherCatClient publisherCatClient) {
         this.informationmodelRepository = repo;
-        this.harvest = harvest;
+        this.apiRegistrationsHarvest = apiRegistrationsHarvest;
         this.publisherCatClient = publisherCatClient;
     }
 
-    public void harvestFromSource() {
+    public void harvestAll() {
 
         logger.debug("Starting harvest of Information Models from our APIs");
-        List<InformationModelHarvestSource> modelSources = getTheHarvestSources();
+        List<InformationModelHarvestSource> modelSources = getAllHarvestSources();
 
         Date harvestDate = new Date();
 
@@ -56,7 +56,7 @@ public class InformationmodelHarvester {
 
                 Optional<InformationModel> existingModelOptional = informationmodelRepository.findById(source.id);
 
-                InformationModel model = harvest.getInformationModel(source);
+                InformationModel model = apiRegistrationsHarvest.getInformationModel(source);
                 model.setPublisher(lookupPublisher(source.publisherOrgNr));
 
                 updateHarvestMetadata(model, harvestDate, existingModelOptional.orElse(null));
@@ -99,9 +99,9 @@ public class InformationmodelHarvester {
         return firstString.equals(secondString);
     }
 
-    private List<InformationModelHarvestSource> getTheHarvestSources() {
+    private List<InformationModelHarvestSource> getAllHarvestSources() {
         //At the moment we only harvest our own apis.
-        return harvest.getHarvestSourcesFromAPIs();
+        return apiRegistrationsHarvest.getHarvestSources();
     }
 
 
