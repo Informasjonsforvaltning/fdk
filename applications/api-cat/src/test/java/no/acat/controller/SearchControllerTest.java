@@ -279,61 +279,6 @@ public class SearchControllerTest {
         "        }";
 
     @Test
-    public void checkOne() {
-        // todo meaningful test would be to allow elastic client to build a query and process sample response,
-        // instead of mocking entire elastic client here
-        ElasticsearchService elasticsearchService = mock(ElasticsearchService.class);
-        ApiSearchController controller = new ApiSearchController(elasticsearchService, Utils.jsonMapper());
-        ApiSearchController spyController = spy(controller);
-
-        SearchHit hit = mock(SearchHit.class);
-        SearchHit[] hits = {hit};
-
-        SearchHits searchHits = mock(SearchHits.class);
-        when(searchHits.getTotalHits()).thenReturn(1L);
-        when(searchHits.getHits()).thenReturn(hits);
-
-        SearchResponse searchResponse = mock(SearchResponse.class);
-        when(searchResponse.getHits()).thenReturn(searchHits);
-
-        doReturn(null).when(spyController).buildSearchRequest(anyString(), anyString(), any(), any());
-        doReturn(searchResponse).when(spyController).doQuery(anyObject());
-        doNothing().when(spyController).addSortForEmptySearch(anyObject());
-        // todo this is nonsense, we do not test anything
-        doReturn(new QueryResponse()).when(spyController).convertFromElasticResponse(anyObject());
-
-        when(hit.getSourceAsString()).thenReturn(apiSpecExample);
-        when(hit.getId()).thenReturn("http://testtesttset");
-
-        QueryResponse response = spyController.search("", "", new String[]{""}, "", "", PageRequest.of(0, 10));
-
-        assertThat(response, notNullValue());
-
-    }
-
-    @Test
-    public void checkAddSortForEmptySearch_returnOnce() {
-
-        ElasticsearchService elasticsearchService = mock(ElasticsearchService.class);
-        ApiSearchController controller = new ApiSearchController(elasticsearchService, Utils.jsonMapper());
-        ApiSearchController spyController = spy(controller);
-
-        SearchRequestBuilder builder = mock(SearchRequestBuilder.class);
-        SortBuilders sortBuilders = mock(SortBuilders.class);
-        FieldSortBuilder fieldSortBuilder = mock(FieldSortBuilder.class);
-
-        when(fieldSortBuilder.order(SortOrder.DESC)).thenReturn(fieldSortBuilder);
-        doReturn(builder).when(builder).addSort(fieldSortBuilder);
-
-        doCallRealMethod().when(spyController).addSortForEmptySearch(builder);
-
-        spyController.addSortForEmptySearch(builder);
-
-        verify(spyController, times(1)).addSortForEmptySearch(any(SearchRequestBuilder.class));
-    }
-
-
-    @Test
     public void checkConvertFromElasticResponse() {
 
         ElasticsearchService elasticsearchService = mock(ElasticsearchService.class);
