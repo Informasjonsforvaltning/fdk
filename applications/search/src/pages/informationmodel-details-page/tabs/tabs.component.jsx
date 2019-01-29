@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap';
 import classnames from 'classnames';
+import './tabs.component.scss';
 
 const renderTabContent = (tabContent, activeTab) => {
   if (!tabContent) {
