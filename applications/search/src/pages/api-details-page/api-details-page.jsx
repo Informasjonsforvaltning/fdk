@@ -15,6 +15,7 @@ import { ListRegular } from '../../components/list-regular/list-regular.componen
 import { TwoColRow } from '../../components/list-regular/twoColRow/twoColRow';
 import { DatasetReference } from './dataset-reference/dataset-reference.component';
 import { config } from '../../config';
+
 const renderDescription = description => {
   if (!description) {
     return null;
@@ -331,7 +332,8 @@ export const ApiDetailsPage = props => {
             {renderDatasetReferences(referencedDatasets)}
 
             {renderContactPoints(apiItem.contactPoint)}
-            {!config.disqusShortname && "Environment variable for Disqus not set!"}
+            {!config.disqusShortname &&
+              'Environment variable for Disqus not set!'}
             <Disqus.DiscussionEmbed
               shortname={config.disqusShortname}
               config={disqusConfig}
