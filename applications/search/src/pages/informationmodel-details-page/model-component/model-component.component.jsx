@@ -76,7 +76,7 @@ export const ModelComponentPure = props => {
     <React.Fragment>
       <div className="d-flex">
         <button
-          className="bg-transparent border-0 p-0 d-flex align-items-center w-50"
+          className="bg-transparent border-0 p-0 d-flex align-items-center w-50 node"
           onClick={onToggle}
           name={name}
         >
@@ -96,6 +96,7 @@ export const ModelComponentPure = props => {
               offset={-10}
               duration={1500}
               tabIndex="0"
+              className="node"
             >
               <span>{type}</span>
             </ScrollLink>
