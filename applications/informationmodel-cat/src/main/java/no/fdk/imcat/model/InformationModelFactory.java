@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Date;
 import java.util.Optional;
+import java.util.UUID;
 
 @Component
 public class InformationModelFactory {
@@ -28,11 +29,13 @@ public class InformationModelFactory {
 
     public InformationModel createInformationModel(InformationModelHarvestSource source, Date harvestDate) {
 
-        Optional<InformationModel> existingModelOptional = informationmodelRepository.findById(source.id);
+        Optional<InformationModel> existingModelOptional = informationmodelRepository.getByHarvestSourceUri(source.harvestSourceUri);
+
+        String id = existingModelOptional.isPresent() ? existingModelOptional.get().getId() : UUID.randomUUID().toString();
 
         InformationModel model = new InformationModel();
-        model.setHarvestSourceUri(source.URI);
-        model.setId(source.id);
+        model.setHarvestSourceUri(source.harvestSourceUri);
+        model.setId(id);
         model.setTitle(source.title);
         model.setSchema(source.schema);
         model.setPublisher(lookupPublisher(source.publisherOrgNr));
