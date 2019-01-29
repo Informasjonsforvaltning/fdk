@@ -4,6 +4,7 @@ import no.dcat.shared.HarvestMetadata;
 import no.dcat.shared.HarvestMetadataUtil;
 import no.dcat.shared.Publisher;
 import no.fdk.imcat.model.InformationModel;
+import no.fdk.imcat.model.InformationModelHarvestSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;

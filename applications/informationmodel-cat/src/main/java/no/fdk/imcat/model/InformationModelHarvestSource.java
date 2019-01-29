@@ -1,8 +1,8 @@
-package no.fdk.imcat.service;
+package no.fdk.imcat.model;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
-class InformationModelHarvestSource {
+public class InformationModelHarvestSource {
     public String URI;
     public String id;
     public String publisherOrgNr;
