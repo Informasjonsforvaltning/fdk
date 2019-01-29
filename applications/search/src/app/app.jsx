@@ -8,6 +8,7 @@ import { ConnectedDatasetDetailsPage } from '../pages/dataset-details-page/conne
 import { ConnectedApiDetailsPage } from '../pages/api-details-page/connected-api-details-page';
 import { ConnectedConceptDetailsPage } from '../pages/concept-details-page/connected-concept-details-page';
 import { ConnectedConceptComparePage } from '../pages/concept-compare-page/connected-concept-compare-page';
+import { ConnectedInformationModelDetailsPage } from '../pages/informationmodel-details-page/connected-information-model-details-page';
 import { AboutPage } from '../pages/about-page/about-page.component';
 import { ArticlePage } from '../pages/article-page/article-page.component';
 import { Breadcrumbs } from './breadcrumbs/breadcrumbs.component';
@@ -76,6 +77,11 @@ export function App(props) {
             exact
             path={PATHNAME_INFORMATIONMODELS}
             component={ConnectedSearchPage}
+          />
+          <Route
+            exact
+            path={`${PATHNAME_INFORMATIONMODELS}/:id`}
+            component={ConnectedInformationModelDetailsPage}
           />
           <Route
             exact

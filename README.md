@@ -40,51 +40,64 @@ Any questions can be sent to [fellesdatakatalog@brreg.no](mailto:fellesdatakatal
 
 The [search api](https://github.com/brreg/openAPI/blob/master/specs/fdk.yaml) can also be used.
 
+## Prerequisite
+1) Make sure you have local admin on your computer, as gitbash has to be run as an administrator
+
 ## Set up your developement environnement
   1) Clone this repo
   
   2) Install Java8, Maven and Docker. 
-    
-      If you have a Mac, running this script will install Java8 and Maven automatically: 
-      
-      ```
-      ./install-dependencies-mac.sh
-      ```
+   	
+	```
+	- If you are running Windows. Make sure you manually add the correct Maven path in windows "environment Variables"
+	- Also make sure you have set correct JAVA_HOME path to environment variables.
+	- After having installed Docker. Make sure you update the resource limits at Settings-Advanced. You need at least 4 CPU's and 		more than 8k MB of Memory.
+	```
+
+     	If you have a Mac, running this script will install Java8 and Maven automatically: 
+      	```
+	./install-dependencies-mac.sh
+	```
   3) Compile, create docker images and run the entire project:
-   
-     ```
-     ./runAll.sh
-     ```  
+  	
+	```
+	If you are running windows, you also need to make sure you have installed node.js:
+	https://nodejs.org/en/download/
+	```
 
-     If you only want to recompile one module ("search-api" in this example), use the following:     
+	```
+	./runAll.sh
+	```  
 
-     ```
-     ./runDocker.sh search-api
-     ```
-	 
+	If you only want to recompile one module ("search-api" in this example), use the following:     
+
+	```
+	./runDocker.sh search-api
+	```
+
 	 Frontend applications such as search and registration-react are built and run the following way:
-	 
+
 	 ```
 	 docker-compose up -d --build registration-react
 	 ```
 
   4) If imagase are already built, project can be run: 
 
-      ```
-      docker-compose up -d
-      ```
-	  
+	```
+	docker-compose up -d
+	```
+
 	  Restart a specific module  after image rebuild,.
 
-      ```
-      docker-compose up -d registration
-      ```
-            
-      Monitor logs 
-      
-      ```
-      docker-compose logs -f registration
-      ```
+	```
+	docker-compose up -d registration
+	```
+
+	Monitor logs 
+
+	```
+	docker-compose logs -f registration
+	```
 
   5)  Open solution
   
@@ -98,46 +111,46 @@ The [search api](https://github.com/brreg/openAPI/blob/master/specs/fdk.yaml) ca
   In order to have maintainable tests, the tests must equally well run in all environment configurationds: 
 
   1) Brower in host machine (windowed+headless), services in docker-compose
-      
-      Make sure chromium is installed (for mac, TODO windows)
-      ```
-      brew cask install chromium
-      ```
-      
-      Make sure services are running in docker-compose network and exposed to localhost 
-      (beware of port conflicts with services running in intelliJ
-      
-      ```
-      ./runAll.sh
-      # or
-      docker-compose up -d
-      ```
-         
-      Ensure dependencies are installed
-      ```
-      (cd applications/e2e ; npm i)
-      ```
-      
-      Run tests    
-      
-      ```
-      # run tests in chromim headless (no window, just report) 
-      cd applications/e2e ; npm run test:headless)
-      
-      # run tests in chromium window opened
-      (cd applications/e2e ; npm t)
-      
-      ```
+
+	Make sure chromium is installed (for mac, TODO windows)
+	```
+	brew cask install chromium
+	```
+
+	Make sure services are running in docker-compose network and exposed to localhost 
+	(beware of port conflicts with services running in intelliJ
+
+	```
+	./runAll.sh
+	# or
+	docker-compose up -d
+	```
+
+	Ensure dependencies are installed
+	```
+	(cd applications/e2e ; npm i)
+	```
+
+	Run tests    
+
+	```
+	# run tests in chromim headless (no window, just report) 
+	cd applications/e2e ; npm run test:headless)
+
+	# run tests in chromium window opened
+	(cd applications/e2e ; npm t)
+
+	```
   2) Browser in container (headless), services in docker-compose
      
-     ```
-     # run
-     docker-compose run e2e npm run test:in_container
-     
-     # build container (if changes in tests)
-     docker-compose build e2e 
-     
-     ```
+	```
+	# run
+	docker-compose run e2e npm run test:in_container
+
+	# build container (if changes in tests)
+	docker-compose build e2e 
+
+	```
       
 # Modules 
 

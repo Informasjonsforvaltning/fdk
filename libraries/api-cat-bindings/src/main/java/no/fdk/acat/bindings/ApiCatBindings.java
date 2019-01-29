@@ -1,10 +1,12 @@
 package no.fdk.acat.bindings;
 
-import io.swagger.v3.oas.models.OpenAPI;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import no.fdk.acat.common.model.apispecification.ApiSpecification;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpEntity;
 import org.springframework.web.client.RestTemplate;
 
@@ -15,6 +17,8 @@ import static org.springframework.http.HttpMethod.POST;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ApiCatBindings {
+    private static Logger logger = LoggerFactory.getLogger(ApiCatBindings.class);
+
     private String apiRootUrl;
 
     private static String getMessage(ConvertResponse response) {
@@ -36,11 +40,17 @@ public class ApiCatBindings {
 
     public void triggerHarvestApiRegistration(String apiRegistrationId) {
         RestTemplate restTemplate = new RestTemplate();
+        String triggerUrl = getApisApiRootUrl() + "/trigger/harvest/apiregistration/" + apiRegistrationId;
 
-        restTemplate.exchange(getApisApiRootUrl() + "/trigger/harvest/apiregistration/" + apiRegistrationId, POST, null, Void.class);
+        try {
+            restTemplate.exchange(triggerUrl, POST, null, Void.class);
+        } catch (Exception e) {
+            String errorMessage = "Failed sending harvest trigger message " + triggerUrl;
+            logger.error(errorMessage, e);
+        }
     }
 
-    private OpenAPI convert(String url, String spec) {
+    private ConvertResponse convert(String url, String spec) {
         RestTemplate restTemplate = new RestTemplate();
 
         ConvertRequest request = ConvertRequest.builder()
@@ -52,22 +62,27 @@ public class ApiCatBindings {
 
         ConvertResponse convertResponse = restTemplate.exchange(getApisApiRootUrl() + "/convert", POST, requestEntity, ConvertResponse.class).getBody();
 
-        OpenAPI openAPI = convertResponse.openApi;
+        return convertResponse;
+    }
 
-        if (openAPI == null) {
+    private ApiSpecification convertToApiSpecification(String url, String spec) {
+        ConvertResponse convertResponse = convert(url, spec);
+        ApiSpecification apiSpecification = convertResponse.apiSpecification;
+
+        if (apiSpecification == null) {
             throw new Error("Conversion error: " + getMessage(convertResponse));
         }
-
-        return openAPI;
+        return apiSpecification;
     }
 
-    public OpenAPI convertSpecToOpenApi(String spec) {
-        return convert("", spec);
+    public ApiSpecification convertSpecToApiSpecification(String spec) {
+        return convertToApiSpecification("", spec);
     }
 
-    public OpenAPI convertSpecUrlToOpenApi(String url) {
-        return convert(url, "");
+    public ApiSpecification convertSpecUrlToApiSpecification(String url) {
+        return convertToApiSpecification(url, "");
     }
+
 
 }
 

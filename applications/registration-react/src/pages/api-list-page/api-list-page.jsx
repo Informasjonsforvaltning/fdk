@@ -248,7 +248,7 @@ export const APIListPage = props => {
               <ListItems
                 catalogId={catalogId}
                 items={harvestedApiItems}
-                itemTitleField={['openApi', 'info', 'title']}
+                itemTitleField={['apiSpecification', 'info', 'title']}
                 prefixPath={`/catalogs/${catalogId}/apis`}
                 defaultEmptyListText={localization.listItems.missingApiItems}
               />
@@ -280,7 +280,7 @@ export const APIListPage = props => {
                 <ListItems
                   catalogId={catalogId}
                   items={registeredApiItems}
-                  itemTitleField={['openApi', 'info', 'title']}
+                  itemTitleField={['apiSpecification', 'info', 'title']}
                   prefixPath={`/catalogs/${catalogId}/apis`}
                   defaultEmptyListText={localization.listItems.missingApiItems}
                 />

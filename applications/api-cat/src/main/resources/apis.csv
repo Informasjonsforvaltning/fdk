@@ -6,4 +6,3 @@ Id;OrgNr;OrgName;ApiSpecUrl;ApiDocUrl;NationalComponent;DatasetRefs
 6;970018131;Utdanningsdirektoratet;https://data-nsr.udir.no/swagger/docs/v1.0;https://data.norge.no/data/utdanningsdirektoratet/nasjonalt-skoleregister-nsr-0;;
 7;970018131;Utdanningsdirektoratet;https://data-nxr-fellestjeneste.udir.no/swagger/docs/v1;https://data.norge.no/data/utdanningsdirektoratet/nxr-fellestjeneste-0;;
 8;970018131;Utdanningsdirektoratet;http://www.barnehagefakta.no:80/swagger/docs/v1;https://data.norge.no/data/utdanningsdirektoratet/barnehagefakta-baf;;
-9;971032146;KS;https://play-with-fint.felleskomponent.no/administrasjon/personal/v2/api-docs;https://play-with-fint.felleskomponent.no/administrasjon/personal/swagger-ui.html;;

@@ -25,7 +25,7 @@ export const ResultsTabs = props => {
     countInformationModels
   } = props;
 
-  let search = addOrReplaceParamWithoutURL(searchParam, 'from', '');
+  let search = addOrReplaceParamWithoutURL(searchParam, 'page', '');
   search = addOrReplaceParamWithoutURL(search, 'sortfield', '');
   return (
     <div className="row">

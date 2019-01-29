@@ -13,21 +13,42 @@ exports[`should render ApiDetailsPage correctly with apiItem 1`] = `
         className="col-12 col-lg-8 offset-lg-4"
       >
         <SideEffect(DocumentMeta)
-          description="Provides a basic search api against the National Data Directory of Norway"
-          title="National Data Directory Search API"
+          description="Provides a basic search api against the National API Directory of Norway"
+          title="National API Directory Search API"
         />
         <HarvestDate
-          harvest={null}
+          harvest={
+            Object {
+              "changed": Array [
+                "2018-12-21T09:27:29.577Z",
+                "2019-01-07T16:53:37.588Z",
+                "2019-01-07T16:54:19.940Z",
+              ],
+              "firstHarvested": "2018-12-19T09:52:51.883Z",
+              "lastChanged": "2019-01-07T16:54:19.940Z",
+              "lastHarvested": "2019-01-07T16:54:19.940Z",
+            }
+          }
         />
         <SearchHitHeader
           nationalComponent={false}
-          publisher={null}
+          publisher={
+            Object {
+              "id": "974760673",
+              "name": "REGISTERENHETEN I BRØNNØYSUND",
+              "orgPath": "/STAT/912660680/974760673",
+              "prefLabel": Object {
+                "no": "Brønnøysundregistrene",
+              },
+              "uri": "http://data.brreg.no/enhetsregisteret/enhet/974760673",
+            }
+          }
           publisherItems={null}
           publisherLabel="Provider:"
           publisherTag="span"
           tag="h1"
           theme={null}
-          title="National Data Directory Search API"
+          title="National API Directory Search API"
           titleLink={null}
         />
       </div>
@@ -42,8 +63,12 @@ exports[`should render ApiDetailsPage correctly with apiItem 1`] = `
           menuItems={
             Array [
               Object {
-                "name": "National Data Directory Search API",
+                "name": "National API Directory Search API",
                 "prefLabel": "Description",
+              },
+              Object {
+                "name": "Format",
+                "prefLabel": "Format",
               },
               Object {
                 "name": "Operations",
@@ -52,6 +77,10 @@ exports[`should render ApiDetailsPage correctly with apiItem 1`] = `
               Object {
                 "name": "Terms and restrictions",
                 "prefLabel": "Terms and restrictions",
+              },
+              Object {
+                "name": "Dataset references",
+                "prefLabel": "Dataset references",
               },
               Object {
                 "name": "Contact information",
@@ -64,184 +93,46 @@ exports[`should render ApiDetailsPage correctly with apiItem 1`] = `
       <section
         className="col-12 col-lg-8 mt-3"
       >
-        <ShowMore
-          contentHtml="Provides a basic search api against the National Data Directory of Norway"
-          label=""
-          showLessButtonText="Show less"
+        <withStateHandlers(ShowMorePure)
           showMoreButtonText="Show the full description"
-        />
+        >
+          <span
+            dangerouslySetInnerHTML={
+              Object {
+                "__html": "<p>Provides a basic search api against the National API Directory of Norway</p>",
+              }
+            }
+          />
+        </withStateHandlers(ShowMorePure)>
+        <ListRegular
+          bottomMargin={true}
+          title="Format"
+        >
+          <div
+            className="d-flex list-regular--item"
+          >
+            <span
+              key="0"
+            >
+              application/json
+            </span>
+          </div>
+        </ListRegular>
         <ApiEndpoints
           apiDocUrl={null}
-          apiSpecUrl="/api/apis/c541c305-4e4f-43ed-be3e-5434740ec1b5/spec"
+          apiSpecUrl="https://raw.githubusercontent.com/brreg/openAPI/master/specs/api-cat.json"
           name="Operations"
           paths={
             Object {
-              "/aggregateDataset": Object {
+              "/search": Object {
                 "get": Object {
-                  "responses": Object {
-                    "200": Object {
-                      "description": "OK",
-                    },
-                    "401": Object {
-                      "description": "Unauthorized",
-                    },
-                    "403": Object {
-                      "description": "Forbidden",
-                    },
-                    "404": Object {
-                      "description": "Not Found",
-                    },
-                  },
+                  "description": "So far only simple queries is supported",
+                  "summary": "Queries the api catalog for api specifications",
                 },
               },
-              "/catalogs": Object {
+              "/{id}": Object {
                 "get": Object {
-                  "description": "The three formats are: text/turtle, application/ld+json and application/rdf+xml",
-                  "responses": Object {
-                    "200": Object {
-                      "description": "OK",
-                    },
-                    "401": Object {
-                      "description": "Unauthorized",
-                    },
-                    "403": Object {
-                      "description": "Forbidden",
-                    },
-                    "404": Object {
-                      "description": "Not Found",
-                    },
-                  },
-                },
-              },
-              "/catalogs/datasets": Object {
-                "get": Object {
-                  "description": "The three formats are: text/turtle, application/ld+json and application/rdf+xml",
-                  "responses": Object {
-                    "200": Object {
-                      "description": "OK",
-                    },
-                    "401": Object {
-                      "description": "Unauthorized",
-                    },
-                    "403": Object {
-                      "description": "Forbidden",
-                    },
-                    "404": Object {
-                      "description": "Not Found",
-                    },
-                  },
-                },
-              },
-              "/datasets": Object {
-                "get": Object {
-                  "description": "Returns a list of matching datasets wrapped in a elasticsearch response. Max number returned by a single query is 100. Size parameters greater than 100 will not return more than 100 datasets. In order to access all datasets, use multiple queries and increment from parameter.",
-                  "responses": Object {
-                    "200": Object {
-                      "description": "OK",
-                    },
-                    "401": Object {
-                      "description": "Unauthorized",
-                    },
-                    "403": Object {
-                      "description": "Forbidden",
-                    },
-                    "404": Object {
-                      "description": "Not Found",
-                    },
-                  },
-                },
-              },
-              "/datasets/**": Object {
-                "get": Object {
-                  "description": "You must specify the dataset's identifier",
-                  "responses": Object {
-                    "200": Object {
-                      "description": "OK",
-                    },
-                    "401": Object {
-                      "description": "Unauthorized",
-                    },
-                    "403": Object {
-                      "description": "Forbidden",
-                    },
-                    "404": Object {
-                      "description": "Not Found",
-                    },
-                  },
-                },
-              },
-              "/harvest/catalog": Object {
-                "get": Object {
-                  "responses": Object {
-                    "200": Object {
-                      "description": "OK",
-                    },
-                    "401": Object {
-                      "description": "Unauthorized",
-                    },
-                    "403": Object {
-                      "description": "Forbidden",
-                    },
-                    "404": Object {
-                      "description": "Not Found",
-                    },
-                  },
-                },
-              },
-              "/publisher": Object {
-                "get": Object {
-                  "description": "Returns the elasticsearch response with matching publishers",
-                  "responses": Object {
-                    "200": Object {
-                      "description": "OK",
-                    },
-                    "401": Object {
-                      "description": "Unauthorized",
-                    },
-                    "403": Object {
-                      "description": "Forbidden",
-                    },
-                    "404": Object {
-                      "description": "Not Found",
-                    },
-                  },
-                },
-              },
-              "/publisher/hierarchy": Object {
-                "get": Object {
-                  "responses": Object {
-                    "200": Object {
-                      "description": "OK",
-                    },
-                    "401": Object {
-                      "description": "Unauthorized",
-                    },
-                    "403": Object {
-                      "description": "Forbidden",
-                    },
-                    "404": Object {
-                      "description": "Not Found",
-                    },
-                  },
-                },
-              },
-              "/terms": Object {
-                "get": Object {
-                  "description": "Returns the elasticsearch response with matching terms (dct:subject)",
-                  "responses": Object {
-                    "200": Object {
-                      "description": "OK",
-                    },
-                    "401": Object {
-                      "description": "Unauthorized",
-                    },
-                    "403": Object {
-                      "description": "Forbidden",
-                    },
-                    "404": Object {
-                      "description": "Not Found",
-                    },
-                  },
+                  "summary": "Get a specific api",
                 },
               },
             }
@@ -276,6 +167,10 @@ exports[`should render ApiDetailsPage correctly with apiItem 1`] = `
                 />
               </a>
             }
+          />
+          <TwoColRow
+            col1="Price"
+            col2="Gratis"
           />
         </ListRegular>
         <ListRegular

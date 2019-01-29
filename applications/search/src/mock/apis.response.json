@@ -1,0 +1,82 @@
+{
+  "total": 2,
+  "hits": [
+    {
+      "id": "68dda78f-364f-41dd-869a-0dd8d9a3fe4c",
+      "title": "Barnehagefakta",
+      "titleFormatted": "Barnehagefakta",
+      "nationalComponent": false,
+      "publisher": {
+        "id": "970018131",
+        "name": "UTDANNINGSDIREKTORATET",
+        "orgPath": "/STAT/872417842/970018131",
+        "prefLabel": {
+          "no": "Utdanningsdirektoratet"
+        }
+      },
+      "formats": []
+    },
+    {
+      "id": "70f6e5b3-b633-413b-b5e7-11b63bb413eb",
+      "title": "Nasjonalt barnehageregister API",
+      "titleFormatted": "Nasjonalt barnehageregister API",
+      "nationalComponent": false,
+      "publisher": {
+        "id": "970018131",
+        "name": "UTDANNINGSDIREKTORATET",
+        "orgPath": "/STAT/872417842/970018131",
+        "prefLabel": {
+          "no": "Utdanningsdirektoratet"
+        }
+      },
+      "formats": [
+        "application/xml",
+        "application/json",
+        "text/json",
+        "text/xml"
+      ]
+    }
+  ],
+  "aggregations": {
+    "formats": {
+      "buckets": [
+        {
+          "key": "MISSING",
+          "count": 1
+        },
+        {
+          "key": "application/json",
+          "count": 1
+        },
+        {
+          "key": "application/xml",
+          "count": 1
+        },
+        {
+          "key": "text/json",
+          "count": 1
+        },
+        {
+          "key": "text/xml",
+          "count": 1
+        }
+      ]
+    },
+    "orgPath": {
+      "buckets": [
+        {
+          "key": "/STAT",
+          "count": 2
+        },
+        {
+          "key": "/STAT/872417842",
+          "count": 2
+        },
+        {
+          "key": "/STAT/872417842/970018131",
+          "count": 2
+        }
+      ]
+    }
+  }
+}

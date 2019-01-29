@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render ModelComponentProperty with props 1`] = `
+<div
+  className="d-flex schema-collapse--item"
+  name="Test property"
+  style={
+    Object {
+      "marginLeft": "16px",
+    }
+  }
+>
+  <div
+    className="w-50 pl-0"
+  >
+    Test property
+  </div>
+  <div
+    className="w-50"
+  >
+    type
+  </div>
+</div>
+`;

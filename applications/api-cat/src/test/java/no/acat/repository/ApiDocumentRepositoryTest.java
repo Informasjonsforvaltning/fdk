@@ -36,7 +36,6 @@ public class ApiDocumentRepositoryTest {
     ApiDocumentRepository spyApiDocumentRepository;
     ElasticsearchService mockElasticsearchService;
     ObjectMapper mapper;
-    String spec;
 
     @Before
     public void setup() throws IOException {
@@ -44,7 +43,6 @@ public class ApiDocumentRepositoryTest {
          mapper = mock(ObjectMapper.class);
          mockElasticsearchService = mock(ElasticsearchService.class);
          spyApiDocumentRepository = spy(new ApiDocumentRepository(mockElasticsearchService, mapper));
-         spec = Utils.getStringFromResource("sample-dataset-complete.json");
 
     }
 
@@ -73,33 +71,6 @@ public class ApiDocumentRepositoryTest {
 
     }
 
-    @Test
-    public void checkByIdReturn() throws IOException {
-
-
-        String id = "1002";
-        GetResponse getResponse = mock(GetResponse.class);
-        Client client = mock(Client.class);
-        GetRequestBuilder getRequestBuilder = mock(GetRequestBuilder.class);
-        ApiDocument apiDocument = new ApiDocument();
-        apiDocument.setId(id);
-
-        when(mockElasticsearchService.getClient()).thenReturn(client);
-        when(client.prepareGet("acat", "apidocument", id)).thenReturn(getRequestBuilder);
-        when(getRequestBuilder.get()).thenReturn(getResponse);
-        when(getResponse.isExists()).thenReturn(true);
-
-        doReturn(spec).when(getResponse).getSourceAsString();
-        doReturn(apiDocument).when(mapper).readValue(spec, ApiDocument.class);
-        doReturn(Optional.of(spec)).when(spyApiDocumentRepository).getById(id);
-
-        doCallRealMethod().when(spyApiDocumentRepository).getById(id);
-
-        Optional<ApiDocument> expected = spyApiDocumentRepository.getById(id);
-
-        Assert.assertThat(expected.get().getId(), is(id));
-
-    }
 
     @Test
     public void checkIf_apiDocumentByHarvestSourceUri_hitsLengthIsOne_returnApiDocument(){

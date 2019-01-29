@@ -5,7 +5,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import no.dcat.datastore.domain.dcat.builders.DcatBuilder;
 import no.dcat.shared.Dataset;
-import no.dcat.webutils.exceptions.NotFoundException;
+import no.fdk.webutils.exceptions.NotFoundException;
 import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
@@ -22,6 +22,8 @@ import org.elasticsearch.search.sort.SortBuilders;
 import org.elasticsearch.search.sort.SortOrder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -106,14 +108,6 @@ public class DatasetsQueryService extends ElasticsearchService {
         @RequestParam(value = "lastChanged", defaultValue = "0", required = false)
             int lastChanged,
 
-        @ApiParam("Returns datatasets from position x in the result set, 0 is the default value. A value of 150 will return the 150th dataset in the resultset")
-        @RequestParam(value = "from", defaultValue = "0", required = false)
-            int from,
-
-        @ApiParam("Specifies the size, i.e. the number of datasets to return in one request. The default is 10, the maximum number of datasets returned is 100")
-        @RequestParam(value = "size", defaultValue = "10", required = false)
-            int size,
-
         @ApiParam("Specifies the language elements of the datasets to search in, default is nb")
         @RequestParam(value = "lang", defaultValue = "nb", required = false)
             String lang,
@@ -152,7 +146,10 @@ public class DatasetsQueryService extends ElasticsearchService {
 
         @ApiParam("Include aggregations")
         @RequestParam(value = "aggregations", defaultValue = "true", required = false)
-            String aggregations
+            String aggregations,
+
+        @PageableDefault()
+            Pageable pageable
     ) {
 
         StringBuilder loggMsg = new StringBuilder()
@@ -165,8 +162,8 @@ public class DatasetsQueryService extends ElasticsearchService {
             .append(" firstHarvested:").append(firstHarvested)
             .append(" lastHarvested:").append(lastHarvested)
             .append(" lastChanged:").append(lastChanged)
-            .append(" from:").append(from)
-            .append(" size:").append(size)
+            .append(" offset:").append(pageable.getOffset())
+            .append(" size:").append(pageable.getPageSize())
             .append(" lang:").append(lang)
             .append(" sortfield:").append(sortfield)
             .append(" sortdirection:").append(sortdirection)
@@ -187,8 +184,8 @@ public class DatasetsQueryService extends ElasticsearchService {
         }
         lang = "*"; // hardcode to search in all language fields
 
-        from = checkAndAdjustFrom(from);
-        size = checkAndAdjustSize(size);
+        int from = checkAndAdjustFrom((int)pageable.getOffset());
+        int size = checkAndAdjustSize(pageable.getPageSize());
 
         ResponseEntity<String> jsonError = initializeElasticsearchTransportClient();
         if (jsonError != null) return jsonError;

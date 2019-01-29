@@ -2,7 +2,7 @@ import qs from 'qs';
 
 const SET_QUERY_QUERYSTRING = 'SET_QUERY_QUERYSTRING';
 const SET_QUERY_FIELD = 'SET_QUERY_FIELD';
-const SET_QUERY_FROM = 'SET_QUERY_FROM';
+const SET_QUERY_PAGE = 'SET_QUERY_PAGE';
 const CLEAR_QUERY = 'CLEAR_QUERY';
 
 export function setSearchQuery(query, history) {
@@ -30,10 +30,10 @@ export function setQueryFilter(fieldType, fieldValue, history) {
   };
 }
 
-export function setQueryFrom(fieldValue, history) {
+export function setQueryPage(fieldValue, history) {
   return (dispatch, getState) => {
     dispatch({
-      type: SET_QUERY_FROM,
+      type: SET_QUERY_PAGE,
       fieldValue
     });
     history.push(
@@ -65,12 +65,12 @@ export function searchReducer(state = initialState, action) {
       return {
         ...state,
         [action.fieldType]: action.fieldValue,
-        from: undefined
+        page: undefined
       };
-    case SET_QUERY_FROM:
+    case SET_QUERY_PAGE:
       return {
         ...state,
-        from: action.fieldValue
+        page: action.fieldValue
       };
     case CLEAR_QUERY:
       return {

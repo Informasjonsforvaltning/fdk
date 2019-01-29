@@ -1,5 +1,11 @@
 @import '../../../node_modules/designsystemet/fdk-designsystem-bootstrap4/scss/colors.scss';
 
+.show-more__cropped-box-measure {
+  position:relative;
+  max-height:12rem;
+  overflow:hidden;
+}
+
 .show-more__cropped-box {
   position:relative;
   height:12rem;

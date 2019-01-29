@@ -3,16 +3,18 @@ package no.dcat.controller;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import io.swagger.v3.oas.models.OpenAPI;
 import no.dcat.model.ApiRegistration;
 import no.dcat.model.ApiRegistrationFactory;
 import no.dcat.model.Catalog;
 import no.dcat.service.ApiCatService;
 import no.dcat.service.ApiRegistrationRepository;
 import no.dcat.service.CatalogRepository;
-import no.dcat.webutils.exceptions.BadRequestException;
-import no.dcat.webutils.exceptions.NotFoundException;
+import no.dcat.service.InformationmodelCatService;
+import no.fdk.webutils.exceptions.BadRequestException;
+import no.fdk.webutils.exceptions.NotFoundException;
 import no.fdk.acat.bindings.ApiCatBindings;
+import no.fdk.acat.common.model.apispecification.ApiSpecification;
+import no.fdk.imcat.bindings.InformationmodelCatBindings;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,16 +46,19 @@ public class ApiRegistrationController {
     private ApiRegistrationRepository apiRegistrationRepository;
     private CatalogRepository catalogRepository;
     private ApiCatBindings apiCat;
+    private InformationmodelCatBindings informationmodelCat;
 
     @Autowired
     public ApiRegistrationController(
         ApiRegistrationRepository apiRegistrationRepository,
         CatalogRepository catalogRepository,
-        ApiCatService apiCatService
+        ApiCatService apiCatService,
+        InformationmodelCatService informationmodelCatService
     ) {
         this.apiRegistrationRepository = apiRegistrationRepository;
         this.catalogRepository = catalogRepository;
         this.apiCat = apiCatService;
+        this.informationmodelCat= informationmodelCatService;
     }
 
     /**
@@ -135,13 +140,13 @@ public class ApiRegistrationController {
             String apiSpecUrl = apiRegistrationData.getApiSpecUrl();
             String apiSpec = apiRegistrationData.getApiSpec();
 
-            OpenAPI openAPI = null;
+            ApiSpecification apiSpecification = null;
             if (!StringUtils.isEmpty(apiSpecUrl)) {
-                openAPI = apiCat.convertSpecUrlToOpenApi(apiSpecUrl);
+                apiSpecification = apiCat.convertSpecUrlToApiSpecification(apiSpecUrl);
             } else if (!StringUtils.isEmpty(apiSpec)) {
-                openAPI = apiCat.convertSpecToOpenApi(apiSpec);
+                apiSpecification = apiCat.convertSpecToApiSpecification(apiSpec);
             }
-            apiRegistrationData.setOpenApi(openAPI);
+            apiRegistrationData.setApiSpecification(apiSpecification);
         } catch (Exception e) {
             throw new BadRequestException(e.getMessage());
         }
@@ -153,6 +158,7 @@ public class ApiRegistrationController {
         ApiRegistration savedApiRegistration = apiRegistrationRepository.save(apiRegistration);
 
         apiCat.triggerHarvestApiRegistration(savedApiRegistration.getId());
+        informationmodelCat.triggerHarvestApiRegistration(savedApiRegistration.getId());
 
         return savedApiRegistration;
     }
@@ -194,6 +200,7 @@ public class ApiRegistrationController {
         apiRegistrationRepository.delete(apiRegistration);
 
         apiCat.triggerHarvestApiRegistration(id);
+        informationmodelCat.triggerHarvestApiRegistration(id);
     }
 
     /**
@@ -247,6 +254,8 @@ public class ApiRegistrationController {
         ApiRegistration savedApiRegistration = apiRegistrationRepository.save(newApiRegistration);
 
         apiCat.triggerHarvestApiRegistration(id);
+        informationmodelCat.triggerHarvestApiRegistration(id);
+
 
         return savedApiRegistration;
     }

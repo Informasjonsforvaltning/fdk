@@ -11,21 +11,22 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>shared</module>
-        <module>datastore</module>
-        <module>elasticsearch5-client</module>
-        <module>elasticsearch5-test</module>
-        <module>html-cleaner</module>
-        <module>referencedata-client</module>
-        <module>webutils-spring</module>
         <module>api-cat-bindings</module>
         <module>api-cat-common</module>
         <module>api-cat-converters</module>
-        <module>publisher-cat-client</module>
-        <module>registration-api-client</module>
-        <module>concept-cat-common</module>
-        <module>harvest-queue</module>
         <module>concept-cat-client</module>
+        <module>concept-cat-common</module>
+        <module>datastore</module>
+        <module>elasticsearch5-client</module>
+        <module>elasticsearch5-test</module>
+        <module>harvest-queue</module>
+        <module>html-cleaner</module>
+        <module>informationmodel-cat-bindings</module>
+        <module>publisher-cat-client</module>
+        <module>referencedata-client</module>
+        <module>registration-api-client</module>
+        <module>shared</module>
+        <module>webutils-spring</module>
     </modules>
 
 </project>

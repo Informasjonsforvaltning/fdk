@@ -21,10 +21,9 @@ const renderDescription = description => {
 
   const descriptionText = getTranslateText(description);
   return (
-    <ShowMore
-      showMoreButtonText={localization.showFullDescription}
-      contentHtml={descriptionText}
-    />
+    <ShowMore showMoreButtonText={localization.showFullDescription}>
+      {descriptionText}
+    </ShowMore>
   );
 };
 

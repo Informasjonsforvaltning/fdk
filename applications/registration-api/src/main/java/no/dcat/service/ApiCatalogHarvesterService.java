@@ -1,13 +1,14 @@
 package no.dcat.service;
 
-import io.swagger.v3.oas.models.OpenAPI;
-import no.fdk.acat.bindings.ApiCatBindings;
-import no.dcat.model.ApiRegistrationFactory;
 import no.dcat.model.ApiCatalog;
 import no.dcat.model.ApiRegistration;
+import no.dcat.model.ApiRegistrationFactory;
 import no.dcat.model.HarvestStatus;
+import no.fdk.acat.bindings.ApiCatBindings;
+import no.fdk.acat.common.model.apispecification.ApiSpecification;
 import no.fdk.harvestqueue.HarvestQueue;
 import no.fdk.harvestqueue.QueuedTask;
+import no.fdk.imcat.bindings.InformationmodelCatBindings;
 import org.apache.commons.io.input.BOMInputStream;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
@@ -47,14 +48,24 @@ public class ApiCatalogHarvesterService {
 
     private ApiCatBindings apiCat;
 
+    private InformationmodelCatBindings informationmodelCat;
+
     private HarvestQueue harvestQueue;
 
+
     @Autowired
-    public ApiCatalogHarvesterService(ApiRegistrationRepository apiRegistrationRepository, ApiCatalogRepository apiCatalogRepository, HarvestQueue harvestQueue, ApiCatService apiCatService) {
+    public ApiCatalogHarvesterService(
+        ApiRegistrationRepository apiRegistrationRepository,
+        ApiCatalogRepository apiCatalogRepository,
+        HarvestQueue harvestQueue,
+        ApiCatService apiCatService,
+        InformationmodelCatService informationmodelCatService
+    ) {
         this.apiRegistrationRepository = apiRegistrationRepository;
         this.apiCatalogRepository = apiCatalogRepository;
         this.harvestQueue = harvestQueue;
         this.apiCat = apiCatService;
+        this.informationmodelCat = informationmodelCatService;
     }
 
     //TODO: Also trigger this every 24h ? (there exists a spring thing to do that)
@@ -105,7 +116,7 @@ public class ApiCatalogHarvesterService {
                 ApiRegistration apiRegistration;
                 if (existingApiRegistrationOptional.isPresent()) {
                     logger.debug("Existing registration {}", existingApiRegistrationOptional.get().getId());
-                    apiRegistration= existingApiRegistrationOptional.get();
+                    apiRegistration = existingApiRegistrationOptional.get();
                     apiRegistration.set_lastModified(new Date());
                 } else {
                     apiRegistration = ApiRegistrationFactory.createApiRegistration(originCatalog.getOrgNo(), apiRegistrationData);
@@ -117,8 +128,8 @@ public class ApiCatalogHarvesterService {
                 apiRegistration.setFromApiCatalog(true);
 
                 try {
-                    OpenAPI openAPI = apiCat.convertSpecUrlToOpenApi(apiSpecUrl);
-                    apiRegistration.setOpenApi(openAPI);
+                    ApiSpecification apiSpecification = apiCat.convertSpecUrlToApiSpecification(apiSpecUrl);
+                    apiRegistration.setApiSpecification(apiSpecification);
                 } catch (Exception e) {
                     String errorMessage = "Failed while trying to fetch and parse API spec " + apiSpecUrl + " " + e.toString();
                     apiRegistration.setHarvestStatus(HarvestStatus.Error(errorMessage));
@@ -126,6 +137,8 @@ public class ApiCatalogHarvesterService {
 
                 ApiRegistration savedApiRegistration = apiRegistrationRepository.save(apiRegistration);
                 apiCat.triggerHarvestApiRegistration(savedApiRegistration.getId());
+                informationmodelCat.triggerHarvestApiRegistration(savedApiRegistration.getId());
+
             }
 
             originCatalog.setHarvestStatus(HarvestStatus.Success());
