@@ -60,6 +60,10 @@ public class ApiSearchController {
         @RequestParam(value = "orgPath", defaultValue = "", required = false)
             String orgPath,
 
+        @ApiParam("Filters on harvestSourceUri external identifier")
+        @RequestParam(value = "harvestSourceUri", defaultValue = "", required = false)
+            String harvestSourceUri,
+
         @ApiParam("Filters on format")
         @RequestParam(value = "format", defaultValue = "", required = false)
             String[] formats,
@@ -97,6 +101,10 @@ public class ApiSearchController {
 
         if (!orgPath.isEmpty()) {
             composedQuery.filter(QueryUtil.createTermFilter("publisher.orgPath", orgPath));
+        }
+
+        if (!harvestSourceUri.isEmpty()) {
+            composedQuery.filter(QueryUtil.createTermFilter("harvestSourceUri", harvestSourceUri));
         }
 
         if (formats != null && formats.length > 0) {
