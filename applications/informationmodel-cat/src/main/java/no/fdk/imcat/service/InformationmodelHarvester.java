@@ -1,20 +1,16 @@
 package no.fdk.imcat.service;
 
-import no.dcat.shared.HarvestMetadata;
-import no.dcat.shared.HarvestMetadataUtil;
 import no.fdk.imcat.model.InformationModel;
 import no.fdk.imcat.model.InformationModelFactory;
 import no.fdk.imcat.model.InformationModelHarvestSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 /*
     Fetch information models and insert or update them in the search index.
@@ -38,8 +34,8 @@ public class InformationmodelHarvester {
     private InformationModelFactory informationModelFactory;
 
     @Autowired
-    public InformationmodelHarvester(InformationmodelRepository repo, ApiRegistrationsHarvest apiRegistrationsHarvest, InformationModelFactory informationModelFactory) {
-        this.informationmodelRepository = repo;
+    public InformationmodelHarvester(InformationmodelRepository informationmodelRepository, ApiRegistrationsHarvest apiRegistrationsHarvest, InformationModelFactory informationModelFactory) {
+        this.informationmodelRepository = informationmodelRepository;
         this.apiRegistrationsHarvest = apiRegistrationsHarvest;
         this.informationModelFactory = informationModelFactory;
     }
@@ -54,39 +50,11 @@ public class InformationmodelHarvester {
         for (InformationModelHarvestSource source : modelSources) {
             if (source.sourceType == API_TYPE) {
 
-                Optional<InformationModel> existingModelOptional = informationmodelRepository.findById(source.id);
+                InformationModel model = informationModelFactory.createInformationModel(source, harvestDate);
 
-                InformationModel model = informationModelFactory.createInformationModel(source);
-
-                updateHarvestMetadata(model, harvestDate, existingModelOptional.orElse(null));
                 informationmodelRepository.save(model);
             }
         }
-    }
-
-    void updateHarvestMetadata(InformationModel informationModel, Date harvestDate, InformationModel existingInformationModel) {
-        HarvestMetadata oldHarvest = existingInformationModel != null ? existingInformationModel.getHarvest() : null;
-
-        // new document is not considered a change
-        boolean hasChanged = existingInformationModel != null && !isEqualContent(informationModel, existingInformationModel);
-
-        HarvestMetadata harvest = HarvestMetadataUtil.createOrUpdate(oldHarvest, harvestDate, hasChanged);
-
-        informationModel.setHarvest(harvest);
-    }
-
-    boolean isEqualContent(InformationModel first, InformationModel second) {
-        String[] ignoredProperties = {"id", "harvest"};
-        InformationModel firstContent = new InformationModel();
-        InformationModel secondContent = new InformationModel();
-
-        BeanUtils.copyProperties(first, firstContent, ignoredProperties);
-        BeanUtils.copyProperties(second, secondContent, ignoredProperties);
-
-        // This is a poor mans comparator. Seems to include all fields
-        String firstString = firstContent.toString();
-        String secondString = secondContent.toString();
-        return firstString.equals(secondString);
     }
 
     private List<InformationModelHarvestSource> getAllHarvestSources() {
