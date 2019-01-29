@@ -4,6 +4,7 @@ import no.dcat.shared.HarvestMetadata;
 import no.dcat.shared.HarvestMetadataUtil;
 import no.dcat.shared.Publisher;
 import no.fdk.imcat.model.InformationModel;
+import no.fdk.imcat.model.InformationModelFactory;
 import no.fdk.imcat.model.InformationModelHarvestSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,12 +37,14 @@ public class InformationmodelHarvester {
     private ApiRegistrationsHarvest apiRegistrationsHarvest;
 
     private PublisherCatClient publisherCatClient;
+    private InformationModelFactory informationModelFactory;
 
     @Autowired
-    public InformationmodelHarvester(InformationmodelRepository repo, ApiRegistrationsHarvest apiRegistrationsHarvest, PublisherCatClient publisherCatClient) {
+    public InformationmodelHarvester(InformationmodelRepository repo, ApiRegistrationsHarvest apiRegistrationsHarvest, PublisherCatClient publisherCatClient, InformationModelFactory informationModelFactory) {
         this.informationmodelRepository = repo;
         this.apiRegistrationsHarvest = apiRegistrationsHarvest;
         this.publisherCatClient = publisherCatClient;
+        this.informationModelFactory = informationModelFactory;
     }
 
     public void harvestAll() {
@@ -56,8 +59,7 @@ public class InformationmodelHarvester {
 
                 Optional<InformationModel> existingModelOptional = informationmodelRepository.findById(source.id);
 
-                InformationModel model = apiRegistrationsHarvest.getInformationModel(source);
-                model.setPublisher(lookupPublisher(source.publisherOrgNr));
+                InformationModel model = informationModelFactory.createInformationModel(source);
 
                 updateHarvestMetadata(model, harvestDate, existingModelOptional.orElse(null));
                 informationmodelRepository.save(model);

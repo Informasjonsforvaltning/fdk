@@ -43,16 +43,6 @@ public class ApiRegistrationsHarvest {
         this.registrationApiClient = client;
     }
 
-    InformationModel getInformationModel(InformationModelHarvestSource source) {
-
-        InformationModel newModel = new InformationModel();
-        newModel.setHarvestSourceUri(source.URI);
-        newModel.setId(source.id);
-        newModel.setTitle(source.title);
-        newModel.setSchema(source.schema);
-        return newModel;
-    }
-
     String getApiSpec(ApiRegistrationPublic apiRegistration) throws IOException {
         String apiSpecUrl = apiRegistration.getApiSpecUrl();
         String apiSpec = apiRegistration.getApiSpec();
