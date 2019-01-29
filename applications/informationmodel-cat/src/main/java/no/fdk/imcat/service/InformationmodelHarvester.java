@@ -2,7 +2,6 @@ package no.fdk.imcat.service;
 
 import no.dcat.shared.HarvestMetadata;
 import no.dcat.shared.HarvestMetadataUtil;
-import no.dcat.shared.Publisher;
 import no.fdk.imcat.model.InformationModel;
 import no.fdk.imcat.model.InformationModelFactory;
 import no.fdk.imcat.model.InformationModelHarvestSource;
@@ -36,14 +35,12 @@ public class InformationmodelHarvester {
     private InformationmodelRepository informationmodelRepository;
     private ApiRegistrationsHarvest apiRegistrationsHarvest;
 
-    private PublisherCatClient publisherCatClient;
     private InformationModelFactory informationModelFactory;
 
     @Autowired
-    public InformationmodelHarvester(InformationmodelRepository repo, ApiRegistrationsHarvest apiRegistrationsHarvest, PublisherCatClient publisherCatClient, InformationModelFactory informationModelFactory) {
+    public InformationmodelHarvester(InformationmodelRepository repo, ApiRegistrationsHarvest apiRegistrationsHarvest, InformationModelFactory informationModelFactory) {
         this.informationmodelRepository = repo;
         this.apiRegistrationsHarvest = apiRegistrationsHarvest;
-        this.publisherCatClient = publisherCatClient;
         this.informationModelFactory = informationModelFactory;
     }
 
@@ -65,15 +62,6 @@ public class InformationmodelHarvester {
                 informationmodelRepository.save(model);
             }
         }
-    }
-
-    Publisher lookupPublisher(String orgNr) {
-        try {
-            return publisherCatClient.getByOrgNr(orgNr);
-        } catch (Exception e) {
-            logger.warn("Publisher lookup failed for orgNr={}. Error: {}", orgNr, e.getMessage());
-        }
-        return null;
     }
 
     void updateHarvestMetadata(InformationModel informationModel, Date harvestDate, InformationModel existingInformationModel) {
