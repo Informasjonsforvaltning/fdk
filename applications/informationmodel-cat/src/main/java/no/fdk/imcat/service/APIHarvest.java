@@ -9,6 +9,7 @@ import io.swagger.v3.oas.models.OpenAPI;
 import no.dcat.client.registrationapi.ApiRegistrationPublic;
 import no.fdk.acat.converters.apispecificationparser.OpenApiV3JsonParser;
 import no.fdk.imcat.model.InformationModel;
+import no.fdk.imcat.model.InformationModelHarvestSource;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
