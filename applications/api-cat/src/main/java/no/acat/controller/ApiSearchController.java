@@ -48,32 +48,9 @@ public class ApiSearchController {
         this.mapper = mapper;
     }
 
-    static void addTermFilter(BoolQueryBuilder boolQuery, String term, String value) {
-        if (value.isEmpty()) return;
-
-        if (value.equals(MISSING)) {
-            boolQuery.filter(QueryBuilders.boolQuery().mustNot(QueryBuilders.existsQuery(term)));
-        } else {
-            boolQuery.filter(QueryBuilders.termQuery(term, value));
-        }
-    }
-
-    static void addAllTermsFilter(BoolQueryBuilder boolQuery, String term, String[] values) {
-        if (values == null || values.length == 0) return;
-
-        if (values[0].equals(MISSING)) {
-            boolQuery.filter(QueryBuilders.boolQuery().mustNot(QueryBuilders.existsQuery(term)));
-        } else {
-            for (String value : values) {
-                boolQuery.filter(QueryBuilders.termQuery(term, value));
-            }
-        }
-
-    }
-
     @ApiOperation(value = "Queries the api catalog for api specifications",
         notes = "So far only simple queries is supported", response = QueryResponse.class)
-    @RequestMapping(value = "/search", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "", method = RequestMethod.GET, produces = "application/json")
     public QueryResponse search(
         @ApiParam("the query string")
         @RequestParam(value = "q", defaultValue = "", required = false)
@@ -87,6 +64,10 @@ public class ApiSearchController {
         @RequestParam(value = "format", defaultValue = "", required = false)
             String[] formats,
 
+        @ApiParam("Calculate aggregations")
+        @RequestParam(value = "aggregations", defaultValue = "false", required = false)
+            String includeAggregations,
+
         @ApiParam("Specifies the sort field, at the present we support title, modified and publisher. Default is no value")
         @RequestParam(value = "sortfield", defaultValue = "", required = false)
             String sortfield,
@@ -98,64 +79,49 @@ public class ApiSearchController {
         @PageableDefault()
             Pageable pageable
     ) {
-        try {
-            SearchRequestBuilder searchRequest = buildSearchRequest(query, orgPath, formats, pageable);
-            addSort(sortfield, sortdirection, searchRequest);
-            if (query.isEmpty()) {
-                addSortForEmptySearch(searchRequest);
-            }
+        logger.debug("GET /apis?q={}", query);
 
-            SearchResponse elasticResponse = doQuery(searchRequest);
-            return convertFromElasticResponse(elasticResponse);
-        } catch (Exception e) {
-            logger.error("error {}", e.getMessage(), e);
-        }
-
-        return null;
-    }
-
-    SearchRequestBuilder buildSearchRequest(String query, String orgPath, String[] formats, Pageable pageable) {
-
-        QueryBuilder search;
+        QueryBuilder searchQuery;
 
         if (query.isEmpty()) {
-            search = QueryBuilders.matchAllQuery();
+            searchQuery = QueryBuilders.matchAllQuery();
         } else {
             // add * if query only contains one word
             if (!query.contains(" ")) {
                 query = query + " " + query + "*";
             }
-            search = QueryBuilders.simpleQueryStringQuery(query);
+            searchQuery = QueryBuilders.simpleQueryStringQuery(query);
         }
 
-        BoolQueryBuilder boolQuery = QueryBuilders.boolQuery().must(search);
+        BoolQueryBuilder composedQuery = QueryBuilders.boolQuery().must(searchQuery);
 
-        addTermFilter(boolQuery, "publisher.orgPath", orgPath);
-        addAllTermsFilter(boolQuery, "formats", formats);
+        if (!orgPath.isEmpty()) {
+            composedQuery.filter(QueryUtil.createTermFilter("publisher.orgPath", orgPath));
+        }
 
-        logger.debug("Built query:{}", boolQuery);
+        if (formats != null && formats.length > 0) {
+            composedQuery.filter(QueryUtil.createTermsFilter("formats", formats));
+        }
+        logger.debug("Built query:{}", composedQuery);
 
         String[] returnFields = {"id", "title", "titleFormatted", "description", "descriptionFormatted", "nationalComponent", "formats", "publisher.id", "publisher.orgPath", "publisher.name", "publisher.prefLabel.*"};
 
         int from = (int) pageable.getOffset();
 
-        return elasticsearch.getClient()
+        SearchRequestBuilder searchRequest = elasticsearch.getClient()
             .prepareSearch("acat")
             .setTypes("apidocument")
-            .setQuery(boolQuery)
+            .setQuery(composedQuery)
             .setFrom(checkAndAdjustFrom(from))
             .setSize(checkAndAdjustSize(pageable.getPageSize()))
-            .setFetchSource(returnFields, null)
-            .addAggregation(createTermsAggregation("formats", "formats"))
-            .addAggregation(createTermsAggregation("orgPath", "publisher.orgPath"));
+            .setFetchSource(returnFields, null);
 
-    }
+        if ("true".equals(includeAggregations)) {
+            searchRequest
+                .addAggregation(createTermsAggregation("formats", "formats"))
+                .addAggregation(createTermsAggregation("orgPath", "publisher.orgPath"));
+        }
 
-    SearchResponse doQuery(SearchRequestBuilder searchBuilder) {
-        return searchBuilder.execute().actionGet();
-    }
-
-    private void addSort(String sortfield, String sortdirection, SearchRequestBuilder searchBuilder) {
         if ("modified".equals(sortfield)) {
             SortOrder sortOrder = "asc".equals(sortdirection.toLowerCase()) ? SortOrder.ASC : SortOrder.DESC;
 
@@ -164,19 +130,19 @@ public class ApiSearchController {
                 .missing("_last");
 
             logger.debug("sort: {}", sortBuilder.toString());
-            searchBuilder.addSort(sortBuilder);
+            searchRequest.addSort(sortBuilder);
         }
-    }
 
-    /**
-     * create default sort order - national components should appear first
-     */
-    void addSortForEmptySearch(SearchRequestBuilder searchBuilder) {
-        SortBuilder sortNationalComponentFirst = SortBuilders
-            .fieldSort("nationalComponent")
-            .order(SortOrder.DESC);
+        if (query.isEmpty()) {
+            SortBuilder sortNationalComponentFirst = SortBuilders
+                .fieldSort("nationalComponent")
+                .order(SortOrder.DESC);
+            searchRequest.addSort(sortNationalComponentFirst);
+        }
 
-        searchBuilder.addSort(sortNationalComponentFirst);
+        SearchResponse elasticResponse = searchRequest.execute().actionGet();
+
+        return convertFromElasticResponse(elasticResponse);
     }
 
 
@@ -233,6 +199,9 @@ public class ApiSearchController {
     }
 
     void convertAggregations(QueryResponse queryResponse, SearchResponse elasticResponse) {
+        if (elasticResponse.getAggregations() ==null){
+            return;
+        }
         queryResponse.setAggregations(new HashMap<>());
         Map<String, Aggregation> elasticAggregationsMap = elasticResponse.getAggregations().getAsMap();
 
@@ -246,5 +215,25 @@ public class ApiSearchController {
             });
             queryResponse.getAggregations().put(aggregationName, outputAggregation);
         });
+    }
+
+    static class QueryUtil {
+        static QueryBuilder createTermFilter(String term, String value) {
+            return value.equals(MISSING) ?
+                QueryBuilders.boolQuery().mustNot(QueryBuilders.existsQuery(term)) :
+                QueryBuilders.termQuery(term, value);
+        }
+
+        static QueryBuilder createTermsFilter(String term, String[] values) {
+            BoolQueryBuilder composedQuery = QueryBuilders.boolQuery();
+            for (String value : values) {
+                if (value.equals(MISSING)) {
+                    composedQuery.filter(QueryBuilders.boolQuery().mustNot(QueryBuilders.existsQuery(term)));
+                } else {
+                    composedQuery.filter(QueryBuilders.termQuery(term, value));
+                }
+            }
+            return composedQuery;
+        }
     }
 }

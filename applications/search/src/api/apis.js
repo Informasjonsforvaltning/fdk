@@ -4,7 +4,10 @@ import axios from 'axios';
 const apisUrlBase = '/api/apis';
 
 export const apisSearchUrl = query =>
-  `${apisUrlBase}/search${qs.stringify(query, { addQueryPrefix: true })}`;
+  `${apisUrlBase}${qs.stringify(
+    { ...query, aggregations: 'true' },
+    { addQueryPrefix: true }
+  )}`;
 
 export const getApi = id =>
   axios
