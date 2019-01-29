@@ -1,6 +1,5 @@
 package no.fdk.imcat.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
@@ -50,13 +49,7 @@ public class ApiRegistrationsHarvest {
         newModel.setHarvestSourceUri(source.URI);
         newModel.setId(source.id);
         newModel.setTitle(source.title);
-        ObjectWriter writer = mapper.writer();
-        try {
-            newModel.setSchema(writer.writeValueAsString(source.schema));
-        } catch (JsonProcessingException e) {
-            logger.error("Jackson fail!");
-            logger.trace(e.getStackTrace().toString());
-        }
+        newModel.setSchema(source.schema);
         return newModel;
     }
 
@@ -106,7 +99,7 @@ public class ApiRegistrationsHarvest {
         return sourceList;
     }
 
-    private JsonNode extractSchemaFromOpenApi(String openApiSpec, String id) throws IOException {
+    private String extractSchemaFromOpenApi(String openApiSpec, String id) throws IOException {
 
         /*
         informationmodel schema is defined as:
@@ -133,7 +126,10 @@ public class ApiRegistrationsHarvest {
         JSONSchemaRootNode.put("$schema", "http://json-schema.org/draft-06/schema#");
         JSONSchemaRootNode.put("$id", schemaId);
         JSONSchemaRootNode.set("definitions", definitionsNode);
-        return JSONSchemaRootNode;
+        ObjectWriter writer = mapper.writer();
+
+        String schemaString = writer.writeValueAsString(JSONSchemaRootNode);
+        return schemaString;
     }
 
     List<ApiRegistrationPublic> getApiRegistrations() {
