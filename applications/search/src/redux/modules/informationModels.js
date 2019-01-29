@@ -55,7 +55,8 @@ export function informationModelsReducer(state = initialState, action) {
           '_embedded.informationmodels'
         ),
         informationModelAggregations: _.get(action.payload, 'aggregations'),
-        informationModelTotal: _.get(action.payload, 'total'),
+        informationModelTotal: _.get(action.payload, ['page', 'totalElements']),
+
         meta: {
           isFetching: false,
           lastFetch: Date.now(),
