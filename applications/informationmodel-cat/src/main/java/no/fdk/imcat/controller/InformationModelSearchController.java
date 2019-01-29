@@ -111,8 +111,8 @@ public class InformationModelSearchController {
         }
 
         if (!StringUtils.isEmpty(returnFields)) {
-            SourceFilter sourceFilter = new FetchSourceFilter(returnFields.concat(",prefLabel").split(","), null);
-            finalQuery.addSourceFilter(sourceFilter);//TODO: Understand
+            SourceFilter sourceFilter = new FetchSourceFilter(returnFields.split(","), null);
+            finalQuery.addSourceFilter(sourceFilter);
         }
 
         if (!StringUtils.isEmpty(sortfield)) {
