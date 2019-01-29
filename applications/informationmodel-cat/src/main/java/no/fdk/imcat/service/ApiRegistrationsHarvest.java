@@ -7,7 +7,6 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import io.swagger.v3.oas.models.OpenAPI;
 import no.dcat.client.registrationapi.ApiRegistrationPublic;
 import no.fdk.acat.converters.apispecificationparser.OpenApiV3JsonParser;
-import no.fdk.imcat.model.InformationModel;
 import no.fdk.imcat.model.InformationModelHarvestSource;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
@@ -74,9 +73,9 @@ public class ApiRegistrationsHarvest {
                     continue;
                 }
                 InformationModelHarvestSource hs = new InformationModelHarvestSource();
-                hs.URI = INFORMATIONMODEL_ROOT + apiRegistration.getId();
+                String harvestSourceUri = registrationApiClient.getPublicApisUrlBase() + '/' + apiRegistration.getId();
+                hs.harvestSourceUri = harvestSourceUri;
                 hs.publisherOrgNr = apiRegistration.getCatalogId();
-                hs.id = apiRegistration.getId();
                 hs.sourceType = API_TYPE;
                 hs.title = openAPI.getInfo().getTitle();
                 hs.schema = extractSchemaFromOpenApi(apiSpec, apiRegistration.getId());

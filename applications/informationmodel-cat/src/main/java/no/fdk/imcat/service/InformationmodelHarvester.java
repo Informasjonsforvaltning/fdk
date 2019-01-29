@@ -6,7 +6,6 @@ import no.fdk.imcat.model.InformationModelHarvestSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -22,11 +21,6 @@ public class InformationmodelHarvester {
     public static final int RETRY_COUNT_API_RETRIEVAL = 20;
 
     private static final Logger logger = LoggerFactory.getLogger(InformationmodelHarvester.class);
-
-
-    @Value("${application.harvestSourceUri}")
-    private String harvestSourceUri;
-
 
     private InformationmodelRepository informationmodelRepository;
     private ApiRegistrationsHarvest apiRegistrationsHarvest;
