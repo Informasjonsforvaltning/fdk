@@ -1,12 +1,10 @@
 package no.acat.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import no.acat.service.ParserService;
 import no.acat.utils.Utils;
+import no.dcat.shared.testcategories.UnitTest;
+import no.fdk.webutils.exceptions.BadRequestException;
 import no.fdk.acat.bindings.ConvertRequest;
 import no.fdk.acat.bindings.ConvertResponse;
-import no.dcat.shared.testcategories.UnitTest;
-import no.dcat.webutils.exceptions.BadRequestException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,9 +22,7 @@ public class ConvertControllerTest {
 
     @Before
     public void setup() {
-        ObjectMapper mapper = Utils.jsonMapper();
-        ParserService parserService = new ParserService(mapper);
-        convertController = new ConvertController(parserService);
+        convertController = new ConvertController();
     }
 
     @Test(expected = BadRequestException.class)
@@ -41,25 +37,25 @@ public class ConvertControllerTest {
     @Test
     public void checkIfReturnResponsebodySuccess() throws IOException, BadRequestException {
 
-        String spec = Utils.getStringFromResource("raw-enhet-api.json");
+        String spec = Utils.getStringFromResource("enhetsregisteret-openapi3.json");
         ConvertRequest convertRequest = ConvertRequest.builder().spec(spec).build();
 
         ConvertResponse convertResponse = convertController.convert(convertRequest);
 
         Assert.assertEquals(
-            convertResponse.getOpenApi().getInfo().getTitle(),
+            convertResponse.getApiSpecification().getInfo().getTitle(),
             "Åpne Data fra Enhetsregisteret - API Dokumentasjon");
     }
 
     @Test
     public void checkIfGettingSpecFromUrlSuccess() throws Exception {
-        String url = Utils.getResourceUrl("raw-enhet-api.json");
+        String url = Utils.getResourceUrl("enhetsregisteret-openapi3.json");
         ConvertRequest convertRequest = ConvertRequest.builder().url(url).build();
 
         ConvertResponse convertResponse = convertController.convert(convertRequest);
 
         Assert.assertEquals(
-            convertResponse.getOpenApi().getInfo().getTitle(),
+            convertResponse.getApiSpecification().getInfo().getTitle(),
             "Åpne Data fra Enhetsregisteret - API Dokumentasjon");
     }
 

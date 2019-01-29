@@ -1,12 +1,11 @@
 package no.acat.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import no.acat.model.ApiDocument;
 import no.acat.repository.ApiDocumentRepository;
-import no.acat.spec.ParseException;
 import no.acat.utils.Utils;
 import no.dcat.client.registrationapi.ApiRegistrationPublic;
 import no.dcat.shared.testcategories.UnitTest;
+import no.fdk.acat.converters.apispecificationparser.ParseException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -35,15 +34,12 @@ public class ApiDocumentBuilderServiceTest {
         publisherCatClientMock = mock(PublisherCatClient.class);
         datasetCatClientMock = mock(DatasetCatClient.class);
 
-        ObjectMapper mapper = Utils.jsonMapper();
-        ParserService parserService = new ParserService(mapper);
-
-        apiDocumentBuilderService = new ApiDocumentBuilderService(apiDocumentRepositoryMock, parserService, publisherCatClientMock, datasetCatClientMock);
+        apiDocumentBuilderService = new ApiDocumentBuilderService(apiDocumentRepositoryMock, publisherCatClientMock, datasetCatClientMock);
     }
 
     @Test
-    public void checkIfApiDocumentIsCreated() throws IOException, ParseException {
-        String spec = Utils.getStringFromResource("raw-enhet-api.json");
+    public void checkIfApiDocumentIsCreated() throws IOException,ParseException {
+        String spec = Utils.getStringFromResource("enhetsregisteret-openapi3.json");
         ApiRegistrationPublic apiRegistrationPublic = new ApiRegistrationPublic();
         apiRegistrationPublic.setApiSpec(spec);
         String harvestSourceUri = "x";
@@ -57,7 +53,7 @@ public class ApiDocumentBuilderServiceTest {
 
     @Test
     public void checkIfExistingApiDocumentIsUpdated() throws IOException, ParseException {
-        String spec = Utils.getStringFromResource("raw-enhet-api.json");
+        String spec = Utils.getStringFromResource("enhetsregisteret-openapi3.json");
         ApiRegistrationPublic apiRegistrationPublic = new ApiRegistrationPublic();
         apiRegistrationPublic.setApiSpec(spec);
         String harvestSourceUri = "x";

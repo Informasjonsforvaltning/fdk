@@ -77,8 +77,4 @@ public class ConceptHarvester {
         }
             return "";
         }
-
-    private Reader resourceAsReader(final String resourceName) {
-        return new InputStreamReader(getClass().getClassLoader().getResourceAsStream(resourceName), StandardCharsets.UTF_8);
-    }
 }

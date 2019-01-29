@@ -15,8 +15,6 @@ import org.springframework.hateoas.core.Relation;
 @EqualsAndHashCode(callSuper = true)
 @Relation(value = "concept", collectionRelation = "concepts")
 @Document(indexName = "ccat", type = "concept")
-@Setting(settingPath = "ccat.settings.json")
-@Mapping(mappingPath = "conceptdenormalized.mapping.json")
 public class ConceptDenormalized extends Concept {
 
     @ApiModelProperty("The publisher of the concept [dct:publisher]")

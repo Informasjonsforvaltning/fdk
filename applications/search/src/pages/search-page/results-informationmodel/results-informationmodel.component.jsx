@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import ReactPaginate from 'react-paginate';
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import cx from 'classnames';
-import _ from 'lodash';
 
 import localization from '../../../lib/localization';
 import { SearchHitItem } from './search-hit-item/search-hit-item.component';
@@ -13,7 +12,7 @@ const renderFilterModal = ({
   showFilterModal,
   closeFilterModal,
   searchQuery,
-  publisherArray,
+  publisherCounts,
   publishers,
   onFilterPublisherHierarchy
 }) => (
@@ -23,7 +22,7 @@ const renderFilterModal = ({
       <div className="search-filters">
         <SearchPublishersTree
           title={localization.facet.provider}
-          filter={publisherArray}
+          publisherCounts={publisherCounts}
           onFilterPublisherHierarchy={onFilterPublisherHierarchy}
           activeFilter={searchQuery.orgPath}
           publishers={publishers}
@@ -83,7 +82,7 @@ export class ResultsInformationModel extends React.Component {
       onFilterAccessRights,
       onFilterPublisherHierarchy,
       searchQuery,
-      publisherArray,
+      publisherCounts,
       publishers,
       onClearFilters,
       onPageChange,
@@ -95,8 +94,7 @@ export class ResultsInformationModel extends React.Component {
       setInformationModelSort
     } = this.props;
 
-    const page =
-      searchQuery && searchQuery.from ? searchQuery.from / hitsPerPage : 0;
+    const page = (searchQuery && searchQuery.page) || 0;
     const pageCount = Math.ceil((informationModelTotal || 1) / hitsPerPage);
 
     const clearButtonClass = cx(
@@ -173,13 +171,13 @@ export class ResultsInformationModel extends React.Component {
                   informationModelAggregations,
                   onFilterAccessRights,
                   searchQuery,
-                  publisherArray,
+                  publisherCounts,
                   publishers,
                   onFilterPublisherHierarchy
                 })}
                 <SearchPublishersTree
                   title={localization.facet.provider}
-                  filter={publisherArray}
+                  publisherCounts={publisherCounts}
                   onFilterPublisherHierarchy={onFilterPublisherHierarchy}
                   activeFilter={searchQuery.orgPath}
                   publishers={publishers}
@@ -189,29 +187,26 @@ export class ResultsInformationModel extends React.Component {
           </aside>
           <div id="informationModels" className="col-12 col-lg-8">
             {renderHits(informationModelItems, publishers)}
-
-            {_.get(informationModelItems, 'total', 0) > 50 && (
-              <div className="col-12 d-flex justify-content-center">
-                <span className="uu-invisible" aria-hidden="false">
-                  Sidepaginering.
-                </span>
-                <ReactPaginate
-                  pageCount={pageCount}
-                  pageRangeDisplayed={2}
-                  marginPagesDisplayed={1}
-                  previousLabel={localization.page.prev}
-                  nextLabel={localization.page.next}
-                  breakLabel={<span>...</span>}
-                  breakClassName="break-me"
-                  containerClassName="pagination"
-                  onPageChange={onPageChange}
-                  subContainerClassName="pages pagination"
-                  activeClassName="active"
-                  initialPage={page}
-                  disableInitialCallback
-                />
-              </div>
-            )}
+            <div className="col-12 d-flex justify-content-center">
+              <span className="uu-invisible" aria-hidden="false">
+                Sidepaginering.
+              </span>
+              <ReactPaginate
+                pageCount={pageCount}
+                pageRangeDisplayed={2}
+                marginPagesDisplayed={1}
+                previousLabel={localization.page.prev}
+                nextLabel={localization.page.next}
+                breakLabel={<span>...</span>}
+                breakClassName="break-me"
+                containerClassName="pagination"
+                onPageChange={onPageChange}
+                subContainerClassName="pages pagination"
+                activeClassName="active"
+                initialPage={page}
+                disableInitialCallback
+              />
+            </div>
           </div>
         </div>
       </main>
@@ -228,7 +223,7 @@ ResultsInformationModel.defaultProps = {
   onFilterAccessRights: null,
   onFilterPublisherHierarchy: null,
   searchQuery: {},
-  publisherArray: null,
+  publisherCounts: null,
   publishers: null,
   onClearFilters: null,
   setInformationModelSort: null,
@@ -246,7 +241,7 @@ ResultsInformationModel.propTypes = {
   onFilterAccessRights: PropTypes.func,
   onFilterPublisherHierarchy: PropTypes.func,
   searchQuery: PropTypes.object,
-  publisherArray: PropTypes.array,
+  publisherCounts: PropTypes.array,
   publishers: PropTypes.object,
   onClearFilters: PropTypes.func,
   setInformationModelSort: PropTypes.func,

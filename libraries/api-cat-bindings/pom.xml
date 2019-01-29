@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.0.5.RELEASE</version>
+        <version>2.0.8.RELEASE</version>
         <relativePath/>
     </parent>
 
@@ -14,7 +14,7 @@
 
     <groupId>no.dcat</groupId>
     <artifactId>api-cat-bindings</artifactId>
-    <version>1.2.0</version>
+    <version>1.5.0</version>
 
     <dependencies>
         <dependency>
@@ -28,9 +28,10 @@
             <version>4.3.10.RELEASE</version>
         </dependency>
         <dependency>
-            <groupId>io.swagger.core.v3</groupId>
-            <artifactId>swagger-models</artifactId>
-            <version>2.0.5</version>
+            <groupId>no.dcat</groupId>
+            <artifactId>api-cat-common</artifactId>
+            <version>1.0.0</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 </project>

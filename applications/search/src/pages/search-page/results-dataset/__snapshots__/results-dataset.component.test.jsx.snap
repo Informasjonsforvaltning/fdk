@@ -143,10 +143,8 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
               />
               <SearchPublishersTree
                 activeFilter={null}
-                filter={Array []}
                 onFilterPublisherHierarchy={[MockFunction]}
-                onSearch={null}
-                orgPath={null}
+                publisherCounts={null}
                 publishers={Object {}}
                 title="Organization"
               />
@@ -247,10 +245,8 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
         />
         <SearchPublishersTree
           activeFilter={null}
-          filter={Array []}
           onFilterPublisherHierarchy={[MockFunction]}
-          onSearch={null}
-          orgPath={null}
+          publisherCounts={null}
           publishers={Object {}}
           title="Organization"
         />
@@ -1660,6 +1656,38 @@ Flateobjektene avgrenses uavhengig av de administrative grensene.",
         />
       </ErrorBoundary>
     </section>
+    <section
+      className="col-12 col-lg-8 offset-lg-4 d-flex justify-content-center"
+    >
+      <span
+        aria-hidden="false"
+        className="uu-invisible"
+      >
+        Sidepaginering.
+      </span>
+      <PaginationBoxView
+        activeClassName="active"
+        breakClassName="break-me"
+        breakLabel={
+          <span>
+            ...
+          </span>
+        }
+        containerClassName="pagination"
+        disableInitialCallback={true}
+        disabledClassName="disabled"
+        initialPage={0}
+        marginPagesDisplayed={1}
+        nextClassName="next"
+        nextLabel="Neste side"
+        onPageChange={[MockFunction]}
+        pageCount={1}
+        pageRangeDisplayed={2}
+        previousClassName="previous"
+        previousLabel="Forrige side"
+        subContainerClassName="pages pagination"
+      />
+    </section>
   </section>
 </main>
 `;
@@ -1724,6 +1752,38 @@ exports[`should render ResultsDataset correctly with minimum of props 1`] = `
     <section
       className="col-12 col-lg-8"
     />
+    <section
+      className="col-12 col-lg-8 offset-lg-4 d-flex justify-content-center"
+    >
+      <span
+        aria-hidden="false"
+        className="uu-invisible"
+      >
+        Sidepaginering.
+      </span>
+      <PaginationBoxView
+        activeClassName="active"
+        breakClassName="break-me"
+        breakLabel={
+          <span>
+            ...
+          </span>
+        }
+        containerClassName="pagination"
+        disableInitialCallback={true}
+        disabledClassName="disabled"
+        initialPage={0}
+        marginPagesDisplayed={1}
+        nextClassName="next"
+        nextLabel="Neste side"
+        onPageChange={null}
+        pageCount={Infinity}
+        pageRangeDisplayed={2}
+        previousClassName="previous"
+        previousLabel="Forrige side"
+        subContainerClassName="pages pagination"
+      />
+    </section>
   </section>
 </main>
 `;
@@ -1788,6 +1848,38 @@ exports[`should render ResultsDataset correctly with props 1`] = `
     <section
       className="col-12 col-lg-8"
     />
+    <section
+      className="col-12 col-lg-8 offset-lg-4 d-flex justify-content-center"
+    >
+      <span
+        aria-hidden="false"
+        className="uu-invisible"
+      >
+        Sidepaginering.
+      </span>
+      <PaginationBoxView
+        activeClassName="active"
+        breakClassName="break-me"
+        breakLabel={
+          <span>
+            ...
+          </span>
+        }
+        containerClassName="pagination"
+        disableInitialCallback={true}
+        disabledClassName="disabled"
+        initialPage={0}
+        marginPagesDisplayed={1}
+        nextClassName="next"
+        nextLabel="Neste side"
+        onPageChange={[MockFunction]}
+        pageCount={1}
+        pageRangeDisplayed={2}
+        previousClassName="previous"
+        previousLabel="Forrige side"
+        subContainerClassName="pages pagination"
+      />
+    </section>
   </section>
 </main>
 `;

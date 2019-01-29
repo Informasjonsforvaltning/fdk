@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
-import DocumentMeta from 'react-document-meta';
-import Disqus from 'disqus-react';
+import DocumentMeta from 'react-document-meta'; 
+import Disqus from 'disqus-react'; 
+import sanitizeHtml from 'sanitize-html';
+import showdown from 'showdown'; 
 
 import localization from '../../lib/localization';
 import { getTranslateText } from '../../lib/translateText';
@@ -16,17 +18,24 @@ import { TwoColRow } from '../../components/list-regular/twoColRow/twoColRow';
 import { DatasetReference } from './dataset-reference/dataset-reference.component';
 import { config } from '../../config';
 
-const renderDescription = description => {
-  if (!description) {
+const showDownConverter = new showdown.Converter();
+
+const renderDescription = descriptionFormatted => {
+  if (!descriptionFormatted) {
     return null;
   }
 
-  const descriptionText = getTranslateText(description);
+  const unsanitizedHtml = showDownConverter.makeHtml(descriptionFormatted);
+  const sanitizedHtml = sanitizeHtml(unsanitizedHtml);
+
   return (
-    <ShowMore
-      showMoreButtonText={localization.showFullDescription}
-      contentHtml={descriptionText}
-    />
+    <ShowMore showMoreButtonText={localization.showFullDescription}>
+      <span
+        dangerouslySetInnerHTML={{
+          __html: sanitizedHtml
+        }}
+      />
+    </ShowMore>
   );
 };
 
@@ -88,10 +97,17 @@ const renderDatasetReferences = references => {
   );
 };
 
+const getContactPointKey = contactPoint =>
+  contactPoint &&
+  (contactPoint.uri ||
+    contactPoint.organizationName ||
+    contactPoint.email ||
+    contactPoint.phone);
+
 const renderContactPoint = contactPoint => {
   const { uri, organizationName, email, phone } = contactPoint;
   return (
-    <React.Fragment key={uri || organizationName}>
+    <React.Fragment key={getContactPointKey(contactPoint)}>
       {uri && (
         <TwoColRow
           col1={localization.contactPoint}
@@ -123,9 +139,15 @@ const renderContactPoint = contactPoint => {
 };
 
 const renderContactPoints = contactPoints => {
-  if (!contactPoints) {
+  if (
+    !contactPoints ||
+    !Array.isArray(contactPoints) ||
+    contactPoints.length < 1 ||
+    !contactPoints.some(getContactPointKey)
+  ) {
     return null;
   }
+
   const children = items => items.map(item => renderContactPoint(item));
 
   return (
@@ -224,15 +246,15 @@ const renderStickyMenu = apiItem => {
       prefLabel: localization.format
     });
   }
-  if (_.get(apiItem, ['openApi', 'paths'])) {
+  if (_.get(apiItem, ['apiSpecification', 'paths'])) {
     menuItems.push({
       name: localization.api.endpoints.operations,
       prefLabel: localization.api.endpoints.operations
     });
   }
   if (
-    _.get(apiItem, ['openApi', 'info', 'termsOfService']) ||
-    _.get(apiItem, ['openApi', 'info', 'license']) ||
+    _.get(apiItem, ['apiSpecification', 'info', 'termsOfService']) ||
+    _.get(apiItem, ['apiSpecification', 'info', 'license']) ||
     _.get(apiItem, 'cost') ||
     _.get(apiItem, 'usageLimitation') ||
     _.get(apiItem, 'performance') ||
@@ -308,12 +330,14 @@ export const ApiDetailsPage = props => {
           <div className="col-12 col-lg-4 ">{renderStickyMenu(apiItem)}</div>
 
           <section className="col-12 col-lg-8 mt-3">
-            {renderDescription(apiItem.description)}
+            {renderDescription(
+              apiItem.descriptionFormatted || apiItem.description
+            )}
 
             {renderFormats(apiItem.formats)}
 
             {renderApiEndpoints(
-              apiItem.openApi && apiItem.openApi.paths,
+              apiItem.apiSpecification && apiItem.apiSpecification.paths,
               apiItem.apiSpecUrl || internalApiSpecUrl,
               apiItem.apiDocUrl
             )}
@@ -321,8 +345,8 @@ export const ApiDetailsPage = props => {
             {renderAPIInfo({})}
 
             {renderTermsAndRestrictions(
-              _.get(apiItem, ['openApi', 'info', 'termsOfService']),
-              _.get(apiItem, ['openApi', 'info', 'license']),
+              _.get(apiItem, ['apiSpecification', 'info', 'termsOfService']),
+              _.get(apiItem, ['apiSpecification', 'info', 'license']),
               _.get(apiItem, 'cost'),
               _.get(apiItem, 'usageLimitation'),
               _.get(apiItem, 'performance'),

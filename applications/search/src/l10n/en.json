@@ -2,6 +2,7 @@
   "apiLabel": "API",
   "description": "Description",
   "showFullDescription": "Show the full description",
+  "showMore": "Show more",
   "showLess": "Show less",
   "objective": "Objective",
   "showFullObjective": "Show the full objective",
@@ -23,6 +24,8 @@
   "unknown": "Unknown",
   "deprecated": "deprecated",
   "responsible": "Responsible",
+  "name": "Name",
+  "type": "Type",
   "app": {
     "menu": "Menu"
   },
@@ -317,5 +320,13 @@
     "hiddenLabel": "Hidden term",
     "definition": "Definition",
     "identifier": "Identifier"
+  },
+  "infoMod": {
+    "infoModHeader": "Information models",
+    "tabs": {
+      "structure": "Structure",
+      "json": "JSON Schema"
+    },
+    "relatedAPIHeader": "Belongs to API"
   }
 }

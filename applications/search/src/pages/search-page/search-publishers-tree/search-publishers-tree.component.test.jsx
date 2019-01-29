@@ -1,28 +1,30 @@
+import _ from 'lodash';
 import React from 'react';
 import { shallow } from 'enzyme';
 import { SearchPublishersTree } from './search-publishers-tree.component';
 import publishers from '../../../../test/fixtures/publishers';
 import { normalizeAggregations } from '../../../lib/normalizeAggregations';
-import { extractPublisherCounts } from '../../../api/get-datasets';
 import datasetsApiResponse from './__fixtures/datasetsApiResponse.json';
 
+const normalizedDatasetsApiResponse = normalizeAggregations(
+  datasetsApiResponse
+);
+const publisherCounts = _.get(
+  normalizedDatasetsApiResponse,
+  'aggregations.orgPath.buckets'
+);
 let onFilterPublisherHierarchy;
-let onSearch;
 let defaultProps;
 let wrapper;
 
 beforeEach(() => {
   onFilterPublisherHierarchy = jest.fn();
-  onSearch = jest.fn();
 
   defaultProps = {
     title: 'title',
-    filter: extractPublisherCounts(normalizeAggregations(datasetsApiResponse)),
+    publisherCounts,
     onFilterPublisherHierarchy,
-    activeFilter: null,
-    publishers,
-    onSearch,
-    orgPath: '/STAT/872417842/960885406' // publishers[1].orgPath
+    publishers
   };
   wrapper = shallow(<SearchPublishersTree {...defaultProps} />);
 });

@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render PureInformationModelBreadcrumb correctly with no informationModelItem 1`] = `<span />`;
+
+exports[`should render PureInformationModelBreadcrumb with "Dataset" active correctly 1`] = `
+<span>
+  api title
+</span>
+`;

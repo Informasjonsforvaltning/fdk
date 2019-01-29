@@ -102,6 +102,7 @@ services:
     environment:
     - cluster.name=elasticsearch
     - xpack.security.enabled=false
+    - xpack.monitoring.enabled=false
 
   nginx-registration:
     restart: always

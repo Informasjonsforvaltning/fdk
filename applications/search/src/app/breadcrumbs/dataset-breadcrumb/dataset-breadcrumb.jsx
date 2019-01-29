@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { resolve } from 'react-resolver';
-import { getDataset } from '../../../api/get-dataset';
+import { getDataset } from '../../../api/datasets';
 import { getTranslateText } from '../../../lib/translateText';
 
 const memoizedGetDataset = _.memoize(getDataset);

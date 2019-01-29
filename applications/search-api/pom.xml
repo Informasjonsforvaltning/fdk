@@ -10,7 +10,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.0.5.RELEASE</version>
+        <version>2.0.8.RELEASE</version>
         <relativePath/>
     </parent>
 
@@ -89,7 +89,7 @@
         <dependency>
             <groupId>no.dcat</groupId>
             <artifactId>datastore</artifactId>
-            <version>1.0.3</version>
+            <version>1.1.0</version>
         </dependency>
         <dependency>
             <groupId>no.dcat</groupId>
@@ -103,16 +103,15 @@
             <version>1.2.0</version>
         </dependency>
 
-        <!-- 2.8 does not work at all. Same problem as 2.7 in 2.6, 2.5. Could't get 2.2.2 to work -->
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
-            <version>2.7.0</version>
+            <version>2.9.2</version>
         </dependency>
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger-ui</artifactId>
-            <version>2.7.0</version>
+            <version>2.9.2</version>
         </dependency>
 
         <dependency>
@@ -124,7 +123,7 @@
         <dependency>
             <groupId>no.dcat</groupId>
             <artifactId>webutils-spring</artifactId>
-            <version>1.0.3</version>
+            <version>1.2.0</version>
         </dependency>
 
         <dependency>

@@ -1,28 +1,33 @@
 import _ from 'lodash';
+import qs from 'qs';
 import { fetchActions } from '../fetchActions';
+import { apisSearchUrl } from '../../api/apis';
 
 export const APIS_REQUEST = 'APIS_REQUEST';
 export const APIS_SUCCESS = 'APIS_SUCCESS';
 export const APIS_FAILURE = 'APIS_FAILURE';
 
-function shouldFetch(metaState, query) {
+const generateQueryKey = query => qs.stringify(query, { skipNulls: true });
+
+function shouldFetch(metaState, queryKey) {
   const threshold = 60 * 1000; // seconds
   return (
     !metaState ||
     (!metaState.isFetching &&
       ((metaState.lastFetch || 0) < Date.now() - threshold ||
-        metaState.cachedQuery !== query))
+        metaState.queryKey !== queryKey))
   );
 }
 
 export function fetchApisIfNeededAction(query) {
+  const queryKey = generateQueryKey(query);
   return (dispatch, getState) =>
-    shouldFetch(_.get(getState(), ['apis', 'meta']), query) &&
+    shouldFetch(_.get(getState(), ['apis', 'meta']), queryKey) &&
     dispatch(
-      fetchActions(`/api/apis/search?${query}`, [
-        { type: APIS_REQUEST, meta: { query } },
-        { type: APIS_SUCCESS, meta: { query } },
-        APIS_FAILURE
+      fetchActions(apisSearchUrl(query), [
+        { type: APIS_REQUEST, meta: { queryKey } },
+        { type: APIS_SUCCESS, meta: { queryKey } },
+        { type: APIS_FAILURE, meta: { queryKey } }
       ])
     );
 }
@@ -37,7 +42,7 @@ export function apis(state = initialState, action) {
         meta: {
           isFetching: true,
           lastFetch: null,
-          cachedQuery: action.meta.query
+          queryKey: action.meta.queryKey
         }
       };
     case APIS_SUCCESS:
@@ -49,7 +54,7 @@ export function apis(state = initialState, action) {
         meta: {
           isFetching: false,
           lastFetch: Date.now(),
-          cachedQuery: action.meta.query
+          queryKey: action.meta.queryKey
         }
       };
     case APIS_FAILURE:
@@ -60,8 +65,9 @@ export function apis(state = initialState, action) {
         apiTotal: null,
         meta: {
           isFetching: false,
-          lastFetch: null,
-          cachedQuery: null
+          lastFetch: null, // retry on error
+          queryKey: action.meta.queryKey,
+          error: action.payload
         }
       };
     default:

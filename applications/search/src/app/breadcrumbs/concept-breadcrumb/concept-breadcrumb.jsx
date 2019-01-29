@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { resolve } from 'react-resolver';
-import { getConcept } from '../../../api/get-concept';
+import { getConcept } from '../../../api/concepts';
 import { getTranslateText } from '../../../lib/translateText';
 
 const memoizedGetApi = _.memoize(getConcept);

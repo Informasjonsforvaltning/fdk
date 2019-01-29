@@ -63,6 +63,11 @@ exports[`should render App correctly 1`] = `
       <Route
         component={[Function]}
         exact={true}
+        path="/informationmodels/:id"
+      />
+      <Route
+        component={[Function]}
+        exact={true}
         path="/concepts/compare"
       />
       <Route

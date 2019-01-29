@@ -1,35 +1,35 @@
 import _ from 'lodash';
-import { normalizeAggregations } from '../../lib/normalizeAggregations';
+import qs from 'qs';
+
 import { fetchActions } from '../fetchActions';
-import { addOrReplaceParamWithoutURL } from '../../lib/addOrReplaceUrlParam';
+import { conceptsSearchUrl } from '../../api/concepts';
 
 export const CONCEPTS_REQUEST = 'CONCEPTS_REQUEST';
 export const CONCEPTS_SUCCESS = 'CONCEPTS_SUCCESS';
 export const CONCEPTS_FAILURE = 'CONCEPTS_FAILURE';
 
-function shouldFetch(metaState, query) {
+const generateQueryKey = query => qs.stringify(query, { skipNulls: true });
+
+function shouldFetch(metaState, queryKey) {
   const threshold = 60 * 1000; // seconds
   return (
     !metaState ||
     (!metaState.isFetching &&
       ((metaState.lastFetch || 0) < Date.now() - threshold ||
-        metaState.cachedQuery !== query))
+        metaState.queryKey !== queryKey))
   );
 }
 
-export function fetchConceptsIfNeededAction(query, aggregations = true) {
-  const queryReplaced = addOrReplaceParamWithoutURL(
-    query,
-    'aggregations',
-    aggregations
-  );
+export function fetchConceptsIfNeededAction(query) {
+  const queryKey = generateQueryKey(query);
+
   return (dispatch, getState) =>
-    shouldFetch(_.get(getState(), ['concepts', 'meta']), queryReplaced) &&
+    shouldFetch(_.get(getState(), ['concepts', 'meta']), queryKey) &&
     dispatch(
-      fetchActions(`/api/concepts${queryReplaced}`, [
-        { type: CONCEPTS_REQUEST, meta: { query: queryReplaced } },
-        { type: CONCEPTS_SUCCESS, meta: { query: queryReplaced } },
-        CONCEPTS_FAILURE
+      fetchActions(conceptsSearchUrl(query), [
+        { type: CONCEPTS_REQUEST, meta: { queryKey } },
+        { type: CONCEPTS_SUCCESS, meta: { queryKey } },
+        { type: CONCEPTS_FAILURE, meta: { queryKey } }
       ])
     );
 }
@@ -44,22 +44,19 @@ export function concepts(state = initialState, action) {
         meta: {
           isFetching: true,
           lastFetch: null,
-          cachedQuery: action.meta.query
+          queryKey: action.meta.queryKey
         }
       };
     case CONCEPTS_SUCCESS:
       return {
         ...state,
         conceptItems: _.get(action.payload, ['_embedded', 'concepts']),
-        conceptAggregations: _.get(
-          normalizeAggregations(action.payload),
-          'aggregations'
-        ),
+        conceptAggregations: _.get(action.payload, 'aggregations'),
         conceptTotal: _.get(action.payload, ['page', 'totalElements']),
         meta: {
           isFetching: false,
           lastFetch: Date.now(),
-          cachedQuery: action.meta.query
+          queryKey: action.meta.queryKey
         }
       };
     case CONCEPTS_FAILURE:
@@ -70,8 +67,9 @@ export function concepts(state = initialState, action) {
         conceptTotal: null,
         meta: {
           isFetching: false,
-          lastFetch: null,
-          cachedQuery: null
+          lastFetch: null, // retry on error
+          queryKey: action.meta.queryKey,
+          error: action.payload
         }
       };
     default:

@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
+import sanitizeHtml from 'sanitize-html';
 
 import localization from '../../../lib/localization';
 import { ShowMore } from '../../../components/show-more/show-more';
@@ -44,18 +45,20 @@ export class DatasetDescription extends React.Component {
         />
 
         {descriptionFormatted && (
-          <ShowMore
-            showMoreButtonText={localization.showFullDescription}
-            contentHtml={descriptionFormatted}
-          />
+          <ShowMore showMoreButtonText={localization.showFullDescription}>
+            <span
+              dangerouslySetInnerHTML={{
+                __html: sanitizeHtml(descriptionFormatted)
+              }}
+            />
+          </ShowMore>
         )}
 
         {objective && (
-          <ShowMore
-            showMoreButtonText={localization.showFullObjective}
-            label={localization.objective}
-            contentHtml={objective}
-          />
+          <ShowMore showMoreButtonText={localization.showFullObjective}>
+            <strong>{localization.objective}: </strong>
+            {objective}
+          </ShowMore>
         )}
       </header>
     );

@@ -1,10 +1,9 @@
 import _ from 'lodash';
 import React from 'react';
-import qs from 'qs';
 import { Route, Switch } from 'react-router-dom';
 import cx from 'classnames';
 import { detect } from 'detect-browser';
-import { withState, withHandlers, compose } from 'recompose';
+import { compose, withHandlers, withState } from 'recompose';
 
 import { ResultsDataset } from './results-dataset/results-dataset.component';
 import { ResultsConcepts } from './results-concepts/results-concepts.component';
@@ -12,17 +11,15 @@ import { ResultsApi } from './results-api/results-api.component';
 import { ResultsInformationModel } from './results-informationmodel/results-informationmodel.component';
 import { SearchBoxWithState } from './search-box/search-box.component';
 import { ResultsTabs } from './results-tabs/results-tabs.component';
-import { removeValue, addValue } from '../../lib/stringUtils';
+import { addValue, removeValue } from '../../lib/stringUtils';
 
 import './search-page.scss';
-import { createNestedListOfPublishers } from '../../api/get-datasets';
-import { createNestedListOfConceptPublishers } from '../../api/get-concepts';
 import {
-  PATHNAME_DATASETS,
+  HITS_PER_PAGE,
   PATHNAME_APIS,
   PATHNAME_CONCEPTS,
-  PATHNAME_INFORMATIONMODELS,
-  HITS_PER_PAGE
+  PATHNAME_DATASETS,
+  PATHNAME_INFORMATIONMODELS
 } from '../../constants/constants';
 
 const ReactGA = require('react-ga');
@@ -34,7 +31,7 @@ export const SearchPage = props => {
     searchQuery,
     setSearchQuery,
     setQueryFilter,
-    setQueryFrom,
+    setQueryPage,
     fetchDatasetsIfNeeded,
     fetchApisIfNeeded,
     fetchConceptsIfNeeded,
@@ -76,15 +73,14 @@ export const SearchPage = props => {
     close
   } = props;
 
-  const stringifiedQuery = qs.stringify(searchQuery, { skipNulls: true });
+  fetchDatasetsIfNeeded(searchQuery);
+  fetchApisIfNeeded(searchQuery);
+  fetchConceptsIfNeeded(searchQuery);
+  fetchInformationModelsIfNeeded(searchQuery);
 
-  fetchDatasetsIfNeeded(stringifiedQuery);
-  fetchApisIfNeeded(stringifiedQuery);
-  fetchConceptsIfNeeded(`?${stringifiedQuery}`);
   fetchThemesIfNeeded();
   fetchPublishersIfNeeded();
   fetchReferenceDataIfNeeded();
-  fetchInformationModelsIfNeeded(stringifiedQuery);
 
   const handleClearFilters = () => {
     clearQuery(history);
@@ -92,7 +88,9 @@ export const SearchPage = props => {
 
   const isFilterNotEmpty = () =>
     _.some(
-      _.values(_.omit(props.searchQuery, ['q', 'sortfield', 'sortdirection']))
+      _.values(
+        _.omit(props.searchQuery, ['q', 'page', 'sortfield', 'sortdirection'])
+      )
     );
 
   const handleSearchSubmit = searchField => {
@@ -263,13 +261,8 @@ export const SearchPage = props => {
 
   const handlePageChange = data => {
     const { selected } = data;
-    const offset = Math.ceil(selected * HITS_PER_PAGE);
 
-    if (offset === 0) {
-      setQueryFrom(undefined, history);
-    } else {
-      setQueryFrom(offset, history);
-    }
+    setQueryPage(selected || undefined, history);
   };
 
   const topSectionClass = cx('top-section-search', 'mb-4', {
@@ -327,9 +320,7 @@ export const SearchPage = props => {
                 showClearFilterButton={isFilterNotEmpty()}
                 closeFilterModal={close}
                 hitsPerPage={HITS_PER_PAGE}
-                publisherArray={createNestedListOfPublishers(
-                  _.get(datasetAggregations, ['orgPath', 'buckets'], [])
-                )}
+                publisherCounts={_.get(datasetAggregations, 'orgPath.buckets')}
                 publishers={publisherItems}
                 referenceData={referenceData}
                 setDatasetSort={setDatasetSort}
@@ -365,9 +356,7 @@ export const SearchPage = props => {
                 showClearFilterButton={isFilterNotEmpty()}
                 closeFilterModal={close}
                 hitsPerPage={HITS_PER_PAGE}
-                publisherArray={createNestedListOfPublishers(
-                  _.get(apiAggregations, ['orgPath', 'buckets'], [])
-                )}
+                publisherCounts={_.get(apiAggregations, 'orgPath.buckets')}
                 publishers={publisherItems}
                 setApiSort={setApiSort}
                 apiSortValue={apiSortValue}
@@ -394,10 +383,8 @@ export const SearchPage = props => {
                 hitsPerPage={HITS_PER_PAGE}
                 showFilterModal={showFilterModal}
                 closeFilterModal={close}
-                showClearFilterButton={!!searchQuery.orgPath}
-                publisherArray={createNestedListOfConceptPublishers(
-                  _.get(conceptAggregations, ['orgPath', 'buckets'], [])
-                )}
+                showClearFilterButton={isFilterNotEmpty()}
+                publisherCounts={_.get(conceptAggregations, 'orgPath.buckets')}
                 publishers={publisherItems}
                 conceptsCompare={conceptsCompare}
                 addConcept={addConcept}
@@ -435,12 +422,9 @@ export const SearchPage = props => {
                 showClearFilterButton={isFilterNotEmpty()}
                 closeFilterModal={close}
                 hitsPerPage={HITS_PER_PAGE}
-                publisherArray={createNestedListOfPublishers(
-                  _.get(
-                    informationModelAggregations,
-                    ['orgPath', 'buckets'],
-                    []
-                  )
+                publisherCounts={_.get(
+                  informationModelAggregations,
+                  'orgPath.buckets'
                 )}
                 publishers={publisherItems}
                 setInformationModelSort={setInformationModelSort}

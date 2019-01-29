@@ -1,22 +1,21 @@
 package no.dcat.controller;
 
 import com.google.gson.Gson;
-import io.swagger.v3.oas.models.OpenAPI;
-import no.fdk.acat.bindings.ApiCatBindings;
 import no.dcat.model.ApiRegistration;
 import no.dcat.model.Catalog;
 import no.dcat.service.ApiCatService;
 import no.dcat.service.ApiRegistrationRepository;
 import no.dcat.service.CatalogRepository;
+import no.dcat.service.InformationmodelCatService;
 import no.dcat.shared.testcategories.UnitTest;
-import no.dcat.webutils.exceptions.BadRequestException;
-import no.dcat.webutils.exceptions.NotFoundException;
+import no.fdk.webutils.exceptions.BadRequestException;
+import no.fdk.webutils.exceptions.NotFoundException;
+import no.fdk.acat.common.model.apispecification.ApiSpecification;
 import org.apache.commons.io.IOUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
-import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.core.io.ClassPathResource;
@@ -28,7 +27,6 @@ import java.util.Optional;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
-import static org.mockito.ArgumentMatchers.anyObject;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
@@ -49,6 +47,9 @@ public class ApiRegistrationControllerTest {
     @Mock
     private ApiCatService apiCatMock;
 
+    @Mock
+    private InformationmodelCatService informationmodelCatMock;
+
     @Before
     public void setup() throws IOException {
         MockitoAnnotations.initMocks(this);
@@ -56,18 +57,18 @@ public class ApiRegistrationControllerTest {
         Catalog catalog = new Catalog();
         catalog.setId(catalogId);
         apiResource = new ClassPathResource("raw-enhet-api.json");
-        OpenAPI openApi =
-            new Gson().fromJson(IOUtils.toString(apiResource.getInputStream(), "UTF-8"), OpenAPI.class);
+        ApiSpecification apiSpecification =
+            new Gson().fromJson(IOUtils.toString(apiResource.getInputStream(), "UTF-8"), ApiSpecification.class);
 
         when(catalogRepository.findById(anyString())).thenReturn(Optional.of(catalog));
-        when(apiCatMock.convertSpecUrlToOpenApi(apiResource.getURL().toString())).thenReturn(openApi);
+        when(apiCatMock.convertSpecUrlToApiSpecification(apiResource.getURL().toString())).thenReturn(apiSpecification);
 
         ApiRegistration apiRegData = mock(ApiRegistration.class);
         when(apiRegData.getId()).thenReturn("id");
-        when(apiRegistrationRepository.save(anyObject())).thenReturn(apiRegData);
+        when(apiRegistrationRepository.save(any(ApiRegistration.class))).thenAnswer((invocation) -> invocation.getArguments()[0]);
 
         apiRegistrationController =
-            new ApiRegistrationController(apiRegistrationRepository, catalogRepository, apiCatMock);
+            new ApiRegistrationController(apiRegistrationRepository, catalogRepository, apiCatMock, informationmodelCatMock);
     }
 
     @Test
@@ -76,14 +77,10 @@ public class ApiRegistrationControllerTest {
         ApiRegistration apiRegData = new ApiRegistration();
         apiRegData.setApiSpecUrl(apiResource.getURL().toString());
 
-        ApiRegistration actual = apiRegistrationController.createApiRegistration(catalogId, apiRegData);
+        ApiRegistration saved = apiRegistrationController.createApiRegistration(catalogId, apiRegData);
 
-        ArgumentCaptor<ApiRegistration> apiCaptor = ArgumentCaptor.forClass(ApiRegistration.class);
-        verify(apiRegistrationRepository).save(apiCaptor.capture());
-
-        actual = apiCaptor.getValue();
         assertThat(
-            actual.getOpenApi().getInfo().getTitle(),
+            saved.getApiSpecification().getInfo().getTitle(),
             is("Åpne Data fra Enhetsregisteret - API Dokumentasjon"));
     }
 

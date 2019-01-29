@@ -38,7 +38,7 @@ export class ResultsDataset extends React.Component {
       onFilterSpatial,
       searchQuery,
       themesItems,
-      publisherArray,
+      publisherCounts,
       publishers
     } = this.props;
     return (
@@ -63,7 +63,7 @@ export class ResultsDataset extends React.Component {
             />
             <SearchPublishersTree
               title={localization.facet.organisation}
-              filter={publisherArray}
+              publisherCounts={publisherCounts}
               onFilterPublisherHierarchy={onFilterPublisherHierarchy}
               activeFilter={searchQuery.orgPath}
               publishers={publishers}
@@ -124,15 +124,14 @@ export class ResultsDataset extends React.Component {
       searchQuery,
       themesItems,
       hitsPerPage,
-      publisherArray,
+      publisherCounts,
       publishers,
       onSortByScore,
       onSortByLastModified,
       setDatasetSort,
       datasetSortValue
     } = this.props;
-    const page =
-      searchQuery && searchQuery.from ? searchQuery.from / hitsPerPage : 0;
+    const page = (searchQuery && searchQuery.page) || 0;
     const pageCount = Math.ceil((datasetTotal || 1) / hitsPerPage);
 
     const clearButtonClass = cx(
@@ -222,7 +221,7 @@ export class ResultsDataset extends React.Component {
                   />
                   <SearchPublishersTree
                     title={localization.facet.organisation}
-                    filter={publisherArray}
+                    publisherCounts={publisherCounts}
                     onFilterPublisherHierarchy={onFilterPublisherHierarchy}
                     activeFilter={searchQuery.orgPath}
                     publishers={publishers}
@@ -247,28 +246,26 @@ export class ResultsDataset extends React.Component {
 
           <section className="col-12 col-lg-8">{this._renderHits()}</section>
 
-          {datasetTotal > 10 && (
-            <section className="col-12 col-lg-8 offset-lg-4 d-flex justify-content-center">
-              <span className="uu-invisible" aria-hidden="false">
-                Sidepaginering.
-              </span>
-              <ReactPaginate
-                pageCount={pageCount}
-                pageRangeDisplayed={2}
-                marginPagesDisplayed={1}
-                previousLabel={localization.page.prev}
-                nextLabel={localization.page.next}
-                breakLabel={<span>...</span>}
-                breakClassName="break-me"
-                containerClassName="pagination"
-                onPageChange={onPageChange}
-                subContainerClassName="pages pagination"
-                activeClassName="active"
-                initialPage={page}
-                disableInitialCallback
-              />
-            </section>
-          )}
+          <section className="col-12 col-lg-8 offset-lg-4 d-flex justify-content-center">
+            <span className="uu-invisible" aria-hidden="false">
+              Sidepaginering.
+            </span>
+            <ReactPaginate
+              pageCount={pageCount}
+              pageRangeDisplayed={2}
+              marginPagesDisplayed={1}
+              previousLabel={localization.page.prev}
+              nextLabel={localization.page.next}
+              breakLabel={<span>...</span>}
+              breakClassName="break-me"
+              containerClassName="pagination"
+              onPageChange={onPageChange}
+              subContainerClassName="pages pagination"
+              activeClassName="active"
+              initialPage={page}
+              disableInitialCallback
+            />
+          </section>
         </section>
       </main>
     );
@@ -288,7 +285,7 @@ ResultsDataset.defaultProps = {
   onFilterSpatial: null,
   searchQuery: {},
   themesItems: null,
-  publisherArray: null,
+  publisherCounts: null,
   publishers: null,
   referenceData: null,
   onClearFilters: null,
@@ -311,7 +308,7 @@ ResultsDataset.propTypes = {
   onFilterSpatial: PropTypes.func,
   searchQuery: PropTypes.object,
   themesItems: PropTypes.object,
-  publisherArray: PropTypes.array,
+  publisherCounts: PropTypes.array,
   publishers: PropTypes.object,
   referenceData: PropTypes.object,
   onClearFilters: PropTypes.func,

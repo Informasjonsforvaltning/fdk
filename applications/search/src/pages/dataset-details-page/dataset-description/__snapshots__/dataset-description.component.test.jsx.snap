@@ -166,12 +166,17 @@ exports[`should render DatasetDescription correctly 1`] = `
     title="Markagrensen"
     titleLink={null}
   />
-  <ShowMore
-    contentHtml="Datasettet avgrenser område for virkeområdet til lov 6. juni 2009 nr. 35 om naturområder i Oslo og nærliggende kommuner (markaloven) som trådte i kraft 1. september 2009. Markalovens virkeområde er fastsatt i forskrift 4. september 2015 nr. 1032 om justering av markagrensen fastlegger markalovens geografiske virkeområde med tilhørende kart."
-    label=""
-    showLessButtonText="Show less"
+  <withStateHandlers(ShowMorePure)
     showMoreButtonText="Show the full description"
-  />
+  >
+    <span
+      dangerouslySetInnerHTML={
+        Object {
+          "__html": "Datasettet avgrenser område for virkeområdet til lov 6. juni 2009 nr. 35 om naturområder i Oslo og nærliggende kommuner (markaloven) som trådte i kraft 1. september 2009. Markalovens virkeområde er fastsatt i forskrift 4. september 2015 nr. 1032 om justering av markagrensen fastlegger markalovens geografiske virkeområde med tilhørende kart.",
+        }
+      }
+    />
+  </withStateHandlers(ShowMorePure)>
 </header>
 `;
 

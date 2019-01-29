@@ -2,6 +2,7 @@
   "apiLabel": "API",
   "description": "Skildring",
   "showFullDescription": "Vis heile skildringa",
+  "showMore": "Vis mer",
   "showLess": "Vis mindre",
   "objective": "Formål",
   "showFullObjective": "Vis heile formålet",
@@ -23,6 +24,8 @@
   "unknown": "Ukjend",
   "deprecated": "under avvikling",
   "responsible": "Ansvarleg",
+  "name": "Namn",
+  "type": "Type",
   "app": {
     "menu": "Meny"
   },
@@ -316,5 +319,13 @@
     "hiddenLabel": "Frårådd term",
     "definition": "Definisjon",
     "identifier": "Identifikator"
+  },
+  "infoMod": {
+    "infoModHeader": "Informasjonsmodellar",
+    "tabs": {
+      "structure": "Struktur",
+      "json": "JSON Schema"
+    },
+    "relatedAPIHeader": "Høyrer til API"
   }
 }

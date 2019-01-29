@@ -97,10 +97,8 @@ exports[`should render ResultsInformationModel correctly with hits 1`] = `
             >
               <SearchPublishersTree
                 activeFilter={null}
-                filter={Array []}
                 onFilterPublisherHierarchy={[MockFunction]}
-                onSearch={null}
-                orgPath={null}
+                publisherCounts={null}
                 publishers={Object {}}
                 title="Provider"
               />
@@ -121,10 +119,8 @@ exports[`should render ResultsInformationModel correctly with hits 1`] = `
         </Modal>
         <SearchPublishersTree
           activeFilter={null}
-          filter={Array []}
           onFilterPublisherHierarchy={[MockFunction]}
-          onSearch={null}
-          orgPath={null}
+          publisherCounts={null}
           publishers={Object {}}
           title="Provider"
         />
@@ -322,6 +318,38 @@ exports[`should render ResultsInformationModel correctly with hits 1`] = `
         key="eadda99c-781e-4900-8f54-8dd298168382"
         publishers={Object {}}
       />
+      <div
+        className="col-12 d-flex justify-content-center"
+      >
+        <span
+          aria-hidden="false"
+          className="uu-invisible"
+        >
+          Sidepaginering.
+        </span>
+        <PaginationBoxView
+          activeClassName="active"
+          breakClassName="break-me"
+          breakLabel={
+            <span>
+              ...
+            </span>
+          }
+          containerClassName="pagination"
+          disableInitialCallback={true}
+          disabledClassName="disabled"
+          initialPage={0}
+          marginPagesDisplayed={1}
+          nextClassName="next"
+          nextLabel="Neste side"
+          onPageChange={[MockFunction]}
+          pageCount={1}
+          pageRangeDisplayed={2}
+          previousClassName="previous"
+          previousLabel="Forrige side"
+          subContainerClassName="pages pagination"
+        />
+      </div>
     </div>
   </div>
 </main>
@@ -387,7 +415,40 @@ exports[`should render ResultsInformationModel correctly with minimum of props a
     <div
       className="col-12 col-lg-8"
       id="informationModels"
-    />
+    >
+      <div
+        className="col-12 d-flex justify-content-center"
+      >
+        <span
+          aria-hidden="false"
+          className="uu-invisible"
+        >
+          Sidepaginering.
+        </span>
+        <PaginationBoxView
+          activeClassName="active"
+          breakClassName="break-me"
+          breakLabel={
+            <span>
+              ...
+            </span>
+          }
+          containerClassName="pagination"
+          disableInitialCallback={true}
+          disabledClassName="disabled"
+          initialPage={0}
+          marginPagesDisplayed={1}
+          nextClassName="next"
+          nextLabel="Neste side"
+          onPageChange={null}
+          pageCount={Infinity}
+          pageRangeDisplayed={2}
+          previousClassName="previous"
+          previousLabel="Forrige side"
+          subContainerClassName="pages pagination"
+        />
+      </div>
+    </div>
   </div>
 </main>
 `;

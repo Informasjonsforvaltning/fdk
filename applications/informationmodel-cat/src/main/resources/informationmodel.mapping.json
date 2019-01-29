@@ -1,0 +1,33 @@
+{
+  "informationmodel": {
+    "properties": {
+      "harvestSourceUri": {
+        "type": "keyword"
+      },
+      "identifier": {
+        "type" : "keyword"
+      },
+      "publisher": {
+        "properties": {
+          "name": {
+            "type": "text",
+            "fielddata": true,
+            "analyzer": "norwegian"
+          },
+          "prefLabel": {
+            "properties": {
+              "no": {
+                "type": "text"
+              }
+            }
+          },
+          "orgPath": {
+            "type": "text",
+            "fielddata": true,
+            "analyzer": "path-analyzer"
+          }
+        }
+      }
+    }
+  }
+}

@@ -15,7 +15,7 @@ const renderFilterModal = ({
   closeFilterModal,
   apiAggregations,
   searchQuery,
-  publisherArray,
+  publisherCounts,
   publishers,
   onFilterFormat,
   onFilterPublisherHierarchy
@@ -26,7 +26,7 @@ const renderFilterModal = ({
       <div className="search-filters">
         <SearchPublishersTree
           title={localization.facet.provider}
-          filter={publisherArray}
+          publisherCounts={publisherCounts}
           onFilterPublisherHierarchy={onFilterPublisherHierarchy}
           activeFilter={searchQuery.orgPath}
           publishers={publishers}
@@ -87,7 +87,7 @@ export class ResultsApi extends React.Component {
       onFilterPublisherHierarchy,
       onFilterFormat,
       searchQuery,
-      publisherArray,
+      publisherCounts,
       publishers,
       onClearFilters,
       onPageChange,
@@ -99,8 +99,7 @@ export class ResultsApi extends React.Component {
       setApiSort
     } = this.props;
 
-    const page =
-      searchQuery && searchQuery.from ? searchQuery.from / hitsPerPage : 0;
+    const page = (searchQuery && searchQuery.page) || 0;
     const pageCount = Math.ceil((apiTotal || 1) / hitsPerPage);
 
     const clearButtonClass = cx(
@@ -177,14 +176,14 @@ export class ResultsApi extends React.Component {
                   apiAggregations,
                   onFilterAccessRights,
                   searchQuery,
-                  publisherArray,
+                  publisherCounts,
                   publishers,
                   onFilterFormat,
                   onFilterPublisherHierarchy
                 })}
                 <SearchPublishersTree
                   title={localization.facet.provider}
-                  filter={publisherArray}
+                  publisherCounts={publisherCounts}
                   onFilterPublisherHierarchy={onFilterPublisherHierarchy}
                   activeFilter={searchQuery.orgPath}
                   publishers={publishers}
@@ -202,28 +201,26 @@ export class ResultsApi extends React.Component {
           <div id="apis" className="col-12 col-lg-8">
             {renderHits(apiItems, publishers)}
 
-            {_.get(apiItems, 'total', 0) > 10 && (
-              <div className="col-12 d-flex justify-content-center">
-                <span className="uu-invisible" aria-hidden="false">
-                  Sidepaginering.
-                </span>
-                <ReactPaginate
-                  pageCount={pageCount}
-                  pageRangeDisplayed={2}
-                  marginPagesDisplayed={1}
-                  previousLabel={localization.page.prev}
-                  nextLabel={localization.page.next}
-                  breakLabel={<span>...</span>}
-                  breakClassName="break-me"
-                  containerClassName="pagination"
-                  onPageChange={onPageChange}
-                  subContainerClassName="pages pagination"
-                  activeClassName="active"
-                  initialPage={page}
-                  disableInitialCallback
-                />
-              </div>
-            )}
+            <div className="col-12 d-flex justify-content-center">
+              <span className="uu-invisible" aria-hidden="false">
+                Sidepaginering.
+              </span>
+              <ReactPaginate
+                pageCount={pageCount}
+                pageRangeDisplayed={2}
+                marginPagesDisplayed={1}
+                previousLabel={localization.page.prev}
+                nextLabel={localization.page.next}
+                breakLabel={<span>...</span>}
+                breakClassName="break-me"
+                containerClassName="pagination"
+                onPageChange={onPageChange}
+                subContainerClassName="pages pagination"
+                activeClassName="active"
+                initialPage={page}
+                disableInitialCallback
+              />
+            </div>
           </div>
         </div>
       </main>
@@ -241,7 +238,7 @@ ResultsApi.defaultProps = {
   onFilterPublisherHierarchy: null,
   onFilterFormat: null,
   searchQuery: {},
-  publisherArray: null,
+  publisherCounts: null,
   publishers: null,
   onClearFilters: null,
   onPageChange: null,
@@ -259,7 +256,7 @@ ResultsApi.propTypes = {
   onFilterPublisherHierarchy: PropTypes.func,
   onFilterFormat: PropTypes.func,
   searchQuery: PropTypes.object,
-  publisherArray: PropTypes.array,
+  publisherCounts: PropTypes.array,
   publishers: PropTypes.object,
   onClearFilters: PropTypes.func,
   onSortByLastModified: PropTypes.func.isRequired,

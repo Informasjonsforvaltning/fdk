@@ -1,0 +1,84 @@
+{
+  "id": "77bb65c6-38f7-4eab-80c7-855d45aaa996",
+  "harvestSourceUri": "http://nginx-search:8080/api/registration/apis/bf0f51b5-8665-4a9e-bcae-3d42dbdfce65",
+  "apiSpecUrl": "https://raw.githubusercontent.com/brreg/openAPI/master/specs/api-cat.json",
+  "harvest": {
+    "firstHarvested": "2018-12-19T09:52:51.883Z",
+    "lastHarvested": "2019-01-07T16:54:19.940Z",
+    "lastChanged": "2019-01-07T16:54:19.940Z",
+    "changed": [
+      "2018-12-21T09:27:29.577Z",
+      "2019-01-07T16:53:37.588Z",
+      "2019-01-07T16:54:19.940Z"
+    ]
+  },
+  "title": "National API Directory Search API",
+  "titleFormatted": "National API Directory Search API",
+  "description": "Provides a basic search api against the National API Directory of Norway",
+  "descriptionFormatted": "Provides a basic search api against the National API Directory of Norway",
+  "nationalComponent": false,
+  "publisher": {
+    "uri": "http://data.brreg.no/enhetsregisteret/enhet/974760673",
+    "id": "974760673",
+    "name": "REGISTERENHETEN I BRØNNØYSUND",
+    "orgPath": "/STAT/912660680/974760673",
+    "prefLabel": {
+      "no": "Brønnøysundregistrene"
+    }
+  },
+  "contactPoint": [
+    {
+      "uri": "https://fellesdatakatalog.brreg.no",
+      "email": "fellesdatakatalog@brreg.no",
+      "organizationName": "Brønnøysundregistrene"
+    }
+  ],
+  "formats": [
+    "application/json"
+  ],
+  "datasetReferences": [
+    {
+      "id": "ea9e2aa7-880c-4387-888e-77446acab279",
+      "uri": "http://brreg.no/catalogs/974760673/datasets/ed6510da-01cf-4905-82fb-72e3cda08789",
+      "title": {
+        "nb": "Felles datakatalog",
+        "en": "National data catalogue"
+      }
+    }
+  ],
+  "apiSpecification": {
+    "info": {
+      "title": "National API Directory Search API",
+      "description": "Provides a basic search api against the National API Directory of Norway",
+      "termsOfService": "https://fellesdatakatalog.brreg.no/about",
+      "contact": {
+        "name": "Brønnøysundregistrene",
+        "url": "https://fellesdatakatalog.brreg.no",
+        "email": "fellesdatakatalog@brreg.no"
+      },
+      "license": {
+        "name": "License of API",
+        "url": "http://data.norge.no/nlod/no/2.0"
+      },
+      "version": "1.0"
+    },
+    "paths": {
+      "/search": {
+        "get": {
+          "summary": "Queries the api catalog for api specifications",
+          "description": "So far only simple queries is supported"
+        }
+      },
+      "/{id}": {
+        "get": {
+          "summary": "Get a specific api"
+        }
+      }
+    }
+  },
+  "apiSpec": "{\n  \"openapi\": \"3.0.1\",\n  \"info\": {\n    \"description\": \"Provides a basic search api against the National API Directory of Norway\",\n    \"version\": \"1.0\",\n    \"title\": \"National API Directory Search API\",\n    \"termsOfService\": \"https://fellesdatakatalog.brreg.no/about\",\n    \"contact\": {\n      \"name\": \"Brønnøysundregistrene\",\n      \"url\": \"https://fellesdatakatalog.brreg.no\",\n      \"email\": \"fellesdatakatalog@brreg.no\"\n    },\n    \"license\": {\n      \"name\": \"License of API\",\n      \"url\": \"http://data.norge.no/nlod/no/2.0\"\n    }\n  },\n  \"servers\": [\n    {\n      \"url\": \"https://fellesdatakatalog.brreg.no/api-cat/apis\",\n      \"description\": \"The production API server\"\n    }\n  ],\n  \"tags\": [\n    {\n      \"name\": \"get-controller\",\n      \"description\": \"Get Controller\"\n    },\n    {\n      \"name\": \"search-controller\",\n      \"description\": \"Search Controller\"\n    }\n  ],\n  \"paths\": {\n    \"/search\": {\n      \"get\": {\n        \"tags\": [\n          \"search-controller\"\n        ],\n        \"summary\": \"Queries the api catalog for api specifications\",\n        \"description\": \"So far only simple queries is supported\",\n        \"operationId\": \"searchUsingGET\",\n        \"parameters\": [\n          {\n            \"name\": \"q\",\n            \"in\": \"query\",\n            \"description\": \"the query string\",\n            \"required\": false,\n            \"schema\": {\n              \"type\": \"string\"\n            }\n          }\n        ],\n        \"responses\": {\n          \"200\": {\n            \"description\": \"OK\",\n            \"content\": {\n              \"application/json\": {\n                \"schema\": {\n                  \"$ref\": \"#/components/schemas/QueryResponse\"\n                }\n              }\n            }\n          }\n        }\n      }\n    },\n    \"/{id}\": {\n      \"get\": {\n        \"tags\": [\n          \"get-controller\"\n        ],\n        \"summary\": \"Get a specific api\",\n        \"operationId\": \"getApiDocumentUsingGET\",\n        \"parameters\": [\n          {\n            \"name\": \"id\",\n            \"in\": \"path\",\n            \"description\": \"id\",\n            \"required\": true,\n            \"schema\": {\n              \"type\": \"string\"\n            }\n          }\n        ],\n        \"responses\": {\n          \"200\": {\n            \"description\": \"OK\",\n            \"content\": {\n              \"application/json\": {\n                \"schema\": {\n                  \"$ref\": \"#/components/schemas/ApiDocument\"\n                }\n              }\n            }\n          },\n          \"401\": {\n            \"description\": \"Unauthorized\"\n          },\n          \"403\": {\n            \"description\": \"Forbidden\"\n          },\n          \"404\": {\n            \"description\": \"Not Found\"\n          }\n        }\n      }\n    }\n  },\n  \"components\": {\n    \"schemas\": {\n      \"QueryResponse\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"aggregations\": {\n            \"$ref\": \"#/components/schemas/Aggregation\"\n          },\n          \"hits\": {\n            \"type\": \"array\",\n            \"items\": {\n              \"$ref\": \"#/components/schemas/ApiDocument\"\n            }\n          },\n          \"total\": {\n            \"type\": \"integer\",\n            \"format\": \"int64\"\n          }\n        }\n      },\n      \"Aggregation\": {\n        \"type\": \"object\"\n      },\n      \"ApiDocument\": {\n        \"type\": \"object\"\n      }\n    }\n  }\n}",
+  "cost": "Gratis",
+  "usageLimitation": "",
+  "performance": "",
+  "availability": ""
+}
