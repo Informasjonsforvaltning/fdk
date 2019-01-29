@@ -20,42 +20,21 @@ exports[`should render CustomHitsStats correctly when no hits 1`] = `
       , 
       0 hit(s) among APIs
     </span>
-    <FeatureToggle
-      featureName="INFORMATIONMODEL"
-      showOnlyWhenDisabled={true}
-    >
-      <span>
-         
-        and
-         
-      </span>
-      <span>
-        0 hit(s) among concepts
-      </span>
-      <span>
-        Sorry, no hits
-      </span>
-    </FeatureToggle>
-    <FeatureToggle
-      featureName="INFORMATIONMODEL"
-      showOnlyWhenDisabled={false}
-    >
-      <span>
-        , 
-        0 hit(s) among concepts
-      </span>
-      <span>
-         
-        and
-         
-      </span>
-      <span>
-        0 hit(s) among information models
-      </span>
-      <span>
-        Sorry, no hits
-      </span>
-    </FeatureToggle>
+    <span>
+      , 
+      0 hit(s) among concepts
+    </span>
+    <span>
+       
+      and
+       
+    </span>
+    <span>
+      0 hit(s) among information models
+    </span>
+    <span>
+      Sorry, no hits
+    </span>
   </div>
 </div>
 `;
@@ -77,38 +56,20 @@ exports[`should render CustomHitsStats correctly when no initial search 1`] = `
          
         dataset descriptions
       </span>
-      <FeatureToggle
-        featureName="INFORMATIONMODEL"
-        showOnlyWhenDisabled={true}
-      >
-        <span>
-           
-          and
-           
-          100
-           
-          concepts
-        </span>
-      </FeatureToggle>
-      <FeatureToggle
-        featureName="INFORMATIONMODEL"
-        showOnlyWhenDisabled={false}
-      >
-        <span>
-          , 
-          100
-           
-          concepts
-        </span>
-        <span>
-           
-          and
-           
-          0
-           
-          information models
-        </span>
-      </FeatureToggle>
+      <span>
+        , 
+        100
+         
+        concepts
+      </span>
+      <span>
+         
+        and
+         
+        0
+         
+        information models
+      </span>
     </div>
   </div>
 </div>
@@ -134,36 +95,18 @@ exports[`should render CustomHitsStats correctly when search performed  1`] = `
       , 
       0 hit(s) among APIs
     </span>
-    <FeatureToggle
-      featureName="INFORMATIONMODEL"
-      showOnlyWhenDisabled={true}
-    >
-      <span>
-         
-        and
-         
-      </span>
-      <span>
-        100 hit(s) among concepts
-      </span>
-    </FeatureToggle>
-    <FeatureToggle
-      featureName="INFORMATIONMODEL"
-      showOnlyWhenDisabled={false}
-    >
-      <span>
-        , 
-        100 hit(s) among concepts
-      </span>
-      <span>
-         
-        and
-         
-      </span>
-      <span>
-        0 hit(s) among information models
-      </span>
-    </FeatureToggle>
+    <span>
+      , 
+      100 hit(s) among concepts
+    </span>
+    <span>
+       
+      and
+       
+    </span>
+    <span>
+      0 hit(s) among information models
+    </span>
   </div>
 </div>
 `;

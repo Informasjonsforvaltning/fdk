@@ -1,7 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FeatureToggle } from 'react-feature-toggles';
-import { FEATURES } from '../../../../app/features';
 import localization from '../../../../lib/localization';
 
 export const CustomHitsStats = props => {
@@ -29,31 +27,16 @@ export const CustomHitsStats = props => {
           <span>{localization.hitstats.search}&nbsp;</span>
           <span>{datasetTextCount}</span>
           <span>,&nbsp;{apisTextCount}</span>
+          <span>,&nbsp;{termsTextCount}</span>
+          <span>&nbsp;{localization.hitstats.and}&nbsp;</span>
+          <span>{informationModelsTextCount}</span>
 
-          <FeatureToggle
-            featureName={FEATURES.INFORMATIONMODEL}
-            showOnlyWhenDisabled
-          >
-            <span>&nbsp;{localization.hitstats.and}&nbsp;</span>
-            <span>{termsTextCount}</span>
-
-            {countDatasets === 0 &&
-              countApis === 0 &&
-              countTerms === 0 && <span>{localization.hitstats.noHits}</span>}
-          </FeatureToggle>
-
-          <FeatureToggle featureName={FEATURES.INFORMATIONMODEL}>
-            <span>,&nbsp;{termsTextCount}</span>
-            <span>&nbsp;{localization.hitstats.and}&nbsp;</span>
-            <span>{informationModelsTextCount}</span>
-
-            {countDatasets === 0 &&
-              countApis === 0 &&
-              countTerms === 0 &&
-              countInformationModels === 0 && (
-                <span>{localization.hitstats.noHits}</span>
-              )}
-          </FeatureToggle>
+          {countDatasets === 0 &&
+            countApis === 0 &&
+            countTerms === 0 &&
+            countInformationModels === 0 && (
+              <span>{localization.hitstats.noHits}</span>
+            )}
         </div>
       </div>
     );
@@ -71,25 +54,13 @@ export const CustomHitsStats = props => {
               , {countApis} {localization.hitstats.apis}
             </span>
           )}
-          <FeatureToggle
-            featureName={FEATURES.INFORMATIONMODEL}
-            showOnlyWhenDisabled
-          >
-            <span>
-              &nbsp;{localization.hitstats.and} {countTerms}{' '}
-              {localization.hitstats.concepts}
-            </span>
-          </FeatureToggle>
-
-          <FeatureToggle featureName={FEATURES.INFORMATIONMODEL}>
-            <span>
-              , {countTerms} {localization.hitstats.concepts}
-            </span>
-            <span>
-              &nbsp;{localization.hitstats.and} {countInformationModels}{' '}
-              {localization.hitstats.informationModels}
-            </span>
-          </FeatureToggle>
+          <span>
+            , {countTerms} {localization.hitstats.concepts}
+          </span>
+          <span>
+            &nbsp;{localization.hitstats.and} {countInformationModels}{' '}
+            {localization.hitstats.informationModels}
+          </span>
         </div>
       </div>
     </div>
