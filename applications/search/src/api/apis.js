@@ -14,3 +14,9 @@ export const getApi = id =>
     .get(`${apisUrlBase}/${id}`)
     .then(response => response.data)
     .catch(e => console.error(JSON.stringify(e))); // eslint-disable-line no-console;
+
+export const getApiByHarvestSourceUri = harvestSourceUri =>
+  axios
+    .get(`${apisUrlBase}?harvestSourceUri=${harvestSourceUri}`)
+    .then(response => response.data)
+    .catch(e => console.log(JSON.stringify(e))); // eslint-disable-line no-console
