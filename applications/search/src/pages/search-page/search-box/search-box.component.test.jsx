@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { SearchBox } from './search-box.component';
+import { SearchBoxPure } from './search-box.component';
 
 let onSearchSubmit;
 let setInputText;
@@ -24,8 +24,8 @@ beforeEach(() => {
   };
 });
 
-test('should render SearchBox correctly', () => {
-  const wrapper = shallow(<SearchBox {...defaultProps} />);
+test('should render SearchBoxPure correctly', () => {
+  const wrapper = shallow(<SearchBoxPure {...defaultProps} />);
   expect(wrapper).toMatchSnapshot();
 });
 
@@ -34,7 +34,7 @@ test('should call onSearchSubmit prop for valid form submission', () => {
     target: { value: 'test value' },
     preventDefault
   };
-  const wrapper = shallow(<SearchBox {...defaultProps} />);
+  const wrapper = shallow(<SearchBoxPure {...defaultProps} />);
   wrapper.find('form').prop('onSubmit')(mockedEvent);
   expect(preventDefault).toHaveBeenCalled();
   expect(onSearchSubmit).toHaveBeenLastCalledWith('queryToSubmit');
@@ -45,7 +45,7 @@ test('should call setInputText on change', () => {
     target: { value: 'test value' },
     preventDefault
   };
-  const wrapper = shallow(<SearchBox {...defaultProps} />);
+  const wrapper = shallow(<SearchBoxPure {...defaultProps} />);
   wrapper.find('input').prop('onChange')(mockedEvent);
   expect(setInputText).toHaveBeenLastCalledWith(mockedEvent);
 });
@@ -55,13 +55,13 @@ test('should call onSearchSubmit prop for valid form submission', () => {
     target: { value: 'test value' },
     preventDefault
   };
-  const wrapper = shallow(<SearchBox {...defaultProps} />);
+  const wrapper = shallow(<SearchBoxPure {...defaultProps} />);
   wrapper.find('button.fdk-button-search').prop('onClick')(mockedEvent);
   expect(onSearchSubmit).toHaveBeenLastCalledWith('queryToSubmit');
 });
 
 test('should call open when filter clicked', () => {
-  const wrapper = shallow(<SearchBox {...defaultProps} />);
+  const wrapper = shallow(<SearchBoxPure {...defaultProps} />);
   wrapper.find('button.fdk-button-filter').prop('onClick')();
   expect(open).toHaveBeenCalled();
 });

@@ -8,7 +8,7 @@ import localization from '../../../lib/localization';
 import { CustomHitsStats } from './custom-hits-stats/custom-hits-stats.component';
 import './search-box.scss';
 
-export const SearchBox = props => {
+export const SearchBoxPure = props => {
   const {
     onSearchSubmit,
     countDatasets,
@@ -90,7 +90,7 @@ export const SearchBox = props => {
   );
 };
 
-SearchBox.defaultProps = {
+SearchBoxPure.defaultProps = {
   searchText: null,
   countDatasets: null,
   countTerms: null,
@@ -101,7 +101,7 @@ SearchBox.defaultProps = {
   touched: false
 };
 
-SearchBox.propTypes = {
+SearchBoxPure.propTypes = {
   onSearchSubmit: PropTypes.func.isRequired,
   searchText: PropTypes.string,
   countDatasets: PropTypes.number,
@@ -126,4 +126,5 @@ const enhance = compose(
   })
 );
 
-export const SearchBoxWithState = enhance(SearchBox);
+export const SearchBoxWithState = enhance(SearchBoxPure);
+export const SearchBox = SearchBoxWithState;
