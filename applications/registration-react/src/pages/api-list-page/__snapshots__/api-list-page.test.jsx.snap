@@ -5,7 +5,12 @@ exports[`should render APIListPageComponent correctly 1`] = `
   className="container"
 >
   <div
-    className="row mb-5"
+    className="row"
+    style={
+      Object {
+        "marginBottom": "6rem",
+      }
+    }
   >
     <div
       className="col-12"
@@ -14,7 +19,7 @@ exports[`should render APIListPageComponent correctly 1`] = `
         API-katalog
       </h1>
       <div
-        className="fdk-reg-datasets-publisher mt-2 mb-4"
+        className="fdk-reg-datasets-publisher"
       >
         RAMSUND OG ROGNAN REVISJON
       </div>
