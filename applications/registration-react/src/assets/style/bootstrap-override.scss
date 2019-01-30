@@ -19,18 +19,11 @@ $input-focus-box-shadow: 0 0 0 0.4rem rgba(45, 55, 65, 0.25);
 
 $form-check-input-gutter: 2rem;
 
+$alert-bg-level:-10;
+$alert-border-level:1;
+$alert-color-level:5;
+
 @import '../../../node_modules/bootstrap/scss/bootstrap';
-
-
-.alert-success {
-  background-color: $color-green-3;
-  color: $color-green-1;
-}
-
-.alert-warning {
-  background-color: $color-yellow2;
-  color: $color1;
-}
 
 /*****************************************/
 /*********** End Bootstrap overrides **********/
