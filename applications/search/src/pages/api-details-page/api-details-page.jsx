@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import DocumentMeta from 'react-document-meta';
+import Disqus from 'disqus-react';
 import sanitizeHtml from 'sanitize-html';
 import showdown from 'showdown';
 
@@ -15,6 +16,7 @@ import { StickyMenu } from '../../components/sticky-menu/sticky-menu.component';
 import { ListRegular } from '../../components/list-regular/list-regular.component';
 import { TwoColRow } from '../../components/list-regular/twoColRow/twoColRow';
 import { DatasetReference } from './dataset-reference/dataset-reference.component';
+import { config } from '../../config';
 
 const showDownConverter = new showdown.Converter();
 
@@ -294,6 +296,11 @@ export const ApiDetailsPage = props => {
     description: getTranslateText(apiItem.description)
   };
 
+  const disqusConfig = {
+    url: window.location.href,
+    identifier: apiItem.id,
+    title: meta.title
+  };
   return (
     <main id="content" className="container">
       <article>
@@ -342,7 +349,12 @@ export const ApiDetailsPage = props => {
             {renderDatasetReferences(referencedDatasets)}
 
             {renderContactPoints(apiItem.contactPoint)}
-
+            {!config.disqusShortname &&
+              'Environment variable for Disqus not set!'}
+            <Disqus.DiscussionEmbed
+              shortname={config.disqusShortname}
+              config={disqusConfig}
+            />
             <div style={{ height: '75vh' }} />
           </section>
         </div>
