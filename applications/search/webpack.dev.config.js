@@ -62,7 +62,6 @@ module.exports = {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV),
         REDUX_LOG: JSON.stringify(process.env.REDUX_LOG),
         DISQUS_SHORTNAME: JSON.stringify(process.env.DISQUS_SHORTNAME)
-
       }
     }),
     new webpack.HotModuleReplacementPlugin(),

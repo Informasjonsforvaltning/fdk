@@ -77,7 +77,7 @@ module.exports = {
   plugins: [
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('production'),
-      'process.env.REDUX_LOG' : JSON.stringify(process.env.REDUX_LOG)
+      'process.env.REDUX_LOG': JSON.stringify(process.env.REDUX_LOG)
     }),
     new webpack.EnvironmentPlugin(['DISQUS_SHORTNAME']),
     new webpack.LoaderOptionsPlugin({
