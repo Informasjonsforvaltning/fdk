@@ -9,7 +9,7 @@ import { ResultsDataset } from './results-dataset/results-dataset.component';
 import { ResultsConcepts } from './results-concepts/results-concepts.component';
 import { ResultsApi } from './results-api/results-api.component';
 import { ResultsInformationModel } from './results-informationmodel/results-informationmodel.component';
-import { SearchBoxWithState } from './search-box/search-box.component';
+import { SearchBox } from './search-box/search-box.component';
 import { ResultsTabs } from './results-tabs/results-tabs.component';
 import { addValue, removeValue } from '../../lib/stringUtils';
 
@@ -273,7 +273,7 @@ export const SearchPage = props => {
     <div>
       <section className={topSectionClass}>
         <div className="container">
-          <SearchBoxWithState
+          <SearchBox
             onSearchSubmit={handleSearchSubmit}
             searchText={searchQuery.q || ''}
             countDatasets={datasetTotal}

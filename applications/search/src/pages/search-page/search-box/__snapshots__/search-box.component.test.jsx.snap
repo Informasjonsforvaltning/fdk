@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`should render SearchBox correctly 1`] = `
+exports[`should render SearchBoxPure correctly 1`] = `
 <div
   className="row pt-5 pb-5"
 >
