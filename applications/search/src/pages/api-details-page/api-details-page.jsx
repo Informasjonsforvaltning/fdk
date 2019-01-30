@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
-import DocumentMeta from 'react-document-meta'; 
-import Disqus from 'disqus-react'; 
+import DocumentMeta from 'react-document-meta';
+import Disqus from 'disqus-react';
 import sanitizeHtml from 'sanitize-html';
-import showdown from 'showdown'; 
+import showdown from 'showdown';
 
 import localization from '../../lib/localization';
 import { getTranslateText } from '../../lib/translateText';
@@ -301,7 +301,6 @@ export const ApiDetailsPage = props => {
     identifier: apiItem.id,
     title: meta.title
   };
-  console.log('config is', config);
   return (
     <main id="content" className="container">
       <article>
@@ -317,12 +316,6 @@ export const ApiDetailsPage = props => {
               publisherItems={publisherItems}
               nationalComponent={apiItem.nationalComponent}
             />
-            <Disqus.CommentCount
-              shortname={config.disqusShortname}
-              config={disqusConfig}
-            >
-              Kommentarer
-            </Disqus.CommentCount>
           </div>
         </div>
 
