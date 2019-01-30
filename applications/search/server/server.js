@@ -16,6 +16,8 @@ module.exports = {
       disqusShortname: process.env.DISQUS_SHORTNAME
     };
 
+    console.log("disqus shortname: " + env.disqusShortname);
+
     const app = express();
     app.use(compression());
     app.set('view engine', 'ejs');

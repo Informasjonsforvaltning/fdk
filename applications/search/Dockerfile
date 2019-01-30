@@ -6,7 +6,7 @@ RUN apk add --no-cache git
 RUN npm init -y
 RUN npm config set unsafe-perm true
 RUN npm install ejs express method-override body-parser compression --loglevel error
-RUN npm install pm2 -g --loglevel error
+RUN npm install pm2 webpack webpack-cli cross-var -g --loglevel error
 
 # Create app directory
 RUN mkdir -p /usr/src/app && chmod 777 /usr/src/app
@@ -15,6 +15,8 @@ WORKDIR /usr/src/app
 
 COPY package.json /usr/src/app/package.json
 COPY package-lock.json /usr/src/app/package-lock.json
+COPY build.sh /usr/src/app/build.sh
+RUN chmod u+x /usr/src/app/build.sh
 
 # Install app dependencies
 RUN npm install --only=production --loglevel=warn
@@ -27,8 +29,8 @@ COPY webpack.* /usr/src/app/
 # most volatile directory latest, in order to reuse layers.
 COPY src /usr/src/app/src
 
-RUN npm run build
-
 EXPOSE 3000
 
-CMD [ "pm2-docker", "start.js" ]
+# build application after docker container have started and env variables are set
+ENTRYPOINT /usr/src/app/build.sh
+CMD ["pm2-docker", "start.js"]
