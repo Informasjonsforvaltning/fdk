@@ -103,89 +103,96 @@ export const APIListPage = props => {
           _.get(apiCatalogs, 'harvestSourceUri', recentlyPostedHarvestUrl)
         )}
 
-      <div className="row mb-5">
+      <div style={{ marginBottom: '6rem' }} className="row">
         <div className="col-12">
           <h1>{localization.api.register.apiCatalog}</h1>
-          <div className="fdk-reg-datasets-publisher mt-2 mb-4">
+          <div className="fdk-reg-datasets-publisher">
             {getTranslateText(_.get(catalogItem, ['publisher', 'prefLabel'])) ||
               _.get(catalogItem, ['publisher', 'name'])}
           </div>
         </div>
       </div>
 
-      <div className="row mb-5">
-        <div className="col-12 d-flex">
-          {registeredApiItems &&
-            registeredApiItems.length === 0 && (
-              <Link
-                className="ml-0 mr-3 btn btn-primary fdk-button card-link"
-                to={`/catalogs/${catalogId}/apis/import`}
-              >
-                <i className="fa fa-plus-circle mr-2" />
-                {localization.api.register.registerNew}
-              </Link>
-            )}
-
-          {!apiCatalogs &&
-            !showHarvestLink && (
-              <Button
-                className="mr-3 btn btn-primary fdk-button"
-                color="primary"
-                onClick={onToggle}
-              >
-                <i className="fa fa-plus-circle mr-2" />
-                {localization.api.harvest.harvestFromCatalog}
-              </Button>
-            )}
-          {!apiCatalogs &&
-            showHarvestLink && (
-              <React.Fragment>
-                <label className="d-flex flex-grow-1 mb-0" htmlFor="importUrl">
-                  <span className="align-self-center">
-                    {localization.api.harvest.labelHarvestUrl}
-                  </span>
-                  <input
-                    name="importUrl"
-                    onChange={e => handleChangeUrl(e)}
-                    type="input"
-                    className="ml-2 py-2 px-4 flex-grow-1"
-                    autoComplete="off"
-                  />
-                </label>
-                <Button
-                  className="ml-3 btn btn-primary fdk-button"
-                  color="primary"
-                  disabled={!touched || !!error || harvestUrl === ''}
-                  onClick={() => setApiCatalogUrl()}
+      {!apiCatalogs && (
+        <div className="row mb-5">
+          <div className="col-12 d-flex">
+            {registeredApiItems &&
+              registeredApiItems.length === 0 && (
+                <Link
+                  className="ml-0 mr-3 btn btn-primary fdk-button card-link"
+                  to={`/catalogs/${catalogId}/apis/import`}
                 >
-                  {localization.api.harvest.harvestAction}
-                </Button>
-                <button
-                  className="btn bg-transparent fdk-color-blue-dark"
+                  <i className="fa fa-plus-circle mr-2" />
+                  {localization.api.register.registerNew}
+                </Link>
+              )}
+
+            {!apiCatalogs &&
+              !showHarvestLink && (
+                <Button
+                  className="mr-3 btn btn-primary fdk-button"
+                  color="primary"
                   onClick={onToggle}
                 >
-                  {localization.app.cancel}
-                </button>
-              </React.Fragment>
+                  <i className="fa fa-plus-circle mr-2" />
+                  {localization.api.harvest.harvestFromCatalog}
+                </Button>
+              )}
+            {!apiCatalogs &&
+              showHarvestLink && (
+                <React.Fragment>
+                  <label
+                    className="d-flex flex-grow-1 mb-0"
+                    htmlFor="importUrl"
+                  >
+                    <span className="align-self-center">
+                      {localization.api.harvest.labelHarvestUrl}
+                    </span>
+                    <input
+                      name="importUrl"
+                      onChange={e => handleChangeUrl(e)}
+                      type="input"
+                      className="ml-2 py-2 px-4 flex-grow-1"
+                      autoComplete="off"
+                    />
+                  </label>
+                  <Button
+                    className="ml-3 btn btn-primary fdk-button"
+                    color={
+                      !touched || !!error || harvestUrl === ''
+                        ? 'secondary'
+                        : 'primary'
+                    }
+                    disabled={!touched || !!error || harvestUrl === ''}
+                    onClick={() => setApiCatalogUrl()}
+                  >
+                    {localization.api.harvest.harvestAction}
+                  </Button>
+                  <button
+                    className="btn bg-transparent fdk-color-blue-dark"
+                    onClick={onToggle}
+                  >
+                    {localization.app.cancel}
+                  </button>
+                </React.Fragment>
+              )}
+          </div>
+          {!apiCatalogs &&
+            touched &&
+            error && (
+              <div className="col-12 mt-3">
+                <div className="alert alert-danger">{error}</div>
+              </div>
             )}
         </div>
-        {!apiCatalogs &&
-          touched &&
-          error && (
-            <div className="col-12 mt-3">
-              <div className="alert alert-danger">{error}</div>
-            </div>
-          )}
-      </div>
+      )}
 
       {apiCatalogs &&
         harvestedApiItems && (
           <React.Fragment>
-            <div className="row mb-5">
+            <div className="row mb-2">
               <div className="col-12">
-                <h2 className="mb-4">
-                  {localization.api.harvest.harvestedFromCatalogTitle}
-                </h2>
+                <h2>{localization.api.harvest.harvestedFromCatalogTitle}</h2>
 
                 {!showHarvestLink && (
                   <React.Fragment>
@@ -243,7 +250,7 @@ export const APIListPage = props => {
 
       {harvestedApiItems &&
         harvestedApiItems.length > 0 && (
-          <div className="row mb-2 mb-5">
+          <div style={{ marginBottom: '6rem' }} className="row">
             <div className="col-12 fdk-reg-datasets-list">
               <ListItems
                 catalogId={catalogId}
@@ -260,11 +267,9 @@ export const APIListPage = props => {
         registeredApiItems &&
         registeredApiItems.length > 0 && (
           <React.Fragment>
-            <div className="row mb-5">
+            <div className="row mb-3">
               <div className="col-12">
-                <h2 className="mb-4">
-                  {localization.api.register.registeredApiTitle}
-                </h2>
+                <h2>{localization.api.register.registeredApiTitle}</h2>
                 <Link
                   className="ml-0 btn btn-primary fdk-button card-link"
                   to={`/catalogs/${catalogId}/apis/import`}
@@ -321,7 +326,7 @@ APIListPage.propTypes = {
   fetchCatalogIfNeeded: PropTypes.func,
   fetchApisIfNeeded: PropTypes.func,
   fetchApiCatalogIfNeeded: PropTypes.func,
-  postApiCatalogAction: _.noop(),
+  postApiCatalogAction: PropTypes.func,
   match: PropTypes.object,
   showHarvestLink: PropTypes.bool,
   onToggle: PropTypes.func,
