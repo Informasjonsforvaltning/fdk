@@ -8,24 +8,9 @@ import { getTranslateText } from '../../lib/translateText';
 import { HarvestDate } from '../../components/harvest-date/harvest-date.component';
 import { SearchHitHeader } from '../../components/search-hit-header/search-hit-header.component';
 import { StickyMenu } from '../../components/sticky-menu/sticky-menu.component';
-import { ShowMore } from '../../components/show-more/show-more';
 import { ListRegular } from '../../components/list-regular/list-regular.component';
 import { Tabs } from './tabs/tabs.component';
 import { Structure } from './structure/structure.component';
-
-const renderRelatedApiDescription = description => {
-  if (!description) {
-    return null;
-  }
-
-  const descriptionText = getTranslateText(description);
-  return (
-    <ShowMore
-      showMoreButtonText={localization.showFullDescription}
-      contentHtml={descriptionText}
-    />
-  );
-};
 
 const renderJSONSchema = schema => {
   if (!schema) {
@@ -63,24 +48,27 @@ const renderModels = schema => {
   );
 };
 
-const renderRelatedApi = (informationModelItem, publisherItems) => {
-  if (!informationModelItem) {
+const renderRelatedApi = (referencedApis, publisherItems) => {
+  if (!referencedApis || referencedApis.length === 0) {
     return null;
   }
-  const link = `/apis/${encodeURIComponent(informationModelItem.id)}`;
-  return (
-    <ListRegular title={localization.infoMod.relatedAPIHeader}>
-      <div className="list-regular--item">
+  const apiReferenceItems = items =>
+    items.map((item, index) => (
+      <div key={`reference-${index}`} className="list-regular--item">
         <SearchHitHeader
-          title={getTranslateText(informationModelItem.title)}
-          titleLink={link}
+          title={item.title}
+          titleLink={`/apis/${encodeURIComponent(item.id)}`}
           publisherLabel={localization.api.provider}
-          publisher={informationModelItem.publisher}
+          publisher={item.publisher}
           publisherItems={publisherItems}
           tag="h4"
         />
-        {renderRelatedApiDescription(informationModelItem.description)}
       </div>
+    ));
+
+  return (
+    <ListRegular title={localization.infoMod.relatedAPIHeader}>
+      {apiReferenceItems(referencedApis)}
     </ListRegular>
   );
 };
@@ -112,7 +100,7 @@ function getSchema(model) {
 export const InformationModelDetailsPage = props => {
   props.fetchPublishersIfNeeded();
 
-  const { informationModelItem, publisherItems } = props;
+  const { informationModelItem, publisherItems, referencedApis } = props;
 
   if (!informationModelItem) {
     return null;
@@ -149,7 +137,7 @@ export const InformationModelDetailsPage = props => {
           <section className="col-12 col-lg-9 mt-3">
             {renderModels(getSchema(informationModelItem))}
 
-            {renderRelatedApi(informationModelItem, publisherItems)}
+            {renderRelatedApi(_.get(referencedApis, 'hits'), publisherItems)}
             <div style={{ height: '75vh' }} />
           </section>
         </div>
@@ -161,11 +149,13 @@ export const InformationModelDetailsPage = props => {
 InformationModelDetailsPage.defaultProps = {
   informationModelItem: null,
   publisherItems: null,
-  fetchPublishersIfNeeded: () => {}
+  fetchPublishersIfNeeded: () => {},
+  referencedApis: null
 };
 
 InformationModelDetailsPage.propTypes = {
   informationModelItem: PropTypes.object,
   publisherItems: PropTypes.object,
-  fetchPublishersIfNeeded: PropTypes.func
+  fetchPublishersIfNeeded: PropTypes.func,
+  referencedApis: PropTypes.object
 };
