@@ -59,7 +59,7 @@ export const renderDistributions = componentProps => {
             <div className="form-group">
               <Helptext
                 title={localization.schema.distribution.helptext.type}
-                helptextItems={helptextItems.Dataset_distribution}
+                helptextItems={helptextItems.Distribution_type}
               />
               <Field
                 name={`${distribution}.type`}
