@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -40,15 +41,21 @@ public class InformationmodelHarvester {
         List<InformationModelHarvestSource> modelSources = getAllHarvestSources();
 
         Date harvestDate = new Date();
+        List<String> idsHarvested = new ArrayList<>();
 
         for (InformationModelHarvestSource source : modelSources) {
             if (source.sourceType == API_TYPE) {
-
-                InformationModel model = informationModelFactory.createInformationModel(source, harvestDate);
-
-                informationmodelRepository.save(model);
+                try {
+                    InformationModel model = informationModelFactory.createInformationModel(source, harvestDate);
+                    informationmodelRepository.save(model);
+                    idsHarvested.add(model.getId());
+                } catch (Exception e) {
+                    logger.error("Error creating or saving InformationModel for harvestSourceUri={}", source.harvestSourceUri, e);
+                }
             }
         }
+        List<String> idsToDelete = informationmodelRepository.getAllIdsNotHarvested(idsHarvested);
+        informationmodelRepository.deleteByIds(idsToDelete);
     }
 
     private List<InformationModelHarvestSource> getAllHarvestSources() {
