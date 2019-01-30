@@ -25,7 +25,28 @@ export const ArticlePage = () => {
             <p
               dangerouslySetInnerHTML={{
                 __html:
-                  'Din leder må gi deg tilgang til tjenesten "Registrering i datakatalog" og tildele deg rollen "Tilgangsstyring".<br />Kontakt datasettansvarlig i din virksomhet.'
+                'Jeg ønsker tilgang til registreringsløsningen for min virksomhet'  
+                <br />
+                'Din leder må gi deg tilgang til tjenesten "Registrering i datakatalog" i '
+                <a
+                  title="Lenke til Altinn"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href="https://www.altinn.no/"
+                >
+                    Altinn 
+               </a>', og eventuelt tildele deg rollen "Tilgangsstyring", dersom du skal delegere tilgangen videre.' 
+                 <br />
+                    'Kontakt den som kan delegere tilganger i '
+                 <a
+                  title="Lenke til Altinn"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href="https://www.altinn.no/"
+                >
+                    Altinn 
+               </a>
+                'i din virksomhet.'
               }}
             />
             <p>
@@ -43,8 +64,7 @@ export const ArticlePage = () => {
           </div>
 
           <div className="fdk-subtitle">
-            Hvordan gjøre en ansatt til datasettansvarlig
-            <span className="label label-default ml-1-em">Anbefalt</span>
+            Hvordan gjøre en ansatt til ansvarlig for registrering i Felles datakatalog (FDK) - Anbefalt
           </div>
 
           <div className="fdk-box fdk-box--yellow fdk-box--flex fdk-box--noMargin">
@@ -61,10 +81,7 @@ export const ArticlePage = () => {
 
           <div className="fdk-box fdk-box--white fdk-box--border">
             <p>
-              En <strong>datasettansvarlig</strong> vil ha ansvaret for å gi
-              ansatte tilgang til å registrere datasett på vegne av
-              virksomheten. Det er anbefalt at dere har en person med dette
-              ansvaret, da det forenkler fremtidige tilganger.
+              Den som er ansvarlig for registrering i FDK vil ha ansvaret for å gi ansatte tilgang til å registrere i FDK på vegne av virksomheten. Det er anbefalt at dere har en person med dette ansvaret, da det forenkler fremtidige tilganger.
             </p>
             <p>
               <strong>Slik går du frem:</strong>
@@ -80,12 +97,12 @@ export const ArticlePage = () => {
                   rel="noopener noreferrer"
                   href="https://www.altinn.no/"
                 >
-                  Altinn.no
+                  Altinn
                 </a>
                 <div
                   dangerouslySetInnerHTML={{
                     __html:
-                      'Velg <strong>"Profil, roller og rettigheter"</strong>.<br />'
+                      'Velg aktøren du ønsker å representere<br />'
                   }}
                 />
               </div>
