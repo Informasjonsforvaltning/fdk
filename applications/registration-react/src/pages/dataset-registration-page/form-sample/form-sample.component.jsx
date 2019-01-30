@@ -37,10 +37,7 @@ export const renderSamples = componentProps => {
               </button>
             </div>
             <div className="form-group">
-              <Helptext
-                title={localization.schema.sample.helptext.accessURL}
-                helptextItems={helptextItems.Distribution_accessURL}
-              />
+              <Helptext title={localization.schema.sample.helptext.accessURL} />
               <Field
                 name={`${sample}.accessURL.0`}
                 type="text"
@@ -63,7 +60,6 @@ export const renderSamples = componentProps => {
             <div className="form-group">
               <Helptext
                 title={localization.schema.sample.helptext.description}
-                helptextItems={helptextItems.Distribution_description}
               />
               <Field
                 name={`${sample}.description.${localization.getLanguage()}`}

@@ -93,7 +93,7 @@ export const FormAccessRights = props => {
       <div className="form-group">
         <Helptext
           title={localization.schema.accessRights.heading}
-          helptextItems={helptextItems.Dataset_distribution}
+          helptextItems={helptextItems.Dataset_accessRights}
         />
         <Field
           name="accessRights.uri"
