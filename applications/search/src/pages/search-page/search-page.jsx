@@ -275,7 +275,7 @@ export const SearchPage = props => {
         <div className="container">
           <SearchBoxWithState
             onSearchSubmit={handleSearchSubmit}
-            searchQuery={searchQuery.q || ''}
+            searchText={searchQuery.q || ''}
             countDatasets={datasetTotal}
             countTerms={conceptTotal}
             countApis={apiTotal}
