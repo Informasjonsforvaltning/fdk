@@ -16,7 +16,7 @@ export const SearchBox = props => {
     countApis,
     countInformationModels,
     open,
-    searchQuery,
+    searchText,
     inputText,
     setInputText,
     touched
@@ -51,7 +51,7 @@ export const SearchBox = props => {
                 placeholder={localization.query.intro}
                 aria-label={localization.query.intro}
                 className="fdk-search"
-                value={touched ? inputText : searchQuery}
+                value={touched ? inputText : searchText}
                 onChange={e => setInputText(e)}
                 autoComplete="off"
               />
@@ -91,7 +91,7 @@ export const SearchBox = props => {
 };
 
 SearchBox.defaultProps = {
-  searchQuery: null,
+  searchText: null,
   countDatasets: null,
   countTerms: null,
   countApis: null,
@@ -103,7 +103,7 @@ SearchBox.defaultProps = {
 
 SearchBox.propTypes = {
   onSearchSubmit: PropTypes.func.isRequired,
-  searchQuery: PropTypes.string,
+  searchText: PropTypes.string,
   countDatasets: PropTypes.number,
   countTerms: PropTypes.number,
   countApis: PropTypes.number,

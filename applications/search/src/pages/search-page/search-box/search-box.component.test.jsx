@@ -17,7 +17,7 @@ beforeEach(() => {
     onSearchSubmit,
     setInputText,
     inputText: 'queryToSubmit',
-    searchQuery: 'enhetsregister',
+    searchText: 'enhetsregister',
     countDatasets: 100,
     countTerms: 10,
     open
