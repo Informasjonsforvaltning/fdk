@@ -7,11 +7,13 @@ const webpack = require('webpack');
 const webpackMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 const config = require('../webpack.dev.config.js');
+require('dotenv').config();
 
 module.exports = {
   start() {
     const env = {
-      production: process.env.NODE_ENV === 'production'
+      production: process.env.NODE_ENV === 'production',
+      disqusShortname: process.env.DISQUS_SHORTNAME
     };
 
     const app = express();
