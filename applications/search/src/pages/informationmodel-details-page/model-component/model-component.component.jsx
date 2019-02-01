@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import _ from 'lodash';
 import { Collapse } from 'reactstrap';
 import { withStateHandlers } from 'recompose';
 import Scroll from 'react-scroll';
@@ -45,8 +44,8 @@ export const ModelComponentPure = props => {
 
   const definition = definitions[name];
   const type = getTypeFromTypeRef(getParentTypeRef(definition));
+  const nativeType = getTypeFromTypeRef(definition.type);
   const properties = getOwnProperties(definition);
-  const propertiesIsEmpty = _.isEmpty(getOwnProperties(definition), true);
 
   const collapseIconClass = cx(
     'fa',
@@ -58,19 +57,6 @@ export const ModelComponentPure = props => {
       'fa-angle-up': collapse
     }
   );
-
-  if (propertiesIsEmpty) {
-    return (
-      <div
-        style={{ marginLeft: '16px' }}
-        className="d-flex align-items-center"
-        name={name}
-      >
-        <span className="d-flex w-50 fdk-text-extra-strong">{name}</span>
-        <span className="d-flex w-50">{type}</span>
-      </div>
-    );
-  }
 
   return (
     <React.Fragment>
@@ -102,6 +88,12 @@ export const ModelComponentPure = props => {
             </ScrollLink>
           </div>
         )}
+        {!type &&
+          nativeType && (
+            <div style={{ marginLeft: '16px' }} className="d-flex w-50">
+              {nativeType}
+            </div>
+          )}
       </div>
       <Collapse className="mt-2" isOpen={collapse}>
         {renderProperties(properties)}
