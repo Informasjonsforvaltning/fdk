@@ -44,7 +44,7 @@ exports[`should render ResultsTabs with "Concepts" active correctly 1`] = `
             }
           }
         >
-          Api
+          API
           <span>
              (
             4
@@ -142,7 +142,7 @@ exports[`should render ResultsTabs with "Dataset" active correctly 1`] = `
             }
           }
         >
-          Api
+          API
           <span>
              (
             4
