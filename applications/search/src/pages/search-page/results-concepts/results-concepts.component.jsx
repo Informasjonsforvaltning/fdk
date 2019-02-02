@@ -154,7 +154,7 @@ export class ResultsConcepts extends React.Component {
       }
     );
     const sortByScoreClass = cx('fdk-button', 'fdk-button-black-toggle', {
-      selected: conceptSortValue === undefined
+      selected: !conceptSortValue
     });
     const sortByLastModifiedClass = cx(
       'fdk-button',
@@ -256,37 +256,55 @@ export class ResultsConcepts extends React.Component {
 }
 
 ResultsConcepts.defaultProps = {
-  conceptItems: null,
-  onClearFilters: null,
-  onPageChange: null,
-  onFilterPublisherHierarchy: null,
+  showFilterModal: false,
+  closeFilterModal: _.noop,
+  showClearFilterButton: false,
+
+  conceptItems: [],
+  conceptTotal: 0,
+  conceptAggregations: null,
+
+  onClearFilters: _.noop,
+  onFilterPublisherHierarchy: _.noop,
   searchQuery: null,
-  hitsPerPage: null,
-  showFilterModal: null,
-  closeFilterModal: null,
-  showClearFilterButton: null,
-  publisherCounts: null,
+
+  publisherCounts: [],
   publishers: null,
+
+  onPageChange: _.noop,
+  hitsPerPage: 0,
+  setConceptSort: _.noop,
+  conceptSortValue: '',
+
   conceptsCompare: null,
   addConcept: _.noop,
-  setConceptSort: null
+  removeConcept: _.noop
 };
 
 ResultsConcepts.propTypes = {
-  conceptItems: PropTypes.array,
-  onClearFilters: PropTypes.func,
-  onPageChange: PropTypes.func,
-  onFilterPublisherHierarchy: PropTypes.func,
-  searchQuery: PropTypes.object,
-  hitsPerPage: PropTypes.number,
   showFilterModal: PropTypes.bool,
   closeFilterModal: PropTypes.func,
   showClearFilterButton: PropTypes.bool,
+
+  conceptItems: PropTypes.array,
+  conceptTotal: PropTypes.number,
+  conceptAggregations: PropTypes.object,
+
+  onClearFilters: PropTypes.func,
+  onFilterPublisherHierarchy: PropTypes.func,
+  searchQuery: PropTypes.object,
+
   publisherCounts: PropTypes.array,
   publishers: PropTypes.object,
+
+  onSortByLastModified: PropTypes.func.isRequired,
+  onSortByScore: PropTypes.func.isRequired,
+  onPageChange: PropTypes.func,
+  hitsPerPage: PropTypes.number,
+  setConceptSort: PropTypes.func,
+  conceptSortValue: PropTypes.string,
+
   conceptsCompare: PropTypes.object,
   addConcept: PropTypes.func,
-  setConceptSort: PropTypes.func,
-  onSortByLastModified: PropTypes.func.isRequired,
-  onSortByScore: PropTypes.func.isRequired
+  removeConcept: PropTypes.func
 };

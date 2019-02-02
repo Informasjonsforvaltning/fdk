@@ -227,36 +227,47 @@ export class ResultsApi extends React.Component {
 
 ResultsApi.defaultProps = {
   showFilterModal: false,
-  closeFilterModal: null,
+  closeFilterModal: _.noop,
+  showClearFilterButton: false,
+
   apiItems: [],
   apiTotal: 0,
   apiAggregations: null,
-  onFilterPublisherHierarchy: null,
-  onFilterFormat: null,
+
+  onFilterPublisherHierarchy: _.noop,
+  onFilterFormat: _.noop,
+  onClearFilters: _.noop,
   searchQuery: {},
+
   publisherCounts: null,
   publishers: null,
-  onClearFilters: null,
-  onPageChange: null,
-  showClearFilterButton: null,
-  hitsPerPage: null
+
+  onPageChange: _.noop,
+  hitsPerPage: 0,
+  apiSortValue: ''
 };
 
 ResultsApi.propTypes = {
   showFilterModal: PropTypes.bool,
   closeFilterModal: PropTypes.func,
+  showClearFilterButton: PropTypes.bool,
+
   apiItems: PropTypes.array,
   apiTotal: PropTypes.number,
   apiAggregations: PropTypes.object,
+
   onFilterPublisherHierarchy: PropTypes.func,
   onFilterFormat: PropTypes.func,
+  onClearFilters: PropTypes.func,
   searchQuery: PropTypes.object,
+
   publisherCounts: PropTypes.array,
   publishers: PropTypes.object,
-  onClearFilters: PropTypes.func,
+
   onSortByLastModified: PropTypes.func.isRequired,
   onSortByScore: PropTypes.func.isRequired,
   onPageChange: PropTypes.func,
-  showClearFilterButton: PropTypes.bool,
-  hitsPerPage: PropTypes.number
+  hitsPerPage: PropTypes.number,
+  setApiSort: PropTypes.func.isRequired,
+  apiSortValue: PropTypes.string
 };

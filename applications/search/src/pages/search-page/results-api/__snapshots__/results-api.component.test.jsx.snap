@@ -131,7 +131,7 @@ exports[`should render ResultsApi correctly with hits 1`] = `
                   }
                 }
                 htmlKey={2}
-                onClick={null}
+                onClick={[Function]}
                 themesItems={null}
                 title="Format"
               />
@@ -186,7 +186,7 @@ exports[`should render ResultsApi correctly with hits 1`] = `
             }
           }
           htmlKey={2}
-          onClick={null}
+          onClick={[Function]}
           themesItems={null}
           title="Format"
         />
@@ -295,7 +295,7 @@ exports[`should render ResultsApi correctly with minimum of props and no hits 1`
     >
       <button
         className="btn btn-primary fdk-button fade-in-500 d-none"
-        onClick={null}
+        onClick={[Function]}
         type="button"
       >
         Clear
@@ -367,7 +367,7 @@ exports[`should render ResultsApi correctly with minimum of props and no hits 1`
           marginPagesDisplayed={1}
           nextClassName="next"
           nextLabel="Neste side"
-          onPageChange={null}
+          onPageChange={[Function]}
           pageCount={Infinity}
           pageRangeDisplayed={2}
           previousClassName="previous"

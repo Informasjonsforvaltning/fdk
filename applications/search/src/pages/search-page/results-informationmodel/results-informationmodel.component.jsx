@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import ReactPaginate from 'react-paginate';
@@ -212,36 +213,46 @@ export class ResultsInformationModel extends React.Component {
 
 ResultsInformationModel.defaultProps = {
   showFilterModal: false,
-  closeFilterModal: null,
+  closeFilterModal: _.noop,
+  showClearFilterButton: false,
+
   informationModelItems: [],
   informationModelTotal: 0,
   informationModelAggregations: null,
-  onFilterPublisherHierarchy: null,
+
+  onFilterPublisherHierarchy: _.noop,
   searchQuery: {},
-  publisherCounts: null,
+  onClearFilters: _.noop,
+
+  publisherCounts: [],
   publishers: null,
-  onClearFilters: null,
-  setInformationModelSort: null,
-  onPageChange: null,
-  showClearFilterButton: null,
-  hitsPerPage: null
+
+  onPageChange: _.noop,
+  hitsPerPage: 0,
+  setInformationModelSort: _.noop,
+  informationModelSortValue: ''
 };
 
 ResultsInformationModel.propTypes = {
   showFilterModal: PropTypes.bool,
   closeFilterModal: PropTypes.func,
+  showClearFilterButton: PropTypes.bool,
+
   informationModelItems: PropTypes.array,
   informationModelTotal: PropTypes.number,
   informationModelAggregations: PropTypes.object,
+
   onFilterPublisherHierarchy: PropTypes.func,
   searchQuery: PropTypes.object,
+  onClearFilters: PropTypes.func,
+
   publisherCounts: PropTypes.array,
   publishers: PropTypes.object,
-  onClearFilters: PropTypes.func,
-  setInformationModelSort: PropTypes.func,
+
   onSortByLastModified: PropTypes.func.isRequired,
   onSortByScore: PropTypes.func.isRequired,
   onPageChange: PropTypes.func,
-  showClearFilterButton: PropTypes.bool,
-  hitsPerPage: PropTypes.number
+  hitsPerPage: PropTypes.number,
+  setInformationModelSort: PropTypes.func,
+  informationModelSortValue: PropTypes.string
 };
