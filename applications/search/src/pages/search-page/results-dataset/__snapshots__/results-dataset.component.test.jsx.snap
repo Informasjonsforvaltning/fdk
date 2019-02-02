@@ -144,7 +144,7 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
               <SearchPublishersTree
                 activeFilter={null}
                 onFilterPublisherHierarchy={[MockFunction]}
-                publisherCounts={null}
+                publisherCounts={Array []}
                 publishers={Object {}}
                 title="Organization"
               />
@@ -161,7 +161,7 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
                   }
                 }
                 htmlKey={3}
-                onClick={null}
+                onClick={[Function]}
                 themesItems={null}
                 title="Spatial"
               />
@@ -178,7 +178,7 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
                   }
                 }
                 htmlKey={4}
-                onClick={null}
+                onClick={[Function]}
                 themesItems={null}
                 title="Provenance"
               />
@@ -246,7 +246,7 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
         <SearchPublishersTree
           activeFilter={null}
           onFilterPublisherHierarchy={[MockFunction]}
-          publisherCounts={null}
+          publisherCounts={Array []}
           publishers={Object {}}
           title="Organization"
         />
@@ -263,7 +263,7 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
             }
           }
           htmlKey={3}
-          onClick={null}
+          onClick={[Function]}
           themesItems={null}
           title="Spatial"
         />
@@ -280,7 +280,7 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
             }
           }
           htmlKey={4}
-          onClick={null}
+          onClick={[Function]}
           themesItems={null}
           title="Provenance"
         />
@@ -1705,7 +1705,7 @@ exports[`should render ResultsDataset correctly with minimum of props 1`] = `
     >
       <button
         className="btn btn-primary fdk-button fade-in-500 d-none"
-        onClick={null}
+        onClick={[Function]}
         type="button"
       >
         Clear
@@ -1776,7 +1776,7 @@ exports[`should render ResultsDataset correctly with minimum of props 1`] = `
         marginPagesDisplayed={1}
         nextClassName="next"
         nextLabel="Neste side"
-        onPageChange={null}
+        onPageChange={[Function]}
         pageCount={Infinity}
         pageRangeDisplayed={2}
         previousClassName="previous"

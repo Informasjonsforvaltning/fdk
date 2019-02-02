@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import ReactPaginate from 'react-paginate';
@@ -144,7 +145,7 @@ export class ResultsDataset extends React.Component {
       }
     );
     const sortByScoreClass = cx('fdk-button', 'fdk-button-black-toggle', {
-      selected: datasetSortValue === undefined
+      selected: !datasetSortValue
     });
     const sortByLastModifiedClass = cx(
       'fdk-button',
@@ -274,48 +275,58 @@ export class ResultsDataset extends React.Component {
 
 ResultsDataset.defaultProps = {
   showFilterModal: false,
-  closeFilterModal: null,
+  closeFilterModal: _.noop,
+  showClearFilterButton: false,
+
   datasetItems: null,
   datasetAggregations: null,
   datasetTotal: 1,
-  onFilterTheme: null,
-  onFilterAccessRights: null,
-  onFilterPublisherHierarchy: null,
-  onFilterProvenance: null,
-  onFilterSpatial: null,
-  searchQuery: {},
+
+  onFilterTheme: _.noop,
+  onFilterAccessRights: _.noop,
+  onFilterPublisherHierarchy: _.noop,
+  onFilterProvenance: _.noop,
+  onFilterSpatial: _.noop,
+  searchQuery: null,
+  onClearFilters: _.noop,
+
   themesItems: null,
-  publisherCounts: null,
+  publisherCounts: [],
   publishers: null,
   referenceData: null,
-  onClearFilters: null,
-  onPageChange: null,
-  setDatasetSort: null,
-  showClearFilterButton: null,
-  hitsPerPage: null
+
+  setDatasetSort: _.noop,
+  datasetSortValue: '',
+  onPageChange: _.noop,
+  hitsPerPage: 0
 };
 
 ResultsDataset.propTypes = {
   showFilterModal: PropTypes.bool,
   closeFilterModal: PropTypes.func,
+  showClearFilterButton: PropTypes.bool,
+
   datasetItems: PropTypes.array,
   datasetAggregations: PropTypes.object,
   datasetTotal: PropTypes.number,
+
   onFilterTheme: PropTypes.func,
   onFilterAccessRights: PropTypes.func,
   onFilterPublisherHierarchy: PropTypes.func,
   onFilterProvenance: PropTypes.func,
   onFilterSpatial: PropTypes.func,
   searchQuery: PropTypes.object,
+  onClearFilters: PropTypes.func,
+
   themesItems: PropTypes.object,
   publisherCounts: PropTypes.array,
   publishers: PropTypes.object,
   referenceData: PropTypes.object,
-  onClearFilters: PropTypes.func,
+
   setDatasetSort: PropTypes.func,
   onSortByLastModified: PropTypes.func.isRequired,
   onSortByScore: PropTypes.func.isRequired,
+  datasetSortValue: PropTypes.string,
   onPageChange: PropTypes.func,
-  showClearFilterButton: PropTypes.bool,
   hitsPerPage: PropTypes.number
 };

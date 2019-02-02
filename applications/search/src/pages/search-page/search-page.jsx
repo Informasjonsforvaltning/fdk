@@ -143,23 +143,6 @@ export const SearchPage = props => {
     }
   };
 
-  const handleDatasetFilterPublisher = event => {
-    const { publisher } = searchQuery;
-    if (event.target.checked) {
-      setQueryFilter(
-        'publisher',
-        addValue(publisher, event.target.value),
-        history
-      );
-    } else {
-      setQueryFilter(
-        'publisher',
-        removeValue(publisher, event.target.value),
-        history
-      );
-    }
-  };
-
   const handleDatasetFilterPublisherHierarchy = event => {
     if (event.target.checked) {
       ReactGA.event({
@@ -297,139 +280,122 @@ export const SearchPage = props => {
           <Route
             exact
             path={PATHNAME_DATASETS}
-            render={props => (
+            render={() => (
               <ResultsDataset
+                showFilterModal={showFilterModal}
+                closeFilterModal={close}
                 datasetItems={datasetItems}
                 datasetAggregations={datasetAggregations}
                 datasetTotal={datasetTotal}
-                onClearFilters={handleClearFilters}
                 onFilterTheme={handleDatasetFilterThemes}
                 onFilterAccessRights={handleDatasetFilterAccessRights}
-                onFilterPublisher={handleDatasetFilterPublisher}
                 onFilterPublisherHierarchy={
                   handleDatasetFilterPublisherHierarchy
                 }
                 onFilterProvenance={handleDatasetFilterProvenance}
                 onFilterSpatial={handleDatasetFilterSpatial}
-                onPageChange={handlePageChange}
-                onSortByLastModified={sortByLastModified}
-                onSortByScore={sortByScore}
                 searchQuery={searchQuery}
                 themesItems={themesItems}
-                showFilterModal={showFilterModal}
-                showClearFilterButton={isFilterNotEmpty()}
-                closeFilterModal={close}
-                hitsPerPage={HITS_PER_PAGE}
                 publisherCounts={_.get(datasetAggregations, 'orgPath.buckets')}
                 publishers={publisherItems}
                 referenceData={referenceData}
+                onClearFilters={handleClearFilters}
                 setDatasetSort={setDatasetSort}
+                onSortByLastModified={sortByLastModified}
+                onSortByScore={sortByScore}
                 datasetSortValue={datasetSortValue}
-                {...props}
+                onPageChange={handlePageChange}
+                showClearFilterButton={isFilterNotEmpty()}
+                hitsPerPage={HITS_PER_PAGE}
               />
             )}
           />
           <Route
             exact
             path={PATHNAME_APIS}
-            render={props => (
+            render={() => (
               <ResultsApi
+                showFilterModal={showFilterModal}
+                closeFilterModal={close}
+                showClearFilterButton={isFilterNotEmpty()}
                 apiItems={apiItems}
-                apiAggregations={apiAggregations}
                 apiTotal={apiTotal}
-                onClearFilters={handleClearFilters}
-                onFilterTheme={handleDatasetFilterThemes}
+                apiAggregations={apiAggregations}
                 onFilterAccessRights={handleDatasetFilterAccessRights}
-                onFilterPublisher={handleDatasetFilterPublisher}
                 onFilterPublisherHierarchy={
                   handleDatasetFilterPublisherHierarchy
                 }
                 onFilterFormat={handleFilterFormat}
-                onFilterProvenance={handleDatasetFilterProvenance}
-                onFilterSpatial={handleDatasetFilterSpatial}
-                onPageChange={handlePageChange}
-                onSortByLastModified={sortByLastModified}
-                onSortByScore={sortByScore}
+                onClearFilters={handleClearFilters}
                 searchQuery={searchQuery}
-                themesItems={themesItems}
-                showFilterModal={showFilterModal}
-                showClearFilterButton={isFilterNotEmpty()}
-                closeFilterModal={close}
-                hitsPerPage={HITS_PER_PAGE}
                 publisherCounts={_.get(apiAggregations, 'orgPath.buckets')}
                 publishers={publisherItems}
+                onSortByLastModified={sortByLastModified}
+                onSortByScore={sortByScore}
+                onPageChange={handlePageChange}
+                hitsPerPage={HITS_PER_PAGE}
                 setApiSort={setApiSort}
                 apiSortValue={apiSortValue}
-                {...props}
               />
             )}
           />
           <Route
             exact
             path={PATHNAME_CONCEPTS}
-            render={props => (
+            render={() => (
               <ResultsConcepts
+                showFilterModal={showFilterModal}
+                closeFilterModal={close}
+                showClearFilterButton={isFilterNotEmpty()}
                 conceptItems={conceptItems}
-                conceptAggregations={conceptAggregations}
                 conceptTotal={conceptTotal}
+                conceptAggregations={conceptAggregations}
                 onClearFilters={handleClearFilters}
-                onPageChange={handlePageChange}
-                onSortByLastModified={sortByLastModified}
-                onSortByScore={sortByScore}
                 onFilterPublisherHierarchy={
                   handleDatasetFilterPublisherHierarchy
                 }
                 searchQuery={searchQuery}
-                hitsPerPage={HITS_PER_PAGE}
-                showFilterModal={showFilterModal}
-                closeFilterModal={close}
-                showClearFilterButton={isFilterNotEmpty()}
                 publisherCounts={_.get(conceptAggregations, 'orgPath.buckets')}
                 publishers={publisherItems}
+                onSortByLastModified={sortByLastModified}
+                onSortByScore={sortByScore}
+                onPageChange={handlePageChange}
+                hitsPerPage={HITS_PER_PAGE}
+                setConceptSort={setConceptSort}
+                conceptSortValue={conceptSortValue}
                 conceptsCompare={conceptsCompare}
                 addConcept={addConcept}
                 removeConcept={removeConcept}
-                setConceptSort={setConceptSort}
-                conceptSortValue={conceptSortValue}
-                {...props}
               />
             )}
           />
           <Route
             exact
             path={PATHNAME_INFORMATIONMODELS}
-            render={props => (
+            render={() => (
               <ResultsInformationModel
+                showFilterModal={showFilterModal}
+                closeFilterModal={close}
+                showClearFilterButton={isFilterNotEmpty()}
                 informationModelItems={informationModelItems}
-                informationModelAggregations={informationModelAggregations}
                 informationModelTotal={informationModelTotal}
-                onClearFilters={handleClearFilters}
-                onFilterTheme={handleDatasetFilterThemes}
-                onFilterAccessRights={handleDatasetFilterAccessRights}
-                onFilterPublisher={handleDatasetFilterPublisher}
+                informationModelAggregations={informationModelAggregations}
                 onFilterPublisherHierarchy={
                   handleDatasetFilterPublisherHierarchy
                 }
-                onFilterFormat={handleFilterFormat}
-                onFilterProvenance={handleDatasetFilterProvenance}
-                onFilterSpatial={handleDatasetFilterSpatial}
-                onPageChange={handlePageChange}
-                onSortByLastModified={sortByLastModified}
-                onSortByScore={sortByScore}
+                onClearFilters={handleClearFilters}
                 searchQuery={searchQuery}
-                themesItems={themesItems}
-                showFilterModal={showFilterModal}
-                showClearFilterButton={isFilterNotEmpty()}
-                closeFilterModal={close}
-                hitsPerPage={HITS_PER_PAGE}
                 publisherCounts={_.get(
                   informationModelAggregations,
                   'orgPath.buckets'
                 )}
                 publishers={publisherItems}
+                onSortByLastModified={sortByLastModified}
+                onSortByScore={sortByScore}
+                onPageChange={handlePageChange}
+                hitsPerPage={HITS_PER_PAGE}
                 setInformationModelSort={setInformationModelSort}
                 informationModelSortValue={informationModelSortValue}
-                {...props}
               />
             )}
           />
