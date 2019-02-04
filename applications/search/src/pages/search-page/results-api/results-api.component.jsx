@@ -62,158 +62,149 @@ const renderHits = (hits, publishers) => {
   return null;
 };
 
-// eslint-disable-next-line react/prefer-stateless-function
-export class ResultsApi extends React.Component {
-  render() {
-    const {
-      showFilterModal,
-      closeFilterModal,
-      apiItems,
-      apiTotal,
-      apiAggregations,
-      onFilterPublisherHierarchy,
-      onFilterFormat,
-      locationSearch,
-      publisherCounts,
-      publishers,
-      onClearFilters,
-      onPageChange,
-      showClearFilterButton,
-      hitsPerPage,
-      onSortByScore,
-      onSortByLastModified,
-      apiSortValue,
-      setApiSort
-    } = this.props;
+export const ResultsApiPure = ({
+  showFilterModal,
+  closeFilterModal,
+  apiItems,
+  apiTotal,
+  apiAggregations,
+  onFilterPublisherHierarchy,
+  onFilterFormat,
+  locationSearch,
+  publisherCounts,
+  publishers,
+  onClearFilters,
+  onPageChange,
+  showClearFilterButton,
+  hitsPerPage,
+  onSortByScore,
+  onSortByLastModified,
+  apiSortValue,
+  setApiSort
+}) => {
+  const page = parseInt(locationSearch.page || 0, 10);
+  const pageCount = Math.ceil((apiTotal || 1) / hitsPerPage);
 
-    const page = parseInt(locationSearch.page || 0, 10);
-    const pageCount = Math.ceil((apiTotal || 1) / hitsPerPage);
+  const clearButtonClass = cx(
+    'btn',
+    'btn-primary',
+    'fdk-button',
+    'fade-in-500',
+    {
+      'd-none': !showClearFilterButton
+    }
+  );
+  const sortByScoreClass = cx('fdk-button', 'fdk-button-black-toggle', {
+    selected: !apiSortValue
+  });
+  const sortByLastModifiedClass = cx('fdk-button', 'fdk-button-black-toggle', {
+    selected: apiSortValue === 'modified'
+  });
 
-    const clearButtonClass = cx(
-      'btn',
-      'btn-primary',
-      'fdk-button',
-      'fade-in-500',
-      {
-        'd-none': !showClearFilterButton
-      }
-    );
-    const sortByScoreClass = cx('fdk-button', 'fdk-button-black-toggle', {
-      selected: !apiSortValue
-    });
-    const sortByLastModifiedClass = cx(
-      'fdk-button',
-      'fdk-button-black-toggle',
-      {
-        selected: apiSortValue === 'modified'
-      }
-    );
+  const onSortByScoreClick = () => {
+    setApiSort(undefined);
+    onSortByScore();
+  };
+  const onSortByModifiedClick = () => {
+    setApiSort('modified');
+    onSortByLastModified();
+  };
 
-    const onSortByScoreClick = () => {
-      setApiSort(undefined);
-      onSortByScore();
-    };
-    const onSortByModifiedClick = () => {
-      setApiSort('modified');
-      onSortByLastModified();
-    };
-
-    return (
-      <main data-test-id="apis" id="content">
-        <div className="row mb-3">
-          <div className="col-6 col-lg-4">
-            <button
-              className={clearButtonClass}
-              onClick={onClearFilters}
-              type="button"
+  return (
+    <main data-test-id="apis" id="content">
+      <div className="row mb-3">
+        <div className="col-6 col-lg-4">
+          <button
+            className={clearButtonClass}
+            onClick={onClearFilters}
+            type="button"
+          >
+            {localization.query.clear}
+          </button>
+        </div>
+        <div className="col-6 col-lg-4 offset-lg-4">
+          <div className="d-flex justify-content-end">
+            <Button
+              className={sortByScoreClass}
+              onClick={onSortByScoreClick}
+              color="primary"
             >
-              {localization.query.clear}
-            </button>
-          </div>
-          <div className="col-6 col-lg-4 offset-lg-4">
-            <div className="d-flex justify-content-end">
-              <Button
-                className={sortByScoreClass}
-                onClick={onSortByScoreClick}
-                color="primary"
-              >
-                {localization.sort.relevance}
-              </Button>
-              <Button
-                className={sortByLastModifiedClass}
-                onClick={onSortByModifiedClick}
-                color="primary"
-              >
-                {localization.sort.modified}
-              </Button>
-            </div>
+              {localization.sort.relevance}
+            </Button>
+            <Button
+              className={sortByLastModifiedClass}
+              onClick={onSortByModifiedClick}
+              color="primary"
+            >
+              {localization.sort.modified}
+            </Button>
           </div>
         </div>
-        <div className="row">
-          <aside className="search-filters col-lg-4 d-none d-lg-block">
-            <span className="uu-invisible" aria-hidden="false">
-              Filtrering
-            </span>
-            {apiAggregations && (
-              <div>
-                {renderFilterModal({
-                  showFilterModal,
-                  closeFilterModal,
-                  apiAggregations,
-                  locationSearch,
-                  publisherCounts,
-                  publishers,
-                  onFilterFormat,
-                  onFilterPublisherHierarchy
-                })}
-                <SearchPublishersTree
-                  title={localization.facet.provider}
-                  publisherCounts={publisherCounts}
-                  onFilterPublisherHierarchy={onFilterPublisherHierarchy}
-                  activeFilter={locationSearch.orgPath}
-                  publishers={publishers}
-                />
-                <FilterBox
-                  htmlKey={2}
-                  title={localization.facet.format}
-                  filter={_.get(apiAggregations, 'formats')}
-                  onClick={onFilterFormat}
-                  activeFilter={locationSearch.format}
-                />
-              </div>
-            )}
-          </aside>
-          <div id="apis" className="col-12 col-lg-8">
-            {renderHits(apiItems, publishers)}
-
-            <div className="col-12 d-flex justify-content-center">
-              <span className="uu-invisible" aria-hidden="false">
-                Sidepaginering.
-              </span>
-              <ReactPaginate
-                pageCount={pageCount}
-                pageRangeDisplayed={2}
-                marginPagesDisplayed={1}
-                previousLabel={localization.page.prev}
-                nextLabel={localization.page.next}
-                breakLabel={<span>...</span>}
-                breakClassName="break-me"
-                containerClassName="pagination"
-                onPageChange={onPageChange}
-                subContainerClassName="pages pagination"
-                activeClassName="active"
-                initialPage={page}
-                disableInitialCallback
+      </div>
+      <div className="row">
+        <aside className="search-filters col-lg-4 d-none d-lg-block">
+          <span className="uu-invisible" aria-hidden="false">
+            Filtrering
+          </span>
+          {apiAggregations && (
+            <div>
+              {renderFilterModal({
+                showFilterModal,
+                closeFilterModal,
+                apiAggregations,
+                locationSearch,
+                publisherCounts,
+                publishers,
+                onFilterFormat,
+                onFilterPublisherHierarchy
+              })}
+              <SearchPublishersTree
+                title={localization.facet.provider}
+                publisherCounts={publisherCounts}
+                onFilterPublisherHierarchy={onFilterPublisherHierarchy}
+                activeFilter={locationSearch.orgPath}
+                publishers={publishers}
+              />
+              <FilterBox
+                htmlKey={2}
+                title={localization.facet.format}
+                filter={_.get(apiAggregations, 'formats')}
+                onClick={onFilterFormat}
+                activeFilter={locationSearch.format}
               />
             </div>
+          )}
+        </aside>
+        <div id="apis" className="col-12 col-lg-8">
+          {renderHits(apiItems, publishers)}
+
+          <div className="col-12 d-flex justify-content-center">
+            <span className="uu-invisible" aria-hidden="false">
+              Sidepaginering.
+            </span>
+            <ReactPaginate
+              pageCount={pageCount}
+              pageRangeDisplayed={2}
+              marginPagesDisplayed={1}
+              previousLabel={localization.page.prev}
+              nextLabel={localization.page.next}
+              breakLabel={<span>...</span>}
+              breakClassName="break-me"
+              containerClassName="pagination"
+              onPageChange={onPageChange}
+              subContainerClassName="pages pagination"
+              activeClassName="active"
+              initialPage={page}
+              disableInitialCallback
+            />
           </div>
         </div>
-      </main>
-    );
-  }
-}
+      </div>
+    </main>
+  );
+};
 
-ResultsApi.defaultProps = {
+ResultsApiPure.defaultProps = {
   showFilterModal: false,
   closeFilterModal: _.noop,
   showClearFilterButton: false,
@@ -234,7 +225,7 @@ ResultsApi.defaultProps = {
   apiSortValue: ''
 };
 
-ResultsApi.propTypes = {
+ResultsApiPure.propTypes = {
   showFilterModal: PropTypes.bool,
   closeFilterModal: PropTypes.func,
   showClearFilterButton: PropTypes.bool,
@@ -258,3 +249,5 @@ ResultsApi.propTypes = {
   setApiSort: PropTypes.func.isRequired,
   apiSortValue: PropTypes.string
 };
+
+export const ResultsApi = ResultsApiPure;
