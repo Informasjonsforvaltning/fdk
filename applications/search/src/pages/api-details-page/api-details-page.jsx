@@ -349,12 +349,12 @@ export const ApiDetailsPage = props => {
             {renderDatasetReferences(referencedDatasets)}
 
             {renderContactPoints(apiItem.contactPoint)}
-            {!config.disqusShortname &&
-              'Environment variable for Disqus not set!'}
-            <Disqus.DiscussionEmbed
-              shortname={config.disqusShortname}
-              config={disqusConfig}
-            />
+            {config.disqusShortname && (
+              <Disqus.DiscussionEmbed
+                shortname={config.disqusShortname}
+                config={disqusConfig}
+              />
+            )}
             <div style={{ height: '75vh' }} />
           </section>
         </div>
