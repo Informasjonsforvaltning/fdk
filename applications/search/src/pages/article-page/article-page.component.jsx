@@ -224,7 +224,7 @@ export const ArticlePage = () => {
             <p
               dangerouslySetInnerHTML={{
                 __html:
-                  'Dersom du allikevel ønsker å tildele rettigheter enkeltvis, følger du stegene som beskrevet over, <strong>unntatt steg 4</strong>, hvor du tildeler roller "Tilgangsstyring".'
+                  'Dersom du allikevel ønsker å tildele rettigheter enkeltvis, følger du stegene som beskrevet over, <strong>unntatt steg 4</strong>, hvor du tildeler rollen "Tilgangsstyring".'
               }}
             />
           </div>
