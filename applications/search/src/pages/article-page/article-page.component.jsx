@@ -23,8 +23,6 @@ export const ArticlePage = () => {
 
           <div className="fdk-box fdk-box--white">
             <p>
-              Jeg ønsker tilgang til registreringsløsningen for min virksomhet
-              <br />
               {
                 'Din leder må gi deg tilgang til tjenesten "Registrering i datakatalog" i '
               }
