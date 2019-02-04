@@ -2,7 +2,6 @@ package no.dcat.client.registrationapi;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModelProperty;
-import io.swagger.v3.oas.models.OpenAPI;
 import lombok.Data;
 import lombok.ToString;
 import no.fdk.acat.common.model.apispecification.ApiSpecification;
@@ -33,9 +32,6 @@ public class ApiRegistrationPublic {
 
     @ApiModelProperty("The dataset references")
     private List<String> datasetReferences;
-
-    @ApiModelProperty("Spec converted to openAPI v3")
-    private OpenAPI openApi;
 
     private ApiSpecification apiSpecification;
 
