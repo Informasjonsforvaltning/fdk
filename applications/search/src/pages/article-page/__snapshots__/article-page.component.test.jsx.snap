@@ -28,13 +28,35 @@ exports[`should render ArticlePage correctly 1`] = `
       <div
         className="fdk-box fdk-box--white"
       >
-        <p
-          dangerouslySetInnerHTML={
-            Object {
-              "__html": "Din leder må gi deg tilgang til tjenesten \\"Registrering i datakatalog\\" og tildele deg rollen \\"Tilgangsstyring\\".<br />Kontakt datasettansvarlig i din virksomhet.",
-            }
-          }
-        />
+        <p>
+          Jeg ønsker tilgang til registreringsløsningen for min virksomhet
+          <br />
+          Din leder må gi deg tilgang til tjenesten "Registrering i datakatalog" i 
+          <a
+            href="https://www.altinn.no/"
+            rel="noopener noreferrer"
+            target="_blank"
+            title="Lenke til Altinn"
+          >
+            Altinn
+          </a>
+          , og eventuelt tildele deg rollen 
+          "Tilgangsstyring"
+          , dersom du skal delegere tilgangen videre.
+          <br />
+          Kontakt den som kan delegere tilganger i
+           
+          <a
+            href="https://www.altinn.no/"
+            rel="noopener noreferrer"
+            target="_blank"
+            title="Lenke til Altinn"
+          >
+            Altinn
+          </a>
+           
+          i din virksomhet.
+        </p>
         <p>
           Når du har fått tilgang, vil din virksomhets datakatalog være tilgjengelig etter innlogging.
           <br />
@@ -51,12 +73,7 @@ exports[`should render ArticlePage correctly 1`] = `
       <div
         className="fdk-subtitle"
       >
-        Hvordan gjøre en ansatt til datasettansvarlig
-        <span
-          className="label label-default ml-1-em"
-        >
-          Anbefalt
-        </span>
+        Hvordan gjøre en ansatt til ansvarlig for registrering i Felles datakatalog (FDK) - Anbefalt
       </div>
       <div
         className="fdk-box fdk-box--yellow fdk-box--flex fdk-box--noMargin"
@@ -87,11 +104,7 @@ exports[`should render ArticlePage correctly 1`] = `
         className="fdk-box fdk-box--white fdk-box--border"
       >
         <p>
-          En 
-          <strong>
-            datasettansvarlig
-          </strong>
-           vil ha ansvaret for å gi ansatte tilgang til å registrere datasett på vegne av virksomheten. Det er anbefalt at dere har en person med dette ansvaret, da det forenkler fremtidige tilganger.
+          Den som er ansvarlig for registrering i FDK vil ha ansvaret for å gi ansatte tilgang til å registrere i FDK på vegne av virksomheten. Det er anbefalt at dere har en person med dette ansvaret, da det forenkler fremtidige tilganger.
         </p>
         <p>
           <strong>
@@ -116,12 +129,12 @@ exports[`should render ArticlePage correctly 1`] = `
               target="_blank"
               title="Lenke til Altinn"
             >
-              Altinn.no
+              Altinn
             </a>
             <div
               dangerouslySetInnerHTML={
                 Object {
-                  "__html": "Velg <strong>\\"Profil, roller og rettigheter\\"</strong>.<br />",
+                  "__html": "Velg aktøren du ønsker å representere<br />",
                 }
               }
             />
@@ -131,7 +144,7 @@ exports[`should render ArticlePage correctly 1`] = `
           >
             <img
               alt=""
-              src="/static/img/image11.png"
+              src="/static/img/image_choose_person.png"
               title=""
             />
           </div>
@@ -148,7 +161,7 @@ exports[`should render ArticlePage correctly 1`] = `
             className="fdk-box__rowItem__text"
             dangerouslySetInnerHTML={
               Object {
-                "__html": "I nedtrekksmenyen velger du <strong>virksomheten</strong> som du representrerer. Altså den virksomheten som forvalter datakatalogen du oppretter en datasettansvarlig for.",
+                "__html": "Velg \\"profil\\" øverst på siden",
               }
             }
           />
@@ -157,7 +170,7 @@ exports[`should render ArticlePage correctly 1`] = `
           >
             <img
               alt=""
-              src="/static/img/image5.png"
+              src="/static/img/image_choose_profile.png"
               title=""
             />
           </div>
@@ -191,7 +204,7 @@ exports[`should render ArticlePage correctly 1`] = `
           >
             <img
               alt=""
-              src="/static/img/image3.png"
+              src="/static/img/image_add_new_person.png"
               title=""
             />
           </div>
@@ -215,7 +228,7 @@ exports[`should render ArticlePage correctly 1`] = `
               }
             />
             <p>
-              Tilgangsstyring gir datasettansvarlig muligheten til å gi andre ansatte tilgang til registreringsløsningen i fremtiden.
+              Tilgangsstyring gir deg muligheten til å gi andre ansatte tilgang til registreringsløsningen i fremtiden.
             </p>
           </div>
           <div
@@ -223,7 +236,7 @@ exports[`should render ArticlePage correctly 1`] = `
           >
             <img
               alt=""
-              src="/static/img/image2.png"
+              src="/static/img/image_give_and_remove_rights.png"
               title=""
             />
           </div>
@@ -259,7 +272,7 @@ exports[`should render ArticlePage correctly 1`] = `
           >
             <img
               alt=""
-              src="/static/img/image13.png"
+              src="/static/img/image_give_and_remove_rights_confirmation.png"
               title=""
             />
           </div>
@@ -268,12 +281,7 @@ exports[`should render ArticlePage correctly 1`] = `
           className="text-center"
         >
           <span>
-            Gratulerer! Nå har du opprettet en
-             
-            <strong>
-              datasettansvarlig
-            </strong>
-             for din virksomhet.
+            Gratulerer! Nå har du opprettet en ansvarlig for registrering i FDK for din virksomhet.
           </span>
         </div>
       </div>
@@ -288,7 +296,7 @@ exports[`should render ArticlePage correctly 1`] = `
         className="fdk-box fdk-box--white"
       >
         <p>
-          Vi anbefaler at dere bruker en datasettansvarlig som administrerer registreringsrettigheter for virksomheten. Dette er forklart over.
+          Vi anbefaler at dere bruker en ansvarlig for registrering i FDK som administrerer registreringsrettigheter for virksomheten. Dette er forklart over.
         </p>
         <p
           dangerouslySetInnerHTML={
@@ -373,7 +381,6 @@ exports[`should render ArticlePage correctly 1`] = `
                 >
                   Send oss gjerne en e-post
                 </a>
-                 
                 med ris, ros eller om morsomme bugs som har klart å gjemme seg fra testerne våre.
               </p>
             </div>

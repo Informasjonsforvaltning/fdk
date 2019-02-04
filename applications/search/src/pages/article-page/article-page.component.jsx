@@ -22,12 +22,33 @@ export const ArticlePage = () => {
           </div>
 
           <div className="fdk-box fdk-box--white">
-            <p
-              dangerouslySetInnerHTML={{
-                __html:
-                  'Din leder må gi deg tilgang til tjenesten "Registrering i datakatalog" og tildele deg rollen "Tilgangsstyring".<br />Kontakt datasettansvarlig i din virksomhet.'
-              }}
-            />
+            <p>
+              Jeg ønsker tilgang til registreringsløsningen for min virksomhet
+              <br />
+              {
+                'Din leder må gi deg tilgang til tjenesten "Registrering i datakatalog" i '
+              }
+              <a
+                title="Lenke til Altinn"
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://www.altinn.no/"
+              >
+                Altinn
+              </a>, og eventuelt tildele deg rollen {'"Tilgangsstyring"'},
+              dersom du skal delegere tilgangen videre.
+              <br />
+              Kontakt den som kan delegere tilganger i{' '}
+              <a
+                title="Lenke til Altinn"
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://www.altinn.no/"
+              >
+                Altinn
+              </a>{' '}
+              i din virksomhet.
+            </p>
             <p>
               Når du har fått tilgang, vil din virksomhets datakatalog være
               tilgjengelig etter innlogging.<br />
@@ -43,8 +64,8 @@ export const ArticlePage = () => {
           </div>
 
           <div className="fdk-subtitle">
-            Hvordan gjøre en ansatt til datasettansvarlig
-            <span className="label label-default ml-1-em">Anbefalt</span>
+            Hvordan gjøre en ansatt til ansvarlig for registrering i Felles
+            datakatalog (FDK) - Anbefalt
           </div>
 
           <div className="fdk-box fdk-box--yellow fdk-box--flex fdk-box--noMargin">
@@ -61,8 +82,8 @@ export const ArticlePage = () => {
 
           <div className="fdk-box fdk-box--white fdk-box--border">
             <p>
-              En <strong>datasettansvarlig</strong> vil ha ansvaret for å gi
-              ansatte tilgang til å registrere datasett på vegne av
+              Den som er ansvarlig for registrering i FDK vil ha ansvaret for å
+              gi ansatte tilgang til å registrere i FDK på vegne av
               virksomheten. Det er anbefalt at dere har en person med dette
               ansvaret, da det forenkler fremtidige tilganger.
             </p>
@@ -80,17 +101,20 @@ export const ArticlePage = () => {
                   rel="noopener noreferrer"
                   href="https://www.altinn.no/"
                 >
-                  Altinn.no
+                  Altinn
                 </a>
                 <div
                   dangerouslySetInnerHTML={{
-                    __html:
-                      'Velg <strong>"Profil, roller og rettigheter"</strong>.<br />'
+                    __html: 'Velg aktøren du ønsker å representere<br />'
                   }}
                 />
               </div>
               <div className="fdk-box__rowItem--big">
-                <img alt="" src="/static/img/image11.png" title="" />
+                <img
+                  alt=""
+                  src="/static/img/image_choose_person.png"
+                  title=""
+                />
               </div>
             </div>
 
@@ -99,12 +123,15 @@ export const ArticlePage = () => {
               <div
                 className="fdk-box__rowItem__text"
                 dangerouslySetInnerHTML={{
-                  __html:
-                    'I nedtrekksmenyen velger du <strong>virksomheten</strong> som du representrerer. Altså den virksomheten som forvalter datakatalogen du oppretter en datasettansvarlig for.'
+                  __html: 'Velg "profil" øverst på siden'
                 }}
               />
               <div className="fdk-box__rowItem--big">
-                <img alt="" src="/static/img/image5.png" title="" />
+                <img
+                  alt=""
+                  src="/static/img/image_choose_profile.png"
+                  title=""
+                />
               </div>
             </div>
 
@@ -123,7 +150,11 @@ export const ArticlePage = () => {
                 </div>
               </div>
               <div className="fdk-box__rowItem--big">
-                <img alt="" src="/static/img/image3.png" title="" />
+                <img
+                  alt=""
+                  src="/static/img/image_add_new_person.png"
+                  title=""
+                />
               </div>
             </div>
 
@@ -137,12 +168,16 @@ export const ArticlePage = () => {
                   }}
                 />
                 <p>
-                  Tilgangsstyring gir datasettansvarlig muligheten til å gi
-                  andre ansatte tilgang til registreringsløsningen i fremtiden.
+                  Tilgangsstyring gir deg muligheten til å gi andre ansatte
+                  tilgang til registreringsløsningen i fremtiden.
                 </p>
               </div>
               <div className="fdk-box__rowItem--big">
-                <img alt="" src="/static/img/image2.png" title="" />
+                <img
+                  alt=""
+                  src="/static/img/image_give_and_remove_rights.png"
+                  title=""
+                />
               </div>
             </div>
 
@@ -160,14 +195,18 @@ export const ArticlePage = () => {
                 />
               </div>
               <div className="fdk-box__rowItem--big">
-                <img alt="" src="/static/img/image13.png" title="" />
+                <img
+                  alt=""
+                  src="/static/img/image_give_and_remove_rights_confirmation.png"
+                  title=""
+                />
               </div>
             </div>
 
             <div className="text-center">
               <span>
-                Gratulerer! Nå har du opprettet en{' '}
-                <strong>datasettansvarlig</strong> for din virksomhet.
+                Gratulerer! Nå har du opprettet en ansvarlig for registrering i
+                FDK for din virksomhet.
               </span>
             </div>
           </div>
@@ -180,8 +219,9 @@ export const ArticlePage = () => {
 
           <div className="fdk-box fdk-box--white">
             <p>
-              Vi anbefaler at dere bruker en datasettansvarlig som administrerer
-              registreringsrettigheter for virksomheten. Dette er forklart over.
+              Vi anbefaler at dere bruker en ansvarlig for registrering i FDK
+              som administrerer registreringsrettigheter for virksomheten. Dette
+              er forklart over.
             </p>
             <p
               dangerouslySetInnerHTML={{
@@ -247,7 +287,7 @@ export const ArticlePage = () => {
                       href="mailto:fellesdatakatalog@brreg.no"
                     >
                       Send oss gjerne en e-post
-                    </a>{' '}
+                    </a>
                     med ris, ros eller om morsomme bugs som har klart å gjemme
                     seg fra testerne våre.
                   </p>
