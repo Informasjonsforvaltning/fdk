@@ -228,22 +228,6 @@ export const ArticlePage = () => {
               }}
             />
           </div>
-
-          <div className="fdk-subtitle">
-            <span>
-              Jeg vil importere datasett til registreringsløsningen fra egne
-              kilder
-            </span>
-          </div>
-
-          <div className="fdk-box fdk-box--white">
-            <p>
-              Registreringsløsningen har en importfunksjon, slik at
-              datasettbeskrivelser registrert i andre løsningner kan hentes inn.
-              Vi anbefaler deg å gå over datasettene og sørge for at all
-              relevant informasjon er oppdatert.
-            </p>
-          </div>
         </div>
       </div>
       <div className="row">
