@@ -80,6 +80,7 @@ public class DcatValidationTest {
 
     }
 
+
     @Test
     public void validateWithNullModelShouldThrowIllegalArgumentException() {
 
