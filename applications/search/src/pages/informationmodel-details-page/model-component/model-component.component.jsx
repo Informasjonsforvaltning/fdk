@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+import _ from 'lodash';
 import { Collapse } from 'reactstrap';
 import { withStateHandlers } from 'recompose';
 import Scroll from 'react-scroll';
@@ -35,6 +36,58 @@ const renderProperties = properties => {
   });
 };
 
+const renderName = (collapseIconClass, onToggle, name, propertiesIsEmpty) => {
+  if (propertiesIsEmpty) {
+    return (
+      <div
+        style={{ marginLeft: '16px' }}
+        className="d-flex align-items-center w-50"
+        name={name}
+      >
+        <span className="d-flex w-50 fdk-text-extra-strong">{name}</span>
+      </div>
+    );
+  }
+  return (
+    <button
+      style={{ marginRight: '16px' }}
+      className="bg-transparent border-0 p-0 d-flex align-items-center w-50 node"
+      onClick={onToggle}
+      name={name}
+    >
+      <div className="d-flex align-items-center">
+        <i className={collapseIconClass} />
+        <span className="d-flex w-50 fdk-text-extra-strong">{name}</span>
+      </div>
+    </button>
+  );
+};
+
+const renderType = (type, nativeType) => {
+  if (type) {
+    return (
+      <div className="d-flex w-50">
+        <ScrollLink
+          key={type}
+          to={type}
+          spy
+          smooth
+          isDynamic
+          offset={-10}
+          duration={1500}
+          tabIndex="0"
+          className="node"
+        >
+          <span>{type}</span>
+        </ScrollLink>
+      </div>
+    );
+  } else if (!type && nativeType) {
+    return <div className="d-flex w-50">{nativeType}</div>;
+  }
+  return null;
+};
+
 export const ModelComponentPure = props => {
   const { name, definitions, collapse, onToggle } = props;
 
@@ -46,6 +99,7 @@ export const ModelComponentPure = props => {
   const type = getTypeFromTypeRef(getParentTypeRef(definition));
   const nativeType = getTypeFromTypeRef(definition.type);
   const properties = getOwnProperties(definition);
+  const propertiesIsEmpty = _.isEmpty(getOwnProperties(definition), true);
 
   const collapseIconClass = cx(
     'fa',
@@ -61,39 +115,9 @@ export const ModelComponentPure = props => {
   return (
     <React.Fragment>
       <div className="d-flex">
-        <button
-          className="bg-transparent border-0 p-0 d-flex align-items-center w-50 node"
-          onClick={onToggle}
-          name={name}
-        >
-          <div className="d-flex align-items-center">
-            <i className={collapseIconClass} />
-            <span className="d-flex w-50 fdk-text-extra-strong">{name}</span>
-          </div>
-        </button>
-        {type && (
-          <div style={{ marginLeft: '16px' }} className="d-flex w-50">
-            <ScrollLink
-              key={type}
-              to={type}
-              spy
-              smooth
-              isDynamic
-              offset={-10}
-              duration={1500}
-              tabIndex="0"
-              className="node"
-            >
-              <span>{type}</span>
-            </ScrollLink>
-          </div>
-        )}
-        {!type &&
-          nativeType && (
-            <div style={{ marginLeft: '16px' }} className="d-flex w-50">
-              {nativeType}
-            </div>
-          )}
+        {renderName(collapseIconClass, onToggle, name, propertiesIsEmpty)}
+
+        {renderType(type, nativeType)}
       </div>
       <Collapse className="mt-2" isOpen={collapse}>
         {renderProperties(properties)}

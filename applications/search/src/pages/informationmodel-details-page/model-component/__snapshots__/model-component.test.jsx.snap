@@ -10,6 +10,11 @@ exports[`should render ModelComponentPure with props 1`] = `
     <button
       className="bg-transparent border-0 p-0 d-flex align-items-center w-50 node"
       name="Enhet"
+      style={
+        Object {
+          "marginRight": "16px",
+        }
+      }
     >
       <div
         className="d-flex align-items-center"
