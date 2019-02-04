@@ -162,7 +162,7 @@ export const ArticlePage = () => {
                 <p
                   dangerouslySetInnerHTML={{
                     __html:
-                      'Her tildeler du <strong>rolle</strong> til den ansatte. <br />Søk etter roller <strong>Tilgangsstyring</strong>.'
+                      'Her tildeler du <strong>rolle</strong> til den ansatte. <br />Legg til rollen <strong>Tilgangsstyring</strong>.'
                   }}
                 />
                 <p>
