@@ -11,7 +11,6 @@ import { ResultsApi } from './results-api/results-api.component';
 import { ResultsInformationModel } from './results-informationmodel/results-informationmodel.component';
 import { SearchBox } from './search-box/search-box.component';
 import { ResultsTabs } from './results-tabs/results-tabs.component';
-import { addValue, removeValue } from '../../lib/stringUtils';
 
 import './search-page.scss';
 import {
@@ -21,15 +20,21 @@ import {
   PATHNAME_DATASETS,
   PATHNAME_INFORMATIONMODELS
 } from '../../constants/constants';
+import { parseSearchParams } from '../../lib/location-history-helper';
+import {
+  clearFilters,
+  isFilterNotEmpty,
+  setFilter,
+  setMultiselectFilterValue,
+  setPage,
+  setSearchText,
+  setSortfield
+} from './search-location-helper';
 
 const browser = detect();
 
 export const SearchPage = props => {
   const {
-    searchQuery,
-    setSearchQuery,
-    setQueryFilter,
-    setQueryPage,
     fetchDatasetsIfNeeded,
     fetchApisIfNeeded,
     fetchConceptsIfNeeded,
@@ -37,7 +42,6 @@ export const SearchPage = props => {
     fetchPublishersIfNeeded,
     fetchReferenceDataIfNeeded,
     fetchInformationModelsIfNeeded,
-    clearQuery,
     history,
     datasetItems,
     datasetAggregations,
@@ -71,119 +75,90 @@ export const SearchPage = props => {
     close
   } = props;
 
-  fetchDatasetsIfNeeded(searchQuery);
-  fetchApisIfNeeded(searchQuery);
-  fetchConceptsIfNeeded(searchQuery);
-  fetchInformationModelsIfNeeded(searchQuery);
+  const locationSearch = parseSearchParams(location);
+
+  fetchDatasetsIfNeeded(locationSearch);
+  fetchApisIfNeeded(locationSearch);
+  fetchConceptsIfNeeded(locationSearch);
+  fetchInformationModelsIfNeeded(locationSearch);
 
   fetchThemesIfNeeded();
   fetchPublishersIfNeeded();
   fetchReferenceDataIfNeeded();
 
   const handleClearFilters = () => {
-    clearQuery(history);
+    clearFilters(history, location);
   };
 
-  const isFilterNotEmpty = () =>
-    _.some(
-      _.values(
-        _.omit(props.searchQuery, ['q', 'page', 'sortfield', 'sortdirection'])
-      )
-    );
+  const _isFilterNotEmpty = () => isFilterNotEmpty(location);
 
-  const handleSearchSubmit = searchField => {
-    setSearchQuery(searchField, history);
+  const handleSearchSubmit = searchText => {
+    setSearchText(history, location, searchText);
   };
 
   const handleDatasetFilterThemes = event => {
-    const { theme } = searchQuery;
-    if (event.target.checked) {
-      setQueryFilter('theme', addValue(theme, event.target.value), history);
-    } else {
-      setQueryFilter('theme', removeValue(theme, event.target.value), history);
-    }
+    const selectedValue = event.target.value;
+    const add = event.target.checked;
+    setMultiselectFilterValue(history, location, 'theme', selectedValue, add);
   };
 
   const handleDatasetFilterAccessRights = event => {
-    const { accessrights } = searchQuery;
-    if (event.target.checked) {
-      setQueryFilter(
-        'accessrights',
-        addValue(accessrights, event.target.value),
-        history
-      );
-    } else {
-      setQueryFilter(
-        'accessrights',
-        removeValue(accessrights, event.target.value),
-        history
-      );
-    }
+    const selectedValue = event.target.value;
+    const add = event.target.checked;
+    setMultiselectFilterValue(
+      history,
+      location,
+      'accessrights',
+      selectedValue,
+      add
+    );
   };
 
   const handleDatasetFilterPublisherHierarchy = event => {
+    const selectedValue = event.target.value;
+
     if (event.target.checked) {
-      setQueryFilter('orgPath', event.target.value, history);
+      setFilter(history, location, { orgPath: selectedValue });
     } else {
-      setQueryFilter('orgPath', undefined, history);
+      setFilter(history, location, { orgPath: null });
     }
   };
 
   const handleDatasetFilterProvenance = event => {
-    const { provenance } = searchQuery;
-    if (event.target.checked) {
-      setQueryFilter(
-        'provenance',
-        addValue(provenance, event.target.value),
-        history
-      );
-    } else {
-      setQueryFilter(
-        'provenance',
-        removeValue(provenance, event.target.value),
-        history
-      );
-    }
+    const selectedValue = event.target.value;
+    const add = event.target.checked;
+    setMultiselectFilterValue(
+      history,
+      location,
+      'provenance',
+      selectedValue,
+      add
+    );
   };
 
   const handleDatasetFilterSpatial = event => {
-    const { spatial } = searchQuery;
-    if (event.target.checked) {
-      setQueryFilter('spatial', addValue(spatial, event.target.value), history);
-    } else {
-      setQueryFilter(
-        'spatial',
-        removeValue(spatial, event.target.value),
-        history
-      );
-    }
+    const selectedValue = event.target.value;
+    const add = event.target.checked;
+    setMultiselectFilterValue(history, location, 'spatial', selectedValue, add);
   };
 
   const handleFilterFormat = event => {
-    const { format } = searchQuery;
-    if (event.target.checked) {
-      setQueryFilter('format', addValue(format, event.target.value), history);
-    } else {
-      setQueryFilter(
-        'format',
-        removeValue(format, event.target.value),
-        history
-      );
-    }
+    const selectedValue = event.target.value;
+    const add = event.target.checked;
+    setMultiselectFilterValue(history, location, 'format', selectedValue, add);
   };
 
   const sortByScore = () => {
-    setQueryFilter('sortfield', undefined, history);
+    setSortfield(history, location, undefined);
   };
   const sortByLastModified = () => {
-    const { setQueryFilter, history } = props;
-    setQueryFilter('sortfield', 'modified', history);
+    setSortfield(history, location, 'modified');
   };
 
   const handlePageChange = data => {
     const { selected } = data;
 
-    setQueryPage(selected || undefined, history);
+    setPage(history, location, selected);
   };
 
   const topSectionClass = cx('top-section-search', 'mb-4', {
@@ -196,7 +171,7 @@ export const SearchPage = props => {
         <div className="container">
           <SearchBox
             onSearchSubmit={handleSearchSubmit}
-            searchText={searchQuery.q || ''}
+            searchText={locationSearch.q || ''}
             countDatasets={datasetTotal}
             countTerms={conceptTotal}
             countApis={apiTotal}
@@ -232,7 +207,7 @@ export const SearchPage = props => {
                 }
                 onFilterProvenance={handleDatasetFilterProvenance}
                 onFilterSpatial={handleDatasetFilterSpatial}
-                searchQuery={searchQuery}
+                locationSearch={locationSearch}
                 themesItems={themesItems}
                 publisherCounts={_.get(datasetAggregations, 'orgPath.buckets')}
                 publishers={publisherItems}
@@ -243,7 +218,7 @@ export const SearchPage = props => {
                 onSortByScore={sortByScore}
                 datasetSortValue={datasetSortValue}
                 onPageChange={handlePageChange}
-                showClearFilterButton={isFilterNotEmpty()}
+                showClearFilterButton={_isFilterNotEmpty()}
                 hitsPerPage={HITS_PER_PAGE}
               />
             )}
@@ -255,7 +230,7 @@ export const SearchPage = props => {
               <ResultsApi
                 showFilterModal={showFilterModal}
                 closeFilterModal={close}
-                showClearFilterButton={isFilterNotEmpty()}
+                showClearFilterButton={_isFilterNotEmpty()}
                 apiItems={apiItems}
                 apiTotal={apiTotal}
                 apiAggregations={apiAggregations}
@@ -265,7 +240,7 @@ export const SearchPage = props => {
                 }
                 onFilterFormat={handleFilterFormat}
                 onClearFilters={handleClearFilters}
-                searchQuery={searchQuery}
+                locationSearch={locationSearch}
                 publisherCounts={_.get(apiAggregations, 'orgPath.buckets')}
                 publishers={publisherItems}
                 onSortByLastModified={sortByLastModified}
@@ -284,7 +259,7 @@ export const SearchPage = props => {
               <ResultsConcepts
                 showFilterModal={showFilterModal}
                 closeFilterModal={close}
-                showClearFilterButton={isFilterNotEmpty()}
+                showClearFilterButton={_isFilterNotEmpty()}
                 conceptItems={conceptItems}
                 conceptTotal={conceptTotal}
                 conceptAggregations={conceptAggregations}
@@ -292,7 +267,7 @@ export const SearchPage = props => {
                 onFilterPublisherHierarchy={
                   handleDatasetFilterPublisherHierarchy
                 }
-                searchQuery={searchQuery}
+                locationSearch={locationSearch}
                 publisherCounts={_.get(conceptAggregations, 'orgPath.buckets')}
                 publishers={publisherItems}
                 onSortByLastModified={sortByLastModified}
@@ -314,7 +289,7 @@ export const SearchPage = props => {
               <ResultsInformationModel
                 showFilterModal={showFilterModal}
                 closeFilterModal={close}
-                showClearFilterButton={isFilterNotEmpty()}
+                showClearFilterButton={_isFilterNotEmpty()}
                 informationModelItems={informationModelItems}
                 informationModelTotal={informationModelTotal}
                 informationModelAggregations={informationModelAggregations}
@@ -322,7 +297,7 @@ export const SearchPage = props => {
                   handleDatasetFilterPublisherHierarchy
                 }
                 onClearFilters={handleClearFilters}
-                searchQuery={searchQuery}
+                locationSearch={locationSearch}
                 publisherCounts={_.get(
                   informationModelAggregations,
                   'orgPath.buckets'

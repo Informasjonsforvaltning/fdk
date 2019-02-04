@@ -19,20 +19,6 @@ import { SearchPublishersTree } from '../search-publishers-tree/search-publisher
 import { getTranslateText } from '../../../lib/translateText';
 
 export class ResultsConcepts extends React.Component {
-  componentWillMount() {
-    const urlHasSortfieldModified =
-      window.location.href.indexOf('sortfield=modified') !== -1;
-    const conceptSortValueIsModified =
-      this.props.conceptSortValue === 'modified';
-
-    if (conceptSortValueIsModified || urlHasSortfieldModified) {
-      this.props.setConceptSort('modified');
-      this.props.onSortByLastModified();
-    } else {
-      this.props.onSortByScore();
-      this.props.setConceptSort(undefined);
-    }
-  }
   _renderCompareTerms() {
     const { conceptsCompare } = this.props;
     const conceptIdsArray = [];
@@ -95,7 +81,7 @@ export class ResultsConcepts extends React.Component {
       showFilterModal,
       closeFilterModal,
       onFilterPublisherHierarchy,
-      searchQuery,
+      locationSearch,
       publisherCounts,
       publishers
     } = this.props;
@@ -108,7 +94,7 @@ export class ResultsConcepts extends React.Component {
               title={localization.facet.organisation}
               publisherCounts={publisherCounts}
               onFilterPublisherHierarchy={onFilterPublisherHierarchy}
-              activeFilter={searchQuery.orgPath}
+              activeFilter={locationSearch.orgPath}
               publishers={publishers}
             />
           </div>
@@ -132,7 +118,7 @@ export class ResultsConcepts extends React.Component {
       onClearFilters,
       onPageChange,
       onFilterPublisherHierarchy,
-      searchQuery,
+      locationSearch,
       showClearFilterButton,
       hitsPerPage,
       publisherCounts,
@@ -142,7 +128,7 @@ export class ResultsConcepts extends React.Component {
       conceptSortValue,
       setConceptSort
     } = this.props;
-    const page = (searchQuery && searchQuery.page) || 0;
+    const page = parseInt(locationSearch.page || 0, 10);
     const pageCount = Math.ceil((conceptTotal || 1) / hitsPerPage);
     const clearButtonClass = cx(
       'btn',
@@ -218,7 +204,7 @@ export class ResultsConcepts extends React.Component {
                     title={localization.facet.organisation}
                     publisherCounts={publisherCounts}
                     onFilterPublisherHierarchy={onFilterPublisherHierarchy}
-                    activeFilter={_.get(searchQuery, 'orgPath')}
+                    activeFilter={_.get(locationSearch, 'orgPath')}
                     publishers={publishers}
                   />
                 </div>
@@ -266,7 +252,7 @@ ResultsConcepts.defaultProps = {
 
   onClearFilters: _.noop,
   onFilterPublisherHierarchy: _.noop,
-  searchQuery: null,
+  locationSearch: {},
 
   publisherCounts: [],
   publishers: null,
@@ -292,8 +278,7 @@ ResultsConcepts.propTypes = {
 
   onClearFilters: PropTypes.func,
   onFilterPublisherHierarchy: PropTypes.func,
-  searchQuery: PropTypes.object,
-
+  locationSearch: PropTypes.object,
   publisherCounts: PropTypes.array,
   publishers: PropTypes.object,
 

@@ -6,12 +6,6 @@ import { fetchInformationModelsIfNeededAction } from '../../redux/modules/inform
 import { fetchPublishersIfNeededAction } from '../../redux/modules/publishers';
 import { fetchThemesIfNeededAction } from '../../redux/modules/themes';
 import {
-  setSearchQuery,
-  setQueryFilter,
-  setQueryPage,
-  clearQuery
-} from '../../redux/modules/search';
-import {
   setDatasetSortAction,
   setConceptSortAction,
   setApiSortAction,
@@ -119,12 +113,6 @@ const mapDispatchToProps = dispatch => ({
   setDatasetSort: sortValue => dispatch(setDatasetSortAction(sortValue)),
   setApiSort: sortValue => dispatch(setApiSortAction(sortValue)),
   setConceptSort: sortValue => dispatch(setConceptSortAction(sortValue)),
-  setSearchQuery: (query, history) => dispatch(setSearchQuery(query, history)),
-  setQueryFilter: (filterType, filterValue, history) =>
-    dispatch(setQueryFilter(filterType, filterValue, history)),
-  setQueryPage: (filterValue, history) =>
-    dispatch(setQueryPage(filterValue, history)),
-  clearQuery: history => dispatch(clearQuery(history)),
   fetchInformationModelsIfNeeded: query =>
     dispatch(fetchInformationModelsIfNeededAction(query)),
   setInformationModelSort: sortValue =>
