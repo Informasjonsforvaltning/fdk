@@ -22,8 +22,6 @@ import {
   PATHNAME_INFORMATIONMODELS
 } from '../../constants/constants';
 
-const ReactGA = require('react-ga');
-
 const browser = detect();
 
 export const SearchPage = props => {
@@ -100,18 +98,8 @@ export const SearchPage = props => {
   const handleDatasetFilterThemes = event => {
     const { theme } = searchQuery;
     if (event.target.checked) {
-      ReactGA.event({
-        category: 'Fasett',
-        action: 'Legge til tema',
-        label: event.target.value
-      });
       setQueryFilter('theme', addValue(theme, event.target.value), history);
     } else {
-      ReactGA.event({
-        category: 'Fasett',
-        action: 'Fjerne tema',
-        label: event.target.value
-      });
       setQueryFilter('theme', removeValue(theme, event.target.value), history);
     }
   };
@@ -119,22 +107,12 @@ export const SearchPage = props => {
   const handleDatasetFilterAccessRights = event => {
     const { accessrights } = searchQuery;
     if (event.target.checked) {
-      ReactGA.event({
-        category: 'Fasett',
-        action: 'Legge til tilgang',
-        label: event.target.value
-      });
       setQueryFilter(
         'accessrights',
         addValue(accessrights, event.target.value),
         history
       );
     } else {
-      ReactGA.event({
-        category: 'Fasett',
-        action: 'Fjerne tilgang',
-        label: event.target.value
-      });
       setQueryFilter(
         'accessrights',
         removeValue(accessrights, event.target.value),
@@ -145,18 +123,8 @@ export const SearchPage = props => {
 
   const handleDatasetFilterPublisherHierarchy = event => {
     if (event.target.checked) {
-      ReactGA.event({
-        category: 'Fasett',
-        action: 'Legge til virksomhet',
-        label: event.target.value
-      });
       setQueryFilter('orgPath', event.target.value, history);
     } else {
-      ReactGA.event({
-        category: 'Fasett',
-        action: 'Fjerne virksomhet',
-        label: event.target.value
-      });
       setQueryFilter('orgPath', undefined, history);
     }
   };
@@ -164,22 +132,12 @@ export const SearchPage = props => {
   const handleDatasetFilterProvenance = event => {
     const { provenance } = searchQuery;
     if (event.target.checked) {
-      ReactGA.event({
-        category: 'Fasett',
-        action: 'Legge til opphav',
-        label: event.target.value
-      });
       setQueryFilter(
         'provenance',
         addValue(provenance, event.target.value),
         history
       );
     } else {
-      ReactGA.event({
-        category: 'Fasett',
-        action: 'Fjerne opphav',
-        label: event.target.value
-      });
       setQueryFilter(
         'provenance',
         removeValue(provenance, event.target.value),
@@ -191,18 +149,8 @@ export const SearchPage = props => {
   const handleDatasetFilterSpatial = event => {
     const { spatial } = searchQuery;
     if (event.target.checked) {
-      ReactGA.event({
-        category: 'Fasett',
-        action: 'Legge til geografi',
-        label: event.target.value
-      });
       setQueryFilter('spatial', addValue(spatial, event.target.value), history);
     } else {
-      ReactGA.event({
-        category: 'Fasett',
-        action: 'Fjerne geografi',
-        label: event.target.value
-      });
       setQueryFilter(
         'spatial',
         removeValue(spatial, event.target.value),
@@ -214,18 +162,8 @@ export const SearchPage = props => {
   const handleFilterFormat = event => {
     const { format } = searchQuery;
     if (event.target.checked) {
-      ReactGA.event({
-        category: 'Fasett',
-        action: 'Legge til format',
-        label: event.target.value
-      });
       setQueryFilter('format', addValue(format, event.target.value), history);
     } else {
-      ReactGA.event({
-        category: 'Fasett',
-        action: 'Fjerne format',
-        label: event.target.value
-      });
       setQueryFilter(
         'format',
         removeValue(format, event.target.value),
