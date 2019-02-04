@@ -23,8 +23,6 @@ export const ArticlePage = () => {
 
           <div className="fdk-box fdk-box--white">
             <p>
-              Jeg ønsker tilgang til registreringsløsningen for min virksomhet
-              <br />
               {
                 'Din leder må gi deg tilgang til tjenesten "Registrering i datakatalog" i '
               }
@@ -164,7 +162,7 @@ export const ArticlePage = () => {
                 <p
                   dangerouslySetInnerHTML={{
                     __html:
-                      'Her tildeler du <strong>rolle</strong> til den ansatte. <br />Søk etter roller <strong>Tilgangsstyring</strong>.'
+                      'Her tildeler du <strong>rolle</strong> til den ansatte. <br />Legg til rollen <strong>Tilgangsstyring</strong>.'
                   }}
                 />
                 <p>
@@ -226,25 +224,9 @@ export const ArticlePage = () => {
             <p
               dangerouslySetInnerHTML={{
                 __html:
-                  'Dersom du allikevel ønsker å tildele rettigheter enkeltvis, følger du stegene som beskrevet over, <strong>unntatt steg 4</strong>, hvor du tildeler roller "Tilgangsstyring".'
+                  'Dersom du allikevel ønsker å tildele rettigheter enkeltvis, følger du stegene som beskrevet over, <strong>unntatt steg 4</strong>, hvor du tildeler rollen "Tilgangsstyring".'
               }}
             />
-          </div>
-
-          <div className="fdk-subtitle">
-            <span>
-              Jeg vil importere datasett til registreringsløsningen fra egne
-              kilder
-            </span>
-          </div>
-
-          <div className="fdk-box fdk-box--white">
-            <p>
-              Registreringsløsningen har en importfunksjon, slik at
-              datasettbeskrivelser registrert i andre løsningner kan hentes inn.
-              Vi anbefaler deg å gå over datasettene og sørge for at all
-              relevant informasjon er oppdatert.
-            </p>
           </div>
         </div>
       </div>
