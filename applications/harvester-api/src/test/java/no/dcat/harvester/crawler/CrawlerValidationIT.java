@@ -53,7 +53,7 @@ public class CrawlerValidationIT {
         CrawlerJob crawlerJob = new CrawlerJob(dcatSource,null, subjectCrawler);
         Model model = crawlerJob.loadModelAndValidate(r.getURL());
 
-       // model.write(System.out, "TURTLE");
+        // model.write(System.out, "TURTLE");
 
         DcatReader reader = setupReader(model);
         List<Dataset> datasets = reader.getDatasets();
@@ -72,6 +72,29 @@ public class CrawlerValidationIT {
         boolean notFound = datasets.stream().noneMatch(dataset -> dataset.getUri().startsWith("https://data.norge.no/node/1939"));
         assertThat("the dataset is not found after removing non-valid dataset", notFound, is(true));
         assertThat("the number of datasets after removing non-valid dataset", datasets.size(), is(549));
+
+    }
+
+
+    @Test
+    public void readGeonorgeDataWithWrongSpatialProperty() throws Throwable {
+
+        Resource r = new ClassPathResource("geonorge-spatial-resource.xml");
+        DcatSource dcatSource = new DcatSource();
+        dcatSource.setUrl("http://testurl");
+        CrawlerJob crawlerJob = new CrawlerJob(dcatSource,null, subjectCrawler);
+        Model model = crawlerJob.loadModelAndValidate(r.getURL());
+
+        DcatReader reader = setupReader(model);
+        List<Dataset> datasets = reader.getDatasets();
+
+        Dataset found = datasets.stream().filter(dataset ->
+            dataset.getUri().startsWith("https://kartkatalog.geonorge.no/Metadata/uuid/041f1e6e-bdbc-4091-b48f-8a5990f3cc5b"))
+            .findFirst().get();
+
+        assertThat("the dataset is found in modeldata", found, is(notNullValue()));
+        assertThat("the number of datasets in model", datasets.size() , is(1));
+
 
     }
 

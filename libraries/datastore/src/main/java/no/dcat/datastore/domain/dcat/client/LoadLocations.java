@@ -65,7 +65,13 @@ public class LoadLocations {
         ResIterator resIterator = model.listResourcesWithProperty(DCTerms.spatial);
         resIterator.forEachRemaining(datasetResource -> {
             datasetResource.listProperties(DCTerms.spatial).forEachRemaining(spatial -> {
-                String uri = AbstractBuilder.removeDefaultBaseUri(model, spatial.getObject().asResource().getURI());
+
+                String uri = null;
+                if(spatial.getObject().isResource()) {
+                    uri = AbstractBuilder.removeDefaultBaseUri(model, spatial.getObject().asResource().getURI());
+                } else {
+                    uri = spatial.getLiteral().getString();
+                }
 
                 if (uri != null && uri.startsWith("http")) {
                     if (existingLocationCodes == null || !existingLocationCodes.containsKey(uri)) {
