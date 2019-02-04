@@ -12,7 +12,7 @@ import { SearchPublishersTree } from '../search-publishers-tree/search-publisher
 const renderFilterModal = ({
   showFilterModal,
   closeFilterModal,
-  searchQuery,
+  locationSearch,
   publisherCounts,
   publishers,
   onFilterPublisherHierarchy
@@ -25,7 +25,7 @@ const renderFilterModal = ({
           title={localization.facet.provider}
           publisherCounts={publisherCounts}
           onFilterPublisherHierarchy={onFilterPublisherHierarchy}
-          activeFilter={searchQuery.orgPath}
+          activeFilter={locationSearch.orgPath}
           publishers={publishers}
         />
       </div>
@@ -54,25 +54,6 @@ const renderHits = (hits, publishers) => {
 
 // eslint-disable-next-line react/prefer-stateless-function
 export class ResultsInformationModel extends React.Component {
-  componentWillMount() {
-    const {
-      informationModelSortValue,
-      setInformationModelSort,
-      onSortByLastModified,
-      onSortByScore
-    } = this.props;
-    const urlHasSortfieldModified =
-      window.location.href.indexOf('sortfield=modified') !== -1;
-    const informationModelIsModified = informationModelSortValue === 'modified';
-
-    if (informationModelIsModified || urlHasSortfieldModified) {
-      setInformationModelSort('modified');
-      onSortByLastModified();
-    } else {
-      onSortByScore();
-      setInformationModelSort(undefined);
-    }
-  }
   render() {
     const {
       showFilterModal,
@@ -81,7 +62,7 @@ export class ResultsInformationModel extends React.Component {
       informationModelTotal,
       informationModelAggregations,
       onFilterPublisherHierarchy,
-      searchQuery,
+      locationSearch,
       publisherCounts,
       publishers,
       onClearFilters,
@@ -94,7 +75,7 @@ export class ResultsInformationModel extends React.Component {
       setInformationModelSort
     } = this.props;
 
-    const page = (searchQuery && searchQuery.page) || 0;
+    const page = parseInt(locationSearch.page || 0, 10);
     const pageCount = Math.ceil((informationModelTotal || 1) / hitsPerPage);
 
     const clearButtonClass = cx(
@@ -167,7 +148,7 @@ export class ResultsInformationModel extends React.Component {
                 {renderFilterModal({
                   showFilterModal,
                   closeFilterModal,
-                  searchQuery,
+                  locationSearch,
                   publisherCounts,
                   publishers,
                   onFilterPublisherHierarchy
@@ -176,7 +157,7 @@ export class ResultsInformationModel extends React.Component {
                   title={localization.facet.provider}
                   publisherCounts={publisherCounts}
                   onFilterPublisherHierarchy={onFilterPublisherHierarchy}
-                  activeFilter={searchQuery.orgPath}
+                  activeFilter={locationSearch.orgPath}
                   publishers={publishers}
                 />
               </div>
@@ -221,7 +202,7 @@ ResultsInformationModel.defaultProps = {
   informationModelAggregations: null,
 
   onFilterPublisherHierarchy: _.noop,
-  searchQuery: {},
+  locationSearch: {},
   onClearFilters: _.noop,
 
   publisherCounts: [],
@@ -243,9 +224,8 @@ ResultsInformationModel.propTypes = {
   informationModelAggregations: PropTypes.object,
 
   onFilterPublisherHierarchy: PropTypes.func,
-  searchQuery: PropTypes.object,
+  locationSearch: PropTypes.object,
   onClearFilters: PropTypes.func,
-
   publisherCounts: PropTypes.array,
   publishers: PropTypes.object,
 

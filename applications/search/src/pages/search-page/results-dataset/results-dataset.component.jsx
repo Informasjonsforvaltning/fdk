@@ -12,21 +12,6 @@ import { SearchPublishersTree } from '../search-publishers-tree/search-publisher
 import { ErrorBoundary } from '../../../components/error-boundary/error-boundary';
 
 export class ResultsDataset extends React.Component {
-  componentWillMount() {
-    const urlHasSortfieldModified =
-      window.location.href.indexOf('sortfield=modified') !== -1;
-    const datasetSortValueIsModified =
-      this.props.datasetSortValue === 'modified';
-
-    if (datasetSortValueIsModified || urlHasSortfieldModified) {
-      this.props.setDatasetSort('modified');
-      this.props.onSortByLastModified();
-    } else {
-      this.props.onSortByScore();
-      this.props.setDatasetSort(undefined);
-    }
-  }
-
   _renderFilterModal() {
     const {
       showFilterModal,
@@ -37,7 +22,7 @@ export class ResultsDataset extends React.Component {
       onFilterPublisherHierarchy,
       onFilterProvenance,
       onFilterSpatial,
-      searchQuery,
+      locationSearch,
       themesItems,
       publisherCounts,
       publishers
@@ -52,7 +37,7 @@ export class ResultsDataset extends React.Component {
               title={localization.facet.theme}
               filter={datasetAggregations.theme_count}
               onClick={onFilterTheme}
-              activeFilter={searchQuery.theme}
+              activeFilter={locationSearch.theme}
               themesItems={themesItems}
             />
             <FilterBox
@@ -60,13 +45,13 @@ export class ResultsDataset extends React.Component {
               title={localization.facet.accessRight}
               filter={datasetAggregations.accessRightsCount}
               onClick={onFilterAccessRights}
-              activeFilter={searchQuery.accessrights}
+              activeFilter={locationSearch.accessrights}
             />
             <SearchPublishersTree
               title={localization.facet.organisation}
               publisherCounts={publisherCounts}
               onFilterPublisherHierarchy={onFilterPublisherHierarchy}
-              activeFilter={searchQuery.orgPath}
+              activeFilter={locationSearch.orgPath}
               publishers={publishers}
             />
             <FilterBox
@@ -74,14 +59,14 @@ export class ResultsDataset extends React.Component {
               title={localization.facet.spatial}
               filter={datasetAggregations.spatial}
               onClick={onFilterSpatial}
-              activeFilter={searchQuery.spatial}
+              activeFilter={locationSearch.spatial}
             />
             <FilterBox
               htmlKey={4}
               title={localization.facet.provenance}
               filter={datasetAggregations.provenanceCount}
               onClick={onFilterProvenance}
-              activeFilter={searchQuery.provenance}
+              activeFilter={locationSearch.provenance}
             />
           </div>
         </ModalBody>
@@ -122,7 +107,7 @@ export class ResultsDataset extends React.Component {
       onFilterSpatial,
       onPageChange,
       showClearFilterButton,
-      searchQuery,
+      locationSearch,
       themesItems,
       hitsPerPage,
       publisherCounts,
@@ -132,7 +117,7 @@ export class ResultsDataset extends React.Component {
       setDatasetSort,
       datasetSortValue
     } = this.props;
-    const page = (searchQuery && searchQuery.page) || 0;
+    const page = parseInt(locationSearch.page || 0, 10);
     const pageCount = Math.ceil((datasetTotal || 1) / hitsPerPage);
 
     const clearButtonClass = cx(
@@ -210,7 +195,7 @@ export class ResultsDataset extends React.Component {
                     title={localization.facet.theme}
                     filter={datasetAggregations.theme_count}
                     onClick={onFilterTheme}
-                    activeFilter={searchQuery.theme}
+                    activeFilter={locationSearch.theme}
                     themesItems={themesItems}
                   />
                   <FilterBox
@@ -218,13 +203,13 @@ export class ResultsDataset extends React.Component {
                     title={localization.facet.accessRight}
                     filter={datasetAggregations.accessRightsCount}
                     onClick={onFilterAccessRights}
-                    activeFilter={searchQuery.accessrights}
+                    activeFilter={locationSearch.accessrights}
                   />
                   <SearchPublishersTree
                     title={localization.facet.organisation}
                     publisherCounts={publisherCounts}
                     onFilterPublisherHierarchy={onFilterPublisherHierarchy}
-                    activeFilter={searchQuery.orgPath}
+                    activeFilter={locationSearch.orgPath}
                     publishers={publishers}
                   />
                   <FilterBox
@@ -232,14 +217,14 @@ export class ResultsDataset extends React.Component {
                     title={localization.facet.spatial}
                     filter={datasetAggregations.spatial}
                     onClick={onFilterSpatial}
-                    activeFilter={searchQuery.spatial}
+                    activeFilter={locationSearch.spatial}
                   />
                   <FilterBox
                     htmlKey={4}
                     title={localization.facet.provenance}
                     filter={datasetAggregations.provenanceCount}
                     onClick={onFilterProvenance}
-                    activeFilter={searchQuery.provenance}
+                    activeFilter={locationSearch.provenance}
                   />
                 </div>
               )}
@@ -287,9 +272,8 @@ ResultsDataset.defaultProps = {
   onFilterPublisherHierarchy: _.noop,
   onFilterProvenance: _.noop,
   onFilterSpatial: _.noop,
-  searchQuery: null,
+  locationSearch: {},
   onClearFilters: _.noop,
-
   themesItems: null,
   publisherCounts: [],
   publishers: null,
@@ -315,9 +299,8 @@ ResultsDataset.propTypes = {
   onFilterPublisherHierarchy: PropTypes.func,
   onFilterProvenance: PropTypes.func,
   onFilterSpatial: PropTypes.func,
-  searchQuery: PropTypes.object,
+  locationSearch: PropTypes.object,
   onClearFilters: PropTypes.func,
-
   themesItems: PropTypes.object,
   publisherCounts: PropTypes.array,
   publishers: PropTypes.object,

@@ -1,17 +1,13 @@
-export function removeValue(list, value) {
-  const modifiedList = list.split(',');
-  modifiedList.splice(modifiedList.indexOf(value), 1);
-  if (JSON.stringify(modifiedList) === '[]') {
-    return undefined;
-  }
-  return modifiedList.join(',');
+import _ from 'lodash';
+
+export function removeValue(listAsString, value) {
+  return _.without(listAsString.split(','), value).join(',') || undefined; // return undefined instead of empty
 }
 
-export function addValue(list, value) {
-  let ret = [];
-  if (list) {
-    ret = list.split(',');
-  }
-  ret.push(value);
-  return ret.join(',');
+export function addValue(listAsString, value) {
+  return (listAsString || '')
+    .split(',')
+    .concat(value)
+    .filter(v => !!v)
+    .join(',');
 }

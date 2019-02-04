@@ -6,7 +6,6 @@ import { settingsResolver } from './modules/settings';
 import { catalogsReducer } from './modules/catalogs';
 import { referenceDataReducer } from './modules/referenceData';
 import { conceptsCompareReducer } from './modules/conceptsCompare';
-import { searchReducer } from './modules/search';
 import { datasets } from './modules/datasets';
 import { apis } from './modules/apis';
 import { concepts } from './modules/concepts';
@@ -20,7 +19,6 @@ export const rootReducer = combineReducers({
   catalogs: catalogsReducer,
   referenceData: referenceDataReducer,
   conceptsCompare: conceptsCompareReducer,
-  searchQuery: searchReducer,
   datasets,
   apis,
   concepts,

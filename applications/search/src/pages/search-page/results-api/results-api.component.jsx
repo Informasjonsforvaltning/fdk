@@ -14,7 +14,7 @@ const renderFilterModal = ({
   showFilterModal,
   closeFilterModal,
   apiAggregations,
-  searchQuery,
+  locationSearch,
   publisherCounts,
   publishers,
   onFilterFormat,
@@ -28,7 +28,7 @@ const renderFilterModal = ({
           title={localization.facet.provider}
           publisherCounts={publisherCounts}
           onFilterPublisherHierarchy={onFilterPublisherHierarchy}
-          activeFilter={searchQuery.orgPath}
+          activeFilter={locationSearch.orgPath}
           publishers={publishers}
         />
         <FilterBox
@@ -36,7 +36,7 @@ const renderFilterModal = ({
           title={localization.facet.format}
           filter={_.get(apiAggregations, 'formats')}
           onClick={onFilterFormat}
-          activeFilter={searchQuery.format}
+          activeFilter={locationSearch.format}
         />
       </div>
     </ModalBody>
@@ -62,20 +62,8 @@ const renderHits = (hits, publishers) => {
   return null;
 };
 
+// eslint-disable-next-line react/prefer-stateless-function
 export class ResultsApi extends React.Component {
-  componentWillMount() {
-    const urlHasSortfieldModified =
-      window.location.href.indexOf('sortfield=modified') !== -1;
-    const apiSortValueIsModified = this.props.apiSortValue === 'modified';
-
-    if (apiSortValueIsModified || urlHasSortfieldModified) {
-      this.props.setApiSort('modified');
-      this.props.onSortByLastModified();
-    } else {
-      this.props.onSortByScore();
-      this.props.setApiSort(undefined);
-    }
-  }
   render() {
     const {
       showFilterModal,
@@ -85,7 +73,7 @@ export class ResultsApi extends React.Component {
       apiAggregations,
       onFilterPublisherHierarchy,
       onFilterFormat,
-      searchQuery,
+      locationSearch,
       publisherCounts,
       publishers,
       onClearFilters,
@@ -98,7 +86,7 @@ export class ResultsApi extends React.Component {
       setApiSort
     } = this.props;
 
-    const page = (searchQuery && searchQuery.page) || 0;
+    const page = parseInt(locationSearch.page || 0, 10);
     const pageCount = Math.ceil((apiTotal || 1) / hitsPerPage);
 
     const clearButtonClass = cx(
@@ -172,7 +160,7 @@ export class ResultsApi extends React.Component {
                   showFilterModal,
                   closeFilterModal,
                   apiAggregations,
-                  searchQuery,
+                  locationSearch,
                   publisherCounts,
                   publishers,
                   onFilterFormat,
@@ -182,7 +170,7 @@ export class ResultsApi extends React.Component {
                   title={localization.facet.provider}
                   publisherCounts={publisherCounts}
                   onFilterPublisherHierarchy={onFilterPublisherHierarchy}
-                  activeFilter={searchQuery.orgPath}
+                  activeFilter={locationSearch.orgPath}
                   publishers={publishers}
                 />
                 <FilterBox
@@ -190,7 +178,7 @@ export class ResultsApi extends React.Component {
                   title={localization.facet.format}
                   filter={_.get(apiAggregations, 'formats')}
                   onClick={onFilterFormat}
-                  activeFilter={searchQuery.format}
+                  activeFilter={locationSearch.format}
                 />
               </div>
             )}
@@ -237,8 +225,7 @@ ResultsApi.defaultProps = {
   onFilterPublisherHierarchy: _.noop,
   onFilterFormat: _.noop,
   onClearFilters: _.noop,
-  searchQuery: {},
-
+  locationSearch: {},
   publisherCounts: null,
   publishers: null,
 
@@ -259,7 +246,7 @@ ResultsApi.propTypes = {
   onFilterPublisherHierarchy: PropTypes.func,
   onFilterFormat: PropTypes.func,
   onClearFilters: PropTypes.func,
-  searchQuery: PropTypes.object,
+  locationSearch: PropTypes.object,
 
   publisherCounts: PropTypes.array,
   publishers: PropTypes.object,
