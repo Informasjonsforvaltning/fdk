@@ -1,5 +1,4 @@
 export const SETTINGS_PATCH = 'SETTINGS_PATCH';
-export const SET_DATASET_SORT_PATCH = 'SET_DATASET_SORT_PATCH';
 export const SET_CONCEPT_SORT_PATCH = 'SET_CONCEPT_SORT_PATCH';
 export const SET_INFORMATIONMODEL_SORT_PATCH =
   'SET_INFORMATIONMODEL_SORT_PATCH';
@@ -8,13 +7,6 @@ export function setLanguageAction(language) {
   return {
     type: SETTINGS_PATCH,
     settings: { language }
-  };
-}
-
-export function setDatasetSortAction(datasetSortValue) {
-  return {
-    type: SET_DATASET_SORT_PATCH,
-    datasetSortValue
   };
 }
 
@@ -33,7 +25,6 @@ export function setInformationModelSortAction(informationModelSortValue) {
 
 const initialState = {
   language: 'nb',
-  datasetSortValue: undefined,
   conceptSortValue: undefined
 };
 
@@ -41,8 +32,6 @@ export function settingsResolver(state = initialState, action) {
   switch (action.type) {
     case SETTINGS_PATCH:
       return { ...state, ...action.settings };
-    case SET_DATASET_SORT_PATCH:
-      return { ...state, datasetSortValue: action.datasetSortValue };
     case SET_CONCEPT_SORT_PATCH:
       return { ...state, conceptSortValue: action.conceptSortValue };
     case SET_INFORMATIONMODEL_SORT_PATCH:

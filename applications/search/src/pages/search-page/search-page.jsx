@@ -62,10 +62,8 @@ export const SearchPage = props => {
     conceptsCompare,
     addConcept,
     removeConcept,
-    setDatasetSort,
     setConceptSort,
     setInformationModelSort,
-    datasetSortValue,
     conceptSortValue,
     informationModelSortValue,
     showFilterModal,
@@ -206,10 +204,6 @@ export const SearchPage = props => {
               publishers={publisherItems}
               referenceData={referenceData}
               onClearFilters={handleClearFilters}
-              setDatasetSort={setDatasetSort}
-              onSortByLastModified={sortByLastModified}
-              onSortByScore={sortByScore}
-              datasetSortValue={datasetSortValue}
               onPageChange={handlePageChange}
               showClearFilterButton={_isFilterNotEmpty()}
               hitsPerPage={HITS_PER_PAGE}
