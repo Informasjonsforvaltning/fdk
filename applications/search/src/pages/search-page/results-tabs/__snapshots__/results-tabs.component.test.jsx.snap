@@ -19,7 +19,7 @@ exports[`should render ResultsTabs with "Concepts" active correctly 1`] = `
           to={
             Object {
               "pathname": "/",
-              "search": "?",
+              "search": "",
             }
           }
         >
@@ -40,7 +40,7 @@ exports[`should render ResultsTabs with "Concepts" active correctly 1`] = `
           to={
             Object {
               "pathname": "/apis",
-              "search": "?",
+              "search": "",
             }
           }
         >
@@ -61,7 +61,7 @@ exports[`should render ResultsTabs with "Concepts" active correctly 1`] = `
           to={
             Object {
               "pathname": "/concepts",
-              "search": "?",
+              "search": "",
             }
           }
         >
@@ -82,7 +82,7 @@ exports[`should render ResultsTabs with "Concepts" active correctly 1`] = `
           to={
             Object {
               "pathname": "/informationmodels",
-              "search": "?",
+              "search": "",
             }
           }
         >
@@ -117,7 +117,7 @@ exports[`should render ResultsTabs with "Dataset" active correctly 1`] = `
           to={
             Object {
               "pathname": "/",
-              "search": "?",
+              "search": "",
             }
           }
         >
@@ -138,7 +138,7 @@ exports[`should render ResultsTabs with "Dataset" active correctly 1`] = `
           to={
             Object {
               "pathname": "/apis",
-              "search": "?",
+              "search": "",
             }
           }
         >
@@ -159,7 +159,7 @@ exports[`should render ResultsTabs with "Dataset" active correctly 1`] = `
           to={
             Object {
               "pathname": "/concepts",
-              "search": "?",
+              "search": "",
             }
           }
         >
@@ -180,7 +180,7 @@ exports[`should render ResultsTabs with "Dataset" active correctly 1`] = `
           to={
             Object {
               "pathname": "/informationmodels",
-              "search": "?",
+              "search": "",
             }
           }
         >

@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import cx from 'classnames';
+import { withRouter } from 'react-router';
 
-import { addOrReplaceParamWithoutURL } from '../../../lib/addOrReplaceUrlParam';
 import localization from '../../../lib/localization';
 import './results-tabs.scss';
 import {
@@ -12,19 +12,16 @@ import {
   PATHNAME_CONCEPTS,
   PATHNAME_INFORMATIONMODELS
 } from '../../../constants/constants';
+import { getLinkForTab } from '../search-location-helper';
 
-export const ResultsTabs = props => {
-  const {
-    activePath,
-    searchParam,
-    countDatasets,
-    countTerms,
-    countApis,
-    countInformationModels
-  } = props;
-
-  let search = addOrReplaceParamWithoutURL(searchParam, 'page', '');
-  search = addOrReplaceParamWithoutURL(search, 'sortfield', '');
+export const ResultsTabsPure = ({
+  countDatasets,
+  countTerms,
+  countApis,
+  countInformationModels,
+  location
+}) => {
+  const activePath = location.pathname;
   return (
     <div className="row">
       <div className="col-12">
@@ -35,7 +32,7 @@ export const ResultsTabs = props => {
             })}
           >
             <Link
-              to={{ pathname: PATHNAME_DATASETS, search }}
+              to={getLinkForTab(location, PATHNAME_DATASETS)}
               aria-label="Link til side for datasett:"
             >
               {localization.page.datasetTab}
@@ -48,7 +45,7 @@ export const ResultsTabs = props => {
             })}
           >
             <Link
-              to={{ pathname: PATHNAME_APIS, search }}
+              to={getLinkForTab(location, PATHNAME_APIS)}
               aria-label="Link til side for api:"
             >
               {localization.page.apiTab}
@@ -61,7 +58,7 @@ export const ResultsTabs = props => {
             })}
           >
             <Link
-              to={{ pathname: PATHNAME_CONCEPTS, search }}
+              to={getLinkForTab(location, PATHNAME_CONCEPTS)}
               aria-label="Link til side for begrep:"
             >
               {localization.page.termTab}
@@ -74,7 +71,7 @@ export const ResultsTabs = props => {
             })}
           >
             <Link
-              to={{ pathname: PATHNAME_INFORMATIONMODELS, search }}
+              to={getLinkForTab(location, PATHNAME_INFORMATIONMODELS)}
               aria-label="Link til side for informasjonsmodell:"
             >
               {localization.page.informationModelTab}
@@ -87,20 +84,22 @@ export const ResultsTabs = props => {
   );
 };
 
-ResultsTabs.defaultProps = {
-  activePath: null,
-  searchParam: '',
+ResultsTabsPure.defaultProps = {
   countDatasets: null,
   countTerms: null,
   countApis: null,
-  countInformationModels: null
+  countInformationModels: null,
+
+  location: { search: '' }
 };
 
-ResultsTabs.propTypes = {
-  activePath: PropTypes.string,
-  searchParam: PropTypes.string,
+ResultsTabsPure.propTypes = {
   countDatasets: PropTypes.number,
   countTerms: PropTypes.number,
   countApis: PropTypes.number,
-  countInformationModels: PropTypes.number
+  countInformationModels: PropTypes.number,
+
+  location: PropTypes.object
 };
+
+export const ResultsTabs = withRouter(ResultsTabsPure);

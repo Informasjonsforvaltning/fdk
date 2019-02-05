@@ -17,9 +17,20 @@ import _ from 'lodash';
 
 import {
   historyPushSearchParams,
-  parseSearchParams
+  parseSearchParams,
+  renderSearchParams
 } from '../../lib/location-history-helper';
 import { addValue, removeValue } from '../../lib/stringUtils';
+
+export const getLinkForTab = (location, pathname) => {
+  const oldSearchParams = parseSearchParams(location);
+  // keep q
+  // reset page, size, sortfield and filters
+
+  const searchParams = _.pick(oldSearchParams, ['q']);
+  const search = renderSearchParams(searchParams);
+  return { pathname, search };
+};
 
 export const setSearchText = (history, location, searchText) => {
   const oldSearchParams = parseSearchParams(location);

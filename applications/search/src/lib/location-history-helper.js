@@ -1,12 +1,14 @@
 import qs from 'qs';
 
+export const renderSearchParams = searchParams =>
+  qs.stringify(searchParams, { skipNulls: true, addQueryPrefix: true });
+
 export const historyPushSearchParams = (history, searchParams) => {
   if (typeof history.push !== 'function') {
     throw new Error('History parameter must be a react-router history object');
   }
   return history.push(
-    history.location.pathname +
-      qs.stringify(searchParams, { skipNulls: true, addQueryPrefix: true })
+    history.location.pathname + renderSearchParams(searchParams)
   );
 };
 
