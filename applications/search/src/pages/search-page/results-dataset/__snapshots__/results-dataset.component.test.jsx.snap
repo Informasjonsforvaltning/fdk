@@ -13,7 +13,7 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
     >
       <button
         className="btn btn-primary fdk-button fade-in-500 d-none"
-        onClick={[MockFunction]}
+        onClick={[Function]}
         type="button"
       >
         Clear
@@ -68,7 +68,7 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
           }
           centered={false}
           fade={true}
-          isOpen={true}
+          isOpen={false}
           keyboard={true}
           modalTransition={
             Object {
@@ -78,13 +78,13 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
           onClosed={[Function]}
           onOpened={[Function]}
           role="dialog"
-          toggle={[MockFunction]}
+          toggle={[Function]}
           zIndex={1050}
         >
           <ModalHeader
             closeAriaLabel="Close"
             tag="h5"
-            toggle={[MockFunction]}
+            toggle={[Function]}
             wrapTag="div"
           >
             Filter
@@ -120,8 +120,8 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
                   }
                 }
                 htmlKey={1}
-                onClick={[MockFunction]}
-                themesItems={Object {}}
+                onClick={[Function]}
+                themesItems={null}
                 title="Theme"
               />
               <FilterBox
@@ -137,15 +137,15 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
                   }
                 }
                 htmlKey={2}
-                onClick={[MockFunction]}
+                onClick={[Function]}
                 themesItems={null}
                 title="Access"
               />
               <SearchPublishersTree
                 activeFilter={null}
-                onFilterPublisherHierarchy={[MockFunction]}
+                onFilterPublisherHierarchy={[Function]}
                 publisherCounts={Array []}
-                publishers={Object {}}
+                publishers={null}
                 title="Organization"
               />
               <FilterBox
@@ -190,7 +190,7 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
             <Button
               className="fdk-button"
               color="primary"
-              onClick={[MockFunction]}
+              onClick={[Function]}
               tag="button"
             >
               Close
@@ -222,8 +222,8 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
             }
           }
           htmlKey={1}
-          onClick={[MockFunction]}
-          themesItems={Object {}}
+          onClick={[Function]}
+          themesItems={null}
           title="Theme"
         />
         <FilterBox
@@ -239,15 +239,15 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
             }
           }
           htmlKey={2}
-          onClick={[MockFunction]}
+          onClick={[Function]}
           themesItems={null}
           title="Access"
         />
         <SearchPublishersTree
           activeFilter={null}
-          onFilterPublisherHierarchy={[MockFunction]}
+          onFilterPublisherHierarchy={[Function]}
           publisherCounts={Array []}
-          publishers={Object {}}
+          publishers={null}
           title="Organization"
         />
         <FilterBox
@@ -1680,7 +1680,7 @@ Flateobjektene avgrenses uavhengig av de administrative grensene.",
         marginPagesDisplayed={1}
         nextClassName="next"
         nextLabel="Neste side"
-        onPageChange={[MockFunction]}
+        onPageChange={[Function]}
         pageCount={1}
         pageRangeDisplayed={2}
         previousClassName="previous"
@@ -1777,102 +1777,6 @@ exports[`should render ResultsDataset correctly with minimum of props 1`] = `
         nextClassName="next"
         nextLabel="Neste side"
         onPageChange={[Function]}
-        pageCount={Infinity}
-        pageRangeDisplayed={2}
-        previousClassName="previous"
-        previousLabel="Forrige side"
-        subContainerClassName="pages pagination"
-      />
-    </section>
-  </section>
-</main>
-`;
-
-exports[`should render ResultsDataset correctly with props 1`] = `
-<main
-  data-test-id="datasets"
-  id="content"
->
-  <section
-    className="row mb-3"
-  >
-    <div
-      className="col-6 col-lg-4"
-    >
-      <button
-        className="btn btn-primary fdk-button fade-in-500 d-none"
-        onClick={[MockFunction]}
-        type="button"
-      >
-        Clear
-      </button>
-    </div>
-    <div
-      className="col-6 col-lg-4 offset-lg-4"
-    >
-      <div
-        className="d-flex justify-content-end"
-      >
-        <Button
-          className="fdk-button fdk-button-black-toggle selected"
-          color="primary"
-          onClick={[Function]}
-          tag="button"
-        >
-          Relevance
-        </Button>
-        <Button
-          className="fdk-button fdk-button-black-toggle"
-          color="primary"
-          onClick={[Function]}
-          tag="button"
-        >
-          Recently published
-        </Button>
-      </div>
-    </div>
-  </section>
-  <section
-    className="row"
-  >
-    <aside
-      className="search-filters col-lg-4 d-none d-lg-block"
-    >
-      <span
-        aria-hidden="false"
-        className="uu-invisible"
-      >
-        Filtrering tilgang
-      </span>
-    </aside>
-    <section
-      className="col-12 col-lg-8"
-    />
-    <section
-      className="col-12 col-lg-8 offset-lg-4 d-flex justify-content-center"
-    >
-      <span
-        aria-hidden="false"
-        className="uu-invisible"
-      >
-        Sidepaginering.
-      </span>
-      <PaginationBoxView
-        activeClassName="active"
-        breakClassName="break-me"
-        breakLabel={
-          <span>
-            ...
-          </span>
-        }
-        containerClassName="pagination"
-        disableInitialCallback={true}
-        disabledClassName="disabled"
-        forcePage={0}
-        marginPagesDisplayed={1}
-        nextClassName="next"
-        nextLabel="Neste side"
-        onPageChange={[MockFunction]}
         pageCount={1}
         pageRangeDisplayed={2}
         previousClassName="previous"
