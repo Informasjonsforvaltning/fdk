@@ -163,8 +163,6 @@ export const SearchPage = props => {
             open={open}
           />
           <ResultsTabs
-            activePath={location.pathname}
-            searchParam={location.search}
             countDatasets={datasetTotal}
             countTerms={conceptTotal}
             countApis={apiTotal}
