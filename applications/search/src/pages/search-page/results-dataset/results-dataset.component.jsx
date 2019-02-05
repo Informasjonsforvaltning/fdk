@@ -4,12 +4,14 @@ import PropTypes from 'prop-types';
 import ReactPaginate from 'react-paginate';
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import cx from 'classnames';
+import { withRouter } from 'react-router';
 
 import localization from '../../../lib/localization';
 import { SearchHitItem } from './search-hit-item/search-hit-item.component';
 import { FilterBox } from '../../../components/filter-box/filter-box.component';
 import { SearchPublishersTree } from '../search-publishers-tree/search-publishers-tree.component';
 import { ErrorBoundary } from '../../../components/error-boundary/error-boundary';
+import { getSortfield, setSortfield } from '../search-location-helper';
 
 function _renderFilterModal({
   showFilterModal,
@@ -111,11 +113,9 @@ export const ResultsDatasetPure = ({
   hitsPerPage,
   publisherCounts,
   publishers,
-  onSortByScore,
-  onSortByLastModified,
-  setDatasetSort,
-  datasetSortValue,
-  referenceData
+  referenceData,
+  history,
+  location
 }) => {
   const page = parseInt(locationSearch.page || 0, 10);
   const pageCount = Math.ceil((datasetTotal || 1) / hitsPerPage);
@@ -129,20 +129,20 @@ export const ResultsDatasetPure = ({
       'd-none': !showClearFilterButton
     }
   );
+
+  const sortfield = getSortfield(location);
   const sortByScoreClass = cx('fdk-button', 'fdk-button-black-toggle', {
-    selected: !datasetSortValue
+    selected: !sortfield
   });
   const sortByLastModifiedClass = cx('fdk-button', 'fdk-button-black-toggle', {
-    selected: datasetSortValue === 'modified'
+    selected: sortfield === 'modified'
   });
 
   const onSortByScoreClick = () => {
-    setDatasetSort(undefined);
-    onSortByScore();
+    setSortfield(history, location, undefined);
   };
   const onSortByModifiedClick = () => {
-    setDatasetSort('modified');
-    onSortByLastModified();
+    setSortfield(history, location, 'modified');
   };
 
   return (
@@ -289,10 +289,11 @@ ResultsDatasetPure.defaultProps = {
   publishers: null,
   referenceData: null,
 
-  setDatasetSort: _.noop,
-  datasetSortValue: '',
   onPageChange: _.noop,
-  hitsPerPage: 0
+  hitsPerPage: 0,
+
+  history: { push: _.noop },
+  location: { search: '' }
 };
 
 ResultsDatasetPure.propTypes = {
@@ -316,12 +317,11 @@ ResultsDatasetPure.propTypes = {
   publishers: PropTypes.object,
   referenceData: PropTypes.object,
 
-  setDatasetSort: PropTypes.func,
-  onSortByLastModified: PropTypes.func.isRequired,
-  onSortByScore: PropTypes.func.isRequired,
-  datasetSortValue: PropTypes.string,
   onPageChange: PropTypes.func,
-  hitsPerPage: PropTypes.number
+  hitsPerPage: PropTypes.number,
+
+  history: PropTypes.object,
+  location: PropTypes.object
 };
 
-export const ResultsDataset = ResultsDatasetPure;
+export const ResultsDataset = withRouter(ResultsDatasetPure);

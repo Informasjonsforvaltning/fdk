@@ -6,7 +6,6 @@ import { fetchInformationModelsIfNeededAction } from '../../redux/modules/inform
 import { fetchPublishersIfNeededAction } from '../../redux/modules/publishers';
 import { fetchThemesIfNeededAction } from '../../redux/modules/themes';
 import {
-  setDatasetSortAction,
   setConceptSortAction,
   setInformationModelSortAction
 } from '../../redux/modules/settings';
@@ -91,7 +90,6 @@ const mapStateToProps = ({
     isFetchingPublishers,
     referenceData,
     conceptsCompare: items,
-    datasetSortValue: settings.datasetSortValue,
     conceptSortValue: settings.conceptSortValue,
     informationModelSortValue: settings.informationModelSortValue,
     searchQuery
@@ -108,7 +106,6 @@ const mapDispatchToProps = dispatch => ({
     dispatch(fetchReferenceDataIfNeededAction(REFERENCEDATA_DISTRIBUTIONTYPE)),
   addConcept: item => dispatch(addConceptAction(item)),
   removeConcept: uri => dispatch(removeConceptAction(uri)),
-  setDatasetSort: sortValue => dispatch(setDatasetSortAction(sortValue)),
   setConceptSort: sortValue => dispatch(setConceptSortAction(sortValue)),
   fetchInformationModelsIfNeeded: query =>
     dispatch(fetchInformationModelsIfNeededAction(query)),

@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import _ from 'lodash';
-import { ResultsDataset } from './results-dataset.component';
+import { ResultsDatasetPure } from './results-dataset.component';
 import datasetsResponse from '../__fixtures/datasetsApiResponse.json';
 import { normalizeAggregations } from '../../../lib/normalizeAggregations';
 import { HITS_PER_PAGE } from '../../../constants/constants';
@@ -48,12 +48,12 @@ beforeEach(() => {
     onSortByScore,
     onPageChange
   };
-  wrapper = shallow(<ResultsDataset {...defaultProps} />);
+  wrapper = shallow(<ResultsDatasetPure {...defaultProps} />);
 });
 
 test('should render ResultsDataset correctly with minimum of props', () => {
   const minWrapper = shallow(
-    <ResultsDataset
+    <ResultsDatasetPure
       setDatasetSort={setDatasetSort}
       onSortByLastModified={onSortByLastModified}
       onSortByScore={onSortByScore}
