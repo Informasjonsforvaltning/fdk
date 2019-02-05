@@ -8,7 +8,6 @@ import { fetchThemesIfNeededAction } from '../../redux/modules/themes';
 import {
   setDatasetSortAction,
   setConceptSortAction,
-  setApiSortAction,
   setInformationModelSortAction
 } from '../../redux/modules/settings';
 import {
@@ -93,7 +92,6 @@ const mapStateToProps = ({
     referenceData,
     conceptsCompare: items,
     datasetSortValue: settings.datasetSortValue,
-    apiSortValue: settings.apiSortValue,
     conceptSortValue: settings.conceptSortValue,
     informationModelSortValue: settings.informationModelSortValue,
     searchQuery
@@ -111,7 +109,6 @@ const mapDispatchToProps = dispatch => ({
   addConcept: item => dispatch(addConceptAction(item)),
   removeConcept: uri => dispatch(removeConceptAction(uri)),
   setDatasetSort: sortValue => dispatch(setDatasetSortAction(sortValue)),
-  setApiSort: sortValue => dispatch(setApiSortAction(sortValue)),
   setConceptSort: sortValue => dispatch(setConceptSortAction(sortValue)),
   fetchInformationModelsIfNeeded: query =>
     dispatch(fetchInformationModelsIfNeededAction(query)),

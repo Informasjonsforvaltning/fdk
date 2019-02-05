@@ -63,11 +63,9 @@ export const SearchPage = props => {
     addConcept,
     removeConcept,
     setDatasetSort,
-    setApiSort,
     setConceptSort,
     setInformationModelSort,
     datasetSortValue,
-    apiSortValue,
     conceptSortValue,
     informationModelSortValue,
     showFilterModal,
@@ -232,12 +230,8 @@ export const SearchPage = props => {
               locationSearch={locationSearch}
               publisherCounts={_.get(apiAggregations, 'orgPath.buckets')}
               publishers={publisherItems}
-              onSortByLastModified={sortByLastModified}
-              onSortByScore={sortByScore}
               onPageChange={handlePageChange}
               hitsPerPage={HITS_PER_PAGE}
-              setApiSort={setApiSort}
-              apiSortValue={apiSortValue}
             />
           </Route>
           <Route exact path={PATHNAME_CONCEPTS}>
