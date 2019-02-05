@@ -26,7 +26,6 @@ import {
   isFilterNotEmpty,
   setFilter,
   setMultiselectFilterValue,
-  setPage,
   setSearchText
 } from './search-location-helper';
 
@@ -139,12 +138,6 @@ export const SearchPage = props => {
     setMultiselectFilterValue(history, location, 'format', selectedValue, add);
   };
 
-  const handlePageChange = data => {
-    const { selected } = data;
-
-    setPage(history, location, selected);
-  };
-
   const topSectionClass = cx('top-section-search', 'mb-4', {
     'top-section-search--image': !!(browser && browser.name !== 'ie')
   });
@@ -190,7 +183,6 @@ export const SearchPage = props => {
               publishers={publisherItems}
               referenceData={referenceData}
               onClearFilters={handleClearFilters}
-              onPageChange={handlePageChange}
               showClearFilterButton={_isFilterNotEmpty()}
               hitsPerPage={HITS_PER_PAGE}
             />
@@ -210,7 +202,6 @@ export const SearchPage = props => {
               locationSearch={locationSearch}
               publisherCounts={_.get(apiAggregations, 'orgPath.buckets')}
               publishers={publisherItems}
-              onPageChange={handlePageChange}
               hitsPerPage={HITS_PER_PAGE}
             />
           </Route>
@@ -227,7 +218,6 @@ export const SearchPage = props => {
               locationSearch={locationSearch}
               publisherCounts={_.get(conceptAggregations, 'orgPath.buckets')}
               publishers={publisherItems}
-              onPageChange={handlePageChange}
               hitsPerPage={HITS_PER_PAGE}
               conceptsCompare={conceptsCompare}
               addConcept={addConcept}
@@ -250,7 +240,6 @@ export const SearchPage = props => {
                 'orgPath.buckets'
               )}
               publishers={publisherItems}
-              onPageChange={handlePageChange}
               hitsPerPage={HITS_PER_PAGE}
             />
           </Route>
