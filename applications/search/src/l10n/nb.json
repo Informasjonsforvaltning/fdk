@@ -321,7 +321,7 @@
     "identifier": "Identifikator"
   },
   "infoMod": {
-    "infoModHeader": "Informasjonsmodeller",
+    "infoModHeader": "Informasjonsmodell",
     "tabs": {
       "structure": "Struktur",
       "json": "JSON Schema"
