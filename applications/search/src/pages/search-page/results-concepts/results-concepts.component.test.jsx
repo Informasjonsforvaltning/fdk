@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import _ from 'lodash';
-import { ResultsConcepts } from './results-concepts.component';
+import { ResultsConceptsPure } from './results-concepts.component';
 import concepts from '../../../../test/fixtures/concepts';
 import { HITS_PER_PAGE } from '../../../constants/constants';
 import { normalizeAggregations } from '../../../lib/normalizeAggregations';
@@ -41,12 +41,12 @@ beforeEach(() => {
     onSortByLastModified,
     onSortByScore
   };
-  wrapper = shallow(<ResultsConcepts {...defaultProps} />);
+  wrapper = shallow(<ResultsConceptsPure {...defaultProps} />);
 });
 
 test('should render ResultsConcepts correctly with minimum of props', () => {
   const minWrapper = shallow(
-    <ResultsConcepts
+    <ResultsConceptsPure
       setConceptSort={setConceptSort}
       onSortByLastModified={onSortByLastModified}
       onSortByScore={onSortByScore}

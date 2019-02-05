@@ -62,9 +62,7 @@ export const SearchPage = props => {
     conceptsCompare,
     addConcept,
     removeConcept,
-    setConceptSort,
     setInformationModelSort,
-    conceptSortValue,
     informationModelSortValue,
     showFilterModal,
     open,
@@ -245,8 +243,6 @@ export const SearchPage = props => {
               onSortByScore={sortByScore}
               onPageChange={handlePageChange}
               hitsPerPage={HITS_PER_PAGE}
-              setConceptSort={setConceptSort}
-              conceptSortValue={conceptSortValue}
               conceptsCompare={conceptsCompare}
               addConcept={addConcept}
               removeConcept={removeConcept}
