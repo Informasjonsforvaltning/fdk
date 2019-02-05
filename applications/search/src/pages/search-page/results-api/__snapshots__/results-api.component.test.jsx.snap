@@ -13,7 +13,7 @@ exports[`should render ResultsApi correctly with hits 1`] = `
     >
       <button
         className="btn btn-primary fdk-button fade-in-500 d-none"
-        onClick={[MockFunction]}
+        onClick={[Function]}
         type="button"
       >
         Clear
@@ -68,7 +68,7 @@ exports[`should render ResultsApi correctly with hits 1`] = `
           }
           centered={false}
           fade={true}
-          isOpen={true}
+          isOpen={false}
           keyboard={true}
           modalTransition={
             Object {
@@ -78,13 +78,13 @@ exports[`should render ResultsApi correctly with hits 1`] = `
           onClosed={[Function]}
           onOpened={[Function]}
           role="dialog"
-          toggle={[MockFunction]}
+          toggle={[Function]}
           zIndex={1050}
         >
           <ModalHeader
             closeAriaLabel="Close"
             tag="h5"
-            toggle={[MockFunction]}
+            toggle={[Function]}
             wrapTag="div"
           >
             Filter
@@ -97,9 +97,9 @@ exports[`should render ResultsApi correctly with hits 1`] = `
             >
               <SearchPublishersTree
                 activeFilter={null}
-                onFilterPublisherHierarchy={[MockFunction]}
+                onFilterPublisherHierarchy={[Function]}
                 publisherCounts={null}
-                publishers={Object {}}
+                publishers={null}
                 title="Provider"
               />
               <FilterBox
@@ -143,7 +143,7 @@ exports[`should render ResultsApi correctly with hits 1`] = `
             <Button
               className="fdk-button"
               color="primary"
-              onClick={[MockFunction]}
+              onClick={[Function]}
               tag="button"
             >
               Close
@@ -152,9 +152,9 @@ exports[`should render ResultsApi correctly with hits 1`] = `
         </Modal>
         <SearchPublishersTree
           activeFilter={null}
-          onFilterPublisherHierarchy={[MockFunction]}
+          onFilterPublisherHierarchy={[Function]}
           publisherCounts={null}
-          publishers={Object {}}
+          publishers={null}
           title="Provider"
         />
         <FilterBox
@@ -216,7 +216,7 @@ exports[`should render ResultsApi correctly with hits 1`] = `
           }
         }
         key="68dda78f-364f-41dd-869a-0dd8d9a3fe4c"
-        publishers={Object {}}
+        publishers={null}
       />
       <SearchHitItem
         fadeInCounter={1}
@@ -243,7 +243,7 @@ exports[`should render ResultsApi correctly with hits 1`] = `
           }
         }
         key="70f6e5b3-b633-413b-b5e7-11b63bb413eb"
-        publishers={Object {}}
+        publishers={null}
       />
       <div
         className="col-12 d-flex justify-content-center"
@@ -269,8 +269,8 @@ exports[`should render ResultsApi correctly with hits 1`] = `
           marginPagesDisplayed={1}
           nextClassName="next"
           nextLabel="Neste side"
-          onPageChange={[MockFunction]}
-          pageCount={1}
+          onPageChange={[Function]}
+          pageCount={Infinity}
           pageRangeDisplayed={2}
           previousClassName="previous"
           previousLabel="Forrige side"
@@ -368,7 +368,7 @@ exports[`should render ResultsApi correctly with minimum of props and no hits 1`
           nextClassName="next"
           nextLabel="Neste side"
           onPageChange={[Function]}
-          pageCount={Infinity}
+          pageCount={1}
           pageRangeDisplayed={2}
           previousClassName="previous"
           previousLabel="Forrige side"
