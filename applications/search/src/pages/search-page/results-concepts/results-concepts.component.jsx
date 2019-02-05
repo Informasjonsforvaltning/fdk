@@ -19,6 +19,7 @@ import { CompareTerms } from './compare-terms/compare-terms.component';
 import { SearchPublishersTree } from '../search-publishers-tree/search-publishers-tree.component';
 import { getTranslateText } from '../../../lib/translateText';
 import { getSortfield, setPage, setSortfield } from '../search-location-helper';
+import { parseSearchParams } from '../../../lib/location-history-helper';
 
 function _renderCompareTerms({ conceptsCompare, removeConcept }) {
   const conceptIdsArray = [];
@@ -121,7 +122,6 @@ export const ResultsConceptsPure = ({
   conceptTotal,
   onClearFilters,
   onFilterPublisherHierarchy,
-  locationSearch,
   showClearFilterButton,
   hitsPerPage,
   publisherCounts,
@@ -133,6 +133,8 @@ export const ResultsConceptsPure = ({
   history,
   location
 }) => {
+  const locationSearch = parseSearchParams(location);
+
   const page = parseInt(locationSearch.page || 0, 10);
   const pageCount = Math.ceil((conceptTotal || 1) / hitsPerPage);
   const clearButtonClass = cx(
@@ -270,7 +272,6 @@ ResultsConceptsPure.defaultProps = {
 
   onClearFilters: _.noop,
   onFilterPublisherHierarchy: _.noop,
-  locationSearch: {},
 
   publisherCounts: [],
   publishers: null,
@@ -296,7 +297,6 @@ ResultsConceptsPure.propTypes = {
 
   onClearFilters: PropTypes.func,
   onFilterPublisherHierarchy: PropTypes.func,
-  locationSearch: PropTypes.object,
   publisherCounts: PropTypes.array,
   publishers: PropTypes.object,
 
