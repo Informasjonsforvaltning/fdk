@@ -177,7 +177,6 @@ export const SearchPage = props => {
               onFilterPublisherHierarchy={handleDatasetFilterPublisherHierarchy}
               onFilterProvenance={handleDatasetFilterProvenance}
               onFilterSpatial={handleDatasetFilterSpatial}
-              locationSearch={locationSearch}
               themesItems={themesItems}
               publisherCounts={_.get(datasetAggregations, 'orgPath.buckets')}
               publishers={publisherItems}
