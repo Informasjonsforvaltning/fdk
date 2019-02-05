@@ -9,7 +9,7 @@ import cx from 'classnames';
 import localization from '../../../lib/localization';
 import { SearchHitItem } from './search-hit-item/search-hit-item.component';
 import { SearchPublishersTree } from '../search-publishers-tree/search-publishers-tree.component';
-import { getSortfield, setSortfield } from '../search-location-helper';
+import { getSortfield, setPage, setSortfield } from '../search-location-helper';
 
 const renderFilterModal = ({
   showFilterModal,
@@ -65,7 +65,6 @@ export const ResultsInformationModelPure = ({
   publisherCounts,
   publishers,
   onClearFilters,
-  onPageChange,
   showClearFilterButton,
   hitsPerPage,
   history,
@@ -97,6 +96,9 @@ export const ResultsInformationModelPure = ({
   };
   const onSortByModifiedClick = () => {
     setSortfield(history, location, 'modified');
+  };
+  const onPageChange = data => {
+    setPage(history, location, data.selected);
   };
 
   return (
@@ -199,7 +201,6 @@ ResultsInformationModelPure.defaultProps = {
   publisherCounts: [],
   publishers: null,
 
-  onPageChange: _.noop,
   hitsPerPage: 10,
 
   history: { push: _.noop },
@@ -221,7 +222,6 @@ ResultsInformationModelPure.propTypes = {
   publisherCounts: PropTypes.array,
   publishers: PropTypes.object,
 
-  onPageChange: PropTypes.func,
   hitsPerPage: PropTypes.number,
 
   history: PropTypes.object,

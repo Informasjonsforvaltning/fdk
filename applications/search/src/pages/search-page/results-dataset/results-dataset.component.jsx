@@ -11,7 +11,7 @@ import { SearchHitItem } from './search-hit-item/search-hit-item.component';
 import { FilterBox } from '../../../components/filter-box/filter-box.component';
 import { SearchPublishersTree } from '../search-publishers-tree/search-publishers-tree.component';
 import { ErrorBoundary } from '../../../components/error-boundary/error-boundary';
-import { getSortfield, setSortfield } from '../search-location-helper';
+import { getSortfield, setPage, setSortfield } from '../search-location-helper';
 
 function _renderFilterModal({
   showFilterModal,
@@ -106,7 +106,6 @@ export const ResultsDatasetPure = ({
   onFilterPublisherHierarchy,
   onFilterProvenance,
   onFilterSpatial,
-  onPageChange,
   showClearFilterButton,
   locationSearch,
   themesItems,
@@ -143,6 +142,10 @@ export const ResultsDatasetPure = ({
   };
   const onSortByModifiedClick = () => {
     setSortfield(history, location, 'modified');
+  };
+
+  const onPageChange = data => {
+    setPage(history, location, data.selected);
   };
 
   return (
@@ -289,7 +292,6 @@ ResultsDatasetPure.defaultProps = {
   publishers: null,
   referenceData: null,
 
-  onPageChange: _.noop,
   hitsPerPage: 10,
 
   history: { push: _.noop },
@@ -317,7 +319,6 @@ ResultsDatasetPure.propTypes = {
   publishers: PropTypes.object,
   referenceData: PropTypes.object,
 
-  onPageChange: PropTypes.func,
   hitsPerPage: PropTypes.number,
 
   history: PropTypes.object,

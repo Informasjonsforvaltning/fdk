@@ -18,7 +18,7 @@ import { ConceptsHitItem } from './concepts-hit-item/concepts-hit-item.component
 import { CompareTerms } from './compare-terms/compare-terms.component';
 import { SearchPublishersTree } from '../search-publishers-tree/search-publishers-tree.component';
 import { getTranslateText } from '../../../lib/translateText';
-import { getSortfield, setSortfield } from '../search-location-helper';
+import { getSortfield, setPage, setSortfield } from '../search-location-helper';
 
 function _renderCompareTerms({ conceptsCompare, removeConcept }) {
   const conceptIdsArray = [];
@@ -120,7 +120,6 @@ export const ResultsConceptsPure = ({
   conceptAggregations,
   conceptTotal,
   onClearFilters,
-  onPageChange,
   onFilterPublisherHierarchy,
   locationSearch,
   showClearFilterButton,
@@ -159,6 +158,10 @@ export const ResultsConceptsPure = ({
   };
   const onSortByModifiedClick = () => {
     setSortfield(history, location, 'modified');
+  };
+
+  const onPageChange = data => {
+    setPage(history, location, data.selected);
   };
 
   return (
@@ -272,7 +275,6 @@ ResultsConceptsPure.defaultProps = {
   publisherCounts: [],
   publishers: null,
 
-  onPageChange: _.noop,
   hitsPerPage: 10,
 
   conceptsCompare: null,
@@ -298,7 +300,6 @@ ResultsConceptsPure.propTypes = {
   publisherCounts: PropTypes.array,
   publishers: PropTypes.object,
 
-  onPageChange: PropTypes.func,
   hitsPerPage: PropTypes.number,
 
   conceptsCompare: PropTypes.object,
