@@ -10,6 +10,7 @@ import localization from '../../../lib/localization';
 import { SearchHitItem } from './search-hit-item/search-hit-item.component';
 import { SearchPublishersTree } from '../search-publishers-tree/search-publishers-tree.component';
 import { getSortfield, setPage, setSortfield } from '../search-location-helper';
+import { parseSearchParams } from '../../../lib/location-history-helper';
 
 const renderFilterModal = ({
   showFilterModal,
@@ -61,7 +62,6 @@ export const ResultsInformationModelPure = ({
   informationModelTotal,
   informationModelAggregations,
   onFilterPublisherHierarchy,
-  locationSearch,
   publisherCounts,
   publishers,
   onClearFilters,
@@ -70,6 +70,7 @@ export const ResultsInformationModelPure = ({
   history,
   location
 }) => {
+  const locationSearch = parseSearchParams(location);
   const page = parseInt(locationSearch.page || 0, 10);
   const pageCount = Math.ceil((informationModelTotal || 1) / hitsPerPage);
 
@@ -195,7 +196,6 @@ ResultsInformationModelPure.defaultProps = {
   informationModelAggregations: null,
 
   onFilterPublisherHierarchy: _.noop,
-  locationSearch: {},
   onClearFilters: _.noop,
 
   publisherCounts: [],
@@ -217,7 +217,6 @@ ResultsInformationModelPure.propTypes = {
   informationModelAggregations: PropTypes.object,
 
   onFilterPublisherHierarchy: PropTypes.func,
-  locationSearch: PropTypes.object,
   onClearFilters: PropTypes.func,
   publisherCounts: PropTypes.array,
   publishers: PropTypes.object,

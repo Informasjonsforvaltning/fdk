@@ -231,7 +231,6 @@ export const SearchPage = props => {
               informationModelAggregations={informationModelAggregations}
               onFilterPublisherHierarchy={handleDatasetFilterPublisherHierarchy}
               onClearFilters={handleClearFilters}
-              locationSearch={locationSearch}
               publisherCounts={_.get(
                 informationModelAggregations,
                 'orgPath.buckets'
