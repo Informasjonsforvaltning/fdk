@@ -194,7 +194,7 @@ export const ResultsApiPure = ({
               onPageChange={onPageChange}
               subContainerClassName="pages pagination"
               activeClassName="active"
-              initialPage={page}
+              forcePage={page}
               disableInitialCallback
             />
           </div>
