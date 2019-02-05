@@ -11,254 +11,264 @@ import { FilterBox } from '../../../components/filter-box/filter-box.component';
 import { SearchPublishersTree } from '../search-publishers-tree/search-publishers-tree.component';
 import { ErrorBoundary } from '../../../components/error-boundary/error-boundary';
 
-export class ResultsDataset extends React.Component {
-  _renderFilterModal() {
-    const {
-      showFilterModal,
-      closeFilterModal,
-      datasetAggregations,
-      onFilterTheme,
-      onFilterAccessRights,
-      onFilterPublisherHierarchy,
-      onFilterProvenance,
-      onFilterSpatial,
-      locationSearch,
-      themesItems,
-      publisherCounts,
-      publishers
-    } = this.props;
-    return (
-      <Modal isOpen={showFilterModal} toggle={closeFilterModal}>
-        <ModalHeader toggle={closeFilterModal}>Filter</ModalHeader>
-        <ModalBody>
-          <div className="search-filters">
-            <FilterBox
-              htmlKey={1}
-              title={localization.facet.theme}
-              filter={datasetAggregations.theme_count}
-              onClick={onFilterTheme}
-              activeFilter={locationSearch.theme}
-              themesItems={themesItems}
-            />
-            <FilterBox
-              htmlKey={2}
-              title={localization.facet.accessRight}
-              filter={datasetAggregations.accessRightsCount}
-              onClick={onFilterAccessRights}
-              activeFilter={locationSearch.accessrights}
-            />
-            <SearchPublishersTree
-              title={localization.facet.organisation}
-              publisherCounts={publisherCounts}
-              onFilterPublisherHierarchy={onFilterPublisherHierarchy}
-              activeFilter={locationSearch.orgPath}
-              publishers={publishers}
-            />
-            <FilterBox
-              htmlKey={3}
-              title={localization.facet.spatial}
-              filter={datasetAggregations.spatial}
-              onClick={onFilterSpatial}
-              activeFilter={locationSearch.spatial}
-            />
-            <FilterBox
-              htmlKey={4}
-              title={localization.facet.provenance}
-              filter={datasetAggregations.provenanceCount}
-              onClick={onFilterProvenance}
-              activeFilter={locationSearch.provenance}
-            />
-          </div>
-        </ModalBody>
-        <ModalFooter>
-          <Button
-            className="fdk-button"
-            onClick={closeFilterModal}
-            color="primary"
-          >
-            Close
-          </Button>
-        </ModalFooter>
-      </Modal>
-    );
-  }
-
-  _renderHits() {
-    const { datasetItems, referenceData } = this.props;
-    if (datasetItems && Array.isArray(datasetItems)) {
-      return datasetItems.map(item => (
-        <ErrorBoundary key={item._source.id}>
-          <SearchHitItem result={item} referenceData={referenceData} />
-        </ErrorBoundary>
-      ));
-    }
-    return null;
-  }
-  render() {
-    const {
-      datasetItems,
-      datasetAggregations,
-      datasetTotal,
-      onClearFilters,
-      onFilterTheme,
-      onFilterAccessRights,
-      onFilterPublisherHierarchy,
-      onFilterProvenance,
-      onFilterSpatial,
-      onPageChange,
-      showClearFilterButton,
-      locationSearch,
-      themesItems,
-      hitsPerPage,
-      publisherCounts,
-      publishers,
-      onSortByScore,
-      onSortByLastModified,
-      setDatasetSort,
-      datasetSortValue
-    } = this.props;
-    const page = parseInt(locationSearch.page || 0, 10);
-    const pageCount = Math.ceil((datasetTotal || 1) / hitsPerPage);
-
-    const clearButtonClass = cx(
-      'btn',
-      'btn-primary',
-      'fdk-button',
-      'fade-in-500',
-      {
-        'd-none': !showClearFilterButton
-      }
-    );
-    const sortByScoreClass = cx('fdk-button', 'fdk-button-black-toggle', {
-      selected: !datasetSortValue
-    });
-    const sortByLastModifiedClass = cx(
-      'fdk-button',
-      'fdk-button-black-toggle',
-      {
-        selected: datasetSortValue === 'modified'
-      }
-    );
-
-    const onSortByScoreClick = () => {
-      setDatasetSort(undefined);
-      onSortByScore();
-    };
-    const onSortByModifiedClick = () => {
-      setDatasetSort('modified');
-      onSortByLastModified();
-    };
-
-    return (
-      <main id="content" data-test-id="datasets">
-        <section className="row mb-3">
-          <div className="col-6 col-lg-4">
-            <button
-              className={clearButtonClass}
-              onClick={onClearFilters}
-              type="button"
-            >
-              {localization.query.clear}
-            </button>
-          </div>
-          <div className="col-6 col-lg-4 offset-lg-4">
-            <div className="d-flex justify-content-end">
-              <Button
-                className={sortByScoreClass}
-                onClick={onSortByScoreClick}
-                color="primary"
-              >
-                {localization.sort.relevance}
-              </Button>
-              <Button
-                className={sortByLastModifiedClass}
-                onClick={onSortByModifiedClick}
-                color="primary"
-              >
-                {localization.sort.modified}
-              </Button>
-            </div>
-          </div>
-        </section>
-
-        <section className="row">
-          <aside className="search-filters col-lg-4 d-none d-lg-block">
-            <span className="uu-invisible" aria-hidden="false">
-              Filtrering tilgang
-            </span>
-            {datasetItems &&
-              datasetAggregations && (
-                <div>
-                  {this._renderFilterModal()}
-                  <FilterBox
-                    htmlKey={1}
-                    title={localization.facet.theme}
-                    filter={datasetAggregations.theme_count}
-                    onClick={onFilterTheme}
-                    activeFilter={locationSearch.theme}
-                    themesItems={themesItems}
-                  />
-                  <FilterBox
-                    htmlKey={2}
-                    title={localization.facet.accessRight}
-                    filter={datasetAggregations.accessRightsCount}
-                    onClick={onFilterAccessRights}
-                    activeFilter={locationSearch.accessrights}
-                  />
-                  <SearchPublishersTree
-                    title={localization.facet.organisation}
-                    publisherCounts={publisherCounts}
-                    onFilterPublisherHierarchy={onFilterPublisherHierarchy}
-                    activeFilter={locationSearch.orgPath}
-                    publishers={publishers}
-                  />
-                  <FilterBox
-                    htmlKey={3}
-                    title={localization.facet.spatial}
-                    filter={datasetAggregations.spatial}
-                    onClick={onFilterSpatial}
-                    activeFilter={locationSearch.spatial}
-                  />
-                  <FilterBox
-                    htmlKey={4}
-                    title={localization.facet.provenance}
-                    filter={datasetAggregations.provenanceCount}
-                    onClick={onFilterProvenance}
-                    activeFilter={locationSearch.provenance}
-                  />
-                </div>
-              )}
-          </aside>
-
-          <section className="col-12 col-lg-8">{this._renderHits()}</section>
-
-          <section className="col-12 col-lg-8 offset-lg-4 d-flex justify-content-center">
-            <span className="uu-invisible" aria-hidden="false">
-              Sidepaginering.
-            </span>
-            <ReactPaginate
-              pageCount={pageCount}
-              pageRangeDisplayed={2}
-              marginPagesDisplayed={1}
-              previousLabel={localization.page.prev}
-              nextLabel={localization.page.next}
-              breakLabel={<span>...</span>}
-              breakClassName="break-me"
-              containerClassName="pagination"
-              onPageChange={onPageChange}
-              subContainerClassName="pages pagination"
-              activeClassName="active"
-              initialPage={page}
-              disableInitialCallback
-            />
-          </section>
-        </section>
-      </main>
-    );
-  }
+function _renderFilterModal({
+  showFilterModal,
+  closeFilterModal,
+  datasetAggregations,
+  onFilterTheme,
+  onFilterAccessRights,
+  onFilterPublisherHierarchy,
+  onFilterProvenance,
+  onFilterSpatial,
+  locationSearch,
+  themesItems,
+  publisherCounts,
+  publishers
+}) {
+  return (
+    <Modal isOpen={showFilterModal} toggle={closeFilterModal}>
+      <ModalHeader toggle={closeFilterModal}>Filter</ModalHeader>
+      <ModalBody>
+        <div className="search-filters">
+          <FilterBox
+            htmlKey={1}
+            title={localization.facet.theme}
+            filter={datasetAggregations.theme_count}
+            onClick={onFilterTheme}
+            activeFilter={locationSearch.theme}
+            themesItems={themesItems}
+          />
+          <FilterBox
+            htmlKey={2}
+            title={localization.facet.accessRight}
+            filter={datasetAggregations.accessRightsCount}
+            onClick={onFilterAccessRights}
+            activeFilter={locationSearch.accessrights}
+          />
+          <SearchPublishersTree
+            title={localization.facet.organisation}
+            publisherCounts={publisherCounts}
+            onFilterPublisherHierarchy={onFilterPublisherHierarchy}
+            activeFilter={locationSearch.orgPath}
+            publishers={publishers}
+          />
+          <FilterBox
+            htmlKey={3}
+            title={localization.facet.spatial}
+            filter={datasetAggregations.spatial}
+            onClick={onFilterSpatial}
+            activeFilter={locationSearch.spatial}
+          />
+          <FilterBox
+            htmlKey={4}
+            title={localization.facet.provenance}
+            filter={datasetAggregations.provenanceCount}
+            onClick={onFilterProvenance}
+            activeFilter={locationSearch.provenance}
+          />
+        </div>
+      </ModalBody>
+      <ModalFooter>
+        <Button
+          className="fdk-button"
+          onClick={closeFilterModal}
+          color="primary"
+        >
+          Close
+        </Button>
+      </ModalFooter>
+    </Modal>
+  );
 }
 
-ResultsDataset.defaultProps = {
+function _renderHits({ datasetItems, referenceData }) {
+  if (datasetItems && Array.isArray(datasetItems)) {
+    return datasetItems.map(item => (
+      <ErrorBoundary key={item._source.id}>
+        <SearchHitItem result={item} referenceData={referenceData} />
+      </ErrorBoundary>
+    ));
+  }
+  return null;
+}
+
+export const ResultsDatasetPure = ({
+  showFilterModal,
+  closeFilterModal,
+  datasetItems,
+  datasetAggregations,
+  datasetTotal,
+  onClearFilters,
+  onFilterTheme,
+  onFilterAccessRights,
+  onFilterPublisherHierarchy,
+  onFilterProvenance,
+  onFilterSpatial,
+  onPageChange,
+  showClearFilterButton,
+  locationSearch,
+  themesItems,
+  hitsPerPage,
+  publisherCounts,
+  publishers,
+  onSortByScore,
+  onSortByLastModified,
+  setDatasetSort,
+  datasetSortValue,
+  referenceData
+}) => {
+  const page = parseInt(locationSearch.page || 0, 10);
+  const pageCount = Math.ceil((datasetTotal || 1) / hitsPerPage);
+
+  const clearButtonClass = cx(
+    'btn',
+    'btn-primary',
+    'fdk-button',
+    'fade-in-500',
+    {
+      'd-none': !showClearFilterButton
+    }
+  );
+  const sortByScoreClass = cx('fdk-button', 'fdk-button-black-toggle', {
+    selected: !datasetSortValue
+  });
+  const sortByLastModifiedClass = cx('fdk-button', 'fdk-button-black-toggle', {
+    selected: datasetSortValue === 'modified'
+  });
+
+  const onSortByScoreClick = () => {
+    setDatasetSort(undefined);
+    onSortByScore();
+  };
+  const onSortByModifiedClick = () => {
+    setDatasetSort('modified');
+    onSortByLastModified();
+  };
+
+  return (
+    <main id="content" data-test-id="datasets">
+      <section className="row mb-3">
+        <div className="col-6 col-lg-4">
+          <button
+            className={clearButtonClass}
+            onClick={onClearFilters}
+            type="button"
+          >
+            {localization.query.clear}
+          </button>
+        </div>
+        <div className="col-6 col-lg-4 offset-lg-4">
+          <div className="d-flex justify-content-end">
+            <Button
+              className={sortByScoreClass}
+              onClick={onSortByScoreClick}
+              color="primary"
+            >
+              {localization.sort.relevance}
+            </Button>
+            <Button
+              className={sortByLastModifiedClass}
+              onClick={onSortByModifiedClick}
+              color="primary"
+            >
+              {localization.sort.modified}
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      <section className="row">
+        <aside className="search-filters col-lg-4 d-none d-lg-block">
+          <span className="uu-invisible" aria-hidden="false">
+            Filtrering tilgang
+          </span>
+          {datasetItems &&
+            datasetAggregations && (
+              <div>
+                {_renderFilterModal({
+                  showFilterModal,
+                  closeFilterModal,
+                  datasetAggregations,
+                  onFilterTheme,
+                  onFilterAccessRights,
+                  onFilterPublisherHierarchy,
+                  onFilterProvenance,
+                  onFilterSpatial,
+                  locationSearch,
+                  themesItems,
+                  publisherCounts,
+                  publishers
+                })}
+                <FilterBox
+                  htmlKey={1}
+                  title={localization.facet.theme}
+                  filter={datasetAggregations.theme_count}
+                  onClick={onFilterTheme}
+                  activeFilter={locationSearch.theme}
+                  themesItems={themesItems}
+                />
+                <FilterBox
+                  htmlKey={2}
+                  title={localization.facet.accessRight}
+                  filter={datasetAggregations.accessRightsCount}
+                  onClick={onFilterAccessRights}
+                  activeFilter={locationSearch.accessrights}
+                />
+                <SearchPublishersTree
+                  title={localization.facet.organisation}
+                  publisherCounts={publisherCounts}
+                  onFilterPublisherHierarchy={onFilterPublisherHierarchy}
+                  activeFilter={locationSearch.orgPath}
+                  publishers={publishers}
+                />
+                <FilterBox
+                  htmlKey={3}
+                  title={localization.facet.spatial}
+                  filter={datasetAggregations.spatial}
+                  onClick={onFilterSpatial}
+                  activeFilter={locationSearch.spatial}
+                />
+                <FilterBox
+                  htmlKey={4}
+                  title={localization.facet.provenance}
+                  filter={datasetAggregations.provenanceCount}
+                  onClick={onFilterProvenance}
+                  activeFilter={locationSearch.provenance}
+                />
+              </div>
+            )}
+        </aside>
+
+        <section className="col-12 col-lg-8">
+          {_renderHits({ datasetItems, referenceData })}
+        </section>
+
+        <section className="col-12 col-lg-8 offset-lg-4 d-flex justify-content-center">
+          <span className="uu-invisible" aria-hidden="false">
+            Sidepaginering.
+          </span>
+          <ReactPaginate
+            pageCount={pageCount}
+            pageRangeDisplayed={2}
+            marginPagesDisplayed={1}
+            previousLabel={localization.page.prev}
+            nextLabel={localization.page.next}
+            breakLabel={<span>...</span>}
+            breakClassName="break-me"
+            containerClassName="pagination"
+            onPageChange={onPageChange}
+            subContainerClassName="pages pagination"
+            activeClassName="active"
+            initialPage={page}
+            disableInitialCallback
+          />
+        </section>
+      </section>
+    </main>
+  );
+};
+
+ResultsDatasetPure.defaultProps = {
   showFilterModal: false,
   closeFilterModal: _.noop,
   showClearFilterButton: false,
@@ -285,7 +295,7 @@ ResultsDataset.defaultProps = {
   hitsPerPage: 0
 };
 
-ResultsDataset.propTypes = {
+ResultsDatasetPure.propTypes = {
   showFilterModal: PropTypes.bool,
   closeFilterModal: PropTypes.func,
   showClearFilterButton: PropTypes.bool,
@@ -313,3 +323,5 @@ ResultsDataset.propTypes = {
   onPageChange: PropTypes.func,
   hitsPerPage: PropTypes.number
 };
+
+export const ResultsDataset = ResultsDatasetPure;
