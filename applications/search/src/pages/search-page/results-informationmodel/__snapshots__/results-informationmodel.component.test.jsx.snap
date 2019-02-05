@@ -338,7 +338,7 @@ exports[`should render ResultsInformationModel correctly with hits 1`] = `
           containerClassName="pagination"
           disableInitialCallback={true}
           disabledClassName="disabled"
-          initialPage={0}
+          forcePage={0}
           marginPagesDisplayed={1}
           nextClassName="next"
           nextLabel="Neste side"
@@ -436,7 +436,7 @@ exports[`should render ResultsInformationModel correctly with minimum of props a
           containerClassName="pagination"
           disableInitialCallback={true}
           disabledClassName="disabled"
-          initialPage={0}
+          forcePage={0}
           marginPagesDisplayed={1}
           nextClassName="next"
           nextLabel="Neste side"
