@@ -11,6 +11,7 @@ import { SearchHitItem } from './search-hit-item/search-hit-item.component';
 import { FilterBox } from '../../../components/filter-box/filter-box.component';
 import { SearchPublishersTree } from '../search-publishers-tree/search-publishers-tree.component';
 import { getSortfield, setPage, setSortfield } from '../search-location-helper';
+import { parseSearchParams } from '../../../lib/location-history-helper';
 
 const renderFilterModal = ({
   showFilterModal,
@@ -72,7 +73,6 @@ export const ResultsApiPure = ({
   apiAggregations,
   onFilterPublisherHierarchy,
   onFilterFormat,
-  locationSearch,
   publisherCounts,
   publishers,
   onClearFilters,
@@ -81,6 +81,8 @@ export const ResultsApiPure = ({
   history,
   location
 }) => {
+  const locationSearch = parseSearchParams(location);
+
   const page = parseInt(locationSearch.page || 0, 10);
   const pageCount = Math.ceil((apiTotal || 1) / hitsPerPage);
 
@@ -219,7 +221,6 @@ ResultsApiPure.defaultProps = {
   onFilterPublisherHierarchy: _.noop,
   onFilterFormat: _.noop,
   onClearFilters: _.noop,
-  locationSearch: {},
   publisherCounts: null,
   publishers: null,
 
@@ -241,7 +242,6 @@ ResultsApiPure.propTypes = {
   onFilterPublisherHierarchy: PropTypes.func,
   onFilterFormat: PropTypes.func,
   onClearFilters: PropTypes.func,
-  locationSearch: PropTypes.object,
 
   publisherCounts: PropTypes.array,
   publishers: PropTypes.object,
