@@ -26,7 +26,7 @@ beforeEach(() => {
   onSortByScore = jest.fn();
 
   defaultProps = {
-    termItems: concepts,
+    conceptItems: concepts,
     onClearFilters,
     onPageChange,
     onFilterPublisherHierarchy,
@@ -42,9 +42,6 @@ beforeEach(() => {
     onSortByScore
   };
   wrapper = shallow(<ResultsConcepts {...defaultProps} />);
-  wrapper.setState({
-    terms: [concepts.hits.hits[0]._source]
-  });
 });
 
 test('should render ResultsConcepts correctly with minimum of props', () => {

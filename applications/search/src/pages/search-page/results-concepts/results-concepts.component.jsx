@@ -18,230 +18,245 @@ import { CompareTerms } from './compare-terms/compare-terms.component';
 import { SearchPublishersTree } from '../search-publishers-tree/search-publishers-tree.component';
 import { getTranslateText } from '../../../lib/translateText';
 
-export class ResultsConcepts extends React.Component {
-  _renderCompareTerms() {
-    const { conceptsCompare } = this.props;
-    const conceptIdsArray = [];
-    const children = items =>
-      Object.keys(items).map(el => {
-        const item = items[el];
-        conceptIdsArray.push(item.id);
-        const { publisher } = item;
-        const publisherPrefLabel =
-          getTranslateText(_get(publisher, ['prefLabel'])) ||
-          _capitalize(_get(publisher, 'name', ''));
+function _renderCompareTerms({ conceptsCompare, removeConcept }) {
+  const conceptIdsArray = [];
+  const children = items =>
+    Object.keys(items).map(el => {
+      const item = items[el];
+      conceptIdsArray.push(item.id);
+      const { publisher } = item;
+      const publisherPrefLabel =
+        getTranslateText(_get(publisher, ['prefLabel'])) ||
+        _capitalize(_get(publisher, 'name', ''));
 
-        return (
-          <CompareTerms
-            key={item.uri}
-            uri={item.id}
-            prefLabel={item.prefLabel}
-            creator={publisherPrefLabel}
-            onDeleteTerm={this.props.removeConcept}
-          />
-        );
-      });
-
-    if (conceptsCompare && Object.keys(conceptsCompare).length > 0) {
       return (
-        <div className="mt-5">
-          <h3 className="mb-3">{localization.terms.compareTerms}</h3>
-          {children(conceptsCompare)}
-          <div className="d-flex justify-content-center">
-            <Link
-              to={`${PATHNAME_CONCEPTS}${PATHNAME_CONCEPTS_COMPARE}?compare=${conceptIdsArray}`}
-            >
-              {localization.compare.openCompare}
-            </Link>
-          </div>
-        </div>
-      );
-    }
-    return null;
-  }
-
-  _renderTerms() {
-    const { conceptItems, conceptsCompare } = this.props;
-    if (conceptItems && Array.isArray(conceptItems)) {
-      return conceptItems.map(item => (
-        <ConceptsHitItem
-          key={item.id}
-          result={item}
-          concepts={conceptsCompare}
-          onAddConcept={this.props.addConcept}
-          onDeleteConcept={this.props.removeConcept}
+        <CompareTerms
+          key={item.uri}
+          uri={item.id}
+          prefLabel={item.prefLabel}
+          creator={publisherPrefLabel}
+          onDeleteTerm={removeConcept}
         />
-      ));
-    }
-    return null;
-  }
-
-  _renderFilterModal() {
-    const {
-      showFilterModal,
-      closeFilterModal,
-      onFilterPublisherHierarchy,
-      locationSearch,
-      publisherCounts,
-      publishers
-    } = this.props;
-    return (
-      <Modal isOpen={showFilterModal} toggle={closeFilterModal}>
-        <ModalHeader toggle={closeFilterModal}>Filter</ModalHeader>
-        <ModalBody>
-          <div className="search-filters">
-            <SearchPublishersTree
-              title={localization.facet.organisation}
-              publisherCounts={publisherCounts}
-              onFilterPublisherHierarchy={onFilterPublisherHierarchy}
-              activeFilter={locationSearch.orgPath}
-              publishers={publishers}
-            />
-          </div>
-        </ModalBody>
-        <ModalFooter>
-          <Button
-            className="fdk-button-default fdk-button"
-            onClick={closeFilterModal}
-          >
-            Close
-          </Button>
-        </ModalFooter>
-      </Modal>
-    );
-  }
-
-  render() {
-    const {
-      conceptAggregations,
-      conceptTotal,
-      onClearFilters,
-      onPageChange,
-      onFilterPublisherHierarchy,
-      locationSearch,
-      showClearFilterButton,
-      hitsPerPage,
-      publisherCounts,
-      publishers,
-      onSortByScore,
-      onSortByLastModified,
-      conceptSortValue,
-      setConceptSort
-    } = this.props;
-    const page = parseInt(locationSearch.page || 0, 10);
-    const pageCount = Math.ceil((conceptTotal || 1) / hitsPerPage);
-    const clearButtonClass = cx(
-      'btn',
-      'btn-primary',
-      'fdk-button',
-      'fade-in-500',
-      {
-        'd-none': !showClearFilterButton
-      }
-    );
-    const sortByScoreClass = cx('fdk-button', 'fdk-button-black-toggle', {
-      selected: !conceptSortValue
+      );
     });
-    const sortByLastModifiedClass = cx(
-      'fdk-button',
-      'fdk-button-black-toggle',
-      {
-        selected: conceptSortValue === 'modified'
-      }
-    );
 
-    const onSortByScoreClick = () => {
-      setConceptSort(undefined);
-      onSortByScore();
-    };
-    const onSortByModifiedClick = () => {
-      setConceptSort('modified');
-      onSortByLastModified();
-    };
-
+  if (conceptsCompare && Object.keys(conceptsCompare).length > 0) {
     return (
-      <main id="content">
-        <section className="row mb-3">
-          <div className="col-6 col-lg-4">
-            <button
-              className={clearButtonClass}
-              onClick={onClearFilters}
-              type="button"
-            >
-              {localization.query.clear}
-            </button>
-          </div>
-          <div className="col-6 col-lg-4 offset-lg-4">
-            <div className="d-flex justify-content-end">
-              <Button
-                className={sortByScoreClass}
-                onClick={onSortByScoreClick}
-                color="primary"
-              >
-                {localization.sort.relevance}
-              </Button>
-              <Button
-                className={sortByLastModifiedClass}
-                onClick={onSortByModifiedClick}
-                color="primary"
-              >
-                {localization.sort.modified}
-              </Button>
-            </div>
-          </div>
-        </section>
-
-        <section className="row">
-          <aside className="search-filters col-lg-4">
-            <div className="d-none d-lg-block">
-              <span className="uu-invisible" aria-hidden="false">
-                Filtrering tilgang
-              </span>
-              {conceptAggregations && (
-                <div>
-                  {this._renderFilterModal()}
-                  <SearchPublishersTree
-                    title={localization.facet.organisation}
-                    publisherCounts={publisherCounts}
-                    onFilterPublisherHierarchy={onFilterPublisherHierarchy}
-                    activeFilter={_.get(locationSearch, 'orgPath')}
-                    publishers={publishers}
-                  />
-                </div>
-              )}
-            </div>
-            {this._renderCompareTerms()}
-          </aside>
-
-          <section className="col-lg-8">{this._renderTerms()}</section>
-
-          <section className="col-lg-8 offset-lg-4 d-flex justify-content-center">
-            <span className="uu-invisible" aria-hidden="false">
-              Sidepaginering.
-            </span>
-            <ReactPaginate
-              pageCount={pageCount}
-              pageRangeDisplayed={2}
-              marginPagesDisplayed={1}
-              previousLabel={localization.page.prev}
-              nextLabel={localization.page.next}
-              breakLabel={<span>...</span>}
-              breakClassName="break-me"
-              containerClassName="pagination"
-              onPageChange={onPageChange}
-              subContainerClassName="pages pagination"
-              activeClassName="active"
-              initialPage={page}
-              disableInitialCallback
-            />
-          </section>
-        </section>
-      </main>
+      <div className="mt-5">
+        <h3 className="mb-3">{localization.terms.compareTerms}</h3>
+        {children(conceptsCompare)}
+        <div className="d-flex justify-content-center">
+          <Link
+            to={`${PATHNAME_CONCEPTS}${PATHNAME_CONCEPTS_COMPARE}?compare=${conceptIdsArray}`}
+          >
+            {localization.compare.openCompare}
+          </Link>
+        </div>
+      </div>
     );
   }
+  return null;
 }
 
-ResultsConcepts.defaultProps = {
+function _renderTerms({
+  conceptItems,
+  conceptsCompare,
+  addConcept,
+  removeConcept
+}) {
+  if (conceptItems && Array.isArray(conceptItems)) {
+    return conceptItems.map(item => (
+      <ConceptsHitItem
+        key={item.id}
+        result={item}
+        concepts={conceptsCompare}
+        onAddConcept={addConcept}
+        onDeleteConcept={removeConcept}
+      />
+    ));
+  }
+  return null;
+}
+
+function _renderFilterModal({
+  showFilterModal,
+  closeFilterModal,
+  onFilterPublisherHierarchy,
+  locationSearch,
+  publisherCounts,
+  publishers
+}) {
+  return (
+    <Modal isOpen={showFilterModal} toggle={closeFilterModal}>
+      <ModalHeader toggle={closeFilterModal}>Filter</ModalHeader>
+      <ModalBody>
+        <div className="search-filters">
+          <SearchPublishersTree
+            title={localization.facet.organisation}
+            publisherCounts={publisherCounts}
+            onFilterPublisherHierarchy={onFilterPublisherHierarchy}
+            activeFilter={locationSearch.orgPath}
+            publishers={publishers}
+          />
+        </div>
+      </ModalBody>
+      <ModalFooter>
+        <Button
+          className="fdk-button-default fdk-button"
+          onClick={closeFilterModal}
+        >
+          Close
+        </Button>
+      </ModalFooter>
+    </Modal>
+  );
+}
+
+export const ResultsConceptsPure = ({
+  showFilterModal,
+  closeFilterModal,
+  conceptAggregations,
+  conceptTotal,
+  onClearFilters,
+  onPageChange,
+  onFilterPublisherHierarchy,
+  locationSearch,
+  showClearFilterButton,
+  hitsPerPage,
+  publisherCounts,
+  publishers,
+  onSortByScore,
+  onSortByLastModified,
+  conceptSortValue,
+  setConceptSort,
+  conceptItems,
+  conceptsCompare,
+  addConcept,
+  removeConcept
+}) => {
+  const page = parseInt(locationSearch.page || 0, 10);
+  const pageCount = Math.ceil((conceptTotal || 1) / hitsPerPage);
+  const clearButtonClass = cx(
+    'btn',
+    'btn-primary',
+    'fdk-button',
+    'fade-in-500',
+    {
+      'd-none': !showClearFilterButton
+    }
+  );
+  const sortByScoreClass = cx('fdk-button', 'fdk-button-black-toggle', {
+    selected: !conceptSortValue
+  });
+  const sortByLastModifiedClass = cx('fdk-button', 'fdk-button-black-toggle', {
+    selected: conceptSortValue === 'modified'
+  });
+
+  const onSortByScoreClick = () => {
+    setConceptSort(undefined);
+    onSortByScore();
+  };
+  const onSortByModifiedClick = () => {
+    setConceptSort('modified');
+    onSortByLastModified();
+  };
+
+  return (
+    <main id="content">
+      <section className="row mb-3">
+        <div className="col-6 col-lg-4">
+          <button
+            className={clearButtonClass}
+            onClick={onClearFilters}
+            type="button"
+          >
+            {localization.query.clear}
+          </button>
+        </div>
+        <div className="col-6 col-lg-4 offset-lg-4">
+          <div className="d-flex justify-content-end">
+            <Button
+              className={sortByScoreClass}
+              onClick={onSortByScoreClick}
+              color="primary"
+            >
+              {localization.sort.relevance}
+            </Button>
+            <Button
+              className={sortByLastModifiedClass}
+              onClick={onSortByModifiedClick}
+              color="primary"
+            >
+              {localization.sort.modified}
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      <section className="row">
+        <aside className="search-filters col-lg-4">
+          <div className="d-none d-lg-block">
+            <span className="uu-invisible" aria-hidden="false">
+              Filtrering tilgang
+            </span>
+            {conceptAggregations && (
+              <div>
+                {_renderFilterModal({
+                  showFilterModal,
+                  closeFilterModal,
+                  onFilterPublisherHierarchy,
+                  locationSearch,
+                  publisherCounts,
+                  publishers
+                })}
+                <SearchPublishersTree
+                  title={localization.facet.organisation}
+                  publisherCounts={publisherCounts}
+                  onFilterPublisherHierarchy={onFilterPublisherHierarchy}
+                  activeFilter={_.get(locationSearch, 'orgPath')}
+                  publishers={publishers}
+                />
+              </div>
+            )}
+          </div>
+          {_renderCompareTerms({ conceptsCompare, removeConcept })}
+        </aside>
+
+        <section className="col-lg-8">
+          {_renderTerms({
+            conceptItems,
+            conceptsCompare,
+            addConcept,
+            removeConcept
+          })}
+        </section>
+
+        <section className="col-lg-8 offset-lg-4 d-flex justify-content-center">
+          <span className="uu-invisible" aria-hidden="false">
+            Sidepaginering.
+          </span>
+          <ReactPaginate
+            pageCount={pageCount}
+            pageRangeDisplayed={2}
+            marginPagesDisplayed={1}
+            previousLabel={localization.page.prev}
+            nextLabel={localization.page.next}
+            breakLabel={<span>...</span>}
+            breakClassName="break-me"
+            containerClassName="pagination"
+            onPageChange={onPageChange}
+            subContainerClassName="pages pagination"
+            activeClassName="active"
+            initialPage={page}
+            disableInitialCallback
+          />
+        </section>
+      </section>
+    </main>
+  );
+};
+
+ResultsConceptsPure.defaultProps = {
   showFilterModal: false,
   closeFilterModal: _.noop,
   showClearFilterButton: false,
@@ -267,7 +282,7 @@ ResultsConcepts.defaultProps = {
   removeConcept: _.noop
 };
 
-ResultsConcepts.propTypes = {
+ResultsConceptsPure.propTypes = {
   showFilterModal: PropTypes.bool,
   closeFilterModal: PropTypes.func,
   showClearFilterButton: PropTypes.bool,
@@ -293,3 +308,5 @@ ResultsConcepts.propTypes = {
   addConcept: PropTypes.func,
   removeConcept: PropTypes.func
 };
+
+export const ResultsConcepts = ResultsConceptsPure;
