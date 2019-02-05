@@ -322,7 +322,7 @@
     "identifier": "Identifier"
   },
   "infoMod": {
-    "infoModHeader": "Information models",
+    "infoModHeader": "Information model",
     "tabs": {
       "structure": "Structure",
       "json": "JSON Schema"
