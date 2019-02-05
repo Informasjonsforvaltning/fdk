@@ -78,6 +78,8 @@ export const setMultiselectFilterValue = (
   setFilter(history, location, { [filterName]: newFilterValue });
 };
 
+export const getSortfield = location => parseSearchParams(location).sortfield;
+
 export const setSortfield = (history, location, sortfield) => {
   const oldSearchParams = parseSearchParams(location);
 

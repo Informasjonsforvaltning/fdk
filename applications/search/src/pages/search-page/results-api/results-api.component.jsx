@@ -4,11 +4,13 @@ import ReactPaginate from 'react-paginate';
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import cx from 'classnames';
 import _ from 'lodash';
+import { withRouter } from 'react-router';
 
 import localization from '../../../lib/localization';
 import { SearchHitItem } from './search-hit-item/search-hit-item.component';
 import { FilterBox } from '../../../components/filter-box/filter-box.component';
 import { SearchPublishersTree } from '../search-publishers-tree/search-publishers-tree.component';
+import { getSortfield, setSortfield } from '../search-location-helper';
 
 const renderFilterModal = ({
   showFilterModal,
@@ -77,10 +79,8 @@ export const ResultsApiPure = ({
   onPageChange,
   showClearFilterButton,
   hitsPerPage,
-  onSortByScore,
-  onSortByLastModified,
-  apiSortValue,
-  setApiSort
+  history,
+  location
 }) => {
   const page = parseInt(locationSearch.page || 0, 10);
   const pageCount = Math.ceil((apiTotal || 1) / hitsPerPage);
@@ -94,20 +94,20 @@ export const ResultsApiPure = ({
       'd-none': !showClearFilterButton
     }
   );
+
+  const sortfield = getSortfield(location);
   const sortByScoreClass = cx('fdk-button', 'fdk-button-black-toggle', {
-    selected: !apiSortValue
+    selected: !sortfield
   });
   const sortByLastModifiedClass = cx('fdk-button', 'fdk-button-black-toggle', {
-    selected: apiSortValue === 'modified'
+    selected: sortfield === 'modified'
   });
 
   const onSortByScoreClick = () => {
-    setApiSort(undefined);
-    onSortByScore();
+    setSortfield(history, location, undefined);
   };
   const onSortByModifiedClick = () => {
-    setApiSort('modified');
-    onSortByLastModified();
+    setSortfield(history, location, 'modified');
   };
 
   return (
@@ -222,7 +222,9 @@ ResultsApiPure.defaultProps = {
 
   onPageChange: _.noop,
   hitsPerPage: 0,
-  apiSortValue: ''
+
+  history: { push: _.noop },
+  location: { search: '' }
 };
 
 ResultsApiPure.propTypes = {
@@ -242,12 +244,11 @@ ResultsApiPure.propTypes = {
   publisherCounts: PropTypes.array,
   publishers: PropTypes.object,
 
-  onSortByLastModified: PropTypes.func.isRequired,
-  onSortByScore: PropTypes.func.isRequired,
   onPageChange: PropTypes.func,
   hitsPerPage: PropTypes.number,
-  setApiSort: PropTypes.func.isRequired,
-  apiSortValue: PropTypes.string
+
+  history: PropTypes.object,
+  location: PropTypes.object
 };
 
-export const ResultsApi = ResultsApiPure;
+export const ResultsApi = withRouter(ResultsApiPure);

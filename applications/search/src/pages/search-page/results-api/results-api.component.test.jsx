@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import _ from 'lodash';
-import { ResultsApi } from './results-api.component';
+import { ResultsApiPure } from './results-api.component';
 import apisApiResponse from '../../../mock/apis.response.json';
 import { HITS_PER_PAGE } from '../../../constants/constants';
 
@@ -47,12 +47,12 @@ beforeEach(() => {
     onSortByScore,
     onPageChange
   };
-  wrapper = shallow(<ResultsApi {...defaultProps} />);
+  wrapper = shallow(<ResultsApiPure {...defaultProps} />);
 });
 
 test('should render ResultsApi correctly with minimum of props and no hits', () => {
   const minWrapper = shallow(
-    <ResultsApi
+    <ResultsApiPure
       setApiSort={setApiSort}
       onSortByLastModified={onSortByLastModified}
       onSortByScore={onSortByScore}
