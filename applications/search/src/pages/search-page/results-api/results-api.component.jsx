@@ -221,7 +221,7 @@ ResultsApiPure.defaultProps = {
   publishers: null,
 
   onPageChange: _.noop,
-  hitsPerPage: 0,
+  hitsPerPage: 10,
 
   history: { push: _.noop },
   location: { search: '' }
