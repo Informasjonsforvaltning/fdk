@@ -7,6 +7,7 @@ import _get from 'lodash/get';
 import _capitalize from 'lodash/capitalize';
 import _ from 'lodash';
 import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router';
 
 import {
   PATHNAME_CONCEPTS,
@@ -17,6 +18,7 @@ import { ConceptsHitItem } from './concepts-hit-item/concepts-hit-item.component
 import { CompareTerms } from './compare-terms/compare-terms.component';
 import { SearchPublishersTree } from '../search-publishers-tree/search-publishers-tree.component';
 import { getTranslateText } from '../../../lib/translateText';
+import { getSortfield, setSortfield } from '../search-location-helper';
 
 function _renderCompareTerms({ conceptsCompare, removeConcept }) {
   const conceptIdsArray = [];
@@ -125,14 +127,12 @@ export const ResultsConceptsPure = ({
   hitsPerPage,
   publisherCounts,
   publishers,
-  onSortByScore,
-  onSortByLastModified,
-  conceptSortValue,
-  setConceptSort,
   conceptItems,
   conceptsCompare,
   addConcept,
-  removeConcept
+  removeConcept,
+  history,
+  location
 }) => {
   const page = parseInt(locationSearch.page || 0, 10);
   const pageCount = Math.ceil((conceptTotal || 1) / hitsPerPage);
@@ -145,20 +145,20 @@ export const ResultsConceptsPure = ({
       'd-none': !showClearFilterButton
     }
   );
+
+  const sortfield = getSortfield(location);
   const sortByScoreClass = cx('fdk-button', 'fdk-button-black-toggle', {
-    selected: !conceptSortValue
+    selected: !sortfield
   });
   const sortByLastModifiedClass = cx('fdk-button', 'fdk-button-black-toggle', {
-    selected: conceptSortValue === 'modified'
+    selected: sortfield === 'modified'
   });
 
   const onSortByScoreClick = () => {
-    setConceptSort(undefined);
-    onSortByScore();
+    setSortfield(history, location, undefined);
   };
   const onSortByModifiedClick = () => {
-    setConceptSort('modified');
-    onSortByLastModified();
+    setSortfield(history, location, 'modified');
   };
 
   return (
@@ -274,12 +274,13 @@ ResultsConceptsPure.defaultProps = {
 
   onPageChange: _.noop,
   hitsPerPage: 0,
-  setConceptSort: _.noop,
-  conceptSortValue: '',
 
   conceptsCompare: null,
   addConcept: _.noop,
-  removeConcept: _.noop
+  removeConcept: _.noop,
+
+  history: { push: _.noop },
+  location: { search: '' }
 };
 
 ResultsConceptsPure.propTypes = {
@@ -297,16 +298,15 @@ ResultsConceptsPure.propTypes = {
   publisherCounts: PropTypes.array,
   publishers: PropTypes.object,
 
-  onSortByLastModified: PropTypes.func.isRequired,
-  onSortByScore: PropTypes.func.isRequired,
   onPageChange: PropTypes.func,
   hitsPerPage: PropTypes.number,
-  setConceptSort: PropTypes.func,
-  conceptSortValue: PropTypes.string,
 
   conceptsCompare: PropTypes.object,
   addConcept: PropTypes.func,
-  removeConcept: PropTypes.func
+  removeConcept: PropTypes.func,
+
+  history: PropTypes.object,
+  location: PropTypes.object
 };
 
-export const ResultsConcepts = ResultsConceptsPure;
+export const ResultsConcepts = withRouter(ResultsConceptsPure);
