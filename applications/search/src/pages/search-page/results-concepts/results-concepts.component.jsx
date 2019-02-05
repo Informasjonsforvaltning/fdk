@@ -273,7 +273,7 @@ ResultsConceptsPure.defaultProps = {
   publishers: null,
 
   onPageChange: _.noop,
-  hitsPerPage: 0,
+  hitsPerPage: 10,
 
   conceptsCompare: null,
   addConcept: _.noop,
