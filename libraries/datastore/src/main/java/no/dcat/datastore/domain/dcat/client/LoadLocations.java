@@ -70,6 +70,7 @@ public class LoadLocations {
                 if(spatial.getObject().isResource()) {
                     uri = AbstractBuilder.removeDefaultBaseUri(model, spatial.getObject().asResource().getURI());
                 } else {
+                    //Workaround to handle resource URI on the form <dct:spatial>someurl</dct:spatial>
                     uri = spatial.getLiteral().getString();
                 }
 
