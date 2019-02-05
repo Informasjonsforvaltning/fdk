@@ -1,6 +1,4 @@
 export const SETTINGS_PATCH = 'SETTINGS_PATCH';
-export const SET_INFORMATIONMODEL_SORT_PATCH =
-  'SET_INFORMATIONMODEL_SORT_PATCH';
 
 export function setLanguageAction(language) {
   return {
@@ -9,27 +7,14 @@ export function setLanguageAction(language) {
   };
 }
 
-export function setInformationModelSortAction(informationModelSortValue) {
-  return {
-    type: SET_INFORMATIONMODEL_SORT_PATCH,
-    informationModelSortValue
-  };
-}
-
 const initialState = {
-  language: 'nb',
-  conceptSortValue: undefined
+  language: 'nb'
 };
 
 export function settingsResolver(state = initialState, action) {
   switch (action.type) {
     case SETTINGS_PATCH:
       return { ...state, ...action.settings };
-    case SET_INFORMATIONMODEL_SORT_PATCH:
-      return {
-        ...state,
-        informationModelSortValue: action.informationModelSortValue
-      };
     default:
       return state;
   }
