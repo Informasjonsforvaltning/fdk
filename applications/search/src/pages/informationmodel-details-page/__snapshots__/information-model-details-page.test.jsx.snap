@@ -52,8 +52,8 @@ exports[`should render InformationModelDetailsPage correctly with informationMod
           menuItems={
             Array [
               Object {
-                "name": "Information models",
-                "prefLabel": "Information models",
+                "name": "Information model",
+                "prefLabel": "Information model",
               },
               Object {
                 "name": "Belongs to API",
@@ -68,7 +68,7 @@ exports[`should render InformationModelDetailsPage correctly with informationMod
       >
         <ListRegular
           bottomMargin={true}
-          title="Information models"
+          title="Information model"
         >
           <div
             className="d-flex list-regular--item"
