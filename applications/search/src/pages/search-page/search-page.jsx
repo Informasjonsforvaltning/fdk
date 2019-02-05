@@ -213,7 +213,6 @@ export const SearchPage = props => {
               conceptAggregations={conceptAggregations}
               onClearFilters={handleClearFilters}
               onFilterPublisherHierarchy={handleDatasetFilterPublisherHierarchy}
-              locationSearch={locationSearch}
               publisherCounts={_.get(conceptAggregations, 'orgPath.buckets')}
               publishers={publisherItems}
               hitsPerPage={HITS_PER_PAGE}

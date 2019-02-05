@@ -12,6 +12,7 @@ import { FilterBox } from '../../../components/filter-box/filter-box.component';
 import { SearchPublishersTree } from '../search-publishers-tree/search-publishers-tree.component';
 import { ErrorBoundary } from '../../../components/error-boundary/error-boundary';
 import { getSortfield, setPage, setSortfield } from '../search-location-helper';
+import { parseSearchParams } from '../../../lib/location-history-helper';
 
 function _renderFilterModal({
   showFilterModal,
@@ -107,7 +108,6 @@ export const ResultsDatasetPure = ({
   onFilterProvenance,
   onFilterSpatial,
   showClearFilterButton,
-  locationSearch,
   themesItems,
   hitsPerPage,
   publisherCounts,
@@ -116,6 +116,8 @@ export const ResultsDatasetPure = ({
   history,
   location
 }) => {
+  const locationSearch = parseSearchParams(location);
+
   const page = parseInt(locationSearch.page || 0, 10);
   const pageCount = Math.ceil((datasetTotal || 1) / hitsPerPage);
 
@@ -285,7 +287,6 @@ ResultsDatasetPure.defaultProps = {
   onFilterPublisherHierarchy: _.noop,
   onFilterProvenance: _.noop,
   onFilterSpatial: _.noop,
-  locationSearch: {},
   onClearFilters: _.noop,
   themesItems: null,
   publisherCounts: [],
@@ -312,7 +313,6 @@ ResultsDatasetPure.propTypes = {
   onFilterPublisherHierarchy: PropTypes.func,
   onFilterProvenance: PropTypes.func,
   onFilterSpatial: PropTypes.func,
-  locationSearch: PropTypes.object,
   onClearFilters: PropTypes.func,
   themesItems: PropTypes.object,
   publisherCounts: PropTypes.array,
