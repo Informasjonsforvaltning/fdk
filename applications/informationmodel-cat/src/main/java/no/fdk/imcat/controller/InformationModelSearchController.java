@@ -54,6 +54,10 @@ public class InformationModelSearchController {
         @RequestParam(value = "orgPath", defaultValue = "", required = false)
             String orgPath,
 
+        @ApiParam("Filters on harvestSourceUri external identifier")
+        @RequestParam(value = "harvestSourceUri", defaultValue = "", required = false)
+            String harvestSourceUri,
+
         @ApiParam("Calculate aggregations")
         @RequestParam(value = "aggregations", defaultValue = "false", required = false)
             String includeAggregations,
@@ -91,6 +95,10 @@ public class InformationModelSearchController {
 
         if (!orgPath.isEmpty()) {
             composedQuery.filter(QueryUtil.createTermFilter("publisher.orgPath", orgPath));
+        }
+
+        if (!harvestSourceUri.isEmpty()) {
+            composedQuery.filter(QueryUtil.createTermFilter("harvestSourceUri", harvestSourceUri));
         }
 
         NativeSearchQuery finalQuery = new NativeSearchQueryBuilder()

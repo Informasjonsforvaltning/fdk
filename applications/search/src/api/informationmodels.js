@@ -14,3 +14,9 @@ export const getInformationmodel = id =>
     .get(`${informationmodelsUrlBase}/${id}`)
     .then(response => response.data)
     .catch(e => console.error(JSON.stringify(e))); // eslint-disable-line no-console;
+
+export const getinformationModelByHarvestSourceUri = harvestSourceUri =>
+  axios
+    .get(`${informationmodelsUrlBase}?harvestSourceUri=${harvestSourceUri}`)
+    .then(response => response.data)
+    .catch(e => console.log(JSON.stringify(e))); // eslint-disable-line no-console

@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render InformationModelReference correctly 1`] = `
+<div
+  className="d-flex flex-column list-regular--item mb-4"
+>
+  <a
+    href="/informationModels/43dbbfe0-ae35-43dd-8411-2e8b1e9f9276"
+  >
+    <strong>
+      Markagrensen
+    </strong>
+  </a>
+</div>
+`;
+
+exports[`should render InformationModelReference correctly with no props 1`] = `""`;
