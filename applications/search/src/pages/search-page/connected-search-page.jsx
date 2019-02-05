@@ -5,7 +5,6 @@ import { fetchConceptsIfNeededAction } from '../../redux/modules/concepts';
 import { fetchInformationModelsIfNeededAction } from '../../redux/modules/informationModels';
 import { fetchPublishersIfNeededAction } from '../../redux/modules/publishers';
 import { fetchThemesIfNeededAction } from '../../redux/modules/themes';
-import { setInformationModelSortAction } from '../../redux/modules/settings';
 import {
   addConceptAction,
   removeConceptAction
@@ -25,7 +24,6 @@ const mapStateToProps = ({
   publishers,
   referenceData,
   conceptsCompare,
-  settings,
   searchQuery
 }) => {
   const { datasetItems, datasetAggregations, datasetTotal } = datasets || {
@@ -87,7 +85,6 @@ const mapStateToProps = ({
     isFetchingPublishers,
     referenceData,
     conceptsCompare: items,
-    informationModelSortValue: settings.informationModelSortValue,
     searchQuery
   };
 };
@@ -103,9 +100,7 @@ const mapDispatchToProps = dispatch => ({
   addConcept: item => dispatch(addConceptAction(item)),
   removeConcept: uri => dispatch(removeConceptAction(uri)),
   fetchInformationModelsIfNeeded: query =>
-    dispatch(fetchInformationModelsIfNeededAction(query)),
-  setInformationModelSort: sortValue =>
-    dispatch(setInformationModelSortAction(sortValue))
+    dispatch(fetchInformationModelsIfNeededAction(query))
 });
 
 export const ConnectedSearchPage = connect(

@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import _ from 'lodash';
-import { ResultsInformationModel } from './results-informationmodel.component';
+import { ResultsInformationModelPure } from './results-informationmodel.component';
 import informationModelApiResponse from '../__fixtures/informationmodelsApiResponse.json';
 import { HITS_PER_PAGE } from '../../../constants/constants';
 
@@ -47,12 +47,12 @@ beforeEach(() => {
     onSortByScore,
     onPageChange
   };
-  wrapper = shallow(<ResultsInformationModel {...defaultProps} />);
+  wrapper = shallow(<ResultsInformationModelPure {...defaultProps} />);
 });
 
 test('should render ResultsInformationModel correctly with minimum of props and no hits', () => {
   const minWrapper = shallow(
-    <ResultsInformationModel
+    <ResultsInformationModelPure
       setInformationModelSort={setInformationModelSort}
       onSortByLastModified={onSortByLastModified}
       onSortByScore={onSortByScore}

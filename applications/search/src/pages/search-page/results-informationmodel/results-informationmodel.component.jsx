@@ -1,13 +1,15 @@
 import _ from 'lodash';
 import React from 'react';
-import PropTypes from 'prop-types';
+import { withRouter } from 'react-router';
 import ReactPaginate from 'react-paginate';
+import PropTypes from 'prop-types';
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import cx from 'classnames';
 
 import localization from '../../../lib/localization';
 import { SearchHitItem } from './search-hit-item/search-hit-item.component';
 import { SearchPublishersTree } from '../search-publishers-tree/search-publishers-tree.component';
+import { getSortfield, setSortfield } from '../search-location-helper';
 
 const renderFilterModal = ({
   showFilterModal,
@@ -66,10 +68,8 @@ export const ResultsInformationModelPure = ({
   onPageChange,
   showClearFilterButton,
   hitsPerPage,
-  onSortByScore,
-  onSortByLastModified,
-  informationModelSortValue,
-  setInformationModelSort
+  history,
+  location
 }) => {
   const page = parseInt(locationSearch.page || 0, 10);
   const pageCount = Math.ceil((informationModelTotal || 1) / hitsPerPage);
@@ -83,20 +83,20 @@ export const ResultsInformationModelPure = ({
       'd-none': !showClearFilterButton
     }
   );
+
+  const sortfield = getSortfield(location);
   const sortByScoreClass = cx('fdk-button', 'fdk-button-black-toggle', {
-    selected: !informationModelSortValue
+    selected: !sortfield
   });
   const sortByLastModifiedClass = cx('fdk-button', 'fdk-button-black-toggle', {
-    selected: informationModelSortValue === 'modified'
+    selected: sortfield === 'modified'
   });
 
   const onSortByScoreClick = () => {
-    setInformationModelSort(undefined);
-    onSortByScore();
+    setSortfield(history, location, undefined);
   };
   const onSortByModifiedClick = () => {
-    setInformationModelSort('modified');
-    onSortByLastModified();
+    setSortfield(history, location, 'modified');
   };
 
   return (
@@ -201,8 +201,9 @@ ResultsInformationModelPure.defaultProps = {
 
   onPageChange: _.noop,
   hitsPerPage: 0,
-  setInformationModelSort: _.noop,
-  informationModelSortValue: ''
+
+  history: { push: _.noop },
+  location: { search: '' }
 };
 
 ResultsInformationModelPure.propTypes = {
@@ -220,12 +221,11 @@ ResultsInformationModelPure.propTypes = {
   publisherCounts: PropTypes.array,
   publishers: PropTypes.object,
 
-  onSortByLastModified: PropTypes.func.isRequired,
-  onSortByScore: PropTypes.func.isRequired,
   onPageChange: PropTypes.func,
   hitsPerPage: PropTypes.number,
-  setInformationModelSort: PropTypes.func,
-  informationModelSortValue: PropTypes.string
+
+  history: PropTypes.object,
+  location: PropTypes.object
 };
 
-export const ResultsInformationModel = ResultsInformationModelPure;
+export const ResultsInformationModel = withRouter(ResultsInformationModelPure);

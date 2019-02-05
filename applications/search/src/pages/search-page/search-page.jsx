@@ -27,8 +27,7 @@ import {
   setFilter,
   setMultiselectFilterValue,
   setPage,
-  setSearchText,
-  setSortfield
+  setSearchText
 } from './search-location-helper';
 
 const browser = detect();
@@ -62,8 +61,6 @@ export const SearchPage = props => {
     conceptsCompare,
     addConcept,
     removeConcept,
-    setInformationModelSort,
-    informationModelSortValue,
     showFilterModal,
     open,
     close
@@ -140,13 +137,6 @@ export const SearchPage = props => {
     const selectedValue = event.target.value;
     const add = event.target.checked;
     setMultiselectFilterValue(history, location, 'format', selectedValue, add);
-  };
-
-  const sortByScore = () => {
-    setSortfield(history, location, undefined);
-  };
-  const sortByLastModified = () => {
-    setSortfield(history, location, 'modified');
   };
 
   const handlePageChange = data => {
@@ -239,8 +229,6 @@ export const SearchPage = props => {
               locationSearch={locationSearch}
               publisherCounts={_.get(conceptAggregations, 'orgPath.buckets')}
               publishers={publisherItems}
-              onSortByLastModified={sortByLastModified}
-              onSortByScore={sortByScore}
               onPageChange={handlePageChange}
               hitsPerPage={HITS_PER_PAGE}
               conceptsCompare={conceptsCompare}
@@ -264,12 +252,8 @@ export const SearchPage = props => {
                 'orgPath.buckets'
               )}
               publishers={publisherItems}
-              onSortByLastModified={sortByLastModified}
-              onSortByScore={sortByScore}
               onPageChange={handlePageChange}
               hitsPerPage={HITS_PER_PAGE}
-              setInformationModelSort={setInformationModelSort}
-              informationModelSortValue={informationModelSortValue}
             />
           </Route>
         </Switch>
