@@ -14,7 +14,7 @@
 
     <groupId>no.dcat</groupId>
     <artifactId>registration-api-bindings</artifactId>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
 
     <dependencies>
         <dependency>
@@ -33,7 +33,7 @@
         <dependency>
             <groupId>no.dcat</groupId>
             <artifactId>registration-api-common</artifactId>
-            <version>1.0.0</version>
+            <version>1.1.0</version>
         </dependency>
 
     </dependencies>
