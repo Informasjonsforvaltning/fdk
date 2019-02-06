@@ -13,8 +13,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>no.dcat</groupId>
-    <artifactId>registration-api-client</artifactId>
-    <version>1.6.0</version>
+    <artifactId>registration-api-bindings</artifactId>
+    <version>1.0.0</version>
 
     <dependencies>
         <dependency>

@@ -1,4 +1,4 @@
-package no.dcat.client.registrationapi;
+package no.fdk.registration.bindings;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
@@ -15,14 +15,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 /*
-RegistrationApiClient is a library for consuming REST api with strong types.
+RegistrationApiBindings is a library for consuming REST api with strong types.
  */
-public class RegistrationApiClient {
+public class RegistrationApiBindings {
     @Getter
     @Setter
     private String apiRootUrl;
 
-    private static Logger logger = LoggerFactory.getLogger(RegistrationApiClient.class);
+    private static Logger logger = LoggerFactory.getLogger(RegistrationApiBindings.class);
 
     public List<ApiRegistrationPublic> getPublished() {
         List<ApiRegistrationPublic> result = new ArrayList<>();
