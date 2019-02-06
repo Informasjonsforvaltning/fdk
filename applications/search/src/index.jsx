@@ -34,7 +34,7 @@ window.addEventListener('unhandledrejection', event => {
  * @return {null}
  */
 function Analytics(props) {
-  const PAGEVIEW_TIMEOUT = 200;
+  const PAGEVIEW_TIMEOUT = 1000;
   if (
     window.location.hostname.indexOf('fellesdatakatalog.brreg.no') !== -1 ||
     window.location.hostname.indexOf('fellesdatakatalog.tt1.brreg.no') !== -1 ||
