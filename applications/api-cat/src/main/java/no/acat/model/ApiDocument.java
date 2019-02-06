@@ -47,9 +47,6 @@ public class ApiDocument {
     @ApiModelProperty("An overview of the formats returned by the api")
     private Set<String> formats;
 
-    @ApiModelProperty("Indication if the api is National Component")
-    private boolean nationalComponent;
-
     @ApiModelProperty("The publisher of the api [dct:publisher]")
     private Publisher publisher;
 
@@ -61,6 +58,18 @@ public class ApiDocument {
 
     @ApiModelProperty("The url of the API documentation")
     private String apiDocUrl;
+
+    @ApiModelProperty("Indication if the api is from an authoritative source (a National Component)")
+    private Boolean nationalComponent;
+
+    @ApiModelProperty("Indication if the api has open access")
+    private Boolean isOpenAccess;
+
+    @ApiModelProperty("Indication if the api has open licence")
+    private Boolean isOpenLicense;
+
+    @ApiModelProperty("Indication if the api is free")
+    private Boolean isFree;
 
     private String cost;
 
