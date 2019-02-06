@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { Link } from 'react-router-dom';
 import { getTranslateText } from '../../../lib/translateText';
-import localization from '../../../lib/localization';
 
 export const InformationModelReference = props => {
   const { informationModelReference } = props;
@@ -17,9 +16,8 @@ export const InformationModelReference = props => {
   return (
     <div className="d-flex flex-column list-regular--item mb-4">
       <Link to={`/informationModels/${id}`}>
-        {localization.api.linkInformationModelReference}
+        <strong>{prefLabel ? getTranslateText(prefLabel) : id}</strong>
       </Link>
-      <strong>{prefLabel ? getTranslateText(prefLabel) : id}</strong>
     </div>
   );
 };
