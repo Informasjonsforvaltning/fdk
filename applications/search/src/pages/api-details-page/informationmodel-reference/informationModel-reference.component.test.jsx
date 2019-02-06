@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { InformationModelReference } from './informationmodel-reference.component';
-import informationModelItem from './__fixtures/informationmodelItem.json';
+import informationModelItem from '../../../mock/informationmodels.response.json';
 
 let defaultProps;
 
