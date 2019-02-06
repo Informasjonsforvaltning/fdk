@@ -6,11 +6,12 @@ exports[`should render InformationModelReference correctly 1`] = `
 >
   <Link
     replace={false}
-    to="/informationModels/43dbbfe0-ae35-43dd-8411-2e8b1e9f9276"
-  />
-  <strong>
-    Markagrensen
-  </strong>
+    to="/informationModels/936c581f-9d95-418b-8fce-e452f6bdfd5e"
+  >
+    <strong>
+      Åpne Data fra Enhetsregisteret - API Dokumentasjon
+    </strong>
+  </Link>
 </div>
 `;
 
