@@ -78,9 +78,9 @@ public class ApiCatalogController {
 
         if (!Objects.equals(apiCatalog.getHarvestSourceUri(), apiCatalogData.getHarvestSourceUri())) {
             apiCatalog.setHarvestSourceUri(apiCatalogData.getHarvestSourceUri());
-            apiCatalog.setHarvestStatus(null);
         }
 
+        apiCatalog.setHarvestStatus(null);//Always trigger a harvest
         ApiCatalog apiCatalogSaved = apiCatalogRepository.save(apiCatalog);
         apiCatalogHarvesterService.addHarvestSingleCatalogTaskToQueue(apiCatalogSaved);
 
