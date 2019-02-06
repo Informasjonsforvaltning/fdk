@@ -4,13 +4,12 @@ import no.acat.model.ApiDocument;
 import no.acat.repository.ApiDocumentRepository;
 import no.acat.service.ApiDocumentBuilderService;
 import no.acat.service.RegistrationApiClient;
-import no.dcat.client.registrationapi.ApiRegistrationPublic;
+import no.fdk.registration.common.ApiRegistrationPublic;
 import no.dcat.shared.testcategories.UnitTest;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;

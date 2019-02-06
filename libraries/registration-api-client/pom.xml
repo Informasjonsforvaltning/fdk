@@ -14,27 +14,13 @@
 
     <groupId>no.dcat</groupId>
     <artifactId>registration-api-client</artifactId>
-    <version>1.5.0</version>
+    <version>1.6.0</version>
 
     <dependencies>
         <dependency>
             <groupId>no.dcat</groupId>
             <artifactId>shared</artifactId>
             <version>1.4.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.json</groupId>
-            <artifactId>json</artifactId>
-            <version>20180130</version>
-        </dependency>
-        <dependency>
-            <groupId>com.googlecode.json-simple</groupId>
-            <artifactId>json-simple</artifactId>
-            <version>1.1</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -46,9 +32,8 @@
         </dependency>
         <dependency>
             <groupId>no.dcat</groupId>
-            <artifactId>api-cat-common</artifactId>
+            <artifactId>registration-api-common</artifactId>
             <version>1.0.0</version>
-            <scope>compile</scope>
         </dependency>
 
     </dependencies>

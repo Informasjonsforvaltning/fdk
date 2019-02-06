@@ -3,7 +3,7 @@ package no.acat.service;
 import no.acat.model.ApiDocument;
 import no.acat.repository.ApiDocumentRepository;
 import no.acat.utils.Utils;
-import no.dcat.client.registrationapi.ApiRegistrationPublic;
+import no.fdk.registration.common.ApiRegistrationPublic;
 import no.dcat.shared.testcategories.UnitTest;
 import no.fdk.acat.converters.apispecificationparser.ParseException;
 import org.junit.Before;

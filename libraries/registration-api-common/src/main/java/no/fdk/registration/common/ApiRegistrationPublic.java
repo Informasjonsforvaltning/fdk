@@ -1,4 +1,4 @@
-package no.dcat.client.registrationapi;
+package no.fdk.registration.common;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModelProperty;
