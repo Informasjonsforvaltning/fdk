@@ -1,6 +1,6 @@
 package no.dcat.controller;
 
-import no.dcat.client.registrationapi.ApiRegistrationPublic;
+import no.fdk.registration.common.ApiRegistrationPublic;
 import no.dcat.model.ApiRegistration;
 import no.dcat.service.ApiRegistrationRepository;
 import org.springframework.beans.BeanUtils;

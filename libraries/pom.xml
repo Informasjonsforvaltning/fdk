@@ -25,6 +25,7 @@
         <module>publisher-cat-client</module>
         <module>referencedata-client</module>
         <module>registration-api-client</module>
+        <module>registration-api-common</module>
         <module>shared</module>
         <module>webutils-spring</module>
     </modules>

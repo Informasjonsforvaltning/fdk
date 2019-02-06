@@ -3,7 +3,7 @@ package no.acat.service;
 import no.acat.model.ApiDocument;
 import no.acat.repository.ApiDocumentRepository;
 import no.dcat.client.publishercat.PublisherCatClient;
-import no.dcat.client.registrationapi.ApiRegistrationPublic;
+import no.fdk.registration.common.ApiRegistrationPublic;
 import no.dcat.htmlclean.HtmlCleaner;
 import no.dcat.shared.*;
 import no.fdk.acat.common.model.apispecification.ApiSpecification;
