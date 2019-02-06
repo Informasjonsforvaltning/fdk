@@ -104,9 +104,14 @@ public class ApiDocumentBuilderService {
 
     void populateFromApiRegistration(ApiDocument apiDocument, ApiRegistrationPublic apiRegistration) {
         apiDocument.setPublisher(lookupPublisher(apiRegistration.getCatalogId()));
-        apiDocument.setNationalComponent(apiRegistration.isNationalComponent());
         apiDocument.setDatasetReferences(extractDatasetReferences(apiRegistration));
         apiDocument.setApiDocUrl(apiRegistration.getApiDocUrl());
+
+        apiDocument.setNationalComponent(apiRegistration.getNationalComponent());
+        apiDocument.setIsOpenAccess(apiRegistration.getIsOpenAccess());
+        apiDocument.setIsOpenLicense(apiRegistration.getIsOpenLicense());
+        apiDocument.setIsFree(apiRegistration.getIsFree());
+
         apiDocument.setCost(apiRegistration.getCost());
         apiDocument.setUsageLimitation(apiRegistration.getUsageLimitation());
         apiDocument.setPerformance(apiRegistration.getPerformance());
