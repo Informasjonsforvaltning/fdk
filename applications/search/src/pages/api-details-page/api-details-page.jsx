@@ -16,6 +16,7 @@ import { StickyMenu } from '../../components/sticky-menu/sticky-menu.component';
 import { ListRegular } from '../../components/list-regular/list-regular.component';
 import { TwoColRow } from '../../components/list-regular/twoColRow/twoColRow';
 import { DatasetReference } from './dataset-reference/dataset-reference.component';
+import { InformationModelReference } from './informationmodel-reference/informationmodel-reference.component';
 import { config } from '../../config';
 
 const showDownConverter = new showdown.Converter();
@@ -93,6 +94,26 @@ const renderDatasetReferences = references => {
   return (
     <ListRegular title={localization.datasetReferences}>
       {children(references)}
+    </ListRegular>
+  );
+};
+
+const renderInformationModelReferences = references => {
+  if (!references || (references && references.length === 0)) {
+    return null;
+  }
+  const informationModels = references._embedded.informationmodels;
+  const children = items =>
+    items.map((item, index) => (
+      <InformationModelReference
+        key={`${index}-${item.id}`}
+        informationModelReference={item}
+        index={index}
+      />
+    ));
+  return (
+    <ListRegular title={localization.informationModelReferences}>
+      {children(informationModels)}
     </ListRegular>
   );
 };
@@ -271,6 +292,12 @@ const renderStickyMenu = apiItem => {
       prefLabel: localization.datasetReferences
     });
   }
+  if (_.get(apiItem, 'informationModelReferences')) {
+    menuItems.push({
+      name: localization.informationModelReferences,
+      prefLabel: localization.informationModelReferences
+    });
+  }
   if (_.get(apiItem, 'contactPoint')) {
     menuItems.push({
       name: localization.contactInfo,
@@ -283,8 +310,12 @@ const renderStickyMenu = apiItem => {
 export const ApiDetailsPage = props => {
   props.fetchPublishersIfNeeded();
 
-  const { apiItem, publisherItems, referencedDatasets } = props;
-
+  const {
+    apiItem,
+    publisherItems,
+    referencedDatasets,
+    referencedInformationModels
+  } = props;
   if (!apiItem) {
     return null;
   }
@@ -347,6 +378,8 @@ export const ApiDetailsPage = props => {
             )}
 
             {renderDatasetReferences(referencedDatasets)}
+
+            {renderInformationModelReferences(referencedInformationModels)}
 
             {renderContactPoints(apiItem.contactPoint)}
             {config.disqusShortname && (
