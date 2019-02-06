@@ -6,4 +6,6 @@ public class InformationModelHarvestSource {
     public String sourceType;
     public String title;
     public String schema;
+    public String serviceCode;
+    public String serviceEditionCode;
 }
