@@ -98,11 +98,13 @@ const renderDatasetReferences = references => {
   );
 };
 
-const renderInformationModelReferences = references => {
-  if (!references || (references && references.length === 0)) {
+const renderInformationModelReferences = informationModels => {
+  if (
+    !Array.isArray(informationModels) ||
+    (informationModels && informationModels.length === 0)
+  ) {
     return null;
   }
-  const informationModels = references._embedded.informationmodels;
   const children = items =>
     items.map((item, index) => (
       <InformationModelReference

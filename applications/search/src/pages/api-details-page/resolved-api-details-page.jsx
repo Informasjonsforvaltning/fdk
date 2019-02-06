@@ -22,17 +22,17 @@ const mapProps = {
     const promiseMap = urlArray.map(url =>
       memoizedGetDatasetByURI(encodeURIComponent(url))
     );
-    const result = await Promise.all(promiseMap);
-    return result;
+    return Promise.all(promiseMap);
   },
   referencedInformationModels: async props => {
     const apiItem = await memoizedGetApi(props.match.params.id);
 
     const harvestSourceUri = _.get(apiItem, 'harvestSourceUri');
 
-    return Promise.resolve(
-      memoizedGetinformationModelByHarvestSourceUri(harvestSourceUri)
+    const informationmodel = await memoizedGetinformationModelByHarvestSourceUri(
+      harvestSourceUri
     );
+    return informationmodel ? [informationmodel] : [];
   }
 };
 
