@@ -26,16 +26,13 @@ const mapProps = {
     return result;
   },
   referencedInformationModels: async props => {
-    const getApi = await memoizedGetApi(props.match.params.id);
-    const urlArray = _.get(getApi, 'informationModelReferences', []).map(
-      item => item.uri
-    );
+    const apiItem = await memoizedGetApi(props.match.params.id);
 
-    const promiseMap = urlArray.map(url =>
-      memoizedGetinformationModelByHarvestSourceUri(encodeURIComponent(url))
+    const harvestSourceUri = _.get(apiItem, 'harvestSourceUri');
+
+    return Promise.resolve(
+      memoizedGetinformationModelByHarvestSourceUri(harvestSourceUri)
     );
-    const result = await Promise.all(promiseMap);
-    return result;
   }
 };
 

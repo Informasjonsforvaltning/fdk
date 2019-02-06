@@ -102,17 +102,18 @@ const renderInformationModelReferences = references => {
   if (!references || (references && references.length === 0)) {
     return null;
   }
+  const informationModels = references._embedded.informationmodels;
   const children = items =>
     items.map((item, index) => (
       <InformationModelReference
         key={`${index}-${item.id}`}
-        datasetReference={item}
+        informationModelReference={item}
         index={index}
       />
     ));
   return (
-    <ListRegular title={localization.datasetReferences}>
-      {children(references)}
+    <ListRegular title={localization.informationModelReferences}>
+      {children(informationModels)}
     </ListRegular>
   );
 };
@@ -315,7 +316,6 @@ export const ApiDetailsPage = props => {
     referencedDatasets,
     referencedInformationModels
   } = props;
-
   if (!apiItem) {
     return null;
   }
