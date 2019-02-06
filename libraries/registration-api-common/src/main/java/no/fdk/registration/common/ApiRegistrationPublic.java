@@ -27,13 +27,22 @@ public class ApiRegistrationPublic {
     @ApiModelProperty("The url of the API documentation")
     private String apiDocUrl;
 
-    @ApiModelProperty("Indication if the api is a National Component")
-    private boolean nationalComponent;
-
     @ApiModelProperty("The dataset references")
     private List<String> datasetReferences;
 
     private ApiSpecification apiSpecification;
+
+    @ApiModelProperty("Indication if the api is from an authoritative source (a National Component)")
+    private Boolean nationalComponent;
+
+    @ApiModelProperty("Indication if the api has open access")
+    private Boolean isOpenAccess;
+
+    @ApiModelProperty("Indication if the api has open licence")
+    private Boolean isOpenLicense;
+
+    @ApiModelProperty("Indication if the api is free")
+    private Boolean isFree;
 
     private String cost;
 
