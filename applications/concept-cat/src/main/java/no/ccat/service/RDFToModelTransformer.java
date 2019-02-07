@@ -211,6 +211,9 @@ public class RDFToModelTransformer {
 
         try {
             Statement propertyStmnt = resource.getProperty(DCAT.contactPoint);
+            if (propertyStmnt == null) {
+                return null;
+            }
 
             Resource contactPointResource = propertyStmnt.getObject().asResource();
 
