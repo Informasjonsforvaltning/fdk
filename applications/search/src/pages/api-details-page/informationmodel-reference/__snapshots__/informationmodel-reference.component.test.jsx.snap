@@ -2,7 +2,7 @@
 
 exports[`should render InformationModelReference correctly 1`] = `
 <div
-  className="d-flex flex-column list-regular--item mb-4"
+  className="d-flex flex-column list-regular--item mb-4 informationmodel-item"
 >
   <Link
     replace={false}
