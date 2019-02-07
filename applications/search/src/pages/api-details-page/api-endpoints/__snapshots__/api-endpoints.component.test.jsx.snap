@@ -42,9 +42,7 @@ exports[`should render api-ApiEndpoints correctly 1`] = `
       </div>
       <div
         className="col-7"
-      >
-        Hent alle tjenester
-      </div>
+      />
     </div>
   </React.Fragment>
   <React.Fragment
@@ -62,9 +60,7 @@ exports[`should render api-ApiEndpoints correctly 1`] = `
       </div>
       <div
         className="col-7"
-      >
-        Hent alle enheter
-      </div>
+      />
     </div>
   </React.Fragment>
   <React.Fragment
@@ -82,9 +78,7 @@ exports[`should render api-ApiEndpoints correctly 1`] = `
       </div>
       <div
         className="col-7"
-      >
-        Hent detaljer om enhet
-      </div>
+      />
     </div>
   </React.Fragment>
   <React.Fragment
@@ -102,9 +96,7 @@ exports[`should render api-ApiEndpoints correctly 1`] = `
       </div>
       <div
         className="col-7"
-      >
-        Hent alle underenheter
-      </div>
+      />
     </div>
   </React.Fragment>
   <React.Fragment
@@ -122,9 +114,7 @@ exports[`should render api-ApiEndpoints correctly 1`] = `
       </div>
       <div
         className="col-7"
-      >
-        Hent detaljer om underenhet
-      </div>
+      />
     </div>
   </React.Fragment>
   <React.Fragment
@@ -142,9 +132,7 @@ exports[`should render api-ApiEndpoints correctly 1`] = `
       </div>
       <div
         className="col-7"
-      >
-        Hent oppdateringer på enheter
-      </div>
+      />
     </div>
   </React.Fragment>
   <React.Fragment
@@ -162,9 +150,7 @@ exports[`should render api-ApiEndpoints correctly 1`] = `
       </div>
       <div
         className="col-7"
-      >
-        Hent oppdateringer på underenheter
-      </div>
+      />
     </div>
   </React.Fragment>
   <React.Fragment
@@ -182,9 +168,7 @@ exports[`should render api-ApiEndpoints correctly 1`] = `
       </div>
       <div
         className="col-7"
-      >
-        Hent alle organisasjonsformer
-      </div>
+      />
     </div>
   </React.Fragment>
   <React.Fragment
@@ -202,9 +186,7 @@ exports[`should render api-ApiEndpoints correctly 1`] = `
       </div>
       <div
         className="col-7"
-      >
-        Hent en enkelt organisasjonsform fra kode
-      </div>
+      />
     </div>
   </React.Fragment>
   <div
