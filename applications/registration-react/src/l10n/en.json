@@ -10,6 +10,8 @@
   "yesterday": "yesterday",
   "time": "at",
   "at": "at",
+  "getNew": "hent ny",
+  "specification": "specification",
   "header": {
     "Registration of Datasets": "Registration of datasets",
     "Registration of API's": "Registration of API's"
