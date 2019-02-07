@@ -7,114 +7,42 @@ import { withState, withHandlers, compose } from 'recompose';
 
 import getTranslateText from '../../utils/translateText';
 import localization from '../../utils/localization';
-import { ListRegular } from '../../components/list-regular/list-regular.component';
-import { ListRegularItem } from '../../components/list-regular/list-regular-item/list-regular-item.component';
 import { AlertMessage } from '../../components/alert-message/alert-message.component';
 import { FormTemplateWithState } from '../../components/form-template/form-template-with-state.component';
 import { ConnectedFormMeta } from './form-meta/connected-form-meta';
 import { ConnectedFormRelatedDatasets } from './form-relatedDatasets/connected-form-related-datasets';
 import { StatusBarWithState } from '../../components/status-bar/status-bar.component';
 import { ConnectedFormPublish } from './connected-form-publish/connected-form-publish';
+import { APISpecificationInfo } from './api-specification-info.component';
 
-const renderApiSpecificationInfo = (info, paths) => {
-  if (!info) {
-    return null;
-  }
-
-  return (
-    <ListRegular title={localization.api.register.importFromSpec}>
-      {_.get(info, 'title') && (
-        <ListRegularItem
-          asideContent={localization.title}
-          mainContent={_.get(info, 'title')}
-        />
-      )}
-      {_.get(info, 'description') && (
-        <ListRegularItem
-          asideContent={localization.description}
-          mainContent={_.get(info, 'description')}
-        />
-      )}
-      {_.get(info, 'version') && (
-        <ListRegularItem
-          asideContent={localization.version}
-          mainContent={_.get(info, 'version')}
-        />
-      )}
-      {paths && (
-        <ListRegularItem
-          asideContent={localization.operations}
-          mainContent={`${Object.keys(paths).length} ${
-            Object.keys(paths).length > 0
-              ? localization.operations.toLowerCase()
-              : localization.operation.toLowerCase()
-          }`}
-        />
-      )}
-      {_.get(info, ['license', 'url']) && (
-        <div className="d-flex list-regular--item">
-          <div className="col-4 pl-0 fdk-text-strong">
-            {localization.license}
-          </div>
-          <div className="col-8">
-            <a href={_.get(info, ['license', 'url'])}>
-              {_.get(info, ['license', 'name'])}
-              <i className="fa fa-external-link fdk-fa-right" />
-            </a>
-          </div>
-        </div>
-      )}
-      {_.get(info, 'termsOfService') && (
-        <div className="d-flex list-regular--item">
-          <div className="col-4 pl-0 fdk-text-strong">
-            {localization.termsOfService}
-          </div>
-          <div className="col-8">
-            <a href={_.get(info, 'termsOfService')}>
-              {_.get(info, 'termsOfService')}
-              <i className="fa fa-external-link fdk-fa-right" />
-            </a>
-          </div>
-        </div>
-      )}
-      {_.get(info, 'contact') && (
-        <div className="d-flex list-regular--item">
-          <div className="col-4 pl-0 fdk-text-strong">
-            {localization.contactInformation}
-          </div>
-          <div className="col-8">
-            <span>{_.get(info, ['contact', 'name'])}, </span>
-            <span>{_.get(info, ['contact', 'url'])}, </span>
-            <span>{_.get(info, ['contact', 'email'])}, </span>
-          </div>
-        </div>
-      )}
-    </ListRegular>
-  );
-};
-
-export const APIRegistrationPagePure = props => {
-  const {
-    fetchCatalogIfNeeded,
-    fetchApisIfNeeded,
-    fetchHelptextsIfNeeded,
-    deleteApiItem,
-    catalogItem,
-    lastSaved,
-    isSaving,
-    error,
-    justPublishedOrUnPublished,
-    registrationStatus,
-    helptextItems,
-    item,
-    location,
-    match,
-    publisher,
-    referencedDatasets,
-    showImportError,
-    showImportSuccess
-  } = props;
+export const APIRegistrationPagePure = ({
+  fetchCatalogIfNeeded,
+  fetchApisIfNeeded,
+  fetchHelptextsIfNeeded,
+  deleteApiItem,
+  catalogItem,
+  lastSaved,
+  isSaving,
+  error,
+  justPublishedOrUnPublished,
+  registrationStatus,
+  helptextItems,
+  item,
+  location,
+  match,
+  publisher,
+  referencedDatasets,
+  showImportError,
+  showImportSuccess,
+  showImportSpecificationButtons,
+  onToggleShowImportSpecificationButtons,
+  handleShowImportError,
+  handleShowImportSuccess,
+  apiSuccess,
+  history
+}) => {
   const catalogId = _.get(match, ['params', 'catalogId']);
+  const apiId = _.get(match, ['params', 'id']);
   const searchQuery =
     parse(_.get(location, 'search'), { ignoreQueryPrefix: true }) || {};
   const info = _.get(item, ['apiSpecification', 'info']);
@@ -124,7 +52,7 @@ export const APIRegistrationPagePure = props => {
   fetchHelptextsIfNeeded();
 
   const deleteApi = () => {
-    const { history, match } = props;
+    // const { history, match } = props;
     const api = {
       Authorization: `Basic user:password`
     };
@@ -199,10 +127,20 @@ export const APIRegistrationPagePure = props => {
 
       <div className="row mb-5">
         <div className="col-12">
-          {renderApiSpecificationInfo(
-            info,
-            _.get(item, ['apiSpecification', 'paths'])
-          )}
+          <APISpecificationInfo
+            info={info}
+            paths={_.get(item, ['apiSpecification', 'paths'])}
+            fromApiCatalog={_.get(item, 'fromApiCatalog')}
+            showImportSpecificationButtons={showImportSpecificationButtons}
+            onToggleShowImportSpecificationButtons={
+              onToggleShowImportSpecificationButtons
+            }
+            catalogId={catalogId}
+            apiId={apiId}
+            handleShowImportError={handleShowImportError}
+            handleShowImportSuccess={handleShowImportSuccess}
+            apiSuccess={apiSuccess}
+          />
         </div>
       </div>
 
@@ -290,7 +228,13 @@ APIRegistrationPagePure.defaultProps = {
   publisher: null,
   referencedDatasets: null,
   showImportError: false,
-  showImportSuccess: false
+  showImportSuccess: false,
+  showImportSpecificationButtons: false,
+  onToggleShowImportSpecificationButtons: _.noop(),
+  handleShowImportError: _.noop(),
+  handleShowImportSuccess: _.noop(),
+  apiSuccess: _.noop(),
+  history: null
 };
 
 APIRegistrationPagePure.propTypes = {
@@ -311,7 +255,13 @@ APIRegistrationPagePure.propTypes = {
   publisher: PropTypes.object,
   referencedDatasets: PropTypes.array,
   showImportError: PropTypes.bool,
-  showImportSuccess: PropTypes.bool
+  showImportSuccess: PropTypes.bool,
+  showImportSpecificationButtons: PropTypes.bool,
+  onToggleShowImportSpecificationButtons: PropTypes.func,
+  handleShowImportError: PropTypes.func,
+  handleShowImportSuccess: PropTypes.func,
+  apiSuccess: PropTypes.func,
+  history: PropTypes.object
 };
 
 const enhance = compose(
