@@ -257,3 +257,13 @@ Remove old images
 Docker is slow on mac:
 Docker needs at least 8G of memory
 >  Docker -> Preferences -> Advanced -> Change memory to (8 GiB)
+
+## Common ElasticSearch Problems
+Error message: java.nio.file.AccessDeniedException: /usr/share/elasticsearch/data/nodes
+On windows platforms, this seems to be caused by some issue with credentials.
+
+    Solution - reset and reeenter the credentials:
+        Rightclick docker->Settings->Shared Drives->Reset Credentials. Reselect the drive you want shared, and reenter
+        credentials, and do a docker-compose stop elasticsearch5 and a docker-compose up -d
+        
+    
