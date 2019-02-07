@@ -390,6 +390,7 @@
       "importFromSpecSuccess": "Import from {0} was successful!",
       "importFromSpecError": "Import from {0} failed!",
       "importFromSpec": "Imported from specification",
+      "importFromSpecSub": "Fields from specification to be shown in the National Data Directory.",
       "addInfo": "To ensure API specification to be useful you are encouraged to add additional information. That information is only used in the National Data Directory",
       "registeredApiTitle": "Single API descriptions"
     },

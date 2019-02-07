@@ -390,6 +390,7 @@
       "importFromSpecSuccess": "Import fra {0} var vellykket",
       "importFromSpecError": "Import fra {0} feilet!",
       "importFromSpec": "Importert fra spesifikasjon",
+      "importFromSpecSub": "Dette er de aktuelle feltene fra spesifikasjonen som vil vises i Felles datakatalog.",
       "addInfo": "For at API-beskrivelsen skal være nyttig for brukerne av Felles Datakatalog bør du legge til tilleggsinformasjon. Denne er spesifikk for Datakatalogen og vil kun brukes her.",
       "registeredApiTitle": "Enkeltstående API-beskrivelser"
     },
