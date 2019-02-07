@@ -20,7 +20,7 @@ export const renderPathMethod = (path, method, methodDeclaration) => (
       <div className="col-5 pl-0 fdk-text-strong">
         {method.toUpperCase()} {path}
       </div>
-      <div className="col-7">{methodDeclaration.description}</div>
+      <div className="col-7">{methodDeclaration.summary}</div>
     </div>
   </React.Fragment>
 );
