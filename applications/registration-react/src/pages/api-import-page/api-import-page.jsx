@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { readAsText } from 'promise-file-reader';
 
-import { postApiFile } from '../../api/post-api-file';
-import { postApiLink } from '../../api/post-api-link';
+import { postApi } from '../../api/apis';
 import localization from '../../utils/localization';
 import { ImportDialog } from './import-dialog/import-dialog.component';
 import { ImportFileUpload } from './import-file-upload/import-file-upload.component';
@@ -68,7 +67,7 @@ export class ApiImportPage extends React.Component {
     const { catalogId, importUrl } = this.state;
     const { addApiItem } = this.props;
 
-    postApiLink(catalogId, importUrl)
+    postApi(catalogId, { apiSpecUrl: importUrl })
       .then(responseData => {
         addApiItem(responseData);
         redirectWhenImportSucceeded(
@@ -103,7 +102,7 @@ export class ApiImportPage extends React.Component {
       });
       readAsText(fileMetaData)
         .then(apiSpec => {
-          postApiFile(catalogId, apiSpec)
+          postApi(catalogId, { apiSpec })
             .then(responseData => {
               addApiItem(responseData);
               redirectWhenImportSucceeded(
