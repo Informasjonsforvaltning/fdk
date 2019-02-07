@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { parse } from 'qs';
 import axios from 'axios';
+import { withState, withHandlers, compose } from 'recompose';
 
 import getTranslateText from '../../utils/translateText';
 import localization from '../../utils/localization';
@@ -92,7 +93,7 @@ const renderApiSpecificationInfo = (info, paths) => {
   );
 };
 
-export const APIRegistrationPage = props => {
+export const APIRegistrationPagePure = props => {
   const {
     fetchCatalogIfNeeded,
     fetchApisIfNeeded,
@@ -109,7 +110,9 @@ export const APIRegistrationPage = props => {
     location,
     match,
     publisher,
-    referencedDatasets
+    referencedDatasets,
+    showImportError,
+    showImportSuccess
   } = props;
   const catalogId = _.get(match, ['params', 'catalogId']);
   const searchQuery =
@@ -162,6 +165,32 @@ export const APIRegistrationPage = props => {
               {localization.formatString(
                 localization.api.register.importFromSpecSuccess,
                 _.get(searchQuery, 'importSuccess')
+              )}
+            </AlertMessage>
+          </div>
+        </div>
+      )}
+
+      {showImportSuccess && (
+        <div className="row mb-5">
+          <div className="col-12">
+            <AlertMessage type="success">
+              {localization.formatString(
+                localization.api.register.importFromSpecSuccess,
+                localization.specification
+              )}
+            </AlertMessage>
+          </div>
+        </div>
+      )}
+
+      {showImportError && (
+        <div className="row mb-5">
+          <div className="col-12">
+            <AlertMessage type="danger">
+              {localization.formatString(
+                localization.api.register.importFromSpecError,
+                localization.specification
               )}
             </AlertMessage>
           </div>
@@ -243,7 +272,7 @@ export const APIRegistrationPage = props => {
   );
 };
 
-APIRegistrationPage.defaultProps = {
+APIRegistrationPagePure.defaultProps = {
   fetchCatalogIfNeeded: _.noop(),
   fetchApisIfNeeded: _.noop,
   fetchHelptextsIfNeeded: _.noop(),
@@ -259,10 +288,12 @@ APIRegistrationPage.defaultProps = {
   location: null,
   match: null,
   publisher: null,
-  referencedDatasets: null
+  referencedDatasets: null,
+  showImportError: false,
+  showImportSuccess: false
 };
 
-APIRegistrationPage.propTypes = {
+APIRegistrationPagePure.propTypes = {
   fetchCatalogIfNeeded: PropTypes.func,
   fetchApisIfNeeded: PropTypes.func,
   fetchHelptextsIfNeeded: PropTypes.func,
@@ -278,5 +309,34 @@ APIRegistrationPage.propTypes = {
   location: PropTypes.object,
   match: PropTypes.object,
   publisher: PropTypes.object,
-  referencedDatasets: PropTypes.array
+  referencedDatasets: PropTypes.array,
+  showImportError: PropTypes.bool,
+  showImportSuccess: PropTypes.bool
 };
+
+const enhance = compose(
+  withState(
+    'showImportSpecificationButtons',
+    'toggleShowImportSpecificationButtons',
+    false
+  ),
+  withState('showImportError', 'setShowImportError', false),
+  withState('showImportSuccess', 'setShowImportSuccess', false),
+  withHandlers({
+    onToggleShowImportSpecificationButtons: props => e => {
+      e.preventDefault();
+      props.toggleShowImportSpecificationButtons(
+        !props.showImportSpecificationButtons
+      );
+    },
+    handleShowImportError: props => () => {
+      props.setShowImportError(true);
+    },
+    handleShowImportSuccess: props => () => {
+      props.setShowImportSuccess(true);
+    }
+  })
+);
+
+export const APIRegistrationPageWithState = enhance(APIRegistrationPagePure);
+export const APIRegistrationPage = APIRegistrationPageWithState;
