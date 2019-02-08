@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render FormApiStatus, { renderLandingpage  correctly 1`] = `
+<form>
+  <div
+    className="form-group"
+  >
+    <withState(withHandlers(Helptext))
+      title="Status på API-et"
+    />
+    <Field
+      component={[Function]}
+      items={null}
+      name="status"
+      saveObject={false}
+      valueKey="code"
+    />
+  </div>
+</form>
+`;

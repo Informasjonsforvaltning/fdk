@@ -294,6 +294,12 @@
         "availability": "Availability"
       }
     },
+    "apiStatus": {
+      "title": "API status",
+      "helptext": {
+        "apiStatus": "API status"
+      }
+    },
     "apiDatasetReferences": {
       "title": "Related datasets",
       "helptext": {

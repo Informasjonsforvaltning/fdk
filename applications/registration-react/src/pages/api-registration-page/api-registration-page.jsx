@@ -11,6 +11,7 @@ import { AlertMessage } from '../../components/alert-message/alert-message.compo
 import { FormTemplateWithState } from '../../components/form-template/form-template-with-state.component';
 import { ConnectedFormMeta } from './form-meta/connected-form-meta';
 import { ConnectedFormRelatedDatasets } from './form-relatedDatasets/connected-form-related-datasets';
+import { ConnectedFormApiStatus } from './form-apiStatus/connected-form-apiStatus';
 import { StatusBarWithState } from '../../components/status-bar/status-bar.component';
 import { ConnectedFormPublish } from './connected-form-publish/connected-form-publish';
 import { APISpecificationInfo } from './api-specification-info.component';
@@ -19,6 +20,7 @@ export const APIRegistrationPagePure = ({
   fetchCatalogIfNeeded,
   fetchApisIfNeeded,
   fetchHelptextsIfNeeded,
+  fetchApiStatusIfNeeded,
   deleteApiItem,
   catalogItem,
   lastSaved,
@@ -39,7 +41,8 @@ export const APIRegistrationPagePure = ({
   handleShowImportError,
   handleShowImportSuccess,
   apiSuccess,
-  history
+  history,
+  apiStatusItems
 }) => {
   const catalogId = _.get(match, ['params', 'catalogId']);
   const apiId = _.get(match, ['params', 'id']);
@@ -50,6 +53,7 @@ export const APIRegistrationPagePure = ({
   fetchCatalogIfNeeded(catalogId);
   fetchApisIfNeeded(catalogId);
   fetchHelptextsIfNeeded();
+  fetchApiStatusIfNeeded();
 
   const deleteApi = () => {
     // const { history, match } = props;
@@ -172,6 +176,21 @@ export const APIRegistrationPagePure = ({
             <div className="col-12">
               <FormTemplateWithState
                 showInitially
+                title={localization.schema.apiStatus.title}
+              >
+                <ConnectedFormApiStatus
+                  match={match}
+                  apiItem={item}
+                  apiStatusItems={apiStatusItems}
+                />
+              </FormTemplateWithState>
+            </div>
+          </div>
+
+          <div className="row mb-5">
+            <div className="col-12">
+              <FormTemplateWithState
+                showInitially
                 title={localization.schema.apiDatasetReferences.title}
               >
                 <ConnectedFormRelatedDatasets
@@ -214,6 +233,7 @@ APIRegistrationPagePure.defaultProps = {
   fetchCatalogIfNeeded: _.noop(),
   fetchApisIfNeeded: _.noop,
   fetchHelptextsIfNeeded: _.noop(),
+  fetchApiStatusIfNeeded: _.noop(),
   deleteApiItem: _.noop(),
   catalogItem: null,
   lastSaved: null,
@@ -222,6 +242,7 @@ APIRegistrationPagePure.defaultProps = {
   justPublishedOrUnPublished: false,
   registrationStatus: null,
   helptextItems: null,
+  apiStatusItems: null,
   item: null,
   location: null,
   match: null,
@@ -241,6 +262,7 @@ APIRegistrationPagePure.propTypes = {
   fetchCatalogIfNeeded: PropTypes.func,
   fetchApisIfNeeded: PropTypes.func,
   fetchHelptextsIfNeeded: PropTypes.func,
+  fetchApiStatusIfNeeded: PropTypes.func,
   deleteApiItem: PropTypes.func,
   catalogItem: PropTypes.object,
   lastSaved: PropTypes.string,
@@ -249,6 +271,7 @@ APIRegistrationPagePure.propTypes = {
   justPublishedOrUnPublished: PropTypes.bool,
   registrationStatus: PropTypes.string,
   helptextItems: PropTypes.object,
+  apiStatusItems: PropTypes.array,
   item: PropTypes.object,
   location: PropTypes.object,
   match: PropTypes.object,
