@@ -255,7 +255,7 @@ const renderTermsAndRestrictions = (
   );
 };
 
-const renderStickyMenu = apiItem => {
+const renderStickyMenu = (apiItem, informationModels) => {
   const menuItems = [];
   if (_.get(apiItem, 'description')) {
     menuItems.push({
@@ -294,7 +294,7 @@ const renderStickyMenu = apiItem => {
       prefLabel: localization.datasetReferences
     });
   }
-  if (_.get(apiItem, 'informationModelReferences')) {
+  if (informationModels) {
     menuItems.push({
       name: localization.informationModelReferences,
       prefLabel: localization.informationModelReferences
@@ -353,7 +353,9 @@ export const ApiDetailsPage = props => {
         </div>
 
         <div className="row">
-          <div className="col-12 col-lg-4 ">{renderStickyMenu(apiItem)}</div>
+          <div className="col-12 col-lg-4 ">
+            {renderStickyMenu(apiItem, referencedInformationModels)}
+          </div>
 
           <section className="col-12 col-lg-8 mt-3">
             {renderDescription(
