@@ -5,7 +5,7 @@ export const APIS_REQUEST = 'APIS_REQUEST';
 export const APIS_SUCCESS = 'APIS_SUCCESS';
 export const APIS_FAILURE = 'APIS_FAILURE';
 export const APIS_ADD_ITEM = 'APIS_ADD_ITEM';
-export const APIS_ITEM_SET_STATUS = 'APIS_ITEM_SET_STATUS';
+export const API_SUCCESS = 'API_SUCCESS';
 export const APIS_ITEM_DELETE = 'APIS_ITEM_DELETE';
 
 function shouldFetch(metaState) {
@@ -44,11 +44,9 @@ export const addApiItemAction = payload => ({
   payload
 });
 
-export const setApiItemStatusAction = (catalogId, apiId, status) => ({
-  type: APIS_ITEM_SET_STATUS,
-  catalogId,
-  apiId,
-  status
+export const apiSuccessAction = payload => ({
+  type: API_SUCCESS,
+  payload
 });
 
 export const deleteApiItemAction = (catalogId, apiId) => ({
@@ -105,23 +103,21 @@ export default function apis(state = initialState, action) {
           }
         }
       };
-    case APIS_ITEM_SET_STATUS:
+    case API_SUCCESS: {
+      const items = _.get(state, [action.payload.catalogId, 'items']);
+      const isNew = !!_.find(items, { id: action.payload.id });
+      const newItems = isNew
+        ? [...items, action.payload]
+        : items.map(
+            item => (item.id === action.payload.id ? action.payload : item)
+          );
       return {
         ...state,
-        [action.catalogId]: {
-          items: [
-            _.get(state, [action.catalogId, 'items'], {}).map(item => {
-              if (item.id === action.apiId) {
-                return {
-                  ...item,
-                  registrationStatus: action.status
-                };
-              }
-              return item;
-            })
-          ]
+        [action.payload.catalogId]: {
+          items: newItems
         }
       };
+    }
     case APIS_ITEM_DELETE:
       return {
         ...state,
