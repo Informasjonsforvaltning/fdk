@@ -14,9 +14,9 @@ export const InformationModelReference = props => {
   const prefLabel = _.get(informationModelReference, ['title']);
 
   return (
-    <div className="d-flex flex-column list-regular--item mb-4">
+    <div className="d-flex flex-column list-regular--item">
       <Link to={`/informationModels/${id}`}>
-        <strong>{prefLabel ? getTranslateText(prefLabel) : id}</strong>
+        {prefLabel ? getTranslateText(prefLabel) : id}
       </Link>
     </div>
   );
