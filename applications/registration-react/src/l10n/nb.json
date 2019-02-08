@@ -294,6 +294,12 @@
         "availability": "Pålitelighet"
       }
     },
+    "apiStatus": {
+      "title": "Status på API-et",
+      "helptext": {
+        "apiStatus": "Status på API-et"
+      }
+    },
     "apiDatasetReferences": {
       "title": "Tilknyttede datasettbeskrivelser",
       "helptext": {
