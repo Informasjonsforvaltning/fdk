@@ -6,48 +6,46 @@ import {
   apiFormPatchErrorAction,
   apiFormPatchJustPublishedOrUnPublishedAction
 } from '../../../redux/modules/api-form-status';
-import { setApiItemStatusAction } from '../../../redux/modules/apis';
+import { apiSuccessAction } from '../../../redux/modules/apis';
 
 export const asyncValidate = (values, dispatch, props) => {
   const { match } = props;
-  const catalogId = _.get(match, ['params', 'catalogId']);
   const apiId = _.get(match, ['params', 'id']);
 
-  if (dispatch && apiId) {
+  if (typeof dispatch !== 'function') {
+    throw new Error('dispatch must be a function');
+  }
+
+  if (apiId) {
     dispatch(apiFormPatchIsSavingAction(apiId));
   }
 
   return axios
     .patch(_.get(match, 'url'), values)
     .then(response => {
-      if (dispatch) {
+      const apiRegistration = response && response.data;
+      if (apiRegistration) {
         dispatch(
           apiFormPatchSuccessAction(
-            _.get(response, ['data', 'id']),
-            _.get(response, ['data', '_lastModified'])
+            apiRegistration.id,
+            apiRegistration._lastModified
           )
         );
         if (_.get(values, 'registrationStatus')) {
           dispatch(
             apiFormPatchJustPublishedOrUnPublishedAction(
-              _.get(response, ['data', 'id']),
+              apiRegistration.id,
               true,
-              _.get(values, 'registrationStatus')
+              apiRegistration.registrationStatus
             )
           );
-          dispatch(
-            setApiItemStatusAction(
-              catalogId,
-              apiId,
-              _.get(values, 'registrationStatus')
-            )
-          );
+          dispatch(apiSuccessAction(apiRegistration));
         } else {
           dispatch(
             apiFormPatchJustPublishedOrUnPublishedAction(
-              _.get(response, ['data', 'id']),
+              apiRegistration.id,
               false,
-              _.get(response, ['data', 'registrationStatus'])
+              apiRegistration.registrationStatus
             )
           );
         }
