@@ -294,7 +294,10 @@ const renderStickyMenu = (apiItem, informationModels) => {
       prefLabel: localization.datasetReferences
     });
   }
-  if (informationModels) {
+  if (
+    Array.isArray(informationModels) ||
+    (informationModels && informationModels.length === 0)
+  ) {
     menuItems.push({
       name: localization.informationModelReferences,
       prefLabel: localization.informationModelReferences
@@ -334,6 +337,7 @@ export const ApiDetailsPage = props => {
     identifier: apiItem.id,
     title: meta.title
   };
+
   return (
     <main id="content" className="container">
       <article>
