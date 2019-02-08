@@ -294,10 +294,7 @@ const renderStickyMenu = (apiItem, informationModels) => {
       prefLabel: localization.datasetReferences
     });
   }
-  if (
-    Array.isArray(informationModels) ||
-    (informationModels && informationModels.length === 0)
-  ) {
+  if (Array.isArray(informationModels) && informationModels.length > 0) {
     menuItems.push({
       name: localization.informationModelReferences,
       prefLabel: localization.informationModelReferences
