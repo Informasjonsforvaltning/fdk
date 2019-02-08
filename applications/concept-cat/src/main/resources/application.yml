@@ -16,7 +16,10 @@ application:
   apiRootUrl: http://nginx-search:8080/api
   apiRootExternalURL: https://fellesdatakatalog.brreg.no/api
   conceptsPath: /concepts
-  harvestSourceUri: https://data.brreg.no/begrep/
+  harvestsourcesuris:
+    uriList:
+      - "https://data.brreg.no/begrep/"
+      - "https://raw.githubusercontent.com/akhvidsten/skosmapping/master/Virksomhetsarkitektur"
 
 
 ---
@@ -31,5 +34,9 @@ application:
   apiRootUrl: http://localhost:8080/api
   apiRootExternalURL: http://localhost:8080/api
   conceptsPath: /concepts
+  harvestsourcesuris:
+    uriList:
+    - "https://data.brreg.no/begrep/"
+    - "https://raw.githubusercontent.com/akhvidsten/skosmapping/master/Virksomhetsarkitektur"
 server:
   port: 8088

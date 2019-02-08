@@ -1,19 +1,21 @@
 package no.ccat.service;
 
+import no.ccat.config.HarvestURIList;
 import no.ccat.model.ConceptDenormalized;
 import no.dcat.shared.HarvestMetadata;
 import no.dcat.shared.HarvestMetadataUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.Reader;
+import java.io.StringReader;
 import java.net.URL;
 import java.net.URLConnection;
-import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.List;
 
@@ -27,20 +29,29 @@ public class ConceptHarvester {
     private final ConceptDenormalizedRepository conceptDenormalizedRepository;
     private final RDFToModelTransformer rdfToModelTransformer;
 
-    @Value("${application.harvestSourceUri}")
-    private String harvestSourceUri;
+    private HarvestURIList harvestURIList;
 
     @Autowired
-    public ConceptHarvester(ConceptDenormalizedRepository conceptDenormalizedRepository, RDFToModelTransformer rdfToModelTransformer) {
+    public ConceptHarvester(ConceptDenormalizedRepository conceptDenormalizedRepository, RDFToModelTransformer rdfToModelTransformer, HarvestURIList harvestURIList) {
         this.conceptDenormalizedRepository = conceptDenormalizedRepository;
         this.rdfToModelTransformer = rdfToModelTransformer;
+        this.harvestURIList = harvestURIList;
     }
 
     @PostConstruct
     public void harvestFromSource() {
+        logger.info("Harvest of Concepts start");
+
+        for (String uri : harvestURIList.getUriList()) {
+            harvestFromSingleURLSource(uri);
+        }
+        logger.info("Harvest of Concepts complete");
+    }
+
+    private void harvestFromSingleURLSource(String harvestUri) {
         Reader reader;
 
-        String theEntireDocument = readURLFully(harvestSourceUri);
+        String theEntireDocument = readURLFully(harvestUri);
 
         reader = new StringReader(theEntireDocument);
 
@@ -48,8 +59,7 @@ public class ConceptHarvester {
 
         List<ConceptDenormalized> concepts = rdfToModelTransformer.getConceptsFromStream(reader);
 
-        logger.info("Harvested {} concepts", concepts.size());
-
+        logger.info("Harvested {} concepts from Uri {}", concepts.size(), harvestUri);
 
         Date harvestDate = new Date();
         concepts.stream().forEach(concept -> {
@@ -75,6 +85,6 @@ public class ConceptHarvester {
         } catch (IOException e) {
             logger.warn("Downloading concepts from url failed:" + harvestSourceUri);
         }
-            return "";
-        }
+        return "";
+    }
 }
