@@ -1,7 +1,7 @@
 package no.dcat.harvester.crawler.converters;
 
 import no.dcat.datastore.domain.dcat.vocabulary.DCATNO;
-import no.dcat.shared.testcategories.IntegrationTest;
+import no.fdk.test.testcategories.IntegrationTest;
 import org.apache.jena.rdf.model.*;
 import org.apache.jena.sparql.vocabulary.FOAF;
 import org.apache.jena.util.FileManager;

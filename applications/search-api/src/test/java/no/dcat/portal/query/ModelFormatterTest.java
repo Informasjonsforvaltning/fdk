@@ -1,6 +1,6 @@
 package no.dcat.portal.query;
 
-import no.dcat.shared.testcategories.UnitTest;
+import no.fdk.test.testcategories.UnitTest;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.junit.Before;

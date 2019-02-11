@@ -2,7 +2,7 @@ package no.dcat.harvester;
 
 import no.dcat.datastore.domain.DcatSource;
 import no.dcat.datastore.domain.dcat.vocabulary.DCATNO;
-import no.dcat.shared.testcategories.UnitTest;
+import no.fdk.test.testcategories.UnitTest;
 import org.apache.jena.query.Dataset;
 import org.apache.jena.rdf.model.Literal;
 import org.apache.jena.rdf.model.Model;

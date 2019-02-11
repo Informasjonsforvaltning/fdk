@@ -1,7 +1,7 @@
 package no.dcat.harvester.notification;
 
 import no.dcat.harvester.crawler.notification.EmailNotificationService;
-import no.dcat.shared.testcategories.UnitTest;
+import no.fdk.test.testcategories.UnitTest;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.springframework.mail.MailSendException;

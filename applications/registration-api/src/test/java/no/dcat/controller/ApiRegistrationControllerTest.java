@@ -7,7 +7,7 @@ import no.dcat.service.ApiCatService;
 import no.dcat.service.ApiRegistrationRepository;
 import no.dcat.service.CatalogRepository;
 import no.dcat.service.InformationmodelCatService;
-import no.dcat.shared.testcategories.UnitTest;
+import no.fdk.test.testcategories.UnitTest;
 import no.fdk.acat.common.model.apispecification.ApiSpecification;
 import no.fdk.webutils.exceptions.BadRequestException;
 import no.fdk.webutils.exceptions.NotFoundException;

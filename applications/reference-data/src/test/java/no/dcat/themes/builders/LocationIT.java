@@ -2,11 +2,11 @@ package no.dcat.themes.builders;
 
 import no.dcat.shared.SkosCode;
 import no.dcat.shared.Types;
-import no.dcat.shared.testcategories.IntegrationTest;
 import no.dcat.themes.database.TDBConnection;
 import no.dcat.themes.database.TDBInferenceService;
 import no.dcat.themes.database.TDBService;
 import no.dcat.themes.service.CodesService;
+import no.fdk.test.testcategories.IntegrationTest;
 import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Ignore;

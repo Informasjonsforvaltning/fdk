@@ -2,7 +2,7 @@ package no.dcat.datastore.domain.dcat;
 
 import no.dcat.datastore.domain.dcat.builders.DatasetBuilder;
 import no.dcat.shared.Subject;
-import no.dcat.shared.testcategories.IntegrationTest;
+import no.fdk.test.testcategories.IntegrationTest;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.ResIterator;

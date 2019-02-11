@@ -2,7 +2,7 @@ package no.acat.controller;
 
 import no.acat.model.ApiDocument;
 import no.acat.repository.ApiDocumentRepository;
-import no.dcat.shared.testcategories.UnitTest;
+import no.fdk.test.testcategories.UnitTest;
 import no.fdk.webutils.exceptions.NotFoundException;
 import org.junit.Assert;
 import org.junit.Before;

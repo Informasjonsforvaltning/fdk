@@ -9,7 +9,7 @@ import no.dcat.shared.Catalog;
 import no.dcat.shared.Contact;
 import no.dcat.shared.Dataset;
 import no.dcat.shared.QualityAnnotation;
-import no.dcat.shared.testcategories.UnitTest;
+import no.fdk.test.testcategories.UnitTest;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.sparql.vocabulary.FOAF;

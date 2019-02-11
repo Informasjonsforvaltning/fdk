@@ -6,7 +6,7 @@ import no.dcat.datastore.DcatIndexUtils;
 import no.dcat.datastore.ElasticDockerRule;
 import no.dcat.datastore.domain.DcatSource;
 import no.dcat.shared.Dataset;
-import no.dcat.shared.testcategories.IntegrationTest;
+import no.fdk.test.testcategories.IntegrationTest;
 import org.apache.commons.io.IOUtils;
 import org.apache.jena.util.FileManager;
 import org.elasticsearch.action.search.SearchRequestBuilder;

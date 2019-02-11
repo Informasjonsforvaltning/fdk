@@ -5,7 +5,7 @@ import no.dcat.datastore.ElasticDockerRule;
 import no.dcat.model.Catalog;
 import no.dcat.service.CatalogRepository;
 import no.dcat.shared.admin.DcatSourceDto;
-import no.dcat.shared.testcategories.IntegrationTest;
+import no.fdk.test.testcategories.IntegrationTest;
 import org.apache.commons.codec.binary.Base64;
 import org.junit.Before;
 import org.junit.ClassRule;

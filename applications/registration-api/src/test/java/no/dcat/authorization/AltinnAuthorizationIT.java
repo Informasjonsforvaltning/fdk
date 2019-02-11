@@ -1,6 +1,6 @@
 package no.dcat.authorization;
 
-import no.dcat.shared.testcategories.IntegrationTest;
+import no.fdk.test.testcategories.IntegrationTest;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;

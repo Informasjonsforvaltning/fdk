@@ -87,18 +87,13 @@
         </dependency>
         <dependency>
             <groupId>no.dcat</groupId>
-            <artifactId>shared</artifactId>
-            <version>1.4.0</version>
-        </dependency>
-        <dependency>
-            <groupId>no.dcat</groupId>
             <artifactId>webutils-spring</artifactId>
             <version>1.2.0</version>
         </dependency>
         <dependency>
             <groupId>no.dcat</groupId>
             <artifactId>html-cleaner</artifactId>
-            <version>1.0.0</version>
+            <version>1.1.0</version>
         </dependency>
 
         <dependency>
@@ -114,7 +109,7 @@
         <dependency>
             <groupId>no.dcat</groupId>
             <artifactId>api-cat-converters</artifactId>
-            <version>1.0.0</version>
+            <version>1.1.0</version>
         </dependency>
         <dependency>
             <groupId>no.dcat</groupId>
@@ -134,6 +129,13 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>no.dcat</groupId>
+            <artifactId>test</artifactId>
+            <version>1.0.0</version>
+            <scope>test</scope>
+        </dependency>
+
         <!-- END TEST DEPENDENCIES -->
 
     </dependencies>
@@ -196,7 +198,7 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.19.1</version>
                 <configuration>
-                    <groups>no.dcat.shared.testcategories.UnitTest</groups> <!-- java.lang.Exception is a hack to make a valid comma-separated list og category classes -->
+                    <groups>no.fdk.test.testcategories.UnitTest</groups> <!-- java.lang.Exception is a hack to make a valid comma-separated list og category classes -->
                     <argLine>${surefireArgLine}  -Dfile.encoding=${project.build.sourceEncoding}</argLine>
                 </configuration>
             </plugin>

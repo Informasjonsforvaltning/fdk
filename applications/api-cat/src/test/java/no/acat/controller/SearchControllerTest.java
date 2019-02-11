@@ -5,7 +5,7 @@ import no.acat.model.ApiDocument;
 import no.acat.model.queryresponse.QueryResponse;
 import no.acat.service.ElasticsearchService;
 import no.acat.utils.Utils;
-import no.dcat.shared.testcategories.UnitTest;
+import no.fdk.test.testcategories.UnitTest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;

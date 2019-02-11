@@ -1,6 +1,6 @@
 package no.dcat.bddtest.cucumber;
 
-import no.dcat.shared.testcategories.EndToEndTest;
+import no.fdk.test.testcategories.EndToEndTest;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;

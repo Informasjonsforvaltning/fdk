@@ -5,7 +5,7 @@ import no.dcat.model.Catalog;
 import no.dcat.model.Dataset;
 import no.dcat.service.CatalogRepository;
 import no.dcat.service.DatasetRepository;
-import no.dcat.shared.testcategories.IntegrationTest;
+import no.fdk.test.testcategories.IntegrationTest;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;

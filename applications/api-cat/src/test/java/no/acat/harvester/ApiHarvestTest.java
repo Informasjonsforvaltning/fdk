@@ -4,7 +4,7 @@ import no.acat.model.ApiDocument;
 import no.acat.repository.ApiDocumentRepository;
 import no.acat.service.ApiDocumentBuilderService;
 import no.acat.service.RegistrationApiClient;
-import no.dcat.shared.testcategories.UnitTest;
+import no.fdk.test.testcategories.UnitTest;
 import no.fdk.registration.common.ApiRegistrationPublic;
 import org.junit.Before;
 import org.junit.Test;

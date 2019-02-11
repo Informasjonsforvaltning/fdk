@@ -3,7 +3,7 @@ package no.dcat.controller;
 import no.dcat.model.ApiCatalog;
 import no.dcat.service.ApiCatalogHarvesterService;
 import no.dcat.service.ApiCatalogRepository;
-import no.dcat.shared.testcategories.UnitTest;
+import no.fdk.test.testcategories.UnitTest;
 import no.fdk.webutils.exceptions.BadRequestException;
 import no.fdk.webutils.exceptions.NotFoundException;
 import org.junit.Before;

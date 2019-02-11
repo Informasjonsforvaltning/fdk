@@ -8,7 +8,7 @@ import no.dcat.datastore.domain.dcat.vocabulary.DCAT;
 import no.dcat.datastore.domain.dcat.vocabulary.DCATCrawler;
 import no.dcat.shared.Distribution;
 import no.dcat.shared.*;
-import no.dcat.shared.testcategories.UnitTest;
+import no.fdk.test.testcategories.UnitTest;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.ResIterator;

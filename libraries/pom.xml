@@ -27,6 +27,7 @@
         <module>registration-api-bindings</module>
         <module>registration-api-common</module>
         <module>shared</module>
+        <module>test</module>
         <module>webutils-spring</module>
     </modules>
 

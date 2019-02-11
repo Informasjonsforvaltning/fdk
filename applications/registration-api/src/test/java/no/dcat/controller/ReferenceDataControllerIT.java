@@ -1,7 +1,7 @@
 package no.dcat.controller;
 
 import com.google.gson.Gson;
-import no.dcat.shared.testcategories.IntegrationTest;
+import no.fdk.test.testcategories.IntegrationTest;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;

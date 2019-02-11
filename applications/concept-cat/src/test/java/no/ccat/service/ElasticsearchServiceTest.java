@@ -1,7 +1,7 @@
 package no.ccat.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import no.dcat.shared.testcategories.IntegrationTest;
+import no.fdk.test.testcategories.IntegrationTest;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;

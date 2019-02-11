@@ -31,11 +31,6 @@
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>no.dcat</groupId>
-            <artifactId>shared</artifactId>
-            <version>1.4.0</version>
-        </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -78,7 +73,12 @@
             <groupId>net.java.dev.jna</groupId>
             <artifactId>jna</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>no.dcat</groupId>
+            <artifactId>test</artifactId>
+            <version>1.0.0</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -141,7 +141,7 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.19.1</version>
                 <configuration>
-                    <groups>no.dcat.shared.testcategories.UnitTest</groups>
+                    <groups>no.fdk.test.testcategories.UnitTest</groups>
                     <argLine>${surefireArgLine} -Dfile.encoding=${project.build.sourceEncoding}</argLine>
                 </configuration>
             </plugin>

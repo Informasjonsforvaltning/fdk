@@ -1,6 +1,6 @@
 package no.dcat.model;
 
-import no.dcat.shared.testcategories.UnitTest;
+import no.fdk.test.testcategories.UnitTest;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
