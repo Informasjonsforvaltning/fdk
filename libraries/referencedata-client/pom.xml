@@ -18,13 +18,13 @@
 
     <dependencies>
         <dependency>
-            <groupId>no.dcat</groupId>
-            <artifactId>shared</artifactId>
-            <version>1.4.0</version>
-        </dependency>
-        <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>no.dcat</groupId>
+            <artifactId>shared</artifactId>
+            <version>1.5.0</version>
         </dependency>
     </dependencies>
 </project>

@@ -160,18 +160,13 @@
 
         <dependency>
             <groupId>no.dcat</groupId>
-            <artifactId>shared</artifactId>
-            <version>1.4.0</version>
-        </dependency>
-        <dependency>
-            <groupId>no.dcat</groupId>
             <artifactId>html-cleaner</artifactId>
-            <version>1.0.0</version>
+            <version>1.1.0</version>
         </dependency>
         <dependency>
             <groupId>no.dcat</groupId>
             <artifactId>datastore</artifactId>
-            <version>1.1.0</version>
+            <version>1.2.0</version>
         </dependency>
         <dependency>
             <groupId>no.dcat</groupId>
@@ -196,6 +191,12 @@
             <artifactId>springfox-swagger2</artifactId>
             <version>2.9.2</version>
         </dependency>
+        <dependency>
+            <groupId>no.dcat</groupId>
+            <artifactId>test</artifactId>
+            <version>1.0.0</version>
+            <scope>test</scope>
+        </dependency>
 
     </dependencies>
 
@@ -206,25 +207,25 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
-                <unittest.category>,no.dcat.shared.testcategories.UnitTest</unittest.category>
+                <unittest.category>,no.fdk.test.testcategories.UnitTest</unittest.category>
             </properties>
         </profile>
         <profile>
             <id>integration-test</id>
             <properties>
-                <integrationtest.category>,no.dcat.shared.testcategories.IntegrationTest</integrationtest.category>
+                <integrationtest.category>,no.fdk.test.testcategories.IntegrationTest</integrationtest.category>
             </properties>
         </profile>
         <profile>
             <id>end-to-end-test</id>
             <properties>
-                <endtoendtest.category>,no.dcat.shared.testcategories.EndToEndTest</endtoendtest.category>
+                <endtoendtest.category>,no.fdk.test.testcategories.EndToEndTest</endtoendtest.category>
             </properties>
         </profile>
         <profile>
             <id>load-test</id>
             <properties>
-                <loadtest.category>,no.dcat.shared.testcategories.LoadTest</loadtest.category>
+                <loadtest.category>,no.fdk.test.testcategories.LoadTest</loadtest.category>
             </properties>
         </profile>
     </profiles>

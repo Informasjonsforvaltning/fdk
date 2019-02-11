@@ -1,6 +1,6 @@
 package no.dcat.datastore.domain.dcat.vocabulary;
 
-import no.dcat.shared.testcategories.UnitTest;
+import no.fdk.test.testcategories.UnitTest;
 import org.apache.jena.rdf.model.Resource;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;

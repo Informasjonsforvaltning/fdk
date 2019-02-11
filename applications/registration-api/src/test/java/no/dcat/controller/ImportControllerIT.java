@@ -4,7 +4,7 @@ import no.dcat.datastore.ElasticDockerRule;
 import no.dcat.model.Catalog;
 import no.dcat.model.Dataset;
 import no.dcat.service.CatalogRepository;
-import no.dcat.shared.testcategories.IntegrationTest;
+import no.fdk.test.testcategories.IntegrationTest;
 import no.fdk.webutils.exceptions.NotFoundException;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.util.FileManager;

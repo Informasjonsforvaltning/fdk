@@ -1,6 +1,6 @@
 package no.fdk.acat.converters.apispecificationparser;
 
-import no.dcat.shared.testcategories.UnitTest;
+import no.fdk.test.testcategories.UnitTest;
 import no.fdk.acat.common.model.apispecification.ApiSpecification;
 import org.apache.commons.io.IOUtils;
 import org.junit.Assert;

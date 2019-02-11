@@ -2,7 +2,7 @@ package no.dcat.datastore.domain.dcat.builders;
 
 import no.dcat.shared.Distribution;
 import no.dcat.shared.SkosCode;
-import no.dcat.shared.testcategories.UnitTest;
+import no.fdk.test.testcategories.UnitTest;
 import org.apache.jena.rdf.model.Resource;
 import org.junit.Assert;
 import org.junit.Test;

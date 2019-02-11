@@ -1,7 +1,7 @@
 package no.dcat.datastore.domain.dcat.builders;
 
 import no.dcat.shared.SkosCode;
-import no.dcat.shared.testcategories.UnitTest;
+import no.fdk.test.testcategories.UnitTest;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.riot.RDFDataMgr;

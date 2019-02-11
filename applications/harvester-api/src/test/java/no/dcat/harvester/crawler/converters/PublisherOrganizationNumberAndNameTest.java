@@ -1,6 +1,6 @@
 package no.dcat.harvester.crawler.converters;
 
-import no.dcat.shared.testcategories.UnitTest;
+import no.fdk.test.testcategories.UnitTest;
 import org.hamcrest.core.Is;
 import org.junit.Assert;
 import org.junit.Before;

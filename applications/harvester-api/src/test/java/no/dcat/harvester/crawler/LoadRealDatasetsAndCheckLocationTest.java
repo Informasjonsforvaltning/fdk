@@ -10,7 +10,7 @@ import no.dcat.datastore.domain.dcat.builders.RdfModelLoader;
 import no.dcat.datastore.domain.dcat.client.RetrieveCodes;
 import no.dcat.harvester.crawler.handlers.ElasticSearchResultHandler;
 import no.dcat.shared.SkosCode;
-import no.dcat.shared.testcategories.UnitTest;
+import no.fdk.test.testcategories.UnitTest;
 import org.apache.commons.io.IOUtils;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ResIterator;

@@ -1,7 +1,7 @@
 package no.acat.controller;
 
 import no.acat.utils.Utils;
-import no.dcat.shared.testcategories.UnitTest;
+import no.fdk.test.testcategories.UnitTest;
 import no.fdk.acat.bindings.ConvertRequest;
 import no.fdk.acat.bindings.ConvertResponse;
 import no.fdk.webutils.exceptions.BadRequestException;

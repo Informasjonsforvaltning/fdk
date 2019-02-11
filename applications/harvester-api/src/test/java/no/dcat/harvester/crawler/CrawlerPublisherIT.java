@@ -2,7 +2,7 @@ package no.dcat.harvester.crawler;
 
 import no.dcat.datastore.domain.dcat.Publisher;
 import no.dcat.datastore.domain.dcat.builders.PublisherBuilder;
-import no.dcat.shared.testcategories.IntegrationTest;
+import no.fdk.test.testcategories.IntegrationTest;
 import org.apache.jena.rdf.model.Model;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;

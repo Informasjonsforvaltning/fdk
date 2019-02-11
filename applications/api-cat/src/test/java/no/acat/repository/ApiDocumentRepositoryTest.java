@@ -3,7 +3,7 @@ package no.acat.repository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import no.acat.model.ApiDocument;
 import no.acat.service.ElasticsearchService;
-import no.dcat.shared.testcategories.UnitTest;
+import no.fdk.test.testcategories.UnitTest;
 import org.elasticsearch.action.ListenableActionFuture;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.action.bulk.BulkResponse;

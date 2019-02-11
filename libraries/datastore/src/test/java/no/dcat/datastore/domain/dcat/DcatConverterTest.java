@@ -3,7 +3,7 @@ package no.dcat.datastore.domain.dcat;
 import no.dcat.datastore.domain.dcat.builders.DcatReader;
 import no.dcat.shared.Contact;
 import no.dcat.shared.Dataset;
-import no.dcat.shared.testcategories.UnitTest;
+import no.fdk.test.testcategories.UnitTest;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.riot.RDFDataMgr;
 import org.junit.Test;

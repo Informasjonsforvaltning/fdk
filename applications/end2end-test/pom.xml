@@ -22,13 +22,8 @@
     <dependencies>
         <dependency>
             <groupId>no.dcat</groupId>
-            <artifactId>shared</artifactId>
-            <version>1.4.0</version>
-        </dependency>
-        <dependency>
-            <groupId>no.dcat</groupId>
             <artifactId>datastore</artifactId>
-            <version>1.1.0</version>
+            <version>1.2.0</version>
         </dependency>
         <dependency>
             <groupId>no.dcat</groupId>
@@ -125,6 +120,12 @@
             <groupId>no.dcat</groupId>
             <artifactId>elasticsearch5-client</artifactId>
             <version>1.2.0</version>
+        </dependency>
+        <dependency>
+            <groupId>no.dcat</groupId>
+            <artifactId>test</artifactId>
+            <version>1.0.0</version>
+            <scope>test</scope>
         </dependency>
 
 

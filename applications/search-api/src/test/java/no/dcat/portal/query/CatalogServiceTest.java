@@ -1,7 +1,7 @@
 package no.dcat.portal.query;
 
 import no.dcat.shared.Catalog;
-import no.dcat.shared.testcategories.UnitTest;
+import no.fdk.test.testcategories.UnitTest;
 import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QueryExecutionFactory;

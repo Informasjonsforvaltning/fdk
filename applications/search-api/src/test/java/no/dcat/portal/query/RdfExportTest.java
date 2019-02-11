@@ -2,7 +2,7 @@ package no.dcat.portal.query;
 
 import com.google.gson.Gson;
 import no.dcat.shared.Dataset;
-import no.dcat.shared.testcategories.UnitTest;
+import no.fdk.test.testcategories.UnitTest;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.Before;

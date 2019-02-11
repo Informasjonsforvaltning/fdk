@@ -4,7 +4,7 @@ import no.dcat.datastore.domain.dcat.builders.DcatReader;
 import no.dcat.harvester.service.SubjectCrawler;
 import no.dcat.shared.Dataset;
 import no.dcat.shared.Subject;
-import no.dcat.shared.testcategories.IntegrationTest;
+import no.fdk.test.testcategories.IntegrationTest;
 import org.apache.jena.rdf.model.Model;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;

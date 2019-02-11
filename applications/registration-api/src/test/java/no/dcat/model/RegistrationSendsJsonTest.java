@@ -2,7 +2,7 @@ package no.dcat.model;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.*;
-import no.dcat.shared.testcategories.UnitTest;
+import no.fdk.test.testcategories.UnitTest;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.Test;

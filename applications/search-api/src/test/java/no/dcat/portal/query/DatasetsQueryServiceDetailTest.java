@@ -1,7 +1,7 @@
 package no.dcat.portal.query;
 
 import no.dcat.shared.Dataset;
-import no.dcat.shared.testcategories.UnitTest;
+import no.fdk.test.testcategories.UnitTest;
 import no.fdk.webutils.exceptions.NotFoundException;
 import org.elasticsearch.action.ListenableActionFuture;
 import org.elasticsearch.action.search.SearchRequestBuilder;

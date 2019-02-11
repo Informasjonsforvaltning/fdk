@@ -1,7 +1,7 @@
 package no.dcat.themes.builders;
 
 import no.dcat.shared.HelpText;
-import no.dcat.shared.testcategories.UnitTest;
+import no.fdk.test.testcategories.UnitTest;
 import no.dcat.themes.Controller;
 import org.apache.jena.shared.NotFoundException;
 import org.junit.Test;

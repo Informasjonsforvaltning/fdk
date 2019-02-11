@@ -3,7 +3,7 @@ package no.dcat.harvester.crawler.handlers;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import no.dcat.datastore.domain.dcat.Publisher;
-import no.dcat.shared.testcategories.UnitTest;
+import no.fdk.test.testcategories.UnitTest;
 import org.elasticsearch.action.index.IndexRequest;
 import org.junit.Before;
 import org.junit.Test;

@@ -3,7 +3,7 @@ package no.dcat.harvester.crawler;
 import no.dcat.datastore.domain.dcat.client.BasicAuthRestTemplate;
 import no.dcat.datastore.domain.dcat.client.LoadLocations;
 import no.dcat.shared.SkosCode;
-import no.dcat.shared.testcategories.IntegrationTest;
+import no.fdk.test.testcategories.IntegrationTest;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
