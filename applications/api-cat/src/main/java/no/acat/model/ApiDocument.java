@@ -79,4 +79,5 @@ public class ApiDocument {
 
     private String availability;
 
+    private String status;
 }

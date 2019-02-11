@@ -51,4 +51,6 @@ public class ApiRegistrationPublic {
     private String performance;
 
     private String availability;
+
+    private String status;
 }

@@ -3,13 +3,13 @@ package no.acat.service;
 import no.acat.model.ApiDocument;
 import no.acat.repository.ApiDocumentRepository;
 import no.dcat.client.publishercat.PublisherCatClient;
-import no.fdk.registration.common.ApiRegistrationPublic;
 import no.dcat.htmlclean.HtmlCleaner;
 import no.dcat.shared.*;
 import no.fdk.acat.common.model.apispecification.ApiSpecification;
 import no.fdk.acat.common.model.apispecification.ExternalDocumentation;
 import no.fdk.acat.converters.apispecificationparser.ParseException;
 import no.fdk.acat.converters.apispecificationparser.UniversalParser;
+import no.fdk.registration.common.ApiRegistrationPublic;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -116,6 +116,7 @@ public class ApiDocumentBuilderService {
         apiDocument.setUsageLimitation(apiRegistration.getUsageLimitation());
         apiDocument.setPerformance(apiRegistration.getPerformance());
         apiDocument.setAvailability(apiRegistration.getAvailability());
+        apiDocument.setStatus(apiRegistration.getStatus());
     }
 
     Publisher lookupPublisher(String orgNr) {
