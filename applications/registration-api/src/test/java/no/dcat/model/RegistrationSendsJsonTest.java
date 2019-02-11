@@ -1,4 +1,5 @@
 package no.dcat.model;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.*;
 import no.dcat.shared.testcategories.UnitTest;
@@ -19,13 +20,14 @@ public class RegistrationSendsJsonTest {
         JsonSerializer<Date> ser = new JsonSerializer<Date>() {
             @Override
             public JsonElement serialize(Date src, Type typeOfSrc, JsonSerializationContext
-                    context) {
+                context) {
                 return src == null ? null : new JsonPrimitive(src.getTime());
             }
         };
         Dataset dataset = new GsonBuilder().setPrettyPrinting().registerTypeAdapter(Date.class, ser).create().fromJson(datasetJson, Dataset.class);
         Assert.assertThat(dataset, Matchers.is(Matchers.notNullValue()));
     }
+
     @Test(expected = Exception.class)
     public void canParseReferenceWithJackson() throws Throwable {
         ObjectMapper mapper = new ObjectMapper();

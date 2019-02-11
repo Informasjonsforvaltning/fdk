@@ -1,10 +1,10 @@
 package no.dcat.controller;
 
+import no.dcat.datastore.domain.dcat.smoke.TestCompleteCatalog;
 import no.dcat.model.Catalog;
 import no.dcat.model.Dataset;
 import no.dcat.service.CatalogRepository;
 import no.dcat.service.DatasetRepository;
-import no.dcat.datastore.domain.dcat.smoke.TestCompleteCatalog;
 import no.dcat.shared.testcategories.UnitTest;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,7 +12,6 @@ import org.junit.experimental.categories.Category;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.BeanUtils;
-import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;

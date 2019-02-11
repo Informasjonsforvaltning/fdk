@@ -4,8 +4,8 @@ import no.acat.model.ApiDocument;
 import no.acat.repository.ApiDocumentRepository;
 import no.acat.service.ApiDocumentBuilderService;
 import no.acat.service.RegistrationApiClient;
-import no.fdk.registration.common.ApiRegistrationPublic;
 import no.dcat.shared.testcategories.UnitTest;
+import no.fdk.registration.common.ApiRegistrationPublic;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -87,7 +87,7 @@ public class ApiHarvestTest {
 
 
         ApiHarvester harvester = new ApiHarvester(apiDocumentBuilderServiceMock, registrationApiClientMock, apiDocumentRepositoryMock);
-        harvester.RETRY_COUNT_API_RETRIEVAL=5;
+        harvester.RETRY_COUNT_API_RETRIEVAL = 5;
         harvester.harvestAll();//Throws exception.
     }
 }

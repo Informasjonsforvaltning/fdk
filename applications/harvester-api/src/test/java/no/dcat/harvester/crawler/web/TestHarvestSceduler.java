@@ -52,7 +52,7 @@ public class TestHarvestSceduler {
     public Date getNextExecutionTime(String cronExpression) {
         // to test if a cron expression runs only from Monday to Friday
         org.springframework.scheduling.support.CronTrigger trigger =
-                new CronTrigger(cronExpression);
+            new CronTrigger(cronExpression);
         Calendar today = Calendar.getInstance();
         //today.set(Calendar.DAY_OF_WEEK, Calendar.TUESDAY);
 

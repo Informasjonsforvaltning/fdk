@@ -3,13 +3,10 @@ package no.acat.repository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import no.acat.model.ApiDocument;
 import no.acat.service.ElasticsearchService;
-import no.acat.utils.Utils;
 import no.dcat.shared.testcategories.UnitTest;
 import org.elasticsearch.action.ListenableActionFuture;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.action.bulk.BulkResponse;
-import org.elasticsearch.action.get.GetRequestBuilder;
-import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.search.SearchType;
@@ -40,14 +37,14 @@ public class ApiDocumentRepositoryTest {
     @Before
     public void setup() throws IOException {
 
-         mapper = mock(ObjectMapper.class);
-         mockElasticsearchService = mock(ElasticsearchService.class);
-         spyApiDocumentRepository = spy(new ApiDocumentRepository(mockElasticsearchService, mapper));
+        mapper = mock(ObjectMapper.class);
+        mockElasticsearchService = mock(ElasticsearchService.class);
+        spyApiDocumentRepository = spy(new ApiDocumentRepository(mockElasticsearchService, mapper));
 
     }
 
     @Test
-    public void checkIf_Count_ReturnOK(){
+    public void checkIf_Count_ReturnOK() {
         SearchResponse searchResponse = mock(SearchResponse.class);
         Client client = mock(Client.class);
         SearchRequestBuilder searchRequestBuilder = mock(SearchRequestBuilder.class);
@@ -73,61 +70,61 @@ public class ApiDocumentRepositoryTest {
 
 
     @Test
-    public void checkIf_apiDocumentByHarvestSourceUri_hitsLengthIsOne_returnApiDocument(){
+    public void checkIf_apiDocumentByHarvestSourceUri_hitsLengthIsOne_returnApiDocument() {
 
-       String id = "1002";
-       ApiDocument apiDocument = new ApiDocument();
-       apiDocument.setId(id);
-       SearchResponse searchResponse = mock(SearchResponse.class);
-       Client client = mock(Client.class);
-       SearchRequestBuilder searchRequestBuilder = mock(SearchRequestBuilder.class);
+        String id = "1002";
+        ApiDocument apiDocument = new ApiDocument();
+        apiDocument.setId(id);
+        SearchResponse searchResponse = mock(SearchResponse.class);
+        Client client = mock(Client.class);
+        SearchRequestBuilder searchRequestBuilder = mock(SearchRequestBuilder.class);
 
-       when(mockElasticsearchService.getClient()).thenReturn(client);
-       when(client.prepareSearch("acat")).thenReturn(searchRequestBuilder);
-       when(searchRequestBuilder.setTypes(anyString())).thenReturn(searchRequestBuilder);
-       when(searchRequestBuilder.setSearchType(SearchType.DFS_QUERY_THEN_FETCH)).thenReturn(searchRequestBuilder);
-       when(searchRequestBuilder.setQuery(QueryBuilders.termQuery("harvestSourceUri", "harvestSourceUri"))).thenReturn(searchRequestBuilder);
-       when(searchRequestBuilder.get()).thenReturn(searchResponse);
+        when(mockElasticsearchService.getClient()).thenReturn(client);
+        when(client.prepareSearch("acat")).thenReturn(searchRequestBuilder);
+        when(searchRequestBuilder.setTypes(anyString())).thenReturn(searchRequestBuilder);
+        when(searchRequestBuilder.setSearchType(SearchType.DFS_QUERY_THEN_FETCH)).thenReturn(searchRequestBuilder);
+        when(searchRequestBuilder.setQuery(QueryBuilders.termQuery("harvestSourceUri", "harvestSourceUri"))).thenReturn(searchRequestBuilder);
+        when(searchRequestBuilder.get()).thenReturn(searchResponse);
 
-       SearchHits hits = mock(SearchHits.class);
-       SearchHit hit = mock(SearchHit.class);
-       SearchHit[] shits = {hit};
+        SearchHits hits = mock(SearchHits.class);
+        SearchHit hit = mock(SearchHit.class);
+        SearchHit[] shits = {hit};
 
-       when(searchResponse.getHits()).thenReturn(hits);
-       when(hits.getHits()).thenReturn(shits);
-       when(shits[0].getSourceAsString()).thenReturn("{\"id\":\"1002\"}");
+        when(searchResponse.getHits()).thenReturn(hits);
+        when(hits.getHits()).thenReturn(shits);
+        when(shits[0].getSourceAsString()).thenReturn("{\"id\":\"1002\"}");
 
-       doCallRealMethod().when(spyApiDocumentRepository).getApiDocumentByHarvestSourceUri("harvestSourceUri");
+        doCallRealMethod().when(spyApiDocumentRepository).getApiDocumentByHarvestSourceUri("harvestSourceUri");
 
-       Optional<ApiDocument> expected = spyApiDocumentRepository.getApiDocumentByHarvestSourceUri("harvestSourceUri");
+        Optional<ApiDocument> expected = spyApiDocumentRepository.getApiDocumentByHarvestSourceUri("harvestSourceUri");
 
-       Assert.assertThat(expected.get().getId(),  is(id));
+        Assert.assertThat(expected.get().getId(), is(id));
 
-   }
+    }
 
 
-   @Test(expected = RuntimeException.class)
-   public void checkIf_createOrReplaceApiDocument_hasFailures() throws IOException {
+    @Test(expected = RuntimeException.class)
+    public void checkIf_createOrReplaceApiDocument_hasFailures() throws IOException {
 
-       String id = "1002";
-       ApiDocument apiDocument = new ApiDocument();
-       Client client = mock(Client.class);
-       BulkRequestBuilder bulkRequestBuilder = mock(BulkRequestBuilder.class);
-       BulkResponse bulkResponse = mock(BulkResponse.class);
-       ListenableActionFuture listenableActionFuture = mock(ListenableActionFuture.class);
+        String id = "1002";
+        ApiDocument apiDocument = new ApiDocument();
+        Client client = mock(Client.class);
+        BulkRequestBuilder bulkRequestBuilder = mock(BulkRequestBuilder.class);
+        BulkResponse bulkResponse = mock(BulkResponse.class);
+        ListenableActionFuture listenableActionFuture = mock(ListenableActionFuture.class);
 
-       when(mockElasticsearchService.getClient()).thenReturn(client);
-       when(client.prepareBulk()).thenReturn(bulkRequestBuilder);
-       when(mapper.writeValueAsString(apiDocument)).thenReturn("{\"id\":\"1002\"}");
-       when(bulkRequestBuilder.execute()).thenReturn(listenableActionFuture);
-       when(listenableActionFuture.actionGet()).thenReturn(bulkResponse);
-       when(bulkResponse.hasFailures()).thenReturn(true);
+        when(mockElasticsearchService.getClient()).thenReturn(client);
+        when(client.prepareBulk()).thenReturn(bulkRequestBuilder);
+        when(mapper.writeValueAsString(apiDocument)).thenReturn("{\"id\":\"1002\"}");
+        when(bulkRequestBuilder.execute()).thenReturn(listenableActionFuture);
+        when(listenableActionFuture.actionGet()).thenReturn(bulkResponse);
+        when(bulkResponse.hasFailures()).thenReturn(true);
 
-       doCallRealMethod().when(spyApiDocumentRepository).createOrReplaceApiDocument(apiDocument);
+        doCallRealMethod().when(spyApiDocumentRepository).createOrReplaceApiDocument(apiDocument);
 
-       spyApiDocumentRepository.createOrReplaceApiDocument(apiDocument);
+        spyApiDocumentRepository.createOrReplaceApiDocument(apiDocument);
 
-   }
+    }
 
     @Test
     public void checkIf_createOrReplaceApiDocument_hasPassed() throws IOException {
@@ -154,7 +151,7 @@ public class ApiDocumentRepositoryTest {
     }
 
     @Test
-    public void check_deleteApiDocumentByIds_IfIdsSize_IsZero(){
+    public void check_deleteApiDocumentByIds_IfIdsSize_IsZero() {
 
         List<String> ids = new ArrayList<>();
 
@@ -167,7 +164,7 @@ public class ApiDocumentRepositoryTest {
     }
 
     @Test(expected = RuntimeException.class)
-    public void checkIf_deleteApiDocumentByIds_hasFailures(){
+    public void checkIf_deleteApiDocumentByIds_hasFailures() {
 
         List<String> ids = new ArrayList<>();
         ids.add("1");
@@ -189,7 +186,7 @@ public class ApiDocumentRepositoryTest {
     }
 
     @Test
-    public void checkIf_deleteApiDocumentByIds_passed(){
+    public void checkIf_deleteApiDocumentByIds_passed() {
 
         List<String> ids = new ArrayList<>();
         ids.add("1");

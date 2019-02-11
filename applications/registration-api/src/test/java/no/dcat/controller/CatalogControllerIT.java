@@ -48,19 +48,20 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Category(IntegrationTest.class)
 @Ignore
 public class CatalogControllerIT {
+    @ClassRule
+    public static ElasticDockerRule elasticRule = new ElasticDockerRule();
     private static Logger logger = LoggerFactory.getLogger(CatalogControllerIT.class);
-
     @Autowired
     private MockMvc mockMvc;
-
     @Autowired
     private CatalogRepository catalogRepository;
-
     @Autowired
     private CatalogController catalogController;
 
-    @ClassRule
-    public static ElasticDockerRule elasticRule = new ElasticDockerRule();
+    public static String asJsonString(Object obj) {
+        return new Gson().toJson(obj);
+
+    }
 
     @Before
     public void before() {
@@ -88,7 +89,7 @@ public class CatalogControllerIT {
         String[] excpectedIds = {"910244132", "910244999"};
 
         assertThat(count, is(2));
-        assertThat(ids.toArray(), is(excpectedIds) );
+        assertThat(ids.toArray(), is(excpectedIds));
 
     }
 
@@ -101,10 +102,9 @@ public class CatalogControllerIT {
 
     private void listCatalogToCreateCatalogs() throws Exception {
         mockMvc
-                .perform(MockMvcRequestBuilders.get("/catalogs", String.class))
-                .andExpect(content().string(containsString("/catalogs")));
+            .perform(MockMvcRequestBuilders.get("/catalogs", String.class))
+            .andExpect(content().string(containsString("/catalogs")));
     }
-
 
     @Test
     @WithUserDetails("03096000854")
@@ -119,10 +119,11 @@ public class CatalogControllerIT {
         ResponseEntity<List<DcatSourceDto>> response = null;
         try {
             response = restTemplate.exchange(
-                    uri,
-                    HttpMethod.GET,
-                    new org.springframework.http.HttpEntity<>(createHeaders("test_admin", "password")),
-                    new ParameterizedTypeReference<List<DcatSourceDto>>() {});
+                uri,
+                HttpMethod.GET,
+                new org.springframework.http.HttpEntity<>(createHeaders("test_admin", "password")),
+                new ParameterizedTypeReference<List<DcatSourceDto>>() {
+                });
         } catch (Exception e) {
             logger.error("Failed to get list of dcat sources from harvester-api: {}", e.getLocalizedMessage());
             logger.error("response from harvester: {}", response.toString());
@@ -134,11 +135,9 @@ public class CatalogControllerIT {
         logger.info("response: {}", response.getBody().size());
 
         assertTrue(datasources.stream().filter(
-                ds -> ds.getId().equals("http://brreg.no/catalogs/910244132")).findFirst().isPresent());
+            ds -> ds.getId().equals("http://brreg.no/catalogs/910244132")).findFirst().isPresent());
 
     }
-
-
 
     @Test
     @WithUserDetails("03096000854")
@@ -147,41 +146,40 @@ public class CatalogControllerIT {
         listCatalogToCreateCatalogs();
 
         mockMvc
-                .perform(
-                        MockMvcRequestBuilders
-                                .get("/catalogs")
-                )
-                .andExpect(content().json("{\n" +
-                        "  \"_embedded\" : {\n" +
-                        "    \"catalogs\" : [ {\n" +
-                        "      \"id\" : \"910244132\",\n" +
-                        "      \"uri\" : \"http://brreg.no/catalogs/910244132\",\n" +
-                        "      \"title\" : {\n" +
-                        "        \"nb\" : \"Datakatalog for RAMSUND OG ROGNAN REVISJON\"\n" +
-                        "      },\n" +
-                        "      \"description\" : { },\n" +
-                        "      \"publisher\" : {\n" +
-                        "        \"uri\" : \"https://data.brreg.no/enhetsregisteret/api/enheter/910244132\",\n" +
-                        "        \"name\" : \"RAMSUND OG ROGNAN REVISJON\"\n" +
-                        "      }\n" +
-                        "    } ]\n" +
-                        "  },\n" +
-                        "  \"_links\" : {\n" +
-                        "    \"self\" : {\n" +
-                        "      \"href\" : \"http://localhost/catalogs?page=0&size=20\"\n" +
-                        "    }\n" +
-                        "  },\n" +
-                        "  \"page\" : {\n" +
-                        "    \"size\" : 20,\n" +
-                        "    \"totalElements\" : 1,\n" +
-                        "    \"totalPages\" : 1,\n" +
-                        "    \"number\" : 0\n" +
-                        "  }\n" +
-                        "}"))
-                .andExpect(status().isOk());
+            .perform(
+                MockMvcRequestBuilders
+                    .get("/catalogs")
+            )
+            .andExpect(content().json("{\n" +
+                "  \"_embedded\" : {\n" +
+                "    \"catalogs\" : [ {\n" +
+                "      \"id\" : \"910244132\",\n" +
+                "      \"uri\" : \"http://brreg.no/catalogs/910244132\",\n" +
+                "      \"title\" : {\n" +
+                "        \"nb\" : \"Datakatalog for RAMSUND OG ROGNAN REVISJON\"\n" +
+                "      },\n" +
+                "      \"description\" : { },\n" +
+                "      \"publisher\" : {\n" +
+                "        \"uri\" : \"https://data.brreg.no/enhetsregisteret/api/enheter/910244132\",\n" +
+                "        \"name\" : \"RAMSUND OG ROGNAN REVISJON\"\n" +
+                "      }\n" +
+                "    } ]\n" +
+                "  },\n" +
+                "  \"_links\" : {\n" +
+                "    \"self\" : {\n" +
+                "      \"href\" : \"http://localhost/catalogs?page=0&size=20\"\n" +
+                "    }\n" +
+                "  },\n" +
+                "  \"page\" : {\n" +
+                "    \"size\" : 20,\n" +
+                "    \"totalElements\" : 1,\n" +
+                "    \"totalPages\" : 1,\n" +
+                "    \"number\" : 0\n" +
+                "  }\n" +
+                "}"))
+            .andExpect(status().isOk());
 
     }
-
 
     @Test
     @WithUserDetails("03096000854")
@@ -196,16 +194,15 @@ public class CatalogControllerIT {
         catalog.setTitle(title2);
 
         mockMvc
-                .perform(
-                        MockMvcRequestBuilders
-                                .post("/catalogs", catalog)
-                                .content(asJsonString(catalog))
-                                .contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(content().string("{\"id\":\"910244132\",\"uri\":\"http://brreg.no/catalogs/910244132\",\"title\":{\"en\":\"aTest\"},\"description\":{},\"publisher\":{\"uri\":\"https://data.brreg.no/enhetsregisteret/api/enheter/910244132\",\"id\":\"910244132\",\"name\":\"RAMSUND OG ROGNAN REVISJON\"}}"))
-                .andExpect(status().isOk());
+            .perform(
+                MockMvcRequestBuilders
+                    .post("/catalogs", catalog)
+                    .content(asJsonString(catalog))
+                    .contentType(MediaType.APPLICATION_JSON_UTF8))
+            .andExpect(content().string("{\"id\":\"910244132\",\"uri\":\"http://brreg.no/catalogs/910244132\",\"title\":{\"en\":\"aTest\"},\"description\":{},\"publisher\":{\"uri\":\"https://data.brreg.no/enhetsregisteret/api/enheter/910244132\",\"id\":\"910244132\",\"name\":\"RAMSUND OG ROGNAN REVISJON\"}}"))
+            .andExpect(status().isOk());
 
     }
-
 
     @Test
     @WithUserDetails("03096000854")
@@ -220,19 +217,15 @@ public class CatalogControllerIT {
         catalog.setTitle(title2);
 
         mockMvc
-                .perform(
-                        MockMvcRequestBuilders
-                                .put("/catalogs/910244132", catalog)
-                                .content(asJsonString(catalog))
-                                .contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(content().string("{\"id\":\"910244132\",\"uri\":\"http://brreg.no/catalogs/910244132\",\"title\":{\"en\":\"aTest\"},\"description\":{},\"publisher\":{\"uri\":\"https://data.brreg.no/enhetsregisteret/api/enheter/910244132\",\"id\":\"910244132\",\"name\":\"RAMSUND OG ROGNAN REVISJON\"}}"))
-                .andExpect(status().isOk());
+            .perform(
+                MockMvcRequestBuilders
+                    .put("/catalogs/910244132", catalog)
+                    .content(asJsonString(catalog))
+                    .contentType(MediaType.APPLICATION_JSON_UTF8))
+            .andExpect(content().string("{\"id\":\"910244132\",\"uri\":\"http://brreg.no/catalogs/910244132\",\"title\":{\"en\":\"aTest\"},\"description\":{},\"publisher\":{\"uri\":\"https://data.brreg.no/enhetsregisteret/api/enheter/910244132\",\"id\":\"910244132\",\"name\":\"RAMSUND OG ROGNAN REVISJON\"}}"))
+            .andExpect(status().isOk());
 
     }
-
-
-
-
 
     @Test
     @WithUserDetails("03096000854")
@@ -240,14 +233,8 @@ public class CatalogControllerIT {
         listCatalogToCreateCatalogs();
 
         mockMvc
-                .perform(MockMvcRequestBuilders.delete("/catalogs/" + "910244132"))
-                .andExpect(status().isOk());
-
-    }
-
-
-    public static String asJsonString( Object obj) {
-        return new Gson().toJson(obj);
+            .perform(MockMvcRequestBuilders.delete("/catalogs/" + "910244132"))
+            .andExpect(status().isOk());
 
     }
 
@@ -256,14 +243,14 @@ public class CatalogControllerIT {
      *
      * @return HTTP header containing basic auth and content type application/josn
      */
-    private HttpHeaders createHeaders(String username, String password){
+    private HttpHeaders createHeaders(String username, String password) {
         return new HttpHeaders() {{
             String auth = username + ":" + password;
 
             byte[] encodedAuth = Base64.encodeBase64(
-                    auth.getBytes(Charset.forName("US-ASCII")) );
-            String authHeader = "Basic " + new String( encodedAuth );
-            set( "Authorization", authHeader );
+                auth.getBytes(Charset.forName("US-ASCII")));
+            String authHeader = "Basic " + new String(encodedAuth);
+            set("Authorization", authHeader);
         }};
     }
 }

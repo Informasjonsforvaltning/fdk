@@ -23,7 +23,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 public class SpringIntegrationTestConfigE2E {
 
     @Test
-    public void nothing(){
+    public void nothing() {
 
     }
 

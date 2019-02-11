@@ -1,11 +1,7 @@
 package no.dcat.harvester.crawler.converters;
 
 import no.dcat.shared.testcategories.UnitTest;
-import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.ModelFactory;
-import org.apache.jena.rdf.model.NodeIterator;
-import org.apache.jena.rdf.model.Resource;
-import org.apache.jena.rdf.model.Statement;
+import org.apache.jena.rdf.model.*;
 import org.apache.jena.util.FileManager;
 import org.apache.jena.vocabulary.RDF;
 import org.apache.jena.vocabulary.SKOS;
@@ -20,75 +16,75 @@ import static org.junit.Assert.assertTrue;
 @Category(UnitTest.class)
 public class EnhetsregisterResolverTest {
 
-	@Test
-	public void testConvertBrregFileBlankNode() throws Exception {
-		EnhetsregisterResolver enhetsregisterResolver = new EnhetsregisterResolver();
+    @Test
+    public void testConvertBrregFileBlankNode() throws Exception {
+        EnhetsregisterResolver enhetsregisterResolver = new EnhetsregisterResolver();
 
-		Model model = FileManager.get().loadModel(EnhetsregisterResolverTest.class.getClassLoader().getResource("brreg/blankNodeTest.xml").getFile());
+        Model model = FileManager.get().loadModel(EnhetsregisterResolverTest.class.getClassLoader().getResource("brreg/blankNodeTest.xml").getFile());
 
-		enhetsregisterResolver.resolveModel(model);
+        enhetsregisterResolver.resolveModel(model);
 
-		// this just tests that we can handle blank nodes
-		// no assertion is made, just tests that there is no null pointer exception
-	}
-	
-	@Test
-	public void testMissingBrregFile() throws Exception {
-		EnhetsregisterResolver enhetsregisterResolver = new EnhetsregisterResolver();
-		
-		Model model = ModelFactory.createDefaultModel();
+        // this just tests that we can handle blank nodes
+        // no assertion is made, just tests that there is no null pointer exception
+    }
 
-		enhetsregisterResolver.collectEnhetsregisterInfoFromResource(model, model.createResource("http://test"));
-		
-		NodeIterator listObjectsOfProperty = model.listObjectsOfProperty(RDF.type);
-		
-		assertTrue("Expected empty model", listObjectsOfProperty.toList().isEmpty());
-	}
+    @Test
+    public void testMissingBrregFile() throws Exception {
+        EnhetsregisterResolver enhetsregisterResolver = new EnhetsregisterResolver();
 
-	@Test
-	public void testPreferredNameWithHitInCanonicalNames() {
-		EnhetsregisterResolver enhetsregisterResolver = new EnhetsregisterResolver();
+        Model model = ModelFactory.createDefaultModel();
 
-		Model model = ModelFactory.createDefaultModel();
-		Resource publisher = model.createResource("http://publisheruri");
+        enhetsregisterResolver.collectEnhetsregisterInfoFromResource(model, model.createResource("http://test"));
 
-		enhetsregisterResolver.addPreferredOrganisationName(model, publisher, "889640782", "Arbeids og velferdsetaten");
+        NodeIterator listObjectsOfProperty = model.listObjectsOfProperty(RDF.type);
 
-		Statement prefLabelStmt = publisher.getProperty(SKOS.prefLabel);
-		String actualLabel = prefLabelStmt.getObject().asLiteral().getString();
+        assertTrue("Expected empty model", listObjectsOfProperty.toList().isEmpty());
+    }
 
-		assertThat(actualLabel, Matchers.is("Arbeids og velferdsetaten"));
+    @Test
+    public void testPreferredNameWithHitInCanonicalNames() {
+        EnhetsregisterResolver enhetsregisterResolver = new EnhetsregisterResolver();
 
-	}
+        Model model = ModelFactory.createDefaultModel();
+        Resource publisher = model.createResource("http://publisheruri");
 
-	@Test
-	public void testPreferredNameWithNoHitInCanonicalNames() {
-		EnhetsregisterResolver enhetsregisterResolver = new EnhetsregisterResolver();
+        enhetsregisterResolver.addPreferredOrganisationName(model, publisher, "889640782", "Arbeids og velferdsetaten");
 
-		Model model = ModelFactory.createDefaultModel();
-		Resource publisher = model.createResource("http://publisheruri");
+        Statement prefLabelStmt = publisher.getProperty(SKOS.prefLabel);
+        String actualLabel = prefLabelStmt.getObject().asLiteral().getString();
 
-		enhetsregisterResolver.addPreferredOrganisationName(model, publisher, "123", "Orginal navn");
+        assertThat(actualLabel, Matchers.is("Arbeids og velferdsetaten"));
 
-		Statement prefLabelStmt = publisher.getProperty(SKOS.prefLabel);
-		String actualLabel = prefLabelStmt.getObject().asLiteral().getString();
+    }
 
-		assertThat(actualLabel, Matchers.is("Orginal navn"));
-	}
+    @Test
+    public void testPreferredNameWithNoHitInCanonicalNames() {
+        EnhetsregisterResolver enhetsregisterResolver = new EnhetsregisterResolver();
 
-	@Test
-	public void testPreferredNameWithNoOriginalName() {
-		EnhetsregisterResolver enhetsregisterResolver = new EnhetsregisterResolver();
+        Model model = ModelFactory.createDefaultModel();
+        Resource publisher = model.createResource("http://publisheruri");
 
-		Model model = ModelFactory.createDefaultModel();
-		Resource publisher = model.createResource("http://publisheruri");
+        enhetsregisterResolver.addPreferredOrganisationName(model, publisher, "123", "Orginal navn");
 
-		enhetsregisterResolver.addPreferredOrganisationName(model, publisher, "454", null);
+        Statement prefLabelStmt = publisher.getProperty(SKOS.prefLabel);
+        String actualLabel = prefLabelStmt.getObject().asLiteral().getString();
 
-		Statement prefLabelStmt = publisher.getProperty(SKOS.prefLabel);
+        assertThat(actualLabel, Matchers.is("Orginal navn"));
+    }
 
-		assertThat(prefLabelStmt, Matchers.is(Matchers.nullValue()));
+    @Test
+    public void testPreferredNameWithNoOriginalName() {
+        EnhetsregisterResolver enhetsregisterResolver = new EnhetsregisterResolver();
 
-	}
+        Model model = ModelFactory.createDefaultModel();
+        Resource publisher = model.createResource("http://publisheruri");
+
+        enhetsregisterResolver.addPreferredOrganisationName(model, publisher, "454", null);
+
+        Statement prefLabelStmt = publisher.getProperty(SKOS.prefLabel);
+
+        assertThat(prefLabelStmt, Matchers.is(Matchers.nullValue()));
+
+    }
 
 }

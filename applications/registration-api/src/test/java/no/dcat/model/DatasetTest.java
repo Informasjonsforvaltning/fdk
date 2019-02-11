@@ -1,10 +1,6 @@
 package no.dcat.model;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import no.dcat.shared.testcategories.UnitTest;
-import org.hamcrest.Matchers;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
@@ -24,11 +20,11 @@ public class DatasetTest {
         assertThat(dataset, is(dataset1));
     }
 
-   @Test
+    @Test
     public void toString_makesSense() throws Exception {
         Dataset dataset = new Dataset("1");
         Map languangeDescription = new HashMap();
-        languangeDescription.put("no","test");
+        languangeDescription.put("no", "test");
         dataset.setDescription(languangeDescription);
         assertThat(dataset.toString(), is("Dataset(1, null, null, null, null, {}, {no=test}, null, {}, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, DRAFT)"));
     }

@@ -1,11 +1,9 @@
 package no.dcat.harvester.crawler;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import no.dcat.datastore.domain.DcatSource;
 import no.dcat.datastore.domain.dcat.builders.DcatReader;
 import no.dcat.harvester.service.SubjectCrawler;
 import no.dcat.shared.Dataset;
-import no.dcat.shared.Subject;
 import no.dcat.shared.testcategories.IntegrationTest;
 import org.apache.jena.rdf.model.Model;
 import org.junit.Test;
@@ -25,7 +23,6 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
-import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
 
 @ActiveProfiles(value = "unit-integration")
@@ -33,9 +30,8 @@ import static org.junit.Assert.assertThat;
 @SpringBootTest
 @Category(IntegrationTest.class)
 public class CrawlerValidationIT {
-    private static Logger logger = LoggerFactory.getLogger(CrawlerValidationIT.class);
     static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-
+    private static Logger logger = LoggerFactory.getLogger(CrawlerValidationIT.class);
     @Autowired
     SubjectCrawler subjectCrawler;
 
@@ -50,7 +46,7 @@ public class CrawlerValidationIT {
         Resource r = new ClassPathResource("difi-complete-2018-03-08.jsonld");
         DcatSource dcatSource = new DcatSource();
         dcatSource.setUrl("http://testurl");
-        CrawlerJob crawlerJob = new CrawlerJob(dcatSource,null, subjectCrawler);
+        CrawlerJob crawlerJob = new CrawlerJob(dcatSource, null, subjectCrawler);
         Model model = crawlerJob.loadModelAndValidate(r.getURL());
 
         // model.write(System.out, "TURTLE");
@@ -61,7 +57,7 @@ public class CrawlerValidationIT {
         Dataset found = datasets.stream().filter(dataset -> dataset.getUri().startsWith("https://data.norge.no/node/1939")).findFirst().get();
 
         assertThat("the dataset is found in modeldata before validation", found, is(notNullValue()));
-        assertThat("the number of datasets before validation", datasets.size() , is(550));
+        assertThat("the number of datasets before validation", datasets.size(), is(550));
 
         crawlerJob.isValid(model);
         crawlerJob.removeNonValidDatasets(model);
@@ -82,7 +78,7 @@ public class CrawlerValidationIT {
         Resource r = new ClassPathResource("geonorge-spatial-resource.xml");
         DcatSource dcatSource = new DcatSource();
         dcatSource.setUrl("http://testurl");
-        CrawlerJob crawlerJob = new CrawlerJob(dcatSource,null, subjectCrawler);
+        CrawlerJob crawlerJob = new CrawlerJob(dcatSource, null, subjectCrawler);
         Model model = crawlerJob.loadModelAndValidate(r.getURL());
 
         DcatReader reader = setupReader(model);
@@ -93,7 +89,7 @@ public class CrawlerValidationIT {
             .findFirst().get();
 
         assertThat("the dataset is found in modeldata", found, is(notNullValue()));
-        assertThat("the number of datasets in model", datasets.size() , is(1));
+        assertThat("the number of datasets in model", datasets.size(), is(1));
 
 
     }

@@ -1,10 +1,10 @@
 package no.dcat.harvester.service;
 
+import no.dcat.datastore.domain.dcat.builders.DcatBuilder;
+import no.dcat.datastore.domain.dcat.builders.DcatReader;
 import no.dcat.shared.Catalog;
 import no.dcat.shared.Dataset;
 import no.dcat.shared.Subject;
-import no.dcat.datastore.domain.dcat.builders.DcatBuilder;
-import no.dcat.datastore.domain.dcat.builders.DcatReader;
 import no.dcat.shared.testcategories.IntegrationTest;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
@@ -27,7 +27,6 @@ import java.util.List;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;
-import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
 @ActiveProfiles(value = "unit-integration")
 @RunWith(SpringRunner.class)
@@ -35,12 +34,10 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 @Category(IntegrationTest.class)
 public class SubjectCrawlerIT {
     private static Logger logger = LoggerFactory.getLogger(SubjectCrawlerIT.class);
-
-    @Autowired
-    private SubjectCrawler subjectCrawler;
-
     private final String catalogUri = "http://dcat.no/catalog/1234";
     Catalog catalog;
+    @Autowired
+    private SubjectCrawler subjectCrawler;
 
     @Before
     public void setup() {
@@ -61,18 +58,18 @@ public class SubjectCrawlerIT {
 
         Dataset dataset1 = new Dataset();
         dataset1.setId("1");
-        dataset1.setUri(catalogUri+"/datasets/1");
+        dataset1.setUri(catalogUri + "/datasets/1");
         dataset1.setSubject(Arrays.asList(subject1, subject2));
 
         Dataset dataset2 = new Dataset();
         dataset2.setId("2");
-        dataset2.setUri(catalogUri+"/datasets/2");
+        dataset2.setUri(catalogUri + "/datasets/2");
         dataset2.setSubject(Arrays.asList(subject3));
 
         catalog = new Catalog();
         catalog.setId("1234");
         catalog.setUri(catalogUri);
-        catalog.setDataset(Arrays.asList(dataset1,dataset2));
+        catalog.setDataset(Arrays.asList(dataset1, dataset2));
     }
 
     @Test

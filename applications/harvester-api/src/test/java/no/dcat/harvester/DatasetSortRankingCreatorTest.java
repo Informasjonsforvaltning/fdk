@@ -14,7 +14,6 @@ import org.junit.experimental.categories.Category;
 
 import java.io.IOException;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -24,7 +23,7 @@ import static org.junit.Assert.assertTrue;
 public class DatasetSortRankingCreatorTest {
 
     @Test
-    public void datasetsFromRegistrationComponentInternalURIShouldBeRatedA()  throws IOException {
+    public void datasetsFromRegistrationComponentInternalURIShouldBeRatedA() throws IOException {
 
         //Prepare test code
         Model model = loadTestModel("datasett-mini.ttl");
@@ -42,7 +41,7 @@ public class DatasetSortRankingCreatorTest {
     }
 
     @Test
-    public void datasetsFromRegistrationComponentExternalURIShouldBeRatedA()  throws IOException {
+    public void datasetsFromRegistrationComponentExternalURIShouldBeRatedA() throws IOException {
 
         //Prepare test code
         Model model = loadTestModel("datasett-mini.ttl");
@@ -60,7 +59,7 @@ public class DatasetSortRankingCreatorTest {
     }
 
     @Test
-    public void datasetsNotFromRegistrationComponentShouldBeRatedB()  throws IOException {
+    public void datasetsNotFromRegistrationComponentShouldBeRatedB() throws IOException {
 
         //Prepare test code
         Model model = loadTestModel("datasett-mini.ttl");

@@ -29,30 +29,26 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 @Category(IntegrationTest.class)
 public class DatasetWithElasticSearchIT {
 
+    @ClassRule
+    public static ElasticDockerRule elasticRule = new ElasticDockerRule();
     @Value("${spring.data.elasticsearch.clusterNodes}")
     private String clusterNodes;
-
     @Value("${spring.data.elasticsearch.clusterName}")
     private String clusterName;
-
     @Autowired
     private DatasetRepository datasetRepository;
 
     @PostConstruct
-    void validate(){
+    void validate() {
         assert clusterNodes != null;
         assert clusterName != null;
     }
 
-    @ClassRule
-    public static ElasticDockerRule elasticRule = new ElasticDockerRule();
-
-
     @Test
     public void elasticsearchCanStoreData_usingTemplate() throws Exception {
         Dataset dataset = new Dataset("1");
-        Map<String,String> languangeDescription = new HashMap<>();
-        languangeDescription.put("no","test");
+        Map<String, String> languangeDescription = new HashMap<>();
+        languangeDescription.put("no", "test");
         dataset.setDescription(languangeDescription);
 
         datasetRepository.save(dataset);

@@ -38,11 +38,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
-import static org.junit.Assert.*;
 import static org.powermock.api.mockito.PowerMockito.*;
 
 /**
@@ -51,10 +51,10 @@ import static org.powermock.api.mockito.PowerMockito.*;
  */
 @RunWith(PowerMockRunner.class)
 @PowerMockIgnore({"java.lang.*",
-        "javax.management.*",  "javax.security.*", "javax.xml.*",
-        "org.apache.xerces.*",
-        "ch.qos.logback.*", "org.slf4j.*", "org.apache.logging.log4j.*",
-        "org.apache.jena.*", "org.apache.xerces.*", "com.sun.org.*" })
+    "javax.management.*", "javax.security.*", "javax.xml.*",
+    "org.apache.xerces.*",
+    "ch.qos.logback.*", "org.slf4j.*", "org.apache.logging.log4j.*",
+    "org.apache.jena.*", "org.apache.xerces.*", "com.sun.org.*"})
 @PrepareForTest({RetrieveCodes.class, ElasticSearchResultHandler.class, CrawlerJob.class})
 @Category(UnitTest.class)
 @Ignore
@@ -82,7 +82,8 @@ public class LoadRealDatasetsAndCheckLocationTest {
         assertThat(job.getDatasetsInError().size(), is(1));
     }
 
-    @Ignore //temporarily disable this. Should be enabled, but a UnitTest should not fetch resources from data.geonorge.no (which this test ends up doing)
+    @Ignore
+    //temporarily disable this. Should be enabled, but a UnitTest should not fetch resources from data.geonorge.no (which this test ends up doing)
     @Test
     public void loadDatanorgeData() throws Exception {
 
@@ -99,7 +100,7 @@ public class LoadRealDatasetsAndCheckLocationTest {
         doThrow(RuntimeException.class).when(dcatDataStore).saveDataCatalogue(any(), any());
 
         mockStatic(RetrieveCodes.class);
-        Map<String, Map<String,SkosCode>> locationCodes = extractLocationCodes(resource, getCodes());
+        Map<String, Map<String, SkosCode>> locationCodes = extractLocationCodes(resource, getCodes());
         when(RetrieveCodes.getAllCodes(anyString())).thenReturn(locationCodes);
 
         ElasticSearchResultHandler esHandler = new ElasticSearchResultHandler("localhost:9300", "elasticsearch", "http://localhost:8100", "user", "password");
@@ -118,7 +119,7 @@ public class LoadRealDatasetsAndCheckLocationTest {
         return spyJob;
     }
 
-    private Map<String, Map<String,SkosCode>> extractLocationCodes(Resource resource, Map<String, Map<String, SkosCode>> codes) throws IOException {
+    private Map<String, Map<String, SkosCode>> extractLocationCodes(Resource resource, Map<String, Map<String, SkosCode>> codes) throws IOException {
         if (codes.get("location") == null) {
             codes.put("location", new HashMap<>());
         }
@@ -132,7 +133,7 @@ public class LoadRealDatasetsAndCheckLocationTest {
 
             StmtIterator statementIterator = datasetResource.listProperties(DCTerms.spatial);
 
-            while(statementIterator.hasNext()) {
+            while (statementIterator.hasNext()) {
                 Statement statement = statementIterator.next();
 
                 if (statement.getObject().isURIResource()) {
@@ -164,7 +165,8 @@ public class LoadRealDatasetsAndCheckLocationTest {
 
         Gson gson = new Gson();
         String text = IOUtils.toString(resource.getInputStream(), StandardCharsets.UTF_8);
-        Type type = new TypeToken<Map<String, Map<String, SkosCode>>>(){}.getType();
+        Type type = new TypeToken<Map<String, Map<String, SkosCode>>>() {
+        }.getType();
 
         return gson.fromJson(text, type);
     }

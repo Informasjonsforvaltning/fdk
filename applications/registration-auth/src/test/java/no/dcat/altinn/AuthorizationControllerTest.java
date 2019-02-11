@@ -20,7 +20,7 @@ public class AuthorizationControllerTest {
     public void success() throws Throwable {
         AuthorizationController controller = new AuthorizationController();
 
-        HttpEntity<List<Entity>> response = controller.getReportees("true","02084902333", "4814", "3");
+        HttpEntity<List<Entity>> response = controller.getReportees("true", "02084902333", "4814", "3");
 
         List<Entity> entities = response.getBody();
 

@@ -28,16 +28,11 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
-import static org.hamcrest.Matchers.notNullValue;
-import static org.hamcrest.Matchers.nullValue;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.*;
 
 /**
  * Created by dask on 20.03.2017.
@@ -48,11 +43,16 @@ public class CatalogServiceTest {
 
     private CatalogService catalogService;
 
+    private static String read(InputStream input) throws IOException {
+        try (BufferedReader buffer = new BufferedReader(new InputStreamReader(input))) {
+            return buffer.lines().collect(Collectors.joining("\n"));
+        }
+    }
+
     @Before
     public void setup() {
         catalogService = new CatalogService();
     }
-
 
     @Test
     public void getCatalogsOK() throws Throwable {
@@ -77,7 +77,7 @@ public class CatalogServiceTest {
     }
 
     @Test
-    public void getAllCatalogsOK() throws  Throwable {
+    public void getAllCatalogsOK() throws Throwable {
         CatalogService spy = spy(catalogService);
 
         // Load testdatasett in model
@@ -98,7 +98,6 @@ public class CatalogServiceTest {
         assertThat(response.size(), is(1));
 
     }
-
 
     @Test
     public void getCatalogsFailsOnIOError() throws Throwable {
@@ -134,14 +133,13 @@ public class CatalogServiceTest {
 
     }
 
-
     @Test
     public void getCatalogDcatOk() {
         CatalogService spy = spy(catalogService);
         doReturn("DCAT format").when(spy).findResourceById(anyString(), anyString(), anyString());
 
         ResponseEntity<String> response = spy.getCatalogDcat("http://data.brreg.no/datakatalog/katalog/974761076/5",
-                "ttl", "text/turtle");
+            "ttl", "text/turtle");
 
         assertThat(response.getStatusCode(), is(HttpStatus.OK));
     }
@@ -154,14 +152,14 @@ public class CatalogServiceTest {
         final String[] acHeaders = {"application/ld+json", "json", "ld+json", "application/rdf+xml", "rdf", "text/turtle", "turtle"};
         for (String ac : acHeaders) {
             ResponseEntity<String> response = spy.getDatasetDcat("some id",
-                    null, ac);
+                null, ac);
             assertThat(response.getStatusCode(), is(HttpStatus.OK));
         }
 
         final String[] formats = {"ttl", "xml", "rdf", "json", "jsonld"};
         for (String f : formats) {
             ResponseEntity<String> response = spy.getDatasetDcat("some id",
-                    f, null);
+                f, null);
             assertThat(response.getStatusCode(), is(HttpStatus.OK));
         }
     }
@@ -172,7 +170,7 @@ public class CatalogServiceTest {
         doReturn("DCAT format").when(spy).findResourceById(anyString(), anyString(), anyString());
 
         ResponseEntity<String> response = spy.getCatalogDcat("http://data.brreg.no/datakatalog/katalog/974761076/5",
-                null, "XXXX");
+            null, "XXXX");
 
         assertThat(response.getStatusCode(), is(HttpStatus.NOT_ACCEPTABLE));
     }
@@ -183,11 +181,10 @@ public class CatalogServiceTest {
         doReturn("DCAT format").when(spy).findResourceById(anyString(), anyString(), anyString());
 
         ResponseEntity<String> response = spy.getCatalogDcat("http://data.brreg.no/datakatalog/katalog/974761076/5",
-                "WRONG", null);
+            "WRONG", null);
 
         assertThat(response.getStatusCode(), is(HttpStatus.NOT_ACCEPTABLE));
     }
-
 
     @Test
     public void getCatalogDcatIdNotFound() {
@@ -195,7 +192,7 @@ public class CatalogServiceTest {
         doReturn(null).when(spy).findResourceById(anyString(), anyString(), anyString());
 
         ResponseEntity<String> response = spy.getCatalogDcat("http://data.brreg.no/datakatalog/katalog/974761076/5",
-                null, "text/turtle");
+            null, "text/turtle");
 
         assertThat(response.getStatusCode(), is(HttpStatus.NOT_FOUND));
     }
@@ -206,7 +203,7 @@ public class CatalogServiceTest {
         doThrow(new NoSuchElementException("NSEE")).when(spy).findResourceById(anyString(), anyString(), anyString());
 
         ResponseEntity<String> response = spy.getCatalogDcat("http://data.brreg.no/datakatalog/katalog/974761076/5",
-                null, "application/ld+json");
+            null, "application/ld+json");
 
         assertThat(response.getStatusCode(), is(HttpStatus.NOT_FOUND));
     }
@@ -222,15 +219,15 @@ public class CatalogServiceTest {
         String queryString = read(queryResource.getInputStream());
 
         //model.read(mResource.getInputStream(), "TURTLE");
-        String id ="http://data.brreg.no/datakatalog/katalog/974761076/5";
+        String id = "http://data.brreg.no/datakatalog/katalog/974761076/5";
         Query q = QueryFactory.create(String.format(queryString, id));
         QueryExecution qe = QueryExecutionFactory.create(q, model);
         doReturn(q).when(spy).getQuery(anyString());
         doReturn(qe).when(spy).getQueryExecution(q);
 
-        String resultOK = spy.findResourceById( id,
-                queryString,
-                "text/turtle");
+        String resultOK = spy.findResourceById(id,
+            queryString,
+            "text/turtle");
 
         assertThat(resultOK, not(nullValue()));
     }
@@ -246,7 +243,7 @@ public class CatalogServiceTest {
         String queryString = read(queryResource.getInputStream());
 
         //model.read(mResource.getInputStream(), "TURTLE");
-        String id ="unknownid";
+        String id = "unknownid";
         Query q = QueryFactory.create(String.format(queryString, id));
         QueryExecution qe = QueryExecutionFactory.create(q, model);
         doReturn(q).when(spy).getQuery(anyString());
@@ -263,7 +260,7 @@ public class CatalogServiceTest {
         doReturn(null).when(spy).invokeFusekiQuery(anyString(), anyString(), anyString(), anyString());
 
         ResponseEntity<String> response = spy.getDatasetDcat("http://data.brreg.no/datakatalog/katalog/974761076/5",
-                null, "application/ld+json");
+            null, "application/ld+json");
 
         assertThat(response.getStatusCode(), is(HttpStatus.NOT_FOUND));
     }
@@ -274,7 +271,7 @@ public class CatalogServiceTest {
         doReturn(null).when(spy).invokeFusekiQuery(anyString(), anyString(), anyString(), anyString());
 
         ResponseEntity<String> response = spy.getCatalogDcat("http://data.brreg.no/datakatalog/katalog/974761076/5",
-                null, "application/ld+json");
+            null, "application/ld+json");
 
         assertThat(response.getStatusCode(), is(HttpStatus.NOT_FOUND));
     }
@@ -284,11 +281,10 @@ public class CatalogServiceTest {
         CatalogService spy = spy(catalogService);
 
         ResponseEntity<String> response = spy.invokeFusekiQuery("http://data.brreg.no/datakatalog/katalog/974761076/5",
-                null, "application/ld+json", "sparql/nofile.sparql");
+            null, "application/ld+json", "sparql/nofile.sparql");
 
         assertThat(response, nullValue());
     }
-
 
     @Test
     public void invokeFusekiQueryThrowsExceptionbecauseOfIOErrorInFuseki() {
@@ -296,7 +292,7 @@ public class CatalogServiceTest {
         doThrow(new QueryExceptionHTTP(404, "force exception")).when(spy).getQueryExecution(any());
 
         ResponseEntity<String> response = spy.invokeFusekiQuery("http://data.brreg.no/datakatalog/katalog/974761076/5",
-                null, "application/ld+json", "sparql/catalog.sparql");
+            null, "application/ld+json", "sparql/catalog.sparql");
 
         assertThat(response.getStatusCode(), is(HttpStatus.NOT_FOUND));
     }
@@ -309,13 +305,6 @@ public class CatalogServiceTest {
         ResponseEntity<String> response = spy.getCatalogs();
 
         assertThat(response.getStatusCode(), is(HttpStatus.INTERNAL_SERVER_ERROR));
-    }
-
-
-    private static String read(InputStream input) throws IOException {
-        try (BufferedReader buffer = new BufferedReader(new InputStreamReader(input))) {
-            return buffer.lines().collect(Collectors.joining("\n"));
-        }
     }
 
 }

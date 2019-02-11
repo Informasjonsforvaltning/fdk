@@ -8,12 +8,8 @@ import org.apache.jena.rdf.model.Model;
 import org.apache.jena.riot.RDFDataMgr;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -23,9 +19,8 @@ import static org.junit.Assert.assertThat;
 
 @Category(UnitTest.class)
 public class DcatConverterTest {
-    private static Logger logger = LoggerFactory.getLogger(DcatConverterTest.class);
     static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-
+    private static Logger logger = LoggerFactory.getLogger(DcatConverterTest.class);
 
     public DcatReader setupReader(Model model) {
         return new DcatReader(model);
@@ -52,16 +47,16 @@ public class DcatConverterTest {
         DcatReader reader = setupReader(model);
         List<Dataset> datasets = reader.getDatasets();
         int[] contactCount = {0};
-        datasets.forEach(dataset ->{
+        datasets.forEach(dataset -> {
             if (dataset.getContactPoint() != null)
-            for (Contact contact : dataset.getContactPoint()) {
-                if (contact != null) {
-                    contactCount[0]++;
+                for (Contact contact : dataset.getContactPoint()) {
+                    if (contact != null) {
+                        contactCount[0]++;
 
-                    logger.info(contact.getEmail());
+                        logger.info(contact.getEmail());
+                    }
+
                 }
-
-            }
         });
         assertThat(contactCount[0], is(3));
         assertThat(datasets.size(), is(4));
@@ -82,9 +77,9 @@ public class DcatConverterTest {
         final int[] t = {0};
         datasets.forEach(dataset -> {
             if (dataset.getTemporal() != null) {
-                dataset.getTemporal().forEach( temporal -> {
+                dataset.getTemporal().forEach(temporal -> {
                     t[0]++;
-                   logger.info("{}: {} - {}", dataset.getUri(), sdf.format(temporal.getStartDate()), sdf.format(temporal.getEndDate()));
+                    logger.info("{}: {} - {}", dataset.getUri(), sdf.format(temporal.getStartDate()), sdf.format(temporal.getEndDate()));
                 });
             }
         });
@@ -96,7 +91,7 @@ public class DcatConverterTest {
     @Test
     public void readGeonorgeData() throws Throwable {
 
-        Model model = RDFDataMgr.loadModel("geonorge-data-2017-10-19.xml" );
+        Model model = RDFDataMgr.loadModel("geonorge-data-2017-10-19.xml");
 
         DcatReader reader = setupReader(model);
         List<Dataset> datasets = reader.getDatasets();
@@ -127,7 +122,7 @@ public class DcatConverterTest {
     @Test
     public void readGdocData() throws Throwable {
 
-        Model model = RDFDataMgr.loadModel("gdoc-data-2017-10-19.ttl" );
+        Model model = RDFDataMgr.loadModel("gdoc-data-2017-10-19.ttl");
 
         DcatReader reader = setupReader(model);
         List<Dataset> datasets = reader.getDatasets();

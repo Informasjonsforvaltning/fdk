@@ -2,12 +2,7 @@ package no.dcat.harvester.crawler.converters;
 
 import no.dcat.datastore.domain.dcat.vocabulary.DCATNO;
 import no.dcat.shared.testcategories.IntegrationTest;
-import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.ModelFactory;
-import org.apache.jena.rdf.model.NodeIterator;
-import org.apache.jena.rdf.model.ResIterator;
-import org.apache.jena.rdf.model.Resource;
-import org.apache.jena.rdf.model.Statement;
+import org.apache.jena.rdf.model.*;
 import org.apache.jena.sparql.vocabulary.FOAF;
 import org.apache.jena.util.FileManager;
 import org.apache.jena.vocabulary.DCTerms;
@@ -35,9 +30,9 @@ public class EnhetsregisterResolverIT {
         Model model = FileManager.get().loadModel("rdf/virksomheter.ttl");
         enhetsregisterResolver.resolveModel(model);
         NodeIterator countryiter = model.listObjectsOfProperty(
-                model.createResource("http://data.brreg.no/enhetsregisteret/enhet/991825827/forretningsadresse"),
-                model.createProperty("http://data.brreg.no/meta/land"));
-        assertEquals("Norge" , countryiter.next().asLiteral().getValue().toString());
+            model.createResource("http://data.brreg.no/enhetsregisteret/enhet/991825827/forretningsadresse"),
+            model.createProperty("http://data.brreg.no/meta/land"));
+        assertEquals("Norge", countryiter.next().asLiteral().getValue().toString());
     }
 
     @Test
@@ -48,15 +43,15 @@ public class EnhetsregisterResolverIT {
         Resource publisherResource = model.getResource("http://data.brreg.no/enhetsregisteret/enhet/971040238");
 
         String previousName = publisherResource.getProperty(FOAF.name).getString();
-        logger.info("name before {}",previousName);
+        logger.info("name before {}", previousName);
 
         enhetsregisterResolver.resolveModel(model);
 
         String nameAfter = publisherResource.getProperty(FOAF.name).getObject().asLiteral().toString();
-        assertEquals("Official name", "STATENS KARTVERK" , nameAfter);
+        assertEquals("Official name", "STATENS KARTVERK", nameAfter);
 
         String prefName = publisherResource.getProperty(SKOS.prefLabel).getObject().asLiteral().getString();
-        assertEquals("Preferred name", "Statens Kartverk" , prefName);
+        assertEquals("Preferred name", "Statens Kartverk", prefName);
     }
 
     @Test
@@ -66,7 +61,7 @@ public class EnhetsregisterResolverIT {
         Resource publisherResource = model.getResource("https://register.geonorge.no/register/organisasjoner/kartverket/difi");
 
         String previousName = publisherResource.getProperty(FOAF.name).getString();
-        logger.info("name before {}",previousName);
+        logger.info("name before {}", previousName);
 
         enhetsregisterResolver.resolveModel(model);
 
@@ -86,7 +81,7 @@ public class EnhetsregisterResolverIT {
         Resource publisherResource = model.getResource("https://register.geonorge.no/register/organisasjoner/kartverket/statens-vegvesen");
 
         String previousName = publisherResource.getProperty(FOAF.name).getString();
-        logger.info("name before {}",previousName);
+        logger.info("name before {}", previousName);
 
         enhetsregisterResolver.resolveModel(model);
 
@@ -109,18 +104,17 @@ public class EnhetsregisterResolverIT {
         Resource publisherResource = model.getResource("https://register.geonorge.no/register/organisasjoner/kartverket/oljedirektoratet");
 
         String previousName = publisherResource.getProperty(FOAF.name).getString();
-        logger.info("name before {}",previousName);
+        logger.info("name before {}", previousName);
 
         enhetsregisterResolver.resolveModel(model);
         Resource newPublisherResource = model.getResource("http://data.brreg.no/enhetsregisteret/enhet/870917732");
 
         String newName = newPublisherResource.getProperty(FOAF.name).getString();
 
-        logger.info("name after {}",newName);
+        logger.info("name after {}", newName);
 
         assertThat(newName, Is.is("OLJEDIREKTORATET"));
     }
-
 
 
     @Test
@@ -130,14 +124,14 @@ public class EnhetsregisterResolverIT {
         Resource publisherResource = model.getResource("http://data.brreg.no/enhetsregisteret/enhet/971526920");
 
         String previousName = publisherResource.getProperty(FOAF.name).getString();
-        logger.info("name before {}",previousName);
+        logger.info("name before {}", previousName);
 
         enhetsregisterResolver.resolveModel(model);
 
         String newName = publisherResource.getProperty(FOAF.name).getString();
         String prefName = publisherResource.getProperty(SKOS.prefLabel).getString();
 
-        logger.info("name after {}",newName);
+        logger.info("name after {}", newName);
         logger.info("pref name  {}", prefName);
 
         assertThat(newName, Is.is("STATISTISK SENTRALBYR\u00C5"));
@@ -195,7 +189,7 @@ public class EnhetsregisterResolverIT {
         Resource landbruksdirektoratet = model.getResource("http://data.brreg.no/enhetsregisteret/enhet/981544315");
         String publisherUri = landbruksdirektoratet.getProperty(DCATNO.organizationPath).getString();
 
-       assertThat(publisherUri, Is.is("/STAT/972417874/981544315"));
+        assertThat(publisherUri, Is.is("/STAT/972417874/981544315"));
     }
 
     @Test
@@ -257,8 +251,8 @@ public class EnhetsregisterResolverIT {
         EnhetsregisterResolver enhetsregisterResolver = new EnhetsregisterResolver();
 
         String oljeDEP = "http://data.brreg.no/enhetsregisteret/enhet/977161630",
-                oljedir = "http://data.brreg.no/enhetsregisteret/enhet/970205039",
-                nve = "http://data.brreg.no/enhetsregisteret/enhet/870917732";
+            oljedir = "http://data.brreg.no/enhetsregisteret/enhet/970205039",
+            nve = "http://data.brreg.no/enhetsregisteret/enhet/870917732";
 
         Model model = ModelFactory.createDefaultModel();
 
@@ -272,7 +266,7 @@ public class EnhetsregisterResolverIT {
 
         Statement property = superiorOrgResource.getProperty(SKOS.prefLabel);
 
-        assertEquals("Superior org should not have prefLabel property",  null, property);
+        assertEquals("Superior org should not have prefLabel property", null, property);
 
     }
 

@@ -39,7 +39,7 @@ public class HelpTextControllerTest {
     public void helpTextsSingleHasDesc() throws Throwable {
         HelpText helpText = controller.helpTexts("Dataset_description");
         assertThat(helpText.getDescription(), is(notNullValue()));
-     //   assertThat(helpTexts.get(0).getDescription(), isMapContaining); Want to test the Map<String, String> structure
+        //   assertThat(helpTexts.get(0).getDescription(), isMapContaining); Want to test the Map<String, String> structure
         assertThat(helpText.getDescription().get("nb"), is(notNullValue()));
     }
 
@@ -56,7 +56,7 @@ public class HelpTextControllerTest {
         HelpText helpText = controller.helpTexts("Dahut_description");
     }
 
-        @Test
+    @Test
     public void helpTextsMoreHasDesc() throws Throwable {
         List<HelpText> helpTexts = controller.helpTexts();
         assertThat(helpTexts.get(0).getDescription(), is(notNullValue()));
