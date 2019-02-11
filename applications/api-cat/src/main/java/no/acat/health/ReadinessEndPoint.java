@@ -20,16 +20,18 @@ public class ReadinessEndPoint {
 
     @ReadOperation
     public WebEndpointResponse<Health> health() {
-        boolean up = false;
+        boolean up;
 
         try {
             long count = this.apiDocumentRepository.getCount();
             up = count > 0;
         } catch (Exception e) {
+            up = false;
         }
 
-        return up ?
-            new WebEndpointResponse(Health.up().build(), 200) :
-            new WebEndpointResponse(Health.down().build(), 503);
+        if (!up) {
+            return new WebEndpointResponse(Health.down().build(), 503);
+        }
+        return new WebEndpointResponse(Health.up().build(), 200);
     }
 }
