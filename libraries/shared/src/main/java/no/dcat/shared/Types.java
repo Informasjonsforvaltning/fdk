@@ -12,6 +12,7 @@ public enum Types {
     referencetypes("rdf/reference-code-skos.ttl", "referencetypes"),
     openlicenses("rdf/open-licenses-skos.rdf", "openlicenses"),
     distributiontype("rdf/distribution-type-skos.rdf", "distributiontype"),
+    apistatus("rdf/api-status-skos.ttl", "apistatus"),
 
     location(null, "location"),
     subject(null, "subject");
