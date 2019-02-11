@@ -34,7 +34,7 @@ public class UniversalParserTest {
         String spec = IOUtils.toString(new ClassPathResource("fs-api-swagger.json").getInputStream(), "UTF-8");
 
         ApiSpecification parsed = parser.parse(spec);
-        Assert.assertEquals("FS-API",parsed.getInfo().getTitle());
+        Assert.assertEquals("FS-API", parsed.getInfo().getTitle());
     }
 
     @Test
@@ -42,7 +42,7 @@ public class UniversalParserTest {
         String spec = IOUtils.toString(new ClassPathResource("enhetsregisteret-openapi3.json").getInputStream(), "UTF-8");
 
         ApiSpecification parsed = parser.parse(spec);
-        Assert.assertEquals("Åpne Data fra Enhetsregisteret - API Dokumentasjon",parsed.getInfo().getTitle());
+        Assert.assertEquals("Åpne Data fra Enhetsregisteret - API Dokumentasjon", parsed.getInfo().getTitle());
     }
 
 }

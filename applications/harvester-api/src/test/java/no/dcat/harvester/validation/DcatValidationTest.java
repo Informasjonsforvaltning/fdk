@@ -19,6 +19,7 @@ import java.util.Arrays;
 @Category(UnitTest.class)
 public class DcatValidationTest {
     private static Logger logger = LoggerFactory.getLogger(DcatValidationTest.class);
+
     @Test
     public void validateWithValidationHandlerAsNullShouldWork() {
 
@@ -73,7 +74,8 @@ public class DcatValidationTest {
             if (error.isError()) {
                 errorFlag[0] = true;
                 logger.debug(error.toString());
-            }});
+            }
+        });
 
         Assert.assertTrue(errorFlag[0]);
         Assert.assertFalse(validationFlag);

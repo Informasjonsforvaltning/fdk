@@ -36,23 +36,17 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 @AutoConfigureMockMvc
 @Category(IntegrationTest.class)
 public class RdfCatalogControllerIT {
-    private static Logger logger = LoggerFactory.getLogger(RdfCatalogControllerIT.class);
-
-    @Autowired
-    private DatasetRepository datasetRepository;
-
-    @Autowired
-    private RdfCatalogController rdfCatalogController;
-
-    private TestRestTemplate unathorizedRestTemplate = new TestRestTemplate();
-
-    private HttpHeaders headers = new HttpHeaders();
-
-    @Autowired
-    private CatalogRepository catalogRepository;
-
     @ClassRule
     public static ElasticDockerRule elasticRule = new ElasticDockerRule();
+    private static Logger logger = LoggerFactory.getLogger(RdfCatalogControllerIT.class);
+    @Autowired
+    private DatasetRepository datasetRepository;
+    @Autowired
+    private RdfCatalogController rdfCatalogController;
+    private TestRestTemplate unathorizedRestTemplate = new TestRestTemplate();
+    private HttpHeaders headers = new HttpHeaders();
+    @Autowired
+    private CatalogRepository catalogRepository;
 
     @Before
     public void before() {

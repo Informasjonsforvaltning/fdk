@@ -27,14 +27,15 @@ public class AuthorizationServiceTest {
     private AuthorizationService authorizationService;
 
     @Before
-    public void setup () throws Throwable {
+    public void setup() throws Throwable {
         AuthorizationService aService = new AuthorizationService();
         aService.entityNameService = new EntityNameService();
         authorizationService = spy(aService);
 
         ClassPathResource example = new ClassPathResource("exampleAuthorizationEntities.json");
         ObjectMapper mapper = new ObjectMapper();
-        List<Entity> response = mapper.readValue(example.getInputStream(), new TypeReference<List<Entity>>(){});
+        List<Entity> response = mapper.readValue(example.getInputStream(), new TypeReference<List<Entity>>() {
+        });
 
         doReturn(response).when(authorizationService).getAuthorizedEntities(anyString());
 
@@ -58,7 +59,7 @@ public class AuthorizationServiceTest {
         List<String> organizations = authorizationService.getOrganisations("02084902333");
 
         for (String org : organizations) {
-            logger.info("org: {}",org);
+            logger.info("org: {}", org);
         }
     }
 

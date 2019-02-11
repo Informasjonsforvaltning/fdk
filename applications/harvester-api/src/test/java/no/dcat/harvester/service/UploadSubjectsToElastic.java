@@ -1,10 +1,6 @@
 package no.dcat.harvester.service;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
+import com.google.gson.*;
 import no.dcat.datastore.domain.dcat.builders.DatasetBuilder;
 import no.dcat.datastore.domain.dcat.builders.DcatBuilder;
 import no.dcat.shared.Publisher;
@@ -37,22 +33,15 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 
 @Category(UnitTest.class)
 public class UploadSubjectsToElastic {
 
     private static final String BEGREP_TTL_URL = "D:\\git\\fdk\\conf\\subjects\\jira@brreg 2018-05-04T15_33_37+0200.html";
-    private static Logger logger = LoggerFactory.getLogger(UploadSubjectsToElastic.class);
-
     private static final String FOLDER = "D://git/fdk/conf/subjects";
-
+    private static Logger logger = LoggerFactory.getLogger(UploadSubjectsToElastic.class);
     final String lok = "http://localhost:9200";
     final String ut1 = "http://elasticsearch-fellesdatakatalog-ut1.ose-npc.brreg.no";
     final String tt1 = "http://elasticsearch-fellesdatakatalog-tt1.ose-npc.brreg.no";

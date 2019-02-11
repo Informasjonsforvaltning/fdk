@@ -5,16 +5,15 @@ import org.apache.jena.rdf.model.Resource;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
-import javax.swing.*;
-
-import static org.junit.Assert.*;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.nullValue;
+import static org.junit.Assert.assertThat;
 
 @Category(UnitTest.class)
 public class DQVTest {
 
     @Test
-    public void testResolveDimensionNSprefixOK () throws Throwable {
+    public void testResolveDimensionNSprefixOK() throws Throwable {
         Resource actual = DQV.resolveDimensionResource("iso:Accuracy");
 
         assertThat(actual, is(DQV.Accuracy));

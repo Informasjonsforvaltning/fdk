@@ -2,10 +2,10 @@ package no.dcat.themes.builders;
 
 import no.dcat.shared.DataTheme;
 import no.dcat.shared.testcategories.UnitTest;
-import no.dcat.themes.database.TDBInferenceService;
-import no.dcat.themes.service.ThemesService;
 import no.dcat.themes.database.TDBConnection;
+import no.dcat.themes.database.TDBInferenceService;
 import no.dcat.themes.database.TDBService;
+import no.dcat.themes.service.ThemesService;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;

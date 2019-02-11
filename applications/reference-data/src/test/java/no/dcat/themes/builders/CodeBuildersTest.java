@@ -3,10 +3,10 @@ package no.dcat.themes.builders;
 import no.dcat.shared.SkosCode;
 import no.dcat.shared.Types;
 import no.dcat.shared.testcategories.UnitTest;
-import no.dcat.themes.database.TDBInferenceService;
-import no.dcat.themes.service.CodesService;
 import no.dcat.themes.database.TDBConnection;
+import no.dcat.themes.database.TDBInferenceService;
 import no.dcat.themes.database.TDBService;
+import no.dcat.themes.service.CodesService;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -32,7 +32,6 @@ public class CodeBuildersTest {
         tdbService.postConstruct();
         TDBInferenceService tdbInferenceService = new TDBInferenceService(tdbService);
         TDBConnection tdbConnection = new TDBConnection(tdbInferenceService);
-
 
 
         List<SkosCode> codes = new CodesService(tdbConnection).getCodes(Types.provenancestatement);

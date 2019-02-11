@@ -1,12 +1,7 @@
 package no.dcat.controller;
 
-import no.dcat.configuration.SpringSecurityContextBean;
 import no.dcat.shared.testcategories.UnitTest;
 import org.junit.experimental.categories.Category;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
 
 //git @RunWith(MockitoJUnitRunner.class)
 @Category(UnitTest.class)

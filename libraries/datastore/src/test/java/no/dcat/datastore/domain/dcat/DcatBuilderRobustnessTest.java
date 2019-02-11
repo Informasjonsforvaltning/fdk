@@ -2,12 +2,12 @@ package no.dcat.datastore.domain.dcat;
 
 import com.google.common.io.CharStreams;
 import com.google.gson.Gson;
+import no.dcat.datastore.domain.dcat.builders.DcatBuilder;
 import no.dcat.datastore.domain.dcat.builders.DcatReader;
 import no.dcat.datastore.domain.dcat.smoke.TestCompleteCatalog;
 import no.dcat.shared.Catalog;
 import no.dcat.shared.Contact;
 import no.dcat.shared.Dataset;
-import no.dcat.datastore.domain.dcat.builders.DcatBuilder;
 import no.dcat.shared.QualityAnnotation;
 import no.dcat.shared.testcategories.UnitTest;
 import org.apache.jena.rdf.model.Model;
@@ -23,18 +23,12 @@ import org.springframework.core.io.ClassPathResource;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.startsWith;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.*;
 
 
@@ -95,7 +89,7 @@ public class DcatBuilderRobustnessTest {
         DcatBuilder builderSpy = new DcatBuilder();
 
         ClassPathResource resource = new ClassPathResource("ramsund.json");
-        String datasetJson = CharStreams.toString(new InputStreamReader(resource.getInputStream(),"utf-8"));
+        String datasetJson = CharStreams.toString(new InputStreamReader(resource.getInputStream(), "utf-8"));
         Dataset dataset = new Gson().fromJson(datasetJson, Dataset.class);
 
         builderSpy.addDataset(dataset);
@@ -148,7 +142,7 @@ public class DcatBuilderRobustnessTest {
         logger.debug(dcat);
 
         Model model = ModelFactory.createDefaultModel();
-        model.read(new ByteArrayInputStream(dcat.getBytes()),null, "TTL");
+        model.read(new ByteArrayInputStream(dcat.getBytes()), null, "TTL");
 
         DcatReader reader = new DcatReader(model);
 
@@ -156,7 +150,7 @@ public class DcatBuilderRobustnessTest {
 
         final Set<Contact> contacts = new HashSet<>();
         actualDatasets.forEach(dataset -> {
-            logger.debug("ds: {}",dataset.getUri());
+            logger.debug("ds: {}", dataset.getUri());
             dataset.getContactPoint().forEach(cp -> {
                 logger.debug("cp: {}", cp.toString());
                 contacts.add(cp);
@@ -164,7 +158,6 @@ public class DcatBuilderRobustnessTest {
         });
 
         assertThat(contacts.size(), is(4));
-
 
 
     }
@@ -178,7 +171,7 @@ public class DcatBuilderRobustnessTest {
 
         QualityAnnotation qualityAnnotation = new QualityAnnotation();
         qualityAnnotation.setInDimension("iso:Accuracy");
-        Map<String,String> x = new HashMap<>();
+        Map<String, String> x = new HashMap<>();
         x.put("no", "nøyaktighet");
         qualityAnnotation.setHasBody(x);
         qualityAnnotation.setMotivatedBy("me self");

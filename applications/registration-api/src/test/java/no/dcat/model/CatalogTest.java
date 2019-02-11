@@ -35,7 +35,6 @@ public class CatalogTest {
     }
 
 
-
     @Test
     public void catalogWithSameUrlHaveSameHashcode() throws Exception {
         Catalog catalog = new Catalog();

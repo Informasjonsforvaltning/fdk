@@ -71,7 +71,7 @@ public class DatasetsQueryServicePublisherTest {
         when(action.actionGet()).thenReturn(response);
 
         SearchRequestBuilder builder = mock(SearchRequestBuilder.class);
-        when(builder.setQuery((QueryBuilder)any())).thenReturn(builder);
+        when(builder.setQuery((QueryBuilder) any())).thenReturn(builder);
         when(builder.execute()).thenReturn(action);
         when(builder.setTypes(TYPE)).thenReturn(builder);
         when(client.prepareSearch(INDEX)).thenReturn(builder);

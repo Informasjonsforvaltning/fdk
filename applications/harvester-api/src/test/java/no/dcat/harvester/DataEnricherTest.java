@@ -39,10 +39,11 @@ public class DataEnricherTest {
 
     /**
      * Check that language is not empty for all title properties
+     *
      * @throws IOException
      */
     @Test
-    public void allTitlesHasLanguage()  throws IOException {
+    public void allTitlesHasLanguage() throws IOException {
 
         //Prepare test code
         Model model = loadTestModel("datasett-mini.ttl");
@@ -56,10 +57,10 @@ public class DataEnricherTest {
 
         //Check if result is as expected - every title should have a non-empty language attribute
         StmtIterator titleIter = enriched.listStatements(new SimpleSelector(null, DCTerms.title, (RDFNode) null));
-        while(titleIter.hasNext()) {
+        while (titleIter.hasNext()) {
             Statement titleStmt = titleIter.next();
             Literal title = titleStmt.getObject().asLiteral();
-            if(title.getLanguage().equals("")) {
+            if (title.getLanguage().equals("")) {
                 titleMissingLanguage = true;
             }
         }
@@ -70,10 +71,11 @@ public class DataEnricherTest {
 
     /**
      * Check that language is not empty for all description properties
+     *
      * @throws IOException
      */
     @Test
-    public void allDescriptionsHasLanguage()  throws IOException {
+    public void allDescriptionsHasLanguage() throws IOException {
 
         //Prepare test code
         Model model = loadTestModel("datasett-mini.ttl");
@@ -87,10 +89,10 @@ public class DataEnricherTest {
 
         //Check if result is as expected - every descripition should have a non-empty language attribute
         StmtIterator descIter = enriched.listStatements(new SimpleSelector(null, DCTerms.description, (RDFNode) null));
-        while(descIter.hasNext()) {
+        while (descIter.hasNext()) {
             Statement descStmt = descIter.next();
             Literal description = descStmt.getObject().asLiteral();
-            if(description.getLanguage().equals("")) {
+            if (description.getLanguage().equals("")) {
                 descriptionMissingLanguage = true;
             }
         }
@@ -101,10 +103,11 @@ public class DataEnricherTest {
 
     /**
      * Check that language is not empty for all keyword properties
+     *
      * @throws IOException
      */
     @Test
-    public void allKeywordsHasLanguage()  throws IOException {
+    public void allKeywordsHasLanguage() throws IOException {
 
         //Prepare test code
         Model model = loadTestModel("datasett-mini.ttl");
@@ -118,10 +121,10 @@ public class DataEnricherTest {
 
         //Check if result is as expected - every keyword should have a non-empty language attribute
         StmtIterator keywordIter = enriched.listStatements(new SimpleSelector(null, DCAT.keyword, (RDFNode) null));
-        while(keywordIter.hasNext()) {
+        while (keywordIter.hasNext()) {
             Statement keywordStmt = keywordIter.next();
             Literal keyword = keywordStmt.getObject().asLiteral();
-            if(keyword.getLanguage().equals("")) {
+            if (keyword.getLanguage().equals("")) {
                 keywordMissingLanguage = true;
             }
         }
@@ -131,10 +134,11 @@ public class DataEnricherTest {
 
     /**
      * Check that default language assigned to title property is "nb"
+     *
      * @throws IOException
      */
     @Test
-    public void defaultTitleLanguageShouldBeNoNb()  throws IOException {
+    public void defaultTitleLanguageShouldBeNoNb() throws IOException {
 
         //Prepare test code
         Model model = loadTestModel("datasett-mini.ttl");
@@ -154,10 +158,11 @@ public class DataEnricherTest {
 
     /**
      * Check that default language assigned to description property is "nb"
+     *
      * @throws IOException
      */
     @Test
-    public void defaultdescriptionLanguageShouldBeNoNb()  throws IOException {
+    public void defaultdescriptionLanguageShouldBeNoNb() throws IOException {
 
         //Prepare test code
         Model model = loadTestModel("datasett-mini.ttl");
@@ -177,10 +182,11 @@ public class DataEnricherTest {
 
     /**
      * Check that default language assigned to keyword property is "nb"
+     *
      * @throws IOException
      */
     @Test
-    public void defaultkeywordLanguageShouldBeNoNb()  throws IOException {
+    public void defaultkeywordLanguageShouldBeNoNb() throws IOException {
 
         //Prepare test code
         Model model = loadTestModel("datasett-mini.ttl");
@@ -198,7 +204,7 @@ public class DataEnricherTest {
     }
 
     @Test
-    public void ifLanguageIsEnItShouldBeKept()  throws IOException {
+    public void ifLanguageIsEnItShouldBeKept() throws IOException {
 
         //Prepare test code
         Model model = loadTestModel("datasett-mini.ttl");
@@ -218,10 +224,11 @@ public class DataEnricherTest {
 
     /**
      * Check that language in source data is not overwritten by default
+     *
      * @throws IOException
      */
     @Test
-    public void alreadyPresentLanguageShouldNotBeOverwritten()  throws IOException {
+    public void alreadyPresentLanguageShouldNotBeOverwritten() throws IOException {
 
         //Prepare test code
         Model model = loadTestModel("datasett-mini.ttl");
@@ -240,7 +247,7 @@ public class DataEnricherTest {
     }
 
     @Test
-    public void descriptionShouldRemoveIllegalHTMLTags()  throws IOException {
+    public void descriptionShouldRemoveIllegalHTMLTags() throws IOException {
 
         //Prepare test code
         Model model = loadTestModel("datasett-mini.ttl");
@@ -259,7 +266,7 @@ public class DataEnricherTest {
 
 
     @Test
-    public void datanorgeDistributionLicensesShouldHaveSourceProperty()  throws IOException {
+    public void datanorgeDistributionLicensesShouldHaveSourceProperty() throws IOException {
 
         //Prepare test code
         Model model = loadTestModel("distribution-licenseformat-difi.jsonld");
@@ -273,8 +280,8 @@ public class DataEnricherTest {
         RDFNode license = distributionRes.getProperty(DCTerms.license).getObject();
 
         assertEquals(
-                license.asResource().getProperty(DCTerms.source).getLiteral().toString(),
-                "http://data.norge.no/nlod/");
+            license.asResource().getProperty(DCTerms.source).getLiteral().toString(),
+            "http://data.norge.no/nlod/");
     }
 
 }

@@ -36,9 +36,9 @@ public class ElasticSearchResultPubHandlerTest {
     public void addPublisherToIndexOK() {
 
         String pudlisherUri = "http://data.brreg.no/enhetsregisteret/enhet/983887457";
-        String organisasjonsform    = "ORGL";
-        String overordnetEnhet     = "814716872";
-        String name     = "BR";
+        String organisasjonsform = "ORGL";
+        String overordnetEnhet = "814716872";
+        String name = "BR";
 
         Publisher publisher = new Publisher();
         publisher.setOrganisasjonsform(organisasjonsform);
@@ -67,8 +67,8 @@ public class ElasticSearchResultPubHandlerTest {
 
         IndexRequest actual = handler.addPublisherToIndex(gson, publisher);
 
-        assertThat(publisher.getId(), is( "983887457"));
-        assertThat(actual.toString(), is (expected));
+        assertThat(publisher.getId(), is("983887457"));
+        assertThat(actual.toString(), is(expected));
     }
 
     @Test

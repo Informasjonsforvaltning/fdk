@@ -27,22 +27,22 @@ import static org.junit.Assert.assertThat;
 public class ReferenceTest {
 
     String referencesJson = "[  \n" +
-            "  {  \n" +
-            "     \"referenceType\":{  \n" +
-            "        \"uri\":\"\",\n" +
-            "         \"code\":\"\",\n" +
-            "         \"prefLabel\":{  \n" +
-            "           \"nb\":\"\"\n" +
-            "         }\n" +
-            "      },\n" +
-            "      \"source\":{  \n" +
-            "        \"uri\":\"\",\n" +
-            "         \"prefLabel\":{  \n" +
-            "           \"nb\":\"\"\n" +
-            "         }\n" +
-            "      }\n" +
-            "   }\n" +
-            "]";
+        "  {  \n" +
+        "     \"referenceType\":{  \n" +
+        "        \"uri\":\"\",\n" +
+        "         \"code\":\"\",\n" +
+        "         \"prefLabel\":{  \n" +
+        "           \"nb\":\"\"\n" +
+        "         }\n" +
+        "      },\n" +
+        "      \"source\":{  \n" +
+        "        \"uri\":\"\",\n" +
+        "         \"prefLabel\":{  \n" +
+        "           \"nb\":\"\"\n" +
+        "         }\n" +
+        "      }\n" +
+        "   }\n" +
+        "]";
 
 
     @Test
@@ -71,21 +71,21 @@ public class ReferenceTest {
     @Test
     public void canCreateRDF() throws Throwable {
         String referenceJson = "{\n" +
-                "\t\t\t\"referenceType\": {\n" +
-                "\t\t\t\t\"uri\": \"http://purl.org/dc/source\",\n" +
-                "\t\t\t\t\"code\": \"source\",\n" +
-                "\t\t\t\t\"prefLabel\": {\n" +
-                "\t\t\t\t\t\"nb\": \"Er avledet fra\"\n" +
-                "\t\t\t\t}\n" +
-                "\t\t\t},\n" +
-                "\t\t\t\"source\": {\n" +
-                "\t\t\t\t\"uri\": \"614a1c83-6fcd-4712-bcfa-fdcbccbc0a72\",\n" +
-                "\t\t\t\t\"prefLabel\": {\n" +
-                "\t\t\t\t\t\"nb\": \"Medlemsliste Berlevågs mannskor\"\n" +
-                "\t\t\t\t},\n" +
-                "\t\t\t\t\"extraType\": null\n" +
-                "\t\t\t}\n" +
-                "\t\t}";
+            "\t\t\t\"referenceType\": {\n" +
+            "\t\t\t\t\"uri\": \"http://purl.org/dc/source\",\n" +
+            "\t\t\t\t\"code\": \"source\",\n" +
+            "\t\t\t\t\"prefLabel\": {\n" +
+            "\t\t\t\t\t\"nb\": \"Er avledet fra\"\n" +
+            "\t\t\t\t}\n" +
+            "\t\t\t},\n" +
+            "\t\t\t\"source\": {\n" +
+            "\t\t\t\t\"uri\": \"614a1c83-6fcd-4712-bcfa-fdcbccbc0a72\",\n" +
+            "\t\t\t\t\"prefLabel\": {\n" +
+            "\t\t\t\t\t\"nb\": \"Medlemsliste Berlevågs mannskor\"\n" +
+            "\t\t\t\t},\n" +
+            "\t\t\t\t\"extraType\": null\n" +
+            "\t\t\t}\n" +
+            "\t\t}";
         Reference reference = new GsonBuilder().create().fromJson(referenceJson, Reference.class);
 
         Dataset d1 = new Dataset();
@@ -93,7 +93,6 @@ public class ReferenceTest {
         d1.setUri("http://dataset1");
 
         Reference r2 = new Reference();
-
 
 
         Catalog c = new Catalog();
@@ -115,7 +114,7 @@ public class ReferenceTest {
 
         assertThat(datasets.size(), is(1));
         Dataset actual = datasets.get(0);
-        assertThat(actual.getReferences().size(), is (1));
+        assertThat(actual.getReferences().size(), is(1));
 
         Reference actualRef = actual.getReferences().get(0);
         assertThat(actualRef.getSource().getUri(), containsString("614a1c83-6fcd-4712-bcfa-fdcbccbc0a72"));

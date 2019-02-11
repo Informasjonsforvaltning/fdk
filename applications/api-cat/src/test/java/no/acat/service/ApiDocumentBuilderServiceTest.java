@@ -3,9 +3,9 @@ package no.acat.service;
 import no.acat.model.ApiDocument;
 import no.acat.repository.ApiDocumentRepository;
 import no.acat.utils.Utils;
-import no.fdk.registration.common.ApiRegistrationPublic;
 import no.dcat.shared.testcategories.UnitTest;
 import no.fdk.acat.converters.apispecificationparser.ParseException;
+import no.fdk.registration.common.ApiRegistrationPublic;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -38,7 +38,7 @@ public class ApiDocumentBuilderServiceTest {
     }
 
     @Test
-    public void checkIfApiDocumentIsCreated() throws IOException,ParseException {
+    public void checkIfApiDocumentIsCreated() throws IOException, ParseException {
         String spec = Utils.getStringFromResource("enhetsregisteret-openapi3.json");
         ApiRegistrationPublic apiRegistrationPublic = new ApiRegistrationPublic();
         apiRegistrationPublic.setApiSpec(spec);

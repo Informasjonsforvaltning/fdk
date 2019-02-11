@@ -25,7 +25,6 @@ import static org.junit.Assert.assertThat;
 
 /**
  * Tests to check that location uris can be handled correctly by reference data service.
- *
  */
 @Category(IntegrationTest.class)
 public class LocationIT {
@@ -89,7 +88,7 @@ public class LocationIT {
 
     @Test
     @Ignore
-    public void testExtractionFromLocation () throws Throwable {
+    public void testExtractionFromLocation() throws Throwable {
         testOsloFromGeonames2();
         testGeonorgeFylke();
         testGeonorgeKommune();

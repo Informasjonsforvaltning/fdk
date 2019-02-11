@@ -6,14 +6,8 @@ import no.dcat.datastore.domain.dcat.builders.DcatBuilder;
 import no.dcat.datastore.domain.dcat.smoke.TestCompleteCatalog;
 import no.dcat.datastore.domain.dcat.vocabulary.DCAT;
 import no.dcat.datastore.domain.dcat.vocabulary.DCATCrawler;
-import no.dcat.shared.Catalog;
-import no.dcat.shared.DataTheme;
-import no.dcat.shared.Dataset;
 import no.dcat.shared.Distribution;
-import no.dcat.shared.PeriodOfTime;
-import no.dcat.shared.SkosCode;
-import no.dcat.shared.Subject;
-import no.dcat.shared.Types;
+import no.dcat.shared.*;
 import no.dcat.shared.testcategories.UnitTest;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
@@ -22,7 +16,6 @@ import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.vocabulary.DCTerms;
 import org.apache.jena.vocabulary.RDF;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.slf4j.Logger;
@@ -30,11 +23,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.startsWith;
@@ -43,10 +32,9 @@ import static org.junit.Assert.assertTrue;
 
 @Category(UnitTest.class)
 public class DatasetConverterTest {
-    private static Logger logger = LoggerFactory.getLogger(DatasetConverterTest.class);
-
     static Catalog catalog;
     static Dataset expectedDataset, actualDataset;
+    private static Logger logger = LoggerFactory.getLogger(DatasetConverterTest.class);
 
     @BeforeClass
     public static void setup() throws Throwable {
@@ -128,6 +116,27 @@ public class DatasetConverterTest {
         logger.info("java: {}", actualDataset.toString());
     }
 
+    public static void addCode(Map<String, SkosCode> codeList, String nbLabel, String uri) {
+        SkosCode code = new SkosCode();
+        code.setUri(uri);
+        Map<String, String> prefLabel = new HashMap<>();
+        prefLabel.put("nb", nbLabel);
+        code.setPrefLabel(prefLabel);
+        codeList.put(uri, code);
+
+    }
+
+    public static void addCode2(Map<String, SkosCode> codeList, String nbLabel, String codeValue, String uri) {
+        SkosCode code = new SkosCode();
+        code.setUri(uri);
+        Map<String, String> prefLabel = new HashMap<>();
+        prefLabel.put("nb", nbLabel);
+        code.setPrefLabel(prefLabel);
+        code.setCode(codeValue);
+        codeList.put(uri, code);
+
+    }
+
     @Test
     public void hasAccuracyAnnotation() throws Throwable {
         assertThat(actualDataset.getHasAccuracyAnnotation(), is(expectedDataset.getHasAccuracyAnnotation()));
@@ -146,7 +155,6 @@ public class DatasetConverterTest {
         assertTrue(expectedDataset.getLanguage().contains(firstLanguage));
         assertThat(actualDataset.getLanguage().size(), is(2));
     }
-
 
     @Test
     public void hasType() throws Throwable {
@@ -169,7 +177,6 @@ public class DatasetConverterTest {
         assertThat(actualDataset.getObjective(), is(expectedDataset.getObjective()));
     }
 
-
     @Test
     public void hasSubject() throws Throwable {
         logger.info("subjects {}", actualDataset.getSubject());
@@ -187,11 +194,10 @@ public class DatasetConverterTest {
         assertThat(actualSubject.getInScheme(), is(expectedSubject.getInScheme()));
     }
 
-
     @Test
     public void checkContactPoints() throws Throwable {
-        
-        expectedDataset.getContactPoint().sort((c1, c2) -> c1.getEmail().compareTo(c2.getEmail()) );
+
+        expectedDataset.getContactPoint().sort((c1, c2) -> c1.getEmail().compareTo(c2.getEmail()));
         actualDataset.getContactPoint().sort((c1, c2) -> c1.getEmail().compareTo(c2.getEmail()));
         assertThat(actualDataset.getContactPoint(), is(expectedDataset.getContactPoint()));
     }
@@ -234,7 +240,6 @@ public class DatasetConverterTest {
         assertThat(actualDataset.getHasRelevanceAnnotation(), is(expectedDataset.getHasRelevanceAnnotation()));
     }
 
-
     @Test
     public void converterHandleLandingPageWithoutBaseOK() throws Throwable {
 
@@ -247,9 +252,9 @@ public class DatasetConverterTest {
     public void converterHandlesAccessUrlWithoutBaseUri() throws Throwable {
 
         actualDataset.getDistribution().forEach(distribution ->
-                distribution.getAccessURL().forEach(accessUrl ->
-                    assertThat("should start with protocol", accessUrl, startsWith("http"))
-                ));
+            distribution.getAccessURL().forEach(accessUrl ->
+                assertThat("should start with protocol", accessUrl, startsWith("http"))
+            ));
 
         actualDataset.getSample().forEach(sample ->
             sample.getAccessURL().forEach(accessUrl ->
@@ -271,28 +276,6 @@ public class DatasetConverterTest {
         }
 
         assertThat(count, is(expectedDataset.getTheme().size()));
-    }
-
-
-    public static void addCode(Map<String, SkosCode> codeList, String nbLabel, String uri) {
-        SkosCode code = new SkosCode();
-        code.setUri(uri);
-        Map<String, String> prefLabel = new HashMap<>();
-        prefLabel.put("nb", nbLabel);
-        code.setPrefLabel(prefLabel);
-        codeList.put(uri, code);
-
-    }
-
-    public static void addCode2(Map<String, SkosCode> codeList, String nbLabel, String codeValue, String uri) {
-        SkosCode code = new SkosCode();
-        code.setUri(uri);
-        Map<String, String> prefLabel = new HashMap<>();
-        prefLabel.put("nb", nbLabel);
-        code.setPrefLabel(prefLabel);
-        code.setCode(codeValue);
-        codeList.put(uri, code);
-
     }
 
     public class PeriodOfTimeComparer implements Comparator<PeriodOfTime> {

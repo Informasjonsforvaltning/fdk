@@ -1,15 +1,10 @@
 package no.dcat.rdf;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonPrimitive;
-import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
-import no.dcat.model.Catalog;
-import no.dcat.model.Dataset;
+import com.google.gson.*;
 import no.dcat.datastore.domain.dcat.builders.DcatBuilder;
 import no.dcat.datastore.domain.dcat.smoke.TestCompleteCatalog;
+import no.dcat.model.Catalog;
+import no.dcat.model.Dataset;
 import no.dcat.shared.testcategories.UnitTest;
 import org.junit.Before;
 import org.junit.Test;
@@ -55,7 +50,7 @@ public class DcatBuilderTest {
         String actual = builder.transform(catalog, "TURTLE");
 
         assertThat(actual, is(notNullValue()));
-        logger.debug("actual DCAT \n{}",actual);
+        logger.debug("actual DCAT \n{}", actual);
 
     }
 
@@ -69,7 +64,7 @@ public class DcatBuilderTest {
         JsonSerializer<Date> ser = new JsonSerializer<Date>() {
             @Override
             public JsonElement serialize(Date src, Type typeOfSrc, JsonSerializationContext
-                    context) {
+                context) {
                 return src == null ? null : new JsonPrimitive(src.getTime());
             }
         };
@@ -79,10 +74,8 @@ public class DcatBuilderTest {
         String actual = gson.toJson(catalog);
 
         assertThat(actual, is(notNullValue()));
-        logger.debug("{}",actual);
+        logger.debug("{}", actual);
     }
-
-
 
 
     @Test
@@ -93,16 +86,16 @@ public class DcatBuilderTest {
         String actual = builder.transform(catalog, "TURTLE");
 
         assertThat(actual, is(notNullValue()));
-        logger.debug("mini catalog\n{}",actual);
+        logger.debug("mini catalog\n{}", actual);
     }
 
     @Test
     public void convertMinimumCatalogToTurtleOK() throws Throwable {
         builder = new DcatBuilder();
-        Catalog catalog = new Catalog() ;
+        Catalog catalog = new Catalog();
 
         Dataset dataset = new Dataset();
-        Map<String,String> title = new HashMap<>();
+        Map<String, String> title = new HashMap<>();
         title.put("nb", "minimum dataset");
         dataset.setTitle(title);
         dataset.setUri("http://uri/12345");
@@ -112,7 +105,7 @@ public class DcatBuilderTest {
         String actual = builder.transform(catalog, "TURTLE");
 
         assertThat(actual, is(notNullValue()));
-        logger.debug("miniimum catalog\n{}",actual);
+        logger.debug("miniimum catalog\n{}", actual);
 
     }
 

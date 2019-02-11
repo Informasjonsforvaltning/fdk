@@ -1,7 +1,6 @@
 package no.dcat.harvester.crawler;
 
 
-import no.dcat.harvester.HarvesterApplication;
 import no.dcat.datastore.domain.DcatSource;
 import no.dcat.shared.testcategories.UnitTest;
 import org.junit.Test;

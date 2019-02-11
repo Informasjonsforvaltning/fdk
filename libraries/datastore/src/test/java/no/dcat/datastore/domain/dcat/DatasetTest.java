@@ -3,11 +3,7 @@ package no.dcat.datastore.domain.dcat;
 import no.dcat.datastore.domain.DcatSource;
 import no.dcat.datastore.domain.dcat.builders.DatasetBuilder;
 import no.dcat.datastore.domain.dcat.vocabulary.DCAT;
-import no.dcat.shared.Contact;
-import no.dcat.shared.Dataset;
-import no.dcat.shared.SkosCode;
-import no.dcat.shared.Subject;
-import no.dcat.shared.Types;
+import no.dcat.shared.*;
 import no.dcat.shared.testcategories.UnitTest;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
@@ -26,12 +22,7 @@ import org.slf4j.LoggerFactory;
 import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by nodavsko on 01.11.2016.
@@ -44,6 +35,28 @@ public class DatasetTest {
 
     private DcatSource dcatSource;
     private Dataset data;
+
+    public static Map<String, Map<String, SkosCode>> initializeCodes() {
+        Map<String, Map<String, SkosCode>> codes = new HashMap<>();
+        codes.put(Types.provenancestatement.getType(), generateCode("statlig vedtak", "http://data.brreg.no/datakatalog/provinens/vedtak"));
+        codes.put(Types.linguisticsystem.getType(), generateCode("norsk", "http://publications.europa.eu/resource/authority/language/2"));
+        codes.put(Types.rightsstatement.getType(), generateCode("Offentlig", "http://publications.europa.eu/resource/authority/access-right/PUBLIC"));
+        codes.put(Types.frequency.getType(), generateCode("kontinuerlig", "http://publications.europa.eu/resource/authority/frequency/CONT"));
+        codes.put(Types.referencetypes.getType(), generateCode("references", "references"));
+
+        return codes;
+    }
+
+    public static Map<String, SkosCode> generateCode(String norwegianTitle, String code) {
+        Map titles = new HashMap();
+        titles.put("no", norwegianTitle);
+
+        SkosCode skosCode = new SkosCode(code, "code", titles);
+        Map<String, SkosCode> CodeMap = new HashMap<>();
+
+        CodeMap.put(code, skosCode);
+        return CodeMap;
+    }
 
     @Before
     public void setup() {
@@ -62,18 +75,6 @@ public class DatasetTest {
 
         data = DatasetBuilder.create(datasetResource, catalogResource, locations, initializeCodes(), new HashMap<>());
     }
-
-    public static Map<String, Map<String, SkosCode>> initializeCodes() {
-        Map<String, Map<String, SkosCode>> codes = new HashMap<>();
-        codes.put(Types.provenancestatement.getType(), generateCode("statlig vedtak", "http://data.brreg.no/datakatalog/provinens/vedtak"));
-        codes.put(Types.linguisticsystem.getType(), generateCode("norsk", "http://publications.europa.eu/resource/authority/language/2"));
-        codes.put(Types.rightsstatement.getType(), generateCode("Offentlig", "http://publications.europa.eu/resource/authority/access-right/PUBLIC"));
-        codes.put(Types.frequency.getType(), generateCode("kontinuerlig", "http://publications.europa.eu/resource/authority/frequency/CONT"));
-        codes.put(Types.referencetypes.getType(), generateCode("references", "references"));
-
-        return codes;
-    }
-
 
     @Test
     public void publisherExists() {
@@ -118,7 +119,7 @@ public class DatasetTest {
     public void datasetProperties() throws ParseException {
         Dataset expected = new Dataset();
         expected.setIdentifier(Arrays.asList("10"));
-        expected.setSubject(Arrays.asList(new Subject("http://brreg.no/begrep/orgnr",null,null)));
+        expected.setSubject(Arrays.asList(new Subject("http://brreg.no/begrep/orgnr", null, null)));
 
         SkosCode accrualPeriodicity = new SkosCode("http://publications.europa.eu/resource/authority/frequency/CONT", "CONT", new HashMap<String, String>());
         accrualPeriodicity.getPrefLabel().put("no", "kontinuerlig");
@@ -136,9 +137,9 @@ public class DatasetTest {
         expected.setIssued(createDate("01-01-2009 00:00:00"));
         expected.setLandingPage(Arrays.asList("https://w2.brreg.no/frivillighetsregisteret/"));
 
-        SkosCode language = new SkosCode("http://publications.europa.eu/resource/authority/language/2", "2", new HashMap<String,String>());
+        SkosCode language = new SkosCode("http://publications.europa.eu/resource/authority/language/2", "2", new HashMap<String, String>());
         language.getPrefLabel().put("no", "norsk");
-        SkosCode language2 = new SkosCode("http://publications.europa.eu/resource/authority/language/3", "3", new HashMap<String,String>());
+        SkosCode language2 = new SkosCode("http://publications.europa.eu/resource/authority/language/3", "3", new HashMap<String, String>());
         expected.setLanguage(Arrays.asList(language, language2));
 
         SkosCode provinance = new SkosCode("http://data.brreg.no/datakatalog/provinens/vedtak", "vedtak", new HashMap<String, String>());
@@ -165,17 +166,6 @@ public class DatasetTest {
         Assert.assertEquals(expected.getSpatial().get(0).getUri(), data.getSpatial().get(0).getUri());
         Assert.assertEquals(expected.getSpatial().get(0).getPrefLabel().get("no"), data.getSpatial().get(0).getPrefLabel().get("no"));
         Assert.assertEquals(expected.getTitle(), data.getTitle());
-    }
-
-    public static Map<String, SkosCode> generateCode(String norwegianTitle, String code) {
-        Map titles = new HashMap();
-        titles.put("no", norwegianTitle);
-
-        SkosCode skosCode = new SkosCode(code, "code", titles);
-        Map<String, SkosCode> CodeMap = new HashMap<>();
-
-        CodeMap.put(code, skosCode);
-        return CodeMap;
     }
 
     private Date createDate(String dateInString) throws ParseException {

@@ -27,30 +27,28 @@ public class ReferenceDataControllerIT {
     @Autowired
     private MockMvc mockMvc;
 
+    public static String asJsonString(Object obj) {
+
+        return new Gson().toJson(obj);
+
+    }
 
     @Test
     @WithUserDetails("03096000854")
     public void getSubjectTest() throws Exception {
 
         mockMvc
-                .perform(MockMvcRequestBuilders.get("/referenceData/subjects", String.class).param("uri", "https://data-david.github.io/Begrep/begrep/Hovedenhet"))
-                .andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
-                .andExpect(MockMvcResultMatchers.content().json("{\"uri\":\"https://data-david.github.io/Begrep/begrep/Hovedenhet\",\"prefLabel\":{\"no\":\"hovedenhet\"}}"));
+            .perform(MockMvcRequestBuilders.get("/referenceData/subjects", String.class).param("uri", "https://data-david.github.io/Begrep/begrep/Hovedenhet"))
+            .andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
+            .andExpect(MockMvcResultMatchers.content().json("{\"uri\":\"https://data-david.github.io/Begrep/begrep/Hovedenhet\",\"prefLabel\":{\"no\":\"hovedenhet\"}}"));
     }
-
 
     @Test
     public void getSubjectAnonymousFailsTest() throws Exception {
 
         mockMvc
-                .perform(MockMvcRequestBuilders.get("/referenceData/subjects", String.class).param("uri", "https://data-david.github.io/Begrep/begrep/Hovedenhet"))
-                .andExpect(MockMvcResultMatchers.status().is3xxRedirection()); // redirect to login page
-
-    }
-
-    public static String asJsonString(Object obj) {
-
-        return new Gson().toJson(obj);
+            .perform(MockMvcRequestBuilders.get("/referenceData/subjects", String.class).param("uri", "https://data-david.github.io/Begrep/begrep/Hovedenhet"))
+            .andExpect(MockMvcResultMatchers.status().is3xxRedirection()); // redirect to login page
 
     }
 

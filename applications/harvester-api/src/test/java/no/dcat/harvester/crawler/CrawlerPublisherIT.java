@@ -1,6 +1,5 @@
 package no.dcat.harvester.crawler;
 
-import no.dcat.harvester.HarvesterApplication;
 import no.dcat.datastore.domain.dcat.Publisher;
 import no.dcat.datastore.domain.dcat.builders.PublisherBuilder;
 import no.dcat.shared.testcategories.IntegrationTest;
@@ -25,16 +24,15 @@ public class CrawlerPublisherIT {
 
     /**
      * Test organization path. Dependent on Enhetsregisteret.
-     *
      */
     @Test
-    public void orgPathOK () throws Throwable {
+    public void orgPathOK() throws Throwable {
 
         Resource r = new ClassPathResource("organizations.ttl");
 
         // Crawler brregAgentConverter should generate organization paths in model
-        Model model = new CrawlerJob(null,null, null)
-                .loadModelAndValidate(r.getURL());
+        Model model = new CrawlerJob(null, null, null)
+            .loadModelAndValidate(r.getURL());
 
         //model.write(System.out, "TURTLE");
 

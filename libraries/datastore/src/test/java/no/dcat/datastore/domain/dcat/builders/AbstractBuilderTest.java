@@ -3,21 +3,13 @@ package no.dcat.datastore.domain.dcat.builders;
 import no.dcat.datastore.domain.dcat.smoke.TestCompleteCatalog;
 import no.dcat.datastore.domain.dcat.vocabulary.DCAT;
 import no.dcat.datastore.domain.dcat.vocabulary.DCATNO;
-import no.dcat.shared.Catalog;
-import no.dcat.shared.Contact;
-import no.dcat.shared.Dataset;
-import no.dcat.shared.Distribution;
-import no.dcat.shared.PeriodOfTime;
-import no.dcat.shared.Reference;
-import no.dcat.shared.SkosCode;
-import no.dcat.shared.SkosConcept;
+import no.dcat.shared.*;
 import no.dcat.shared.testcategories.UnitTest;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.ResIterator;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.vocabulary.DCTerms;
-import org.apache.jena.vocabulary.DCTypes;
 import org.apache.jena.vocabulary.RDF;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -27,16 +19,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
 
 import java.io.ByteArrayInputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.hamcrest.Matchers.empty;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
-import static org.hamcrest.Matchers.nullValue;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 
 

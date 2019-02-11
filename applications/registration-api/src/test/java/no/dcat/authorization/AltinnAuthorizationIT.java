@@ -43,7 +43,7 @@ public class AltinnAuthorizationIT {
         List<Entity> actualEntities = authorizationService.getAuthorizedEntities("02084902333");
 
         Assert.assertNotNull(actualEntities);
-        assertThat(actualEntities.size(), is(3) );
+        assertThat(actualEntities.size(), is(3));
 
         logger.info("# of entities {}", actualEntities.size());
         for (Entity entity : actualEntities) {
@@ -54,9 +54,8 @@ public class AltinnAuthorizationIT {
 
     @Test(expected = AuthorizationServiceException.class)
     public void testGetAuthorizedEntitiesInvalidUser() throws Throwable {
-            List<String> actualEntities = authorizationService.getOrganisations("16079411314");
+        List<String> actualEntities = authorizationService.getOrganisations("16079411314");
     }
-
 
 
 }

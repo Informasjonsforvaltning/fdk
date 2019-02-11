@@ -3,8 +3,6 @@ package no.dcat.portal.query;
 
 import no.dcat.shared.testcategories.UnitTest;
 import org.junit.Test;
-
-import no.dcat.portal.query.PublisherQueryService;
 import org.junit.experimental.categories.Category;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,13 +10,13 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StreamUtils;
-import org.springframework.util.StringUtils;
 
 import java.nio.charset.Charset;
 
-import static org.mockito.Mockito.*;
-import static org.junit.Assert.*;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.spy;
 
 @Category(UnitTest.class)
 public class PublisherServiceTest {
@@ -52,13 +50,13 @@ public class PublisherServiceTest {
 
             // only count departments if they are first in list
             if (departmentFirst && containsDep) {
-                firstDepartmentCounter ++;
+                firstDepartmentCounter++;
             }
 
             // Count non departments and make sure we no longer count departments
             if (!containsDep) {
                 departmentFirst = false;
-                noDepartmentCounter ++;
+                noDepartmentCounter++;
             }
 
         }
