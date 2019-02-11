@@ -6,7 +6,7 @@ export const APIS_SUCCESS = 'APIS_SUCCESS';
 export const APIS_FAILURE = 'APIS_FAILURE';
 export const APIS_ADD_ITEM = 'APIS_ADD_ITEM';
 export const API_SUCCESS = 'API_SUCCESS';
-export const APIS_ITEM_DELETE = 'APIS_ITEM_DELETE';
+export const API_DELETE = 'API_DELETE';
 
 function shouldFetch(metaState) {
   const threshold = 60 * 1000; // seconds
@@ -49,8 +49,8 @@ export const apiSuccessAction = payload => ({
   payload
 });
 
-export const deleteApiItemAction = (catalogId, apiId) => ({
-  type: APIS_ITEM_DELETE,
+export const deleteApiAction = (catalogId, apiId) => ({
+  type: API_DELETE,
   catalogId,
   apiId
 });
@@ -118,7 +118,7 @@ export default function apis(state = initialState, action) {
         }
       };
     }
-    case APIS_ITEM_DELETE:
+    case API_DELETE:
       return {
         ...state,
         [action.catalogId]: {
