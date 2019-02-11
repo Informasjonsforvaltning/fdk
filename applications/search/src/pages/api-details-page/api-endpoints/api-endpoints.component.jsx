@@ -76,7 +76,7 @@ export const ApiEndpoints = props => {
           <h3 className="">{localization.api.endpoints.operation}</h3>
         </div>
         <div className="col-7">
-          <h3 className="">{localization.api.endpoints.description}</h3>
+          <h3 className="">{localization.api.endpoints.summary}</h3>
         </div>
       </div>
       {renderPaths(paths)}

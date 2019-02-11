@@ -297,7 +297,7 @@
     "endpoints": {
       "operations": "Operasjonar",
       "operation": "Operasjon",
-      "description": "Skildring"
+      "summary": "Samandrag"
     },
     "termsAndRestrictions": {
       "termsAndRestrictions": "Vilkår og avgrensingar",
