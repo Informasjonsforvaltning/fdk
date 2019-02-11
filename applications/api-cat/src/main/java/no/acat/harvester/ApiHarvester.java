@@ -4,7 +4,7 @@ import no.acat.model.ApiDocument;
 import no.acat.repository.ApiDocumentRepository;
 import no.acat.service.ApiDocumentBuilderService;
 import no.acat.service.RegistrationApiClient;
-import no.fdk.registration.common.ApiRegistrationPublic;
+import no.fdk.acat.common.model.ApiRegistrationPublic;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 import org.slf4j.Logger;

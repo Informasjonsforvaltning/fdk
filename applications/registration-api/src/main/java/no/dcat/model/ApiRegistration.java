@@ -3,7 +3,7 @@ package no.dcat.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
-import no.fdk.registration.common.ApiRegistrationPublic;
+import no.fdk.acat.common.model.ApiRegistrationPublic;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Mapping;
 
