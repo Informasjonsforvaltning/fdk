@@ -23,16 +23,18 @@ public class ReadinessEndPoint {
 
     @ReadOperation
     public WebEndpointResponse<Health> health() {
-        boolean up = false;
+        boolean up;
 
         try {
-            List<DataTheme> dataThemeList= themesService.getThemes();
-            up = dataThemeList.size() > 0;
+            int count = themesService.getThemes().size();
+            up = count > 0;
         } catch (Exception e) {
+            up = false;
         }
 
-        return up ?
-            new WebEndpointResponse(Health.up().build(), 200) :
-            new WebEndpointResponse(Health.down().build(), 503);
+        if (!up) {
+            return new WebEndpointResponse<>(Health.down().build(), 503);
+        }
+        return new WebEndpointResponse<>(Health.up().build(), 200);
     }
 }
