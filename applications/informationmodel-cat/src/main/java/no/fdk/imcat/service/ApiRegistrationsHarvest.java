@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import io.swagger.v3.oas.models.OpenAPI;
-import no.fdk.registration.common.ApiRegistrationPublic;
+import no.fdk.acat.common.model.ApiRegistrationPublic;
 import no.fdk.acat.converters.apispecificationparser.OpenApiV3JsonParser;
 import no.fdk.imcat.model.InformationModelHarvestSource;
 import org.apache.commons.io.IOUtils;

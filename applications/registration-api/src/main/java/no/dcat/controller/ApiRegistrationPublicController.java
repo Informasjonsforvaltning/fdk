@@ -2,7 +2,7 @@ package no.dcat.controller;
 
 import no.dcat.model.ApiRegistration;
 import no.dcat.service.ApiRegistrationRepository;
-import no.fdk.registration.common.ApiRegistrationPublic;
+import no.fdk.acat.common.model.ApiRegistrationPublic;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

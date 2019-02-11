@@ -1,4 +1,4 @@
-package no.fdk.registration.common;
+package no.fdk.acat.common.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModelProperty;

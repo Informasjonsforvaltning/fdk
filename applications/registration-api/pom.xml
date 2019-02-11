@@ -188,19 +188,13 @@
         <dependency>
             <groupId>no.dcat</groupId>
             <artifactId>api-cat-bindings</artifactId>
-            <version>1.5.0</version>
+            <version>1.6.0</version>
         </dependency>
         <dependency>
             <groupId>no.dcat</groupId>
             <artifactId>informationmodel-cat-bindings</artifactId>
-            <version>1.1.0</version>
+            <version>1.2.0</version>
         </dependency>
-        <dependency>
-            <groupId>no.dcat</groupId>
-            <artifactId>registration-api-common</artifactId>
-            <version>1.1.0</version>
-        </dependency>
-
         <dependency>
             <groupId>no.dcat</groupId>
             <artifactId>elasticsearch5-client</artifactId>
