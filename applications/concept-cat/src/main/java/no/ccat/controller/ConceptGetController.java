@@ -1,6 +1,8 @@
 package no.ccat.controller;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiOperation;
+import no.ccat.common.model.Source;
 import no.ccat.model.ConceptDenormalized;
 import no.ccat.service.ConceptDenormalizedRepository;
 import no.fdk.webutils.exceptions.NotFoundException;
@@ -14,6 +16,7 @@ import java.util.Optional;
 @CrossOrigin
 @RestController
 @RequestMapping(value = "/concepts")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ConceptGetController {
     private static final Logger logger = LoggerFactory.getLogger(ConceptGetController.class);
 
@@ -34,6 +37,24 @@ public class ConceptGetController {
         if (!conceptDenormalizedOptional.isPresent()) {
             throw new NotFoundException();
         }
-        return conceptDenormalizedOptional.get();
+        ConceptDenormalized concept = conceptDenormalizedOptional.get();
+        stripEmptyObject(concept);
+        return concept;
     }
+
+    //In order for spring to not include Source or Remark when its parts are empty we need to null out the source object itself.
+    public static void stripEmptyObject(ConceptDenormalized concept) {
+        if (concept.getDefinition() != null) {
+            if (concept.getDefinition().getSource() != null) {
+                Source source = concept.getDefinition().getSource();
+                if (source.getUri() == null && (source.getPrefLabel() == null || source.getPrefLabel().size() == 0)) {
+                    concept.getDefinition().setSource(null);
+                }
+            }
+            if (concept.getDefinition().getRemark() != null && concept.getDefinition().getRemark().size() == 0) {
+                concept.getDefinition().setRemark(null);
+            }
+        }
+    }
+
 }
