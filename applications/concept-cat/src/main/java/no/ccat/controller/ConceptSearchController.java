@@ -134,15 +134,7 @@ public class ConceptSearchController {
         AggregatedPage<ConceptDenormalized> aggregatedPage = elasticsearchTemplate.queryForPage(finalQuery, ConceptDenormalized.class);
         List<ConceptDenormalized> concepts = aggregatedPage.getContent();
 
-        //In order for spring to not include Source when it's parts are empty we need to null out the source object itself.
-        for (ConceptDenormalized concept : concepts) {
-            if (concept.getDefinition() != null && concept.getDefinition().getSource()!=null) {
-                Source source = concept.getDefinition().getSource();
-                if (source.getUri() == null && (source.getPrefLabel() == null || source.getPrefLabel().size() == 0)) {
-                    concept.getDefinition().setSource(null);
-                }
-            }
-        }
+        stripEmptyObjects(concepts);
 
         PagedResources.PageMetadata pageMetadata = new PagedResources.PageMetadata(
             pageable.getPageSize(),
@@ -159,6 +151,15 @@ public class ConceptSearchController {
             return conceptResources;
         }
     }
+
+    private void stripEmptyObjects(List<ConceptDenormalized> concepts) {
+        //In order for spring to not include Source or Remark when its parts are empty we need to null out the source object itself.
+        for (ConceptDenormalized concept : concepts) {
+            ConceptGetController.stripEmptyObject(concept);
+        }
+    }
+
+
 
     private void addSort(String sortfield, String sortdirection, NativeSearchQuery searchBuilder) {
         if (!sortfield.trim().isEmpty()) {
