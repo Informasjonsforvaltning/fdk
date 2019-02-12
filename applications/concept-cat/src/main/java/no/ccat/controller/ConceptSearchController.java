@@ -1,7 +1,9 @@
 package no.ccat.controller;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import no.ccat.common.model.Source;
 import no.ccat.model.ConceptDenormalized;
 import no.fdk.webutils.aggregation.ResponseUtil;
 import org.elasticsearch.index.query.BoolQueryBuilder;
@@ -31,6 +33,7 @@ import java.util.List;
 @CrossOrigin
 @RestController
 @RequestMapping(value = "/concepts")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ConceptSearchController {
     public static final String MISSING = "MISSING";
     private static final Logger logger = LoggerFactory.getLogger(ConceptSearchController.class);
@@ -130,6 +133,16 @@ public class ConceptSearchController {
 
         AggregatedPage<ConceptDenormalized> aggregatedPage = elasticsearchTemplate.queryForPage(finalQuery, ConceptDenormalized.class);
         List<ConceptDenormalized> concepts = aggregatedPage.getContent();
+
+        //In order for spring to not include Source when it's parts are empty we need to null out the source object itself.
+        for (ConceptDenormalized concept : concepts) {
+            if (concept.getDefinition() != null && concept.getDefinition().getSource()!=null) {
+                Source source = concept.getDefinition().getSource();
+                if (source.getUri() == null && (source.getPrefLabel() == null || source.getPrefLabel().size() == 0)) {
+                    concept.getDefinition().setSource(null);
+                }
+            }
+        }
 
         PagedResources.PageMetadata pageMetadata = new PagedResources.PageMetadata(
             pageable.getPageSize(),
