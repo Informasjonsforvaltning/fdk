@@ -297,7 +297,7 @@
     "endpoints": {
       "operations": "Operasjoner",
       "operation": "Operasjon",
-      "description": "Beskrivelse"
+      "summary": "Sammendrag"
     },
     "termsAndRestrictions": {
       "termsAndRestrictions": "Vilkår og begrensninger",
