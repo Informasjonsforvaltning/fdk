@@ -39,10 +39,10 @@ public class ApiRegistrationControllerTest {
     private Resource apiResource;
 
     @Mock
-    private CatalogRepository catalogRepository;
+    private CatalogRepository catalogRepositoryMock;
 
     @Mock
-    private ApiRegistrationRepository apiRegistrationRepository;
+    private ApiRegistrationRepository apiRegistrationRepositoryMock;
 
     @Mock
     private ApiCatService apiCatMock;
@@ -60,15 +60,15 @@ public class ApiRegistrationControllerTest {
         ApiSpecification apiSpecification =
             new Gson().fromJson(IOUtils.toString(apiResource.getInputStream(), "UTF-8"), ApiSpecification.class);
 
-        when(catalogRepository.findById(anyString())).thenReturn(Optional.of(catalog));
+        when(catalogRepositoryMock.findById(anyString())).thenReturn(Optional.of(catalog));
         when(apiCatMock.convertSpecUrlToApiSpecification(apiResource.getURL().toString())).thenReturn(apiSpecification);
 
         ApiRegistration apiRegData = mock(ApiRegistration.class);
         when(apiRegData.getId()).thenReturn("id");
-        when(apiRegistrationRepository.save(any(ApiRegistration.class))).thenAnswer((invocation) -> invocation.getArguments()[0]);
+        when(apiRegistrationRepositoryMock.save(any(ApiRegistration.class))).thenAnswer((invocation) -> invocation.getArguments()[0]);
 
         apiRegistrationController =
-            new ApiRegistrationController(apiRegistrationRepository, catalogRepository, apiCatMock, informationmodelCatMock);
+            new ApiRegistrationController(apiRegistrationRepositoryMock, catalogRepositoryMock, apiCatMock, informationmodelCatMock);
     }
 
     @Test
@@ -93,7 +93,7 @@ public class ApiRegistrationControllerTest {
         ApiRegistration apiRegistration = new ApiRegistration();
         apiRegistration.setCatalogId(catalogId + "0000");
 
-        when(apiRegistrationRepository.findById(anyString())).thenReturn(Optional.of(apiRegistration));
+        when(apiRegistrationRepositoryMock.findById(anyString())).thenReturn(Optional.of(apiRegistration));
 
         apiRegistrationController.deleteApiRegistration(catalogId, id);
     }
@@ -109,7 +109,7 @@ public class ApiRegistrationControllerTest {
         apiRegistration.setCatalogId(catalogId);
         apiRegistration.setRegistrationStatus(ApiRegistration.REGISTRATION_STATUS_PUBLISH);
 
-        when(apiRegistrationRepository.findById(id)).thenReturn(Optional.of(apiRegistration));
+        when(apiRegistrationRepositoryMock.findById(id)).thenReturn(Optional.of(apiRegistration));
 
         apiRegistrationController.deleteApiRegistration(catalogId, id);
     }
@@ -125,12 +125,12 @@ public class ApiRegistrationControllerTest {
         apiRegistration.setCatalogId(catalogId);
         apiRegistration.setRegistrationStatus(ApiRegistration.REGISTRATION_STATUS_DRAFT);
 
-        when(apiRegistrationRepository.findById(id)).thenReturn(Optional.of(apiRegistration));
+        when(apiRegistrationRepositoryMock.findById(id)).thenReturn(Optional.of(apiRegistration));
 
         apiRegistrationController.deleteApiRegistration(catalogId, id);
-        doNothing().when(apiRegistrationRepository).delete(apiRegistration);
+        doNothing().when(apiRegistrationRepositoryMock).delete(apiRegistration);
 
-        verify(apiRegistrationRepository, times(1)).delete(apiRegistration);
+        verify(apiRegistrationRepositoryMock, times(1)).delete(apiRegistration);
         verify(apiCatMock, times(1)).triggerHarvestApiRegistration(id);
     }
 }
