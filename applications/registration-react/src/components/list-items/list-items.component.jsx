@@ -31,7 +31,7 @@ const renderItems = (
               const retTitle =
                 getTranslateText(_.get(item, itemTitleField)) ||
                 _.get(item, itemTitleField);
-              return retTitle ? retTitle.toLowerCase() : '';
+              return typeof retTitle === 'string' ? retTitle.toLowerCase() : '';
             }
             return null;
           }
