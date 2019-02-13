@@ -131,7 +131,7 @@ const renderContactPoint = contactPoint => {
   const { uri, organizationName, email, phone } = contactPoint;
   return (
     <React.Fragment key={getContactPointKey(contactPoint)}>
-      {uri && (
+      {(uri || organizationName) && (
         <TwoColRow
           col1={localization.contactPoint}
           col2={
@@ -141,7 +141,7 @@ const renderContactPoint = contactPoint => {
                 <i className="fa fa-external-link fdk-fa-right" />
               </a>
             ) : (
-              { organizationName }
+              organizationName
             )
           }
         />
