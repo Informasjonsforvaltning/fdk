@@ -52,6 +52,7 @@ public class ApiCatalogHarvesterService {
 
     private HarvestQueue harvestQueue;
 
+    private ApiRegistrationFactory apiRegistrationFactory;
 
     @Autowired
     public ApiCatalogHarvesterService(
@@ -59,13 +60,15 @@ public class ApiCatalogHarvesterService {
         ApiCatalogRepository apiCatalogRepository,
         HarvestQueue harvestQueue,
         ApiCatService apiCatService,
-        InformationmodelCatService informationmodelCatService
+        InformationmodelCatService informationmodelCatService,
+        ApiRegistrationFactory apiRegistrationFactory
     ) {
         this.apiRegistrationRepository = apiRegistrationRepository;
         this.apiCatalogRepository = apiCatalogRepository;
         this.harvestQueue = harvestQueue;
         this.apiCat = apiCatService;
         this.informationmodelCat = informationmodelCatService;
+        this.apiRegistrationFactory = apiRegistrationFactory;
     }
 
     //TODO: Also trigger this every 24h ? (there exists a spring thing to do that)
@@ -107,9 +110,6 @@ public class ApiCatalogHarvesterService {
             }
 
             for (String apiSpecUrl : allApiUrlsForThisCatalog) {
-                ApiRegistration apiRegistrationData = new ApiRegistration();
-                apiRegistrationData.setApiSpecUrl(apiSpecUrl);
-
                 Optional<ApiRegistration> existingApiRegistrationOptional = apiRegistrationRepository.getByCatalogIdAndApiSpecUrl(originCatalog.getOrgNo(), apiSpecUrl);
                 logger.debug("Found existing {}", existingApiRegistrationOptional.isPresent());
 
@@ -117,19 +117,17 @@ public class ApiCatalogHarvesterService {
                 if (existingApiRegistrationOptional.isPresent()) {
                     logger.debug("Existing registration {}", existingApiRegistrationOptional.get().getId());
                     apiRegistration = existingApiRegistrationOptional.get();
-                    apiRegistration.set_lastModified(new Date());
                 } else {
-                    apiRegistration = ApiRegistrationFactory.createApiRegistration(originCatalog.getOrgNo(), apiRegistrationData);
+                    apiRegistration = apiRegistrationFactory.createApiRegistration(originCatalog.getOrgNo());
                     logger.debug("Created apiRegistration for orgNo: {}, id: {}", originCatalog.getOrgNo(), apiRegistration.getId());
                 }
                 logger.debug("saved apiRegistration {}", apiRegistration.getId());
-                apiRegistration.setHarvestStatus(HarvestStatus.Success());
 
                 apiRegistration.setFromApiCatalog(true);
 
                 try {
-                    ApiSpecification apiSpecification = apiCat.convertSpecUrlToApiSpecification(apiSpecUrl);
-                    apiRegistration.setApiSpecification(apiSpecification);
+                    apiRegistrationFactory.setApiSpecificationFromSpecUrl(apiRegistration, apiSpecUrl);
+                    apiRegistration.setHarvestStatus(HarvestStatus.Success());
                 } catch (Exception e) {
                     String errorMessage = "Failed while trying to fetch and parse API spec " + apiSpecUrl + " " + e.toString();
                     apiRegistration.setHarvestStatus(HarvestStatus.Error(errorMessage));
