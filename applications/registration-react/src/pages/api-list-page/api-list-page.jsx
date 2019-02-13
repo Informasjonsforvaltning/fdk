@@ -223,7 +223,11 @@ export const APIListPage = props => {
                     </label>
                     <Button
                       className="ml-3 btn btn-primary fdk-button"
-                      color="primary"
+                      color={
+                        !touched || !!error || harvestUrl === ''
+                          ? 'secondary'
+                          : 'primary'
+                      }
                       disabled={!touched || !!error || harvestUrl === ''}
                       onClick={() => setApiCatalogUrl()}
                     >
