@@ -2,6 +2,7 @@ package no.dcat.controller;
 
 import com.google.gson.Gson;
 import no.dcat.model.ApiRegistration;
+import no.fdk.registration.common.ApiRegistrationEditableProperties;
 import no.dcat.model.ApiRegistrationFactory;
 import no.dcat.model.Catalog;
 import no.dcat.service.ApiCatService;
@@ -24,8 +25,12 @@ import org.springframework.core.io.Resource;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
+import static no.fdk.registration.common.ApiRegistrationEditableProperties.REGISTRATION_STATUS_DRAFT;
+import static no.fdk.registration.common.ApiRegistrationEditableProperties.REGISTRATION_STATUS_PUBLISH;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -79,8 +84,9 @@ public class ApiRegistrationControllerTest {
     @Test
     public void createApiRegistrationOK() throws Throwable {
 
-        ApiRegistration apiRegData = new ApiRegistration();
-        apiRegData.setApiSpecUrl(apiResource.getURL().toString());
+        Map<String, Object> apiRegData = new HashMap<String, Object>() {{
+            put("apiSpecUrl", apiResource.getURL().toString());
+        }};
 
         ApiRegistration saved = apiRegistrationController.createApiRegistration(catalogId, apiRegData);
 
@@ -112,7 +118,7 @@ public class ApiRegistrationControllerTest {
 
         ApiRegistration apiRegistration = new ApiRegistration();
         apiRegistration.setCatalogId(catalogId);
-        apiRegistration.setRegistrationStatus(ApiRegistration.REGISTRATION_STATUS_PUBLISH);
+        apiRegistration.setRegistrationStatus(REGISTRATION_STATUS_PUBLISH);
 
         when(apiRegistrationRepositoryMock.findById(id)).thenReturn(Optional.of(apiRegistration));
 
@@ -128,7 +134,7 @@ public class ApiRegistrationControllerTest {
 
         ApiRegistration apiRegistration = new ApiRegistration();
         apiRegistration.setCatalogId(catalogId);
-        apiRegistration.setRegistrationStatus(ApiRegistration.REGISTRATION_STATUS_DRAFT);
+        apiRegistration.setRegistrationStatus(REGISTRATION_STATUS_DRAFT);
 
         when(apiRegistrationRepositoryMock.findById(id)).thenReturn(Optional.of(apiRegistration));
 

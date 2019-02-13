@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static no.fdk.registration.common.ApiRegistrationEditableProperties.REGISTRATION_STATUS_PUBLISH;
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
@@ -51,7 +52,7 @@ public class ApiRegistrationPublicController {
     public PagedResources<ApiRegistrationPublic> getPublished(Pageable pageable, PagedResourcesAssembler assembler) {
 
         Page<ApiRegistration> apiRegistrationsPage =
-            apiRegistrationRepository.findByRegistrationStatus(ApiRegistration.REGISTRATION_STATUS_PUBLISH, pageable);
+            apiRegistrationRepository.findByRegistrationStatus(REGISTRATION_STATUS_PUBLISH, pageable);
 
         List<ApiRegistration> apiRegistrationList = apiRegistrationsPage.getContent();
         List<ApiRegistrationPublic> apiRegistrationPublicList = apiRegistrationList.stream()

@@ -1,8 +1,5 @@
 package no.dcat.controller;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import no.dcat.model.ApiRegistration;
 import no.dcat.model.ApiRegistrationFactory;
 import no.dcat.service.ApiCatService;
@@ -13,7 +10,6 @@ import no.fdk.acat.bindings.ApiCatBindings;
 import no.fdk.imcat.bindings.InformationmodelCatBindings;
 import no.fdk.webutils.exceptions.BadRequestException;
 import no.fdk.webutils.exceptions.NotFoundException;
-import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +22,9 @@ import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.Map;
 
+import static no.fdk.registration.common.ApiRegistrationEditableProperties.REGISTRATION_STATUS_PUBLISH;
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.web.bind.annotation.RequestMethod.*;
@@ -111,31 +107,23 @@ public class ApiRegistrationController {
         produces = APPLICATION_JSON_UTF8_VALUE)
     public ApiRegistration createApiRegistration(
         @PathVariable("catalogId") String catalogId,
-        @RequestBody ApiRegistration apiRegistrationData
+        @RequestBody Map<String, Object> apiRegistrationData
     ) throws NotFoundException, BadRequestException {
 
         logger.info("SAVE requestbody apiRegistration");
 
         catalogRepository.findById(catalogId).orElseThrow(NotFoundException::new);
 
-        ApiRegistration apiRegistration = apiRegistrationFactory.createApiRegistration(catalogId);
-
+        ApiRegistration apiRegistration;
         try {
-            String apiSpecUrl = apiRegistrationData.getApiSpecUrl();
-            String apiSpec = apiRegistrationData.getApiSpec();
-
-            if (!StringUtils.isEmpty(apiSpecUrl)) {
-                apiRegistrationFactory.setApiSpecificationFromSpecUrl(apiRegistration, apiSpecUrl);
-            } else if (!StringUtils.isEmpty(apiSpec)) {
-                apiRegistrationFactory.setApiSpecificationFromSpec(apiRegistration, apiSpec);
-            }
+            apiRegistration = apiRegistrationFactory.createApiRegistration(catalogId);
+            apiRegistrationFactory.copyEditableProperties(apiRegistration, apiRegistrationData);
+            logger.debug("created apiRegistration {}", apiRegistration.getId());
         } catch (Exception e) {
             throw new BadRequestException(e.getMessage());
         }
-        logger.debug("create apiRegistration {}", apiRegistration.getId());
 
         ApiRegistration savedApiRegistration = apiRegistrationRepository.save(apiRegistration);
-
         apiCat.triggerHarvestApiRegistration(savedApiRegistration.getId());
         informationmodelCat.triggerHarvestApiRegistration(savedApiRegistration.getId());
 
@@ -161,7 +149,7 @@ public class ApiRegistrationController {
 
         ApiRegistration apiRegistration = getApiRegistrationByIdAndCatalogId(id, catalogId);
 
-        if (apiRegistration.getRegistrationStatus().equals(ApiRegistration.REGISTRATION_STATUS_PUBLISH)) {
+        if (apiRegistration.getRegistrationStatus().equals(REGISTRATION_STATUS_PUBLISH)) {
             throw new BadRequestException();
         }
 
@@ -188,37 +176,16 @@ public class ApiRegistrationController {
         @PathVariable("catalogId") String catalogId,
         @PathVariable("id") String id,
         @RequestBody Map<String, Object> updates)
-        throws NotFoundException {
+        throws NotFoundException, BadRequestException {
         logger.info("PATCH requestbody update apiRegistration: {}", updates.toString());
 
-        Gson gson = new Gson();
+        ApiRegistration apiRegistration = getApiRegistrationByIdAndCatalogId(id, catalogId);
 
-        // get already saved apiRegistration
-        ApiRegistration oldApiRegistration = getApiRegistrationByIdAndCatalogId(id, catalogId);
-
-        JsonObject oldApiRegistrationJson = gson.toJsonTree(oldApiRegistration).getAsJsonObject();
-
-        updates.forEach((key, newValue) -> {
-            logger.debug("update key: {} value: ", key, newValue);
-            JsonElement jsonValue = gson.toJsonTree(newValue);
-            oldApiRegistrationJson.add(key, jsonValue); // JsonObject.add actually replaces value
-        });
-
-        logger.debug("Changed apiRegistration Json element: {}", oldApiRegistrationJson.toString());
-
-        ApiRegistration apiRegistration =
-            gson.fromJson(oldApiRegistrationJson.toString(), ApiRegistration.class);
-
-        String apiSpecUrl = updates.get("apiSpecUrl") == null ? null : updates.get("apiSpecUrl").toString();
-        String apiSpec = updates.get("apiSpec") == null ? null : updates.get("apiSpec").toString();
-
-        if (!StringUtils.isEmpty(apiSpecUrl)) {
-            apiRegistrationFactory.setApiSpecificationFromSpecUrl(apiRegistration, apiSpecUrl);
-        } else if (!StringUtils.isEmpty(apiSpec)) {
-            apiRegistrationFactory.setApiSpecificationFromSpec(apiRegistration, apiSpec);
+        try {
+            apiRegistrationFactory.copyEditableProperties(apiRegistration, updates);
+        } catch (Exception e) {
+            throw new BadRequestException(e.getMessage());
         }
-
-        apiRegistration.set_lastModified(new Date());
 
         ApiRegistration savedApiRegistration = apiRegistrationRepository.save(apiRegistration);
 

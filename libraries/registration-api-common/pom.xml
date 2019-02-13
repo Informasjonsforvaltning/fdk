@@ -7,7 +7,7 @@
 
     <groupId>no.dcat</groupId>
     <artifactId>registration-api-common</artifactId>
-    <version>1.1.0</version>
+    <version>1.2.0</version>
     <properties>
         <!--standard properties-->
         <java.version>1.8</java.version>
@@ -28,6 +28,11 @@
             <groupId>no.dcat</groupId>
             <artifactId>api-cat-common</artifactId>
             <version>1.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.2</version>
         </dependency>
     </dependencies>
 </project>
