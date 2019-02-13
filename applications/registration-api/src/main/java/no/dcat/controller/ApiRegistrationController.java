@@ -10,11 +10,11 @@ import no.dcat.service.ApiCatService;
 import no.dcat.service.ApiRegistrationRepository;
 import no.dcat.service.CatalogRepository;
 import no.dcat.service.InformationmodelCatService;
-import no.fdk.webutils.exceptions.BadRequestException;
-import no.fdk.webutils.exceptions.NotFoundException;
 import no.fdk.acat.bindings.ApiCatBindings;
 import no.fdk.acat.common.model.apispecification.ApiSpecification;
 import no.fdk.imcat.bindings.InformationmodelCatBindings;
+import no.fdk.webutils.exceptions.BadRequestException;
+import no.fdk.webutils.exceptions.NotFoundException;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,7 +58,7 @@ public class ApiRegistrationController {
         this.apiRegistrationRepository = apiRegistrationRepository;
         this.catalogRepository = catalogRepository;
         this.apiCat = apiCatService;
-        this.informationmodelCat= informationmodelCatService;
+        this.informationmodelCat = informationmodelCatService;
     }
 
     /**
@@ -94,19 +94,7 @@ public class ApiRegistrationController {
         @PathVariable("catalogId") String catalogId,
         @PathVariable("id") String id
     ) throws NotFoundException {
-        Optional<ApiRegistration> apiRegistrationOptional = apiRegistrationRepository.findById(id);
-
-        if (!apiRegistrationOptional.isPresent()) {
-            throw new NotFoundException();
-        }
-
-        ApiRegistration apiRegistration = apiRegistrationOptional.get();
-
-        if (!Objects.equals(catalogId, apiRegistration.getCatalogId())) {
-            throw new NotFoundException();
-        }
-
-        return apiRegistration;
+        return getApiRegistrationByIdAndCatalogId(id, catalogId);
     }
 
     /**
@@ -129,12 +117,7 @@ public class ApiRegistrationController {
 
         logger.info("SAVE requestbody apiRegistration");
 
-        Optional<Catalog> catalogOptional = catalogRepository.findById(catalogId);
-
-        if (!catalogOptional.isPresent()) {
-            // This can happen if authorization system has catalogId, but we don't have it in our system
-            throw new NotFoundException();
-        }
+        catalogRepository.findById(catalogId).orElseThrow(NotFoundException::new);
 
         try {
             String apiSpecUrl = apiRegistrationData.getApiSpecUrl();
@@ -180,18 +163,7 @@ public class ApiRegistrationController {
     ) throws NotFoundException, BadRequestException {
         logger.info("DELETE apiRegistration: " + id);
 
-        Optional<ApiRegistration> apiRegistrationOptional = apiRegistrationRepository.findById(id);
-
-
-        if (!apiRegistrationOptional.isPresent()) {
-            throw new NotFoundException();
-        }
-
-        ApiRegistration apiRegistration = apiRegistrationOptional.get();
-
-        if (!Objects.equals(catalogId, apiRegistration.getCatalogId())) {
-            throw new NotFoundException();
-        }
+        ApiRegistration apiRegistration = getApiRegistrationByIdAndCatalogId(id, catalogId);
 
         if (apiRegistration.getRegistrationStatus().equals(ApiRegistration.REGISTRATION_STATUS_PUBLISH)) {
             throw new BadRequestException();
@@ -226,16 +198,7 @@ public class ApiRegistrationController {
         Gson gson = new Gson();
 
         // get already saved apiRegistration
-        Optional<ApiRegistration> oldApiRegistrationOptional = apiRegistrationRepository.findById(id);
-        if (!oldApiRegistrationOptional.isPresent()) {
-            throw new NotFoundException();
-        }
-
-        ApiRegistration oldApiRegistration = oldApiRegistrationOptional.get();
-
-        if (!Objects.equals(catalogId, oldApiRegistration.getCatalogId())) {
-            throw new NotFoundException();
-        }
+        ApiRegistration oldApiRegistration = getApiRegistrationByIdAndCatalogId(id, catalogId);
 
         JsonObject oldApiRegistrationJson = gson.toJsonTree(oldApiRegistration).getAsJsonObject();
 
@@ -258,5 +221,12 @@ public class ApiRegistrationController {
 
 
         return savedApiRegistration;
+    }
+
+    ApiRegistration getApiRegistrationByIdAndCatalogId(String id, String catalogId) throws NotFoundException {
+        return apiRegistrationRepository
+            .findById(id)
+            .filter(r -> catalogId.equals(r.getCatalogId()))
+            .orElseThrow(NotFoundException::new);
     }
 }
