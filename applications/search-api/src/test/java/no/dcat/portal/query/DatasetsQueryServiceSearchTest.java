@@ -46,13 +46,13 @@ public class DatasetsQueryServiceSearchTest {
      */
     @Test
     public void testValidWithSortdirection() {
-        ResponseEntity<String> actual = sqs.search("query", "", "", "", "", "", 0, 0, 0, "nb", "title.nb", "ascending", "", "", "", "", "", "", "", PageRequest.of(0, 10));
+        ResponseEntity<String> actual = sqs.search("query", "", "", "", "", "", 0, 0, 0, "nb", "modified", "asc", "", "", "", "", "", "", "", PageRequest.of(0, 10));
 
         verify(client.prepareSearch("dcat")
             .setTypes("dataset")
             .setQuery(any(QueryBuilder.class))
             .setFrom(1).setSize(10))
-            .addSort(SortBuilders.fieldSort("title.nb.raw").order(SortOrder.ASC).missing("_last"));
+            .addSort(SortBuilders.fieldSort("harvest.firstHarvested").order(SortOrder.ASC).missing("_last"));
         assertThat(actual.getStatusCodeValue()).isEqualTo(HttpStatus.OK.value());
 
         sqs.search("query", "", "", "", "", "", 0, 0, 0, "nb", "title.nb", "ascending", "", "", "", "", "", "", "", PageRequest.of(0, 10));
