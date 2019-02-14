@@ -17,7 +17,6 @@ import org.elasticsearch.search.aggregations.Aggregation;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms;
-import org.elasticsearch.search.sort.FieldSortBuilder;
 import org.elasticsearch.search.sort.SortBuilder;
 import org.elasticsearch.search.sort.SortBuilders;
 import org.elasticsearch.search.sort.SortOrder;
@@ -72,7 +71,7 @@ public class ApiSearchController {
         @RequestParam(value = "aggregations", defaultValue = "false", required = false)
             String includeAggregations,
 
-        @ApiParam("Specifies the sort field, at the present we support title, modified and publisher. Default is no value")
+        @ApiParam("Specifies the sort field, at the present the only value is \"modified\". Default is no value, and results are sorted by relevance")
         @RequestParam(value = "sortfield", defaultValue = "", required = false)
             String sortfield,
 
@@ -133,7 +132,7 @@ public class ApiSearchController {
         if ("modified".equals(sortfield)) {
             SortOrder sortOrder = "asc".equals(sortdirection.toLowerCase()) ? SortOrder.ASC : SortOrder.DESC;
 
-            FieldSortBuilder sortBuilder = SortBuilders.fieldSort("harvest.firstHarvested")
+            SortBuilder sortBuilder = SortBuilders.fieldSort("harvest.firstHarvested")
                 .order(sortOrder)
                 .missing("_last");
 
@@ -207,7 +206,7 @@ public class ApiSearchController {
     }
 
     void convertAggregations(QueryResponse queryResponse, SearchResponse elasticResponse) {
-        if (elasticResponse.getAggregations() ==null){
+        if (elasticResponse.getAggregations() == null) {
             return;
         }
         queryResponse.setAggregations(new HashMap<>());
