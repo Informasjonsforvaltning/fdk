@@ -1,7 +1,7 @@
 package no.fdk.acat.converters.apispecificationparser;
 
-import no.fdk.test.testcategories.UnitTest;
 import no.fdk.acat.common.model.apispecification.ApiSpecification;
+import no.fdk.test.testcategories.UnitTest;
 import org.apache.commons.io.IOUtils;
 import org.junit.Assert;
 import org.junit.Test;
@@ -30,6 +30,20 @@ public class UniversalParserTest {
     }
 
     @Test
+    public void CanParse_WhenSwagger_ShouldReturnFalse() throws IOException {
+        String spec = IOUtils.toString(new ClassPathResource("fs-api-swagger-invalid-missing-description.json").getInputStream(), "UTF-8");
+        boolean result = parser.canParse(spec);
+        Assert.assertFalse(result);
+    }
+
+    @Test
+    public void CanParse_WhenOpenApi_ShouldReturnFalseWhen() throws IOException {
+        String spec = IOUtils.toString(new ClassPathResource("enhetsregisteret-openapi3-invalid-missing-description.json").getInputStream(), "UTF-8");
+        boolean result = parser.canParse(spec);
+        Assert.assertFalse(result);
+    }
+
+    @Test
     public void Parse_WhenSwagger_ShouldParse() throws Exception {
         String spec = IOUtils.toString(new ClassPathResource("fs-api-swagger.json").getInputStream(), "UTF-8");
 
@@ -44,5 +58,6 @@ public class UniversalParserTest {
         ApiSpecification parsed = parser.parse(spec);
         Assert.assertEquals("Åpne Data fra Enhetsregisteret - API Dokumentasjon", parsed.getInfo().getTitle());
     }
+
 
 }
