@@ -98,6 +98,10 @@ public class ApiSearchController {
 
         BoolQueryBuilder composedQuery = QueryBuilders.boolQuery().must(searchQuery);
 
+        // Adding constant "should" term increases score for matching documents
+        // Elasticsearch interprets string value "true" as matching with boolean true
+        composedQuery.should(QueryUtil.createTermQuery("nationalComponent", "true").boost(2));
+
         if (!orgPath.isEmpty()) {
             composedQuery.filter(QueryUtil.createTermQuery("publisher.orgPath", orgPath));
         }
@@ -138,13 +142,6 @@ public class ApiSearchController {
 
             logger.debug("sort: {}", sortBuilder.toString());
             searchRequest.addSort(sortBuilder);
-        }
-
-        if (query.isEmpty()) {
-            SortBuilder sortNationalComponentFirst = SortBuilders
-                .fieldSort("nationalComponent")
-                .order(SortOrder.DESC);
-            searchRequest.addSort(sortNationalComponentFirst);
         }
 
         SearchResponse elasticResponse = searchRequest.execute().actionGet();
