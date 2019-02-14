@@ -1,8 +1,8 @@
 package no.fdk.acat.converters.apispecificationparser;
 
 import io.swagger.v3.oas.models.OpenAPI;
-import no.fdk.test.testcategories.UnitTest;
 import no.fdk.acat.common.model.apispecification.ApiSpecification;
+import no.fdk.test.testcategories.UnitTest;
 import org.apache.commons.io.IOUtils;
 import org.junit.Assert;
 import org.junit.Before;
@@ -18,16 +18,24 @@ public class OpenApiV3JsonParserTest {
     private final OpenApiV3JsonParser openApiV3JsonParser = new OpenApiV3JsonParser();
 
     private String spec;
+    private String invalidSpec;
 
     @Before
     public void setup() throws IOException {
         spec = IOUtils.toString(new ClassPathResource("enhetsregisteret-openapi3.json").getInputStream(), "UTF-8");
+        invalidSpec = IOUtils.toString(new ClassPathResource("enhetsregisteret-openapi3-invalid-missing-description.json").getInputStream(), "UTF-8");
     }
 
     @Test
     public void CanParse_ShouldReturnTrue() {
         boolean result = openApiV3JsonParser.canParse(spec);
         Assert.assertTrue(result);
+    }
+
+    @Test
+    public void CanParse_ShouldReturnFalse() {
+        boolean result = openApiV3JsonParser.canParse(invalidSpec);
+        Assert.assertFalse(result);
     }
 
     @Test

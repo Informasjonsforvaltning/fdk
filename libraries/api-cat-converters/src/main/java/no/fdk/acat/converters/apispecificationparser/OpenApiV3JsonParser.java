@@ -22,7 +22,29 @@ public class OpenApiV3JsonParser implements Parser {
         try {
             JsonElement element = new JsonParser().parse(spec);
             String version = element.getAsJsonObject().get("openapi").getAsString();
-            return version.length() > 2 && version.substring(0, 2).equals("3.");
+            if (!(version.length() > 2 && version.substring(0, 2).equals("3."))) {
+                return false;
+            }
+
+            JsonElement info = element.getAsJsonObject().get("info");
+            if (info == null) {
+                return false;
+            }
+
+            String title = info.getAsJsonObject().get("title").getAsString();
+            if (title == null || title.isEmpty()) {
+                return false;
+            }
+            String documentVersion = info.getAsJsonObject().get("version").getAsString();
+            if (documentVersion == null || documentVersion.isEmpty()) {
+                return false;
+            }
+
+            String description = info.getAsJsonObject().get("description").getAsString();
+            if (description == null || description.isEmpty()) {
+                return false;
+            }
+            return true;
         } catch (Exception e) {
             return false;
         }
