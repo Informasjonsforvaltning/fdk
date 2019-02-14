@@ -100,15 +100,15 @@ public class ApiSearchController {
         BoolQueryBuilder composedQuery = QueryBuilders.boolQuery().must(searchQuery);
 
         if (!orgPath.isEmpty()) {
-            composedQuery.filter(QueryUtil.createTermFilter("publisher.orgPath", orgPath));
+            composedQuery.filter(QueryUtil.createTermQuery("publisher.orgPath", orgPath));
         }
 
         if (!harvestSourceUri.isEmpty()) {
-            composedQuery.filter(QueryUtil.createTermFilter("harvestSourceUri", harvestSourceUri));
+            composedQuery.filter(QueryUtil.createTermQuery("harvestSourceUri", harvestSourceUri));
         }
 
         if (formats != null && formats.length > 0) {
-            composedQuery.filter(QueryUtil.createTermsFilter("formats", formats));
+            composedQuery.filter(QueryUtil.createTermsQuery("formats", formats));
         }
         logger.debug("Built query:{}", composedQuery);
 
@@ -226,13 +226,13 @@ public class ApiSearchController {
     }
 
     static class QueryUtil {
-        static QueryBuilder createTermFilter(String term, String value) {
+        static QueryBuilder createTermQuery(String term, String value) {
             return value.equals(MISSING) ?
                 QueryBuilders.boolQuery().mustNot(QueryBuilders.existsQuery(term)) :
                 QueryBuilders.termQuery(term, value);
         }
 
-        static QueryBuilder createTermsFilter(String term, String[] values) {
+        static QueryBuilder createTermsQuery(String term, String[] values) {
             BoolQueryBuilder composedQuery = QueryBuilders.boolQuery();
             for (String value : values) {
                 if (value.equals(MISSING)) {
