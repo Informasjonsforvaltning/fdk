@@ -3,7 +3,6 @@ package no.ccat.controller;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import no.ccat.common.model.Source;
 import no.ccat.model.ConceptDenormalized;
 import no.fdk.webutils.aggregation.ResponseUtil;
 import org.elasticsearch.index.query.BoolQueryBuilder;
@@ -68,7 +67,7 @@ public class ConceptSearchController {
         @RequestParam(value = "returnfields", defaultValue = "", required = false)
             String returnFields,
 
-        @ApiParam("Specifies the sort field, at the present we support title, modified and publisher. Default is no value")
+        @ApiParam("Specifies the sort field, at the present the only value is \"modified\". Default is no value, and results are sorted by relevance")
         @RequestParam(value = "sortfield", defaultValue = "", required = false)
             String sortfield,
 
@@ -127,8 +126,10 @@ public class ConceptSearchController {
             finalQuery.addSourceFilter(sourceFilter);
         }
 
-        if (!StringUtils.isEmpty(sortfield)) {
-            addSort(sortfield, sortdirection, finalQuery);
+        if ("modified".equals(sortfield)) {
+            Sort.Direction sortOrder = sortdirection.toLowerCase().contains("asc".toLowerCase()) ? Sort.Direction.ASC : Sort.Direction.DESC;
+            String sortProperty = "harvest.firstHarvested";
+            finalQuery.addSort(new Sort(sortOrder, sortProperty));
         }
 
         AggregatedPage<ConceptDenormalized> aggregatedPage = elasticsearchTemplate.queryForPage(finalQuery, ConceptDenormalized.class);
@@ -156,27 +157,6 @@ public class ConceptSearchController {
         //In order for spring to not include Source or Remark when its parts are empty we need to null out the source object itself.
         for (ConceptDenormalized concept : concepts) {
             ConceptGetController.stripEmptyObject(concept);
-        }
-    }
-
-
-
-    private void addSort(String sortfield, String sortdirection, NativeSearchQuery searchBuilder) {
-        if (!sortfield.trim().isEmpty()) {
-
-            Sort.Direction sortOrder = sortdirection.toLowerCase().contains("asc".toLowerCase()) ? Sort.Direction.ASC : Sort.Direction.DESC;
-            StringBuilder sbSortField = new StringBuilder();
-
-            if (!sortfield.equals("modified")) {
-                sbSortField.append(sortfield).append(".nb");
-            } else {
-                sbSortField.append("harvest.firstHarvested");
-            }
-
-            Sort sort = new Sort(sortOrder, sbSortField.toString());
-
-            logger.debug("sort: {}", sort.toString());
-            searchBuilder.addSort(sort);
         }
     }
 
