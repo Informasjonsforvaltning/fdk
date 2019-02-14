@@ -13,7 +13,6 @@ import org.elasticsearch.search.aggregations.bucket.terms.Terms;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
@@ -66,7 +65,7 @@ public class InformationModelSearchController {
         @RequestParam(value = "returnfields", defaultValue = "", required = false)
             String returnFields,
 
-        @ApiParam("Specifies the sort field, at the present we support title, modified and publisher. Default is no value")
+        @ApiParam("Specifies the sort field, at the present the only value is \"modified\". Default is no value, and results are sorted by relevance")
         @RequestParam(value = "sortfield", defaultValue = "", required = false)
             String sortfield,
 
@@ -123,8 +122,10 @@ public class InformationModelSearchController {
             finalQuery.addSourceFilter(sourceFilter);
         }
 
-        if (!StringUtils.isEmpty(sortfield)) {
-            addSort(sortfield, sortdirection, finalQuery);
+        if ("modified".equals(sortfield)) {
+            Sort.Direction sortOrder = sortdirection.toLowerCase().contains("asc".toLowerCase()) ? Sort.Direction.ASC : Sort.Direction.DESC;
+            String sortProperty = "harvest.firstHarvested";
+            finalQuery.addSort(new Sort(sortOrder, sortProperty));
         }
 
         AggregatedPage<InformationModel> aggregatedPage = elasticsearchTemplate.queryForPage(finalQuery, InformationModel.class);
@@ -143,23 +144,6 @@ public class InformationModelSearchController {
             return ResponseUtil.addAggregations(informationModelResources, aggregatedPage);
         } else {
             return informationModelResources;
-        }
-    }
-
-    private void addSort(String sortfield, String sortdirection, NativeSearchQuery searchBuilder) {
-        if (!sortfield.trim().isEmpty()) {
-
-            Sort.Direction sortOrder = sortdirection.toLowerCase().contains("asc".toLowerCase()) ? Sort.Direction.ASC : Sort.Direction.DESC;
-            StringBuilder sbSortField = new StringBuilder();
-
-            if (sortfield.equals("modified")) {
-                sbSortField.append("harvest.firstHarvested");
-            }
-
-            Sort sort = new Sort(sortOrder, sbSortField.toString());
-
-            logger.debug("sort: {}", sort.toString());
-            searchBuilder.addSort(sort);
         }
     }
 
