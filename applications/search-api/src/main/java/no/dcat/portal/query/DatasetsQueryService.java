@@ -16,7 +16,6 @@ import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.bucket.filters.FiltersAggregator;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms.Order;
-import org.elasticsearch.search.sort.FieldSortBuilder;
 import org.elasticsearch.search.sort.SortBuilder;
 import org.elasticsearch.search.sort.SortBuilders;
 import org.elasticsearch.search.sort.SortOrder;
@@ -184,7 +183,7 @@ public class DatasetsQueryService extends ElasticsearchService {
         }
         lang = "*"; // hardcode to search in all language fields
 
-        int from = checkAndAdjustFrom((int)pageable.getOffset());
+        int from = checkAndAdjustFrom((int) pageable.getOffset());
         int size = checkAndAdjustSize(pageable.getPageSize());
 
         ResponseEntity<String> jsonError = initializeElasticsearchTransportClient();
@@ -260,8 +259,17 @@ public class DatasetsQueryService extends ElasticsearchService {
             if (StringUtils.isEmpty(query)) {
                 addSortForEmptySearch(searchBuilder);
             }
-        } else {
-            addSort(sortfield, sortdirection, searchBuilder);
+        }
+
+        if ("modified".equals(sortfield)) {
+            SortOrder sortOrder = "asc".equals(sortdirection.toLowerCase()) ? SortOrder.ASC : SortOrder.DESC;
+
+            SortBuilder sortBuilder = SortBuilders.fieldSort("harvest.firstHarvested")
+                .order(sortOrder)
+                .missing("_last");
+
+            logger.debug("sort: {}", sortBuilder.toString());
+            searchBuilder.addSort(sortBuilder);
         }
 
         // Execute search
@@ -313,28 +321,6 @@ public class DatasetsQueryService extends ElasticsearchService {
 
     RangeQueryBuilder temporalRangeBefore(int days, String dateField) {
         return QueryBuilders.rangeQuery(dateField).lte("now-" + days + "d/d");
-    }
-
-
-    private void addSort(String sortfield, String sortdirection, SearchRequestBuilder searchBuilder) {
-        if (!sortfield.trim().isEmpty()) {
-
-            SortOrder sortOrder = sortdirection.toLowerCase().contains("asc".toLowerCase()) ? SortOrder.ASC : SortOrder.DESC;
-            StringBuilder sbSortField = new StringBuilder();
-
-            if (!sortfield.equals("modified")) {
-                sbSortField.append(sortfield).append(".raw");
-            } else {
-                sbSortField.append("harvest.firstHarvested");
-            }
-
-            SortBuilder sortBuilder = SortBuilders.fieldSort(sbSortField.toString());
-            sortBuilder.order(sortOrder);
-            ((FieldSortBuilder) sortBuilder).missing("_last");
-
-            logger.debug("sort: {}", sortBuilder.toString());
-            searchBuilder.addSort(sortBuilder);
-        }
     }
 
     private int checkAndAdjustFrom(int from) {
