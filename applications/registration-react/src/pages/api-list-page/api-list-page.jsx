@@ -127,58 +127,52 @@ export const APIListPage = props => {
                 </Link>
               )}
 
-            {!apiCatalogs &&
-              !showHarvestLink && (
+            {!showHarvestLink && (
+              <Button
+                className="mr-3 btn btn-primary fdk-button"
+                color="primary"
+                onClick={onToggle}
+              >
+                <i className="fa fa-plus-circle mr-2" />
+                {localization.api.harvest.harvestFromCatalog}
+              </Button>
+            )}
+            {showHarvestLink && (
+              <React.Fragment>
+                <label className="d-flex flex-grow-1 mb-0" htmlFor="importUrl">
+                  <span className="align-self-center">
+                    {localization.api.harvest.labelHarvestUrl}
+                  </span>
+                  <input
+                    name="importUrl"
+                    onChange={e => handleChangeUrl(e)}
+                    type="input"
+                    className="ml-2 py-2 px-4 flex-grow-1"
+                    autoComplete="off"
+                  />
+                </label>
                 <Button
-                  className="mr-3 btn btn-primary fdk-button"
-                  color="primary"
+                  className="ml-3 btn btn-primary fdk-button"
+                  color={
+                    !touched || !!error || harvestUrl === ''
+                      ? 'secondary'
+                      : 'primary'
+                  }
+                  disabled={!touched || !!error || harvestUrl === ''}
+                  onClick={() => setApiCatalogUrl()}
+                >
+                  {localization.api.harvest.harvestAction}
+                </Button>
+                <button
+                  className="btn bg-transparent fdk-color-blue-dark"
                   onClick={onToggle}
                 >
-                  <i className="fa fa-plus-circle mr-2" />
-                  {localization.api.harvest.harvestFromCatalog}
-                </Button>
-              )}
-            {!apiCatalogs &&
-              showHarvestLink && (
-                <React.Fragment>
-                  <label
-                    className="d-flex flex-grow-1 mb-0"
-                    htmlFor="importUrl"
-                  >
-                    <span className="align-self-center">
-                      {localization.api.harvest.labelHarvestUrl}
-                    </span>
-                    <input
-                      name="importUrl"
-                      onChange={e => handleChangeUrl(e)}
-                      type="input"
-                      className="ml-2 py-2 px-4 flex-grow-1"
-                      autoComplete="off"
-                    />
-                  </label>
-                  <Button
-                    className="ml-3 btn btn-primary fdk-button"
-                    color={
-                      !touched || !!error || harvestUrl === ''
-                        ? 'secondary'
-                        : 'primary'
-                    }
-                    disabled={!touched || !!error || harvestUrl === ''}
-                    onClick={() => setApiCatalogUrl()}
-                  >
-                    {localization.api.harvest.harvestAction}
-                  </Button>
-                  <button
-                    className="btn bg-transparent fdk-color-blue-dark"
-                    onClick={onToggle}
-                  >
-                    {localization.app.cancel}
-                  </button>
-                </React.Fragment>
-              )}
+                  {localization.app.cancel}
+                </button>
+              </React.Fragment>
+            )}
           </div>
-          {!apiCatalogs &&
-            touched &&
+          {touched &&
             error && (
               <div className="col-12 mt-3">
                 <div className="alert alert-danger">{error}</div>
@@ -249,28 +243,28 @@ export const APIListPage = props => {
                   </div>
                 )}
             </div>
+
+            <div style={{ marginBottom: '6rem' }} className="row">
+              {harvestedApiItems.length > 0 && (
+                <div className="col-12 fdk-reg-datasets-list">
+                  <ListItems
+                    catalogId={catalogId}
+                    items={harvestedApiItems}
+                    itemTitleField={['apiSpecification', 'info', 'title']}
+                    prefixPath={`/catalogs/${catalogId}/apis`}
+                    defaultEmptyListText={
+                      localization.listItems.missingApiItems
+                    }
+                  />
+                </div>
+              )}
+            </div>
           </React.Fragment>
         )}
 
-      {harvestedApiItems &&
-        harvestedApiItems.length > 0 && (
-          <div style={{ marginBottom: '6rem' }} className="row">
-            <div className="col-12 fdk-reg-datasets-list">
-              <ListItems
-                catalogId={catalogId}
-                items={harvestedApiItems}
-                itemTitleField={['apiSpecification', 'info', 'title']}
-                prefixPath={`/catalogs/${catalogId}/apis`}
-                defaultEmptyListText={localization.listItems.missingApiItems}
-              />
-            </div>
-          </div>
-        )}
-
-      {catalogItem &&
-        registeredApiItems &&
-        registeredApiItems.length > 0 && (
-          <React.Fragment>
+      {registeredApiItems && (
+        <React.Fragment>
+          {(apiCatalogs || registeredApiItems.length > 0) && (
             <div className="row mb-3">
               <div className="col-12">
                 <h2>{localization.api.register.registeredApiTitle}</h2>
@@ -283,7 +277,8 @@ export const APIListPage = props => {
                 </Link>
               </div>
             </div>
-
+          )}
+          {registeredApiItems.length > 0 && (
             <div className="row mb-2 mb-5">
               <div className="col-12 fdk-reg-datasets-list">
                 <ListItems
@@ -295,8 +290,9 @@ export const APIListPage = props => {
                 />
               </div>
             </div>
-          </React.Fragment>
-        )}
+          )}
+        </React.Fragment>
+      )}
     </div>
   );
 };
