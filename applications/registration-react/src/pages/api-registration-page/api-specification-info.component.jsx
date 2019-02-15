@@ -13,7 +13,7 @@ export const APISpecificationInfo = ({
   paths,
   fromApiCatalog,
   showImportSpecificationButtons,
-  onToggleShowImportSpecificationButtons,
+  handleShowImportSpecificationButtons,
   catalogId,
   apiId,
   handleShowImportError,
@@ -103,7 +103,7 @@ export const APISpecificationInfo = ({
               <Button
                 className="mr-3 fdk-button"
                 color="outline-primary"
-                onClick={onToggleShowImportSpecificationButtons}
+                onClick={handleShowImportSpecificationButtons}
               >
                 {_.capitalize(localization.getNew)} {localization.specification}
               </Button>
@@ -113,7 +113,9 @@ export const APISpecificationInfo = ({
                 <ImportDialog
                   catalogId={catalogId}
                   apiId={apiId}
-                  handleShowLinkImport={onToggleShowImportSpecificationButtons}
+                  handleShowImportSpecificationButtons={
+                    handleShowImportSpecificationButtons
+                  }
                   handleShowImportError={handleShowImportError}
                   handleShowImportSuccess={handleShowImportSuccess}
                   apiSuccess={apiSuccess}
@@ -132,7 +134,7 @@ APISpecificationInfo.defaultProps = {
   paths: null,
   fromApiCatalog: false,
   showImportSpecificationButtons: false,
-  onToggleShowImportSpecificationButtons: _.noop(),
+  handleShowImportSpecificationButtons: _.noop(),
   catalogId: null,
   apiId: null,
   handleShowImportError: _.noop(),
@@ -145,7 +147,7 @@ APISpecificationInfo.propTypes = {
   paths: PropTypes.object,
   fromApiCatalog: PropTypes.bool,
   showImportSpecificationButtons: PropTypes.bool,
-  onToggleShowImportSpecificationButtons: PropTypes.func,
+  handleShowImportSpecificationButtons: PropTypes.func,
   catalogId: PropTypes.string,
   apiId: PropTypes.string,
   handleShowImportError: PropTypes.func,
