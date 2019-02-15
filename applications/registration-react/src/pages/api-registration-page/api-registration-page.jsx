@@ -304,11 +304,11 @@ const enhance = compose(
         !props.showImportSpecificationButtons
       );
     },
-    handleShowImportError: props => () => {
-      props.setShowImportError(true);
+    handleShowImportError: props => value => {
+      props.setShowImportError(value);
     },
-    handleShowImportSuccess: props => () => {
-      props.setShowImportSuccess(true);
+    handleShowImportSuccess: props => value => {
+      props.setShowImportSuccess(value);
     }
   })
 );
