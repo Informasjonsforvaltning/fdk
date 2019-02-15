@@ -35,9 +35,7 @@ export const ImportDialogPure = ({
         if (process.env.NODE_ENV !== 'production') {
           console.log('error', error); // eslint-disable-line no-console
         }
-        this.setState({
-          error: true
-        });
+        handleShowImportError();
       });
   };
 
