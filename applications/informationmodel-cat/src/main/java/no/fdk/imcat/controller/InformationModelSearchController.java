@@ -93,11 +93,11 @@ public class InformationModelSearchController {
         BoolQueryBuilder composedQuery = QueryBuilders.boolQuery().must(searchQuery);
 
         if (!orgPath.isEmpty()) {
-            composedQuery.filter(QueryUtil.createTermFilter("publisher.orgPath", orgPath));
+            composedQuery.filter(QueryUtil.createTermQuery("publisher.orgPath", orgPath));
         }
 
         if (!harvestSourceUri.isEmpty()) {
-            composedQuery.filter(QueryUtil.createTermFilter("harvestSourceUri", harvestSourceUri));
+            composedQuery.filter(QueryUtil.createTermQuery("harvestSourceUri", harvestSourceUri));
         }
 
         NativeSearchQuery finalQuery = new NativeSearchQueryBuilder()
@@ -148,7 +148,7 @@ public class InformationModelSearchController {
     }
 
     static class QueryUtil {
-        static QueryBuilder createTermFilter(String term, String value) {
+        static QueryBuilder createTermQuery(String term, String value) {
             return value.equals(MISSING) ?
                 QueryBuilders.boolQuery().mustNot(QueryBuilders.existsQuery(term)) :
                 QueryBuilders.termQuery(term, value);
