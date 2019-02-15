@@ -15,7 +15,7 @@ export const ImportDialogPure = ({
   apiId,
   showLinkImport,
   onToggleShowLinkImport,
-  handleShowLinkImport,
+  handleShowImportSpecificationButtons,
   onSetImportUrl,
   handleShowImportError,
   handleShowImportSuccess,
@@ -29,6 +29,7 @@ export const ImportDialogPure = ({
       .then(responseData => {
         apiSuccess(responseData);
         handleShowImportSuccess();
+        handleShowImportSpecificationButtons();
       })
       .catch(error => {
         if (process.env.NODE_ENV !== 'production') {
@@ -50,6 +51,7 @@ export const ImportDialogPure = ({
             .then(responseData => {
               apiSuccess(responseData);
               handleShowImportSuccess();
+              handleShowImportSpecificationButtons();
             })
             .catch(error => {
               if (process.env.NODE_ENV !== 'production') {
@@ -87,7 +89,7 @@ export const ImportDialogPure = ({
           testid="button-cancel"
           className="fdk-color-blue-dark fdk-bg-color-white"
           color="transparent"
-          onClick={handleShowLinkImport}
+          onClick={handleShowImportSpecificationButtons}
         >
           {localization.api.import.cancel}
         </Button>
@@ -97,7 +99,7 @@ export const ImportDialogPure = ({
   return (
     <ImportLinkUpload
       handleLinkUpload={onLinkUpload}
-      handleCancelImport={handleShowLinkImport}
+      handleCancelImport={handleShowImportSpecificationButtons}
       handleChangeImportUrl={onSetImportUrl}
     />
   );
@@ -106,7 +108,7 @@ export const ImportDialogPure = ({
 ImportDialogPure.defaultProps = {
   catalogId: null,
   apiId: null,
-  handleShowLinkImport: _.noop(),
+  handleShowImportSpecificationButtons: _.noop(),
   importUrl: null,
   handleShowImportError: _.noop(),
   handleShowImportSuccess: _.noop(),
@@ -118,7 +120,7 @@ ImportDialogPure.defaultProps = {
 ImportDialogPure.propTypes = {
   catalogId: PropTypes.string,
   apiId: PropTypes.string,
-  handleShowLinkImport: PropTypes.func,
+  handleShowImportSpecificationButtons: PropTypes.func,
   importUrl: PropTypes.string,
   handleShowImportError: PropTypes.func,
   handleShowImportSuccess: PropTypes.func,

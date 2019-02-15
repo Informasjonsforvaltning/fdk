@@ -136,7 +136,7 @@ export const APIRegistrationPagePure = ({
             paths={_.get(item, ['apiSpecification', 'paths'])}
             fromApiCatalog={_.get(item, 'fromApiCatalog')}
             showImportSpecificationButtons={showImportSpecificationButtons}
-            onToggleShowImportSpecificationButtons={
+            handleShowImportSpecificationButtons={
               onToggleShowImportSpecificationButtons
             }
             catalogId={catalogId}
@@ -297,7 +297,9 @@ const enhance = compose(
   withState('showImportSuccess', 'setShowImportSuccess', false),
   withHandlers({
     onToggleShowImportSpecificationButtons: props => e => {
-      e.preventDefault();
+      if (e) {
+        e.preventDefault();
+      }
       props.toggleShowImportSpecificationButtons(
         !props.showImportSpecificationButtons
       );
