@@ -22,24 +22,34 @@ export const ImportDialogPure = ({
   importUrl,
   apiSuccess
 }) => {
+  const onCancel = () => {
+    handleShowImportSpecificationButtons();
+    handleShowImportError(false);
+  };
+
   const onLinkUpload = () => {
     onToggleShowLinkImport();
+    handleShowImportSuccess(false);
+    handleShowImportError(false);
 
     patchApi(catalogId, apiId, { apiSpecUrl: importUrl })
       .then(responseData => {
         apiSuccess(responseData);
-        handleShowImportSuccess();
+        handleShowImportSuccess(true);
         handleShowImportSpecificationButtons();
       })
       .catch(error => {
         if (process.env.NODE_ENV !== 'production') {
           console.log('error', error); // eslint-disable-line no-console
         }
-        handleShowImportError();
+        handleShowImportError(true);
       });
   };
 
   const onFileUpload = e => {
+    handleShowImportSuccess(false);
+    handleShowImportError(false);
+
     const fileMetaData = e.target.files[0] || null;
 
     if (fileMetaData) {
@@ -48,21 +58,21 @@ export const ImportDialogPure = ({
           patchApi(catalogId, apiId, { apiSpec })
             .then(responseData => {
               apiSuccess(responseData);
-              handleShowImportSuccess();
+              handleShowImportSuccess(true);
               handleShowImportSpecificationButtons();
             })
             .catch(error => {
               if (process.env.NODE_ENV !== 'production') {
                 console.log('error', error); // eslint-disable-line no-console
               }
-              handleShowImportError();
+              handleShowImportError(true);
             });
         })
         .catch(error => {
           if (process.env.NODE_ENV !== 'production') {
             console.log('error', error); // eslint-disable-line no-console
           }
-          handleShowImportError();
+          handleShowImportError(true);
         });
     }
   };
@@ -87,7 +97,7 @@ export const ImportDialogPure = ({
           testid="button-cancel"
           className="fdk-color-blue-dark fdk-bg-color-white"
           color="transparent"
-          onClick={handleShowImportSpecificationButtons}
+          onClick={onCancel}
         >
           {localization.api.import.cancel}
         </Button>
