@@ -17,7 +17,7 @@ export const FormRelatedDatasets = ({
         title={
           localization.schema.apiDatasetReferences.helptext.datasetReferences
         }
-        helptextItems={_.get(helptextItems, 'Cost')}
+        helptextItems={_.get(helptextItems, 'Related_dataset')}
       />
       <Field
         name="datasetUris"
