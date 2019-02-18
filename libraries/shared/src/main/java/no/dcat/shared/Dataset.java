@@ -21,7 +21,6 @@ public class Dataset {
 
     private String source;
     private HarvestMetadata harvest;
-    private String provenanceSort;
 
     // dct:title
     // Norwegian: Tittel

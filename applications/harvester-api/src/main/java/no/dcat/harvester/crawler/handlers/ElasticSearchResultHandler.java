@@ -360,8 +360,6 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
 
                 addDisplayFields(dataset);
 
-                addSortField(dataset);
-
                 saveDatasetAndHarvestRecord(dcatSource, elasticsearch, validationResults, gson, bulkRequest, harvestTime, dataset, stats);
 
             }
@@ -389,32 +387,6 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         waitForIndexing(elasticsearch);
 
     }
-
-    /**
-     * Add extra sort field to handle sorting of provencance codes
-     *
-     * @param dataset with new provenanceSort value
-     */
-    void addSortField(Dataset dataset) {
-        String sortString = "";
-
-        final String provenance = dataset.getProvenance() != null ? dataset.getProvenance().getCode() : null;
-
-        if ("NASJONAL".equals(provenance)) {
-            sortString = "1NASJONAL";
-        } else if ("VEDTAK".equals(provenance)) {
-            sortString = "2VEDTAK";
-        } else if ("BRUKER".equals(provenance)) {
-            sortString = "3BRUKER";
-        } else if ("TREDJEPART".equals(provenance)) {
-            sortString = "4TREDJEPART";
-        } else {
-            sortString = "9UKJENT";
-        }
-
-        dataset.setProvenanceSort(sortString);
-    }
-
 
     /**
      * Add extra fields to the dataset to help visualization.
