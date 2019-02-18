@@ -188,12 +188,12 @@
         <dependency>
             <groupId>no.dcat</groupId>
             <artifactId>api-cat-bindings</artifactId>
-            <version>1.7.0-SNAPSHOT</version>
+            <version>1.8.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>no.dcat</groupId>
             <artifactId>informationmodel-cat-bindings</artifactId>
-            <version>1.3.0-SNAPSHOT</version>
+            <version>1.4.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>no.dcat</groupId>
@@ -213,7 +213,7 @@
         <dependency>
             <groupId>no.dcat</groupId>
             <artifactId>api-cat-converters</artifactId>
-            <version>1.3.0-SNAPSHOT</version>
+            <version>1.4.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>no.dcat</groupId>
