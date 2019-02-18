@@ -8,86 +8,6 @@
         "properties": {
           "uri": {
             "type": "keyword"
-          },
-          "description": {
-            "properties": {
-              "nb": {
-                "type": "text",
-                "analyzer": "norwegian",
-                "fields": {
-                  "raw": {
-                    "type": "keyword"
-                  }
-                }
-              },
-              "nn": {
-                "type": "text",
-                "analyzer": "norwegian",
-                "fields": {
-                  "raw": {
-                    "type": "keyword"
-                  }
-                }
-              },
-              "no": {
-                "type": "text",
-                "analyzer": "norwegian",
-                "fields": {
-                  "raw": {
-                    "type": "keyword"
-                  }
-                }
-              },
-              "en": {
-                "type": "text",
-                "analyzer": "english",
-                "fields": {
-                  "raw": {
-                    "type": "keyword"
-                  }
-                }
-              }
-            }
-          },
-          "title": {
-            "properties": {
-              "nb": {
-                "type": "text",
-                "analyzer": "norwegian",
-                "fields": {
-                  "raw": {
-                    "type": "keyword"
-                  }
-                }
-              },
-              "nn": {
-                "type": "text",
-                "analyzer": "norwegian",
-                "fields": {
-                  "raw": {
-                    "type": "keyword"
-                  }
-                }
-              },
-              "no": {
-                "type": "text",
-                "analyzer": "norwegian",
-                "fields": {
-                  "raw": {
-                    "type": "keyword"
-                  }
-                }
-              },
-              "en": {
-                "type": "text",
-                "analyzer": "english",
-                "fields": {
-                  "raw": {
-                    "type": "keyword"
-                  }
-                }
-              }
-            }
           }
         }
       },
@@ -217,13 +137,7 @@
       },
       "theme": {
         "properties": {
-          "id": {
-            "type": "keyword"
-          },
           "code": {
-            "type": "keyword"
-          },
-          "startUse": {
             "type": "keyword"
           },
           "title": {
@@ -263,59 +177,6 @@
                     "type": "keyword"
                   }
                 }
-              }
-            }
-          },
-          "conceptSchema": {
-            "properties": {
-              "id": {
-                "type": "keyword"
-              },
-              "title": {
-                "properties": {
-                  "nb": {
-                    "type": "text",
-                    "analyzer": "norwegian",
-                    "fields": {
-                      "raw": {
-                        "type": "keyword"
-                      }
-                    }
-                  },
-                  "nn": {
-                    "type": "text",
-                    "analyzer": "norwegian",
-                    "fields": {
-                      "raw": {
-                        "type": "keyword"
-                      }
-                    }
-                  },
-                  "no": {
-                    "type": "text",
-                    "analyzer": "norwegian",
-                    "fields": {
-                      "raw": {
-                        "type": "keyword"
-                      }
-                    }
-                  },
-                  "en": {
-                    "type": "text",
-                    "analyzer": "english",
-                    "fields": {
-                      "raw": {
-                        "type": "keyword"
-                      }
-                    }
-                  }
-                }
-              },
-              "versioninfo": {
-                "type": "keyword"
-              },
-              "versionnumber": {
-                "type": "keyword"
               }
             }
           }
@@ -367,9 +228,6 @@
             }
           }
         }
-      },
-      "source": {
-        "type": "keyword"
       },
       "subject": {
         "properties": {
@@ -429,9 +287,6 @@
             "type": "keyword"
           }
         }
-      },
-      "provenanceSort": {
-        "type": "keyword"
       }
     }
   }
