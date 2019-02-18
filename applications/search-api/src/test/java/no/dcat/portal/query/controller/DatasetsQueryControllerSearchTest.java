@@ -29,9 +29,9 @@ import static org.mockito.Mockito.*;
  */
 @RunWith(MockitoJUnitRunner.class)
 @Category(UnitTest.class)
-public class DatasetsQueryServiceSearchTest {
+public class DatasetsQueryControllerSearchTest {
 
-    DatasetsQueryService sqs;
+    DatasetsQueryController sqs;
     Client client;
 
     @Before
@@ -40,7 +40,7 @@ public class DatasetsQueryServiceSearchTest {
         populateMock();
         ElasticsearchService elasticsearchServiceMock = mock(ElasticsearchService.class);
         when(elasticsearchServiceMock.getClient()).thenReturn(client);
-        sqs = new DatasetsQueryService(elasticsearchServiceMock);
+        sqs = new DatasetsQueryController(elasticsearchServiceMock);
     }
 
     /**

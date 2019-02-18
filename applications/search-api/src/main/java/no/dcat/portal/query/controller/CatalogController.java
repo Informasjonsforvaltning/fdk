@@ -34,9 +34,9 @@ import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 @RestController
-public class CatalogService {
+public class CatalogController {
 
-    private static final Logger logger = LoggerFactory.getLogger(CatalogService.class);
+    private static final Logger logger = LoggerFactory.getLogger(CatalogController.class);
     private static final String DATASET_QUERY_FILENAME = "sparql/dataset.sparql";
     private static final String CATALOG_QUERY_FILENAME = "sparql/catalog.sparql";
     private static final String GET_CATALOGS_QUERY_FILENAME = "sparql/allcatalogs.sparql";

@@ -18,8 +18,8 @@ import static org.mockito.Mockito.mock;
 
 
 @Category(UnitTest.class)
-public class DatasetsQueryServiceRdfExportTest {
-    private static Logger logger = LoggerFactory.getLogger(DatasetsQueryServiceRdfExportTest.class);
+public class DatasetsQueryControllerRdfExportTest {
+    private static Logger logger = LoggerFactory.getLogger(DatasetsQueryControllerRdfExportTest.class);
 
     String queryReply = " {\n" +
         "        \"id\" : \"http://brreg.no/catalogs/910244132/datasets/f5759687-d1e0-47fd-97eb-647759d0e8f4\",\n" +
@@ -272,13 +272,13 @@ public class DatasetsQueryServiceRdfExportTest {
         "        }\n" +
         "      }";
 
-    private DatasetsQueryService queryService;
+    private DatasetsQueryController queryService;
 
     @Before
     public void mockQuery() {
 
         ElasticsearchService elasticsearchServiceMock = mock(ElasticsearchService.class);
-        queryService = new DatasetsQueryService(elasticsearchServiceMock);
+        queryService = new DatasetsQueryController(elasticsearchServiceMock);
     }
 
     @Test

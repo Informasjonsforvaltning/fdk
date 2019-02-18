@@ -27,8 +27,8 @@ import static org.mockito.Mockito.*;
  * Class for testing getDatasetByIdHandler rest-API in DatasetsQueryService.
  */
 @Category(UnitTest.class)
-public class DatasetsQueryServiceDetailTest {
-    DatasetsQueryService sqs;
+public class DatasetsQueryControllerDetailTest {
+    DatasetsQueryController sqs;
     Client client;
     SearchResponse response;
     String dataset = "{\n" +
@@ -237,7 +237,7 @@ public class DatasetsQueryServiceDetailTest {
         client = mock(Client.class);
         populateMock();
         when(elasticsearchServiceMock.getClient()).thenReturn(client);
-        sqs = new DatasetsQueryService(elasticsearchServiceMock);
+        sqs = new DatasetsQueryController(elasticsearchServiceMock);
     }
 
     /**
@@ -245,7 +245,7 @@ public class DatasetsQueryServiceDetailTest {
      */
     @Test
     public void testWithHits() throws NotFoundException {
-        DatasetsQueryService spyController = spy(new DatasetsQueryService(elasticsearchServiceMock));
+        DatasetsQueryController spyController = spy(new DatasetsQueryController(elasticsearchServiceMock));
         doReturn(new Dataset()).when(spyController).getDatasetById(anyString());
 
         ResponseEntity<String> actual = spyController.getDatasetByIdHandler(new ServletRequest("29"), "29");
@@ -257,7 +257,7 @@ public class DatasetsQueryServiceDetailTest {
      */
     @Test(expected = NotFoundException.class)
     public void testWithNoHits() throws NotFoundException {
-        DatasetsQueryService spyController = spy(new DatasetsQueryService(elasticsearchServiceMock));
+        DatasetsQueryController spyController = spy(new DatasetsQueryController(elasticsearchServiceMock));
         doReturn(null).when(spyController).getDatasetById(anyString());
 
         spyController.getDatasetByIdHandler(new ServletRequest("29"), "29");
@@ -271,7 +271,7 @@ public class DatasetsQueryServiceDetailTest {
 
     @Test
     public void correctAcceptheader() throws NotFoundException {
-        DatasetsQueryService spyController = spy(new DatasetsQueryService(elasticsearchServiceMock));
+        DatasetsQueryController spyController = spy(new DatasetsQueryController(elasticsearchServiceMock));
         doReturn(new Dataset()).when(spyController).getDatasetById(anyString());
 
         HttpServletRequestWrapper request = new HttpServletRequestWrapper(new ServletRequest("/details/path")) {

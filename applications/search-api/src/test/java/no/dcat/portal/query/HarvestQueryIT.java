@@ -8,7 +8,7 @@ import no.dcat.datastore.ElasticDockerRule;
 import no.dcat.datastore.domain.dcat.Publisher;
 import no.dcat.datastore.domain.harvest.CatalogHarvestRecord;
 import no.dcat.datastore.domain.harvest.ChangeInformation;
-import no.dcat.portal.query.controller.HarvestQueryService;
+import no.dcat.portal.query.controller.HarvestQueryController;
 import no.fdk.test.testcategories.IntegrationTest;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.action.bulk.BulkResponse;
@@ -125,7 +125,7 @@ public class HarvestQueryIT {
         ElasticsearchService elasticsearchServiceMock = mock(ElasticsearchService.class);
         when(elasticsearchServiceMock.getClient()).thenReturn(elasticsearch.getClient());
 
-        HarvestQueryService service = new HarvestQueryService(elasticsearchServiceMock);
+        HarvestQueryController service = new HarvestQueryController(elasticsearchServiceMock);
 
         // First query, all under /STAT
         ResponseEntity<String> response = service.listCatalogHarvestRecords("/STAT/1");
