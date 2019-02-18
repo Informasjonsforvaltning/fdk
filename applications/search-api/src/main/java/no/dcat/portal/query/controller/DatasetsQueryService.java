@@ -1,9 +1,10 @@
-package no.dcat.portal.query;
+package no.dcat.portal.query.controller;
 
 import com.google.gson.Gson;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import no.dcat.datastore.domain.dcat.builders.DcatBuilder;
+import no.dcat.portal.query.ElasticsearchService;
 import no.dcat.shared.Dataset;
 import no.fdk.webutils.exceptions.NotFoundException;
 import org.elasticsearch.action.get.GetResponse;

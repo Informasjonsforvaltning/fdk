@@ -1,4 +1,4 @@
-package no.dcat.portal.query;
+package no.dcat.portal.query.controller;
 
 import no.fdk.webutils.exceptions.GlobalControllerExceptionHandler;
 import org.springframework.web.bind.annotation.ControllerAdvice;

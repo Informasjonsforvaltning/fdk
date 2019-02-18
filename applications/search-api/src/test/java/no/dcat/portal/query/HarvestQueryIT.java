@@ -8,6 +8,7 @@ import no.dcat.datastore.ElasticDockerRule;
 import no.dcat.datastore.domain.dcat.Publisher;
 import no.dcat.datastore.domain.harvest.CatalogHarvestRecord;
 import no.dcat.datastore.domain.harvest.ChangeInformation;
+import no.dcat.portal.query.controller.HarvestQueryService;
 import no.fdk.test.testcategories.IntegrationTest;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.action.bulk.BulkResponse;
