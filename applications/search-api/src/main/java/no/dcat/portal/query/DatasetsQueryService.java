@@ -83,10 +83,6 @@ public class DatasetsQueryService extends ElasticsearchService {
         @RequestParam(value = "theme", defaultValue = "", required = false)
             String theme,
 
-        @ApiParam("Filters on publisher name")
-        @RequestParam(value = "publisher", defaultValue = "", required = false)
-            String publisher,
-
         @ApiParam("Filters on accessrights, codes are PUBLIC, RESTRICTED or NON_PUBLIC ")
         @RequestParam(value = "accessrights", defaultValue = "", required = false)
             String accessRights,
@@ -99,14 +95,6 @@ public class DatasetsQueryService extends ElasticsearchService {
         @RequestParam(value = "firstHarvested", defaultValue = "0", required = false)
             int firstHarvested,
 
-        @ApiParam("Filters datasets that were last harvested x-days ago, e.g. 10 will result in datasets that have not been harvested for the last 10 days.")
-        @RequestParam(value = "lastHarvested", defaultValue = "0", required = false)
-            int lastHarvested,
-
-        @ApiParam("Filters datasets that has changed within the last x-days, e.g. a value of 10 will result in datasets that were changed during 10 days, i.e. its values have changed within the last 10 days")
-        @RequestParam(value = "lastChanged", defaultValue = "0", required = false)
-            int lastChanged,
-
         @ApiParam("Specifies the language elements of the datasets to search in, default is nb")
         @RequestParam(value = "lang", defaultValue = "nb", required = false)
             String lang,
@@ -118,10 +106,6 @@ public class DatasetsQueryService extends ElasticsearchService {
         @ApiParam("Specifies the sort direction of the sorted result. The directions are: asc for ascending and desc for descending")
         @RequestParam(value = "sortdirection", defaultValue = "", required = false)
             String sortdirection,
-
-        @ApiParam("Filters datasets according their referred subjects")
-        @RequestParam(value = "subject", defaultValue = "", required = false)
-            String subject,
 
         @ApiParam("Filters datasets according to their provenance code, e.g. NASJONAL - nasjonal building block, VEDTAK - governmental decisions, BRUKER - user collected data and TREDJEPART - third party data")
         @RequestParam(value = "provenance", defaultValue = "", required = false)
@@ -155,18 +139,14 @@ public class DatasetsQueryService extends ElasticsearchService {
             .append(" query:").append(query)
             .append(" title:").append(title)
             .append(" theme:").append(theme)
-            .append(" publisher:").append(publisher)
             .append(" accessRights:").append(accessRights)
             .append(" orgPath:").append(orgPath)
             .append(" firstHarvested:").append(firstHarvested)
-            .append(" lastHarvested:").append(lastHarvested)
-            .append(" lastChanged:").append(lastChanged)
             .append(" offset:").append(pageable.getOffset())
             .append(" size:").append(pageable.getPageSize())
             .append(" lang:").append(lang)
             .append(" sortfield:").append(sortfield)
             .append(" sortdirection:").append(sortdirection)
-            .append(" subject:").append(subject)
             .append(" provenance:").append(provenance)
             .append(" spatial:").append(spatial)
             .append(" opendata: ").append(opendata)
@@ -222,7 +202,7 @@ public class DatasetsQueryService extends ElasticsearchService {
         }
 
         // add filter
-        BoolQueryBuilder boolQuery = addFilter(theme, publisher, accessRights, search, orgPath, firstHarvested, lastHarvested, lastChanged, subject, provenance, spatial, opendata, catalog);
+        BoolQueryBuilder boolQuery = addFilter(theme, accessRights, search, orgPath, firstHarvested, provenance, spatial, opendata, catalog);
 
         // set up search query with aggregations
         SearchRequestBuilder searchBuilder = getClient().prepareSearch("dcat");
@@ -351,10 +331,9 @@ public class DatasetsQueryService extends ElasticsearchService {
      * @return a new bool query with the added filter.
      */
     private BoolQueryBuilder addFilter(
-        String theme, String publisher, String accessRights,
+        String theme, String accessRights,
         QueryBuilder search, String orgPath,
-        int firstHarvested, int lastHarvested, int lastChanged,
-        String subject, String provenance, String spatial, String opendata,
+        int firstHarvested, String provenance, String spatial, String opendata,
         String catalog) {
 
         BoolQueryBuilder boolQuery = QueryBuilders.boolQuery()
@@ -373,18 +352,6 @@ public class DatasetsQueryService extends ElasticsearchService {
             }
 
             boolQuery.filter(themeFilter);
-        }
-
-        if (!StringUtils.isEmpty(publisher)) {
-            BoolQueryBuilder publisherFilter = QueryBuilders.boolQuery();
-
-            if (publisher.equals(UNKNOWN)) {
-                publisherFilter.mustNot(QueryBuilders.existsQuery("publisher.name"));
-            } else {
-                publisherFilter.must(QueryBuilders.termQuery("publisher.name.raw", publisher));
-            }
-
-            boolQuery.filter(publisherFilter);
         }
 
         if (!StringUtils.isEmpty(catalog)) {
@@ -438,34 +405,6 @@ public class DatasetsQueryService extends ElasticsearchService {
             BoolQueryBuilder firstHarvestedFilter = QueryBuilders.boolQuery();
             firstHarvestedFilter.must(temporalRangeFromXdaysToNow(firstHarvested, "harvest.firstHarvested"));
             boolQuery.filter(firstHarvestedFilter);
-        }
-
-        if (lastHarvested > 0) {
-            BoolQueryBuilder lastHarvestedFilter = QueryBuilders.boolQuery();
-            lastHarvestedFilter.must(temporalRangeBefore(lastHarvested, "harvest.lastHarvested"));
-
-            boolQuery.filter(lastHarvestedFilter);
-        }
-
-        if (lastChanged > 0) {
-            BoolQueryBuilder lastChangedFilter = QueryBuilders.boolQuery();
-            lastChangedFilter.must(temporalRangeFromXdaysToNow(lastChanged, "harvest.lastChanged"));
-            boolQuery.filter(lastChangedFilter);
-        }
-
-        if (!StringUtils.isEmpty(subject)) {
-            BoolQueryBuilder subjectFilter = QueryBuilders.boolQuery();
-
-            Arrays.stream(subject.split(",")).forEach(subj -> {
-                if (subj.equals(UNKNOWN)) {
-                    subjectFilter.mustNot(QueryBuilders.existsQuery("subject"));
-                } else if (subj.startsWith("http")) {
-                    subjectFilter.must(QueryBuilders.matchQuery("subject.uri", subj));
-                } else {
-                    subjectFilter.must(QueryBuilders.termQuery("subject.prefLabel.no.raw", subj));
-                }
-            });
-            boolQuery.filter(subjectFilter);
         }
 
         if (!StringUtils.isEmpty(provenance)) {
