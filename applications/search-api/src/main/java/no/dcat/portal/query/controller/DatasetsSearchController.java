@@ -164,20 +164,20 @@ public class DatasetsSearchController {
         int from = checkAndAdjustFrom((int) pageable.getOffset());
         int size = checkAndAdjustSize(pageable.getPageSize());
 
-        QueryBuilder search;
+        QueryBuilder searchQuery;
 
         if (!StringUtils.isEmpty(title)) {
             QueryBuilder nbQuery = QueryBuilders.matchPhrasePrefixQuery("title.nb", title).analyzer("norwegian").maxExpansions(15);
             QueryBuilder noQuery = QueryBuilders.matchPhrasePrefixQuery("title.no", title).analyzer("norwegian").maxExpansions(15);
             QueryBuilder nnQuery = QueryBuilders.matchPhrasePrefixQuery("title.nn", title).analyzer("norwegian").maxExpansions(15);
             QueryBuilder enQuery = QueryBuilders.matchPhrasePrefixQuery("title.en", title).analyzer("english").maxExpansions(15);
-            search = QueryBuilders.boolQuery().should(nbQuery).should(noQuery).should(nnQuery).should(enQuery);
+            searchQuery = QueryBuilders.boolQuery().should(nbQuery).should(noQuery).should(nnQuery).should(enQuery);
         } else if (!StringUtils.isEmpty(query)) {
             // add * if query only contains one word
             if (!query.contains(" ")) {
                 query = query + " " + query + "*";
             }
-            search = QueryBuilders.simpleQueryStringQuery(query)
+            searchQuery = QueryBuilders.simpleQueryStringQuery(query)
                 .analyzer(analyzerLang)
                 .field("title" + "." + lang).boost(3f)
                 .field("objective" + "." + lang)
@@ -193,17 +193,79 @@ public class DatasetsSearchController {
                 .field("subject.definition." + lang)
                 .defaultOperator(Operator.OR);
         } else {
-            search = QueryBuilders.matchAllQuery();
+            searchQuery = QueryBuilders.matchAllQuery();
         }
 
-        // add filter
-        BoolQueryBuilder boolQuery = addFilter(theme, accessRights, search, orgPath, firstHarvested, provenance, spatial, opendata, catalog);
+        BoolQueryBuilder composedQuery = QueryBuilders.boolQuery().must(searchQuery);
+
+        // add filters
+
+        // theme can contain multiple themes, example: AGRI,HEAL
+        if (!StringUtils.isEmpty(theme)) {
+            String[] themes = theme.split(",");
+            composedQuery.filter(QueryUtil.createTermsQuery("theme.code", themes));
+        }
+
+        if (!StringUtils.isEmpty(catalog)) {
+            composedQuery.filter(QueryUtil.createTermQuery("catalog.uri", catalog));
+        }
+
+
+        if (!StringUtils.isEmpty(accessRights)) {
+            composedQuery.filter(QueryUtil.createTermQuery("accessRights.code.raw", accessRights));
+        }
+        if (!StringUtils.isEmpty(opendata)) {
+            BoolQueryBuilder opendataFilter = QueryBuilders.boolQuery();
+            if (opendata.equals("true")) {
+                opendataFilter.must(QueryBuilders.termQuery("distribution.openLicense", "true"));
+                opendataFilter.must(QueryBuilders.termQuery("accessRights.code.raw", "PUBLIC"));
+            }
+            //Handle the negative cases
+            else if (opendata.equals("false")) {
+                BoolQueryBuilder notOpenLicenseFilter = QueryBuilders.boolQuery();
+                BoolQueryBuilder notOpenDistributionFilter = QueryBuilders.boolQuery();
+                notOpenLicenseFilter.mustNot(QueryBuilders.termQuery("distribution.openLicense", "true"));
+                notOpenDistributionFilter.mustNot(QueryBuilders.termQuery("accessRights.code.raw", "PUBLIC"));
+                opendataFilter.should(notOpenLicenseFilter);
+                opendataFilter.should(notOpenDistributionFilter);
+            }
+            composedQuery.filter(opendataFilter);
+        }
+
+        if (!StringUtils.isEmpty(orgPath)) {
+            composedQuery.filter(QueryUtil.createTermQuery("publisher.orgPath", orgPath));
+        }
+
+        if (firstHarvested > 0) {
+            composedQuery.filter(QueryUtil.createRangeQueryFromXdaysToNow(firstHarvested, "harvest.firstHarvested"));
+        }
+
+        if (!StringUtils.isEmpty(provenance)) {
+            composedQuery.filter(QueryUtil.createTermQuery("provenance.code.raw", accessRights));
+        }
+
+        if (!StringUtils.isEmpty(spatial)) {
+            BoolQueryBuilder spatialFilter = QueryBuilders.boolQuery();
+
+            String[] spatials = spatial.split(",");
+            Arrays.stream(spatials).forEach(spatialLabel -> {
+                if (spatialLabel.equals(MISSING)) {
+                    spatialFilter.mustNot(QueryBuilders.existsQuery("spatial"));
+                } else if (spatialLabel.startsWith("http")) {
+                    spatialFilter.must(QueryBuilders.termQuery("spatial.uri", spatialLabel));
+                } else {
+                    spatialFilter.must(QueryBuilders.termQuery("spatial.prefLabel.no.raw", spatialLabel));
+                }
+            });
+
+            composedQuery.filter(spatialFilter);
+        }
 
         // set up search query with aggregations
         SearchRequestBuilder searchBuilder = elasticsearch.getClient().prepareSearch("dcat");
         searchBuilder
             .setTypes("dataset")
-            .setQuery(boolQuery)
+            .setQuery(composedQuery)
             .setFrom(from)
             .setSize(size);
 
@@ -360,86 +422,6 @@ public class DatasetsSearchController {
         }
 
         return size;
-    }
-
-
-    /**
-     * Adds filters to query.
-     *
-     * @param search the search object
-     * @return a new bool query with the added filter.
-     */
-    private BoolQueryBuilder addFilter(
-        String theme, String accessRights,
-        QueryBuilder search, String orgPath,
-        int firstHarvested, String provenance, String spatial, String opendata,
-        String catalog) {
-
-        BoolQueryBuilder boolQuery = QueryBuilders.boolQuery()
-            .must(search);
-
-        // theme can contain multiple themes, example: AGRI,HEAL
-        if (!StringUtils.isEmpty(theme)) {
-            String[] themes = theme.split(",");
-            boolQuery.filter(QueryUtil.createTermsQuery("theme.code", themes));
-        }
-
-        if (!StringUtils.isEmpty(catalog)) {
-            boolQuery.filter(QueryUtil.createTermQuery("catalog.uri", catalog));
-        }
-
-
-        if (!StringUtils.isEmpty(accessRights)) {
-            boolQuery.filter(QueryUtil.createTermQuery("accessRights.code.raw", accessRights));
-        }
-        if (!StringUtils.isEmpty(opendata)) {
-            BoolQueryBuilder opendataFilter = QueryBuilders.boolQuery();
-            if (opendata.equals("true")) {
-                opendataFilter.must(QueryBuilders.termQuery("distribution.openLicense", "true"));
-                opendataFilter.must(QueryBuilders.termQuery("accessRights.code.raw", "PUBLIC"));
-            }
-            //Handle the negative cases
-            else if (opendata.equals("false")) {
-                BoolQueryBuilder notOpenLicenseFilter = QueryBuilders.boolQuery();
-                BoolQueryBuilder notOpenDistributionFilter = QueryBuilders.boolQuery();
-                notOpenLicenseFilter.mustNot(QueryBuilders.termQuery("distribution.openLicense", "true"));
-                notOpenDistributionFilter.mustNot(QueryBuilders.termQuery("accessRights.code.raw", "PUBLIC"));
-                opendataFilter.should(notOpenLicenseFilter);
-                opendataFilter.should(notOpenDistributionFilter);
-            }
-            boolQuery.filter(opendataFilter);
-        }
-
-        if (!StringUtils.isEmpty(orgPath)) {
-            boolQuery.filter(QueryUtil.createTermQuery("publisher.orgPath", orgPath));
-        }
-
-        if (firstHarvested > 0) {
-            boolQuery.filter(QueryUtil.createRangeQueryFromXdaysToNow(firstHarvested, "harvest.firstHarvested"));
-        }
-
-        if (!StringUtils.isEmpty(provenance)) {
-            boolQuery.filter(QueryUtil.createTermQuery("provenance.code.raw", accessRights));
-        }
-
-        if (!StringUtils.isEmpty(spatial)) {
-            BoolQueryBuilder spatialFilter = QueryBuilders.boolQuery();
-
-            String[] spatials = spatial.split(",");
-            Arrays.stream(spatials).forEach(spatialLabel -> {
-                if (spatialLabel.equals(MISSING)) {
-                    spatialFilter.mustNot(QueryBuilders.existsQuery("spatial"));
-                } else if (spatialLabel.startsWith("http")) {
-                    spatialFilter.must(QueryBuilders.termQuery("spatial.uri", spatialLabel));
-                } else {
-                    spatialFilter.must(QueryBuilders.termQuery("spatial.prefLabel.no.raw", spatialLabel));
-                }
-            });
-
-            boolQuery.filter(spatialFilter);
-        }
-
-        return boolQuery;
     }
 
     static class QueryUtil {
