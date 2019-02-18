@@ -21,6 +21,7 @@ import org.elasticsearch.search.sort.SortBuilders;
 import org.elasticsearch.search.sort.SortOrder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
@@ -40,7 +41,7 @@ import java.util.Date;
  * Created by nodavsko on 29.09.2016.
  */
 @RestController
-public class DatasetsQueryService extends ElasticsearchService {
+public class DatasetsQueryService {
     public static final String UNKNOWN = "Ukjent";
     public static final String INDEX_DCAT = "dcat";
     public static final String FIELD_THEME_CODE = "theme.code";
@@ -57,6 +58,12 @@ public class DatasetsQueryService extends ElasticsearchService {
     public static final String QUERY_GET_BY_URI = "/datasets/byuri";
     private static final int AGGREGATION_NUMBER_OF_COUNTS = 10000; //be sure all theme counts are returned
     private static Logger logger = LoggerFactory.getLogger(DatasetsQueryService.class);
+    private ElasticsearchService elasticsearch;
+
+    @Autowired
+    public DatasetsQueryService(ElasticsearchService elasticsearchService) {
+        this.elasticsearch = elasticsearchService;
+    }
 
     /**
      * Compose and execute an elasticsearch query on dcat based on the input parameters.
@@ -166,9 +173,6 @@ public class DatasetsQueryService extends ElasticsearchService {
         int from = checkAndAdjustFrom((int) pageable.getOffset());
         int size = checkAndAdjustSize(pageable.getPageSize());
 
-        ResponseEntity<String> jsonError = initializeElasticsearchTransportClient();
-        if (jsonError != null) return jsonError;
-
         QueryBuilder search;
 
         if (!StringUtils.isEmpty(title)) {
@@ -205,7 +209,7 @@ public class DatasetsQueryService extends ElasticsearchService {
         BoolQueryBuilder boolQuery = addFilter(theme, accessRights, search, orgPath, firstHarvested, provenance, spatial, opendata, catalog);
 
         // set up search query with aggregations
-        SearchRequestBuilder searchBuilder = getClient().prepareSearch("dcat");
+        SearchRequestBuilder searchBuilder = elasticsearch.getClient().prepareSearch("dcat");
         searchBuilder
             .setTypes("dataset")
             .setQuery(boolQuery)
@@ -494,8 +498,7 @@ public class DatasetsQueryService extends ElasticsearchService {
     }
 
     Dataset getDatasetById(String id) {
-        initializeElasticsearchTransportClient();
-        GetResponse elasticGetResponse = getClient().prepareGet(INDEX_DCAT, "dataset", id).get();
+        GetResponse elasticGetResponse = elasticsearch.getClient().prepareGet(INDEX_DCAT, "dataset", id).get();
 
         if (!elasticGetResponse.isExists()) {
             return null;
@@ -507,9 +510,8 @@ public class DatasetsQueryService extends ElasticsearchService {
     }
 
     Dataset getDatasetByUri(String uri) throws Exception {
-        initializeElasticsearchTransportClient();
 
-        SearchRequestBuilder searchBuilder = getClient().prepareSearch("dcat")
+        SearchRequestBuilder searchBuilder = elasticsearch.getClient().prepareSearch("dcat")
             .setTypes("dataset")
             .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
             .setQuery(QueryBuilders.termQuery("uri", uri));
@@ -583,9 +585,6 @@ public class DatasetsQueryService extends ElasticsearchService {
 
         logger.info("{} of {}", AGGREGATE_DATASET, query);
 
-        ResponseEntity<String> jsonError = initializeElasticsearchTransportClient();
-        if (jsonError != null) return jsonError;
-
         QueryBuilder search;
 
         if ("".equals(query)) {
@@ -607,7 +606,7 @@ public class DatasetsQueryService extends ElasticsearchService {
         AggregationBuilder datasetsWithSubject = AggregationBuilders.filter("subjectCount", QueryBuilders.existsQuery("subject.prefLabel"));
 
         // set up search query with aggregations
-        SearchRequestBuilder searchBuilder = getClient().prepareSearch("dcat")
+        SearchRequestBuilder searchBuilder = elasticsearch.getClient().prepareSearch("dcat")
             .setTypes("dataset")
             .setQuery(search)
             .setSize(0)

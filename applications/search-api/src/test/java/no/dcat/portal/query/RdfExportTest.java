@@ -13,6 +13,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import static org.mockito.Mockito.mock;
+
 
 @Category(UnitTest.class)
 public class RdfExportTest {
@@ -273,7 +275,9 @@ public class RdfExportTest {
 
     @Before
     public void mockQuery() {
-        queryService = new DatasetsQueryService();
+
+        ElasticsearchService elasticsearchServiceMock = mock(ElasticsearchService.class);
+        queryService = new DatasetsQueryService(elasticsearchServiceMock);
     }
 
     @Test

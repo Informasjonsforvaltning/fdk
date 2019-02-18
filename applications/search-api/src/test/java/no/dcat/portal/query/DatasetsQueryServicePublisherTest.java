@@ -33,10 +33,11 @@ public class DatasetsQueryServicePublisherTest {
 
     @Before
     public void setUp() {
-        sqs = new PublisherQueryService();
         client = mock(Client.class);
         populateMock();
-        sqs.setClient(client);
+        ElasticsearchService elasticsearchServiceMock = mock(ElasticsearchService.class);
+        when(elasticsearchServiceMock.getClient()).thenReturn(client);
+        sqs = new PublisherQueryService(elasticsearchServiceMock);
     }
 
     /**

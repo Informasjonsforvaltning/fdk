@@ -35,10 +35,11 @@ public class DatasetsQueryServiceSearchTest {
 
     @Before
     public void setUp() {
-        sqs = new DatasetsQueryService();
         client = mock(Client.class);
         populateMock();
-        sqs.setClient(client);
+        ElasticsearchService elasticsearchServiceMock = mock(ElasticsearchService.class);
+        when(elasticsearchServiceMock.getClient()).thenReturn(client);
+        sqs = new DatasetsQueryService(elasticsearchServiceMock);
     }
 
     /**
