@@ -8,7 +8,7 @@ const mapStateToProps = ({ form }, ownProps) => {
   return {
     syncErrors: getFormSyncErrors('apiDatasetReferences')(form),
     initialValues: {
-      datasetReferences: _.get(apiItem, 'datasetReferences', [])
+      datasetUris: _.get(apiItem, 'datasetUris', [])
     }
   };
 };
