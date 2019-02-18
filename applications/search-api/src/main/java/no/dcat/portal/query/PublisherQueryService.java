@@ -18,6 +18,7 @@ import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -30,13 +31,19 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
-public class PublisherQueryService extends ElasticsearchService {
+public class PublisherQueryService {
     public static final String INDEX_DCAT = "dcat";
     public static final String TYPE_DATA_PUBLISHER = "publisher";
     public static final String QUERY_PUBLISHER = "/publisher";
     public static final String QUERY_PUBLISHER_HIERARCHY = "/publisher/hierarchy";
     public static final String QUERY_GET_BY_ORGNR = "/publishers/{orgNr}";
     private static Logger logger = LoggerFactory.getLogger(PublisherQueryService.class);
+    private ElasticsearchService elasticsearch;
+
+    @Autowired
+    public PublisherQueryService(ElasticsearchService elasticsearchService) {
+        this.elasticsearch = elasticsearchService;
+    }
 
     /**
      * Finds all publisher loaded into elasticsearch.
@@ -53,9 +60,6 @@ public class PublisherQueryService extends ElasticsearchService {
         @RequestParam(value = "q", defaultValue = "", required = false) String query) {
         logger.info("/publisher query: {}", query);
 
-        ResponseEntity<String> jsonError = initializeElasticsearchTransportClient();
-        if (jsonError != null) return jsonError;
-
         QueryBuilder search;
 
         if ("".equals(query)) {
@@ -64,7 +68,7 @@ public class PublisherQueryService extends ElasticsearchService {
             search = QueryBuilders.matchPhrasePrefixQuery("name", query);
         }
 
-        SearchRequestBuilder searchQuery = getClient().prepareSearch(INDEX_DCAT).setTypes(TYPE_DATA_PUBLISHER).setQuery(search);
+        SearchRequestBuilder searchQuery = elasticsearch.getClient().prepareSearch(INDEX_DCAT).setTypes(TYPE_DATA_PUBLISHER).setQuery(search);
         SearchResponse responseSize = searchQuery.execute().actionGet();
 
         int totNrOfPublisher = (int) responseSize.getHits().getTotalHits();
@@ -98,8 +102,7 @@ public class PublisherQueryService extends ElasticsearchService {
     }
 
     Publisher getPublisherByOrgNr(String orgNr) throws NotFoundException {
-        initializeElasticsearchTransportClient();
-        GetResponse elasticGetResponse = getClient().prepareGet(INDEX_DCAT, TYPE_DATA_PUBLISHER, orgNr).get();
+        GetResponse elasticGetResponse = elasticsearch.getClient().prepareGet(INDEX_DCAT, TYPE_DATA_PUBLISHER, orgNr).get();
 
         if (!elasticGetResponse.isExists()) {
             throw new NotFoundException();

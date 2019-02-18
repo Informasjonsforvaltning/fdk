@@ -24,6 +24,8 @@ import java.util.*;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 
 @Category(IntegrationTest.class)
@@ -118,8 +120,11 @@ public class HarvestQueryIT {
     @Test
     public void queryCatalogHarvestRecordsOK() throws Throwable {
 
-        HarvestQueryService service = new HarvestQueryService();
-        service.setClient(elasticsearch.getClient());
+
+        ElasticsearchService elasticsearchServiceMock = mock(ElasticsearchService.class);
+        when(elasticsearchServiceMock.getClient()).thenReturn(elasticsearch.getClient());
+
+        HarvestQueryService service = new HarvestQueryService(elasticsearchServiceMock);
 
         // First query, all under /STAT
         ResponseEntity<String> response = service.listCatalogHarvestRecords("/STAT/1");

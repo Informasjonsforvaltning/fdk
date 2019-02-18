@@ -12,6 +12,7 @@ import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.metrics.sum.SumAggregationBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,11 +20,17 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Date;
 
 @RestController
-public class HarvestQueryService extends ElasticsearchService {
+public class HarvestQueryService {
     public static final String INDEX_DCAT = "dcat";
     public static final String TYPE_DATA_PUBLISHER = "publisher";
     public static final String QUERY_PUBLISHER = "/publisher";
     private static Logger logger = LoggerFactory.getLogger(HarvestQueryService.class);
+    private ElasticsearchService elasticsearch;
+
+    @Autowired
+    public HarvestQueryService(ElasticsearchService elasticsearchService) {
+        this.elasticsearch = elasticsearchService;
+    }
 
     /**
      * @return The complete elasticsearch response on Json-format is returned..
@@ -35,9 +42,6 @@ public class HarvestQueryService extends ElasticsearchService {
         @ApiParam("The orgpath of the publisher, e.g. /STAT or /FYLKE")
         @RequestParam(value = "q", defaultValue = "", required = false) String query) {
         logger.info("/harvest query: {}", query);
-
-        ResponseEntity<String> jsonError = initializeElasticsearchTransportClient();
-        if (jsonError != null) return jsonError;
 
         QueryBuilder search;
 
@@ -62,7 +66,7 @@ public class HarvestQueryService extends ElasticsearchService {
         AggregationBuilder last30 = AggregationBuilders.filter("last30days", range2).subAggregation(agg1).subAggregation(agg2).subAggregation(agg3);
         AggregationBuilder last365 = AggregationBuilders.filter("last365days", range3).subAggregation(agg1).subAggregation(agg2).subAggregation(agg3);
 
-        SearchRequestBuilder searchQuery = getClient()
+        SearchRequestBuilder searchQuery = elasticsearch.getClient()
             .prepareSearch("harvest").setTypes("catalog")
             .setQuery(search)
             .addAggregation(last7)

@@ -228,12 +228,14 @@ public class DatasetsQueryServiceDetailTest {
         "                    }\n" +
         "                }";
 
+    ElasticsearchService elasticsearchServiceMock = mock(ElasticsearchService.class);
+
     @Before
     public void setUp() {
-        sqs = new DatasetsQueryService();
         client = mock(Client.class);
         populateMock();
-        sqs.setClient(client);
+        when(elasticsearchServiceMock.getClient()).thenReturn(client);
+        sqs = new DatasetsQueryService(elasticsearchServiceMock);
     }
 
     /**
@@ -241,7 +243,7 @@ public class DatasetsQueryServiceDetailTest {
      */
     @Test
     public void testWithHits() throws NotFoundException {
-        DatasetsQueryService spyController = spy(new DatasetsQueryService());
+        DatasetsQueryService spyController = spy(new DatasetsQueryService(elasticsearchServiceMock));
         doReturn(new Dataset()).when(spyController).getDatasetById(anyString());
 
         ResponseEntity<String> actual = spyController.getDatasetByIdHandler(new ServletRequest("29"), "29");
@@ -253,7 +255,7 @@ public class DatasetsQueryServiceDetailTest {
      */
     @Test(expected = NotFoundException.class)
     public void testWithNoHits() throws NotFoundException {
-        DatasetsQueryService spyController = spy(new DatasetsQueryService());
+        DatasetsQueryService spyController = spy(new DatasetsQueryService(elasticsearchServiceMock));
         doReturn(null).when(spyController).getDatasetById(anyString());
 
         spyController.getDatasetByIdHandler(new ServletRequest("29"), "29");
@@ -267,7 +269,7 @@ public class DatasetsQueryServiceDetailTest {
 
     @Test
     public void correctAcceptheader() throws NotFoundException {
-        DatasetsQueryService spyController = spy(new DatasetsQueryService());
+        DatasetsQueryService spyController = spy(new DatasetsQueryService(elasticsearchServiceMock));
         doReturn(new Dataset()).when(spyController).getDatasetById(anyString());
 
         HttpServletRequestWrapper request = new HttpServletRequestWrapper(new ServletRequest("/details/path")) {
