@@ -434,3 +434,7 @@ Velg Feed dersom det er en distribusjon hvor endringer hentes gjennom f.eks. RSS
     dct:abstract """Dato/tid sist katalogen ble endret,. Dette kan være endring av en datasettbeskrivelse, eller andre metadata i katalogen."""@no ;
     dct:description """Dato/tid sist katalogen ble endret,. Dette kan være endring av en datasettbeskrivelse, eller andre metadata i katalogen."""@no .
     
+# Related dataset (Relatert datasett)
+:Related_dataset
+    dct:abstract """Legg til en eller flere datasettbeskrivelse(r) som er tilknyttet API-et."""@no ;
+    dct:description """ """@no .
