@@ -10,7 +10,7 @@ import org.elasticsearch.index.query.*;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.bucket.filters.FiltersAggregator;
-import org.elasticsearch.search.aggregations.bucket.terms.Terms.Order;
+import org.elasticsearch.search.aggregations.bucket.terms.Terms;
 import org.elasticsearch.search.sort.SortBuilder;
 import org.elasticsearch.search.sort.SortBuilders;
 import org.elasticsearch.search.sort.SortOrder;
@@ -35,7 +35,7 @@ import java.util.Date;
  */
 @RestController
 public class DatasetsSearchController {
-    public static final String UNKNOWN = "Ukjent";
+    public static final String MISSING = "Ukjent";
     public static final String INDEX_DCAT = "dcat";
     public static final String FIELD_THEME_CODE = "theme.code";
     public static final String FIELD_ACCESS_RIGHTS_PREFLABEL = "accessRights.code.raw";
@@ -47,7 +47,7 @@ public class DatasetsSearchController {
     public static final long DAY_IN_MS = 1000 * 3600 * 24;
     /* api names */
     public static final String QUERY_SEARCH = "/datasets";
-    private static final int AGGREGATION_NUMBER_OF_COUNTS = 10000; //be sure all theme counts are returned
+    private static final int MAX_AGGREGATIONS = 10000; //be sure all theme counts are returned
     private static Logger logger = LoggerFactory.getLogger(DatasetsSearchController.class);
     private ElasticsearchService elasticsearch;
 
@@ -208,17 +208,17 @@ public class DatasetsSearchController {
             .setSize(size);
 
         if ("true".equals(aggregations)) {
-            searchBuilder.addAggregation(createAggregation(TERMS_SUBJECTS_COUNT, FIELD_SUBJECTS_PREFLABEL, UNKNOWN))
-                .addAggregation(createAggregation(TERMS_ACCESS_RIGHTS_COUNT, FIELD_ACCESS_RIGHTS_PREFLABEL, UNKNOWN))
-                .addAggregation(createAggregation(TERMS_THEME_COUNT, FIELD_THEME_CODE, UNKNOWN))
-                .addAggregation(createAggregation("catalogs", "catalog.uri", UNKNOWN))
-                .addAggregation(createAggregation("provenanceCount", "provenance.code.raw", UNKNOWN))
-                .addAggregation(createAggregation("orgPath", "publisher.orgPath", UNKNOWN))
-                .addAggregation(temporalAggregation("firstHarvested", "harvest.firstHarvested"))
+            searchBuilder.addAggregation(QueryUtil.createTermsAggregation(TERMS_SUBJECTS_COUNT, FIELD_SUBJECTS_PREFLABEL))
+                .addAggregation(QueryUtil.createTermsAggregation(TERMS_ACCESS_RIGHTS_COUNT, FIELD_ACCESS_RIGHTS_PREFLABEL))
+                .addAggregation(QueryUtil.createTermsAggregation(TERMS_THEME_COUNT, FIELD_THEME_CODE))
+                .addAggregation(QueryUtil.createTermsAggregation("catalogs", "catalog.uri"))
+                .addAggregation(QueryUtil.createTermsAggregation("provenanceCount", "provenance.code.raw"))
+                .addAggregation(QueryUtil.createTermsAggregation("orgPath", "publisher.orgPath"))
+                .addAggregation(QueryUtil.createTemporalAggregation("firstHarvested", "harvest.firstHarvested"))
                 .addAggregation(AggregationBuilders.missing("missingFirstHarvested").field("harvest.firstHarvested"))
-                .addAggregation(temporalAggregation("lastChanged", "harvest.lastChanged"))
+                .addAggregation(QueryUtil.createTemporalAggregation("lastChanged", "harvest.lastChanged"))
                 .addAggregation(AggregationBuilders.missing("missingLastChanged").field("harvest.lastChanged"))
-                .addAggregation(createAggregation("spatial", "spatial.prefLabel.no.raw", UNKNOWN))
+                .addAggregation(QueryUtil.createTermsAggregation("spatial", "spatial.prefLabel.no.raw"))
                 .addAggregation(getOpendataAggregation());
         }
 
@@ -291,17 +291,17 @@ public class DatasetsSearchController {
         AggregationBuilder datasetsWithSubject = AggregationBuilders.filter("subjectCount", QueryBuilders.existsQuery("subject.prefLabel"));
 
         // set up search query with aggregations
-        SearchRequestBuilder searchBuilder = elasticsearch.getClient().prepareSearch("dcat")
+        SearchRequestBuilder searchBuilder = elasticsearch.getClient().prepareSearch(INDEX_DCAT)
             .setTypes("dataset")
             .setQuery(search)
             .setSize(0)
-            .addAggregation(createAggregation(TERMS_ACCESS_RIGHTS_COUNT, FIELD_ACCESS_RIGHTS_PREFLABEL, UNKNOWN))
-            .addAggregation(createAggregation(TERMS_THEME_COUNT, FIELD_THEME_CODE, UNKNOWN))
-            .addAggregation(createAggregation("orgPath", "publisher.orgPath", UNKNOWN))
-            .addAggregation(createAggregation("catalogs", "catalog.uri", UNKNOWN))
-            .addAggregation(temporalAggregation("firstHarvested", "harvest.firstHarvested"))
+            .addAggregation(QueryUtil.createTermsAggregation(TERMS_ACCESS_RIGHTS_COUNT, FIELD_ACCESS_RIGHTS_PREFLABEL))
+            .addAggregation(QueryUtil.createTermsAggregation(TERMS_THEME_COUNT, FIELD_THEME_CODE))
+            .addAggregation(QueryUtil.createTermsAggregation("orgPath", "publisher.orgPath"))
+            .addAggregation(QueryUtil.createTermsAggregation("catalogs", "catalog.uri"))
+            .addAggregation(QueryUtil.createTemporalAggregation("firstHarvested", "harvest.firstHarvested"))
             .addAggregation(AggregationBuilders.missing("missingFirstHarvested").field("harvest.firstHarvested"))
-            .addAggregation(temporalAggregation("lastChanged", "harvest.lastChanged"))
+            .addAggregation(QueryUtil.createTemporalAggregation("lastChanged", "harvest.lastChanged"))
             .addAggregation(AggregationBuilders.missing("missingLastChanged").field("harvest.lastChanged"))
             .addAggregation(datasetsWithDistribution)
             .addAggregation(openDatasetsWithDistribution)
@@ -341,20 +341,6 @@ public class DatasetsSearchController {
         searchBuilder.addSort(sortFieldProvenance).addSort(sortOnSource).addSort(sortOnLastChanged);
     }
 
-    AggregationBuilder temporalAggregation(String name, String dateField) {
-
-        return AggregationBuilders.filters(name,
-            new FiltersAggregator.KeyedFilter("last7days", temporalRangeFromXdaysToNow(7, dateField)),
-            new FiltersAggregator.KeyedFilter("last30days", temporalRangeFromXdaysToNow(30, dateField)),
-            new FiltersAggregator.KeyedFilter("last365days", temporalRangeFromXdaysToNow(365, dateField)));
-    }
-
-
-    RangeQueryBuilder temporalRangeFromXdaysToNow(int days, String dateField) {
-        long now = new Date().getTime();
-
-        return QueryBuilders.rangeQuery(dateField).from(now - days * DAY_IN_MS).to(now).format("epoch_millis");
-    }
 
     private int checkAndAdjustFrom(int from) {
         if (from < 0) {
@@ -394,35 +380,17 @@ public class DatasetsSearchController {
 
         // theme can contain multiple themes, example: AGRI,HEAL
         if (!StringUtils.isEmpty(theme)) {
-            BoolQueryBuilder themeFilter = QueryBuilders.boolQuery();
-
-            for (String t : theme.split(",")) {
-                if (t.equals(UNKNOWN)) {
-                    themeFilter.mustNot(QueryBuilders.existsQuery("theme.code"));
-                } else {
-                    themeFilter.must(QueryBuilders.termQuery("theme.code", t));
-                }
-            }
-
-            boolQuery.filter(themeFilter);
+            String[] themes = theme.split(",");
+            boolQuery.filter(QueryUtil.createTermsQuery("theme.code", themes));
         }
 
         if (!StringUtils.isEmpty(catalog)) {
-            BoolQueryBuilder catalogFilter = QueryBuilders.boolQuery();
-            catalogFilter.must(QueryBuilders.termQuery("catalog.uri", catalog));
-            boolQuery.filter(catalogFilter);
+            boolQuery.filter(QueryUtil.createTermQuery("catalog.uri", catalog));
         }
 
 
         if (!StringUtils.isEmpty(accessRights)) {
-            BoolQueryBuilder accessRightsFilter = QueryBuilders.boolQuery();
-            if (accessRights.equals(UNKNOWN)) {
-                accessRightsFilter.mustNot(QueryBuilders.existsQuery("accessRights"));
-            } else {
-                accessRightsFilter.must(QueryBuilders.termQuery("accessRights.code.raw", accessRights));
-            }
-
-            boolQuery.filter(accessRightsFilter);
+            boolQuery.filter(QueryUtil.createTermQuery("accessRights.code.raw", accessRights));
         }
         if (!StringUtils.isEmpty(opendata)) {
             BoolQueryBuilder opendataFilter = QueryBuilders.boolQuery();
@@ -443,34 +411,23 @@ public class DatasetsSearchController {
         }
 
         if (!StringUtils.isEmpty(orgPath)) {
-            BoolQueryBuilder orgPathFilter = QueryBuilders.boolQuery();
-            orgPathFilter.must(QueryBuilders.termQuery("publisher.orgPath", orgPath));
-            boolQuery.filter(orgPathFilter);
+            boolQuery.filter(QueryUtil.createTermQuery("publisher.orgPath", orgPath));
         }
 
         if (firstHarvested > 0) {
-            BoolQueryBuilder firstHarvestedFilter = QueryBuilders.boolQuery();
-            firstHarvestedFilter.must(temporalRangeFromXdaysToNow(firstHarvested, "harvest.firstHarvested"));
-            boolQuery.filter(firstHarvestedFilter);
+            boolQuery.filter(QueryUtil.createRangeQueryFromXdaysToNow(firstHarvested, "harvest.firstHarvested"));
         }
 
         if (!StringUtils.isEmpty(provenance)) {
-            BoolQueryBuilder provenanceFilter = QueryBuilders.boolQuery();
-
-            if (provenance.equals(UNKNOWN)) {
-                provenanceFilter.mustNot(QueryBuilders.existsQuery("provenance"));
-            } else {
-                provenanceFilter.must(QueryBuilders.termQuery("provenance.code.raw", provenance));
-            }
-
-            boolQuery.filter(provenanceFilter);
+            boolQuery.filter(QueryUtil.createTermQuery("provenance.code.raw", accessRights));
         }
 
         if (!StringUtils.isEmpty(spatial)) {
             BoolQueryBuilder spatialFilter = QueryBuilders.boolQuery();
 
-            Arrays.stream(spatial.split(",")).forEach(spatialLabel -> {
-                if (spatialLabel.equals(UNKNOWN)) {
+            String[] spatials = spatial.split(",");
+            Arrays.stream(spatials).forEach(spatialLabel -> {
+                if (spatialLabel.equals(MISSING)) {
                     spatialFilter.mustNot(QueryBuilders.existsQuery("spatial"));
                 } else if (spatialLabel.startsWith("http")) {
                     spatialFilter.must(QueryBuilders.termQuery("spatial.uri", spatialLabel));
@@ -482,25 +439,49 @@ public class DatasetsSearchController {
             boolQuery.filter(spatialFilter);
         }
 
-
         return boolQuery;
     }
 
-    /**
-     * Create aggregation object that counts the number of
-     * datasets for each value of the defined field.
-     * <p/>
-     *
-     * @param field The field to be aggregated.
-     * @return Aggregation builder object to be used in query
-     */
-    private AggregationBuilder createAggregation(String terms, String field, String missing) {
-        return AggregationBuilders
-            .terms(terms)
-            .missing(missing)
-            .field(field)
-            .size(AGGREGATION_NUMBER_OF_COUNTS)
-            .order(Order.count(false));
-    }
+    static class QueryUtil {
+        static QueryBuilder createTermQuery(String term, String value) {
+            return value.equals(MISSING) ?
+                QueryBuilders.boolQuery().mustNot(QueryBuilders.existsQuery(term)) :
+                QueryBuilders.termQuery(term, value);
+        }
 
+        static QueryBuilder createTermsQuery(String term, String[] values) {
+            BoolQueryBuilder composedQuery = QueryBuilders.boolQuery();
+            for (String value : values) {
+                if (value.equals(MISSING)) {
+                    composedQuery.filter(QueryBuilders.boolQuery().mustNot(QueryBuilders.existsQuery(term)));
+                } else {
+                    composedQuery.filter(QueryBuilders.termQuery(term, value));
+                }
+            }
+            return composedQuery;
+        }
+
+        static RangeQueryBuilder createRangeQueryFromXdaysToNow(int days, String dateField) {
+            long now = new Date().getTime();
+
+            return QueryBuilders.rangeQuery(dateField).from(now - days * DAY_IN_MS).to(now).format("epoch_millis");
+        }
+
+        static AggregationBuilder createTermsAggregation(String aggregationName, String field) {
+            return AggregationBuilders
+                .terms(aggregationName)
+                .missing(MISSING)
+                .field(field)
+                .size(MAX_AGGREGATIONS)
+                .order(Terms.Order.count(false));
+        }
+
+        static AggregationBuilder createTemporalAggregation(String name, String dateField) {
+
+            return AggregationBuilders.filters(name,
+                new FiltersAggregator.KeyedFilter("last7days", QueryUtil.createRangeQueryFromXdaysToNow(7, dateField)),
+                new FiltersAggregator.KeyedFilter("last30days", QueryUtil.createRangeQueryFromXdaysToNow(30, dateField)),
+                new FiltersAggregator.KeyedFilter("last365days", QueryUtil.createRangeQueryFromXdaysToNow(365, dateField)));
+        }
+    }
 }
