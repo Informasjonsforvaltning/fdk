@@ -116,7 +116,7 @@ public class ApiDocumentBuilderService {
         apiDocument.setUsageLimitation(apiRegistration.getUsageLimitation());
         apiDocument.setPerformance(apiRegistration.getPerformance());
         apiDocument.setAvailability(apiRegistration.getAvailability());
-        apiDocument.setStatus(apiRegistration.getStatus());
+        apiDocument.setStatusCode(apiRegistration.getStatusCode());
     }
 
     Publisher lookupPublisher(String orgNr) {

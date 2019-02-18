@@ -8,7 +8,7 @@ const mapStateToProps = ({ form }, ownProps) => {
   return {
     syncErrors: getFormSyncErrors('apiStatus')(form),
     initialValues: {
-      status: _.get(apiItem, 'status')
+      statusCode: _.get(apiItem, 'statusCode')
     }
   };
 };
