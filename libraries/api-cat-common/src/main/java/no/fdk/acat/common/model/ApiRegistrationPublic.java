@@ -52,5 +52,5 @@ public class ApiRegistrationPublic {
 
     private String availability;
 
-    private String status;
+    private String statusCode;
 }

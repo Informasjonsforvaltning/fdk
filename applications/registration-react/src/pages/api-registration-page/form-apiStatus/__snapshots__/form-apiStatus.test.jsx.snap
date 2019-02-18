@@ -11,7 +11,7 @@ exports[`should render FormApiStatus, { renderLandingpage  correctly 1`] = `
     <Field
       component={[Function]}
       items={null}
-      name="status"
+      name="statusCode"
       saveObject={false}
       valueKey="code"
     />

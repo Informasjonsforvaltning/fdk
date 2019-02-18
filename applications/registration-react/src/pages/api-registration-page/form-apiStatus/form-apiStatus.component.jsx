@@ -11,7 +11,7 @@ export const FormApiStatus = ({ apiStatusItems }) => (
     <div className="form-group">
       <Helptext title={localization.schema.apiStatus.helptext.apiStatus} />
       <Field
-        name="status"
+        name="statusCode"
         component={SelectField}
         items={apiStatusItems}
         valueKey="code"
