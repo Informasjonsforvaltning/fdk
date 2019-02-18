@@ -19,21 +19,19 @@ public class ElasticsearchService {
 
     @Value("${elastic.clusterName}")
     private String clusterName;
+    private Elasticsearch5Client elasticsearch;
 
     @PostConstruct
-    void validate(){
+    void validate() {
         assert clusterNodes != null;
         assert clusterName != null;
     }
-
-
-    private Elasticsearch5Client elasticsearch;
 
     public Client getClient() {
         if (elasticsearch == null) {
             initializeElasticsearchTransportClient();
         }
-        return elasticsearch==null ? null : elasticsearch.getClient();
+        return elasticsearch == null ? null : elasticsearch.getClient();
     }
 
     void setClient(Client client) {

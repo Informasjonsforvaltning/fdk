@@ -31,13 +31,12 @@ import java.util.stream.Collectors;
 
 @RestController
 public class PublisherQueryService extends ElasticsearchService {
-    private static Logger logger = LoggerFactory.getLogger(PublisherQueryService.class);
     public static final String INDEX_DCAT = "dcat";
     public static final String TYPE_DATA_PUBLISHER = "publisher";
     public static final String QUERY_PUBLISHER = "/publisher";
     public static final String QUERY_PUBLISHER_HIERARCHY = "/publisher/hierarchy";
     public static final String QUERY_GET_BY_ORGNR = "/publishers/{orgNr}";
-
+    private static Logger logger = LoggerFactory.getLogger(PublisherQueryService.class);
 
     /**
      * Finds all publisher loaded into elasticsearch.
@@ -47,11 +46,11 @@ public class PublisherQueryService extends ElasticsearchService {
      */
     @CrossOrigin
     @ApiOperation(value = "Query for publishers.",
-            notes = "Returns the elasticsearch response with matching publishers", response = Publisher.class)
+        notes = "Returns the elasticsearch response with matching publishers", response = Publisher.class)
     @RequestMapping(value = QUERY_PUBLISHER, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> publishers(
-            @ApiParam("A query string to match a publisher name")
-            @RequestParam(value = "q", defaultValue = "", required = false) String query) {
+        @ApiParam("A query string to match a publisher name")
+        @RequestParam(value = "q", defaultValue = "", required = false) String query) {
         logger.info("/publisher query: {}", query);
 
         ResponseEntity<String> jsonError = initializeElasticsearchTransportClient();
@@ -84,15 +83,15 @@ public class PublisherQueryService extends ElasticsearchService {
      */
     @CrossOrigin
     @ApiOperation(
-            value = "Get a specific publisher by OrgNr",
-            response = Publisher.class)
+        value = "Get a specific publisher by OrgNr",
+        response = Publisher.class)
     @RequestMapping(
-            value = QUERY_GET_BY_ORGNR,
-            method = RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE)
+        value = QUERY_GET_BY_ORGNR,
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
     public Publisher getPublisherByOrgNrHandler(
-            @ApiParam("Organization number") @PathVariable String orgNr)
-            throws NotFoundException {
+        @ApiParam("Organization number") @PathVariable String orgNr)
+        throws NotFoundException {
         logger.info(String.format("Get publisher with OrgNr: %s", orgNr));
 
         return getPublisherByOrgNr(orgNr);
@@ -119,7 +118,7 @@ public class PublisherQueryService extends ElasticsearchService {
      */
     @CrossOrigin
     @ApiOperation(value = "Returns all publishers in a hierarchy.",
-            response = PublisherHit.class)
+        response = PublisherHit.class)
     @RequestMapping(value = QUERY_PUBLISHER_HIERARCHY, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Hits> publisherNames() {
         /**
@@ -189,9 +188,9 @@ public class PublisherQueryService extends ElasticsearchService {
          * Removed any potential root duplicates or non root parents added to root level.
          */
         List<PublisherHit> result = publisherHitListWithChildren.stream()
-                .filter(publisherHit -> getParentOrgPath(publisherHit.orgPath).compareTo("") == 0)
-                .map(parent -> sortChildren(parent))
-                .collect(Collectors.toList());
+            .filter(publisherHit -> getParentOrgPath(publisherHit.orgPath).compareTo("") == 0)
+            .map(parent -> sortChildren(parent))
+            .collect(Collectors.toList());
 
         /**
          * Hardcoded in sorting for root elements.
