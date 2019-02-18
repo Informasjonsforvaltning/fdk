@@ -1,7 +1,9 @@
-package no.dcat.portal.query;
+package no.dcat.portal.query.controller;
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import no.dcat.portal.query.ModelFormatter;
+import no.dcat.portal.query.SupportedFormat;
 import no.dcat.shared.Catalog;
 import no.dcat.shared.Dataset;
 import org.apache.jena.query.*;

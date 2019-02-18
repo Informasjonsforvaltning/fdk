@@ -1,6 +1,7 @@
-package no.dcat.portal.query;
+package no.dcat.portal.query.controller;
 
 import com.google.gson.Gson;
+import no.dcat.portal.query.ElasticsearchService;
 import no.dcat.shared.Dataset;
 import no.fdk.test.testcategories.UnitTest;
 import org.hamcrest.Matchers;
@@ -17,8 +18,8 @@ import static org.mockito.Mockito.mock;
 
 
 @Category(UnitTest.class)
-public class RdfExportTest {
-    private static Logger logger = LoggerFactory.getLogger(RdfExportTest.class);
+public class DatasetsQueryServiceRdfExportTest {
+    private static Logger logger = LoggerFactory.getLogger(DatasetsQueryServiceRdfExportTest.class);
 
     String queryReply = " {\n" +
         "        \"id\" : \"http://brreg.no/catalogs/910244132/datasets/f5759687-d1e0-47fd-97eb-647759d0e8f4\",\n" +

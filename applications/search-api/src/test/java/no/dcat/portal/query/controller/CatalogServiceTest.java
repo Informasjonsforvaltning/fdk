@@ -1,4 +1,4 @@
-package no.dcat.portal.query;
+package no.dcat.portal.query.controller;
 
 import no.dcat.shared.Catalog;
 import no.fdk.test.testcategories.UnitTest;
