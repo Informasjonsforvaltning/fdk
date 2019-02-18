@@ -135,8 +135,8 @@ public class ApiHarvester {
                 apiRegistration.setApiSpecUrl(line.get("ApiSpecUrl"));
                 apiRegistration.setApiDocUrl(line.get("ApiDocUrl"));
                 apiRegistration.setNationalComponent("true".equals(line.get("NationalComponent")));
-                List<String> datasetReferences = Arrays.asList(line.get("DatasetRefs").split(","));
-                apiRegistration.setDatasetReferences(datasetReferences);
+                Set<String> datasetUris = new HashSet<>(Arrays.asList(line.get("DatasetRefs").split(",")));
+                apiRegistration.setDatasetUris(datasetUris);
 
                 result.add(apiRegistration);
             }

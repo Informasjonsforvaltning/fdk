@@ -129,7 +129,7 @@ public class ApiDocumentBuilderService {
     }
 
     Set<DatasetReference> extractDatasetReferences(ApiRegistrationPublic apiRegistration) {
-        List<String> datasetReferenceSources = apiRegistration.getDatasetReferences();
+        Set<String> datasetReferenceSources = apiRegistration.getDatasetUris();
 
         if (datasetReferenceSources == null) {
             return null;

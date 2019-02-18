@@ -20,7 +20,7 @@ export const FormRelatedDatasets = ({
         helptextItems={_.get(helptextItems, 'Cost')}
       />
       <Field
-        name="datasetReferences"
+        name="datasetUris"
         type="text"
         component={InputTagsDatasetsField}
         label="datasetReferences"

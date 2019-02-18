@@ -39,7 +39,7 @@ export class InputTagsDatasetsField extends React.Component {
   componentWillMount() {
     const { input, referencedDatasets } = this.props;
     const datasetReferences = [];
-    _.get(input, 'value').forEach(item => {
+    _.get(input, 'value', []).forEach(item => {
       datasetReferences.push({
         id: item,
         name: getTranslateText(

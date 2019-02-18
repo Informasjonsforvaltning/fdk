@@ -11,9 +11,7 @@ const mapProps = {
   publisher: props =>
     memoizedGetPublisherByOrgNr(_.get(props.match, ['params', 'catalogId'])),
   referencedDatasets: async props => {
-    const urlArray = _.get(props.item, 'datasetReferences', []).map(
-      item => item
-    );
+    const urlArray = _.get(props.item, 'datasetUris', []).map(item => item);
     const promiseMap = urlArray.map(url =>
       memoizedGetDatasetByURI(encodeURIComponent(url))
     );

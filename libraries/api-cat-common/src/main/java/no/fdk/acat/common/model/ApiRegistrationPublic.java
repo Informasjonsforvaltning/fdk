@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.ToString;
 import no.fdk.acat.common.model.apispecification.ApiSpecification;
 
-import java.util.List;
+import java.util.Set;
 
 @Data
 @ToString(includeFieldNames = false)
@@ -28,7 +28,7 @@ public class ApiRegistrationPublic {
     private String apiDocUrl;
 
     @ApiModelProperty("The dataset references")
-    private List<String> datasetReferences;
+    private Set<String> datasetUris;
 
     private ApiSpecification apiSpecification;
 
