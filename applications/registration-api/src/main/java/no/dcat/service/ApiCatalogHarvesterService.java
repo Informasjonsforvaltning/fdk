@@ -5,7 +5,6 @@ import no.dcat.model.ApiRegistration;
 import no.dcat.model.ApiRegistrationFactory;
 import no.dcat.model.HarvestStatus;
 import no.fdk.acat.bindings.ApiCatBindings;
-import no.fdk.acat.common.model.apispecification.ApiSpecification;
 import no.fdk.harvestqueue.HarvestQueue;
 import no.fdk.harvestqueue.QueuedTask;
 import no.fdk.imcat.bindings.InformationmodelCatBindings;
@@ -24,7 +23,6 @@ import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -108,6 +106,8 @@ public class ApiCatalogHarvesterService {
                     allApiUrlsForThisCatalog.add(st.getObject().toString());
                 }
             }
+            List<String> errorLog = new ArrayList<>();
+            boolean harvestedAtLeastOneAPI=false;
 
             for (String apiSpecUrl : allApiUrlsForThisCatalog) {
                 Optional<ApiRegistration> existingApiRegistrationOptional = apiRegistrationRepository.getByCatalogIdAndApiSpecUrl(originCatalog.getOrgNo(), apiSpecUrl);
@@ -115,31 +115,44 @@ public class ApiCatalogHarvesterService {
 
                 ApiRegistration apiRegistration;
                 if (existingApiRegistrationOptional.isPresent()) {
-                    logger.debug("Existing registration {}", existingApiRegistrationOptional.get().getId());
+                    logger.debug("Existing registration {} url {}", existingApiRegistrationOptional.get().getId(),apiSpecUrl);
                     apiRegistration = existingApiRegistrationOptional.get();
                 } else {
                     apiRegistration = apiRegistrationFactory.createApiRegistration(originCatalog.getOrgNo());
                     logger.debug("Created apiRegistration for orgNo: {}, id: {}", originCatalog.getOrgNo(), apiRegistration.getId());
                 }
-                logger.debug("saved apiRegistration {}", apiRegistration.getId());
 
                 apiRegistration.setFromApiCatalog(true);
 
                 try {
                     apiRegistrationFactory.setApiSpecificationFromSpecUrl(apiRegistration, apiSpecUrl);
                     apiRegistration.setHarvestStatus(HarvestStatus.Success());
+                    ApiRegistration savedApiRegistration = apiRegistrationRepository.save(apiRegistration);
+
+                    apiCat.triggerHarvestApiRegistration(savedApiRegistration.getId());
+                    informationmodelCat.triggerHarvestApiRegistration(savedApiRegistration.getId());
+                    harvestedAtLeastOneAPI = true;
+                    logger.debug("saved apiRegistration {}, url {}", apiRegistration.getId(), apiSpecUrl);
                 } catch (Exception e) {
+                    errorLog.add(apiSpecUrl);
+                    logger.debug("Failed while trying to harvest API {} ", apiSpecUrl, e.getMessage());
                     String errorMessage = "Failed while trying to fetch and parse API spec " + apiSpecUrl + " " + e.toString();
                     apiRegistration.setHarvestStatus(HarvestStatus.Error(errorMessage));
                 }
-
-                ApiRegistration savedApiRegistration = apiRegistrationRepository.save(apiRegistration);
-                apiCat.triggerHarvestApiRegistration(savedApiRegistration.getId());
-                informationmodelCat.triggerHarvestApiRegistration(savedApiRegistration.getId());
-
             }
 
-            originCatalog.setHarvestStatus(HarvestStatus.Success());
+            if (!errorLog.isEmpty()) {
+                logger.info("Harvest of API catalog {} done, errors present", originCatalog.getHarvestSourceUri());
+                if (harvestedAtLeastOneAPI) {
+                    originCatalog.setHarvestStatus(HarvestStatus.PartialSuccess(String.join(",", errorLog)));
+                } else {
+                    originCatalog.setHarvestStatus(HarvestStatus.Error(String.join(",", errorLog)));
+                }
+            } else {
+                logger.info("Harvest of  API catalog {} done, success", originCatalog.getHarvestSourceUri());
+                originCatalog.setHarvestStatus(HarvestStatus.Success());
+            }
+            
             apiCatalogRepository.save(originCatalog);
 
         } catch (Exception e) {

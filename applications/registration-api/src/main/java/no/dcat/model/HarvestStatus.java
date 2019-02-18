@@ -14,4 +14,6 @@ public class HarvestStatus {
     public static HarvestStatus Error(String message) {
         return new HarvestStatus(false, message);
     }
+
+    public static HarvestStatus PartialSuccess(String message) {return new HarvestStatus(true, message);}
 }
