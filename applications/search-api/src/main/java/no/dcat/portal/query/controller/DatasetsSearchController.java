@@ -117,7 +117,7 @@ public class DatasetsSearchController {
         @RequestParam(value = "opendata", defaultValue = "", required = false)
             String opendata,
 
-        @ApiParam("Filters on catalog. ")
+        @ApiParam("Filters on catalog uri.")
         @RequestParam(value = "catalog", defaultValue = "", required = false)
             String catalog,
 
@@ -409,13 +409,7 @@ public class DatasetsSearchController {
 
         if (!StringUtils.isEmpty(catalog)) {
             BoolQueryBuilder catalogFilter = QueryBuilders.boolQuery();
-
-            if (catalog.startsWith("http")) {
-                catalogFilter.must(QueryBuilders.termQuery("catalog.uri", catalog));
-            } else {
-                catalogFilter.must(QueryBuilders.multiMatchQuery(catalog, "catalog.title.*"));
-            }
-
+            catalogFilter.must(QueryBuilders.termQuery("catalog.uri", catalog));
             boolQuery.filter(catalogFilter);
         }
 
