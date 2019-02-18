@@ -284,13 +284,9 @@ public class DatasetsSearchController {
                 .addAggregation(getOpendataAggregation());
         }
 
-
         if (!StringUtils.isEmpty(returnFields)) {
             searchBuilder.setFetchSource(returnFields.split(","), null);
         }
-
-        logger.trace("Query: {}", searchBuilder.toString());
-
 
         if (StringUtils.isEmpty(sortfield)) {
             if (StringUtils.isEmpty(query)) {
@@ -310,8 +306,8 @@ public class DatasetsSearchController {
         }
 
         // Execute search
+        logger.trace("Executing query: {}", searchBuilder.toString());
         SearchResponse response = searchBuilder.execute().actionGet();
-
         logger.trace("Search response: {}", response.toString());
 
         // return response
@@ -398,7 +394,6 @@ public class DatasetsSearchController {
 
         SortBuilder sortOnLastChanged = SortBuilders.fieldSort("harvest.lastChanged")
             .order(SortOrder.DESC);
-
 
         searchBuilder.addSort(sortFieldProvenance).addSort(sortOnSource).addSort(sortOnLastChanged);
     }
