@@ -145,8 +145,8 @@ public class ApiSearchController {
 
         if ("true".equals(includeAggregations)) {
             searchRequest
-                .addAggregation(createTermsAggregation("formats", "formats"))
-                .addAggregation(createTermsAggregation("orgPath", "publisher.orgPath"));
+                .addAggregation(QueryUtil.createTermsAggregation("formats", "formats"))
+                .addAggregation(QueryUtil.createTermsAggregation("orgPath", "publisher.orgPath"));
         }
 
         if ("modified".equals(sortfield)) {
@@ -186,14 +186,6 @@ public class ApiSearchController {
         return size;
     }
 
-    private AggregationBuilder createTermsAggregation(String aggregationName, String field) {
-        return AggregationBuilders
-            .terms(aggregationName)
-            .missing(MISSING)
-            .field(field)
-            .size(MAX_AGGREGATIONS)
-            .order(Terms.Order.count(false));
-    }
 
     QueryResponse convertFromElasticResponse(SearchResponse elasticResponse) {
         logger.debug("converting response");
@@ -254,6 +246,15 @@ public class ApiSearchController {
                 }
             }
             return composedQuery;
+        }
+
+        static AggregationBuilder createTermsAggregation(String aggregationName, String field) {
+            return AggregationBuilders
+                .terms(aggregationName)
+                .missing(MISSING)
+                .field(field)
+                .size(MAX_AGGREGATIONS)
+                .order(Terms.Order.count(false));
         }
     }
 }
