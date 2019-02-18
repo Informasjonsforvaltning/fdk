@@ -198,6 +198,10 @@ public class DatasetsSearchController {
 
         BoolQueryBuilder composedQuery = QueryBuilders.boolQuery().must(searchQuery);
 
+        // Adding constant "should" term increases score for matching documents for national components
+        // in api-cat, we use modern notation nationalComponent=true, while in dataset is not as explicit
+        composedQuery.should(QueryUtil.createTermQuery("provenance.code.raw", "NASJONAL").boost(2));
+
         // add filters
 
         // theme can contain multiple themes, example: AGRI,HEAL
@@ -286,12 +290,6 @@ public class DatasetsSearchController {
 
         if (!StringUtils.isEmpty(returnFields)) {
             searchBuilder.setFetchSource(returnFields.split(","), null);
-        }
-
-        if (StringUtils.isEmpty(sortfield)) {
-            if (StringUtils.isEmpty(query)) {
-                addSortForEmptySearch(searchBuilder);
-            }
         }
 
         if ("modified".equals(sortfield)) {
@@ -383,21 +381,6 @@ public class DatasetsSearchController {
                 .must(QueryBuilders.termQuery("distribution.openLicense", "true"))
         );
     }
-
-    private void addSortForEmptySearch(SearchRequestBuilder searchBuilder) {
-
-        SortBuilder sortFieldProvenance = SortBuilders.fieldSort("provenanceSort")
-            .order(SortOrder.ASC);
-
-        SortBuilder sortOnSource = SortBuilders.fieldSort("source")
-            .order(SortOrder.ASC);
-
-        SortBuilder sortOnLastChanged = SortBuilders.fieldSort("harvest.lastChanged")
-            .order(SortOrder.DESC);
-
-        searchBuilder.addSort(sortFieldProvenance).addSort(sortOnSource).addSort(sortOnLastChanged);
-    }
-
 
     private int checkAndAdjustFrom(int from) {
         if (from < 0) {
