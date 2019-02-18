@@ -24,11 +24,11 @@ import static org.mockito.Mockito.*;
  */
 @RunWith(MockitoJUnitRunner.class)
 @Category(UnitTest.class)
-public class DatasetsQueryServicePublisherTest {
+public class PublisherQueryControllerTest {
     public static final String INDEX = "dcat";
     public static final String TYPE = "publisher";
     public static final int NR_OF_HITS = 12;
-    PublisherQueryService sqs;
+    PublisherQueryController sqs;
     Client client;
     SearchResponse response;
 
@@ -38,7 +38,7 @@ public class DatasetsQueryServicePublisherTest {
         populateMock();
         ElasticsearchService elasticsearchServiceMock = mock(ElasticsearchService.class);
         when(elasticsearchServiceMock.getClient()).thenReturn(client);
-        sqs = new PublisherQueryService(elasticsearchServiceMock);
+        sqs = new PublisherQueryController(elasticsearchServiceMock);
     }
 
     /**

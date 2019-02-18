@@ -42,7 +42,7 @@ import java.util.Date;
  * Created by nodavsko on 29.09.2016.
  */
 @RestController
-public class DatasetsQueryService {
+public class DatasetsQueryController {
     public static final String UNKNOWN = "Ukjent";
     public static final String INDEX_DCAT = "dcat";
     public static final String FIELD_THEME_CODE = "theme.code";
@@ -58,11 +58,11 @@ public class DatasetsQueryService {
     public static final String QUERY_GET_BY_ID = "/datasets/{id}";
     public static final String QUERY_GET_BY_URI = "/datasets/byuri";
     private static final int AGGREGATION_NUMBER_OF_COUNTS = 10000; //be sure all theme counts are returned
-    private static Logger logger = LoggerFactory.getLogger(DatasetsQueryService.class);
+    private static Logger logger = LoggerFactory.getLogger(DatasetsQueryController.class);
     private ElasticsearchService elasticsearch;
 
     @Autowired
-    public DatasetsQueryService(ElasticsearchService elasticsearchService) {
+    public DatasetsQueryController(ElasticsearchService elasticsearchService) {
         this.elasticsearch = elasticsearchService;
     }
 

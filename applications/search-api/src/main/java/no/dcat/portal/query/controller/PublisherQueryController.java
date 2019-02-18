@@ -32,17 +32,17 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
-public class PublisherQueryService {
+public class PublisherQueryController {
     public static final String INDEX_DCAT = "dcat";
     public static final String TYPE_DATA_PUBLISHER = "publisher";
     public static final String QUERY_PUBLISHER = "/publisher";
     public static final String QUERY_PUBLISHER_HIERARCHY = "/publisher/hierarchy";
     public static final String QUERY_GET_BY_ORGNR = "/publishers/{orgNr}";
-    private static Logger logger = LoggerFactory.getLogger(PublisherQueryService.class);
+    private static Logger logger = LoggerFactory.getLogger(PublisherQueryController.class);
     private ElasticsearchService elasticsearch;
 
     @Autowired
-    public PublisherQueryService(ElasticsearchService elasticsearchService) {
+    public PublisherQueryController(ElasticsearchService elasticsearchService) {
         this.elasticsearch = elasticsearchService;
     }
 

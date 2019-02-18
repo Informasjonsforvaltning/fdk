@@ -21,15 +21,15 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Date;
 
 @RestController
-public class HarvestQueryService {
+public class HarvestQueryController {
     public static final String INDEX_DCAT = "dcat";
     public static final String TYPE_DATA_PUBLISHER = "publisher";
     public static final String QUERY_PUBLISHER = "/publisher";
-    private static Logger logger = LoggerFactory.getLogger(HarvestQueryService.class);
+    private static Logger logger = LoggerFactory.getLogger(HarvestQueryController.class);
     private ElasticsearchService elasticsearch;
 
     @Autowired
-    public HarvestQueryService(ElasticsearchService elasticsearchService) {
+    public HarvestQueryController(ElasticsearchService elasticsearchService) {
         this.elasticsearch = elasticsearchService;
     }
 
