@@ -10,7 +10,6 @@ import no.fdk.acat.bindings.ApiCatBindings;
 import no.fdk.imcat.bindings.InformationmodelCatBindings;
 import no.fdk.webutils.exceptions.BadRequestException;
 import no.fdk.webutils.exceptions.NotFoundException;
-import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,7 +92,7 @@ public class ApiRegistrationController {
     /**
      * Create new apiRegistration in catalog. Id for the apiRegistration is created automatically.
      *
-     * @param apiRegistrationData
+     * @param data
      * @return ApiRegistration
      */
     @PreAuthorize("hasPermission(#catalogId, 'write')")
@@ -105,29 +104,21 @@ public class ApiRegistrationController {
         produces = APPLICATION_JSON_UTF8_VALUE)
     public ApiRegistration createApiRegistration(
         @PathVariable("catalogId") String catalogId,
-        @RequestBody ApiRegistration apiRegistrationData
+        @RequestBody Map<String, Object> data
     ) throws NotFoundException, BadRequestException {
 
         logger.info("SAVE requestbody apiRegistration");
 
         catalogRepository.findById(catalogId).orElseThrow(NotFoundException::new);
 
-        ApiRegistrationBuilder apiRegistrationBuilder = new ApiRegistrationBuilder(catalogId);
-
+        ApiRegistration apiRegistration;
         try {
-            String apiSpecUrl = apiRegistrationData.getApiSpecUrl();
-            String apiSpec = apiRegistrationData.getApiSpec();
-
-            if (StringUtils.isNotEmpty(apiSpecUrl)) {
-                apiRegistrationBuilder.setApiSpecificationFromSpecUrl(apiSpecUrl, apiCat);
-            } else if (!StringUtils.isEmpty(apiSpec)) {
-                apiRegistrationBuilder.setApiSpecificationFromSpec(apiSpec, apiCat);
-            }
-
+            apiRegistration = new ApiRegistrationBuilder(catalogId)
+                .setData(data, apiCat)
+                .build();
         } catch (Exception e) {
             throw new BadRequestException(e.getMessage());
         }
-        ApiRegistration apiRegistration = apiRegistrationBuilder.build();
         logger.debug("create apiRegistration {}", apiRegistration.getId());
         ApiRegistration savedApiRegistration = apiRegistrationRepository.save(apiRegistration);
 
