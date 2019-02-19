@@ -59,7 +59,7 @@
         <dependency>
             <groupId>no.dcat</groupId>
             <artifactId>api-cat-common</artifactId>
-            <version>1.3.0-SNAPSHOT</version>
+            <version>1.4.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
         <dependency>

@@ -75,6 +75,8 @@ public class ApiRegistrationBuilder {
             setApiSpecificationFromSpec(apiSpec, apiCatService);
         }
 
+        fixStatusValues();
+
         return this;
     }
 
@@ -93,6 +95,19 @@ public class ApiRegistrationBuilder {
             });
 
         apiRegistration = gson.fromJson(apiRegistrationJson, ApiRegistration.class);
+        return this;
+    }
+
+    public ApiRegistrationBuilder fixStatusValues() {
+        // reset deprecation fields if not in one of deprecated statuses
+        Set<String> deprecatedStatusCodes = new HashSet(Arrays.asList("DEPRECATED", "REMOVED"));
+
+        if(!deprecatedStatusCodes.contains(apiRegistration.getStatusCode())) {
+            apiRegistration.setDeprecationInfoExpirationDate(null);
+            apiRegistration.setDeprecationInfoMessage(null);
+            apiRegistration.setDeprecationInfoReplacedWithUrl(null);
+        }
+
         return this;
     }
 }
