@@ -2,7 +2,7 @@ package no.dcat.service;
 
 import no.dcat.model.ApiCatalog;
 import no.dcat.model.ApiRegistration;
-import no.dcat.model.ApiRegistrationFactory;
+import no.dcat.model.ApiRegistrationBuilder;
 import no.dcat.model.HarvestStatus;
 import no.fdk.acat.bindings.ApiCatBindings;
 import no.fdk.harvestqueue.HarvestQueue;
@@ -50,23 +50,19 @@ public class ApiCatalogHarvesterService {
 
     private HarvestQueue harvestQueue;
 
-    private ApiRegistrationFactory apiRegistrationFactory;
-
     @Autowired
     public ApiCatalogHarvesterService(
         ApiRegistrationRepository apiRegistrationRepository,
         ApiCatalogRepository apiCatalogRepository,
         HarvestQueue harvestQueue,
         ApiCatService apiCatService,
-        InformationmodelCatService informationmodelCatService,
-        ApiRegistrationFactory apiRegistrationFactory
+        InformationmodelCatService informationmodelCatService
     ) {
         this.apiRegistrationRepository = apiRegistrationRepository;
         this.apiCatalogRepository = apiCatalogRepository;
         this.harvestQueue = harvestQueue;
         this.apiCat = apiCatService;
         this.informationmodelCat = informationmodelCatService;
-        this.apiRegistrationFactory = apiRegistrationFactory;
     }
 
     //TODO: Also trigger this every 24h ? (there exists a spring thing to do that)
@@ -107,38 +103,35 @@ public class ApiCatalogHarvesterService {
                 }
             }
             List<String> errorLog = new ArrayList<>();
-            boolean harvestedAtLeastOneAPI=false;
+            boolean harvestedAtLeastOneAPI = false;
 
             for (String apiSpecUrl : allApiUrlsForThisCatalog) {
                 Optional<ApiRegistration> existingApiRegistrationOptional = apiRegistrationRepository.getByCatalogIdAndApiSpecUrl(originCatalog.getOrgNo(), apiSpecUrl);
                 logger.debug("Found existing {}", existingApiRegistrationOptional.isPresent());
 
-                ApiRegistration apiRegistration;
-                if (existingApiRegistrationOptional.isPresent()) {
-                    logger.debug("Existing registration {} url {}", existingApiRegistrationOptional.get().getId(),apiSpecUrl);
-                    apiRegistration = existingApiRegistrationOptional.get();
-                } else {
-                    apiRegistration = apiRegistrationFactory.createApiRegistration(originCatalog.getOrgNo());
-                    logger.debug("Created apiRegistration for orgNo: {}, id: {}", originCatalog.getOrgNo(), apiRegistration.getId());
-                }
-
-                apiRegistration.setFromApiCatalog(true);
+                ApiRegistrationBuilder apiRegistrationBuilder = existingApiRegistrationOptional.isPresent() ?
+                    new ApiRegistrationBuilder(existingApiRegistrationOptional.get()) :
+                    new ApiRegistrationBuilder(originCatalog.getOrgNo());
 
                 try {
-                    apiRegistrationFactory.setApiSpecificationFromSpecUrl(apiRegistration, apiSpecUrl);
-                    apiRegistration.setHarvestStatus(HarvestStatus.Success());
-                    ApiRegistration savedApiRegistration = apiRegistrationRepository.save(apiRegistration);
+                    apiRegistrationBuilder
+                        .setApiSpecificationFromSpecUrl(apiSpecUrl, apiCat)
+                        .setFromApiCatalog(true)
+                        .setHarvestStatus(HarvestStatus.Success());
 
-                    apiCat.triggerHarvestApiRegistration(savedApiRegistration.getId());
-                    informationmodelCat.triggerHarvestApiRegistration(savedApiRegistration.getId());
                     harvestedAtLeastOneAPI = true;
-                    logger.debug("saved apiRegistration {}, url {}", apiRegistration.getId(), apiSpecUrl);
                 } catch (Throwable t) {
                     errorLog.add(apiSpecUrl);
                     logger.debug("Failed while trying to harvest API {} ", apiSpecUrl, t.getMessage());
                     String errorMessage = "Failed while trying to fetch and parse API spec " + apiSpecUrl + " " + t.toString();
-                    apiRegistration.setHarvestStatus(HarvestStatus.Error(errorMessage));
+                    apiRegistrationBuilder.setHarvestStatus(HarvestStatus.Error(errorMessage));
                 }
+
+                ApiRegistration apiRegistration = apiRegistrationBuilder.build();
+                ApiRegistration savedApiRegistration = apiRegistrationRepository.save(apiRegistration);
+                logger.debug("saved apiRegistration {}, url {}", savedApiRegistration.getId(), apiSpecUrl);
+                apiCat.triggerHarvestApiRegistration(savedApiRegistration.getId());
+                informationmodelCat.triggerHarvestApiRegistration(savedApiRegistration.getId());
             }
 
             if (!errorLog.isEmpty()) {
@@ -152,7 +145,7 @@ public class ApiCatalogHarvesterService {
                 logger.info("Harvest of  API catalog {} done, success", originCatalog.getHarvestSourceUri());
                 originCatalog.setHarvestStatus(HarvestStatus.Success());
             }
-            
+
             apiCatalogRepository.save(originCatalog);
 
         } catch (Throwable t) {

@@ -2,7 +2,6 @@ package no.dcat.controller;
 
 import com.google.gson.Gson;
 import no.dcat.model.ApiRegistration;
-import no.dcat.model.ApiRegistrationFactory;
 import no.dcat.model.Catalog;
 import no.dcat.service.ApiCatService;
 import no.dcat.service.ApiRegistrationRepository;
@@ -53,8 +52,6 @@ public class ApiRegistrationControllerTest {
     @Mock
     private InformationmodelCatService informationmodelCatMock;
 
-    private ApiRegistrationFactory apiRegistrationFactory;
-
     @Before
     public void setup() throws IOException {
         MockitoAnnotations.initMocks(this);
@@ -72,10 +69,8 @@ public class ApiRegistrationControllerTest {
         when(apiRegData.getId()).thenReturn("id");
         when(apiRegistrationRepositoryMock.save(any(ApiRegistration.class))).thenAnswer((invocation) -> invocation.getArguments()[0]);
 
-        apiRegistrationFactory = new ApiRegistrationFactory(apiCatMock);
-
         apiRegistrationController =
-            new ApiRegistrationController(apiRegistrationRepositoryMock, catalogRepositoryMock, apiCatMock, informationmodelCatMock, apiRegistrationFactory);
+            new ApiRegistrationController(apiRegistrationRepositoryMock, catalogRepositoryMock, apiCatMock, informationmodelCatMock);
     }
 
     @Test
