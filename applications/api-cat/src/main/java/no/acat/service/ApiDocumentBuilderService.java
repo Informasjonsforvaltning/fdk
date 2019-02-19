@@ -5,6 +5,7 @@ import no.acat.repository.ApiDocumentRepository;
 import no.dcat.client.publishercat.PublisherCatClient;
 import no.dcat.htmlclean.HtmlCleaner;
 import no.dcat.shared.*;
+import no.fdk.acat.common.model.ApiEditableProperties;
 import no.fdk.acat.common.model.ApiRegistrationPublic;
 import no.fdk.acat.common.model.apispecification.ApiSpecification;
 import no.fdk.acat.common.model.apispecification.ExternalDocumentation;
@@ -105,18 +106,8 @@ public class ApiDocumentBuilderService {
     void populateFromApiRegistration(ApiDocument apiDocument, ApiRegistrationPublic apiRegistration) {
         apiDocument.setPublisher(lookupPublisher(apiRegistration.getCatalogId()));
         apiDocument.setDatasetReferences(extractDatasetReferences(apiRegistration));
-        apiDocument.setApiDocUrl(apiRegistration.getApiDocUrl());
 
-        apiDocument.setNationalComponent(apiRegistration.getNationalComponent());
-        apiDocument.setIsOpenAccess(apiRegistration.getIsOpenAccess());
-        apiDocument.setIsOpenLicense(apiRegistration.getIsOpenLicense());
-        apiDocument.setIsFree(apiRegistration.getIsFree());
-
-        apiDocument.setCost(apiRegistration.getCost());
-        apiDocument.setUsageLimitation(apiRegistration.getUsageLimitation());
-        apiDocument.setPerformance(apiRegistration.getPerformance());
-        apiDocument.setAvailability(apiRegistration.getAvailability());
-        apiDocument.setStatusCode(apiRegistration.getStatusCode());
+        BeanUtils.copyProperties(apiRegistration,apiDocument, ApiEditableProperties.class);
     }
 
     Publisher lookupPublisher(String orgNr) {

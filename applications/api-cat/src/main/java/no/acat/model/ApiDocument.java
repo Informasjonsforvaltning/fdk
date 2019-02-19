@@ -7,6 +7,7 @@ import no.dcat.shared.Contact;
 import no.dcat.shared.DatasetReference;
 import no.dcat.shared.HarvestMetadata;
 import no.dcat.shared.Publisher;
+import no.fdk.acat.common.model.ApiEditableProperties;
 import no.fdk.acat.common.model.apispecification.ApiSpecification;
 
 import java.util.List;
@@ -16,9 +17,9 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString(includeFieldNames = false)
+@ToString(includeFieldNames = false, callSuper=true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ApiDocument {
+public class ApiDocument extends ApiEditableProperties {
     @ApiModelProperty("The id given by the harvest system")
     private String id;
 
@@ -55,29 +56,4 @@ public class ApiDocument {
 
     @ApiModelProperty("A list of references to the datasets that can be returned by the api")
     private Set<DatasetReference> datasetReferences;
-
-    @ApiModelProperty("The url of the API documentation")
-    private String apiDocUrl;
-
-    @ApiModelProperty("Indication if the api is from an authoritative source (a National Component)")
-    private Boolean nationalComponent;
-
-    @ApiModelProperty("Indication if the api has open access")
-    private Boolean isOpenAccess;
-
-    @ApiModelProperty("Indication if the api has open licence")
-    private Boolean isOpenLicense;
-
-    @ApiModelProperty("Indication if the api is free")
-    private Boolean isFree;
-
-    private String cost;
-
-    private String usageLimitation;
-
-    private String performance;
-
-    private String availability;
-
-    private String statusCode;
 }
