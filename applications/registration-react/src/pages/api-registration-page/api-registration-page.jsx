@@ -10,6 +10,7 @@ import localization from '../../utils/localization';
 import { AlertMessage } from '../../components/alert-message/alert-message.component';
 import { FormTemplateWithState } from '../../components/form-template/form-template-with-state.component';
 import { ConnectedFormMeta } from './form-meta/connected-form-meta';
+import { ConnectedFormAccess } from './form-access/connected-form-access';
 import { ConnectedFormRelatedDatasets } from './form-relatedDatasets/connected-form-related-datasets';
 import { ConnectedFormApiStatus } from './form-apiStatus/connected-form-apiStatus';
 import { StatusBarWithState } from '../../components/status-bar/status-bar.component';
@@ -171,7 +172,20 @@ export const APIRegistrationPagePure = ({
               </FormTemplateWithState>
             </div>
           </div>
-
+          <div className="row mb-5">
+            <div className="col-12">
+              <FormTemplateWithState
+                showInitially
+                title={localization.schema.apiAccess.title}
+              >
+                <ConnectedFormAccess
+                  apiItem={item}
+                  match={match}
+                  helptextItems={helptextItems}
+                />
+              </FormTemplateWithState>
+            </div>
+          </div>
           <div className="row mb-5">
             <div className="col-12">
               <FormTemplateWithState
