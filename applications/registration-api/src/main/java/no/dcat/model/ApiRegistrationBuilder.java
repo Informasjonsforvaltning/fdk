@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import no.fdk.acat.bindings.ApiCatBindings;
+import no.fdk.acat.common.model.ApiEditableProperties;
 import org.apache.commons.lang.StringUtils;
 
 import java.util.*;
@@ -23,6 +24,11 @@ public class ApiRegistrationBuilder {
 
     public ApiRegistrationBuilder(ApiRegistration apiRegistration) {
         this.apiRegistration = apiRegistration;
+    }
+
+    static Set<String> getEditablePropertyNames() {
+        return Arrays.stream(ApiEditableProperties.class.getDeclaredFields()).map(f -> f.getName()).collect(Collectors.toSet());
+
     }
 
     public ApiRegistration build() {
@@ -75,9 +81,11 @@ public class ApiRegistrationBuilder {
     public ApiRegistrationBuilder setEditableProperties(Map<String, Object> data) {
         Gson gson = new Gson();
 
+        Set<String> editablePropertyNames = getEditablePropertyNames();
         JsonObject apiRegistrationJson = gson.toJsonTree(apiRegistration).getAsJsonObject();
 
         data.entrySet().stream()
+            .filter(entry -> editablePropertyNames.contains(entry.getKey()))
             .forEach(entry -> {
                 JsonElement jsonValue = gson.toJsonTree(entry.getValue());
                 // Despite confusing name, JsonObject.add actually replaces field value
