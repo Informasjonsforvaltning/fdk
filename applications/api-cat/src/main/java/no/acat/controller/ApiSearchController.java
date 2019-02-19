@@ -115,7 +115,23 @@ public class ApiSearchController {
         }
         logger.debug("Built query:{}", composedQuery);
 
-        String[] returnFields = {"id", "title", "titleFormatted", "description", "descriptionFormatted", "nationalComponent", "formats", "publisher.id", "publisher.orgPath", "publisher.name", "publisher.prefLabel.*"};
+        String[] returnFields = {
+            "id",
+            "title",
+            "titleFormatted",
+            "description",
+            "descriptionFormatted",
+            "formats",
+            "publisher.id",
+            "publisher.orgPath",
+            "publisher.name",
+            "publisher.prefLabel.*",
+            "nationalComponent",
+            "isOpenAccess",
+            "isOpenLicence",
+            "isFree",
+            "statusCode"
+        };
 
         int from = (int) pageable.getOffset();
 
