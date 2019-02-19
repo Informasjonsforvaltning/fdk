@@ -1,9 +1,13 @@
 package no.dcat.model;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import no.fdk.acat.bindings.ApiCatBindings;
+import org.apache.commons.lang.StringUtils;
 
-import java.util.Date;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import static no.dcat.model.ApiRegistration.REGISTRATION_STATUS_DRAFT;
 
@@ -49,6 +53,38 @@ public class ApiRegistrationBuilder {
         apiRegistration.setApiSpecification(apiCatService.convertSpecUrlToApiSpecification(apiSpecUrl));
         apiRegistration.setApiSpecUrl(apiSpecUrl);
         apiRegistration.setApiSpec(null);
+        return this;
+    }
+
+    public ApiRegistrationBuilder setData(Map<String, Object> data, ApiCatBindings apiCatService) {
+
+        setEditableProperties(data);
+
+        String apiSpecUrl = (String) data.get("apiSpecUrl");
+        String apiSpec = (String) data.get("apiSpec");
+
+        if (StringUtils.isNotEmpty(apiSpecUrl)) {
+            setApiSpecificationFromSpecUrl(apiSpecUrl, apiCatService);
+        } else if (!StringUtils.isEmpty(apiSpec)) {
+            setApiSpecificationFromSpec(apiSpec, apiCatService);
+        }
+
+        return this;
+    }
+
+    public ApiRegistrationBuilder setEditableProperties(Map<String, Object> data) {
+        Gson gson = new Gson();
+
+        JsonObject apiRegistrationJson = gson.toJsonTree(apiRegistration).getAsJsonObject();
+
+        data.entrySet().stream()
+            .forEach(entry -> {
+                JsonElement jsonValue = gson.toJsonTree(entry.getValue());
+                // Despite confusing name, JsonObject.add actually replaces field value
+                apiRegistrationJson.add(entry.getKey(), jsonValue);
+            });
+
+        apiRegistration = gson.fromJson(apiRegistrationJson, ApiRegistration.class);
         return this;
     }
 }
