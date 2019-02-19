@@ -404,6 +404,9 @@
           },
           "uri": {
             "type": "keyword"
+          },
+          "id": {
+            "type": "keyword"
           }
         }
       },

@@ -359,6 +359,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
                 catalogRecord.getValidDatasetUris().add(dataset.getUri());
 
                 addDisplayFields(dataset);
+                addSubjectId(dataset);
 
                 addSortField(dataset);
 
@@ -437,6 +438,22 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
         });
 
         dataset.setDescription(descriptionCleaned);
+    }
+
+
+    /**
+     * Add subject id to subjects, to help cross-referencing from subjects
+     * @param dataset
+     */
+    private void addSubjectId(Dataset dataset) {
+        if (dataset == null || dataset.getSubject() == null) {
+            return;
+        }
+
+        for(Subject subject : dataset.getSubject()) {
+            //subject.setId("idFraESresultHandler");
+        }
+
     }
 
     DatasetHarvestRecord findLastDatasetHarvestRecordWithContent(Dataset dataset, Elasticsearch5Client elasticsearch, Gson gson) {
