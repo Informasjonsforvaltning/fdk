@@ -1,8 +1,5 @@
 package no.dcat.controller;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import no.dcat.model.ApiRegistration;
 import no.dcat.model.ApiRegistrationBuilder;
 import no.dcat.service.ApiCatService;
@@ -186,37 +183,21 @@ public class ApiRegistrationController {
         @PathVariable("catalogId") String catalogId,
         @PathVariable("id") String id,
         @RequestBody Map<String, Object> updates)
-        throws NotFoundException {
+        throws NotFoundException, BadRequestException {
         logger.info("PATCH requestbody update apiRegistration: {}", updates.toString());
 
-        Gson gson = new Gson();
-
-        // get already saved apiRegistration
         ApiRegistration oldApiRegistration = getApiRegistrationByIdAndCatalogId(id, catalogId);
 
-        JsonObject oldApiRegistrationJson = gson.toJsonTree(oldApiRegistration).getAsJsonObject();
+        ApiRegistration apiRegistration;
+        try {
+            apiRegistration = new ApiRegistrationBuilder(oldApiRegistration)
+                .setData(updates, apiCat)
+                .build();
 
-        updates.forEach((key, newValue) -> {
-            logger.debug("update key: {} value: ", key, newValue);
-            JsonElement jsonValue = gson.toJsonTree(newValue);
-            oldApiRegistrationJson.add(key, jsonValue); // JsonObject.add actually replaces value
-        });
-
-        logger.debug("Changed apiRegistration Json element: {}", oldApiRegistrationJson.toString());
-
-        ApiRegistrationBuilder apiRegistrationBuilder = new ApiRegistrationBuilder(
-            gson.fromJson(oldApiRegistrationJson.toString(), ApiRegistration.class));
-
-        String apiSpecUrl = updates.get("apiSpecUrl") == null ? null : updates.get("apiSpecUrl").toString();
-        String apiSpec = updates.get("apiSpec") == null ? null : updates.get("apiSpec").toString();
-
-        if (!StringUtils.isEmpty(apiSpecUrl)) {
-            apiRegistrationBuilder.setApiSpecificationFromSpecUrl(apiSpecUrl, apiCat);
-        } else if (!StringUtils.isEmpty(apiSpec)) {
-            apiRegistrationBuilder.setApiSpecificationFromSpec(apiSpec, apiCat);
+        } catch (Exception e) {
+            throw new BadRequestException(e.getMessage());
         }
 
-        ApiRegistration apiRegistration = apiRegistrationBuilder.build();
         ApiRegistration savedApiRegistration = apiRegistrationRepository.save(apiRegistration);
 
         apiCat.triggerHarvestApiRegistration(id);
