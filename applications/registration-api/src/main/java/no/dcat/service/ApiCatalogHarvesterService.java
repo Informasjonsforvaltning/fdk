@@ -133,10 +133,10 @@ public class ApiCatalogHarvesterService {
                     informationmodelCat.triggerHarvestApiRegistration(savedApiRegistration.getId());
                     harvestedAtLeastOneAPI = true;
                     logger.debug("saved apiRegistration {}, url {}", apiRegistration.getId(), apiSpecUrl);
-                } catch (Exception e) {
+                } catch (Throwable t) {
                     errorLog.add(apiSpecUrl);
-                    logger.debug("Failed while trying to harvest API {} ", apiSpecUrl, e.getMessage());
-                    String errorMessage = "Failed while trying to fetch and parse API spec " + apiSpecUrl + " " + e.toString();
+                    logger.debug("Failed while trying to harvest API {} ", apiSpecUrl, t.getMessage());
+                    String errorMessage = "Failed while trying to fetch and parse API spec " + apiSpecUrl + " " + t.toString();
                     apiRegistration.setHarvestStatus(HarvestStatus.Error(errorMessage));
                 }
             }
@@ -155,8 +155,8 @@ public class ApiCatalogHarvesterService {
             
             apiCatalogRepository.save(originCatalog);
 
-        } catch (Exception e) {
-            String errorMessage = "Failed while trying to fetch and parse API Catalog: " + originCatalog.getHarvestSourceUri() + " " + e.toString();
+        } catch (Throwable t) {
+            String errorMessage = "Failed while trying to fetch and parse API Catalog: " + originCatalog.getHarvestSourceUri() + " " + t.toString();
             logger.warn(errorMessage);
             originCatalog.setHarvestStatus(HarvestStatus.Error(errorMessage));
             apiCatalogRepository.save(originCatalog);
@@ -169,7 +169,6 @@ public class ApiCatalogHarvesterService {
                 }
             }
         }
-
     }
 
     private class HarvestSingleCatalogTask implements QueuedTask {
