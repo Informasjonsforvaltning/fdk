@@ -2,13 +2,13 @@ package no.dcat.model;
 
 import no.dcat.service.ApiCatService;
 import no.fdk.acat.bindings.ApiCatBindings;
-import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
 import java.util.UUID;
+
+import static no.dcat.model.ApiRegistration.REGISTRATION_STATUS_DRAFT;
 
 @Component
 public class ApiRegistrationFactory {
@@ -27,7 +27,7 @@ public class ApiRegistrationFactory {
 
         apiRegistration.setId(UUID.randomUUID().toString());
         apiRegistration.setCatalogId(catalogId);
-        apiRegistration.setRegistrationStatus(ApiRegistration.REGISTRATION_STATUS_DRAFT);
+        apiRegistration.setRegistrationStatus(REGISTRATION_STATUS_DRAFT);
         apiRegistration.set_lastModified(new Date());
 
         return apiRegistration;

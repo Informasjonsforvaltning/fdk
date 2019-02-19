@@ -26,6 +26,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.io.IOException;
 import java.util.Optional;
 
+import static no.dcat.model.ApiRegistration.REGISTRATION_STATUS_DRAFT;
+import static no.dcat.model.ApiRegistration.REGISTRATION_STATUS_PUBLISH;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -112,7 +114,7 @@ public class ApiRegistrationControllerTest {
 
         ApiRegistration apiRegistration = new ApiRegistration();
         apiRegistration.setCatalogId(catalogId);
-        apiRegistration.setRegistrationStatus(ApiRegistration.REGISTRATION_STATUS_PUBLISH);
+        apiRegistration.setRegistrationStatus(REGISTRATION_STATUS_PUBLISH);
 
         when(apiRegistrationRepositoryMock.findById(id)).thenReturn(Optional.of(apiRegistration));
 
@@ -128,7 +130,7 @@ public class ApiRegistrationControllerTest {
 
         ApiRegistration apiRegistration = new ApiRegistration();
         apiRegistration.setCatalogId(catalogId);
-        apiRegistration.setRegistrationStatus(ApiRegistration.REGISTRATION_STATUS_DRAFT);
+        apiRegistration.setRegistrationStatus(REGISTRATION_STATUS_DRAFT);
 
         when(apiRegistrationRepositoryMock.findById(id)).thenReturn(Optional.of(apiRegistration));
 
