@@ -10,6 +10,8 @@
   "yesterday": "i går",
   "time": "kl.",
   "at": "på",
+  "yes": "Ja",
+  "no": "Nei",
   "getNew": "hent ny",
   "specification": "spesifikasjon",
   "header": {
@@ -298,6 +300,15 @@
       "title": "Status på API-et",
       "helptext": {
         "apiStatus": "Status på API-et"
+      }
+    },
+    "apiAccess": {
+      "title": "Tilgang",
+      "helptext": {
+        "isOpenAccess": "Kan alle få tilgang?",
+        "isOpenLicense": "Er lisensen åpen?",
+        "isFree": "Er det gratis å bruke?",
+        "nationalComponent": "Gir API-et kilde til en autoritativ kilde?"
       }
     },
     "apiDatasetReferences": {

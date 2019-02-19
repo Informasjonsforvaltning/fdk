@@ -300,6 +300,15 @@
         "apiStatus": "API status"
       }
     },
+    "apiAccess": {
+      "title": "Title",
+      "helptext": {
+        "isOpenAccess": "Can everybody get access?",
+        "isOpenLicense": "Is the license open?",
+        "isFree": "Is it free to use?",
+        "nationalComponent": "Does the API give an authoritative source?"
+      }
+    },
     "apiDatasetReferences": {
       "title": "Related datasets",
       "helptext": {
