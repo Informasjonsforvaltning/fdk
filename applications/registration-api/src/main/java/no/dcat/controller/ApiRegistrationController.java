@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Date;
 import java.util.Map;
 
+import static no.dcat.model.ApiRegistration.REGISTRATION_STATUS_PUBLISH;
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.web.bind.annotation.RequestMethod.*;
@@ -161,7 +162,7 @@ public class ApiRegistrationController {
 
         ApiRegistration apiRegistration = getApiRegistrationByIdAndCatalogId(id, catalogId);
 
-        if (apiRegistration.getRegistrationStatus().equals(ApiRegistration.REGISTRATION_STATUS_PUBLISH)) {
+        if (apiRegistration.getRegistrationStatus().equals(REGISTRATION_STATUS_PUBLISH)) {
             throw new BadRequestException();
         }
 
