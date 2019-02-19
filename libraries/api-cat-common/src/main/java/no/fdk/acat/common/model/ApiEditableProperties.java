@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.ToString;
 
+import java.util.Date;
 import java.util.Set;
 
 @Data
@@ -39,4 +40,10 @@ public class ApiEditableProperties {
     private String availability;
 
     private String statusCode;
+
+    private Date deprecationInfoExpirationDate;
+
+    private String deprecationInfoMessage;
+
+    private String deprecationInfoReplacedWithUrl;
 }
