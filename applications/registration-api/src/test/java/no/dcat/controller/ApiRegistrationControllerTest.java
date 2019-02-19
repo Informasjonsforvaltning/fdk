@@ -23,6 +23,8 @@ import org.springframework.core.io.Resource;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 import static no.dcat.model.ApiRegistration.REGISTRATION_STATUS_DRAFT;
@@ -76,8 +78,9 @@ public class ApiRegistrationControllerTest {
     @Test
     public void createApiRegistrationOK() throws Throwable {
 
-        ApiRegistration apiRegData = new ApiRegistration();
-        apiRegData.setApiSpecUrl(apiResource.getURL().toString());
+        Map<String, Object> apiRegData = new HashMap<String, Object>() {{
+            put("apiSpecUrl", apiResource.getURL().toString());
+        }};
 
         ApiRegistration saved = apiRegistrationController.createApiRegistration(catalogId, apiRegData);
 
