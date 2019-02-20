@@ -17,6 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -65,7 +66,7 @@ public class ApiCatalogHarvesterService {
         this.informationmodelCat = informationmodelCatService;
     }
 
-    //TODO: Also trigger this every 24h ? (there exists a spring thing to do that)
+    @Scheduled(cron = "${application.harvestCron}")
     @PostConstruct
     public void initQueue() {
 
