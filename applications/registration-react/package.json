@@ -23,10 +23,10 @@
   "license": "ISC",
   "dependencies": {
     "@babel/cli": "^7.0.0-beta.54",
-    "@babel/core": "^7.0.0-beta.54",
+    "@babel/core": "^7.3.3",
     "@babel/plugin-proposal-object-rest-spread": "^7.0.0-beta.54",
     "@babel/polyfill": "^7.0.0-beta.54",
-    "@babel/preset-env": "^7.0.0-beta.54",
+    "@babel/preset-env": "^7.3.1",
     "@babel/preset-react": "^7.0.0-beta.54",
     "axios": "^0.17.1",
     "babel-core": "^7.0.0-bridge.0",
@@ -45,11 +45,11 @@
     "file-loader": "^1.1.11",
     "font-awesome": "^4.7.0",
     "is-url": "^1.2.2",
-    "lodash": "^4.17.5",
+    "lodash": "^4.17.11",
     "method-override": "^2.3.10",
     "mini-css-extract-plugin": "^0.4.1",
     "moment": "^2.20.1",
-    "node-sass": "^4.9.0",
+    "node-sass": "^4.11.0",
     "promise-file-reader": "^1.0.2",
     "prop-types": "^15.6.0",
     "qs": "^6.5.2",
@@ -88,8 +88,8 @@
     "whatwg-fetch": "^3.0.0"
   },
   "devDependencies": {
-    "enzyme": "^3.3.0",
-    "enzyme-adapter-react-16": "^1.1.1",
+    "enzyme": "^3.9.0",
+    "enzyme-adapter-react-16": "^1.9.1",
     "enzyme-to-json": "^3.3.3",
     "eslint": "^4.16.0",
     "eslint-config-airbnb": "^16.1.0",
@@ -105,6 +105,6 @@
     "lint-staged": "^6.0.1",
     "prettier": "1.13.7",
     "redux-test-utils": "^0.2.2",
-    "webpack-dev-server": "^3.1.5"
+    "webpack-dev-server": "^3.2.0"
   }
 }
