@@ -21,6 +21,9 @@ application:
   harvesterUrl: http://harvester:8080
   openDataEnhet: ${FDK_ENHETSREGISTERET_URL:https://data.brreg.no/enhetsregisteret/api/enheter/}
   apiRootUrl: http://nginx-search:8080/api
+  # harvest every sixth hour
+  harvestCron: 0 0 */6 * * *
+
 
 spring:
   jackson:
