@@ -299,7 +299,10 @@
     "apiStatus": {
       "title": "Status på API-et",
       "helptext": {
-        "apiStatus": "Status på API-et"
+        "apiStatus": "Status på API-et",
+        "deprecationInfoExpirationDate": "Utløpsdato",
+        "deprecationInfoMessage": "Tilleggskommentar",
+        "deprecationInfoReplacedWithUrl": "Lenke til ny versjon av API-beskrivelsen"
       }
     },
     "apiAccess": {

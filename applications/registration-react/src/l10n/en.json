@@ -297,7 +297,10 @@
     "apiStatus": {
       "title": "API status",
       "helptext": {
-        "apiStatus": "API status"
+        "apiStatus": "API status",
+        "deprecationInfoExpirationDate": "Expiration date",
+        "deprecationInfoMessage": "Comments",
+        "deprecationInfoReplacedWithUrl": "Link to new version of API"
       }
     },
     "apiAccess": {

@@ -196,6 +196,7 @@ export const APIRegistrationPagePure = ({
                   match={match}
                   apiItem={item}
                   apiStatusItems={apiStatusItems}
+                  helptextItems={helptextItems}
                 />
               </FormTemplateWithState>
             </div>
