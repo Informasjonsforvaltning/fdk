@@ -7,6 +7,7 @@ import localization from '../../lib/localization';
 import { ListRegular } from '../../components/list-regular/list-regular.component';
 import { ListRegularItem } from '../../components/list-regular/list-regular-item/list-regular-item.component';
 import { ImportDialog } from './import-dialog/import-dialog.component';
+import { convertToSanitizedHtml } from '../../lib/markdown-converter';
 
 export const APISpecificationInfo = ({
   info,
@@ -38,7 +39,13 @@ export const APISpecificationInfo = ({
       {_.get(info, 'description') && (
         <ListRegularItem
           asideContent={localization.description}
-          mainContent={_.get(info, 'description')}
+          mainContent={
+            <div
+              dangerouslySetInnerHTML={{
+                __html: convertToSanitizedHtml(info.description)
+              }}
+            />
+          }
         />
       )}
       {_.get(info, 'version') && (
