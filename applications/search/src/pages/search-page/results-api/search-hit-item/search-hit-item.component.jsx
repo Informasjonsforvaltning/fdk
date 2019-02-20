@@ -8,6 +8,7 @@ import localization from '../../../../lib/localization';
 import './search-hit-item.scss';
 import { getTranslateText } from '../../../../lib/translateText';
 import { SearchHitHeader } from '../../../../components/search-hit-header/search-hit-header.component';
+import { convertToSanitizedHtml } from '../../../../lib/markdown-converter';
 
 const renderHeaderLink = (item, publisher, publishers) => {
   if (!item) {
@@ -31,21 +32,31 @@ const renderHeaderLink = (item, publisher, publishers) => {
   );
 };
 
-const renderDescription = description => {
-  if (!description) {
+const renderDescription = descriptionFormatted => {
+  if (!descriptionFormatted) {
     return null;
   }
-  let descriptionText = getTranslateText(description);
-  if (descriptionText && descriptionText.length > 220) {
-    descriptionText = `${descriptionText.substr(0, 220)}...`;
-  }
+
+  const sanitizedHtml = convertToSanitizedHtml(descriptionFormatted);
+
+  // our naive cropping algorithm brutally abrupts the markup string.
+  // It is a bit safer to do it in html markup than in markdown.
+  const croppedHtml =
+    sanitizedHtml.length < 250
+      ? sanitizedHtml
+      : `${sanitizedHtml.substr(0, 220)}...`;
+
   return (
-    <p className="fdk-text-size-medium">
-      <span className="uu-invisible" aria-hidden="false">
-        Beskrivelse av api,
-      </span>
-      {descriptionText}
-    </p>
+    <div className="fdk-text-size-medium">
+      <div className="uu-invisible" aria-hidden="false">
+        Beskrivelse av api
+      </div>
+      <div
+        dangerouslySetInnerHTML={{
+          __html: croppedHtml
+        }}
+      />
+    </div>
   );
 };
 
@@ -132,7 +143,9 @@ export const SearchHitItem = props => {
 
       {renderExpiredVersion(_.get(item, 'expired'))}
 
-      {renderDescription(_.get(item, 'description'))}
+      {renderDescription(
+        _.get(_.get(item, 'descriptionFormatted')) || _.get(item, 'description')
+      )}
 
       {renderAccessRights(_.get(item, 'accessRights'))}
 
