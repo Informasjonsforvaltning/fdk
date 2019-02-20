@@ -2,7 +2,7 @@ import { reduxForm } from 'redux-form';
 
 import { FormSpatial } from './form-spatial.component';
 import validate from './form-spatial-validations';
-import asyncValidate from '../../../utils/asyncValidate';
+import asyncValidate from '../../../lib/asyncValidate';
 
 const config = {
   form: 'spatial',

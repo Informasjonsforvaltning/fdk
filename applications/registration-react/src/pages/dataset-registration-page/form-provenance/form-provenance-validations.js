@@ -1,7 +1,7 @@
 import _get from 'lodash/get';
 
 import { validateMinTwoChars } from '../../../validation/validation';
-import localization from '../../../utils/localization';
+import localization from '../../../lib/localization';
 
 const validate = values => {
   const errors = {};

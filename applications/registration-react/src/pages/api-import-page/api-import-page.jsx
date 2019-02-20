@@ -4,7 +4,7 @@ import _ from 'lodash';
 import { readAsText } from 'promise-file-reader';
 
 import { postApi } from '../../api/apis';
-import localization from '../../utils/localization';
+import localization from '../../lib/localization';
 import { ImportDialog } from './import-dialog/import-dialog.component';
 import { ImportFileUpload } from './import-file-upload/import-file-upload.component';
 import ImportLinkUpload from './import-link-upload/import-link-upload.component';

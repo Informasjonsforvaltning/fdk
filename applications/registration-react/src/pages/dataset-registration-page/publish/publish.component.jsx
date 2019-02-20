@@ -8,7 +8,7 @@ import axios from 'axios';
 
 import Modal from '../../../components/modal/modal.component';
 import AppDeleteModal from '../../../components/delete-modal/delete-modal.component';
-import localization from '../../../utils/localization';
+import localization from '../../../lib/localization';
 import { publishDataset } from '../../../actions/index';
 import './publish.scss';
 

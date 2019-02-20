@@ -2,7 +2,7 @@ import { reduxForm } from 'redux-form';
 
 import { FormInformationModel } from './form-informationmodel.component';
 import validate from './form-informationmodel-validations';
-import asyncValidate from '../../../utils/asyncValidate';
+import asyncValidate from '../../../lib/asyncValidate';
 
 const config = {
   form: 'informationModel',

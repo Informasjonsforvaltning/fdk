@@ -2,7 +2,7 @@ import { getFormSyncErrors } from 'redux-form';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 
-import localization from '../../../utils/localization';
+import localization from '../../../lib/localization';
 import { textType, emptyArray } from '../../../schemaTypes';
 import { ConfiguredFormTitle } from './configured-form-title';
 

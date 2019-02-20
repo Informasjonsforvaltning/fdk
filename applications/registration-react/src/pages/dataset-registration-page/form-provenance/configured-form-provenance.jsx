@@ -3,7 +3,7 @@ import _throttle from 'lodash/throttle';
 
 import { FormProvenance } from './form-provenance.component';
 import validate from './form-provenance-validations';
-import asyncValidate from '../../../utils/asyncValidate';
+import asyncValidate from '../../../lib/asyncValidate';
 
 const config = {
   form: 'provenance',

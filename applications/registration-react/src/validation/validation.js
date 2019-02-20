@@ -1,6 +1,6 @@
 import isURL from 'is-url';
 
-import localization from '../utils/localization';
+import localization from '../lib/localization';
 
 /* eslint-disable no-param-reassign */
 export const validateRequired = (

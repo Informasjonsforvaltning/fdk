@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
-import localization from '../../utils/localization';
+import localization from '../../lib/localization';
 
 export default class AppImportModal extends React.Component {
   constructor(props) {

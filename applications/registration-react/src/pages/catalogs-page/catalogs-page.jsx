@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { CardGroup } from 'reactstrap';
 import _ from 'lodash';
 
-import localization from '../../utils/localization';
+import localization from '../../lib/localization';
 import { Catalog } from './catalogs/catalogs.component';
-import getTranslateText from '../../utils/translateText';
+import getTranslateText from '../../lib/translateText';
 import './catalogs-page.scss';
 
 const renderCatalogs = props => {

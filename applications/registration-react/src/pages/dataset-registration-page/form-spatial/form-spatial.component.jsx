@@ -2,12 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Field, FieldArray } from 'redux-form';
 
-import localization from '../../../utils/localization';
+import localization from '../../../lib/localization';
 import Helptext from '../../../components/helptext/helptext.component';
 import InputTagsFieldArray from '../../../components/field-input-tags-objects/field-input-tags-objects.component';
 import DatepickerField from '../../../components/field-datepicker/field-datepicker.component';
 import CheckboxField from '../../../components/field-checkbox/field-checkbox.component';
-import asyncValidate from '../../../utils/asyncValidate';
+import asyncValidate from '../../../lib/asyncValidate';
 
 export const renderTemporalFields = (item, index, fields, componentProps) => (
   <div className="d-flex mb-2" key={index}>

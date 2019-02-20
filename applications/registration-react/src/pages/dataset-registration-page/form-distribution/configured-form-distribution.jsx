@@ -3,7 +3,7 @@ import _throttle from 'lodash/throttle';
 
 import { FormDistribution } from './form-distribution.component';
 import validate from './form-distribution-validations';
-import asyncValidate from '../../../utils/asyncValidate';
+import asyncValidate from '../../../lib/asyncValidate';
 
 const config = {
   form: 'distribution',

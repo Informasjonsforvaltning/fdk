@@ -2,14 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Field, FieldArray } from 'redux-form';
 
-import localization from '../../../utils/localization';
+import localization from '../../../lib/localization';
 import Helptext from '../../../components/helptext/helptext.component';
 import InputField from '../../../components/field-input/field-input.component';
 import InputTagsField from '../../../components/field-input-tags/field-input-tags.component';
 import TextAreaField from '../../../components/field-textarea/field-textarea.component';
 import RadioField from '../../../components/field-radio/field-radio.component';
 import SelectField from '../../../components/field-select/field-select.component';
-import asyncValidate from '../../../utils/asyncValidate';
+import asyncValidate from '../../../lib/asyncValidate';
 import { textType, licenseType } from '../../../schemaTypes';
 
 export const renderDistributionLandingpage = componentProps => {

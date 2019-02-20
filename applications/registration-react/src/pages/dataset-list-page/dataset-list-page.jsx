@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 
-import localization from '../../utils/localization';
+import localization from '../../lib/localization';
 import { getDatasetItemsByCatalogId } from '../../redux/modules/datasets';
 import FormCatalog from './form-catalog/connected-form-catalog.component';
 import DatasetItemsList from './items-list/item-list.component';

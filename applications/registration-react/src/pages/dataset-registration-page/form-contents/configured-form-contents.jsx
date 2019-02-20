@@ -2,7 +2,7 @@ import { reduxForm } from 'redux-form';
 
 import { FormContentsComponent } from './form-contents.component';
 import validate from './form-contents-validations';
-import asyncValidate from '../../../utils/asyncValidate';
+import asyncValidate from '../../../lib/asyncValidate';
 
 const config = {
   form: 'contents',
