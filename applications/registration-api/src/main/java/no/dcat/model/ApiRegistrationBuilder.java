@@ -11,6 +11,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import static no.dcat.model.ApiRegistration.REGISTRATION_STATUS_DRAFT;
+import static no.dcat.model.ApiRegistration.REGISTRATION_STATUS_PUBLISH;
 
 public class ApiRegistrationBuilder {
     private ApiRegistration apiRegistration;
@@ -46,6 +47,16 @@ public class ApiRegistrationBuilder {
         return this;
     }
 
+    public ApiRegistrationBuilder setRegistrationStatus(String registrationStatus) {
+        Set<String> registrationStatusCodes = new HashSet(Arrays.asList(REGISTRATION_STATUS_DRAFT, REGISTRATION_STATUS_PUBLISH));
+
+        if (registrationStatusCodes.contains(registrationStatus)) {
+            apiRegistration.setRegistrationStatus(registrationStatus);
+        }
+
+        return this;
+    }
+
     public ApiRegistrationBuilder setApiSpecificationFromSpec(String apiSpec, ApiCatBindings apiCatService) {
         // if we parse from spec, then remove potentially conflicting spec url input
         apiRegistration.setApiSpecification(apiCatService.convertSpecToApiSpecification(apiSpec));
@@ -75,7 +86,10 @@ public class ApiRegistrationBuilder {
             setApiSpecificationFromSpec(apiSpec, apiCatService);
         }
 
-        fixStatusValues();
+        String registrationStatus = (String) data.get("registrationStatus");
+        if (StringUtils.isNotEmpty(registrationStatus)) {
+            setRegistrationStatus(registrationStatus);
+        }
 
         return this;
     }
@@ -95,6 +109,9 @@ public class ApiRegistrationBuilder {
             });
 
         apiRegistration = gson.fromJson(apiRegistrationJson, ApiRegistration.class);
+
+        fixStatusValues();
+
         return this;
     }
 
@@ -102,7 +119,7 @@ public class ApiRegistrationBuilder {
         // reset deprecation fields if not in one of deprecated statuses
         Set<String> deprecatedStatusCodes = new HashSet(Arrays.asList("DEPRECATED", "REMOVED"));
 
-        if(!deprecatedStatusCodes.contains(apiRegistration.getStatusCode())) {
+        if (!deprecatedStatusCodes.contains(apiRegistration.getStatusCode())) {
             apiRegistration.setDeprecationInfoExpirationDate(null);
             apiRegistration.setDeprecationInfoMessage(null);
             apiRegistration.setDeprecationInfoReplacedWithUrl(null);
