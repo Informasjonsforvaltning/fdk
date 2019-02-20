@@ -1258,22 +1258,18 @@ exports[`should render DatasetDetailsPage correctly with datasetItem 1`] = `
           bottomMargin={true}
           title="Contact information"
         >
-          <React.Fragment
-            key="kundesenter@kartverket.no"
-          >
-            <TwoColRow
-              col1="Email"
-              col2={
-                <a
-                  href="mailto:kundesenter@kartverket.no"
-                  rel="noopener noreferrer"
-                  title="kundesenter@kartverket.no"
-                >
-                  kundesenter@kartverket.no
-                </a>
-              }
-            />
-          </React.Fragment>
+          <TwoColRow
+            col1="Email"
+            col2={
+              <a
+                href="mailto:kundesenter@kartverket.no"
+                rel="noopener noreferrer"
+                title="kundesenter@kartverket.no"
+              >
+                kundesenter@kartverket.no
+              </a>
+            }
+          />
         </ListRegular>
         <div
           style={

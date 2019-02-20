@@ -3,7 +3,7 @@
 exports[`should render ModelComponentPure correctly with no props 1`] = `""`;
 
 exports[`should render ModelComponentPure with props 1`] = `
-<React.Fragment>
+<Fragment>
   <div
     className="d-flex"
   >
@@ -203,5 +203,5 @@ exports[`should render ModelComponentPure with props 1`] = `
       typeRef="#/definitions/Self"
     />
   </Collapse>
-</React.Fragment>
+</Fragment>
 `;

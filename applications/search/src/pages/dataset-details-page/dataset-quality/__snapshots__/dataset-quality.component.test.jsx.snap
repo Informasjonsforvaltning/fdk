@@ -5,29 +5,21 @@ exports[`should render DatasetQuality correctly 1`] = `
   bottomMargin={true}
   title="Quality"
 >
-  <React.Fragment>
-    <TwoColRow
-      col1="Completeness"
-      col2="comleteness"
-    />
-  </React.Fragment>
-  <React.Fragment>
-    <TwoColRow
-      col1="Accuracy"
-      col2="accuracy"
-    />
-  </React.Fragment>
-  <React.Fragment>
-    <TwoColRow
-      col1="Relevance"
-      col2="relevance"
-    />
-  </React.Fragment>
-  <React.Fragment>
-    <TwoColRow
-      col1="Availability"
-      col2="availability"
-    />
-  </React.Fragment>
+  <TwoColRow
+    col1="Completeness"
+    col2="comleteness"
+  />
+  <TwoColRow
+    col1="Accuracy"
+    col2="accuracy"
+  />
+  <TwoColRow
+    col1="Relevance"
+    col2="relevance"
+  />
+  <TwoColRow
+    col1="Availability"
+    col2="availability"
+  />
 </ListRegular>
 `;
