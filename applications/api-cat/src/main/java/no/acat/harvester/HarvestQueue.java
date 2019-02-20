@@ -2,6 +2,7 @@ package no.acat.harvester;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -15,7 +16,8 @@ public class HarvestQueue {
     private final Queue<String> scheduledTasks = new LinkedList<>();
 
     @PostConstruct
-    public void init() {
+    @Scheduled(cron = "${application.harvestCron}")
+    public void startHarvestAll() {
         String task = HarvestExecutor.HARVEST_ALL;
         logger.debug("Initial trigger task {}", task);
         addTask(task);

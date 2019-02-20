@@ -9,6 +9,8 @@ logging:
   level.org.springframework.web: WARN
 application:
   apiRootUrl: http://nginx-search:8080/api
+  # harvest every sixth hour, 10 minutes after apicatalogs update
+  harvestCron: 0 10 */6 * * *
 elastic:
   clusterNodes: ${FDK_ES_CLUSTERNODES:elasticsearch5:9300}
   clusterName: ${FDK_ES_CLUSTERNAME:elasticsearch}
