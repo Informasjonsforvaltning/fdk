@@ -7,6 +7,7 @@ import no.dcat.shared.HarvestMetadataUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -39,6 +40,7 @@ public class ConceptHarvester {
     }
 
     @PostConstruct
+    @Scheduled(cron = "${application.harvestCron}")
     public void harvestFromSource() {
         logger.info("Harvest of Concepts start");
 
