@@ -553,7 +553,9 @@ exports[`should render FormThemes correctly with theme 1`] = `
     />
     <div
       className="alert alert-danger mt-3"
-    />
+    >
+      <Component />
+    </div>
   </div>
 </form>
 `;
