@@ -44,6 +44,7 @@ export const ImportDialogPure = ({
         }
         handleShowImportError(true);
       });
+    window.scrollTo(0, 0);
   };
 
   const onFileUpload = e => {
@@ -75,6 +76,7 @@ export const ImportDialogPure = ({
           handleShowImportError(true);
         });
     }
+    window.scrollTo(0, 0);
   };
 
   if (!showLinkImport) {
