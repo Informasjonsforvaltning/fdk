@@ -15,7 +15,9 @@ logging:
   level.org.springframework.data.elasticsearch: ${LOG_LEVEL:INFO}
 application:
   apiRootUrl: http://nginx-search:8080/api
-  harvestSourceUri: https://fellesdatakatalog.brreg.no/api #TODO:Verify if this makes sense
+  harvestSourceUri: https://fellesdatakatalog.brreg.no/api
+  # harvest every sixth hour, 10 minutes after apicatalogs update
+  harvestCron: 0 10 */6 * * *
 
 
 ---
