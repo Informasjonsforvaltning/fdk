@@ -96,7 +96,7 @@ exports[`should render ApiDetailsPage correctly with apiItem 1`] = `
         <withStateHandlers(ShowMorePure)
           showMoreButtonText="Show the full description"
         >
-          <span
+          <div
             dangerouslySetInnerHTML={
               Object {
                 "__html": "<p>Provides a basic search api against the National API Directory of Norway</p>",
