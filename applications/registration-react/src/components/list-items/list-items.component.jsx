@@ -4,10 +4,10 @@ import orderBy from 'lodash/orderBy';
 import _ from 'lodash';
 import { withState, withHandlers, compose } from 'recompose';
 
-import localization from '../../utils/localization';
+import localization from '../../lib/localization';
 import SortButtons from '../sort-button/sort-button.component';
 import { ListItem } from './list-item/list-item.component';
-import getTranslateText from '../../utils/translateText';
+import getTranslateText from '../../lib/translateText';
 import './list-items.scss';
 
 const renderItems = (

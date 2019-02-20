@@ -6,7 +6,7 @@ import _ from 'lodash';
 import Form from './form-catalog.component';
 import validate from './form-catalog-validations';
 import { putCatalogDataset } from './async-catalog-dataset';
-import shouldAsyncValidate from '../../../utils/shouldAsyncValidate';
+import shouldAsyncValidate from '../../../lib/shouldAsyncValidate';
 import { textType } from '../../../schemaTypes';
 import './connected-form-catalog.scss';
 import { config } from '../../../config';

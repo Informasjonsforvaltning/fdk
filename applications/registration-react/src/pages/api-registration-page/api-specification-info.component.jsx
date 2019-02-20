@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { Button } from 'reactstrap';
 
-import localization from '../../utils/localization';
+import localization from '../../lib/localization';
 import { ListRegular } from '../../components/list-regular/list-regular.component';
 import { ListRegularItem } from '../../components/list-regular/list-regular-item/list-regular-item.component';
 import { ImportDialog } from './import-dialog/import-dialog.component';

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import _ from 'lodash';
 
-import localization from '../../../utils/localization';
+import localization from '../../../lib/localization';
 import ImportModal from '../../../components/import-modal/import-modal.component';
 import { ListItems } from '../../../components/list-items/list-items.component';
 import './items-list.scss';

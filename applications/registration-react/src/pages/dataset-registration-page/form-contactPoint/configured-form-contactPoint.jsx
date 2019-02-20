@@ -2,7 +2,7 @@ import { reduxForm } from 'redux-form';
 
 import { FormContactPoint } from './form-contactPoint.component';
 import validate from './form-contactPoint-validations';
-import asyncValidate from '../../../utils/asyncValidate';
+import asyncValidate from '../../../lib/asyncValidate';
 
 const config = {
   form: 'contactPoint',

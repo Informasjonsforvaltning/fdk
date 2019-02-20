@@ -4,7 +4,7 @@ import _ from 'lodash';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-import localization from '../../utils/localization';
+import localization from '../../lib/localization';
 import { FormTemplateWithState } from '../../components/form-template/form-template-with-state.component';
 import { ConnectedFormTitle } from './form-title/connected-form-title.component';
 import { ConnectedFormDistribution } from './form-distribution/connected-form-distribution.component';

@@ -4,7 +4,7 @@ import _ from 'lodash';
 import { Button } from 'reactstrap';
 import { withState, withHandlers, compose } from 'recompose';
 
-import localization from '../../../utils/localization';
+import localization from '../../../lib/localization';
 import { PanelBase } from '../../../components/panel-base/panel-base.component';
 import InputField from '../../../components/field-input/field-input.component';
 import { AlertMessage } from '../../../components/alert-message/alert-message.component';

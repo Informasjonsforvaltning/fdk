@@ -4,7 +4,7 @@ import cx from 'classnames';
 import { Collapse } from 'reactstrap';
 import _ from 'lodash';
 
-import localization from '../../utils/localization';
+import localization from '../../lib/localization';
 import './form-template.scss';
 
 export const FormTemplate = props => {

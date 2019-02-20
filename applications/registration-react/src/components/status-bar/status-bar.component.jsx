@@ -8,7 +8,7 @@ import moment from 'moment';
 import Moment from 'react-moment';
 import 'moment/locale/nb';
 
-import localization from '../../utils/localization';
+import localization from '../../lib/localization';
 import './status-bar.scss';
 
 const StatusBar = props => {

@@ -6,7 +6,7 @@ import AutosizeInput from 'react-input-autosize';
 import _ from 'lodash';
 
 import { getConceptByTitlePrefix } from '../../../../api/get-concept-by-title-prefix';
-import getTranslateText from '../../../../utils/translateText';
+import getTranslateText from '../../../../lib/translateText';
 import '../../../../components/field-input-tags/field-input-tags.scss';
 
 const updateInput = (updates, props) => {

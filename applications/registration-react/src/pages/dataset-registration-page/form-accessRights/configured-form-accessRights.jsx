@@ -3,7 +3,7 @@ import _throttle from 'lodash/throttle';
 
 import { FormAccessRights } from './form-accessRights.component';
 import validate from './form-accessRights.validations';
-import asyncValidate from '../../../utils/asyncValidate';
+import asyncValidate from '../../../lib/asyncValidate';
 
 const config = {
   form: 'accessRights',

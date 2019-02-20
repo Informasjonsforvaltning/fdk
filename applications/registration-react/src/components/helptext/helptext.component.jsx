@@ -5,7 +5,7 @@ import { Collapse } from 'reactstrap';
 import _ from 'lodash';
 import { withState, withHandlers, compose } from 'recompose';
 
-import localization from '../../utils/localization';
+import localization from '../../lib/localization';
 import './helptext.scss';
 
 export const Helptext = props => {

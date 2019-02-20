@@ -1,6 +1,6 @@
 import _get from 'lodash/get';
 
-import localization from '../../../utils/localization';
+import localization from '../../../lib/localization';
 import {
   validateRequired,
   validateMinTwoChars

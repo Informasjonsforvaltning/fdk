@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 import _ from 'lodash';
 
-import localization from '../../../utils/localization';
+import localization from '../../../lib/localization';
 import Helptext from '../../../components/helptext/helptext.component';
 import InputTagsFieldConcepts from './input-tags-concepts/input-tags-concepts.component';
 import InputTagsFieldArray from '../../../components/field-input-tags-objects/field-input-tags-objects.component';

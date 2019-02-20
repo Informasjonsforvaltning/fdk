@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 
 import { resetUser } from '../../actions/index';
-import localization from '../../utils/localization';
+import localization from '../../lib/localization';
 import './app-login-dialog.scss';
 
 // const LoginDialog = props => {

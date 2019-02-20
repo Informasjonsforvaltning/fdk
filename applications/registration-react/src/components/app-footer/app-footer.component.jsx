@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import _ from 'lodash';
 
-import localization from '../../utils/localization';
+import localization from '../../lib/localization';
 import './app-footer.scss';
 
 export const Footer = props => {

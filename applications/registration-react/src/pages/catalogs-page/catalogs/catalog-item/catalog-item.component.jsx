@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import cx from 'classnames';
-import localization from '../../../../utils/localization';
+import localization from '../../../../lib/localization';
 import './catalog-item.component.scss';
 
 export const CatalogItem = props => {
