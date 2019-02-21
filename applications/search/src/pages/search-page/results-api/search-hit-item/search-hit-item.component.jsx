@@ -15,7 +15,6 @@ const renderHeaderLink = (item, publisher, publishers, referenceData) => {
   }
   const { title } = item;
   const link = `/apis/${encodeURIComponent(item.id)}`;
-
   return (
     <header>
       <SearchHitHeader
@@ -140,6 +139,8 @@ export const SearchHitItem = ({
     'fade-in-400': fadeInCounter === 2
   });
 
+  const { isFree, isOpenAccess, isOpenLicense } = item;
+
   return (
     <article className={searchHitClass}>
       <span className="uu-invisible" aria-hidden="false">
@@ -160,19 +161,84 @@ export const SearchHitItem = ({
       {renderAccessRights(_.get(item, 'accessRights'))}
 
       {renderFormat(_.get(item, 'formats'))}
+
+      {isFree === true && (
+        <span className="access-icon fdk-color-green-1">
+          <span className="icon2-icon-api-cost-none">
+            <span className="path1" />
+            <span className="path2" />
+            <span className="path3" />
+            <span className="path4" />
+            <span className="path5" />
+          </span>{' '}
+          Gratis
+        </span>
+      )}
+
+      {isFree === false && (
+        <span className="access-icon fdk-color-red-1">
+          <span className="icon2-icon-api-cost">
+            <span className="path1" />
+            <span className="path2" />
+          </span>{' '}
+          Ikke gratis å bruke
+        </span>
+      )}
+      {isOpenAccess === true && (
+        <span className="access-icon fdk-color-green-1">
+          <span className="icon2-icon-api-access-all">
+            <span className="path1" />
+            <span className="path2" />
+            <span className="path3" />
+            <span className="path4" />
+          </span>Åpent for alle
+        </span>
+      )}
+      {isOpenAccess === false && (
+        <span className="access-icon fdk-color-red-1">
+          <span className="icon2-icon-api-access-not-limited">
+            <span className="path1" />
+            <span className="path2" />
+          </span>Ikke åpen tilgang
+        </span>
+      )}
+      {isOpenLicense === true && (
+        <span className="access-icon fdk-color-green-1">
+          <span className="icon2-icon-api-license-open">
+            <span className="path1" />
+            <span className="path2" />
+            <span className="path3" />
+            <span className="path4" />
+            <span className="path5" />
+            <span className="path6" />
+          </span>{' '}
+          Åpen lisens{' '}
+        </span>
+      )}
+      {isOpenLicense === false && (
+        <span className="access-icon fdk-color-red-1">
+          <span className="icon2-icon-api-license">
+            <span className="path1" />
+            <span className="path2" />
+            <span className="path3" />
+            <span className="path4" />
+            <span className="path5" />
+            <span className="path6" />
+          </span>{' '}
+          Ikke åpen lisens{' '}
+        </span>
+      )}
     </article>
   );
 };
 
 SearchHitItem.defaultProps = {
-  fadeInCounter: null,
-  item: null,
-  publishers: null,
-  referenceData: null
+  referenceData: null,
+  item: {},
+  publishers: null
 };
 
 SearchHitItem.propTypes = {
-  fadeInCounter: PropTypes.number,
   item: PropTypes.shape({}),
   publishers: PropTypes.object,
   referenceData: PropTypes.object

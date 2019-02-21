@@ -17,6 +17,7 @@ import { DatasetReference } from './dataset-reference/dataset-reference.componen
 import { InformationModelReference } from './informationmodel-reference/informationmodel-reference.component';
 import { config } from '../../config';
 import { convertToSanitizedHtml } from '../../lib/markdown-converter';
+import './api-details-page.scss';
 
 const renderDescription = descriptionFormatted => {
   if (!descriptionFormatted) {
@@ -329,6 +330,8 @@ export const ApiDetailsPage = props => {
     title: meta.title
   };
 
+  const { isFree, isOpenAccess, isOpenLicense } = apiItem;
+
   return (
     <main id="content" className="container">
       <article>
@@ -353,11 +356,78 @@ export const ApiDetailsPage = props => {
             {renderStickyMenu(apiItem, referencedInformationModels)}
           </div>
 
-          <section className="col-12 col-lg-8 mt-3">
+          <section className="col-12 col-lg-8 mt-3 api-details-section">
             {renderDescription(
               apiItem.descriptionFormatted || apiItem.description
             )}
+            <div className="access-icons">
+              {isFree === true && (
+                <span className="access-icon fdk-color-green-1">
+                  <span className="icon2-icon-api-cost-none">
+                    <span className="path1" />
+                    <span className="path2" />
+                    <span className="path3" />
+                    <span className="path4" />
+                    <span className="path5" />
+                  </span>{' '}
+                  Gratis
+                </span>
+              )}
 
+              {isFree === false && (
+                <span className="access-icon fdk-color-red-1">
+                  <span className="icon2-icon-api-cost">
+                    <span className="path1" />
+                    <span className="path2" />
+                  </span>{' '}
+                  Ikke gratis å bruke
+                </span>
+              )}
+              {isOpenAccess === true && (
+                <span className="access-icon fdk-color-green-1">
+                  <span className="icon2-icon-api-access-all">
+                    <span className="path1" />
+                    <span className="path2" />
+                    <span className="path3" />
+                    <span className="path4" />
+                  </span>Åpent for alle
+                </span>
+              )}
+              {isOpenAccess === false && (
+                <span className="access-icon fdk-color-red-1">
+                  <span className="icon2-icon-api-access-not-limited">
+                    <span className="path1" />
+                    <span className="path2" />
+                  </span>Ikke åpen tilgang
+                </span>
+              )}
+              {isOpenLicense === true && (
+                <span className="access-icon fdk-color-green-1">
+                  <span className="icon2-icon-api-license-open">
+                    <span className="path1" />
+                    <span className="path2" />
+                    <span className="path3" />
+                    <span className="path4" />
+                    <span className="path5" />
+                    <span className="path6" />
+                  </span>{' '}
+                  Åpen lisens{' '}
+                </span>
+              )}
+              {isOpenLicense === false && (
+                <span className="access-icon fdk-color-red-1">
+                  <span className="icon2-icon-api-license">
+                    <span className="path1" />
+                    <span className="path2" />
+                    <span className="path3" />
+                    <span className="path4" />
+                    <span className="path5" />
+                    <span className="path6" />
+                  </span>{' '}
+                  Ikke åpen lisens{' '}
+                </span>
+              )}
+            </div>
             {renderFormats(apiItem.formats)}
 
             {renderApiEndpoints(
