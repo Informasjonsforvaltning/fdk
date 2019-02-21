@@ -27,6 +27,10 @@
   "responsible": "Ansvarlig",
   "name": "Navn",
   "type": "Type",
+  "statusRemoved": "Denne versjonen av API-et er avviklet.",
+  "statusDeprecated": "Denne versjonen av API-et er foreldet og vil fases ut {0} {1}. ",
+  "statusReplacedUrl": "Ny versjon er dokumentert her.",
+  "during": "i",
   "app": {
     "menu": "Meny"
   },

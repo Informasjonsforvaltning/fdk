@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import cx from 'classnames';
 import _ from 'lodash';
 
@@ -8,6 +7,7 @@ import localization from '../../../../lib/localization';
 import './search-hit-item.scss';
 import { getTranslateText } from '../../../../lib/translateText';
 import { SearchHitHeader } from '../../../../components/search-hit-header/search-hit-header.component';
+import { AlertMessage } from '../../../../components/alert-message/alert-message.component';
 
 const renderHeaderLink = (item, publisher, publishers, referenceData) => {
   if (!item) {
@@ -63,16 +63,50 @@ const renderDescription = description => {
   );
 };
 
-const renderExpiredVersion = expired => {
-  if (!expired) {
-    return null;
-  }
-  return (
-    <div className="search-hit__version mb-4 p-4">
-      <span>Denne versjonen av API-et er utgått og vil fases ut i 2019. </span>
-      <Link to="/TODO">Versjon 2 er dokumentert her.</Link>
-    </div>
+const renderExpiredOrDeprecatedVersion = item => {
+  const statusCode = _.get(item, 'statusCode');
+  const deprecationInfoExpirationDate = _.get(
+    item,
+    'deprecationInfoExpirationDate'
   );
+  const deprecationInfoReplacedWithUrl = _.get(
+    item,
+    'deprecationInfoReplacedWithUrl'
+  );
+  if (statusCode === 'REMOVED') {
+    return (
+      <AlertMessage type="info">
+        <span>{localization.statusRemoved} </span>
+        {deprecationInfoReplacedWithUrl && (
+          <a href={deprecationInfoReplacedWithUrl}>
+            {localization.statusReplacedUrl}
+          </a>
+        )}
+      </AlertMessage>
+    );
+  } else if (statusCode === 'DEPRECATED') {
+    return (
+      <AlertMessage type="info">
+        <span>
+          {deprecationInfoExpirationDate &&
+            localization.formatString(
+              localization.statusDeprecated,
+              localization.during,
+              deprecationInfoExpirationDate.substring(0, 4)
+            )}
+          {!deprecationInfoExpirationDate &&
+            localization.formatString(localization.statusDeprecated, '', '')}
+        </span>
+
+        {deprecationInfoReplacedWithUrl && (
+          <a href={deprecationInfoReplacedWithUrl}>
+            {localization.statusReplacedUrl}
+          </a>
+        )}
+      </AlertMessage>
+    );
+  }
+  return null;
 };
 
 const renderAccessRights = accessRights => {
@@ -154,7 +188,7 @@ export const SearchHitItem = ({
         referenceData
       )}
 
-      {renderExpiredVersion(_.get(item, 'expired'))}
+      {renderExpiredOrDeprecatedVersion(item)}
 
       {renderDescription(_.get(item, 'description'))}
 
