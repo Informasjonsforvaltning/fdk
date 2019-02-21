@@ -27,6 +27,10 @@
   "responsible": "Responsible",
   "name": "Name",
   "type": "Type",
+  "statusRemoved": "This version of API is removed.",
+  "statusDeprecated": "This version of API has expired and will be phased out {0} {1}. ",
+  "statusReplacedUrl": "Ny versjon er dokumentert her.",
+  "during": "during",
   "app": {
     "menu": "Menu"
   },

@@ -18,6 +18,7 @@ import { InformationModelReference } from './informationmodel-reference/informat
 import { config } from '../../config';
 import { convertToSanitizedHtml } from '../../lib/markdown-converter';
 import './api-details-page.scss';
+import { AlertMessage } from '../../components/alert-message/alert-message.component';
 
 const renderDescription = descriptionFormatted => {
   if (!descriptionFormatted) {
@@ -304,6 +305,52 @@ const renderStickyMenu = (apiItem, informationModels) => {
   return <StickyMenu menuItems={menuItems} />;
 };
 
+const renderExpiredOrDeprecatedVersion = item => {
+  const statusCode = _.get(item, 'statusCode');
+  const deprecationInfoExpirationDate = _.get(
+    item,
+    'deprecationInfoExpirationDate'
+  );
+  const deprecationInfoReplacedWithUrl = _.get(
+    item,
+    'deprecationInfoReplacedWithUrl'
+  );
+  if (statusCode === 'REMOVED') {
+    return (
+      <AlertMessage type="info">
+        <span>{localization.statusRemoved} </span>
+        {deprecationInfoReplacedWithUrl && (
+          <a href={deprecationInfoReplacedWithUrl}>
+            {localization.statusReplacedUrl}
+          </a>
+        )}
+      </AlertMessage>
+    );
+  } else if (statusCode === 'DEPRECATED') {
+    return (
+      <AlertMessage type="info">
+        <span>
+          {deprecationInfoExpirationDate &&
+            localization.formatString(
+              localization.statusDeprecated,
+              localization.during,
+              deprecationInfoExpirationDate.substring(0, 4)
+            )}
+          {!deprecationInfoExpirationDate &&
+            localization.formatString(localization.statusDeprecated, '', '')}
+        </span>
+
+        {deprecationInfoReplacedWithUrl && (
+          <a href={deprecationInfoReplacedWithUrl}>
+            {localization.statusReplacedUrl}
+          </a>
+        )}
+      </AlertMessage>
+    );
+  }
+  return null;
+};
+
 export const ApiDetailsPage = ({
   apiItem,
   publisherItems,
@@ -352,6 +399,8 @@ export const ApiDetailsPage = ({
               statusCode={apiItem.statusCode}
               referenceData={referenceData}
             />
+
+            {renderExpiredOrDeprecatedVersion(apiItem)}
           </div>
         </div>
 
