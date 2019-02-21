@@ -28,61 +28,57 @@ Systemet er basert på en norsk profil [DCAT-AP-NO 1.1](https://doc.difi.no/dcat
 av en [Europeisk profil](https://joinup.ec.europa.eu/release/dcat-ap-v11) av [W3C Datakatalog standard](https://www.w3.org/TR/vocab-dcat/)
 for utveksling av datasettbeskrivelser. 
 
-# Contact
+## Contact
 
 If you have any questions please send them to [fellesdatakatalog@brreg.no](mailto:fellesdatakatalog@brreg.no).
 
-# Usage
-
-# Test the search application
+## Run application
 The search application is available [here](https://fellesdatakatalog.brreg.no). The two other applications
 are only available for registered users. 
 Any questions can be sent to [fellesdatakatalog@brreg.no](mailto:fellesdatakatalog@brreg.no).
 
 The [search api](https://github.com/brreg/openAPI/blob/master/specs/fdk.yaml) can also be used.
 
-## Prerequisite
-1) Make sure you have local admin on your computer, as gitbash has to be run as an administrator
+## Set up your developement environment
 
-## Set up your developement environnement
-  1) Clone this repo
+Prerequisite: Make sure you have local admin on your computer, as gitbash has to be run as an administrator
+
+1) Clone this repo
   
-  2) Install Java8, Maven and Docker. 
+2) Install Java8, Maven and Docker. 
    	
-	```
-	- If you are running Windows. Make sure you manually add the correct Maven path in windows "environment Variables"
-	- Also make sure you have set correct JAVA_HOME path to environment variables.
-	- After having installed Docker. Make sure you update the resource limits at Settings-Advanced. You need at least 4 CPU's and 		more than 8k MB of Memory.
-	```
+    - If you are running Windows. Make sure you manually add the correct Maven path in windows "environment Variables"
+    - Also make sure you have set correct JAVA_HOME path to environment variables.
+    - After having installed Docker. Make sure you update the resource limits at Settings-Advanced. You need at least 4 CPU's and 		more than 8k MB of Memory.
+    
+    - If you have a Mac, running this script will install Java8 and Maven automatically: 
+    
+        ```
+        ./install-dependencies-mac.sh
+        ```
+    
+3) Compile, create docker images and run the entire project:
 
-     	If you have a Mac, running this script will install Java8 and Maven automatically: 
-      	```
-	./install-dependencies-mac.sh
-	```
-  3) Compile, create docker images and run the entire project:
-  	
-	```
-	If you are running windows, you also need to make sure you have installed node.js:
-	https://nodejs.org/en/download/
-	```
+    If you are running windows, you also need to make sure you have installed node.js:
+    https://nodejs.org/en/download/
+    
+    ```
+    ./runAll.sh
+    ```  
+    
+    If you only want to recompile one module ("search-api" in this example), use the following:     
+    
+    ```
+    ./runDocker.sh search-api
+    ```
+    
+     Frontend applications such as search and registration-react are built and run the following way:
+    
+     ```
+     docker-compose up -d --build registration-react
+     ```
 
-	```
-	./runAll.sh
-	```  
-
-	If you only want to recompile one module ("search-api" in this example), use the following:     
-
-	```
-	./runDocker.sh search-api
-	```
-
-	 Frontend applications such as search and registration-react are built and run the following way:
-
-	 ```
-	 docker-compose up -d --build registration-react
-	 ```
-
-  4) If imagase are already built, project can be run: 
+4) If imagase are already built, project can be run: 
 
 	```
 	docker-compose up -d
@@ -100,7 +96,7 @@ The [search api](https://github.com/brreg/openAPI/blob/master/specs/fdk.yaml) ca
 	docker-compose logs -f registration
 	```
 
-  5)  Open solution
+5)  Open solution
   
       Search site: [http://localhost:8080](http://localhost:8080)
 
@@ -111,7 +107,7 @@ The [search api](https://github.com/brreg/openAPI/blob/master/specs/fdk.yaml) ca
 
   In order to have maintainable tests, the tests must equally well run in all environment configurationds: 
 
-  1) Brower in host machine (windowed+headless), services in docker-compose
+1) Brower in host machine (windowed+headless), services in docker-compose
 
 	Make sure chromium is installed (for mac, TODO windows)
 	```
@@ -142,7 +138,7 @@ The [search api](https://github.com/brreg/openAPI/blob/master/specs/fdk.yaml) ca
 	(cd applications/e2e ; npm t)
 
 	```
-  2) Browser in container (headless), services in docker-compose
+2) Browser in container (headless), services in docker-compose
      
 	```
 	# run
@@ -164,7 +160,7 @@ npm run release
 git push --follow-tags origin
 ```
 
-# Modules 
+## Modules 
 
 ![Architecture](/images/fdk-architecture-logic.png)
 
@@ -193,21 +189,21 @@ External Integrations
   * IDPorten, for authentication of users
   * Altinn, for authorization of users
 
-# Start individual applications
+## Start individual applications
 There is a couple of scripts that automates build and run the various models ondocker. The scripts are:
   * `./runDocker.sh search-api` to compile, build and run the search-api module on docker
   * `./runAll.sh` to run all the modules on docker, it actually downloads images from docker hub or builds them if
    you have made changes to the code.
   
 
-## Search application:
+### Search application:
 >`docker-compose up -d search`
 
 This starts DCAT repositories, fuseki and elasticsearch, as well as the search-api service. 
 To access the search application start a browser on [http://localhost:8080](http://localhost:8080). Be aware that 
 there is no data registered in the repositories (see the harvester application)
 
-## Harvester application:
+### Harvester application:
 >`docker-compose up -d harvester`
 
 This starts the harvester application with the corresponding harvester-api. 
@@ -216,7 +212,7 @@ This starts the harvester application with the corresponding harvester-api.
   - Next you need to register a catalog to be harvested. You may use the registration application to register data about datasets which can be harvested here. 
     [http://registration-api:8080/catalogs/123456699](http://registration-api:8080/catalogs/123456699) given your catalog has id 123456699.    
 
-## Registration application:
+### Registration application:
 >`docker-compose up -d registration`
 
 This starts the registration application with corresponding api services. 
@@ -224,14 +220,14 @@ The application can be accessed on [http://localhost:8099](http://localhost:8099
 The regstration application requires authentication. The following test-user identifiers 
 can be used: (03096000854, 01066800187, 23076102252)
 
-## Shut down all containers:
+### Shut down all containers:
 >`docker-compose down`
 
 ## Run end2end tests (java)
 
 In IntelliJ, select module applications/end2end-test and click "run tests"
 
-# Storage
+## Storage
 The repository is stored in a persistent volume, see [data/esdata5](data/esdata5) for elasticsearch 
 repository and [data/fuseki](data/fuseki) for the fuseki repository. 
   * Elasticsearch stores the data in JSON denormalized for search
@@ -274,8 +270,8 @@ Docker needs at least 8G of memory
 Error message: java.nio.file.AccessDeniedException: /usr/share/elasticsearch/data/nodes
 On windows platforms, this seems to be caused by some issue with credentials.
 
-    Solution - reset and reeenter the credentials:
-        Rightclick docker->Settings->Shared Drives->Reset Credentials. Reselect the drive you want shared, and reenter
-        credentials, and do a docker-compose stop elasticsearch5 and a docker-compose up -d
+Solution - reset and reeenter the credentials:
+    Rightclick docker->Settings->Shared Drives->Reset Credentials. Reselect the drive you want shared, and reenter
+    credentials, and do a docker-compose stop elasticsearch5 and a docker-compose up -d
         
     
