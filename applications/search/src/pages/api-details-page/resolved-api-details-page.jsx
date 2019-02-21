@@ -32,6 +32,8 @@ const mapProps = {
     const informationmodel = await memoizedGetinformationModelByHarvestSourceUri(
       harvestSourceUri
     );
+
+    // this method returns list of referenced information models, but our current api gives one
     return informationmodel ? [informationmodel] : [];
   }
 };
