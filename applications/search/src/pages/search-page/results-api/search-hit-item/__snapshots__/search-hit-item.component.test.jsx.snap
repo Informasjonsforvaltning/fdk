@@ -139,7 +139,7 @@ exports[`should render api-SearchHitItem with long description 1`] = `
     It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, ...
   </div>
   <span
-    className="access-icon red"
+    className="access-icon fdk-color-red-1"
   >
     <span
       className="icon2-icon-api-cost"
@@ -155,7 +155,7 @@ exports[`should render api-SearchHitItem with long description 1`] = `
     Ikke gratis å bruke
   </span>
   <span
-    className="access-icon red"
+    className="access-icon fdk-color-red-1"
   >
     <span
       className="icon2-icon-api-access-not-limited"
@@ -170,7 +170,7 @@ exports[`should render api-SearchHitItem with long description 1`] = `
     Ikke åpen tilgang
   </span>
   <span
-    className="access-icon red"
+    className="access-icon fdk-color-red-1"
   >
     <span
       className="icon2-icon-api-license"

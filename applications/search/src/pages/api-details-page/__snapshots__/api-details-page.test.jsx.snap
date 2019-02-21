@@ -93,7 +93,7 @@ exports[`should render ApiDetailsPage correctly with apiItem 1`] = `
         />
       </div>
       <section
-        className="col-12 col-lg-8 mt-3"
+        className="col-12 col-lg-8 mt-3 api-details-section"
       >
         <withStateHandlers(ShowMorePure)
           showMoreButtonText="Show the full description"
@@ -106,6 +106,9 @@ exports[`should render ApiDetailsPage correctly with apiItem 1`] = `
             }
           />
         </withStateHandlers(ShowMorePure)>
+        <div
+          className="access-icons"
+        />
         <ListRegular
           bottomMargin={true}
           title="Format"
@@ -270,8 +273,11 @@ exports[`should render ApiDetailsPage correctly with missing api-properties 1`] 
         />
       </div>
       <section
-        className="col-12 col-lg-8 mt-3"
+        className="col-12 col-lg-8 mt-3 api-details-section"
       >
+        <div
+          className="access-icons"
+        />
         <ListRegular
           bottomMargin={true}
           title="Terms and restrictions"
