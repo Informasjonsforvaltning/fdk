@@ -51,7 +51,7 @@ const renderFilterModal = ({
   </Modal>
 );
 
-const renderHits = (hits, publishers) => {
+const renderHits = (hits, publishers, referenceData) => {
   if (hits && Array.isArray(hits)) {
     return hits.map((item, index) => (
       <SearchHitItem
@@ -59,6 +59,7 @@ const renderHits = (hits, publishers) => {
         item={item}
         fadeInCounter={index < 3 ? index : null}
         publishers={publishers}
+        referenceData={referenceData}
       />
     ));
   }
@@ -79,7 +80,8 @@ export const ResultsApiPure = ({
   showClearFilterButton,
   hitsPerPage,
   history,
-  location
+  location,
+  referenceData
 }) => {
   const locationSearch = parseSearchParams(location);
 
@@ -181,7 +183,7 @@ export const ResultsApiPure = ({
           )}
         </aside>
         <div id="apis" className="col-12 col-lg-8">
-          {renderHits(apiItems, publishers)}
+          {renderHits(apiItems, publishers, referenceData)}
 
           <div className="col-12 d-flex justify-content-center">
             <span className="uu-invisible" aria-hidden="false">
@@ -227,7 +229,8 @@ ResultsApiPure.defaultProps = {
   hitsPerPage: 10,
 
   history: { push: _.noop },
-  location: { search: '' }
+  location: { search: '' },
+  referenceData: null
 };
 
 ResultsApiPure.propTypes = {
@@ -249,7 +252,8 @@ ResultsApiPure.propTypes = {
   hitsPerPage: PropTypes.number,
 
   history: PropTypes.object,
-  location: PropTypes.object
+  location: PropTypes.object,
+  referenceData: PropTypes.object
 };
 
 export const ResultsApi = withRouter(ResultsApiPure);

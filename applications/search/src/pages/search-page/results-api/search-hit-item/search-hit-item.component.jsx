@@ -10,7 +10,7 @@ import { getTranslateText } from '../../../../lib/translateText';
 import { SearchHitHeader } from '../../../../components/search-hit-header/search-hit-header.component';
 import { convertToSanitizedHtml } from '../../../../lib/markdown-converter';
 
-const renderHeaderLink = (item, publisher, publishers) => {
+const renderHeaderLink = (item, publisher, publishers, referenceData) => {
   if (!item) {
     return null;
   }
@@ -27,6 +27,8 @@ const renderHeaderLink = (item, publisher, publishers) => {
         publisher={publisher}
         publisherItems={publishers}
         nationalComponent={item.nationalComponent}
+        statusCode={item.statusCode}
+        referenceData={referenceData}
       />
     </header>
   );
@@ -124,9 +126,12 @@ const renderFormat = formats => {
   );
 };
 
-export const SearchHitItem = props => {
-  const { item, fadeInCounter, publishers } = props;
-
+export const SearchHitItem = ({
+  item,
+  fadeInCounter,
+  publishers,
+  referenceData
+}) => {
   const searchHitClass = cx('search-hit', {
     'fade-in-200': fadeInCounter === 0,
     'fade-in-300': fadeInCounter === 1,
@@ -139,7 +144,12 @@ export const SearchHitItem = props => {
         Søketreff.
       </span>
 
-      {renderHeaderLink(item, _.get(item, 'publisher'), publishers)}
+      {renderHeaderLink(
+        item,
+        _.get(item, 'publisher'),
+        publishers,
+        referenceData
+      )}
 
       {renderExpiredVersion(_.get(item, 'expired'))}
 
@@ -157,11 +167,13 @@ export const SearchHitItem = props => {
 SearchHitItem.defaultProps = {
   fadeInCounter: null,
   item: null,
-  publishers: null
+  publishers: null,
+  referenceData: null
 };
 
 SearchHitItem.propTypes = {
   fadeInCounter: PropTypes.number,
   item: PropTypes.shape({}),
-  publishers: PropTypes.object
+  publishers: PropTypes.object,
+  referenceData: PropTypes.object
 };

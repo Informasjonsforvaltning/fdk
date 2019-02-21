@@ -3,7 +3,7 @@
 exports[`should render SearchHitHeader with harvest dates 1`] = `
 <Fragment>
   <div
-    className="mb-2 d-flex flex-wrap align-items-baseline justify-content-between"
+    className="mb-2 d-flex flex-wrap align-items-center"
   >
     <h1
       className="mr-3"

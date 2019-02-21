@@ -4,6 +4,7 @@ import _ from 'lodash';
 import { Link } from 'react-router-dom';
 
 import { LabelNational } from '../label-national/label-national.component';
+import { LabelStatus } from '../label-status/label-status.component';
 import { PublisherLabel } from '../publisher-label/publisher-label.component';
 import { getPublisherByOrgNr } from '../../redux/modules/publishers';
 import { getTranslateText } from '../../lib/translateText';
@@ -71,15 +72,27 @@ export const SearchHitHeader = props => {
     publisherTag,
     publisherItems,
     theme,
-    nationalComponent
+    nationalComponent,
+    statusCode,
+    referenceData
   } = props;
 
   return (
     <React.Fragment>
       {title && (
-        <div className="mb-2 d-flex flex-wrap align-items-baseline justify-content-between">
+        <div className="mb-2 d-flex flex-wrap align-items-center">
           {renderTitle(Tag, title, titleLink)}
-          {nationalComponent && <LabelNational />}
+          {statusCode && (
+            <LabelStatus
+              statusCode={statusCode}
+              referenceData={referenceData}
+            />
+          )}
+          {nationalComponent && (
+            <div className="ml-auto">
+              <LabelNational />
+            </div>
+          )}
         </div>
       )}
 
@@ -111,7 +124,9 @@ SearchHitHeader.defaultProps = {
   publisherTag: 'span',
   publisherItems: null,
   theme: null,
-  nationalComponent: false
+  nationalComponent: false,
+  statusCode: null,
+  referenceData: null
 };
 
 SearchHitHeader.propTypes = {
@@ -123,5 +138,7 @@ SearchHitHeader.propTypes = {
   publisherTag: PropTypes.string,
   publisherItems: PropTypes.object,
   theme: PropTypes.array,
-  nationalComponent: PropTypes.bool
+  nationalComponent: PropTypes.bool,
+  statusCode: PropTypes.string,
+  referenceData: PropTypes.object
 };

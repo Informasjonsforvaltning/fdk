@@ -6,6 +6,7 @@ export const REFERENCEEDATA_SUCCESS = 'REFERENCEEDATA_SUCCESS';
 export const REFERENCEEDATA_FAILURE = 'REFERENCEEDATA_FAILURE';
 export const REFERENCEDATA_DISTRIBUTIONTYPE = 'distributiontype';
 export const REFERENCEDATA_REFERENCETYPES = 'referencetypes';
+export const REFERENCEDATA_APISTATUS = 'apistatus';
 
 function shouldFetch(metaState) {
   const threshold = 60 * 1000; // seconds
@@ -77,3 +78,6 @@ export function referenceDataReducer(state = initialState, action) {
 
 export const getReferenceDataByUri = (referenceData, code, uri) =>
   _.find(_.get(referenceData, ['items', code]), { uri });
+
+export const getApiStatusByCode = (referenceData, code) =>
+  _.find(_.get(referenceData, ['items', 'apistatus']), { code });
