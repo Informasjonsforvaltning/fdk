@@ -23,7 +23,7 @@ public class SwaggerJsonParserTest {
     @Before
     public void setup() throws IOException {
         spec = IOUtils.toString(new ClassPathResource("fs-api-swagger.json").getInputStream(), "UTF-8");
-        invalidSpec = IOUtils.toString(new ClassPathResource("fs-api-swagger-invalid-missing-description.json").getInputStream(), "UTF-8");
+        invalidSpec = IOUtils.toString(new ClassPathResource("fs-api-swagger-invalid-missing-title.json").getInputStream(), "UTF-8");
     }
 
     @Test

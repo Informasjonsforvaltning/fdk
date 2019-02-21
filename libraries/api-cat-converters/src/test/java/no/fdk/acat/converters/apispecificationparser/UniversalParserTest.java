@@ -31,14 +31,14 @@ public class UniversalParserTest {
 
     @Test
     public void CanParse_WhenSwagger_ShouldReturnFalse() throws IOException {
-        String spec = IOUtils.toString(new ClassPathResource("fs-api-swagger-invalid-missing-description.json").getInputStream(), "UTF-8");
+        String spec = IOUtils.toString(new ClassPathResource("fs-api-swagger-invalid-missing-title.json").getInputStream(), "UTF-8");
         boolean result = parser.canParse(spec);
         Assert.assertFalse(result);
     }
 
     @Test
     public void CanParse_WhenOpenApi_ShouldReturnFalseWhen() throws IOException {
-        String spec = IOUtils.toString(new ClassPathResource("enhetsregisteret-openapi3-invalid-missing-description.json").getInputStream(), "UTF-8");
+        String spec = IOUtils.toString(new ClassPathResource("enhetsregisteret-openapi3-invalid-missing-title.json").getInputStream(), "UTF-8");
         boolean result = parser.canParse(spec);
         Assert.assertFalse(result);
     }
