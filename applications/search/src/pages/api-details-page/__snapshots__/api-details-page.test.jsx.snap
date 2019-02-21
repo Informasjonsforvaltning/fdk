@@ -179,31 +179,35 @@ exports[`should render ApiDetailsPage correctly with apiItem 1`] = `
           bottomMargin={true}
           title="Contact information"
         >
-          <TwoColRow
-            col1="Contact point"
-            col2={
-              <a
-                href="https://fellesdatakatalog.brreg.no"
-              >
-                Brønnøysundregistrene
-                <i
-                  className="fa fa-external-link fdk-fa-right"
-                />
-              </a>
-            }
-          />
-          <TwoColRow
-            col1="Email"
-            col2={
-              <a
-                href="mailto:fellesdatakatalog@brreg.no"
-                rel="noopener noreferrer"
-                title="fellesdatakatalog@brreg.no"
-              >
-                fellesdatakatalog@brreg.no
-              </a>
-            }
-          />
+          <React.Fragment
+            key="https://fellesdatakatalog.brreg.no"
+          >
+            <TwoColRow
+              col1="Contact point"
+              col2={
+                <a
+                  href="https://fellesdatakatalog.brreg.no"
+                >
+                  Brønnøysundregistrene
+                  <i
+                    className="fa fa-external-link fdk-fa-right"
+                  />
+                </a>
+              }
+            />
+            <TwoColRow
+              col1="Email"
+              col2={
+                <a
+                  href="mailto:fellesdatakatalog@brreg.no"
+                  rel="noopener noreferrer"
+                  title="fellesdatakatalog@brreg.no"
+                >
+                  fellesdatakatalog@brreg.no
+                </a>
+              }
+            />
+          </React.Fragment>
         </ListRegular>
         <div
           style={

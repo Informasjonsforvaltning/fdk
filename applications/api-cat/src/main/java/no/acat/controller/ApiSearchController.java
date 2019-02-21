@@ -128,7 +128,7 @@ public class ApiSearchController {
             "publisher.prefLabel.*",
             "nationalComponent",
             "isOpenAccess",
-            "isOpenLicence",
+            "isOpenLicense",
             "isFree",
             "statusCode"
         };

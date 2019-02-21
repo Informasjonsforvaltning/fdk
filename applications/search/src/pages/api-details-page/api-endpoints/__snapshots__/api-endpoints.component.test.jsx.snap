@@ -27,132 +27,168 @@ exports[`should render api-ApiEndpoints correctly 1`] = `
       </h3>
     </div>
   </div>
-  <div
-    className="d-flex list-regular--item"
+  <React.Fragment
+    key="get-/"
   >
     <div
-      className="col-5 pl-0 fdk-text-strong"
+      className="d-flex list-regular--item"
     >
-      GET
-       
-      /
+      <div
+        className="col-5 pl-0 fdk-text-strong"
+      >
+        GET
+         
+        /
+      </div>
+      <div
+        className="col-7"
+      />
     </div>
-    <div
-      className="col-7"
-    />
-  </div>
-  <div
-    className="d-flex list-regular--item"
+  </React.Fragment>
+  <React.Fragment
+    key="get-/enheter"
   >
     <div
-      className="col-5 pl-0 fdk-text-strong"
+      className="d-flex list-regular--item"
     >
-      GET
-       
-      /enheter
+      <div
+        className="col-5 pl-0 fdk-text-strong"
+      >
+        GET
+         
+        /enheter
+      </div>
+      <div
+        className="col-7"
+      />
     </div>
-    <div
-      className="col-7"
-    />
-  </div>
-  <div
-    className="d-flex list-regular--item"
+  </React.Fragment>
+  <React.Fragment
+    key="get-/enheter/{organisasjonsnummer}"
   >
     <div
-      className="col-5 pl-0 fdk-text-strong"
+      className="d-flex list-regular--item"
     >
-      GET
-       
-      /enheter/{organisasjonsnummer}
+      <div
+        className="col-5 pl-0 fdk-text-strong"
+      >
+        GET
+         
+        /enheter/{organisasjonsnummer}
+      </div>
+      <div
+        className="col-7"
+      />
     </div>
-    <div
-      className="col-7"
-    />
-  </div>
-  <div
-    className="d-flex list-regular--item"
+  </React.Fragment>
+  <React.Fragment
+    key="post-/underenheter"
   >
     <div
-      className="col-5 pl-0 fdk-text-strong"
+      className="d-flex list-regular--item"
     >
-      POST
-       
-      /underenheter
+      <div
+        className="col-5 pl-0 fdk-text-strong"
+      >
+        POST
+         
+        /underenheter
+      </div>
+      <div
+        className="col-7"
+      />
     </div>
-    <div
-      className="col-7"
-    />
-  </div>
-  <div
-    className="d-flex list-regular--item"
+  </React.Fragment>
+  <React.Fragment
+    key="get-/underenheter/{organisasjonsnummer}"
   >
     <div
-      className="col-5 pl-0 fdk-text-strong"
+      className="d-flex list-regular--item"
     >
-      GET
-       
-      /underenheter/{organisasjonsnummer}
+      <div
+        className="col-5 pl-0 fdk-text-strong"
+      >
+        GET
+         
+        /underenheter/{organisasjonsnummer}
+      </div>
+      <div
+        className="col-7"
+      />
     </div>
-    <div
-      className="col-7"
-    />
-  </div>
-  <div
-    className="d-flex list-regular--item"
+  </React.Fragment>
+  <React.Fragment
+    key="get-/oppdateringer/enheter"
   >
     <div
-      className="col-5 pl-0 fdk-text-strong"
+      className="d-flex list-regular--item"
     >
-      GET
-       
-      /oppdateringer/enheter
+      <div
+        className="col-5 pl-0 fdk-text-strong"
+      >
+        GET
+         
+        /oppdateringer/enheter
+      </div>
+      <div
+        className="col-7"
+      />
     </div>
-    <div
-      className="col-7"
-    />
-  </div>
-  <div
-    className="d-flex list-regular--item"
+  </React.Fragment>
+  <React.Fragment
+    key="get-/oppdateringer/underenheter"
   >
     <div
-      className="col-5 pl-0 fdk-text-strong"
+      className="d-flex list-regular--item"
     >
-      GET
-       
-      /oppdateringer/underenheter
+      <div
+        className="col-5 pl-0 fdk-text-strong"
+      >
+        GET
+         
+        /oppdateringer/underenheter
+      </div>
+      <div
+        className="col-7"
+      />
     </div>
-    <div
-      className="col-7"
-    />
-  </div>
-  <div
-    className="d-flex list-regular--item"
+  </React.Fragment>
+  <React.Fragment
+    key="get-/organisasjonsformer"
   >
     <div
-      className="col-5 pl-0 fdk-text-strong"
+      className="d-flex list-regular--item"
     >
-      GET
-       
-      /organisasjonsformer
+      <div
+        className="col-5 pl-0 fdk-text-strong"
+      >
+        GET
+         
+        /organisasjonsformer
+      </div>
+      <div
+        className="col-7"
+      />
     </div>
-    <div
-      className="col-7"
-    />
-  </div>
-  <div
-    className="d-flex list-regular--item"
+  </React.Fragment>
+  <React.Fragment
+    key="get-/organisasjonsformer/{orgformKode}"
   >
     <div
-      className="col-5 pl-0 fdk-text-strong"
+      className="d-flex list-regular--item"
     >
-      GET
-       
-      /organisasjonsformer/{orgformKode}
+      <div
+        className="col-5 pl-0 fdk-text-strong"
+      >
+        GET
+         
+        /organisasjonsformer/{orgformKode}
+      </div>
+      <div
+        className="col-7"
+      />
     </div>
-    <div
-      className="col-7"
-    />
-  </div>
+  </React.Fragment>
   <div
     className="d-flex list-regular--item"
   >

@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`should render Tabs correctly 1`] = `
-<Fragment>
+<React.Fragment>
   <Nav
     tabs={true}
     tag="ul"
@@ -48,7 +48,7 @@ exports[`should render Tabs correctly 1`] = `
       tag="div"
     />
   </TabContent>
-</Fragment>
+</React.Fragment>
 `;
 
-exports[`should render Tabs correctly with no props 1`] = `<Fragment />`;
+exports[`should render Tabs correctly with no props 1`] = `<React.Fragment />`;

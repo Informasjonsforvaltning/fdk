@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`should render ConceptsHitItem correctly 1`] = `
-<Fragment>
+<React.Fragment>
   <article
     className="search-hit fade-in-200"
     title="Begrep: engelsk preflabel14"
@@ -15,19 +15,21 @@ exports[`should render ConceptsHitItem correctly 1`] = `
     <div
       className="mb-2 d-flex flex-wrap align-items-baseline justify-content-between"
     >
-      <Link
-        className="search-hit__title-link"
-        replace={false}
-        title="API: engelsk preflabel14"
-        to="/concepts/14"
-      >
-        <h2
-          className="mr-3"
-          name="engelsk preflabel14"
+      <React.Fragment>
+        <Link
+          className="search-hit__title-link"
+          replace={false}
+          title="API: engelsk preflabel14"
+          to="/concepts/14"
         >
-          engelsk preflabel14
-        </h2>
-      </Link>
+          <h2
+            className="mr-3"
+            name="engelsk preflabel14"
+          >
+            engelsk preflabel14
+          </h2>
+        </Link>
+      </React.Fragment>
       <button
         className="btn fdk-color-blue-dark bg-transparent fdk-text-size-15 fade-in-400"
         onClick={[Function]}
@@ -68,5 +70,5 @@ exports[`should render ConceptsHitItem correctly 1`] = `
       engelsk definition14
     </p>
   </article>
-</Fragment>
+</React.Fragment>
 `;
