@@ -118,6 +118,8 @@ exports[`should render DatasetDescription correctly 1`] = `
     publisherItems={null}
     publisherLabel="Owner: "
     publisherTag="span"
+    referenceData={null}
+    statusCode={null}
     tag="h1"
     theme={
       Array [
@@ -195,6 +197,8 @@ exports[`should render DatasetDescription correctly with no props 1`] = `
     publisherItems={null}
     publisherLabel="Owner: "
     publisherTag="span"
+    referenceData={null}
+    statusCode={null}
     tag="h1"
     theme={null}
     title={null}

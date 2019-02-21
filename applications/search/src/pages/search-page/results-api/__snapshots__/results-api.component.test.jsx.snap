@@ -217,6 +217,7 @@ exports[`should render ResultsApi correctly with hits 1`] = `
         }
         key="68dda78f-364f-41dd-869a-0dd8d9a3fe4c"
         publishers={null}
+        referenceData={null}
       />
       <SearchHitItem
         fadeInCounter={1}
@@ -244,6 +245,7 @@ exports[`should render ResultsApi correctly with hits 1`] = `
         }
         key="70f6e5b3-b633-413b-b5e7-11b63bb413eb"
         publishers={null}
+        referenceData={null}
       />
       <div
         className="col-12 d-flex justify-content-center"

@@ -343,6 +343,7 @@ export const ApiDetailsPage = props => {
               publisher={apiItem.publisher}
               publisherItems={publisherItems}
               nationalComponent={apiItem.nationalComponent}
+              statusCode={apiItem.statusCode}
             />
           </div>
         </div>

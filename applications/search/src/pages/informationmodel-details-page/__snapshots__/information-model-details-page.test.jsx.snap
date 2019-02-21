@@ -35,6 +35,8 @@ exports[`should render InformationModelDetailsPage correctly with informationMod
           publisherItems={null}
           publisherLabel="Provider:"
           publisherTag="span"
+          referenceData={null}
+          statusCode={null}
           tag="h1"
           theme={null}
           title="Åpne Data fra Enhetsregisteret - API Dokumentasjon"

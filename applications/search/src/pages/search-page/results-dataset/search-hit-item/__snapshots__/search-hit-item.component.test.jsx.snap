@@ -47,6 +47,8 @@ exports[`should render SearchHitItem 1`] = `
         publisherItems={null}
         publisherLabel="Owner: "
         publisherTag="span"
+        referenceData={null}
+        statusCode={null}
         tag="h2"
         theme={
           Array [

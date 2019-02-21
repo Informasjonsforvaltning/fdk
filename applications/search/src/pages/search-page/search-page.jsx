@@ -40,6 +40,7 @@ export const SearchPage = props => {
     fetchPublishersIfNeeded,
     fetchReferenceDataIfNeeded,
     fetchInformationModelsIfNeeded,
+    fetchApiStatusIfNeeded,
     history,
     datasetItems,
     datasetAggregations,
@@ -71,6 +72,7 @@ export const SearchPage = props => {
   fetchApisIfNeeded(locationSearch);
   fetchConceptsIfNeeded(locationSearch);
   fetchInformationModelsIfNeeded(locationSearch);
+  fetchApiStatusIfNeeded();
 
   fetchThemesIfNeeded();
   fetchPublishersIfNeeded();
@@ -201,6 +203,7 @@ export const SearchPage = props => {
               publisherCounts={_.get(apiAggregations, 'orgPath.buckets')}
               publishers={publisherItems}
               hitsPerPage={HITS_PER_PAGE}
+              referenceData={referenceData}
             />
           </Route>
           <Route exact path={PATHNAME_CONCEPTS}>
