@@ -304,18 +304,21 @@ const renderStickyMenu = (apiItem, informationModels) => {
   return <StickyMenu menuItems={menuItems} />;
 };
 
-export const ApiDetailsPage = props => {
-  props.fetchPublishersIfNeeded();
-
-  const {
-    apiItem,
-    publisherItems,
-    referencedDatasets,
-    referencedInformationModels
-  } = props;
+export const ApiDetailsPage = ({
+  apiItem,
+  publisherItems,
+  referencedDatasets,
+  referencedInformationModels,
+  referenceData,
+  fetchPublishersIfNeeded,
+  fetchApiStatusIfNeeded
+}) => {
   if (!apiItem) {
     return null;
   }
+
+  fetchPublishersIfNeeded();
+  fetchApiStatusIfNeeded();
 
   const internalApiSpecUrl = `/api/apis/${apiItem.id}/spec`;
 
@@ -347,6 +350,7 @@ export const ApiDetailsPage = props => {
               publisherItems={publisherItems}
               nationalComponent={apiItem.nationalComponent}
               statusCode={apiItem.statusCode}
+              referenceData={referenceData}
             />
           </div>
         </div>
@@ -469,11 +473,15 @@ export const ApiDetailsPage = props => {
 ApiDetailsPage.defaultProps = {
   apiItem: null,
   publisherItems: null,
-  fetchPublishersIfNeeded: () => {}
+  referenceData: null,
+  fetchPublishersIfNeeded: () => {},
+  fetchApiStatusIfNeeded: _.noop
 };
 
 ApiDetailsPage.propTypes = {
   apiItem: PropTypes.object,
   publisherItems: PropTypes.object,
-  fetchPublishersIfNeeded: PropTypes.func
+  referenceData: PropTypes.object,
+  fetchPublishersIfNeeded: PropTypes.func,
+  fetchApiStatusIfNeeded: PropTypes.func
 };
