@@ -35,17 +35,30 @@ const renderDescription = description => {
   if (!description) {
     return null;
   }
-  let descriptionText = getTranslateText(description);
-  if (descriptionText && descriptionText.length > 220) {
-    descriptionText = `${descriptionText.substr(0, 220)}...`;
+  const descriptionText = getTranslateText(description);
+  const breakPattern = /(\n|<br|<\/p|<\/h)/;
+  const match = breakPattern.exec(descriptionText);
+
+  let firstLine = match
+    ? descriptionText.substr(0, match.index)
+    : descriptionText;
+
+  if (firstLine.length > 250) {
+    firstLine = firstLine.substr(0, 220);
+    firstLine = firstLine.substr(0, firstLine.lastIndexOf(' '));
   }
+
+  if (firstLine.length < descriptionText.length) {
+    firstLine += ' ...';
+  }
+
   return (
-    <p className="fdk-text-size-medium">
-      <span className="uu-invisible" aria-hidden="false">
-        Beskrivelse av api,
-      </span>
-      {descriptionText}
-    </p>
+    <div className="fdk-text-size-medium">
+      <div className="uu-invisible" aria-hidden="false">
+        Beskrivelse av api
+      </div>
+      {firstLine}
+    </div>
   );
 };
 
