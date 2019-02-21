@@ -35,20 +35,17 @@ exports[`should render api-SearchHitItem correctly 1`] = `
       titleLink="/apis/24fa3668-6ada-4a50-804e-1396f8470a24"
     />
   </header>
-  <p
+  <div
     className="fdk-text-size-medium"
   >
-    <span
+    <div
       aria-hidden="false"
       className="uu-invisible"
     >
-      Beskrivelse av api,
-    </span>
-    Dette er eit REST-API for å tilby funksjonalitet tilsvarende dagens SOAP-baserte oppslagstjeneste for KRR.
-
-Tilgang til API-et styres med OAuth2-baserte access_tokens. Desse vert utstedt frå ID-porten si OAuth2-teneste.
-...
-  </p>
+      Beskrivelse av api
+    </div>
+    Dette er eit REST-API for å tilby funksjonalitet tilsvarende dagens SOAP-baserte oppslagstjeneste for KRR. ...
+  </div>
   <div
     className="mb-2"
   >
@@ -115,16 +112,16 @@ exports[`should render api-SearchHitItem with long description 1`] = `
       titleLink="/apis/32690443-e926-4e52-9988-dbac45085102"
     />
   </header>
-  <p
+  <div
     className="fdk-text-size-medium"
   >
-    <span
+    <div
       aria-hidden="false"
       className="uu-invisible"
     >
-      Beskrivelse av api,
-    </span>
-    It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as...
-  </p>
+      Beskrivelse av api
+    </div>
+    It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, ...
+  </div>
 </article>
 `;
