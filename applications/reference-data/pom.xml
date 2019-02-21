@@ -240,7 +240,7 @@
                 <!-- Generates coverage reports from unit and integration tests -->
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.1</version>
+                <version>0.8.2</version>
                 <executions>
                     <!--
                         JaCoCo report for unit tests
