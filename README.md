@@ -1,6 +1,7 @@
 
 [![Build Status](https://travis-ci.org/Informasjonsforvaltning/fdk.svg?branch=master)](https://travis-ci.org/Informasjonsforvaltning/fdk) 
 [![codecov](https://codecov.io/gh/Informasjonsforvaltning/fdk/branch/develop/graph/badge.svg)](https://codecov.io/gh/Informasjonsforvaltning/fdk)
+[![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)](https://conventionalcommits.org)
 
 # The National Data Directory (Felles datakatalog)
 
@@ -152,6 +153,17 @@ The [search api](https://github.com/brreg/openAPI/blob/master/specs/fdk.yaml) ca
 
 	```
       
+## Release
+
+Generate release notes and create release in GitHub:
+
+```
+git checkout develop
+git pull
+npm run release
+git push --follow-tags origin
+```
+
 # Modules 
 
 ![Architecture](/images/fdk-architecture-logic.png)
