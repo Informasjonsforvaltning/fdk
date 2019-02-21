@@ -1,0 +1,23 @@
+{
+  "name": "fdk",
+  "version": "1.0.0",
+  "description": "Fellesdatakatalog",
+  "main": " ",
+  "dependencies": {},
+  "devDependencies": {
+    "standard-version": "^5.0.0"
+  },
+  "scripts": {
+    "release": "standard-version --no-verify"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Informasjonsforvaltning/fdk.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Informasjonsforvaltning/fdk/issues"
+  },
+  "homepage": "https://github.com/Informasjonsforvaltning/fdk#readme"
+}
