@@ -23,7 +23,7 @@ public class OpenApiV3JsonParserTest {
     @Before
     public void setup() throws IOException {
         spec = IOUtils.toString(new ClassPathResource("enhetsregisteret-openapi3.json").getInputStream(), "UTF-8");
-        invalidSpec = IOUtils.toString(new ClassPathResource("enhetsregisteret-openapi3-invalid-missing-description.json").getInputStream(), "UTF-8");
+        invalidSpec = IOUtils.toString(new ClassPathResource("enhetsregisteret-openapi3-invalid-missing-title.json").getInputStream(), "UTF-8");
     }
 
     @Test

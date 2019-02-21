@@ -40,10 +40,6 @@ public class OpenApiV3JsonParser implements Parser {
                 return false;
             }
 
-            String description = info.getAsJsonObject().get("description").getAsString();
-            if (description == null || description.isEmpty()) {
-                return false;
-            }
             return true;
         } catch (Exception e) {
             return false;
