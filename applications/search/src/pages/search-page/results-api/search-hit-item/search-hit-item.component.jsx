@@ -163,7 +163,7 @@ export const SearchHitItem = ({
       {renderFormat(_.get(item, 'formats'))}
 
       {isFree === true && (
-        <span className="access-icon green">
+        <span className="access-icon fdk-color-green-1">
           <span className="icon2-icon-api-cost-none">
             <span className="path1" />
             <span className="path2" />
@@ -176,7 +176,7 @@ export const SearchHitItem = ({
       )}
 
       {isFree === false && (
-        <span className="access-icon red">
+        <span className="access-icon fdk-color-red-1">
           <span className="icon2-icon-api-cost">
             <span className="path1" />
             <span className="path2" />
@@ -185,7 +185,7 @@ export const SearchHitItem = ({
         </span>
       )}
       {isOpenAccess === true && (
-        <span className="access-icon green">
+        <span className="access-icon fdk-color-green-1">
           <span className="icon2-icon-api-access-all">
             <span className="path1" />
             <span className="path2" />
@@ -195,7 +195,7 @@ export const SearchHitItem = ({
         </span>
       )}
       {isOpenAccess === false && (
-        <span className="access-icon red">
+        <span className="access-icon fdk-color-red-1">
           <span className="icon2-icon-api-access-not-limited">
             <span className="path1" />
             <span className="path2" />
@@ -203,7 +203,7 @@ export const SearchHitItem = ({
         </span>
       )}
       {isOpenLicense === true && (
-        <span className="access-icon green">
+        <span className="access-icon fdk-color-green-1">
           <span className="icon2-icon-api-license-open">
             <span className="path1" />
             <span className="path2" />
@@ -216,7 +216,7 @@ export const SearchHitItem = ({
         </span>
       )}
       {isOpenLicense === false && (
-        <span className="access-icon red">
+        <span className="access-icon fdk-color-red-1">
           <span className="icon2-icon-api-license">
             <span className="path1" />
             <span className="path2" />
@@ -239,7 +239,6 @@ SearchHitItem.defaultProps = {
 };
 
 SearchHitItem.propTypes = {
-  fadeInCounter: PropTypes.number,
   item: PropTypes.shape({}),
   publishers: PropTypes.object,
   referenceData: PropTypes.object
