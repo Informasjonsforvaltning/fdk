@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`should render DatasetInfo correctly 1`] = `
-<React.Fragment>
+<Fragment>
   <ListRegular
     bottomMargin={true}
     title="Relations"
@@ -65,56 +65,52 @@ exports[`should render DatasetInfo correctly 1`] = `
         </span>
       </div>
     </div>
-    <React.Fragment
-      key="temporal-1483228800000"
-    >
-      <TwoColRow
-        col1="From"
-        col2={
-          <t
-            ago={false}
-            calendar={false}
-            decimal={false}
-            element="time"
-            filter={[Function]}
-            format="DD.MM.YYYY"
-            fromNow={false}
-            interval={60000}
-            onChange={[Function]}
-            toNow={false}
-            unit={null}
-            unix={false}
-            utc={false}
-          >
-            1483228800000
-          </t>
-        }
-      />
-      <TwoColRow
-        col1="To"
-        col2={
-          <t
-            ago={false}
-            calendar={false}
-            decimal={false}
-            element="time"
-            filter={[Function]}
-            format="DD.MM.YYYY"
-            fromNow={false}
-            interval={60000}
-            onChange={[Function]}
-            toNow={false}
-            unit={null}
-            unix={false}
-            utc={false}
-          >
-            1514764799000
-          </t>
-        }
-      />
-    </React.Fragment>
+    <TwoColRow
+      col1="From"
+      col2={
+        <t
+          ago={false}
+          calendar={false}
+          decimal={false}
+          element="time"
+          filter={[Function]}
+          format="DD.MM.YYYY"
+          fromNow={false}
+          interval={60000}
+          onChange={[Function]}
+          toNow={false}
+          unit={null}
+          unix={false}
+          utc={false}
+        >
+          1483228800000
+        </t>
+      }
+    />
+    <TwoColRow
+      col1="To"
+      col2={
+        <t
+          ago={false}
+          calendar={false}
+          decimal={false}
+          element="time"
+          filter={[Function]}
+          format="DD.MM.YYYY"
+          fromNow={false}
+          interval={60000}
+          onChange={[Function]}
+          toNow={false}
+          unit={null}
+          unix={false}
+          utc={false}
+        >
+          1514764799000
+        </t>
+      }
+    />
   </ListRegular>
-</React.Fragment>
+</Fragment>
 `;
 
-exports[`should render DatasetInfo correctly with no props 1`] = `<React.Fragment />`;
+exports[`should render DatasetInfo correctly with no props 1`] = `<Fragment />`;
