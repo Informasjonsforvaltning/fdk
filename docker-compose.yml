@@ -17,10 +17,17 @@ services:
     expose:
       - "8080"
 
+  postgres:
+    image: postgres
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
   sso:
     image: jboss/keycloak
     expose:
       - "8080"
+    depends_on:
+      - postgres
 
 ### ingress modules
   nginx-search:
@@ -128,3 +135,4 @@ services:
 volumes:
   fuseki-data:
   elasticsearch-data:
+  postgres-data:
