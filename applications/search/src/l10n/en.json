@@ -293,12 +293,6 @@
     "title": "Registration (only in Norwegian)"
   },
   "api": {
-    "accessRight": {
-      "public": "API that are public",
-      "restricted": "API with restricted access",
-      "nonPublic": "API that are not public",
-      "unknown": "Unknown accesslevel"
-    },
     "endpoints": {
       "operations": "Operations",
       "operation": "Operation",

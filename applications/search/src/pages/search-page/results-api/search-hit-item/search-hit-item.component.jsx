@@ -109,37 +109,6 @@ const renderExpiredOrDeprecatedVersion = item => {
   return null;
 };
 
-const renderAccessRights = accessRights => {
-  if (!(accessRights && accessRights[0])) {
-    return null;
-  }
-
-  const { code } = accessRights[0] || {
-    code: null
-  };
-  let accessRightsLabel;
-
-  switch (code) {
-    case 'NON_PUBLIC':
-      accessRightsLabel = localization.api.accessRight.nonPublic;
-      break;
-    case 'RESTRICTED':
-      accessRightsLabel = localization.api.accessRight.restricted;
-      break;
-    case 'PUBLIC':
-      accessRightsLabel = localization.api.accessRight.public;
-      break;
-    default:
-      accessRightsLabel = localization.api.accessRight.unknown;
-  }
-
-  return (
-    <div className="mb-2">
-      <strong>{accessRightsLabel}</strong>
-    </div>
-  );
-};
-
 const renderFormat = formats => {
   if (!formats || formats.length === 0) {
     return null;
@@ -191,8 +160,6 @@ export const SearchHitItem = ({
       {renderExpiredOrDeprecatedVersion(item)}
 
       {renderDescription(_.get(item, 'description'))}
-
-      {renderAccessRights(_.get(item, 'accessRights'))}
 
       {renderFormat(_.get(item, 'formats'))}
 
