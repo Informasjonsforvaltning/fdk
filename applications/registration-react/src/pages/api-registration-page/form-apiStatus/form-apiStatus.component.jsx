@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -9,6 +10,13 @@ import DatepickerField from '../../../components/field-datepicker/field-datepick
 import TextAreaField from '../../../components/field-textarea/field-textarea.component';
 import InputField from '../../../components/field-input/field-input.component';
 
+const apiStatusSortOrder = {
+  EXPERIMENTAL: 0,
+  STABLE: 1,
+  DEPRECATED: 2,
+  REMOVED: 3
+};
+
 export const FormApiStatus = ({ apiStatusItems, apiStatusCodeFromForm }) => (
   <form>
     <div className="form-group">
@@ -16,7 +24,7 @@ export const FormApiStatus = ({ apiStatusItems, apiStatusCodeFromForm }) => (
       <Field
         name="statusCode"
         component={SelectField}
-        items={apiStatusItems}
+        items={_.sortBy(apiStatusItems, item => apiStatusSortOrder[item.code])}
         valueKey="code"
         saveObject={false}
       />
