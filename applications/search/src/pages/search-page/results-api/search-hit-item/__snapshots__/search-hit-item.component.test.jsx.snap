@@ -71,6 +71,9 @@ exports[`should render api-SearchHitItem correctly 1`] = `
       */*
     </span>
   </div>
+  <div
+    className="access-icons"
+  />
 </article>
 `;
 
@@ -99,6 +102,9 @@ exports[`should render api-SearchHitItem correctly with no props 1`] = `
       titleLink="/apis/undefined"
     />
   </header>
+  <div
+    className="access-icons"
+  />
 </article>
 `;
 
@@ -138,65 +144,66 @@ exports[`should render api-SearchHitItem with long description 1`] = `
     </div>
     It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, ...
   </div>
-  <span
-    className="access-icon fdk-color-red-1"
+  <div
+    className="access-icons"
   >
     <span
-      className="icon2-icon-api-cost"
+      className="access-icon fdk-color-red-1"
     >
       <span
-        className="path1"
-      />
-      <span
-        className="path2"
-      />
+        className="icon2-icon-api-cost"
+      >
+        <span
+          className="path1"
+        />
+        <span
+          className="path2"
+        />
+      </span>
+      Ikke gratis å bruke
     </span>
-     
-    Ikke gratis å bruke
-  </span>
-  <span
-    className="access-icon fdk-color-red-1"
-  >
     <span
-      className="icon2-icon-api-access-not-limited"
+      className="access-icon fdk-color-red-1"
     >
       <span
-        className="path1"
-      />
-      <span
-        className="path2"
-      />
+        className="icon2-icon-api-access-not-limited"
+      >
+        <span
+          className="path1"
+        />
+        <span
+          className="path2"
+        />
+      </span>
+      Ikke åpen tilgang
     </span>
-    Ikke åpen tilgang
-  </span>
-  <span
-    className="access-icon fdk-color-red-1"
-  >
     <span
-      className="icon2-icon-api-license"
+      className="access-icon fdk-color-red-1"
     >
       <span
-        className="path1"
-      />
-      <span
-        className="path2"
-      />
-      <span
-        className="path3"
-      />
-      <span
-        className="path4"
-      />
-      <span
-        className="path5"
-      />
-      <span
-        className="path6"
-      />
+        className="icon2-icon-api-license"
+      >
+        <span
+          className="path1"
+        />
+        <span
+          className="path2"
+        />
+        <span
+          className="path3"
+        />
+        <span
+          className="path4"
+        />
+        <span
+          className="path5"
+        />
+        <span
+          className="path6"
+        />
+      </span>
+      Ikke åpen lisens
     </span>
-     
-    Ikke åpen lisens
-     
-  </span>
+  </div>
 </article>
 `;

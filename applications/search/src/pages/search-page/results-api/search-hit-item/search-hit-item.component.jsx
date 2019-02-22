@@ -8,6 +8,14 @@ import './search-hit-item.scss';
 import { getTranslateText } from '../../../../lib/translateText';
 import { SearchHitHeader } from '../../../../components/search-hit-header/search-hit-header.component';
 import { AlertMessage } from '../../../../components/alert-message/alert-message.component';
+import {
+  iconIsFree,
+  iconIsNotFree,
+  iconIsNotOpenAccess,
+  iconIsNotOpenLicense,
+  iconIsOpenAccess,
+  iconIsOpenLicense
+} from '../../../../components/api-icons';
 
 const renderHeaderLink = (item, publisher, publishers, referenceData) => {
   if (!item) {
@@ -163,72 +171,14 @@ export const SearchHitItem = ({
 
       {renderFormat(_.get(item, 'formats'))}
 
-      {isFree === true && (
-        <span className="access-icon fdk-color-green-1">
-          <span className="icon2-icon-api-cost-none">
-            <span className="path1" />
-            <span className="path2" />
-            <span className="path3" />
-            <span className="path4" />
-            <span className="path5" />
-          </span>{' '}
-          Gratis
-        </span>
-      )}
-
-      {isFree === false && (
-        <span className="access-icon fdk-color-red-1">
-          <span className="icon2-icon-api-cost">
-            <span className="path1" />
-            <span className="path2" />
-          </span>{' '}
-          Ikke gratis å bruke
-        </span>
-      )}
-      {isOpenAccess === true && (
-        <span className="access-icon fdk-color-green-1">
-          <span className="icon2-icon-api-access-all">
-            <span className="path1" />
-            <span className="path2" />
-            <span className="path3" />
-            <span className="path4" />
-          </span>Åpent for alle
-        </span>
-      )}
-      {isOpenAccess === false && (
-        <span className="access-icon fdk-color-red-1">
-          <span className="icon2-icon-api-access-not-limited">
-            <span className="path1" />
-            <span className="path2" />
-          </span>Ikke åpen tilgang
-        </span>
-      )}
-      {isOpenLicense === true && (
-        <span className="access-icon fdk-color-green-1">
-          <span className="icon2-icon-api-license-open">
-            <span className="path1" />
-            <span className="path2" />
-            <span className="path3" />
-            <span className="path4" />
-            <span className="path5" />
-            <span className="path6" />
-          </span>{' '}
-          Åpen lisens{' '}
-        </span>
-      )}
-      {isOpenLicense === false && (
-        <span className="access-icon fdk-color-red-1">
-          <span className="icon2-icon-api-license">
-            <span className="path1" />
-            <span className="path2" />
-            <span className="path3" />
-            <span className="path4" />
-            <span className="path5" />
-            <span className="path6" />
-          </span>{' '}
-          Ikke åpen lisens{' '}
-        </span>
-      )}
+      <div className="access-icons">
+        {isFree === true && iconIsFree()}
+        {isFree === false && iconIsNotFree()}
+        {isOpenAccess === true && iconIsOpenAccess()}
+        {isOpenAccess === false && iconIsNotOpenAccess()}
+        {isOpenLicense === true && iconIsOpenLicense()}
+        {isOpenLicense === false && iconIsNotOpenLicense()}
+      </div>
     </article>
   );
 };
