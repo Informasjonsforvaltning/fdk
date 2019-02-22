@@ -17,6 +17,11 @@ services:
     expose:
       - "8080"
 
+  sso:
+    image: jboss/keycloak
+    expose:
+      - "8080"
+
 ### ingress modules
   nginx-search:
     image: dcatno/nginx-search:latest
