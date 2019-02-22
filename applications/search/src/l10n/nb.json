@@ -292,12 +292,6 @@
     "title": "Kom i gang med registrering"
   },
   "api": {
-    "accessRight": {
-      "public": "API-et er åpent",
-      "restricted": "API-et har begrenset offentlighet",
-      "nonPublic": "API-et er unntatt offentlighet",
-      "unknown": "Ukjent tilgang"
-    },
     "endpoints": {
       "operations": "Operasjoner",
       "operation": "Operasjon",
