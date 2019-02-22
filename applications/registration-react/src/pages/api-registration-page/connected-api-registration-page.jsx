@@ -44,7 +44,10 @@ const mapStateToProps = (
     helptextItems,
     history: _.get(ownProps, 'history'),
     match: _.get(ownProps, 'match'),
-    apiStatusItems: _.get(referenceData, ['items', 'apistatus'])
+    apiStatusItems: _.filter(
+      _.get(referenceData, ['items', 'apistatus']),
+      item => !!item.code
+    )
   };
 };
 
