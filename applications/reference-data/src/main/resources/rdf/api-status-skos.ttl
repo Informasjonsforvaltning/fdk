@@ -16,7 +16,7 @@
     a skos:Concept ;
     skos:inScheme   <api-statuses> ;
     at:authority-code "EXPERIMENTAL";
-    skos:prefLabel "Experimental"@en, "Utprøving"@nb, "Utprøving"@nn .
+    skos:prefLabel "Experimental"@en, "Under utprøving"@nb, "Under utprøving"@nn .
 
 <under-deprecation>
     a skos:Concept ;
