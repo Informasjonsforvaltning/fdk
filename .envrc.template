@@ -1,6 +1,8 @@
 # recommended dev configuration
 
 export LOG_LEVEL=DEBUG
+export KEYCLOAK_USER=admin
+export KEYCLOAK_PASSWORD=admin
 
 
 # secrets - never commit in git

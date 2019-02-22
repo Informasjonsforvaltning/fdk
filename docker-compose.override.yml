@@ -22,6 +22,14 @@ services:
     ports:
       - "3030:8080"
 
+  sso:
+    environment:
+      - KEYCLOAK_USER
+      - KEYCLOAK_PASSWORD
+      - KEYCLOAK_LOGLEVEL=DEBUG
+    ports:
+      - "8084:8080"
+
 ### ingress modules
   nginx-search:
     restart: always
@@ -41,6 +49,7 @@ services:
       - registration-react
 
 ### nodejs modules
+
   search:
     build: ./applications/search
     restart: always
