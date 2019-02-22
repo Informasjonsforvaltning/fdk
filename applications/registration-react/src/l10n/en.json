@@ -409,6 +409,7 @@
       "importFromSpecError": "Import from {0} failed!",
       "importFromSpec": "Imported from specification",
       "importFromSpecSub": "Fields from specification to be shown in the National Data Directory.",
+      "importFromCatalogSomeSpecFailed": "The National Data Directory only supports Open API-Specification 2.0 and 3.0, and Swagger 2.0. The following specifications could not be harvested:",
       "addInfo": "To ensure API specification to be useful you are encouraged to add additional information. That information is only used in the National Data Directory",
       "registeredApiTitle": "Single API descriptions"
     },

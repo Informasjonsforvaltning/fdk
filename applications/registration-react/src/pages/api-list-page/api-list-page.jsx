@@ -53,6 +53,25 @@ const alertHarvestError = harvestUrl => (
   </div>
 );
 
+const renderFailedSpecifications = errorMessage => {
+  const list = errorMessage.split(',');
+  if (!list) {
+    return null;
+  }
+  return list.map((item, index) => <li key={`item-${index}`}>{item}</li>);
+};
+
+const alertHarvestErrorMsg = errorMessage => (
+  <div className="row mb-5">
+    <div className="col-12">
+      <AlertMessage type="danger">
+        {localization.api.register.importFromCatalogSomeSpecFailed}
+        <ul>{renderFailedSpecifications(errorMessage)}</ul>
+      </AlertMessage>
+    </div>
+  </div>
+);
+
 export const APIListPage = props => {
   const {
     apiCatalogs,
@@ -92,8 +111,15 @@ export const APIListPage = props => {
       {alertDeleted(_.get(location, ['state', 'confirmDelete'], false))}
 
       {_.get(apiCatalogs, ['harvestStatus', 'success'], false) === true &&
+        _.get(apiCatalogs, ['harvestStatus', 'errorMessage']) === undefined &&
         alertHarvestSuccess(
           _.get(apiCatalogs, 'harvestSourceUri', recentlyPostedHarvestUrl)
+        )}
+
+      {_.get(apiCatalogs, ['harvestStatus', 'success'], false) === true &&
+        _.get(apiCatalogs, ['harvestStatus', 'errorMessage']) &&
+        alertHarvestErrorMsg(
+          _.get(apiCatalogs, ['harvestStatus', 'errorMessage'])
         )}
 
       {((_.get(apiCatalogs, ['harvestStatus', 'success']) === false &&

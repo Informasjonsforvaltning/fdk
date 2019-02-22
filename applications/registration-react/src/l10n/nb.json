@@ -411,6 +411,7 @@
       "importFromSpecError": "Import fra {0} feilet!",
       "importFromSpec": "Importert fra spesifikasjon",
       "importFromSpecSub": "Dette er de aktuelle feltene fra spesifikasjonen som vil vises i Felles datakatalog.",
+      "importFromCatalogSomeSpecFailed": "Felles datakatalog støtter foreløpig Open API-Specification 2.0 og 3.0 og Swagger 2.0. Følgende spesifikasjoner kunne ikke høstes:",
       "addInfo": "For at API-beskrivelsen skal være nyttig for brukerne av Felles Datakatalog bør du legge til tilleggsinformasjon. Denne er spesifikk for Datakatalogen og vil kun brukes her.",
       "registeredApiTitle": "Enkeltstående API-beskrivelser"
     },
