@@ -293,6 +293,14 @@
     "title": "Registration (only in Norwegian)"
   },
   "api": {
+    "access": {
+      "isFree": "Free",
+      "isNotFree": "Not free",
+      "isOpenAccess": "Public access",
+      "isNotOpenAccess": "Not public access",
+      "isOpenLicense": "Open license",
+      "isNotOpenLicense" : "License not open"
+    },
     "endpoints": {
       "operations": "Operations",
       "operation": "Operation",

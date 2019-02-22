@@ -1,4 +1,5 @@
 import React from 'react';
+import localization from '../lib/localization';
 
 export const iconIsFree = () => (
   <span className="access-icon fdk-color-green-1">
@@ -8,7 +9,8 @@ export const iconIsFree = () => (
       <span className="path3" />
       <span className="path4" />
       <span className="path5" />
-    </span>Gratis
+    </span>
+    {localization.api.access.isFree}
   </span>
 );
 
@@ -18,7 +20,7 @@ export const iconIsNotFree = () => (
       <span className="path1" />
       <span className="path2" />
     </span>
-    Ikke gratis å bruke
+    {localization.api.access.isNotFree}
   </span>
 );
 
@@ -30,7 +32,7 @@ export const iconIsOpenAccess = () => (
       <span className="path3" />
       <span className="path4" />
     </span>
-    Åpent for alle
+    {localization.api.access.isOpenAccess}
   </span>
 );
 
@@ -40,7 +42,7 @@ export const iconIsNotOpenAccess = () => (
       <span className="path1" />
       <span className="path2" />
     </span>
-    Ikke åpen tilgang
+    {localization.api.access.isNotOpenAccess}
   </span>
 );
 
@@ -54,7 +56,7 @@ export const iconIsOpenLicense = () => (
       <span className="path5" />
       <span className="path6" />
     </span>
-    Åpen lisens
+    {localization.api.access.isOpenLicense}
   </span>
 );
 export const iconIsNotOpenLicense = () => (
@@ -67,6 +69,6 @@ export const iconIsNotOpenLicense = () => (
       <span className="path5" />
       <span className="path6" />
     </span>
-    Ikke åpen lisens
+    {localization.api.access.isNotOpenLicense}
   </span>
 );

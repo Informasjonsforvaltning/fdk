@@ -292,6 +292,14 @@
     "title": "Korleis komme i gong med registrering"
   },
   "api": {
+    "access": {
+      "isFree": "Gratis",
+      "isNotFree": "Ikkje gratis å bruke",
+      "isOpenAccess": "Opent for alle",
+      "isNotOpenAccess": "Ikkje open tilgang",
+      "isOpenLicense": "Open lisens",
+      "isNotOpenLicense" : "Ikkje open lisens"
+    },
     "endpoints": {
       "operations": "Operasjonar",
       "operation": "Operasjon",
