@@ -130,7 +130,9 @@ public class ApiSearchController {
             "isOpenAccess",
             "isOpenLicense",
             "isFree",
-            "statusCode"
+            "statusCode",
+            "deprecationInfoExpirationDate",
+            "deprecationInfoReplacedWithUrl"
         };
 
         int from = (int) pageable.getOffset();
