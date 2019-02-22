@@ -292,6 +292,14 @@
     "title": "Kom i gang med registrering"
   },
   "api": {
+    "access": {
+      "isFree": "Gratis",
+      "isNotFree": "Ikke gratis å bruke",
+      "isOpenAccess": "Åpent for alle",
+      "isNotOpenAccess": "Ikke åpen tilgang",
+      "isOpenLicense": "Åpen lisens",
+      "isNotOpenLicense" : "Ikke åpen lisens"
+    },
     "endpoints": {
       "operations": "Operasjoner",
       "operation": "Operasjon",
