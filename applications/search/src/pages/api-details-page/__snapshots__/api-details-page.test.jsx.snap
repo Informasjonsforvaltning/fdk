@@ -107,7 +107,7 @@ exports[`should render ApiDetailsPage correctly with apiItem 1`] = `
           />
         </withStateHandlers(ShowMorePure)>
         <div
-          className="access-icons"
+          className="access-icons mb-5 d-flex justify-content-between"
         />
         <ListRegular
           bottomMargin={true}
@@ -276,7 +276,7 @@ exports[`should render ApiDetailsPage correctly with missing api-properties 1`] 
         className="col-12 col-lg-8 mt-3 api-details-section"
       >
         <div
-          className="access-icons"
+          className="access-icons mb-5 d-flex justify-content-between"
         />
         <ListRegular
           bottomMargin={true}

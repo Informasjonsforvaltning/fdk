@@ -421,7 +421,7 @@ export const ApiDetailsPage = ({
             {renderDescription(
               apiItem.descriptionFormatted || apiItem.description
             )}
-            <div className="access-icons">
+            <div className="access-icons mb-5 d-flex justify-content-between">
               {isFree === true && iconIsFree()}
               {isFree === false && iconIsNotFree()}
               {isOpenAccess === true && iconIsOpenAccess()}

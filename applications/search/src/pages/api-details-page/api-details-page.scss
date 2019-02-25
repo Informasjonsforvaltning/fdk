@@ -1,10 +1,15 @@
+@import '../../../node_modules/designsystemet/fdk-designsystem-bootstrap4/scss/colors.scss';
 
-.api-details-section .access-icon {
-    padding: 10px;
-    background: #fff;
-    margin: 0 9px 35px 0;
-    width: 237px;
-}
-.api-details-section .access-icon:last-child {
-    margin-right: 0;
+.api-details-section {
+    .access-icon {
+        background-color: $color-white;;
+        border-radius: 5px;
+        border: 1px $color-white;;
+        padding: 1em 2em;
+        margin-right: 0.5em;
+    }
+
+    .access-icon:last-child {
+        margin-right: 0;
+    }
 }
