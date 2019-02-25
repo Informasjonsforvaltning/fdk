@@ -72,7 +72,7 @@ exports[`should render api-SearchHitItem correctly 1`] = `
     </span>
   </div>
   <div
-    className="access-icons"
+    className="access-icons mt-2 d-flex justify-content-between"
   />
 </article>
 `;
@@ -103,7 +103,7 @@ exports[`should render api-SearchHitItem correctly with no props 1`] = `
     />
   </header>
   <div
-    className="access-icons"
+    className="access-icons mt-2 d-flex justify-content-between"
   />
 </article>
 `;
@@ -145,10 +145,10 @@ exports[`should render api-SearchHitItem with long description 1`] = `
     It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, ...
   </div>
   <div
-    className="access-icons"
+    className="access-icons mt-2 d-flex justify-content-between"
   >
     <span
-      className="access-icon fdk-color-red-1"
+      className="access-icon flex-fill fdk-color-red-1"
     >
       <span
         className="icon2-icon-api-cost"
@@ -163,7 +163,7 @@ exports[`should render api-SearchHitItem with long description 1`] = `
       Not free
     </span>
     <span
-      className="access-icon fdk-color-red-1"
+      className="access-icon flex-fill fdk-color-red-1"
     >
       <span
         className="icon2-icon-api-access-not-limited"
@@ -178,7 +178,7 @@ exports[`should render api-SearchHitItem with long description 1`] = `
       Not public access
     </span>
     <span
-      className="access-icon fdk-color-red-1"
+      className="access-icon flex-fill fdk-color-red-1"
     >
       <span
         className="icon2-icon-api-license"

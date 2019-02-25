@@ -171,7 +171,7 @@ export const SearchHitItem = ({
 
       {renderFormat(_.get(item, 'formats'))}
 
-      <div className="access-icons">
+      <div className="access-icons mt-2 d-flex justify-content-between">
         {isFree === true && iconIsFree()}
         {isFree === false && iconIsNotFree()}
         {isOpenAccess === true && iconIsOpenAccess()}

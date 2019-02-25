@@ -2,7 +2,7 @@ import React from 'react';
 import localization from '../lib/localization';
 
 export const iconIsFree = () => (
-  <span className="access-icon fdk-color-green-1">
+  <span className="access-icon flex-fill fdk-color-green-1">
     <span className="icon2-icon-api-cost-none">
       <span className="path1" />
       <span className="path2" />
@@ -15,7 +15,7 @@ export const iconIsFree = () => (
 );
 
 export const iconIsNotFree = () => (
-  <span className="access-icon fdk-color-red-1">
+  <span className="access-icon flex-fill fdk-color-red-1">
     <span className="icon2-icon-api-cost">
       <span className="path1" />
       <span className="path2" />
@@ -25,7 +25,7 @@ export const iconIsNotFree = () => (
 );
 
 export const iconIsOpenAccess = () => (
-  <span className="access-icon fdk-color-green-1">
+  <span className="access-icon flex-fill fdk-color-green-1">
     <span className="icon2-icon-api-access-all">
       <span className="path1" />
       <span className="path2" />
@@ -37,7 +37,7 @@ export const iconIsOpenAccess = () => (
 );
 
 export const iconIsNotOpenAccess = () => (
-  <span className="access-icon fdk-color-red-1">
+  <span className="access-icon flex-fill fdk-color-red-1">
     <span className="icon2-icon-api-access-not-limited">
       <span className="path1" />
       <span className="path2" />
@@ -47,7 +47,7 @@ export const iconIsNotOpenAccess = () => (
 );
 
 export const iconIsOpenLicense = () => (
-  <span className="access-icon fdk-color-green-1">
+  <span className="access-icon flex-fill fdk-color-green-1">
     <span className="icon2-icon-api-license-open">
       <span className="path1" />
       <span className="path2" />
@@ -60,7 +60,7 @@ export const iconIsOpenLicense = () => (
   </span>
 );
 export const iconIsNotOpenLicense = () => (
-  <span className="access-icon fdk-color-red-1">
+  <span className="access-icon flex-fill fdk-color-red-1">
     <span className="icon2-icon-api-license">
       <span className="path1" />
       <span className="path2" />
