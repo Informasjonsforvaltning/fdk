@@ -17,7 +17,11 @@ TwoColRow.defaultProps = {
 };
 
 TwoColRow.propTypes = {
-  col1: PropTypes.string,
+  col1: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object,
+    PropTypes.array
+  ]),
   col2: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.object,
