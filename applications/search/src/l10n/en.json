@@ -153,9 +153,9 @@
   "search_hit": {
     "owned": "Owner: ",
     "sample": "Sample data are available",
-    "NationalBuildingBlock": "National Building Block",
+    "NationalBuildingBlock": "Autorative source",
     "bruker": "User collected data",
-    "nasjonal": "National Building Block",
+    "nasjonal": "Autorative source",
     "tredjepart": "Third party",
     "vedtak": "Decision",
     "distributionType": "Distribution type"
