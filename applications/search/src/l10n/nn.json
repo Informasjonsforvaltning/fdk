@@ -152,9 +152,9 @@
   "search_hit": {
     "owned": "Eigar: ",
     "sample": "Eksempeldata tilgjengeleg",
-    "NationalBuildingBlock": "Nasjonal felleskomponent",
+    "NationalBuildingBlock": "Autorativ kilde",
     "bruker": "Brukerinnsamla data",
-    "nasjonal": "Nasjonal felleskomponent",
+    "nasjonal": "Autorativ kilde",
     "tredjepart": "Tredjepart",
     "vedtak": "Vedtak",
     "distributionType": "Distribusjonstype"
