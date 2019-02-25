@@ -9,7 +9,7 @@ import './form-access.scss';
 
 export const FormAccess = ({ helptextItems }) => (
   <form>
-    <div className="form-group api-access">
+    <div className="form-group mb-5 api-access">
       <Helptext
         title={localization.schema.apiAccess.helptext.isOpenAccess}
         helptextItems={_.get(helptextItems, 'isOpenAccess')}
@@ -31,7 +31,7 @@ export const FormAccess = ({ helptextItems }) => (
         label={localization.no}
       />
     </div>
-    <div className="form-group api-access">
+    <div className="form-group mb-5 api-access">
       <Helptext
         title={localization.schema.apiAccess.helptext.isOpenLicense}
         helptextItems={_.get(helptextItems, 'isOpenLicense')}
@@ -53,7 +53,7 @@ export const FormAccess = ({ helptextItems }) => (
         label={localization.no}
       />
     </div>
-    <div className="form-group api-access">
+    <div className="form-group mb-5 api-access">
       <Helptext
         title={localization.schema.apiAccess.helptext.isFree}
         helptextItems={_.get(helptextItems, 'isFree')}
@@ -75,7 +75,7 @@ export const FormAccess = ({ helptextItems }) => (
         label={localization.no}
       />
     </div>
-    <div className="form-group api-access">
+    <div className="form-group mb-5 api-access">
       <Helptext
         title={localization.schema.apiAccess.helptext.nationalComponent}
         helptextItems={_.get(helptextItems, 'nationalComponent')}
