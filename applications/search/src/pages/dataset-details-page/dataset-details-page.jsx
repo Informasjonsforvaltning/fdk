@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import DocumentMeta from 'react-document-meta';
 import Moment from 'react-moment';
+import { Link } from 'react-router-dom';
 
 import localization from '../../lib/localization';
 import { DatasetDescription } from './dataset-description/dataset-description.component';
@@ -185,7 +186,19 @@ const renderSubjects = subject => {
     items.map(item => (
       <TwoColRow
         key={item.uri}
-        col1={_.capitalize(getTranslateText(_.get(item, 'prefLabel')))}
+        col1={
+          item.uri ? (
+            <Link
+              to={`/concepts/${item.uri.substring(
+                item.uri.lastIndexOf('/') + 1
+              )}`}
+            >
+              {_.capitalize(getTranslateText(_.get(item, 'prefLabel')))}
+            </Link>
+          ) : (
+            _.capitalize(getTranslateText(_.get(item, 'prefLabel')))
+          )
+        }
         col2={getTranslateText(_.get(item, 'definition'))}
       />
     ));
