@@ -162,9 +162,9 @@ export const APIRegistrationPagePure = ({
             <div className="col-12">
               <FormTemplateWithState
                 showInitially
-                title={localization.schema.apiMeta.title}
+                title={localization.schema.apiAccess.title}
               >
-                <ConnectedFormMeta
+                <ConnectedFormAccess
                   apiItem={item}
                   match={match}
                   helptextItems={helptextItems}
@@ -176,9 +176,9 @@ export const APIRegistrationPagePure = ({
             <div className="col-12">
               <FormTemplateWithState
                 showInitially
-                title={localization.schema.apiAccess.title}
+                title={localization.schema.apiMeta.title}
               >
-                <ConnectedFormAccess
+                <ConnectedFormMeta
                   apiItem={item}
                   match={match}
                   helptextItems={helptextItems}
