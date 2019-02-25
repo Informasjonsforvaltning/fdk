@@ -27,10 +27,6 @@
   "responsible": "Responsible",
   "name": "Name",
   "type": "Type",
-  "statusRemoved": "This version of API is removed.",
-  "statusDeprecated": "This version of API has expired and will be phased out {0} {1}. ",
-  "statusReplacedUrl": "Ny versjon er dokumentert her.",
-  "during": "during",
   "app": {
     "menu": "Menu"
   },
@@ -153,9 +149,9 @@
   "search_hit": {
     "owned": "Owner: ",
     "sample": "Sample data are available",
-    "NationalBuildingBlock": "National Building Block",
+    "NationalBuildingBlock": "Autorative source",
     "bruker": "User collected data",
-    "nasjonal": "National Building Block",
+    "nasjonal": "Autorative source",
     "tredjepart": "Third party",
     "vedtak": "Decision",
     "distributionType": "Distribution type"
@@ -293,13 +289,11 @@
     "title": "Registration (only in Norwegian)"
   },
   "api": {
-    "access": {
-      "isFree": "Free",
-      "isNotFree": "Not free",
-      "isOpenAccess": "Public access",
-      "isNotOpenAccess": "Not public access",
-      "isOpenLicense": "Open license",
-      "isNotOpenLicense" : "License not open"
+    "accessRight": {
+      "public": "API that are public",
+      "restricted": "API with restricted access",
+      "nonPublic": "API that are not public",
+      "unknown": "Unknown accesslevel"
     },
     "endpoints": {
       "operations": "Operations",

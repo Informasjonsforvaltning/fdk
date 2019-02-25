@@ -27,10 +27,6 @@
   "responsible": "Ansvarleg",
   "name": "Namn",
   "type": "Type",
-  "statusRemoved": "Denne versjonen av API-et er avvikla.",
-  "statusDeprecated": "Denne versjonen av API-et er forelda og vil fases ut {0} {1}. ",
-  "statusReplacedUrl": "Ny versjon er dokumentert her.",
-  "during": "i",
   "app": {
     "menu": "Meny"
   },
@@ -152,9 +148,9 @@
   "search_hit": {
     "owned": "Eigar: ",
     "sample": "Eksempeldata tilgjengeleg",
-    "NationalBuildingBlock": "Nasjonal felleskomponent",
+    "NationalBuildingBlock": "Autorativ kilde",
     "bruker": "Brukerinnsamla data",
-    "nasjonal": "Nasjonal felleskomponent",
+    "nasjonal": "Autorativ kilde",
     "tredjepart": "Tredjepart",
     "vedtak": "Vedtak",
     "distributionType": "Distribusjonstype"
@@ -292,13 +288,11 @@
     "title": "Korleis komme i gong med registrering"
   },
   "api": {
-    "access": {
-      "isFree": "Gratis",
-      "isNotFree": "Ikkje gratis å bruke",
-      "isOpenAccess": "Opent for alle",
-      "isNotOpenAccess": "Ikkje open tilgang",
-      "isOpenLicense": "Open lisens",
-      "isNotOpenLicense" : "Ikkje open lisens"
+    "accessRight": {
+      "public": "API-et er opent",
+      "restricted": "API med avgrensa offentlegheit",
+      "nonPublic": "API-et er unntatt offentlegheit",
+      "unknown": "Ukjend tilgang"
     },
     "endpoints": {
       "operations": "Operasjonar",

@@ -27,10 +27,6 @@
   "responsible": "Ansvarlig",
   "name": "Navn",
   "type": "Type",
-  "statusRemoved": "Denne versjonen av API-et er avviklet.",
-  "statusDeprecated": "Denne versjonen av API-et er foreldet og vil fases ut {0} {1}. ",
-  "statusReplacedUrl": "Ny versjon er dokumentert her.",
-  "during": "i",
   "app": {
     "menu": "Meny"
   },
@@ -152,9 +148,9 @@
   "search_hit": {
     "owned": "Eier: ",
     "sample": "Eksempeldata tilgjengelig",
-    "NationalBuildingBlock": "Nasjonal felleskomponent",
+    "NationalBuildingBlock": "Autorativ kilde",
     "bruker": "Brukerinnsamlede data",
-    "nasjonal": "Nasjonal felleskomponent",
+    "nasjonal": "Autorativ kilde",
     "tredjepart": "Tredjepart",
     "vedtak": "Vedtak",
     "distributionType": "Distribusjonstype"
@@ -292,13 +288,11 @@
     "title": "Kom i gang med registrering"
   },
   "api": {
-    "access": {
-      "isFree": "Gratis",
-      "isNotFree": "Ikke gratis å bruke",
-      "isOpenAccess": "Åpent for alle",
-      "isNotOpenAccess": "Ikke åpen tilgang",
-      "isOpenLicense": "Åpen lisens",
-      "isNotOpenLicense" : "Ikke åpen lisens"
+    "accessRight": {
+      "public": "API-et er åpent",
+      "restricted": "API-et har begrenset offentlighet",
+      "nonPublic": "API-et er unntatt offentlighet",
+      "unknown": "Ukjent tilgang"
     },
     "endpoints": {
       "operations": "Operasjoner",
