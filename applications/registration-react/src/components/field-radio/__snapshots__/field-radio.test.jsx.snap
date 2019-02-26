@@ -4,9 +4,15 @@ exports[`should render RadioField correctly 1`] = `
 <label
   className="form-check fdk-form-check mb-0"
   htmlFor=""
+  style={
+    Object {
+      "opacity": "1",
+    }
+  }
 >
   <input
     className="form-check-input"
+    disabled={false}
     id=""
     type="radio"
   />
