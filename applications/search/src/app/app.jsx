@@ -32,7 +32,7 @@ export function App(props) {
   // react-localization is a stateful library, so we set the required language on each full-app render
   // and full-render app each time when the language is changed
   localization.setLanguage(props.language);
-
+  twttr.widgets.load(); // eslint-disable-line no-undef
   return (
     <div>
       <div>
@@ -144,6 +144,13 @@ export function App(props) {
 
       <div className="fdk-footer d-none d-md-block">
         <div className="container">
+          <a
+            className="twitter-timeline"
+            data-width="400"
+            href="https://twitter.com/datakatalogen?ref_src=twsrc%5Etfw"
+          >
+            Tweets by datakatalogen
+          </a>
           <div className="row">
             <div className="col-md-3">
               <p className="fdk-p-footer">
