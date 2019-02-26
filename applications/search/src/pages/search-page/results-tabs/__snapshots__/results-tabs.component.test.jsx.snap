@@ -32,7 +32,7 @@ exports[`should render ResultsTabs with "Concepts" active correctly 1`] = `
         </Link>
       </li>
       <li
-        className="d-flex justify-content-center beta"
+        className="d-flex justify-content-center"
       >
         <Link
           aria-label="Link til side for api:"
@@ -130,7 +130,7 @@ exports[`should render ResultsTabs with "Dataset" active correctly 1`] = `
         </Link>
       </li>
       <li
-        className="d-flex justify-content-center beta"
+        className="d-flex justify-content-center"
       >
         <Link
           aria-label="Link til side for api:"

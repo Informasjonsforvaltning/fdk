@@ -40,7 +40,7 @@ export const ResultsTabsPure = ({
             </Link>
           </li>
           <li
-            className={cx('d-flex justify-content-center beta', {
+            className={cx('d-flex justify-content-center', {
               'li-active': activePath === PATHNAME_APIS
             })}
           >
