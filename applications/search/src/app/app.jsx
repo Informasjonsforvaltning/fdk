@@ -32,7 +32,10 @@ export function App(props) {
   // react-localization is a stateful library, so we set the required language on each full-app render
   // and full-render app each time when the language is changed
   localization.setLanguage(props.language);
-  twttr.widgets.load(); // eslint-disable-line no-undef
+  if (typeof twttr !== 'undefined') {
+    // eslint-disable-line no-undef
+    twttr.widgets.load(); // eslint-disable-line no-undef
+  }
   return (
     <div>
       <div>

@@ -159,6 +159,13 @@ exports[`should render App correctly 1`] = `
     <div
       className="container"
     >
+      <a
+        className="twitter-timeline"
+        data-width="400"
+        href="https://twitter.com/datakatalogen?ref_src=twsrc%5Etfw"
+      >
+        Tweets by datakatalogen
+      </a>
       <div
         className="row"
       >
