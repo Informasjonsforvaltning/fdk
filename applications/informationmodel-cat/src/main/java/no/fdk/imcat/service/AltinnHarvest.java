@@ -1,162 +1,167 @@
 package no.fdk.imcat.service;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import no.dcat.shared.Publisher;
 import no.fdk.imcat.model.InformationModel;
 import no.fdk.imcat.model.InformationModelFactory;
 import no.fdk.imcat.model.InformationModelHarvestSource;
-import org.apache.commons.io.input.ReaderInputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import java.io.StringReader;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.util.*;
+import java.util.zip.GZIPInputStream;
 
 /**
  * Harvest Altinns APIS
  */
+
 @Service
 public class AltinnHarvest {
     private static final Logger logger = LoggerFactory.getLogger(AltinnHarvest.class);
 
     private InformationModelFactory informationModelFactory;
 
+    private HashMap<String, InformationModel> everyAltinnInformationModel = new HashMap<>();
+
 
     public AltinnHarvest(InformationModelFactory factory) {
         this.informationModelFactory = factory;
     }
 
+    private static InformationModel parseInformationModel(AltInnService service) {
+        InformationModel model = new InformationModel();
+
+        Publisher p = new Publisher(service.OrganizationNumber);
+        model.setPublisher(p);
+        model.setTitle(service.ServiceName);
+        model.setId(service.ServiceCode + "_" + service.ServiceEditionCode);
+        logger.debug("Service " + service.ServiceName + " has {} forms", service.Forms.size());
+
+        byte[] gzippedJson = Base64.getDecoder().decode(service.Forms.get(0).JsonSchema);
+        byte[] rawJson = null;
+
+        try (ByteArrayInputStream bin = new ByteArrayInputStream(gzippedJson);
+             GZIPInputStream gzipper = new GZIPInputStream(bin)) {
+            ByteArrayOutputStream myBucket = new ByteArrayOutputStream();
+            boolean done = false;
+            byte[] buffer = new byte[1000]; //much bigger later
+            while (!done) {
+                int length = gzipper.read(buffer, 0, buffer.length);
+                if (length > 0) {
+                    myBucket.write(buffer, 0, length);
+                }
+                done = (length == -1);
+            }
+
+            gzipper.close();
+
+
+            String str = new String(myBucket.toByteArray(), StandardCharsets.UTF_8);
+
+            //parse the json ?
+            logger.debug("The stringS!" + str);
+
+            //make a model from this ? or a fragment ?
+            // first approx, just grab the first form
+            model.setSchema(str);
+        } catch (IOException ie) {
+            logger.debug("Failed to gunzip JSON", ie);
+        }
+
+        return model;
+
+    }
+
+    public InformationModel getByServiceCodeAndEdition(String serviceCode, String serviceEditionCode) {
+        return everyAltinnInformationModel.get(serviceCode + "_" + serviceEditionCode);
+    }
 
     public List<InformationModelHarvestSource> getHarvestSources() {
+        logger.debug("Getting harvest sources from AltInn");
         List<InformationModelHarvestSource> sourceList = new ArrayList<>();
 
-        //Get the entire form list
-        try {
-            RestTemplate rest = new RestTemplate();
-            HttpHeaders headers = new HttpHeaders();
-            headers.add("Accept", "application/xml");//For some reason the XML contains the urls we want, the JSON of the SAME resources does not.
-            HttpEntity<String> requestEntity = new HttpEntity<>("", headers);
-            ResponseEntity<String> responseEntity = rest.exchange("https://www.altinn.no/api/metadata", HttpMethod.GET, requestEntity, String.class);
-            String theXMLAll = responseEntity.getBody();
+        //loadAllInformationModelsFromCompositeFile("C:\\tmp\\altinn-service-schemas.json");
+        loadAllInformationModelsFromOutAltInnAdapter();
 
-            theXMLAll = theXMLAll.substring(3); //Skip UTF8-Bytemarker
-            StringReader srr = new StringReader(theXMLAll);
+        for (String key : everyAltinnInformationModel.keySet()) {
 
-            ReaderInputStream ris = new ReaderInputStream(srr);
+            InformationModel model = everyAltinnInformationModel.get(key);
 
-            DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-            Document doc = builder.parse(ris);
-            doc.getDocumentElement().normalize();
+            int underscoreIndex = key.indexOf("_");
+            String altInnServiceCode = key.substring(0, underscoreIndex);
+            String altInnServiceEditionCode = key.substring(underscoreIndex + 1);
 
-            //We ignore all of the file, but the target urls
-            NodeList resources = doc.getElementsByTagName("resource");
-            for (int i = 1; i < resources.getLength() - 1; i++) {//We start at 1 to exclude the self-reference
-                Node n = resources.item(i);
-                if (n.getAttributes().getNamedItem("href") == null) {
-                    continue;//This node has no href, so we skip it
-                }
-                String formURL = n.getAttributes().getNamedItem("href").getNodeValue();
+            InformationModelHarvestSource source = new InformationModelHarvestSource();
+            source.harvestSourceUri = model.getHarvestSourceUri();
+            source.sourceType = InformationmodelHarvester.ALTINN_TYPE;
 
-                NodeList children = n.getChildNodes();
-                String altInnServiceCode = getNamedElementsValue(children, "ServiceCode");
-                String altInnServiceEditionCode = getNamedElementsValue(children, "ServiceEditionCode");
+            source.serviceCode = altInnServiceCode;
+            source.serviceEditionCode = altInnServiceEditionCode;
+            sourceList.add(source);
 
-                InformationModelHarvestSource source = new InformationModelHarvestSource();
-                source.harvestSourceUri = formURL;
-                source.title = getNamedElementsValue(children, "ServiceName");
-                source.sourceType = InformationmodelHarvester.ALTINN_TYPE;
-                source.serviceCode = altInnServiceCode;
-                source.serviceEditionCode = altInnServiceEditionCode;
-                sourceList.add(source);
-                logger.debug(formURL);
-            }
-        } catch (Exception e) {
-            logger.debug("Failed to parse", e);
         }
 
         return sourceList;
     }
 
-    public String getNamedElementsValue(NodeList listToSearch, String nodename) {
-        for (int i = 0; i < listToSearch.getLength() - 1; i++) {
-            Node n = listToSearch.item(i);
-            if (nodename.equalsIgnoreCase(n.getNodeName())) {
-                if (n.getNodeValue() == null) {
-                    return n.getTextContent();
-                } else {
-                    return n.getNodeValue();
-                }
+    private void loadAllInformationModelsFromOutAltInnAdapter() {
+        try {
+            URL altinn = new URL("https://fdk-dev-altinn.appspot.com/api/v1/schemas");
+            logger.debug("Retrieving all schemas from altinn.  url: {} expected load time approx 5 minutes", altinn);
+            String JSonSchemaFromFile = new Scanner(altinn.openStream(), "UTF-8").useDelimiter("\\A").next();
+            logger.debug("schemas retrieved. url {} ", altinn);
+
+            ObjectMapper objectMapper = new ObjectMapper();
+            logger.debug("Preparing to parse altinn schemas");
+            List<AltInnService> servicesInAltInn = objectMapper.readValue(JSonSchemaFromFile, new TypeReference<List<AltInnService>>() {
+            });
+            logger.debug("Altinn schemas parsed");
+
+            //Now extract the subforms from base64 gzipped json
+            for (AltInnService service : servicesInAltInn) {
+                InformationModel model = parseInformationModel(service);
+                everyAltinnInformationModel.put(model.getId(), model);
+                //TODO: Get all the model subforms
             }
+
+        } catch (Throwable e) {
+            logger.debug("Failed while reading information models from  ", e);
         }
-        return "";
+
     }
 
-    InformationModel getInformationModel(InformationModelHarvestSource source) {
-        RestTemplate rest = new RestTemplate();
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Accept", "application/xml");//For some reason the XML contains the urls we want, the JSON of the SAME resources does not.
-        HttpEntity<String> requestEntity = new HttpEntity<>("", headers);
-        logger.debug("Retrieving form details: " + source.harvestSourceUri);
-        String theXMLAll = "";
-        try {
-            ResponseEntity<String> responseEntity = rest.exchange(source.harvestSourceUri, HttpMethod.GET, requestEntity, String.class);
-            theXMLAll = responseEntity.getBody();
+    private static class AltInnService {
 
-        } catch (Exception e) {
-            logger.debug("Failed to read service details for url " + source.harvestSourceUri + ". Ignoring and continuing");
-            return null;
+        public String ServiceOwnerCode;
+        public String ServiceOwnerName;
+        public String OrganizationNumber;
+        public String ServiceName;
+        public String ServiceCode;
+        public String ServiceEditionCode;
+        public String ValidFrom;
+        public String ValidTo;
+        public String ServiceType;
+        public String EnterpriseUserEnabled;
+        public List<AltinnForm> Forms;
+        AltInnService() {
         }
-
-        theXMLAll = theXMLAll.substring(3); //Skip UTF8-Bytemarker
-        StringReader srr = new StringReader(theXMLAll);
-
-        ReaderInputStream ris = new ReaderInputStream(srr);
-
-        //resource :
-        //https://www.altinn.no/api/metadata/formtask/3906/141205
-        //has link https://www.altinn.no/api/metadata/formtask/3906/141205/forms/3940/20161021/xsd
-        //corresponding file:
-        //./schema_3906_141205_forms_3940_20161021.schema
-
-        try {
-            DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-            Document doc = builder.parse(ris);
-            doc.getDocumentElement().normalize();
-
-            NodeList formMetaDataList = doc.getElementsByTagName("FormMetaData");
-            logger.debug("For this file we got " + formMetaDataList.getLength() + " metadatas");
-
-            if (formMetaDataList.getLength() == 0) {
-                //This service does not have the required Metadata. Ignore
-                logger.debug("Service " + source.harvestSourceUri + " did not contain the required metadata to generate Information Model. Ignoring and moving on");
-                return null;
-            }
-            Node n = formMetaDataList.item(0);
-            NodeList children = n.getChildNodes();
-            String dataFormatId = getNamedElementsValue(children, "DataFormatID");
-            String dataFormatVersion = getNamedElementsValue(children, "DataFormatVersion");
-
-            String JSonSchemaFromFile = new String(Files.readAllBytes(Paths.get("C:\\tmp\\tt\\schema_" + source.serviceCode + "_" + source.serviceEditionCode + "_forms_" + dataFormatId + "_" + dataFormatVersion + ".schema.json")));
-            source.schema = JSonSchemaFromFile;
-            InformationModel im = informationModelFactory.createInformationModel(source, new Date());
-            return im;
-
-        } catch (Exception e) {
-            logger.debug("Failed to parse", e);
-        }
-        return null;
     }
+
+    private static class AltinnForm {
+        public String FormID;
+        public String FormName;
+        public String FormType;
+        public String DataFormatID;
+        public String DataFormatVersion;
+        public String XsdSchemaUrl;
+        public String JsonSchema;
+    }
+
 }

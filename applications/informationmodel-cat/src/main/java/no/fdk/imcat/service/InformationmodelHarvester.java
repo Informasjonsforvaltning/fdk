@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 /*
     Fetch information models and insert or update them in the search index.
@@ -57,10 +56,12 @@ public class InformationmodelHarvester {
                     logger.error("Error creating or saving InformationModel for harvestSourceUri={}", source.harvestSourceUri, e);
                 }
             } else if (source.sourceType == ALTINN_TYPE) {
-                    InformationModel model = altinnHarvest.getInformationModel(source);
-                    if (model != null) {
-                        informationmodelRepository.save(model);
-                    }
+                InformationModel model = altinnHarvest.getByServiceCodeAndEdition(source.serviceCode, source.serviceEditionCode);
+
+                if (model != null) {
+                    informationmodelRepository.save(model);
+                    idsHarvested.add(model.getId());
+                }
             }
         }
         List<String> idsToDelete = informationmodelRepository.getAllIdsNotHarvested(idsHarvested);
@@ -70,7 +71,7 @@ public class InformationmodelHarvester {
     private List<InformationModelHarvestSource> getAllHarvestSources() {
         ArrayList<InformationModelHarvestSource> sources = new ArrayList<>();
         sources.addAll(altinnHarvest.getHarvestSources());
-        sources.addAll(apiRegistrationsHarvest.getHarvestSources());
+        //sources.addAll(apiRegistrationsHarvest.getHarvestSources());//TODO:Uncomment this before merge to develop
         return sources;
     }
 }
