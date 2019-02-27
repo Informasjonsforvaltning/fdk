@@ -25,6 +25,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -71,6 +72,10 @@ public class ApiSearchController {
         @RequestParam(value = "aggregations", defaultValue = "false", required = false)
             String includeAggregations,
 
+        @ApiParam("The title text")
+        @RequestParam(value = "title", defaultValue = "", required = false)
+            String title,
+
         @ApiParam("Specifies the sort field, at the present the only value is \"modified\". Default is no value, and results are sorted by relevance")
         @RequestParam(value = "sortfield", defaultValue = "", required = false)
             String sortfield,
@@ -86,7 +91,10 @@ public class ApiSearchController {
 
         QueryBuilder searchQuery;
 
-        if (query.isEmpty()) {
+        if (!StringUtils.isEmpty(title)) {
+                    QueryBuilder titleQuery = QueryBuilders.matchPhrasePrefixQuery("title", title).analyzer("norwegian").maxExpansions(15);
+                    searchQuery = QueryBuilders.boolQuery().should(titleQuery);
+        } else if (query.isEmpty()) {
             searchQuery = QueryBuilders.matchAllQuery();
         } else {
             // add * if query only contains one word
