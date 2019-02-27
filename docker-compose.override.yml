@@ -87,8 +87,6 @@ services:
       - fuseki.adminServiceUri=http://fuseki:8080/fuseki/admin
       - application.crawlerThreadPoolSize=2
       - harvestRecordRetentionDays=30
-    volumes:
-      - ./logs:/usr/local/tomcat/logs:rw
 
   harvester:
     restart: always
@@ -101,8 +99,6 @@ services:
       - application.harvesterUrl=http://harvester-api:8080
       - harvester_adminUsername=test_admin
       - harvester_adminPassword=password
-    volumes:
-      - ./logs:/usr/local/tomcat/logs:rw
 
   nginx-registration:
     restart: always
