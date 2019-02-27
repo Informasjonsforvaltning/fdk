@@ -19,7 +19,6 @@ import { APISpecificationInfo } from './api-specification-info.component';
 
 export const APIRegistrationPagePure = ({
   fetchCatalogIfNeeded,
-  fetchApisIfNeeded,
   fetchHelptextsIfNeeded,
   fetchApiStatusIfNeeded,
   deleteApiItem,
@@ -52,7 +51,6 @@ export const APIRegistrationPagePure = ({
   const info = _.get(item, ['apiSpecification', 'info']);
 
   fetchCatalogIfNeeded(catalogId);
-  fetchApisIfNeeded(catalogId);
   fetchHelptextsIfNeeded();
   fetchApiStatusIfNeeded();
 
@@ -246,7 +244,6 @@ export const APIRegistrationPagePure = ({
 
 APIRegistrationPagePure.defaultProps = {
   fetchCatalogIfNeeded: _.noop(),
-  fetchApisIfNeeded: _.noop,
   fetchHelptextsIfNeeded: _.noop(),
   fetchApiStatusIfNeeded: _.noop(),
   deleteApiItem: _.noop(),
@@ -275,7 +272,6 @@ APIRegistrationPagePure.defaultProps = {
 
 APIRegistrationPagePure.propTypes = {
   fetchCatalogIfNeeded: PropTypes.func,
-  fetchApisIfNeeded: PropTypes.func,
   fetchHelptextsIfNeeded: PropTypes.func,
   fetchApiStatusIfNeeded: PropTypes.func,
   deleteApiItem: PropTypes.func,

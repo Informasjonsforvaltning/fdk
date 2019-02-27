@@ -1,12 +1,7 @@
 import { connect } from 'react-redux';
 import _ from 'lodash';
 
-import {
-  fetchApisIfNeededAction,
-  getApiItemsByApiId,
-  deleteApiAction,
-  apiSuccessAction
-} from '../../redux/modules/apis';
+import { deleteApiAction, apiSuccessAction } from '../../redux/modules/apis';
 import { getApiFormStatusById } from '../../redux/modules/api-form-status';
 import { fetchHelptextsIfNeeded } from '../../redux/modules/helptexts';
 import { fetchCatalogIfNeeded } from '../../redux/modules/catalog';
@@ -17,7 +12,7 @@ import {
 import { ResolvedAPIRegistrationPage } from './resolved-api-registration-page';
 
 const mapStateToProps = (
-  { apiFormStatus, apis, helptexts, catalog, referenceData },
+  { apiFormStatus, helptexts, catalog, referenceData },
   ownProps
 ) => {
   const { helptextItems } = helptexts || {
@@ -40,7 +35,6 @@ const mapStateToProps = (
       getApiFormStatusById(apiFormStatus, apiId),
       'status'
     ),
-    item: getApiItemsByApiId(apis, catalogId, apiId),
     helptextItems,
     history: _.get(ownProps, 'history'),
     match: _.get(ownProps, 'match'),
@@ -53,7 +47,6 @@ const mapStateToProps = (
 
 const mapDispatchToProps = dispatch => ({
   fetchCatalogIfNeeded: catalogId => dispatch(fetchCatalogIfNeeded(catalogId)),
-  fetchApisIfNeeded: catalogId => dispatch(fetchApisIfNeededAction(catalogId)),
   fetchHelptextsIfNeeded: () => dispatch(fetchHelptextsIfNeeded()),
   fetchApiStatusIfNeeded: () =>
     dispatch(fetchReferenceDataIfNeededAction(REFERENCEDATA_APISTATUS)),
