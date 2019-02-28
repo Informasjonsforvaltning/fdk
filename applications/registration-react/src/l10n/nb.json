@@ -100,7 +100,8 @@
   },
   "helptext": {
     "required": "Obligatorisk",
-    "more": "Flere anbefalinger"
+    "more": "Flere anbefalinger",
+    "less": "Færre anbefalinger"
   },
   "schema": {
     "common": {

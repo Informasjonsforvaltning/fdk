@@ -5,7 +5,7 @@ exports[`should render FormApiStatus, { renderLandingpage  correctly 1`] = `
   <div
     className="form-group"
   >
-    <withState(withHandlers(Helptext))
+    <withStateHandlers(Helptext)
       title="Status på API-et"
     />
     <Field

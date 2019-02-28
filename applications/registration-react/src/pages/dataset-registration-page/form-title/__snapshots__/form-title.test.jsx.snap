@@ -5,7 +5,7 @@ exports[`should render FormTitle, { renderLandingpage  correctly 1`] = `
   <div
     className="form-group"
   >
-    <withState(withHandlers(Helptext))
+    <withStateHandlers(Helptext)
       helptextItems={
         Object {
           "description": Object {
@@ -36,7 +36,7 @@ exports[`should render FormTitle, { renderLandingpage  correctly 1`] = `
   <div
     className="form-group"
   >
-    <withState(withHandlers(Helptext))
+    <withStateHandlers(Helptext)
       helptextItems={
         Object {
           "description": Object {
@@ -70,7 +70,7 @@ exports[`should render FormTitle, { renderLandingpage  correctly 1`] = `
   <div
     className="form-group"
   >
-    <withState(withHandlers(Helptext))
+    <withStateHandlers(Helptext)
       helptextItems={
         Object {
           "description": Object {
@@ -96,7 +96,7 @@ exports[`should render FormTitle, { renderLandingpage  correctly 1`] = `
   <div
     className="form-group"
   >
-    <withState(withHandlers(Helptext))
+    <withStateHandlers(Helptext)
       helptextItems={
         Object {
           "description": Object {
