@@ -7,7 +7,7 @@ exports[`should render FormThemes correctly with theme 1`] = `
   <div
     className="form-group"
   >
-    <withState(withHandlers(Helptext))
+    <withStateHandlers(Helptext)
       helptextItems={
         Object {
           "description": Object {

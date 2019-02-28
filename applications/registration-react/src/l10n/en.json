@@ -98,7 +98,8 @@
   },
   "helptext": {
     "required": "Required",
-    "more": "More recommendations"
+    "more": "More recommendations",
+    "less": "Less recommendations"
   },
   "schema": {
     "common": {

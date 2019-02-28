@@ -5,7 +5,7 @@ exports[`should render FormContactPoint correctly 1`] = `
   <div
     className="form-group"
   >
-    <withState(withHandlers(Helptext))
+    <withStateHandlers(Helptext)
       helptextItems={
         Object {
           "description": Object {
@@ -31,7 +31,7 @@ Dette kan være navnet til en gruppe, avdeling, seksjon eller liknende i organis
   <div
     className="form-group"
   >
-    <withState(withHandlers(Helptext))
+    <withStateHandlers(Helptext)
       helptextItems={
         Object {
           "description": Object {
@@ -55,7 +55,7 @@ Dette kan være navnet til en gruppe, avdeling, seksjon eller liknende i organis
   <div
     className="form-group"
   >
-    <withState(withHandlers(Helptext))
+    <withStateHandlers(Helptext)
       helptextItems={
         Object {
           "description": Object {
@@ -79,7 +79,7 @@ Dette kan være navnet til en gruppe, avdeling, seksjon eller liknende i organis
   <div
     className="form-group"
   >
-    <withState(withHandlers(Helptext))
+    <withStateHandlers(Helptext)
       helptextItems={
         Object {
           "description": Object {

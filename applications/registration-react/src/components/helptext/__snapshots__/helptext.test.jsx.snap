@@ -1,8 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`should render Helptext correctly 1`] = `
-<withHandlers(Helptext)
-  collapse={false}
+<Helptext
   helptextItems={
     Object {
       "Agent_identifier": Object {
@@ -788,7 +787,8 @@ Det skal angis distribusjonens type
     }
   }
   required={false}
+  showAll={false}
   title="Title"
-  toggleCollapse={[Function]}
+  toggleShowAll={[Function]}
 />
 `;

@@ -5,7 +5,7 @@ exports[`should render FormAccessRights correctly 1`] = `
   <div
     className="form-group"
   >
-    <withState(withHandlers(Helptext))
+    <withStateHandlers(Helptext)
       helptextItems={
         Object {
           "description": Object {
@@ -62,7 +62,7 @@ exports[`should render FormAccessRights correctly with syncErrors 1`] = `
   <div
     className="form-group"
   >
-    <withState(withHandlers(Helptext))
+    <withStateHandlers(Helptext)
       helptextItems={
         Object {
           "description": Object {
@@ -121,7 +121,7 @@ exports[`should render FormAccessRights correctly with syncErrors 1`] = `
       <div
         className="form-group"
       >
-        <withState(withHandlers(Helptext))
+        <withStateHandlers(Helptext)
           helptextItems={
             Object {
               "description": Object {
@@ -148,7 +148,7 @@ exports[`should render FormAccessRights correctly with syncErrors 1`] = `
       <div
         className="form-group"
       >
-        <withState(withHandlers(Helptext))
+        <withStateHandlers(Helptext)
           helptextItems={
             Object {
               "description": Object {
@@ -176,7 +176,7 @@ Dersom et datasett inneholder personopplysninger skal det være et grunnlag for 
       <div
         className="form-group"
       >
-        <withState(withHandlers(Helptext))
+        <withStateHandlers(Helptext)
           helptextItems={
             Object {
               "description": Object {

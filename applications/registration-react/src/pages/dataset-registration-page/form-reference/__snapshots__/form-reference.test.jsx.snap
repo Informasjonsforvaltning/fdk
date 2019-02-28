@@ -5,7 +5,7 @@ exports[`should render FormReference correctly 1`] = `
   <div
     className="form-group"
   >
-    <withState(withHandlers(Helptext))
+    <withStateHandlers(Helptext)
       helptextItems={
         Object {
           "description": Object {

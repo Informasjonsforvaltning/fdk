@@ -7,7 +7,7 @@ exports[`should render FormSpatial correctly with initialValues 1`] = `
   <div
     className="form-group"
   >
-    <withState(withHandlers(Helptext))
+    <withStateHandlers(Helptext)
       helptextItems={
         Object {
           "description": Object {
@@ -38,7 +38,7 @@ exports[`should render FormSpatial correctly with initialValues 1`] = `
   <div
     className="form-group"
   >
-    <withState(withHandlers(Helptext))
+    <withStateHandlers(Helptext)
       helptextItems={
         Object {
           "description": Object {
@@ -69,7 +69,7 @@ exports[`should render FormSpatial correctly with initialValues 1`] = `
   <div
     className="form-group"
   >
-    <withState(withHandlers(Helptext))
+    <withStateHandlers(Helptext)
       helptextItems={
         Object {
           "description": Object {
@@ -97,7 +97,7 @@ Tidspunkt angis med xsd:dateTime. Dette inkluderer utvidelser av kapittel 5.4 i 
   <div
     className="form-group"
   >
-    <withState(withHandlers(Helptext))
+    <withStateHandlers(Helptext)
       helptextItems={
         Object {
           "description": Object {

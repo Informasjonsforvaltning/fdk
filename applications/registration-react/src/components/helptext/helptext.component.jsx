@@ -3,25 +3,22 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { Collapse } from 'reactstrap';
 import _ from 'lodash';
-import { withState, withHandlers, compose } from 'recompose';
+import { withStateHandlers } from 'recompose';
 
+import getTranslateText from '../../lib/translateText';
 import localization from '../../lib/localization';
 import './helptext.scss';
 
 export const Helptext = props => {
-  const { title, required, helptextItems, onToggle, collapse } = props;
+  const { title, required, helptextItems, toggleShowAll, showAll } = props;
 
   const collapseClass = cx('fa', 'fdk-fa-left', {
-    'fa-angle-double-down': !collapse,
-    'fa-angle-double-up': collapse
+    'fa-angle-double-down': !showAll,
+    'fa-angle-double-up': showAll
   });
 
-  const shortTextClass = cx('m-0', {
-    'text-ellipsis': !collapse
-  });
-
-  const shortdesc = _.get(helptextItems, 'shortdesc', '');
-  const description = _.get(helptextItems, 'description', '');
+  const shortdesc = _.get(helptextItems, 'shortdesc');
+  const description = _.get(helptextItems, 'description');
 
   return (
     <div className="fdk-reg-helptext mb-3 p-3">
@@ -34,37 +31,46 @@ export const Helptext = props => {
         )}
       </div>
       <div className="d-md-flex">
-        {shortdesc && (
-          <p
-            className={shortTextClass}
-            dangerouslySetInnerHTML={{
-              __html:
-                shortdesc && shortdesc.nb
-                  ? shortdesc.nb.replace(new RegExp('\n', 'g'), '<br />')
-                  : ''
-            }}
-          />
-        )}
-        {description && (
-          <button
-            className="fdk-btn-no-border text-left p-0 ml-1 fdk-reg-helptext-more align-self-start"
-            onClick={onToggle}
-          >
-            <i className={collapseClass} />
-            {localization.helptext.more}
-          </button>
-        )}
+        {shortdesc &&
+          typeof shortdesc === 'object' && (
+            <p
+              className="m-0"
+              dangerouslySetInnerHTML={{
+                __html: getTranslateText(shortdesc).replace(
+                  new RegExp('\n', 'g'),
+                  '<br />'
+                )
+              }}
+            />
+          )}
+        {description &&
+          typeof description === 'object' &&
+          getTranslateText(description).trim() !== '' && (
+            <button
+              className="fdk-btn-no-border text-left p-0 ml-1 fdk-reg-helptext-more align-self-start"
+              onClick={toggleShowAll}
+            >
+              <i className={collapseClass} />
+              {showAll
+                ? localization.helptext.less
+                : localization.helptext.more}
+            </button>
+          )}
       </div>
-      <Collapse className="mt-3" isOpen={collapse}>
-        <p
-          dangerouslySetInnerHTML={{
-            __html:
-              description && description.nb
-                ? description.nb.replace(new RegExp('\n', 'g'), '<br />')
-                : ''
-          }}
-        />
-      </Collapse>
+      {description &&
+        typeof description === 'object' &&
+        getTranslateText(description).trim() !== '' && (
+          <Collapse className="mt-3" isOpen={showAll}>
+            <p
+              dangerouslySetInnerHTML={{
+                __html: getTranslateText(description).replace(
+                  new RegExp('\n', 'g'),
+                  '<br />'
+                )
+              }}
+            />
+          </Collapse>
+        )}
     </div>
   );
 };
@@ -73,26 +79,28 @@ Helptext.defaultProps = {
   title: '',
   required: false,
   helptextItems: null,
-  onToggle: _.noop(),
-  collapse: false
+  toggleShowAll: _.noop(),
+  showAll: false
 };
 
 Helptext.propTypes = {
   title: PropTypes.string,
   required: PropTypes.bool,
   helptextItems: PropTypes.object,
-  onToggle: PropTypes.func,
-  collapse: PropTypes.bool
+  toggleShowAll: PropTypes.func,
+  showAll: PropTypes.bool
 };
 
-const enhance = compose(
-  withState('collapse', 'toggleCollapse', false),
-  withHandlers({
-    onToggle: props => e => {
+const enhance = withStateHandlers(
+  ({ initialShowAll = false }) => ({
+    showAll: initialShowAll
+  }),
+  {
+    toggleShowAll: ({ showAll }) => e => {
       e.preventDefault();
-      props.toggleCollapse(!props.collapse);
+      return { showAll: !showAll };
     }
-  })
+  }
 );
 
 export default enhance(Helptext);
