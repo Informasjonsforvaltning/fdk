@@ -243,6 +243,19 @@ export const SearchPage = props => {
             />
           </Route>
         </Switch>
+        <div className="twitter-container">
+          <div className="twitter">
+            <h3>Nytt fra Datakatalogen på Twitter</h3>
+            <a
+              className="twitter-timeline"
+              data-width="600"
+              data-height="400"
+              href="https://twitter.com/datakatalogen?ref_src=twsrc%5Etfw"
+            >
+              Tweets by datakatalogen
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   );
