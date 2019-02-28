@@ -244,7 +244,7 @@ export const SearchPage = props => {
             />
           </Route>
         </Switch>
-        <div className="twitter-container">
+        <div className="twitter-container d-flex justify-content-end mt-5">
           <div className="twitter">
             <h2>{localization.newsFromDatakatalogenOnTwitter}</h2>
             <a
