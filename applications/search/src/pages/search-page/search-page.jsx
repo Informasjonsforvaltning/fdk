@@ -28,6 +28,7 @@ import {
   setMultiselectFilterValue,
   setSearchText
 } from './search-location-helper';
+import localization from '../../lib/localization';
 
 const browser = detect();
 
@@ -245,7 +246,7 @@ export const SearchPage = props => {
         </Switch>
         <div className="twitter-container">
           <div className="twitter">
-            <h3>Nytt fra Datakatalogen på Twitter</h3>
+            <h2>{localization.newsFromDatakatalogenOnTwitter}</h2>
             <a
               className="twitter-timeline"
               data-width="600"
