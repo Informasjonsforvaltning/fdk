@@ -15,7 +15,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Base64;
+import java.util.HashMap;
+import java.util.List;
 import java.util.zip.GZIPInputStream;
 
 /**
@@ -25,9 +28,8 @@ import java.util.zip.GZIPInputStream;
 @Service
 public class AltinnHarvest {
     private static final Logger logger = LoggerFactory.getLogger(AltinnHarvest.class);
-
+    private static String harvestSourceURIBase = "https://fdk-dev-altinn.appspot.com/api/v1/schemas/";
     private InformationModelFactory informationModelFactory;
-
     private HashMap<String, InformationModel> everyAltinnInformationModel = new HashMap<>();
 
 
@@ -41,17 +43,24 @@ public class AltinnHarvest {
         Publisher p = new Publisher(service.OrganizationNumber);
         model.setPublisher(p);
         model.setTitle(service.ServiceName);
-        model.setId(service.ServiceCode + "_" + service.ServiceEditionCode);
-        logger.debug("Service " + service.ServiceName + " has {} forms", service.Forms.size());
+        model.setHarvestSourceUri(harvestSourceURIBase + service.ServiceCode + "_" + service.ServiceEditionCode);
 
-        byte[] gzippedJson = Base64.getDecoder().decode(service.Forms.get(0).JsonSchema);
-        byte[] rawJson = null;
+        StringBuilder formBuilder = new StringBuilder();
 
+        for (AltinnForm form : service.Forms) {
+            byte[] gzippedJson = Base64.getDecoder().decode(form.JsonSchema);
+            formBuilder.append(extractSingleForm(gzippedJson));
+        }
+        model.setSchema(formBuilder.toString());
+        return model;
+    }
+
+    private static String extractSingleForm(byte[] gzippedJson) {
         try (ByteArrayInputStream bin = new ByteArrayInputStream(gzippedJson);
              GZIPInputStream gzipper = new GZIPInputStream(bin)) {
             ByteArrayOutputStream myBucket = new ByteArrayOutputStream();
             boolean done = false;
-            byte[] buffer = new byte[1000]; //much bigger later
+            byte[] buffer = new byte[10000];
             while (!done) {
                 int length = gzipper.read(buffer, 0, buffer.length);
                 if (length > 0) {
@@ -59,24 +68,13 @@ public class AltinnHarvest {
                 }
                 done = (length == -1);
             }
-
             gzipper.close();
 
-
-            String str = new String(myBucket.toByteArray(), StandardCharsets.UTF_8);
-
-            //parse the json ?
-            logger.debug("The stringS!" + str);
-
-            //make a model from this ? or a fragment ?
-            // first approx, just grab the first form
-            model.setSchema(str);
+            return new String(myBucket.toByteArray(), StandardCharsets.UTF_8);
         } catch (IOException ie) {
             logger.debug("Failed to gunzip JSON", ie);
         }
-
-        return model;
-
+        return null;
     }
 
     public InformationModel getByServiceCodeAndEdition(String serviceCode, String serviceEditionCode) {
@@ -87,8 +85,7 @@ public class AltinnHarvest {
         logger.debug("Getting harvest sources from AltInn");
         List<InformationModelHarvestSource> sourceList = new ArrayList<>();
 
-        //loadAllInformationModelsFromCompositeFile("C:\\tmp\\altinn-service-schemas.json");
-        loadAllInformationModelsFromOutAltInnAdapter();
+        loadAllInformationModelsFromOurAltInnAdapter();
 
         for (String key : everyAltinnInformationModel.keySet()) {
 
@@ -105,36 +102,27 @@ public class AltinnHarvest {
             source.serviceCode = altInnServiceCode;
             source.serviceEditionCode = altInnServiceEditionCode;
             sourceList.add(source);
-
         }
-
         return sourceList;
     }
 
-    private void loadAllInformationModelsFromOutAltInnAdapter() {
+    private void loadAllInformationModelsFromOurAltInnAdapter() {
         try {
             URL altinn = new URL("https://fdk-dev-altinn.appspot.com/api/v1/schemas");
             logger.debug("Retrieving all schemas from altinn.  url: {} expected load time approx 5 minutes", altinn);
-            String JSonSchemaFromFile = new Scanner(altinn.openStream(), "UTF-8").useDelimiter("\\A").next();
-            logger.debug("schemas retrieved. url {} ", altinn);
-
             ObjectMapper objectMapper = new ObjectMapper();
-            logger.debug("Preparing to parse altinn schemas");
-            List<AltInnService> servicesInAltInn = objectMapper.readValue(JSonSchemaFromFile, new TypeReference<List<AltInnService>>() {
+            List<AltInnService> servicesInAltInn = objectMapper.readValue(altinn, new TypeReference<List<AltInnService>>() {
             });
-            logger.debug("Altinn schemas parsed");
+            logger.debug("Done retrieving all schemas from altinn. {} ", altinn);
 
             //Now extract the subforms from base64 gzipped json
             for (AltInnService service : servicesInAltInn) {
                 InformationModel model = parseInformationModel(service);
-                everyAltinnInformationModel.put(model.getId(), model);
-                //TODO: Get all the model subforms
+                everyAltinnInformationModel.put(model.getHarvestSourceUri(), model);
             }
-
         } catch (Throwable e) {
             logger.debug("Failed while reading information models from  ", e);
         }
-
     }
 
     private static class AltInnService {
@@ -150,6 +138,7 @@ public class AltinnHarvest {
         public String ServiceType;
         public String EnterpriseUserEnabled;
         public List<AltinnForm> Forms;
+
         AltInnService() {
         }
     }

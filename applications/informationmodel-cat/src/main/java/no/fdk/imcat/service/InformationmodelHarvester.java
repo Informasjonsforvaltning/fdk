@@ -57,6 +57,7 @@ public class InformationmodelHarvester {
                 }
             } else if (source.sourceType == ALTINN_TYPE) {
                 InformationModel model = altinnHarvest.getByServiceCodeAndEdition(source.serviceCode, source.serviceEditionCode);
+                model = informationModelFactory.enrichInformationModelFromAltInn(model, harvestDate);
 
                 if (model != null) {
                     informationmodelRepository.save(model);
@@ -71,7 +72,7 @@ public class InformationmodelHarvester {
     private List<InformationModelHarvestSource> getAllHarvestSources() {
         ArrayList<InformationModelHarvestSource> sources = new ArrayList<>();
         sources.addAll(altinnHarvest.getHarvestSources());
-        //sources.addAll(apiRegistrationsHarvest.getHarvestSources());//TODO:Uncomment this before merge to develop
+        //sources.addAll(apiRegistrationsHarvest.getHarvestSources());
         return sources;
     }
 }
