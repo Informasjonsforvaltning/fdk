@@ -26,6 +26,7 @@
   "deprecated": "deprecated",
   "responsible": "Responsible",
   "name": "Name",
+  "newsFromDatakatalogenOnTwitter": "News from Datakatalogen on Twitter",
   "type": "Type",
   "statusRemoved": "This version of API is removed.",
   "statusDeprecated": "This version of API has expired and will be phased out {0} {1}. ",
