@@ -69,6 +69,10 @@ export class RegDataset extends React.Component {
   constructor(props) {
     super(props);
 
+    const { match } = this.props;
+    const catalogId = _.get(match, ['params', 'catalogId']);
+
+    this.props.fetchDatasetsIfNeeded(catalogId);
     this.props.fetchHelptextsIfNeeded();
     this.props.fetchProvenanceIfNeeded();
     this.props.fetchFrequencyIfNeeded();
@@ -442,6 +446,7 @@ RegDataset.defaultProps = {
   fetchReferenceDatasetsIfNeeded: _.noop,
   fetchOpenLicensesIfNeeded: _.noop,
   fetchHelptextsIfNeeded: _.noop,
+  fetchDatasetsIfNeeded: _.noop,
   isSaving: false,
   error: null,
   justPublishedOrUnPublished: false,
@@ -481,6 +486,7 @@ RegDataset.propTypes = {
   fetchReferenceDatasetsIfNeeded: PropTypes.func,
   fetchOpenLicensesIfNeeded: PropTypes.func,
   fetchHelptextsIfNeeded: PropTypes.func,
+  fetchDatasetsIfNeeded: PropTypes.func,
   isSaving: PropTypes.bool,
   error: PropTypes.number,
   justPublishedOrUnPublished: PropTypes.bool,
