@@ -8,6 +8,7 @@ import no.fdk.imcat.model.InformationModelFactory;
 import no.fdk.imcat.model.InformationModelHarvestSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayInputStream;
@@ -15,10 +16,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import java.util.zip.GZIPInputStream;
 
 /**
@@ -28,13 +26,14 @@ import java.util.zip.GZIPInputStream;
 @Service
 public class AltinnHarvest {
     private static final Logger logger = LoggerFactory.getLogger(AltinnHarvest.class);
-    private static String harvestSourceURIBase = "https://fdk-dev-altinn.appspot.com/api/v1/schemas/";
+    private static String harvestSourceURIBase = null;
     private InformationModelFactory informationModelFactory;
     private HashMap<String, InformationModel> everyAltinnInformationModel = new HashMap<>();
 
 
-    public AltinnHarvest(InformationModelFactory factory) {
+    public AltinnHarvest(InformationModelFactory factory, Environment env) {
         this.informationModelFactory = factory;
+        harvestSourceURIBase = env.getProperty("application.harvestSourceURIBase");
     }
 
     private static InformationModel parseInformationModel(AltInnService service) {
@@ -108,10 +107,12 @@ public class AltinnHarvest {
 
     private void loadAllInformationModelsFromOurAltInnAdapter() {
         try {
-            URL altinn = new URL("https://fdk-dev-altinn.appspot.com/api/v1/schemas");
+            URL altinn = new URL(harvestSourceURIBase);
+            logger.debug("Retrieving all schemas from altinn.  url: {} expected load time approx 5 minutes", altinn);
+            String JSonSchemaFromFile = new Scanner(altinn.openStream(), "UTF-8").useDelimiter("\\A").next();
             logger.debug("Retrieving all schemas from altinn.  url: {} expected load time approx 5 minutes", altinn);
             ObjectMapper objectMapper = new ObjectMapper();
-            List<AltInnService> servicesInAltInn = objectMapper.readValue(altinn, new TypeReference<List<AltInnService>>() {
+            List<AltInnService> servicesInAltInn = objectMapper.readValue(JSonSchemaFromFile, new TypeReference<List<AltInnService>>() {
             });
             logger.debug("Done retrieving all schemas from altinn. {} ", altinn);
 

@@ -16,6 +16,7 @@ logging:
 application:
   apiRootUrl: http://nginx-search:8080/api
   harvestSourceUri: https://fellesdatakatalog.brreg.no/api
+  harvestSourceURIBase: https://storage.googleapis.com/altinndata/altinn-service-schemas.json
   # harvest every sixth hour, 10 minutes after apicatalogs update
   harvestCron: 0 10 */6 * * *
 
