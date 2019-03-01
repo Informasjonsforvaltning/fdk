@@ -118,3 +118,6 @@ export const getDatasetItemsByCatalogId = (datasets, catalogId) =>
 
 export const getDatasetItemByDatasetiId = (datasets, catalogId, id) =>
   _.find(_.get(datasets, [catalogId, 'items'], []), ['id', id]);
+
+export const getDatasetItemsCount = (datasets, catalogId) =>
+  _.get(datasets, [catalogId, 'items'], []).length;
