@@ -16,6 +16,10 @@ const asyncValidate = (values, dispatch, props, blurredField) => {
     Authorization: `Basic user:password`
   };
 
+  if (typeof dispatch !== 'function') {
+    throw new Error('dispatch must be a function');
+  }
+
   if (blurredField && blurredField.indexOf('remove_temporal_') !== -1) {
     const index = blurredField.split('_').pop();
     values.splice(index, 1);
@@ -75,49 +79,45 @@ const asyncValidate = (values, dispatch, props, blurredField) => {
     };
   }
 
-  if (dispatch && datasetId) {
+  if (datasetId) {
     dispatch(datasetFormPatchIsSavingAction(datasetId));
   }
 
   return axios
     .patch(_.get(match, 'url'), values, { headers: api })
     .then(response => {
-      if (dispatch) {
+      dispatch(
+        datasetFormPatchSuccessAction(
+          _.get(response, ['data', 'id']),
+          _.get(response, ['data', '_lastModified'])
+        )
+      );
+      if (_.get(values, 'registrationStatus')) {
         dispatch(
-          datasetFormPatchSuccessAction(
+          datasetFormPatchJustPublishedOrUnPublishedAction(
             _.get(response, ['data', 'id']),
-            _.get(response, ['data', '_lastModified'])
+            true,
+            _.get(values, 'registrationStatus')
           )
         );
-        if (_.get(values, 'registrationStatus')) {
-          dispatch(
-            datasetFormPatchJustPublishedOrUnPublishedAction(
-              _.get(response, ['data', 'id']),
-              true,
-              _.get(values, 'registrationStatus')
-            )
-          );
-        } else {
-          dispatch(
-            datasetFormPatchJustPublishedOrUnPublishedAction(
-              _.get(response, ['data', 'id']),
-              false,
-              _.get(response, ['data', 'registrationStatus'])
-            )
-          );
-        }
+      } else {
+        dispatch(
+          datasetFormPatchJustPublishedOrUnPublishedAction(
+            _.get(response, ['data', 'id']),
+            false,
+            _.get(response, ['data', 'registrationStatus'])
+          )
+        );
       }
     })
     .catch(response => {
       const { error } = response;
-      if (dispatch) {
-        dispatch(
-          datasetFormPatchErrorAction(
-            datasetId,
-            _.get(response, ['response', 'status'], 'network')
-          )
-        );
-      }
+      dispatch(
+        datasetFormPatchErrorAction(
+          datasetId,
+          _.get(response, ['response', 'status'], 'network')
+        )
+      );
       return Promise.reject(error);
     });
 };
