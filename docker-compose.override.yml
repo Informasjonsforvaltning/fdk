@@ -27,7 +27,7 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - ./applications/search/src:/usr/src/app/src:rw
+      - ./applications/search/src:/usr/src/app/src
     environment:
       - REDUX_LOG=${REDUX_LOG}
       - NODE_ENV=${NODE_ENV}
@@ -138,7 +138,7 @@ services:
     ports:
       - "4300:4300"
     volumes:
-      - ./applications/registration-react/src:/usr/src/app/src:rw
+      - ./applications/registration-react/src:/usr/src/app/src
     environment:
       - REGISTRATION_LANGUAGE=${REGISTRATION_LANGUAGE}
       - NODE_ENV=${NODE_ENV}
@@ -160,5 +160,5 @@ services:
   e2e:
     build: ./applications/e2e
     volumes:
-      - ./applications/e2e/test:/usr/src/app/test:rw
-      - ./applications/e2e/reports:/usr/src/app/reports:rw
+      - ./applications/e2e/test:/usr/src/app/test
+      - ./applications/e2e/reports:/usr/src/app/reports
