@@ -6,6 +6,7 @@ import {
   datasetFormPatchErrorAction,
   datasetFormPatchJustPublishedOrUnPublishedAction
 } from '../redux/modules/dataset-form-status';
+import { datasetSuccessAction } from '../redux/modules/datasets';
 
 /* eslint-disable no-param-reassign */
 const asyncValidate = (values, dispatch, props, blurredField) => {
@@ -86,6 +87,7 @@ const asyncValidate = (values, dispatch, props, blurredField) => {
   return axios
     .patch(_.get(match, 'url'), values, { headers: api })
     .then(response => {
+      const datasetRegistration = response && response.data;
       dispatch(
         datasetFormPatchSuccessAction(
           _.get(response, ['data', 'id']),
@@ -109,6 +111,7 @@ const asyncValidate = (values, dispatch, props, blurredField) => {
           )
         );
       }
+      dispatch(datasetSuccessAction(datasetRegistration));
     })
     .catch(response => {
       const { error } = response;
