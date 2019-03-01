@@ -57,7 +57,7 @@ export const ImportLinkUploadPure = props => {
 };
 
 ImportLinkUploadPure.defaultProps = {
-  handleChangeUrl: _.noop(),
+  handleChangeUrl: _.noop,
   touched: false,
   error: null
 };

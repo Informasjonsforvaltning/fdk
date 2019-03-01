@@ -141,12 +141,12 @@ APISpecificationInfo.defaultProps = {
   paths: null,
   fromApiCatalog: false,
   showImportSpecificationButtons: false,
-  handleShowImportSpecificationButtons: _.noop(),
+  handleShowImportSpecificationButtons: _.noop,
   catalogId: null,
   apiId: null,
-  handleShowImportError: _.noop(),
-  handleShowImportSuccess: _.noop(),
-  apiSuccess: _.noop()
+  handleShowImportError: _.noop,
+  handleShowImportSuccess: _.noop,
+  apiSuccess: _.noop
 };
 
 APISpecificationInfo.propTypes = {

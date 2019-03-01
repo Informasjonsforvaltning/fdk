@@ -79,7 +79,7 @@ Helptext.defaultProps = {
   title: '',
   required: false,
   helptextItems: null,
-  toggleShowAll: _.noop(),
+  toggleShowAll: _.noop,
   showAll: false
 };
 
