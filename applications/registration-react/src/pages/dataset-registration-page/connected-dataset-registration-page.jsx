@@ -9,10 +9,14 @@ import {
   fetchReferenceDatasetsIfNeeded,
   fetchOpenLicensesIfNeeded
 } from '../../actions/index';
-import { deleteDatasetItemAction } from '../../redux/modules/datasets';
+import {
+  fetchDatasetsIfNeeded,
+  deleteDatasetItemAction,
+  getDatasetItemByDatasetiId
+} from '../../redux/modules/datasets';
 import { fetchHelptextsIfNeeded } from '../../redux/modules/helptexts';
 import { getDatasetFormStatusById } from '../../redux/modules/dataset-form-status';
-import { ResolvedRegDataset } from './resolved-dataset-registration-page';
+import { RegDataset } from './dataset-registration-page';
 
 const mapStateToProps = (
   {
@@ -24,11 +28,13 @@ const mapStateToProps = (
     referenceDatasets,
     openlicenses,
     form,
-    datasetFormStatus
+    datasetFormStatus,
+    datasets
   },
   ownProps
 ) => {
   const id = _.get(ownProps, ['match', 'params', 'id']);
+  const catalogId = _.get(ownProps, ['match', 'params', 'catalogId']);
 
   const { helptextItems } = helptexts || {
     helptextItems: null
@@ -122,7 +128,8 @@ const mapStateToProps = (
     registrationStatus: _.get(
       getDatasetFormStatusById(datasetFormStatus, id),
       'status'
-    )
+    ),
+    datasetItem: getDatasetItemByDatasetiId(datasets, catalogId, id)
   };
 };
 
@@ -136,10 +143,11 @@ const mapDispatchToProps = dispatch => ({
   fetchOpenLicensesIfNeeded: () => dispatch(fetchOpenLicensesIfNeeded()),
   fetchHelptextsIfNeeded: () => dispatch(fetchHelptextsIfNeeded()),
   deleteDatasetItem: (catalogId, id) =>
-    dispatch(deleteDatasetItemAction(catalogId, id))
+    dispatch(deleteDatasetItemAction(catalogId, id)),
+  fetchDatasetsIfNeeded: catalogId => dispatch(fetchDatasetsIfNeeded(catalogId))
 });
 
 export const ConnectedDatasetRegistrationPage = connect(
   mapStateToProps,
   mapDispatchToProps
-)(ResolvedRegDataset);
+)(RegDataset);
