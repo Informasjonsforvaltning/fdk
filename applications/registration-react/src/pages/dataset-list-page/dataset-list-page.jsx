@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 
 import localization from '../../lib/localization';
-import { getDatasetItemsByCatalogId } from '../../redux/modules/datasets';
 import FormCatalog from './form-catalog/connected-form-catalog.component';
 import DatasetItemsList from './items-list/item-list.component';
 import { AlertMessage } from '../../components/alert-message/alert-message.component';
@@ -13,7 +12,7 @@ export const DatasetsListPage = props => {
   const {
     helptextItems,
     catalog,
-    datasets,
+    datasetItems,
     fetchHelptextsIfNeeded,
     fetchCatalogIfNeeded,
     fetchDatasetsIfNeeded,
@@ -54,10 +53,7 @@ export const DatasetsListPage = props => {
               />
               <DatasetItemsList
                 catalogId={catalogId}
-                datasetItems={getDatasetItemsByCatalogId(
-                  datasets,
-                  _.get(catalog, ['items', catalogId, 'id'])
-                )}
+                datasetItems={datasetItems}
                 defaultEmptyListText={
                   localization.listItems.missingDatasetItems
                 }
@@ -72,7 +68,7 @@ export const DatasetsListPage = props => {
 DatasetsListPage.defaultProps = {
   helptextItems: null,
   catalog: null,
-  datasets: null,
+  datasetItems: null,
   fetchHelptextsIfNeeded: () => {},
   fetchCatalogIfNeeded: () => {},
   fetchDatasetsIfNeeded: () => {},
@@ -83,7 +79,7 @@ DatasetsListPage.defaultProps = {
 DatasetsListPage.propTypes = {
   helptextItems: PropTypes.object,
   catalog: PropTypes.object,
-  datasets: PropTypes.object,
+  datasetItems: PropTypes.array,
   fetchHelptextsIfNeeded: PropTypes.func,
   fetchCatalogIfNeeded: PropTypes.func,
   fetchDatasetsIfNeeded: PropTypes.func,

@@ -1,15 +1,21 @@
 import { connect } from 'react-redux';
+import _ from 'lodash';
+
 import { fetchHelptextsIfNeeded } from '../../redux/modules/helptexts';
-import { fetchDatasetsIfNeeded } from '../../redux/modules/datasets';
+import {
+  fetchDatasetsIfNeeded,
+  getDatasetItemsByCatalogId
+} from '../../redux/modules/datasets';
 import { fetchCatalogIfNeeded } from '../../redux/modules/catalog';
 import { DatasetsListPage } from './dataset-list-page';
 
-const mapStateToProps = ({ helptexts, catalog, datasets }) => {
+const mapStateToProps = ({ helptexts, catalog, datasets }, ownProps) => {
   const { helptextItems } = helptexts || {};
+  const catalogId = _.get(ownProps, ['match', 'params', 'catalogId']);
   return {
     helptextItems,
     catalog,
-    datasets
+    datasetItems: getDatasetItemsByCatalogId(datasets, catalogId)
   };
 };
 
