@@ -54,7 +54,7 @@ export const ImportFileUpload = props => {
 
 ImportFileUpload.defaultProps = {
   fileName: null,
-  handleShowLinkImport: _.noop()
+  handleShowLinkImport: _.noop
 };
 
 ImportFileUpload.propTypes = {

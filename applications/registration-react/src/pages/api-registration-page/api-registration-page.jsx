@@ -245,11 +245,11 @@ export const APIRegistrationPagePure = ({
 };
 
 APIRegistrationPagePure.defaultProps = {
-  fetchCatalogIfNeeded: _.noop(),
+  fetchCatalogIfNeeded: _.noop,
   fetchApisIfNeeded: _.noop,
-  fetchHelptextsIfNeeded: _.noop(),
-  fetchApiStatusIfNeeded: _.noop(),
-  deleteApiItem: _.noop(),
+  fetchHelptextsIfNeeded: _.noop,
+  fetchApiStatusIfNeeded: _.noop,
+  deleteApiItem: _.noop,
   catalogItem: null,
   lastSaved: null,
   isSaving: false,
@@ -266,10 +266,10 @@ APIRegistrationPagePure.defaultProps = {
   showImportError: false,
   showImportSuccess: false,
   showImportSpecificationButtons: false,
-  onToggleShowImportSpecificationButtons: _.noop(),
-  handleShowImportError: _.noop(),
-  handleShowImportSuccess: _.noop(),
-  apiSuccess: _.noop(),
+  onToggleShowImportSpecificationButtons: _.noop,
+  handleShowImportError: _.noop,
+  handleShowImportSuccess: _.noop,
+  apiSuccess: _.noop,
   history: null
 };
 

@@ -118,13 +118,13 @@ export const ImportDialogPure = ({
 ImportDialogPure.defaultProps = {
   catalogId: null,
   apiId: null,
-  handleShowImportSpecificationButtons: _.noop(),
+  handleShowImportSpecificationButtons: _.noop,
   importUrl: null,
-  handleShowImportError: _.noop(),
-  handleShowImportSuccess: _.noop(),
+  handleShowImportError: _.noop,
+  handleShowImportSuccess: _.noop,
   showLinkImport: false,
-  onToggleShowLinkImport: _.noop(),
-  onSetImportUrl: _.noop()
+  onToggleShowLinkImport: _.noop,
+  onSetImportUrl: _.noop
 };
 
 ImportDialogPure.propTypes = {

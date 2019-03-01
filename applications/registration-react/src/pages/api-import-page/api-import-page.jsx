@@ -189,7 +189,7 @@ export class ApiImportPage extends React.Component {
 
 ApiImportPage.defaultProps = {
   match: null,
-  addApiItem: _.noop()
+  addApiItem: _.noop
 };
 
 ApiImportPage.propTypes = {

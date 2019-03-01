@@ -77,7 +77,7 @@ FormTemplate.defaultProps = {
   required: false,
   children: null,
   collapse: false,
-  onToggle: _.noop()
+  onToggle: _.noop
 };
 
 FormTemplate.propTypes = {

@@ -34,6 +34,7 @@ exports[`should render APIListPageComponent correctly 1`] = `
       <Button
         className="mr-3 btn btn-primary fdk-button"
         color="primary"
+        onClick={[Function]}
         tag="button"
       >
         <i

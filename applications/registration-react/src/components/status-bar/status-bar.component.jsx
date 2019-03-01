@@ -175,11 +175,11 @@ StatusBar.defaultProps = {
   error: null,
   published: false,
   justPublishedOrUnPublished: false,
-  onDelete: _.noop(),
+  onDelete: _.noop,
   confirmDelete: false,
-  onToggleConfirmDelete: _.noop(),
+  onToggleConfirmDelete: _.noop,
   showDialogRequiredFields: false,
-  onToggleShowDialogRequiredFields: _.noop(),
+  onToggleShowDialogRequiredFields: _.noop,
   formComponent: null,
   allowPublish: true
 };

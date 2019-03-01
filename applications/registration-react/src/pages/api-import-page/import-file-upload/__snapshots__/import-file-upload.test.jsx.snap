@@ -18,6 +18,7 @@ exports[`should render ImportFileUpload correctly 1`] = `
       Noe gikk galt med importen. Kontroller at du har valgt riktig fil, eller prøv å 
       <button
         className="fdk-button-small fdk-color-blue-dark"
+        onClick={[Function]}
       >
         importere via lenke
       </button>
