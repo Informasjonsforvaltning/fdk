@@ -9,7 +9,7 @@ export const DATASETS_ITEM_SET_STATUS = 'DATASETS_ITEM_SET_STATUS';
 export const DATASETS_ITEM_DELETE = 'DATASETS_ITEM_DELETE';
 
 function shouldFetch(metaState) {
-  const threshold = 60 * 100; // seconds
+  const threshold = 60 * 1000; // seconds
   return (
     !metaState ||
     (!metaState.isFetching &&
