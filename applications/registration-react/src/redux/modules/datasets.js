@@ -7,6 +7,7 @@ export const DATASETS_FAILURE = 'DATASETS_FAILURE';
 export const DATASETS_ADD_ITEM = 'DATASETS_ADD_ITEM';
 export const DATASETS_ITEM_SET_STATUS = 'DATASETS_ITEM_SET_STATUS';
 export const DATASETS_ITEM_DELETE = 'DATASETS_ITEM_DELETE';
+export const DATASET_SUCCESS = 'DATASET_SUCCESS';
 
 function shouldFetch(metaState) {
   const threshold = 60 * 1000; // seconds
@@ -42,6 +43,11 @@ export const deleteDatasetItemAction = (catalogId, datasetId) => ({
   datasetId
 });
 
+export const datasetSuccessAction = payload => ({
+  type: DATASET_SUCCESS,
+  payload
+});
+
 const initialState = {};
 
 export default function datasets(state = initialState, action) {
@@ -56,17 +62,25 @@ export default function datasets(state = initialState, action) {
           }
         }
       };
-    case DATASETS_SUCCESS:
+    case DATASETS_SUCCESS: {
+      const objFromArray = _.get(action.payload, [
+        '_embedded',
+        'datasets'
+      ]).reduce((accumulator, current) => {
+        accumulator[current.id] = current; // eslint-disable-line no-param-reassign
+        return accumulator;
+      }, {});
       return {
         ...state,
         [action.meta.catalogId]: {
-          items: _.get(action.payload, ['_embedded', 'datasets']),
+          items: objFromArray,
           meta: {
             isFetching: false,
             lastFetch: Date.now()
           }
         }
       };
+    }
     case DATASETS_FAILURE:
       return {
         ...state,
@@ -77,35 +91,36 @@ export default function datasets(state = initialState, action) {
           }
         }
       };
+    case DATASET_SUCCESS: {
+      const items = _.get(state, [action.payload.catalogId, 'items']);
+      return {
+        ...state,
+        [action.payload.catalogId]: {
+          items: {
+            ...items,
+            [action.payload.id]: action.payload
+          }
+        }
+      };
+    }
     case DATASETS_ITEM_SET_STATUS:
       return {
         ...state,
         [action.catalogId]: {
-          items: [
-            _.get(state, [action.catalogId, 'items'], {}).map(item => {
-              if (item.id === action.datasetId) {
-                return {
-                  ...item,
-                  registrationStatus: action.status
-                };
-              }
-              return item;
-            })
-          ]
+          items: {
+            ..._.get(state, [action.catalogId, 'items']),
+            [action.datasetId]: {
+              ..._.get(state, [action.catalogId, 'items', action.datasetId]),
+              registrationStatus: action.status
+            }
+          }
         }
       };
     case DATASETS_ITEM_DELETE:
       return {
         ...state,
         [action.catalogId]: {
-          items: [
-            _.get(state, [action.catalogId, 'items'], {}).map(item => {
-              if (item.id !== action.datasetId) {
-                return item;
-              }
-              return null;
-            })
-          ]
+          ..._.omit(state, [action.catalogId, 'items'], action.datasetId)
         }
       };
     default:
@@ -113,11 +128,14 @@ export default function datasets(state = initialState, action) {
   }
 }
 
-export const getDatasetItemsByCatalogId = (datasets, catalogId) =>
-  _.get(datasets, [catalogId, 'items']);
+export const getDatasetItemsByCatalogId = (datasets, catalogId) => {
+  const objects = _.get(datasets, [catalogId, 'items'], []);
+  const array = [];
+  Object.keys(objects).map(key => array.push(objects[key]));
+  return array;
+};
 
 export const getDatasetItemByDatasetiId = (datasets, catalogId, id) =>
-  _.find(_.get(datasets, [catalogId, 'items'], []), ['id', id]);
+  _.get(datasets, [catalogId, 'items', id]);
 
-export const getDatasetItemsCount = (datasets, catalogId) =>
-  _.get(datasets, [catalogId, 'items'], []).length;
+export const getDatasetItemsCount = datasets => Object.keys(datasets).length;
