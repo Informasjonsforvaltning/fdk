@@ -2,7 +2,7 @@
 
 exports[`should render Catalog correctly with minimum props 1`] = `
 <CatalogItem
-  itemsCount={0}
+  itemsCount={null}
   key="910244132"
   publisherId="910244132"
   type="datasets"
@@ -11,7 +11,7 @@ exports[`should render Catalog correctly with minimum props 1`] = `
 
 exports[`should render Catalog correctly with one dataset item 1`] = `
 <CatalogItem
-  itemsCount={1}
+  itemsCount={null}
   key="910244132"
   publisherId="910244132"
   type="datasets"

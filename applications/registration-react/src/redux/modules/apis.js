@@ -142,3 +142,6 @@ export const getApiItemsByCatalogId = (apis, catalogId) =>
 
 export const getApiItemsByApiId = (apis, catalogId, id) =>
   _.find(_.get(apis, [catalogId, 'items'], []), ['id', id]);
+
+export const getAPIItemsCount = (apis, catalogId) =>
+  _.get(apis, [catalogId, 'items'], []).length;

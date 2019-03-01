@@ -6,6 +6,8 @@ import _ from 'lodash';
 import localization from '../../lib/localization';
 import { Catalog } from './catalogs/catalogs.component';
 import getTranslateText from '../../lib/translateText';
+import { getDatasetItemsCount } from '../../redux/modules/datasets';
+import { getAPIItemsCount } from '../../redux/modules/apis';
 import './catalogs-page.scss';
 
 const renderCatalogs = props => {
@@ -37,7 +39,7 @@ const renderCatalogs = props => {
               catalogId={item.id}
               type="datasets"
               fetchItems={fetchDatasetsIfNeeded}
-              items={datasets}
+              itemsCount={getDatasetItemsCount(datasets, item.id)}
             />
           )}
           {apis && (
@@ -46,7 +48,7 @@ const renderCatalogs = props => {
               catalogId={item.id}
               fetchItems={fetchApisIfNeeded}
               type="apis"
-              items={apis}
+              itemsCount={getAPIItemsCount(apis, item.id)}
             />
           )}
         </CardGroup>
