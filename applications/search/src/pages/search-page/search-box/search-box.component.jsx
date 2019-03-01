@@ -97,7 +97,7 @@ SearchBoxPure.defaultProps = {
   countApis: null,
   countInformationModels: null,
   inputText: null,
-  setInputText: _.noop(),
+  setInputText: _.noop,
   touched: false
 };
 
