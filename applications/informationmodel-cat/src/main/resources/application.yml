@@ -16,8 +16,10 @@ logging:
 application:
   apiRootUrl: http://nginx-search:8080/api
   harvestSourceUri: https://fellesdatakatalog.brreg.no/api
+  harvestSourceURIBase: ${FDK_ALTINN_MODELS_URL:https://fdk-dev-altinn.appspot.com/api/v1/schemas}
   # harvest every sixth hour, 10 minutes after apicatalogs update
   harvestCron: 0 10 */6 * * *
+
 
 
 ---

@@ -45,6 +45,16 @@ public class InformationModelFactory {
         return model;
     }
 
+    public InformationModel enrichInformationModelFromAltInn(InformationModel model, Date harvestDate) {
+        Optional<InformationModel> existingModelOptional = informationmodelRepository.getByHarvestSourceUri(model.getHarvestSourceUri());
+
+        String id = existingModelOptional.isPresent() ? existingModelOptional.get().getId() : UUID.randomUUID().toString();
+        model.setId(id);
+
+        updateHarvestMetadata(model, harvestDate, existingModelOptional.orElse(null));
+        return model;
+    }
+
     Publisher lookupPublisher(String orgNr) {
         try {
             return publisherCatClient.getByOrgNr(orgNr);

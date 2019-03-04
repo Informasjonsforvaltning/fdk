@@ -19,20 +19,23 @@ import java.util.List;
 public class InformationmodelHarvester {
 
     public static final String API_TYPE = "api";
+    public static final String ALTINN_TYPE = "altinn";
     public static final int RETRY_COUNT_API_RETRIEVAL = 20;
 
     private static final Logger logger = LoggerFactory.getLogger(InformationmodelHarvester.class);
 
     private InformationmodelRepository informationmodelRepository;
     private ApiRegistrationsHarvest apiRegistrationsHarvest;
+    private AltinnHarvest altinnHarvest;
 
     private InformationModelFactory informationModelFactory;
 
     @Autowired
-    public InformationmodelHarvester(InformationmodelRepository informationmodelRepository, ApiRegistrationsHarvest apiRegistrationsHarvest, InformationModelFactory informationModelFactory) {
+    public InformationmodelHarvester(InformationmodelRepository informationmodelRepository, ApiRegistrationsHarvest apiRegistrationsHarvest, InformationModelFactory informationModelFactory, AltinnHarvest altinnHarvest) {
         this.informationmodelRepository = informationmodelRepository;
         this.apiRegistrationsHarvest = apiRegistrationsHarvest;
         this.informationModelFactory = informationModelFactory;
+        this.altinnHarvest = altinnHarvest;
     }
 
     public void harvestAll() {
@@ -52,6 +55,14 @@ public class InformationmodelHarvester {
                 } catch (Exception e) {
                     logger.error("Error creating or saving InformationModel for harvestSourceUri={}", source.harvestSourceUri, e);
                 }
+            } else if (source.sourceType == ALTINN_TYPE) {
+                InformationModel model = altinnHarvest.getByServiceCodeAndEdition(source.serviceCode, source.serviceEditionCode);
+                model = informationModelFactory.enrichInformationModelFromAltInn(model, harvestDate);
+
+                if (model != null) {
+                    informationmodelRepository.save(model);
+                    idsHarvested.add(model.getId());
+                }
             }
         }
         List<String> idsToDelete = informationmodelRepository.getAllIdsNotHarvested(idsHarvested);
@@ -59,9 +70,9 @@ public class InformationmodelHarvester {
     }
 
     private List<InformationModelHarvestSource> getAllHarvestSources() {
-        //At the moment we only harvest our own apis.
-        return apiRegistrationsHarvest.getHarvestSources();
+        ArrayList<InformationModelHarvestSource> sources = new ArrayList<>();
+        sources.addAll(altinnHarvest.getHarvestSources());
+        sources.addAll(apiRegistrationsHarvest.getHarvestSources());
+        return sources;
     }
-
-
 }

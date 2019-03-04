@@ -81,7 +81,7 @@ public class ApiRegistrationsHarvest {
                 hs.schema = extractSchemaFromOpenApi(apiSpec, apiRegistration.getId());
                 sourceList.add(hs);
 
-            } catch (Exception e) {
+            } catch (Throwable e) {
                 logger.info("Skipping api registration, id={}, reason:{}", apiRegistration.getId(), e.getMessage());
             }
         }
