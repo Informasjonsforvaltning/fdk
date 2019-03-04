@@ -108,13 +108,13 @@ public class AltinnHarvest {
     private void loadAllInformationModelsFromOurAltInnAdapter() {
         try {
             URL altinn = new URL(harvestSourceURIBase);
-            logger.debug("Retrieving all schemas from altinn.  url: {} expected load time approx 5 minutes", altinn);
+            logger.debug("Retrieving all schemas from altinn.  url: {} Expected load time approx 5 minutes", altinn);
             String JSonSchemaFromFile = new Scanner(altinn.openStream(), "UTF-8").useDelimiter("\\A").next();
-            logger.debug("Retrieving all schemas from altinn.  url: {} expected load time approx 5 minutes", altinn);
+            logger.debug("Retrieved all schemas from altinn.  url: {} Now parsing", altinn);
             ObjectMapper objectMapper = new ObjectMapper();
             List<AltInnService> servicesInAltInn = objectMapper.readValue(JSonSchemaFromFile, new TypeReference<List<AltInnService>>() {
             });
-            logger.debug("Done retrieving all schemas from altinn. {} ", altinn);
+            logger.debug("Done retrieving and parsing all schemas from altinn. {} ", altinn);
 
             //Now extract the subforms from base64 gzipped json
             for (AltInnService service : servicesInAltInn) {

@@ -15,11 +15,11 @@ logging:
   level.org.springframework.data.elasticsearch: ${LOG_LEVEL:INFO}
 application:
   apiRootUrl: http://nginx-search:8080/api
-  harvestSourceUri: https://fellesdatakatalog.brreg.no/api #TODO:Verify if this makes sense
-  harvestSourceURIBase: ${FDK_ALTINN_MODELS_URL:https://storage.googleapis.com/altinndata/altinn-service-schemas.json}
   harvestSourceUri: https://fellesdatakatalog.brreg.no/api
+  harvestSourceURIBase: ${FDK_ALTINN_MODELS_URL:https://fdk-dev-altinn.appspot.com/api/v1/schemas}
   # harvest every sixth hour, 10 minutes after apicatalogs update
   harvestCron: 0 10 */6 * * *
+
 
 
 ---
