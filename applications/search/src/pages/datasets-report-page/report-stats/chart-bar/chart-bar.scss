@@ -1,0 +1,20 @@
+.chart{
+  display:table;
+  table-layout: fixed;
+  width:8em;
+  margin:0 auto;
+  background-size: 100% 50px;
+  background-position: left top;
+
+  li{
+    position:relative;
+    display:table-cell;
+    vertical-align:bottom;
+    height:12em;
+  }
+
+  span{
+    margin:0 1em;
+    display: block;
+  }
+}
