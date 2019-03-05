@@ -288,7 +288,9 @@
     "searchPublisherPlaceholder": "Search publisher...",
     "typeToSearch": "Type to search",
     "openData":"Open data",
-    "catalogs":"Catalogs"
+    "catalogs":"Catalogs",
+    "openDataset": "datasets are open",
+    "openDatasetDescription": "Open datasets are public and have distributions with open license."
   },
   "registration": {
     "title": "Registration (only in Norwegian)"

@@ -5,348 +5,272 @@ exports[`should render ReportStats correctly 1`] = `
   className="container"
 >
   <div
-    className="row"
+    className="row mb-4"
   >
     <div
-      className="col-12 fdk-container-stats"
+      className="col-12 fdk-container-statsx"
     >
-      <h2>
+      <h1>
         Showing numbers for 
         <strong>
           Test entity
         </strong>
-      </h2>
-    </div>
-  </div>
-  <div
-    className="row"
-  >
-    <div
-      className="col-12 fdk-container-stats fdk-container-stats-total"
-    >
-      <h1>
-        <strong>
-          <Link
-            replace={false}
-            to="/"
-          >
-            985
-          </Link>
-        </strong>
-      </h1>
-      <h1>
-        datasets in total
       </h1>
     </div>
   </div>
   <div
-    className="row"
+    className="row px-0 fdk-container-stats"
   >
     <div
-      className="col-12 fdk-container-stats fdk-container-stats-accesslevel-title"
+      className="d-flex flex-wrap flex-md-nowrap justify-content-around mb-5"
     >
-      <h2>
-        Accesslevel
-      </h2>
-      <div
-        className="row"
+      <StatBox
+        componentKey="PUBLIC-undefined"
+        iconBgColor="green"
+        iconBgSize="xlarge"
+        iconColor="green"
+        iconType="lock"
+        label="Datasets that are public"
+        pieData={null}
+        statBoxStyle="w-25"
       >
         <Link
-          className="col-lg-3 fdk-container-stats-accesslevel fdk-container-stats-vr p-0"
+          className="mb-3"
           replace={false}
           title="Datasets that are public"
           to="/?accessrights=PUBLIC"
         >
-          <p>
-            <strong>
-              <i
-                className="fa fdk-fa-left fa-unlock fdk-color-offentlig"
-              />
-              982
-            </strong>
-          </p>
-          <p>
-            Datasets that are public
-          </p>
+          982
         </Link>
+      </StatBox>
+      <StatBox
+        componentKey="RESTRICTED-undefined"
+        iconBgColor="green"
+        iconBgSize="small"
+        iconColor="green"
+        iconType="lock"
+        label="Datasets with restricted access"
+        pieData={null}
+        statBoxStyle="w-25"
+      >
         <Link
-          className="col-lg-3 fdk-container-stats-accesslevel fdk-container-stats-vr p-0"
+          className="mb-3"
           replace={false}
           title="Datasets with restricted access"
           to="/?accessrights=RESTRICTED"
         >
-          <p>
-            <strong>
-               
-              <i
-                className="fa fdk-fa-left fa-unlock-alt fdk-color-begrenset"
-              />
-              3
-            </strong>
-          </p>
-          <p>
-            Datasets with restricted access
-          </p>
+          3
         </Link>
+      </StatBox>
+      <StatBox
+        componentKey="NONPUBLIC-undefined"
+        iconBgColor="yellow"
+        iconBgSize="small"
+        iconColor="yellow"
+        iconType="unlock"
+        label="Datasets that are not public"
+        pieData={null}
+        statBoxStyle="w-25"
+      >
         <Link
-          className="col-lg-3 fdk-container-stats-accesslevel fdk-container-stats-vr p-0"
+          className="mb-3"
           replace={false}
+          title="Datasets that are not public"
           to="/?accessrights=NON_PUBLIC"
         >
-          <p>
-            <strong>
-              <i
-                className="fa fdk-fa-left fa-lock fdk-color-unntatt"
-              />
-              0
-            </strong>
-          </p>
-          <p>
-            Datasets that are not public
-          </p>
+          0
         </Link>
+      </StatBox>
+      <StatBox
+        componentKey="UNKNOWN-undefined"
+        iconBgColor="red"
+        iconBgSize="small"
+        iconColor="red"
+        iconType="lock"
+        label="Datasets with unknown accesslevel"
+        pieData={null}
+        statBoxStyle="w-25"
+      >
         <Link
-          className="col-lg-3 fdk-container-stats-accesslevel p-0"
+          className="mb-3"
           replace={false}
+          title="Datasets with unknown accesslevel"
           to="/?accessrights=Ukjent"
         >
-          <p>
-            <strong>
-              <i
-                className="fa fdk-fa-left fa-question fdk-color4"
-              />
-              0
-            </strong>
-          </p>
-          <p>
-            Datasets with unknown accesslevel
-          </p>
+          0
         </Link>
-      </div>
+      </StatBox>
     </div>
-  </div>
-  <div
-    className="row"
-  >
     <div
-      className="col-12 fdk-container-stats fdk-container-stats-concepts-title"
+      className="d-flex flex-fill mb-5"
     >
-      <h2>
-        Open data
-      </h2>
-      <div
-        className="fdk-container-stats-concepts"
+      <StatBox
+        componentKey={null}
+        iconBgColor={null}
+        iconBgSize={null}
+        iconColor={null}
+        iconType={null}
+        label={null}
+        pieData={
+          Array [
+            Object {
+              "color": "#3CBEF0",
+              "value": 555,
+            },
+            Object {
+              "color": "#AAE6FF",
+              "value": 430,
+            },
+          ]
+        }
+        statBoxStyle={null}
       >
         <Link
-          className="fdk-container-stats-accesslevel"
+          className="mb-3"
           replace={false}
+          title="datasets are open"
           to="/?opendata=true"
         >
-          <p>
-            <strong>
-              555
-            </strong>
-          </p>
+          <span>
+            555
+          </span>
+          <span>
+            /
+            985
+          </span>
         </Link>
-      </div>
+        <span>
+          datasets are open
+        </span>
+        <div
+          className="mt-3"
+        >
+          Open datasets are public and have distributions with open license.
+        </div>
+      </StatBox>
     </div>
-  </div>
-  <div
-    className="row mb-3"
-  >
     <div
-      className="col-12 p-0"
+      className="d-flex flex-fill mb-5 border-top"
     >
-      <CardDeck
-        tag="div"
+      <StatBox
+        componentKey={null}
+        iconBgColor={null}
+        iconBgSize={null}
+        iconColor={null}
+        iconType={null}
+        label="Datasets that are not public"
+        pieData={null}
+        statBoxStyle="w-25"
       >
-        <Card
-          className="fdk-container-stats fdk-container-stats-changes"
-          style={
-            Object {
-              "borderColor": "transparent",
-            }
-          }
-          tag="div"
+        <ChartBar
+          barColor="green"
+          componentKey="withDistribution-undefined"
+          percentHeight={99.69450101832994}
+        />
+        <Link
+          className="mb-3"
+          replace={false}
+          title="Public datasets with distributions"
+          to="/#"
         >
-          <CardBody
-            tag="div"
-          >
-            <h2>
-              Published in last 7 days
-            </h2>
-            <CardText
-              tag="p"
-            >
-              <strong>
-                <Link
-                  className="fdk-plain-label"
-                  replace={false}
-                  title="New datasets"
-                  to="/?firstHarvested=7"
-                >
-                  0
-                </Link>
-              </strong>
-            </CardText>
-            <CardText
-              tag="p"
-            >
-              New datasets
-            </CardText>
-          </CardBody>
-        </Card>
-        <Card
-          className="fdk-container-stats fdk-container-stats-changes"
-          style={
-            Object {
-              "borderColor": "transparent",
-            }
-          }
-          tag="div"
+          979
+        </Link>
+      </StatBox>
+      <StatBox
+        componentKey={null}
+        iconBgColor={null}
+        iconBgSize={null}
+        iconColor={null}
+        iconType={null}
+        label="Public datasets without distributions"
+        pieData={null}
+        statBoxStyle="w-25"
+      >
+        <ChartBar
+          barColor="green"
+          componentKey="withoutDistribution-undefined"
+          percentHeight={1}
+        />
+        <Link
+          className="mb-3"
+          replace={false}
+          title="Public datasets without distributions"
+          to="/#"
         >
-          <CardBody
-            tag="div"
-          >
-            <h2>
-              Published in last 30 days
-            </h2>
-            <CardText
-              tag="p"
-            >
-              <strong>
-                <Link
-                  className="fdk-plain-label"
-                  replace={false}
-                  title="New datasets"
-                  to="/?firstHarvested=30"
-                >
-                  568
-                </Link>
-              </strong>
-            </CardText>
-            <CardText
-              tag="p"
-            >
-              New datasets
-            </CardText>
-          </CardBody>
-        </Card>
-        <Card
-          className="fdk-container-stats fdk-container-stats-changes"
-          style={
-            Object {
-              "borderColor": "transparent",
-            }
-          }
-          tag="div"
-        >
-          <CardBody
-            tag="div"
-          >
-            <h2>
-              Published in last 365 days
-            </h2>
-            <CardText
-              tag="p"
-            >
-              <strong>
-                <Link
-                  className="fdk-plain-label"
-                  replace={false}
-                  title="New datasets"
-                  to="/?firstHarvested=365"
-                >
-                  985
-                </Link>
-              </strong>
-            </CardText>
-            <CardText
-              tag="p"
-            >
-              New datasets
-            </CardText>
-          </CardBody>
-        </Card>
-      </CardDeck>
+          3
+        </Link>
+      </StatBox>
     </div>
-  </div>
-  <div
-    className="row"
-  >
     <div
-      className="col-12 fdk-container-stats fdk-container-stats-concepts-title"
+      className="d-flex flex-fill mb-5 border-top"
     >
-      <h2>
-        Use of concepts
-      </h2>
-      <div
-        className="row fdk-container-stats-concepts"
+      <StatBox
+        componentKey={null}
+        iconBgColor={null}
+        iconBgSize={null}
+        iconColor="blue"
+        iconType="book"
+        label="Datasets that use concepts"
+        pieData={null}
+        statBoxStyle="w-25"
       >
-        <div
-          className="col-lg-6 fdk-container-stats-vr"
+        <Link
+          className="mb-3"
+          replace={false}
+          title="Datasets that use concepts"
+          to="/#"
         >
-          <p>
-            <strong>
-              0
-            </strong>
-          </p>
-          <p>
-            Datasets that use concepts
-          </p>
-        </div>
-        <div
-          className="col-lg-6"
-        >
-          <p>
-            <strong>
-              985
-            </strong>
-          </p>
-          <p>
-            Datasets without concepts
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div
-    className="row"
-  >
-    <div
-      className="col-12 fdk-container-stats fdk-container-stats-concepts-title"
-    >
-      <h2>
-        Distributions
-      </h2>
-      <div
-        className="row fdk-container-stats-concepts"
+          0
+        </Link>
+      </StatBox>
+      <ReactMinimalPieChart
+        animate={true}
+        animationDuration={500}
+        animationEasing="ease-out"
+        className="d-flex p-4 w-25"
+        cx={50}
+        cy={50}
+        data={
+          Array [
+            Object {
+              "color": "#3CBEF0",
+              "value": 0,
+            },
+            Object {
+              "color": "#AAE6FF",
+              "value": 985,
+            },
+          ]
+        }
+        label={false}
+        labelPosition={50}
+        lengthAngle={360}
+        lineWidth={45}
+        paddingAngle={0}
+        radius={50}
+        ratio={1}
+        rounded={false}
+        startAngle={0}
+      />
+      <StatBox
+        componentKey={null}
+        iconBgColor={null}
+        iconBgSize={null}
+        iconColor="grey"
+        iconType="book"
+        label="Datasets without concepts"
+        pieData={null}
+        statBoxStyle="w-25"
       >
-        <div
-          className="col-lg-6 fdk-container-stats-vr"
+        <Link
+          className="mb-3"
+          replace={false}
+          title="Datasets without concepts"
+          to="/#"
         >
-          <p>
-            <strong>
-              979
-            </strong>
-          </p>
-          <p>
-            Public datasets with distributions
-          </p>
-        </div>
-        <div
-          className="col-lg-6"
-        >
-          <p>
-            <strong>
-              3
-            </strong>
-          </p>
-          <p>
-            Public datasets without distributions
-          </p>
-        </div>
-      </div>
+          985
+        </Link>
+      </StatBox>
     </div>
   </div>
   <div
