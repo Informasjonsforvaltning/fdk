@@ -3,12 +3,14 @@ package no.dcat.datastore.domain.dcat.builders;
 import no.dcat.datastore.domain.dcat.vocabulary.ADMS;
 import no.dcat.datastore.domain.dcat.vocabulary.AT;
 import no.dcat.datastore.domain.dcat.vocabulary.DCATNO;
+import no.dcat.datastore.domain.dcat.vocabulary.DCATapi;
 import no.dcat.datastore.domain.dcat.vocabulary.DQV;
 import no.dcat.datastore.domain.dcat.vocabulary.OA;
 import no.dcat.shared.Catalog;
 import no.dcat.shared.Contact;
 import no.dcat.shared.Dataset;
 import no.dcat.shared.Distribution;
+import no.dcat.shared.DataDistributionService;
 import no.dcat.shared.PeriodOfTime;
 import no.dcat.shared.Publisher;
 import no.dcat.shared.QualityAnnotation;
@@ -70,6 +72,7 @@ public class DcatBuilder {
         model.setNsPrefix("foaf", FOAF.NS);
         model.setNsPrefix("vcard", VCARD4.NS);
         model.setNsPrefix("dcatno", DCATNO.NS);
+        model.setNsPrefix("dcatapi", DCATapi.NS);
         model.setNsPrefix("xsd", XSD.NS);
         model.setNsPrefix("adms", ADMS.NS);
         model.setNsPrefix("iso", DQV.NS);
@@ -450,6 +453,9 @@ public class DcatBuilder {
 
                         addLiteral(disRes, DCTerms.type, distribution.getType());
 
+                        addDataDistributionService(distribution.getAccessService(), disRes);
+
+
                         if (disRes.getProperty(DCTerms.title) != null ||
                                 disRes.getProperty(DCTerms.description) != null ||
                                 disRes.getProperty(DCAT.accessURL) != null ||
@@ -624,6 +630,33 @@ public class DcatBuilder {
             addLiterals(resource, SKOS.inScheme, subject.getInScheme());
         }
     }
+
+    public void addDataDistributionService(DataDistributionService distributionService, Resource resource) {
+        if (distributionService != null) {
+            try {
+                Resource distributionServiceRes = null;
+                if (distributionService.getUri() != null) {
+                    distributionServiceRes = model.createResource(distributionService.getUri());
+                } else {
+                    distributionServiceRes = model.createResource(UUID.randomUUID().toString());
+                }
+
+                distributionServiceRes.addProperty(RDF.type, DCATapi.DataDistributionService);
+
+                addLiteral(distributionServiceRes, DCTerms.identifier, distributionService.getId());
+                addLiterals(distributionServiceRes, DCTerms.title, distributionService.getTitle());
+                addLiterals(distributionServiceRes, DCTerms.description, distributionService.getDescription());
+                addPublisher(distributionServiceRes, DCTerms.publisher, distributionService.getPublisher());
+                addSkosConcepts(distributionServiceRes, DCATapi.endpointDescription, distributionService.getEndpointDescription(), FOAF.Document);
+
+                resource.addProperty(DCATapi.accessService, distributionServiceRes);
+
+            } catch (Exception e) {
+                logger.error("Unable to export dataDistributionService {}. Reason {}", distributionService.getTitle(), e.getLocalizedMessage(), e);
+            }
+        }
+    }
+
 
     public DcatBuilder addSkosProperties(Resource resource, Property property, List<SkosConcept> concepts, Resource type) {
         if (concepts != null) {

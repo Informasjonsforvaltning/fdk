@@ -221,13 +221,19 @@ public class DatasetConverterTest {
         Distribution actualDist = actualDataset.getDistribution().get(0);
         Distribution expectedDist = expectedDataset.getDistribution().get(0);
 
+        List<String> actualSortedAccessURL = actualDist.getAccessURL();
+        actualSortedAccessURL.sort(Comparator.naturalOrder());
+        List<String> expectedSortedAccessURL = expectedDist.getAccessURL();
+        expectedSortedAccessURL.sort(Comparator.naturalOrder());
+
         assertThat("description", actualDist.getDescription(), is(expectedDist.getDescription()));
         assertThat("licence", actualDist.getLicense(), is(expectedDist.getLicense()));
         assertThat("conformsTo", actualDist.getConformsTo(), is(expectedDist.getConformsTo()));
         assertThat("format", actualDist.getFormat(), is(expectedDist.getFormat()));
-        assertThat("accessURL", actualDist.getAccessURL(), is(expectedDist.getAccessURL()));
+        assertThat("accessURL", actualSortedAccessURL, is(expectedSortedAccessURL));
         assertThat("page", actualDist.getPage(), is(expectedDist.getPage()));
-
+        assertThat("accessService endpoint description", actualDist.getAccessService().getEndpointDescription(),
+            is(expectedDist.getAccessService().getEndpointDescription()));
     }
 
     @Test
