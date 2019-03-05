@@ -1,0 +1,29 @@
+.statbox {
+  .stat-box--icon {
+    height: 10rem;
+    .stat-box-circle--xlarge {
+      border-radius: 50%;
+      height: 10rem;
+      width: 10rem;
+    }
+    .stat-box-circle--large {
+      border-radius: 50%;
+      height: 8rem;
+      width: 8rem;
+    }
+    .stat-box-circle--medium {
+      border-radius: 50%;
+      height: 6rem;
+      width: 6rem;
+    }
+    .stat-box-circle--small {
+      border-radius: 50%;
+      height: 5rem;
+      width: 5rem;
+    }
+  }
+  a {
+    font-size: 3rem;
+    font-weight: 600;
+  }
+}
