@@ -287,7 +287,9 @@
     "searchPublisherPlaceholder": "Søk på virksomhetsnavn...",
     "typeToSearch": "Skriv for å søke",
     "openData":"Åpne data",
-    "catalogs":"Kataloger"
+    "catalogs":"Kataloger",
+    "openDataset": "datasett er åpne",
+    "openDatasetDescription": "Åpne datasett er datasett som er offentlig tilgjengelig og har distribusjoner med åpen lisens."
   },
   "registration": {
     "title": "Kom i gang med registrering"

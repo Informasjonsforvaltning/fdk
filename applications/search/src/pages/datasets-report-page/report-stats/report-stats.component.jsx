@@ -2,12 +2,36 @@ import _ from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { CardDeck, Card, CardText, CardBody } from 'reactstrap';
+import PieChart from 'react-minimal-pie-chart';
 
 import localization from '../../../lib/localization';
 import { getParamFromLocation } from '../../../lib/addOrReplaceUrlParam';
 import './report-stats.scss';
 import { getTranslateText } from '../../../lib/translateText';
+import { StatBox } from './stat-box/stat-box.component';
+import { ChartBar } from './chart-bar/chart-bar.component';
+
+const calculatePercent = (number, total) => {
+  const calculatedValue = (number / total) * 100;
+  if (calculatedValue === 0) {
+    return calculatedValue;
+  } else if (calculatedValue < 1) {
+    return 1;
+  }
+  return calculatedValue;
+};
+
+const calculateSize = (number, total) => {
+  const calculatedValue = (number / total) * 100;
+  if (calculatedValue < 25) {
+    return 'small';
+  } else if (calculatedValue >= 25 && calculatedValue < 50) {
+    return 'medium';
+  } else if (calculatedValue >= 50 && calculatedValue < 75) {
+    return 'large';
+  }
+  return 'xlarge';
+};
 
 export const ReportStats = props => {
   props.fetchCatalogsIfNeeded();
@@ -33,220 +57,192 @@ export const ReportStats = props => {
     name = localization.report.allEntities;
   }
   const title = (
-    <div className="row">
-      <div className="col-12 fdk-container-stats">
-        <h2>
+    <div className="row mb-4">
+      <div className="col-12 fdk-container-statsx">
+        <h1>
           {localization.report.title}
           <strong>{name}</strong>
-        </h2>
-      </div>
-    </div>
-  );
-
-  const total = (
-    <div className="row">
-      <div className="col-12 fdk-container-stats fdk-container-stats-total">
-        <h1>
-          <strong>
-            <Link to={orgPath ? `/?orgPath=${encodedOrgPath}` : '/'}>
-              {stats.total}
-            </Link>
-          </strong>
         </h1>
-        <h1>{localization.report.total}</h1>
       </div>
     </div>
   );
 
   const accessLevel = (
-    <div className="row">
-      <div className="col-12 fdk-container-stats fdk-container-stats-accesslevel-title">
-        <h2>{localization.report.accessLevel}</h2>
-        <div className="row">
-          <Link
-            title={localization.report.public}
-            className="col-lg-3 fdk-container-stats-accesslevel fdk-container-stats-vr p-0"
-            to={`/?accessrights=PUBLIC${orgPathParam}`}
-          >
-            <p>
-              <strong>
-                <i className="fa fdk-fa-left fa-unlock fdk-color-offentlig" />
-                {stats.public}
-              </strong>
-            </p>
-            <p>{localization.report.public}</p>
-          </Link>
-          <Link
-            title={localization.report.restricted}
-            className="col-lg-3 fdk-container-stats-accesslevel fdk-container-stats-vr p-0"
-            to={`/?accessrights=RESTRICTED${orgPathParam}`}
-          >
-            <p>
-              <strong>
-                {' '}
-                <i className="fa fdk-fa-left fa-unlock-alt fdk-color-begrenset" />
-                {stats.restricted}
-              </strong>
-            </p>
-            <p>{localization.report.restricted}</p>
-          </Link>
-          <Link
-            className="col-lg-3 fdk-container-stats-accesslevel fdk-container-stats-vr p-0"
-            to={`/?accessrights=NON_PUBLIC${orgPathParam}`}
-          >
-            <p>
-              <strong>
-                <i className="fa fdk-fa-left fa-lock fdk-color-unntatt" />
-                {stats.nonPublic}
-              </strong>
-            </p>
-            <p>{localization.report.nonPublic}</p>
-          </Link>
-          <Link
-            className="col-lg-3 fdk-container-stats-accesslevel p-0"
-            to={`/?accessrights=Ukjent${orgPathParam}`}
-          >
-            <p>
-              <strong>
-                <i className="fa fdk-fa-left fa-question fdk-color4" />
-                {stats.unknown}
-              </strong>
-            </p>
-            <p>{localization.report.unknown}</p>
-          </Link>
-        </div>
-      </div>
+    <div className="d-flex flex-wrap flex-md-nowrap justify-content-around mb-5">
+      <StatBox
+        componentKey={`PUBLIC-${orgPath}`}
+        statBoxStyle="w-25"
+        iconBgSize={calculateSize(stats.public, stats.total)}
+        iconBgColor="green"
+        iconType="lock"
+        iconColor="green"
+        label={localization.report.public}
+      >
+        <Link
+          title={localization.report.public}
+          className="mb-3"
+          to={`/?accessrights=PUBLIC${orgPathParam}`}
+        >
+          {stats.public}
+        </Link>
+      </StatBox>
+      <StatBox
+        componentKey={`RESTRICTED-${orgPath}`}
+        statBoxStyle="w-25"
+        iconBgSize={calculateSize(stats.restricted, stats.total)}
+        iconBgColor="green"
+        iconType="lock"
+        iconColor="green"
+        label={localization.report.restricted}
+      >
+        <Link
+          title={localization.report.restricted}
+          className="mb-3"
+          to={`/?accessrights=RESTRICTED${orgPathParam}`}
+        >
+          {stats.restricted}
+        </Link>
+      </StatBox>
+      <StatBox
+        componentKey={`NONPUBLIC-${orgPath}`}
+        statBoxStyle="w-25"
+        iconBgSize={calculateSize(stats.nonPublic, stats.total)}
+        iconBgColor="yellow"
+        iconType="unlock"
+        iconColor="yellow"
+        label={localization.report.nonPublic}
+      >
+        <Link
+          title={localization.report.nonPublic}
+          className="mb-3"
+          to={`/?accessrights=NON_PUBLIC${orgPathParam}`}
+        >
+          {stats.nonPublic}
+        </Link>
+      </StatBox>
+      <StatBox
+        componentKey={`UNKNOWN-${orgPath}`}
+        statBoxStyle="w-25"
+        iconBgSize={calculateSize(stats.unknown, stats.total)}
+        iconBgColor="red"
+        iconType="lock"
+        iconColor="red"
+        label={localization.report.unknown}
+      >
+        <Link
+          title={localization.report.unknown}
+          className="mb-3"
+          to={`/?accessrights=Ukjent${orgPathParam}`}
+        >
+          {stats.unknown}
+        </Link>
+      </StatBox>
     </div>
   );
 
   const opendata = (
-    <div className="row">
-      <div className="col-12 fdk-container-stats fdk-container-stats-concepts-title">
-        <h2>{localization.report.openData}</h2>
-        <div className="fdk-container-stats-concepts">
-          <Link
-            className="fdk-container-stats-accesslevel"
-            to={`/?opendata=true${orgPathParam}`}
-          >
-            <p>
-              <strong>{stats.opendata}</strong>
-            </p>
-          </Link>
-        </div>
-      </div>
-    </div>
-  );
-
-  const changes = (
-    <div className="row mb-3">
-      <div className="col-12 p-0">
-        <CardDeck>
-          <Card
-            className="fdk-container-stats fdk-container-stats-changes"
-            style={{ borderColor: 'transparent' }}
-          >
-            <CardBody>
-              <h2>{localization.report.changesLastWeek}</h2>
-              <CardText>
-                <strong>
-                  <Link
-                    title={localization.report.newDatasets}
-                    className="fdk-plain-label"
-                    to={`/?firstHarvested=7${orgPathParam}`}
-                  >
-                    {stats.newLastWeek}
-                  </Link>
-                </strong>
-              </CardText>
-              <CardText>{localization.report.newDatasets}</CardText>
-            </CardBody>
-          </Card>
-          <Card
-            className="fdk-container-stats fdk-container-stats-changes"
-            style={{ borderColor: 'transparent' }}
-          >
-            <CardBody>
-              <h2>{localization.report.changesLastMonth}</h2>
-              <CardText>
-                <strong>
-                  <Link
-                    title={localization.report.newDatasets}
-                    className="fdk-plain-label"
-                    to={`/?firstHarvested=30${orgPathParam}`}
-                  >
-                    {stats.newLastMonth}
-                  </Link>
-                </strong>
-              </CardText>
-              <CardText>{localization.report.newDatasets}</CardText>
-            </CardBody>
-          </Card>
-          <Card
-            className="fdk-container-stats fdk-container-stats-changes"
-            style={{ borderColor: 'transparent' }}
-          >
-            <CardBody>
-              <h2>{localization.report.changesLastYear}</h2>
-              <CardText>
-                <strong>
-                  <Link
-                    title={localization.report.newDatasets}
-                    className="fdk-plain-label"
-                    to={`/?firstHarvested=365${orgPathParam}`}
-                  >
-                    {stats.newLastYear}
-                  </Link>
-                </strong>
-              </CardText>
-              <CardText>{localization.report.newDatasets}</CardText>
-            </CardBody>
-          </Card>
-        </CardDeck>
-      </div>
-    </div>
-  );
-
-  const concepts = (
-    <div className="row">
-      <div className="col-12 fdk-container-stats fdk-container-stats-concepts-title">
-        <h2>{localization.report.concepts}</h2>
-        <div className="row fdk-container-stats-concepts">
-          <div className="col-lg-6 fdk-container-stats-vr">
-            <p>
-              <strong>{stats.subjectCount}</strong>
-            </p>
-            <p>{localization.report.withConcepts}</p>
-          </div>
-          <div className="col-lg-6">
-            <p>
-              <strong>{stats.total - stats.subjectCount}</strong>
-            </p>
-            <p>{localization.report.withoutConcepts}</p>
-          </div>
-        </div>
-      </div>
+    <div className="d-flex flex-fill mb-5">
+      <StatBox
+        pieData={[
+          { value: stats.opendata, color: '#3CBEF0' },
+          { value: stats.total - stats.opendata, color: '#AAE6FF' }
+        ]}
+      >
+        <Link
+          title={localization.report.openDataset}
+          className="mb-3"
+          to={`/?opendata=true${orgPathParam}`}
+        >
+          <span>{stats.opendata}</span>
+          <span>/{stats.total}</span>
+        </Link>
+        <span>{localization.report.openDataset}</span>
+        <div className="mt-3">{localization.report.openDatasetDescription}</div>
+      </StatBox>
     </div>
   );
 
   const distributions = (
-    <div className="row">
-      <div className="col-12 fdk-container-stats fdk-container-stats-concepts-title">
-        <h2>{localization.report.distributions}</h2>
-        <div className="row fdk-container-stats-concepts">
-          <div className="col-lg-6 fdk-container-stats-vr">
-            <p>
-              <strong>{stats.distOnPublicAccessCount}</strong>
-            </p>
-            <p>{localization.report.withDistributions}</p>
-          </div>
-          <div className="col-lg-6">
-            <p>
-              <strong>{stats.public - stats.distOnPublicAccessCount}</strong>
-            </p>
-            <p>{localization.report.withoutDistributions}</p>
-          </div>
-        </div>
-      </div>
+    <div className="d-flex flex-fill mb-5 border-top">
+      <StatBox statBoxStyle="w-25" label={localization.report.nonPublic}>
+        <ChartBar
+          componentKey={`withDistribution-${orgPath}`}
+          percentHeight={calculatePercent(
+            stats.distOnPublicAccessCount,
+            stats.public
+          )}
+          barColor="green"
+        />
+        <Link
+          title={localization.report.withDistributions}
+          className="mb-3"
+          to="/#"
+        >
+          {stats.distOnPublicAccessCount}
+        </Link>
+      </StatBox>
+
+      <StatBox
+        statBoxStyle="w-25"
+        label={localization.report.withoutDistributions}
+      >
+        <ChartBar
+          componentKey={`withoutDistribution-${orgPath}`}
+          percentHeight={calculatePercent(
+            stats.public - stats.distOnPublicAccessCount,
+            stats.public
+          )}
+          barColor="green"
+        />
+        <Link
+          title={localization.report.withoutDistributions}
+          className="mb-3"
+          to="/#"
+        >
+          {stats.public - stats.distOnPublicAccessCount}
+        </Link>
+      </StatBox>
+    </div>
+  );
+
+  const concepts = (
+    <div className="d-flex flex-fill mb-5 border-top">
+      <StatBox
+        statBoxStyle="w-25"
+        iconType="book"
+        iconColor="blue"
+        label={localization.report.withConcepts}
+      >
+        <Link title={localization.report.withConcepts} className="mb-3" to="/#">
+          {stats.subjectCount}
+        </Link>
+      </StatBox>
+
+      <PieChart
+        className="d-flex p-4 w-25"
+        data={[
+          { value: stats.subjectCount, color: '#3CBEF0' },
+          { value: stats.total - stats.subjectCount, color: '#AAE6FF' }
+        ]}
+        startAngle={0}
+        lineWidth={45}
+        animate
+      />
+
+      <StatBox
+        statBoxStyle="w-25"
+        iconType="book"
+        iconColor="grey"
+        label={localization.report.withoutConcepts}
+      >
+        <Link
+          title={localization.report.withoutConcepts}
+          className="mb-3"
+          to="/#"
+        >
+          {stats.total - stats.subjectCount}
+        </Link>
+      </StatBox>
     </div>
   );
 
@@ -281,12 +277,14 @@ export const ReportStats = props => {
   return (
     <div className="container">
       {title}
-      {total}
-      {accessLevel}
-      {opendata}
-      {changes}
-      {concepts}
-      {distributions}
+
+      <div className="row px-0 fdk-container-stats">
+        {accessLevel}
+        {opendata}
+        {distributions}
+        {concepts}
+      </div>
+
       {catalogs}
     </div>
   );

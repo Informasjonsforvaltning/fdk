@@ -287,7 +287,9 @@
     "searchPublisherPlaceholder": "Søk på verksemdnavn...",
     "typeToSearch": "Skriv for å søke",
     "openData":"Opne data",
-    "catalogs":"Katalogar"
+    "catalogs":"Katalogar",
+    "openDataset": "datasett er opne",
+    "openDatasetDescription": "Opne datasett er datasett som er offentleg tilgjengeleg og har distribusjonar med open lisens."
   },
   "registration": {
     "title": "Korleis komme i gong med registrering"
