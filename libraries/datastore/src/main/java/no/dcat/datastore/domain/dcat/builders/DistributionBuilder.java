@@ -3,7 +3,9 @@ package no.dcat.datastore.domain.dcat.builders;
 import no.dcat.datastore.domain.dcat.Distribution;
 import no.dcat.shared.SkosCode;
 import no.dcat.shared.SkosConcept;
+import no.dcat.shared.DataDistributionService;
 import no.dcat.datastore.domain.dcat.vocabulary.DCAT;
+import no.dcat.datastore.domain.dcat.vocabulary.DCATapi;
 import no.dcat.shared.Types;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ResIterator;
@@ -116,9 +118,30 @@ public class DistributionBuilder extends AbstractBuilder {
 
             dist.setType(extractAsString(distResource, DCTerms.type));
 
+            dist.setAccessService(getDataDistributionService(distResource));
+
         }
 
         return dist;
+    }
+
+
+    public static DataDistributionService getDataDistributionService(Resource distResource) {
+        StmtIterator distributionServiceIterator = distResource.listProperties(DCATapi.accessService);
+
+        if(distributionServiceIterator.hasNext()){
+            //we only allow one DataDistributionService per distribution
+            Statement next = distributionServiceIterator.next();
+            if(next.getObject().isResource()) {
+                Resource distributionService = next.getResource();
+                return DataDistributionServiceBuilder.create(distributionService);
+
+            } else {
+                return null;
+            }
+        } else {
+            return null;
+        }
     }
 
 }

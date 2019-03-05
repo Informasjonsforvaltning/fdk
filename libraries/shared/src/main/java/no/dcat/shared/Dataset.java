@@ -46,7 +46,7 @@ public class Dataset {
 
     //dct:publisher
     //Norwegian: Utgiver
-     private Publisher publisher;
+    private Publisher publisher;
 
     //dct:issued
     //Norwegian: Utgivelsesdato

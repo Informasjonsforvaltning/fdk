@@ -27,4 +27,5 @@ public class Distribution {
     private List<SkosConcept> page;
     private List<String> format;
     private String type;
+    private DataDistributionService accessService;
 }

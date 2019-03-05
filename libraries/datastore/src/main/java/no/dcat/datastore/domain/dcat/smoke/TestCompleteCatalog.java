@@ -1,18 +1,7 @@
 package no.dcat.datastore.domain.dcat.smoke;
 
 import no.dcat.datastore.domain.dcat.vocabulary.DQV;
-import no.dcat.shared.Catalog;
-import no.dcat.shared.Contact;
-import no.dcat.shared.DataTheme;
-import no.dcat.shared.Dataset;
-import no.dcat.shared.Distribution;
-import no.dcat.shared.PeriodOfTime;
-import no.dcat.shared.Publisher;
-import no.dcat.shared.QualityAnnotation;
-import no.dcat.shared.Reference;
-import no.dcat.shared.SkosCode;
-import no.dcat.shared.SkosConcept;
-import no.dcat.shared.Subject;
+import no.dcat.shared.*;
 import org.apache.jena.sparql.vocabulary.FOAF;
 import org.apache.jena.vocabulary.DCTerms;
 
@@ -159,6 +148,13 @@ public class TestCompleteCatalog {
         distribution.setLicense(SkosConcept.getInstance("https://data.norge.no/nlod/no/2.0", "NODL", DCTerms.LicenseDocument.getURI()));
         distribution.setPage(Arrays.asList(SkosConcept.getInstance("http://lenke/til/mer/info", "Dokumentasjon av distribusjonen", FOAF.Document.getURI())));
         distribution.setFormat(Collections.singletonList("application/json"));
+
+        DataDistributionService sampleApiDescription = new DataDistributionService();
+        sampleApiDescription.setPublisher(publisher);
+        sampleApiDescription.setTitle(map("nb", "Eksempel-API"));
+        sampleApiDescription.setDescription(map("nb", "Dette er eksempel på et API som er referert fra en distribusjon"));
+        sampleApiDescription.setEndpointDescription(Arrays.asList(SkosConcept.getInstance("http://lenke/til/en/api-beskrivelse", "Oppføring i API-katalog", FOAF.Document.getURI())));
+        distribution.setAccessService(sampleApiDescription);
 
         dataset.setDistribution(Collections.singletonList(distribution));
 

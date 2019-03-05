@@ -27,6 +27,7 @@ public class DcatDataStore {
 	public void saveDataCatalogue(DcatSource dcatSource, Model dcatModel) {
 		dcatModel.setNsPrefix("adms", "http://www.w3.org/ns/adms#");
 		dcatModel.setNsPrefix("dcat", "http://www.w3.org/ns/dcat#");
+        dcatModel.setNsPrefix("dcatapi", "http://dcat.no/dcatapi/");
 		dcatModel.setNsPrefix("dct", "http://purl.org/dc/terms/");
 		dcatModel.setNsPrefix("foaf", "http://xmlns.com/foaf/0.1/");
 		dcatModel.setNsPrefix("owl", "http://www.w3.org/2002/07/owl#");
@@ -58,7 +59,7 @@ public class DcatDataStore {
 		Model model = fuseki.graph(graphName);
 		return model;
 	}
-	
+
 	public List<String> listGraphs() {
 		logger.trace("Listing all graphs");
 		String query = String.join("",
@@ -67,15 +68,15 @@ public class DcatDataStore {
 				"?a ?b ?c.",
 				"}",
 			"}"	);
-		
+
 		List<String> graphs = new ArrayList<>();
-		
+
 		ResultSet results = fuseki.select(query);
 		while (results.hasNext()) {
 			QuerySolution next = results.next();
 			graphs.add(next.get("g").asResource().getURI());
 		}
 		return graphs;
-		
+
 	}
 }
