@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import localization from '../../../lib/localization';
 import { getParamFromLocation } from '../../../lib/addOrReplaceUrlParam';
 import { DatasetStats } from './dataset-stats/dataset-stats.component';
+import { Tabs } from '../../../components/tabs/tabs.component';
 import './report-stats.scss';
 
 export const ReportStats = props => {
@@ -38,9 +39,26 @@ export const ReportStats = props => {
   );
 
   return (
-    <div className="container">
+    <div>
       {title}
-      <DatasetStats stats={stats} orgPath={orgPath} catalogs={catalogs} />
+      <div className="row">
+        <div className="col-12 fdk-report-tabs">
+          <Tabs
+            tabContent={[
+              {
+                title: localization.report.datasetTab,
+                body: (
+                  <DatasetStats
+                    stats={stats}
+                    orgPath={orgPath}
+                    catalogs={catalogs}
+                  />
+                )
+              }
+            ]}
+          />
+        </div>
+      </div>
     </div>
   );
 };

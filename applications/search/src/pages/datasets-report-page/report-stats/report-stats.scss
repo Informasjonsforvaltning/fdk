@@ -2,10 +2,12 @@
 
 .fdk-container-stats {
   background-color: $color0;
-  border: 1px solid $color6;
+  border-left: 1px solid $color6;
+  border-right: 1px solid $color6;
+  border-bottom: 1px solid $color6;
   margin-bottom: .9em;
   padding: .9em 2em;
-  border-radius: 5px;
+  border-radius: 0 0 5px 5px;
   h2 {    
     font-weight: 300;
   }
@@ -102,5 +104,31 @@
   padding-bottom: 22px !important;
   strong {
     font-size: 3rem !important;
+  }
+}
+
+.fdk-report-tabs {
+  .nav-tabs {
+    .nav-item {
+      background-color: $color-grey-2;
+      margin-right: 0.5em;
+      text-align: center;
+      .nav-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: $color-blue-dark;
+        font-size: 1.8rem;
+        height: 2.5em;
+        padding: 0 2em;
+        &.active {
+          color: $color-dark-1;
+          font-weight: 500;
+        }
+      }
+      &:last-child {
+        margin-right: 0;
+      }
+    }
   }
 }
