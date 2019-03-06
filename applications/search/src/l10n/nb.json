@@ -32,6 +32,7 @@
   "statusDeprecated": "Denne versjonen av API-et er foreldet og vil fases ut {0} {1}. ",
   "statusReplacedUrl": "Ny versjon er dokumentert her.",
   "during": "i",
+  "datasetLabel": "Datasett",
   "app": {
     "menu": "Meny"
   },
@@ -289,7 +290,8 @@
     "openData":"Åpne data",
     "catalogs":"Kataloger",
     "openDataset": "datasett er åpne",
-    "openDatasetDescription": "Åpne datasett er datasett som er offentlig tilgjengelig og har distribusjoner med åpen lisens."
+    "openDatasetDescription": "Åpne datasett er datasett som er offentlig tilgjengelig og har distribusjoner med åpen lisens.",
+    "datasetTab": "Rapport for datasett"
   },
   "registration": {
     "title": "Kom i gang med registrering"
