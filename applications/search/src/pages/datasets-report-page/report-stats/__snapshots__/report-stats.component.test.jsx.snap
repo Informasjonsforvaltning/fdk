@@ -18,2207 +18,379 @@ exports[`should render ReportStats correctly 1`] = `
       </h1>
     </div>
   </div>
-  <div
-    className="row px-0 fdk-container-stats"
-  >
-    <div
-      className="d-flex flex-wrap flex-md-nowrap justify-content-around mb-5"
-    >
-      <StatBox
-        componentKey="PUBLIC-undefined"
-        iconBgColor="green"
-        iconBgSize="xlarge"
-        iconColor="green"
-        iconType="lock"
-        label="Datasets that are public"
-        pieData={null}
-        statBoxStyle="w-25"
-      >
-        <Link
-          className="mb-3"
-          replace={false}
-          title="Datasets that are public"
-          to="/?accessrights=PUBLIC"
-        >
-          982
-        </Link>
-      </StatBox>
-      <StatBox
-        componentKey="RESTRICTED-undefined"
-        iconBgColor="green"
-        iconBgSize="small"
-        iconColor="green"
-        iconType="lock"
-        label="Datasets with restricted access"
-        pieData={null}
-        statBoxStyle="w-25"
-      >
-        <Link
-          className="mb-3"
-          replace={false}
-          title="Datasets with restricted access"
-          to="/?accessrights=RESTRICTED"
-        >
-          3
-        </Link>
-      </StatBox>
-      <StatBox
-        componentKey="NONPUBLIC-undefined"
-        iconBgColor="yellow"
-        iconBgSize="small"
-        iconColor="yellow"
-        iconType="unlock"
-        label="Datasets that are not public"
-        pieData={null}
-        statBoxStyle="w-25"
-      >
-        <Link
-          className="mb-3"
-          replace={false}
-          title="Datasets that are not public"
-          to="/?accessrights=NON_PUBLIC"
-        >
-          0
-        </Link>
-      </StatBox>
-      <StatBox
-        componentKey="UNKNOWN-undefined"
-        iconBgColor="red"
-        iconBgSize="small"
-        iconColor="red"
-        iconType="lock"
-        label="Datasets with unknown accesslevel"
-        pieData={null}
-        statBoxStyle="w-25"
-      >
-        <Link
-          className="mb-3"
-          replace={false}
-          title="Datasets with unknown accesslevel"
-          to="/?accessrights=Ukjent"
-        >
-          0
-        </Link>
-      </StatBox>
-    </div>
-    <div
-      className="d-flex flex-fill mb-5"
-    >
-      <StatBox
-        componentKey={null}
-        iconBgColor={null}
-        iconBgSize={null}
-        iconColor={null}
-        iconType={null}
-        label={null}
-        pieData={
-          Array [
-            Object {
-              "color": "#3CBEF0",
-              "value": 555,
-            },
-            Object {
-              "color": "#AAE6FF",
-              "value": 430,
-            },
-          ]
-        }
-        statBoxStyle={null}
-      >
-        <Link
-          className="mb-3"
-          replace={false}
-          title="datasets are open"
-          to="/?opendata=true"
-        >
-          <span>
-            555
-          </span>
-          <span>
-            /
-            985
-          </span>
-        </Link>
-        <span>
-          datasets are open
-        </span>
-        <div
-          className="mt-3"
-        >
-          Open datasets are public and have distributions with open license.
-        </div>
-      </StatBox>
-    </div>
-    <div
-      className="d-flex flex-fill mb-5 border-top"
-    >
-      <StatBox
-        componentKey={null}
-        iconBgColor={null}
-        iconBgSize={null}
-        iconColor={null}
-        iconType={null}
-        label="Datasets that are not public"
-        pieData={null}
-        statBoxStyle="w-25"
-      >
-        <ChartBar
-          barColor="green"
-          componentKey="withDistribution-undefined"
-          percentHeight={99.69450101832994}
-        />
-        <Link
-          className="mb-3"
-          replace={false}
-          title="Public datasets with distributions"
-          to="/#"
-        >
-          979
-        </Link>
-      </StatBox>
-      <StatBox
-        componentKey={null}
-        iconBgColor={null}
-        iconBgSize={null}
-        iconColor={null}
-        iconType={null}
-        label="Public datasets without distributions"
-        pieData={null}
-        statBoxStyle="w-25"
-      >
-        <ChartBar
-          barColor="green"
-          componentKey="withoutDistribution-undefined"
-          percentHeight={1}
-        />
-        <Link
-          className="mb-3"
-          replace={false}
-          title="Public datasets without distributions"
-          to="/#"
-        >
-          3
-        </Link>
-      </StatBox>
-    </div>
-    <div
-      className="d-flex flex-fill mb-5 border-top"
-    >
-      <StatBox
-        componentKey={null}
-        iconBgColor={null}
-        iconBgSize={null}
-        iconColor="blue"
-        iconType="book"
-        label="Datasets that use concepts"
-        pieData={null}
-        statBoxStyle="w-25"
-      >
-        <Link
-          className="mb-3"
-          replace={false}
-          title="Datasets that use concepts"
-          to="/#"
-        >
-          0
-        </Link>
-      </StatBox>
-      <ReactMinimalPieChart
-        animate={true}
-        animationDuration={500}
-        animationEasing="ease-out"
-        className="d-flex p-4 w-25"
-        cx={50}
-        cy={50}
-        data={
-          Array [
-            Object {
-              "color": "#3CBEF0",
-              "value": 0,
-            },
-            Object {
-              "color": "#AAE6FF",
-              "value": 985,
-            },
-          ]
-        }
-        label={false}
-        labelPosition={50}
-        lengthAngle={360}
-        lineWidth={45}
-        paddingAngle={0}
-        radius={50}
-        ratio={1}
-        rounded={false}
-        startAngle={0}
-      />
-      <StatBox
-        componentKey={null}
-        iconBgColor={null}
-        iconBgSize={null}
-        iconColor="grey"
-        iconType="book"
-        label="Datasets without concepts"
-        pieData={null}
-        statBoxStyle="w-25"
-      >
-        <Link
-          className="mb-3"
-          replace={false}
-          title="Datasets without concepts"
-          to="/#"
-        >
-          985
-        </Link>
-      </StatBox>
-    </div>
-  </div>
-  <div
-    className="row"
-  >
-    <div
-      className="col-12 fdk-container-stats fdk-container-stats-concepts-title"
-    >
-      <h2>
-        Catalogs
-      </h2>
-      <div
-        className="row"
-        key="http://www.geonorge.no/geonetwork"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=http://www.geonorge.no/geonetwork"
-            >
-              417
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/964965226/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/964965226/data.jsonld"
-            >
-              147
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/981544315/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/981544315/data.jsonld"
-            >
-              44
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/991825827/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/991825827/data.jsonld"
-            >
-              36
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/971040238/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/971040238/data.jsonld"
-            >
-              33
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/889640782/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/889640782/data.jsonld"
-            >
-              26
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/971032081/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/971032081/data.jsonld"
-            >
-              23
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/985399077/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/985399077/data.jsonld"
-            >
-              15
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/870917732/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/870917732/data.jsonld"
-            >
-              11
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/986339523/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/986339523/data.jsonld"
-            >
-              11
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/958935420/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/958935420/data.jsonld"
-            >
-              10
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/964338531/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/964338531/data.jsonld"
-            >
-              10
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/970018131/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/970018131/data.jsonld"
-            >
-              10
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/970205039/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/970205039/data.jsonld"
-            >
-              10
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/971526920/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/971526920/data.jsonld"
-            >
-              10
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/974760673/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/974760673/data.jsonld"
-            >
-              9
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/988913898/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/988913898/data.jsonld"
-            >
-              9
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/919666102/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/919666102/data.jsonld"
-            >
-              8
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/964978573/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/964978573/data.jsonld"
-            >
-              8
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/972417858/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/972417858/data.jsonld"
-            >
-              8
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/974446871/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/974446871/data.jsonld"
-            >
-              7
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/972417807/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/972417807/data.jsonld"
-            >
-              6
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/977161630/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/977161630/data.jsonld"
-            >
-              6
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/971274042/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/971274042/data.jsonld"
-            >
-              5
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/971277882/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/971277882/data.jsonld"
-            >
-              5
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/974763907/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/974763907/data.jsonld"
-            >
-              5
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/985198292/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/985198292/data.jsonld"
-            >
-              5
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/964968063/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/964968063/data.jsonld"
-            >
-              4
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/971527412/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/971527412/data.jsonld"
-            >
-              4
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/974760819/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/974760819/data.jsonld"
-            >
-              4
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/840029212/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/840029212/data.jsonld"
-            >
-              3
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/9747678801/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/9747678801/data.jsonld"
-            >
-              3
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/983744516/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/983744516/data.jsonld"
-            >
-              3
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/874789542/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/874789542/data.jsonld"
-            >
-              2
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/914749360/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/914749360/data.jsonld"
-            >
-              2
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/915933149/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/915933149/data.jsonld"
-            >
-              2
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/936401651/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/936401651/data.jsonld"
-            >
-              2
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/942953119/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/942953119/data.jsonld"
-            >
-              2
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/944020977/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/944020977/data.jsonld"
-            >
-              2
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/961181399/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/961181399/data.jsonld"
-            >
-              2
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/964967725/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/964967725/data.jsonld"
-            >
-              2
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/964968896/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/964968896/data.jsonld"
-            >
-              2
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/974760983/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/974760983/data.jsonld"
-            >
-              2
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/974761211/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/974761211/data.jsonld"
-            >
-              2
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/974783231/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/974783231/data.jsonld"
-            >
-              2
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/982391490/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/982391490/data.jsonld"
-            >
-              2
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/987879696/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/987879696/data.jsonld"
-            >
-              2
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/999601391/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/999601391/data.jsonld"
-            >
-              2
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="http://brreg.no/catalogs/910244132"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=http://brreg.no/catalogs/910244132"
-            >
-              1
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/840894312/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/840894312/data.jsonld"
-            >
-              1
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/842566142/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/842566142/data.jsonld"
-            >
-              1
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/844458312/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/844458312/data.jsonld"
-            >
-              1
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/867668292/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/867668292/data.jsonld"
-            >
-              1
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/886028482/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/886028482/data.jsonld"
-            >
-              1
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/916132727/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/916132727/data.jsonld"
-            >
-              1
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/916285515/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/916285515/data.jsonld"
-            >
-              1
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/917082308/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/917082308/data.jsonld"
-            >
-              1
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/917422575/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/917422575/data.jsonld"
-            >
-              1
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/934945514/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/934945514/data.jsonld"
-            >
-              1
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/937884117/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/937884117/data.jsonld"
-            >
-              1
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/938626367/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/938626367/data.jsonld"
-            >
-              1
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/940101808/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/940101808/data.jsonld"
-            >
-              1
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/942110286/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/942110286/data.jsonld"
-            >
-              1
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/942110464/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/942110464/data.jsonld"
-            >
-              1
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/942114184/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/942114184/data.jsonld"
-            >
-              1
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/945578564/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/945578564/data.jsonld"
-            >
-              1
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/958381492/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/958381492/data.jsonld"
-            >
-              1
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/963923511/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/963923511/data.jsonld"
-            >
-              1
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/964979367/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/964979367/data.jsonld"
-            >
-              1
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/971036028/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/971036028/data.jsonld"
-            >
-              1
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/971203420/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/971203420/data.jsonld"
-            >
-              1
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/971273003/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/971273003/data.jsonld"
-            >
-              1
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/971524960/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/971524960/data.jsonld"
-            >
-              1
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/972417866/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/972417866/data.jsonld"
-            >
-              1
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/972417971/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/972417971/data.jsonld"
-            >
-              1
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/974442167/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/974442167/data.jsonld"
-            >
-              1
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/974652366/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/974652366/data.jsonld"
-            >
-              1
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/974761122/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/974761122/data.jsonld"
-            >
-              1
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/976390512/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/976390512/data.jsonld"
-            >
-              1
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/979469241/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/979469241/data.jsonld"
-            >
-              1
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/983544622/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/983544622/data.jsonld"
-            >
-              1
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/983609155/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/983609155/data.jsonld"
-            >
-              1
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/984661185/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/984661185/data.jsonld"
-            >
-              1
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/986128433/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/986128433/data.jsonld"
-            >
-              1
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/986252932/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/986252932/data.jsonld"
-            >
-              1
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/991467645/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/991467645/data.jsonld"
-            >
-              1
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/991609407/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/991609407/data.jsonld"
-            >
-              1
-            </Link>
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-        key="https://data.norge.no/api/dcat2/994686011/data.jsonld"
-      >
-        <div
-          className="col-10"
-        />
-        <div
-          className="col-2 text-right"
-        >
-          <strong>
-            <Link
-              className="fdk-plain-label"
-              replace={false}
-              title="New datasets"
-              to="/?catalog=https://data.norge.no/api/dcat2/994686011/data.jsonld"
-            >
-              1
-            </Link>
-          </strong>
-        </div>
-      </div>
-    </div>
-  </div>
+  <DatasetStats
+    catalogs={null}
+    orgPath={null}
+    stats={
+      Object {
+        "catalogCounts": Array [
+          Object {
+            "count": 417,
+            "key": "http://www.geonorge.no/geonetwork",
+          },
+          Object {
+            "count": 147,
+            "key": "https://data.norge.no/api/dcat2/964965226/data.jsonld",
+          },
+          Object {
+            "count": 44,
+            "key": "https://data.norge.no/api/dcat2/981544315/data.jsonld",
+          },
+          Object {
+            "count": 36,
+            "key": "https://data.norge.no/api/dcat2/991825827/data.jsonld",
+          },
+          Object {
+            "count": 33,
+            "key": "https://data.norge.no/api/dcat2/971040238/data.jsonld",
+          },
+          Object {
+            "count": 26,
+            "key": "https://data.norge.no/api/dcat2/889640782/data.jsonld",
+          },
+          Object {
+            "count": 23,
+            "key": "https://data.norge.no/api/dcat2/971032081/data.jsonld",
+          },
+          Object {
+            "count": 15,
+            "key": "https://data.norge.no/api/dcat2/985399077/data.jsonld",
+          },
+          Object {
+            "count": 11,
+            "key": "https://data.norge.no/api/dcat2/870917732/data.jsonld",
+          },
+          Object {
+            "count": 11,
+            "key": "https://data.norge.no/api/dcat2/986339523/data.jsonld",
+          },
+          Object {
+            "count": 10,
+            "key": "https://data.norge.no/api/dcat2/958935420/data.jsonld",
+          },
+          Object {
+            "count": 10,
+            "key": "https://data.norge.no/api/dcat2/964338531/data.jsonld",
+          },
+          Object {
+            "count": 10,
+            "key": "https://data.norge.no/api/dcat2/970018131/data.jsonld",
+          },
+          Object {
+            "count": 10,
+            "key": "https://data.norge.no/api/dcat2/970205039/data.jsonld",
+          },
+          Object {
+            "count": 10,
+            "key": "https://data.norge.no/api/dcat2/971526920/data.jsonld",
+          },
+          Object {
+            "count": 9,
+            "key": "https://data.norge.no/api/dcat2/974760673/data.jsonld",
+          },
+          Object {
+            "count": 9,
+            "key": "https://data.norge.no/api/dcat2/988913898/data.jsonld",
+          },
+          Object {
+            "count": 8,
+            "key": "https://data.norge.no/api/dcat2/919666102/data.jsonld",
+          },
+          Object {
+            "count": 8,
+            "key": "https://data.norge.no/api/dcat2/964978573/data.jsonld",
+          },
+          Object {
+            "count": 8,
+            "key": "https://data.norge.no/api/dcat2/972417858/data.jsonld",
+          },
+          Object {
+            "count": 7,
+            "key": "https://data.norge.no/api/dcat2/974446871/data.jsonld",
+          },
+          Object {
+            "count": 6,
+            "key": "https://data.norge.no/api/dcat2/972417807/data.jsonld",
+          },
+          Object {
+            "count": 6,
+            "key": "https://data.norge.no/api/dcat2/977161630/data.jsonld",
+          },
+          Object {
+            "count": 5,
+            "key": "https://data.norge.no/api/dcat2/971274042/data.jsonld",
+          },
+          Object {
+            "count": 5,
+            "key": "https://data.norge.no/api/dcat2/971277882/data.jsonld",
+          },
+          Object {
+            "count": 5,
+            "key": "https://data.norge.no/api/dcat2/974763907/data.jsonld",
+          },
+          Object {
+            "count": 5,
+            "key": "https://data.norge.no/api/dcat2/985198292/data.jsonld",
+          },
+          Object {
+            "count": 4,
+            "key": "https://data.norge.no/api/dcat2/964968063/data.jsonld",
+          },
+          Object {
+            "count": 4,
+            "key": "https://data.norge.no/api/dcat2/971527412/data.jsonld",
+          },
+          Object {
+            "count": 4,
+            "key": "https://data.norge.no/api/dcat2/974760819/data.jsonld",
+          },
+          Object {
+            "count": 3,
+            "key": "https://data.norge.no/api/dcat2/840029212/data.jsonld",
+          },
+          Object {
+            "count": 3,
+            "key": "https://data.norge.no/api/dcat2/9747678801/data.jsonld",
+          },
+          Object {
+            "count": 3,
+            "key": "https://data.norge.no/api/dcat2/983744516/data.jsonld",
+          },
+          Object {
+            "count": 2,
+            "key": "https://data.norge.no/api/dcat2/874789542/data.jsonld",
+          },
+          Object {
+            "count": 2,
+            "key": "https://data.norge.no/api/dcat2/914749360/data.jsonld",
+          },
+          Object {
+            "count": 2,
+            "key": "https://data.norge.no/api/dcat2/915933149/data.jsonld",
+          },
+          Object {
+            "count": 2,
+            "key": "https://data.norge.no/api/dcat2/936401651/data.jsonld",
+          },
+          Object {
+            "count": 2,
+            "key": "https://data.norge.no/api/dcat2/942953119/data.jsonld",
+          },
+          Object {
+            "count": 2,
+            "key": "https://data.norge.no/api/dcat2/944020977/data.jsonld",
+          },
+          Object {
+            "count": 2,
+            "key": "https://data.norge.no/api/dcat2/961181399/data.jsonld",
+          },
+          Object {
+            "count": 2,
+            "key": "https://data.norge.no/api/dcat2/964967725/data.jsonld",
+          },
+          Object {
+            "count": 2,
+            "key": "https://data.norge.no/api/dcat2/964968896/data.jsonld",
+          },
+          Object {
+            "count": 2,
+            "key": "https://data.norge.no/api/dcat2/974760983/data.jsonld",
+          },
+          Object {
+            "count": 2,
+            "key": "https://data.norge.no/api/dcat2/974761211/data.jsonld",
+          },
+          Object {
+            "count": 2,
+            "key": "https://data.norge.no/api/dcat2/974783231/data.jsonld",
+          },
+          Object {
+            "count": 2,
+            "key": "https://data.norge.no/api/dcat2/982391490/data.jsonld",
+          },
+          Object {
+            "count": 2,
+            "key": "https://data.norge.no/api/dcat2/987879696/data.jsonld",
+          },
+          Object {
+            "count": 2,
+            "key": "https://data.norge.no/api/dcat2/999601391/data.jsonld",
+          },
+          Object {
+            "count": 1,
+            "key": "http://brreg.no/catalogs/910244132",
+          },
+          Object {
+            "count": 1,
+            "key": "https://data.norge.no/api/dcat2/840894312/data.jsonld",
+          },
+          Object {
+            "count": 1,
+            "key": "https://data.norge.no/api/dcat2/842566142/data.jsonld",
+          },
+          Object {
+            "count": 1,
+            "key": "https://data.norge.no/api/dcat2/844458312/data.jsonld",
+          },
+          Object {
+            "count": 1,
+            "key": "https://data.norge.no/api/dcat2/867668292/data.jsonld",
+          },
+          Object {
+            "count": 1,
+            "key": "https://data.norge.no/api/dcat2/886028482/data.jsonld",
+          },
+          Object {
+            "count": 1,
+            "key": "https://data.norge.no/api/dcat2/916132727/data.jsonld",
+          },
+          Object {
+            "count": 1,
+            "key": "https://data.norge.no/api/dcat2/916285515/data.jsonld",
+          },
+          Object {
+            "count": 1,
+            "key": "https://data.norge.no/api/dcat2/917082308/data.jsonld",
+          },
+          Object {
+            "count": 1,
+            "key": "https://data.norge.no/api/dcat2/917422575/data.jsonld",
+          },
+          Object {
+            "count": 1,
+            "key": "https://data.norge.no/api/dcat2/934945514/data.jsonld",
+          },
+          Object {
+            "count": 1,
+            "key": "https://data.norge.no/api/dcat2/937884117/data.jsonld",
+          },
+          Object {
+            "count": 1,
+            "key": "https://data.norge.no/api/dcat2/938626367/data.jsonld",
+          },
+          Object {
+            "count": 1,
+            "key": "https://data.norge.no/api/dcat2/940101808/data.jsonld",
+          },
+          Object {
+            "count": 1,
+            "key": "https://data.norge.no/api/dcat2/942110286/data.jsonld",
+          },
+          Object {
+            "count": 1,
+            "key": "https://data.norge.no/api/dcat2/942110464/data.jsonld",
+          },
+          Object {
+            "count": 1,
+            "key": "https://data.norge.no/api/dcat2/942114184/data.jsonld",
+          },
+          Object {
+            "count": 1,
+            "key": "https://data.norge.no/api/dcat2/945578564/data.jsonld",
+          },
+          Object {
+            "count": 1,
+            "key": "https://data.norge.no/api/dcat2/958381492/data.jsonld",
+          },
+          Object {
+            "count": 1,
+            "key": "https://data.norge.no/api/dcat2/963923511/data.jsonld",
+          },
+          Object {
+            "count": 1,
+            "key": "https://data.norge.no/api/dcat2/964979367/data.jsonld",
+          },
+          Object {
+            "count": 1,
+            "key": "https://data.norge.no/api/dcat2/971036028/data.jsonld",
+          },
+          Object {
+            "count": 1,
+            "key": "https://data.norge.no/api/dcat2/971203420/data.jsonld",
+          },
+          Object {
+            "count": 1,
+            "key": "https://data.norge.no/api/dcat2/971273003/data.jsonld",
+          },
+          Object {
+            "count": 1,
+            "key": "https://data.norge.no/api/dcat2/971524960/data.jsonld",
+          },
+          Object {
+            "count": 1,
+            "key": "https://data.norge.no/api/dcat2/972417866/data.jsonld",
+          },
+          Object {
+            "count": 1,
+            "key": "https://data.norge.no/api/dcat2/972417971/data.jsonld",
+          },
+          Object {
+            "count": 1,
+            "key": "https://data.norge.no/api/dcat2/974442167/data.jsonld",
+          },
+          Object {
+            "count": 1,
+            "key": "https://data.norge.no/api/dcat2/974652366/data.jsonld",
+          },
+          Object {
+            "count": 1,
+            "key": "https://data.norge.no/api/dcat2/974761122/data.jsonld",
+          },
+          Object {
+            "count": 1,
+            "key": "https://data.norge.no/api/dcat2/976390512/data.jsonld",
+          },
+          Object {
+            "count": 1,
+            "key": "https://data.norge.no/api/dcat2/979469241/data.jsonld",
+          },
+          Object {
+            "count": 1,
+            "key": "https://data.norge.no/api/dcat2/983544622/data.jsonld",
+          },
+          Object {
+            "count": 1,
+            "key": "https://data.norge.no/api/dcat2/983609155/data.jsonld",
+          },
+          Object {
+            "count": 1,
+            "key": "https://data.norge.no/api/dcat2/984661185/data.jsonld",
+          },
+          Object {
+            "count": 1,
+            "key": "https://data.norge.no/api/dcat2/986128433/data.jsonld",
+          },
+          Object {
+            "count": 1,
+            "key": "https://data.norge.no/api/dcat2/986252932/data.jsonld",
+          },
+          Object {
+            "count": 1,
+            "key": "https://data.norge.no/api/dcat2/991467645/data.jsonld",
+          },
+          Object {
+            "count": 1,
+            "key": "https://data.norge.no/api/dcat2/991609407/data.jsonld",
+          },
+          Object {
+            "count": 1,
+            "key": "https://data.norge.no/api/dcat2/994686011/data.jsonld",
+          },
+        ],
+        "distOnPublicAccessCount": 979,
+        "distributions": 982,
+        "newLastMonth": 568,
+        "newLastWeek": 0,
+        "newLastYear": 985,
+        "nonPublic": 0,
+        "opendata": 555,
+        "public": 982,
+        "restricted": 3,
+        "subjectCount": 0,
+        "total": 985,
+        "unknown": 0,
+      }
+    }
+  />
 </div>
 `;
