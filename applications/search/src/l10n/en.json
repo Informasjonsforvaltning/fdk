@@ -32,6 +32,7 @@
   "statusDeprecated": "This version of API has expired and will be phased out {0} {1}. ",
   "statusReplacedUrl": "Ny versjon er dokumentert her.",
   "during": "during",
+  "datasetLabel": "Dataset",
   "app": {
     "menu": "Menu"
   },
@@ -290,7 +291,8 @@
     "openData":"Open data",
     "catalogs":"Catalogs",
     "openDataset": "datasets are open",
-    "openDatasetDescription": "Open datasets are public and have distributions with open license."
+    "openDatasetDescription": "Open datasets are public and have distributions with open license.",
+    "datasetTab": "Dataset report"
   },
   "registration": {
     "title": "Registration (only in Norwegian)"

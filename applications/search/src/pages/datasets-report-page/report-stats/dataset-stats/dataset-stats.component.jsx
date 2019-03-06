@@ -222,41 +222,47 @@ export const DatasetStats = props => {
     </div>
   );
 
-  const catalogItems = (
-    <div className="row">
-      <div className="col-12 fdk-container-stats fdk-container-stats-concepts-title">
-        <h2>{localization.report.catalogs}</h2>
-        {stats.catalogCounts.map(catalogRecord => (
-          <div className="row" key={catalogRecord.key}>
-            <div className="col-10">
-              {getTranslateText(_.get(catalogs, [catalogRecord.key, 'title']))}
-            </div>
-            <div className="col-2 text-right">
-              <strong>
-                <Link
-                  title={localization.report.newDatasets}
-                  className="fdk-plain-label"
-                  to={`/?catalog=${catalogRecord.key}${orgPathParam}`}
-                >
-                  {catalogRecord.count}
-                </Link>
-              </strong>
-            </div>
-          </div>
-        ))}
+  const catalogListItem = stats.catalogCounts.map(catalogRecord => (
+    <div
+      className="d-flex justify-content-between fdk-bg-color-grey-4 rounded p-4 mb-1"
+      key={catalogRecord.key}
+    >
+      <div>
+        {getTranslateText(_.get(catalogs, [catalogRecord.key, 'title']))}
       </div>
+      <div>
+        <strong>
+          <Link
+            title={localization.report.newDatasets}
+            className="fdk-plain-label"
+            to={`/?catalog=${catalogRecord.key}${orgPathParam}`}
+          >
+            {catalogRecord.count}
+          </Link>
+        </strong>
+      </div>
+    </div>
+  ));
+
+  const catalogList = (
+    <div className="d-flex flex-column p-5 border-top">
+      <div className="d-flex justify-content-between fdk-bg-color-dark-1 fdk-color-white rounded p-4 mb-1">
+        <div>{localization.report.catalogs}</div>
+        <div>{localization.datasetLabel}</div>
+      </div>
+      {catalogListItem}
     </div>
   );
 
   return (
     <React.Fragment>
-      <div className="row px-0 fdk-container-stats">
+      <div className="px-0 fdk-container-stats">
         {accessLevel}
         {opendata}
         {distributions}
         {concepts}
+        {catalogList}
       </div>
-      {catalogItems}
     </React.Fragment>
   );
 };
