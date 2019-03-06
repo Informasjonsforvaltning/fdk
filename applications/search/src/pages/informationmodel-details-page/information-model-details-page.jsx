@@ -9,7 +9,7 @@ import { HarvestDate } from '../../components/harvest-date/harvest-date.componen
 import { SearchHitHeader } from '../../components/search-hit-header/search-hit-header.component';
 import { StickyMenu } from '../../components/sticky-menu/sticky-menu.component';
 import { ListRegular } from '../../components/list-regular/list-regular.component';
-import { Tabs } from './tabs/tabs.component';
+import { Tabs } from '../../components/tabs/tabs.component';
 import { Structure } from './structure/structure.component';
 
 const renderJSONSchema = schema => {

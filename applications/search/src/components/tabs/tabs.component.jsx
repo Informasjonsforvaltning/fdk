@@ -17,7 +17,7 @@ const renderTabContent = (tabContent, activeTab) => {
     ));
 
   return (
-    <TabContent className="pt-4 pb-4" activeTab={activeTab}>
+    <TabContent className="pb-4" activeTab={activeTab}>
       {items(tabContent)}
     </TabContent>
   );
