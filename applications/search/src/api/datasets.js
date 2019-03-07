@@ -4,7 +4,10 @@ import qs from 'qs';
 const datasetsUrlBase = '/datasets';
 
 export const datasetsSearchUrl = query =>
-  `${datasetsUrlBase}${qs.stringify(query, { addQueryPrefix: true })}`;
+  `${datasetsUrlBase}${qs.stringify(
+    { ...query, aggregations: 'true' },
+    { addQueryPrefix: true }
+  )}`;
 
 export const getDataset = id =>
   axios
