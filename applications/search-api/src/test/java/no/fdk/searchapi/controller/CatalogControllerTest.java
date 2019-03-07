@@ -1,4 +1,4 @@
-package no.dcat.portal.query.controller;
+package no.fdk.searchapi.controller;
 
 import no.dcat.shared.Catalog;
 import no.fdk.test.testcategories.UnitTest;
@@ -13,6 +13,7 @@ import org.apache.jena.sparql.engine.http.QueryExceptionHTTP;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import org.mockito.Mockito;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
@@ -56,7 +57,7 @@ public class CatalogControllerTest {
 
     @Test
     public void getCatalogsOK() throws Throwable {
-        CatalogController spy = spy(catalogController);
+        CatalogController spy = Mockito.spy(catalogController);
 
         // Load testdatasett in model
         Resource mResource = new ClassPathResource("data.ttl");
@@ -78,7 +79,7 @@ public class CatalogControllerTest {
 
     @Test
     public void getAllCatalogsOK() throws Throwable {
-        CatalogController spy = spy(catalogController);
+        CatalogController spy = Mockito.spy(catalogController);
 
         // Load testdatasett in model
         Resource mResource = new ClassPathResource("data.ttl");
@@ -101,7 +102,7 @@ public class CatalogControllerTest {
 
     @Test
     public void getCatalogsFailsOnIOError() throws Throwable {
-        CatalogController spy = spy(catalogController);
+        CatalogController spy = Mockito.spy(catalogController);
 
         doThrow(new IOException("force exception")).when(spy).read(any());
 
@@ -113,7 +114,7 @@ public class CatalogControllerTest {
 
     @Test
     public void getCatalogsFailsOnNoCatalogsFound() throws Throwable {
-        CatalogController spy = spy(catalogController);
+        CatalogController spy = Mockito.spy(catalogController);
 
         // read modelfile with no catalog in
         Resource mResource = new ClassPathResource("data-no-catalog.ttl");
@@ -135,7 +136,7 @@ public class CatalogControllerTest {
 
     @Test
     public void getCatalogDcatOk() {
-        CatalogController spy = spy(catalogController);
+        CatalogController spy = Mockito.spy(catalogController);
         doReturn("DCAT format").when(spy).findResourceById(anyString(), anyString(), anyString());
 
         ResponseEntity<String> response = spy.getCatalogDcat("http://data.brreg.no/datakatalog/katalog/974761076/5",
@@ -146,7 +147,7 @@ public class CatalogControllerTest {
 
     @Test
     public void getDatasetDcatFormatsOK() {
-        CatalogController spy = spy(catalogController);
+        CatalogController spy = Mockito.spy(catalogController);
         doReturn("DCAT format").when(spy).findResourceById(anyString(), anyString(), anyString());
 
         final String[] acHeaders = {"application/ld+json", "json", "ld+json", "application/rdf+xml", "rdf", "text/turtle", "turtle"};
@@ -166,7 +167,7 @@ public class CatalogControllerTest {
 
     @Test
     public void getCatalogDcatWrongAcceptHeader() {
-        CatalogController spy = spy(catalogController);
+        CatalogController spy = Mockito.spy(catalogController);
         doReturn("DCAT format").when(spy).findResourceById(anyString(), anyString(), anyString());
 
         ResponseEntity<String> response = spy.getCatalogDcat("http://data.brreg.no/datakatalog/katalog/974761076/5",
@@ -177,7 +178,7 @@ public class CatalogControllerTest {
 
     @Test
     public void getCatalogDcatWrongFormat() {
-        CatalogController spy = spy(catalogController);
+        CatalogController spy = Mockito.spy(catalogController);
         doReturn("DCAT format").when(spy).findResourceById(anyString(), anyString(), anyString());
 
         ResponseEntity<String> response = spy.getCatalogDcat("http://data.brreg.no/datakatalog/katalog/974761076/5",
@@ -188,7 +189,7 @@ public class CatalogControllerTest {
 
     @Test
     public void getCatalogDcatIdNotFound() {
-        CatalogController spy = spy(catalogController);
+        CatalogController spy = Mockito.spy(catalogController);
         doReturn(null).when(spy).findResourceById(anyString(), anyString(), anyString());
 
         ResponseEntity<String> response = spy.getCatalogDcat("http://data.brreg.no/datakatalog/katalog/974761076/5",
@@ -199,7 +200,7 @@ public class CatalogControllerTest {
 
     @Test
     public void getCatalogDcatIdThrowsNotFound() {
-        CatalogController spy = spy(catalogController);
+        CatalogController spy = Mockito.spy(catalogController);
         doThrow(new NoSuchElementException("NSEE")).when(spy).findResourceById(anyString(), anyString(), anyString());
 
         ResponseEntity<String> response = spy.getCatalogDcat("http://data.brreg.no/datakatalog/katalog/974761076/5",
@@ -210,7 +211,7 @@ public class CatalogControllerTest {
 
     @Test
     public void findResourceByIdOK() throws Throwable {
-        CatalogController spy = spy(catalogController);
+        CatalogController spy = Mockito.spy(catalogController);
         Resource mResource = new ClassPathResource("data.ttl");
         org.apache.jena.query.Dataset dataset = RDFDataMgr.loadDataset(mResource.getURL().toString());
         Model model = ModelFactory.createUnion(ModelFactory.createDefaultModel(), dataset.getDefaultModel());
@@ -234,7 +235,7 @@ public class CatalogControllerTest {
 
     @Test
     public void findResourceWithunknownIdReturnsNull() throws Throwable {
-        CatalogController spy = spy(catalogController);
+        CatalogController spy = Mockito.spy(catalogController);
         Resource mResource = new ClassPathResource("data.ttl");
         org.apache.jena.query.Dataset dataset = RDFDataMgr.loadDataset(mResource.getURL().toString());
         Model model = ModelFactory.createUnion(ModelFactory.createDefaultModel(), dataset.getDefaultModel());
@@ -256,7 +257,7 @@ public class CatalogControllerTest {
 
     @Test
     public void exportDatasetFusekiNotFound() {
-        CatalogController spy = spy(catalogController);
+        CatalogController spy = Mockito.spy(catalogController);
         doReturn(null).when(spy).invokeFusekiQuery(anyString(), anyString(), anyString(), anyString());
 
         ResponseEntity<String> response = spy.getDatasetDcat("http://data.brreg.no/datakatalog/katalog/974761076/5",
@@ -267,7 +268,7 @@ public class CatalogControllerTest {
 
     @Test
     public void exportCatalogFusekiNotFound() {
-        CatalogController spy = spy(catalogController);
+        CatalogController spy = Mockito.spy(catalogController);
         doReturn(null).when(spy).invokeFusekiQuery(anyString(), anyString(), anyString(), anyString());
 
         ResponseEntity<String> response = spy.getCatalogDcat("http://data.brreg.no/datakatalog/katalog/974761076/5",
@@ -278,7 +279,7 @@ public class CatalogControllerTest {
 
     @Test
     public void invokeFusekiQueryThrowsExceptionSinceNoSparqlQueryFileIsFound() {
-        CatalogController spy = spy(catalogController);
+        CatalogController spy = Mockito.spy(catalogController);
 
         ResponseEntity<String> response = spy.invokeFusekiQuery("http://data.brreg.no/datakatalog/katalog/974761076/5",
             null, "application/ld+json", "sparql/nofile.sparql");
@@ -288,7 +289,7 @@ public class CatalogControllerTest {
 
     @Test
     public void invokeFusekiQueryThrowsExceptionbecauseOfIOErrorInFuseki() {
-        CatalogController spy = spy(catalogController);
+        CatalogController spy = Mockito.spy(catalogController);
         doThrow(new QueryExceptionHTTP(404, "force exception")).when(spy).getQueryExecution(any());
 
         ResponseEntity<String> response = spy.invokeFusekiQuery("http://data.brreg.no/datakatalog/katalog/974761076/5",
@@ -299,7 +300,7 @@ public class CatalogControllerTest {
 
     @Test
     public void getCatalogsThrowsExceptionBecauseOfIOErrorInFuseki() {
-        CatalogController spy = spy(catalogController);
+        CatalogController spy = Mockito.spy(catalogController);
         doThrow(new QueryExceptionHTTP(406, "force exception")).when(spy).getQueryExecution(any());
 
         ResponseEntity<String> response = spy.getCatalogs();

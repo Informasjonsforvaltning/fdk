@@ -1,4 +1,4 @@
-package no.dcat.portal.query.controller;
+package no.fdk.searchapi.controller;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.google.gson.Gson;
@@ -9,7 +9,7 @@ import com.google.gson.reflect.TypeToken;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.Data;
-import no.dcat.portal.query.ElasticsearchService;
+import no.fdk.searchapi.ElasticsearchService;
 import no.dcat.shared.Publisher;
 import no.fdk.webutils.exceptions.NotFoundException;
 import org.elasticsearch.action.get.GetResponse;

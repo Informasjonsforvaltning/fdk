@@ -1,6 +1,6 @@
-package no.dcat.portal.query.controller;
+package no.fdk.searchapi.controller;
 
-import no.dcat.portal.query.ElasticsearchService;
+import no.fdk.searchapi.ElasticsearchService;
 import no.fdk.test.testcategories.UnitTest;
 import org.elasticsearch.action.ListenableActionFuture;
 import org.elasticsearch.action.search.SearchRequestBuilder;

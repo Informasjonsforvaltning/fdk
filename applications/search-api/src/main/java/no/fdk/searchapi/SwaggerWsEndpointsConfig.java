@@ -1,4 +1,4 @@
-package no.dcat.portal.query;
+package no.fdk.searchapi;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

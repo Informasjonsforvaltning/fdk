@@ -1,4 +1,4 @@
-package no.dcat.portal.query;
+package no.fdk.searchapi;
 
 /*
  * Created by nodavsko on 28.09.2016.

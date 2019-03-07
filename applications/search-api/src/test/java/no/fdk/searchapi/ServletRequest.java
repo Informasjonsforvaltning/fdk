@@ -1,4 +1,4 @@
-package no.dcat.portal.query;
+package no.fdk.searchapi;
 
 import javax.servlet.*;
 import javax.servlet.http.*;

@@ -1,4 +1,4 @@
-package no.dcat.portal.query;
+package no.fdk.searchapi;
 
 import no.dcat.client.elasticsearch5.Elasticsearch5Client;
 import org.elasticsearch.client.Client;
