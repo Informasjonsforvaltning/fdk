@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashSet;
 
 
 /**
@@ -39,10 +40,8 @@ public class DatasetsSearchController {
     public static final String INDEX_DCAT = "dcat";
     public static final String FIELD_THEME_CODE = "theme.code";
     public static final String FIELD_ACCESS_RIGHTS_PREFLABEL = "accessRights.code.raw";
-    public static final String FIELD_SUBJECTS_PREFLABEL = "subject.prefLabel.no";
     public static final String TERMS_THEME_COUNT = "theme_count";
     public static final String TERMS_ACCESS_RIGHTS_COUNT = "accessRightsCount";
-    public static final String TERMS_SUBJECTS_COUNT = "subjectsCount";
     public static final String AGGREGATE_DATASET = "/aggregateDataset";
     public static final long DAY_IN_MS = 1000 * 3600 * 24;
     /* api names */
@@ -274,18 +273,7 @@ public class DatasetsSearchController {
             .setSize(size);
 
         if (StringUtils.isNotEmpty(aggregations)) {
-            searchBuilder.addAggregation(QueryUtil.createTermsAggregation(TERMS_SUBJECTS_COUNT, FIELD_SUBJECTS_PREFLABEL))
-                .addAggregation(QueryUtil.createTermsAggregation(TERMS_ACCESS_RIGHTS_COUNT, FIELD_ACCESS_RIGHTS_PREFLABEL))
-                .addAggregation(QueryUtil.createTermsAggregation(TERMS_THEME_COUNT, FIELD_THEME_CODE))
-                .addAggregation(QueryUtil.createTermsAggregation("catalogs", "catalog.uri"))
-                .addAggregation(QueryUtil.createTermsAggregation("provenanceCount", "provenance.code.raw"))
-                .addAggregation(QueryUtil.createTermsAggregation("orgPath", "publisher.orgPath"))
-                .addAggregation(QueryUtil.createTemporalAggregation("firstHarvested", "harvest.firstHarvested"))
-                .addAggregation(AggregationBuilders.missing("missingFirstHarvested").field("harvest.firstHarvested"))
-                .addAggregation(QueryUtil.createTemporalAggregation("lastChanged", "harvest.lastChanged"))
-                .addAggregation(AggregationBuilders.missing("missingLastChanged").field("harvest.lastChanged"))
-                .addAggregation(QueryUtil.createTermsAggregation("spatial", "spatial.prefLabel.no.raw"))
-                .addAggregation(getOpendataAggregation());
+            searchBuilder = addAggregations(searchBuilder, aggregations);
         }
 
         if (StringUtils.isNotEmpty(returnFields)) {
@@ -310,6 +298,45 @@ public class DatasetsSearchController {
 
         // return response
         return new ResponseEntity<>(response.toString(), HttpStatus.OK);
+    }
+
+    public SearchRequestBuilder addAggregations(SearchRequestBuilder searchBuilder, String aggregationFields) {
+        HashSet<String> selectedAggregationFields = new HashSet<>(Arrays.asList(aggregationFields.split(",")));
+
+        if (selectedAggregationFields.contains("accessRightsCount")) {
+            searchBuilder.addAggregation(QueryUtil.createTermsAggregation("accessRightsCount", "accessRights.code.raw"));
+        }
+        if (selectedAggregationFields.contains("theme_count")) {
+            searchBuilder.addAggregation(QueryUtil.createTermsAggregation("theme_count", "theme.code"));
+        }
+        if (selectedAggregationFields.contains("orgPath")) {
+            searchBuilder.addAggregation(QueryUtil.createTermsAggregation("orgPath", "publisher.orgPath"));
+        }
+        if (selectedAggregationFields.contains("catalogs")) {
+            searchBuilder.addAggregation(QueryUtil.createTermsAggregation("catalogs", "catalog.uri"));
+        }
+        if (selectedAggregationFields.contains("provenanceCount")) {
+            searchBuilder.addAggregation(QueryUtil.createTermsAggregation("provenanceCount", "provenance.code.raw"));
+        }
+        if (selectedAggregationFields.contains("firstHarvested")) {
+            searchBuilder.addAggregation(QueryUtil.createTemporalAggregation("firstHarvested", "harvest.firstHarvested"));
+        }
+        if (selectedAggregationFields.contains("missingFirstHarvested")) {
+            searchBuilder.addAggregation(AggregationBuilders.missing("missingFirstHarvested").field("harvest.firstHarvested"));
+        }
+        if (selectedAggregationFields.contains("lastChanged")) {
+            searchBuilder.addAggregation(QueryUtil.createTemporalAggregation("lastChanged", "harvest.lastChanged"));
+        }
+        if (selectedAggregationFields.contains("missingLastChanged")) {
+            searchBuilder.addAggregation(AggregationBuilders.missing("missingLastChanged").field("harvest.lastChanged"));
+        }
+        if (selectedAggregationFields.contains("spatial")) {
+            searchBuilder.addAggregation(QueryUtil.createTermsAggregation("spatial", "spatial.prefLabel.no.raw"));
+        }
+        if (selectedAggregationFields.contains("opendata")) {
+            searchBuilder.addAggregation(buildOpendataAggregation());
+        }
+        return searchBuilder;
     }
 
     /**
@@ -362,7 +389,7 @@ public class DatasetsSearchController {
             .addAggregation(datasetsWithDistribution)
             .addAggregation(openDatasetsWithDistribution)
             .addAggregation(datasetsWithSubject)
-            .addAggregation(getOpendataAggregation());
+            .addAggregation(buildOpendataAggregation());
 
         // Execute search
         SearchResponse response = searchBuilder.execute().actionGet();
@@ -374,7 +401,7 @@ public class DatasetsSearchController {
     }
 
 
-    public AggregationBuilder getOpendataAggregation() {
+    public AggregationBuilder buildOpendataAggregation() {
         return AggregationBuilders.filter("opendata",
             QueryBuilders.boolQuery()
                 .must(QueryBuilders.termQuery("accessRights.code.raw", "PUBLIC"))
