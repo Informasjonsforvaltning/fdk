@@ -1,0 +1,13 @@
+{
+  "bearer-only" : true,
+  "realm": "demo",
+  "auth-server-url": "http://localhost:8084/auth",
+  "ssl-required": "external",
+  "resource": "resource_server",
+  "credentials": {
+    "secret": "ea3843f5-a589-47f2-962b-85b47405f1ca"
+  },
+  "policy-enforcer": {
+    "on-deny-redirect-to": "/accessDenied"
+  }
+}
