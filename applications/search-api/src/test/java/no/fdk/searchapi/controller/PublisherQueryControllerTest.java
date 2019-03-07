@@ -1,6 +1,6 @@
 package no.fdk.searchapi.controller;
 
-import no.fdk.searchapi.ElasticsearchService;
+import no.fdk.searchapi.service.ElasticsearchService;
 import no.fdk.test.testcategories.UnitTest;
 import org.elasticsearch.action.ListenableActionFuture;
 import org.elasticsearch.action.search.SearchRequestBuilder;

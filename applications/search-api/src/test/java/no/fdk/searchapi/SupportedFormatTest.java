@@ -1,5 +1,6 @@
 package no.fdk.searchapi;
 
+import no.fdk.searchapi.controller.SupportedFormat;
 import no.fdk.test.testcategories.UnitTest;
 import org.apache.jena.riot.Lang;
 import org.junit.Test;

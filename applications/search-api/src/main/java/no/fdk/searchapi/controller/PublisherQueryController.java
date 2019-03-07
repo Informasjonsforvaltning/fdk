@@ -9,7 +9,7 @@ import com.google.gson.reflect.TypeToken;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.Data;
-import no.fdk.searchapi.ElasticsearchService;
+import no.fdk.searchapi.service.ElasticsearchService;
 import no.dcat.shared.Publisher;
 import no.fdk.webutils.exceptions.NotFoundException;
 import org.elasticsearch.action.get.GetResponse;

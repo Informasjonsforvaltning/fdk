@@ -1,7 +1,7 @@
 package no.fdk.searchapi.controller;
 
 import com.google.gson.Gson;
-import no.fdk.searchapi.ElasticsearchService;
+import no.fdk.searchapi.service.ElasticsearchService;
 import no.dcat.shared.Dataset;
 import no.fdk.test.testcategories.UnitTest;
 import org.hamcrest.Matchers;

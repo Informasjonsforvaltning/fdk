@@ -1,4 +1,4 @@
-package no.fdk.searchapi;
+package no.fdk.searchapi.configuration;
 
 /*
  * Created by nodavsko on 28.09.2016.

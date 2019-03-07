@@ -1,4 +1,4 @@
-package no.fdk.searchapi;
+package no.fdk.searchapi.service;
 
 import no.dcat.client.elasticsearch5.Elasticsearch5Client;
 import org.elasticsearch.client.Client;

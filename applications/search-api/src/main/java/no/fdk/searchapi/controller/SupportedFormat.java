@@ -1,4 +1,4 @@
-package no.fdk.searchapi;
+package no.fdk.searchapi.controller;
 
 import org.apache.jena.riot.Lang;
 
