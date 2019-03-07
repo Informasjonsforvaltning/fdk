@@ -358,7 +358,8 @@ Velg Feed dersom det er en distribusjon hvor endringer hentes gjennom f.eks. RSS
 # Distribusjon_format (format)
 :Distribution_format
     dct:abstract """Velg format(er) fra IANAs liste over offisielle medietyper. Dersom formatet ikke finnes i listen kan du angi eget."""@no ;
-    dct:description """Lenke til IANAs liste over offisielle medietyper: <a href='http://www.iana.org/assignments/media-types/media-types.xhtml'>http://www.iana.org/assignments/media-types/media-types.xhtml</a>"""@no .
+    dct:description """Skriv inn format og avlsutt med TAB eller Enter. Vi anbefaler at du bruker de samme formatbeskrivelsene som du finner i lenken nedenfor. (Obs: Du må selv kopiere over formatet fra listen.) 
+Lenke til IANAs liste over offisielle medietyper: <a href='http://www.iana.org/assignments/media-types/media-types.xhtml'>http://www.iana.org/assignments/media-types/media-types.xhtml</a>"""@no .
 
 # Distribusjon_accessURL (tilgangsurl)
 :Distribution_accessURL
