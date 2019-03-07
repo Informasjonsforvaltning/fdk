@@ -13,12 +13,11 @@ export const getDatasetByURI = async uri => {
 export const getDatasetByTitlePrefix = async (
   title = '',
   orgPath,
-  aggregations = true,
   returnFields
 ) => {
   const queryParams = `title=${title}${orgPath ? `&orgPath=${orgPath}` : ''}${
     returnFields ? `&returnfields=${returnFields}` : ''
-  }${aggregations ? '' : `&aggregations=false`}`;
+  }`;
 
   const url = `/search-api/datasets?${queryParams}`;
 

@@ -126,7 +126,7 @@ public class DatasetsSearchController {
             String returnFields,
 
         @ApiParam("Include aggregations")
-        @RequestParam(value = "aggregations", defaultValue = "true", required = false)
+        @RequestParam(value = "aggregations", defaultValue = "", required = false)
             String aggregations,
 
         @PageableDefault()
@@ -273,7 +273,7 @@ public class DatasetsSearchController {
             .setFrom(from)
             .setSize(size);
 
-        if ("true".equals(aggregations)) {
+        if (StringUtils.isNotEmpty(aggregations)) {
             searchBuilder.addAggregation(QueryUtil.createTermsAggregation(TERMS_SUBJECTS_COUNT, FIELD_SUBJECTS_PREFLABEL))
                 .addAggregation(QueryUtil.createTermsAggregation(TERMS_ACCESS_RIGHTS_COUNT, FIELD_ACCESS_RIGHTS_PREFLABEL))
                 .addAggregation(QueryUtil.createTermsAggregation(TERMS_THEME_COUNT, FIELD_THEME_CODE))
