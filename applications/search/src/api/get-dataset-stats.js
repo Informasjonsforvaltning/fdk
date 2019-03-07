@@ -1,7 +1,9 @@
 import _ from 'lodash';
 import axios from 'axios';
+import qs from 'qs';
 
 import { normalizeAggregations } from '../lib/normalizeAggregations';
+import { datasetsUrlBase, searchAggregations } from './datasets';
 
 function getFromBucketArray(data, aggregation, key) {
   const buckets = _.get(data, ['aggregations', aggregation, 'buckets'], []);
@@ -36,10 +38,17 @@ export function extractStats(data) {
   };
 }
 
+const statsAggregations = `${searchAggregations},distCount,distOnPublicAccessCount,distOnPublicAccessCount,subjectCount`;
+
+export const statsUrl = query =>
+  `${datasetsUrlBase}${qs.stringify(
+    { ...query, size: 0, aggregations: statsAggregations },
+    { addQueryPrefix: true }
+  )}`;
+
 export const getDatasetStats = async query => {
-  const q = query || '';
   const response = await axios
-    .get(`/aggregateDataset?q=${q}`)
+    .get(statsUrl(query))
     .catch(e => console.log(JSON.stringify(e))); // eslint-disable-line no-console
 
   return response && extractStats(normalizeAggregations(response.data));

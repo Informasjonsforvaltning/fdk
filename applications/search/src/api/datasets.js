@@ -1,9 +1,9 @@
 import axios from 'axios';
 import qs from 'qs';
 
-const datasetsUrlBase = '/datasets';
+export const datasetsUrlBase = '/datasets';
 
-const searchAggregations =
+export const searchAggregations =
   'accessRightsCount,theme_count,orgPath,catalogs,provenanceCount,firstHarvested,missingFirstHarvested,lastChanged,missingLastChanged,spatial,opendata';
 
 export const datasetsSearchUrl = query =>

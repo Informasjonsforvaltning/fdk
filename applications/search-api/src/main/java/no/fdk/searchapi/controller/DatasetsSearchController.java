@@ -336,6 +336,22 @@ public class DatasetsSearchController {
         if (selectedAggregationFields.contains("opendata")) {
             searchBuilder.addAggregation(buildOpendataAggregation());
         }
+        if (selectedAggregationFields.contains("distCount")) {
+            searchBuilder.addAggregation(AggregationBuilders.filter("distCount", QueryBuilders.existsQuery("distribution")));
+        }
+        if (selectedAggregationFields.contains("distOnPublicAccessCount")) {
+
+            searchBuilder.addAggregation(AggregationBuilders.filter("distOnPublicAccessCount",
+                QueryBuilders.boolQuery()
+                    .must(QueryBuilders.existsQuery("distribution"))
+                    .must(QueryBuilders.termQuery("accessRights.code.raw", "PUBLIC"))
+            ));
+        }
+        if (selectedAggregationFields.contains("subjectCount")) {
+
+            searchBuilder.addAggregation(AggregationBuilders.filter("subjectCount", QueryBuilders.existsQuery("subject.prefLabel")));
+        }
+
         return searchBuilder;
     }
 
