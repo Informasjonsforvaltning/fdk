@@ -351,6 +351,23 @@ export const distributionValues = values => {
   return null;
 };
 
+export const distributionAPIValues = values => {
+  if (values) {
+    let countDistributions = 0;
+    const { distribution } = values;
+    if (distribution) {
+      countDistributions = distribution.filter(item => item.accessService)
+        .length;
+    }
+    if (countDistributions > 0) {
+      return `${countDistributions} ${
+        localization.datasets.formValues.distributions
+      }`;
+    }
+  }
+  return null;
+};
+
 export const sampleValues = values => {
   if (values) {
     let countSamples = 0;
