@@ -274,6 +274,11 @@
       "formatLabel": "Format",
       "descriptionLabel": "Description"
     },
+    "distributionAPI": {
+      "helptext": {
+        "api": "API description"
+      }
+    },
     "sample": {
       "helptext": {
         "accessURL": "Access URL",
@@ -352,6 +357,7 @@
       "reference": "References",
       "contactInformation": "Contact information",
       "distribution": "Distribution",
+      "distributionAPI": "API distributions",
       "sample": "Sample data"
     },
     "formValues": {

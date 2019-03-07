@@ -21,6 +21,7 @@ import { ConnectedFormContactPoint } from './form-contactPoint/connected-form-co
 import { ConnectedFormContents } from './form-contents/connected-form-contents.component';
 import { StatusBarWithState } from '../../components/status-bar/status-bar.component';
 import { ConnectedFormPublish } from './connected-form-publish/connected-form-publish';
+import { ConnectedFormDistributionAPI } from './form-distribution-api/connected-form-distribution-api';
 import {
   titleValues,
   accessRightsValues,
@@ -34,6 +35,7 @@ import {
   referenceValues,
   contactPointValues,
   distributionValues,
+  distributionAPIValues,
   sampleValues
 } from './dataset-registration-page.logic';
 import './dataset-registration-page.scss';
@@ -326,6 +328,17 @@ export class RegDataset extends React.Component {
                   syncErrors={contactPoint.syncErrors}
                 >
                   <ConnectedFormContactPoint
+                    datasetItem={datasetItem}
+                    helptextItems={helptextItems}
+                    match={match}
+                  />
+                </FormTemplateWithState>
+
+                <FormTemplateWithState
+                  title={localization.datasets.formTemplates.distributionAPI}
+                  values={distributionAPIValues(distribution.values)}
+                >
+                  <ConnectedFormDistributionAPI
                     datasetItem={datasetItem}
                     helptextItems={helptextItems}
                     match={match}

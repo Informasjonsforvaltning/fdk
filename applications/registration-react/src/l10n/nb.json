@@ -276,6 +276,11 @@
       "formatLabel": "Format",
       "descriptionLabel": "Beskrivelse"
     },
+    "distributionAPI": {
+      "helptext": {
+        "api": "API-beskrivelser"
+      }
+    },
     "sample": {
       "helptext": {
         "accessURL": "Tilgangslenke",
@@ -354,6 +359,7 @@
       "reference": "Relasjoner",
       "contactInformation": "Kontaktinformasjon",
       "distribution": "Distribusjoner",
+      "distributionAPI": "API-distribusjoner",
       "sample": "Eksempeldata"
     },
     "formValues": {
