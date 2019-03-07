@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import no.fdk.searchapi.service.ElasticsearchService;
 import no.dcat.shared.Dataset;
+import org.apache.commons.lang3.StringUtils;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.index.query.*;
@@ -21,7 +22,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
@@ -166,13 +166,13 @@ public class DatasetsSearchController {
 
         QueryBuilder searchQuery;
 
-        if (!StringUtils.isEmpty(title)) {
+        if (StringUtils.isNotEmpty(title)) {
             QueryBuilder nbQuery = QueryBuilders.matchPhrasePrefixQuery("title.nb", title).analyzer("norwegian").maxExpansions(15);
             QueryBuilder noQuery = QueryBuilders.matchPhrasePrefixQuery("title.no", title).analyzer("norwegian").maxExpansions(15);
             QueryBuilder nnQuery = QueryBuilders.matchPhrasePrefixQuery("title.nn", title).analyzer("norwegian").maxExpansions(15);
             QueryBuilder enQuery = QueryBuilders.matchPhrasePrefixQuery("title.en", title).analyzer("english").maxExpansions(15);
             searchQuery = QueryBuilders.boolQuery().should(nbQuery).should(noQuery).should(nnQuery).should(enQuery);
-        } else if (!StringUtils.isEmpty(query)) {
+        } else if (StringUtils.isNotEmpty(query)) {
             // add * if query only contains one word
             if (!query.contains(" ")) {
                 query = query + " " + query + "*";
@@ -205,20 +205,20 @@ public class DatasetsSearchController {
         // add filters
 
         // theme can contain multiple themes, example: AGRI,HEAL
-        if (!StringUtils.isEmpty(theme)) {
+        if (StringUtils.isNotEmpty(theme)) {
             String[] themes = theme.split(",");
             composedQuery.filter(QueryUtil.createTermsQuery("theme.code", themes));
         }
 
-        if (!StringUtils.isEmpty(catalog)) {
+        if (StringUtils.isNotEmpty(catalog)) {
             composedQuery.filter(QueryUtil.createTermQuery("catalog.uri", catalog));
         }
 
 
-        if (!StringUtils.isEmpty(accessRights)) {
+        if (StringUtils.isNotEmpty(accessRights)) {
             composedQuery.filter(QueryUtil.createTermQuery("accessRights.code.raw", accessRights));
         }
-        if (!StringUtils.isEmpty(opendata)) {
+        if (StringUtils.isNotEmpty(opendata)) {
             BoolQueryBuilder opendataFilter = QueryBuilders.boolQuery();
             if (opendata.equals("true")) {
                 opendataFilter.must(QueryBuilders.termQuery("distribution.openLicense", "true"));
@@ -236,7 +236,7 @@ public class DatasetsSearchController {
             composedQuery.filter(opendataFilter);
         }
 
-        if (!StringUtils.isEmpty(orgPath)) {
+        if (StringUtils.isNotEmpty(orgPath)) {
             composedQuery.filter(QueryUtil.createTermQuery("publisher.orgPath", orgPath));
         }
 
@@ -244,11 +244,11 @@ public class DatasetsSearchController {
             composedQuery.filter(QueryUtil.createRangeQueryFromXdaysToNow(firstHarvested, "harvest.firstHarvested"));
         }
 
-        if (!StringUtils.isEmpty(provenance)) {
+        if (StringUtils.isNotEmpty(provenance)) {
             composedQuery.filter(QueryUtil.createTermQuery("provenance.code.raw", accessRights));
         }
 
-        if (!StringUtils.isEmpty(spatial)) {
+        if (StringUtils.isNotEmpty(spatial)) {
             BoolQueryBuilder spatialFilter = QueryBuilders.boolQuery();
 
             String[] spatials = spatial.split(",");
@@ -288,7 +288,7 @@ public class DatasetsSearchController {
                 .addAggregation(getOpendataAggregation());
         }
 
-        if (!StringUtils.isEmpty(returnFields)) {
+        if (StringUtils.isNotEmpty(returnFields)) {
             searchBuilder.setFetchSource(returnFields.split(","), null);
         }
 
