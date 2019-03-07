@@ -46,13 +46,6 @@ Query paramters
 - `creator=DIFI` (terms of which has DIFI as creator)
 - `orgPath=/STAT/962738899` (all terms defined by government (STAT) and organization number 96273889 and any subunits)
 
-## Search for HarvestCatalogRecords
-
-Example `/harvest/catalog?q=/STAT` which returns aggregations of harvestRecords for the last 7 days, last 30 days and last 365 days for all publisher under the /STAT hierarchy level.
-
-Example `/harvest/catalog?q=/STAT/123456789/987654321` returns aggregations of a particular publisher and all organisations that are organized under it. 
-
-
 ## search for title and returnfields
 /datasets?title=Postnummer i Norge  (witch returns datasets with title)
 
