@@ -1,8 +1,8 @@
-package no.dcat.portal.query.controller;
+package no.fdk.searchapi.controller;
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import no.dcat.portal.query.ElasticsearchService;
+import no.fdk.searchapi.ElasticsearchService;
 import no.dcat.shared.Dataset;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;

@@ -1,7 +1,7 @@
-package no.dcat.portal.query.controller;
+package no.fdk.searchapi.controller;
 
-import no.dcat.portal.query.ElasticsearchService;
-import no.dcat.portal.query.ServletRequest;
+import no.fdk.searchapi.ElasticsearchService;
+import no.fdk.searchapi.ServletRequest;
 import no.dcat.shared.Dataset;
 import no.fdk.test.testcategories.UnitTest;
 import no.fdk.webutils.exceptions.NotFoundException;
