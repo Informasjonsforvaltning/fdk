@@ -159,18 +159,6 @@ public class DatasetsSearchControllerTest {
         sqs.search("", "", "", "", "", 0, "", "", "", "", "", "", "Katalog for Brønnøysundregistrene", "", "", PageRequest.of(0, 10));
     }
 
-    @Test
-    public void aggregateDatasets() {
-        ResponseEntity<String> actual = sqs.aggregateDatasets("query");
-
-        assertThat(actual.getStatusCodeValue()).isEqualTo(HttpStatus.OK.value());
-
-        actual = sqs.aggregateDatasets("");
-
-        assertThat(actual.getStatusCodeValue()).isEqualTo(HttpStatus.OK.value());
-
-    }
-
     private void populateMock() {
         SearchResponse response = mock(SearchResponse.class);
 

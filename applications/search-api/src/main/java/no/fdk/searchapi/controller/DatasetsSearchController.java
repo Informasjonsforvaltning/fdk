@@ -2,8 +2,8 @@ package no.fdk.searchapi.controller;
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import no.fdk.searchapi.service.ElasticsearchService;
 import no.dcat.shared.Dataset;
+import no.fdk.searchapi.service.ElasticsearchService;
 import org.apache.commons.lang3.StringUtils;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
@@ -37,12 +37,6 @@ import java.util.HashSet;
 @RestController
 public class DatasetsSearchController {
     public static final String MISSING = "Ukjent";
-    public static final String INDEX_DCAT = "dcat";
-    public static final String FIELD_THEME_CODE = "theme.code";
-    public static final String FIELD_ACCESS_RIGHTS_PREFLABEL = "accessRights.code.raw";
-    public static final String TERMS_THEME_COUNT = "theme_count";
-    public static final String TERMS_ACCESS_RIGHTS_COUNT = "accessRightsCount";
-    public static final String AGGREGATE_DATASET = "/aggregateDataset";
     public static final long DAY_IN_MS = 1000 * 3600 * 24;
     /* api names */
     public static final String QUERY_SEARCH = "/datasets";
@@ -334,7 +328,11 @@ public class DatasetsSearchController {
             searchBuilder.addAggregation(QueryUtil.createTermsAggregation("spatial", "spatial.prefLabel.no.raw"));
         }
         if (selectedAggregationFields.contains("opendata")) {
-            searchBuilder.addAggregation(buildOpendataAggregation());
+            searchBuilder.addAggregation(AggregationBuilders.filter("opendata",
+                QueryBuilders.boolQuery()
+                    .must(QueryBuilders.termQuery("accessRights.code.raw", "PUBLIC"))
+                    .must(QueryBuilders.termQuery("distribution.openLicense", "true"))
+            ));
         }
         if (selectedAggregationFields.contains("distCount")) {
             searchBuilder.addAggregation(AggregationBuilders.filter("distCount", QueryBuilders.existsQuery("distribution")));
@@ -353,76 +351,6 @@ public class DatasetsSearchController {
         }
 
         return searchBuilder;
-    }
-
-    /**
-     * Aggregation based on orgPath.
-     *
-     * @param query the first part or complete orgPath
-     * @return the aggregations of datasets with terms, accessRights, subjects, publishers, orgPath and distributions
-     */
-
-    @CrossOrigin
-    @ApiOperation(value = "Aggregates dataset count per organization path.")
-    @RequestMapping(value = AGGREGATE_DATASET, method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<String> aggregateDatasets(@RequestParam(value = "q", defaultValue = "") String query) {
-
-        logger.info("{} of {}", AGGREGATE_DATASET, query);
-
-        QueryBuilder search;
-
-        if ("".equals(query)) {
-            search = QueryBuilders.matchAllQuery();
-        } else {
-            search = QueryBuilders.termQuery("publisher.orgPath", query);
-        }
-
-        logger.trace(search.toString());
-
-        AggregationBuilder datasetsWithDistribution = AggregationBuilders.filter("distCount", QueryBuilders.existsQuery("distribution"));
-
-        AggregationBuilder openDatasetsWithDistribution = AggregationBuilders.filter("distOnPublicAccessCount",
-            QueryBuilders.boolQuery()
-                .must(QueryBuilders.existsQuery("distribution"))
-                .must(QueryBuilders.termQuery("accessRights.code.raw", "PUBLIC"))
-        );
-
-        AggregationBuilder datasetsWithSubject = AggregationBuilders.filter("subjectCount", QueryBuilders.existsQuery("subject.prefLabel"));
-
-        // set up search query with aggregations
-        SearchRequestBuilder searchBuilder = elasticsearch.getClient().prepareSearch(INDEX_DCAT)
-            .setTypes("dataset")
-            .setQuery(search)
-            .setSize(0)
-            .addAggregation(QueryUtil.createTermsAggregation(TERMS_ACCESS_RIGHTS_COUNT, FIELD_ACCESS_RIGHTS_PREFLABEL))
-            .addAggregation(QueryUtil.createTermsAggregation(TERMS_THEME_COUNT, FIELD_THEME_CODE))
-            .addAggregation(QueryUtil.createTermsAggregation("orgPath", "publisher.orgPath"))
-            .addAggregation(QueryUtil.createTermsAggregation("catalogs", "catalog.uri"))
-            .addAggregation(QueryUtil.createTemporalAggregation("firstHarvested", "harvest.firstHarvested"))
-            .addAggregation(AggregationBuilders.missing("missingFirstHarvested").field("harvest.firstHarvested"))
-            .addAggregation(QueryUtil.createTemporalAggregation("lastChanged", "harvest.lastChanged"))
-            .addAggregation(AggregationBuilders.missing("missingLastChanged").field("harvest.lastChanged"))
-            .addAggregation(datasetsWithDistribution)
-            .addAggregation(openDatasetsWithDistribution)
-            .addAggregation(datasetsWithSubject)
-            .addAggregation(buildOpendataAggregation());
-
-        // Execute search
-        SearchResponse response = searchBuilder.execute().actionGet();
-
-        logger.trace("Search response: " + response.toString());
-
-        // return response
-        return new ResponseEntity<>(response.toString(), HttpStatus.OK);
-    }
-
-
-    public AggregationBuilder buildOpendataAggregation() {
-        return AggregationBuilders.filter("opendata",
-            QueryBuilders.boolQuery()
-                .must(QueryBuilders.termQuery("accessRights.code.raw", "PUBLIC"))
-                .must(QueryBuilders.termQuery("distribution.openLicense", "true"))
-        );
     }
 
     private int checkAndAdjustFrom(int from) {
