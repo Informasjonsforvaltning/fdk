@@ -1,6 +1,6 @@
 package no.fdk.searchapi.controller;
 
-import no.fdk.searchapi.ElasticsearchService;
+import no.fdk.searchapi.service.ElasticsearchService;
 import no.fdk.searchapi.ServletRequest;
 import no.dcat.shared.Dataset;
 import no.fdk.test.testcategories.UnitTest;

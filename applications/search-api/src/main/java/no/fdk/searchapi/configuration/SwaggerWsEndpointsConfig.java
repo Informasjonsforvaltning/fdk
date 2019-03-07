@@ -1,4 +1,4 @@
-package no.fdk.searchapi;
+package no.fdk.searchapi.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
