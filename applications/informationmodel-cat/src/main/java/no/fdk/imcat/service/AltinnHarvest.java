@@ -8,6 +8,7 @@ import no.fdk.imcat.model.InformationModelFactory;
 import no.fdk.imcat.model.InformationModelHarvestSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
@@ -29,18 +30,19 @@ public class AltinnHarvest {
     private static String harvestSourceURIBase = null;
     private InformationModelFactory informationModelFactory;
     private HashMap<String, InformationModel> everyAltinnInformationModel = new HashMap<>();
+    private PublisherCatClient publisherCatClient;
 
-
-    public AltinnHarvest(InformationModelFactory factory, Environment env) {
+    @Autowired
+    public AltinnHarvest(InformationModelFactory factory, Environment env, PublisherCatClient pCatClient ) {
         this.informationModelFactory = factory;
+        this.publisherCatClient = pCatClient;
         harvestSourceURIBase = env.getProperty("application.harvestSourceURIBase");
     }
 
-    private static InformationModel parseInformationModel(AltInnService service) {
+    private InformationModel parseInformationModel(AltInnService service) {
         InformationModel model = new InformationModel();
 
-        Publisher p = new Publisher(service.OrganizationNumber);
-        model.setPublisher(p);
+        model.setPublisher(lookupPublisher(service.OrganizationNumber));
         model.setTitle(service.ServiceName);
         model.setHarvestSourceUri(harvestSourceURIBase + service.ServiceCode + "_" + service.ServiceEditionCode);
 
@@ -52,6 +54,15 @@ public class AltinnHarvest {
         }
         model.setSchema(formBuilder.toString());
         return model;
+    }
+
+    Publisher lookupPublisher(String orgNr) {
+        try {
+            return publisherCatClient.getByOrgNr(orgNr);
+        } catch (Exception e) {
+            logger.warn("Publisher lookup failed for orgNr={}. Error: {}", orgNr, e.getMessage());
+        }
+        return null;
     }
 
     private static String extractSingleForm(byte[] gzippedJson) {
