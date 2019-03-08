@@ -87,8 +87,8 @@
     "dataset": "treff",
     "nosearch.summary": "Søk blant",
     "nosearch.descriptions": "datasettbeskrivelser",
-    "datasetTab": "Dataset",
-    "apiTab": "API",
+    "datasetTab": "Datasets",
+    "apiTab": "APIs",
     "termTab": "Concepts",
     "informationModelTab": "Information models",
     "nosearch.concepts": "begreper"
