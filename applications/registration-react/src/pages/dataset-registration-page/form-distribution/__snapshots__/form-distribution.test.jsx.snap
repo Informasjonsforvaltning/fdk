@@ -788,6 +788,59 @@ Det skal angis distribusjonens type
         },
       }
     }
+    initialValues={
+      Object {
+        "distribution": Array [
+          Object {
+            "accessService": null,
+            "accessURL": Array [
+              "http://google.no",
+            ],
+            "conformsTo": Array [],
+            "description": Object {
+              "nb": "Beskrivelse av distribusjon",
+            },
+            "format": Array [
+              "json",
+              "xml",
+            ],
+            "id": "",
+            "license": Object {
+              "extraType": null,
+              "prefLabel": null,
+              "uri": "http://creativecommons.org/publicdomain/zero/1.0/",
+            },
+            "page": Array [
+              Object {
+                "extraType": null,
+                "prefLabel": Object {
+                  "nb": "",
+                },
+                "uri": "https://google.com",
+              },
+            ],
+            "type": "API",
+          },
+        ],
+        "openLicenseItems": Array [
+          Object {
+            "code": "CC BY 4.0",
+            "prefLabel_no": "Creative Commons Navngivelse 4.0 Internasjonal",
+            "uri": "http://creativecommons.org/licenses/by/4.0/",
+          },
+          Object {
+            "code": "CC0 1.0",
+            "prefLabel_no": "Creative Commons Universal Fristatus-erklæring",
+            "uri": "http://creativecommons.org/publicdomain/zero/1.0/",
+          },
+          Object {
+            "code": "NLOD",
+            "prefLabel_no": "Norsk lisens for offentlige data",
+            "uri": "http://data.norge.no/nlod/",
+          },
+        ],
+      }
+    }
     name="distribution"
     openLicenseItems={
       Array [
