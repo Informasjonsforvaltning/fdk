@@ -16,6 +16,7 @@ import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.aggregations.Aggregation;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
+import org.elasticsearch.search.aggregations.bucket.MultiBucketsAggregation;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms;
 import org.elasticsearch.search.sort.SortBuilder;
 import org.elasticsearch.search.sort.SortBuilders;
@@ -233,7 +234,7 @@ public class ApiSearchController {
                 buckets = new ArrayList<>();
             }};
 
-            ((Terms) aggregation).getBuckets().forEach((bucket) -> {
+            ((MultiBucketsAggregation)aggregation).getBuckets().forEach((bucket) -> {
                 outputAggregation.getBuckets().add(AggregationBucket.of(bucket.getKeyAsString(), bucket.getDocCount()));
             });
             queryResponse.getAggregations().put(aggregationName, outputAggregation);
