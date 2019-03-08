@@ -10,7 +10,11 @@ let wrapper;
 
 beforeEach(() => {
   defaultProps = {
-    stats: extractStats(normalizeAggregations(aggregateDatasetApiResponse)),
+    datasetStats: extractStats(
+      normalizeAggregations(aggregateDatasetApiResponse)
+    ),
+    apiStats: {},
+    conceptStats: {},
     entityName: 'test entity'
   };
   wrapper = shallow(<ReportStats {...defaultProps} />);

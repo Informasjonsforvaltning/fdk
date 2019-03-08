@@ -255,6 +255,10 @@
     "typeToSearch": "Type to search",
     "catalogs": "Catalogs",
     "datasetTab": "Dataset report",
+    "datasets": "datasets",
+    "apis":"APIs",
+    "concepts":"concepts",
+    "newPastWeek":"new the past week",
     "aggregation": {
       "public": "Datasets that are public",
       "restricted": "Datasets with restricted access",

@@ -20,6 +20,80 @@ exports[`should render ReportStats correctly 1`] = `
     className="row"
   >
     <div
+      className="col-12 fdk-container-stats fdk-container-stats-total"
+    >
+      <div
+        className="row"
+      >
+        <div
+          className="col-4"
+        >
+          <a
+            href="#1"
+          >
+            <img
+              alt=""
+              src="/static/img/icon-catalog-dataset.svg"
+            />
+            <br />
+            <strong>
+              985
+               
+              datasets
+            </strong>
+            <br />
+            0
+             
+            new the past week
+          </a>
+        </div>
+        <div
+          className="col-4"
+        >
+          <a
+            href="#2"
+          >
+            <img
+              alt=""
+              src="/static/img/icon-catalog-api.svg"
+            />
+            <br />
+            <strong>
+               
+              APIs
+            </strong>
+            <br />
+             
+            new the past week
+          </a>
+        </div>
+        <div
+          className="col-4"
+        >
+          <a
+            href="#3"
+          >
+            <img
+              alt=""
+              src="/static/img/icon-catalog-begrep.svg"
+            />
+            <br />
+            <strong>
+               
+              concepts
+            </strong>
+            <br />
+             
+            new the past week
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="row"
+  >
+    <div
       className="col-12 fdk-report-tabs"
     >
       <Tabs
