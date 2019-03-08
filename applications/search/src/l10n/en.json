@@ -94,21 +94,9 @@
     "nosearch.concepts": "begreper"
   },
   "hitstats": {
-    "nosearch": {
-      "search": "Search among",
-      "descriptions": "dataset descriptions"
-    },
-    "search": "Search gave",
-    "datasetHits": "hit(s) among datasets",
-    "conceptHits": "hit(s) among concepts",
-    "noHits": "Sorry, no hits",
-    "concepts": "concepts",
-    "and": "and",
-    "but": "but",
-    "apis": "APIs",
-    "apiHits": "hit(s) among APIs",
-    "informationModels": "information models",
-    "informationModelsHits": "hit(s) among information models"
+    "nosearch": "Search among {0} datasets, {1} APIs, {2} concepts and {3} information models",
+    "search": "Search gave {0} hit(s) among datasets, {1} hit(s) among APIs, {2} hit(s) among concepts {3} hit(s) among information models",
+    "nohits": "Sorry, no hits"
   },
   "facet": {
     "organisation": "Organization",

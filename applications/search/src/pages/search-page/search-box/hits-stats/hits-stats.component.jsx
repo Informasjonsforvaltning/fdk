@@ -11,57 +11,43 @@ export const HitsStats = props => {
     filteringOrTextSearchPerformed
   } = props;
 
-  if (filteringOrTextSearchPerformed) {
-    const datasetTextCount = `${countDatasets} ${
-      localization.hitstats.datasetHits
-    }`;
-    const apisTextCount = `${countApis} ${localization.hitstats.apiHits}`;
-    const termsTextCount = `${countTerms} ${localization.hitstats.conceptHits}`;
-    const informationModelsTextCount = `${countInformationModels} ${
-      localization.hitstats.informationModelsHits
-    }`;
-
-    return (
-      <div className="sk-hits-stats" data-qa="hits-stats">
-        <div className="sk-hits-stats__info" data-qa="info">
-          <span>{localization.hitstats.search}&nbsp;</span>
-          <span>{datasetTextCount}</span>
-          <span>,&nbsp;{apisTextCount}</span>
-          <span>,&nbsp;{termsTextCount}</span>
-          <span>&nbsp;{localization.hitstats.and}&nbsp;</span>
-          <span>{informationModelsTextCount}</span>
-
-          {countDatasets === 0 &&
-            countApis === 0 &&
-            countTerms === 0 &&
-            countInformationModels === 0 && (
-              <span>{localization.hitstats.noHits}</span>
-            )}
-        </div>
-      </div>
-    );
+  // Do not show anything if we don't have the stats yet
+  if (
+    countDatasets === null ||
+    countTerms === null ||
+    countApis === null ||
+    countInformationModels === null
+  ) {
+    return null;
   }
+
+  const nohits =
+    countDatasets === 0 &&
+    countApis === 0 &&
+    countTerms === 0 &&
+    countInformationModels === 0;
+
+  let template;
+  if (!filteringOrTextSearchPerformed) {
+    template = localization.hitstats.nosearch;
+  } else if (nohits) {
+    template = localization.hitstats.nohits;
+  } else {
+    template = localization.hitstats.search;
+  }
+
+  const content = localization.formatString(
+    template,
+    countDatasets,
+    countApis,
+    countTerms,
+    countInformationModels
+  );
+
   return (
     <div className="sk-hits-stats" data-qa="hits-stats">
-      <div className="sk-hits-stats__info nosearch" data-qa="info">
-        <div>
-          <span>
-            {localization.hitstats.nosearch.search} {countDatasets}{' '}
-            {localization.hitstats.nosearch.descriptions}
-          </span>
-          {countApis > 0 && (
-            <span>
-              , {countApis} {localization.hitstats.apis}
-            </span>
-          )}
-          <span>
-            , {countTerms} {localization.hitstats.concepts}
-          </span>
-          <span>
-            &nbsp;{localization.hitstats.and} {countInformationModels}{' '}
-            {localization.hitstats.informationModels}
-          </span>
-        </div>
+      <div className="sk-hits-stats__info" data-qa="info">
+        {content}
       </div>
     </div>
   );
