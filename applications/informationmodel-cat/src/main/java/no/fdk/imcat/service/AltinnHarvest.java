@@ -33,7 +33,7 @@ public class AltinnHarvest {
     private PublisherCatClient publisherCatClient;
 
     @Autowired
-    public AltinnHarvest(InformationModelFactory factory, Environment env, PublisherCatClient pCatClient ) {
+    public AltinnHarvest(InformationModelFactory factory, Environment env, PublisherCatClient pCatClient) {
         this.informationModelFactory = factory;
         this.publisherCatClient = pCatClient;
         harvestSourceURIBase = env.getProperty("application.harvestSourceURIBase");
@@ -48,9 +48,23 @@ public class AltinnHarvest {
 
         StringBuilder formBuilder = new StringBuilder();
 
+        List<String> decodedForms = new ArrayList<>();
         for (AltinnForm form : service.Forms) {
             byte[] gzippedJson = Base64.getDecoder().decode(form.JsonSchema);
-            formBuilder.append(extractSingleForm(gzippedJson));
+            decodedForms.add(extractSingleForm(gzippedJson));
+        }
+        boolean serviceHasMultipleForms = service.Forms.size() > 1;
+        if (serviceHasMultipleForms) {
+            //Put all the separate Schemas into a JSON Array
+            formBuilder.append("[");
+            for (int i=0;i<decodedForms.size()-1;i++) {
+                formBuilder.append(decodedForms.get(i));
+                formBuilder.append(",");
+            }
+            formBuilder.append(decodedForms.get(decodedForms.size()-1));
+            formBuilder.append("]");
+        } else {
+            formBuilder.append(decodedForms);
         }
         model.setSchema(formBuilder.toString());
         return model;
