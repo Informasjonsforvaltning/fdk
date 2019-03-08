@@ -68,6 +68,7 @@ export const renderDistributions = componentProps => {
                 type="radio"
                 value="API"
                 label={localization.schema.distribution.apiLabel}
+                disabled
               />
               <Field
                 name={`${distribution}.type`}
