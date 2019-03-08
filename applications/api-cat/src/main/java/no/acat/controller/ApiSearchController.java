@@ -12,11 +12,13 @@ import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.index.query.RangeQueryBuilder;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.aggregations.Aggregation;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.bucket.MultiBucketsAggregation;
+import org.elasticsearch.search.aggregations.bucket.filters.FiltersAggregator;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms;
 import org.elasticsearch.search.sort.SortBuilder;
 import org.elasticsearch.search.sort.SortBuilders;
@@ -37,6 +39,7 @@ import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 @RequestMapping(value = "/apis")
 public class ApiSearchController {
     public static final String MISSING = "MISSING";
+    public static final long DAY_IN_MS = 1000 * 3600 * 24;
     public static final int MAX_AGGREGATIONS = 10000;
     private static final Logger logger = LoggerFactory.getLogger(ApiSearchController.class);
     private ElasticsearchService elasticsearch;
@@ -204,6 +207,10 @@ public class ApiSearchController {
         if (selectedAggregationFields.contains("orgPath")) {
             searchBuilder.addAggregation(QueryUtil.createTermsAggregation("orgPath", "publisher.orgPath"));
         }
+        if (selectedAggregationFields.contains("firstHarvested")) {
+            searchBuilder.addAggregation(QueryUtil.createTemporalAggregation("firstHarvested", "harvest.firstHarvested"));
+        }
+
         return searchBuilder;
     }
 
@@ -267,6 +274,11 @@ public class ApiSearchController {
             }
             return composedQuery;
         }
+        static RangeQueryBuilder createRangeQueryFromXdaysToNow(int days, String dateField) {
+            long now = new Date().getTime();
+
+            return QueryBuilders.rangeQuery(dateField).from(now - days * DAY_IN_MS).to(now).format("epoch_millis");
+        }
 
         static AggregationBuilder createTermsAggregation(String aggregationName, String field) {
             return AggregationBuilders
@@ -275,6 +287,14 @@ public class ApiSearchController {
                 .field(field)
                 .size(MAX_AGGREGATIONS)
                 .order(Terms.Order.count(false));
+        }
+
+        static AggregationBuilder createTemporalAggregation(String name, String dateField) {
+
+            return AggregationBuilders.filters(name,
+                new FiltersAggregator.KeyedFilter("last7days", QueryUtil.createRangeQueryFromXdaysToNow(7, dateField)),
+                new FiltersAggregator.KeyedFilter("last30days", QueryUtil.createRangeQueryFromXdaysToNow(30, dateField)),
+                new FiltersAggregator.KeyedFilter("last365days", QueryUtil.createRangeQueryFromXdaysToNow(365, dateField)));
         }
     }
 }
