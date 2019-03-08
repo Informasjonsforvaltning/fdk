@@ -25,12 +25,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
 @CrossOrigin
 @RestController
@@ -91,9 +92,9 @@ public class ApiSearchController {
 
         QueryBuilder searchQuery;
 
-        if (!StringUtils.isEmpty(title)) {
-                    QueryBuilder titleQuery = QueryBuilders.matchPhrasePrefixQuery("title", title).analyzer("norwegian").maxExpansions(15);
-                    searchQuery = QueryBuilders.boolQuery().should(titleQuery);
+        if (isNotEmpty(title)) {
+            QueryBuilder titleQuery = QueryBuilders.matchPhrasePrefixQuery("title", title).analyzer("norwegian").maxExpansions(15);
+            searchQuery = QueryBuilders.boolQuery().should(titleQuery);
         } else if (query.isEmpty()) {
             searchQuery = QueryBuilders.matchAllQuery();
         } else {

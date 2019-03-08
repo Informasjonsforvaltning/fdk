@@ -4,7 +4,6 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import no.dcat.shared.Dataset;
 import no.fdk.searchapi.service.ElasticsearchService;
-import org.apache.commons.lang3.StringUtils;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.index.query.*;
@@ -27,6 +26,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
+
+import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
 
 /**
@@ -159,13 +160,13 @@ public class DatasetsSearchController {
 
         QueryBuilder searchQuery;
 
-        if (StringUtils.isNotEmpty(title)) {
+        if (isNotEmpty(title)) {
             QueryBuilder nbQuery = QueryBuilders.matchPhrasePrefixQuery("title.nb", title).analyzer("norwegian").maxExpansions(15);
             QueryBuilder noQuery = QueryBuilders.matchPhrasePrefixQuery("title.no", title).analyzer("norwegian").maxExpansions(15);
             QueryBuilder nnQuery = QueryBuilders.matchPhrasePrefixQuery("title.nn", title).analyzer("norwegian").maxExpansions(15);
             QueryBuilder enQuery = QueryBuilders.matchPhrasePrefixQuery("title.en", title).analyzer("english").maxExpansions(15);
             searchQuery = QueryBuilders.boolQuery().should(nbQuery).should(noQuery).should(nnQuery).should(enQuery);
-        } else if (StringUtils.isNotEmpty(query)) {
+        } else if (isNotEmpty(query)) {
             // add * if query only contains one word
             if (!query.contains(" ")) {
                 query = query + " " + query + "*";
@@ -198,20 +199,20 @@ public class DatasetsSearchController {
         // add filters
 
         // theme can contain multiple themes, example: AGRI,HEAL
-        if (StringUtils.isNotEmpty(theme)) {
+        if (isNotEmpty(theme)) {
             String[] themes = theme.split(",");
             composedQuery.filter(QueryUtil.createTermsQuery("theme.code", themes));
         }
 
-        if (StringUtils.isNotEmpty(catalog)) {
+        if (isNotEmpty(catalog)) {
             composedQuery.filter(QueryUtil.createTermQuery("catalog.uri", catalog));
         }
 
 
-        if (StringUtils.isNotEmpty(accessRights)) {
+        if (isNotEmpty(accessRights)) {
             composedQuery.filter(QueryUtil.createTermQuery("accessRights.code.raw", accessRights));
         }
-        if (StringUtils.isNotEmpty(opendata)) {
+        if (isNotEmpty(opendata)) {
             BoolQueryBuilder opendataFilter = QueryBuilders.boolQuery();
             if (opendata.equals("true")) {
                 opendataFilter.must(QueryBuilders.termQuery("distribution.openLicense", "true"));
@@ -229,7 +230,7 @@ public class DatasetsSearchController {
             composedQuery.filter(opendataFilter);
         }
 
-        if (StringUtils.isNotEmpty(orgPath)) {
+        if (isNotEmpty(orgPath)) {
             composedQuery.filter(QueryUtil.createTermQuery("publisher.orgPath", orgPath));
         }
 
@@ -237,11 +238,11 @@ public class DatasetsSearchController {
             composedQuery.filter(QueryUtil.createRangeQueryFromXdaysToNow(firstHarvested, "harvest.firstHarvested"));
         }
 
-        if (StringUtils.isNotEmpty(provenance)) {
+        if (isNotEmpty(provenance)) {
             composedQuery.filter(QueryUtil.createTermQuery("provenance.code.raw", accessRights));
         }
 
-        if (StringUtils.isNotEmpty(spatial)) {
+        if (isNotEmpty(spatial)) {
             BoolQueryBuilder spatialFilter = QueryBuilders.boolQuery();
 
             String[] spatials = spatial.split(",");
@@ -266,11 +267,11 @@ public class DatasetsSearchController {
             .setFrom(from)
             .setSize(size);
 
-        if (StringUtils.isNotEmpty(aggregations)) {
+        if (isNotEmpty(aggregations)) {
             searchBuilder = addAggregations(searchBuilder, aggregations);
         }
 
-        if (StringUtils.isNotEmpty(returnFields)) {
+        if (isNotEmpty(returnFields)) {
             searchBuilder.setFetchSource(returnFields.split(","), null);
         }
 
