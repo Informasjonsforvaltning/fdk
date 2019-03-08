@@ -72,9 +72,9 @@
     "register": "Registrere datasett",
     "helpToRegister": "Hjelp til å komme i gong med å registrere datasett",
     "help": "Hjelp",
-    "status":"Status implementasjon",
-    "standard":"DCAT-AP-NO 1.1 standarden",
-    "guide":"Rettleiar",
+    "status": "Status implementasjon",
+    "standard": "DCAT-AP-NO 1.1 standarden",
+    "guide": "Rettleiar",
     "fordataowners": "For dataeigarar",
     "fordatausers": "For databrukarar",
     "technical": "Teknisk"
@@ -84,14 +84,14 @@
     "next": "Neste side",
     "prev": "Forrige side",
     "result.summary": "Søket gav ",
-    "dataset":"treff",
-    "nosearch.summary":"Søk blant",
-    "nosearch.descriptions":"datasettskildringar",
+    "dataset": "treff",
+    "nosearch.summary": "Søk blant",
+    "nosearch.descriptions": "datasettskildringar",
     "datasetTab": "Datasett",
     "apiTab": "API",
     "termTab": "Omgrep",
     "informationModelTab": "Informasjonsmodellar",
-    "nosearch.concepts":"omgrep"
+    "nosearch.concepts": "omgrep"
   },
   "hitstats": {
     "nosearch": {
@@ -111,16 +111,16 @@
     "informationModelsHits": "treff i informasjonsmodellar"
   },
   "facet": {
-    "organisation":"Verksemd",
-    "theme":"Tema",
-    "accessRight":"Tilgang",
-    "concept":"Omgrep",
-    "legal":"Heimel",
-    "spatial":"Geografi",
-    "temporal":"Tidsperiode",
-    "standard":"Standard",
-    "showmore":"Vis fleire",
-    "showfewer":"Vis færre",
+    "organisation": "Verksemd",
+    "theme": "Tema",
+    "accessRight": "Tilgang",
+    "concept": "Omgrep",
+    "legal": "Heimel",
+    "spatial": "Geografi",
+    "temporal": "Tidsperiode",
+    "standard": "Standard",
+    "showmore": "Vis fleire",
+    "showfewer": "Vis færre",
     "publishers": {
       "STAT": "Stat",
       "FYLKE": "Fylke",
@@ -133,8 +133,8 @@
     "format": "Format"
   },
   "result": {
-    "dataset":"Datasett",
-    "waiting":"Hentar data ..."
+    "dataset": "Datasett",
+    "waiting": "Hentar data ..."
   },
   "footer": {
     "organisation.number": "Organisasjonsnummer:",
@@ -287,8 +287,8 @@
     "searchPublisher": "Velg verksemd",
     "searchPublisherPlaceholder": "Søk på verksemdnavn...",
     "typeToSearch": "Skriv for å søke",
-    "openData":"Opne data",
-    "catalogs":"Katalogar",
+    "openData": "Opne data",
+    "catalogs": "Katalogar",
     "openDataset": "datasett er opne",
     "openDatasetDescription": "Opne datasett er datasett som er offentleg tilgjengeleg og har distribusjonar med open lisens.",
     "datasetTab": "Rapport for datasett"
@@ -303,7 +303,7 @@
       "isOpenAccess": "Opent for alle",
       "isNotOpenAccess": "Ikkje open tilgang",
       "isOpenLicense": "Open lisens",
-      "isNotOpenLicense" : "Ikkje open lisens"
+      "isNotOpenLicense": "Ikkje open lisens"
     },
     "endpoints": {
       "operations": "Operasjonar",
