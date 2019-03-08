@@ -338,7 +338,8 @@ export const distributionValues = values => {
     const { distribution } = values;
     if (distribution) {
       countDistributions = distribution.filter(
-        item => item.accessURL && item.accessURL[0] !== ''
+        item =>
+          item.accessURL && item.accessURL[0] !== '' && !item.accessService
       ).length;
     }
     if (countDistributions > 0) {

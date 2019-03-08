@@ -15,7 +15,8 @@ export const distributionTypes = values => {
       conformsTo: item.conformsTo ? item.conformsTo : [],
       page: item.page && item.page.length > 0 ? item.page : [licenseType],
       format: item.format ? item.format : [],
-      type: item.type ? item.type : ''
+      type: item.type ? item.type : '',
+      accessService: item.accessService ? item.accessService : null
     }));
   } else {
     distributions = [];

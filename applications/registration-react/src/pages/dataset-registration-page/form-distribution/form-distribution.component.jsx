@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Field, FieldArray } from 'redux-form';
+import _ from 'lodash';
 
 import localization from '../../../lib/localization';
 import Helptext from '../../../components/helptext/helptext.component';
@@ -30,11 +31,15 @@ export const renderDistributionLandingpage = componentProps => {
 };
 
 export const renderDistributions = componentProps => {
-  const { fields, helptextItems, openLicenseItems } = componentProps;
+  const { fields, helptextItems, openLicenseItems, initialValues } = componentProps;
   return (
     <div>
       {fields &&
-        fields.map((distribution, index) => (
+        fields.map((distribution, index) => {
+          if (_.get(initialValues, ['distribution', index, 'accessService'])) {
+            return null;
+          }
+          return (
           <div key={index}>
             <div className="d-flex">
               <h4>Distribusjon #{index + 1}</h4>
@@ -172,7 +177,8 @@ export const renderDistributions = componentProps => {
             </div>
             <hr />
           </div>
-        ))}
+          );
+        })}
       <button
         className="fdk-btn-no-border"
         type="button"
@@ -206,6 +212,7 @@ export const FormDistribution = props => {
         component={renderDistributions}
         helptextItems={helptextItems}
         openLicenseItems={openLicenseItems}
+        initialValues={initialValues}
       />
     </form>
   );
