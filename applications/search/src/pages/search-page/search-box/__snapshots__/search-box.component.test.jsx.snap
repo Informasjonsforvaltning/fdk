@@ -54,7 +54,7 @@ exports[`should render SearchBoxPure correctly 1`] = `
   <div
     className="col-md-12 text-center"
   >
-    <CustomHitsStats
+    <HitsStats
       countApis={null}
       countDatasets={100}
       countInformationModels={null}

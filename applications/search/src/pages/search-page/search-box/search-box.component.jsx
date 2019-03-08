@@ -5,7 +5,7 @@ import _ from 'lodash';
 
 import { getParamFromUrl } from '../../../lib/addOrReplaceUrlParam';
 import localization from '../../../lib/localization';
-import { CustomHitsStats } from './custom-hits-stats/custom-hits-stats.component';
+import { HitsStats } from './hits-stats/hits-stats.component';
 import './search-box.scss';
 
 export const SearchBoxPure = props => {
@@ -71,7 +71,7 @@ export const SearchBoxPure = props => {
         </button>
       </div>
       <div className="col-md-12 text-center">
-        <CustomHitsStats
+        <HitsStats
           countDatasets={countDatasets}
           countTerms={countTerms}
           countApis={countApis}
