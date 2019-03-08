@@ -8,7 +8,10 @@ import no.fdk.webutils.aggregation.ResponseUtil;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.index.query.RangeQueryBuilder;
+import org.elasticsearch.search.aggregations.AbstractAggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
+import org.elasticsearch.search.aggregations.bucket.filters.FiltersAggregator;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,6 +29,7 @@ import org.springframework.hateoas.PagedResources;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 
@@ -37,6 +41,8 @@ import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ConceptSearchController {
     public static final String MISSING = "MISSING";
+    public static final long DAY_IN_MS = 1000 * 3600 * 24;
+
     private static final Logger logger = LoggerFactory.getLogger(ConceptSearchController.class);
     private ElasticsearchTemplate elasticsearchTemplate;
 
@@ -159,6 +165,10 @@ public class ConceptSearchController {
                 .size(Integer.MAX_VALUE)
                 .order(Terms.Order.count(false)));
         }
+        if (selectedAggregationFields.contains("firstHarvested")) {
+            searchQuery.addAggregation(QueryUtil.createTemporalAggregation("firstHarvested", "harvest.firstHarvested"));
+        }
+
         return searchQuery;
     }
 
@@ -170,10 +180,25 @@ public class ConceptSearchController {
     }
 
     static class QueryUtil {
+        static RangeQueryBuilder createRangeQueryFromXdaysToNow(int days, String dateField) {
+            long now = new Date().getTime();
+
+            return QueryBuilders.rangeQuery(dateField).from(now - days * DAY_IN_MS).to(now).format("epoch_millis");
+        }
+
         static QueryBuilder createTermQuery(String term, String value) {
             return value.equals(MISSING) ?
                 QueryBuilders.boolQuery().mustNot(QueryBuilders.existsQuery(term)) :
                 QueryBuilders.termQuery(term, value);
+        }
+
+
+        static AbstractAggregationBuilder createTemporalAggregation(String name, String dateField) {
+
+            return AggregationBuilders.filters(name,
+                new FiltersAggregator.KeyedFilter("last7days", QueryUtil.createRangeQueryFromXdaysToNow(7, dateField)),
+                new FiltersAggregator.KeyedFilter("last30days", QueryUtil.createRangeQueryFromXdaysToNow(30, dateField)),
+                new FiltersAggregator.KeyedFilter("last365days", QueryUtil.createRangeQueryFromXdaysToNow(365, dateField)));
         }
     }
 }
