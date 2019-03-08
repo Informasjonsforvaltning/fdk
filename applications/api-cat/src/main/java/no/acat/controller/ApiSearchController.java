@@ -28,9 +28,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
@@ -71,8 +69,8 @@ public class ApiSearchController {
             String[] formats,
 
         @ApiParam("Calculate aggregations")
-        @RequestParam(value = "aggregations", defaultValue = "false", required = false)
-            String includeAggregations,
+        @RequestParam(value = "aggregations", defaultValue = "", required = false)
+            String aggregations,
 
         @ApiParam("The title text")
         @RequestParam(value = "title", defaultValue = "", required = false)
@@ -155,10 +153,8 @@ public class ApiSearchController {
             .setSize(checkAndAdjustSize(pageable.getPageSize()))
             .setFetchSource(returnFields, null);
 
-        if ("true".equals(includeAggregations)) {
-            searchRequest
-                .addAggregation(QueryUtil.createTermsAggregation("formats", "formats"))
-                .addAggregation(QueryUtil.createTermsAggregation("orgPath", "publisher.orgPath"));
+        if (isNotEmpty(aggregations)) {
+            searchRequest = addAggregations(searchRequest, aggregations);
         }
 
         if ("modified".equals(sortfield)) {
@@ -198,6 +194,18 @@ public class ApiSearchController {
         return size;
     }
 
+    public SearchRequestBuilder addAggregations(SearchRequestBuilder searchBuilder, String aggregationFields){
+        HashSet<String> selectedAggregationFields = new HashSet<>(Arrays.asList(aggregationFields.split(",")));
+
+        if (selectedAggregationFields.contains("formats")) {
+            searchBuilder
+                .addAggregation(QueryUtil.createTermsAggregation("formats", "formats"));
+        }
+        if (selectedAggregationFields.contains("orgPath")) {
+            searchBuilder.addAggregation(QueryUtil.createTermsAggregation("orgPath", "publisher.orgPath"));
+        }
+        return searchBuilder;
+    }
 
     QueryResponse convertFromElasticResponse(SearchResponse elasticResponse) {
         logger.debug("converting response");

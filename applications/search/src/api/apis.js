@@ -3,9 +3,11 @@ import axios from 'axios';
 
 const apisUrlBase = '/api/apis';
 
+export const searchAggregations = 'formats,orgPath';
+
 export const apisSearchUrl = query =>
   `${apisUrlBase}${qs.stringify(
-    { ...query, aggregations: 'true' },
+    { ...query, aggregations: searchAggregations },
     { addQueryPrefix: true }
   )}`;
 
