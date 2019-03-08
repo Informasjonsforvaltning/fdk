@@ -233,7 +233,7 @@ export const DatasetStats = props => {
       <div>
         <strong>
           <Link
-            title={localization.report.newDatasets}
+            title={localization.page.datasetTab}
             className="fdk-plain-label"
             to={`/?catalog=${catalogRecord.key}${orgPathParam}`}
           >
