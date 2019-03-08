@@ -16,14 +16,9 @@ export const ReportStats = props => {
 
   let name;
   if (entityName) {
-    name =
-      entityName === 'STAT' ||
-      entityName === 'FYLKE' ||
-      entityName === 'KOMMUNE' ||
-      entityName === 'PRIVAT' ||
-      entityName === 'ANNET'
-        ? localization.facet.publishers[entityName]
-        : _.capitalize(entityName);
+    name = _.capitalize(
+      localization.facet.publishers[entityName] || entityName
+    );
   } else {
     name = localization.report.allEntities;
   }
