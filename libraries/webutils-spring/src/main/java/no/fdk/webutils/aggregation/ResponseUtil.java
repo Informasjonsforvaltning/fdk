@@ -1,12 +1,12 @@
 package no.fdk.webutils.aggregation;
 
+import org.elasticsearch.search.aggregations.bucket.MultiBucketsAggregation;
+import org.springframework.data.elasticsearch.core.aggregation.AggregatedPage;
+import org.springframework.hateoas.PagedResources;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
-import org.elasticsearch.search.aggregations.bucket.terms.Terms;
-import org.springframework.data.elasticsearch.core.aggregation.AggregatedPage;
-import org.springframework.hateoas.PagedResources;
 
 public class ResponseUtil {
 
@@ -18,7 +18,7 @@ public class ResponseUtil {
                 buckets = new ArrayList<>();
             }};
 
-            ((Terms) elasticAggregation).getBuckets().forEach((bucket) -> {
+            ((MultiBucketsAggregation) elasticAggregation).getBuckets().forEach((bucket) -> {
                 outputAggregation.getBuckets().add(AggregationBucket.of(bucket.getKeyAsString(), bucket.getDocCount()));
             });
             aggregations.put(aggregationName, outputAggregation);
