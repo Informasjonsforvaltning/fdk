@@ -1,7 +1,7 @@
 import qs from 'qs';
 import axios from 'axios';
 
-const apisUrlBase = '/api/apis';
+export const apisUrlBase = '/api/apis';
 
 export const searchAggregations = 'formats,orgPath';
 
