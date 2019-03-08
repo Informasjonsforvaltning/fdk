@@ -72,9 +72,9 @@
     "register": "Registration",
     "helpToRegister": "User manual to start registration (only in Norwegian)",
     "help": "Help",
-    "status":"Status implementation",
-    "standard":"The DCAT-AP-NO 1.1 standard",
-    "guide":"Standard Guide",
+    "status": "Status implementation",
+    "standard": "The DCAT-AP-NO 1.1 standard",
+    "guide": "Standard Guide",
     "fordataowners": "For data owners",
     "fordatausers": "For data users",
     "technical": "Technical information"
@@ -84,14 +84,14 @@
     "next": "Neste side",
     "prev": "Forrige side",
     "result.summary": "Søket ga ",
-    "dataset":"treff",
-    "nosearch.summary":"Søk blant",
-    "nosearch.descriptions":"datasettbeskrivelser",
+    "dataset": "treff",
+    "nosearch.summary": "Søk blant",
+    "nosearch.descriptions": "datasettbeskrivelser",
     "datasetTab": "Dataset",
     "apiTab": "API",
     "termTab": "Concepts",
     "informationModelTab": "Information models",
-    "nosearch.concepts":"begreper"
+    "nosearch.concepts": "begreper"
   },
   "hitstats": {
     "nosearch": {
@@ -111,16 +111,16 @@
     "informationModelsHits": "hit(s) among information models"
   },
   "facet": {
-    "organisation":"Organization",
-    "theme":"Theme",
-    "accessRight":"Access",
-    "concept":"Concept",
-    "legal":"Legal",
-    "spatial":"Spatial",
-    "temporal":"Temporal",
-    "standard":"Standard",
-    "showmore":"Show more",
-    "showfewer":"Show fewer",
+    "organisation": "Organization",
+    "theme": "Theme",
+    "accessRight": "Access",
+    "concept": "Concept",
+    "legal": "Legal",
+    "spatial": "Spatial",
+    "temporal": "Temporal",
+    "standard": "Standard",
+    "showmore": "Show more",
+    "showfewer": "Show fewer",
     "publishers": {
       "STAT": "Central authority",
       "FYLKE": "County",
@@ -133,8 +133,8 @@
     "format": "Format"
   },
   "result": {
-    "dataset":"Dataset",
-    "waiting":"Fetching data ..."
+    "dataset": "Dataset",
+    "waiting": "Fetching data ..."
   },
   "footer": {
     "organisation.number": "Organisation number:",
@@ -287,8 +287,8 @@
     "searchPublisher": "Choose publisher",
     "searchPublisherPlaceholder": "Search publisher...",
     "typeToSearch": "Type to search",
-    "openData":"Open data",
-    "catalogs":"Catalogs",
+    "openData": "Open data",
+    "catalogs": "Catalogs",
     "openDataset": "datasets are open",
     "openDatasetDescription": "Open datasets are public and have distributions with open license.",
     "datasetTab": "Dataset report"
@@ -303,7 +303,7 @@
       "isOpenAccess": "Public access",
       "isNotOpenAccess": "Not public access",
       "isOpenLicense": "Open license",
-      "isNotOpenLicense" : "License not open"
+      "isNotOpenLicense": "License not open"
     },
     "endpoints": {
       "operations": "Operations",
