@@ -31,7 +31,12 @@ export const renderDistributionLandingpage = componentProps => {
 };
 
 export const renderDistributions = componentProps => {
-  const { fields, helptextItems, openLicenseItems, initialValues } = componentProps;
+  const {
+    fields,
+    helptextItems,
+    openLicenseItems,
+    initialValues
+  } = componentProps;
   return (
     <div>
       {fields &&
@@ -40,143 +45,145 @@ export const renderDistributions = componentProps => {
             return null;
           }
           return (
-          <div key={index}>
-            <div className="d-flex">
-              <h4>Distribusjon #{index + 1}</h4>
-              <button
-                className="fdk-btn-no-border"
-                type="button"
-                title="Remove distribution"
-                onClick={() => {
-                  fields.remove(index);
-                  asyncValidate(
-                    fields.getAll(),
-                    null,
-                    componentProps,
-                    `remove_distribution_${index}`
-                  );
-                }}
-              >
-                <i className="fa fa-trash mr-2" />
-                {localization.schema.distribution.deleteDistributionLabel}
-              </button>
-            </div>
-            <div className="form-group">
-              <Helptext
-                title={localization.schema.distribution.helptext.type}
-                helptextItems={helptextItems.Distribution_type}
-              />
-              <Field
-                name={`${distribution}.type`}
-                radioId={`distribution-api-${index}`}
-                component={RadioField}
-                type="radio"
-                value="API"
-                label={localization.schema.distribution.apiLabel}
-                disabled
-              />
-              <Field
-                name={`${distribution}.type`}
-                radioId={`distribution-feed-${index}`}
-                component={RadioField}
-                type="radio"
-                value="Feed"
-                label={localization.schema.distribution.feedLabel}
-              />
-              <Field
-                name={`${distribution}.type`}
-                radioId={`distribution-file-${index}`}
-                component={RadioField}
-                type="radio"
-                value="Nedlastbar fil"
-                label={localization.schema.distribution.downloadLabel}
-              />
-            </div>
-            <div className="form-group">
-              <Helptext
-                title={localization.schema.distribution.helptext.accessURL}
-                helptextItems={helptextItems.Distribution_accessURL}
-              />
-              <Field
-                name={`${distribution}.accessURL.0`}
-                type="text"
-                component={InputField}
-                label={localization.schema.distribution.accessURLLabel}
-              />
-            </div>
-            <div className="form-group">
-              <Helptext
-                title={localization.schema.distribution.helptext.format}
-                helptextItems={helptextItems.Distribution_format}
-              />
-              <Field
-                name={`${distribution}.format`}
-                type="text"
-                component={InputTagsField}
-                label={localization.schema.distribution.formatLabel}
-              />
-            </div>
-            <div className="form-group">
-              <Helptext
-                title={localization.schema.distribution.helptext.license}
-                helptextItems={helptextItems.Distribution_modified}
-              />
-              <Field
-                name={`${distribution}.license`}
-                component={SelectField}
-                items={openLicenseItems}
-              />
-            </div>
-            <div className="form-group">
-              <Helptext
-                title={localization.schema.distribution.helptext.description}
-                helptextItems={helptextItems.Distribution_description}
-              />
-              <Field
-                name={`${distribution}.description.${localization.getLanguage()}`}
-                component={TextAreaField}
-                label={localization.schema.distribution.descriptionLabel}
-              />
-            </div>
-
-            <div className="form-group">
-              <Helptext
-                title={localization.schema.distribution.helptext.documentation}
-                helptextItems={helptextItems.Distribution_documentation}
-              />
-              <FieldArray
-                name={`${distribution}.page`}
-                component={renderDistributionLandingpage}
-                helptextItems={helptextItems}
-              />
-            </div>
-
-            <div className="form-group">
-              <Helptext
-                title={localization.schema.distribution.helptext.conformsTo}
-                helptextItems={helptextItems.Distribution_conformsTo}
-              />
+            <div key={index}>
               <div className="d-flex">
-                <div className="w-50">
-                  <Field
-                    name={`${distribution}.conformsTo[0].prefLabel.${localization.getLanguage()}`}
-                    component={InputField}
-                    showLabel
-                    label={localization.schema.common.titleLabel}
-                  />
-                </div>
-                <div className="w-50">
-                  <Field
-                    name={`${distribution}.conformsTo[0].uri`}
-                    component={InputField}
-                    showLabel
-                    label={localization.schema.common.linkLabel}
-                  />
+                <h4>Distribusjon #{index + 1}</h4>
+                <button
+                  className="fdk-btn-no-border"
+                  type="button"
+                  title="Remove distribution"
+                  onClick={() => {
+                    fields.remove(index);
+                    asyncValidate(
+                      fields.getAll(),
+                      null,
+                      componentProps,
+                      `remove_distribution_${index}`
+                    );
+                  }}
+                >
+                  <i className="fa fa-trash mr-2" />
+                  {localization.schema.distribution.deleteDistributionLabel}
+                </button>
+              </div>
+              <div className="form-group">
+                <Helptext
+                  title={localization.schema.distribution.helptext.type}
+                  helptextItems={helptextItems.Distribution_type}
+                />
+                <Field
+                  name={`${distribution}.type`}
+                  radioId={`distribution-api-${index}`}
+                  component={RadioField}
+                  type="radio"
+                  value="API"
+                  label={localization.schema.distribution.apiLabel}
+                  disabled
+                />
+                <Field
+                  name={`${distribution}.type`}
+                  radioId={`distribution-feed-${index}`}
+                  component={RadioField}
+                  type="radio"
+                  value="Feed"
+                  label={localization.schema.distribution.feedLabel}
+                />
+                <Field
+                  name={`${distribution}.type`}
+                  radioId={`distribution-file-${index}`}
+                  component={RadioField}
+                  type="radio"
+                  value="Nedlastbar fil"
+                  label={localization.schema.distribution.downloadLabel}
+                />
+              </div>
+              <div className="form-group">
+                <Helptext
+                  title={localization.schema.distribution.helptext.accessURL}
+                  helptextItems={helptextItems.Distribution_accessURL}
+                />
+                <Field
+                  name={`${distribution}.accessURL.0`}
+                  type="text"
+                  component={InputField}
+                  label={localization.schema.distribution.accessURLLabel}
+                />
+              </div>
+              <div className="form-group">
+                <Helptext
+                  title={localization.schema.distribution.helptext.format}
+                  helptextItems={helptextItems.Distribution_format}
+                />
+                <Field
+                  name={`${distribution}.format`}
+                  type="text"
+                  component={InputTagsField}
+                  label={localization.schema.distribution.formatLabel}
+                />
+              </div>
+              <div className="form-group">
+                <Helptext
+                  title={localization.schema.distribution.helptext.license}
+                  helptextItems={helptextItems.Distribution_modified}
+                />
+                <Field
+                  name={`${distribution}.license`}
+                  component={SelectField}
+                  items={openLicenseItems}
+                />
+              </div>
+              <div className="form-group">
+                <Helptext
+                  title={localization.schema.distribution.helptext.description}
+                  helptextItems={helptextItems.Distribution_description}
+                />
+                <Field
+                  name={`${distribution}.description.${localization.getLanguage()}`}
+                  component={TextAreaField}
+                  label={localization.schema.distribution.descriptionLabel}
+                />
+              </div>
+
+              <div className="form-group">
+                <Helptext
+                  title={
+                    localization.schema.distribution.helptext.documentation
+                  }
+                  helptextItems={helptextItems.Distribution_documentation}
+                />
+                <FieldArray
+                  name={`${distribution}.page`}
+                  component={renderDistributionLandingpage}
+                  helptextItems={helptextItems}
+                />
+              </div>
+
+              <div className="form-group">
+                <Helptext
+                  title={localization.schema.distribution.helptext.conformsTo}
+                  helptextItems={helptextItems.Distribution_conformsTo}
+                />
+                <div className="d-flex">
+                  <div className="w-50">
+                    <Field
+                      name={`${distribution}.conformsTo[0].prefLabel.${localization.getLanguage()}`}
+                      component={InputField}
+                      showLabel
+                      label={localization.schema.common.titleLabel}
+                    />
+                  </div>
+                  <div className="w-50">
+                    <Field
+                      name={`${distribution}.conformsTo[0].uri`}
+                      component={InputField}
+                      showLabel
+                      label={localization.schema.common.linkLabel}
+                    />
+                  </div>
                 </div>
               </div>
+              <hr />
             </div>
-            <hr />
-          </div>
           );
         })}
       <button
