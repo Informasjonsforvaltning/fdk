@@ -94,21 +94,9 @@
     "nosearch.concepts": "begreper"
   },
   "hitstats": {
-    "nosearch": {
-      "search": "Søk blant",
-      "descriptions": "datasettbeskrivelser"
-    },
-    "search": "Søket ga",
-    "datasetHits": "treff i datasett",
-    "conceptHits": "treff i begreper",
-    "noHits": "Søket ga dessverre ingen treff",
-    "concepts": "begreper",
-    "and": "og",
-    "but": "men",
-    "apis": "API-er",
-    "apiHits": "treff i API-er",
-    "informationModels": "informasjonsmodeller",
-    "informationModelsHits": "treff i informasjonsmodeller"
+    "nosearch": "Søk blant {0} datasett, {1} API-er, {2} begreper og {3} informasjonsmodeller",
+    "search": "Søket ga {0} treff i datasett, {1} treff i API-er, {2} treff i begreper og {3} treff i informasjonsmodeller",
+    "nohits": "Søket ga dessverre ingen treff"
   },
   "facet": {
     "organisation": "Virksomhet",
