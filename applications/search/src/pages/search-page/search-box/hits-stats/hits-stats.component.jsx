@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import localization from '../../../../lib/localization';
 
-export const CustomHitsStats = props => {
+export const HitsStats = props => {
   const {
     countDatasets,
     countTerms,
@@ -67,7 +67,7 @@ export const CustomHitsStats = props => {
   );
 };
 
-CustomHitsStats.defaultProps = {
+HitsStats.defaultProps = {
   countDatasets: 0,
   countTerms: 0,
   countApis: 0,
@@ -75,7 +75,7 @@ CustomHitsStats.defaultProps = {
   filteringOrTextSearchPerformed: false
 };
 
-CustomHitsStats.propTypes = {
+HitsStats.propTypes = {
   countDatasets: PropTypes.number,
   countTerms: PropTypes.number,
   countApis: PropTypes.number,

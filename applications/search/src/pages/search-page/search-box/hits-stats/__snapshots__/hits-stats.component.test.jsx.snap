@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`should render CustomHitsStats correctly when no hits 1`] = `
+exports[`should render HitsStats correctly when no hits 1`] = `
 <div
   className="sk-hits-stats"
   data-qa="hits-stats"
@@ -39,7 +39,7 @@ exports[`should render CustomHitsStats correctly when no hits 1`] = `
 </div>
 `;
 
-exports[`should render CustomHitsStats correctly when no initial search 1`] = `
+exports[`should render HitsStats correctly when no initial search 1`] = `
 <div
   className="sk-hits-stats"
   data-qa="hits-stats"
@@ -75,7 +75,7 @@ exports[`should render CustomHitsStats correctly when no initial search 1`] = `
 </div>
 `;
 
-exports[`should render CustomHitsStats correctly when search performed  1`] = `
+exports[`should render HitsStats correctly when search performed  1`] = `
 <div
   className="sk-hits-stats"
   data-qa="hits-stats"
