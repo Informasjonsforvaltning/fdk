@@ -52,10 +52,10 @@ export const DatasetStats = props => {
         iconBgColor="green"
         iconType="lock"
         iconColor="green"
-        label={localization.report.public}
+        label={localization.report.aggregation.public}
       >
         <Link
-          title={localization.report.public}
+          title={localization.report.aggregation.public}
           className="mb-3"
           to={`/?accessrights=PUBLIC${orgPathParam}`}
         >
@@ -69,10 +69,10 @@ export const DatasetStats = props => {
         iconBgColor="green"
         iconType="lock"
         iconColor="green"
-        label={localization.report.restricted}
+        label={localization.report.aggregation.restricted}
       >
         <Link
-          title={localization.report.restricted}
+          title={localization.report.aggregation.restricted}
           className="mb-3"
           to={`/?accessrights=RESTRICTED${orgPathParam}`}
         >
@@ -86,10 +86,10 @@ export const DatasetStats = props => {
         iconBgColor="yellow"
         iconType="unlock"
         iconColor="yellow"
-        label={localization.report.nonPublic}
+        label={localization.report.aggregation.nonPublic}
       >
         <Link
-          title={localization.report.nonPublic}
+          title={localization.report.aggregation.nonPublic}
           className="mb-3"
           to={`/?accessrights=NON_PUBLIC${orgPathParam}`}
         >
@@ -103,10 +103,10 @@ export const DatasetStats = props => {
         iconBgColor="red"
         iconType="lock"
         iconColor="red"
-        label={localization.report.unknown}
+        label={localization.report.aggregation.accessRightsUnknown}
       >
         <Link
-          title={localization.report.unknown}
+          title={localization.report.aggregation.accessRightsUnknown}
           className="mb-3"
           to={`/?accessrights=Ukjent${orgPathParam}`}
         >
@@ -125,22 +125,27 @@ export const DatasetStats = props => {
         ]}
       >
         <Link
-          title={localization.report.openDataset}
+          title={localization.report.aggregation.openDataset}
           className="mb-3"
           to={`/?opendata=true${orgPathParam}`}
         >
           <span>{stats.opendata}</span>
           <span>/{stats.total}</span>
         </Link>
-        <span>{localization.report.openDataset}</span>
-        <div className="mt-3">{localization.report.openDatasetDescription}</div>
+        <span>{localization.report.aggregation.openDataset}</span>
+        <div className="mt-3">
+          {localization.report.aggregation.openDatasetDescription}
+        </div>
       </StatBox>
     </div>
   );
 
   const distributions = (
     <div className="d-flex flex-fill mb-5 border-top">
-      <StatBox statBoxStyle="w-25" label={localization.report.nonPublic}>
+      <StatBox
+        statBoxStyle="w-25"
+        label={localization.report.aggregation.publicWithDistributions}
+      >
         <ChartBar
           componentKey={`withDistribution-${orgPath}`}
           percentHeight={calculatePercent(
@@ -150,7 +155,7 @@ export const DatasetStats = props => {
           barColor="green"
         />
         <Link
-          title={localization.report.withDistributions}
+          title={localization.report.aggregation.publicWithDistributions}
           className="mb-3"
           to="/#"
         >
@@ -160,7 +165,7 @@ export const DatasetStats = props => {
 
       <StatBox
         statBoxStyle="w-25"
-        label={localization.report.withoutDistributions}
+        label={localization.report.aggregation.publicWithoutDistributions}
       >
         <ChartBar
           componentKey={`withoutDistribution-${orgPath}`}
@@ -171,7 +176,7 @@ export const DatasetStats = props => {
           barColor="green"
         />
         <Link
-          title={localization.report.withoutDistributions}
+          title={localization.report.aggregation.publicWithoutDistributions}
           className="mb-3"
           to="/#"
         >
@@ -187,9 +192,13 @@ export const DatasetStats = props => {
         statBoxStyle="w-25"
         iconType="book"
         iconColor="blue"
-        label={localization.report.withConcepts}
+        label={localization.report.aggregation.withConcepts}
       >
-        <Link title={localization.report.withConcepts} className="mb-3" to="/#">
+        <Link
+          title={localization.report.aggregation.withConcepts}
+          className="mb-3"
+          to="/#"
+        >
           {stats.subjectCount}
         </Link>
       </StatBox>
@@ -209,10 +218,10 @@ export const DatasetStats = props => {
         statBoxStyle="w-25"
         iconType="book"
         iconColor="grey"
-        label={localization.report.withoutConcepts}
+        label={localization.report.aggregation.withoutConcepts}
       >
         <Link
-          title={localization.report.withoutConcepts}
+          title={localization.report.aggregation.withoutConcepts}
           className="mb-3"
           to="/#"
         >
