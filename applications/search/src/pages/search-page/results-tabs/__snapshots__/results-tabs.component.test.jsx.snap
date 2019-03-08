@@ -23,7 +23,7 @@ exports[`should render ResultsTabs with "Concepts" active correctly 1`] = `
             }
           }
         >
-          Dataset
+          Datasets
           <span>
              (
             985
@@ -44,7 +44,7 @@ exports[`should render ResultsTabs with "Concepts" active correctly 1`] = `
             }
           }
         >
-          API
+          APIs
           <span>
              (
             4
@@ -121,7 +121,7 @@ exports[`should render ResultsTabs with "Dataset" active correctly 1`] = `
             }
           }
         >
-          Dataset
+          Datasets
           <span>
              (
             985
@@ -142,7 +142,7 @@ exports[`should render ResultsTabs with "Dataset" active correctly 1`] = `
             }
           }
         >
-          API
+          APIs
           <span>
              (
             4
