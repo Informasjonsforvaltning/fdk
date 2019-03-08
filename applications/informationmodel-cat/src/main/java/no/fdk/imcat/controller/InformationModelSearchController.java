@@ -23,10 +23,11 @@ import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilde
 import org.springframework.data.elasticsearch.core.query.SourceFilter;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.hateoas.PagedResources;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
 @CrossOrigin
 @RestController
@@ -117,7 +118,7 @@ public class InformationModelSearchController {
             finalQuery.addAggregation(aggregationBuilder);
         }
 
-        if (!StringUtils.isEmpty(returnFields)) {
+        if (isNotEmpty(returnFields)) {
             SourceFilter sourceFilter = new FetchSourceFilter(returnFields.split(","), null);
             finalQuery.addSourceFilter(sourceFilter);
         }

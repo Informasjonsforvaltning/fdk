@@ -24,10 +24,11 @@ import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilde
 import org.springframework.data.elasticsearch.core.query.SourceFilter;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.hateoas.PagedResources;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
 @CrossOrigin
 @RestController
@@ -82,7 +83,7 @@ public class ConceptSearchController {
 
         QueryBuilder searchQuery;
 
-        if (!StringUtils.isEmpty(prefLabel)) {
+        if (isNotEmpty(prefLabel)) {
             QueryBuilder nbQuery = QueryBuilders.matchPhrasePrefixQuery("prefLabel.nb", prefLabel).analyzer("norwegian").maxExpansions(15);
             QueryBuilder noQuery = QueryBuilders.matchPhrasePrefixQuery("prefLabel.no", prefLabel).analyzer("norwegian").maxExpansions(15);
             QueryBuilder nnQuery = QueryBuilders.matchPhrasePrefixQuery("prefLabel.nn", prefLabel).analyzer("norwegian").maxExpansions(15);
@@ -121,7 +122,7 @@ public class ConceptSearchController {
             finalQuery.addAggregation(aggregationBuilder);
         }
 
-        if (!StringUtils.isEmpty(returnFields)) {
+        if (isNotEmpty(returnFields)) {
             SourceFilter sourceFilter = new FetchSourceFilter(returnFields.concat(",prefLabel").split(","), null);
             finalQuery.addSourceFilter(sourceFilter);
         }

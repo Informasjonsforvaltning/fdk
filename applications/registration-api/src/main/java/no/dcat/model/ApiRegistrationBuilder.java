@@ -5,13 +5,13 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import no.fdk.acat.bindings.ApiCatBindings;
 import no.fdk.acat.common.model.ApiEditableProperties;
-import org.apache.commons.lang.StringUtils;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 import static no.dcat.model.ApiRegistration.REGISTRATION_STATUS_DRAFT;
 import static no.dcat.model.ApiRegistration.REGISTRATION_STATUS_PUBLISH;
+import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
 public class ApiRegistrationBuilder {
     private ApiRegistration apiRegistration;
@@ -80,14 +80,14 @@ public class ApiRegistrationBuilder {
         String apiSpecUrl = (String) data.get("apiSpecUrl");
         String apiSpec = (String) data.get("apiSpec");
 
-        if (StringUtils.isNotEmpty(apiSpecUrl)) {
+        if (isNotEmpty(apiSpecUrl)) {
             setApiSpecificationFromSpecUrl(apiSpecUrl, apiCatService);
-        } else if (!StringUtils.isEmpty(apiSpec)) {
+        } else if (isNotEmpty(apiSpec)) {
             setApiSpecificationFromSpec(apiSpec, apiCatService);
         }
 
         String registrationStatus = (String) data.get("registrationStatus");
-        if (StringUtils.isNotEmpty(registrationStatus)) {
+        if (isNotEmpty(registrationStatus)) {
             setRegistrationStatus(registrationStatus);
         }
 
