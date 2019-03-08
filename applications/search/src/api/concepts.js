@@ -3,9 +3,11 @@ import qs from 'qs';
 
 const conceptsUrlBase = `/api/concepts`;
 
+export const searchAggregations = 'orgPath';
+
 export const conceptsSearchUrl = query =>
   `${conceptsUrlBase}${qs.stringify(
-    { ...query, aggregations: 'true' },
+    { ...query, aggregations: searchAggregations },
     { addQueryPrefix: true }
   )}`;
 

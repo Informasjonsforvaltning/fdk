@@ -8,7 +8,6 @@ import no.fdk.webutils.aggregation.ResponseUtil;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.search.aggregations.AbstractAggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms;
 import org.slf4j.Logger;
@@ -26,6 +25,8 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.hateoas.PagedResources;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
@@ -58,7 +59,7 @@ public class ConceptSearchController {
 
         @ApiParam("Calculate aggregations")
         @RequestParam(value = "aggregations", defaultValue = "false", required = false)
-            String includeAggregations,
+            String aggregations,
 
         @ApiParam("The prefLabel text")
         @RequestParam(value = "preflabel", defaultValue = "", required = false)
@@ -111,15 +112,8 @@ public class ConceptSearchController {
             .withPageable(pageable)
             .build();
 
-        if ("true".equals(includeAggregations)) {
-            AbstractAggregationBuilder aggregationBuilder = AggregationBuilders
-                .terms("orgPath")
-                .field("publisher.orgPath")
-                .missing(MISSING)
-                .size(Integer.MAX_VALUE)
-                .order(Terms.Order.count(false));
-
-            finalQuery.addAggregation(aggregationBuilder);
+        if (isNotEmpty(aggregations)) {
+            finalQuery = addAggregations(finalQuery, aggregations);
         }
 
         if (isNotEmpty(returnFields)) {
@@ -152,6 +146,20 @@ public class ConceptSearchController {
         } else {
             return conceptResources;
         }
+    }
+
+    public NativeSearchQuery addAggregations(NativeSearchQuery searchQuery, String aggregationFields) {
+        HashSet<String> selectedAggregationFields = new HashSet<>(Arrays.asList(aggregationFields.split(",")));
+
+        if (selectedAggregationFields.contains("orgPath")) {
+            searchQuery.addAggregation(AggregationBuilders
+                .terms("orgPath")
+                .field("publisher.orgPath")
+                .missing(MISSING)
+                .size(Integer.MAX_VALUE)
+                .order(Terms.Order.count(false)));
+        }
+        return searchQuery;
     }
 
     private void stripEmptyObjects(List<ConceptDenormalized> concepts) {
