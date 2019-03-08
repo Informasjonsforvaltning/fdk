@@ -83,15 +83,10 @@
     "navigation": "Sidenavigering",
     "next": "Neste side",
     "prev": "Forrige side",
-    "result.summary": "Søket gav ",
-    "dataset": "treff",
-    "nosearch.summary": "Søk blant",
-    "nosearch.descriptions": "datasettskildringar",
     "datasetTab": "Datasett",
     "apiTab": "API",
     "termTab": "Omgrep",
-    "informationModelTab": "Informasjonsmodellar",
-    "nosearch.concepts": "omgrep"
+    "informationModelTab": "Informasjonsmodellar"
   },
   "hitstats": {
     "nosearch": "Søk blant {0} datasett, {1} API, {2} omgrep og {3} informasjonsmodellar",
