@@ -1,7 +1,7 @@
 import axios from 'axios';
 import qs from 'qs';
 
-const conceptsUrlBase = `/api/concepts`;
+export const conceptsUrlBase = `/api/concepts`;
 
 export const searchAggregations = 'orgPath';
 

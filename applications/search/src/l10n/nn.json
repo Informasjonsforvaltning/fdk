@@ -255,6 +255,10 @@
     "typeToSearch": "Skriv for å søke",
     "catalogs": "Katalogar",
     "datasetTab": "Rapport for datasett",
+    "datasets":"datasett",
+    "apis":"API-er",
+    "concepts":"omgrep",
+    "newPastWeek":"nye siste uke",
     "aggregation": {
       "public": "Datasett som er offentleg",
       "restricted": "Datasett med avgrensa offentlegheit",
