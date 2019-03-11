@@ -12,13 +12,10 @@
     "hits" : [ ]
   },
   "aggregations" : {
-    "distCount" : {
+    "withDistribution" : {
       "doc_count" : 982
     },
-    "missingFirstHarvested" : {
-      "doc_count" : 0
-    },
-    "distOnPublicAccessCount" : {
+    "publicWithDistribution" : {
       "doc_count" : 979
     },
     "orgPath" : {
@@ -374,7 +371,7 @@
         "doc_count" : 1
       } ]
     },
-    "accessRightsCount" : {
+    "accessRights" : {
       "doc_count_error_upper_bound" : 0,
       "sum_other_doc_count" : 0,
       "buckets" : [ {
@@ -385,7 +382,7 @@
         "doc_count" : 3
       } ]
     },
-    "theme_count" : {
+    "theme" : {
       "doc_count_error_upper_bound" : 0,
       "sum_other_doc_count" : 0,
       "buckets" : [ {
@@ -429,7 +426,7 @@
         "doc_count" : 8
       } ]
     },
-    "catalogs" : {
+    "catalog" : {
       "doc_count_error_upper_bound" : 0,
       "sum_other_doc_count" : 0,
       "buckets" : [ {
@@ -701,22 +698,6 @@
     "opendata" : {
       "doc_count" : 555
     },
-    "lastChanged" : {
-      "buckets" : {
-        "last7days" : {
-          "doc_count" : 1
-        },
-        "last30days" : {
-          "doc_count" : 587
-        },
-        "last365days" : {
-          "doc_count" : 985
-        }
-      }
-    },
-    "missingLastChanged" : {
-      "doc_count" : 0
-    },
     "firstHarvested" : {
       "buckets" : {
         "last7days" : {
@@ -730,7 +711,7 @@
         }
       }
     },
-    "subjectCount" : {
+    "subject" : {
       "doc_count" : 0
     }
   }

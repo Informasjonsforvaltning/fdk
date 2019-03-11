@@ -1333,19 +1333,6 @@
     ]
   },
   "aggregations": {
-    "missingFirstHarvested": {
-      "doc_count": 0
-    },
-    "subjectsCount": {
-      "doc_count_error_upper_bound": 0,
-      "sum_other_doc_count": 0,
-      "buckets": [
-        {
-          "key": "Ukjent",
-          "doc_count": 4
-        }
-      ]
-    },
     "orgPath": {
       "doc_count_error_upper_bound": 0,
       "sum_other_doc_count": 0,
@@ -1380,7 +1367,7 @@
         }
       ]
     },
-    "accessRightsCount": {
+    "accessRights": {
       "doc_count_error_upper_bound": 0,
       "sum_other_doc_count": 0,
       "buckets": [
@@ -1390,7 +1377,7 @@
         }
       ]
     },
-    "theme_count": {
+    "theme": {
       "doc_count_error_upper_bound": 0,
       "sum_other_doc_count": 0,
       "buckets": [
@@ -1412,48 +1399,6 @@
         }
       ]
     },
-    "catalogs": {
-      "doc_count_error_upper_bound": 0,
-      "sum_other_doc_count": 0,
-      "buckets": [
-        {
-          "key": "http://www.geonorge.no/geonetwork",
-          "doc_count": 4
-        }
-      ]
-    },
-    "opendata": {
-      "doc_count": 0
-    },
-    "lastChanged": {
-      "buckets": {
-        "last7days": {
-          "doc_count": 0
-        },
-        "last30days": {
-          "doc_count": 4
-        },
-        "last365days": {
-          "doc_count": 4
-        }
-      }
-    },
-    "missingLastChanged": {
-      "doc_count": 0
-    },
-    "firstHarvested": {
-      "buckets": {
-        "last7days": {
-          "doc_count": 0
-        },
-        "last30days": {
-          "doc_count": 0
-        },
-        "last365days": {
-          "doc_count": 4
-        }
-      }
-    },
     "spatial": {
       "doc_count_error_upper_bound": 0,
       "sum_other_doc_count": 0,
@@ -1464,7 +1409,7 @@
         }
       ]
     },
-    "provenanceCount": {
+    "provenance": {
       "doc_count_error_upper_bound": 0,
       "sum_other_doc_count": 0,
       "buckets": [
