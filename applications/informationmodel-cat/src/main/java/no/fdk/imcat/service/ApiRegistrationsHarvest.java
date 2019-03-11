@@ -117,7 +117,7 @@ public class ApiRegistrationsHarvest {
         JSONSchemaRootNode.set("definitions", definitionsNode);
         ObjectWriter writer = mapper.writer();
 
-        String schemaString = writer.writeValueAsString(JSONSchemaRootNode);
+        String schemaString = writer.writeValueAsString("["+ JSONSchemaRootNode+"]");//Since the information models from AltInn can contain multiple Schemas, all schemas must be inside an array.
         return schemaString;
     }
 
