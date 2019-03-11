@@ -41,6 +41,27 @@ public class ApiSearchController {
     public static final String MISSING = "MISSING";
     public static final long DAY_IN_MS = 1000 * 3600 * 24;
     public static final int MAX_AGGREGATIONS = 10000;
+    public static final String[] DEFAULT_RETURN_FIELDS = {
+        "id",
+        "title",
+        "titleFormatted",
+        "description",
+        "descriptionFormatted",
+        "formats",
+        "publisher.id",
+        "publisher.orgPath",
+        "publisher.name",
+        "publisher.prefLabel.*",
+        "nationalComponent",
+        "isOpenAccess",
+        "isOpenLicense",
+        "isFree",
+        "statusCode",
+        "deprecationInfoExpirationDate",
+        "deprecationInfoReplacedWithUrl"
+    };
+
+
     private static final Logger logger = LoggerFactory.getLogger(ApiSearchController.class);
     private ElasticsearchService elasticsearch;
     private ObjectMapper mapper;
@@ -79,6 +100,10 @@ public class ApiSearchController {
         @RequestParam(value = "title", defaultValue = "", required = false)
             String title,
 
+        @ApiParam("UUID of dataset referenced by the API")
+        @RequestParam(value = "datasetid", defaultValue = "", required = false)
+            String datasetId,
+
         @ApiParam("Specifies the sort field, at the present the only value is \"modified\". Default is no value, and results are sorted by relevance")
         @RequestParam(value = "sortfield", defaultValue = "", required = false)
             String sortfield,
@@ -86,6 +111,10 @@ public class ApiSearchController {
         @ApiParam("Specifies the sort direction of the sorted result. The directions are: asc for ascending and desc for descending")
         @RequestParam(value = "sortdirection", defaultValue = "", required = false)
             String sortdirection,
+
+        @ApiParam("Comma-separated list of fields in query response. If not specified, all fields are returned.")
+        @RequestParam(value = "returnFields", defaultValue = "", required = false)
+            String returnFields,
 
         @PageableDefault()
             Pageable pageable
@@ -124,27 +153,21 @@ public class ApiSearchController {
         if (formats != null && formats.length > 0) {
             composedQuery.filter(QueryUtil.createTermsQuery("formats", formats));
         }
+
+        if (!datasetId.isEmpty()) {
+            composedQuery.filter(QueryBuilders.termQuery("datasetReferences.id", datasetId));
+        }
+
         logger.debug("Built query:{}", composedQuery);
 
-        String[] returnFields = {
-            "id",
-            "title",
-            "titleFormatted",
-            "description",
-            "descriptionFormatted",
-            "formats",
-            "publisher.id",
-            "publisher.orgPath",
-            "publisher.name",
-            "publisher.prefLabel.*",
-            "nationalComponent",
-            "isOpenAccess",
-            "isOpenLicense",
-            "isFree",
-            "statusCode",
-            "deprecationInfoExpirationDate",
-            "deprecationInfoReplacedWithUrl"
-        };
+        String[] returnFieldsArray;
+
+        if(!returnFields.isEmpty()) {
+            returnFieldsArray = returnFields.split(",");
+        } else {
+            returnFieldsArray = DEFAULT_RETURN_FIELDS;
+        }
+
 
         int from = (int) pageable.getOffset();
 
@@ -154,7 +177,7 @@ public class ApiSearchController {
             .setQuery(composedQuery)
             .setFrom(checkAndAdjustFrom(from))
             .setSize(checkAndAdjustSize(pageable.getPageSize()))
-            .setFetchSource(returnFields, null);
+            .setFetchSource(returnFieldsArray, null);
 
         if (isNotEmpty(aggregations)) {
             searchRequest = addAggregations(searchRequest, aggregations);
