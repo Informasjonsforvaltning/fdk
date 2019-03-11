@@ -68,6 +68,9 @@
       "datasetReferences": {
         "dynamic": "false",
         "properties": {
+          "id" : {
+            "type" : "keyword"
+          },
           "title": {
             "type": "object",
             "dynamic": "true"
