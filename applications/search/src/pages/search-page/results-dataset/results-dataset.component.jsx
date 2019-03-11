@@ -25,7 +25,6 @@ function _renderFilterModal({
   onFilterSpatial,
   locationSearch,
   themesItems,
-  publisherCounts,
   publishers
 }) {
   return (
@@ -36,7 +35,7 @@ function _renderFilterModal({
           <FilterBox
             htmlKey={1}
             title={localization.facet.theme}
-            filter={datasetAggregations.theme_count}
+            filter={datasetAggregations.theme}
             onClick={onFilterTheme}
             activeFilter={locationSearch.theme}
             themesItems={themesItems}
@@ -44,13 +43,13 @@ function _renderFilterModal({
           <FilterBox
             htmlKey={2}
             title={localization.facet.accessRight}
-            filter={datasetAggregations.accessRightsCount}
+            filter={datasetAggregations.accessRights}
             onClick={onFilterAccessRights}
             activeFilter={locationSearch.accessrights}
           />
           <SearchPublishersTree
             title={localization.facet.organisation}
-            publisherCounts={publisherCounts}
+            publisherCounts={datasetAggregations.orgPath.buckets}
             onFilterPublisherHierarchy={onFilterPublisherHierarchy}
             activeFilter={locationSearch.orgPath}
             publishers={publishers}
@@ -65,7 +64,7 @@ function _renderFilterModal({
           <FilterBox
             htmlKey={4}
             title={localization.facet.provenance}
-            filter={datasetAggregations.provenanceCount}
+            filter={datasetAggregations.provenance}
             onClick={onFilterProvenance}
             activeFilter={locationSearch.provenance}
           />
@@ -110,7 +109,6 @@ export const ResultsDatasetPure = ({
   showClearFilterButton,
   themesItems,
   hitsPerPage,
-  publisherCounts,
   publishers,
   referenceData,
   history,
@@ -201,13 +199,12 @@ export const ResultsDatasetPure = ({
                   onFilterSpatial,
                   locationSearch,
                   themesItems,
-                  publisherCounts,
                   publishers
                 })}
                 <FilterBox
                   htmlKey={1}
                   title={localization.facet.theme}
-                  filter={datasetAggregations.theme_count}
+                  filter={datasetAggregations.theme}
                   onClick={onFilterTheme}
                   activeFilter={locationSearch.theme}
                   themesItems={themesItems}
@@ -215,13 +212,13 @@ export const ResultsDatasetPure = ({
                 <FilterBox
                   htmlKey={2}
                   title={localization.facet.accessRight}
-                  filter={datasetAggregations.accessRightsCount}
+                  filter={datasetAggregations.accessRights}
                   onClick={onFilterAccessRights}
                   activeFilter={locationSearch.accessrights}
                 />
                 <SearchPublishersTree
                   title={localization.facet.organisation}
-                  publisherCounts={publisherCounts}
+                  publisherCounts={datasetAggregations.orgPath.buckets}
                   onFilterPublisherHierarchy={onFilterPublisherHierarchy}
                   activeFilter={locationSearch.orgPath}
                   publishers={publishers}
@@ -236,7 +233,7 @@ export const ResultsDatasetPure = ({
                 <FilterBox
                   htmlKey={4}
                   title={localization.facet.provenance}
-                  filter={datasetAggregations.provenanceCount}
+                  filter={datasetAggregations.provenance}
                   onClick={onFilterProvenance}
                   activeFilter={locationSearch.provenance}
                 />
@@ -289,7 +286,6 @@ ResultsDatasetPure.defaultProps = {
   onFilterSpatial: _.noop,
   onClearFilters: _.noop,
   themesItems: null,
-  publisherCounts: [],
   publishers: null,
   referenceData: null,
 
@@ -315,7 +311,6 @@ ResultsDatasetPure.propTypes = {
   onFilterSpatial: PropTypes.func,
   onClearFilters: PropTypes.func,
   themesItems: PropTypes.object,
-  publisherCounts: PropTypes.array,
   publishers: PropTypes.object,
   referenceData: PropTypes.object,
 

@@ -144,7 +144,38 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
               <SearchPublishersTree
                 activeFilter={null}
                 onFilterPublisherHierarchy={[Function]}
-                publisherCounts={Array []}
+                publisherCounts={
+                  Array [
+                    Object {
+                      "count": 4,
+                      "key": "/STAT",
+                    },
+                    Object {
+                      "count": 2,
+                      "key": "/STAT/972417858",
+                    },
+                    Object {
+                      "count": 2,
+                      "key": "/STAT/972417858/971040238",
+                    },
+                    Object {
+                      "count": 1,
+                      "key": "/STAT/972417807",
+                    },
+                    Object {
+                      "count": 1,
+                      "key": "/STAT/972417807/971526920",
+                    },
+                    Object {
+                      "count": 1,
+                      "key": "/STAT/972417874",
+                    },
+                    Object {
+                      "count": 1,
+                      "key": "/STAT/972417874/988983837",
+                    },
+                  ]
+                }
                 publishers={null}
                 title="Organization"
               />
@@ -246,7 +277,38 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
         <SearchPublishersTree
           activeFilter={null}
           onFilterPublisherHierarchy={[Function]}
-          publisherCounts={Array []}
+          publisherCounts={
+            Array [
+              Object {
+                "count": 4,
+                "key": "/STAT",
+              },
+              Object {
+                "count": 2,
+                "key": "/STAT/972417858",
+              },
+              Object {
+                "count": 2,
+                "key": "/STAT/972417858/971040238",
+              },
+              Object {
+                "count": 1,
+                "key": "/STAT/972417807",
+              },
+              Object {
+                "count": 1,
+                "key": "/STAT/972417807/971526920",
+              },
+              Object {
+                "count": 1,
+                "key": "/STAT/972417874",
+              },
+              Object {
+                "count": 1,
+                "key": "/STAT/972417874/988983837",
+              },
+            ]
+          }
           publishers={null}
           title="Organization"
         />

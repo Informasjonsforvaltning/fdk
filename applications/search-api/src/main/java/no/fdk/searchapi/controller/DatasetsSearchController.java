@@ -298,32 +298,23 @@ public class DatasetsSearchController {
     public SearchRequestBuilder addAggregations(SearchRequestBuilder searchBuilder, String aggregationFields) {
         HashSet<String> selectedAggregationFields = new HashSet<>(Arrays.asList(aggregationFields.split(",")));
 
-        if (selectedAggregationFields.contains("accessRightsCount")) {
-            searchBuilder.addAggregation(QueryUtil.createTermsAggregation("accessRightsCount", "accessRights.code.raw"));
+        if (selectedAggregationFields.contains("accessRights")) {
+            searchBuilder.addAggregation(QueryUtil.createTermsAggregation("accessRights", "accessRights.code.raw"));
         }
-        if (selectedAggregationFields.contains("theme_count")) {
-            searchBuilder.addAggregation(QueryUtil.createTermsAggregation("theme_count", "theme.code"));
+        if (selectedAggregationFields.contains("theme")) {
+            searchBuilder.addAggregation(QueryUtil.createTermsAggregation("theme", "theme.code"));
         }
         if (selectedAggregationFields.contains("orgPath")) {
             searchBuilder.addAggregation(QueryUtil.createTermsAggregation("orgPath", "publisher.orgPath"));
         }
-        if (selectedAggregationFields.contains("catalogs")) {
-            searchBuilder.addAggregation(QueryUtil.createTermsAggregation("catalogs", "catalog.uri"));
+        if (selectedAggregationFields.contains("catalog")) {
+            searchBuilder.addAggregation(QueryUtil.createTermsAggregation("catalog", "catalog.uri"));
         }
-        if (selectedAggregationFields.contains("provenanceCount")) {
-            searchBuilder.addAggregation(QueryUtil.createTermsAggregation("provenanceCount", "provenance.code.raw"));
+        if (selectedAggregationFields.contains("provenance")) {
+            searchBuilder.addAggregation(QueryUtil.createTermsAggregation("provenance", "provenance.code.raw"));
         }
         if (selectedAggregationFields.contains("firstHarvested")) {
             searchBuilder.addAggregation(QueryUtil.createTemporalAggregation("firstHarvested", "harvest.firstHarvested"));
-        }
-        if (selectedAggregationFields.contains("missingFirstHarvested")) {
-            searchBuilder.addAggregation(AggregationBuilders.missing("missingFirstHarvested").field("harvest.firstHarvested"));
-        }
-        if (selectedAggregationFields.contains("lastChanged")) {
-            searchBuilder.addAggregation(QueryUtil.createTemporalAggregation("lastChanged", "harvest.lastChanged"));
-        }
-        if (selectedAggregationFields.contains("missingLastChanged")) {
-            searchBuilder.addAggregation(AggregationBuilders.missing("missingLastChanged").field("harvest.lastChanged"));
         }
         if (selectedAggregationFields.contains("spatial")) {
             searchBuilder.addAggregation(QueryUtil.createTermsAggregation("spatial", "spatial.prefLabel.no.raw"));
@@ -335,20 +326,18 @@ public class DatasetsSearchController {
                     .must(QueryBuilders.termQuery("distribution.openLicense", "true"))
             ));
         }
-        if (selectedAggregationFields.contains("distCount")) {
-            searchBuilder.addAggregation(AggregationBuilders.filter("distCount", QueryBuilders.existsQuery("distribution")));
+        if (selectedAggregationFields.contains("withDistribution")) {
+            searchBuilder.addAggregation(AggregationBuilders.filter("withDistribution", QueryBuilders.existsQuery("distribution")));
         }
-        if (selectedAggregationFields.contains("distOnPublicAccessCount")) {
-
-            searchBuilder.addAggregation(AggregationBuilders.filter("distOnPublicAccessCount",
+        if (selectedAggregationFields.contains("publicWithDistribution")) {
+            searchBuilder.addAggregation(AggregationBuilders.filter("publicWithDistribution",
                 QueryBuilders.boolQuery()
                     .must(QueryBuilders.existsQuery("distribution"))
                     .must(QueryBuilders.termQuery("accessRights.code.raw", "PUBLIC"))
             ));
         }
-        if (selectedAggregationFields.contains("subjectCount")) {
-
-            searchBuilder.addAggregation(AggregationBuilders.filter("subjectCount", QueryBuilders.existsQuery("subject.prefLabel")));
+        if (selectedAggregationFields.contains("subject")) {
+            searchBuilder.addAggregation(AggregationBuilders.filter("subject", QueryBuilders.existsQuery("subject.prefLabel")));
         }
 
         return searchBuilder;
