@@ -41,4 +41,4 @@ application:
     - "https://data.brreg.no/begrep/"
     - "https://raw.githubusercontent.com/akhvidsten/skosmapping/master/Virksomhetsarkitektur"
 server:
-  port: 8088
+  port: 8105

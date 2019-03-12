@@ -27,4 +27,4 @@ elastic:
   clusterNodes: localhost:9300
   clusterName: elasticsearch
 server:
-  port: 8088
+  port: 8103

@@ -70,7 +70,7 @@ services:
   api-cat:
     restart: always
     ports:
-      - "8087:8080"
+      - "8102:8080"
     environment:
       - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
       - FDK_ES_CLUSTERNODES=elasticsearch5:9300
@@ -81,7 +81,7 @@ services:
   concept-cat:
     restart: always
     ports:
-      - "8085:8080"
+      - "8104:8080"
     environment:
       - JAVA_OPTS=-Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
       - LOG_LEVEL=${LOG_LEVEL}
@@ -89,7 +89,7 @@ services:
   informationmodel-cat:
     restart: always
     ports:
-      - "8089:8080"
+      - "8108:8080"
     environment:
     - JAVA_OPTS=-Djava.security.egd=file:/dev/./urandom -Xmx512M -Dspring.profiles.active=docker
     - LOG_LEVEL=${LOG_LEVEL}
@@ -109,7 +109,7 @@ services:
   harvester-api:
     restart: always
     ports:
-      - "8081:8080"
+      - "8108:8080"
     environment:
       - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx1024M -Dspring.profiles.active=docker
       - FDK_ES_CLUSTERNODES=elasticsearch5:9300
@@ -122,14 +122,14 @@ services:
   reference-data:
     restart: always
     ports:
-      - "8100:8080"
+      - "8112:8080"
     environment:
       - JAVA_OPTS=-Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
 
   registration-api:
     restart: always
     ports:
-      - "8079:8080"
+      - "8114:8080"
     environment:
       - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
       - FDK_ES_CLUSTERNODES=elasticsearch5:9300
@@ -148,7 +148,7 @@ services:
   search-api:
     restart: always
     ports:
-      - "8083:8080"
+      - "8118:8080"
     environment:
       - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
       - FDK_ES_CLUSTERNODES=elasticsearch5:9300
@@ -159,7 +159,7 @@ services:
   registration-auth:
     restart: always
     ports:
-      - "8077:8080"
+      - "8116:8080"
     environment:
       - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
 

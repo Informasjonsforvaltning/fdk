@@ -33,4 +33,4 @@ spring:
 application:
   apiRootUrl: http://localhost:8080/api
 server:
-  port: 8090
+  port: 8109
