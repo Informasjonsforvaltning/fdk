@@ -1,5 +1,6 @@
 package no.fdk.searchapi.controller;
 
+import com.google.common.collect.ImmutableMap;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import no.dcat.shared.Dataset;
@@ -7,10 +8,12 @@ import no.fdk.searchapi.service.ElasticsearchService;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.index.query.*;
+import org.elasticsearch.script.Script;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.bucket.filters.FiltersAggregator;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms;
+import org.elasticsearch.search.aggregations.metrics.sum.SumAggregationBuilder;
 import org.elasticsearch.search.sort.SortBuilder;
 import org.elasticsearch.search.sort.SortBuilders;
 import org.elasticsearch.search.sort.SortOrder;
@@ -28,6 +31,8 @@ import java.util.Date;
 import java.util.HashSet;
 
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
+import static org.elasticsearch.script.Script.DEFAULT_SCRIPT_LANG;
+import static org.elasticsearch.script.ScriptType.INLINE;
 
 
 /**
@@ -372,6 +377,15 @@ public class DatasetsSearchController {
                 .size(5)
                 .order(Terms.Order.count(false)));
         }
+        if (selectedAggregationFields.contains("distributionCountForTypeApi")) {
+            searchBuilder.addAggregation(QueryUtil.createDistributionTypeCountAggregation("distributionCountForTypeApi","API"));
+        }
+        if (selectedAggregationFields.contains("distributionCountForTypeFeed")) {
+            searchBuilder.addAggregation(QueryUtil.createDistributionTypeCountAggregation("distributionCountForTypeFeed","Feed"));
+        }
+        if (selectedAggregationFields.contains("distributionCountForTypeFile")) {
+            searchBuilder.addAggregation(QueryUtil.createDistributionTypeCountAggregation("distributionCountForTypeFile","Nedlastbar fil"));
+        }
 
         return searchBuilder;
     }
@@ -437,5 +451,20 @@ public class DatasetsSearchController {
                 new FiltersAggregator.KeyedFilter("last30days", QueryUtil.createRangeQueryFromXdaysToNow(30, dateField)),
                 new FiltersAggregator.KeyedFilter("last365days", QueryUtil.createRangeQueryFromXdaysToNow(365, dateField)));
         }
+
+        static SumAggregationBuilder createDistributionTypeCountAggregation(String name, String type) {
+            return AggregationBuilders.sum(name).script(new Script(
+                INLINE,
+                DEFAULT_SCRIPT_LANG,
+                "int count = 0; " +
+                    "if (params._source.distribution == null) return 0;" +
+                    "for (int i = 0; i < params._source.distribution.length; ++i) { " +
+                    "    if (params._source.distribution[i]['type'] == params.type) count++; " +
+                    "} " +
+                    "return count;",
+                ImmutableMap.of("type", type)
+            ));
+        }
+
     }
 }
