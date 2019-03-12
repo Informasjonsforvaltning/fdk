@@ -359,8 +359,8 @@ public class DatasetsSearchController {
                     .mustNot(QueryBuilders.termQuery("accessRights.code.raw", "PUBLIC"))
             ));
         }
-        if (selectedAggregationFields.contains("subject")) {
-            searchBuilder.addAggregation(AggregationBuilders.filter("subject", QueryBuilders.existsQuery("subject.prefLabel")));
+        if (selectedAggregationFields.contains("withSubject")) {
+            searchBuilder.addAggregation(AggregationBuilders.filter("withSubject", QueryBuilders.existsQuery("subject.prefLabel")));
         }
         if (selectedAggregationFields.contains("nationalComponent")) {
             searchBuilder.addAggregation(AggregationBuilders.filter("nationalComponent", QueryUtil.createTermQuery("provenance.code.raw", "NASJONAL")));
