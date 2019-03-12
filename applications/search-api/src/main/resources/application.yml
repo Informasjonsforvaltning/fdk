@@ -19,4 +19,4 @@ elastic:
 logging:
   level.no.dcat: INFO
 server:
-  port: 8093
+  port: 8119

@@ -22,6 +22,6 @@ management:
 spring:
   profiles: develop
 server:
-  port: 8100
+  port: 8113
 
 

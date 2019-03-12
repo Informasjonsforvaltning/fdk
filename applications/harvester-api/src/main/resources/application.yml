@@ -59,7 +59,7 @@ elastic:
   clusterNodes: localhost:9300
   clusterName: elasticsearch
 server:
-  port: 8081
+  port: 8107
 
 ---
 spring:

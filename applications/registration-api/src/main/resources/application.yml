@@ -130,7 +130,7 @@ spring:
       clusterNodes: localhost:9300
       clusterName: elasticsearch
 server:
-  port: ${registrationApi_serverPort:8099}
+  port: 8115
   ssl:
     key-store: conf/idporten/ssldevelop.p12
     key-store-password: changeit
