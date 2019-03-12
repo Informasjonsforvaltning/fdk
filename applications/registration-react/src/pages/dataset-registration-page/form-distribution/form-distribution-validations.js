@@ -1,4 +1,4 @@
-import _get from 'lodash/get';
+import _ from 'lodash';
 
 import {
   validateMinTwoChars,
@@ -18,8 +18,8 @@ const validate = values => {
       let errors = {};
 
       const accessURL = item.accessURL || null;
-      const license = _get(item, ['license', 'uri'], null);
-      const description = _get(
+      const license = _.get(item, ['license', 'uri'], null);
+      const description = _.get(
         item,
         ['description', localization.getLanguage()],
         null
@@ -36,7 +36,7 @@ const validate = values => {
       if (conformsTo) {
         conformsToNodes = conformsTo.map(item => {
           let itemErrors = {};
-          const conformsToPrefLabel = _get(
+          const conformsToPrefLabel = _.get(
             item,
             ['prefLabel', localization.getLanguage()],
             null
