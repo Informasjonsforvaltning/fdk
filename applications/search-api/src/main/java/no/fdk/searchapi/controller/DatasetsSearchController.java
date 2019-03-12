@@ -336,6 +336,29 @@ public class DatasetsSearchController {
                     .must(QueryBuilders.termQuery("accessRights.code.raw", "PUBLIC"))
             ));
         }
+        if (selectedAggregationFields.contains("nonpublicWithDistribution")) {
+
+            searchBuilder.addAggregation(AggregationBuilders.filter("nonpublicWithDistribution",
+                QueryBuilders.boolQuery()
+                    .must(QueryBuilders.existsQuery("distribution"))
+                    .mustNot(QueryBuilders.termQuery("accessRights.code.raw", "PUBLIC"))
+            ));
+        }
+        if (selectedAggregationFields.contains("publicWithoutDistribution")) {
+            searchBuilder.addAggregation(AggregationBuilders.filter("publicWithoutDistribution",
+                QueryBuilders.boolQuery()
+                    .mustNot(QueryBuilders.existsQuery("distribution"))
+                    .must(QueryBuilders.termQuery("accessRights.code.raw", "PUBLIC"))
+            ));
+        }
+        if (selectedAggregationFields.contains("nonpublicWithoutDistribution")) {
+
+            searchBuilder.addAggregation(AggregationBuilders.filter("nonpublicWithoutDistribution",
+                QueryBuilders.boolQuery()
+                    .mustNot(QueryBuilders.existsQuery("distribution"))
+                    .mustNot(QueryBuilders.termQuery("accessRights.code.raw", "PUBLIC"))
+            ));
+        }
         if (selectedAggregationFields.contains("subject")) {
             searchBuilder.addAggregation(AggregationBuilders.filter("subject", QueryBuilders.existsQuery("subject.prefLabel")));
         }
