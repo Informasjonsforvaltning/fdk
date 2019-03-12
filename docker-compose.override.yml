@@ -1,6 +1,7 @@
 version: "3"
 
 services:
+### external modules
   elasticsearch5:
     restart: always
     volumes:
@@ -21,6 +22,25 @@ services:
     ports:
       - "3030:8080"
 
+### ingress modules
+  nginx-search:
+    restart: always
+    ports:
+      - "8080:8080"
+
+  nginx-registration:
+    restart: always
+
+  nginx-registration-ssl:
+    image: dcatno/nginx-registration-ssl:latest
+    restart: always
+    ports:
+      - "8098:443"
+    depends_on:
+      - nginx-registration
+      - registration-react
+
+### nodejs modules
   search:
     build: ./applications/search
     restart: always
@@ -34,6 +54,19 @@ services:
       - NODE_ENV=${NODE_ENV}
       - DISQUS_SHORTNAME=felles-datakatalog-test-34807898934
 
+  registration-react:
+    build: ./applications/registration-react
+    restart: always
+    command: npm start
+    ports:
+      - "4300:4300"
+    volumes:
+      - ./applications/registration-react/src:/usr/src/app/src
+    environment:
+      - REGISTRATION_LANGUAGE=${REGISTRATION_LANGUAGE}
+      - NODE_ENV=${NODE_ENV}
+
+### java modules
   api-cat:
     restart: always
     ports:
@@ -61,20 +94,17 @@ services:
     - JAVA_OPTS=-Djava.security.egd=file:/dev/./urandom -Xmx512M -Dspring.profiles.active=docker
     - LOG_LEVEL=${LOG_LEVEL}
 
-
-  search-api:
+  harvester:
     restart: always
     ports:
-      - "8083:8080"
+      - "8082:8080"
     environment:
       - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
-      - FDK_ES_CLUSTERNODES=elasticsearch5:9300
-      - FDK_ES_CLUSTERNAME=elasticsearch
-
-  nginx-search:
-    restart: always
-    ports:
-      - "8080:8080"
+      - fuseki.dcatServiceUri=http://fuseki:8080/fuseki/dcat
+      - fuseki.adminServiceUri=http://fuseki:8080/fuseki/admin
+      - application.harvesterUrl=http://harvester-api:8080
+      - harvester_adminUsername=test_admin
+      - harvester_adminPassword=password
 
   harvester-api:
     restart: always
@@ -89,29 +119,12 @@ services:
       - application.crawlerThreadPoolSize=2
       - harvestRecordRetentionDays=30
 
-  harvester:
+  reference-data:
     restart: always
     ports:
-      - "8082:8080"
+      - "8100:8080"
     environment:
-      - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
-      - fuseki.dcatServiceUri=http://fuseki:8080/fuseki/dcat
-      - fuseki.adminServiceUri=http://fuseki:8080/fuseki/admin
-      - application.harvesterUrl=http://harvester-api:8080
-      - harvester_adminUsername=test_admin
-      - harvester_adminPassword=password
-
-  nginx-registration:
-    restart: always
-
-  nginx-registration-ssl:
-    image: dcatno/nginx-registration-ssl:latest
-    restart: always
-    ports:
-      - "8098:443"
-    depends_on:
-      - nginx-registration
-      - registration-react
+      - JAVA_OPTS=-Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
 
   registration-api:
     restart: always
@@ -132,31 +145,23 @@ services:
       - registrationApi_ipStorePassword=${registrationApi_ipStorePassword}
       - LOG_LEVEL=${LOG_LEVEL}
 
-  registration-react:
-    build: ./applications/registration-react
+  search-api:
     restart: always
-    command: npm start
     ports:
-      - "4300:4300"
-    volumes:
-      - ./applications/registration-react/src:/usr/src/app/src
+      - "8083:8080"
     environment:
-      - REGISTRATION_LANGUAGE=${REGISTRATION_LANGUAGE}
-      - NODE_ENV=${NODE_ENV}
+      - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
+      - FDK_ES_CLUSTERNODES=elasticsearch5:9300
+      - FDK_ES_CLUSTERNAME=elasticsearch
 
+
+### test and mock modules
   registration-auth:
     restart: always
     ports:
       - "8077:8080"
     environment:
       - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
-
-  reference-data:
-    restart: always
-    ports:
-      - "8100:8080"
-    environment:
-      - JAVA_OPTS=-Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
 
   e2e:
     build: ./applications/e2e
