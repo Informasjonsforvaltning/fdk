@@ -30,12 +30,12 @@ export function extractStats(data) {
     newLastYear: getFromBucketArray(data, 'firstHarvested', 'last365days'),
     distributions: getFromAggregation(data, 'withDistribution'),
     distOnPublicAccessCount: getFromAggregation(data, 'publicWithDistribution'),
-    subjectCount: getFromAggregation(data, 'subject'),
+    subjectCount: getFromAggregation(data, 'withSubject'),
     catalogCounts: _.get(data, ['aggregations', 'catalog', 'buckets'], [])
   };
 }
 
-const statsAggregations = `${searchAggregations},firstHarvested,withDistribution,publicWithDistribution,nonpublicWithDistribution,publicWithoutDistribution,nonpublicWithoutDistribution,subject,catalog,opendata,nationalComponent,subjects`;
+const statsAggregations = `${searchAggregations},firstHarvested,withDistribution,publicWithDistribution,nonpublicWithDistribution,publicWithoutDistribution,nonpublicWithoutDistribution,withSubject,catalog,opendata,nationalComponent,subjects`;
 
 export const statsUrl = query =>
   `${datasetsUrlBase}${qs.stringify(
