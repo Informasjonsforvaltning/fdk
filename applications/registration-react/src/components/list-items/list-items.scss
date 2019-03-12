@@ -13,7 +13,8 @@
   .sortButton {
     padding: 0 .5em;
     i {
-      line-height: .5em;
+      position: absolute;
+      margin-top: -7px;
     }
   }
 }
