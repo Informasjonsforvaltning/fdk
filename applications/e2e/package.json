@@ -15,18 +15,21 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "babel-core": "^6.26.3",
-    "babel-jest": "^23.0.1",
-    "babel-preset-env": "^1.7.0",
-    "jest": "^23.1.0",
-    "puppeteer": "^1.11.0"
+    "@babel/core": "^7.3.4",
+    "@babel/plugin-transform-runtime": "^7.3.4",
+    "@babel/preset-env": "^7.3.4",
+    "@babel/runtime": "^7.3.4",
+    "babel-jest": "^24.4.0",
+    "delay": "^4.1.0",
+    "jest": "^24.4.0",
+    "json2csv": "^4.3.5",
+    "puppeteer": "^1.13.0"
   },
-  "dependencies": {
-    "delay": "^3.0.0",
-    "json2csv": "^4.3.1"
-  },
+  "dependencies": {},
   "jest": {
-    "setupTestFrameworkScriptFile": "<rootDir>/jestsetup.js",
+    "setupFilesAfterEnv": [
+      "<rootDir>/jestsetup.js"
+    ],
     "testMatch": [
       "<rootDir>/test/**/*.test.js",
       "**/?(*.)(test).js?(x)"
