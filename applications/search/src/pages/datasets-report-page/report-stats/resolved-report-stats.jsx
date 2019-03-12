@@ -10,9 +10,9 @@ const memoizedGetApiStats = _.memoize(getApiStats);
 const memoizedGetConceptStats = _.memoize(getConceptStats);
 
 const mapProps = {
-  datasetStats: props => memoizedGetDatasetStats(props.orgPath),
-  apiStats: props => memoizedGetApiStats(props.orgPath),
-  conceptStats: props => memoizedGetConceptStats(props.orgPath)
+  datasetStats: props => memoizedGetDatasetStats({ orgPath: props.orgPath }),
+  apiStats: props => memoizedGetApiStats({ orgPath: props.orgPath }),
+  conceptStats: props => memoizedGetConceptStats({ orgPath: props.orgPath })
 };
 
 export const ResolvedReportStats = resolve(mapProps)(ConnectedReportStats);
