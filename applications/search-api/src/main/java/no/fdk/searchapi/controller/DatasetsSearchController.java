@@ -362,9 +362,15 @@ public class DatasetsSearchController {
         if (selectedAggregationFields.contains("subject")) {
             searchBuilder.addAggregation(AggregationBuilders.filter("subject", QueryBuilders.existsQuery("subject.prefLabel")));
         }
-
         if (selectedAggregationFields.contains("nationalComponent")) {
             searchBuilder.addAggregation(AggregationBuilders.filter("nationalComponent", QueryUtil.createTermQuery("provenance.code.raw", "NASJONAL")));
+        }
+        if (selectedAggregationFields.contains("subjects")) {
+            searchBuilder.addAggregation(AggregationBuilders
+                .terms("subjects")
+                .field("subject.uri")
+                .size(5)
+                .order(Terms.Order.count(false)));
         }
 
         return searchBuilder;
