@@ -26,7 +26,7 @@ export const renderSamples = componentProps => {
                   fields.remove(index);
                   asyncValidate(
                     fields.getAll(),
-                    null,
+                    componentProps.dispatch,
                     componentProps,
                     `remove_sample_${index}`
                   );
@@ -96,20 +96,26 @@ export const renderSamples = componentProps => {
 };
 
 export const FormSample = props => {
-  const { helptextItems } = props;
+  const { helptextItems, match, dispatch } = props;
   return (
     <form>
       <FieldArray
         name="sample"
         component={renderSamples}
         helptextItems={helptextItems}
+        dispatch={dispatch}
+        match={match}
       />
     </form>
   );
 };
 
-FormSample.defaultProps = {};
+FormSample.defaultProps = {
+  dispatch: null
+};
 
 FormSample.propTypes = {
-  helptextItems: PropTypes.object.isRequired
+  helptextItems: PropTypes.object.isRequired,
+  match: PropTypes.object.isRequired,
+  dispatch: PropTypes.func
 };

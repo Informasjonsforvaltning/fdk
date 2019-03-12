@@ -35,7 +35,8 @@ export const renderDistributions = componentProps => {
     fields,
     helptextItems,
     openLicenseItems,
-    initialValues
+    initialValues,
+    dispatch
   } = componentProps;
   return (
     <div>
@@ -56,7 +57,7 @@ export const renderDistributions = componentProps => {
                     fields.remove(index);
                     asyncValidate(
                       fields.getAll(),
-                      null,
+                      dispatch,
                       componentProps,
                       `remove_distribution_${index}`
                     );
@@ -210,7 +211,7 @@ export const renderDistributions = componentProps => {
 };
 
 export const FormDistribution = props => {
-  const { helptextItems, initialValues } = props;
+  const { helptextItems, initialValues, match, dispatch } = props;
   const { openLicenseItems } = initialValues;
   return (
     <form>
@@ -220,15 +221,20 @@ export const FormDistribution = props => {
         helptextItems={helptextItems}
         openLicenseItems={openLicenseItems}
         initialValues={initialValues}
+        dispatch={dispatch}
+        match={match}
       />
     </form>
   );
 };
 
 FormDistribution.defaultProps = {
-  initialValues: null
+  initialValues: null,
+  dispatch: null
 };
 FormDistribution.propTypes = {
   initialValues: PropTypes.object.isRequired,
-  helptextItems: PropTypes.object.isRequired
+  helptextItems: PropTypes.object.isRequired,
+  match: PropTypes.object.isRequired,
+  dispatch: PropTypes.func
 };
