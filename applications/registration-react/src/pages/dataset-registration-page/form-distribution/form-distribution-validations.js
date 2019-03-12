@@ -17,7 +17,7 @@ const validate = values => {
     errorNodes = distribution.map(item => {
       let errors = {};
 
-      const accessURL = item.accessURL || null;
+      const accessURL = _.get(item, ['accessURL', 0]);
       const license = _.get(item, ['license', 'uri'], null);
       const description = _.get(
         item,
@@ -28,7 +28,7 @@ const validate = values => {
         item.page && item.page[0] && item.page[0].uri ? item.page[0].uri : null;
       const { conformsTo } = item || null;
 
-      errors = validateURL('accessURL', accessURL[0], errors, true);
+      errors = validateURL('accessURL', accessURL, errors, true);
       errors = validateMinTwoChars('license', license, errors, 'uri');
       errors = validateMinTwoChars('description', description, errors);
       errors = validateLinkReturnAsSkosType('page', page, errors, 'uri');
