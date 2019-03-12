@@ -35,7 +35,7 @@ export function extractStats(data) {
   };
 }
 
-const statsAggregations = `${searchAggregations},firstHarvested,withDistribution,publicWithDistribution,nonpublicWithDistribution,publicWithoutDistribution,nonpublicWithoutDistribution,subject,catalog,opendata,nationalComponent`;
+const statsAggregations = `${searchAggregations},firstHarvested,withDistribution,publicWithDistribution,nonpublicWithDistribution,publicWithoutDistribution,nonpublicWithoutDistribution,subject,catalog,opendata,nationalComponent,subjects`;
 
 export const statsUrl = query =>
   `${datasetsUrlBase}${qs.stringify(
