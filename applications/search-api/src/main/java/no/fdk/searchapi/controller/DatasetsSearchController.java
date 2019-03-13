@@ -30,6 +30,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
 
+import static java.lang.Integer.MAX_VALUE;
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 import static org.elasticsearch.script.Script.DEFAULT_SCRIPT_LANG;
 import static org.elasticsearch.script.ScriptType.INLINE;
@@ -46,7 +47,6 @@ public class DatasetsSearchController {
     public static final long DAY_IN_MS = 1000 * 3600 * 24;
     /* api names */
     public static final String QUERY_SEARCH = "/datasets";
-    private static final int MAX_AGGREGATIONS = 10000; //be sure all theme counts are returned
     private static Logger logger = LoggerFactory.getLogger(DatasetsSearchController.class);
     private ElasticsearchService elasticsearch;
 
@@ -440,7 +440,7 @@ public class DatasetsSearchController {
                 .terms(aggregationName)
                 .missing(MISSING)
                 .field(field)
-                .size(MAX_AGGREGATIONS)
+                .size(MAX_VALUE) //be sure all theme counts are returned
                 .order(Terms.Order.count(false));
         }
 
