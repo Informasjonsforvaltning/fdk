@@ -1,5 +1,6 @@
 package no.fdk.searchapi.controller;
 
+import com.google.common.collect.ImmutableMap;
 import no.fdk.searchapi.service.ElasticsearchService;
 import no.fdk.test.testcategories.UnitTest;
 import org.elasticsearch.action.ListenableActionFuture;
@@ -47,41 +48,36 @@ public class DatasetsSearchControllerTest {
      */
     @Test
     public void testValidWithSortdirection() {
-        ResponseEntity<String> actual = sqs.search("query", "", "", "", "", 0, "nb", "modified", "asc", "", "", "", "", "", "", PageRequest.of(0, 10));
+        ResponseEntity<String> actual = sqs.search(ImmutableMap.of(), "nb", "modified", "asc", "", "", PageRequest.of(0, 10));
 
         verify(client.prepareSearch("dcat")
             .setTypes("dataset")
             .setQuery(any(QueryBuilder.class))
-            .setFrom(1).setSize(10))
+            .setFrom(0).setSize(10))
             .addSort(SortBuilders.fieldSort("harvest.firstHarvested").order(SortOrder.ASC).missing("_last"));
-        assertThat(actual.getStatusCodeValue()).isEqualTo(HttpStatus.OK.value());
 
-        sqs.search("query", "", "", "", "", 0, "nb", "title.nb", "asc", "", "", "", "", "", "", PageRequest.of(0, 10));
+        assertThat(actual.getStatusCodeValue()).isEqualTo(HttpStatus.OK.value());
     }
 
     /**
-     * Valid call, check default sort direction.
+     * Valid call, check default sort.
      */
     @Test
     public void testValidWithDefaultSortdirection() {
-        ResponseEntity<String> actual = sqs.search("query", "", "", "", "", 0, "nb", "", "", "", "", "", "", "", "", PageRequest.of(0, 10));
+        ResponseEntity<String> actual = sqs.search(ImmutableMap.of(), "nb", "", "", "", "", PageRequest.of(0, 10));
 
-        verify(client.prepareSearch("dcat").setTypes("dataset").setQuery(any(QueryBuilder.class)).setFrom(1)).setSize(10);
-        verify(client.prepareSearch("dcat").setTypes("dataset").setQuery(any(QueryBuilder.class)).setFrom(1).setSize(10), never()).addSort("", SortOrder.ASC);
+        verify(client.prepareSearch("dcat").setTypes("dataset").setQuery(any(QueryBuilder.class)).setFrom(0).setSize(10), never()).addSort(any());
         assertThat(actual.getStatusCodeValue()).isEqualTo(HttpStatus.OK.value());
     }
 
     /**
-     * Valid call, with tema set.
+     * Valid call, with theme set.
      */
     @Test
-    public void testValidWithTema() {
-        ResponseEntity<String> actual = sqs.search("query", "", "GOVE", "", "", 0, "nb", "", "", "", "", "", "", "", "", PageRequest.of(0, 10));
+    public void testValidWithTheme() {
+        ResponseEntity<String> actual = sqs.search(ImmutableMap.of("theme", "GOVE"), "nb", "", "", "", "", PageRequest.of(0, 10));
 
-        verify(client.prepareSearch("dcat").setTypes("dataset").setQuery(any(QueryBuilder.class)).setFrom(1)).setSize(10);
         assertThat(actual.getStatusCodeValue()).isEqualTo(HttpStatus.OK.value());
-
-        sqs.search("", "", "Ukjent", "", "", 0, "nb", "", "", "", "", "", "", "", "", PageRequest.of(0, 10));
     }
 
     /**
@@ -89,73 +85,39 @@ public class DatasetsSearchControllerTest {
      */
     @Test
     public void return200IfSizeIsLargerThan100() {
-        ResponseEntity<String> actual = sqs.search("", "", "", "", "", 0, "nb", "", "", "", "", "", "", "", "", PageRequest.of(1, 101));
+        ResponseEntity<String> actual = sqs.search(ImmutableMap.of(), "nb", "", "", "", "", PageRequest.of(0, 101));
 
         assertThat(actual.getStatusCodeValue()).isEqualTo(HttpStatus.OK.value());
     }
 
-    @Test
-    public void checkSortfields() {
-        sqs.search("", "", "", "", "", 0, "en", "modified", "", "", "", "", "", "", "", PageRequest.of(0, 10));
-    }
 
     @Test
     public void checkAccessRights() {
-        sqs.search("", "", "", "Ukjent", "", 0, "", "", "", "", "", "", "", "", "", PageRequest.of(0, 10));
-        sqs.search("", "", "", "OPEN", "", 0, "", "", "", "", "", "", "", "", "", PageRequest.of(0, 10));
+        sqs.search(ImmutableMap.of("accessRights", "OPEN"), "nb", "", "", "", "", PageRequest.of(0, 10));
     }
 
     @Test
     public void checkOrgpath() {
-        sqs.search("", "", "", "", "/ANNET", 0, "", "", "", "", "", "", "", "", "", PageRequest.of(0, 10));
+        sqs.search(ImmutableMap.of("orgPath", "/ANNET"), "nb", "", "", "", "", PageRequest.of(0, 10));
     }
 
 
     @Test
     public void checkTitle() {
-        sqs.search("", "TITLE", "", "", "/ANNET", 0, "", "", "", "", "", "", "", "", "", PageRequest.of(0, 10));
-    }
-
-    @Test
-    public void testTitle() {
-        ResponseEntity<String> actual = sqs.search("", "TITLE", "", "", "/ANNET", 0, "nb", "", "", "", "", "", "", "", "", PageRequest.of(0, 10));
-
-        verify(client.prepareSearch("dcat").setTypes("dataset").setQuery(any(QueryBuilder.class)).setFrom(1)).setSize(10);
-        assertThat(actual.getStatusCodeValue()).isEqualTo(HttpStatus.OK.value());
+        sqs.search(ImmutableMap.of("title", "TITLE"), "nb", "", "", "", "", PageRequest.of(0, 10));
     }
 
     @Test
     public void checkProvenance() {
-
-        sqs.search("", "", "", "", "", 0, "", "", "", "NASJONAL", "", "", "", "", "", PageRequest.of(0, 10));
-        sqs.search("", "", "", "", "", 0, "", "", "", "VEDTAK", "", "", "", "", "", PageRequest.of(0, 10));
+        sqs.search(ImmutableMap.of("provenance", "NASJONAL"), "nb", "", "", "", "", PageRequest.of(0, 10));
     }
 
     @Test
     public void checkSpatial() {
-
-        sqs.search("", "", "", "", "", 0, "", "", "", "", "Ukjent", "", "", "", "", PageRequest.of(0, 10));
-        sqs.search("", "", "", "", "", 0, "", "", "", "", "Norge", "", "", "", "", PageRequest.of(0, 10));
-        sqs.search("", "", "", "", "", 0, "", "", "", "", "Oslo", "", "", "", "", PageRequest.of(0, 10));
-        sqs.search("", "", "", "", "", 0, "", "", "", "", "barbara", "", "", "", "", PageRequest.of(0, 10));
-        sqs.search("", "", "", "", "", 0, "", "", "", "", "http://tulletse", "", "", "", "", PageRequest.of(0, 10));
-    }
-
-    @Test
-    public void checkMultipleSpatialLabels() {
-        sqs.search("", "", "", "", "", 0, "", "", "", "", "Ukjent,Oslo Fylke", "", "", "", "", PageRequest.of(0, 10));
-    }
-
-    @Test
-    public void checkOpendata() {
-        sqs.search("", "", "", "", "", 0, "", "", "", "", "", "true", "", "", "", PageRequest.of(0, 10));
-        sqs.search("", "", "", "", "", 0, "", "", "", "", "", "false", "", "", "", PageRequest.of(0, 10));
-    }
-
-    @Test
-    public void checkCatalog() {
-        sqs.search("", "", "", "", "", 0, "", "", "", "", "", "", "http://catalog.url", "", "", PageRequest.of(0, 10));
-        sqs.search("", "", "", "", "", 0, "", "", "", "", "", "", "Katalog for Brønnøysundregistrene", "", "", PageRequest.of(0, 10));
+        sqs.search(ImmutableMap.of("spatial", "Oslo"), "nb", "", "", "", "", PageRequest.of(0, 10));
+        sqs.search(ImmutableMap.of("spatial", "http://tulletse"), "nb", "", "", "", "", PageRequest.of(0, 10));
+        sqs.search(ImmutableMap.of("spatial", "Ukjent"), "nb", "", "", "", "", PageRequest.of(0, 10));
+        sqs.search(ImmutableMap.of("spatial", "Ukjent,Oslo Fylke"), "nb", "", "", "", "", PageRequest.of(0, 10));
     }
 
     private void populateMock() {

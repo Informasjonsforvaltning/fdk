@@ -31,6 +31,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Map;
 
 import static java.lang.Integer.MAX_VALUE;
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
@@ -68,61 +69,34 @@ public class DatasetsSearchController {
             "In order to access all datasets, use multiple queries and increment from parameter.", response = Dataset.class)
     @RequestMapping(value = "/datasets", method = RequestMethod.GET, produces = "application/json")
     @ApiImplicitParams({
+        @ApiImplicitParam(name = "q", dataType = "string", paramType = "query", value = "Full content search"),
+        @ApiImplicitParam(name = "title", dataType = "string", paramType = "query", value = "Title search"),
+        @ApiImplicitParam(name = "theme", dataType = "string", paramType = "query", value = "Filters on specified theme(s). ex. GOVE, or GOVE,SOCI"),
+        @ApiImplicitParam(name = "accessrights", dataType = "string", paramType = "query", value = "Filters on accessrights, codes are PUBLIC, RESTRICTED or NON_PUBLIC"),
+        @ApiImplicitParam(name = "orgPath", dataType = "string", paramType = "query", value = "Filters on publisher's organization path (orgPath), e.g. /STAT/972417858/971040238"),
+        @ApiImplicitParam(name = "firstHarvested", dataType = "string", paramType = "query", defaultValue = "0", value = "Filters datasets that were first harvested x-days ago, e.g. a value of 100 will result in datasets that were harvested more than 100 days ago"),
+        @ApiImplicitParam(name = "provenance", dataType = "string", paramType = "query", value = "Filters datasets according to their provenance code, e.g. NASJONAL - nasjonal building block, VEDTAK - governmental decisions, BRUKER - user collected data and TREDJEPART - third party data"),
+        @ApiImplicitParam(name = "spatial", dataType = "string", paramType = "query", value = "Filters datasets according to their spatial label, e.g. Oslo, Norge"),
+        @ApiImplicitParam(name = "opendata", dataType = "string", paramType = "query", value = "Filters on distribution license and access rights. If true the distribution licence is open and the access rights are public."),
+        @ApiImplicitParam(name = "catalog", dataType = "string", paramType = "query", value = "Filters on catalog uri."),
         @ApiImplicitParam(name = "page", dataType = "string", paramType = "query", defaultValue = "0", value = "Page index. First page is 0"),
         @ApiImplicitParam(name = "size", dataType = "string", paramType = "query", defaultValue = "10", value = "Page size")
     })
     public ResponseEntity<String> search(
-        @ApiParam("Full content search")
-        @RequestParam(value = "q", defaultValue = "", required = false)
-            String query,
-
-        @ApiParam("Title search")
-        @RequestParam(value = "title", defaultValue = "", required = false)
-            String title,
-
-        @ApiParam("Filters on specified theme(s). ex. GOVE, or GOVE,SOCI")
-        @RequestParam(value = "theme", defaultValue = "", required = false)
-            String theme,
-
-        @ApiParam("Filters on accessrights, codes are PUBLIC, RESTRICTED or NON_PUBLIC ")
-        @RequestParam(value = "accessrights", defaultValue = "", required = false)
-            String accessRights,
-
-        @ApiParam("Filters on publisher's organization path (orgPath), e.g. /STAT/972417858/971040238")
-        @RequestParam(value = "orgPath", defaultValue = "", required = false)
-            String orgPath,
-
-        @ApiParam("Filters datasets that were first harvested x-days ago, e.g. a value of 100 will result in datasets that were harvested more than 100 days ago")
-        @RequestParam(value = "firstHarvested", defaultValue = "0", required = false)
-            int firstHarvested,
+        @ApiParam(hidden = true)
+        @RequestParam Map<String, String> params,
 
         @ApiParam("Specifies the language elements of the datasets to search in, default is nb")
         @RequestParam(value = "lang", defaultValue = "nb", required = false)
             String lang,
 
-        @ApiParam("Specifies the sort field, at the present we support title, modified and publisher. Default is no value")
+        @ApiParam("Specifies the sort field. The only allowed value is \"modified\". Default is no value")
         @RequestParam(value = "sortfield", defaultValue = "", required = false)
             String sortfield,
 
         @ApiParam("Specifies the sort direction of the sorted result. The directions are: asc for ascending and desc for descending")
-        @RequestParam(value = "sortdirection", defaultValue = "", required = false)
+        @RequestParam(value = "sortdirection", defaultValue = "desc", required = false)
             String sortdirection,
-
-        @ApiParam("Filters datasets according to their provenance code, e.g. NASJONAL - nasjonal building block, VEDTAK - governmental decisions, BRUKER - user collected data and TREDJEPART - third party data")
-        @RequestParam(value = "provenance", defaultValue = "", required = false)
-            String provenance,
-
-        @ApiParam("Filters datasets according to their spatial label, e.g. Oslo, Norge")
-        @RequestParam(value = "spatial", defaultValue = "", required = false)
-            String spatial,
-
-        @ApiParam("Filters on distribution license and access rights. If true the distribution licence is open and the access rights are public.")
-        @RequestParam(value = "opendata", defaultValue = "", required = false)
-            String opendata,
-
-        @ApiParam("Filters on catalog uri.")
-        @RequestParam(value = "catalog", defaultValue = "", required = false)
-            String catalog,
 
         @ApiParam("Comma separated list of which fields should be returned. E.g id,uri,harvest,publisher")
         @RequestParam(value = "returnfields", defaultValue = "", required = false)
@@ -135,129 +109,21 @@ public class DatasetsSearchController {
         @PageableDefault()
             Pageable pageable
     ) {
-
-        StringBuilder loggMsg = new StringBuilder()
-            .append(" query:").append(query)
-            .append(" title:").append(title)
-            .append(" theme:").append(theme)
-            .append(" accessRights:").append(accessRights)
-            .append(" orgPath:").append(orgPath)
-            .append(" firstHarvested:").append(firstHarvested)
-            .append(" offset:").append(pageable.getOffset())
-            .append(" size:").append(pageable.getPageSize())
-            .append(" lang:").append(lang)
-            .append(" sortfield:").append(sortfield)
-            .append(" sortdirection:").append(sortdirection)
-            .append(" provenance:").append(provenance)
-            .append(" spatial:").append(spatial)
-            .append(" opendata: ").append(opendata)
-            .append(" returnfields: ").append(returnFields);
-
-        logger.debug(loggMsg.toString());
+        logger.debug("GET /datasets?{}", params);
 
         int from = checkAndAdjustFrom((int) pageable.getOffset());
         int size = checkAndAdjustSize(pageable.getPageSize());
 
-        QueryBuilder searchQuery;
+        BoolQueryBuilder composedQuery = QueryBuilders.boolQuery();
 
-        if (isNotEmpty(title)) {
-            QueryBuilder nbQuery = QueryBuilders.matchPhrasePrefixQuery("title.nb", title).analyzer("norwegian").maxExpansions(15);
-            QueryBuilder noQuery = QueryBuilders.matchPhrasePrefixQuery("title.no", title).analyzer("norwegian").maxExpansions(15);
-            QueryBuilder nnQuery = QueryBuilders.matchPhrasePrefixQuery("title.nn", title).analyzer("norwegian").maxExpansions(15);
-            QueryBuilder enQuery = QueryBuilders.matchPhrasePrefixQuery("title.en", title).analyzer("english").maxExpansions(15);
-            searchQuery = QueryBuilders.boolQuery().should(nbQuery).should(noQuery).should(nnQuery).should(enQuery);
-        } else if (isNotEmpty(query)) {
-            // add * if query only contains one word
-            if (!query.contains(" ")) {
-                query = query + " " + query + "*";
-            }
-            searchQuery = QueryBuilders.simpleQueryStringQuery(query)
-                .analyzer(("en".equals(lang)) ? "english" : "norwegian")
-                .field("title.*").boost(3f)
-                .field("objective.*")
-                .field("keyword.*").boost(2f)
-                .field("theme.title.*")
-                .field("description.*")
-                .field("publisher.name").boost(3f)
-                .field("publisher.prefLabel.*").boost(3f)
-                .field("accessRights.prefLabel.*")
-                .field("accessRights.code")
-                .field("subject.prefLabel.*")
-                .field("subject.altLabel.*")
-                .field("subject.definition.*")
-                .defaultOperator(Operator.OR);
-        } else {
-            searchQuery = QueryBuilders.matchAllQuery();
-        }
-
-        BoolQueryBuilder composedQuery = QueryBuilders.boolQuery().must(searchQuery);
+        // Default query is to match all. User defined filters will narrow it down.
+        composedQuery = composedQuery.must(QueryBuilders.matchAllQuery());
 
         // Adding constant "should" term increases score for matching documents for national components
         // in api-cat, we use modern notation nationalComponent=true, while in dataset is not as explicit
-        composedQuery.should(QueryUtil.createTermQuery("provenance.code.raw", "NASJONAL").boost(2));
+        composedQuery = composedQuery.should(QueryUtil.createTermQuery("provenance.code.raw", "NASJONAL").boost(2));
 
-        // add filters
-
-        // theme can contain multiple themes, example: AGRI,HEAL
-        if (isNotEmpty(theme)) {
-            String[] themes = theme.split(",");
-            composedQuery.filter(QueryUtil.createTermsQuery("theme.code", themes));
-        }
-
-        if (isNotEmpty(catalog)) {
-            composedQuery.filter(QueryUtil.createTermQuery("catalog.uri", catalog));
-        }
-
-
-        if (isNotEmpty(accessRights)) {
-            composedQuery.filter(QueryUtil.createTermQuery("accessRights.code.raw", accessRights));
-        }
-        if (isNotEmpty(opendata)) {
-            BoolQueryBuilder opendataFilter = QueryBuilders.boolQuery();
-            if (opendata.equals("true")) {
-                opendataFilter.must(QueryBuilders.termQuery("distribution.openLicense", "true"));
-                opendataFilter.must(QueryBuilders.termQuery("accessRights.code.raw", "PUBLIC"));
-            }
-            //Handle the negative cases
-            else if (opendata.equals("false")) {
-                BoolQueryBuilder notOpenLicenseFilter = QueryBuilders.boolQuery();
-                BoolQueryBuilder notOpenDistributionFilter = QueryBuilders.boolQuery();
-                notOpenLicenseFilter.mustNot(QueryBuilders.termQuery("distribution.openLicense", "true"));
-                notOpenDistributionFilter.mustNot(QueryBuilders.termQuery("accessRights.code.raw", "PUBLIC"));
-                opendataFilter.should(notOpenLicenseFilter);
-                opendataFilter.should(notOpenDistributionFilter);
-            }
-            composedQuery.filter(opendataFilter);
-        }
-
-        if (isNotEmpty(orgPath)) {
-            composedQuery.filter(QueryUtil.createTermQuery("publisher.orgPath", orgPath));
-        }
-
-        if (firstHarvested > 0) {
-            composedQuery.filter(QueryUtil.createRangeQueryFromXdaysToNow(firstHarvested, "harvest.firstHarvested"));
-        }
-
-        if (isNotEmpty(provenance)) {
-            composedQuery.filter(QueryUtil.createTermQuery("provenance.code.raw", accessRights));
-        }
-
-        if (isNotEmpty(spatial)) {
-            BoolQueryBuilder spatialFilter = QueryBuilders.boolQuery();
-
-            String[] spatials = spatial.split(",");
-            Arrays.stream(spatials).forEach(spatialLabel -> {
-                if (spatialLabel.equals(MISSING)) {
-                    spatialFilter.mustNot(QueryBuilders.existsQuery("spatial"));
-                } else if (spatialLabel.startsWith("http")) {
-                    spatialFilter.must(QueryBuilders.termQuery("spatial.uri", spatialLabel));
-                } else {
-                    spatialFilter.must(QueryBuilders.termQuery("spatial.prefLabel.no.raw", spatialLabel));
-                }
-            });
-
-            composedQuery.filter(spatialFilter);
-        }
+        composedQuery = addFilters(composedQuery, params, lang);
 
         // set up search query with aggregations
         SearchRequestBuilder searchBuilder = elasticsearch.getClient().prepareSearch("dcat");
@@ -293,6 +159,110 @@ public class DatasetsSearchController {
 
         // return response
         return new ResponseEntity<>(response.toString(), HttpStatus.OK);
+    }
+
+    BoolQueryBuilder addFilters(BoolQueryBuilder composedQuery, Map<String, String> params, String lang) {
+
+        String title = params.getOrDefault("title", "");
+        if (isNotEmpty(title)) {
+            QueryBuilder nbQuery = QueryBuilders.matchPhrasePrefixQuery("title.nb", title).analyzer("norwegian").maxExpansions(15);
+            QueryBuilder noQuery = QueryBuilders.matchPhrasePrefixQuery("title.no", title).analyzer("norwegian").maxExpansions(15);
+            QueryBuilder nnQuery = QueryBuilders.matchPhrasePrefixQuery("title.nn", title).analyzer("norwegian").maxExpansions(15);
+            QueryBuilder enQuery = QueryBuilders.matchPhrasePrefixQuery("title.en", title).analyzer("english").maxExpansions(15);
+            composedQuery.must(QueryBuilders.boolQuery().should(nbQuery).should(noQuery).should(nnQuery).should(enQuery));
+        }
+
+        String query = params.getOrDefault("q", "");
+        if (isNotEmpty(query)) {
+            // add * if query only contains one word
+            if (!query.contains(" ")) {
+                query = query + " " + query + "*";
+            }
+            composedQuery.must(QueryBuilders.simpleQueryStringQuery(query)
+                .analyzer(("en".equals(lang)) ? "english" : "norwegian")
+                .field("title.*").boost(3f)
+                .field("objective.*")
+                .field("keyword.*").boost(2f)
+                .field("theme.title.*")
+                .field("description.*")
+                .field("publisher.name").boost(3f)
+                .field("publisher.prefLabel.*").boost(3f)
+                .field("accessRights.prefLabel.*")
+                .field("accessRights.code")
+                .field("subject.prefLabel.*")
+                .field("subject.altLabel.*")
+                .field("subject.definition.*")
+                .defaultOperator(Operator.OR));
+        }
+
+        String theme = params.getOrDefault("theme", "");
+        // theme can contain multiple themes, example: AGRI,HEAL
+        if (isNotEmpty(theme)) {
+            String[] themes = theme.split(",");
+            composedQuery.filter(QueryUtil.createTermsQuery("theme.code", themes));
+        }
+
+        String catalog = params.getOrDefault("catalog", "");
+        if (isNotEmpty(catalog)) {
+            composedQuery.filter(QueryUtil.createTermQuery("catalog.uri", catalog));
+        }
+
+        String accessRights = params.getOrDefault("accessrights", "");
+        if (isNotEmpty(accessRights)) {
+            composedQuery.filter(QueryUtil.createTermQuery("accessRights.code.raw", accessRights));
+        }
+        String opendata = params.getOrDefault("opendata", "");
+        if (isNotEmpty(opendata)) {
+            BoolQueryBuilder opendataFilter = QueryBuilders.boolQuery();
+            if (opendata.equals("true")) {
+                opendataFilter.must(QueryBuilders.termQuery("distribution.openLicense", "true"));
+                opendataFilter.must(QueryBuilders.termQuery("accessRights.code.raw", "PUBLIC"));
+            }
+            //Handle the negative cases
+            else if (opendata.equals("false")) {
+                BoolQueryBuilder notOpenLicenseFilter = QueryBuilders.boolQuery();
+                BoolQueryBuilder notOpenDistributionFilter = QueryBuilders.boolQuery();
+                notOpenLicenseFilter.mustNot(QueryBuilders.termQuery("distribution.openLicense", "true"));
+                notOpenDistributionFilter.mustNot(QueryBuilders.termQuery("accessRights.code.raw", "PUBLIC"));
+                opendataFilter.should(notOpenLicenseFilter);
+                opendataFilter.should(notOpenDistributionFilter);
+            }
+            composedQuery.filter(opendataFilter);
+        }
+
+        String orgPath = params.getOrDefault("orgPath", "");
+        if (isNotEmpty(orgPath)) {
+            composedQuery.filter(QueryUtil.createTermQuery("publisher.orgPath", orgPath));
+        }
+
+        int firstHarvested = Integer.parseInt(params.getOrDefault("firstHarvested", "0"));
+        if (firstHarvested > 0) {
+            composedQuery.filter(QueryUtil.createRangeQueryFromXdaysToNow(firstHarvested, "harvest.firstHarvested"));
+        }
+
+        String provenance = params.getOrDefault("provenance", "");
+        if (isNotEmpty(provenance)) {
+            composedQuery.filter(QueryUtil.createTermQuery("provenance.code.raw", accessRights));
+        }
+
+        String spatial = params.getOrDefault("spatial", "");
+        if (isNotEmpty(spatial)) {
+            BoolQueryBuilder spatialFilter = QueryBuilders.boolQuery();
+
+            String[] spatials = spatial.split(",");
+            Arrays.stream(spatials).forEach(spatialLabel -> {
+                if (spatialLabel.equals(MISSING)) {
+                    spatialFilter.mustNot(QueryBuilders.existsQuery("spatial"));
+                } else if (spatialLabel.startsWith("http")) {
+                    spatialFilter.must(QueryBuilders.termQuery("spatial.uri", spatialLabel));
+                } else {
+                    spatialFilter.must(QueryBuilders.termQuery("spatial.prefLabel.no.raw", spatialLabel));
+                }
+            });
+
+            composedQuery.filter(spatialFilter);
+        }
+        return composedQuery;
     }
 
     public SearchRequestBuilder addAggregations(SearchRequestBuilder searchBuilder, String aggregationFields) {
