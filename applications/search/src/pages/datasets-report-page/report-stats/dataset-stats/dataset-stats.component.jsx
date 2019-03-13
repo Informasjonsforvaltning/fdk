@@ -150,7 +150,7 @@ export const DatasetStats = props => {
           componentKey={`withDistribution-${orgPath}`}
           percentHeight={calculatePercent(
             stats.distOnPublicAccessCount,
-            stats.public
+            stats.total
           )}
           barColor="green"
         />
@@ -170,8 +170,8 @@ export const DatasetStats = props => {
         <ChartBar
           componentKey={`withoutDistribution-${orgPath}`}
           percentHeight={calculatePercent(
-            stats.public - stats.distOnPublicAccessCount,
-            stats.public
+            stats.total - stats.distOnPublicAccessCount,
+            stats.total
           )}
           barColor="green"
         />
@@ -180,7 +180,7 @@ export const DatasetStats = props => {
           className="mb-3"
           to="/#"
         >
-          {stats.public - stats.distOnPublicAccessCount}
+          {stats.total - stats.distOnPublicAccessCount}
         </Link>
       </StatBox>
     </div>
