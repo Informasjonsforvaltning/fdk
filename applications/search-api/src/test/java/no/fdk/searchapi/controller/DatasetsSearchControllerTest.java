@@ -7,7 +7,6 @@ import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.index.query.QueryBuilder;
-import org.elasticsearch.search.aggregations.AbstractAggregationBuilder;
 import org.elasticsearch.search.sort.SortBuilders;
 import org.elasticsearch.search.sort.SortOrder;
 import org.junit.Before;
@@ -171,7 +170,6 @@ public class DatasetsSearchControllerTest {
         when(builder.setFrom(anyInt())).thenReturn(builder);
         when(builder.setSize(anyInt())).thenReturn(builder);
         when(builder.addSort(any())).thenReturn(builder);
-        when(builder.addAggregation(any(AbstractAggregationBuilder.class))).thenReturn(builder);
         when(builder.execute()).thenReturn(action);
 
         when(client.prepareSearch("dcat")).thenReturn(builder);

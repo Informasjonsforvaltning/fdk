@@ -1,6 +1,6 @@
 logging:
   level.root: INFO
-  level.no.dcat: INFO
+  level.no: ${LOG_LEVEL:DEBUG}
 application:
   fusekiService: http://fuseki:8080/fuseki
 elastic:
@@ -16,7 +16,5 @@ application:
 elastic:
   clusterNodes: localhost:9300
   clusterName: elasticsearch
-logging:
-  level.no.dcat: INFO
 server:
   port: 8119

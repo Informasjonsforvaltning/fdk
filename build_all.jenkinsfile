@@ -69,8 +69,8 @@ node ('jenkins-maven'){
     def values_images_text = ""
     stage('Split') {
 
-     def list = [[service:"registration-react", compile: "cd applications/registration-react && ./travisBuild.sh"],
-                 [service:"search", compile: "cd applications/search && ./travisBuild.sh"],
+     def list = [[service:"registration-react", compile: "cd applications/registration-react && ./runAllBuild.sh"],
+                 [service:"search", compile: "cd applications/search && ./runAllBuild.sh"],
                  [service:"fuseki", compile: "maven"],
                  [service:"harvester", compile: "maven"],
                  [service:"harvester-api", compile: "maven"],
