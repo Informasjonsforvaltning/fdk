@@ -143,44 +143,44 @@ export const DatasetStats = props => {
   const distributions = (
     <React.Fragment>
       <div className="d-flex flex-fill py-5 border-top flex-wrap flex-md-nowrap">
-      <StatBox
-        label={localization.report.aggregation.publicWithDistributions}
-      >
-        <ChartBar
-          componentKey={`withDistribution-${orgPath}`}
-          percentHeight={calculatePercent(
-            stats.distOnPublicAccessCount,
-            stats.total
-          )}
-          barColor="green"
-        />
-        <Link
-          title={localization.report.aggregation.publicWithDistributions}
-          className="mb-3"
-          to="/#"
+        <StatBox
+          label={localization.report.aggregation.publicWithDistributions}
         >
-          {stats.distOnPublicAccessCount}
-        </Link>
-      </StatBox>
+          <ChartBar
+            componentKey={`withDistribution-${orgPath}`}
+            percentHeight={calculatePercent(
+              stats.distOnPublicAccessCount,
+              stats.total
+            )}
+            barColor="green"
+          />
+          <Link
+            title={localization.report.aggregation.publicWithDistributions}
+            className="mb-3"
+            to="/#"
+          >
+            {stats.distOnPublicAccessCount}
+          </Link>
+        </StatBox>
 
-      <StatBox
-        label={localization.report.aggregation.publicWithoutDistributions}
-      >
-        <ChartBar
-          componentKey={`withoutDistribution-${orgPath}`}
-          percentHeight={calculatePercent(
-            stats.total - stats.distOnPublicAccessCount,
-            stats.total
-          )}
-          barColor="green"
-        />
-        <Link
-          title={localization.report.aggregation.publicWithoutDistributions}
-          className="mb-3"
-          to="/#"
+        <StatBox
+          label={localization.report.aggregation.publicWithoutDistributions}
         >
-          {stats.total - stats.distOnPublicAccessCount}
-        </Link>
+          <ChartBar
+            componentKey={`withoutDistribution-${orgPath}`}
+            percentHeight={calculatePercent(
+              stats.total - stats.distOnPublicAccessCount,
+              stats.total
+            )}
+            barColor="green"
+          />
+          <Link
+            title={localization.report.aggregation.publicWithoutDistributions}
+            className="mb-3"
+            to="/#"
+          >
+            {stats.total - stats.distOnPublicAccessCount}
+          </Link>
         </StatBox>
 
         <StatBox
