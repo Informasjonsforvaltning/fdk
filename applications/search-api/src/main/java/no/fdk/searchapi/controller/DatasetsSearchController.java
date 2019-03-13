@@ -1,6 +1,8 @@
 package no.fdk.searchapi.controller;
 
 import com.google.common.collect.ImmutableMap;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import no.dcat.shared.Dataset;
@@ -65,6 +67,10 @@ public class DatasetsSearchController {
             "Max number returned by a single query is 100. Size parameters greater than 100 will not return more than 100 datasets. " +
             "In order to access all datasets, use multiple queries and increment from parameter.", response = Dataset.class)
     @RequestMapping(value = "/datasets", method = RequestMethod.GET, produces = "application/json")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "page", dataType = "string", paramType = "query", defaultValue = "0", value = "Page index. First page is 0"),
+        @ApiImplicitParam(name = "size", dataType = "string", paramType = "query", defaultValue = "10", value = "Page size")
+    })
     public ResponseEntity<String> search(
         @ApiParam("Full content search")
         @RequestParam(value = "q", defaultValue = "", required = false)
