@@ -44,7 +44,7 @@ export const DatasetStats = props => {
     encodedOrgPath !== null ? `&orgPath=${encodedOrgPath}` : '';
 
   const accessLevel = (
-    <div className="d-flex flex-wrap flex-md-nowrap justify-content-around mb-5">
+    <div className="d-flex flex-wrap flex-md-nowrap justify-content-around py-5">
       <StatBox
         componentKey={`PUBLIC-${orgPath}`}
         statBoxStyle="w-25"
@@ -117,7 +117,7 @@ export const DatasetStats = props => {
   );
 
   const opendata = (
-    <div className="d-flex flex-fill mb-5">
+    <div className="d-flex flex-fill py-5">
       <StatBox
         pieData={[
           { value: stats.opendata, color: '#3CBEF0' },
@@ -187,9 +187,8 @@ export const DatasetStats = props => {
   );
 
   const concepts = (
-    <div className="d-flex flex-fill mb-5 border-top">
+    <div className="d-flex flex-fill py-5 border-top">
       <StatBox
-        statBoxStyle="w-25"
         iconType="book"
         iconColor="blue"
         label={localization.report.aggregation.withConcepts}
@@ -215,7 +214,6 @@ export const DatasetStats = props => {
       />
 
       <StatBox
-        statBoxStyle="w-25"
         iconType="book"
         iconColor="grey"
         label={localization.report.aggregation.withoutConcepts}
