@@ -149,15 +149,6 @@ public class DatasetsSearchController {
 
         logger.debug(loggMsg.toString());
 
-        String themeLanguage = "*";
-        String analyzerLang = "norwegian";
-
-        if ("en".equals(lang)) {
-            //themeLanguage="en";
-            analyzerLang = "english";
-        }
-        lang = "*"; // hardcode to search in all language fields
-
         int from = checkAndAdjustFrom((int) pageable.getOffset());
         int size = checkAndAdjustSize(pageable.getPageSize());
 
@@ -175,19 +166,19 @@ public class DatasetsSearchController {
                 query = query + " " + query + "*";
             }
             searchQuery = QueryBuilders.simpleQueryStringQuery(query)
-                .analyzer(analyzerLang)
-                .field("title" + "." + lang).boost(3f)
-                .field("objective" + "." + lang)
-                .field("keyword" + "." + lang).boost(2f)
-                .field("theme.title" + "." + themeLanguage)
-                .field("description" + "." + lang)
+                .analyzer(("en".equals(lang)) ? "english" : "norwegian")
+                .field("title.*").boost(3f)
+                .field("objective.*")
+                .field("keyword.*").boost(2f)
+                .field("theme.title.*")
+                .field("description.*")
                 .field("publisher.name").boost(3f)
-                .field("publisher.prefLabel." + lang).boost(3f)
-                .field("accessRights.prefLabel" + "." + lang)
+                .field("publisher.prefLabel.*").boost(3f)
+                .field("accessRights.prefLabel.*")
                 .field("accessRights.code")
-                .field("subject.prefLabel." + lang)
-                .field("subject.altLabel." + lang)
-                .field("subject.definition." + lang)
+                .field("subject.prefLabel.*")
+                .field("subject.altLabel.*")
+                .field("subject.definition.*")
                 .defaultOperator(Operator.OR);
         } else {
             searchQuery = QueryBuilders.matchAllQuery();
@@ -376,13 +367,13 @@ public class DatasetsSearchController {
                 .order(Terms.Order.count(false)));
         }
         if (selectedAggregationFields.contains("distributionCountForTypeApi")) {
-            searchBuilder.addAggregation(QueryUtil.createDistributionTypeCountAggregation("distributionCountForTypeApi","API"));
+            searchBuilder.addAggregation(QueryUtil.createDistributionTypeCountAggregation("distributionCountForTypeApi", "API"));
         }
         if (selectedAggregationFields.contains("distributionCountForTypeFeed")) {
-            searchBuilder.addAggregation(QueryUtil.createDistributionTypeCountAggregation("distributionCountForTypeFeed","Feed"));
+            searchBuilder.addAggregation(QueryUtil.createDistributionTypeCountAggregation("distributionCountForTypeFeed", "Feed"));
         }
         if (selectedAggregationFields.contains("distributionCountForTypeFile")) {
-            searchBuilder.addAggregation(QueryUtil.createDistributionTypeCountAggregation("distributionCountForTypeFile","Nedlastbar fil"));
+            searchBuilder.addAggregation(QueryUtil.createDistributionTypeCountAggregation("distributionCountForTypeFile", "Nedlastbar fil"));
         }
 
         return searchBuilder;
