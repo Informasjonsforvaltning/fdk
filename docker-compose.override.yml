@@ -109,7 +109,7 @@ services:
   harvester-api:
     restart: always
     ports:
-      - "8108:8080"
+      - "8106:8080"
     environment:
       - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx1024M -Dspring.profiles.active=docker
       - FDK_ES_CLUSTERNODES=elasticsearch5:9300
