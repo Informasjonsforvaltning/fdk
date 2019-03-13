@@ -50,7 +50,7 @@ export const DatasetStats = props => {
         statBoxStyle="w-25"
         iconBgSize={calculateSize(stats.public, stats.total)}
         iconBgColor="green"
-        iconType="lock"
+        iconType="unlock"
         iconColor="green"
         label={localization.report.aggregation.public}
       >
@@ -66,9 +66,9 @@ export const DatasetStats = props => {
         componentKey={`RESTRICTED-${orgPath}`}
         statBoxStyle="w-25"
         iconBgSize={calculateSize(stats.restricted, stats.total)}
-        iconBgColor="green"
-        iconType="lock"
-        iconColor="green"
+        iconBgColor="yellow"
+        iconType="unlock-alt"
+        iconColor="yellow"
         label={localization.report.aggregation.restricted}
       >
         <Link
@@ -83,9 +83,9 @@ export const DatasetStats = props => {
         componentKey={`NONPUBLIC-${orgPath}`}
         statBoxStyle="w-25"
         iconBgSize={calculateSize(stats.nonPublic, stats.total)}
-        iconBgColor="yellow"
-        iconType="unlock"
-        iconColor="yellow"
+        iconBgColor="red"
+        iconType="lock"
+        iconColor="red"
         label={localization.report.aggregation.nonPublic}
       >
         <Link
@@ -100,9 +100,9 @@ export const DatasetStats = props => {
         componentKey={`UNKNOWN-${orgPath}`}
         statBoxStyle="w-25"
         iconBgSize={calculateSize(stats.unknown, stats.total)}
-        iconBgColor="red"
-        iconType="lock"
-        iconColor="red"
+        iconBgColor="grey"
+        iconType="question"
+        iconColor="dark"
         label={localization.report.aggregation.accessRightsUnknown}
       >
         <Link
