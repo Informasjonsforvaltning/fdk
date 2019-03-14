@@ -256,9 +256,9 @@
     "catalogs": "Katalogar",
     "datasetTab": "Rapport for datasett",
     "datasets":"datasett",
-    "apis":"API-er",
+    "apis":"API",
     "concepts":"omgrep",
-    "newPastWeek":"nye siste uke",
+    "newPastWeek":"nye siste veke",
     "aggregation": {
       "public": "Datasett som er offentleg",
       "restricted": "Datasett med avgrensa offentlegheit",
