@@ -12,6 +12,7 @@ import java.util.Arrays;
 import java.util.Map;
 
 import static no.fdk.searchapi.controller.datasetssearch.Common.MISSING;
+import static no.fdk.searchapi.controller.datasetssearch.QueryUtil.isOpendataQuery;
 import static org.apache.commons.lang3.StringUtils.isEmpty;
 
 public class DatasetsSearchQueryBuilder {
@@ -110,15 +111,10 @@ public class DatasetsSearchQueryBuilder {
 
         static QueryBuilder opendata(String value, DatasetsSearchQueryBuilder queryBuilder) {
             if ("true".equals(value)) {
-                return QueryBuilders.boolQuery()
-                    .must(QueryBuilders.termQuery("distribution.openLicense", "true"))
-                    .must(QueryBuilders.termQuery("accessRights.code.raw", "PUBLIC"));
+                return isOpendataQuery();
             }
             if ("false".equals(value)) {
-                // not open or not public
-                return QueryBuilders.boolQuery()
-                    .should(QueryBuilders.boolQuery().mustNot(QueryBuilders.termQuery("distribution.openLicense", "true")))
-                    .should(QueryBuilders.boolQuery().mustNot(QueryBuilders.termQuery("accessRights.code.raw", "PUBLIC")));
+                return QueryBuilders.boolQuery().mustNot(isOpendataQuery());
             }
             return null;
         }
@@ -135,7 +131,6 @@ public class DatasetsSearchQueryBuilder {
         static QueryBuilder provenance(String value, DatasetsSearchQueryBuilder queryBuilder) {
             return QueryUtil.createTermQuery("provenance.code.raw", value);
         }
-
 
         static QueryBuilder spatial(String value, DatasetsSearchQueryBuilder queryBuilder) {
             BoolQueryBuilder spatialFilter = QueryBuilders.boolQuery();

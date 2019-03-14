@@ -15,6 +15,7 @@ import java.util.Set;
 
 import static java.lang.Integer.MAX_VALUE;
 import static no.fdk.searchapi.controller.datasetssearch.Common.MISSING;
+import static no.fdk.searchapi.controller.datasetssearch.QueryUtil.*;
 import static org.elasticsearch.script.Script.DEFAULT_SCRIPT_LANG;
 import static org.elasticsearch.script.ScriptType.INLINE;
 
@@ -45,48 +46,44 @@ public class DatasetsAggregations {
             aggregations.add(createTermsAggregation("spatial", "spatial.prefLabel.no.raw"));
         }
         if (aggregationFields.contains("opendata")) {
-            aggregations.add(AggregationBuilders.filter("opendata",
-                QueryBuilders.boolQuery()
-                    .must(QueryBuilders.termQuery("accessRights.code.raw", "PUBLIC"))
-                    .must(QueryBuilders.termQuery("distribution.openLicense", "true"))
-            ));
+            aggregations.add(AggregationBuilders.filter("opendata", isOpendataQuery()));
         }
         if (aggregationFields.contains("withDistribution")) {
-            aggregations.add(AggregationBuilders.filter("withDistribution", QueryBuilders.existsQuery("distribution")));
+            aggregations.add(AggregationBuilders.filter("withDistribution", hasDistributionQuery()));
         }
         if (aggregationFields.contains("publicWithDistribution")) {
             aggregations.add(AggregationBuilders.filter("publicWithDistribution",
                 QueryBuilders.boolQuery()
-                    .must(QueryBuilders.existsQuery("distribution"))
-                    .must(QueryBuilders.termQuery("accessRights.code.raw", "PUBLIC"))
+                    .must(hasDistributionQuery())
+                    .must(isPublicQuery())
             ));
         }
         if (aggregationFields.contains("nonpublicWithDistribution")) {
             aggregations.add(AggregationBuilders.filter("nonpublicWithDistribution",
                 QueryBuilders.boolQuery()
-                    .must(QueryBuilders.existsQuery("distribution"))
-                    .mustNot(QueryBuilders.termQuery("accessRights.code.raw", "PUBLIC"))
+                    .must(hasDistributionQuery())
+                    .mustNot(isPublicQuery())
             ));
         }
         if (aggregationFields.contains("publicWithoutDistribution")) {
             aggregations.add(AggregationBuilders.filter("publicWithoutDistribution",
                 QueryBuilders.boolQuery()
-                    .mustNot(QueryBuilders.existsQuery("distribution"))
-                    .must(QueryBuilders.termQuery("accessRights.code.raw", "PUBLIC"))
+                    .mustNot(hasDistributionQuery())
+                    .must(isPublicQuery())
             ));
         }
         if (aggregationFields.contains("nonpublicWithoutDistribution")) {
             aggregations.add(AggregationBuilders.filter("nonpublicWithoutDistribution",
                 QueryBuilders.boolQuery()
-                    .mustNot(QueryBuilders.existsQuery("distribution"))
-                    .mustNot(QueryBuilders.termQuery("accessRights.code.raw", "PUBLIC"))
+                    .mustNot(hasDistributionQuery())
+                    .mustNot(isPublicQuery())
             ));
         }
         if (aggregationFields.contains("withSubject")) {
-            aggregations.add(AggregationBuilders.filter("withSubject", QueryBuilders.existsQuery("subject.prefLabel")));
+            aggregations.add(AggregationBuilders.filter("withSubject", hasSubjectQuery()));
         }
         if (aggregationFields.contains("nationalComponent")) {
-            aggregations.add(AggregationBuilders.filter("nationalComponent", QueryUtil.createTermQuery("provenance.code.raw", "NASJONAL")));
+            aggregations.add(AggregationBuilders.filter("nationalComponent", isNationalComponentQuery()));
         }
         if (aggregationFields.contains("subjects")) {
             aggregations.add(AggregationBuilders
