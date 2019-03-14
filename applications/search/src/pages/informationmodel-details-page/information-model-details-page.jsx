@@ -73,7 +73,7 @@ const renderRelatedApi = (referencedApis, publisherItems) => {
   );
 };
 
-const renderStickyMenu = informationModelItem => {
+const renderStickyMenu = (informationModelItem, referencedApis) => {
   const menuItems = [];
 
   if (_.get(informationModelItem, 'schema')) {
@@ -82,7 +82,7 @@ const renderStickyMenu = informationModelItem => {
       prefLabel: localization.infoMod.infoModHeader
     });
   }
-  if (_.get(informationModelItem, 'id')) {
+  if (!_.isEmpty(_.get(referencedApis, 'hits'))) {
     menuItems.push({
       name: localization.infoMod.relatedAPIHeader,
       prefLabel: localization.infoMod.relatedAPIHeader
@@ -131,7 +131,7 @@ export const InformationModelDetailsPage = props => {
 
         <div className="row">
           <div className="col-12 col-lg-3 ">
-            {renderStickyMenu(informationModelItem)}
+            {renderStickyMenu(informationModelItem, referencedApis)}
           </div>
 
           <section className="col-12 col-lg-9 mt-3">

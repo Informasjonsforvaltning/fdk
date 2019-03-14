@@ -57,10 +57,6 @@ exports[`should render InformationModelDetailsPage correctly with informationMod
                 "name": "Information model",
                 "prefLabel": "Information model",
               },
-              Object {
-                "name": "Belongs to API",
-                "prefLabel": "Belongs to API",
-              },
             ]
           }
         />
