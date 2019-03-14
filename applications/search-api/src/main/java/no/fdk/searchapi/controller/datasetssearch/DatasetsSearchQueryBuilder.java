@@ -12,7 +12,7 @@ import java.util.Arrays;
 import java.util.Map;
 
 import static no.fdk.searchapi.controller.datasetssearch.Common.MISSING;
-import static no.fdk.searchapi.controller.datasetssearch.QueryUtil.isOpendataQuery;
+import static no.fdk.searchapi.controller.datasetssearch.QueryUtil.*;
 import static org.apache.commons.lang3.StringUtils.isEmpty;
 
 public class DatasetsSearchQueryBuilder {
@@ -60,7 +60,6 @@ public class DatasetsSearchQueryBuilder {
                 }
             } catch (Exception e) {
                 // skip silently params that are not implemented as filters
-                logger.debug("Filter method exception: {}, {}", filterName, e);
             }
         }
         return this;
@@ -147,6 +146,49 @@ public class DatasetsSearchQueryBuilder {
             });
 
             return spatialFilter;
+        }
+
+        static QueryBuilder withDistributions(String value, DatasetsSearchQueryBuilder queryBuilder) {
+            if ("true".equals(value)) {
+                return hasDistributionQuery();
+            }
+            if ("false".equals(value)) {
+                return QueryBuilders.boolQuery()
+                    .mustNot(hasDistributionQuery());
+            }
+            return null;
+        }
+
+        static QueryBuilder isPublic(String value, DatasetsSearchQueryBuilder queryBuilder) {
+            if ("true".equals(value)) {
+                return isPublicQuery();
+            }
+            if ("false".equals(value)) {
+                return QueryBuilders.boolQuery().mustNot(isPublicQuery());
+            }
+            return null;
+        }
+
+        static QueryBuilder withSubject(String value, DatasetsSearchQueryBuilder queryBuilder) {
+            if ("true".equals(value)) {
+                return hasSubjectQuery();
+            }
+            return null;
+        }
+
+        static QueryBuilder isNationalComponent(String value, DatasetsSearchQueryBuilder queryBuilder) {
+            if ("true".equals(value)) {
+                return isNationalComponentQuery();
+            }
+            return null;
+        }
+
+        static QueryBuilder subject(String value, DatasetsSearchQueryBuilder queryBuilder) {
+            return QueryBuilders.termQuery("subject.uri", value);
+        }
+
+        static QueryBuilder distributionType(String value, DatasetsSearchQueryBuilder queryBuilder) {
+            return QueryBuilders.termQuery("distribution.type.keyword", value);
         }
     }
 }
