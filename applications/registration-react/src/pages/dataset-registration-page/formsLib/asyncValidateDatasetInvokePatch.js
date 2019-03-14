@@ -1,4 +1,3 @@
-import axios from 'axios';
 import _ from 'lodash';
 import {
   datasetFormPatchSuccessAction,
@@ -7,6 +6,7 @@ import {
   datasetFormPatchJustPublishedOrUnPublishedAction
 } from '../../../redux/modules/dataset-form-status';
 import { datasetSuccessAction } from '../../../redux/modules/datasets';
+import { patchDataset } from '../../../api/datasets';
 
 /* eslint-disable no-param-reassign */
 export const asyncValidateDatasetInvokePatch = (
@@ -89,8 +89,12 @@ export const asyncValidateDatasetInvokePatch = (
     dispatch(datasetFormPatchIsSavingAction(datasetId));
   }
 
-  return axios
-    .patch(_.get(match, 'url'), values, { headers: api })
+  return patchDataset(
+    _.get(match, ['params', 'catalogId']),
+    _.get(match, ['params', 'id']),
+    api,
+    values
+  )
     .then(response => {
       const datasetRegistration = response && response.data;
       dispatch(
