@@ -1,4 +1,4 @@
-package no.fdk.searchapi.controller;
+package no.fdk.searchapi.controller.datasetssearch;
 
 import com.google.common.collect.ImmutableMap;
 import no.fdk.searchapi.service.ElasticsearchService;
