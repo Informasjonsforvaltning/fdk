@@ -42,6 +42,7 @@ public class ApiSearchController {
     public static final String MISSING = "MISSING";
     public static final long DAY_IN_MS = 1000 * 3600 * 24;
     public static final int MAX_AGGREGATIONS = 10000;
+    public static final long MAX_PRECISION = 40000;
     public static final String[] DEFAULT_RETURN_FIELDS = {
         "id",
         "title",
@@ -239,7 +240,6 @@ public class ApiSearchController {
         }
         if (selectedAggregationFields.contains("openAccess")) {
             searchBuilder.addAggregation(QueryUtil.createTermsAggregation("openAccess", "isOpenAccess"));
-
         }
         if (selectedAggregationFields.contains("openLicence")) {
             searchBuilder.addAggregation(QueryUtil.createTermsAggregation("openLicence", "isOpenLicense"));
@@ -290,8 +290,10 @@ public class ApiSearchController {
                 ((MultiBucketsAggregation) aggregation).getBuckets().forEach((bucket) -> {
                     outputAggregation.getBuckets().add(AggregationBucket.of(bucket.getKeyAsString(), bucket.getDocCount()));
                 });
-            } else {
+            } else if (aggregation instanceof InternalCardinality) {
                 outputAggregation.getBuckets().add(AggregationBucket.of("count", ((InternalCardinality) aggregation).getValue()));
+            } else {
+                throw new RuntimeException("Programmer error. Aggregation "+aggregation.getClass().getName()+" is not supported.");
             }
             queryResponse.getAggregations().put(aggregationName, outputAggregation);
         });
@@ -334,7 +336,7 @@ public class ApiSearchController {
         static AggregationBuilder createCardinalityAggregation(String aggregationName, String field) {
             return AggregationBuilders.cardinality(aggregationName)
                 .field(field)
-                .precisionThreshold(40000);
+                .precisionThreshold(MAX_PRECISION);
         }
 
         static AggregationBuilder createTemporalAggregation(String name, String dateField) {
