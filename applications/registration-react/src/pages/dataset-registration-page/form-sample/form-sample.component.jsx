@@ -7,7 +7,7 @@ import Helptext from '../../../components/helptext/helptext.component';
 import InputField from '../../../components/field-input/field-input.component';
 import InputTagsField from '../../../components/field-input-tags/field-input-tags.component';
 import TextAreaField from '../../../components/field-textarea/field-textarea.component';
-import asyncValidate from '../../../lib/asyncValidate';
+import { asyncValidateDatasetInvokePatch } from '../formsLib/asyncValidateDatasetInvokePatch';
 import { textType, licenseType } from '../../../schemaTypes';
 
 export const renderSamples = componentProps => {
@@ -24,7 +24,7 @@ export const renderSamples = componentProps => {
                 title={localization.schema.sample.removeSample}
                 onClick={() => {
                   fields.remove(index);
-                  asyncValidate(
+                  asyncValidateDatasetInvokePatch(
                     fields.getAll(),
                     null,
                     componentProps,

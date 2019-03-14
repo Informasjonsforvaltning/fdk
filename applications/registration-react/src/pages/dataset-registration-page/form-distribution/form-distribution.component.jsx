@@ -10,7 +10,7 @@ import InputTagsField from '../../../components/field-input-tags/field-input-tag
 import TextAreaField from '../../../components/field-textarea/field-textarea.component';
 import RadioField from '../../../components/field-radio/field-radio.component';
 import SelectField from '../../../components/field-select/field-select.component';
-import asyncValidate from '../../../lib/asyncValidate';
+import { asyncValidateDatasetInvokePatch } from '../formsLib/asyncValidateDatasetInvokePatch';
 import { textType, licenseType } from '../../../schemaTypes';
 
 export const renderDistributionLandingpage = componentProps => {
@@ -54,7 +54,7 @@ export const renderDistributions = componentProps => {
                   title="Remove distribution"
                   onClick={() => {
                     fields.remove(index);
-                    asyncValidate(
+                    asyncValidateDatasetInvokePatch(
                       fields.getAll(),
                       null,
                       componentProps,

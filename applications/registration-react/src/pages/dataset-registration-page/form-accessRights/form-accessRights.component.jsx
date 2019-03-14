@@ -6,7 +6,7 @@ import localization from '../../../lib/localization';
 import Helptext from '../../../components/helptext/helptext.component';
 import InputField from '../../../components/field-input/field-input.component';
 import RadioField from '../../../components/field-radio/field-radio.component';
-import asyncValidate from '../../../lib/asyncValidate';
+import { asyncValidateDatasetInvokePatch } from '../formsLib/asyncValidateDatasetInvokePatch';
 import { legalBasisType } from '../../../schemaTypes';
 
 /*
@@ -50,7 +50,7 @@ export const renderLegalBasisFields = (item, index, fields, customProps) => (
           if (fields.length > 1) {
             fields.remove(index);
           }
-          asyncValidate(
+          asyncValidateDatasetInvokePatch(
             fields.getAll(),
             customProps.dispatch,
             customProps,
