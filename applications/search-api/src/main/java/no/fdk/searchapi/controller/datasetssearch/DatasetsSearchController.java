@@ -138,7 +138,7 @@ public class DatasetsSearchController {
         }
 
         // Execute search
-        logger.trace("Executing query: {}", searchBuilder.toString());
+        logger.debug("Executing query: {}", searchBuilder.toString());
         SearchResponse response = searchBuilder.execute().actionGet();
         logger.trace("Search response: {}", response.toString());
 
