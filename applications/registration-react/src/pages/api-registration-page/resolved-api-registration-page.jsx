@@ -2,7 +2,7 @@ import _ from 'lodash';
 import { resolve } from 'react-resolver';
 import { APIRegistrationPage } from './api-registration-page';
 import { getPublisherByOrgNr } from '../../api/get-publisher-by-orgnr';
-import { getDatasetByURI } from '../../api/get-dataset';
+import { getDatasetByURI } from '../../api/datasets';
 
 const memoizedGetPublisherByOrgNr = _.memoize(getPublisherByOrgNr);
 const memoizedGetDatasetByURI = _.memoize(getDatasetByURI);
