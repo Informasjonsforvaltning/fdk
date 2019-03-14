@@ -9,17 +9,8 @@ import { datasetSuccessAction } from '../../../redux/modules/datasets';
 import { patchDataset } from '../../../api/datasets';
 
 /* eslint-disable no-param-reassign */
-export const asyncValidateDatasetInvokePatch = (
-  values,
-  dispatch,
-  props,
-  blurredField
-) => {
+export const asyncValidateDatasetInvokePatch = (values, dispatch, props) => {
   const { catalogId, datasetId } = props;
-
-  const api = {
-    Authorization: `Basic user:password`
-  };
 
   if (typeof dispatch !== 'function') {
     throw new Error('dispatch must be a function');
@@ -88,7 +79,7 @@ export const asyncValidateDatasetInvokePatch = (
     dispatch(datasetFormPatchIsSavingAction(datasetId));
   }
 
-  return patchDataset(catalogId, datasetId, api, values)
+  return patchDataset(catalogId, datasetId, values)
     .then(response => {
       const datasetRegistration = response && response.data;
       dispatch(

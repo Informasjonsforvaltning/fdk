@@ -40,7 +40,7 @@ export const getDatasetById = async (id, catalogId) => {
   return response && response.data;
 };
 
-export const patchDataset = (catalogId, datasetId, header, body) =>
+export const patchDataset = (catalogId, datasetId, body) =>
   axios
-    .patch(`${datasetUrlBase}/${catalogId}/datasets/${datasetId}`, body, header)
+    .patch(`${datasetUrlBase}/${catalogId}/datasets/${datasetId}`, body)
     .then(response => response);
