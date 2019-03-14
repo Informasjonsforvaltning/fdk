@@ -8,8 +8,6 @@ import no.dcat.shared.Dataset;
 import no.fdk.searchapi.service.ElasticsearchService;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
-import org.elasticsearch.index.query.BoolQueryBuilder;
-import org.elasticsearch.index.query.Operator;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
@@ -30,7 +28,6 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Map;
 
-import static no.fdk.searchapi.controller.datasetssearch.Common.MISSING;
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
 
@@ -107,22 +104,17 @@ public class DatasetsSearchController {
         int from = checkAndAdjustFrom((int) pageable.getOffset());
         int size = checkAndAdjustSize(pageable.getPageSize());
 
-        BoolQueryBuilder composedQuery = QueryBuilders.boolQuery();
-
-        // Default query is to match all. User defined filters will narrow it down.
-        composedQuery = composedQuery.must(QueryBuilders.matchAllQuery());
-
-        // Adding constant "should" term increases score for matching documents for national components
-        // in api-cat, we use modern notation nationalComponent=true, while in dataset is not as explicit
-        composedQuery = composedQuery.should(QueryUtil.createTermQuery("provenance.code.raw", "NASJONAL").boost(2));
-
-        composedQuery = addFilters(composedQuery, params, lang);
+        QueryBuilder searchQuery = new DatasetsSearchQueryBuilder()
+            .lang(lang)
+            .boostNationalComponents()
+            .addFilters(params)
+            .build();
 
         // set up search query with aggregations
         SearchRequestBuilder searchBuilder = elasticsearch.getClient().prepareSearch("dcat");
         searchBuilder
             .setTypes("dataset")
-            .setQuery(composedQuery)
+            .setQuery(searchQuery)
             .setFrom(from)
             .setSize(size);
 
@@ -154,109 +146,6 @@ public class DatasetsSearchController {
         return new ResponseEntity<>(response.toString(), HttpStatus.OK);
     }
 
-    BoolQueryBuilder addFilters(BoolQueryBuilder composedQuery, Map<String, String> params, String lang) {
-
-        String title = params.getOrDefault("title", "");
-        if (isNotEmpty(title)) {
-            QueryBuilder nbQuery = QueryBuilders.matchPhrasePrefixQuery("title.nb", title).analyzer("norwegian").maxExpansions(15);
-            QueryBuilder noQuery = QueryBuilders.matchPhrasePrefixQuery("title.no", title).analyzer("norwegian").maxExpansions(15);
-            QueryBuilder nnQuery = QueryBuilders.matchPhrasePrefixQuery("title.nn", title).analyzer("norwegian").maxExpansions(15);
-            QueryBuilder enQuery = QueryBuilders.matchPhrasePrefixQuery("title.en", title).analyzer("english").maxExpansions(15);
-            composedQuery.must(QueryBuilders.boolQuery().should(nbQuery).should(noQuery).should(nnQuery).should(enQuery));
-        }
-
-        String query = params.getOrDefault("q", "");
-        if (isNotEmpty(query)) {
-            // add * if query only contains one word
-            if (!query.contains(" ")) {
-                query = query + " " + query + "*";
-            }
-            composedQuery.must(QueryBuilders.simpleQueryStringQuery(query)
-                .analyzer(("en".equals(lang)) ? "english" : "norwegian")
-                .field("title.*").boost(3f)
-                .field("objective.*")
-                .field("keyword.*").boost(2f)
-                .field("theme.title.*")
-                .field("description.*")
-                .field("publisher.name").boost(3f)
-                .field("publisher.prefLabel.*").boost(3f)
-                .field("accessRights.prefLabel.*")
-                .field("accessRights.code")
-                .field("subject.prefLabel.*")
-                .field("subject.altLabel.*")
-                .field("subject.definition.*")
-                .defaultOperator(Operator.OR));
-        }
-
-        String theme = params.getOrDefault("theme", "");
-        // theme can contain multiple themes, example: AGRI,HEAL
-        if (isNotEmpty(theme)) {
-            String[] themes = theme.split(",");
-            composedQuery.filter(QueryUtil.createTermsQuery("theme.code", themes));
-        }
-
-        String catalog = params.getOrDefault("catalog", "");
-        if (isNotEmpty(catalog)) {
-            composedQuery.filter(QueryUtil.createTermQuery("catalog.uri", catalog));
-        }
-
-        String accessRights = params.getOrDefault("accessrights", "");
-        if (isNotEmpty(accessRights)) {
-            composedQuery.filter(QueryUtil.createTermQuery("accessRights.code.raw", accessRights));
-        }
-        String opendata = params.getOrDefault("opendata", "");
-        if (isNotEmpty(opendata)) {
-            BoolQueryBuilder opendataFilter = QueryBuilders.boolQuery();
-            if (opendata.equals("true")) {
-                opendataFilter.must(QueryBuilders.termQuery("distribution.openLicense", "true"));
-                opendataFilter.must(QueryBuilders.termQuery("accessRights.code.raw", "PUBLIC"));
-            }
-            //Handle the negative cases
-            else if (opendata.equals("false")) {
-                BoolQueryBuilder notOpenLicenseFilter = QueryBuilders.boolQuery();
-                BoolQueryBuilder notOpenDistributionFilter = QueryBuilders.boolQuery();
-                notOpenLicenseFilter.mustNot(QueryBuilders.termQuery("distribution.openLicense", "true"));
-                notOpenDistributionFilter.mustNot(QueryBuilders.termQuery("accessRights.code.raw", "PUBLIC"));
-                opendataFilter.should(notOpenLicenseFilter);
-                opendataFilter.should(notOpenDistributionFilter);
-            }
-            composedQuery.filter(opendataFilter);
-        }
-
-        String orgPath = params.getOrDefault("orgPath", "");
-        if (isNotEmpty(orgPath)) {
-            composedQuery.filter(QueryUtil.createTermQuery("publisher.orgPath", orgPath));
-        }
-
-        int firstHarvested = Integer.parseInt(params.getOrDefault("firstHarvested", "0"));
-        if (firstHarvested > 0) {
-            composedQuery.filter(QueryUtil.createRangeQueryFromXdaysToNow(firstHarvested, "harvest.firstHarvested"));
-        }
-
-        String provenance = params.getOrDefault("provenance", "");
-        if (isNotEmpty(provenance)) {
-            composedQuery.filter(QueryUtil.createTermQuery("provenance.code.raw", accessRights));
-        }
-
-        String spatial = params.getOrDefault("spatial", "");
-        if (isNotEmpty(spatial)) {
-            BoolQueryBuilder spatialFilter = QueryBuilders.boolQuery();
-
-            String[] spatials = spatial.split(",");
-            Arrays.stream(spatials).forEach(spatialLabel -> {
-                if (spatialLabel.equals(MISSING)) {
-                    spatialFilter.mustNot(QueryBuilders.existsQuery("spatial"));
-                } else if (spatialLabel.startsWith("http")) {
-                    spatialFilter.must(QueryBuilders.termQuery("spatial.uri", spatialLabel));
-                } else {
-                    spatialFilter.must(QueryBuilders.termQuery("spatial.prefLabel.no.raw", spatialLabel));
-                }
-            });
-
-            composedQuery.filter(spatialFilter);
-        }
-        return composedQuery;
-    }
 
     public SearchRequestBuilder addAggregations(SearchRequestBuilder searchBuilder, String aggregationFields) {
         HashSet<String> selectedAggregationFields = new HashSet<>(Arrays.asList(aggregationFields.split(",")));
