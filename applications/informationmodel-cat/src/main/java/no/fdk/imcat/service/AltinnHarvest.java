@@ -64,7 +64,7 @@ public class AltinnHarvest {
             formBuilder.append(decodedForms.get(decodedForms.size()-1));
             formBuilder.append("]");
         } else {
-            formBuilder.append(decodedForms);
+            formBuilder.append(decodedForms.get(0));
         }
         model.setSchema(formBuilder.toString());
         return model;
