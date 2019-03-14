@@ -9,9 +9,6 @@ import no.fdk.searchapi.service.ElasticsearchService;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.index.query.QueryBuilder;
-import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.search.aggregations.AggregationBuilders;
-import org.elasticsearch.search.aggregations.bucket.terms.Terms;
 import org.elasticsearch.search.sort.SortBuilder;
 import org.elasticsearch.search.sort.SortBuilders;
 import org.elasticsearch.search.sort.SortOrder;
@@ -27,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
@@ -111,15 +109,17 @@ public class DatasetsSearchController {
             .build();
 
         // set up search query with aggregations
-        SearchRequestBuilder searchBuilder = elasticsearch.getClient().prepareSearch("dcat");
-        searchBuilder
+        SearchRequestBuilder searchBuilder = elasticsearch.getClient().prepareSearch("dcat")
             .setTypes("dataset")
             .setQuery(searchQuery)
             .setFrom(from)
             .setSize(size);
 
+
         if (isNotEmpty(aggregations)) {
-            searchBuilder = addAggregations(searchBuilder, aggregations);
+            Set<String> selectedAggregationFields = new HashSet<>(Arrays.asList(aggregations.split(",")));
+            DatasetsAggregations.buildAggregations(selectedAggregationFields).stream()
+                .forEach(aggregation -> searchBuilder.addAggregation(aggregation));
         }
 
         if (isNotEmpty(returnFields)) {
@@ -146,96 +146,6 @@ public class DatasetsSearchController {
         return new ResponseEntity<>(response.toString(), HttpStatus.OK);
     }
 
-
-    public SearchRequestBuilder addAggregations(SearchRequestBuilder searchBuilder, String aggregationFields) {
-        HashSet<String> selectedAggregationFields = new HashSet<>(Arrays.asList(aggregationFields.split(",")));
-
-        if (selectedAggregationFields.contains("accessRights")) {
-            searchBuilder.addAggregation(QueryUtil.createTermsAggregation("accessRights", "accessRights.code.raw"));
-        }
-        if (selectedAggregationFields.contains("theme")) {
-            searchBuilder.addAggregation(QueryUtil.createTermsAggregation("theme", "theme.code"));
-        }
-        if (selectedAggregationFields.contains("orgPath")) {
-            searchBuilder.addAggregation(QueryUtil.createTermsAggregation("orgPath", "publisher.orgPath"));
-        }
-        if (selectedAggregationFields.contains("catalog")) {
-            searchBuilder.addAggregation(QueryUtil.createTermsAggregation("catalog", "catalog.uri"));
-        }
-        if (selectedAggregationFields.contains("provenance")) {
-            searchBuilder.addAggregation(QueryUtil.createTermsAggregation("provenance", "provenance.code.raw"));
-        }
-        if (selectedAggregationFields.contains("firstHarvested")) {
-            searchBuilder.addAggregation(QueryUtil.createTemporalAggregation("firstHarvested", "harvest.firstHarvested"));
-        }
-        if (selectedAggregationFields.contains("spatial")) {
-            searchBuilder.addAggregation(QueryUtil.createTermsAggregation("spatial", "spatial.prefLabel.no.raw"));
-        }
-        if (selectedAggregationFields.contains("opendata")) {
-            searchBuilder.addAggregation(AggregationBuilders.filter("opendata",
-                QueryBuilders.boolQuery()
-                    .must(QueryBuilders.termQuery("accessRights.code.raw", "PUBLIC"))
-                    .must(QueryBuilders.termQuery("distribution.openLicense", "true"))
-            ));
-        }
-        if (selectedAggregationFields.contains("withDistribution")) {
-            searchBuilder.addAggregation(AggregationBuilders.filter("withDistribution", QueryBuilders.existsQuery("distribution")));
-        }
-        if (selectedAggregationFields.contains("publicWithDistribution")) {
-            searchBuilder.addAggregation(AggregationBuilders.filter("publicWithDistribution",
-                QueryBuilders.boolQuery()
-                    .must(QueryBuilders.existsQuery("distribution"))
-                    .must(QueryBuilders.termQuery("accessRights.code.raw", "PUBLIC"))
-            ));
-        }
-        if (selectedAggregationFields.contains("nonpublicWithDistribution")) {
-
-            searchBuilder.addAggregation(AggregationBuilders.filter("nonpublicWithDistribution",
-                QueryBuilders.boolQuery()
-                    .must(QueryBuilders.existsQuery("distribution"))
-                    .mustNot(QueryBuilders.termQuery("accessRights.code.raw", "PUBLIC"))
-            ));
-        }
-        if (selectedAggregationFields.contains("publicWithoutDistribution")) {
-            searchBuilder.addAggregation(AggregationBuilders.filter("publicWithoutDistribution",
-                QueryBuilders.boolQuery()
-                    .mustNot(QueryBuilders.existsQuery("distribution"))
-                    .must(QueryBuilders.termQuery("accessRights.code.raw", "PUBLIC"))
-            ));
-        }
-        if (selectedAggregationFields.contains("nonpublicWithoutDistribution")) {
-
-            searchBuilder.addAggregation(AggregationBuilders.filter("nonpublicWithoutDistribution",
-                QueryBuilders.boolQuery()
-                    .mustNot(QueryBuilders.existsQuery("distribution"))
-                    .mustNot(QueryBuilders.termQuery("accessRights.code.raw", "PUBLIC"))
-            ));
-        }
-        if (selectedAggregationFields.contains("withSubject")) {
-            searchBuilder.addAggregation(AggregationBuilders.filter("withSubject", QueryBuilders.existsQuery("subject.prefLabel")));
-        }
-        if (selectedAggregationFields.contains("nationalComponent")) {
-            searchBuilder.addAggregation(AggregationBuilders.filter("nationalComponent", QueryUtil.createTermQuery("provenance.code.raw", "NASJONAL")));
-        }
-        if (selectedAggregationFields.contains("subjects")) {
-            searchBuilder.addAggregation(AggregationBuilders
-                .terms("subjects")
-                .field("subject.uri")
-                .size(5)
-                .order(Terms.Order.count(false)));
-        }
-        if (selectedAggregationFields.contains("distributionCountForTypeApi")) {
-            searchBuilder.addAggregation(QueryUtil.createDistributionTypeCountAggregation("distributionCountForTypeApi", "API"));
-        }
-        if (selectedAggregationFields.contains("distributionCountForTypeFeed")) {
-            searchBuilder.addAggregation(QueryUtil.createDistributionTypeCountAggregation("distributionCountForTypeFeed", "Feed"));
-        }
-        if (selectedAggregationFields.contains("distributionCountForTypeFile")) {
-            searchBuilder.addAggregation(QueryUtil.createDistributionTypeCountAggregation("distributionCountForTypeFile", "Nedlastbar fil"));
-        }
-
-        return searchBuilder;
-    }
 
     private int checkAndAdjustFrom(int from) {
         if (from < 0) {
