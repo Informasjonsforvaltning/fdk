@@ -1,4 +1,4 @@
-import _get from 'lodash/get';
+import _ from 'lodash';
 
 import {
   validateMinTwoChars,
@@ -17,9 +17,9 @@ const validate = values => {
     errorNodes = distribution.map(item => {
       let errors = {};
 
-      const accessURL = item.accessURL || null;
-      const license = _get(item, ['license', 'uri'], null);
-      const description = _get(
+      const accessURL = _.get(item, ['accessURL', 0]);
+      const license = _.get(item, ['license', 'uri'], null);
+      const description = _.get(
         item,
         ['description', localization.getLanguage()],
         null
@@ -28,7 +28,7 @@ const validate = values => {
         item.page && item.page[0] && item.page[0].uri ? item.page[0].uri : null;
       const { conformsTo } = item || null;
 
-      errors = validateURL('accessURL', accessURL[0], errors, true);
+      errors = validateURL('accessURL', accessURL, errors, true);
       errors = validateMinTwoChars('license', license, errors, 'uri');
       errors = validateMinTwoChars('description', description, errors);
       errors = validateLinkReturnAsSkosType('page', page, errors, 'uri');
@@ -36,7 +36,7 @@ const validate = values => {
       if (conformsTo) {
         conformsToNodes = conformsTo.map(item => {
           let itemErrors = {};
-          const conformsToPrefLabel = _get(
+          const conformsToPrefLabel = _.get(
             item,
             ['prefLabel', localization.getLanguage()],
             null

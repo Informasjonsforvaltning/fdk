@@ -1,5 +1,6 @@
 package no.fdk.searchapi.controller;
 
+import com.google.common.collect.ImmutableMap;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import no.dcat.shared.Dataset;
@@ -7,10 +8,12 @@ import no.fdk.searchapi.service.ElasticsearchService;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.index.query.*;
+import org.elasticsearch.script.Script;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.bucket.filters.FiltersAggregator;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms;
+import org.elasticsearch.search.aggregations.metrics.sum.SumAggregationBuilder;
 import org.elasticsearch.search.sort.SortBuilder;
 import org.elasticsearch.search.sort.SortBuilders;
 import org.elasticsearch.search.sort.SortOrder;
@@ -27,7 +30,10 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
 
+import static java.lang.Integer.MAX_VALUE;
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
+import static org.elasticsearch.script.Script.DEFAULT_SCRIPT_LANG;
+import static org.elasticsearch.script.ScriptType.INLINE;
 
 
 /**
@@ -39,9 +45,6 @@ import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 public class DatasetsSearchController {
     public static final String MISSING = "Ukjent";
     public static final long DAY_IN_MS = 1000 * 3600 * 24;
-    /* api names */
-    public static final String QUERY_SEARCH = "/datasets";
-    private static final int MAX_AGGREGATIONS = 10000; //be sure all theme counts are returned
     private static Logger logger = LoggerFactory.getLogger(DatasetsSearchController.class);
     private ElasticsearchService elasticsearch;
 
@@ -61,7 +64,7 @@ public class DatasetsSearchController {
         notes = "Returns a list of matching datasets wrapped in a elasticsearch response. " +
             "Max number returned by a single query is 100. Size parameters greater than 100 will not return more than 100 datasets. " +
             "In order to access all datasets, use multiple queries and increment from parameter.", response = Dataset.class)
-    @RequestMapping(value = QUERY_SEARCH, method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/datasets", method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity<String> search(
         @ApiParam("Full content search")
         @RequestParam(value = "q", defaultValue = "", required = false)
@@ -359,8 +362,27 @@ public class DatasetsSearchController {
                     .mustNot(QueryBuilders.termQuery("accessRights.code.raw", "PUBLIC"))
             ));
         }
-        if (selectedAggregationFields.contains("subject")) {
-            searchBuilder.addAggregation(AggregationBuilders.filter("subject", QueryBuilders.existsQuery("subject.prefLabel")));
+        if (selectedAggregationFields.contains("withSubject")) {
+            searchBuilder.addAggregation(AggregationBuilders.filter("withSubject", QueryBuilders.existsQuery("subject.prefLabel")));
+        }
+        if (selectedAggregationFields.contains("nationalComponent")) {
+            searchBuilder.addAggregation(AggregationBuilders.filter("nationalComponent", QueryUtil.createTermQuery("provenance.code.raw", "NASJONAL")));
+        }
+        if (selectedAggregationFields.contains("subjects")) {
+            searchBuilder.addAggregation(AggregationBuilders
+                .terms("subjects")
+                .field("subject.uri")
+                .size(5)
+                .order(Terms.Order.count(false)));
+        }
+        if (selectedAggregationFields.contains("distributionCountForTypeApi")) {
+            searchBuilder.addAggregation(QueryUtil.createDistributionTypeCountAggregation("distributionCountForTypeApi","API"));
+        }
+        if (selectedAggregationFields.contains("distributionCountForTypeFeed")) {
+            searchBuilder.addAggregation(QueryUtil.createDistributionTypeCountAggregation("distributionCountForTypeFeed","Feed"));
+        }
+        if (selectedAggregationFields.contains("distributionCountForTypeFile")) {
+            searchBuilder.addAggregation(QueryUtil.createDistributionTypeCountAggregation("distributionCountForTypeFile","Nedlastbar fil"));
         }
 
         return searchBuilder;
@@ -416,7 +438,7 @@ public class DatasetsSearchController {
                 .terms(aggregationName)
                 .missing(MISSING)
                 .field(field)
-                .size(MAX_AGGREGATIONS)
+                .size(MAX_VALUE) //be sure all theme counts are returned
                 .order(Terms.Order.count(false));
         }
 
@@ -427,5 +449,20 @@ public class DatasetsSearchController {
                 new FiltersAggregator.KeyedFilter("last30days", QueryUtil.createRangeQueryFromXdaysToNow(30, dateField)),
                 new FiltersAggregator.KeyedFilter("last365days", QueryUtil.createRangeQueryFromXdaysToNow(365, dateField)));
         }
+
+        static SumAggregationBuilder createDistributionTypeCountAggregation(String name, String type) {
+            return AggregationBuilders.sum(name).script(new Script(
+                INLINE,
+                DEFAULT_SCRIPT_LANG,
+                "int count = 0; " +
+                    "if (params._source.distribution == null) return 0;" +
+                    "for (int i = 0; i < params._source.distribution.length; ++i) { " +
+                    "    if (params._source.distribution[i]['type'] == params.type) count++; " +
+                    "} " +
+                    "return count;",
+                ImmutableMap.of("type", type)
+            ));
+        }
+
     }
 }

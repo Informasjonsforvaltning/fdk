@@ -34,10 +34,12 @@ const addTagToInput = (updates, props) => {
 
 const removeTagFromInput = (index, props) => {
   const { input } = props;
-  const inputValues = input.value;
+  const distributions = input.value;
 
-  inputValues.splice(index, 1);
-  input.onChange(inputValues);
+  // find distribution-apis among all distributions
+  const distributionApis = _.reject(distributions, { accessService: null });
+  // save all distributsions except the one deleted by index
+  input.onChange(_.reject(distributions, distributionApis[index]));
 };
 
 export class InputTagsAPIsField extends React.Component {

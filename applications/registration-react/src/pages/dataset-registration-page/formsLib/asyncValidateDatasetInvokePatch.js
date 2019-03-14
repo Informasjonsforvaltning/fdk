@@ -1,15 +1,20 @@
-import axios from 'axios';
 import _ from 'lodash';
 import {
   datasetFormPatchSuccessAction,
   datasetFormPatchIsSavingAction,
   datasetFormPatchErrorAction,
   datasetFormPatchJustPublishedOrUnPublishedAction
-} from '../redux/modules/dataset-form-status';
-import { datasetSuccessAction } from '../redux/modules/datasets';
+} from '../../../redux/modules/dataset-form-status';
+import { datasetSuccessAction } from '../../../redux/modules/datasets';
+import { patchDataset } from '../../../api/datasets';
 
 /* eslint-disable no-param-reassign */
-const asyncValidate = (values, dispatch, props, blurredField) => {
+export const asyncValidateDatasetInvokePatch = (
+  values,
+  dispatch,
+  props,
+  blurredField
+) => {
   const { match } = props;
   const datasetId = _.get(match, ['params', 'id']);
 
@@ -84,8 +89,12 @@ const asyncValidate = (values, dispatch, props, blurredField) => {
     dispatch(datasetFormPatchIsSavingAction(datasetId));
   }
 
-  return axios
-    .patch(_.get(match, 'url'), values, { headers: api })
+  return patchDataset(
+    _.get(match, ['params', 'catalogId']),
+    _.get(match, ['params', 'id']),
+    api,
+    values
+  )
     .then(response => {
       const datasetRegistration = response && response.data;
       dispatch(
@@ -125,5 +134,3 @@ const asyncValidate = (values, dispatch, props, blurredField) => {
     });
 };
 /* eslint-enable no-param-reassign */
-
-export default asyncValidate;

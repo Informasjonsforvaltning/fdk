@@ -256,9 +256,9 @@
     "catalogs": "Katalogar",
     "datasetTab": "Rapport for datasett",
     "datasets":"datasett",
-    "apis":"API-er",
+    "apis":"API",
     "concepts":"omgrep",
-    "newPastWeek":"nye siste uke",
+    "newPastWeek":"nye siste veke",
     "aggregation": {
       "public": "Datasett som er offentleg",
       "restricted": "Datasett med avgrensa offentlegheit",
@@ -268,6 +268,11 @@
       "openDatasetDescription": "Opne datasett er datasett som er offentleg tilgjengeleg og har distribusjonar med open lisens.",
       "publicWithDistributions": "Offentlege datasett med distribusjonar",
       "publicWithoutDistributions": "Offentlege datasett utan distribusjonar",
+      "restrictedDatasetWithDistributions": "Avgrensa datasett med distribusjonar",
+      "restrictedDatasetWithoutDistributions": "Avgrensa datasett utan distribusjonar",
+      "typeFile": "nedlastbare filer",
+      "typeFeed": "feeds",
+      "national": "autoritative kjelder",
       "withConcepts": "Datasett som nyttar omgrep",
       "withoutConcepts": "Datasett som ikkje nyttar omgrep"
     }

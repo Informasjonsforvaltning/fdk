@@ -7,7 +7,7 @@ import Helptext from '../../../components/helptext/helptext.component';
 import InputTagsFieldArray from '../../../components/field-input-tags-objects/field-input-tags-objects.component';
 import DatepickerField from '../../../components/field-datepicker/field-datepicker.component';
 import CheckboxField from '../../../components/field-checkbox/field-checkbox.component';
-import asyncValidate from '../../../lib/asyncValidate';
+import { asyncValidateDatasetInvokePatch } from '../formsLib/asyncValidateDatasetInvokePatch';
 
 export const renderTemporalFields = (item, index, fields, componentProps) => (
   <div className="d-flex mb-2" key={index}>
@@ -43,7 +43,7 @@ export const renderTemporalFields = (item, index, fields, componentProps) => (
           if (fields.length > 1) {
             fields.remove(index);
           }
-          asyncValidate(
+          asyncValidateDatasetInvokePatch(
             fields.getAll(),
             null,
             componentProps,
