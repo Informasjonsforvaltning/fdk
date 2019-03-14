@@ -9,7 +9,7 @@ const config = {
   form: 'title',
   validate,
   shouldAsyncValidate,
-  asyncValidateDatasetInvokePatch,
+  asyncValidate: asyncValidateDatasetInvokePatch,
   asyncChangeFields: []
 };
 

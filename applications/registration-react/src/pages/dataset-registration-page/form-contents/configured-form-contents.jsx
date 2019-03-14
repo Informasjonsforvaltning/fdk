@@ -7,7 +7,7 @@ import { asyncValidateDatasetInvokePatch } from '../formsLib/asyncValidateDatase
 const config = {
   form: 'contents',
   validate,
-  asyncValidateDatasetInvokePatch,
+  asyncValidate: asyncValidateDatasetInvokePatch,
   asyncChangeFields: []
 };
 
