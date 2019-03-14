@@ -5,7 +5,7 @@ import { Field, FieldArray } from 'redux-form';
 import localization from '../../../lib/localization';
 import Helptext from '../../../components/helptext/helptext.component';
 import SelectField from '../../../components/field-select/field-select.component';
-import asyncValidate from '../../../lib/asyncValidate';
+import { asyncValidateDatasetInvokePatch } from '../formsLib/asyncValidateDatasetInvokePatch';
 
 const renderReferenceFields = (
   item,
@@ -44,7 +44,7 @@ const renderReferenceFields = (
           if (fields.length > 1) {
             fields.remove(index);
           }
-          asyncValidate(
+          asyncValidateDatasetInvokePatch(
             fields.getAll(),
             null,
             componentProps,

@@ -5,11 +5,16 @@ import {
   datasetFormPatchIsSavingAction,
   datasetFormPatchErrorAction,
   datasetFormPatchJustPublishedOrUnPublishedAction
-} from '../redux/modules/dataset-form-status';
-import { datasetSuccessAction } from '../redux/modules/datasets';
+} from '../../../redux/modules/dataset-form-status';
+import { datasetSuccessAction } from '../../../redux/modules/datasets';
 
 /* eslint-disable no-param-reassign */
-const asyncValidate = (values, dispatch, props, blurredField) => {
+export const asyncValidateDatasetInvokePatch = (
+  values,
+  dispatch,
+  props,
+  blurredField
+) => {
   const { match } = props;
   const datasetId = _.get(match, ['params', 'id']);
 
@@ -125,5 +130,3 @@ const asyncValidate = (values, dispatch, props, blurredField) => {
     });
 };
 /* eslint-enable no-param-reassign */
-
-export default asyncValidate;
