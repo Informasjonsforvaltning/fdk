@@ -11,9 +11,10 @@ import static no.fdk.searchapi.controller.datasetssearch.Common.MISSING;
 
 class QueryUtil {
     static QueryBuilder createTermQuery(String term, String value) {
-        return value.equals(MISSING) ?
-            QueryBuilders.boolQuery().mustNot(QueryBuilders.existsQuery(term)) :
-            QueryBuilders.termQuery(term, value);
+        if (value.equals(MISSING)) {
+            return QueryBuilders.boolQuery().mustNot(QueryBuilders.existsQuery(term));
+        }
+        return QueryBuilders.termQuery(term, value);
     }
 
     static QueryBuilder createTermsQuery(String term, String[] values) {
@@ -33,6 +34,28 @@ class QueryUtil {
         final long now = new Date().getTime();
 
         return QueryBuilders.rangeQuery(dateField).from(now - days * DAY_IN_MS).to(now).format("epoch_millis");
+    }
+
+    static QueryBuilder isNationalComponentQuery() {
+        return QueryBuilders.termQuery("provenance.code.raw", "NASJONAL");
+    }
+
+    static QueryBuilder isOpendataQuery() {
+        return QueryBuilders.boolQuery()
+            .must(QueryBuilders.termQuery("accessRights.code.raw", "PUBLIC"))
+            .must(QueryBuilders.termQuery("distribution.openLicense", "true"));
+    }
+
+    static QueryBuilder hasSubjectQuery() {
+        return QueryBuilders.existsQuery("subject.prefLabel");
+    }
+
+    static QueryBuilder hasDistributionQuery() {
+        return QueryBuilders.existsQuery("distribution");
+    }
+
+    static QueryBuilder isPublicQuery() {
+        return QueryBuilders.termQuery("accessRights.code.raw", "PUBLIC");
     }
 
 }
