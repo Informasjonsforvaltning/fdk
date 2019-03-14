@@ -2,15 +2,21 @@ package no.fdk.searchapi.controller.datasetssearch;
 
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.Operator;
+import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Map;
 
 import static no.fdk.searchapi.controller.datasetssearch.Common.MISSING;
-import static org.apache.commons.lang3.StringUtils.isNotEmpty;
+import static org.apache.commons.lang3.StringUtils.isEmpty;
 
 public class DatasetsSearchQueryBuilder {
+    private static Logger logger = LoggerFactory.getLogger(DatasetsSearchQueryBuilder.class);
+
     private BoolQueryBuilder composedQuery;
     private String lang = "nb";
 
@@ -36,24 +42,35 @@ public class DatasetsSearchQueryBuilder {
     }
 
     DatasetsSearchQueryBuilder addFilters(Map<String, String> params) {
+        for (Map.Entry<String, String> entry : params.entrySet()) {
+            String filterName = entry.getKey();
+            String filterValue = entry.getValue();
 
-        String title = params.getOrDefault("title", "");
-        if (isNotEmpty(title)) {
-            org.elasticsearch.index.query.QueryBuilder nbQuery = QueryBuilders.matchPhrasePrefixQuery("title.nb", title).analyzer("norwegian").maxExpansions(15);
-            org.elasticsearch.index.query.QueryBuilder noQuery = QueryBuilders.matchPhrasePrefixQuery("title.no", title).analyzer("norwegian").maxExpansions(15);
-            org.elasticsearch.index.query.QueryBuilder nnQuery = QueryBuilders.matchPhrasePrefixQuery("title.nn", title).analyzer("norwegian").maxExpansions(15);
-            org.elasticsearch.index.query.QueryBuilder enQuery = QueryBuilders.matchPhrasePrefixQuery("title.en", title).analyzer("english").maxExpansions(15);
-            composedQuery.must(QueryBuilders.boolQuery().should(nbQuery).should(noQuery).should(nnQuery).should(enQuery));
-        }
+            if (isEmpty(filterValue)) continue; //skip filters with empty values
 
-        String query = params.getOrDefault("q", "");
-        if (isNotEmpty(query)) {
-            // add * if query only contains one word
-            if (!query.contains(" ")) {
-                query = query + " " + query + "*";
+            try {
+                Method filterMethod = FilterBuilders.class.getDeclaredMethod(filterName, String.class, DatasetsSearchQueryBuilder.class);
+                QueryBuilder filter = (QueryBuilder) (filterMethod.invoke(null, new Object[]{filterValue, this}));
+                // Difference between .must() and .filter() is that must keeps scores, while filter does not.
+                // We use .must() because of "q"-filter assigns scores.
+                // For other parameters, scores are irrelevant and therefore can be included safely.
+                if (filter != null) {
+                    composedQuery.must(filter);
+                }
+            } catch (Exception e) {
+                // skip silently params that are not implemented as filters
+                logger.debug("Filter method exception: {}, {}", filterName, e);
             }
-            composedQuery.must(QueryBuilders.simpleQueryStringQuery(query)
-                .analyzer(("en".equals(lang)) ? "english" : "norwegian")
+        }
+        return this;
+    }
+
+    static class FilterBuilders {
+        static QueryBuilder q(String value, DatasetsSearchQueryBuilder queryBuilder) {
+            String searchText = !value.contains(" ") ? value + " " + value + "*" : value;
+
+            return QueryBuilders.simpleQueryStringQuery(searchText)
+                .analyzer(("en".equals(queryBuilder.lang)) ? "english" : "norwegian")
                 .field("title.*").boost(3f)
                 .field("objective.*")
                 .field("keyword.*").boost(2f)
@@ -66,64 +83,64 @@ public class DatasetsSearchQueryBuilder {
                 .field("subject.prefLabel.*")
                 .field("subject.altLabel.*")
                 .field("subject.definition.*")
-                .defaultOperator(Operator.OR));
+                .defaultOperator(Operator.OR);
         }
 
-        String theme = params.getOrDefault("theme", "");
-        // theme can contain multiple themes, example: AGRI,HEAL
-        if (isNotEmpty(theme)) {
-            String[] themes = theme.split(",");
-            composedQuery.filter(QueryUtil.createTermsQuery("theme.code", themes));
+        static QueryBuilder title(String value, DatasetsSearchQueryBuilder queryBuilder) {
+            QueryBuilder nbQuery = QueryBuilders.matchPhrasePrefixQuery("title.nb", value).analyzer("norwegian").maxExpansions(15);
+            QueryBuilder noQuery = QueryBuilders.matchPhrasePrefixQuery("title.no", value).analyzer("norwegian").maxExpansions(15);
+            QueryBuilder nnQuery = QueryBuilders.matchPhrasePrefixQuery("title.nn", value).analyzer("norwegian").maxExpansions(15);
+            QueryBuilder enQuery = QueryBuilders.matchPhrasePrefixQuery("title.en", value).analyzer("english").maxExpansions(15);
+            return QueryBuilders.boolQuery().should(nbQuery).should(noQuery).should(nnQuery).should(enQuery);
         }
 
-        String catalog = params.getOrDefault("catalog", "");
-        if (isNotEmpty(catalog)) {
-            composedQuery.filter(QueryUtil.createTermQuery("catalog.uri", catalog));
+        static QueryBuilder theme(String value, DatasetsSearchQueryBuilder queryBuilder) {
+            // theme can contain multiple themes, example: AGRI,HEAL
+            String[] themes = value.split(",");
+            return QueryUtil.createTermsQuery("theme.code", themes);
         }
 
-        String accessRights = params.getOrDefault("accessrights", "");
-        if (isNotEmpty(accessRights)) {
-            composedQuery.filter(QueryUtil.createTermQuery("accessRights.code.raw", accessRights));
+        static QueryBuilder catalog(String value, DatasetsSearchQueryBuilder queryBuilder) {
+            return QueryUtil.createTermQuery("catalog.uri", value);
         }
-        String opendata = params.getOrDefault("opendata", "");
-        if (isNotEmpty(opendata)) {
-            BoolQueryBuilder opendataFilter = QueryBuilders.boolQuery();
-            if (opendata.equals("true")) {
-                opendataFilter.must(QueryBuilders.termQuery("distribution.openLicense", "true"));
-                opendataFilter.must(QueryBuilders.termQuery("accessRights.code.raw", "PUBLIC"));
+
+        static QueryBuilder accessrights(String value, DatasetsSearchQueryBuilder queryBuilder) {
+            return QueryUtil.createTermQuery("accessRights.code.raw", value);
+        }
+
+        static QueryBuilder opendata(String value, DatasetsSearchQueryBuilder queryBuilder) {
+            if ("true".equals(value)) {
+                return QueryBuilders.boolQuery()
+                    .must(QueryBuilders.termQuery("distribution.openLicense", "true"))
+                    .must(QueryBuilders.termQuery("accessRights.code.raw", "PUBLIC"));
             }
-            //Handle the negative cases
-            else if (opendata.equals("false")) {
-                BoolQueryBuilder notOpenLicenseFilter = QueryBuilders.boolQuery();
-                BoolQueryBuilder notOpenDistributionFilter = QueryBuilders.boolQuery();
-                notOpenLicenseFilter.mustNot(QueryBuilders.termQuery("distribution.openLicense", "true"));
-                notOpenDistributionFilter.mustNot(QueryBuilders.termQuery("accessRights.code.raw", "PUBLIC"));
-                opendataFilter.should(notOpenLicenseFilter);
-                opendataFilter.should(notOpenDistributionFilter);
+            if ("false".equals(value)) {
+                // not open or not public
+                return QueryBuilders.boolQuery()
+                    .should(QueryBuilders.boolQuery().mustNot(QueryBuilders.termQuery("distribution.openLicense", "true")))
+                    .should(QueryBuilders.boolQuery().mustNot(QueryBuilders.termQuery("accessRights.code.raw", "PUBLIC")));
             }
-            composedQuery.filter(opendataFilter);
+            return null;
         }
 
-        String orgPath = params.getOrDefault("orgPath", "");
-        if (isNotEmpty(orgPath)) {
-            composedQuery.filter(QueryUtil.createTermQuery("publisher.orgPath", orgPath));
+        static QueryBuilder orgPath(String value, DatasetsSearchQueryBuilder queryBuilder) {
+            return QueryUtil.createTermQuery("publisher.orgPath", value);
         }
 
-        int firstHarvested = Integer.parseInt(params.getOrDefault("firstHarvested", "0"));
-        if (firstHarvested > 0) {
-            composedQuery.filter(QueryUtil.createRangeQueryFromXdaysToNow(firstHarvested, "harvest.firstHarvested"));
+        static QueryBuilder firstHarvested(String value, DatasetsSearchQueryBuilder queryBuilder) {
+            int firstHarvested = Integer.parseInt(value);
+            return (QueryUtil.createRangeQueryFromXdaysToNow(firstHarvested, "harvest.firstHarvested"));
         }
 
-        String provenance = params.getOrDefault("provenance", "");
-        if (isNotEmpty(provenance)) {
-            composedQuery.filter(QueryUtil.createTermQuery("provenance.code.raw", accessRights));
+        static QueryBuilder provenance(String value, DatasetsSearchQueryBuilder queryBuilder) {
+            return QueryUtil.createTermQuery("provenance.code.raw", value);
         }
 
-        String spatial = params.getOrDefault("spatial", "");
-        if (isNotEmpty(spatial)) {
+
+        static QueryBuilder spatial(String value, DatasetsSearchQueryBuilder queryBuilder) {
             BoolQueryBuilder spatialFilter = QueryBuilders.boolQuery();
+            String[] spatials = value.split(",");
 
-            String[] spatials = spatial.split(",");
             Arrays.stream(spatials).forEach(spatialLabel -> {
                 if (spatialLabel.equals(MISSING)) {
                     spatialFilter.mustNot(QueryBuilders.existsQuery("spatial"));
@@ -134,8 +151,7 @@ public class DatasetsSearchQueryBuilder {
                 }
             });
 
-            composedQuery.filter(spatialFilter);
+            return spatialFilter;
         }
-        return this;
     }
 }
