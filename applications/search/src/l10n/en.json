@@ -275,7 +275,9 @@
       "national": "authoritative sources",
       "withConcepts": "Datasets that use concepts",
       "withoutConcepts": "Datasets without concepts"
-    }
+    },
+    "countCatalogsLabel": "organizations with datasets.",
+    "catalogsFrom": "Dataset catalogs from"
   },
   "registration": {
     "title": "Registration (only in Norwegian)"

@@ -275,7 +275,9 @@
       "national": "autoritative kjelder",
       "withConcepts": "Datasett som nyttar omgrep",
       "withoutConcepts": "Datasett som ikkje nyttar omgrep"
-    }
+    },
+    "countCatalogsLabel": "verksemder har datasett i Felles datakatalog",
+    "catalogsFrom": "Datasettkatalogar frå"
   },
   "registration": {
     "title": "Korleis komme i gong med registrering"
