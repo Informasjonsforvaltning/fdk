@@ -275,7 +275,9 @@
       "national": "autoritative kilder",
       "withConcepts": "Datasett som benytter begrep",
       "withoutConcepts": "Datasett som ikke benytter begrep"
-    }
+    },
+    "countCatalogsLabel": "virksomheter har datasett i Felles datakatalog",
+    "catalogsFrom": "Datasettkataloger fra"
   },
   "registration": {
     "title": "Kom i gang med registrering"
