@@ -29,12 +29,16 @@ export function extractStats(data) {
     newLastMonth: getFromBucketArray(data, 'firstHarvested', 'last30days'),
     newLastYear: getFromBucketArray(data, 'firstHarvested', 'last365days'),
     distributions: getFromAggregation(data, 'withDistribution'),
-    distOnPublicAccessCount: getFromAggregation(data, 'publicWithDistribution'),
-    restrictedDatasetWithDist: getFromAggregation(
+    publicWithDistribution: getFromAggregation(data, 'publicWithDistribution'),
+    publicWithoutDistribution: getFromAggregation(
+      data,
+      'publicWithoutDistribution'
+    ),
+    nonpublicWithDistribution: getFromAggregation(
       data,
       'nonpublicWithDistribution'
     ),
-    restrictedDatasetWithoutDist: getFromAggregation(
+    nonpublicWithoutDistribution: getFromAggregation(
       data,
       'nonpublicWithoutDistribution'
     ),
