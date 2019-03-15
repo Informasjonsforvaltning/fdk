@@ -24,6 +24,23 @@ const renderJSONSchema = schema => {
   );
 };
 
+const createTabsArray = schema => {
+  const tabsArray = [];
+
+  // only show structure-tab if schema is an object, not when schema is an array
+  if (schema && schema.definitions) {
+    tabsArray.push({
+      title: localization.infoMod.tabs.structure,
+      body: <Structure definitions={schema.definitions} />
+    });
+  }
+  tabsArray.push({
+    title: localization.infoMod.tabs.json,
+    body: renderJSONSchema(schema)
+  });
+  return tabsArray;
+};
+
 const renderModels = schema => {
   if (!schema) {
     return null;
@@ -32,18 +49,7 @@ const renderModels = schema => {
   return (
     <ListRegular title={localization.infoMod.infoModHeader}>
       <div className="d-flex list-regular--item" />
-      <Tabs
-        tabContent={[
-          {
-            title: localization.infoMod.tabs.structure,
-            body: <Structure definitions={schema.definitions} />
-          },
-          {
-            title: localization.infoMod.tabs.json,
-            body: renderJSONSchema(schema)
-          }
-        ]}
-      />
+      <Tabs tabContent={createTabsArray(schema)} />
     </ListRegular>
   );
 };
