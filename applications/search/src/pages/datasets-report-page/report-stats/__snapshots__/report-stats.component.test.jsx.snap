@@ -102,6 +102,7 @@ exports[`should render ReportStats correctly 1`] = `
             Object {
               "body": <DatasetStats
                 catalogs={null}
+                name="Test entity"
                 orgPath={null}
                 stats={
                   Object {

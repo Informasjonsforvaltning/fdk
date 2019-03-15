@@ -95,6 +95,7 @@ export const ReportStats = props => {
                     stats={datasetStats}
                     orgPath={orgPath}
                     catalogs={catalogs}
+                    name={name}
                   />
                 )
               }
