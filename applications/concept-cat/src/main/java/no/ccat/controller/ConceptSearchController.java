@@ -33,6 +33,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 
+import static java.lang.Integer.MAX_VALUE;
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
 @CrossOrigin
@@ -169,6 +170,9 @@ public class ConceptSearchController {
             searchQuery.addAggregation(QueryUtil.createTemporalAggregation("firstHarvested", "harvest.firstHarvested"));
         }
 
+        if (selectedAggregationFields.contains("publisher")) {
+            searchQuery.addAggregation(QueryUtil.createTermsAggregation("publisher", "publisher.id.keyword"));
+        }
         return searchQuery;
     }
 
@@ -199,6 +203,15 @@ public class ConceptSearchController {
                 new FiltersAggregator.KeyedFilter("last7days", QueryUtil.createRangeQueryFromXdaysToNow(7, dateField)),
                 new FiltersAggregator.KeyedFilter("last30days", QueryUtil.createRangeQueryFromXdaysToNow(30, dateField)),
                 new FiltersAggregator.KeyedFilter("last365days", QueryUtil.createRangeQueryFromXdaysToNow(365, dateField)));
+        }
+
+        static AbstractAggregationBuilder createTermsAggregation(String aggregationName, String field) {
+            return AggregationBuilders
+                .terms(aggregationName)
+                .missing(MISSING)
+                .field(field)
+                .size(MAX_VALUE) //be sure all theme counts are returned
+                .order(Terms.Order.count(false));
         }
     }
 }
