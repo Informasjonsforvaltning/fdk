@@ -67,7 +67,7 @@ public class DatasetsSearchController {
         @ApiImplicitParam(name = "spatial", dataType = "string", paramType = "query", value = "Filters datasets according to their spatial label, e.g. Oslo, Norge"),
         @ApiImplicitParam(name = "opendata", dataType = "string", paramType = "query", value = "Filters on distribution license and access rights. If true the distribution licence is open and the access rights are public."),
         @ApiImplicitParam(name = "catalog", dataType = "string", paramType = "query", value = "Filters on catalog uri."),
-        @ApiImplicitParam(name = "withDistribution", dataType = "string", paramType = "query", value = "Filters only datasets that have or have not distributions. Allowed values: \"true\", \"false\""),
+        @ApiImplicitParam(name = "withDistributions", dataType = "string", paramType = "query", value = "Filters only datasets that have or have not distributions. Allowed values: \"true\", \"false\""),
         @ApiImplicitParam(name = "isPublic", dataType = "string", paramType = "query", value = "Filters only datasets that are public or not public. Allowed values: \"true\", \"false\""),
         @ApiImplicitParam(name = "withSubject", dataType = "string", paramType = "query", value = "Filters only datasets that have any related concepts. Allowed values: \"true\""),
         @ApiImplicitParam(name = "isNationalComponent", dataType = "string", paramType = "query", value = "Filters only datasets that are national compnents. Allowed values: \"true\""),
