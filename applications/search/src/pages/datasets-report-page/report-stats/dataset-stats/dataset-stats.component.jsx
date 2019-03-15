@@ -149,7 +149,7 @@ export const DatasetStats = props => {
           <ChartBar
             componentKey={`withDistribution-${orgPath}`}
             percentHeight={calculatePercent(
-              stats.distOnPublicAccessCount,
+              stats.publicWithDistribution,
               stats.total
             )}
             barColor="green"
@@ -159,7 +159,7 @@ export const DatasetStats = props => {
             className="mb-3"
             to="/#"
           >
-            {stats.distOnPublicAccessCount}
+            {stats.publicWithDistribution}
           </Link>
         </StatBox>
 
@@ -169,7 +169,7 @@ export const DatasetStats = props => {
           <ChartBar
             componentKey={`withoutDistribution-${orgPath}`}
             percentHeight={calculatePercent(
-              stats.total - stats.distOnPublicAccessCount,
+              stats.publicWithoutDistribution,
               stats.total
             )}
             barColor="green"
@@ -179,7 +179,7 @@ export const DatasetStats = props => {
             className="mb-3"
             to="/#"
           >
-            {stats.total - stats.distOnPublicAccessCount}
+            {stats.publicWithoutDistribution}
           </Link>
         </StatBox>
 
@@ -191,7 +191,7 @@ export const DatasetStats = props => {
           <ChartBar
             componentKey={`restricedDatasetwithDistribution-${orgPath}`}
             percentHeight={calculatePercent(
-              stats.restrictedDatasetWithDist,
+              stats.nonpublicWithDistribution,
               stats.total
             )}
             barColor="yellow"
@@ -203,7 +203,7 @@ export const DatasetStats = props => {
             className="mb-3"
             to="/#"
           >
-            {stats.restrictedDatasetWithDist}
+            {stats.nonpublicWithDistribution}
           </Link>
         </StatBox>
 
@@ -216,7 +216,7 @@ export const DatasetStats = props => {
           <ChartBar
             componentKey={`restricedDatasetwithDistribution-${orgPath}`}
             percentHeight={calculatePercent(
-              stats.restrictedDatasetWithoutDist,
+              stats.nonpublicWithoutDistribution,
               stats.total
             )}
             barColor="yellow"
@@ -229,7 +229,7 @@ export const DatasetStats = props => {
             className="mb-3"
             to="/#"
           >
-            {stats.restrictedDatasetWithoutDist}
+            {stats.nonpublicWithoutDistribution}
           </Link>
         </StatBox>
       </div>
@@ -237,7 +237,7 @@ export const DatasetStats = props => {
         <StatBox label={localization.report.apis}>
           <img src="/static/img/icon-report-api.svg" alt="icon" />
           <Link title={localization.report.apis} className="mb-3" to="/#">
-            {stats.distOnPublicAccessCount}
+            {stats.distributionCountForTypeApi}
           </Link>
         </StatBox>
 
