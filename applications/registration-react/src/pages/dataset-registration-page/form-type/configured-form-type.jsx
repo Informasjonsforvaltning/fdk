@@ -5,7 +5,7 @@ import { asyncValidateDatasetInvokePatch } from '../formsLib/asyncValidateDatase
 
 const config = {
   form: 'type',
-  asyncValidateDatasetInvokePatch
+  asyncValidate: asyncValidateDatasetInvokePatch
 };
 
 export const ConfiguredFormType = reduxForm(config)(FormType);

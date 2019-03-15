@@ -7,7 +7,7 @@ import { asyncValidateDatasetInvokePatch } from '../formsLib/asyncValidateDatase
 const config = {
   form: 'themes',
   validate,
-  asyncValidateDatasetInvokePatch
+  asyncValidate: asyncValidateDatasetInvokePatch
 };
 
 export const ConfiguredFormThemes = reduxForm(config)(FormThemes);

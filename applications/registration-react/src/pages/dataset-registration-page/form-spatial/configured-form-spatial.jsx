@@ -7,7 +7,7 @@ import { asyncValidateDatasetInvokePatch } from '../formsLib/asyncValidateDatase
 const config = {
   form: 'spatial',
   validate,
-  asyncValidateDatasetInvokePatch
+  asyncValidate: asyncValidateDatasetInvokePatch
 };
 
 export const ConfiguredFormSpatial = reduxForm(config)(FormSpatial);
