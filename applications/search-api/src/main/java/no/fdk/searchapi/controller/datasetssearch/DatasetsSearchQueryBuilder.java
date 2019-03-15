@@ -184,7 +184,8 @@ public class DatasetsSearchQueryBuilder {
         }
 
         static QueryBuilder subject(String value, DatasetsSearchQueryBuilder queryBuilder) {
-            return QueryBuilders.termQuery("subject.uri", value);
+            String[] subjectUris = value.split(",");
+            return QueryBuilders.termsQuery("subject.uri", subjectUris);
         }
 
         static QueryBuilder distributionType(String value, DatasetsSearchQueryBuilder queryBuilder) {
