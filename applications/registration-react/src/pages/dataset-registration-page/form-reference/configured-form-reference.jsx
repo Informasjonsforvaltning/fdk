@@ -7,7 +7,7 @@ import { asyncValidateDatasetInvokePatch } from '../formsLib/asyncValidateDatase
 const config = {
   form: 'reference',
   validate,
-  asyncValidateDatasetInvokePatch
+  asyncValidate: asyncValidateDatasetInvokePatch
 };
 
 export const ConfiguredFormTitle = reduxForm(config)(FormReference);

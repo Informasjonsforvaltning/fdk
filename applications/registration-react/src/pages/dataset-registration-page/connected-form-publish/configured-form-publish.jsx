@@ -7,7 +7,7 @@ import shouldAsyncValidate from '../../../lib/shouldAsyncValidate';
 const config = {
   form: 'datasetPublish',
   shouldAsyncValidate,
-  asyncValidateDatasetInvokePatch
+  asyncValidate: asyncValidateDatasetInvokePatch
 };
 
 export const ConfiguredFormPublish = reduxForm(config)(FormPublish);
