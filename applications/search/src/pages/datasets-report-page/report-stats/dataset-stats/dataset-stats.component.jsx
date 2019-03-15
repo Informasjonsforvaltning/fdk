@@ -157,7 +157,7 @@ export const DatasetStats = props => {
           <Link
             title={localization.report.aggregation.publicWithDistributions}
             className="mb-3"
-            to="/#"
+            to={`/?withDistributions=true&isPublic=true${orgPathParam}`}
           >
             {stats.publicWithDistribution}
           </Link>
@@ -177,7 +177,7 @@ export const DatasetStats = props => {
           <Link
             title={localization.report.aggregation.publicWithoutDistributions}
             className="mb-3"
-            to="/#"
+            to={`/?withDistributions=false&isPublic=true${orgPathParam}`}
           >
             {stats.publicWithoutDistribution}
           </Link>
@@ -201,7 +201,7 @@ export const DatasetStats = props => {
               localization.report.aggregation.restrictedDatasetWithDistributions
             }
             className="mb-3"
-            to="/#"
+            to={`/?withDistributions=true&isPublic=false${orgPathParam}`}
           >
             {stats.nonpublicWithDistribution}
           </Link>
@@ -227,7 +227,7 @@ export const DatasetStats = props => {
                 .restrictedDatasetWithoutDistributions
             }
             className="mb-3"
-            to="/#"
+            to={`/?withDistributions=false&isPublic=false${orgPathParam}`}
           >
             {stats.nonpublicWithoutDistribution}
           </Link>
@@ -236,7 +236,11 @@ export const DatasetStats = props => {
       <div className="d-flex flex-fill py-5">
         <StatBox label={localization.report.apis}>
           <img src="/static/img/icon-report-api.svg" alt="icon" />
-          <Link title={localization.report.apis} className="mb-3" to="/#">
+          <Link
+            title={localization.report.apis}
+            className="mb-3"
+            to={`/?distributionType=API${orgPathParam}`}
+          >
             {stats.distributionCountForTypeApi}
           </Link>
         </StatBox>
@@ -246,7 +250,7 @@ export const DatasetStats = props => {
           <Link
             title={localization.report.aggregation.typeFile}
             className="mb-3"
-            to="/#"
+            to={`/?distributionType=Nedlastbar fil${orgPathParam}`}
           >
             {stats.distributionCountForTypeFile}
           </Link>
@@ -257,7 +261,7 @@ export const DatasetStats = props => {
           <Link
             title={localization.report.aggregation.typeFeed}
             className="mb-3"
-            to="/#"
+            to={`/?distributionType=Feed${orgPathParam}`}
           >
             {stats.distributionCountForTypeFeed}
           </Link>
@@ -273,7 +277,7 @@ export const DatasetStats = props => {
         <Link
           title={localization.report.aggregation.national}
           className="mb-3"
-          to="/#"
+          to={`/?isNationalComponent=true${orgPathParam}`}
         >
           {stats.nationalComponent}
         </Link>
@@ -291,7 +295,7 @@ export const DatasetStats = props => {
         <Link
           title={localization.report.aggregation.withConcepts}
           className="mb-3"
-          to="/#"
+          to={`/?withSubject=true${orgPathParam}`}
         >
           {stats.subjectCount}
         </Link>
@@ -316,7 +320,7 @@ export const DatasetStats = props => {
         <Link
           title={localization.report.aggregation.withoutConcepts}
           className="mb-3"
-          to="/#"
+          to={`/?withSubject=false${orgPathParam}`}
         >
           {stats.total - stats.subjectCount}
         </Link>
