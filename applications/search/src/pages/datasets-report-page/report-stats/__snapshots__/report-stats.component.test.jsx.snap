@@ -477,6 +477,7 @@ exports[`should render ReportStats correctly 1`] = `
                     "publicWithoutDistribution": 0,
                     "restricted": 3,
                     "subjectCount": 0,
+                    "subjectCounts": Array [],
                     "total": 985,
                     "unknown": 0,
                   }
