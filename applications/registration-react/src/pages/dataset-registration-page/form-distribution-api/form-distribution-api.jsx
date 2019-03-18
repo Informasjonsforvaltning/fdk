@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Field, FieldArray } from 'redux-form';
+import _ from 'lodash';
+import { Link } from 'react-router-dom';
 
 import localization from '../../../lib/localization';
 import Helptext from '../../../components/helptext/helptext.component';
@@ -25,19 +27,78 @@ export const renderDistributionsAPI = componentProps => {
   );
 };
 
-export const FormDistributionAPI = props => {
-  const { helptextItems } = props;
+const renderConnectedApisByDatasetId = (
+  connectedApisByDatasetId,
+  searchHostname
+) => {
+  if (
+    !(
+      connectedApisByDatasetId &&
+      _.get(connectedApisByDatasetId, 'hits').length > 0
+    )
+  ) {
+    return null;
+  }
+
+  const children = items =>
+    items.map(item => (
+      <div
+        key={item.id}
+        className="d-flex align-items-center border-bottom py-3"
+      >
+        <span className="w-75">
+          <Link
+            target="_blank"
+            rel="noopener noreferrer"
+            to={`https://${searchHostname}/apis/${item.id}`}
+          >
+            {item.title}
+          </Link>
+        </span>
+        <span className="w-25 breakword">
+          {_.get(item, ['publisher', 'name'])}
+        </span>
+      </div>
+    ));
+
   return (
-    <form>
-      <FieldArray
-        name="distribution"
-        component={renderDistributionsAPI}
-        helptextItems={helptextItems}
-      />
-    </form>
+    <div className="px-3 mt-5 mb-5">
+      <div className="d-flex border-bottom py-3">
+        <span className="w-75">
+          <strong>{localization.connectedAPI}</strong>
+        </span>
+        <span className="w-25">
+          <strong>Tilbyder</strong>
+        </span>
+      </div>
+      {children(_.get(connectedApisByDatasetId, 'hits'))}
+    </div>
   );
 };
 
+export const FormDistributionAPI = props => {
+  const { helptextItems, connectedApisByDatasetId, searchHostname } = props;
+  return (
+    <React.Fragment>
+      <form>
+        <FieldArray
+          name="distribution"
+          component={renderDistributionsAPI}
+          helptextItems={helptextItems}
+        />
+      </form>
+      {renderConnectedApisByDatasetId(connectedApisByDatasetId, searchHostname)}
+    </React.Fragment>
+  );
+};
+
+FormDistributionAPI.defaultProps = {
+  connectedApisByDatasetId: null,
+  searchHostname: null
+};
+
 FormDistributionAPI.propTypes = {
-  helptextItems: PropTypes.object.isRequired
+  helptextItems: PropTypes.object.isRequired,
+  connectedApisByDatasetId: PropTypes.object,
+  searchHostname: PropTypes.string
 };

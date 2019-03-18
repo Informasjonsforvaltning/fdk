@@ -16,7 +16,8 @@ export const loadConfigFromServer = () => dispatch => {
 };
 
 const initialState = {
-  registrationLanguage: 'nb'
+  registrationLanguage: 'nb',
+  searchHostname: 'fellesdatakatalog.brreg.no'
 };
 
 export function config(state = initialState, action) {

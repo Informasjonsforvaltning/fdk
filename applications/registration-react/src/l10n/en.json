@@ -12,6 +12,8 @@
   "at": "at",
   "getNew": "hent ny",
   "specification": "specification",
+  "connectedAPI": "API descriptions connected to this dataset by others",
+  "provider": "Provider",
   "header": {
     "Registration of Datasets": "Registration of datasets",
     "Registration of API's": "Registration of API's"

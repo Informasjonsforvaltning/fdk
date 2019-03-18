@@ -14,6 +14,8 @@
   "no": "Nei",
   "getNew": "hent ny",
   "specification": "spesifikasjon",
+  "connectedAPI": "API-beskrivelser koblet til dette datasettet av andre",
+  "provider": "Tilbyder",
   "header": {
     "Registration of Datasets": "Registrering av datasett",
     "Registration of API's": "Registrering av API'er"
