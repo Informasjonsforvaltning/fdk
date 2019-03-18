@@ -128,12 +128,8 @@ export default function datasets(state = initialState, action) {
   }
 }
 
-export const getDatasetItemsByCatalogId = (datasets, catalogId) => {
-  const objects = _.get(datasets, [catalogId, 'items'], []);
-  const array = [];
-  Object.keys(objects).map(key => array.push(objects[key]));
-  return array;
-};
+export const getDatasetItemsByCatalogId = (datasets, catalogId) =>
+  Object.values(_.get(datasets, [catalogId, 'items'], {}));
 
 export const getDatasetItemByDatasetiId = (datasets, catalogId, id) =>
   _.get(datasets, [catalogId, 'items', id]);
