@@ -130,7 +130,8 @@ export default function datasets(state = initialState, action) {
 export const getDatasetItemsByCatalogId = (datasets, catalogId) =>
   Object.values(_.get(datasets, [catalogId, 'items'], {}));
 
+export const getDatasetItemsCount = (datasets, catalogId) =>
+  getDatasetItemsByCatalogId(datasets, catalogId).length;
+
 export const getDatasetItemByDatasetiId = (datasets, catalogId, id) =>
   _.get(datasets, [catalogId, 'items', id]);
-
-export const getDatasetItemsCount = datasets => Object.keys(datasets).length;

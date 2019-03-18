@@ -23,32 +23,32 @@ const renderCatalogs = props => {
     return null;
   }
 
-  return catalogItems.map(item => (
-    <div key={_.get(item, 'id')} className="row mb-2 mb-md-5">
+  return catalogItems.map(catalog => (
+    <div key={_.get(catalog, 'id')} className="row mb-2 mb-md-5">
       <div className="col-12">
         <div>
           <h2 className="fdk-text-strong mb-4">
-            {getTranslateText(_.get(item, ['publisher', 'prefLabel'])) ||
-              _.get(item, ['publisher', 'name'], '')}
+            {getTranslateText(_.get(catalog, ['publisher', 'prefLabel'])) ||
+              _.get(catalog, ['publisher', 'name'], '')}
           </h2>
         </div>
         <CardGroup>
           {datasets && (
             <Catalog
-              key={`datasets-${item.id}`}
-              catalogId={item.id}
+              key={`datasets-${catalog.id}`}
+              catalogId={catalog.id}
               type="datasets"
               fetchItems={fetchDatasetsIfNeeded}
-              itemsCount={getDatasetItemsCount(datasets, item.id)}
+              itemsCount={getDatasetItemsCount(datasets, catalog.id)}
             />
           )}
           {apis && (
             <Catalog
-              key={`apis-${item.id}`}
-              catalogId={item.id}
+              key={`apis-${catalog.id}`}
+              catalogId={catalog.id}
               fetchItems={fetchApisIfNeeded}
               type="apis"
-              itemsCount={getAPIItemsCount(apis, item.id)}
+              itemsCount={getAPIItemsCount(apis, catalog.id)}
             />
           )}
         </CardGroup>
