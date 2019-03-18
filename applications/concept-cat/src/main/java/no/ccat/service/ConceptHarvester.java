@@ -17,6 +17,8 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Date;
 import java.util.List;
 
@@ -29,6 +31,7 @@ public class ConceptHarvester {
 
     private final ConceptDenormalizedRepository conceptDenormalizedRepository;
     private final RDFToModelTransformer rdfToModelTransformer;
+    private final boolean isRunningForDeveloperLocally = false;
 
     private HarvestURIList harvestURIList;
 
@@ -53,7 +56,13 @@ public class ConceptHarvester {
     private void harvestFromSingleURLSource(String harvestUri) {
         Reader reader;
 
-        String theEntireDocument = readURLFully(harvestUri);
+        String theEntireDocument = null;
+
+        if (isRunningForDeveloperLocally) {
+            theEntireDocument = readFileFully("c:\\tmp\\localConceptsFile.txt");
+        } else {
+            theEntireDocument = readURLFully(harvestUri);
+        }
 
         reader = new StringReader(theEntireDocument);
 
@@ -71,6 +80,15 @@ public class ConceptHarvester {
         });
     }
 
+    private String readFileFully(String fileURI) {
+        try {
+            return new String(Files.readAllBytes(Paths.get(fileURI)));
+        } catch (IOException ie) {
+            logger.warn("File load failed for File URI " + fileURI);
+        }
+        return null;
+    }
+
     private String readURLFully(String harvestSourceUri) {
         try {
             URL url = new URL(harvestSourceUri);
@@ -86,6 +104,7 @@ public class ConceptHarvester {
 
         } catch (IOException e) {
             logger.warn("Downloading concepts from url failed:" + harvestSourceUri);
+            logger.trace("Got exception when trying to harvest from url " + harvestSourceUri ,e);
         }
         return "";
     }
