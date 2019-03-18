@@ -1,0 +1,19 @@
+@prefix at: <http://publications.europa.eu/ontology/authority/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@base <http://fellesdatakatalog.brreg.no/reference-data/codes/apiservicetype/> .
+
+<api-service-types>
+    a skos:ConceptScheme ;
+    skos:prefLabel "Type of Service"@en, "Tjenestetype (standard)"@nb, "Tenestetype"@nn .
+
+<Kundeforhold>
+    a skos:Concept ;
+    skos:inScheme   <api-service-types> ;
+    at:authority-code "Kundeforhold";
+    skos:prefLabel "Customer relationship"@en, "Kundeforhold"@nb, "Kundeforhold"@nn .
+
+<Kontoopplysninger>
+    a skos:Concept ;
+    skos:inScheme   <api-service-types> ;
+    at:authority-code "Kontoopplysninger";
+    skos:prefLabel "Account details"@en, "Kontoopplysninger"@nb, "Kontoopplysingar"@nn .
