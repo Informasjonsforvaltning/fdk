@@ -247,6 +247,9 @@ public class ApiSearchController {
         if (selectedAggregationFields.contains("freeUsage")) {
             searchBuilder.addAggregation(QueryUtil.createTermsAggregation("freeUsage", "isFree"));
         }
+        if (selectedAggregationFields.contains("apicatalogs")) {
+            searchBuilder.addAggregation(QueryUtil.createTermsAggregation("publisher", "publisher.id"));
+        }
 
         return searchBuilder;
     }
@@ -293,7 +296,7 @@ public class ApiSearchController {
             } else if (aggregation instanceof InternalCardinality) {
                 outputAggregation.getBuckets().add(AggregationBucket.of("count", ((InternalCardinality) aggregation).getValue()));
             } else {
-                throw new RuntimeException("Programmer error. Aggregation "+aggregation.getClass().getName()+" is not supported.");
+                throw new RuntimeException("Programmer error. Aggregation " + aggregation.getClass().getName() + " is not supported.");
             }
             queryResponse.getAggregations().put(aggregationName, outputAggregation);
         });
