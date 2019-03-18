@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import _ from 'lodash';
 
-import { ConfiguredFormDistributionAPI } from './configured-form-distribution-api';
+import { ResolvedFormDistributionAPI } from './resolved-form-distribution-api';
 import { textType, licenseType } from '../../../schemaTypes';
 
 export const distributionTypes = values => {
@@ -26,13 +26,19 @@ export const distributionTypes = values => {
 
 const mapStateToProps = (state, ownProps) => {
   const { datasetItem } = ownProps;
+  const searchHostname = _.get(
+    state,
+    ['config', 'searchHostname'],
+    'fellesdatakatalog.brreg.no'
+  );
   return {
     initialValues: {
       distribution: distributionTypes(_.get(datasetItem, 'distribution'))
-    }
+    },
+    searchHostname
   };
 };
 
 export const ConnectedFormDistributionAPI = connect(mapStateToProps)(
-  ConfiguredFormDistributionAPI
+  ResolvedFormDistributionAPI
 );

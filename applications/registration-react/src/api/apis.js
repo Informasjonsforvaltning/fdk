@@ -29,3 +29,17 @@ export const getAPIByTitlePrefix = async (
 
   return response && response.data;
 };
+
+export const getApiByDatasetId = async (datasetId, returnFields) => {
+  const queryParams = `datasetid=${datasetId}${
+    returnFields ? `&returnFields=${returnFields}` : ''
+  }`;
+
+  const url = `/api/apis?${queryParams}`;
+
+  const response = await axios
+    .get(url)
+    .catch(e => console.log(JSON.stringify(e))); // eslint-disable-line no-console
+
+  return response && response.data;
+};
