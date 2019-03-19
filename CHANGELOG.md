@@ -2,6 +2,42 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+# [1.2.0](https://github.com/Informasjonsforvaltning/fdk/compare/v1.1.0...v1.2.0) (2019-03-18)
+
+
+### Bug Fixes
+
+* **e2e:** Fix test script names in README.md ([ff5cf5c](https://github.com/Informasjonsforvaltning/fdk/commit/ff5cf5c))
+* **informationmodel-cat:** Now combine subforms in a JSON Array ([b64e487](https://github.com/Informasjonsforvaltning/fdk/commit/b64e487))
+* **informationmodel-cat:** Now correctly looks up the publisher ([45ae360](https://github.com/Informasjonsforvaltning/fdk/commit/45ae360))
+* **registration-react:** [#335](https://github.com/Informasjonsforvaltning/fdk/issues/335) change label when open and show all of abstract as default ([d08bc83](https://github.com/Informasjonsforvaltning/fdk/commit/d08bc83))
+* **registration-react:** fix delete distribution-api ([f98c603](https://github.com/Informasjonsforvaltning/fdk/commit/f98c603))
+* **search:** [#1518](https://github.com/Informasjonsforvaltning/fdk/issues/1518) report page - filter by organization ([826fa86](https://github.com/Informasjonsforvaltning/fdk/commit/826fa86))
+* **search:** report-page - fix distribution graphs calculation ([4eb5558](https://github.com/Informasjonsforvaltning/fdk/commit/4eb5558))
+* Fix conflicting port for harvester-api in docker-compose.override.yml ([2fe1308](https://github.com/Informasjonsforvaltning/fdk/commit/2fe1308))
+* **search:** Fix search hits stats line ([dc2e1bb](https://github.com/Informasjonsforvaltning/fdk/commit/dc2e1bb))
+* **search:** Tab labels in plural ([437115c](https://github.com/Informasjonsforvaltning/fdk/commit/437115c))
+
+
+### Features
+
+* **api-cat:** Add aggregation "firstHarvested" ([4e49844](https://github.com/Informasjonsforvaltning/fdk/commit/4e49844))
+* **concept-cat:** Add aggregation "firstHarvested" ([5ad49bc](https://github.com/Informasjonsforvaltning/fdk/commit/5ad49bc))
+* **registration-react:** [#1411](https://github.com/Informasjonsforvaltning/fdk/issues/1411) add API distribution form ([6fca0c3](https://github.com/Informasjonsforvaltning/fdk/commit/6fca0c3))
+* **search:** [#1417](https://github.com/Informasjonsforvaltning/fdk/issues/1417) Show total count for apis and concepts in report. ([#1514](https://github.com/Informasjonsforvaltning/fdk/issues/1514)) ([7b9df32](https://github.com/Informasjonsforvaltning/fdk/commit/7b9df32))
+* **search:** new design elements to report page ([65eb5bd](https://github.com/Informasjonsforvaltning/fdk/commit/65eb5bd))
+* **search-api:** [#1414](https://github.com/Informasjonsforvaltning/fdk/issues/1414) Add new aggregations to dataset search: distributionCountForTypeApi,distributionCountForTypeFeed,distributionCountForTypeFile ([18f8961](https://github.com/Informasjonsforvaltning/fdk/commit/18f8961))
+* **search-api:** [#1414](https://github.com/Informasjonsforvaltning/fdk/issues/1414) Add new aggregations to dataset search: nationalComponent ([e38cd6c](https://github.com/Informasjonsforvaltning/fdk/commit/e38cd6c))
+* **search-api:** [#1414](https://github.com/Informasjonsforvaltning/fdk/issues/1414) Add new aggregations to dataset search: nonpublicWithDistribution,publicWithoutDistribution,nonpublicWithoutDistribution ([3fd0ade](https://github.com/Informasjonsforvaltning/fdk/commit/3fd0ade))
+* **search-api:** [#1414](https://github.com/Informasjonsforvaltning/fdk/issues/1414) Add new aggregations to dataset search: subjects ([ac63a89](https://github.com/Informasjonsforvaltning/fdk/commit/ac63a89))
+* **search-api:** [#1414](https://github.com/Informasjonsforvaltning/fdk/issues/1414) DatasetsSearchController - implement filters withDistribution, isPublic, withSubject, isNationalComponent, subject, distributionType ([663719b](https://github.com/Informasjonsforvaltning/fdk/commit/663719b))
+
+
+
+# Change Log
+
+All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
 # 1.1.0 (2019-02-26)
 
 

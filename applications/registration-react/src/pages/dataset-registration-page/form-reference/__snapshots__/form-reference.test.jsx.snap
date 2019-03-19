@@ -23,7 +23,10 @@ Angi referanser til andre datasett som gir supplerende informasjon om innholdet.
       title="Relasjoner"
     />
     <FieldArray
+      catalogId={null}
       component={[Function]}
+      datasetId={null}
+      dispatch={null}
       name="references"
     />
   </div>

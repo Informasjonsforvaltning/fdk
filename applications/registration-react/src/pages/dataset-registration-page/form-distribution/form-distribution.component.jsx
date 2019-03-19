@@ -10,7 +10,7 @@ import InputTagsField from '../../../components/field-input-tags/field-input-tag
 import TextAreaField from '../../../components/field-textarea/field-textarea.component';
 import RadioField from '../../../components/field-radio/field-radio.component';
 import SelectField from '../../../components/field-select/field-select.component';
-import asyncValidate from '../../../lib/asyncValidate';
+import { handleDatasetDeleteFieldPatch } from '../formsLib/formHandlerDatasetPatch';
 import { textType, licenseType } from '../../../schemaTypes';
 
 export const renderDistributionLandingpage = componentProps => {
@@ -32,10 +32,13 @@ export const renderDistributionLandingpage = componentProps => {
 
 export const renderDistributions = componentProps => {
   const {
+    catalogId,
+    datasetId,
     fields,
     helptextItems,
     openLicenseItems,
-    initialValues
+    initialValues,
+    dispatch
   } = componentProps;
   return (
     <div>
@@ -53,12 +56,13 @@ export const renderDistributions = componentProps => {
                   type="button"
                   title="Remove distribution"
                   onClick={() => {
-                    fields.remove(index);
-                    asyncValidate(
-                      fields.getAll(),
-                      null,
-                      componentProps,
-                      `remove_distribution_${index}`
+                    handleDatasetDeleteFieldPatch(
+                      catalogId,
+                      datasetId,
+                      'distribution',
+                      fields,
+                      index,
+                      dispatch
                     );
                   }}
                 >
@@ -210,7 +214,13 @@ export const renderDistributions = componentProps => {
 };
 
 export const FormDistribution = props => {
-  const { helptextItems, initialValues } = props;
+  const {
+    helptextItems,
+    initialValues,
+    dispatch,
+    catalogId,
+    datasetId
+  } = props;
   const { openLicenseItems } = initialValues;
   return (
     <form>
@@ -220,15 +230,24 @@ export const FormDistribution = props => {
         helptextItems={helptextItems}
         openLicenseItems={openLicenseItems}
         initialValues={initialValues}
+        dispatch={dispatch}
+        catalogId={catalogId}
+        datasetId={datasetId}
       />
     </form>
   );
 };
 
 FormDistribution.defaultProps = {
-  initialValues: null
+  initialValues: null,
+  dispatch: null,
+  catalogId: null,
+  datasetId: null
 };
 FormDistribution.propTypes = {
   initialValues: PropTypes.object.isRequired,
-  helptextItems: PropTypes.object.isRequired
+  helptextItems: PropTypes.object.isRequired,
+  dispatch: PropTypes.func,
+  catalogId: PropTypes.string,
+  datasetId: PropTypes.string
 };

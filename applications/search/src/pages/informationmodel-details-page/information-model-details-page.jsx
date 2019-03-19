@@ -24,6 +24,23 @@ const renderJSONSchema = schema => {
   );
 };
 
+const createTabsArray = schema => {
+  const tabsArray = [];
+
+  // only show structure-tab if schema is an object, not when schema is an array
+  if (schema && schema.definitions) {
+    tabsArray.push({
+      title: localization.infoMod.tabs.structure,
+      body: <Structure definitions={schema.definitions} />
+    });
+  }
+  tabsArray.push({
+    title: localization.infoMod.tabs.json,
+    body: renderJSONSchema(schema)
+  });
+  return tabsArray;
+};
+
 const renderModels = schema => {
   if (!schema) {
     return null;
@@ -32,18 +49,7 @@ const renderModels = schema => {
   return (
     <ListRegular title={localization.infoMod.infoModHeader}>
       <div className="d-flex list-regular--item" />
-      <Tabs
-        tabContent={[
-          {
-            title: localization.infoMod.tabs.structure,
-            body: <Structure definitions={schema.definitions} />
-          },
-          {
-            title: localization.infoMod.tabs.json,
-            body: renderJSONSchema(schema)
-          }
-        ]}
-      />
+      <Tabs tabContent={createTabsArray(schema)} />
     </ListRegular>
   );
 };
@@ -73,7 +79,7 @@ const renderRelatedApi = (referencedApis, publisherItems) => {
   );
 };
 
-const renderStickyMenu = informationModelItem => {
+const renderStickyMenu = (informationModelItem, referencedApis) => {
   const menuItems = [];
 
   if (_.get(informationModelItem, 'schema')) {
@@ -82,7 +88,7 @@ const renderStickyMenu = informationModelItem => {
       prefLabel: localization.infoMod.infoModHeader
     });
   }
-  if (_.get(informationModelItem, 'id')) {
+  if (!_.isEmpty(_.get(referencedApis, 'hits'))) {
     menuItems.push({
       name: localization.infoMod.relatedAPIHeader,
       prefLabel: localization.infoMod.relatedAPIHeader
@@ -131,7 +137,7 @@ export const InformationModelDetailsPage = props => {
 
         <div className="row">
           <div className="col-12 col-lg-3 ">
-            {renderStickyMenu(informationModelItem)}
+            {renderStickyMenu(informationModelItem, referencedApis)}
           </div>
 
           <section className="col-12 col-lg-9 mt-3">

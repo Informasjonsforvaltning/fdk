@@ -3,12 +3,12 @@ import _throttle from 'lodash/throttle';
 
 import { FormDistribution } from './form-distribution.component';
 import validate from './form-distribution-validations';
-import asyncValidate from '../../../lib/asyncValidate';
+import { asyncValidateDatasetInvokePatch } from '../formsLib/asyncValidateDatasetInvokePatch';
 
 const config = {
   form: 'distribution',
   validate,
-  asyncValidate: _throttle(asyncValidate, 250)
+  asyncValidate: _throttle(asyncValidateDatasetInvokePatch, 250)
 };
 
 export const ConfiguredFormDistribution = reduxForm(config)(FormDistribution);

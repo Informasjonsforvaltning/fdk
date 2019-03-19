@@ -268,9 +268,16 @@
       "openDatasetDescription": "Åpne datasett er datasett som er offentlig tilgjengelig og har distribusjoner med åpen lisens.",
       "publicWithDistributions": "Offentlige datasett med distribusjoner",
       "publicWithoutDistributions": "Offentlige datasett uten distribusjoner",
+      "restrictedDatasetWithDistributions": "Begrensede datasett med distribusjoner",
+      "restrictedDatasetWithoutDistributions": "Begrensede datasett uten distribusjoner",
+      "typeFile": "nedlastbare filer",
+      "typeFeed": "feeds",
+      "national": "autoritative kilder",
       "withConcepts": "Datasett som benytter begrep",
       "withoutConcepts": "Datasett som ikke benytter begrep"
-    }
+    },
+    "countCatalogsLabel": "virksomheter har datasett i Felles datakatalog",
+    "catalogsFrom": "Datasettkataloger fra"
   },
   "registration": {
     "title": "Kom i gang med registrering"

@@ -8,6 +8,15 @@
       "harvestSourceUri": {
         "type": "keyword"
       },
+      "isOpenAccess": {
+        "type": "keyword"
+      },
+      "isOpenLicense": {
+        "type": "keyword"
+      },
+      "isFree": {
+        "type": "keyword"
+      },
       "apiSpec": {
         "type": "text",
         "analyzer": "norwegian"
@@ -42,6 +51,9 @@
       },
       "publisher": {
         "properties": {
+          "id": {
+            "type": "keyword"
+          },
           "name": {
             "type": "text",
             "analyzer": "norwegian"
@@ -68,8 +80,8 @@
       "datasetReferences": {
         "dynamic": "false",
         "properties": {
-          "id" : {
-            "type" : "keyword"
+          "id": {
+            "type": "keyword"
           },
           "title": {
             "type": "object",

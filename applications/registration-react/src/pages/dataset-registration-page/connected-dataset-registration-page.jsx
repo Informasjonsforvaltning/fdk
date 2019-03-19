@@ -129,7 +129,9 @@ const mapStateToProps = (
       getDatasetFormStatusById(datasetFormStatus, id),
       'status'
     ),
-    datasetItem: getDatasetItemByDatasetiId(datasets, catalogId, id)
+    datasetItem: getDatasetItemByDatasetiId(datasets, catalogId, id),
+    catalogId,
+    datasetId: id
   };
 };
 

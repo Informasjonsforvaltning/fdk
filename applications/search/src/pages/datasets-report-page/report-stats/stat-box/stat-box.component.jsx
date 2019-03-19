@@ -49,7 +49,8 @@ export const StatBox = props => {
       'fdk-color-yellow-1': iconColor === 'yellow',
       'fdk-color-red-1': iconColor === 'red',
       'fdk-color-blue': iconColor === 'blue',
-      'fdk-color-grey-1': iconColor === 'grey'
+      'fdk-color-grey-1': iconColor === 'grey',
+      'fdk-color-dark-2': iconColor === 'dark'
     }
   );
 
@@ -113,7 +114,14 @@ StatBox.propTypes = {
   iconBgSize: PropTypes.oneOf(['xlarge', 'large', 'medium', 'small']),
   iconBgColor: PropTypes.oneOf(['green', 'yellow', 'red', 'grey']),
   iconType: PropTypes.string,
-  iconColor: PropTypes.oneOf(['green', 'yellow', 'red', 'blue', 'grey']),
+  iconColor: PropTypes.oneOf([
+    'green',
+    'yellow',
+    'red',
+    'blue',
+    'grey',
+    'dark'
+  ]),
   label: PropTypes.string,
   children: PropTypes.node,
   pieData: PropTypes.array

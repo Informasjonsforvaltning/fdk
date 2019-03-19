@@ -1,13 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Field, FieldArray } from 'redux-form';
+import _ from 'lodash';
 
 import localization from '../../../lib/localization';
 import Helptext from '../../../components/helptext/helptext.component';
 import InputTagsFieldArray from '../../../components/field-input-tags-objects/field-input-tags-objects.component';
 import DatepickerField from '../../../components/field-datepicker/field-datepicker.component';
 import CheckboxField from '../../../components/field-checkbox/field-checkbox.component';
-import asyncValidate from '../../../lib/asyncValidate';
+import { handleDatasetDeleteFieldPatch } from '../formsLib/formHandlerDatasetPatch';
 
 export const renderTemporalFields = (item, index, fields, componentProps) => (
   <div className="d-flex mb-2" key={index}>
@@ -35,19 +36,13 @@ export const renderTemporalFields = (item, index, fields, componentProps) => (
         type="button"
         title="Remove temporal"
         onClick={() => {
-          if (fields.length === 1) {
-            fields.remove(index);
-            fields.push({});
-          }
-
-          if (fields.length > 1) {
-            fields.remove(index);
-          }
-          asyncValidate(
-            fields.getAll(),
-            null,
-            componentProps,
-            `remove_temporal_${index}`
+          handleDatasetDeleteFieldPatch(
+            _.get(componentProps, 'catalogId'),
+            _.get(componentProps, 'datasetId'),
+            'temporal',
+            fields,
+            index,
+            componentProps.dispatch
           );
         }}
       >
@@ -79,7 +74,13 @@ export const renderTemporal = componentProps => {
 };
 
 export const FormSpatial = props => {
-  const { helptextItems, initialValues } = props;
+  const {
+    helptextItems,
+    initialValues,
+    dispatch,
+    catalogId,
+    datasetId
+  } = props;
   if (initialValues) {
     return (
       <form>
@@ -101,7 +102,13 @@ export const FormSpatial = props => {
             title={localization.schema.spatial.helptext.temporal}
             helptextItems={helptextItems.Dataset_temporal}
           />
-          <FieldArray name="temporal" component={renderTemporal} />
+          <FieldArray
+            name="temporal"
+            component={renderTemporal}
+            dispatch={dispatch}
+            catalogId={catalogId}
+            datasetId={datasetId}
+          />
         </div>
         <div className="form-group">
           <Helptext
@@ -129,10 +136,16 @@ export const FormSpatial = props => {
 };
 
 FormSpatial.defaultProps = {
-  initialValues: null
+  initialValues: null,
+  dispatch: null,
+  catalogId: null,
+  datasetId: null
 };
 
 FormSpatial.propTypes = {
   initialValues: PropTypes.object,
-  helptextItems: PropTypes.object.isRequired
+  helptextItems: PropTypes.object.isRequired,
+  dispatch: PropTypes.func,
+  catalogId: PropTypes.string,
+  datasetId: PropTypes.string
 };

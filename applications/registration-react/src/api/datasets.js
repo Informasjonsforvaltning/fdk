@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+const datasetUrlBase = '/catalogs';
+
 export const getDatasetByURI = async uri => {
   const url = `/search-api/datasets/byuri?uri=${uri}`;
 
@@ -37,3 +39,8 @@ export const getDatasetById = async (id, catalogId) => {
 
   return response && response.data;
 };
+
+export const patchDataset = (catalogId, datasetId, body) =>
+  axios
+    .patch(`${datasetUrlBase}/${catalogId}/datasets/${datasetId}`, body)
+    .then(response => response);

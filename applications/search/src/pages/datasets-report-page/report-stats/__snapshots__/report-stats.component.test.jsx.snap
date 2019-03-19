@@ -102,6 +102,7 @@ exports[`should render ReportStats correctly 1`] = `
             Object {
               "body": <DatasetStats
                 catalogs={null}
+                name="Test entity"
                 orgPath={null}
                 stats={
                   Object {
@@ -459,16 +460,24 @@ exports[`should render ReportStats correctly 1`] = `
                         "key": "https://data.norge.no/api/dcat2/994686011/data.jsonld",
                       },
                     ],
-                    "distOnPublicAccessCount": 979,
+                    "distributionCountForTypeApi": 0,
+                    "distributionCountForTypeFeed": 0,
+                    "distributionCountForTypeFile": 0,
                     "distributions": 982,
+                    "nationalComponent": 0,
                     "newLastMonth": 568,
                     "newLastWeek": 0,
                     "newLastYear": 985,
                     "nonPublic": 0,
+                    "nonpublicWithDistribution": 0,
+                    "nonpublicWithoutDistribution": 0,
                     "opendata": 555,
                     "public": 982,
+                    "publicWithDistribution": 979,
+                    "publicWithoutDistribution": 0,
                     "restricted": 3,
                     "subjectCount": 0,
+                    "subjectCounts": Array [],
                     "total": 985,
                     "unknown": 0,
                   }

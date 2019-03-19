@@ -20,6 +20,7 @@ import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.bucket.MultiBucketsAggregation;
 import org.elasticsearch.search.aggregations.bucket.filters.FiltersAggregator;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms;
+import org.elasticsearch.search.aggregations.metrics.cardinality.InternalCardinality;
 import org.elasticsearch.search.sort.SortBuilder;
 import org.elasticsearch.search.sort.SortBuilders;
 import org.elasticsearch.search.sort.SortOrder;
@@ -41,6 +42,7 @@ public class ApiSearchController {
     public static final String MISSING = "MISSING";
     public static final long DAY_IN_MS = 1000 * 3600 * 24;
     public static final int MAX_AGGREGATIONS = 10000;
+    public static final long MAX_PRECISION = 40000;
     public static final String[] DEFAULT_RETURN_FIELDS = {
         "id",
         "title",
@@ -162,7 +164,7 @@ public class ApiSearchController {
 
         String[] returnFieldsArray;
 
-        if(!returnFields.isEmpty()) {
+        if (!returnFields.isEmpty()) {
             returnFieldsArray = returnFields.split(",");
         } else {
             returnFieldsArray = DEFAULT_RETURN_FIELDS;
@@ -220,7 +222,7 @@ public class ApiSearchController {
         return size;
     }
 
-    public SearchRequestBuilder addAggregations(SearchRequestBuilder searchBuilder, String aggregationFields){
+    public SearchRequestBuilder addAggregations(SearchRequestBuilder searchBuilder, String aggregationFields) {
         HashSet<String> selectedAggregationFields = new HashSet<>(Arrays.asList(aggregationFields.split(",")));
 
         if (selectedAggregationFields.contains("formats")) {
@@ -232,6 +234,21 @@ public class ApiSearchController {
         }
         if (selectedAggregationFields.contains("firstHarvested")) {
             searchBuilder.addAggregation(QueryUtil.createTemporalAggregation("firstHarvested", "harvest.firstHarvested"));
+        }
+        if (selectedAggregationFields.contains("publisher")) {
+            searchBuilder.addAggregation(QueryUtil.createCardinalityAggregation("publisher", "publisher.id"));
+        }
+        if (selectedAggregationFields.contains("openAccess")) {
+            searchBuilder.addAggregation(QueryUtil.createTermsAggregation("openAccess", "isOpenAccess"));
+        }
+        if (selectedAggregationFields.contains("openLicence")) {
+            searchBuilder.addAggregation(QueryUtil.createTermsAggregation("openLicence", "isOpenLicense"));
+        }
+        if (selectedAggregationFields.contains("freeUsage")) {
+            searchBuilder.addAggregation(QueryUtil.createTermsAggregation("freeUsage", "isFree"));
+        }
+        if (selectedAggregationFields.contains("apicatalogs")) {
+            searchBuilder.addAggregation(QueryUtil.createTermsAggregation("publisher", "publisher.id"));
         }
 
         return searchBuilder;
@@ -272,9 +289,15 @@ public class ApiSearchController {
                 buckets = new ArrayList<>();
             }};
 
-            ((MultiBucketsAggregation)aggregation).getBuckets().forEach((bucket) -> {
-                outputAggregation.getBuckets().add(AggregationBucket.of(bucket.getKeyAsString(), bucket.getDocCount()));
-            });
+            if (aggregation instanceof MultiBucketsAggregation) {
+                ((MultiBucketsAggregation) aggregation).getBuckets().forEach((bucket) -> {
+                    outputAggregation.getBuckets().add(AggregationBucket.of(bucket.getKeyAsString(), bucket.getDocCount()));
+                });
+            } else if (aggregation instanceof InternalCardinality) {
+                outputAggregation.getBuckets().add(AggregationBucket.of("count", ((InternalCardinality) aggregation).getValue()));
+            } else {
+                throw new RuntimeException("Programmer error. Aggregation " + aggregation.getClass().getName() + " is not supported.");
+            }
             queryResponse.getAggregations().put(aggregationName, outputAggregation);
         });
     }
@@ -297,6 +320,7 @@ public class ApiSearchController {
             }
             return composedQuery;
         }
+
         static RangeQueryBuilder createRangeQueryFromXdaysToNow(int days, String dateField) {
             long now = new Date().getTime();
 
@@ -310,6 +334,12 @@ public class ApiSearchController {
                 .field(field)
                 .size(MAX_AGGREGATIONS)
                 .order(Terms.Order.count(false));
+        }
+
+        static AggregationBuilder createCardinalityAggregation(String aggregationName, String field) {
+            return AggregationBuilders.cardinality(aggregationName)
+                .field(field)
+                .precisionThreshold(MAX_PRECISION);
         }
 
         static AggregationBuilder createTemporalAggregation(String name, String dateField) {

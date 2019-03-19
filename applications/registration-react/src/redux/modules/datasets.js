@@ -4,7 +4,6 @@ import { fetchActions } from '../fetchActions';
 export const DATASETS_REQUEST = 'DATASETS_REQUEST';
 export const DATASETS_SUCCESS = 'DATASETS_SUCCESS';
 export const DATASETS_FAILURE = 'DATASETS_FAILURE';
-export const DATASETS_ADD_ITEM = 'DATASETS_ADD_ITEM';
 export const DATASETS_ITEM_SET_STATUS = 'DATASETS_ITEM_SET_STATUS';
 export const DATASETS_ITEM_DELETE = 'DATASETS_ITEM_DELETE';
 export const DATASET_SUCCESS = 'DATASET_SUCCESS';
@@ -128,14 +127,11 @@ export default function datasets(state = initialState, action) {
   }
 }
 
-export const getDatasetItemsByCatalogId = (datasets, catalogId) => {
-  const objects = _.get(datasets, [catalogId, 'items'], []);
-  const array = [];
-  Object.keys(objects).map(key => array.push(objects[key]));
-  return array;
-};
+export const getDatasetItemsByCatalogId = (datasets, catalogId) =>
+  Object.values(_.get(datasets, [catalogId, 'items'], {}));
+
+export const getDatasetItemsCount = (datasets, catalogId) =>
+  getDatasetItemsByCatalogId(datasets, catalogId).length;
 
 export const getDatasetItemByDatasetiId = (datasets, catalogId, id) =>
   _.get(datasets, [catalogId, 'items', id]);
-
-export const getDatasetItemsCount = datasets => Object.keys(datasets).length;

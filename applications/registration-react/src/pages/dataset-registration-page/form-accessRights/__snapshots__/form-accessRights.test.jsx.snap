@@ -139,7 +139,10 @@ exports[`should render FormAccessRights correctly with syncErrors 1`] = `
           title="Skjermingshjemmel"
         />
         <FieldArray
+          catalogId={null}
           component={[Function]}
+          datasetId={null}
+          dispatch={null}
           linkLabel="Lenke"
           name="legalBasisForRestriction"
           titleLabel="Tittel"
@@ -167,7 +170,10 @@ Dersom et datasett inneholder personopplysninger skal det være et grunnlag for 
           title="Behandlingsgrunnlag"
         />
         <FieldArray
+          catalogId={null}
           component={[Function]}
+          datasetId={null}
+          dispatch={null}
           linkLabel="Lenke"
           name="legalBasisForProcessing"
           titleLabel="Tittel"
@@ -194,7 +200,10 @@ Dersom et datasett inneholder personopplysninger skal det være et grunnlag for 
           title="Utleveringshjemmel"
         />
         <FieldArray
+          catalogId={null}
           component={[Function]}
+          datasetId={null}
+          dispatch={null}
           linkLabel="Lenke"
           name="legalBasisForAccess"
           titleLabel="Tittel"
@@ -235,7 +244,7 @@ exports[`should render renderLegalBasis correctly 1`] = `
       <button
         className="fdk-btn-no-border"
         onClick={[Function]}
-        title="Remove temporal"
+        title="Remove legal basis"
         type="button"
       >
         <i
