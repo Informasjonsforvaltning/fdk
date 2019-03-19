@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Field, FieldArray } from 'redux-form';
+import _ from 'lodash';
 
 import localization from '../../../lib/localization';
 import Helptext from '../../../components/helptext/helptext.component';
 import InputField from '../../../components/field-input/field-input.component';
 import RadioField from '../../../components/field-radio/field-radio.component';
-import { asyncValidateDatasetInvokePatch } from '../formsLib/asyncValidateDatasetInvokePatch';
+import { handleDatasetDeleteFieldPatch } from '../formsLib/formHandlerDatasetPatch';
 import { legalBasisType } from '../../../schemaTypes';
 
 /*
@@ -40,21 +41,15 @@ export const renderLegalBasisFields = (item, index, fields, customProps) => (
       <button
         className="fdk-btn-no-border"
         type="button"
-        title="Remove temporal"
+        title="Remove legal basis"
         onClick={() => {
-          if (fields.length === 1) {
-            fields.remove(index);
-            fields.push({});
-          }
-
-          if (fields.length > 1) {
-            fields.remove(index);
-          }
-          asyncValidateDatasetInvokePatch(
-            fields.getAll(),
-            customProps.dispatch,
-            customProps,
-            `remove_${fields.name}_${index}`
+          handleDatasetDeleteFieldPatch(
+            _.get(customProps, 'catalogId'),
+            _.get(customProps, 'datasetId'),
+            fields.name,
+            fields,
+            index,
+            customProps.dispatch
           );
         }}
       >
@@ -85,7 +80,14 @@ export const renderLegalBasis = customProps => {
 };
 
 export const FormAccessRights = props => {
-  const { syncErrors, helptextItems, hasAccessRightsURI } = props;
+  const {
+    syncErrors,
+    helptextItems,
+    hasAccessRightsURI,
+    dispatch,
+    catalogId,
+    datasetId
+  } = props;
   const accessRight = syncErrors ? syncErrors.accessRight : null;
 
   return (
@@ -151,6 +153,9 @@ export const FormAccessRights = props => {
                   localization.schema.accessRights.legalBasisForRestriction
                     .linkLabel
                 }
+                dispatch={dispatch}
+                catalogId={catalogId}
+                datasetId={datasetId}
               />
             </div>
 
@@ -173,6 +178,9 @@ export const FormAccessRights = props => {
                   localization.schema.accessRights.legalBasisForProcessing
                     .linkLabel
                 }
+                dispatch={dispatch}
+                catalogId={catalogId}
+                datasetId={datasetId}
               />
             </div>
 
@@ -193,6 +201,9 @@ export const FormAccessRights = props => {
                 linkLabel={
                   localization.schema.accessRights.legalBasisForAccess.linkLabel
                 }
+                dispatch={dispatch}
+                catalogId={catalogId}
+                datasetId={datasetId}
               />
             </div>
           </div>
@@ -204,10 +215,16 @@ export const FormAccessRights = props => {
 
 FormAccessRights.defaultProps = {
   syncErrors: null,
-  hasAccessRightsURI: null
+  hasAccessRightsURI: null,
+  dispatch: null,
+  catalogId: null,
+  datasetId: null
 };
 FormAccessRights.propTypes = {
   syncErrors: PropTypes.object,
   helptextItems: PropTypes.object.isRequired,
-  hasAccessRightsURI: PropTypes.string
+  hasAccessRightsURI: PropTypes.string,
+  dispatch: PropTypes.func,
+  catalogId: PropTypes.string,
+  datasetId: PropTypes.string
 };
