@@ -7,11 +7,17 @@ import Helptext from '../../../components/helptext/helptext.component';
 import InputField from '../../../components/field-input/field-input.component';
 import InputTagsField from '../../../components/field-input-tags/field-input-tags.component';
 import TextAreaField from '../../../components/field-textarea/field-textarea.component';
-import { asyncValidateDatasetInvokePatch } from '../formsLib/asyncValidateDatasetInvokePatch';
+import { handleDatasetDeleteFieldPatch } from '../formsLib/formHandlerDatasetPatch';
 import { textType, licenseType } from '../../../schemaTypes';
 
 export const renderSamples = componentProps => {
-  const { fields, helptextItems } = componentProps;
+  const {
+    catalogId,
+    datasetId,
+    fields,
+    helptextItems,
+    dispatch
+  } = componentProps;
   return (
     <div>
       {fields &&
@@ -23,12 +29,13 @@ export const renderSamples = componentProps => {
                 type="button"
                 title={localization.schema.sample.removeSample}
                 onClick={() => {
-                  fields.remove(index);
-                  asyncValidateDatasetInvokePatch(
-                    fields.getAll(),
-                    null,
-                    componentProps,
-                    `remove_sample_${index}`
+                  handleDatasetDeleteFieldPatch(
+                    catalogId,
+                    datasetId,
+                    'sample',
+                    fields,
+                    index,
+                    dispatch
                   );
                 }}
               >
@@ -96,20 +103,30 @@ export const renderSamples = componentProps => {
 };
 
 export const FormSample = props => {
-  const { helptextItems } = props;
+  const { helptextItems, dispatch, catalogId, datasetId } = props;
   return (
     <form>
       <FieldArray
         name="sample"
         component={renderSamples}
         helptextItems={helptextItems}
+        dispatch={dispatch}
+        catalogId={catalogId}
+        datasetId={datasetId}
       />
     </form>
   );
 };
 
-FormSample.defaultProps = {};
+FormSample.defaultProps = {
+  dispatch: null,
+  catalogId: null,
+  datasetId: null
+};
 
 FormSample.propTypes = {
-  helptextItems: PropTypes.object.isRequired
+  helptextItems: PropTypes.object.isRequired,
+  dispatch: PropTypes.func,
+  catalogId: PropTypes.string,
+  datasetId: PropTypes.string
 };

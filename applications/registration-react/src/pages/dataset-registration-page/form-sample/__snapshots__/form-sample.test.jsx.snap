@@ -3,7 +3,10 @@
 exports[`should render FormSample correctly 1`] = `
 <form>
   <FieldArray
+    catalogId={null}
     component={[Function]}
+    datasetId={null}
+    dispatch={null}
     helptextItems={
       Object {
         "Agent_identifier": Object {

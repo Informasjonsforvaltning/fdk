@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Field, FieldArray } from 'redux-form';
+import _ from 'lodash';
 
 import localization from '../../../lib/localization';
 import Helptext from '../../../components/helptext/helptext.component';
 import SelectField from '../../../components/field-select/field-select.component';
-import { asyncValidateDatasetInvokePatch } from '../formsLib/asyncValidateDatasetInvokePatch';
+import { handleDatasetDeleteFieldPatch } from '../formsLib/formHandlerDatasetPatch';
 
 const renderReferenceFields = (
   item,
@@ -34,21 +35,15 @@ const renderReferenceFields = (
       <button
         className="fdk-btn-no-border"
         type="button"
-        title="Remove temporal"
+        title="Remove reference"
         onClick={() => {
-          if (fields.length === 1) {
-            fields.remove(index);
-            fields.push({});
-          }
-
-          if (fields.length > 1) {
-            fields.remove(index);
-          }
-          asyncValidateDatasetInvokePatch(
-            fields.getAll(),
-            null,
-            componentProps,
-            `remove_references_${index}`
+          handleDatasetDeleteFieldPatch(
+            _.get(componentProps, 'catalogId'),
+            _.get(componentProps, 'datasetId'),
+            'references',
+            fields,
+            index,
+            componentProps.dispatch
           );
         }}
       >
@@ -90,7 +85,13 @@ export const renderReference = componentProps => {
 };
 
 export const FormReference = props => {
-  const { helptextItems, initialValues } = props;
+  const {
+    helptextItems,
+    initialValues,
+    dispatch,
+    catalogId,
+    datasetId
+  } = props;
   const { referenceTypesItems, referenceDatasetsItems } = initialValues;
   if (initialValues) {
     return (
@@ -105,6 +106,9 @@ export const FormReference = props => {
             component={renderReference}
             referenceTypesItems={referenceTypesItems}
             referenceDatasetsItems={referenceDatasetsItems}
+            dispatch={dispatch}
+            catalogId={catalogId}
+            datasetId={datasetId}
           />
         </div>
       </form>
@@ -114,10 +118,16 @@ export const FormReference = props => {
 };
 
 FormReference.defaultProps = {
-  initialValues: null
+  initialValues: null,
+  dispatch: null,
+  catalogId: null,
+  datasetId: null
 };
 
 FormReference.propTypes = {
   initialValues: PropTypes.object,
-  helptextItems: PropTypes.object.isRequired
+  helptextItems: PropTypes.object.isRequired,
+  dispatch: PropTypes.func,
+  catalogId: PropTypes.string,
+  datasetId: PropTypes.string
 };
