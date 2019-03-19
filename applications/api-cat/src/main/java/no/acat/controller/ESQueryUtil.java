@@ -43,6 +43,14 @@ class ESQueryUtil {
         return QueryBuilders.termQuery("nationalComponent", "true");
     }
 
+    static QueryBuilder isActiveQuery() {
+        // api is active if it is not removed and if it does not have deprecation date or the deprecation date is in future.
+        return QueryBuilders.boolQuery()
+            .mustNot(QueryBuilders.termQuery("statusCode","REMOVED"))
+            .should(QueryBuilders.rangeQuery("deprecationInfoExpirationDate").from("now"))
+            .should(QueryBuilders.boolQuery().mustNot(QueryBuilders.existsQuery("deprecationInfoExpirationDate")));
+    }
+
     static AggregationBuilder createTermsAggregation(String aggregationName, String field) {
         return AggregationBuilders
             .terms(aggregationName)

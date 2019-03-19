@@ -71,7 +71,9 @@ public class ApiSearchController {
         @ApiImplicitParam(name = "format", dataType = "string", paramType = "query", value = "Filters on format"),
         @ApiImplicitParam(name = "title", dataType = "string", paramType = "query", value = "The title text"),
         @ApiImplicitParam(name = "datasetid", dataType = "string", paramType = "query", value = "Id of dataset referenced by the API"),
-
+        @ApiImplicitParam(name = "active", dataType = "string", paramType = "query", value = "Filters active (not expired and not removed)"),
+        @ApiImplicitParam(name = "serviceType", dataType = "string", paramType = "query", value = "Filters by service type"),
+        @ApiImplicitParam(name = "orgNos", dataType = "string", paramType = "query", value = "Filters by publisher organisation number. Multiple values separated with commas."),
         @ApiImplicitParam(name = "page", dataType = "string", paramType = "query", defaultValue = "0", value = "Page index. First page is 0"),
         @ApiImplicitParam(name = "size", dataType = "string", paramType = "query", defaultValue = "10", value = "Page size")
     })
@@ -131,6 +133,8 @@ public class ApiSearchController {
             logger.debug("sort: {}", sortBuilder.toString());
             searchRequest.addSort(sortBuilder);
         }
+
+        logger.debug("Executing query: {}", searchRequest.toString());
 
         SearchResponse elasticResponse = searchRequest.execute().actionGet();
 
