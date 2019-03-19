@@ -9,11 +9,10 @@ import no.acat.model.ApiDocument;
 import no.acat.model.queryresponse.AggregationBucket;
 import no.acat.model.queryresponse.QueryResponse;
 import no.acat.service.ElasticsearchService;
+import org.apache.commons.lang3.ArrayUtils;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
-import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
-import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.aggregations.Aggregation;
 import org.elasticsearch.search.aggregations.bucket.MultiBucketsAggregation;
@@ -29,8 +28,6 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
-
-import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
 @CrossOrigin
 @RestController
@@ -68,38 +65,28 @@ public class ApiSearchController {
     @ApiOperation(value = "Queries the api catalog for api specifications",
         notes = "So far only simple queries is supported", response = QueryResponse.class)
     @ApiImplicitParams({
+        @ApiImplicitParam(name = "q", dataType = "string", paramType = "query", value = "Full content search"),
+        @ApiImplicitParam(name = "orgPath", dataType = "string", paramType = "query", value = "Filters on publisher's organization path (orgPath), e.g. /STAT/972417858/971040238"),
+        @ApiImplicitParam(name = "harvestSourceUri", dataType = "string", paramType = "query", value = "Filters on harvestSourceUri external identifier"),
+        @ApiImplicitParam(name = "format", dataType = "string", paramType = "query", value = "Filters on format"),
+        @ApiImplicitParam(name = "title", dataType = "string", paramType = "query", value = "The title text"),
+        @ApiImplicitParam(name = "datasetid", dataType = "string", paramType = "query", value = "Id of dataset referenced by the API"),
+
         @ApiImplicitParam(name = "page", dataType = "string", paramType = "query", defaultValue = "0", value = "Page index. First page is 0"),
         @ApiImplicitParam(name = "size", dataType = "string", paramType = "query", defaultValue = "10", value = "Page size")
     })
     @RequestMapping(value = "", method = RequestMethod.GET, produces = "application/json")
     public QueryResponse search(
-        @ApiParam("the query string")
-        @RequestParam(value = "q", defaultValue = "", required = false)
-            String query,
+        @ApiParam(hidden = true)
+        @RequestParam Map<String, String> params,
 
-        @ApiParam("Filters on publisher's organization path (orgPath), e.g. /STAT/972417858/971040238")
-        @RequestParam(value = "orgPath", defaultValue = "", required = false)
-            String orgPath,
-
-        @ApiParam("Filters on harvestSourceUri external identifier")
-        @RequestParam(value = "harvestSourceUri", defaultValue = "", required = false)
-            String harvestSourceUri,
-
-        @ApiParam("Filters on format")
-        @RequestParam(value = "format", defaultValue = "", required = false)
-            String[] formats,
+        @ApiParam("Comma-separated list of fields in query response. If not specified, all fields are returned.")
+        @RequestParam(value = "returnFields", defaultValue = DEFAULT_RETURN_FIELDS, required = false)
+            String[] returnFields,
 
         @ApiParam("Calculate aggregations")
         @RequestParam(value = "aggregations", defaultValue = "", required = false)
-            String aggregations,
-
-        @ApiParam("The title text")
-        @RequestParam(value = "title", defaultValue = "", required = false)
-            String title,
-
-        @ApiParam("UUID of dataset referenced by the API")
-        @RequestParam(value = "datasetid", defaultValue = "", required = false)
-            String datasetId,
+            String[] aggregations,
 
         @ApiParam("Specifies the sort field, at the present the only value is \"modified\". Default is no value, and results are sorted by relevance")
         @RequestParam(value = "sortfield", defaultValue = "", required = false)
@@ -109,65 +96,28 @@ public class ApiSearchController {
         @RequestParam(value = "sortdirection", defaultValue = "", required = false)
             String sortdirection,
 
-        @ApiParam("Comma-separated list of fields in query response. If not specified, all fields are returned.")
-        @RequestParam(value = "returnFields", defaultValue = DEFAULT_RETURN_FIELDS, required = false)
-            String[] returnFields,
-
         @PageableDefault()
             Pageable pageable
     ) {
-        logger.debug("GET /apis?q={}", query);
+        logger.debug("GET /apis?{}", params);
 
-        QueryBuilder searchQuery;
-
-        if (isNotEmpty(title)) {
-            QueryBuilder titleQuery = QueryBuilders.matchPhrasePrefixQuery("title", title).analyzer("norwegian").maxExpansions(15);
-            searchQuery = QueryBuilders.boolQuery().should(titleQuery);
-        } else if (query.isEmpty()) {
-            searchQuery = QueryBuilders.matchAllQuery();
-        } else {
-            // add * if query only contains one word
-            if (!query.contains(" ")) {
-                query = query + " " + query + "*";
-            }
-            searchQuery = QueryBuilders.simpleQueryStringQuery(query);
-        }
-
-        BoolQueryBuilder composedQuery = QueryBuilders.boolQuery().must(searchQuery);
-
-        // Adding constant "should" term increases score for matching documents
-        // Elasticsearch interprets string value "true" as matching with boolean true
-        composedQuery.should(QueryUtil.createTermQuery("nationalComponent", "true").boost(2));
-
-        if (!orgPath.isEmpty()) {
-            composedQuery.filter(QueryUtil.createTermQuery("publisher.orgPath", orgPath));
-        }
-
-        if (!harvestSourceUri.isEmpty()) {
-            composedQuery.filter(QueryUtil.createTermQuery("harvestSourceUri", harvestSourceUri));
-        }
-
-        if (formats != null && formats.length > 0) {
-            composedQuery.filter(QueryUtil.createTermsQuery("formats", formats));
-        }
-
-        if (!datasetId.isEmpty()) {
-            composedQuery.filter(QueryBuilders.termQuery("datasetReferences.id", datasetId));
-        }
-
-        logger.debug("Built query:{}", composedQuery);
+        QueryBuilder searchQuery = new ApiSearchESQueryBuilder()
+            .boostNationalComponents()
+            .addParams(params)
+            .build();
 
         int from = (int) pageable.getOffset();
+        int size = pageable.getPageSize();
 
         SearchRequestBuilder searchRequest = elasticsearch.getClient()
             .prepareSearch("acat")
             .setTypes("apidocument")
-            .setQuery(composedQuery)
+            .setQuery(searchQuery)
             .setFrom(checkAndAdjustFrom(from))
-            .setSize(checkAndAdjustSize(pageable.getPageSize()))
+            .setSize(checkAndAdjustSize(size))
             .setFetchSource(returnFields, null);
 
-        if (isNotEmpty(aggregations)) {
+        if (ArrayUtils.isNotEmpty(aggregations)) {
             searchRequest = addAggregations(searchRequest, aggregations);
         }
 
@@ -208,33 +158,33 @@ public class ApiSearchController {
         return size;
     }
 
-    public SearchRequestBuilder addAggregations(SearchRequestBuilder searchBuilder, String aggregationFields) {
-        HashSet<String> selectedAggregationFields = new HashSet<>(Arrays.asList(aggregationFields.split(",")));
+    public SearchRequestBuilder addAggregations(SearchRequestBuilder searchBuilder, String[] aggregations) {
+        HashSet<String> selectedAggregationFields = new HashSet<>(Arrays.asList(aggregations));
 
         if (selectedAggregationFields.contains("formats")) {
             searchBuilder
-                .addAggregation(QueryUtil.createTermsAggregation("formats", "formats"));
+                .addAggregation(ESQueryUtil.createTermsAggregation("formats", "formats"));
         }
         if (selectedAggregationFields.contains("orgPath")) {
-            searchBuilder.addAggregation(QueryUtil.createTermsAggregation("orgPath", "publisher.orgPath"));
+            searchBuilder.addAggregation(ESQueryUtil.createTermsAggregation("orgPath", "publisher.orgPath"));
         }
         if (selectedAggregationFields.contains("firstHarvested")) {
-            searchBuilder.addAggregation(QueryUtil.createTemporalAggregation("firstHarvested", "harvest.firstHarvested"));
+            searchBuilder.addAggregation(ESQueryUtil.createTemporalAggregation("firstHarvested", "harvest.firstHarvested"));
         }
         if (selectedAggregationFields.contains("publisher")) {
-            searchBuilder.addAggregation(QueryUtil.createCardinalityAggregation("publisher", "publisher.id"));
+            searchBuilder.addAggregation(ESQueryUtil.createCardinalityAggregation("publisher", "publisher.id"));
         }
         if (selectedAggregationFields.contains("openAccess")) {
-            searchBuilder.addAggregation(QueryUtil.createTermsAggregation("openAccess", "isOpenAccess"));
+            searchBuilder.addAggregation(ESQueryUtil.createTermsAggregation("openAccess", "isOpenAccess"));
         }
         if (selectedAggregationFields.contains("openLicence")) {
-            searchBuilder.addAggregation(QueryUtil.createTermsAggregation("openLicence", "isOpenLicense"));
+            searchBuilder.addAggregation(ESQueryUtil.createTermsAggregation("openLicence", "isOpenLicense"));
         }
         if (selectedAggregationFields.contains("freeUsage")) {
-            searchBuilder.addAggregation(QueryUtil.createTermsAggregation("freeUsage", "isFree"));
+            searchBuilder.addAggregation(ESQueryUtil.createTermsAggregation("freeUsage", "isFree"));
         }
         if (selectedAggregationFields.contains("apicatalogs")) {
-            searchBuilder.addAggregation(QueryUtil.createTermsAggregation("publisher", "publisher.id"));
+            searchBuilder.addAggregation(ESQueryUtil.createTermsAggregation("publisher", "publisher.id"));
         }
 
         return searchBuilder;
