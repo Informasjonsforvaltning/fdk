@@ -15,8 +15,7 @@ export const asyncValidateDatasetInvokePatch = (
   props,
   blurredField
 ) => {
-  const { match } = props;
-  const datasetId = _.get(match, ['params', 'id']);
+  const { catalogId, datasetId } = props;
 
   const api = {
     Authorization: `Basic user:password`
@@ -89,12 +88,7 @@ export const asyncValidateDatasetInvokePatch = (
     dispatch(datasetFormPatchIsSavingAction(datasetId));
   }
 
-  return patchDataset(
-    _.get(match, ['params', 'catalogId']),
-    _.get(match, ['params', 'id']),
-    api,
-    values
-  )
+  return patchDataset(catalogId, datasetId, api, values)
     .then(response => {
       const datasetRegistration = response && response.data;
       dispatch(
