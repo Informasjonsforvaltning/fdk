@@ -39,14 +39,22 @@ const apiServiceTypeSortOrder = {
   REMOVED: 3
 };
 
-export const FormApiServiceType = ({ apiServiceTypeItems, apiServiceTypeCodeFromForm }) => (
+export const FormApiServiceType = ({
+  apiServiceTypeItems,
+  apiServiceTypeCodeFromForm
+}) => (
   <form>
     <div className="form-group">
-      <Helptext title={localization.schema.apiServiceType.helptext.apiServiceType} />
+      <Helptext
+        title={localization.schema.apiServiceType.helptext.apiServiceType}
+      />
       <Field
         name="statusCode"
         component={SelectField}
-        items={_.sortBy(apiServiceTypeItems, item => apiServiceTypeSortOrder[item.code])}
+        items={_.sortBy(
+          apiServiceTypeItems,
+          item => apiServiceTypeSortOrder[item.code]
+        )}
         valueKey="code"
         saveObject={false}
       />
@@ -74,14 +82,16 @@ export const FormApiServiceType = ({ apiServiceTypeItems, apiServiceTypeCodeFrom
           <div className="form-group">
             <Helptext
               title={
-                localization.schema.apiServiceType.helptext.deprecationInfoMessage
+                localization.schema.apiServiceType.helptext
+                  .deprecationInfoMessage
               }
             />
             <Field
               name="deprecationInfoMessage"
               component={TextAreaField}
               label={
-                localization.schema.apiServiceType.helptext.deprecationInfoMessage
+                localization.schema.apiServiceType.helptext
+                  .deprecationInfoMessage
               }
             />
           </div>
