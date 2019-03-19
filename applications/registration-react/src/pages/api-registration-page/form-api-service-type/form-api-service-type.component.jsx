@@ -45,9 +45,7 @@ export const FormApiServiceType = ({
 }) => (
   <form>
     <div className="form-group">
-      <Helptext
-        title={localization.schema.apiServiceType.helptext.apiServiceType}
-      />
+      <Helptext title={localization.schema.apiServiceType.title} />
       <Field
         name="statusCode"
         component={SelectField}
