@@ -27,9 +27,9 @@
         <at:op-code>NASJONAL</at:op-code>
         <atold:op-code>NASJONAL</atold:op-code>
         <dc:identifier>NASJONAL</dc:identifier>
-        <skos:prefLabel xml:lang="en">National Building Block</skos:prefLabel>
-        <skos:prefLabel xml:lang="nb">Nasjonal felleskomponent</skos:prefLabel>
-        <skos:prefLabel xml:lang="nn">Nasjonal felleskomponent</skos:prefLabel>
+        <skos:prefLabel xml:lang="en">Authoritativ source</skos:prefLabel>
+        <skos:prefLabel xml:lang="nb">Autoritativ kilde</skos:prefLabel>
+        <skos:prefLabel xml:lang="nn">Autoritativ kilde</skos:prefLabel>
     </skos:Concept>
 
     <skos:Concept rdf:about="http://data.brreg.no/datakatalog/provinens/bruker" at:deprecated="false">
