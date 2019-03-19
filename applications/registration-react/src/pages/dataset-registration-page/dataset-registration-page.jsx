@@ -71,8 +71,7 @@ export class RegDataset extends React.Component {
   constructor(props) {
     super(props);
 
-    const { match } = this.props;
-    const catalogId = _.get(match, ['params', 'catalogId']);
+    const { catalogId } = this.props;
 
     this.props.fetchDatasetsIfNeeded(catalogId);
     this.props.fetchHelptextsIfNeeded();
@@ -85,16 +84,20 @@ export class RegDataset extends React.Component {
   }
 
   componentWillMount() {
-    const { match } = this.props;
-    const catalogId = _.get(match, ['params', 'catalogId']);
+    const { catalogId } = this.props;
     this.props.fetchReferenceDatasetsIfNeeded(
       `/catalogs/${catalogId}/datasets`
     );
   }
 
   deleteApi() {
-    const { history, match, datasetItem, deleteDatasetItem } = this.props;
-    const catalogId = _.get(match, ['params', 'catalogId']);
+    const {
+      history,
+      match,
+      catalogId,
+      datasetItem,
+      deleteDatasetItem
+    } = this.props;
 
     const api = {
       Authorization: `Basic user:password`
@@ -141,11 +144,12 @@ export class RegDataset extends React.Component {
       referenceDatasetsItems,
       openLicenseItems,
       lastSaved,
-      match,
       isSaving,
       error,
       justPublishedOrUnPublished,
-      registrationStatus
+      registrationStatus,
+      catalogId,
+      datasetId
     } = this.props;
     const datasetURL = window.location.pathname;
     const catalogDatasetsURL = datasetURL.substring(
@@ -204,7 +208,8 @@ export class RegDataset extends React.Component {
                   <ConnectedFormTitle
                     datasetItem={datasetItem}
                     helptextItems={helptextItems}
-                    match={match}
+                    catalogId={catalogId}
+                    datasetId={datasetId}
                   />
                 </FormTemplateWithState>
 
@@ -217,7 +222,8 @@ export class RegDataset extends React.Component {
                   <ConnectedFormAccessRights
                     datasetItem={datasetItem}
                     helptextItems={helptextItems}
-                    match={match}
+                    catalogId={catalogId}
+                    datasetId={datasetId}
                   />
                 </FormTemplateWithState>
 
@@ -231,7 +237,8 @@ export class RegDataset extends React.Component {
                     datasetItem={datasetItem}
                     themesItems={themesItems}
                     helptextItems={helptextItems}
-                    match={match}
+                    catalogId={catalogId}
+                    datasetId={datasetId}
                   />
                 </FormTemplateWithState>
 
@@ -243,7 +250,8 @@ export class RegDataset extends React.Component {
                   <ConnectedFormType
                     datasetItem={datasetItem}
                     helptextItems={helptextItems}
-                    match={match}
+                    catalogId={catalogId}
+                    datasetId={datasetId}
                   />
                 </FormTemplateWithState>
 
@@ -255,7 +263,8 @@ export class RegDataset extends React.Component {
                   <ConnectedFormConcept
                     datasetItem={datasetItem}
                     helptextItems={helptextItems}
-                    match={match}
+                    catalogId={catalogId}
+                    datasetId={datasetId}
                   />
                 </FormTemplateWithState>
 
@@ -267,7 +276,8 @@ export class RegDataset extends React.Component {
                   <ConnectedFormSpatial
                     datasetItem={datasetItem}
                     helptextItems={helptextItems}
-                    match={match}
+                    catalogId={catalogId}
+                    datasetId={datasetId}
                   />
                 </FormTemplateWithState>
 
@@ -281,7 +291,8 @@ export class RegDataset extends React.Component {
                     provenanceItems={provenanceItems}
                     frequencyItems={frequencyItems}
                     helptextItems={helptextItems}
-                    match={match}
+                    catalogId={catalogId}
+                    datasetId={datasetId}
                   />
                 </FormTemplateWithState>
 
@@ -293,7 +304,8 @@ export class RegDataset extends React.Component {
                   <ConnectedFormContents
                     datasetItem={datasetItem}
                     helptextItems={helptextItems}
-                    match={match}
+                    catalogId={catalogId}
+                    datasetId={datasetId}
                   />
                 </FormTemplateWithState>
 
@@ -305,7 +317,8 @@ export class RegDataset extends React.Component {
                   <ConnectedFormInformationModel
                     datasetItem={datasetItem}
                     helptextItems={helptextItems}
-                    match={match}
+                    catalogId={catalogId}
+                    datasetId={datasetId}
                   />
                 </FormTemplateWithState>
 
@@ -318,7 +331,8 @@ export class RegDataset extends React.Component {
                     referenceTypesItems={referenceTypesItems}
                     referenceDatasetsItems={referenceDatasetsItems}
                     helptextItems={helptextItems}
-                    match={match}
+                    catalogId={catalogId}
+                    datasetId={datasetId}
                   />
                 </FormTemplateWithState>
 
@@ -330,7 +344,8 @@ export class RegDataset extends React.Component {
                   <ConnectedFormContactPoint
                     datasetItem={datasetItem}
                     helptextItems={helptextItems}
-                    match={match}
+                    catalogId={catalogId}
+                    datasetId={datasetId}
                   />
                 </FormTemplateWithState>
 
@@ -341,7 +356,8 @@ export class RegDataset extends React.Component {
                   <ConnectedFormDistributionAPI
                     datasetItem={datasetItem}
                     helptextItems={helptextItems}
-                    match={match}
+                    catalogId={catalogId}
+                    datasetId={datasetId}
                   />
                 </FormTemplateWithState>
 
@@ -362,7 +378,8 @@ export class RegDataset extends React.Component {
                     datasetItem={datasetItem}
                     openLicenseItems={openLicenseItems}
                     helptextItems={helptextItems}
-                    match={match}
+                    catalogId={catalogId}
+                    datasetId={datasetId}
                   />
                 </FormTemplateWithState>
 
@@ -382,7 +399,8 @@ export class RegDataset extends React.Component {
                     datasetItem={datasetItem}
                     openLicenseItems={openLicenseItems}
                     helptextItems={helptextItems}
-                    match={match}
+                    catalogId={catalogId}
+                    datasetId={datasetId}
                   />
                 </FormTemplateWithState>
 
@@ -414,7 +432,8 @@ export class RegDataset extends React.Component {
                         'registrationStatus',
                         ''
                       )}
-                      match={match}
+                      catalogId={catalogId}
+                      datasetId={datasetId}
                     />
                   }
                 />
@@ -429,6 +448,8 @@ export class RegDataset extends React.Component {
 
 RegDataset.defaultProps = {
   match: null,
+  catalogId: null,
+  datasetId: null,
   helptextItems: null,
   themesItems: null,
   provenanceItems: null,
@@ -469,6 +490,8 @@ RegDataset.defaultProps = {
 
 RegDataset.propTypes = {
   match: PropTypes.object,
+  catalogId: PropTypes.string,
+  datasetId: PropTypes.string,
   helptextItems: PropTypes.object,
   themesItems: PropTypes.array,
   provenanceItems: PropTypes.object,
