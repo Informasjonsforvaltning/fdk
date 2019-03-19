@@ -43,26 +43,24 @@ public class ApiSearchController {
     public static final long DAY_IN_MS = 1000 * 3600 * 24;
     public static final int MAX_AGGREGATIONS = 10000;
     public static final long MAX_PRECISION = 40000;
-    public static final String[] DEFAULT_RETURN_FIELDS = {
-        "id",
-        "title",
-        "titleFormatted",
-        "description",
-        "descriptionFormatted",
-        "formats",
-        "publisher.id",
-        "publisher.orgPath",
-        "publisher.name",
-        "publisher.prefLabel.*",
-        "nationalComponent",
-        "isOpenAccess",
-        "isOpenLicense",
-        "isFree",
-        "statusCode",
-        "deprecationInfoExpirationDate",
-        "deprecationInfoReplacedWithUrl"
-    };
-
+    public static final String DEFAULT_RETURN_FIELDS =
+        "id," +
+            "title," +
+            "titleFormatted," +
+            "description," +
+            "descriptionFormatted," +
+            "formats," +
+            "publisher.id," +
+            "publisher.orgPath," +
+            "publisher.name," +
+            "publisher.prefLabel.*," +
+            "nationalComponent," +
+            "isOpenAccess," +
+            "isOpenLicense," +
+            "isFree," +
+            "statusCode," +
+            "deprecationInfoExpirationDate," +
+            "deprecationInfoReplacedWithUrl";
 
     private static final Logger logger = LoggerFactory.getLogger(ApiSearchController.class);
     private ElasticsearchService elasticsearch;
@@ -115,8 +113,8 @@ public class ApiSearchController {
             String sortdirection,
 
         @ApiParam("Comma-separated list of fields in query response. If not specified, all fields are returned.")
-        @RequestParam(value = "returnFields", defaultValue = "", required = false)
-            String returnFields,
+        @RequestParam(value = "returnFields", defaultValue = DEFAULT_RETURN_FIELDS, required = false)
+            String[] returnFields,
 
         @PageableDefault()
             Pageable pageable
@@ -162,15 +160,6 @@ public class ApiSearchController {
 
         logger.debug("Built query:{}", composedQuery);
 
-        String[] returnFieldsArray;
-
-        if (!returnFields.isEmpty()) {
-            returnFieldsArray = returnFields.split(",");
-        } else {
-            returnFieldsArray = DEFAULT_RETURN_FIELDS;
-        }
-
-
         int from = (int) pageable.getOffset();
 
         SearchRequestBuilder searchRequest = elasticsearch.getClient()
@@ -179,7 +168,7 @@ public class ApiSearchController {
             .setQuery(composedQuery)
             .setFrom(checkAndAdjustFrom(from))
             .setSize(checkAndAdjustSize(pageable.getPageSize()))
-            .setFetchSource(returnFieldsArray, null);
+            .setFetchSource(returnFields, null);
 
         if (isNotEmpty(aggregations)) {
             searchRequest = addAggregations(searchRequest, aggregations);
