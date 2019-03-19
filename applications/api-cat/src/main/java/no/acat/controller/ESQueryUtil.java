@@ -13,7 +13,7 @@ import java.util.Date;
 
 import static no.acat.controller.Common.MISSING;
 
-class QueryUtil {
+class ESQueryUtil {
     static QueryBuilder createTermQuery(String term, String value) {
         return value.equals(MISSING) ?
             QueryBuilders.boolQuery().mustNot(QueryBuilders.existsQuery(term)) :
@@ -39,6 +39,10 @@ class QueryUtil {
         return QueryBuilders.rangeQuery(dateField).from(now - days * DAY_IN_MS).to(now).format("epoch_millis");
     }
 
+    static QueryBuilder isNationalComponentQuery() {
+        return QueryBuilders.termQuery("nationalComponent", "true");
+    }
+
     static AggregationBuilder createTermsAggregation(String aggregationName, String field) {
         return AggregationBuilders
             .terms(aggregationName)
@@ -49,6 +53,16 @@ class QueryUtil {
     }
 
     static AggregationBuilder createCardinalityAggregation(String aggregationName, String field) {
+         /*
+            https://www.elastic.co/guide/en/elasticsearch/reference/5.5/search-aggregations-metrics-cardinality-aggregation.html#search-aggregations-metrics-cardinality-aggregation
+
+            The precision_threshold option is specific to the current internal implementation of the cardinality agg, which may change in the future
+
+
+
+The precision_threshold options allows to trade memory for accuracy, and defines a unique count below which counts are expected to be close to accurate. Above this value, counts might become a bit more fuzzy. The maximum supported value is 40000, thresholds above this number will have the same effect as a threshold of 40000. The default values is 3000.
+             */
+
         final int MAX_PRECISION = 40000;
         return AggregationBuilders.cardinality(aggregationName)
             .field(field)
@@ -58,8 +72,8 @@ class QueryUtil {
     static AggregationBuilder createTemporalAggregation(String name, String dateField) {
 
         return AggregationBuilders.filters(name,
-            new FiltersAggregator.KeyedFilter("last7days", QueryUtil.createRangeQueryFromXdaysToNow(7, dateField)),
-            new FiltersAggregator.KeyedFilter("last30days", QueryUtil.createRangeQueryFromXdaysToNow(30, dateField)),
-            new FiltersAggregator.KeyedFilter("last365days", QueryUtil.createRangeQueryFromXdaysToNow(365, dateField)));
+            new FiltersAggregator.KeyedFilter("last7days", ESQueryUtil.createRangeQueryFromXdaysToNow(7, dateField)),
+            new FiltersAggregator.KeyedFilter("last30days", ESQueryUtil.createRangeQueryFromXdaysToNow(30, dateField)),
+            new FiltersAggregator.KeyedFilter("last365days", ESQueryUtil.createRangeQueryFromXdaysToNow(365, dateField)));
     }
 }
