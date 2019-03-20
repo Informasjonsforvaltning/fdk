@@ -14,14 +14,9 @@ import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.index.query.RangeQueryBuilder;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.aggregations.Aggregation;
-import org.elasticsearch.search.aggregations.AggregationBuilder;
-import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.bucket.MultiBucketsAggregation;
-import org.elasticsearch.search.aggregations.bucket.filters.FiltersAggregator;
-import org.elasticsearch.search.aggregations.bucket.terms.Terms;
 import org.elasticsearch.search.aggregations.metrics.cardinality.InternalCardinality;
 import org.elasticsearch.search.sort.SortBuilder;
 import org.elasticsearch.search.sort.SortBuilders;
@@ -41,10 +36,6 @@ import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 @RestController
 @RequestMapping(value = "/apis")
 public class ApiSearchController {
-    public static final String MISSING = "MISSING";
-    public static final long DAY_IN_MS = 1000 * 3600 * 24;
-    public static final int MAX_AGGREGATIONS = 10000;
-    public static final long MAX_PRECISION = 40000;
     public static final String DEFAULT_RETURN_FIELDS =
         "id," +
             "title," +
@@ -76,11 +67,11 @@ public class ApiSearchController {
 
     @ApiOperation(value = "Queries the api catalog for api specifications",
         notes = "So far only simple queries is supported", response = QueryResponse.class)
-    @RequestMapping(value = "", method = RequestMethod.GET, produces = "application/json")
     @ApiImplicitParams({
         @ApiImplicitParam(name = "page", dataType = "string", paramType = "query", defaultValue = "0", value = "Page index. First page is 0"),
         @ApiImplicitParam(name = "size", dataType = "string", paramType = "query", defaultValue = "10", value = "Page size")
     })
+    @RequestMapping(value = "", method = RequestMethod.GET, produces = "application/json")
     public QueryResponse search(
         @ApiParam("the query string")
         @RequestParam(value = "q", defaultValue = "", required = false)
@@ -295,54 +286,5 @@ public class ApiSearchController {
             }
             queryResponse.getAggregations().put(aggregationName, outputAggregation);
         });
-    }
-
-    static class QueryUtil {
-        static QueryBuilder createTermQuery(String term, String value) {
-            return value.equals(MISSING) ?
-                QueryBuilders.boolQuery().mustNot(QueryBuilders.existsQuery(term)) :
-                QueryBuilders.termQuery(term, value);
-        }
-
-        static QueryBuilder createTermsQuery(String term, String[] values) {
-            BoolQueryBuilder composedQuery = QueryBuilders.boolQuery();
-            for (String value : values) {
-                if (value.equals(MISSING)) {
-                    composedQuery.filter(QueryBuilders.boolQuery().mustNot(QueryBuilders.existsQuery(term)));
-                } else {
-                    composedQuery.filter(QueryBuilders.termQuery(term, value));
-                }
-            }
-            return composedQuery;
-        }
-
-        static RangeQueryBuilder createRangeQueryFromXdaysToNow(int days, String dateField) {
-            long now = new Date().getTime();
-
-            return QueryBuilders.rangeQuery(dateField).from(now - days * DAY_IN_MS).to(now).format("epoch_millis");
-        }
-
-        static AggregationBuilder createTermsAggregation(String aggregationName, String field) {
-            return AggregationBuilders
-                .terms(aggregationName)
-                .missing(MISSING)
-                .field(field)
-                .size(MAX_AGGREGATIONS)
-                .order(Terms.Order.count(false));
-        }
-
-        static AggregationBuilder createCardinalityAggregation(String aggregationName, String field) {
-            return AggregationBuilders.cardinality(aggregationName)
-                .field(field)
-                .precisionThreshold(MAX_PRECISION);
-        }
-
-        static AggregationBuilder createTemporalAggregation(String name, String dateField) {
-
-            return AggregationBuilders.filters(name,
-                new FiltersAggregator.KeyedFilter("last7days", QueryUtil.createRangeQueryFromXdaysToNow(7, dateField)),
-                new FiltersAggregator.KeyedFilter("last30days", QueryUtil.createRangeQueryFromXdaysToNow(30, dateField)),
-                new FiltersAggregator.KeyedFilter("last365days", QueryUtil.createRangeQueryFromXdaysToNow(365, dateField)));
-        }
     }
 }
