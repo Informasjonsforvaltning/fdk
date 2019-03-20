@@ -1,0 +1,42 @@
+@prefix schema: <http://schema.org/> .
+@prefix iso:   <http://www.w3.org/ns/dqvNS#> .
+@prefix adms:  <http://www.w3.org/ns/adms#> .
+@prefix dcatapi: <http://dcat.no/dcatapi/> .
+@prefix dqv:   <http://www.w3.org/ns/dqvNS#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+@prefix vcard: <http://www.w3.org/2006/vcard/ns#> .
+@prefix oa:    <http://www.w3.org/ns/prov#> .
+@prefix dct:   <http://purl.org/dc/terms/> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix dcatno: <http://difi.no/dcatno#> .
+@prefix dcat:  <http://www.w3.org/ns/dcat#> .
+@prefix foaf:  <http://xmlns.com/foaf/0.1/> .
+
+<https://data.brreg.no/enhetsregisteret/api/enheter/910888447>
+        a               foaf:Agent ;
+        dct:identifier  "910888447" ;
+        foaf:name       "REINLI OG BERLEVÅG REGNSKAP" .
+
+<http://brreg.no/catalogs/910888447/datasets/edbc9484-7a65-498b-90b4-4c1fe459c7cc>
+        a                  dcat:Dataset ;
+        dct:accessRights   <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+        dct:description    "test"@nb ;
+        dct:publisher      <https://data.brreg.no/enhetsregisteret/api/enheter/910888447> ;
+        dct:title          "Bjørnes test"@nb ;
+        dcat:distribution  [ a                dcat:Distribution ;
+                             dct:description  "En vanlig distribusjon"@nb ;
+                             dct:format       "application/json" ;
+                             dct:license      [ a           dct:LicenseDocument , skos:Concept ;
+                                                dct:source  "http://data.norge.no/nlod/"
+                                              ] ;
+                             dct:type         "Nedlastbar fil" ;
+                             dcat:accessURL   <http://www.brreg.no>
+                           ] ;
+        dcat:theme         <http://publications.europa.eu/resource/authority/data-theme/AGRI> .
+
+<http://registration-api:8080/catalogs/910888447>
+        a              dcat:Catalog ;
+        dct:publisher  <https://data.brreg.no/enhetsregisteret/api/enheter/910888447> ;
+        dct:title      "Datakatalog for REINLI OG BERLEVÅG REGNSKAP"@nb ;
+        dcat:dataset   <http://brreg.no/catalogs/910888447/datasets/edbc9484-7a65-498b-90b4-4c1fe459c7cc> .

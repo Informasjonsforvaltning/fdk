@@ -462,8 +462,8 @@ public class DcatBuilder {
                                 disRes.getProperty(DCTerms.license) != null ||
                                 disRes.getProperty(DCTerms.conformsTo) != null ||
                                 disRes.getProperty(FOAF.page) != null ||
-                                disRes.getProperty(DCTerms.format) != null) {
-
+                                disRes.getProperty(DCTerms.format) != null ||
+                                disRes.getProperty(DCATapi.accessService) != null) {
                             disRes.addProperty(RDF.type, DCAT.Distribution);
                             dataset.addProperty(property, disRes);
                         } else {
