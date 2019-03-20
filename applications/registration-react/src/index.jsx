@@ -5,14 +5,14 @@ import { Provider } from 'react-redux';
 
 import { configureStore } from './redux/configureStore';
 import { ConnectedFeatureToggleProvider } from './components/connected-feature-toggle-provider';
-import { App } from './components/app/app';
+import { ConnectedApp } from './components/app/connected-app';
 
 const store = configureStore();
 
 ReactDOM.render(
   <Provider store={store}>
     <ConnectedFeatureToggleProvider>
-      <App />
+      <ConnectedApp />
     </ConnectedFeatureToggleProvider>
   </Provider>,
   document.getElementById('root')
