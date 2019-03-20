@@ -6,6 +6,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -43,6 +45,7 @@ public class AcatApiApplication {
             .apis(Predicates.not(RequestHandlerSelectors.basePackage("org.springframework.boot")))
             .paths(PathSelectors.any())
             .build()
+            .ignoredParameterTypes(Pageable.class, PagedResourcesAssembler.class)
             .apiInfo(apiInfo());
 
     }

@@ -1,6 +1,8 @@
 package no.acat.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import no.acat.model.ApiDocument;
@@ -75,6 +77,10 @@ public class ApiSearchController {
     @ApiOperation(value = "Queries the api catalog for api specifications",
         notes = "So far only simple queries is supported", response = QueryResponse.class)
     @RequestMapping(value = "", method = RequestMethod.GET, produces = "application/json")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "page", dataType = "string", paramType = "query", defaultValue = "0", value = "Page index. First page is 0"),
+        @ApiImplicitParam(name = "size", dataType = "string", paramType = "query", defaultValue = "10", value = "Page size")
+    })
     public QueryResponse search(
         @ApiParam("the query string")
         @RequestParam(value = "q", defaultValue = "", required = false)
