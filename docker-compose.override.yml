@@ -65,6 +65,7 @@ services:
     environment:
       - REGISTRATION_LANGUAGE=${REGISTRATION_LANGUAGE}
       - NODE_ENV=${NODE_ENV}
+      - SEARCH_HOSTNAME=${SEARCH_HOSTNAME}
 
 ### java modules
   api-cat:

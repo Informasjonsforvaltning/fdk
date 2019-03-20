@@ -25,6 +25,14 @@ module.exports = {
     const port = Number(process.env.PORT || 4300);
     app.set('port', port);
 
+    app.use('/config.json', (req, res) =>
+      res.json({
+        registrationLanguage: process.env.REGISTRATION_LANGUAGE || 'nb',
+        searchHostname:
+          process.env.SEARCH_HOSTNAME || 'fellesdatakatalog.brreg.no'
+      })
+    );
+
     if (!env.production) {
       const compiler = webpack(config);
 
