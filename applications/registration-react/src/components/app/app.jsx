@@ -1,8 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import _ from 'lodash';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import localization from '../../lib/localization';
-import { config } from '../../config';
 import ProtectedRoute from '../../app-protected-route/app-protected-route.component';
 import { ConnectedCatalogsPage } from '../../pages/catalogs-page/connected-catalogs-page';
 import { ConnectedDatasetsListPage } from '../../pages/dataset-list-page/connected-dataset-list-page';
@@ -55,7 +56,20 @@ const routes = (
 export class App extends React.Component {
   constructor(props) {
     super(props);
-    localization.setLanguage(config.registrationLanguage);
+    const { loadConfig } = this.props;
+    loadConfig();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { registrationLanguage } = this.props;
+    const newLanguage = _.get(
+      nextProps,
+      'registrationLanguage',
+      registrationLanguage
+    );
+    if (registrationLanguage !== newLanguage) {
+      localization.setLanguage(newLanguage || registrationLanguage);
+    }
   }
 
   render() {
@@ -71,3 +85,12 @@ export class App extends React.Component {
     );
   }
 }
+
+App.defaultProps = {
+  loadConfig: _.noop
+};
+
+App.propTypes = {
+  registrationLanguage: PropTypes.string.isRequired,
+  loadConfig: PropTypes.func
+};
