@@ -1,11 +1,4 @@
-/*
- GENERAL
- */
-import { config } from '../config';
-
-export const textType = {
-  [config.registrationLanguage]: ''
-};
+export const textType = {};
 
 export const uriType = {
   uri: null
@@ -25,9 +18,6 @@ export const languageType = {
 export const emptyArray = [''];
 
 export const themeType = {
-  title: {
-    [config.registrationLanguage]: ''
-  },
   uri: ''
 };
 
