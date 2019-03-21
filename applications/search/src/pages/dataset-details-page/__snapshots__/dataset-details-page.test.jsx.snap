@@ -24,8 +24,8 @@ exports[`should render DatasetDetailsPage correctly with datasetItem 1`] = `
                 "prefLabel": "Use of dataset",
               },
               Object {
-                "name": "Distributions",
-                "prefLabel": "Distributions",
+                "name": "Other distributions",
+                "prefLabel": "Other distributions",
               },
               Object {
                 "name": "Keyword",
@@ -506,7 +506,7 @@ exports[`should render DatasetDetailsPage correctly with datasetItem 1`] = `
         >
           <DistributionHeading
             itemsCount={7}
-            title="Distributions"
+            title="Other distributions"
           />
           <DatasetDistribution
             accessUrl={

@@ -154,7 +154,8 @@
     "conformsTo": "Conforms to",
     "informationModel": "Information model",
     "informationModelDefaultText": "Information model",
-    "distributions": "Distributions",
+    "distributions": "Other distributions",
+    "distributionsAPI": "API distributions ({0})",
     "distribution": {
       "title": "Distribution",
       "format": "Format",

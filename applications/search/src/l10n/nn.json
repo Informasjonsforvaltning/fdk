@@ -154,7 +154,8 @@
     "conformsTo": "Innhaldsstandard",
     "informationModel": "Informasjonsmodell",
     "informationModelDefaultText": "Informasjonsmodell",
-    "distributions": "Distribusjonar",
+    "distributions": "Andre distribusjonar",
+    "distributionsAPI": "API-distribusjonar ({0})",
     "distribution": {
       "title": "Distribusjon",
       "format": "Tilgjengelege format",
