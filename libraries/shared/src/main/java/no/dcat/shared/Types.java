@@ -13,6 +13,7 @@ public enum Types {
     openlicenses("rdf/open-licenses-skos.rdf", "openlicenses"),
     distributiontype("rdf/distribution-type-skos.rdf", "distributiontype"),
     apistatus("rdf/api-status-skos.ttl", "apistatus"),
+    apiservicetype("rdf/api-service-type-skos.ttl", "apiservicetype"),
 
     location(null, "location"),
     subject(null, "subject");
