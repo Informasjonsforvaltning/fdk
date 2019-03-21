@@ -257,6 +257,7 @@
     "catalogs": "Catalogs",
     "datasetTab": "Dataset report",
     "apiTab": "API report",
+    "conceptTab": "Concept report",
     "datasets": "datasets",
     "apis":"APIs",
     "concepts":"concepts",
@@ -289,7 +290,12 @@
     "distributionFormat": "Distribution formats",
     "countAPIcatalogsLabel": "organizations with API",
     "apisFrom": "API catalogs from",
-    "apiCatalog": "API catalogs"
+    "apiCatalog": "API catalogs",
+    "conceptsRelatedToDataset": "concepts are related to datasets",
+    "conceptMostUsed": "Most used concepts",
+    "countConceptsCatalogsLabel": "organizations with concepts",
+    "conceptsFrom": "Concept catalogs from",
+    "conceptsCatalog": "Concept catalogs"
   },
   "registration": {
     "title": "Registration (only in Norwegian)"
