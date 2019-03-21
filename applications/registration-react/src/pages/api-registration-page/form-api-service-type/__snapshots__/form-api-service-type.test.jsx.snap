@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render FormApiServiceType, { renderLandingpage  correctly 1`] = `
+<form>
+  <div
+    className="form-group"
+  >
+    <withStateHandlers(Helptext)
+      title="Tjenestetype"
+    />
+    <Field
+      component={[Function]}
+      items={Array []}
+      name="serviceType"
+      saveObject={false}
+      valueKey="code"
+    />
+  </div>
+</form>
+`;

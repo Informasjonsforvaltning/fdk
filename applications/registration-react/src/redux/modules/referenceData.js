@@ -1,80 +1,3 @@
-/*
-import _ from 'lodash';
-import { fetchActions } from '../fetchActions';
-
-export const APISTATUS_REQUEST = 'APISTATUS_REQUEST';
-export const APISTATUS_SUCCESS = 'APISTATUS_SUCCESS';
-export const APISTATUS_FAILURE = 'APISTATUS_FAILURE';
-
-function shouldFetch(metaState) {
-  const threshold = 60 * 1000; // seconds
-
-  return (
-    !metaState ||
-    (!metaState.isFetching &&
-      (metaState.lastFetch || 0) < Date.now() - threshold)
-  );
-}
-
-export function fetchApiStatusIfNeededAction() {
-  return (dispatch, getState) =>
-    shouldFetch(_.get(getState(), ['apiStatus', 'meta'])) &&
-    dispatch(
-      fetchActions('/reference-data/codes/apistatus', [
-        APISTATUS_REQUEST,
-        APISTATUS_SUCCESS,
-        APISTATUS_FAILURE
-      ])
-    );
-}
-
-const initialState = {};
-
-export function apiStatus(state = initialState, action) {
-  switch (action.type) {
-    case APISTATUS_REQUEST: {
-      return {
-        ...state,
-        meta: {
-          isFetching: true,
-          lastFetch: null
-        }
-      };
-    }
-    case APISTATUS_SUCCESS: {
-      const apiStatusItems = action.payload.map(item => ({
-        uri: item.uri,
-        code: item.code,
-        prefLabel_no: item.prefLabel.nb,
-        prefLabel_nb: item.prefLabel.nb
-      }));
-      return {
-        ...state,
-        isFetchingApiStatus: false,
-        apiStatusItems,
-        meta: {
-          isFetching: false,
-          lastFetch: Date.now()
-        }
-      };
-    }
-    case APISTATUS_FAILURE: {
-      return {
-        ...state,
-        isFetchingApiStatus: false,
-        apiStatusItems: null,
-        meta: {
-          isFetching: false,
-          lastFetch: null
-        }
-      };
-    }
-    default:
-      return state;
-  }
-}
-*/
-
 import _ from 'lodash';
 import { fetchActions } from '../fetchActions';
 
@@ -82,6 +5,7 @@ export const REFERENCEEDATA_REQUEST = 'REFERENCEEDATA_REQUEST';
 export const REFERENCEEDATA_SUCCESS = 'REFERENCEEDATA_SUCCESS';
 export const REFERENCEEDATA_FAILURE = 'REFERENCEEDATA_FAILURE';
 export const REFERENCEDATA_APISTATUS = 'apistatus';
+export const REFERENCEDATA_APISERVICETYPE = 'apiservicetype';
 
 function shouldFetch(metaState) {
   const threshold = 60 * 1000; // seconds

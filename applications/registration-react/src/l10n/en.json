@@ -300,6 +300,10 @@
         "availability": "Availability"
       }
     },
+    "apiServiceType": {
+      "title": "Service type",
+      "apiServiceTypeStandard": "Service type (standard)",
+    },
     "apiStatus": {
       "title": "API status",
       "helptext": {
