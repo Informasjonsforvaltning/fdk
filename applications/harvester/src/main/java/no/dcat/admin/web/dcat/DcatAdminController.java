@@ -27,7 +27,7 @@ import java.util.Optional;
 @CrossOrigin(origins = "*")
 public class DcatAdminController {
 
-    //ttttttxfgdffdfdf
+    //ttttttxfgdffdfdfsfsdfsdf
 
     @Autowired
     private FusekiSettings fusekiSettings;
