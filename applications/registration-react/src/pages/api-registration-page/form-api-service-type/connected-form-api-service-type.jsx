@@ -19,19 +19,22 @@ const mapStateToProps = (state, ownProps) => {
 const selector = formValueSelector('apiServiceType');
 
 const mapStateToProps = (state, ownProps) => {
-  const { apiItem } = ownProps;
+  const { apiServiceTypeItems } = ownProps;
   const apiServiceTypeCodeFromForm = selector(state, 'statusCode');
   return {
     syncErrors: getFormSyncErrors('apiServiceType')(state.form),
     initialValues: {
-      statusCode: _.get(apiItem, 'statusCode'),
+      statusCode: _.get(apiServiceTypeItems, 'statusCode'),
       deprecationInfoExpirationDate: _.get(
-        apiItem,
+        apiServiceTypeItems,
         'deprecationInfoExpirationDate'
       ),
-      deprecationInfoMessage: _.get(apiItem, 'deprecationInfoMessage'),
+      deprecationInfoMessage: _.get(
+        apiServiceTypeItems,
+        'deprecationInfoMessage'
+      ),
       deprecationInfoReplacedWithUrl: _.get(
-        apiItem,
+        apiServiceTypeItems,
         'deprecationInfoReplacedWithUrl'
       )
     },
