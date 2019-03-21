@@ -255,6 +255,7 @@
     "typeToSearch": "Skriv for å søke",
     "catalogs": "Kataloger",
     "datasetTab": "Rapport for datasett",
+    "apiTab": "Rapport for API-er",
     "datasets":"datasett",
     "apis":"API-er",
     "concepts":"begreper",
@@ -274,10 +275,20 @@
       "typeFeed": "feeds",
       "national": "autoritative kilder",
       "withConcepts": "Datasett som benytter begrep",
-      "withoutConcepts": "Datasett som ikke benytter begrep"
+      "withoutConcepts": "Datasett som ikke benytter begrep",
+      "apiOpenForAll": "API-er er åpne for alle",
+      "apiNotOpenForAll": "API-er er ikke åpne for alle",
+      "apiOpenLicense": "API-er har åpen lisens",
+      "apiNotOpenLicense": "API-er har ikke åpen lisens",
+      "apiFreeUsage": "API-er er gratis å bruke",
+      "apiNotFreeUsage": "API-er er ikke gratis å bruke"
     },
     "countCatalogsLabel": "virksomheter har datasett i Felles datakatalog",
-    "catalogsFrom": "Datasettkataloger fra"
+    "catalogsFrom": "Datasettkataloger fra",
+    "distributionFormat": "Format på distribusjoner",
+    "countAPIcatalogsLabel": "virksomheter har API-er i Felles datakatalog",
+    "apisFrom": "Virksomhetens API-kataloger",
+    "apiCatalog": "API-kataloger"
   },
   "registration": {
     "title": "Kom i gang med registrering"

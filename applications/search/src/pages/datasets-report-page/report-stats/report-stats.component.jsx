@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import localization from '../../../lib/localization';
 import { getParamFromLocation } from '../../../lib/addOrReplaceUrlParam';
 import { DatasetStats } from './dataset-stats/dataset-stats.component';
+import { APIStats } from './api-stats/api-stats.component';
 import { Tabs } from '../../../components/tabs/tabs.component';
 import './report-stats.scss';
 
@@ -93,6 +94,17 @@ export const ReportStats = props => {
                 body: (
                   <DatasetStats
                     stats={datasetStats}
+                    orgPath={orgPath}
+                    catalogs={catalogs}
+                    name={name}
+                  />
+                )
+              },
+              {
+                title: localization.report.apiTab,
+                body: (
+                  <APIStats
+                    stats={apiStats}
                     orgPath={orgPath}
                     catalogs={catalogs}
                     name={name}
