@@ -21,9 +21,9 @@ export default {
       uri: 'http://data.brreg.no/datakatalog/provinens/nasjonal',
       code: 'NASJONAL',
       prefLabel: {
-        en: 'National Building Block',
-        nb: 'Nasjonal felleskomponent',
-        nn: 'Nasjonal felleskomponent'
+        en: 'Authoritativ source',
+        nb: 'Autoritativ kilde',
+        nn: 'Autoritativ kilde'
       }
     },
     TREDJEPART: {
