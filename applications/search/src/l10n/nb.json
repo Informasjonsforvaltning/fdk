@@ -256,6 +256,7 @@
     "typeToSearch": "Skriv for å søke",
     "catalogs": "Kataloger",
     "datasetTab": "Rapport for datasett",
+    "conceptTab": "Rapport for begreper",
     "apiTab": "Rapport for API-er",
     "datasets":"datasett",
     "apis":"API-er",
@@ -289,7 +290,12 @@
     "distributionFormat": "Format på distribusjoner",
     "countAPIcatalogsLabel": "virksomheter har API-er i Felles datakatalog",
     "apisFrom": "Virksomhetens API-kataloger",
-    "apiCatalog": "API-kataloger"
+    "apiCatalog": "API-kataloger",
+    "conceptsRelatedToDataset": "begrep er knyttet til datasett",
+    "conceptMostUsed": "Mest brukte begrep",
+    "countConceptsCatalogsLabel": "virksomheter har begreper i Felles datakatalog",
+    "conceptsFrom": "Virksomhetens begrepskataloger",
+    "conceptsCatalog": "Begrepskataloger"
   },
   "registration": {
     "title": "Kom i gang med registrering"

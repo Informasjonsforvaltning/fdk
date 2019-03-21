@@ -17,11 +17,12 @@ function getFromBucketArray(data, aggregation, key) {
 export function extractStats(data) {
   return {
     total: _.get(data, 'page.totalElements', 0),
-    newLastWeek: getFromBucketArray(data, 'firstHarvested', 'last7days')
+    newLastWeek: getFromBucketArray(data, 'firstHarvested', 'last7days'),
+    publisher: _.get(data, ['aggregations', 'publisher', 'buckets'])
   };
 }
 
-const statsAggregations = `firstHarvested`;
+const statsAggregations = `firstHarvested,publisher`;
 
 export const statsUrl = query =>
   `${conceptsUrlBase}${qs.stringify(

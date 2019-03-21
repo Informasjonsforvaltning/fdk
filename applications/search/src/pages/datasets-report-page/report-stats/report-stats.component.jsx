@@ -7,6 +7,7 @@ import localization from '../../../lib/localization';
 import { getParamFromLocation } from '../../../lib/addOrReplaceUrlParam';
 import { DatasetStats } from './dataset-stats/dataset-stats.component';
 import { APIStats } from './api-stats/api-stats.component';
+import { ConceptStats } from './concept-stats/concept-stats.component';
 import { Tabs } from '../../../components/tabs/tabs.component';
 import './report-stats.scss';
 
@@ -17,7 +18,9 @@ export const ReportStats = props => {
     conceptStats,
     entityName,
     catalogs,
-    fetchCatalogsIfNeeded
+    fetchCatalogsIfNeeded,
+    publishers,
+    mostUsedConcepts
   } = props;
   const orgPath = getParamFromLocation(window.location, 'orgPath');
 
@@ -141,6 +144,16 @@ export const ReportStats = props => {
                     name={name}
                   />
                 )
+              },
+              {
+                title: localization.report.conceptTab,
+                body: (
+                  <ConceptStats
+                    stats={conceptStats}
+                    publishers={publishers}
+                    mostUsedConcepts={mostUsedConcepts}
+                  />
+                )
               }
             ]}
           />
@@ -153,7 +166,8 @@ export const ReportStats = props => {
 ReportStats.defaultProps = {
   fetchCatalogsIfNeeded: _.noop,
   entityName: null,
-  catalogs: null
+  catalogs: null,
+  publishers: null
 };
 
 ReportStats.propTypes = {
@@ -162,5 +176,6 @@ ReportStats.propTypes = {
   apiStats: PropTypes.object.isRequired,
   conceptStats: PropTypes.object.isRequired,
   entityName: PropTypes.string,
-  catalogs: PropTypes.object
+  catalogs: PropTypes.object,
+  publishers: PropTypes.object
 };

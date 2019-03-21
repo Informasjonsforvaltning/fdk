@@ -257,6 +257,7 @@
     "catalogs": "Katalogar",
     "datasetTab": "Rapport for datasett",
     "apiTab": "Rapport for API",
+    "conceptTab": "Rapport for omgrep",
     "datasets":"datasett",
     "apis":"API",
     "concepts":"omgrep",
@@ -287,9 +288,14 @@
     "countCatalogsLabel": "verksemder har datasett i Felles datakatalog",
     "catalogsFrom": "Datasettkatalogar frå",
     "distributionFormat": "Format på distribusjonar",
-    "countAPIcatalogsLabel": "verksember har API i Felles datakatalog",
+    "countAPIcatalogsLabel": "verksemder har API i Felles datakatalog",
     "apisFrom": "Verksemdens API-kataloger",
-    "apiCatalog": "API-kataloger"
+    "apiCatalog": "API-kataloger",
+    "conceptsRelatedToDataset": "omgrep er knytta til datasett",
+    "conceptMostUsed": "Mest brukte omgrep",
+    "countConceptsCatalogsLabel": "verksemder har omgrep i Felles datakatalog",
+    "conceptsFrom": "Verksemdens omgrepskataloger",
+    "conceptsCatalog": "Omgrepskataloger"
   },
   "registration": {
     "title": "Korleis komme i gong med registrering"
