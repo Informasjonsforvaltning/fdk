@@ -12,6 +12,7 @@ import { fetchHelptextsIfNeeded } from '../../redux/modules/helptexts';
 import { fetchCatalogIfNeeded } from '../../redux/modules/catalog';
 import {
   REFERENCEDATA_APISTATUS,
+  REFERENCEDATA_APISERVICETYPE,
   fetchReferenceDataIfNeededAction
 } from '../../redux/modules/referenceData';
 import { ResolvedAPIRegistrationPage } from './resolved-api-registration-page';
@@ -47,6 +48,10 @@ const mapStateToProps = (
     apiStatusItems: _.filter(
       _.get(referenceData, ['items', 'apistatus']),
       item => !!item.code
+    ),
+    apiServiceTypeItems: _.filter(
+      _.get(referenceData, ['items', 'apiservicetype']),
+      item => !!item.code
     )
   };
 };
@@ -57,6 +62,8 @@ const mapDispatchToProps = dispatch => ({
   fetchHelptextsIfNeeded: () => dispatch(fetchHelptextsIfNeeded()),
   fetchApiStatusIfNeeded: () =>
     dispatch(fetchReferenceDataIfNeededAction(REFERENCEDATA_APISTATUS)),
+  fetchApiServiceTypeIfNeeded: () =>
+    dispatch(fetchReferenceDataIfNeededAction(REFERENCEDATA_APISERVICETYPE)),
   deleteApiItem: (catalogId, apiId) =>
     dispatch(deleteApiAction(catalogId, apiId)),
   apiSuccess: apiItem => dispatch(apiSuccessAction(apiItem))

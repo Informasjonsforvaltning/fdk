@@ -302,6 +302,10 @@
         "availability": "Pålitelighet"
       }
     },
+    "apiServiceType": {
+      "title": "Tjenestetype",
+      "apiServiceTypeStandard": "Tjenestetype (standard)"
+    },
     "apiStatus": {
       "title": "Status på API-et",
       "helptext": {
