@@ -6,20 +6,13 @@ exports[`should render FormApiServiceType, { renderLandingpage  correctly 1`] = 
     className="form-group"
   >
     <withStateHandlers(Helptext)
-<<<<<<< HEAD
       title="Tjenestetype (standard)"
-=======
-      title="Status på API-et"
->>>>>>> initial commit
     />
     <Field
       component={[Function]}
       items={Array []}
-<<<<<<< HEAD
       name="serviceType"
-=======
-      name="statusCode"
->>>>>>> initial commit
+      name="serviceType" 
       saveObject={false}
       valueKey="code"
     />

@@ -47,7 +47,7 @@ export const FormApiServiceType = ({
     <div className="form-group">
       <Helptext title={localization.schema.apiServiceType.title} />
       <Field
-        name="statusCode"
+        name="serviceType"
         component={SelectField}
         items={_.sortBy(
           apiServiceTypeItems,

@@ -20,11 +20,11 @@ const selector = formValueSelector('apiServiceType');
 
 const mapStateToProps = (state, ownProps) => {
   const { apiServiceTypeItems } = ownProps;
-  const apiServiceTypeCodeFromForm = selector(state, 'statusCode');
+  const apiServiceTypeCodeFromForm = selector(state, 'serviceType');
   return {
     syncErrors: getFormSyncErrors('apiServiceType')(state.form),
     initialValues: {
-      statusCode: _.get(apiServiceTypeItems, 'statusCode'),
+      serviceType: _.get(apiServiceTypeItems, 'serviceType'),
       deprecationInfoExpirationDate: _.get(
         apiServiceTypeItems,
         'deprecationInfoExpirationDate'
