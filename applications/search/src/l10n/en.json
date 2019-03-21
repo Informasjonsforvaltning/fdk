@@ -274,10 +274,20 @@
       "typeFeed": "feeds",
       "national": "authoritative sources",
       "withConcepts": "Datasets that use concepts",
-      "withoutConcepts": "Datasets without concepts"
+      "withoutConcepts": "Datasets without concepts",
+      "apiOpenForAll": "API with public access",
+      "apiNotOpenForAll": "API without public access",
+      "apiOpenLicense": "API with open license",
+      "apiNotOpenLicense": "API without open license",
+      "apiFreeUsage": "API for free",
+      "apiNotFreeUsage": "API not for free"
     },
     "countCatalogsLabel": "organizations with datasets.",
-    "catalogsFrom": "Dataset catalogs from"
+    "catalogsFrom": "Dataset catalogs from",
+    "distributionFormat": "Distribution formats",
+    "countAPIcatalogsLabel": "organizations with API",
+    "apisFrom": "API catalogs from",
+    "apiCatalog": "API catalogs"
   },
   "registration": {
     "title": "Registration (only in Norwegian)"

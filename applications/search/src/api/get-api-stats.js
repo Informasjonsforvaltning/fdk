@@ -16,11 +16,21 @@ function getFromBucketArray(data, aggregation, key) {
 export function extractStats(data) {
   return {
     total: _.get(data, 'total', 0),
-    newLastWeek: getFromBucketArray(data, 'firstHarvested', 'last7days')
+    newLastWeek: getFromBucketArray(data, 'firstHarvested', 'last7days'),
+    openLicense: getFromBucketArray(data, 'openLicence', 'true'),
+    notOpenLicense: getFromBucketArray(data, 'openLicence', 'false'),
+    missingOpenLicense: getFromBucketArray(data, 'openLicence', 'MISSING'),
+    openAccess: getFromBucketArray(data, 'openAccess', 'true'),
+    notOpenAccess: getFromBucketArray(data, 'openAccess', 'false'),
+    missingOpenAccess: getFromBucketArray(data, 'openAccess', 'MISSING'),
+    freeUsage: getFromBucketArray(data, 'freeUsage', 'true'),
+    notFreeUsage: getFromBucketArray(data, 'freeUsage', 'false'),
+    missingFreeUsage: getFromBucketArray(data, 'freeUsage', 'MISSING'),
+    formatCounts: _.get(data, ['aggregations', 'formats', 'buckets'], [])
   };
 }
 
-const statsAggregations = `firstHarvested`;
+const statsAggregations = `formats,orgPath,firstHarvested,publisher,openAccess,openLicence,freeUsage`;
 
 export const statsUrl = query =>
   `${apisUrlBase}${qs.stringify(

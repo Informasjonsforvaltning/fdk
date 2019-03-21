@@ -274,10 +274,20 @@
       "typeFeed": "feeds",
       "national": "autoritative kjelder",
       "withConcepts": "Datasett som nyttar omgrep",
-      "withoutConcepts": "Datasett som ikkje nyttar omgrep"
+      "withoutConcepts": "Datasett som ikkje nyttar omgrep",
+      "apiOpenForAll": "API er opne for alle",
+      "apiNotOpenForAll": "API er ikke opne for alle",
+      "apiOpenLicense": "API har open lisens",
+      "apiNotOpenLicense": "API har ikke open lisens",
+      "apiFreeUsage": "API er gratis å bruke",
+      "apiNotFreeUsage": "API er ikkje gratis å bruke"
     },
     "countCatalogsLabel": "verksemder har datasett i Felles datakatalog",
-    "catalogsFrom": "Datasettkatalogar frå"
+    "catalogsFrom": "Datasettkatalogar frå",
+    "distributionFormat": "Format på distribusjonar",
+    "countAPIcatalogsLabel": "verksember har API i Felles datakatalog",
+    "apisFrom": "Verksemdens API-kataloger",
+    "apiCatalog": "API-kataloger"
   },
   "registration": {
     "title": "Korleis komme i gong med registrering"
