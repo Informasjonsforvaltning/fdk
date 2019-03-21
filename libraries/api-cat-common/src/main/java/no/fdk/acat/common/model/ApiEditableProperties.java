@@ -41,8 +41,6 @@ public class ApiEditableProperties {
 
     private String statusCode;
 
-    private String serviceType;
-
     private Date deprecationInfoExpirationDate;
 
     private String deprecationInfoMessage;
