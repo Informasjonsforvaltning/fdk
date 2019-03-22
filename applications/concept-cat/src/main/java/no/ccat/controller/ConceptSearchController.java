@@ -30,6 +30,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 
 import static no.ccat.controller.Common.MISSING;
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
@@ -51,30 +52,26 @@ public class ConceptSearchController {
 
     @ApiOperation(value = "Search in concept catalog")
     @ApiImplicitParams({
+        @ApiImplicitParam(name = "q", dataType = "string", paramType = "query", value = "Full content search"),
+        @ApiImplicitParam(name = "orgPath", dataType = "string", paramType = "query", value = "Filters on publisher's organization path (orgPath), e.g. /STAT/972417858/971040238"),
+        @ApiImplicitParam(name = "prefLabel", dataType = "string", paramType = "query", value = "The prefLabel text"),
+
+
         @ApiImplicitParam(name = "page", dataType = "string", paramType = "query", defaultValue = "0", value = "Page index. First page is 0"),
         @ApiImplicitParam(name = "size", dataType = "string", paramType = "query", defaultValue = "10", value = "Page size")
     })
     @RequestMapping(value = "", method = RequestMethod.GET, produces = "application/json")
     public PagedResources<ConceptDenormalized> search(
-        @ApiParam("The query text")
-        @RequestParam(value = "q", defaultValue = "", required = false)
-            String query,
-
-        @ApiParam("Filters on publisher's organization path (orgPath), e.g. /STAT/972417858/971040238")
-        @RequestParam(value = "orgPath", defaultValue = "", required = false)
-            String orgPath,
-
-        @ApiParam("Calculate aggregations")
-        @RequestParam(value = "aggregations", defaultValue = "false", required = false)
-            String aggregations,
-
-        @ApiParam("The prefLabel text")
-        @RequestParam(value = "preflabel", defaultValue = "", required = false)
-            String prefLabel,
+        @ApiParam(hidden = true)
+        @RequestParam Map<String, String> params,
 
         @ApiParam("Comma separated list of which fields should be returned. E.g id,")
         @RequestParam(value = "returnfields", defaultValue = "", required = false)
             String returnFields,
+
+        @ApiParam("Calculate aggregations")
+        @RequestParam(value = "aggregations", defaultValue = "false", required = false)
+            String aggregations,
 
         @ApiParam("Specifies the sort field, at the present the only value is \"modified\". Default is no value, and results are sorted by relevance")
         @RequestParam(value = "sortfield", defaultValue = "", required = false)
@@ -87,34 +84,14 @@ public class ConceptSearchController {
         @PageableDefault()
             Pageable pageable
     ) {
-        logger.debug("GET /concepts?q={}", query);
+        logger.debug("GET /concepts?q={}", params);
 
-        QueryBuilder searchQuery;
-
-        if (isNotEmpty(prefLabel)) {
-            QueryBuilder nbQuery = QueryBuilders.matchPhrasePrefixQuery("prefLabel.nb", prefLabel).analyzer("norwegian").maxExpansions(15);
-            QueryBuilder noQuery = QueryBuilders.matchPhrasePrefixQuery("prefLabel.no", prefLabel).analyzer("norwegian").maxExpansions(15);
-            QueryBuilder nnQuery = QueryBuilders.matchPhrasePrefixQuery("prefLabel.nn", prefLabel).analyzer("norwegian").maxExpansions(15);
-            QueryBuilder enQuery = QueryBuilders.matchPhrasePrefixQuery("prefLabel.en", prefLabel).analyzer("english").maxExpansions(15);
-            searchQuery = QueryBuilders.boolQuery().should(nbQuery).should(noQuery).should(nnQuery).should(enQuery);
-        } else if (query.isEmpty()) {
-            searchQuery = QueryBuilders.matchAllQuery();
-        } else {
-            // add * if query only contains one word
-            if (!query.contains(" ")) {
-                query = query + " " + query + "*";
-            }
-            searchQuery = QueryBuilders.simpleQueryStringQuery(query);
-        }
-
-        BoolQueryBuilder composedQuery = QueryBuilders.boolQuery().must(searchQuery);
-
-        if (!orgPath.isEmpty()) {
-            composedQuery.filter(ESQueryUtil.createTermQuery("publisher.orgPath", orgPath));
-        }
+        QueryBuilder searchQuery = new ConceptSearchESQueryBuilder()
+            .addParams(params)
+            .build();
 
         NativeSearchQuery finalQuery = new NativeSearchQueryBuilder()
-            .withQuery(composedQuery)
+            .withQuery(searchQuery)
             .withIndices("ccat").withTypes("concept")
             .withPageable(pageable)
             .build();
