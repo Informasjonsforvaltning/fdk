@@ -72,7 +72,10 @@ public class ConceptHarvester {
 
         logger.info("Harvested {} concepts from Uri {}", concepts.size(), harvestUri);
 
+        Date harvestDate = new Date();
         concepts.stream().forEach(concept -> {
+            HarvestMetadata harvest = HarvestMetadataUtil.createOrUpdate(null, harvestDate, false);
+            concept.setHarvest(harvest);
             conceptDenormalizedRepository.save(concept);
         });
     }

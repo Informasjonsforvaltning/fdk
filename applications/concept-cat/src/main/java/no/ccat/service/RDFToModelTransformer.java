@@ -5,8 +5,6 @@ import no.ccat.common.model.ContactPoint;
 import no.ccat.common.model.Definition;
 import no.ccat.common.model.Source;
 import no.ccat.model.ConceptDenormalized;
-import no.dcat.shared.HarvestMetadata;
-import no.dcat.shared.HarvestMetadataUtil;
 import no.dcat.shared.Publisher;
 import org.apache.jena.rdf.model.*;
 import org.apache.jena.vocabulary.*;
@@ -177,20 +175,15 @@ public class RDFToModelTransformer {
 
     public ConceptDenormalized extractConceptFromModel(Resource conceptResource) {
         ConceptDenormalized concept = new ConceptDenormalized();
-        ConceptDenormalized existingConcept = conceptDenormalizedRepository.findByIdentifier(conceptResource.getURI());
+        List<ConceptDenormalized> existingConcepts = conceptDenormalizedRepository.findByIdentifier(conceptResource.getURI());
 
-        Date harvestDate = new Date();
-        HarvestMetadata oldMetadata = null;
-        if (existingConcept != null) {
-            oldMetadata = existingConcept.getHarvest();
+        if (existingConcepts.size() > 1) {
+            logger.warn("Found multiple concepts for source URI " + conceptResource.getURI() + ", expected 0 or 1 ");
         }
-        HarvestMetadata harvest = HarvestMetadataUtil.createOrUpdate(oldMetadata, harvestDate, false);
 
-        String id = existingConcept != null ? existingConcept.getId() : UUID.randomUUID().toString();
+        String id = existingConcepts.size() > 0 ? existingConcepts.get(0).getId() : UUID.randomUUID().toString();
 
         concept.setId(id);
-
-        concept.setHarvest(harvest);
 
         concept.setUri(buildLocalUri(id));//So that URI is actually addressable into our system.
 
@@ -242,11 +235,11 @@ public class RDFToModelTransformer {
     private String parseURIFromStatement(Statement statement) {
         if (statement.getResource().isURIResource()) {
             try {
-                URI uri = new URI(statement.getResource().getURI());
+                URI uri = new URI (statement.getResource().getURI());
                 return uri.getSchemeSpecificPart();
                 //contactPoint.setEmail(uri.getSchemeSpecificPart());
             } catch (URISyntaxException use) {
-                logger.error("Email URI not parsable :" + statement.getObject().toString());
+                logger.error("Email URI not parsable :" +statement.getObject().toString() );
             }
         }
         return "";
