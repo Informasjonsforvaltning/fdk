@@ -305,7 +305,7 @@
       }
     },
     "apiServiceType": {
-      "title": "Tjenestetype",
+      "title": "Tjenestetype (standard)",
       "apiServiceTypeStandard": "Tjenestetype (standard)"
     },
     "apiStatus": {
