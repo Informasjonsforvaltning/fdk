@@ -22,4 +22,10 @@ class ConceptSearchParamHandlers {
         QueryBuilder enQuery = QueryBuilders.matchPhrasePrefixQuery("prefLabel.en", value).analyzer("english").maxExpansions(15);
         return QueryBuilders.boolQuery().should(nbQuery).should(noQuery).should(nnQuery).should(enQuery);
     }
+
+    static QueryBuilder firstHarvested(String value, ConceptSearchESQueryBuilder queryBuilder) {
+        int firstHarvested = Integer.parseInt(value);
+        return (ESQueryUtil.createRangeQueryFromXdaysToNow(firstHarvested, "harvest.firstHarvested"));
+    }
+
 }
