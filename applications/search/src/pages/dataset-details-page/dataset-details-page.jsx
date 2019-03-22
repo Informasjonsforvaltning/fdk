@@ -420,7 +420,7 @@ export const DatasetDetailsPage = props => {
     description: getTranslateText(_.get(datasetItem, 'description'))
   };
 
-  const filteredAPIDistributions = _.get(datasetItem, 'distribution').filter(
+  const filteredAPIDistributions = _.get(datasetItem, 'distribution', []).filter(
     item => item.accessService
   );
 
