@@ -420,9 +420,11 @@ export const DatasetDetailsPage = props => {
     description: getTranslateText(_.get(datasetItem, 'description'))
   };
 
-  const filteredAPIDistributions = _.get(datasetItem, 'distribution', []).filter(
-    item => item.accessService
-  );
+  const filteredAPIDistributions = _.get(
+    datasetItem,
+    'distribution',
+    []
+  ).filter(item => item.accessService);
 
   return (
     <main id="content" className="container">
@@ -456,7 +458,7 @@ export const DatasetDetailsPage = props => {
             {renderDistribution(
               localization.dataset.distributions,
               true,
-              _.get(datasetItem, 'distribution').filter(
+              _.get(datasetItem, 'distribution', []).filter(
                 item => !item.accessService
               ),
               referenceData
