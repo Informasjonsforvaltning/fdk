@@ -17,23 +17,23 @@ public class ApiSearchESQueryBuilder {
 
     private BoolQueryBuilder composedQuery;
 
-    ApiSearchESQueryBuilder() {
+    public ApiSearchESQueryBuilder() {
         // Default query is to match all. Additional .must clauses will narrow it down.
         composedQuery = QueryBuilders.boolQuery().must(QueryBuilders.matchAllQuery());
     }
 
-    BoolQueryBuilder build() {
+    public BoolQueryBuilder build() {
         return composedQuery;
     }
 
-    ApiSearchESQueryBuilder boostNationalComponents() {
+    public ApiSearchESQueryBuilder boostNationalComponents() {
         // Increase score of national components in all queries
         // in api-cat, we use modern notation nationalComponent=true, while in dataset is not as explicit
         composedQuery.should(isNationalComponentQuery().boost(2));
         return this;
     }
 
-    ApiSearchESQueryBuilder addParams(Map<String, String> params) {
+    public ApiSearchESQueryBuilder addParams(Map<String, String> params) {
         for (Map.Entry<String, String> entry : params.entrySet()) {
             String filterName = entry.getKey();
             String filterValue = entry.getValue();
