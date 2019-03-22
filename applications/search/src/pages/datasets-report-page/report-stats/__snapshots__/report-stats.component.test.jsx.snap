@@ -28,64 +28,94 @@ exports[`should render ReportStats correctly 1`] = `
         <div
           className="col-4"
         >
-          <a
-            href="#1"
+          <img
+            alt=""
+            src="/static/img/icon-catalog-dataset.svg"
+          />
+          <br />
+          <Link
+            className="mb-3"
+            replace={false}
+            title="Datasets that are public"
+            to="/"
           >
-            <img
-              alt=""
-              src="/static/img/icon-catalog-dataset.svg"
-            />
-            <br />
             <strong>
               985
                
               datasets
             </strong>
-            <br />
+          </Link>
+          <br />
+          <Link
+            className="mb-3"
+            replace={false}
+            title="Datasets that are public"
+            to="/?firstHarvested=7"
+          >
             0
              
             new the past week
-          </a>
+          </Link>
         </div>
         <div
           className="col-4"
         >
-          <a
-            href="#2"
+          <img
+            alt=""
+            src="/static/img/icon-catalog-api.svg"
+          />
+          <br />
+          <Link
+            className="mb-3"
+            replace={false}
+            title="Datasets that are public"
+            to="/apis"
           >
-            <img
-              alt=""
-              src="/static/img/icon-catalog-api.svg"
-            />
-            <br />
             <strong>
                
               APIs
             </strong>
-            <br />
+          </Link>
+          <br />
+          <Link
+            className="mb-3"
+            replace={false}
+            title="Datasets that are public"
+            to="/apis?firstHarvested=7"
+          >
              
             new the past week
-          </a>
+          </Link>
         </div>
         <div
           className="col-4"
         >
-          <a
-            href="#3"
+          <img
+            alt=""
+            src="/static/img/icon-catalog-begrep.svg"
+          />
+          <br />
+          <Link
+            className="mb-3"
+            replace={false}
+            title="Datasets that are public"
+            to="/concepts"
           >
-            <img
-              alt=""
-              src="/static/img/icon-catalog-begrep.svg"
-            />
-            <br />
             <strong>
                
               concepts
             </strong>
-            <br />
+          </Link>
+          <br />
+          <Link
+            className="mb-3"
+            replace={false}
+            title="Datasets that are public"
+            to="/concepts?firstHarvested=7"
+          >
              
             new the past week
-          </a>
+          </Link>
         </div>
       </div>
     </div>
