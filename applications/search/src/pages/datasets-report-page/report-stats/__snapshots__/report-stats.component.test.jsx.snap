@@ -492,7 +492,7 @@ exports[`should render ReportStats correctly 1`] = `
                 orgPath={null}
                 stats={Object {}}
               />,
-              "title": undefined,
+              "title": "API report",
             },
           ]
         }

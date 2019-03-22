@@ -255,6 +255,7 @@
     "typeToSearch": "Type to search",
     "catalogs": "Catalogs",
     "datasetTab": "Dataset report",
+    "apiTab": "API report",
     "datasets": "datasets",
     "apis":"APIs",
     "concepts":"concepts",
