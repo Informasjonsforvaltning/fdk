@@ -255,6 +255,7 @@
     "typeToSearch": "Skriv for å søke",
     "catalogs": "Katalogar",
     "datasetTab": "Rapport for datasett",
+    "apiTab": "Rapport for API",
     "datasets":"datasett",
     "apis":"API",
     "concepts":"omgrep",
