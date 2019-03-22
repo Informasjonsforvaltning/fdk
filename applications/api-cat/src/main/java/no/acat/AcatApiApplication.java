@@ -6,6 +6,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -38,23 +40,24 @@ public class AcatApiApplication {
         secureProtocols.add("https");
 
         return new Docket(DocumentationType.SWAGGER_2)
-                .protocols(secureProtocols)
-                .select()
-                .apis(Predicates.not(RequestHandlerSelectors.basePackage("org.springframework.boot")))
-                .paths(PathSelectors.any())
-                .build()
-                .apiInfo(apiInfo());
+            .protocols(secureProtocols)
+            .select()
+            .apis(Predicates.not(RequestHandlerSelectors.basePackage("org.springframework.boot")))
+            .paths(PathSelectors.any())
+            .build()
+            .ignoredParameterTypes(Pageable.class, PagedResourcesAssembler.class)
+            .apiInfo(apiInfo());
 
     }
 
     private ApiInfo apiInfo() {
         return new ApiInfo(
-                "National API Directory Search API",
-                "Provides a basic search api against the National API Directory of Norway",
-                "1.0",
-                "https://fellesdatakatalog.brreg.no/about",
-                new Contact("Brønnøysundregistrene", "https://fellesdatakatalog.brreg.no", "fellesdatakatalog@brreg.no"),
-                "License of API", "http://data.norge.no/nlod/no/2.0", Collections.emptyList());
+            "National API Directory Search API",
+            "Provides a basic search api against the National API Directory of Norway",
+            "1.0",
+            "https://fellesdatakatalog.brreg.no/about",
+            new Contact("Brønnøysundregistrene", "https://fellesdatakatalog.brreg.no", "fellesdatakatalog@brreg.no"),
+            "License of API", "http://data.norge.no/nlod/no/2.0", Collections.emptyList());
     }
 
 }
