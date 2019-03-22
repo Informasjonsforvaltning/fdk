@@ -1,6 +1,8 @@
 package no.ccat.controller;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import no.ccat.model.ConceptDenormalized;
@@ -54,6 +56,10 @@ public class ConceptSearchController {
     }
 
     @ApiOperation(value = "Search in concept catalog")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "page", dataType = "string", paramType = "query", defaultValue = "0", value = "Page index. First page is 0"),
+        @ApiImplicitParam(name = "size", dataType = "string", paramType = "query", defaultValue = "10", value = "Page size")
+    })
     @RequestMapping(value = "", method = RequestMethod.GET, produces = "application/json")
     public PagedResources<ConceptDenormalized> search(
         @ApiParam("The query text")
