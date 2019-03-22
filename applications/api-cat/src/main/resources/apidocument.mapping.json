@@ -104,6 +104,12 @@
       "availability": {
         "type": "text",
         "analyzer": "norwegian"
+      },
+      "statusCode": {
+        "type": "keyword"
+      },
+      "serviceType": {
+        "type": "keyword"
       }
     }
   }

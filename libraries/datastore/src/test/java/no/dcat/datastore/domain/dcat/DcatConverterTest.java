@@ -1,8 +1,10 @@
 package no.dcat.datastore.domain.dcat;
 
+import no.dcat.datastore.domain.dcat.builders.DcatBuilder;
 import no.dcat.datastore.domain.dcat.builders.DcatReader;
 import no.dcat.shared.Contact;
 import no.dcat.shared.Dataset;
+import no.dcat.shared.SkosConcept;
 import no.fdk.test.testcategories.UnitTest;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.riot.RDFDataMgr;
@@ -129,6 +131,39 @@ public class DcatConverterTest {
 
         assertThat(datasets.size(), is(132));
 
+    }
+
+
+    @Test
+    public void readDistributionOK() throws Throwable {
+
+        Model model = RDFDataMgr.loadModel("dataset-with-distribution.ttl");
+
+        DcatReader reader = setupReader(model);
+        List<Dataset> datasets = reader.getDatasets();
+        String actualDescription = datasets.get(0).getDistribution().get(0).getDescription().get("nb");
+
+        assertThat(actualDescription, is("En vanlig distribusjon"));
+    }
+
+
+    @Test
+    public void readApiDistributionOK() throws Throwable {
+
+        Model model = RDFDataMgr.loadModel("dataset-with-api-distribution.ttl");
+
+        DcatReader reader = setupReader(model);
+        List<Dataset> datasets = reader.getDatasets();
+
+        String actualApiDescription = datasets.get(0).getDistribution().get(0)
+            .getAccessService().getDescription().get("nb");
+
+        SkosConcept endpointDescription = datasets.get(0).getDistribution().get(0)
+            .getAccessService().getEndpointDescription().get(0);
+
+        assertThat(actualApiDescription, is("Åpne Data fra Enhetsregisteret - API Dokumentasjon"));
+        assertThat(endpointDescription.getExtraType(), is("http://xmlns.com/foaf/0.1/Document"));
+        assertThat(endpointDescription.toString().contains("93b125a8-c68c-4d65-8b16-6b45b9453be4"), is(true));
     }
 
 }

@@ -3,6 +3,8 @@ package no.acat.controller;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 
+import static no.acat.controller.ESQueryUtil.isActiveQuery;
+
 class ApiSearchParamHandlers {
     static QueryBuilder q(String value, ApiSearchESQueryBuilder queryBuilder) {
         String searchText = !value.contains(" ") ? value + " " + value + "*" : value;
@@ -30,5 +32,33 @@ class ApiSearchParamHandlers {
 
     static QueryBuilder datasetid(String value, ApiSearchESQueryBuilder queryBuilder) {
         return QueryBuilders.termQuery("datasetReferences.id", value);
+    }
+
+    static QueryBuilder active(String value, ApiSearchESQueryBuilder queryBuilder) {
+        if ("true".equals(value)) {
+            return isActiveQuery();
+        }
+        return null;
+    }
+
+    static QueryBuilder serviceType(String value, ApiSearchESQueryBuilder queryBuilder) {
+        return QueryBuilders.termQuery("serviceType", value);
+    }
+
+    static QueryBuilder orgNos(String value, ApiSearchESQueryBuilder queryBuilder) {
+        String[] orgNos = value.split(",");
+        return QueryBuilders.termsQuery("publisher.id", orgNos);
+    }
+
+    static QueryBuilder isOpenAccess(String value, ApiSearchESQueryBuilder queryBuilder) {
+        return QueryBuilders.termQuery("isOpenAccess", value);
+    }
+
+    static QueryBuilder isOpenLicense(String value, ApiSearchESQueryBuilder queryBuilder) {
+        return QueryBuilders.termQuery("isOpenLicense", value);
+    }
+
+    static QueryBuilder isFree(String value, ApiSearchESQueryBuilder queryBuilder) {
+        return QueryBuilders.termQuery("isFree", value);
     }
 }

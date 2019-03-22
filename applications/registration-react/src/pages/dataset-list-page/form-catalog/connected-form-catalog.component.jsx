@@ -1,4 +1,3 @@
-/* eslint-disable no-class-assign */
 import { reduxForm, getFormValues } from 'redux-form';
 import { connect } from 'react-redux';
 import _ from 'lodash';
@@ -9,7 +8,6 @@ import { putCatalogDataset } from './async-catalog-dataset';
 import shouldAsyncValidate from '../../../lib/shouldAsyncValidate';
 import { textType } from '../../../schemaTypes';
 import './connected-form-catalog.scss';
-import { config } from '../../../config';
 
 const FormCatalog = reduxForm({
   form: 'catalog',
@@ -23,23 +21,21 @@ const FormCatalog = reduxForm({
   }))(Form)
 );
 
-const mapStateToProps = ({ catalog }, ownProps) => {
+const mapStateToProps = ({ catalog, config }, ownProps) => {
+  const registrationLanguage = _.get(config, 'registrationLanguage', 'nb');
   const { catalogId } = ownProps;
   return {
     initialValues: {
       id: catalogId,
       title:
-        _.get(
-          catalog,
-          ['items', catalogId, 'title', config.registrationLanguage],
-          ''
-        ).length > 0
+        _.get(catalog, ['items', catalogId, 'title', registrationLanguage], '')
+          .length > 0
           ? _.get(catalog, ['items', catalogId, 'title'])
           : textType,
       description:
         _.get(
           catalog,
-          ['items', catalogId, 'description', config.registrationLanguage],
+          ['items', catalogId, 'description', registrationLanguage],
           ''
         ).length > 0
           ? _.get(catalog, ['items', catalogId, 'description'])
