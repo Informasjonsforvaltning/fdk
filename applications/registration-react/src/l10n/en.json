@@ -303,7 +303,7 @@
       }
     },
     "apiServiceType": {
-      "title": "Service type",
+      "title": "Service type (standard)",
       "apiServiceTypeStandard": "Service type (standard)",
     },
     "apiStatus": {

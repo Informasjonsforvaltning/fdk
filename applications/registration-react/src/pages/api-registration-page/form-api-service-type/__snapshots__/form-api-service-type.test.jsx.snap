@@ -6,7 +6,7 @@ exports[`should render FormApiServiceType, { renderLandingpage  correctly 1`] = 
     className="form-group"
   >
     <withStateHandlers(Helptext)
-      title="Tjenestetype"
+      title="Tjenestetype (standard)"
     />
     <Field
       component={[Function]}
