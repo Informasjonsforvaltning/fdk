@@ -23,7 +23,7 @@ const mapProps = {
   },
   referencedAPIsFromDistribution: async props => {
     const datasetItem = await memoizedGetDataset(props.match.params.id);
-    const apiIdArray = _.get(datasetItem, 'distribution')
+    const apiIdArray = _.get(datasetItem, 'distribution', [])
       .filter(item => item.accessService)
       .map(item =>
         _.get(item, ['accessService', 'endpointDescription', 0, 'uri'])
