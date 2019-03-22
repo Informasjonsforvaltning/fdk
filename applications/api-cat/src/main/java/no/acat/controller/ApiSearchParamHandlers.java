@@ -49,4 +49,16 @@ class ApiSearchParamHandlers {
         String[] orgNos = value.split(",");
         return QueryBuilders.termsQuery("publisher.id", orgNos);
     }
+
+    static QueryBuilder isOpenAccess(String value, ApiSearchESQueryBuilder queryBuilder) {
+        return QueryBuilders.termQuery("isOpenAccess", value);
+    }
+
+    static QueryBuilder isOpenLicense(String value, ApiSearchESQueryBuilder queryBuilder) {
+        return QueryBuilders.termQuery("isOpenLicense", value);
+    }
+
+    static QueryBuilder isFree(String value, ApiSearchESQueryBuilder queryBuilder) {
+        return QueryBuilders.termQuery("isFree", value);
+    }
 }
