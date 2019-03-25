@@ -120,6 +120,11 @@ public class DatasetsSearchControllerTest {
         sqs.search(ImmutableMap.of("spatial", "Ukjent,Oslo Fylke"), "nb", "", "", "", "", PageRequest.of(0, 10));
     }
 
+    @Test
+    public void checkDatasetAggregations() {
+        sqs.search(ImmutableMap.of(), "nb", "modified", "asc", "", "distributionCountForTypeApi,distributionCountForTypeFeed,distributionCountForTypeFile", PageRequest.of(0, 10));
+    }
+
     private void populateMock() {
         SearchResponse response = mock(SearchResponse.class);
 
