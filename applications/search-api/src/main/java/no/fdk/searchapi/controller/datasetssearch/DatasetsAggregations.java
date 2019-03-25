@@ -93,13 +93,13 @@ public class DatasetsAggregations {
                 .order(Terms.Order.count(false)));
         }
         if (aggregationFields.contains("distributionCountForTypeApi")) {
-            aggregations.add(createDistributionTypeCountAggregation("distributionCountForTypeApi", "API"));
+            aggregations.add(createDistributionTypeCountAggregation("distributionCountForTypeApi", "http://publications.europa.eu/resource/authority/distribution-type/WEB_SERVICE"));
         }
         if (aggregationFields.contains("distributionCountForTypeFeed")) {
-            aggregations.add(createDistributionTypeCountAggregation("distributionCountForTypeFeed", "Feed"));
+            aggregations.add(createDistributionTypeCountAggregation("distributionCountForTypeFeed", "http://publications.europa.eu/resource/authority/distribution-type/FEED_INFO"));
         }
         if (aggregationFields.contains("distributionCountForTypeFile")) {
-            aggregations.add(createDistributionTypeCountAggregation("distributionCountForTypeFile", "Nedlastbar fil"));
+            aggregations.add(createDistributionTypeCountAggregation("distributionCountForTypeFile", "http://publications.europa.eu/resource/authority/distribution-type/DOWNLOADABLE_FILE"));
         }
         return aggregations;
     }
