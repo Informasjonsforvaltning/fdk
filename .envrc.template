@@ -8,3 +8,5 @@ export KEYCLOAK_PASSWORD=admin
 # secrets - never commit in git
 
 export DISQUS_SHORTNAME=CHANGE_ME
+export IDPORTEN_CLIENT_ID=oidc_brreg_fellesdatakatalog
+export IDPORTEN_CLIENT_SECRET=CHANGE_ME

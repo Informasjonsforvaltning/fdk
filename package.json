@@ -8,7 +8,11 @@
     "standard-version": "^5.0.0"
   },
   "scripts": {
-    "release": "standard-version --no-verify"
+    "release": "standard-version --no-verify",
+    "keycloak-prepare": ". .envrc && sed 's/${IDPORTEN_CLIENT_ID}/'\"$IDPORTEN_CLIENT_ID\"'/g;s/${IDPORTEN_CLIENT_SECRET}/'\"$IDPORTEN_CLIENT_SECRET\"'/g;' ./applications-external/sso/template/fdk-realm.json > ./applications-external/sso/import/fdk-realm.json",
+    "_comment1": "a method to export, is to run keycloak server on another port, and run startup migration action export.",
+    "_comment2": "check the logs, and after export is done, and server started, stop manually with ctrl+c",
+    "keycloak-export":"docker-compose exec sso sh -c \"/opt/jboss/keycloak/bin/standalone.sh -Dkeycloak.migration.action=export -Dkeycloak.migration.provider=dir -Dkeycloak.migration.dir=/tmp/keycloak/export -Dkeycloak.migration.strategy=OVERWRITE_EXISTING -Djboss.http.port=8888 -Djboss.https.port=9999 -Djboss.management.http.port=7777\""
   },
   "repository": {
     "type": "git",
