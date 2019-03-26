@@ -24,8 +24,14 @@ public class SwaggerWsEndpointsConfig {
             apicatResource.setSwaggerVersion("2.0");
             apicatResource.setLocation("/api-docs/api-cat");
 
+            SwaggerResource conceptCatResource = new SwaggerResource();
+            conceptCatResource.setName("National Concept Directory search API");
+            conceptCatResource.setSwaggerVersion("2.0");
+            conceptCatResource.setLocation("/api-docs/concept-cat");
+
             List<SwaggerResource> resources = new ArrayList<>(defaultResourcesProvider.get());
             resources.add(apicatResource);
+            resources.add(conceptCatResource);
             return resources;
         };
     }

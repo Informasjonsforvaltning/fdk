@@ -22,6 +22,8 @@ import {
   REFERENCEDATA_REFERENCETYPES,
   REFERENCEDATA_DISTRIBUTIONTYPE
 } from '../../redux/modules/referenceData';
+import { SearchHitHeader } from '../../components/search-hit-header/search-hit-header.component';
+import { getFirstLineOfText } from '../../lib/stringUtils';
 
 const renderPublished = datasetItem => {
   if (!datasetItem) {
@@ -275,6 +277,56 @@ const renderDistribution = (
   );
 };
 
+const renderAPIDistribution = (
+  heading,
+  showCount,
+  distribution,
+  referenceData,
+  publisherItems,
+  referencedAPIsFromDistribution
+) => {
+  if (!(distribution && distribution.length > 0)) {
+    return null;
+  }
+
+  const apiReferenceItems = items =>
+    items.map((item, index) => {
+      const apiId = _.get(item, [
+        'accessService',
+        'endpointDescription',
+        0,
+        'uri'
+      ]);
+      const referencedApi = _.find(referencedAPIsFromDistribution, {
+        id: apiId
+      });
+      return (
+        <div key={`reference-${index}`} className="list-regular--item">
+          <SearchHitHeader
+            title={referencedApi.title}
+            titleLink={`/apis/${encodeURIComponent(referencedApi.id)}`}
+            publisherLabel={localization.api.provider}
+            publisher={referencedApi.publisher}
+            publisherItems={publisherItems}
+            tag="h4"
+          />
+          <div className="uu-invisible" aria-hidden="false">
+            Beskrivelse av api
+          </div>
+          {getFirstLineOfText(getTranslateText(referencedApi.description))}
+        </div>
+      );
+    });
+
+  return (
+    <div className="dataset-distributions">
+      <ListRegular title={heading}>
+        {apiReferenceItems(distribution)}
+      </ListRegular>
+    </div>
+  );
+};
+
 const renderStickyMenu = datasetItem => {
   const menuItems = [];
   if (_.get(datasetItem, 'description')) {
@@ -351,7 +403,13 @@ export const DatasetDetailsPage = props => {
   props.fetchReferenceDataIfNeeded(REFERENCEDATA_REFERENCETYPES);
   props.fetchReferenceDataIfNeeded(REFERENCEDATA_DISTRIBUTIONTYPE);
 
-  const { datasetItem, referencedItems, referenceData } = props;
+  const {
+    datasetItem,
+    referencedItems,
+    referenceData,
+    publisherItems,
+    referencedAPIsFromDistribution
+  } = props;
 
   if (!datasetItem) {
     return null;
@@ -361,6 +419,12 @@ export const DatasetDetailsPage = props => {
     title: getTranslateText(_.get(datasetItem, 'title')),
     description: getTranslateText(_.get(datasetItem, 'description'))
   };
+
+  const filteredAPIDistributions = _.get(
+    datasetItem,
+    'distribution',
+    []
+  ).filter(item => item.accessService);
 
   return (
     <main id="content" className="container">
@@ -379,10 +443,24 @@ export const DatasetDetailsPage = props => {
 
             {renderKeyInfo(datasetItem)}
 
+            {renderAPIDistribution(
+              localization.formatString(
+                localization.dataset.distributionsAPI,
+                filteredAPIDistributions.length
+              ),
+              true,
+              filteredAPIDistributions,
+              referenceData,
+              publisherItems,
+              referencedAPIsFromDistribution
+            )}
+
             {renderDistribution(
               localization.dataset.distributions,
               true,
-              _.get(datasetItem, 'distribution'),
+              _.get(datasetItem, 'distribution', []).filter(
+                item => !item.accessService
+              ),
               referenceData
             )}
 
@@ -415,12 +493,16 @@ DatasetDetailsPage.defaultProps = {
   datasetItem: null,
   referencedItems: null,
   referenceData: null,
-  fetchReferenceDataIfNeeded: () => {}
+  fetchReferenceDataIfNeeded: () => {},
+  publisherItems: null,
+  referencedAPIsFromDistribution: null
 };
 
 DatasetDetailsPage.propTypes = {
   datasetItem: PropTypes.object,
   referencedItems: PropTypes.array,
   referenceData: PropTypes.object,
-  fetchReferenceDataIfNeeded: PropTypes.func
+  fetchReferenceDataIfNeeded: PropTypes.func,
+  publisherItems: PropTypes.object,
+  referencedAPIsFromDistribution: PropTypes.array
 };

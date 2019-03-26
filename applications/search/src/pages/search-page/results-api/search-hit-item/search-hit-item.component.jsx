@@ -16,6 +16,7 @@ import {
   iconIsOpenAccess,
   iconIsOpenLicense
 } from '../../../../components/api-icons';
+import { getFirstLineOfText } from '../../../../lib/stringUtils';
 
 const renderHeaderLink = (item, publisher, publishers, referenceData) => {
   if (!item) {
@@ -44,29 +45,13 @@ const renderDescription = description => {
   if (!description) {
     return null;
   }
-  const descriptionText = getTranslateText(description);
-  const breakPattern = /(\n|<br|<\/p|<\/h)/;
-  const match = breakPattern.exec(descriptionText);
-
-  let firstLine = match
-    ? descriptionText.substr(0, match.index)
-    : descriptionText;
-
-  if (firstLine.length > 250) {
-    firstLine = firstLine.substr(0, 220);
-    firstLine = firstLine.substr(0, firstLine.lastIndexOf(' '));
-  }
-
-  if (firstLine.length < descriptionText.length) {
-    firstLine += ' ...';
-  }
 
   return (
     <div className="fdk-text-size-medium">
       <div className="uu-invisible" aria-hidden="false">
         Beskrivelse av api
       </div>
-      {firstLine}
+      {getFirstLineOfText(getTranslateText(description))}
     </div>
   );
 };

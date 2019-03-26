@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 import localization from '../../../lib/localization';
 import { getParamFromLocation } from '../../../lib/addOrReplaceUrlParam';
@@ -49,37 +50,67 @@ export const ReportStats = props => {
         <div className="col-12 fdk-container-stats fdk-container-stats-total">
           <div className="row">
             <div className="col-4">
-              <a href="#1">
-                <img src="/static/img/icon-catalog-dataset.svg" alt="" />
-                <br />
+              <img src="/static/img/icon-catalog-dataset.svg" alt="" />
+              <br />
+              <Link
+                title={localization.report.aggregation.public}
+                className="mb-3"
+                to="/"
+              >
                 <strong>
                   {datasetStats.total} {localization.report.datasets}
                 </strong>
-                <br />
+              </Link>
+              <br />
+              <Link
+                title={localization.report.aggregation.public}
+                className="mb-3"
+                to="/?firstHarvested=7"
+              >
                 {datasetStats.newLastWeek} {localization.report.newPastWeek}
-              </a>
+              </Link>
             </div>
             <div className="col-4">
-              <a href="#2">
-                <img src="/static/img/icon-catalog-api.svg" alt="" />
-                <br />
+              <img src="/static/img/icon-catalog-api.svg" alt="" />
+              <br />
+              <Link
+                title={localization.report.aggregation.public}
+                className="mb-3"
+                to="/apis"
+              >
                 <strong>
                   {apiStats.total} {localization.report.apis}
                 </strong>
-                <br />
+              </Link>
+              <br />
+              <Link
+                title={localization.report.aggregation.public}
+                className="mb-3"
+                to="/apis?firstHarvested=7"
+              >
                 {apiStats.newLastWeek} {localization.report.newPastWeek}
-              </a>
+              </Link>
             </div>
             <div className="col-4">
-              <a href="#3">
-                <img src="/static/img/icon-catalog-begrep.svg" alt="" />
-                <br />
+              <img src="/static/img/icon-catalog-begrep.svg" alt="" />
+              <br />
+              <Link
+                title={localization.report.aggregation.public}
+                className="mb-3"
+                to="/concepts"
+              >
                 <strong>
                   {conceptStats.total} {localization.report.concepts}
                 </strong>
-                <br />
+              </Link>
+              <br />
+              <Link
+                title={localization.report.aggregation.public}
+                className="mb-3"
+                to="/concepts?firstHarvested=7"
+              >
                 {conceptStats.newLastWeek} {localization.report.newPastWeek}
-              </a>
+              </Link>
             </div>
           </div>
         </div>

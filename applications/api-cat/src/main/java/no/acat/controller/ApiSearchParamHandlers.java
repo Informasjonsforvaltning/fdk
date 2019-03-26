@@ -61,4 +61,9 @@ class ApiSearchParamHandlers {
     static QueryBuilder isFree(String value, ApiSearchESQueryBuilder queryBuilder) {
         return QueryBuilders.termQuery("isFree", value);
     }
+
+    static QueryBuilder firstHarvested(String value, ApiSearchESQueryBuilder queryBuilder) {
+        int firstHarvested = Integer.parseInt(value);
+        return (ESQueryUtil.createRangeQueryFromXdaysToNow(firstHarvested, "harvest.firstHarvested"));
+    }
 }

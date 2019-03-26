@@ -1,6 +1,8 @@
 package no.ccat.controller;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import no.ccat.model.ConceptDenormalized;
@@ -8,10 +10,7 @@ import no.fdk.webutils.aggregation.ResponseUtil;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.index.query.RangeQueryBuilder;
-import org.elasticsearch.search.aggregations.AbstractAggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
-import org.elasticsearch.search.aggregations.bucket.filters.FiltersAggregator;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,11 +28,11 @@ import org.springframework.hateoas.PagedResources;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 
-import static java.lang.Integer.MAX_VALUE;
+import static no.ccat.controller.Common.MISSING;
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
 @CrossOrigin
@@ -41,8 +40,6 @@ import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 @RequestMapping(value = "/concepts")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ConceptSearchController {
-    public static final String MISSING = "MISSING";
-    public static final long DAY_IN_MS = 1000 * 3600 * 24;
 
     private static final Logger logger = LoggerFactory.getLogger(ConceptSearchController.class);
     private ElasticsearchTemplate elasticsearchTemplate;
@@ -54,27 +51,27 @@ public class ConceptSearchController {
     }
 
     @ApiOperation(value = "Search in concept catalog")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "q", dataType = "string", paramType = "query", value = "Full content search"),
+        @ApiImplicitParam(name = "orgPath", dataType = "string", paramType = "query", value = "Filters on publisher's organization path (orgPath), e.g. /STAT/972417858/971040238"),
+        @ApiImplicitParam(name = "prefLabel", dataType = "string", paramType = "query", value = "The prefLabel text"),
+
+
+        @ApiImplicitParam(name = "page", dataType = "string", paramType = "query", defaultValue = "0", value = "Page index. First page is 0"),
+        @ApiImplicitParam(name = "size", dataType = "string", paramType = "query", defaultValue = "10", value = "Page size")
+    })
     @RequestMapping(value = "", method = RequestMethod.GET, produces = "application/json")
     public PagedResources<ConceptDenormalized> search(
-        @ApiParam("The query text")
-        @RequestParam(value = "q", defaultValue = "", required = false)
-            String query,
-
-        @ApiParam("Filters on publisher's organization path (orgPath), e.g. /STAT/972417858/971040238")
-        @RequestParam(value = "orgPath", defaultValue = "", required = false)
-            String orgPath,
-
-        @ApiParam("Calculate aggregations")
-        @RequestParam(value = "aggregations", defaultValue = "false", required = false)
-            String aggregations,
-
-        @ApiParam("The prefLabel text")
-        @RequestParam(value = "preflabel", defaultValue = "", required = false)
-            String prefLabel,
+        @ApiParam(hidden = true)
+        @RequestParam Map<String, String> params,
 
         @ApiParam("Comma separated list of which fields should be returned. E.g id,")
         @RequestParam(value = "returnfields", defaultValue = "", required = false)
             String returnFields,
+
+        @ApiParam("Calculate aggregations")
+        @RequestParam(value = "aggregations", defaultValue = "false", required = false)
+            String aggregations,
 
         @ApiParam("Specifies the sort field, at the present the only value is \"modified\". Default is no value, and results are sorted by relevance")
         @RequestParam(value = "sortfield", defaultValue = "", required = false)
@@ -87,34 +84,14 @@ public class ConceptSearchController {
         @PageableDefault()
             Pageable pageable
     ) {
-        logger.debug("GET /concepts?q={}", query);
+        logger.debug("GET /concepts?q={}", params);
 
-        QueryBuilder searchQuery;
-
-        if (isNotEmpty(prefLabel)) {
-            QueryBuilder nbQuery = QueryBuilders.matchPhrasePrefixQuery("prefLabel.nb", prefLabel).analyzer("norwegian").maxExpansions(15);
-            QueryBuilder noQuery = QueryBuilders.matchPhrasePrefixQuery("prefLabel.no", prefLabel).analyzer("norwegian").maxExpansions(15);
-            QueryBuilder nnQuery = QueryBuilders.matchPhrasePrefixQuery("prefLabel.nn", prefLabel).analyzer("norwegian").maxExpansions(15);
-            QueryBuilder enQuery = QueryBuilders.matchPhrasePrefixQuery("prefLabel.en", prefLabel).analyzer("english").maxExpansions(15);
-            searchQuery = QueryBuilders.boolQuery().should(nbQuery).should(noQuery).should(nnQuery).should(enQuery);
-        } else if (query.isEmpty()) {
-            searchQuery = QueryBuilders.matchAllQuery();
-        } else {
-            // add * if query only contains one word
-            if (!query.contains(" ")) {
-                query = query + " " + query + "*";
-            }
-            searchQuery = QueryBuilders.simpleQueryStringQuery(query);
-        }
-
-        BoolQueryBuilder composedQuery = QueryBuilders.boolQuery().must(searchQuery);
-
-        if (!orgPath.isEmpty()) {
-            composedQuery.filter(QueryUtil.createTermQuery("publisher.orgPath", orgPath));
-        }
+        QueryBuilder searchQuery = new ConceptSearchESQueryBuilder()
+            .addParams(params)
+            .build();
 
         NativeSearchQuery finalQuery = new NativeSearchQueryBuilder()
-            .withQuery(composedQuery)
+            .withQuery(searchQuery)
             .withIndices("ccat").withTypes("concept")
             .withPageable(pageable)
             .build();
@@ -167,11 +144,11 @@ public class ConceptSearchController {
                 .order(Terms.Order.count(false)));
         }
         if (selectedAggregationFields.contains("firstHarvested")) {
-            searchQuery.addAggregation(QueryUtil.createTemporalAggregation("firstHarvested", "harvest.firstHarvested"));
+            searchQuery.addAggregation(ESQueryUtil.createTemporalAggregation("firstHarvested", "harvest.firstHarvested"));
         }
 
         if (selectedAggregationFields.contains("publisher")) {
-            searchQuery.addAggregation(QueryUtil.createTermsAggregation("publisher", "publisher.id.keyword"));
+            searchQuery.addAggregation(ESQueryUtil.createTermsAggregation("publisher", "publisher.id.keyword"));
         }
         return searchQuery;
     }
@@ -180,38 +157,6 @@ public class ConceptSearchController {
         //In order for spring to not include Source or Remark when its parts are empty we need to null out the source object itself.
         for (ConceptDenormalized concept : concepts) {
             ConceptGetController.stripEmptyObject(concept);
-        }
-    }
-
-    static class QueryUtil {
-        static RangeQueryBuilder createRangeQueryFromXdaysToNow(int days, String dateField) {
-            long now = new Date().getTime();
-
-            return QueryBuilders.rangeQuery(dateField).from(now - days * DAY_IN_MS).to(now).format("epoch_millis");
-        }
-
-        static QueryBuilder createTermQuery(String term, String value) {
-            return value.equals(MISSING) ?
-                QueryBuilders.boolQuery().mustNot(QueryBuilders.existsQuery(term)) :
-                QueryBuilders.termQuery(term, value);
-        }
-
-
-        static AbstractAggregationBuilder createTemporalAggregation(String name, String dateField) {
-
-            return AggregationBuilders.filters(name,
-                new FiltersAggregator.KeyedFilter("last7days", QueryUtil.createRangeQueryFromXdaysToNow(7, dateField)),
-                new FiltersAggregator.KeyedFilter("last30days", QueryUtil.createRangeQueryFromXdaysToNow(30, dateField)),
-                new FiltersAggregator.KeyedFilter("last365days", QueryUtil.createRangeQueryFromXdaysToNow(365, dateField)));
-        }
-
-        static AbstractAggregationBuilder createTermsAggregation(String aggregationName, String field) {
-            return AggregationBuilders
-                .terms(aggregationName)
-                .missing(MISSING)
-                .field(field)
-                .size(MAX_VALUE) //be sure all theme counts are returned
-                .order(Terms.Order.count(false));
         }
     }
 }

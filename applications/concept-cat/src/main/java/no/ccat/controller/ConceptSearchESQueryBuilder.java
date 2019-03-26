@@ -1,4 +1,4 @@
-package no.acat.controller;
+package no.ccat.controller;
 
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
@@ -9,31 +9,23 @@ import org.slf4j.LoggerFactory;
 import java.lang.reflect.Method;
 import java.util.Map;
 
-import static no.acat.controller.ESQueryUtil.isNationalComponentQuery;
 import static org.apache.commons.lang3.StringUtils.isEmpty;
 
-public class ApiSearchESQueryBuilder {
-    private static Logger logger = LoggerFactory.getLogger(ApiSearchESQueryBuilder.class);
+public class ConceptSearchESQueryBuilder {
+    private static Logger logger = LoggerFactory.getLogger(ConceptSearchESQueryBuilder.class);
 
     private BoolQueryBuilder composedQuery;
 
-    public ApiSearchESQueryBuilder() {
+    ConceptSearchESQueryBuilder() {
         // Default query is to match all. Additional .must clauses will narrow it down.
         composedQuery = QueryBuilders.boolQuery().must(QueryBuilders.matchAllQuery());
     }
 
-    public BoolQueryBuilder build() {
+    BoolQueryBuilder build() {
         return composedQuery;
     }
 
-    public ApiSearchESQueryBuilder boostNationalComponents() {
-        // Increase score of national components in all queries
-        // in api-cat, we use modern notation nationalComponent=true, while in dataset is not as explicit
-        composedQuery.should(isNationalComponentQuery().boost(2));
-        return this;
-    }
-
-    public ApiSearchESQueryBuilder addParams(Map<String, String> params) {
+    ConceptSearchESQueryBuilder addParams(Map<String, String> params) {
         for (Map.Entry<String, String> entry : params.entrySet()) {
             String filterName = entry.getKey();
             String filterValue = entry.getValue();
@@ -41,7 +33,7 @@ public class ApiSearchESQueryBuilder {
             if (isEmpty(filterValue)) continue; //skip filters with empty values
 
             try {
-                Method filterMethod = ApiSearchParamHandlers.class.getDeclaredMethod(filterName, String.class, ApiSearchESQueryBuilder.class);
+                Method filterMethod = ConceptSearchParamHandlers.class.getDeclaredMethod(filterName, String.class, ConceptSearchESQueryBuilder.class);
                 QueryBuilder filter = (QueryBuilder) (filterMethod.invoke(null, new Object[]{filterValue, this}));
                 // Difference between .must() and .filter() is that must keeps scores, while filter does not.
                 // We use .must() because of "q"-filter assigns scores.
