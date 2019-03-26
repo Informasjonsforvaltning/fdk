@@ -32,6 +32,7 @@
         <module>informationmodel-cat</module>
 
         <module>auth-demo-api</module>
+        <module>app-authz-spring-security</module>
     </modules>
 
 
