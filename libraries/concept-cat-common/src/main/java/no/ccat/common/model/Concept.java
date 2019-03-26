@@ -39,5 +39,8 @@ public class Concept {
     @ApiModelProperty("Contact point [dcat:contactPoint]")
     private ContactPoint contactPoint;
 
+    @ApiModelProperty("Example  [skos:example]")
+    private Map<String, String> example;
+
 
 }

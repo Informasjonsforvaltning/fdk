@@ -200,6 +200,8 @@ public class RDFToModelTransformer {
 
         concept.setSubject(extractLanguageLiteral(conceptResource, DCTerms.subject));
 
+        concept.setExample(extractLanguageLiteral(conceptResource, SKOS.example));
+
         concept.setPrefLabel(extractLanguageLiteralFromLabel(conceptResource, SKOSXL.prefLabel));
 
         concept.setHiddenLabel(extractLanguageLiteralFromListOfLabels(conceptResource, SKOSXL.hiddenLabel));
