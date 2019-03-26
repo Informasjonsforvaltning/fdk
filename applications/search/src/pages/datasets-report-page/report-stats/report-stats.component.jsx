@@ -2,6 +2,7 @@ import _ from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import qs from 'qs';
 
 import localization from '../../../lib/localization';
 import { getParamFromLocation } from '../../../lib/addOrReplaceUrlParam';
@@ -23,7 +24,6 @@ export const ReportStats = props => {
     mostUsedConcepts
   } = props;
   const orgPath = getParamFromLocation(window.location, 'orgPath');
-
   fetchCatalogsIfNeeded();
 
   let name;
@@ -58,7 +58,7 @@ export const ReportStats = props => {
               <Link
                 title={localization.report.aggregation.public}
                 className="mb-3"
-                to="/"
+                to={`/${qs.stringify({ orgPath }, { addQueryPrefix: true })}`}
               >
                 <strong>
                   {datasetStats.total} {localization.report.datasets}
@@ -68,7 +68,10 @@ export const ReportStats = props => {
               <Link
                 title={localization.report.aggregation.public}
                 className="mb-3"
-                to="/?firstHarvested=7"
+                to={`/${qs.stringify(
+                  { firstHarvested: 7, orgPath },
+                  { addQueryPrefix: true }
+                )}`}
               >
                 {datasetStats.newLastWeek} {localization.report.newPastWeek}
               </Link>
@@ -79,7 +82,10 @@ export const ReportStats = props => {
               <Link
                 title={localization.report.aggregation.public}
                 className="mb-3"
-                to="/apis"
+                to={`/apis${qs.stringify(
+                  { orgPath },
+                  { addQueryPrefix: true }
+                )}`}
               >
                 <strong>
                   {apiStats.total} {localization.report.apis}
@@ -89,7 +95,10 @@ export const ReportStats = props => {
               <Link
                 title={localization.report.aggregation.public}
                 className="mb-3"
-                to="/apis?firstHarvested=7"
+                to={`/apis${qs.stringify(
+                  { firstHarvested: 7, orgPath },
+                  { addQueryPrefix: true }
+                )}`}
               >
                 {apiStats.newLastWeek} {localization.report.newPastWeek}
               </Link>
@@ -100,7 +109,10 @@ export const ReportStats = props => {
               <Link
                 title={localization.report.aggregation.public}
                 className="mb-3"
-                to="/concepts"
+                to={`/concepts${qs.stringify(
+                  { orgPath },
+                  { addQueryPrefix: true }
+                )}`}
               >
                 <strong>
                   {conceptStats.total} {localization.report.concepts}
@@ -110,7 +122,10 @@ export const ReportStats = props => {
               <Link
                 title={localization.report.aggregation.public}
                 className="mb-3"
-                to="/concepts?firstHarvested=7"
+                to={`/concepts${qs.stringify(
+                  { firstHarvested: 7, orgPath },
+                  { addQueryPrefix: true }
+                )}`}
               >
                 {conceptStats.newLastWeek} {localization.report.newPastWeek}
               </Link>
