@@ -12,7 +12,6 @@ exports[`should render FormApiServiceType, { renderLandingpage  correctly 1`] = 
       component={[Function]}
       items={Array []}
       name="serviceType"
-      name="serviceType" 
       saveObject={false}
       valueKey="code"
     />
