@@ -31,6 +31,8 @@ services:
       POSTGRES_PASSWORD: password
 
   keycloak:
+    volumes:
+      - ./applications-external/keycloak/import:/tmp/keycloak/import
     environment:
       DB_VENDOR: POSTGRES
       DB_ADDR: postgres
@@ -41,6 +43,11 @@ services:
       KEYCLOAK_PASSWORD: Pa55w0rd
       # Uncomment the line below if you want to specify JDBC parameters. The parameter below is just an example, and it shouldn't be used in production without knowledge. It is highly recommended that you read the PostgreSQL JDBC driver documentation in order to use it.
       #JDBC_PARAMS: "ssl=true"
+#      KEYCLOAK_IMPORT: /tmp/keycloak-realm.json
+
+    #command: -b 0.0.0.0 -Djboss.http.port=8081 -Dkeycloak.migration.action=export -Dkeycloak.migration.provider=dir -Dkeycloak.migration.dir=/tmp/keycloak/test
+#    command: -b 0.0.0.0 -Djboss.http.port=8081 -Dkeycloak.migration.action=import -Dkeycloak.migration.provider=dir -Dkeycloak.migration.dir=/tmp/keycloak/test -Dkeycloak.migration.strategy=OVERWRITE_EXISTING
+    command: -b 0.0.0.0 -Dkeycloak.migration.action=import -Dkeycloak.migration.provider=dir -Dkeycloak.migration.dir=/tmp/keycloak/import -Dkeycloak.migration.strategy=OVERWRITE_EXISTING
     ports:
       - "8084:8080"
 
