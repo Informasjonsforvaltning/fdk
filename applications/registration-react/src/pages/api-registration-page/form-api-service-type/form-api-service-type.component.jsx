@@ -6,28 +6,6 @@ import { Field } from 'redux-form';
 import localization from '../../../lib/localization';
 import Helptext from '../../../components/helptext/helptext.component';
 import SelectField from '../../../components/field-select/field-select.component';
-<<<<<<< HEAD
-
-const apiServiceTypeSortOrder = {
-  Kundeforhold: 0,
-  Kontoopplysninger: 1
-};
-
-export const FormApiServiceType = ({ apiServiceTypeItems }) => (
-  <form>
-    <div className="form-group">
-      <Helptext title={localization.schema.apiServiceType.title} />
-      <Field
-        name="serviceType"
-        component={SelectField}
-        items={_.sortBy(
-          apiServiceTypeItems,
-          item => apiServiceTypeSortOrder[item.code]
-        )}
-        valueKey="code"
-        saveObject={false}
-      />
-=======
 import DatepickerField from '../../../components/field-datepicker/field-datepicker.component';
 import TextAreaField from '../../../components/field-textarea/field-textarea.component';
 import InputField from '../../../components/field-input/field-input.component';
@@ -111,19 +89,11 @@ export const FormApiServiceType = ({
           </div>
         </div>
       )}
->>>>>>> initial commit
     </div>
   </form>
 );
 
 FormApiServiceType.defaultProps = {
-<<<<<<< HEAD
-  apiServiceTypeItems: []
-};
-
-FormApiServiceType.propTypes = {
-  apiServiceTypeItems: PropTypes.array
-=======
   apiServiceTypeItems: null,
   apiServiceTypeCodeFromForm: null
 };
@@ -131,5 +101,4 @@ FormApiServiceType.propTypes = {
 FormApiServiceType.propTypes = {
   apiServiceTypeItems: PropTypes.array,
   apiServiceTypeCodeFromForm: PropTypes.string
->>>>>>> initial commit
 };
