@@ -23,10 +23,14 @@ services:
       - "3030:8080"
 
   sso:
+    volumes:
+      - ./applications-external/sso/import:/tmp/keycloak/import
+      - ./applications-external/sso/export:/tmp/keycloak/export
     environment:
       - KEYCLOAK_USER
       - KEYCLOAK_PASSWORD
       - KEYCLOAK_LOGLEVEL=DEBUG
+    command: -b 0.0.0.0 -Dkeycloak.migration.action=import -Dkeycloak.migration.provider=dir -Dkeycloak.migration.dir=/tmp/keycloak/import -Dkeycloak.migration.strategy=OVERWRITE_EXISTING
     ports:
       - "8084:8080"
 
