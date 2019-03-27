@@ -5,6 +5,9 @@
       "id": {
         "type": "keyword"
       },
+      "datasetUris": {
+        "type": "keyword"
+      },
       "harvestSourceUri": {
         "type": "keyword"
       },
