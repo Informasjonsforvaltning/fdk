@@ -67,6 +67,7 @@ public class ApiSearchController {
     @ApiImplicitParams({
         @ApiImplicitParam(name = "q", dataType = "string", paramType = "query", value = "Full content search"),
         @ApiImplicitParam(name = "orgPath", dataType = "string", paramType = "query", value = "Filters on publisher's organization path (orgPath), e.g. /STAT/972417858/971040238"),
+        @ApiImplicitParam(name = "dataseturi", dataType = "string", paramType = "query", value = "Filters on uri of dataset referenced by the API."),
         @ApiImplicitParam(name = "harvestSourceUri", dataType = "string", paramType = "query", value = "Filters on harvestSourceUri external identifier"),
         @ApiImplicitParam(name = "format", dataType = "string", paramType = "query", value = "Filters on format"),
         @ApiImplicitParam(name = "title", dataType = "string", paramType = "query", value = "The title text"),
@@ -105,6 +106,7 @@ public class ApiSearchController {
         @PageableDefault()
             Pageable pageable
     ) {
+
         logger.debug("GET /apis?{}", params);
 
         QueryBuilder searchQuery = new ApiSearchESQueryBuilder()

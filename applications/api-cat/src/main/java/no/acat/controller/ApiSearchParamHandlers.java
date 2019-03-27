@@ -34,6 +34,10 @@ class ApiSearchParamHandlers {
         return QueryBuilders.termQuery("datasetReferences.id", value);
     }
 
+    static QueryBuilder dataseturi(String value, ApiSearchESQueryBuilder queryBuilder) {
+        return QueryBuilders.termQuery("datasetUris", value);
+    }
+
     static QueryBuilder active(String value, ApiSearchESQueryBuilder queryBuilder) {
         if ("true".equals(value)) {
             return isActiveQuery();
