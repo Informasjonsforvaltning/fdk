@@ -7,6 +7,7 @@ export const REFERENCEEDATA_FAILURE = 'REFERENCEEDATA_FAILURE';
 export const REFERENCEDATA_DISTRIBUTIONTYPE = 'distributiontype';
 export const REFERENCEDATA_REFERENCETYPES = 'referencetypes';
 export const REFERENCEDATA_APISTATUS = 'apistatus';
+export const REFERENCEDATA_APISERVICETYPE = 'apiservicetype';
 
 function shouldFetch(metaState) {
   const threshold = 60 * 1000; // seconds
