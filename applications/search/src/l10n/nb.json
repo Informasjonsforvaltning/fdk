@@ -15,6 +15,7 @@
   "contactPoint": "Kontaktpunkt",
   "documentation": "Dokumentasjon",
   "specification": "Spesifikasjon",
+  "serviceType":"Tjenestetype",
   "email": "E-post",
   "phone": "Telefon",
   "close": "Lukk",

@@ -27,6 +27,10 @@ import {
   iconIsOpenAccess,
   iconIsOpenLicense
 } from '../../components/api-icons';
+import {
+  getReferenceDataByCode,
+  REFERENCEDATA_APISERVICETYPE
+} from '../../redux/modules/referenceData';
 
 const renderDescription = descriptionFormatted => {
   if (!descriptionFormatted) {
@@ -313,6 +317,27 @@ const renderStickyMenu = (apiItem, informationModels) => {
   return <StickyMenu menuItems={menuItems} />;
 };
 
+const renderServiceType = (serviceType, referenceData) => {
+  if (!serviceType) {
+    return null;
+  }
+  const referenceDataServiceTypeItem = getReferenceDataByCode(
+    referenceData,
+    REFERENCEDATA_APISERVICETYPE,
+    serviceType
+  );
+  return (
+    <ListRegular title={localization.serviceType}>
+      <TwoColRow
+        col1={localization.serviceType}
+        col2={getTranslateText(
+          _.get(referenceDataServiceTypeItem, 'prefLabel')
+        )}
+      />
+    </ListRegular>
+  );
+};
+
 const renderExpiredOrDeprecatedVersion = item => {
   const statusCode = _.get(item, 'statusCode');
   const deprecationInfoExpirationDate = _.get(
@@ -366,7 +391,8 @@ export const ApiDetailsPage = ({
   referencedInformationModels,
   referenceData,
   fetchPublishersIfNeeded,
-  fetchApiStatusIfNeeded
+  fetchApiStatusIfNeeded,
+  fetchApiServiceTypeIfNeeded
 }) => {
   if (!apiItem) {
     return null;
@@ -374,6 +400,7 @@ export const ApiDetailsPage = ({
 
   fetchPublishersIfNeeded();
   fetchApiStatusIfNeeded();
+  fetchApiServiceTypeIfNeeded();
 
   const internalApiSpecUrl = `/api/apis/${apiItem.id}/spec`;
 
@@ -448,6 +475,8 @@ export const ApiDetailsPage = ({
               _.get(apiItem, 'availability')
             )}
 
+            {renderServiceType(_.get(apiItem, 'serviceType'), referenceData)}
+
             {renderDatasetReferences(referencedDatasets)}
 
             {renderInformationModelReferences(referencedInformationModels)}
@@ -472,7 +501,8 @@ ApiDetailsPage.defaultProps = {
   publisherItems: null,
   referenceData: null,
   fetchPublishersIfNeeded: () => {},
-  fetchApiStatusIfNeeded: _.noop
+  fetchApiStatusIfNeeded: _.noop,
+  fetchApiServiceTypeIfNeeded: _.noop
 };
 
 ApiDetailsPage.propTypes = {
@@ -480,5 +510,6 @@ ApiDetailsPage.propTypes = {
   publisherItems: PropTypes.object,
   referenceData: PropTypes.object,
   fetchPublishersIfNeeded: PropTypes.func,
-  fetchApiStatusIfNeeded: PropTypes.func
+  fetchApiStatusIfNeeded: PropTypes.func,
+  fetchApiServiceTypeIfNeeded: PropTypes.func
 };

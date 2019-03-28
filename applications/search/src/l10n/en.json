@@ -15,6 +15,7 @@
   "contactPoint": "Contact point",
   "documentation": "Documentation",
   "specification": "Specification",
+  "serviceType":"Service type",
   "email": "Email",
   "phone": "Phone",
   "close": "Close",
