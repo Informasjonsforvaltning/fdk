@@ -399,6 +399,10 @@ Lenke til IANAs liste over offisielle medietyper: <a href='http://www.iana.org/a
     dct:abstract """Dersom distribusjonen har åpne, offentlige data skal lisens oppgis."""@no ;
     dct:description """ """@no .
 
+# Distribusjon (API-beskrivelser)
+:Distribution_api
+    dct:abstract """Søk etter og velg API-beskrivelse fra API-katalogen."""@no ;
+    dct:description """Dersom det finnes API-distribusjoner, anbefaler vi at de først beskrives i API-katalogen og deretter knyttes til datasettbeskrivelsen."""@no .
 
 # Katalog (tittel)
 :Catalog_title
