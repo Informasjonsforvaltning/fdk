@@ -30,7 +30,7 @@ exports[`should render DatasetsReportPage correctly 1`] = `
     <div
       className="col-md-8"
     >
-      <DatasetStatsApiStatsConceptStatsResolver
+      <DatasetStatsApiStatsConceptStatsMostUsedConceptsResolver
         entityName={null}
         orgPath={null}
       />

@@ -28,4 +28,9 @@ class ConceptSearchParamHandlers {
         return (ESQueryUtil.createRangeQueryFromXdaysToNow(firstHarvested, "harvest.firstHarvested"));
     }
 
+    static QueryBuilder uris(String value, ConceptSearchESQueryBuilder queryBuilder) {
+            String[] uris = value.split(",");
+            return QueryBuilders.termsQuery("uri", uris);
+        }
+
 }

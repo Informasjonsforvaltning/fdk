@@ -2,11 +2,13 @@ import _ from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import qs from 'qs';
 
 import localization from '../../../lib/localization';
 import { getParamFromLocation } from '../../../lib/addOrReplaceUrlParam';
 import { DatasetStats } from './dataset-stats/dataset-stats.component';
 import { APIStats } from './api-stats/api-stats.component';
+import { ConceptStats } from './concept-stats/concept-stats.component';
 import { Tabs } from '../../../components/tabs/tabs.component';
 import './report-stats.scss';
 
@@ -17,10 +19,11 @@ export const ReportStats = props => {
     conceptStats,
     entityName,
     catalogs,
-    fetchCatalogsIfNeeded
+    fetchCatalogsIfNeeded,
+    publishers,
+    mostUsedConcepts
   } = props;
   const orgPath = getParamFromLocation(window.location, 'orgPath');
-
   fetchCatalogsIfNeeded();
 
   let name;
@@ -55,7 +58,7 @@ export const ReportStats = props => {
               <Link
                 title={localization.report.aggregation.public}
                 className="mb-3"
-                to="/"
+                to={`/${qs.stringify({ orgPath }, { addQueryPrefix: true })}`}
               >
                 <strong>
                   {datasetStats.total} {localization.report.datasets}
@@ -65,7 +68,10 @@ export const ReportStats = props => {
               <Link
                 title={localization.report.aggregation.public}
                 className="mb-3"
-                to="/?firstHarvested=7"
+                to={`/${qs.stringify(
+                  { firstHarvested: 7, orgPath },
+                  { addQueryPrefix: true }
+                )}`}
               >
                 {datasetStats.newLastWeek} {localization.report.newPastWeek}
               </Link>
@@ -76,7 +82,10 @@ export const ReportStats = props => {
               <Link
                 title={localization.report.aggregation.public}
                 className="mb-3"
-                to="/apis"
+                to={`/apis${qs.stringify(
+                  { orgPath },
+                  { addQueryPrefix: true }
+                )}`}
               >
                 <strong>
                   {apiStats.total} {localization.report.apis}
@@ -86,7 +95,10 @@ export const ReportStats = props => {
               <Link
                 title={localization.report.aggregation.public}
                 className="mb-3"
-                to="/apis?firstHarvested=7"
+                to={`/apis${qs.stringify(
+                  { firstHarvested: 7, orgPath },
+                  { addQueryPrefix: true }
+                )}`}
               >
                 {apiStats.newLastWeek} {localization.report.newPastWeek}
               </Link>
@@ -97,7 +109,10 @@ export const ReportStats = props => {
               <Link
                 title={localization.report.aggregation.public}
                 className="mb-3"
-                to="/concepts"
+                to={`/concepts${qs.stringify(
+                  { orgPath },
+                  { addQueryPrefix: true }
+                )}`}
               >
                 <strong>
                   {conceptStats.total} {localization.report.concepts}
@@ -107,7 +122,10 @@ export const ReportStats = props => {
               <Link
                 title={localization.report.aggregation.public}
                 className="mb-3"
-                to="/concepts?firstHarvested=7"
+                to={`/concepts${qs.stringify(
+                  { firstHarvested: 7, orgPath },
+                  { addQueryPrefix: true }
+                )}`}
               >
                 {conceptStats.newLastWeek} {localization.report.newPastWeek}
               </Link>
@@ -141,6 +159,16 @@ export const ReportStats = props => {
                     name={name}
                   />
                 )
+              },
+              {
+                title: localization.report.conceptTab,
+                body: (
+                  <ConceptStats
+                    stats={conceptStats}
+                    publishers={publishers}
+                    mostUsedConcepts={mostUsedConcepts}
+                  />
+                )
               }
             ]}
           />
@@ -153,7 +181,8 @@ export const ReportStats = props => {
 ReportStats.defaultProps = {
   fetchCatalogsIfNeeded: _.noop,
   entityName: null,
-  catalogs: null
+  catalogs: null,
+  publishers: null
 };
 
 ReportStats.propTypes = {
@@ -162,5 +191,6 @@ ReportStats.propTypes = {
   apiStats: PropTypes.object.isRequired,
   conceptStats: PropTypes.object.isRequired,
   entityName: PropTypes.string,
-  catalogs: PropTypes.object
+  catalogs: PropTypes.object,
+  publishers: PropTypes.object
 };

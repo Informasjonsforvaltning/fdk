@@ -13,8 +13,8 @@ const normalizeBucketsObject = buckets =>
   }));
 
 const normalizeAggregation = aggregation => {
-  if (aggregation.doc_count) {
-    return { count: aggregation.doc_count };
+  if (aggregation.doc_count || aggregation.value) {
+    return { count: aggregation.doc_count || aggregation.value };
   }
 
   const { buckets } = aggregation;
