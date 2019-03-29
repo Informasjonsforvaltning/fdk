@@ -1,4 +1,5 @@
 import axios from 'axios';
+import qs from 'qs';
 
 const apisUrlBase = '/catalogs';
 
@@ -30,12 +31,16 @@ export const getAPIByTitlePrefix = async (
   return response && response.data;
 };
 
-export const getApiByDatasetId = async (datasetId, returnFields) => {
-  const queryParams = `datasetid=${datasetId}${
-    returnFields ? `&returnFields=${returnFields}` : ''
-  }`;
+export const getApiByDatasetUri = async (datasetUri, returnFields) => {
+  const queryParams = `${qs.stringify(
+    {
+      dataseturi: datasetUri,
+      returnFields
+    },
+    { addQueryPrefix: true }
+  )}`;
 
-  const url = `/api/apis?${queryParams}`;
+  const url = `/api/apis${queryParams}`;
 
   const response = await axios
     .get(url)
