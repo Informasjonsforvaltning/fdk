@@ -32,7 +32,7 @@ export const getAPIByTitlePrefix = async (
 };
 
 export const getApiByDatasetUri = async (datasetUri, returnFields) => {
-  const queryParams = `${qs.stringify(
+  const query = `${qs.stringify(
     {
       dataseturi: datasetUri,
       returnFields
@@ -40,7 +40,7 @@ export const getApiByDatasetUri = async (datasetUri, returnFields) => {
     { addQueryPrefix: true }
   )}`;
 
-  const url = `/api/apis${queryParams}`;
+  const url = `/api/apis${query}`;
 
   const response = await axios
     .get(url)
