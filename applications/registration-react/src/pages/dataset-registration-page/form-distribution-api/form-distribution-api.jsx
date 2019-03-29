@@ -14,7 +14,7 @@ export const renderDistributionsAPI = componentProps => {
     <div className="form-group">
       <Helptext
         title={localization.schema.distributionAPI.helptext.api}
-        helptextItems={helptextItems.Dataset_spatial}
+        helptextItems={helptextItems.Distribution_api}
       />
       <Field
         name="distribution"
