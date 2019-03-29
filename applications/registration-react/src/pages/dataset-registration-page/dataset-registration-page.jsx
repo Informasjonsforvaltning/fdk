@@ -358,6 +358,7 @@ export class RegDataset extends React.Component {
                     helptextItems={helptextItems}
                     catalogId={catalogId}
                     datasetId={datasetId}
+                    datasetUri={_.get(datasetItem, 'uri')}
                   />
                 </FormTemplateWithState>
 
