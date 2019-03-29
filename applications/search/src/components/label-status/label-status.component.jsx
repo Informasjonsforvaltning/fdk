@@ -4,7 +4,10 @@ import cx from 'classnames';
 import _ from 'lodash';
 
 import { getTranslateText } from '../../lib/translateText';
-import { getApiStatusByCode } from '../../redux/modules/referenceData';
+import {
+  getReferenceDataByCode,
+  REFERENCEDATA_APISTATUS
+} from '../../redux/modules/referenceData';
 
 export const LabelStatus = ({ tag: Tag, statusCode, referenceData }) => {
   if (statusCode === 'STABLE' || !referenceData) {
@@ -18,7 +21,14 @@ export const LabelStatus = ({ tag: Tag, statusCode, referenceData }) => {
   });
 
   const apiStatusLabel = getTranslateText(
-    _.get(getApiStatusByCode(referenceData, statusCode), 'prefLabel')
+    _.get(
+      getReferenceDataByCode(
+        referenceData,
+        REFERENCEDATA_APISTATUS,
+        statusCode
+      ),
+      'prefLabel'
+    )
   );
 
   return (

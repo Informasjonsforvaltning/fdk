@@ -79,5 +79,5 @@ export function referenceDataReducer(state = initialState, action) {
 export const getReferenceDataByUri = (referenceData, code, uri) =>
   _.find(_.get(referenceData, ['items', code]), { uri });
 
-export const getApiStatusByCode = (referenceData, code) =>
-  _.find(_.get(referenceData, ['items', 'apistatus']), { code });
+export const getReferenceDataByCode = (referenceData, dataType, code) =>
+  _.find(_.get(referenceData, ['items', dataType]), { code });
