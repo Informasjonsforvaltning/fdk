@@ -294,8 +294,8 @@
     "conceptsRelatedToDataset": "omgrep er knytta til datasett",
     "conceptMostUsed": "Mest brukte omgrep",
     "countConceptsCatalogsLabel": "verksemder har omgrep i Felles datakatalog",
-    "conceptsFrom": "Verksemdens omgrepskataloger",
-    "conceptsCatalog": "Omgrepskataloger"
+    "conceptsFrom": "Omgrepskatalogar frå",
+    "conceptsCatalog": "Omgrepskatalogar"
   },
   "registration": {
     "title": "Korleis komme i gong med registrering"
