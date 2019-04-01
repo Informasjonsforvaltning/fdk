@@ -10,7 +10,7 @@ import { StatBox } from '../stat-box/stat-box.component';
 import { getPublisherByOrgNr } from '../../../../redux/modules/publishers';
 
 export const ConceptStats = props => {
-  const { stats, publishers, mostUsedConcepts } = props;
+  const { stats, publishers, mostUsedConcepts, isFilterActive } = props;
 
   if (!stats) {
     return null;
@@ -75,12 +75,14 @@ export const ConceptStats = props => {
 
   const catalogList = (
     <div className="d-flex flex-column p-5 border-top">
-      <div className="statbox d-flex justify-content-center">
-        <span className="stat-box--number">
-          {Object.keys(_.get(stats, 'publisher', [])).length}&nbsp;
-        </span>
-        <span className="">{localization.report.countCatalogsLabel}</span>
-      </div>
+      {!isFilterActive && (
+        <div className="statbox d-flex justify-content-center">
+          <span className="stat-box--number">
+            {Object.keys(_.get(stats, 'publisher', [])).length}&nbsp;
+          </span>
+          <span className="">{localization.report.countCatalogsLabel}</span>
+        </div>
+      )}
 
       {Object.keys(_.get(stats, 'publisher', [])).length > 0 && (
         <React.Fragment>
@@ -110,10 +112,12 @@ export const ConceptStats = props => {
 
 ConceptStats.defaultProps = {
   stats: null,
-  publishers: null
+  publishers: null,
+  isFilterActive: false
 };
 
 ConceptStats.propTypes = {
   stats: PropTypes.object,
-  publishers: PropTypes.object
+  publishers: PropTypes.object,
+  isFilterActive: PropTypes.bool
 };
