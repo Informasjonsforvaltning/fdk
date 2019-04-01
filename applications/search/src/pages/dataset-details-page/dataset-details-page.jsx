@@ -247,7 +247,7 @@ const renderDistribution = (
   distribution,
   referenceData
 ) => {
-  if (!distribution) {
+  if (!(distribution && distribution.length > 0)) {
     return null;
   }
   const distributionItems = (distribution, size) =>
