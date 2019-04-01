@@ -9,6 +9,7 @@ import { PublishersSelect } from './publishers-select/publishers-select.componen
 import { PublishersTree } from './publishers-tree/publishers-tree.component';
 import { getParamFromLocation } from '../../lib/addOrReplaceUrlParam';
 import { ResolvedReportStats } from './report-stats/resolved-report-stats';
+import { isFilterActive } from './filter-helper';
 
 export function DatasetsReportPage(props) {
   function selectPublisher(publisher) {
@@ -41,9 +42,15 @@ export function DatasetsReportPage(props) {
     <section className="container">
       <div className="row">
         <div className="col-md-4">
-          <Button className="fdk-button" onClick={clearSearch} color="primary">
-            {localization.query.clear}
-          </Button>
+          {isFilterActive({ orgPath }) && (
+            <Button
+              className="fdk-button fade-in-500"
+              onClick={clearSearch}
+              color="primary"
+            >
+              {localization.query.clear}
+            </Button>
+          )}
           <PublishersSelect
             publishers={props.publishers}
             onChange={selectPublisher}
