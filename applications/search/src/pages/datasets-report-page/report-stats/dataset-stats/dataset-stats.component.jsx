@@ -33,7 +33,7 @@ const calculateSize = (number, total) => {
 };
 
 export const DatasetStats = props => {
-  const { stats, orgPath, catalogs, name } = props;
+  const { stats, orgPath, catalogs, name, isFilterActive } = props;
 
   if (!stats) {
     return null;
@@ -352,10 +352,14 @@ export const DatasetStats = props => {
 
   const catalogList = (
     <div className="d-flex flex-column p-5 border-top">
-      <StatBox label={localization.report.countCatalogsLabel}>
-        <img src="/static/img/icon-catalog-dataset.svg" alt="icon" />
-        <span className="stat-box--number">{Object.keys(catalogs).length}</span>
-      </StatBox>
+      {!isFilterActive && (
+        <StatBox label={localization.report.countCatalogsLabel}>
+          <img src="/static/img/icon-catalog-dataset.svg" alt="icon" />
+          <span className="stat-box--number">
+            {Object.keys(catalogs).length}
+          </span>
+        </StatBox>
+      )}
       <div className="d-flex mt-5 mb-5 justify-content-center">
         <strong>
           {localization.report.catalogsFrom} {name}
@@ -387,12 +391,14 @@ DatasetStats.defaultProps = {
   stats: null,
   orgPath: null,
   catalogs: null,
-  name: null
+  name: null,
+  isFilterActive: false
 };
 
 DatasetStats.propTypes = {
   stats: PropTypes.object,
   orgPath: PropTypes.string,
   catalogs: PropTypes.object,
-  name: PropTypes.string
+  name: PropTypes.string,
+  isFilterActive: PropTypes.bool
 };

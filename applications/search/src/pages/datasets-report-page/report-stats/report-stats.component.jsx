@@ -12,6 +12,13 @@ import { ConceptStats } from './concept-stats/concept-stats.component';
 import { Tabs } from '../../../components/tabs/tabs.component';
 import './report-stats.scss';
 
+const isFilterActive = props => {
+  if (_.get(props, 'orgPath')) {
+    return true;
+  }
+  return false;
+};
+
 export const ReportStats = props => {
   const {
     datasetStats,
@@ -146,6 +153,7 @@ export const ReportStats = props => {
                     orgPath={orgPath}
                     catalogs={catalogs}
                     name={name}
+                    isFilterActive={isFilterActive(props)}
                   />
                 )
               },
@@ -157,6 +165,7 @@ export const ReportStats = props => {
                     orgPath={orgPath}
                     catalogs={catalogs}
                     name={name}
+                    isFilterActive={isFilterActive(props)}
                   />
                 )
               },
@@ -167,6 +176,7 @@ export const ReportStats = props => {
                     stats={conceptStats}
                     publishers={publishers}
                     mostUsedConcepts={mostUsedConcepts}
+                    isFilterActive={isFilterActive(props)}
                   />
                 )
               }
