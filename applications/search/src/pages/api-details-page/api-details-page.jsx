@@ -283,6 +283,12 @@ const renderStickyMenu = (apiItem, informationModels) => {
       prefLabel: localization.api.endpoints.operations
     });
   }
+  if (_.get(apiItem, 'serviceType')) {
+    menuItems.push({
+      name: localization.serviceType,
+      prefLabel: localization.serviceType
+    });
+  }
   if (
     _.get(apiItem, ['apiSpecification', 'info', 'termsOfService']) ||
     _.get(apiItem, ['apiSpecification', 'info', 'license']) ||
