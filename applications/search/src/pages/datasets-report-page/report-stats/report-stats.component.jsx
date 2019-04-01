@@ -10,14 +10,8 @@ import { DatasetStats } from './dataset-stats/dataset-stats.component';
 import { APIStats } from './api-stats/api-stats.component';
 import { ConceptStats } from './concept-stats/concept-stats.component';
 import { Tabs } from '../../../components/tabs/tabs.component';
+import { isFilterActive } from '../filter-helper';
 import './report-stats.scss';
-
-const isFilterActive = props => {
-  if (_.get(props, 'orgPath')) {
-    return true;
-  }
-  return false;
-};
 
 export const ReportStats = props => {
   const {
