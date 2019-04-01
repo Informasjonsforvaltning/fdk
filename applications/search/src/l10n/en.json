@@ -335,7 +335,8 @@
     "altLabel": "Alternative term",
     "hiddenLabel": "Hidden term",
     "definition": "Definition",
-    "identifier": "Identifier"
+    "identifier": "Identifier",
+    "sample": "Sample"
   },
   "infoMod": {
     "infoModHeader": "Information model",
