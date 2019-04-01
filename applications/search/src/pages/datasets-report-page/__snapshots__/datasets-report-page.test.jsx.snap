@@ -10,14 +10,6 @@ exports[`should render DatasetsReportPage correctly 1`] = `
     <div
       className="col-md-4"
     >
-      <Button
-        className="fdk-button"
-        color="primary"
-        onClick={[Function]}
-        tag="button"
-      >
-        Clear
-      </Button>
       <PublishersSelect
         onChange={[Function]}
         value={null}
