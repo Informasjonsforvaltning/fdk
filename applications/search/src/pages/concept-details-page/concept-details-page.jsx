@@ -154,6 +154,19 @@ const renderContactPoint = contactPoint => {
   );
 };
 
+const renderSample = sample => {
+  if (!(sample && getTranslateText(sample))) {
+    return null;
+  }
+  return (
+    <ListRegular title={localization.concept.sample}>
+      <div className="d-flex list-regular--item">
+        {getTranslateText(sample)}
+      </div>
+    </ListRegular>
+  );
+};
+
 const renderStickyMenu = conceptItem => {
   const menuItems = [];
   menuItems.push({
@@ -164,6 +177,12 @@ const renderStickyMenu = conceptItem => {
     menuItems.push({
       name: localization.concept.remarkHeader,
       prefLabel: localization.concept.remarkHeader
+    });
+  }
+  if (getTranslateText(_.get(conceptItem, 'example'))) {
+    menuItems.push({
+      name: localization.concept.sample,
+      prefLabel: localization.concept.sample
     });
   }
   if (getTranslateText(_.get(conceptItem, 'subject'))) {
@@ -239,6 +258,7 @@ export const ConceptDetailsPage = props => {
             {renderDescription(_.get(conceptItem, ['definition', 'text']))}
             {renderSource(_.get(conceptItem, ['definition', 'source']))}
             {renderRemark(_.get(conceptItem, ['definition', 'remark']))}
+            {renderSample(_.get(conceptItem, 'example'))}
             {renderSubject(_.get(conceptItem, 'subject'))}
             {renderTerms(
               _.get(conceptItem, 'altLabel'),

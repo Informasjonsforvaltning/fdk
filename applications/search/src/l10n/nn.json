@@ -336,7 +336,8 @@
     "altLabel": "Tillaten term",
     "hiddenLabel": "Frårådd term",
     "definition": "Definisjon",
-    "identifier": "Identifikator"
+    "identifier": "Identifikator",
+    "sample": "Eksempel"
   },
   "infoMod": {
     "infoModHeader": "Informasjonsmodell",
