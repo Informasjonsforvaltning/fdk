@@ -157,6 +157,7 @@
     "informationModelDefaultText": "Informasjonsmodell",
     "distributions": "Andre distribusjoner",
     "distributionsAPI": "API-distribusjoner ({0})",
+    "distibutionsAPILabel": "API-distribusjoner",
     "distribution": {
       "title": "Distribusjon",
       "format": "Tilgjengelige format",

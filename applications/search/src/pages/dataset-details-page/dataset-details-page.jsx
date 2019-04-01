@@ -329,6 +329,13 @@ const renderAPIDistribution = (
 
 const renderStickyMenu = datasetItem => {
   const menuItems = [];
+
+  const distributionTypeAPI = _.get(datasetItem, 'distribution', []).filter(
+    item => item.accessService
+  );
+  const distributionsNotTypeAPI = _.get(datasetItem, 'distribution', []).filter(
+    item => !item.accessService
+  );
   if (_.get(datasetItem, 'description')) {
     menuItems.push({
       name: getTranslateText(_.get(datasetItem, 'title')),
@@ -341,7 +348,16 @@ const renderStickyMenu = datasetItem => {
       prefLabel: localization.dataset.keyInfo
     });
   }
-  if (_.get(datasetItem, 'distribution')) {
+  if (distributionTypeAPI && distributionTypeAPI.length > 0) {
+    menuItems.push({
+      name: localization.formatString(
+        localization.dataset.distributionsAPI,
+        distributionTypeAPI.length
+      ),
+      prefLabel: localization.dataset.distibutionsAPILabel
+    });
+  }
+  if (distributionsNotTypeAPI && distributionsNotTypeAPI.length > 0) {
     menuItems.push({
       name: localization.dataset.distributions,
       prefLabel: localization.dataset.distributions

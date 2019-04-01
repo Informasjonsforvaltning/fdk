@@ -157,6 +157,7 @@
     "informationModelDefaultText": "Information model",
     "distributions": "Other distributions",
     "distributionsAPI": "API distributions ({0})",
+    "distibutionsAPILabel": "API distributions",
     "distribution": {
       "title": "Distribution",
       "format": "Format",
