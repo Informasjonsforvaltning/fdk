@@ -16,9 +16,7 @@ const mapProps = {
   apiStats: props => memoizedGetApiStats(_.get(props, 'orgPath')),
   conceptStats: props => memoizedGetConceptStats(_.get(props, 'orgPath')),
   mostUsedConcepts: async props => {
-    const conceptStats = await memoizedGetConceptStats({
-      orgPath: props.orgPath
-    });
+    const conceptStats = await memoizedGetConceptStats(_.get(props, 'orgPath'));
     const datasetCountsByConceptUri = _.get(
       conceptStats,
       'datasetCountsByConceptUri',
