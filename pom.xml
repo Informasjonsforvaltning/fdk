@@ -19,6 +19,7 @@
     <modules>
         <module>applications</module>
         <module>libraries</module>
+        <module>keycloak-oidc-protocol-rest-mapper</module>
     </modules>
 
 
