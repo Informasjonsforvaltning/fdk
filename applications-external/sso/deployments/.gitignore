@@ -1,0 +1,5 @@
+*.deployed
+*.undeployed
+*.isdeploying
+*.dodeploy
+*.pending
