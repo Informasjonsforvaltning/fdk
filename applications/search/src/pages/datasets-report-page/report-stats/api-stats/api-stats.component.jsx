@@ -106,7 +106,11 @@ export const APIStats = props => {
       className="d-flex justify-content-between fdk-bg-color-grey-4 rounded p-4 mb-1"
       key={formatRecord.key}
     >
-      <div>{formatRecord.key}</div>
+      <div>
+        {formatRecord.key === 'MISSING'
+          ? localization.unknown
+          : formatRecord.key}
+      </div>
       <div>
         <strong>
           <Link
