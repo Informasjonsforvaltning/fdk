@@ -301,7 +301,7 @@ const renderAPIDistribution = (
         id: apiId
       });
       return (
-        <div key={`reference-${index}`} className="list-regular--item">
+        <div key={`reference-${index}`} className="list-regular--item pt-5">
           <SearchHitHeader
             title={referencedApi.title}
             titleLink={`/apis/${encodeURIComponent(referencedApi.id)}`}
