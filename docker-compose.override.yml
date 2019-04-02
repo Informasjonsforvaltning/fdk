@@ -26,6 +26,9 @@ services:
     volumes:
       - ./applications-external/sso/import:/tmp/keycloak/import
       - ./applications-external/sso/export:/tmp/keycloak/export
+# until better method is found, use this for deploy:
+# cp keycloak-oidc-protocol-rest-mapper/target/keycloak-oidc-protocol-rest-mapper.jar applications-external/sso/deployments/
+      - ./applications-external/sso/deployments:/opt/jboss/keycloak/standalone/deployments
     environment:
       - KEYCLOAK_USER
       - KEYCLOAK_PASSWORD
