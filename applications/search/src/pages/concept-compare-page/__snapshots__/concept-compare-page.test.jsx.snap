@@ -34,7 +34,7 @@ exports[`should render ConceptComparePage correctly with conceptItem 1`] = `
             >
               <tr>
                 <th>
-                  Concept
+                  Preferred term
                 </th>
                 <th
                   key="row-title-prefLabel-0"
