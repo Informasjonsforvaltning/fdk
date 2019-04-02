@@ -12,9 +12,9 @@ const memoizedGetConceptStats = _.memoize(getConceptStats);
 const memoizedGetConceptsByURIs = _.memoize(getConceptsByURIs);
 
 const mapProps = {
-  datasetStats: props => memoizedGetDatasetStats({ orgPath: props.orgPath }),
-  apiStats: props => memoizedGetApiStats({ orgPath: props.orgPath }),
-  conceptStats: props => memoizedGetConceptStats({ orgPath: props.orgPath }),
+  datasetStats: props => memoizedGetDatasetStats(_.get(props, 'orgPath')),
+  apiStats: props => memoizedGetApiStats(_.get(props, 'orgPath')),
+  conceptStats: props => memoizedGetConceptStats(_.get(props, 'orgPath')),
   mostUsedConcepts: async props => {
     const conceptStats = await memoizedGetConceptStats({
       orgPath: props.orgPath

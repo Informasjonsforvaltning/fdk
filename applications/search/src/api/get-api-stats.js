@@ -38,9 +38,9 @@ export const statsUrl = query =>
     { addQueryPrefix: true }
   )}`;
 
-export const getApiStats = async query => {
+export const getApiStats = async orgPath => {
   const response = await axios
-    .get(statsUrl(query))
+    .get(statsUrl({ orgPath }))
     .catch(e => console.log(JSON.stringify(e))); // eslint-disable-line no-console
 
   return response && extractStats(normalizeAggregations(response.data));

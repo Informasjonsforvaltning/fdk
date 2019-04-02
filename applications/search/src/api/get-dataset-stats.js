@@ -69,9 +69,9 @@ export const statsUrl = query =>
     { addQueryPrefix: true }
   )}`;
 
-export const getDatasetStats = query =>
+export const getDatasetStats = orgPath =>
   axios
-    .get(statsUrl(query))
+    .get(statsUrl({ orgPath }))
     .then(response => response && response.data)
     .then(normalizeAggregations)
     .then(extractStats)
