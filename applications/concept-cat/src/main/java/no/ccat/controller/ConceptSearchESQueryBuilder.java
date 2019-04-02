@@ -32,17 +32,21 @@ public class ConceptSearchESQueryBuilder {
 
             if (isEmpty(filterValue)) continue; //skip filters with empty values
 
-            try {
-                Method filterMethod = ConceptSearchParamHandlers.class.getDeclaredMethod(filterName, String.class, ConceptSearchESQueryBuilder.class);
-                QueryBuilder filter = (QueryBuilder) (filterMethod.invoke(null, new Object[]{filterValue, this}));
-                // Difference between .must() and .filter() is that must keeps scores, while filter does not.
-                // We use .must() because of "q"-filter assigns scores.
-                // For other parameters, scores are irrelevant and therefore can be included safely.
-                if (filter != null) {
-                    composedQuery.must(filter);
+            Method[] methods = ConceptSearchParamHandlers.class.getDeclaredMethods();
+            for (Method method : methods) {
+                if (method.getName().equalsIgnoreCase(filterName)) {
+                    try {
+                        QueryBuilder filter = (QueryBuilder) (method.invoke(null, new Object[]{filterValue, this}));
+                        // Difference between .must() and .filter() is that must keeps scores, while filter does not.
+                        // We use .must() because of "q"-filter assigns scores.
+                        // For other parameters, scores are irrelevant and therefore can be included safely.
+                        if (filter != null) {
+                            composedQuery.must(filter);
+                        }
+                    } catch (ReflectiveOperationException e) {
+                        throw new RuntimeException("Filter invocation error:" + filterName);
+                    }
                 }
-            } catch (Exception e) {
-                // skip silently params that are not implemented as filters
             }
         }
         return this;
