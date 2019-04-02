@@ -40,9 +40,9 @@ const extractConcepts = data => _.get(data, '_embedded.concepts');
 const extractConceptUris = data =>
   _.map(extractConcepts(data), 'uri').join(',');
 
-export const getConceptStats = query =>
+export const getConceptStats = orgPath =>
   axios
-    .get(statsUrl(query))
+    .get(statsUrl({ orgPath }))
     .then(response => response && response.data)
     .then(async data => {
       const stats = extractStats(normalizeAggregations(data));
