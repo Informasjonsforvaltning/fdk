@@ -71,7 +71,7 @@ export class RegDataset extends React.Component {
   constructor(props) {
     super(props);
 
-    const { catalogId } = this.props;
+    const { catalogId, fetchReferenceDataLos } = this.props;
 
     this.props.fetchDatasetsIfNeeded(catalogId);
     this.props.fetchHelptextsIfNeeded();
@@ -80,6 +80,7 @@ export class RegDataset extends React.Component {
     this.props.fetchThemesIfNeeded();
     this.props.fetchReferenceTypesIfNeeded();
     this.props.fetchOpenLicensesIfNeeded();
+    fetchReferenceDataLos();
     this.deleteApi = this.deleteApi.bind(this);
   }
 
@@ -482,6 +483,7 @@ RegDataset.defaultProps = {
   fetchOpenLicensesIfNeeded: _.noop,
   fetchHelptextsIfNeeded: _.noop,
   fetchDatasetsIfNeeded: _.noop,
+  fetchReferenceDataLos: _.noop,
   isSaving: false,
   error: null,
   justPublishedOrUnPublished: false,
@@ -524,6 +526,7 @@ RegDataset.propTypes = {
   fetchOpenLicensesIfNeeded: PropTypes.func,
   fetchHelptextsIfNeeded: PropTypes.func,
   fetchDatasetsIfNeeded: PropTypes.func,
+  fetchReferenceDataLos: PropTypes.func,
   isSaving: PropTypes.bool,
   error: PropTypes.number,
   justPublishedOrUnPublished: PropTypes.bool,
