@@ -86,7 +86,7 @@ export class RegDataset extends React.Component {
   componentWillMount() {
     const { catalogId } = this.props;
     this.props.fetchReferenceDatasetsIfNeeded(
-      `/catalogs/${catalogId}/datasets`
+      `/catalogs/${catalogId}/datasets?size=100`
     );
   }
 
