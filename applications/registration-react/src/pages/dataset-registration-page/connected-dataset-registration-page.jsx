@@ -15,6 +15,7 @@ import {
   getDatasetItemByDatasetiId
 } from '../../redux/modules/datasets';
 import { fetchHelptextsIfNeeded } from '../../redux/modules/helptexts';
+import { fetchReferenceDataLosIfNeededAction } from '../../redux/modules/referenceData';
 import { getDatasetFormStatusById } from '../../redux/modules/dataset-form-status';
 import { RegDataset } from './dataset-registration-page';
 
@@ -29,7 +30,8 @@ const mapStateToProps = (
     openlicenses,
     form,
     datasetFormStatus,
-    datasets
+    datasets,
+    referenceData
   },
   ownProps
 ) => {
@@ -131,7 +133,8 @@ const mapStateToProps = (
     ),
     datasetItem: getDatasetItemByDatasetiId(datasets, catalogId, id),
     catalogId,
-    datasetId: id
+    datasetId: id,
+    losItems: _.get(referenceData, ['items', 'los'])
   };
 };
 
@@ -146,7 +149,9 @@ const mapDispatchToProps = dispatch => ({
   fetchHelptextsIfNeeded: () => dispatch(fetchHelptextsIfNeeded()),
   deleteDatasetItem: (catalogId, id) =>
     dispatch(deleteDatasetItemAction(catalogId, id)),
-  fetchDatasetsIfNeeded: catalogId => dispatch(fetchDatasetsIfNeeded(catalogId))
+  fetchDatasetsIfNeeded: catalogId =>
+    dispatch(fetchDatasetsIfNeeded(catalogId)),
+  fetchReferenceDataLos: () => dispatch(fetchReferenceDataLosIfNeededAction())
 });
 
 export const ConnectedDatasetRegistrationPage = connect(
