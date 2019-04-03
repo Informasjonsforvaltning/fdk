@@ -70,14 +70,7 @@ public class Controller {
     @CrossOrigin
     @RequestMapping(value = "/los", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public List<LosNode> losFullSearch()  {
-        return losService.search(null);
-    }
-
-    @CrossOrigin
-    @RequestMapping(value = "/los/{keyword}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public List<LosNode> los(@PathVariable(name = "keyword") String keyword) {
-
-        return losService.search(keyword);
+        return losService.getAll();
     }
 
     @CrossOrigin

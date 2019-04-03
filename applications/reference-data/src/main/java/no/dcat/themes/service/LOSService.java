@@ -13,7 +13,10 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class LOSService {
@@ -21,40 +24,6 @@ public class LOSService {
     public static final String defaultLanguage = "nb";
     static private final Logger logger = LoggerFactory.getLogger(LOSService.class);
     private static List<LosNode> allLosNodes;
-
-    public List<LosNode> search(String keyword) {
-        if (keyword == null || keyword.isEmpty()) {
-            return allLosNodes;
-        }
-        List<LosNode> results = new ArrayList<>();
-
-        for (LosNode node : allLosNodes) {
-            if (searchHit(keyword, node)) {
-                results.add(node);
-            }
-        }
-        return results;
-    }
-
-    private static boolean searchHit(String keyword, LosNode node) {
-
-        if (caseInsensitiveSearchInMapValues(keyword, node.getName().values())) {
-            return true;
-        }
-        if (node.getSynonyms() != null && caseInsensitiveSearchInMapValues(keyword, node.getSynonyms())) {
-            return true;
-        }
-        return false;
-    }
-
-    private static boolean caseInsensitiveSearchInMapValues(String keyword, Collection<String> c) {
-        for (String val : c) {
-            if (val.equalsIgnoreCase(keyword)) {
-                return true;
-            }
-        }
-        return false;
-    }
 
     private static String getMostSaneName(LosNode node) {
         if (node.getName().containsKey("nb")) {
@@ -172,6 +141,10 @@ public class LOSService {
         }
 
         return null;
+    }
+
+    public List<LosNode> getAll() {
+        return allLosNodes;
     }
 
     @PostConstruct
