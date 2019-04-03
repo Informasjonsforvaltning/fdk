@@ -41,9 +41,13 @@ export const ConceptStats = props => {
     ));
 
   const renderMostUsedConcepts = (
-    <div className="d-flex flex-column align-items-center py-5">
-      <div>{localization.report.conceptMostUsed}:</div>
-      <div>{renderConceptItem(mostUsedConcepts)}</div>
+    <div className="py-5">
+      <div className="d-flex justify-content-center">
+        {localization.report.conceptMostUsed}:
+      </div>
+      <div className="d-flex justify-content-center flex-wrap">
+        {renderConceptItem(mostUsedConcepts)}
+      </div>
     </div>
   );
 
