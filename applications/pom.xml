@@ -30,6 +30,7 @@
         <module>api-cat</module>
         <module>concept-cat</module>
         <module>informationmodel-cat</module>
+        <module>user-api</module>
     </modules>
 
 
