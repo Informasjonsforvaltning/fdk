@@ -6,10 +6,7 @@ import no.dcat.shared.LocationUri;
 import no.dcat.shared.SkosCode;
 import no.dcat.shared.Subject;
 import no.dcat.shared.Types;
-import no.dcat.themes.service.CodesService;
-import no.dcat.themes.service.HelpTextService;
-import no.dcat.themes.service.SubjectsService;
-import no.dcat.themes.service.ThemesService;
+import no.dcat.themes.service.*;
 import org.apache.jena.shared.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,6 +44,9 @@ public class Controller {
     @Autowired
     private SubjectsService subjectsService;
 
+    @Autowired
+    private LOSService losService;
+
     static private final Logger logger = LoggerFactory.getLogger(Controller.class);
 
 
@@ -67,13 +67,16 @@ public class Controller {
 
     }
 
+    @CrossOrigin
+    @RequestMapping(value = "/los", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public List<LosNode> losFullSearch()  {
+        return losService.getAll();
+    }
 
     @CrossOrigin
     @RequestMapping(value = "/themes", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public List<DataTheme> themes() {
-
         return themesService.getThemes();
-
     }
 
     @CrossOrigin
