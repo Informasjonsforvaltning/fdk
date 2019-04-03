@@ -212,10 +212,6 @@ public class LOSService {
     public List<String> generateLosPath(LosNode node) {
         List<String> generatedPaths = new ArrayList<>();
 
-        if (node.getParents() == null || node.getParents().isEmpty()) {
-            return new ArrayList<>();
-        }
-
         //Hovedkategori - /<keyword>
         if (node.getParents() == null || node.getParents().isEmpty()) {
             generatedPaths.add("/" + getMostSaneName(node));
