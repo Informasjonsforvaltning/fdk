@@ -70,6 +70,7 @@
     "react-select": "^1.2.1",
     "react-tag-autocomplete": "^5.7.0",
     "react-tagsinput": "^3.19.0",
+    "react-treeview": "^0.4.7",
     "reactstrap": "^6.3.0",
     "recompose": "^0.30.0",
     "redux": "^3.7.2",

@@ -118,3 +118,12 @@ export function referenceDataReducer(state = initialState, action) {
 
 export const getReferenceDataByUri = (referenceData, code, uri) =>
   _.find(_.get(referenceData, ['items', code]), { uri });
+
+export const getAllLosParentNodes = losItems =>
+  _.filter(losItems, { parents: null });
+
+export const getAllLosChildrenNodes = (losItems, children) =>
+  _.filter(losItems, item => item.isTema && _.includes(children, item.uri));
+
+export const getTopicsLosChildren = (losItems, children) =>
+  _.filter(losItems, item => !item.isTema && _.includes(children, item.uri));

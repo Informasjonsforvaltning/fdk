@@ -22,6 +22,7 @@ import { ConnectedFormContents } from './form-contents/connected-form-contents.c
 import { StatusBarWithState } from '../../components/status-bar/status-bar.component';
 import { ConnectedFormPublish } from './connected-form-publish/connected-form-publish';
 import { ConnectedFormDistributionAPI } from './form-distribution-api/connected-form-distribution-api';
+import { ConnectedFormLOS } from './form-los/connected-form-los.component';
 import {
   titleValues,
   accessRightsValues,
@@ -150,7 +151,8 @@ export class RegDataset extends React.Component {
       justPublishedOrUnPublished,
       registrationStatus,
       catalogId,
-      datasetId
+      datasetId,
+      losItems
     } = this.props;
     const datasetURL = window.location.pathname;
     const catalogDatasetsURL = datasetURL.substring(
@@ -198,7 +200,8 @@ export class RegDataset extends React.Component {
             frequencyItems &&
             referenceTypesItems &&
             referenceDatasetsItems &&
-            openLicenseItems && (
+            openLicenseItems &&
+            losItems && (
               <div className="col-md-8">
                 <FormTemplateWithState
                   title={localization.datasets.formTemplates.title}
@@ -222,6 +225,21 @@ export class RegDataset extends React.Component {
                 >
                   <ConnectedFormAccessRights
                     datasetItem={datasetItem}
+                    helptextItems={helptextItems}
+                    catalogId={catalogId}
+                    datasetId={datasetId}
+                  />
+                </FormTemplateWithState>
+
+                <FormTemplateWithState
+                  title={localization.datasets.formTemplates.theme}
+                  required
+                  values={themesValues(formThemes.values)}
+                  syncErrors={formThemes.syncErrors}
+                >
+                  <ConnectedFormLOS
+                    datasetItem={datasetItem}
+                    losItems={losItems}
                     helptextItems={helptextItems}
                     catalogId={catalogId}
                     datasetId={datasetId}
@@ -488,7 +506,8 @@ RegDataset.defaultProps = {
   error: null,
   justPublishedOrUnPublished: false,
   deleteDatasetItem: _.noop,
-  history: null
+  history: null,
+  losItems: null
 };
 
 RegDataset.propTypes = {
@@ -531,5 +550,6 @@ RegDataset.propTypes = {
   error: PropTypes.number,
   justPublishedOrUnPublished: PropTypes.bool,
   deleteDatasetItem: PropTypes.func,
-  history: PropTypes.object
+  history: PropTypes.object,
+  losItems: PropTypes.array
 };
