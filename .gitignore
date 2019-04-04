@@ -1,19 +1,19 @@
-values_ut1.yaml
-target/
+# IDE files
 *.iml
-.idea/
-logs/
-/phantomjsdriver.log
-/test/*.zip
-/test/lib/
-/portal/webapp/phantomjsdriver.log
-**/phantomjsdriver.log
-/test/zip/
 .DS_Store
-.hot-update.js
-node_modules/
+.idea
+
+# linked volumes
+data
 tdb
-catalog-v001.xml
+logs
+reports
+
+# compilation targets
+node_modules
+target
+
+# configuration
 /conf/subjects/
 /conf/idporten/*
 /conf/altinn/
@@ -23,15 +23,6 @@ catalog-v001.xml
 !/conf/idporten/ssldevelop.p12
 !/conf/dummy-client-SSL-cert.p12
 /conf/environments/
-applications/end2end-test/data/
-applications/registration-api/data/
-data
-applications/registration-api/.settings/org.eclipse.m2e.core.prefs
-applications/registration-api/.settings/org.eclipse.jdt.core.prefs
-applications/registration-api/.settings/org.eclipse.core.resources.prefs
-applications/registration-api/.project
-applications/registration-api/.classpath
-*.prefs
-*.project
-*.classpath
-reports/
+
+# random ad hoc exclusions, not sorted
+phantomjsdriver.log
