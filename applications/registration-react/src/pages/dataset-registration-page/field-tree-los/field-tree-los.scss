@@ -1,0 +1,32 @@
+@import '../../../../node_modules/designsystemet/fdk-designsystem-bootstrap4/scss/colors.scss';
+
+.tree-view {
+  overflow-x: hidden;
+  .tree-view_item {
+    white-space: nowrap;
+  }
+  .tree-view_children {
+    margin-left: 32px;
+  }
+  .checkbox {
+    label {
+      margin-bottom: 0 !important;
+    }
+  }
+  .checkbox.indent {
+    margin-left: 19px;
+  }
+  .tree-view_arrow {
+    font-size: 1.8rem;
+    margin-left: 0.25rem;
+  }
+}
+
+.fdk-filter-pill {
+  cursor: pointer;
+  &:after {
+    content: '\2715';
+    color: $color-white;
+    margin-left: 8px;
+  }
+}

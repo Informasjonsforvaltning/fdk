@@ -331,6 +331,14 @@
       "helptext": {
         "datasetReferences": "Søk etter og velg datasettbeskrivelse(r)"
       }
+    },
+    "los": {
+      "title": "LOS tema",
+      "themeLabel": "Tema",
+      "topicsLabel": "Foreslåtte emner",
+      "helptext": {
+        "title": "Velg ett eller flere tema og/eller emner"
+      }
     }
   },
   "inactiveSessionWarning": {

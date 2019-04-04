@@ -329,6 +329,14 @@
       "helptext": {
         "datasetReferences": "Search and choose related datasets"
       }
+    },
+    "los": {
+      "title": "LOS theme",
+      "themeLabel": "Theme",
+      "topicsLabel": "Suggested topics",
+      "helptext": {
+        "title": "Choose one or more themes and/or topics"
+      }
     }
   },
   "inactiveSessionWarning": {
