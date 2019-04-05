@@ -155,6 +155,7 @@
       }
     },
     "theme": {
+      "deprecatedTheme": "Disse EU-temaene skal fases ut. Vi anbefaler at du benytter Los-temaene i listen over i stedet.",
       "helptext": {
         "theme": "Tema"
       }
@@ -364,6 +365,7 @@
       "title": "Tittel og beskrivelse",
       "accessRight": "Tilgangsnivå",
       "theme": "Tema",
+      "euTheme": "EU-tema",
       "type": "Type",
       "concept": "Begrep og søkeord",
       "spatial": "Geografi, tid og språk",

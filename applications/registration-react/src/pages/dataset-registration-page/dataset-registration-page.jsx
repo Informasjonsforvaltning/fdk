@@ -247,8 +247,7 @@ export class RegDataset extends React.Component {
                 </FormTemplateWithState>
 
                 <FormTemplateWithState
-                  title={localization.datasets.formTemplates.theme}
-                  required
+                  title={localization.datasets.formTemplates.euTheme}
                   values={themesValues(formThemes.values)}
                   syncErrors={formThemes.syncErrors}
                 >

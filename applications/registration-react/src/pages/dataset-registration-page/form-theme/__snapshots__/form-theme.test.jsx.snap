@@ -23,6 +23,16 @@ exports[`should render FormThemes correctly with theme 1`] = `
       }
       title="Tema"
     />
+    <AlertMessage
+      type="warning"
+    >
+      <i
+        className="fa fa-info-circle mr-2"
+      />
+      <span>
+        Disse EU-temaene skal fases ut. Vi anbefaler at du benytter Los-temaene i listen over i stedet.
+      </span>
+    </AlertMessage>
     <Field
       component={[Function]}
       name="theme"

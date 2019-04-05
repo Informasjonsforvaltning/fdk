@@ -6,6 +6,7 @@ import _ from 'lodash';
 import localization from '../../../lib/localization';
 import Helptext from '../../../components/helptext/helptext.component';
 import CheckboxFieldTheme from './theme-checkbox/theme-checkbox.component';
+import { AlertMessage } from '../../../components/alert-message/alert-message.component';
 
 export const FormThemes = props => {
   const { syncErrors, helptextItems, initialValues } = props;
@@ -18,6 +19,10 @@ export const FormThemes = props => {
             title={localization.schema.theme.helptext.theme}
             helptextItems={helptextItems.Dataset_theme}
           />
+          <AlertMessage type="warning">
+            <i className="fa fa-info-circle mr-2" />
+            <span>{localization.schema.theme.deprecatedTheme}</span>
+          </AlertMessage>
           <Field
             name="theme"
             component={CheckboxFieldTheme}
