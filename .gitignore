@@ -13,16 +13,5 @@ reports
 node_modules
 target
 
-# configuration
-/conf/subjects/
-/conf/idporten/*
-/conf/altinn/
-/conf/config.sh
-/conf/env.vars
-/conf-secret/
-!/conf/idporten/ssldevelop.p12
-!/conf/dummy-client-SSL-cert.p12
-/conf/environments/
-
 # random ad hoc exclusions, not sorted
 phantomjsdriver.log
