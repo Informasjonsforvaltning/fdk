@@ -153,6 +153,7 @@
       }
     },
     "theme": {
+      "deprecatedTheme": "These EU themes are deprecated. We recommend you to choose themes from the list above.",
       "helptext": {
         "theme": "Theme"
       }
@@ -362,6 +363,7 @@
       "title": "Title and description",
       "accessRight": "Access rights",
       "theme": "Theme",
+      "euTheme": "EU theme",
       "type": "Type",
       "concept": "Concept and keyword",
       "spatial": "Spatial, time and language",
