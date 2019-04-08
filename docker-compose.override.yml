@@ -163,6 +163,10 @@ services:
       - FDK_ES_CLUSTERNODES=elasticsearch5:9300
       - FDK_ES_CLUSTERNAME=elasticsearch
 
+  user-api:
+    restart: always
+    ports:
+      - "8124:8080"
 
 ### test and mock modules
   registration-auth:
