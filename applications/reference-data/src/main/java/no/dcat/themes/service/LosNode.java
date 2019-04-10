@@ -13,6 +13,8 @@ public class LosNode {
     static final String NODE_IS_TEMA_OR_SUBTEMA = "http://psi.norge.no/los/ontologi/tema";
     static final String NODE_IS_EMNE = "http://psi.norge.no/los/ontologi/ord";
 
+    public transient Long internalId;
+
     @ApiModelProperty("Terms (underkategori or emneord) that are connected to this term")
     public List<URI> children;
     @ApiModelProperty("Terms (hovedkategori or underkategori that are connected to this term")

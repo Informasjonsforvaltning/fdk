@@ -1,5 +1,18 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/fdk-dev-test-database?currentSchema=fdkreference
+    username: postgres
+    password: password
+
+  liquibase:
+    url: jdbc:postgresql://localhost:5432/fdk-dev-test-database
+    user: postgres
+    password: password
+    change-log: classpath:liquibase/changelog/changelog-master.xml
 logging:
   level.root: ERROR
+  level.o.a: ERROR
+  level.o.apache: ERROR
   level.no.brreg: ERROR
   level.no.difi: ERROR
   level.no.dcat: INFO
@@ -14,6 +27,7 @@ server:
 application:
   httpUsername: ${themesHttpUsername:user}
   httpPassword: ${themesHttpPassword:password}
+
 management:
   endpoints.web.exposure.include: health, readiness
 

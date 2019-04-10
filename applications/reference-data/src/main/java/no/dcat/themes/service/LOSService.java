@@ -6,6 +6,10 @@ import org.apache.jena.vocabulary.RDF;
 import org.apache.jena.vocabulary.SKOS;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -22,6 +26,16 @@ public class LOSService {
     public static final String defaultLanguage = "nb";
     static private final Logger logger = LoggerFactory.getLogger(LOSService.class);
     private static List<LosNode> allLosNodes;
+    private static HashMap<String, LosNode> allLosNodesByURI;
+
+    @Autowired
+    JdbcTemplate jdbcTemplate;
+
+    @Autowired
+    LosRDFImporter losRDFImporter;
+
+    @Autowired
+    LOSStorage losStorage;
 
     private static String getMostSaneName(LosNode node) {
         if (node.getName().containsKey("nb")) {
@@ -149,6 +163,24 @@ public class LOSService {
     public void harvestLosDefinitions() {
         fillDatastructure();//Move this into some db storage. We do NOT want to harvest the entire world on startup.
     }
+    @EventListener(ApplicationReadyEvent.class)
+    public void loadLOSTemaAfterStartup() {
+
+        Boolean losTemaHasBeenHarvested = losStorage.hasLosBeenPreviouslyHarvested();
+
+        List<LosNode> allLosNodesTMP = new ArrayList<>();
+        HashMap<String, LosNode> allLosNodesByURITMP = new HashMap<>();
+
+        if (!losTemaHasBeenHarvested) {
+            losRDFImporter.importFromLosSource(allLosNodesTMP, allLosNodesByURITMP);
+            losStorage.saveAllNodes(allLosNodesTMP, allLosNodesByURITMP);
+        } else {
+            losStorage.loadAllNodes(allLosNodesTMP, allLosNodesByURITMP);
+        }
+
+        allLosNodes = allLosNodesTMP;
+        allLosNodesByURI = allLosNodesByURITMP;
+    }
 
     public void fillDatastructure() {
 
@@ -216,10 +248,6 @@ public class LOSService {
         }
         return allPaths;
     }
-    public static LosNode getByURIString (String uri) throws URISyntaxException {
-        URI actualURI = new URI(uri);
-        return getByURI(actualURI);
-    }
 
     public static LosNode getByURI(URI keyword) {
         String uriAsString = keyword.toString();
@@ -231,6 +259,10 @@ public class LOSService {
         return null;
     }
 
+    public static LosNode getByURIString (String uri) throws URISyntaxException {
+        URI actualURI = new URI(uri);
+        return getByURI(actualURI);
+    }
     public boolean hasLosThemes(List<String> themes) {
         if (themes == null || themes.isEmpty()) {
             return false;

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <changeSet author="exttno" id="1.0-0">
+        <sql endDelimiter=";">
+            CREATE SCHEMA IF NOT EXISTS fdkreference
+        </sql>
+    </changeSet>
+
+    <changeSet author="exttno" id="1.1-1">
+        <createTable tableName="lostema" schemaName="fdkreference">
+            <column autoIncrement="true" name="id" type="SERIAL">
+                <constraints primaryKey="true" primaryKeyName="losentry_pkey"/>
+            </column>
+            <column name="uri" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tema" type="bool"/>
+        </createTable>
+
+        <createTable tableName="has_child" schemaName="fdkreference">
+            <column name="lostema_parent_id" type="BIGINT">
+                <constraints referencedTableSchemaName="fdkreference" referencedTableName="lostema" referencedColumnNames="id" foreignKeyName="hasChildParent_fkey"/>
+            </column>
+            <column name="lostema_child_id" type="BIGINT">
+                <constraints referencedTableSchemaName="fdkreference" referencedTableName="lostema" referencedColumnNames="id" foreignKeyName="hasChildChild_fkey"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="has_parent" schemaName="fdkreference">
+            <column name="lostema_parent_id" type="BIGINT">
+                <constraints referencedTableSchemaName="fdkreference" referencedTableName="lostema" referencedColumnNames="id" foreignKeyName="hasParentParent_fkey"/>
+            </column>
+            <column name="lostema_child_id" type="BIGINT">
+                <constraints referencedTableSchemaName="fdkreference" referencedTableName="lostema" referencedColumnNames="id" foreignKeyName="hasParentChild_fkey"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="related_term" schemaName="fdkreference">
+            <column name="lostema_parent_id" type="BIGINT">
+                <constraints referencedTableSchemaName="fdkreference" referencedTableName="lostema" referencedColumnNames="id" foreignKeyName="relatedTermA_t_fkey"/>
+            </column>
+            <column name="lostema_child_id" type="BIGINT">
+                <constraints referencedTableSchemaName="fdkreference" referencedTableName="lostema" referencedColumnNames="id" foreignKeyName="relatedTermB_fkey"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="has_synonyms" schemaName="fdkreference">
+            <column name="temaid" type="BIGINT">
+                <constraints referencedTableSchemaName="fdkreference" referencedTableName="lostema" referencedColumnNames="id" foreignKeyName="synonyms_fkey"/>
+            </column>
+            <column name="synonym" type="VARCHAR(50)"> </column>
+        </createTable>
+
+        <createTable tableName="has_definition" schemaName="fdkreference">
+            <column name="temaid" type="BIGINT">
+                <constraints referencedTableSchemaName="fdkreference" referencedTableName="lostema" referencedColumnNames="id" foreignKeyName="definitions_fkey"/>
+            </column>
+            <column name="lang" type="VARCHAR(2)"></column>
+            <column name="definition" type="TEXT"> </column>
+        </createTable>
+
+        <createTable tableName="has_name" schemaName="fdkreference">
+            <column name="temaid" type="BIGINT">
+                <constraints referencedTableSchemaName="fdkreference" referencedTableName="lostema" referencedColumnNames="id" foreignKeyName="names_fkey"/>
+            </column>
+            <column name="lang" type="VARCHAR(2)"></column>
+            <column name="name" type="VARCHAR(100)"> </column>
+        </createTable>
+
+        <createTable tableName="has_lospaths" schemaName="fdkreference">
+            <column name="temaid" type="BIGINT">
+                <constraints referencedTableSchemaName="fdkreference" referencedTableName="lostema" referencedColumnNames="id" foreignKeyName="lospath_fkey"/>
+            </column>
+            <column name="lospath" type="VARCHAR(100)"> </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

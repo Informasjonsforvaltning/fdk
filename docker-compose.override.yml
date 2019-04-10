@@ -21,6 +21,13 @@ services:
     ports:
       - "3030:8080"
 
+  postgres:
+    restart: always
+    volumes:
+      - /var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
   sso:
     volumes:
       - ./applications-external/sso/import:/tmp/keycloak/import
