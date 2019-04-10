@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-import { getTopicsLosChildren } from './../../../redux/modules/referenceData';
+import { getTopicsLosChildren } from '../../../../redux/modules/referenceData';
 
 export const isNodeActive = (input, node) =>
   _.filter(_.get(input, 'value', []), item => item.uri === node.uri).length > 0;

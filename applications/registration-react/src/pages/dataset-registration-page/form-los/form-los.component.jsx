@@ -4,7 +4,7 @@ import { Field } from 'redux-form';
 
 import localization from '../../../lib/localization';
 import Helptext from '../../../components/helptext/helptext.component';
-import { FieldTreeLos } from '../field-tree-los/field-tree-los.component';
+import { FieldTreeLos } from './field-tree-los/field-tree-los.component';
 
 export const FormLOS = ({ losItems }) => {
   if (!losItems) {
