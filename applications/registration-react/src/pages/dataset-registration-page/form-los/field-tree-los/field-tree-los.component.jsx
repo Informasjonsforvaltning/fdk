@@ -43,7 +43,7 @@ const renderChildrenNodes = ({ childrenNodes, input }) => {
   );
 };
 
-const renderNodes = ({ nodes, losItems, input }) => {
+const renderNodes = ({ nodes, losItems, input, defaultOpenTree }) => {
   if (!nodes) {
     return null;
   }
@@ -51,9 +51,9 @@ const renderNodes = ({ nodes, losItems, input }) => {
     nodes &&
     nodes.map(node => {
       const children = _.get(node, 'children', []);
-      const nodeIsOpen = hasActiveChildren(input, children);
+      const nodeIsOpen = hasActiveChildren(input, children) || defaultOpenTree;
       return (
-        <div key={node.uri}>
+        <div key={`${node.uri}-${defaultOpenTree}`}>
           <TreeView
             nodeLabel={
               <TreeLosOption
@@ -99,7 +99,7 @@ const renderTopics = (topicsToShow, input) =>
   ));
 
 export const FieldTreeLos = props => {
-  const { losItems, input } = props;
+  const { losItems, input, defaultOpenTree, defaultShowTopic } = props;
   return (
     <div className="d-flex">
       <div className="w-50">
@@ -107,22 +107,30 @@ export const FieldTreeLos = props => {
         {renderNodes({
           nodes: getAllLosParentNodes(losItems),
           losItems,
-          input
+          input,
+          defaultOpenTree
         })}
       </div>
       <div className="pl-5 border-left">
         <strong>{localization.schema.los.topicsLabel}</strong>
-        {renderTopics(getTopicsToDisplay(input, losItems), input)}
+        {renderTopics(
+          getTopicsToDisplay(input, losItems, defaultShowTopic),
+          input
+        )}
       </div>
     </div>
   );
 };
 
 FieldTreeLos.defaultProps = {
-  losItems: null
+  losItems: null,
+  defaultOpenTree: false,
+  defaultShowTopic: null
 };
 
 FieldTreeLos.propTypes = {
   losItems: PropTypes.array,
-  input: PropTypes.object.isRequired
+  input: PropTypes.object.isRequired,
+  defaultOpenTree: PropTypes.bool,
+  defaultShowTopic: PropTypes.object
 };

@@ -9,7 +9,10 @@ export const hasActiveChildren = (input, children) =>
   _.filter(_.get(input, 'value', []), item => _.includes(children, item.uri))
     .length > 0;
 
-export const getTopicsToDisplay = (input, losItems) => {
+export const getTopicsToDisplay = (input, losItems, defaultShowTopic) => {
+  if (defaultShowTopic) {
+    return [defaultShowTopic];
+  }
   const topicsToShow = [];
   input.value
     .map(item => _.find(losItems, item))
