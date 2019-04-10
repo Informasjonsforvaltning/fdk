@@ -4,12 +4,12 @@ import TreeView from 'react-treeview';
 import 'react-treeview/react-treeview.css';
 import _ from 'lodash';
 
-import localization from '../../../lib/localization';
-import getTranslateText from '../../../lib/translateText';
+import localization from '../../../../lib/localization';
+import getTranslateText from '../../../../lib/translateText';
 import {
   getAllLosParentNodes,
   getAllLosChildrenNodes
-} from './../../../redux/modules/referenceData';
+} from '../../../../redux/modules/referenceData';
 import { TreeLosOption } from '../field-tree-los/field-tree-los-option.component';
 import {
   isNodeActive,
@@ -17,28 +17,8 @@ import {
   hasActiveChildren,
   getLosItemsFromInput
 } from './field-tree-los-helper';
+import { handleUpdateField } from '../form-helper';
 import './field-tree-los.scss';
-
-const handleChange = (input, event) => {
-  const selectedItemURI = event.target.value;
-  // Skal fjerne fra array
-  if (!event.target.checked) {
-    const newInput = input.value.filter(
-      returnableObjects => returnableObjects.uri !== selectedItemURI
-    );
-    input.onChange(newInput);
-  } else {
-    // add object
-    let updates = [];
-    updates = input.value.map(item => item);
-    const addItem = {
-      uri: selectedItemURI
-    };
-
-    updates.push(addItem);
-    input.onChange(updates);
-  }
-};
 
 const renderChildrenNodes = ({ childrenNodes, input }) => {
   if (!childrenNodes) {
@@ -54,7 +34,7 @@ const renderChildrenNodes = ({ childrenNodes, input }) => {
           value={node.uri}
           label={getTranslateText(node.name)}
           onClick={event => {
-            handleChange(input, event);
+            handleUpdateField(input, event);
           }}
           activeNode={isNodeActive(input, node)}
           displayClass="inline-block"
@@ -82,7 +62,7 @@ const renderNodes = ({ nodes, losItems, input }) => {
                 value={node.uri}
                 label={getTranslateText(node.name)}
                 onClick={event => {
-                  handleChange(input, event);
+                  handleUpdateField(input, event);
                 }}
                 activeNode={isNodeActive(input, node)}
                 displayClass="inline-block"
@@ -111,7 +91,7 @@ const renderTopics = (topicsToShow, input) =>
         value={topic.uri}
         label={getTranslateText(topic.name)}
         onClick={e => {
-          handleChange(input, e);
+          handleUpdateField(input, e);
         }}
         activeNode={isNodeActive(input, topic)}
         displayClass="inline-block"
@@ -147,7 +127,7 @@ const renderFilterPills = (input, losItems) => {
                 defaultValue={_.get(item, 'uri')}
                 checked={false}
                 onClick={e => {
-                  handleChange(input, e);
+                  handleUpdateField(input, e);
                 }}
                 label={getTranslateText(_.get(item, 'name'))}
                 id={_.get(item, 'uri')}
