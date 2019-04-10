@@ -350,9 +350,8 @@ Velg "Tesauri" dersom datasettbeskrivelsen omhandler en hierarkisk og  assosiati
 
 # Distribusjon_type (distribusjonstype)
 :Distribution_type
-    dct:abstract """ """@no ;
-    dct:description """Velg Nedlastbar fil dersom distribusjonen kan lastes ned i maskinlesbart format.
-Velg API dersom distribusjonen hentes gjennom et programmeringsgrensesnitt, typisk REST-API.
+    dct:abstract """Velg Nedlastbar fil dersom distribusjonen kan lastes ned i maskinlesbart format. """@no ;
+    dct:description """ Velg API dersom distribusjonen hentes gjennom et programmeringsgrensesnitt.
 Velg Feed dersom det er en distribusjon hvor endringer hentes gjennom f.eks. RSS, Atom eller andre meldingsformidlinger."""@no .    
 
 # Distribusjon_format (format)
