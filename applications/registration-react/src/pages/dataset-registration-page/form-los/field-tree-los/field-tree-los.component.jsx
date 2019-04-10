@@ -14,8 +14,7 @@ import { TreeLosOption } from '../field-tree-los/field-tree-los-option.component
 import {
   isNodeActive,
   getTopicsToDisplay,
-  hasActiveChildren,
-  getLosItemsFromInput
+  hasActiveChildren
 } from './field-tree-los-helper';
 import { handleUpdateField } from '../form-helper';
 import './field-tree-los.scss';
@@ -99,74 +98,23 @@ const renderTopics = (topicsToShow, input) =>
     </div>
   ));
 
-const renderFilterPills = (input, losItems) => {
-  const chosenLosItems = getLosItemsFromInput(input, losItems);
-  return (
-    chosenLosItems &&
-    chosenLosItems.map((item, index) => {
-      if (item !== undefined) {
-        let inputRef;
-        return (
-          <div key={`filter-${index}-${_.get(item, 'uri')}`}>
-            {/* eslint-disable jsx-a11y/no-noninteractive-element-to-interactive-role */}
-            <label
-              className="mr-2 mb-1 fdk-badge badge badge-secondary fdk-text-size-15"
-              onKeyPress={() => {
-                inputRef.click();
-              }}
-              tabIndex="0"
-              role="button"
-              htmlFor={_.get(item, 'uri')}
-            >
-              <input
-                className="badge"
-                ref={input => {
-                  inputRef = input;
-                }}
-                type="text"
-                defaultValue={_.get(item, 'uri')}
-                checked={false}
-                onClick={e => {
-                  handleUpdateField(input, e);
-                }}
-                label={getTranslateText(_.get(item, 'name'))}
-                id={_.get(item, 'uri')}
-              />
-              <span className="fdk-filter-pill">
-                {getTranslateText(_.get(item, 'name'))}
-              </span>
-            </label>
-            {/* eslint-enable jsx-a11y/no-noninteractive-element-to-interactive-role */}
-          </div>
-        );
-      }
-      return null;
-    })
-  );
-};
-
 export const FieldTreeLos = props => {
   const { losItems, input } = props;
   return (
-    <React.Fragment>
-      <div className="d-flex flex-wrap my-2">
-        {renderFilterPills(input, losItems)}
+    <div className="d-flex">
+      <div className="w-50">
+        <strong>{localization.schema.los.themeLabel}</strong>
+        {renderNodes({
+          nodes: getAllLosParentNodes(losItems),
+          losItems,
+          input
+        })}
       </div>
-      <div className="d-flex">
-        <div className="w-50">
-          <strong>{localization.schema.los.themeLabel}</strong>
-          {renderNodes({
-            nodes: getAllLosParentNodes(losItems),
-            losItems,
-            input
-          })}
-        </div>
-        <div className="pl-5 border-left">
-          <strong>{localization.schema.los.topicsLabel}</strong>
-          {renderTopics(getTopicsToDisplay(input, losItems), input)}
-        </div>
+      <div className="pl-5 border-left">
+        <strong>{localization.schema.los.topicsLabel}</strong>
+        {renderTopics(getTopicsToDisplay(input, losItems), input)}
       </div>
-    </React.Fragment>
+    </div>
   );
 };
 
