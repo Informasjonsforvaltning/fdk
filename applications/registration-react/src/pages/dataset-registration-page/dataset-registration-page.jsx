@@ -27,6 +27,7 @@ import {
   titleValues,
   accessRightsValues,
   themesValues,
+  losValues,
   typeValues,
   conceptValues,
   spatialValues,
@@ -234,7 +235,7 @@ export class RegDataset extends React.Component {
                 <FormTemplateWithState
                   title={localization.datasets.formTemplates.theme}
                   required
-                  values={themesValues(formThemes.values)}
+                  values={losValues(formThemes.values, losItems)}
                   syncErrors={formThemes.syncErrors}
                 >
                   <ConnectedFormLOS
