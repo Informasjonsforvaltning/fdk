@@ -15,11 +15,7 @@ export const FormLOS = ({ losItems }) => {
     <form>
       <div className="form-group">
         <Helptext title={localization.schema.los.helptext.title} />
-        <Field
-          name="theme"
-          component={FilterPillsLos}
-          losItems={losItems}
-        />
+        <Field name="theme" component={FilterPillsLos} losItems={losItems} />
         <Field
           name="theme"
           component={FieldTreeLos}
