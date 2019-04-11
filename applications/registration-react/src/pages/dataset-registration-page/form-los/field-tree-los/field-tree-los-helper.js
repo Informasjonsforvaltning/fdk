@@ -21,7 +21,7 @@ export const getTopicsToDisplay = (input, losItems, defaultShowTopic) => {
         topicsToShow.push(item)
       )
     );
-  return topicsToShow;
+  return _.uniqBy(topicsToShow, item => item.uri);
 };
 
 export const getLosItemsFromInput = (input, losItems) =>
