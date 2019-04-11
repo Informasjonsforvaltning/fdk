@@ -1,4 +1,4 @@
-import _get from 'lodash/get';
+import _ from 'lodash';
 import moment from 'moment';
 
 import localization from '../../lib/localization';
@@ -16,7 +16,7 @@ export const titleValues = values => {
     retVal += getTranslateText(objective)
       ? `${getTranslateText(objective)}. `
       : '';
-    retVal += _get(landingPage, '[0]', '');
+    retVal += _.get(landingPage, '[0]', '');
 
     if (retVal.trim().length > 0) {
       return retVal;
@@ -60,7 +60,9 @@ export const accessRightsValues = values => {
           retVal += getTranslateText(item.prefLabel)
             ? `${getTranslateText(item.prefLabel)} - `
             : '';
-          retVal += _get(item, 'uri', null) ? `${_get(item, 'uri', '')} ` : '';
+          retVal += _.get(item, 'uri', null)
+            ? `${_.get(item, 'uri', '')} `
+            : '';
         });
     }
 
@@ -71,7 +73,9 @@ export const accessRightsValues = values => {
           retVal += getTranslateText(item.prefLabel)
             ? `${getTranslateText(item.prefLabel)} - `
             : '';
-          retVal += _get(item, 'uri', null) ? `${_get(item, 'uri', '')} ` : '';
+          retVal += _.get(item, 'uri', null)
+            ? `${_.get(item, 'uri', '')} `
+            : '';
         });
     }
 
@@ -82,7 +86,9 @@ export const accessRightsValues = values => {
           retVal += getTranslateText(item.prefLabel)
             ? `${getTranslateText(item.prefLabel)} - `
             : '';
-          retVal += _get(item, 'uri', null) ? `${_get(item, 'uri', '')} ` : '';
+          retVal += _.get(item, 'uri', null)
+            ? `${_.get(item, 'uri', '')} `
+            : '';
         });
     }
     if (retVal.trim().length > 0) {
@@ -151,7 +157,7 @@ export const spatialValues = values => {
     const { spatial, temporal, issued, language } = values;
     if (spatial) {
       spatial.forEach(item => {
-        retVal += _get(item, 'uri', null) ? `${_get(item, 'uri', '')}. ` : '';
+        retVal += _.get(item, 'uri', null) ? `${_.get(item, 'uri', '')}. ` : '';
       });
     }
     if (temporal) {
@@ -199,7 +205,7 @@ export const provenanceValues = values => {
         ? `${getTranslateText(provenance.prefLabel)}. `
         : '';
 
-    retVal += _get(accrualPeriodicity, 'code', null)
+    retVal += _.get(accrualPeriodicity, 'code', null)
       ? `${
           localization.schema.provenance.accrualPeriodicity[
             accrualPeriodicity.code
@@ -276,7 +282,7 @@ export const informationModelValues = values => {
         retVal += getTranslateText(item.prefLabel)
           ? `${getTranslateText(item.prefLabel)}`
           : '';
-        retVal += _get(item, 'uri', '') ? ` - ${_get(item, 'uri', '')} ` : '';
+        retVal += _.get(item, 'uri', '') ? ` - ${_.get(item, 'uri', '')} ` : '';
       });
     }
     if (retVal.trim().length > 0) {
@@ -311,17 +317,17 @@ export const contactPointValues = values => {
     const { contactPoint } = values;
     if (contactPoint) {
       contactPoint.forEach(item => {
-        retVal += _get(item, 'organizationUnit', null)
-          ? `${_get(item, 'organizationUnit', null)}. `
+        retVal += _.get(item, 'organizationUnit', null)
+          ? `${_.get(item, 'organizationUnit', null)}. `
           : '';
-        retVal += _get(item, 'hasURL', null)
-          ? `${_get(item, 'hasURL', null)}. `
+        retVal += _.get(item, 'hasURL', null)
+          ? `${_.get(item, 'hasURL', null)}. `
           : '';
-        retVal += _get(item, 'email', null)
-          ? `${_get(item, 'email', null)}. `
+        retVal += _.get(item, 'email', null)
+          ? `${_.get(item, 'email', null)}. `
           : '';
-        retVal += _get(item, 'hasTelephone', null)
-          ? `${_get(item, 'hasTelephone', null)}. `
+        retVal += _.get(item, 'hasTelephone', null)
+          ? `${_.get(item, 'hasTelephone', null)}. `
           : '';
       });
     }
