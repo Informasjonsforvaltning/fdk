@@ -51,7 +51,7 @@ const renderNodes = ({ nodes, losItems, input, defaultOpenTree }) => {
     nodes &&
     nodes.map(node => {
       const children = _.get(node, 'children', []);
-      const nodeIsOpen = hasActiveChildren(input, children) || defaultOpenTree;
+      const nodeIsOpen = defaultOpenTree || hasActiveChildren(input, children);
       return (
         <div key={`${node.uri}-${defaultOpenTree}`}>
           <TreeView

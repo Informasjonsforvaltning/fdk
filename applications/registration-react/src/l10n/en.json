@@ -14,6 +14,8 @@
   "specification": "specification",
   "connectedAPI": "API descriptions connected to this dataset by others",
   "provider": "Provider",
+  "category": "Category",
+  "topic": "Topic",
   "header": {
     "Registration of Datasets": "Registration of datasets",
     "Registration of API's": "Registration of API's"
