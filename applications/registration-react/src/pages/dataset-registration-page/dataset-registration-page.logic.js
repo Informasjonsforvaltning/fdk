@@ -114,6 +114,19 @@ export const themesValues = values => {
   return null;
 };
 
+export const losValues = (values, losItems) => {
+  if (!values) {
+    return null;
+  }
+  const { theme } = values;
+  let retVal = '';
+  theme.forEach(item => {
+    const losItem = _.find(losItems, { uri: item.uri });
+    retVal += losItem ? `${getTranslateText(_.get(losItem, 'name'))}. ` : '';
+  });
+  return retVal;
+};
+
 export const typeValues = values => {
   if (values) {
     let retVal = '';
