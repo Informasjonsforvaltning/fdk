@@ -26,7 +26,10 @@ export const FormLOSPure = ({
   handleSetFilterText,
   handleSetSearchedItem
 }) => {
-  const losItemsToShow = getLosItemParentsAndChildren(losItems, searchedItem);
+  const losItemsToShow = _.uniqBy(
+    getLosItemParentsAndChildren(losItems, searchedItem),
+    item => item.uri
+  );
 
   if (losItemsToShow) {
     return (
