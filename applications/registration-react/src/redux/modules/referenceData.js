@@ -127,3 +127,29 @@ export const getAllLosChildrenNodes = (losItems, children) =>
 
 export const getTopicsLosChildren = (losItems, children) =>
   _.filter(losItems, item => !item.isTema && _.includes(children, item.uri));
+
+export const getLosReferences = (losItems, references, key) => {
+  let items = [];
+  if (references) {
+    _.filter(losItems, item => {
+      if (_.includes(references, item.uri)) {
+        items = [...items, ...getLosReferences(losItems, item[key])];
+        items.push(item);
+      }
+    });
+  }
+  return items;
+};
+
+export const getLosItemParentsAndChildren = (losItems, item) => {
+  if (!item) {
+    return losItems;
+  }
+  const parents = getLosReferences(losItems, _.get(item, 'parents'), 'parents');
+  const children = getLosReferences(
+    losItems,
+    _.get(item, 'children'),
+    'children'
+  );
+  return [item, ...parents, ...children];
+};
