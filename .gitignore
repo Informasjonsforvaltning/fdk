@@ -1,3 +1,5 @@
+.envrc
+
 # IDE files
 *.iml
 .DS_Store

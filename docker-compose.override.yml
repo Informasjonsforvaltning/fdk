@@ -50,9 +50,9 @@ services:
     volumes:
       - ./applications/search/src:/usr/src/app/src
     environment:
-      - REDUX_LOG=${REDUX_LOG}
-      - NODE_ENV=${NODE_ENV}
-      - DISQUS_SHORTNAME=felles-datakatalog-test-34807898934
+      - REDUX_LOG
+      - NODE_ENV
+      - DISQUS_SHORTNAME
 
   registration-react:
     build: ./applications/registration-react
@@ -63,9 +63,9 @@ services:
     volumes:
       - ./applications/registration-react/src:/usr/src/app/src
     environment:
-      - REGISTRATION_LANGUAGE=${REGISTRATION_LANGUAGE}
-      - NODE_ENV=${NODE_ENV}
-      - SEARCH_HOSTNAME=${SEARCH_HOSTNAME}
+      - REGISTRATION_LANGUAGE
+      - NODE_ENV
+      - SEARCH_HOSTNAME
 
 ### java modules
   api-cat:
@@ -76,7 +76,7 @@ services:
       - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
       - FDK_ES_CLUSTERNODES=elasticsearch5:9300
       - FDK_ES_CLUSTERNAME=elasticsearch
-      - LOG_LEVEL=${LOG_LEVEL}
+      - LOG_LEVEL
       - LOG_FORMAT=compact
 
   concept-cat:
@@ -85,7 +85,7 @@ services:
       - "8104:8080"
     environment:
       - JAVA_OPTS=-Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
-      - LOG_LEVEL=${LOG_LEVEL}
+      - LOG_LEVEL
 
   informationmodel-cat:
     restart: always
@@ -93,7 +93,7 @@ services:
       - "8108:8080"
     environment:
     - JAVA_OPTS=-Djava.security.egd=file:/dev/./urandom -Xmx512M -Dspring.profiles.active=docker
-    - LOG_LEVEL=${LOG_LEVEL}
+    - LOG_LEVEL
 
   harvester:
     restart: always
@@ -144,7 +144,7 @@ services:
       - registrationApi_harvesterPassword=password
       - registrationApi_ipKeyPassword=${registrationApi_ipKeyPassword}
       - registrationApi_ipStorePassword=${registrationApi_ipStorePassword}
-      - LOG_LEVEL=${LOG_LEVEL}
+      - LOG_LEVEL
 
   search-api:
     restart: always
