@@ -34,7 +34,11 @@ export const FormLOSPure = ({
   if (losItemsToShow) {
     return (
       <div className="form-group">
-        <Helptext title={localization.schema.los.helptext.title} />
+        <Helptext
+          title={localization.schema.los.helptext.title}
+          abstract={localization.helptexts.themesLos.abstract}
+          description={localization.helptexts.themesLos.description}
+        />
 
         <Autocomplete
           wrapperProps={{ style: { width: '100%' } }}
