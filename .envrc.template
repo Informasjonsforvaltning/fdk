@@ -1,0 +1,8 @@
+# recommended dev configuration
+
+export LOG_LEVEL=DEBUG
+
+
+# secrets - never commit in git
+
+export DISQUS_SHORTNAME=CHANGE_ME
