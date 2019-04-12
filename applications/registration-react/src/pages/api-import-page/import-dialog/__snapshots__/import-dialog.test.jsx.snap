@@ -9,6 +9,11 @@ exports[`should render ImportDialog correctly 1`] = `
       Importer API-spesifikasjon
     </h3>
   </div>
+  <div
+    className="mb-5"
+  >
+    Felles datakatalog støtter foreløpig Open API-Specification 2.0 og 3.0 og Swagger 2.0 i JSON format.
+  </div>
   <Button
     className="mr-3"
     color="primary"

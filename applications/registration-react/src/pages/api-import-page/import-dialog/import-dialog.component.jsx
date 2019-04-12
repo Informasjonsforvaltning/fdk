@@ -14,6 +14,8 @@ export const ImportDialog = props => {
         <h3>{localization.api.import.importApiSpec}</h3>
       </div>
 
+      <div className="mb-5">{localization.api.import.importInfo}</div>
+
       <Button className="mr-3" color="primary" onClick={showLinkImport}>
         {localization.api.import.importLink}
       </Button>
