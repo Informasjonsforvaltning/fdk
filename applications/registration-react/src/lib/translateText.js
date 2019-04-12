@@ -4,8 +4,8 @@ export default function getTranslateText(
   textObj,
   selectedLanguage = localization.getLanguage()
 ) {
-  if (!textObj) {
-    return null;
+  if (!textObj || typeof textObj !== 'object') {
+    return textObj;
   }
   return (
     textObj[selectedLanguage] ||
