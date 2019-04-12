@@ -472,6 +472,12 @@
     "dataset": {
       "confirmDeleteMessage": "Are you sure you want to delete API description permanently?",
       "requiredFieldsMissing": "Dataset could not be published. Required fields need to be filled out."
+    },
+    "helptexts": {
+      "themesLos": {
+        "abstract": "Choose theme(s) describing dataset.",
+        "description": "Themes from Los. Read more <a href='https://www.difi.no/fagomrader-og-tjenester/digitalisering-og-samordning/nasjonal-arkitektur/arkitekturbegreper/los'>here</a>"
+      }
     }
   }
 }

@@ -475,5 +475,11 @@
       "confirmDeleteMessage": "Er du sikker på at du vil slette datasettbeskrivelsen permanent?",
       "requiredFieldsMissing": "Datasettet kunne ikke publiseres. Se over felt som er markert med feil og rett disse før du forsøker å publisere på nytt."
     }
+  },
+  "helptexts": {
+    "themesLos": {
+      "abstract": "Velg tema(er) som beskriver innholdet i datasettet.",
+      "description": "Listen kommer fra Los. Los er en felles terminologi for å beskrive offentlige tjenester og ressurser. Formålet med Los er å gjøre det enklere å finne offentlige ressurser. Les mer <a href='https://www.difi.no/fagomrader-og-tjenester/digitalisering-og-samordning/nasjonal-arkitektur/arkitekturbegreper/los'>her</a>"
+    }
   }
 }
