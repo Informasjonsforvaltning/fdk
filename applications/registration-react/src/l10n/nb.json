@@ -427,7 +427,8 @@
       "importApiSpecLink": "Importer API-spesifikasjon via lenke",
       "importApiSpecLinkError": "Noe gikk galt med importen. Kontroller at URL-en er skrevet riktig, eller prøv å ",
       "linkToSpec": "Lenke til spesifikasjon",
-      "import": "Importer"
+      "import": "Importer",
+      "importInfo": "Felles datakatalog støtter foreløpig Open API-Specification 2.0 og 3.0 og Swagger 2.0 i JSON format."
     },
     "register": {
       "apiCatalog": "API-katalog",

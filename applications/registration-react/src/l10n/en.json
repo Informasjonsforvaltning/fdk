@@ -425,7 +425,8 @@
       "importApiSpecLink": "Import API specification from link",
       "importApiSpecLinkError": "Something went wrong. Please check if url is correct, or try to ",
       "linkToSpec": "Link to specification",
-      "import": "Import"
+      "import": "Import",
+      "importInfo": "The National Data Directory only supports Open API-Specification 2.0 and 3.0, and Swagger 2.0 as JSON format."
     },
     "register": {
       "apiCatalog": "API catalog",
