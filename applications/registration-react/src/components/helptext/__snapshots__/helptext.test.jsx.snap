@@ -2,6 +2,8 @@
 
 exports[`should render Helptext correctly 1`] = `
 <Helptext
+  abstract={null}
+  description={null}
   helptextItems={
     Object {
       "Agent_identifier": Object {

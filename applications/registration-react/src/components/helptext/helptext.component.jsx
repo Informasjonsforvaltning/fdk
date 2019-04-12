@@ -10,15 +10,23 @@ import localization from '../../lib/localization';
 import './helptext.scss';
 
 export const Helptext = props => {
-  const { title, required, helptextItems, toggleShowAll, showAll } = props;
+  const {
+    title,
+    required,
+    abstract,
+    description,
+    helptextItems,
+    toggleShowAll,
+    showAll
+  } = props;
 
   const collapseClass = cx('fa', 'fdk-fa-left', {
     'fa-angle-double-down': !showAll,
     'fa-angle-double-up': showAll
   });
 
-  const shortdesc = _.get(helptextItems, 'shortdesc');
-  const description = _.get(helptextItems, 'description');
+  const shortdesc = abstract || _.get(helptextItems, 'shortdesc');
+  const descriptionText = description || _.get(helptextItems, 'description');
 
   return (
     <div className="fdk-reg-helptext mb-3 p-3">
@@ -31,21 +39,19 @@ export const Helptext = props => {
         )}
       </div>
       <div className="d-md-flex">
-        {shortdesc &&
-          typeof shortdesc === 'object' && (
-            <p
-              className="m-0"
-              dangerouslySetInnerHTML={{
-                __html: getTranslateText(shortdesc).replace(
-                  new RegExp('\n', 'g'),
-                  '<br />'
-                )
-              }}
-            />
-          )}
-        {description &&
-          typeof description === 'object' &&
-          getTranslateText(description).trim() !== '' && (
+        {shortdesc && (
+          <p
+            className="m-0"
+            dangerouslySetInnerHTML={{
+              __html: getTranslateText(shortdesc).replace(
+                new RegExp('\n', 'g'),
+                '<br />'
+              )
+            }}
+          />
+        )}
+        {descriptionText &&
+          getTranslateText(descriptionText).trim() !== '' && (
             <button
               className="fdk-btn-no-border text-left p-0 ml-1 fdk-reg-helptext-more align-self-start"
               onClick={toggleShowAll}
@@ -57,13 +63,12 @@ export const Helptext = props => {
             </button>
           )}
       </div>
-      {description &&
-        typeof description === 'object' &&
-        getTranslateText(description).trim() !== '' && (
+      {descriptionText &&
+        getTranslateText(descriptionText).trim() !== '' && (
           <Collapse className="mt-3" isOpen={showAll}>
             <p
               dangerouslySetInnerHTML={{
-                __html: getTranslateText(description).replace(
+                __html: getTranslateText(descriptionText).replace(
                   new RegExp('\n', 'g'),
                   '<br />'
                 )
@@ -78,6 +83,8 @@ export const Helptext = props => {
 Helptext.defaultProps = {
   title: '',
   required: false,
+  abstract: null,
+  description: null,
   helptextItems: null,
   toggleShowAll: _.noop,
   showAll: false
@@ -86,6 +93,8 @@ Helptext.defaultProps = {
 Helptext.propTypes = {
   title: PropTypes.string,
   required: PropTypes.bool,
+  abstract: PropTypes.string,
+  description: PropTypes.string,
   helptextItems: PropTypes.object,
   toggleShowAll: PropTypes.func,
   showAll: PropTypes.bool
