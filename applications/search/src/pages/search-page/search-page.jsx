@@ -69,10 +69,20 @@ export const SearchPage = props => {
 
   const locationSearch = parseSearchParams(location);
 
-  fetchDatasetsIfNeeded(locationSearch);
-  fetchApisIfNeeded(locationSearch);
-  fetchConceptsIfNeeded(locationSearch);
-  fetchInformationModelsIfNeeded(locationSearch);
+  const datasetSearchParams =
+    location.pathname === PATHNAME_DATASETS ? locationSearch : {};
+  const apiSearchParams =
+    location.pathname === PATHNAME_APIS ? locationSearch : {};
+  const conceptSearchParams =
+    location.pathname === PATHNAME_CONCEPTS ? locationSearch : {};
+  const informationModelSearchParams =
+    location.pathname === PATHNAME_INFORMATIONMODELS ? locationSearch : {};
+
+  fetchDatasetsIfNeeded(datasetSearchParams);
+  fetchApisIfNeeded(apiSearchParams);
+  fetchConceptsIfNeeded(conceptSearchParams);
+  fetchInformationModelsIfNeeded(informationModelSearchParams);
+
   fetchApiStatusIfNeeded();
 
   fetchThemesIfNeeded();
