@@ -91,4 +91,8 @@ export const validatePhone = (nameOfObject, value, errors) => {
   }
   return errors;
 };
+
+export const minLength = min => value =>
+  value && value.length < min ? localization.validation.required : undefined;
+
 /* eslint-enable no-param-reassign */
