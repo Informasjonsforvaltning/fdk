@@ -242,7 +242,7 @@ public class RDFToModelTransformer {
     }
 
     private String parseURIFromStatement(Statement statement) {
-        if (statement.getResource().isURIResource()) {
+        if (statement.getObject().isResource() && statement.getResource().isURIResource()) {
             try {
                 URI uri = new URI(statement.getResource().getURI());
                 return uri.getSchemeSpecificPart();
