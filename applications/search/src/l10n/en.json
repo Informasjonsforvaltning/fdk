@@ -34,6 +34,7 @@
   "statusReplacedUrl": "Ny versjon er dokumentert her.",
   "during": "during",
   "datasetLabel": "Dataset",
+  "activeFilter": "Enabled filters",
   "app": {
     "menu": "Menu"
   },
@@ -60,7 +61,7 @@
   "query": {
     "intro": "Search for datasets...",
     "do": "Search",
-    "clear": "Clear"
+    "clear": "Clear all filters"
   },
   "about": {
     "about": "About The National Data Catalog",

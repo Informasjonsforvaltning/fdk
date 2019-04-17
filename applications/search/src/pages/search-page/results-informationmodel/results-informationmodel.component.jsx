@@ -11,6 +11,7 @@ import { SearchHitItem } from './search-hit-item/search-hit-item.component';
 import { SearchPublishersTree } from '../search-publishers-tree/search-publishers-tree.component';
 import { getSortfield, setPage, setSortfield } from '../search-location-helper';
 import { parseSearchParams } from '../../../lib/location-history-helper';
+import { FilterPills } from '../filter-pills/filter-pills.component';
 
 const renderFilterModal = ({
   showFilterModal,
@@ -64,8 +65,6 @@ export const ResultsInformationModelPure = ({
   onFilterPublisherHierarchy,
   publisherCounts,
   publishers,
-  onClearFilters,
-  showClearFilterButton,
   hitsPerPage,
   history,
   location
@@ -73,16 +72,6 @@ export const ResultsInformationModelPure = ({
   const locationSearch = parseSearchParams(location);
   const page = parseInt(locationSearch.page || 0, 10);
   const pageCount = Math.ceil((informationModelTotal || 1) / hitsPerPage);
-
-  const clearButtonClass = cx(
-    'btn',
-    'btn-primary',
-    'fdk-button',
-    'fade-in-500',
-    {
-      'd-none': !showClearFilterButton
-    }
-  );
 
   const sortfield = getSortfield(location);
   const sortByScoreClass = cx('fdk-button', 'fdk-button-black-toggle', {
@@ -105,15 +94,7 @@ export const ResultsInformationModelPure = ({
   return (
     <main data-test-id="informationModels" id="content">
       <div className="row mb-3">
-        <div className="col-6 col-lg-4">
-          <button
-            className={clearButtonClass}
-            onClick={onClearFilters}
-            type="button"
-          >
-            {localization.query.clear}
-          </button>
-        </div>
+        <div className="col-6 col-lg-4" />
         <div className="col-6 col-lg-4 offset-lg-4">
           <div className="d-flex justify-content-end">
             <Button
@@ -138,6 +119,14 @@ export const ResultsInformationModelPure = ({
           <span className="uu-invisible" aria-hidden="false">
             Filtrering
           </span>
+
+          <FilterPills
+            history={history}
+            location={location}
+            locationSearch={locationSearch}
+            publishers={publishers}
+          />
+
           {informationModelAggregations && (
             <div>
               {renderFilterModal({
@@ -189,14 +178,12 @@ export const ResultsInformationModelPure = ({
 ResultsInformationModelPure.defaultProps = {
   showFilterModal: false,
   closeFilterModal: _.noop,
-  showClearFilterButton: false,
 
   informationModelItems: [],
   informationModelTotal: 0,
   informationModelAggregations: null,
 
   onFilterPublisherHierarchy: _.noop,
-  onClearFilters: _.noop,
 
   publisherCounts: [],
   publishers: null,
@@ -210,14 +197,12 @@ ResultsInformationModelPure.defaultProps = {
 ResultsInformationModelPure.propTypes = {
   showFilterModal: PropTypes.bool,
   closeFilterModal: PropTypes.func,
-  showClearFilterButton: PropTypes.bool,
 
   informationModelItems: PropTypes.array,
   informationModelTotal: PropTypes.number,
   informationModelAggregations: PropTypes.object,
 
   onFilterPublisherHierarchy: PropTypes.func,
-  onClearFilters: PropTypes.func,
   publisherCounts: PropTypes.array,
   publishers: PropTypes.object,
 

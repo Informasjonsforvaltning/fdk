@@ -22,8 +22,6 @@ import {
 } from '../../constants/constants';
 import { parseSearchParams } from '../../lib/location-history-helper';
 import {
-  clearFilters,
-  isFilterNotEmpty,
   setFilter,
   setMultiselectFilterValue,
   setSearchText
@@ -88,12 +86,6 @@ export const SearchPage = props => {
   fetchThemesIfNeeded();
   fetchPublishersIfNeeded();
   fetchReferenceDataIfNeeded();
-
-  const handleClearFilters = () => {
-    clearFilters(history, location);
-  };
-
-  const _isFilterNotEmpty = () => isFilterNotEmpty(location);
 
   const handleSearchSubmit = searchText => {
     setSearchText(history, location, searchText);
@@ -193,8 +185,6 @@ export const SearchPage = props => {
               themesItems={themesItems}
               publishers={publisherItems}
               referenceData={referenceData}
-              onClearFilters={handleClearFilters}
-              showClearFilterButton={_isFilterNotEmpty()}
               hitsPerPage={HITS_PER_PAGE}
             />
           </Route>
@@ -202,14 +192,12 @@ export const SearchPage = props => {
             <ResultsApi
               showFilterModal={showFilterModal}
               closeFilterModal={close}
-              showClearFilterButton={_isFilterNotEmpty()}
               apiItems={apiItems}
               apiTotal={apiTotal}
               apiAggregations={apiAggregations}
               onFilterAccessRights={handleDatasetFilterAccessRights}
               onFilterPublisherHierarchy={handleDatasetFilterPublisherHierarchy}
               onFilterFormat={handleFilterFormat}
-              onClearFilters={handleClearFilters}
               publisherCounts={_.get(apiAggregations, 'orgPath.buckets')}
               publishers={publisherItems}
               hitsPerPage={HITS_PER_PAGE}
@@ -220,11 +208,9 @@ export const SearchPage = props => {
             <ResultsConcepts
               showFilterModal={showFilterModal}
               closeFilterModal={close}
-              showClearFilterButton={_isFilterNotEmpty()}
               conceptItems={conceptItems}
               conceptTotal={conceptTotal}
               conceptAggregations={conceptAggregations}
-              onClearFilters={handleClearFilters}
               onFilterPublisherHierarchy={handleDatasetFilterPublisherHierarchy}
               publisherCounts={_.get(conceptAggregations, 'orgPath.buckets')}
               publishers={publisherItems}
@@ -238,12 +224,10 @@ export const SearchPage = props => {
             <ResultsInformationModel
               showFilterModal={showFilterModal}
               closeFilterModal={close}
-              showClearFilterButton={_isFilterNotEmpty()}
               informationModelItems={informationModelItems}
               informationModelTotal={informationModelTotal}
               informationModelAggregations={informationModelAggregations}
               onFilterPublisherHierarchy={handleDatasetFilterPublisherHierarchy}
-              onClearFilters={handleClearFilters}
               publisherCounts={_.get(
                 informationModelAggregations,
                 'orgPath.buckets'

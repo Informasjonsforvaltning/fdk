@@ -20,6 +20,7 @@ import { SearchPublishersTree } from '../search-publishers-tree/search-publisher
 import { getTranslateText } from '../../../lib/translateText';
 import { getSortfield, setPage, setSortfield } from '../search-location-helper';
 import { parseSearchParams } from '../../../lib/location-history-helper';
+import { FilterPills } from '../filter-pills/filter-pills.component';
 
 function _renderCompareTerms({ conceptsCompare, removeConcept }) {
   const conceptIdsArray = [];
@@ -120,9 +121,7 @@ export const ResultsConceptsPure = ({
   closeFilterModal,
   conceptAggregations,
   conceptTotal,
-  onClearFilters,
   onFilterPublisherHierarchy,
-  showClearFilterButton,
   hitsPerPage,
   publisherCounts,
   publishers,
@@ -137,15 +136,6 @@ export const ResultsConceptsPure = ({
 
   const page = parseInt(locationSearch.page || 0, 10);
   const pageCount = Math.ceil((conceptTotal || 1) / hitsPerPage);
-  const clearButtonClass = cx(
-    'btn',
-    'btn-primary',
-    'fdk-button',
-    'fade-in-500',
-    {
-      'd-none': !showClearFilterButton
-    }
-  );
 
   const sortfield = getSortfield(location);
   const sortByScoreClass = cx('fdk-button', 'fdk-button-black-toggle', {
@@ -169,15 +159,7 @@ export const ResultsConceptsPure = ({
   return (
     <main id="content">
       <section className="row mb-3">
-        <div className="col-6 col-lg-4">
-          <button
-            className={clearButtonClass}
-            onClick={onClearFilters}
-            type="button"
-          >
-            {localization.query.clear}
-          </button>
-        </div>
+        <div className="col-6 col-lg-4" />
         <div className="col-6 col-lg-4 offset-lg-4">
           <div className="d-flex justify-content-end">
             <Button
@@ -204,6 +186,14 @@ export const ResultsConceptsPure = ({
             <span className="uu-invisible" aria-hidden="false">
               Filtrering tilgang
             </span>
+
+            <FilterPills
+              history={history}
+              location={location}
+              locationSearch={locationSearch}
+              publishers={publishers}
+            />
+
             {conceptAggregations && (
               <div>
                 {_renderFilterModal({
@@ -264,13 +254,11 @@ export const ResultsConceptsPure = ({
 ResultsConceptsPure.defaultProps = {
   showFilterModal: false,
   closeFilterModal: _.noop,
-  showClearFilterButton: false,
 
   conceptItems: [],
   conceptTotal: 0,
   conceptAggregations: null,
 
-  onClearFilters: _.noop,
   onFilterPublisherHierarchy: _.noop,
 
   publisherCounts: [],
@@ -289,13 +277,11 @@ ResultsConceptsPure.defaultProps = {
 ResultsConceptsPure.propTypes = {
   showFilterModal: PropTypes.bool,
   closeFilterModal: PropTypes.func,
-  showClearFilterButton: PropTypes.bool,
 
   conceptItems: PropTypes.array,
   conceptTotal: PropTypes.number,
   conceptAggregations: PropTypes.object,
 
-  onClearFilters: PropTypes.func,
   onFilterPublisherHierarchy: PropTypes.func,
   publisherCounts: PropTypes.array,
   publishers: PropTypes.object,
