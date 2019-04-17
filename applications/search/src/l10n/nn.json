@@ -34,6 +34,7 @@
   "statusReplacedUrl": "Ny versjon er dokumentert her.",
   "during": "i",
   "datasetLabel": "Datasett",
+  "activeFilter": "Aktive filtre",
   "app": {
     "menu": "Meny"
   },
@@ -60,7 +61,7 @@
   "query": {
     "intro": "Søk etter innhald",
     "do": "Søk",
-    "clear": "Fjern alle filter"
+    "clear": "Nullstill alle filter"
   },
   "about": {
     "about": "Om felles Datakatalog",

@@ -12,6 +12,7 @@ import { FilterBox } from '../../../components/filter-box/filter-box.component';
 import { SearchPublishersTree } from '../search-publishers-tree/search-publishers-tree.component';
 import { getSortfield, setPage, setSortfield } from '../search-location-helper';
 import { parseSearchParams } from '../../../lib/location-history-helper';
+import { FilterPills } from '../filter-pills/filter-pills.component';
 
 const renderFilterModal = ({
   showFilterModal,
@@ -76,8 +77,6 @@ export const ResultsApiPure = ({
   onFilterFormat,
   publisherCounts,
   publishers,
-  onClearFilters,
-  showClearFilterButton,
   hitsPerPage,
   history,
   location,
@@ -87,16 +86,6 @@ export const ResultsApiPure = ({
 
   const page = parseInt(locationSearch.page || 0, 10);
   const pageCount = Math.ceil((apiTotal || 1) / hitsPerPage);
-
-  const clearButtonClass = cx(
-    'btn',
-    'btn-primary',
-    'fdk-button',
-    'fade-in-500',
-    {
-      'd-none': !showClearFilterButton
-    }
-  );
 
   const sortfield = getSortfield(location);
   const sortByScoreClass = cx('fdk-button', 'fdk-button-black-toggle', {
@@ -120,15 +109,7 @@ export const ResultsApiPure = ({
   return (
     <main data-test-id="apis" id="content">
       <div className="row mb-3">
-        <div className="col-6 col-lg-4">
-          <button
-            className={clearButtonClass}
-            onClick={onClearFilters}
-            type="button"
-          >
-            {localization.query.clear}
-          </button>
-        </div>
+        <div className="col-6 col-lg-4" />
         <div className="col-6 col-lg-4 offset-lg-4">
           <div className="d-flex justify-content-end">
             <Button
@@ -153,6 +134,14 @@ export const ResultsApiPure = ({
           <span className="uu-invisible" aria-hidden="false">
             Filtrering
           </span>
+
+          <FilterPills
+            history={history}
+            location={location}
+            locationSearch={locationSearch}
+            publishers={publishers}
+          />
+
           {apiAggregations && (
             <div>
               {renderFilterModal({
@@ -214,7 +203,6 @@ export const ResultsApiPure = ({
 ResultsApiPure.defaultProps = {
   showFilterModal: false,
   closeFilterModal: _.noop,
-  showClearFilterButton: false,
 
   apiItems: [],
   apiTotal: 0,
@@ -222,7 +210,6 @@ ResultsApiPure.defaultProps = {
 
   onFilterPublisherHierarchy: _.noop,
   onFilterFormat: _.noop,
-  onClearFilters: _.noop,
   publisherCounts: null,
   publishers: null,
 
@@ -236,7 +223,6 @@ ResultsApiPure.defaultProps = {
 ResultsApiPure.propTypes = {
   showFilterModal: PropTypes.bool,
   closeFilterModal: PropTypes.func,
-  showClearFilterButton: PropTypes.bool,
 
   apiItems: PropTypes.array,
   apiTotal: PropTypes.number,
@@ -244,7 +230,6 @@ ResultsApiPure.propTypes = {
 
   onFilterPublisherHierarchy: PropTypes.func,
   onFilterFormat: PropTypes.func,
-  onClearFilters: PropTypes.func,
 
   publisherCounts: PropTypes.array,
   publishers: PropTypes.object,

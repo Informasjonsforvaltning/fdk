@@ -10,15 +10,7 @@ exports[`should render ResultsApi correctly with hits 1`] = `
   >
     <div
       className="col-6 col-lg-4"
-    >
-      <button
-        className="btn btn-primary fdk-button fade-in-500 d-none"
-        onClick={[Function]}
-        type="button"
-      >
-        Clear
-      </button>
-    </div>
+    />
     <div
       className="col-6 col-lg-4 offset-lg-4"
     >
@@ -56,6 +48,21 @@ exports[`should render ResultsApi correctly with hits 1`] = `
       >
         Filtrering
       </span>
+      <FilterPills
+        history={
+          Object {
+            "push": [Function],
+          }
+        }
+        location={
+          Object {
+            "search": "",
+          }
+        }
+        locationSearch={Object {}}
+        publishers={null}
+        themesItems={null}
+      />
       <div>
         <Modal
           autoFocus={true}
@@ -294,15 +301,7 @@ exports[`should render ResultsApi correctly with minimum of props and no hits 1`
   >
     <div
       className="col-6 col-lg-4"
-    >
-      <button
-        className="btn btn-primary fdk-button fade-in-500 d-none"
-        onClick={[Function]}
-        type="button"
-      >
-        Clear
-      </button>
-    </div>
+    />
     <div
       className="col-6 col-lg-4 offset-lg-4"
     >
@@ -340,6 +339,21 @@ exports[`should render ResultsApi correctly with minimum of props and no hits 1`
       >
         Filtrering
       </span>
+      <FilterPills
+        history={
+          Object {
+            "push": [Function],
+          }
+        }
+        location={
+          Object {
+            "search": "",
+          }
+        }
+        locationSearch={Object {}}
+        publishers={null}
+        themesItems={null}
+      />
     </aside>
     <div
       className="col-12 col-lg-8"

@@ -13,6 +13,7 @@ import { SearchPublishersTree } from '../search-publishers-tree/search-publisher
 import { ErrorBoundary } from '../../../components/error-boundary/error-boundary';
 import { getSortfield, setPage, setSortfield } from '../search-location-helper';
 import { parseSearchParams } from '../../../lib/location-history-helper';
+import { FilterPills } from '../filter-pills/filter-pills.component';
 
 function _renderFilterModal({
   showFilterModal,
@@ -100,13 +101,11 @@ export const ResultsDatasetPure = ({
   datasetItems,
   datasetAggregations,
   datasetTotal,
-  onClearFilters,
   onFilterTheme,
   onFilterAccessRights,
   onFilterPublisherHierarchy,
   onFilterProvenance,
   onFilterSpatial,
-  showClearFilterButton,
   themesItems,
   hitsPerPage,
   publishers,
@@ -118,16 +117,6 @@ export const ResultsDatasetPure = ({
 
   const page = parseInt(locationSearch.page || 0, 10);
   const pageCount = Math.ceil((datasetTotal || 1) / hitsPerPage);
-
-  const clearButtonClass = cx(
-    'btn',
-    'btn-primary',
-    'fdk-button',
-    'fade-in-500',
-    {
-      'd-none': !showClearFilterButton
-    }
-  );
 
   const sortfield = getSortfield(location);
   const sortByScoreClass = cx('fdk-button', 'fdk-button-black-toggle', {
@@ -151,15 +140,7 @@ export const ResultsDatasetPure = ({
   return (
     <main id="content" data-test-id="datasets">
       <section className="row mb-3">
-        <div className="col-6 col-lg-4">
-          <button
-            className={clearButtonClass}
-            onClick={onClearFilters}
-            type="button"
-          >
-            {localization.query.clear}
-          </button>
-        </div>
+        <div className="col-6 col-lg-4" />
         <div className="col-6 col-lg-4 offset-lg-4">
           <div className="d-flex justify-content-end">
             <Button
@@ -185,6 +166,15 @@ export const ResultsDatasetPure = ({
           <span className="uu-invisible" aria-hidden="false">
             Filtrering tilgang
           </span>
+
+          <FilterPills
+            history={history}
+            location={location}
+            locationSearch={locationSearch}
+            themesItems={themesItems}
+            publishers={publishers}
+          />
+
           {datasetItems &&
             datasetAggregations && (
               <div>
@@ -273,7 +263,6 @@ export const ResultsDatasetPure = ({
 ResultsDatasetPure.defaultProps = {
   showFilterModal: false,
   closeFilterModal: _.noop,
-  showClearFilterButton: false,
 
   datasetItems: null,
   datasetAggregations: null,
@@ -284,7 +273,6 @@ ResultsDatasetPure.defaultProps = {
   onFilterPublisherHierarchy: _.noop,
   onFilterProvenance: _.noop,
   onFilterSpatial: _.noop,
-  onClearFilters: _.noop,
   themesItems: null,
   publishers: null,
   referenceData: null,
@@ -298,7 +286,6 @@ ResultsDatasetPure.defaultProps = {
 ResultsDatasetPure.propTypes = {
   showFilterModal: PropTypes.bool,
   closeFilterModal: PropTypes.func,
-  showClearFilterButton: PropTypes.bool,
 
   datasetItems: PropTypes.array,
   datasetAggregations: PropTypes.object,
@@ -309,7 +296,6 @@ ResultsDatasetPure.propTypes = {
   onFilterPublisherHierarchy: PropTypes.func,
   onFilterProvenance: PropTypes.func,
   onFilterSpatial: PropTypes.func,
-  onClearFilters: PropTypes.func,
   themesItems: PropTypes.object,
   publishers: PropTypes.object,
   referenceData: PropTypes.object,
