@@ -26,6 +26,8 @@
         <module>concept-cat</module>
         <module>informationmodel-cat</module>
         <module>user-api</module>
+
+        <module>auth-oidc-demo-api</module>
     </modules>
 
 
