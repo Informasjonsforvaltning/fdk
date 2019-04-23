@@ -33,6 +33,7 @@
         <module>user-api</module>
 
         <module>auth-oidc-demo-api</module>
+        <module>auth-demo-api</module>
     </modules>
 
 

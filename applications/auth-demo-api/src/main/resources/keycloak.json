@@ -1,0 +1,7 @@
+{
+  "realm": "demo",
+  "auth-server-url": "http://localhost:8084/auth",
+  "ssl-required": "external",
+  "resource": "fdk-public",
+  "public-client": true
+}
