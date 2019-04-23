@@ -1,0 +1,21 @@
+logging:
+  level.root: WARN
+  level.no: ${LOG_LEVEL:DEBUG}
+  level.org.springframework: WARN
+  level.org.springframework.web: WARN
+#  level.org.springframework.security: DEBUG
+
+rest.security.issuer-uri: http://localhost:8084/auth/realms/demo
+
+security:
+  oauth2:
+    resource:
+      id: fdk-demo-api
+      jwt.key-value: "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnLazUef578yZuRZd2RZTMHkh7TZY0fLb3qMf7zZsS9EPLVB/H8sVgjfc4KQBhaTGB1sJY0vjKoOPgyBh4mnB2AC072s4jE/cto95YJBjdnApaT5UfKJ0b9PgvzyONexYBvI+lHWDlowb0RQA9Rb8BZL3TOBzmx+o8CzSVUqSazYXwI1SlykMjFZqgI2MCdc51EYKnpKN41OxR4glJLCNy494/Zqf0hT5ZljBzBeiA2nDD5UV43aTq+6mAzZAgfYPegOyAeLmQU5p97t6SdfErzsyT+a+oQv4nJKEYF5KUz+YwP7/J1ibSGUsDRTk0nESHNDLqRtz0KeLj2z2qSzi0QIDAQAB\n-----END PUBLIC KEY-----"
+
+---
+#Utv-miljø lokalt på egen PC
+spring:
+  profiles: develop, unit-integration
+server:
+  port: 8121
