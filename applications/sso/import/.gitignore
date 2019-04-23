@@ -1,2 +1,2 @@
-*
-!.gitignore
+# ignored because keycloak includes identity provider shared secret (ID-porten) in realm config.
+fdk-realm.json
