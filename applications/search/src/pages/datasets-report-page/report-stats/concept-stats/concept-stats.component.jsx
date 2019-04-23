@@ -84,7 +84,9 @@ export const ConceptStats = props => {
           <span className="stat-box--number">
             {Object.keys(_.get(stats, 'publisher', [])).length}&nbsp;
           </span>
-          <span className="">{localization.report.countConceptsCatalogsLabel}</span>
+          <span className="">
+            {localization.report.countConceptsCatalogsLabel}
+          </span>
         </div>
       )}
 
