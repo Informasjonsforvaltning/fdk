@@ -47,25 +47,9 @@ const isAllowedToPublish = (
   syncErrors,
   distributionErrors
 ) => {
-  let foundDistributionErrors = false;
-  if (distributionErrors) {
-    const { distribution } = distributionErrors;
-    if (distribution) {
-      distribution.forEach(item => {
-        if (JSON.stringify(item) !== '{}') {
-          foundDistributionErrors = true;
-        }
-      });
-    }
-  }
-
-  if (
-    registrationStatus === 'DRAFT' &&
-    (syncErrors || foundDistributionErrors)
-  ) {
+  if (registrationStatus === 'DRAFT' && (syncErrors || distributionErrors)) {
     return false;
   }
-
   return true;
 };
 
