@@ -62,8 +62,8 @@ Datasettets URI bør benytte en av de globalt unike identifikatorene i dct:ident
 
 # Dataset_content (begreper)
 :Dataset_content
-    dct:abstract """Søk etter begrep og velg fra nedtrekksliste. 
-Et datasett skal lenke til de aktuelle og sentrale begrepene i Felles begrepskatalog og brukes til å beskrive innholdet i datasettet. """@no ;
+    dct:abstract """Søk etter begrep fra Felles begrepskatalog og velg fra nedtrekksliste. 
+Her legger du inn de begrepene som brukes i datasettet. Begrepene brukes til å si noe om hva informasjonen i datasettet betyr. """@no ;
     dct:description """Ved å henvise til gjennomarbeidede definisjoner som virksomheten selv er ansvarlig for å vedlikeholde, sikrer vi at det er tydelig hvordan et begrep brukt i datasettet skal forstås og at denne forståelsen til en hver tid er riktig og oppdatert. """@no .
 
 
