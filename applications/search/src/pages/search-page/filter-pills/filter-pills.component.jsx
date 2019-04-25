@@ -67,9 +67,8 @@ export const FilterPills = ({
   }
 
   const clearButtonClass = cx(
-    'btn',
-    'fdk-button',
-    'fdk-button-black-toggle',
+    'fdk-button-clear',
+    'fdk-text-size-15',
     'border',
     'border-dark',
     'fade-in-500',
@@ -112,7 +111,7 @@ export const FilterPills = ({
         {pills(history, location, locationSearch, themesItems, publishers)}
       </div>
 
-      <div className="mt-2 mb-4">
+      <div className="pl-0 mt-2 mb-4">
         <button
           className={clearButtonClass}
           onClick={() => clearFilters(history, location)}
