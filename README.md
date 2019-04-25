@@ -1,6 +1,4 @@
 
-[![Build Status](https://travis-ci.org/Informasjonsforvaltning/fdk.svg?branch=master)](https://travis-ci.org/Informasjonsforvaltning/fdk) 
-[![codecov](https://codecov.io/gh/Informasjonsforvaltning/fdk/branch/develop/graph/badge.svg)](https://codecov.io/gh/Informasjonsforvaltning/fdk)
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)](https://conventionalcommits.org)
 
 # The National Data Directory (Felles datakatalog)
@@ -39,7 +37,7 @@ Any questions can be sent to [fellesdatakatalog@brreg.no](mailto:fellesdatakatal
 
 The [search api](https://github.com/brreg/openAPI/blob/master/specs/fdk.yaml) can also be used.
 
-## Set up your developement environment
+## Set up your development environment
 
 Prerequisite: Make sure you have local admin on your computer, as gitbash has to be run as an administrator
 
@@ -78,7 +76,7 @@ Prerequisite: Make sure you have local admin on your computer, as gitbash has to
      docker-compose up -d --build registration-react
      ```
 
-4) If imagase are already built, project can be run: 
+4) If images are already built, project can be run: 
 
 	```
 	docker-compose up -d
@@ -235,23 +233,6 @@ repository and [data/fuseki](data/fuseki) for the fuseki repository.
 
 ![Indexes in elasticsearch](/images/elastic-index.png)
 
-## Continuous Integration (Travis, Codecov and Docker Hub)
-
-We use [Travis](https://travis-ci.org) for CI (Continous Integration), 
-[Codecov](https://codecov.io) for code coverage and 
-[DockerHub](https://hub.docker.org) for image repository. 
-
-Travis is configured in `.travis.yml`. Travis executes the instructions in this file to build, 
-run and test the code. We have created a number of scripts that only builds the apps that have changed.
-
- - Travis: https://travis-ci.org/Informasjonsforvaltning/fdk
- - CodeCov: https://codecov.io/gh/Informasjonsforvaltning/fdk
- - DockerHub: https://hub.docker.com/u/dcatno/
-
-Travis checks out the code from GitHub and builds docker images. It reports code coverage to Codecov and tags 
-and pushes new images to DockerHub. Travis also downloads the images and runs integration tests.  
-
- 
 ## Common Docker Problems
 
 Some times docker can be a bit overworked and one might need to clean up.
