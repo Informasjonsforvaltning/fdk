@@ -20,9 +20,14 @@ const getFilterLabel = (key, keyValue, publishers) => {
     return localization.unknown;
   }
   if (key === 'orgPath') {
+    const currentPublisher = publishers[keyValue];
+    if (!currentPublisher) {
+      return _.capitalize(keyValue);
+    }
     return (
-      getTranslateText(_.get(publishers, [keyValue, 'prefLabel'])) ||
-      _.get(publishers, [keyValue, 'name'])
+      localization.facet.publishers[currentPublisher.name] ||
+      getTranslateText(currentPublisher.prefLabel) ||
+      _.capitalize(currentPublisher.name)
     );
   }
   return localization[keyValue.toLowerCase()] || keyValue;
@@ -31,7 +36,9 @@ const getFilterLabel = (key, keyValue, publishers) => {
 const renderThemePill = ({ themesItems, keyValue, history, location, key }) => {
   const themeArray = keyValue.split(',');
   return themeArray.map((theme, index) => {
-    const label = getTranslateText(_.get(themesItems, [theme, 'title']));
+    const label =
+      getTranslateText(_.get(themesItems, [theme, 'title'])) ||
+      localization.unknown;
     return (
       <Pill
         key={`${keyValue}-${index}`}
