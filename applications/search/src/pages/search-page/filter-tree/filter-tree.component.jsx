@@ -4,13 +4,12 @@ import TreeView from 'react-treeview';
 import 'react-treeview/react-treeview.css';
 import cx from 'classnames';
 import { Collapse } from 'reactstrap';
-import _get from 'lodash/get';
-import _capitalize from 'lodash/capitalize';
+import _ from 'lodash';
 
 import { FilterOption } from '../../../components/filter-option/filter-option.component';
 import localization from '../../../lib/localization';
 import { getTranslateText } from '../../../lib/translateText';
-import './search-publishers-tree.scss';
+import './filter-tree.scss';
 import { keyPrefixForest } from '../../../lib/key-prefix-forest';
 
 const isItemCollapsed = (itemOrgPath, chosenOrgPath) => {
@@ -32,20 +31,20 @@ const hasSomeSiblingChildren = siblings =>
   Array.isArray(siblings) && siblings.some(hasSomeChildren);
 
 const subTree = ({
-  publisherCounts,
+  aggregations,
   activeFilter,
-  publishers,
-  onFilterPublisherHierarchy
+  referenceDataItems,
+  handleFiltering
 }) =>
-  publisherCounts.map((node, i) => {
+  aggregations.map((node, i) => {
     let active = false;
     if (activeFilter === node.key) {
       active = true;
     }
 
     const name =
-      getTranslateText(_get(publishers, [node.key, 'prefLabel'])) ||
-      _capitalize(_get(publishers, [node.key, 'name'], node.key));
+      getTranslateText(_.get(referenceDataItems, [node.key, 'prefLabel'])) ||
+      _.capitalize(_.get(referenceDataItems, [node.key, 'name'], node.key));
 
     const label = (
       <FilterOption
@@ -54,7 +53,7 @@ const subTree = ({
         value={node.key}
         labelRaw={name}
         count={node.count}
-        onClick={onFilterPublisherHierarchy}
+        onClick={handleFiltering}
         active={active}
         displayClass="inline-block"
       />
@@ -68,10 +67,10 @@ const subTree = ({
           defaultCollapsed={collapsed}
         >
           {subTree({
-            publisherCounts: node.children,
+            aggregations: node.children,
             activeFilter,
-            publishers,
-            onFilterPublisherHierarchy
+            referenceDataItems,
+            handleFiltering
           })}
         </TreeView>
       );
@@ -83,21 +82,21 @@ const subTree = ({
         value={node.key}
         labelRaw={name}
         count={node.count}
-        onClick={onFilterPublisherHierarchy}
+        onClick={handleFiltering}
         active={active}
-        displayClass={hasSomeSiblingChildren(publisherCounts) ? 'indent' : ''}
+        displayClass={hasSomeSiblingChildren(aggregations) ? 'indent' : ''}
       />
     );
   });
 
 const mainTree = ({
-  publisherCountsForest,
+  aggregationsForest,
   activeFilter,
-  publishers,
-  onFilterPublisherHierarchy
+  referenceDataItems,
+  handleFiltering
 }) =>
-  Array.isArray(publisherCountsForest) &&
-  publisherCountsForest.map((node, i) => {
+  Array.isArray(aggregationsForest) &&
+  aggregationsForest.map((node, i) => {
     let active = false;
     if (activeFilter === node.key) {
       active = true;
@@ -106,17 +105,19 @@ const mainTree = ({
     const collapsed = isItemCollapsed(node.key, activeFilter);
 
     let name = node.key;
-    if (publishers) {
-      const currentPublisher = publishers[node.key];
-      if (currentPublisher) {
-        name =
-          currentPublisher.id === 'STAT' ||
+    if (referenceDataItems) {
+      const currentPublisher = referenceDataItems[node.key];
+      if (
+        currentPublisher &&
+        (currentPublisher.id === 'STAT' ||
           currentPublisher.id === 'FYLKE' ||
           currentPublisher.id === 'KOMMUNE' ||
           currentPublisher.id === 'PRIVAT' ||
-          currentPublisher.id === 'ANNET'
-            ? localization.facet.publishers[currentPublisher.name]
-            : currentPublisher.name;
+          currentPublisher.id === 'ANNET')
+      ) {
+        name = localization.facet.publishers[currentPublisher.name];
+      } else if (currentPublisher) {
+        name = getTranslateText(_.get(currentPublisher, 'prefLabel'));
       }
     }
 
@@ -127,7 +128,7 @@ const mainTree = ({
         value={node.key}
         label={name}
         count={node.count}
-        onClick={onFilterPublisherHierarchy}
+        onClick={handleFiltering}
         active={active}
         displayClass="inline-block"
       />
@@ -144,10 +145,10 @@ const mainTree = ({
             {node.children &&
               node.children.length > 0 &&
               subTree({
-                publisherCounts: node.children,
+                aggregations: node.children,
                 activeFilter,
-                publishers,
-                onFilterPublisherHierarchy
+                referenceDataItems,
+                handleFiltering
               })}
           </TreeView>
         </div>
@@ -161,13 +162,13 @@ const mainTree = ({
         value={node.key}
         label={name}
         count={node.count}
-        onClick={onFilterPublisherHierarchy}
+        onClick={handleFiltering}
         active={active}
       />
     );
   });
 
-export class SearchPublishersTree extends React.Component {
+export class FilterTree extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -193,21 +194,21 @@ export class SearchPublishersTree extends React.Component {
     const { openFilter } = this.state;
     const {
       title,
-      publisherCounts,
-      onFilterPublisherHierarchy,
+      aggregations,
+      handleFiltering,
       activeFilter,
-      publishers
+      referenceDataItems
     } = this.props;
 
-    const publisherCountsForest = keyPrefixForest(publisherCounts);
+    const aggregationsForest = keyPrefixForest(aggregations);
 
     const collapseIconClass = cx('fa', 'mr-2', {
       'fa-angle-down': !this.state.openFilter,
       'fa-angle-up': this.state.openFilter
     });
-    if (Array.isArray(publisherCounts) && publisherCounts.length > 0) {
+    if (Array.isArray(aggregations) && aggregations.length > 0) {
       return (
-        <div className="search-filter-publisher">
+        <div className="fdk-filter-tree">
           <div className="fdk-panel__header">
             <button
               className="fdk-publisher-toggle p-0"
@@ -221,10 +222,10 @@ export class SearchPublishersTree extends React.Component {
             <div className="fdk-panel__content">
               <div className="fdk-items-list">
                 {mainTree({
-                  publisherCountsForest,
+                  aggregationsForest,
                   activeFilter,
-                  publishers,
-                  onFilterPublisherHierarchy
+                  referenceDataItems,
+                  handleFiltering
                 })}
               </div>
             </div>
@@ -236,17 +237,17 @@ export class SearchPublishersTree extends React.Component {
   }
 }
 
-SearchPublishersTree.defaultProps = {
+FilterTree.defaultProps = {
   title: null,
-  publisherCounts: null,
+  aggregations: null,
   activeFilter: null,
-  publishers: null
+  referenceDataItems: null
 };
 
-SearchPublishersTree.propTypes = {
+FilterTree.propTypes = {
   title: PropTypes.string,
-  publisherCounts: PropTypes.array,
-  onFilterPublisherHierarchy: PropTypes.func.isRequired,
+  aggregations: PropTypes.array,
+  handleFiltering: PropTypes.func.isRequired,
   activeFilter: PropTypes.string,
-  publishers: PropTypes.object
+  referenceDataItems: PropTypes.object
 };

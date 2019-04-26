@@ -148,10 +148,9 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
                 themesItems={null}
                 title="Access"
               />
-              <SearchPublishersTree
+              <FilterTree
                 activeFilter={null}
-                onFilterPublisherHierarchy={[Function]}
-                publisherCounts={
+                aggregations={
                   Array [
                     Object {
                       "count": 4,
@@ -183,7 +182,8 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
                     },
                   ]
                 }
-                publishers={null}
+                handleFiltering={[Function]}
+                referenceDataItems={null}
                 title="Organization"
               />
               <FilterBox
@@ -281,10 +281,9 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
           themesItems={null}
           title="Access"
         />
-        <SearchPublishersTree
+        <FilterTree
           activeFilter={null}
-          onFilterPublisherHierarchy={[Function]}
-          publisherCounts={
+          aggregations={
             Array [
               Object {
                 "count": 4,
@@ -316,7 +315,8 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
               },
             ]
           }
-          publishers={null}
+          handleFiltering={[Function]}
+          referenceDataItems={null}
           title="Organization"
         />
         <FilterBox

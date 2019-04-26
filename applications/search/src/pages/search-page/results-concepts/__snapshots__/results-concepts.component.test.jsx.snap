@@ -104,11 +104,11 @@ exports[`should render ResultsConcepts correctly with hits 1`] = `
               <div
                 className="search-filters"
               >
-                <SearchPublishersTree
+                <FilterTree
                   activeFilter={null}
-                  onFilterPublisherHierarchy={[Function]}
-                  publisherCounts={Array []}
-                  publishers={null}
+                  aggregations={Array []}
+                  handleFiltering={[Function]}
+                  referenceDataItems={null}
                   title="Organization"
                 />
               </div>
@@ -126,11 +126,11 @@ exports[`should render ResultsConcepts correctly with hits 1`] = `
               </Button>
             </ModalFooter>
           </Modal>
-          <SearchPublishersTree
+          <FilterTree
             activeFilter={null}
-            onFilterPublisherHierarchy={[Function]}
-            publisherCounts={Array []}
-            publishers={null}
+            aggregations={Array []}
+            handleFiltering={[Function]}
+            referenceDataItems={null}
             title="Organization"
           />
         </div>

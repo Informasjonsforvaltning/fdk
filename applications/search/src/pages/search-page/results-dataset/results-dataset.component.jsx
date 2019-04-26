@@ -9,7 +9,7 @@ import { withRouter } from 'react-router';
 import localization from '../../../lib/localization';
 import { SearchHitItem } from './search-hit-item/search-hit-item.component';
 import { FilterBox } from '../../../components/filter-box/filter-box.component';
-import { SearchPublishersTree } from '../search-publishers-tree/search-publishers-tree.component';
+import { FilterTree } from '../filter-tree/filter-tree.component';
 import { ErrorBoundary } from '../../../components/error-boundary/error-boundary';
 import { getSortfield, setPage, setSortfield } from '../search-location-helper';
 import { parseSearchParams } from '../../../lib/location-history-helper';
@@ -48,12 +48,12 @@ function _renderFilterModal({
             onClick={onFilterAccessRights}
             activeFilter={locationSearch.accessrights}
           />
-          <SearchPublishersTree
+          <FilterTree
             title={localization.facet.organisation}
-            publisherCounts={datasetAggregations.orgPath.buckets}
-            onFilterPublisherHierarchy={onFilterPublisherHierarchy}
+            aggregations={datasetAggregations.orgPath.buckets}
+            handleFiltering={onFilterPublisherHierarchy}
             activeFilter={locationSearch.orgPath}
-            publishers={publishers}
+            referenceDataItems={publishers}
           />
           <FilterBox
             htmlKey={3}
@@ -206,12 +206,12 @@ export const ResultsDatasetPure = ({
                   onClick={onFilterAccessRights}
                   activeFilter={locationSearch.accessrights}
                 />
-                <SearchPublishersTree
+                <FilterTree
                   title={localization.facet.organisation}
-                  publisherCounts={datasetAggregations.orgPath.buckets}
-                  onFilterPublisherHierarchy={onFilterPublisherHierarchy}
+                  aggregations={datasetAggregations.orgPath.buckets}
+                  handleFiltering={onFilterPublisherHierarchy}
                   activeFilter={locationSearch.orgPath}
-                  publishers={publishers}
+                  referenceDataItems={publishers}
                 />
                 <FilterBox
                   htmlKey={3}

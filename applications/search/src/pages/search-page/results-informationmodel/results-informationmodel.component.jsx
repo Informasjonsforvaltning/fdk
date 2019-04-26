@@ -8,7 +8,7 @@ import cx from 'classnames';
 
 import localization from '../../../lib/localization';
 import { SearchHitItem } from './search-hit-item/search-hit-item.component';
-import { SearchPublishersTree } from '../search-publishers-tree/search-publishers-tree.component';
+import { FilterTree } from '../filter-tree/filter-tree.component';
 import { getSortfield, setPage, setSortfield } from '../search-location-helper';
 import { parseSearchParams } from '../../../lib/location-history-helper';
 import { FilterPills } from '../filter-pills/filter-pills.component';
@@ -25,12 +25,12 @@ const renderFilterModal = ({
     <ModalHeader toggle={closeFilterModal}>{localization.filter}</ModalHeader>
     <ModalBody>
       <div className="search-filters">
-        <SearchPublishersTree
+        <FilterTree
           title={localization.facet.provider}
-          publisherCounts={publisherCounts}
-          onFilterPublisherHierarchy={onFilterPublisherHierarchy}
+          aggregations={publisherCounts}
+          handleFiltering={onFilterPublisherHierarchy}
           activeFilter={locationSearch.orgPath}
-          publishers={publishers}
+          referenceDataItems={publishers}
         />
       </div>
     </ModalBody>
@@ -137,12 +137,12 @@ export const ResultsInformationModelPure = ({
                 publishers,
                 onFilterPublisherHierarchy
               })}
-              <SearchPublishersTree
+              <FilterTree
                 title={localization.facet.provider}
-                publisherCounts={publisherCounts}
-                onFilterPublisherHierarchy={onFilterPublisherHierarchy}
+                aggregations={publisherCounts}
+                handleFiltering={onFilterPublisherHierarchy}
                 activeFilter={locationSearch.orgPath}
-                publishers={publishers}
+                referenceDataItems={publishers}
               />
             </div>
           )}

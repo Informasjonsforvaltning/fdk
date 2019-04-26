@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`should render SearchPublishersTree correctly with active filter 1`] = `
+exports[`should render FilterTree correctly with active filter 1`] = `
 <div
-  className="search-filter-publisher"
+  className="fdk-filter-tree"
 >
   <div
     className="fdk-panel__header"
@@ -1602,9 +1602,9 @@ exports[`should render SearchPublishersTree correctly with active filter 1`] = `
 </div>
 `;
 
-exports[`should render SearchPublishersTree correctly with active sub filter 1`] = `
+exports[`should render FilterTree correctly with active sub filter 1`] = `
 <div
-  className="search-filter-publisher"
+  className="fdk-filter-tree"
 >
   <div
     className="fdk-panel__header"
@@ -3204,11 +3204,11 @@ exports[`should render SearchPublishersTree correctly with active sub filter 1`]
 </div>
 `;
 
-exports[`should render SearchPublishersTree correctly with minimum of props 1`] = `""`;
+exports[`should render FilterTree correctly with minimum of props 1`] = `""`;
 
-exports[`should render SearchPublishersTree correctly with props 1`] = `
+exports[`should render FilterTree correctly with props 1`] = `
 <div
-  className="search-filter-publisher"
+  className="fdk-filter-tree"
 >
   <div
     className="fdk-panel__header"

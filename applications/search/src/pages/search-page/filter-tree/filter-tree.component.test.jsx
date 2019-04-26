@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React from 'react';
 import { shallow } from 'enzyme';
-import { SearchPublishersTree } from './search-publishers-tree.component';
+import { FilterTree } from './filter-tree.component';
 import publishers from '../../../../test/fixtures/publishers';
 import { normalizeAggregations } from '../../../lib/normalizeAggregations';
 import datasetsApiResponse from './__fixtures/datasetsApiResponse.json';
@@ -22,34 +22,32 @@ beforeEach(() => {
 
   defaultProps = {
     title: 'title',
-    publisherCounts,
-    onFilterPublisherHierarchy,
-    publishers
+    aggregations: publisherCounts,
+    handleFiltering: onFilterPublisherHierarchy,
+    referenceDataItems: publishers
   };
-  wrapper = shallow(<SearchPublishersTree {...defaultProps} />);
+  wrapper = shallow(<FilterTree {...defaultProps} />);
 });
 
-test('should render SearchPublishersTree correctly with minimum of props', () => {
+test('should render FilterTree correctly with minimum of props', () => {
   const minWrapper = shallow(
-    <SearchPublishersTree
-      onFilterPublisherHierarchy={onFilterPublisherHierarchy}
-    />
+    <FilterTree handleFiltering={onFilterPublisherHierarchy} />
   );
   expect(minWrapper).toMatchSnapshot();
 });
 
-test('should render SearchPublishersTree correctly with props', () => {
+test('should render FilterTree correctly with props', () => {
   expect(wrapper).toMatchSnapshot();
 });
 
-test('should render SearchPublishersTree correctly with active filter', () => {
+test('should render FilterTree correctly with active filter', () => {
   wrapper.setProps({
     activeFilter: '/STAT'
   });
   expect(wrapper).toMatchSnapshot();
 });
 
-test('should render SearchPublishersTree correctly with active sub filter', () => {
+test('should render FilterTree correctly with active sub filter', () => {
   wrapper.setProps({
     activeFilter: '/KOMMUNE/958935420/974770482'
   });
