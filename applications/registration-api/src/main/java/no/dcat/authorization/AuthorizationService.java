@@ -39,8 +39,7 @@ import java.util.stream.Collectors;
 public class AuthorizationService {
     private static final Logger logger = LoggerFactory.getLogger(AuthorizationService.class);
 
-    static String[] TLS_PROTOCOLS = {"TLSv1", "TLSv1.1" /*, "TLSv1.2"*/}; // Comment in TLSv1.2 to fail : bug in altinn or java that fails TLS handshake most of the time, but not always
-    static String[] TLS_PROTOCOLSx = {"TLSv1.2"};
+    static String[] TLS_PROTOCOLS = {"TLSv1.2"};
     static String[] CIPHER_SUITES = null; // {"TLS_RSA_WITH_AES_128_GCM_SHA256"};
 
     @Value("${application.apikey}")
