@@ -30,7 +30,7 @@ const getFilterLabel = (key, keyValue, publishers) => {
       _.capitalize(currentPublisher.name)
     );
   }
-  return localization[keyValue.toLowerCase()] || keyValue;
+  return localization[keyValue.toLowerCase()] || _.capitalize(keyValue);
 };
 
 const renderThemePill = ({ themesItems, keyValue, history, location, key }) => {
