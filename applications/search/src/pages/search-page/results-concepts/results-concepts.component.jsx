@@ -16,7 +16,7 @@ import {
 import localization from '../../../lib/localization';
 import { ConceptsHitItem } from './concepts-hit-item/concepts-hit-item.component';
 import { CompareTerms } from './compare-terms/compare-terms.component';
-import { SearchPublishersTree } from '../search-publishers-tree/search-publishers-tree.component';
+import { FilterTree } from '../filter-tree/filter-tree.component';
 import { getTranslateText } from '../../../lib/translateText';
 import { getSortfield, setPage, setSortfield } from '../search-location-helper';
 import { parseSearchParams } from '../../../lib/location-history-helper';
@@ -95,12 +95,12 @@ function _renderFilterModal({
       <ModalHeader toggle={closeFilterModal}>Filter</ModalHeader>
       <ModalBody>
         <div className="search-filters">
-          <SearchPublishersTree
+          <FilterTree
             title={localization.facet.organisation}
-            publisherCounts={publisherCounts}
-            onFilterPublisherHierarchy={onFilterPublisherHierarchy}
+            aggregations={publisherCounts}
+            handleFiltering={onFilterPublisherHierarchy}
             activeFilter={locationSearch.orgPath}
-            publishers={publishers}
+            referenceDataItems={publishers}
           />
         </div>
       </ModalBody>
@@ -204,12 +204,12 @@ export const ResultsConceptsPure = ({
                   publisherCounts,
                   publishers
                 })}
-                <SearchPublishersTree
+                <FilterTree
                   title={localization.facet.organisation}
-                  publisherCounts={publisherCounts}
-                  onFilterPublisherHierarchy={onFilterPublisherHierarchy}
-                  activeFilter={_.get(locationSearch, 'orgPath')}
-                  publishers={publishers}
+                  aggregations={publisherCounts}
+                  handleFiltering={onFilterPublisherHierarchy}
+                  activeFilter={locationSearch.orgPath}
+                  referenceDataItems={publishers}
                 />
               </div>
             )}

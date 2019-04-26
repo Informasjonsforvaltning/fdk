@@ -102,11 +102,11 @@ exports[`should render ResultsApi correctly with hits 1`] = `
             <div
               className="search-filters"
             >
-              <SearchPublishersTree
+              <FilterTree
                 activeFilter={null}
-                onFilterPublisherHierarchy={[Function]}
-                publisherCounts={null}
-                publishers={null}
+                aggregations={null}
+                handleFiltering={[Function]}
+                referenceDataItems={null}
                 title="Provider"
               />
               <FilterBox
@@ -157,11 +157,11 @@ exports[`should render ResultsApi correctly with hits 1`] = `
             </Button>
           </ModalFooter>
         </Modal>
-        <SearchPublishersTree
+        <FilterTree
           activeFilter={null}
-          onFilterPublisherHierarchy={[Function]}
-          publisherCounts={null}
-          publishers={null}
+          aggregations={null}
+          handleFiltering={[Function]}
+          referenceDataItems={null}
           title="Provider"
         />
         <FilterBox
