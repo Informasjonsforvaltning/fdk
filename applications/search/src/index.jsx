@@ -11,6 +11,7 @@ import { ConnectedFeatureToggleProvider } from './components/connected-feature-t
 import { ConnectedApp } from './app/connected-app';
 import { ErrorBoundary } from './components/error-boundary/error-boundary';
 import ScrollToTop from './components/scroll-to-top/scrollToTop.component';
+import { loadConfig } from './config';
 
 if (window.location.hostname.indexOf('fellesdatakatalog.brreg.no') !== -1) {
   ReactGA.initialize('UA-110098477-1'); // prod
@@ -54,20 +55,27 @@ function Analytics(props) {
   return null;
 }
 
-const store = configureStore();
+function AppRoot(store) {
+  return (
+    <ErrorBoundary>
+      <Provider store={store}>
+        <ConnectedFeatureToggleProvider>
+          <BrowserRouter>
+            <ScrollToTop>
+              <Route path="/" component={Analytics} />
+              <Route path="/" component={ConnectedApp} />
+            </ScrollToTop>
+          </BrowserRouter>
+        </ConnectedFeatureToggleProvider>
+      </Provider>
+    </ErrorBoundary>
+  );
+}
 
-ReactDOM.render(
-  <ErrorBoundary>
-    <Provider store={store}>
-      <ConnectedFeatureToggleProvider>
-        <BrowserRouter>
-          <ScrollToTop>
-            <Route path="/" component={Analytics} />
-            <Route path="/" component={ConnectedApp} />
-          </ScrollToTop>
-        </BrowserRouter>
-      </ConnectedFeatureToggleProvider>
-    </Provider>
-  </ErrorBoundary>,
-  document.getElementById('root')
-);
+async function init() {
+  await loadConfig();
+  const store = configureStore();
+  ReactDOM.render(AppRoot(store), document.getElementById('root'));
+}
+
+init();
