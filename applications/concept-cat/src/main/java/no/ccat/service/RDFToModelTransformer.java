@@ -227,13 +227,15 @@ public class RDFToModelTransformer {
             Resource contactPointResource = propertyStmnt.getObject().asResource();
 
             Statement phoneStatement = contactPointResource.getProperty(VCARD4.hasTelephone);
-            String parsedPhoneNumber = parseURIFromStatement(phoneStatement);
-            contactPoint.setTelephone(parsedPhoneNumber);
-
+            if (phoneStatement != null) {
+                String parsedPhoneNumber = parseURIFromStatement(phoneStatement);
+                contactPoint.setTelephone(parsedPhoneNumber);
+            }
             Statement emailStatement = contactPointResource.getProperty(VCARD4.hasEmail);
-            String parsedEmailAddress = parseURIFromStatement(emailStatement);
-            contactPoint.setEmail(parsedEmailAddress);
-
+            if (emailStatement != null) {
+                String parsedEmailAddress = parseURIFromStatement(emailStatement);
+                contactPoint.setEmail(parsedEmailAddress);
+            }
         } catch (Exception e) {
             logger.warn("Error when extracting property {} from resource {}", DCAT.contactPoint, resource.getURI(), e);
         }
