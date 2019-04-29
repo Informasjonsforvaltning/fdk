@@ -15,7 +15,6 @@ import { ListRegular } from '../../components/list-regular/list-regular.componen
 import { TwoColRow } from '../../components/list-regular/twoColRow/twoColRow';
 import { DatasetReference } from './dataset-reference/dataset-reference.component';
 import { InformationModelReference } from './informationmodel-reference/informationmodel-reference.component';
-import { config } from '../../config';
 import { convertToSanitizedHtml } from '../../lib/markdown-converter';
 import './api-details-page.scss';
 import { AlertMessage } from '../../components/alert-message/alert-message.component';
@@ -31,6 +30,7 @@ import {
   getReferenceDataByCode,
   REFERENCEDATA_APISERVICETYPE
 } from '../../redux/modules/referenceData';
+import { getConfig } from '../../config';
 
 const renderDescription = descriptionFormatted => {
   if (!descriptionFormatted) {
@@ -415,6 +415,8 @@ export const ApiDetailsPage = ({
     description: getTranslateText(apiItem.description)
   };
 
+  const disqusShortname = getConfig().disqusShortname;
+
   const disqusConfig = {
     url: window.location.href,
     identifier: apiItem.id,
@@ -488,9 +490,9 @@ export const ApiDetailsPage = ({
             {renderInformationModelReferences(referencedInformationModels)}
 
             {renderContactPoints(apiItem.contactPoint)}
-            {config.disqusShortname && (
+            {disqusShortname && (
               <Disqus.DiscussionEmbed
-                shortname={config.disqusShortname}
+                shortname={disqusShortname}
                 config={disqusConfig}
               />
             )}
