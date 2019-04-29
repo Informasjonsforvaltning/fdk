@@ -2,6 +2,35 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+# [1.4.0](https://github.com/Informasjonsforvaltning/fdk/compare/v1.3.0...v1.4.0) (2019-04-29)
+
+
+### Bug Fixes
+
+* Fix buildApplication.sh script permissions, to allow execution on mac ([1d89544](https://github.com/Informasjonsforvaltning/fdk/commit/1d89544))
+* **concept-cat:** Some organisations do not have a phone registered ([7466589](https://github.com/Informasjonsforvaltning/fdk/commit/7466589))
+* **registration-react:** [#1341](https://github.com/Informasjonsforvaltning/fdk/issues/1341) distribution format required field ([d73a26c](https://github.com/Informasjonsforvaltning/fdk/commit/d73a26c))
+* **registration-react:** [#1341](https://github.com/Informasjonsforvaltning/fdk/issues/1341) do not allow publishing if distribution missing format ([71e3500](https://github.com/Informasjonsforvaltning/fdk/commit/71e3500))
+* **registration-react:** [#1612](https://github.com/Informasjonsforvaltning/fdk/issues/1612) - dataset references form - change from default fetch size 20 to 1000 ([731a5cc](https://github.com/Informasjonsforvaltning/fdk/commit/731a5cc))
+* **search:** [#1443](https://github.com/Informasjonsforvaltning/fdk/issues/1443) search filter should not update tab numbers ([00c5b26](https://github.com/Informasjonsforvaltning/fdk/commit/00c5b26))
+* **search:** [#1618](https://github.com/Informasjonsforvaltning/fdk/issues/1618) report page - fix styling ([1b837e7](https://github.com/Informasjonsforvaltning/fdk/commit/1b837e7))
+
+
+### Features
+
+* **registration-react:** [#1604](https://github.com/Informasjonsforvaltning/fdk/issues/1604) add LOS to dataset registration ([9f28d17](https://github.com/Informasjonsforvaltning/fdk/commit/9f28d17))
+* **registration-react:** [#1628](https://github.com/Informasjonsforvaltning/fdk/issues/1628) add Los search ([812b273](https://github.com/Informasjonsforvaltning/fdk/commit/812b273))
+* **registration-react:** [#1699](https://github.com/Informasjonsforvaltning/fdk/issues/1699) add Los helptext ([c363921](https://github.com/Informasjonsforvaltning/fdk/commit/c363921))
+* **search:** [#1686](https://github.com/Informasjonsforvaltning/fdk/issues/1686) Extend clear filters button with filter pills block ([485d208](https://github.com/Informasjonsforvaltning/fdk/commit/485d208))
+* **sso:** [#1356](https://github.com/Informasjonsforvaltning/fdk/issues/1356) Set up keycloak container ([12f13d3](https://github.com/Informasjonsforvaltning/fdk/commit/12f13d3))
+* **sso:** [#1688](https://github.com/Informasjonsforvaltning/fdk/issues/1688) Configure integration with ID Porten test environment ([9b5356b](https://github.com/Informasjonsforvaltning/fdk/commit/9b5356b))
+
+
+
+# Change Log
+
+All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
 # [1.3.0](https://github.com/Informasjonsforvaltning/fdk/compare/v1.2.0...v1.3.0) (2019-04-02)
 
 
