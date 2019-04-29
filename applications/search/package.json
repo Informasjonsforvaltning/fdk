@@ -43,7 +43,6 @@
     "designsystemet": "git+https://github.com/Informasjonsforvaltning/designsystemet.git#1.4.13",
     "detect-browser": "^2.1.0",
     "disqus-react": "^1.0.5",
-    "dotenv": "^6.2.0",
     "ejs": "^2.3.4",
     "express": "^4.16.3",
     "file-loader": "^1.1.11",

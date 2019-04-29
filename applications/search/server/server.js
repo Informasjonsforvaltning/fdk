@@ -1,3 +1,4 @@
+const _ = require('lodash');
 const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -6,15 +7,11 @@ const compression = require('compression');
 const webpack = require('webpack');
 const webpackMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
-const config = require('../webpack.dev.config.js');
-require('dotenv').config();
+const webpackConfig = require('../webpack.dev.config.js');
 
 module.exports = {
   start() {
-    const env = {
-      production: process.env.NODE_ENV === 'production',
-      disqusShortname: process.env.DISQUS_SHORTNAME
-    };
+    const production = process.env.NODE_ENV === 'production';
 
     const app = express();
     app.use(compression());
@@ -27,12 +24,31 @@ module.exports = {
     const port = Number(process.env.PORT || 3000);
     app.set('port', port);
 
-    if (!env.production) {
-      const compiler = webpack(config);
+    app.use('/env.json', (req, res) => {
+      const vars = [
+        'REDUX_LOG',
+        'DISQUS_SHORTNAME'
+        /*
+TODO:
+ There are currently lots of environment dependent configuration hardcoded in client code.
+ Keep the list until the migration is gradually done:
+  Twitter
+  Analytics
+  hotjar
+  registration host
+*/
+      ];
+      const values = vars.map(varName => process.env[varName]);
+      const envObj = _.zipObject(vars, values);
+      res.json(envObj);
+    });
+
+    if (!production) {
+      const compiler = webpack(webpackConfig);
 
       app.use(
         webpackMiddleware(compiler, {
-          publicPath: config.output.publicPath,
+          publicPath: webpackConfig.output.publicPath,
           contentBase: 'src',
           stats: {
             colors: true,
@@ -55,7 +71,7 @@ module.exports = {
 
     app.listen(app.get('port'), () => {
       console.log('FDK-search lytter på', app.get('port')); // eslint-disable-line no-console
-      console.log('env:', env.production ? 'production' : 'development'); // eslint-disable-line no-console
+      console.log('env:', production ? 'production' : 'development'); // eslint-disable-line no-console
     });
   }
 };
