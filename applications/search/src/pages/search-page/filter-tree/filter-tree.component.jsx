@@ -134,6 +134,10 @@ const mainTree = ({
       />
     );
     if (node.key !== 'ukjent' && node.key !== 'MISSING') {
+      if (!hasSomeChildren(node)) {
+        return label;
+      }
+
       return (
         <div key={`panel${i}`} className="section">
           <TreeView
@@ -142,14 +146,12 @@ const mainTree = ({
             defaultCollapsed={collapsed}
             itemClassName="tree-view_main"
           >
-            {node.children &&
-              node.children.length > 0 &&
-              subTree({
-                aggregations: node.children,
-                activeFilter,
-                referenceDataItems,
-                handleFiltering
-              })}
+            {subTree({
+              aggregations: node.children,
+              activeFilter,
+              referenceDataItems,
+              handleFiltering
+            })}
           </TreeView>
         </div>
       );
