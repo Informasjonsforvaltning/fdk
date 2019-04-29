@@ -6,6 +6,7 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import ReactGA from 'react-ga';
 import { hotjar } from 'react-hotjar';
 
+import { auth } from './auth/auth-service';
 import { configureStore } from './redux/configureStore';
 import { ConnectedFeatureToggleProvider } from './components/feature-toggle/connected-feature-toggle-provider';
 import { ConnectedApp } from './app/connected-app';
@@ -71,7 +72,9 @@ function AppRoot(store) {
   );
 }
 
-function configureServices() {
+async function configureServices() {
+  await auth.init();
+  await auth.tryRestoreSsoSession();
   const store = configureStore(getConfig().store);
   return { store };
 }

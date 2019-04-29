@@ -28,6 +28,7 @@ import {
 import ScrollToTop from '../components/scroll-to-top/scrollToTop.component';
 import '../assets/css/bootstrap-override.scss';
 import './styles';
+import { AuthDemo } from '../pages/auth-demo/auth-demo';
 
 export function App({ language }) {
   // react-localization is a stateful library, so we set the required language on each full-app render
@@ -112,6 +113,7 @@ export function App({ language }) {
               path={PATHNAME_ABOUT_REGISTRATION}
               component={ArticlePage}
             />
+            <Route exact path="/authdemo" component={AuthDemo} />
           </ScrollToTop>
         </Switch>
       </div>

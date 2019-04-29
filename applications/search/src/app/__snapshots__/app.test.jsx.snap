@@ -101,6 +101,11 @@ exports[`should render App correctly 1`] = `
           exact={true}
           path="/about-registration"
         />
+        <Route
+          component={[Function]}
+          exact={true}
+          path="/authdemo"
+        />
       </withRouter(ScrollToTop)>
     </Switch>
   </div>
