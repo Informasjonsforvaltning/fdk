@@ -5,7 +5,12 @@ import axios from 'axios';
 // The purpose of this declaration is to enable IntelliJ code completion. Fix with typescript
 export const config = {
   reduxLog: false,
-  disqusShortname: undefined
+  disqusShortname: undefined,
+  keycloak: {
+    realm: 'demo',
+    url: 'http://localhost:8084/auth',
+    clientId: 'fdk-public'
+  }
 };
 
 export const loadConfig = async () => {
