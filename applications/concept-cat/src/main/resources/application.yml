@@ -21,6 +21,7 @@ application:
   harvestsourcesuris:
     uriList:
       - "https://data.brreg.no/begrep/"
+      - "https://data.skatteetaten.no/begreper/"
       - "https://raw.githubusercontent.com/akhvidsten/skosmapping/master/Virksomhetsarkitektur"
 
 
@@ -39,6 +40,7 @@ application:
   harvestsourcesuris:
     uriList:
     - "https://data.brreg.no/begrep/"
+    - "https://data.skatteetaten.no/begreper/"
     - "https://raw.githubusercontent.com/akhvidsten/skosmapping/master/Virksomhetsarkitektur"
 server:
   port: 8105
