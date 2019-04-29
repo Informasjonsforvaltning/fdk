@@ -29,6 +29,8 @@
 	</script>
 	<div id='root'></div>
 	<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+	<script>function setServerEnv(env){window.__SERVER_ENV__=env}</script>
+	<script src="/client-env.jsonp?callback=setServerEnv"></script>
 	<script src="/static/bundle.js"></script>
 </body>
 
