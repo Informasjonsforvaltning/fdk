@@ -6,15 +6,12 @@ const compression = require('compression');
 const webpack = require('webpack');
 const webpackMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
-const config = require('../webpack.dev.config.js');
-require('dotenv').config();
+const webpackConfig = require('../webpack.dev.config.js');
+const clientConfig = require('./client-config');
 
 module.exports = {
   start() {
-    const env = {
-      production: process.env.NODE_ENV === 'production',
-      disqusShortname: process.env.DISQUS_SHORTNAME
-    };
+    const production = process.env.NODE_ENV === 'production';
 
     const app = express();
     app.use(compression());
@@ -27,12 +24,14 @@ module.exports = {
     const port = Number(process.env.PORT || 3000);
     app.set('port', port);
 
-    if (!env.production) {
-      const compiler = webpack(config);
+    app.get('/client-config.json', (req, res) => res.json(clientConfig));
+
+    if (!production) {
+      const compiler = webpack(webpackConfig);
 
       app.use(
         webpackMiddleware(compiler, {
-          publicPath: config.output.publicPath,
+          publicPath: webpackConfig.output.publicPath,
           contentBase: 'src',
           stats: {
             colors: true,
@@ -55,7 +54,7 @@ module.exports = {
 
     app.listen(app.get('port'), () => {
       console.log('FDK-search lytter på', app.get('port')); // eslint-disable-line no-console
-      console.log('env:', env.production ? 'production' : 'development'); // eslint-disable-line no-console
+      console.log('env:', production ? 'production' : 'development'); // eslint-disable-line no-console
     });
   }
 };

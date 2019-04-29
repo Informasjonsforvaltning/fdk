@@ -1,5 +1,6 @@
 # recommended dev configuration
 
+export REDUX_LOG=false
 export LOG_LEVEL=DEBUG
 export KEYCLOAK_USER=admin
 export KEYCLOAK_PASSWORD=admin
