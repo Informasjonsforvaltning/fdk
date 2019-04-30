@@ -30,6 +30,9 @@ const hasSomeChildren = node =>
 const hasSomeSiblingChildren = siblings =>
   Array.isArray(siblings) && siblings.some(hasSomeChildren);
 
+const isActiveFilter = (activeFilter, key) =>
+  !!activeFilter && activeFilter.split(',').includes(key);
+
 const subTree = ({
   aggregations,
   activeFilter,
@@ -37,11 +40,6 @@ const subTree = ({
   handleFiltering
 }) =>
   aggregations.map((node, i) => {
-    let active = false;
-    if (activeFilter === node.key) {
-      active = true;
-    }
-
     const name =
       getTranslateText(_.get(referenceDataItems, [node.key, 'prefLabel'])) ||
       _.capitalize(_.get(referenceDataItems, [node.key, 'name'], node.key));
@@ -54,7 +52,7 @@ const subTree = ({
         labelRaw={name}
         count={node.count}
         onClick={handleFiltering}
-        active={active}
+        active={isActiveFilter(activeFilter, node.key)}
         displayClass="inline-block"
       />
     );
@@ -83,7 +81,7 @@ const subTree = ({
         labelRaw={name}
         count={node.count}
         onClick={handleFiltering}
-        active={active}
+        active={isActiveFilter(activeFilter, node.key)}
         displayClass={hasSomeSiblingChildren(aggregations) ? 'indent' : ''}
       />
     );
@@ -97,11 +95,6 @@ const mainTree = ({
 }) =>
   Array.isArray(aggregationsForest) &&
   aggregationsForest.map((node, i) => {
-    let active = false;
-    if (activeFilter === node.key) {
-      active = true;
-    }
-
     const collapsed = isItemCollapsed(node.key, activeFilter);
 
     let name = node.key;
@@ -129,7 +122,7 @@ const mainTree = ({
         label={name}
         count={node.count}
         onClick={handleFiltering}
-        active={active}
+        active={isActiveFilter(activeFilter, node.key)}
         displayClass="inline-block"
       />
     );
@@ -165,7 +158,7 @@ const mainTree = ({
         label={name}
         count={node.count}
         onClick={handleFiltering}
-        active={active}
+        active={isActiveFilter(activeFilter, node.key)}
       />
     );
   });
