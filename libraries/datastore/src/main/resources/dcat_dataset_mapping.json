@@ -135,6 +135,13 @@
           }
         }
       },
+      "losTheme": {
+        "properties": {
+          "losPaths" : {
+            "type": "keyword"
+          }
+        }
+      },
       "theme": {
         "properties": {
           "code": {

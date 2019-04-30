@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
  * Created by dask on 28.02.2017.
  */
 @Component
-@Profile({"docker", "prod"})
+@Profile({"docker", "prod", "develop"})
 public class CrawlerStartHarvest implements ApplicationListener<ApplicationReadyEvent> {
 
     private static final Logger logger = LoggerFactory.getLogger(CrawlerStartHarvest.class);
