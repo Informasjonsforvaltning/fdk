@@ -38,6 +38,7 @@ const renderThemePill = ({ themesItems, keyValue, history, location, key }) => {
   return themeArray.map((theme, index) => {
     const label =
       getTranslateText(_.get(themesItems, [theme, 'title'])) ||
+      getTranslateText(_.get(themesItems, [theme, 'prefLabel'])) ||
       localization.unknown;
     return (
       <Pill
@@ -60,7 +61,8 @@ export const FilterPills = ({
   location,
   locationSearch,
   themesItems,
-  publishers
+  publishers,
+  losItems
 }) => {
   if (!isFilterNotEmpty(location)) {
     return null;
@@ -83,6 +85,14 @@ export const FilterPills = ({
       if (key === 'theme') {
         return renderThemePill({
           themesItems,
+          keyValue,
+          history,
+          location,
+          key
+        });
+      } else if (key === 'losTheme') {
+        return renderThemePill({
+          themesItems: losItems,
           keyValue,
           history,
           location,
@@ -129,7 +139,8 @@ FilterPills.defaultProps = {
   location: null,
   locationSearch: null,
   themesItems: null,
-  publishers: null
+  publishers: null,
+  losItems: null
 };
 
 FilterPills.propTypes = {
@@ -137,5 +148,6 @@ FilterPills.propTypes = {
   location: PropTypes.object,
   locationSearch: PropTypes.object,
   themesItems: PropTypes.object,
-  publishers: PropTypes.object
+  publishers: PropTypes.object,
+  losItems: PropTypes.object
 };
