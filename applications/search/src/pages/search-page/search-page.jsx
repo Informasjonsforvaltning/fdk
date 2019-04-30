@@ -40,6 +40,7 @@ export const SearchPage = props => {
     fetchReferenceDataIfNeeded,
     fetchInformationModelsIfNeeded,
     fetchApiStatusIfNeeded,
+    fetchLosIfNeeded,
     history,
     datasetItems,
     datasetAggregations,
@@ -80,9 +81,8 @@ export const SearchPage = props => {
   fetchApisIfNeeded(apiSearchParams);
   fetchConceptsIfNeeded(conceptSearchParams);
   fetchInformationModelsIfNeeded(informationModelSearchParams);
-
   fetchApiStatusIfNeeded();
-
+  fetchLosIfNeeded();
   fetchThemesIfNeeded();
   fetchPublishersIfNeeded();
   fetchReferenceDataIfNeeded();
@@ -143,6 +143,18 @@ export const SearchPage = props => {
     setMultiselectFilterValue(history, location, 'format', selectedValue, add);
   };
 
+  const handleDatasetFilterLos = event => {
+    const selectedValue = event.target.value;
+    const add = event.target.checked;
+    setMultiselectFilterValue(
+      history,
+      location,
+      'losTheme',
+      selectedValue,
+      add
+    );
+  };
+
   const topSectionClass = cx('top-section-search', 'mb-4', {
     'top-section-search--image': !!(browser && browser.name !== 'ie')
   });
@@ -182,6 +194,7 @@ export const SearchPage = props => {
               onFilterPublisherHierarchy={handleDatasetFilterPublisherHierarchy}
               onFilterProvenance={handleDatasetFilterProvenance}
               onFilterSpatial={handleDatasetFilterSpatial}
+              onFilterLos={handleDatasetFilterLos}
               themesItems={themesItems}
               publishers={publisherItems}
               referenceData={referenceData}
