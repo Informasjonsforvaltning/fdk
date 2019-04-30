@@ -79,6 +79,7 @@ public class DatasetsSearchQueryBuilder {
                 .field("objective.*")
                 .field("keyword.*").boost(2f)
                 .field("theme.title.*")
+                .field("expandedLosTema.*")
                 .field("description.*")
                 .field("publisher.name").boost(3f)
                 .field("publisher.prefLabel.*").boost(3f)
@@ -171,6 +172,13 @@ public class DatasetsSearchQueryBuilder {
                 return QueryBuilders.boolQuery().mustNot(isPublicQuery());
             }
             return null;
+        }
+
+        static QueryBuilder losTheme(String losMainThemeOrSubTheme, DatasetsSearchQueryBuilder queryBuilder) {
+            // los theme can contain multiple themes
+            String[] themes = losMainThemeOrSubTheme.split(",");
+
+            return QueryBuilders.termsQuery("losTheme.losPaths", themes);
         }
 
         static QueryBuilder withSubject(String value, DatasetsSearchQueryBuilder queryBuilder) {

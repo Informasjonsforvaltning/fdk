@@ -233,6 +233,10 @@ public class DatasetBuilder extends AbstractBuilder {
             DataTheme dataTheme = dataThemes.get(themeCode);
 
             if (dataTheme == null) {
+                //This is a los Theme. TODO: When the last registration has been converted to use only los, refactor this code.
+                dataTheme = new DataTheme();
+                dataTheme.setId(themeCode);
+                result.add(dataTheme);
                 logger.warn(String.format("Themecode %s does not exist and will be ignored", themeCode));
             } else {
                 result.add(dataTheme);

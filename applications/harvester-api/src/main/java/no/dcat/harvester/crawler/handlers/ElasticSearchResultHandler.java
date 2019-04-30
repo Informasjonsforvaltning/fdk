@@ -15,6 +15,7 @@ import no.dcat.datastore.domain.dcat.builders.DcatReader;
 import no.dcat.datastore.domain.dcat.vocabulary.DCAT;
 import no.dcat.datastore.domain.harvest.*;
 import no.dcat.harvester.crawler.CrawlerResultHandler;
+import no.dcat.harvester.crawler.model.DatasetWithLOS;
 import no.dcat.harvester.crawler.notification.EmailNotificationService;
 import no.dcat.htmlclean.HtmlCleaner;
 import no.dcat.shared.*;
@@ -36,6 +37,7 @@ import org.elasticsearch.search.sort.SortOrder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
+import no.dcat.client.referencedata.ReferenceDataClient;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -63,6 +65,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
     private static final Logger logger = LoggerFactory.getLogger(ElasticSearchResultHandler.class);
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
     Elasticsearch5Client elasticClient;
+    ReferenceDataClient referenceDataClient;
     DcatIndexUtils dcatIndexUtils;
     String clusterNodes;
     String clusterName;
@@ -105,6 +108,7 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
 
         this.elasticClient = createElasticsearch();
         this.dcatIndexUtils = new DcatIndexUtils(elasticClient);
+        this.referenceDataClient = new ReferenceDataClient(referenceDataUrl);
 
     }
 
@@ -140,7 +144,6 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
 
             long took = (System.currentTimeMillis() - startTime) / 1000;
             logger.info("Finished indexing in {} seconds", took);
-
         } catch (Exception e) {
             logger.error("Exception: " + e.getMessage(), e);
             throw e;
@@ -738,12 +741,32 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
 
             logger.debug("Add dataset document {} to bulk request", dataset.getId());
             // save dataset
+            dataset = expandLOSTema(dataset);
             bulkRequest.add(createBulkRequest(DCAT_INDEX, DATASET_TYPE, dataset.getId(), dataset, gson));
 
         } catch (Exception e) {
             logger.error("Unable to index {}. Reason: {}", dataset.getUri(), e.getMessage(), e);
         }
 
+    }
+
+    private Dataset expandLOSTema( Dataset dataset) {
+        if (referenceDataClient.hasLosCodes(dataset.getTheme())) {
+
+            DatasetWithLOS datasetWithLOS = new DatasetWithLOS();
+            BeanUtils.copyProperties(dataset, datasetWithLOS);
+            datasetWithLOS.setExpandedLosTema( referenceDataClient.expandLOSTema(dataset.getTheme()));
+            datasetWithLOS.setLosTheme(new ArrayList<>());
+            for (DataTheme theme : dataset.getTheme()) {
+                LosTheme losTheme = referenceDataClient.getLosCodeByURI(theme.getId());
+                if (losTheme != null) {
+                    datasetWithLOS.getLosTheme().add(losTheme);
+                }
+            }
+            logger.debug("Expanded, the los keywords were " + datasetWithLOS.getExpandedLosTema());
+            return datasetWithLOS;
+        }
+        return dataset;
     }
 
     DatasetHarvestRecord createDatasetHarvestRecord(Dataset dataset, DcatSource dcatSource, boolean isChanged, Date harvestTime, List<String> catalogValidationResults) {
@@ -871,7 +894,6 @@ public class ElasticSearchResultHandler implements CrawlerResultHandler {
             return string1.equals(string2);
         }
     }
-
 
     ValidationStatus extractValidationStatus(List<String> messages) {
         if (messages != null && !messages.isEmpty()) {

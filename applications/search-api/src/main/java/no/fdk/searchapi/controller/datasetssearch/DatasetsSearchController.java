@@ -57,6 +57,7 @@ public class DatasetsSearchController {
         @ApiImplicitParam(name = "q", dataType = "string", paramType = "query", value = "Full content search"),
         @ApiImplicitParam(name = "title", dataType = "string", paramType = "query", value = "Title search"),
         @ApiImplicitParam(name = "theme", dataType = "string", paramType = "query", value = "Filters on specified theme(s). ex. GOVE, or GOVE,SOCI"),
+        @ApiImplicitParam(name = "losTheme", dataType = "string", paramType = "query", value = "Filters on spesificed los theme(s)."),
         @ApiImplicitParam(name = "accessrights", dataType = "string", paramType = "query", value = "Filters on accessrights, codes are PUBLIC, RESTRICTED or NON_PUBLIC"),
         @ApiImplicitParam(name = "orgPath", dataType = "string", paramType = "query", value = "Filters on publisher's organization path (orgPath), e.g. /STAT/972417858/971040238"),
         @ApiImplicitParam(name = "firstHarvested", dataType = "string", paramType = "query", defaultValue = "0", value = "Filters datasets that were first harvested x-days ago, e.g. a value of 100 will result in datasets that were harvested more than 100 days ago"),

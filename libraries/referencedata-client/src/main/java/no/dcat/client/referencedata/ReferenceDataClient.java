@@ -1,13 +1,18 @@
 package no.dcat.client.referencedata;
 
+import no.dcat.shared.DataTheme;
+import no.dcat.shared.LosTheme;
 import no.dcat.shared.SkosCode;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ReferenceDataClient {
     private String referenceDataUrl;
@@ -74,5 +79,40 @@ public class ReferenceDataClient {
         return allCodes;
     }
 
+    public LosTheme getLosCodeByURI(String uri) {
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<LosTheme> losTheme = restTemplate.getForEntity(referenceDataUrl + "/loscodesbyid?id={uri}",  LosTheme.class, uri);
+        return losTheme.getBody();
+    }
+
+    public boolean hasLosCodes(List<DataTheme> themes) {
+        if (themes == null || themes.isEmpty()) {
+            return false;
+        }
+        List<String> themeStrings = new ArrayList<>();
+        for (DataTheme theme : themes) {
+            themeStrings.add(theme.getId());
+        }
+        String listForRest = themeStrings.stream().collect(Collectors.joining(","));
+        RestTemplate restTemplate = new RestTemplate();
+        Boolean hasLosCodes = restTemplate.exchange(referenceDataUrl + "/loscodes/hasLosTheme?themes={listForRest}", HttpMethod.GET, null, Boolean.class,listForRest).getBody();
+        return hasLosCodes;
+    }
+
+    public List<String> expandLOSTema(List<DataTheme> themes) {
+        if (themes == null || themes.isEmpty()) {
+            return new ArrayList<>();
+        }
+        List<String> themeStrings = new ArrayList<>();
+        for (DataTheme theme : themes) {
+            themeStrings.add(theme.getId());
+        }
+
+        String listForRest = themeStrings.stream().collect(Collectors.joining(","));
+        RestTemplate restTemplate = new RestTemplate();
+
+        ResponseEntity<List<String>> expandeds = restTemplate.exchange(referenceDataUrl + "/loscodes/expandLosTheme?themes={listForRest}", HttpMethod.GET, null, new ParameterizedTypeReference<List<String>>() {}, listForRest);
+        return expandeds.getBody();
+    }
 }
 

@@ -187,7 +187,7 @@ public class LOSService {
 
         //Hovedkategori - /<keyword>
         if (node.getParents() == null || node.getParents().isEmpty()) {
-            generatedPaths.add("/" + getMostSaneName(node));
+            generatedPaths.add(getKeywordFromURI(node.getUri().toLowerCase()));
             return generatedPaths;
         }
 
@@ -200,7 +200,7 @@ public class LOSService {
 
             for (URI u : hovedKategoriURIs) {
                 String subCategory = getKeywordFromURI(currentNode.getUri());
-                hovedKategoriPaths.add(getKeywordFromURI(u) + "/" + subCategory);
+                hovedKategoriPaths.add((getKeywordFromURI(u) + "/" + subCategory).toLowerCase());
             }
             return hovedKategoriPaths;
         }
@@ -213,13 +213,17 @@ public class LOSService {
             LosNode subCategoryLosnode = getByURI(us);
             List<URI> hovedCategories = subCategoryLosnode.getParents();
             for (URI uh : hovedCategories) {
-                allPaths.add("/" + getKeywordFromURI(uh) + "/" + getKeywordFromURI(us) + "/" + getMostSaneName(node));
+                allPaths.add((getKeywordFromURI(uh) + "/" + getKeywordFromURI(us) + "/" + getMostSaneName(node)).toLowerCase());
             }
         }
         return allPaths;
     }
+    public static LosNode getByURIString (String uri) throws URISyntaxException {
+        URI actualURI = new URI(uri);
+        return getByURI(actualURI);
+    }
 
-    public LosNode getByURI(URI keyword) {
+    public static LosNode getByURI(URI keyword) {
         String uriAsString = keyword.toString();
         for (LosNode node : allLosNodes) {
             if (node.getUri().equals(uriAsString)) {
@@ -229,4 +233,82 @@ public class LOSService {
         return null;
     }
 
+    public boolean hasLosThemes(List<String> themes) {
+        if (themes == null || themes.isEmpty()) {
+            return false;
+        }
+        for (String theme : themes) {
+            if (isLosTheme(theme)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static boolean isLosTheme(String theme) {
+        try {
+            if (getByURIString(theme) != null) {
+                return true;
+            }
+        } catch (URISyntaxException use) {
+
+        }
+        return false;
+    }
+
+    public List<String> expandLosThemes(List<String> themes) {
+        List<String> keyWords = new ArrayList<>();
+        for (String theme : themes) {
+            if (isLosTheme(theme)) {
+                keyWords.addAll(expandSingleTheme(theme));
+            }
+        }
+        return keyWords;
+    }
+
+    private static List<String> expandSingleTheme(String theme)  {
+        List<String> keyWords = new ArrayList<>();
+
+        try {
+            LosNode node = getByURIString(theme);
+
+            //add the names
+            for (String langCode : node.getName().keySet()) {
+                String nameInLanguage = node.getName().get(langCode);
+                keyWords.add(nameInLanguage);
+            }
+
+            //if emneord : add the synonyms, else add children (and childrens children)
+            if (!node.isTema) {
+                keyWords.addAll(node.getSynonyms());
+            } else {
+                List<LosNode> children = new ArrayList<>();
+                for (URI child : node.getChildren()) {
+                    children.add(getByURI(child));
+                }
+                boolean hasGrandChildren = node.parents == null;//Only toplevel Tema has grandchildren
+                if (hasGrandChildren) {
+                    List<LosNode> childrensChildren = new ArrayList<>();
+                    for (LosNode child : children) {
+                        List<URI> grandChildren = child.getChildren();
+                        for (URI grandChild : grandChildren) {
+                            LosNode grandChildNode = getByURI(grandChild);
+                            childrensChildren.add(grandChildNode);
+                        }
+                    }
+                    children.addAll(childrensChildren);
+                    for (LosNode child : childrensChildren) {
+                        //Add all the names in all the languages
+                        for (String langCode : child.getName().keySet()) {
+                            keyWords.add(child.getName().get(langCode));
+                        }
+                    }
+                }
+            }
+        } catch (Exception use) {
+            logger.debug("While expanding LOS Theme, got exeption for theme " + theme, use);
+        }
+
+        return keyWords;
+    }
 }

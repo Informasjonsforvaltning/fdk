@@ -26,6 +26,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -62,15 +65,53 @@ public class Controller {
     @CrossOrigin
     @RequestMapping(value = "/codes/{type}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public List<SkosCode> codes(@PathVariable(name = "type") String type) {
-
         return codesService.getCodes(Types.valueOf(type));
-
     }
 
     @CrossOrigin
     @RequestMapping(value = "/los", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public List<LosNode> losFullSearch()  {
         return losService.getAll();
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "/loscodesbyid", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public LosNode getLosNode( String id)  {
+        try {
+            URI u = new URI(id);
+            return losService.getByURI(u);
+        } catch (URISyntaxException use) {
+            logger.debug("Request for LOS by URI failed. URI "+ id);
+        }
+        return null;
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "/loscodes/hasLosTheme", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public Boolean hasLosTheme( String[] themes )  {
+        if (themes == null || themes.length ==0) {
+            return false;
+        }
+        List<String> themesList = new ArrayList<>();
+        for (String str : themes) {
+            themesList.add(str);
+        }
+        return losService.hasLosThemes(themesList);
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "/loscodes/expandLosTheme", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public String[] expandLosThemes( String[] themes) {
+        if (themes == null || themes.length ==0) {
+            return null;
+        }
+        List<String> themesList = new ArrayList<>();
+        for (String str : themes) {
+            themesList.add(str);
+        }
+        List<String> expanded = losService.expandLosThemes(themesList);
+        String [] returnValues = expanded.toArray(new String[0]);
+        return returnValues;
     }
 
     @CrossOrigin

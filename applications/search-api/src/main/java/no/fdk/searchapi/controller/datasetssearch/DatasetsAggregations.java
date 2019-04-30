@@ -30,6 +30,9 @@ public class DatasetsAggregations {
         if (aggregationFields.contains("theme")) {
             aggregations.add(createTermsAggregation("theme", "theme.code"));
         }
+        if (aggregationFields.contains("los")) {
+            aggregations.add(createTermsAggregation("los", "losTheme.losPaths"));
+        }
         if (aggregationFields.contains("orgPath")) {
             aggregations.add(createTermsAggregation("orgPath", "publisher.orgPath"));
         }
