@@ -12,6 +12,7 @@ import {
 import { SearchPageWithState } from './search-page';
 import {
   fetchReferenceDataIfNeededAction,
+  fetchReferenceDataLosIfNeededAction,
   REFERENCEDATA_DISTRIBUTIONTYPE,
   REFERENCEDATA_APISTATUS
 } from '../../redux/modules/referenceData';
@@ -103,7 +104,8 @@ const mapDispatchToProps = dispatch => ({
   fetchInformationModelsIfNeeded: query =>
     dispatch(fetchInformationModelsIfNeededAction(query)),
   fetchApiStatusIfNeeded: () =>
-    dispatch(fetchReferenceDataIfNeededAction(REFERENCEDATA_APISTATUS))
+    dispatch(fetchReferenceDataIfNeededAction(REFERENCEDATA_APISTATUS)),
+  fetchLosIfNeeded: () => dispatch(fetchReferenceDataLosIfNeededAction())
 });
 
 export const ConnectedSearchPage = connect(

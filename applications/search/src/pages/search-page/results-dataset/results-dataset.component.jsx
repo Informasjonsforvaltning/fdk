@@ -14,6 +14,8 @@ import { ErrorBoundary } from '../../../components/error-boundary/error-boundary
 import { getSortfield, setPage, setSortfield } from '../search-location-helper';
 import { parseSearchParams } from '../../../lib/location-history-helper';
 import { FilterPills } from '../filter-pills/filter-pills.component';
+import { REFERENCEDATA_LOS } from '../../../redux/modules/referenceData';
+import { filterLosThemesFromAggregation } from '../los-aggregations-helper';
 
 function _renderFilterModal({
   showFilterModal,
@@ -24,15 +26,29 @@ function _renderFilterModal({
   onFilterPublisherHierarchy,
   onFilterProvenance,
   onFilterSpatial,
+  onFilterLos,
   locationSearch,
   themesItems,
-  publishers
+  publishers,
+  referenceData
 }) {
+  const losItems = _.get(referenceData, ['items', REFERENCEDATA_LOS]);
+
   return (
     <Modal isOpen={showFilterModal} toggle={closeFilterModal}>
       <ModalHeader toggle={closeFilterModal}>Filter</ModalHeader>
       <ModalBody>
         <div className="search-filters">
+          <FilterTree
+            title={localization.facet.theme}
+            aggregations={filterLosThemesFromAggregation(
+              _.get(datasetAggregations, [REFERENCEDATA_LOS, 'buckets']),
+              losItems
+            )}
+            handleFiltering={onFilterLos}
+            activeFilter={locationSearch.los}
+            referenceDataItems={losItems}
+          />
           <FilterBox
             htmlKey={1}
             title={localization.facet.theme}
@@ -106,6 +122,7 @@ export const ResultsDatasetPure = ({
   onFilterPublisherHierarchy,
   onFilterProvenance,
   onFilterSpatial,
+  onFilterLos,
   themesItems,
   hitsPerPage,
   publishers,
@@ -136,6 +153,8 @@ export const ResultsDatasetPure = ({
   const onPageChange = data => {
     setPage(history, location, data.selected);
   };
+
+  const losItems = _.get(referenceData, ['items', REFERENCEDATA_LOS]);
 
   return (
     <main id="content" data-test-id="datasets">
@@ -173,6 +192,7 @@ export const ResultsDatasetPure = ({
             locationSearch={locationSearch}
             themesItems={themesItems}
             publishers={publishers}
+            losItems={losItems}
           />
 
           {datasetItems &&
@@ -187,16 +207,28 @@ export const ResultsDatasetPure = ({
                   onFilterPublisherHierarchy,
                   onFilterProvenance,
                   onFilterSpatial,
+                  onFilterLos,
                   locationSearch,
                   themesItems,
-                  publishers
+                  publishers,
+                  referenceData
                 })}
+                <FilterTree
+                  title={localization.facet.theme}
+                  aggregations={filterLosThemesFromAggregation(
+                    _.get(datasetAggregations, [REFERENCEDATA_LOS, 'buckets']),
+                    losItems
+                  )}
+                  handleFiltering={onFilterLos}
+                  activeFilter={locationSearch.losTheme}
+                  referenceDataItems={losItems}
+                />
                 <FilterBox
                   htmlKey={1}
                   title={localization.facet.theme}
                   filter={datasetAggregations.theme}
                   onClick={onFilterTheme}
-                  activeFilter={locationSearch.theme}
+                  activeFilter={locationSearch.los}
                   themesItems={themesItems}
                 />
                 <FilterBox
@@ -273,6 +305,7 @@ ResultsDatasetPure.defaultProps = {
   onFilterPublisherHierarchy: _.noop,
   onFilterProvenance: _.noop,
   onFilterSpatial: _.noop,
+  onFilterLos: _.noop,
   themesItems: null,
   publishers: null,
   referenceData: null,
@@ -296,6 +329,7 @@ ResultsDatasetPure.propTypes = {
   onFilterPublisherHierarchy: PropTypes.func,
   onFilterProvenance: PropTypes.func,
   onFilterSpatial: PropTypes.func,
+  onFilterLos: PropTypes.func,
   themesItems: PropTypes.object,
   publishers: PropTypes.object,
   referenceData: PropTypes.object,

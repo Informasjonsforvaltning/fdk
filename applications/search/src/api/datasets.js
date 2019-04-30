@@ -4,7 +4,7 @@ import qs from 'qs';
 export const datasetsUrlBase = '/datasets';
 
 export const searchAggregations =
-  'accessRights,theme,orgPath,provenance,spatial';
+  'accessRights,theme,orgPath,provenance,spatial,los';
 
 export const datasetsSearchUrl = query =>
   `${datasetsUrlBase}${qs.stringify(
