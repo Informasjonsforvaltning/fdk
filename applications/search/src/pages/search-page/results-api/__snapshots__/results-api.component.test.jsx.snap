@@ -60,6 +60,7 @@ exports[`should render ResultsApi correctly with hits 1`] = `
           }
         }
         locationSearch={Object {}}
+        losItems={null}
         publishers={null}
         themesItems={null}
       />
@@ -351,6 +352,7 @@ exports[`should render ResultsApi correctly with minimum of props and no hits 1`
           }
         }
         locationSearch={Object {}}
+        losItems={null}
         publishers={null}
         themesItems={null}
       />

@@ -60,6 +60,7 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
           }
         }
         locationSearch={Object {}}
+        losItems={null}
         publishers={null}
         themesItems={null}
       />
@@ -1821,6 +1822,7 @@ exports[`should render ResultsDataset correctly with minimum of props 1`] = `
           }
         }
         locationSearch={Object {}}
+        losItems={null}
         publishers={null}
         themesItems={null}
       />
