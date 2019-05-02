@@ -1,11 +1,11 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/fdk-dev-test-database?currentSchema=fdkreference
+    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=fdkreference
     username: postgres
     password: password
 
   liquibase:
-    url: jdbc:postgresql://localhost:5432/fdk-dev-test-database
+    url: jdbc:postgresql://localhost:5432/postgres
     user: postgres
     password: password
     change-log: classpath:liquibase/changelog/changelog-master.xml
