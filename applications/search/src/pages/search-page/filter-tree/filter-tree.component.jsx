@@ -53,7 +53,7 @@ const subTree = ({
         count={node.count}
         onClick={handleFiltering}
         active={isActiveFilter(activeFilter, node.key)}
-        displayClass="inline-block"
+        displayClass={hasSomeChildren(node) ? 'inline-block' : ''}
       />
     );
     const collapsed = isItemCollapsed(node.key, activeFilter);
@@ -123,7 +123,7 @@ const mainTree = ({
         count={node.count}
         onClick={handleFiltering}
         active={isActiveFilter(activeFilter, node.key)}
-        displayClass="inline-block"
+        displayClass={hasSomeChildren(node) ? 'inline-block' : ''}
       />
     );
     if (node.key !== 'ukjent' && node.key !== 'MISSING') {
