@@ -106,6 +106,7 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
               <FilterTree
                 activeFilter={null}
                 aggregations={Array []}
+                collapseItems={false}
                 handleFiltering={[Function]}
                 referenceDataItems={null}
                 title="Theme"
@@ -190,6 +191,7 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
                     },
                   ]
                 }
+                collapseItems={false}
                 handleFiltering={[Function]}
                 referenceDataItems={null}
                 title="Organization"
@@ -246,6 +248,7 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
         <FilterTree
           activeFilter={null}
           aggregations={Array []}
+          collapseItems={false}
           handleFiltering={[Function]}
           referenceDataItems={null}
           title="Theme"
@@ -330,6 +333,7 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
               },
             ]
           }
+          collapseItems={false}
           handleFiltering={[Function]}
           referenceDataItems={null}
           title="Organization"

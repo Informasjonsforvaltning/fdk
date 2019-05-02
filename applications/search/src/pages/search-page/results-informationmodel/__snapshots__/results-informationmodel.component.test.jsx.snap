@@ -106,6 +106,7 @@ exports[`should render ResultsInformationModel correctly with hits 1`] = `
               <FilterTree
                 activeFilter={null}
                 aggregations={Array []}
+                collapseItems={false}
                 handleFiltering={[Function]}
                 referenceDataItems={null}
                 title="Provider"
@@ -128,6 +129,7 @@ exports[`should render ResultsInformationModel correctly with hits 1`] = `
         <FilterTree
           activeFilter={null}
           aggregations={Array []}
+          collapseItems={false}
           handleFiltering={[Function]}
           referenceDataItems={null}
           title="Provider"

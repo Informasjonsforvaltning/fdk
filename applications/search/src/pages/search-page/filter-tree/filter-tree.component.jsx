@@ -167,9 +167,11 @@ export class FilterTree extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      openFilter: true
+      openFilter: true,
+      openList: false
     };
     this.toggleFilter = this.toggleFilter.bind(this);
+    this.toggleList = this.toggleList.bind(this);
     this.onChange = this.onChange.bind(this);
   }
 
@@ -185,14 +187,19 @@ export class FilterTree extends React.Component {
     this.setState({ openFilter: !this.state.openFilter });
   }
 
+  toggleList() {
+    this.setState({ openList: !this.state.openList });
+  }
+
   render() {
-    const { openFilter } = this.state;
+    const { openFilter, openList } = this.state;
     const {
       title,
       aggregations,
       handleFiltering,
       activeFilter,
-      referenceDataItems
+      referenceDataItems,
+      collapseItems
     } = this.props;
 
     const aggregationsForest = keyPrefixForest(aggregations);
@@ -217,11 +224,36 @@ export class FilterTree extends React.Component {
             <div className="fdk-panel__content">
               <div className="fdk-items-list">
                 {mainTree({
-                  aggregationsForest,
+                  aggregationsForest: collapseItems
+                    ? aggregationsForest.slice(0, 5)
+                    : aggregationsForest,
                   activeFilter,
                   referenceDataItems,
                   handleFiltering
                 })}
+                {collapseItems &&
+                  aggregationsForest.length > 5 && (
+                    <div>
+                      <Collapse isOpen={openList}>
+                        <div>
+                          {mainTree({
+                            aggregationsForest: aggregationsForest.slice(5),
+                            activeFilter,
+                            referenceDataItems,
+                            handleFiltering
+                          })}
+                        </div>
+                      </Collapse>
+                      <button
+                        className="fdk-toggleList"
+                        onClick={this.toggleList}
+                      >
+                        {openList
+                          ? localization.facet.showfewer
+                          : localization.facet.showmore}
+                      </button>
+                    </div>
+                  )}
               </div>
             </div>
           </Collapse>
@@ -236,7 +268,8 @@ FilterTree.defaultProps = {
   title: null,
   aggregations: null,
   activeFilter: null,
-  referenceDataItems: null
+  referenceDataItems: null,
+  collapseItems: false
 };
 
 FilterTree.propTypes = {
@@ -244,5 +277,6 @@ FilterTree.propTypes = {
   aggregations: PropTypes.array,
   handleFiltering: PropTypes.func.isRequired,
   activeFilter: PropTypes.string,
-  referenceDataItems: PropTypes.object
+  referenceDataItems: PropTypes.object,
+  collapseItems: PropTypes.bool
 };

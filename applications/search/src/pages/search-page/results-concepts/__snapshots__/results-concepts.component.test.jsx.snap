@@ -108,6 +108,7 @@ exports[`should render ResultsConcepts correctly with hits 1`] = `
                 <FilterTree
                   activeFilter={null}
                   aggregations={Array []}
+                  collapseItems={false}
                   handleFiltering={[Function]}
                   referenceDataItems={null}
                   title="Organization"
@@ -130,6 +131,7 @@ exports[`should render ResultsConcepts correctly with hits 1`] = `
           <FilterTree
             activeFilter={null}
             aggregations={Array []}
+            collapseItems={false}
             handleFiltering={[Function]}
             referenceDataItems={null}
             title="Organization"
