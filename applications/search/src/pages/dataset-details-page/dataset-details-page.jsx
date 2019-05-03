@@ -300,6 +300,9 @@ const renderAPIDistribution = (
       const referencedApi = _.find(referencedAPIsFromDistribution, {
         id: apiId
       });
+      if (!referencedApi) {
+        return null;
+      }
       return (
         <div key={`reference-${index}`} className="list-regular--item pt-5">
           <SearchHitHeader
