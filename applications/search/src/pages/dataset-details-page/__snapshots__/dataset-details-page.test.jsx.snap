@@ -476,6 +476,7 @@ exports[`should render DatasetDetailsPage correctly with datasetItem 1`] = `
               "uri": "https://kartkatalog.geonorge.no/Metadata/uuid/45e9ba77-388c-40eb-87df-e34e9d9ab300",
             }
           }
+          referenceData={null}
         />
         <div
           className="d-flex flex-wrap mb-5"

@@ -416,16 +416,19 @@ const renderStickyMenu = datasetItem => {
 };
 
 export const DatasetDetailsPage = props => {
-  props.fetchReferenceDataIfNeeded(REFERENCEDATA_REFERENCETYPES);
-  props.fetchReferenceDataIfNeeded(REFERENCEDATA_DISTRIBUTIONTYPE);
-
   const {
     datasetItem,
     referencedItems,
     referenceData,
     publisherItems,
-    referencedAPIsFromDistribution
+    referencedAPIsFromDistribution,
+    fetchReferenceDataIfNeeded,
+    fetchLosIfNeeded
   } = props;
+
+  fetchReferenceDataIfNeeded(REFERENCEDATA_REFERENCETYPES);
+  fetchReferenceDataIfNeeded(REFERENCEDATA_DISTRIBUTIONTYPE);
+  fetchLosIfNeeded();
 
   if (!datasetItem) {
     return null;
@@ -453,7 +456,10 @@ export const DatasetDetailsPage = props => {
           <div className="col-12 col-lg-8">
             <DocumentMeta {...meta} />
 
-            <DatasetDescription datasetItem={datasetItem} />
+            <DatasetDescription
+              datasetItem={datasetItem}
+              referenceData={referenceData}
+            />
 
             {renderPublished(datasetItem)}
 
@@ -509,7 +515,8 @@ DatasetDetailsPage.defaultProps = {
   datasetItem: null,
   referencedItems: null,
   referenceData: null,
-  fetchReferenceDataIfNeeded: () => {},
+  fetchReferenceDataIfNeeded: _.noop,
+  fetchLosIfNeeded: _.noop,
   publisherItems: null,
   referencedAPIsFromDistribution: null
 };
@@ -519,6 +526,7 @@ DatasetDetailsPage.propTypes = {
   referencedItems: PropTypes.array,
   referenceData: PropTypes.object,
   fetchReferenceDataIfNeeded: PropTypes.func,
+  fetchLosIfNeeded: PropTypes.func,
   publisherItems: PropTypes.object,
   referencedAPIsFromDistribution: PropTypes.array
 };

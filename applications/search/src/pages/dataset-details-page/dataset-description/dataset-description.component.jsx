@@ -23,7 +23,7 @@ export class DatasetDescription extends React.Component {
   }
 
   render() {
-    const { datasetItem } = this.props;
+    const { datasetItem, referenceData } = this.props;
     const { harvest, publisher, theme, provenance } = datasetItem || {};
     let { title, descriptionFormatted, objective } = datasetItem || {};
     title = getTranslateText(title);
@@ -42,6 +42,7 @@ export class DatasetDescription extends React.Component {
           publisher={publisher}
           theme={theme}
           nationalComponent={_.get(provenance, 'code') === 'NASJONAL'}
+          referenceData={referenceData}
         />
 
         {descriptionFormatted && (
@@ -66,9 +67,11 @@ export class DatasetDescription extends React.Component {
 }
 
 DatasetDescription.defaultProps = {
-  datasetItem: null
+  datasetItem: null,
+  referenceData: null
 };
 
 DatasetDescription.propTypes = {
-  datasetItem: PropTypes.object
+  datasetItem: PropTypes.object,
+  referenceData: PropTypes.object
 };
