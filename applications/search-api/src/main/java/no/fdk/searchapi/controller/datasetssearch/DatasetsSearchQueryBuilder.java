@@ -174,11 +174,17 @@ public class DatasetsSearchQueryBuilder {
             return null;
         }
 
-        static QueryBuilder losTheme(String losMainThemeOrSubTheme, DatasetsSearchQueryBuilder queryBuilder) {
-            // los theme can contain multiple themes
-            String[] themes = losMainThemeOrSubTheme.split(",");
-
-            return QueryBuilders.termsQuery("losTheme.losPaths", themes);
+        static QueryBuilder losTheme(String losMainOrSubThemes, DatasetsSearchQueryBuilder queryBuilder) {
+            String[] themes = losMainOrSubThemes.split(",");
+            if (themes.length ==1) {
+                return QueryBuilders.termsQuery("losTheme.losPaths", themes);
+            } else {
+                QueryBuilder  builder = QueryBuilders.boolQuery();
+                for (String singleTheme : themes) {
+                    builder = ((BoolQueryBuilder) builder).must(QueryBuilders.termsQuery("losTheme.losPaths", singleTheme));
+                }
+                return builder;
+            }
         }
 
         static QueryBuilder withSubject(String value, DatasetsSearchQueryBuilder queryBuilder) {
