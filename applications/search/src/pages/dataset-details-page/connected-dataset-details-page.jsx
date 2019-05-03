@@ -1,5 +1,8 @@
 import { connect } from 'react-redux';
-import { fetchReferenceDataIfNeededAction } from '../../redux/modules/referenceData';
+import {
+  fetchReferenceDataIfNeededAction,
+  fetchReferenceDataLosIfNeededAction
+} from '../../redux/modules/referenceData';
 import { ResolvedDatasetDetailsPage } from './resolved-dataset-details-page';
 
 const mapStateToProps = ({ referenceData, publishers }) => {
@@ -14,7 +17,8 @@ const mapStateToProps = ({ referenceData, publishers }) => {
 
 const mapDispatchToProps = dispatch => ({
   fetchReferenceDataIfNeeded: code =>
-    dispatch(fetchReferenceDataIfNeededAction(code))
+    dispatch(fetchReferenceDataIfNeededAction(code)),
+  fetchLosIfNeeded: () => dispatch(fetchReferenceDataLosIfNeededAction())
 });
 
 export const ConnectedDatasetDetailsPage = connect(
