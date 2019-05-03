@@ -144,6 +144,7 @@ export const SearchHitItem = props => {
             publisher={publisher}
             theme={theme}
             nationalComponent={_.get(provenance, 'code') === 'NASJONAL'}
+            referenceData={referenceData}
           />
         </header>
         <p className="fdk-text-size-medium">
