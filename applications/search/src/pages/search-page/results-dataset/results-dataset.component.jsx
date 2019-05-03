@@ -222,6 +222,7 @@ export const ResultsDatasetPure = ({
                   handleFiltering={onFilterLos}
                   activeFilter={locationSearch.losTheme}
                   referenceDataItems={losItems}
+                  collapseItems
                 />
                 <FilterBox
                   htmlKey={1}

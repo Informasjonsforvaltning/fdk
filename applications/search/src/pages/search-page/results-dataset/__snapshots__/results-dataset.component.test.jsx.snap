@@ -248,7 +248,7 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
         <FilterTree
           activeFilter={null}
           aggregations={Array []}
-          collapseItems={false}
+          collapseItems={true}
           handleFiltering={[Function]}
           referenceDataItems={null}
           title="Theme"
