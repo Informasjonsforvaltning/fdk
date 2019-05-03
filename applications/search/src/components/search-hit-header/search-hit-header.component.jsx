@@ -7,6 +7,7 @@ import { LabelNational } from '../label-national/label-national.component';
 import { LabelStatus } from '../label-status/label-status.component';
 import { PublisherLabel } from '../publisher-label/publisher-label.component';
 import { getPublisherByOrgNr } from '../../redux/modules/publishers';
+import { REFERENCEDATA_LOS } from '../../redux/modules/referenceData';
 import { getTranslateText } from '../../lib/translateText';
 import localization from '../../lib/localization';
 import './search-hit-header.scss';
@@ -22,20 +23,27 @@ const renderPublisher = (publisherLabel, publisher, publisherItems) => {
   );
 };
 
-const renderThemes = theme => {
+const renderThemes = (theme, losItems) => {
   let themeNodes;
   if (theme) {
-    themeNodes = theme.map((singleTheme, index) => (
-      <div
-        key={`dataset-description-theme-${index}`}
-        className="fdk-label mr-2 mb-2"
-      >
-        <span className="uu-invisible" aria-hidden="false">
-          Datasettets tema.
-        </span>
-        {getTranslateText(singleTheme.title)}
-      </div>
-    ));
+    themeNodes = theme.map((singleTheme, index) => {
+      const losItem = _.find(losItems, { uri: singleTheme.id });
+      return (
+        <div
+          key={`dataset-description-theme-${index}`}
+          className="fdk-label mr-2 mb-2"
+        >
+          <span className="uu-invisible" aria-hidden="false">
+            Datasettets tema.
+          </span>
+          {getTranslateText(
+            _.get(losItem, 'prefLabel') ||
+              _.get(losItem, 'name') ||
+              singleTheme.title
+          )}
+        </div>
+      );
+    });
   }
   return themeNodes;
 };
@@ -109,7 +117,11 @@ export const SearchHitHeader = props => {
             />
           )}
 
-        {theme && renderThemes(theme)}
+        {theme &&
+          renderThemes(
+            theme,
+            _.get(referenceData, ['items', REFERENCEDATA_LOS])
+          )}
       </div>
     </React.Fragment>
   );

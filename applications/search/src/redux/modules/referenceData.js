@@ -85,12 +85,11 @@ export function referenceDataReducer(state = initialState, action) {
     }
     case REFERENCEEDATA_LOS_SUCCESS: {
       const objFromArray = action.payload.reduce((accumulator, current) => {
-        if (current.isTema) {
-          accumulator[_.get(current, ['losPaths', 0], '').toLowerCase()] = {
-            prefLabel: current.name,
-            isTema: current.isTema
-          };
-        }
+        accumulator[_.get(current, ['losPaths', 0], '').toLowerCase()] = {
+          prefLabel: current.name,
+          isTema: current.isTema,
+          uri: current.uri
+        };
         return accumulator;
       }, {});
       return {
