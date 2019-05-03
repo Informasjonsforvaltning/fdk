@@ -125,6 +125,8 @@ services:
     image: dcatno/reference-data:latest
     expose:
       - "8080"
+    depends_on:
+      - postgres
 
   search-api:
     image: dcatno/search-api:latest
