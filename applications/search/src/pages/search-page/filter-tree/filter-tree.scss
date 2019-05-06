@@ -18,4 +18,10 @@
   .checkbox.indent {
     margin-left: 19px;
   }
+  .checkbox {
+   width: 100%;
+    .checkbox_label {
+      max-width: 90%;
+    }
+  }
 }
