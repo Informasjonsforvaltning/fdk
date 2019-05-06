@@ -67,15 +67,22 @@ export const SearchPage = props => {
   } = props;
 
   const locationSearch = parseSearchParams(location);
+  const locationSearchParamQ = _.pick(locationSearch, 'q');
 
   const datasetSearchParams =
-    location.pathname === PATHNAME_DATASETS ? locationSearch : {};
+    location.pathname === PATHNAME_DATASETS
+      ? locationSearch
+      : locationSearchParamQ;
   const apiSearchParams =
-    location.pathname === PATHNAME_APIS ? locationSearch : {};
+    location.pathname === PATHNAME_APIS ? locationSearch : locationSearchParamQ;
   const conceptSearchParams =
-    location.pathname === PATHNAME_CONCEPTS ? locationSearch : {};
+    location.pathname === PATHNAME_CONCEPTS
+      ? locationSearch
+      : locationSearchParamQ;
   const informationModelSearchParams =
-    location.pathname === PATHNAME_INFORMATIONMODELS ? locationSearch : {};
+    location.pathname === PATHNAME_INFORMATIONMODELS
+      ? locationSearch
+      : locationSearchParamQ;
 
   fetchDatasetsIfNeeded(datasetSearchParams);
   fetchApisIfNeeded(apiSearchParams);
