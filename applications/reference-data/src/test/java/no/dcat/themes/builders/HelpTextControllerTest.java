@@ -1,6 +1,7 @@
 package no.dcat.themes.builders;
 
 import no.dcat.shared.HelpText;
+import no.fdk.test.testcategories.IntegrationTest;
 import no.fdk.test.testcategories.UnitTest;
 import no.dcat.themes.Controller;
 import org.apache.jena.shared.NotFoundException;
@@ -23,7 +24,7 @@ import static org.junit.Assert.assertTrue;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
-@Category(UnitTest.class)
+@Category(IntegrationTest.class)
 public class HelpTextControllerTest {
     @Autowired
     private Controller controller;
