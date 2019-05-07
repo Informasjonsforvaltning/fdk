@@ -10,7 +10,6 @@ import { configureStore } from './redux/configureStore';
 import { ConnectedFeatureToggleProvider } from './components/connected-feature-toggle-provider';
 import { ConnectedApp } from './app/connected-app';
 import { ErrorBoundary } from './components/error-boundary/error-boundary';
-import ScrollToTop from './components/scroll-to-top/scrollToTop.component';
 
 if (window.location.hostname.indexOf('fellesdatakatalog.brreg.no') !== -1) {
   ReactGA.initialize('UA-110098477-1'); // prod
@@ -61,10 +60,10 @@ ReactDOM.render(
     <Provider store={store}>
       <ConnectedFeatureToggleProvider>
         <BrowserRouter>
-          <ScrollToTop>
+          <React.Fragment>
             <Route path="/" component={Analytics} />
             <Route path="/" component={ConnectedApp} />
-          </ScrollToTop>
+          </React.Fragment>
         </BrowserRouter>
       </ConnectedFeatureToggleProvider>
     </Provider>

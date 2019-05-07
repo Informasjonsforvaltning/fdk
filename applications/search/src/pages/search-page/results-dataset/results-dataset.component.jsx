@@ -152,6 +152,7 @@ export const ResultsDatasetPure = ({
 
   const onPageChange = data => {
     setPage(history, location, data.selected);
+    window.scrollTo(0, 0);
   };
 
   const losItems = _.get(referenceData, ['items', REFERENCEDATA_LOS]);
