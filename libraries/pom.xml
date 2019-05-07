@@ -29,6 +29,7 @@
         <module>shared</module>
         <module>test</module>
         <module>webutils-spring</module>
+        <module>keycloak-user-storage-rest</module>
     </modules>
 
 </project>
