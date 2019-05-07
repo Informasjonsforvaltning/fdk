@@ -25,6 +25,7 @@ import {
   PATHNAME_ABOUT,
   PATHNAME_ABOUT_REGISTRATION
 } from '../constants/constants';
+import ScrollToTop from '../components/scroll-to-top/scrollToTop.component';
 import '../assets/css/bootstrap-override.scss';
 import './styles';
 
@@ -78,38 +79,40 @@ export function App(props) {
             path={PATHNAME_INFORMATIONMODELS}
             component={ConnectedSearchPage}
           />
-          <Route
-            exact
-            path={`${PATHNAME_INFORMATIONMODELS}/:id`}
-            component={ConnectedInformationModelDetailsPage}
-          />
-          <Route
-            exact
-            path={`${PATHNAME_CONCEPTS}${PATHNAME_CONCEPTS_COMPARE}`}
-            component={ConnectedConceptComparePage}
-          />
-          <Route
-            exact
-            path={`${PATHNAME_CONCEPTS}/:id`}
-            component={ConnectedConceptDetailsPage}
-          />
-          <Route
-            exact
-            path={`${PATHNAME_DATASET_DETAILS}/:id`}
-            component={ConnectedDatasetDetailsPage}
-          />
-          <Route exact path="/apis/:id" component={ConnectedApiDetailsPage} />
-          <Route
-            exact
-            path={PATHNAME_REPORTS}
-            component={ConnectedDatasetsReportPage}
-          />
-          <Route exact path={PATHNAME_ABOUT} component={AboutPage} />
-          <Route
-            exact
-            path={PATHNAME_ABOUT_REGISTRATION}
-            component={ArticlePage}
-          />
+          <ScrollToTop>
+            <Route
+              exact
+              path={`${PATHNAME_INFORMATIONMODELS}/:id`}
+              component={ConnectedInformationModelDetailsPage}
+            />
+            <Route
+              exact
+              path={`${PATHNAME_CONCEPTS}${PATHNAME_CONCEPTS_COMPARE}`}
+              component={ConnectedConceptComparePage}
+            />
+            <Route
+              exact
+              path={`${PATHNAME_CONCEPTS}/:id`}
+              component={ConnectedConceptDetailsPage}
+            />
+            <Route
+              exact
+              path={`${PATHNAME_DATASET_DETAILS}/:id`}
+              component={ConnectedDatasetDetailsPage}
+            />
+            <Route exact path="/apis/:id" component={ConnectedApiDetailsPage} />
+            <Route
+              exact
+              path={PATHNAME_REPORTS}
+              component={ConnectedDatasetsReportPage}
+            />
+            <Route exact path={PATHNAME_ABOUT} component={AboutPage} />
+            <Route
+              exact
+              path={PATHNAME_ABOUT_REGISTRATION}
+              component={ArticlePage}
+            />
+          </ScrollToTop>
         </Switch>
       </div>
 

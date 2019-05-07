@@ -104,6 +104,7 @@ export const ResultsApiPure = ({
 
   const onPageChange = data => {
     setPage(history, location, data.selected);
+    window.scrollTo(0, 0);
   };
 
   return (
