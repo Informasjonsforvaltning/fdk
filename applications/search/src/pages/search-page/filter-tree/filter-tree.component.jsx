@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import TreeView from 'react-treeview';
-import 'react-treeview/react-treeview.css';
 import cx from 'classnames';
 import { Collapse } from 'reactstrap';
 import _ from 'lodash';

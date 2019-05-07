@@ -14,6 +14,24 @@
     .tree-view_children {
       margin-left: 32px;
     }
+
+    .tree-view_children-collapsed {
+      height: 0px;
+    }
+  }
+  .tree-view_arrow {
+    cursor: pointer;
+    margin-right: 6px;
+    display: inline-block;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    font-size: 2rem;
+    vertical-align: top;
+    &:after {
+      content: '▾';
+    }
   }
   .checkbox.indent {
     margin-left: 19px;
@@ -23,5 +41,16 @@
     .checkbox_label {
       max-width: 90%;
     }
+  }
+  /* rotate the triangle to close it */
+  .tree-view_arrow-collapsed {
+    -webkit-transform: rotate(-90deg);
+    -moz-transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
+    transform: rotate(-90deg);
+  }
+
+  .pre-scrollable {
+    max-height: 1000px !important;
   }
 }
