@@ -5,7 +5,7 @@ exports[`should render PublishersTree correctly with props 1`] = `
   key="null"
 >
   <div
-    className="section tree-panel"
+    className="section fdk-report-tree-panel"
     key="panel0"
   >
     <TreeView
@@ -597,7 +597,7 @@ exports[`should render PublishersTree correctly with props 1`] = `
     </TreeView>
   </div>
   <div
-    className="section tree-panel"
+    className="section fdk-report-tree-panel"
     key="panel1"
   >
     <TreeView
@@ -620,7 +620,7 @@ exports[`should render PublishersTree correctly with props 1`] = `
     />
   </div>
   <div
-    className="section tree-panel"
+    className="section fdk-report-tree-panel"
     key="panel2"
   >
     <TreeView
@@ -745,7 +745,7 @@ exports[`should render PublishersTree correctly with props 1`] = `
     </TreeView>
   </div>
   <div
-    className="section tree-panel"
+    className="section fdk-report-tree-panel"
     key="panel3"
   >
     <TreeView
@@ -799,7 +799,7 @@ exports[`should render PublishersTree correctly with props 1`] = `
     </TreeView>
   </div>
   <div
-    className="section tree-panel"
+    className="section fdk-report-tree-panel"
     key="panel4"
   >
     <TreeView

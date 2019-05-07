@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import * as axios from 'axios';
 import defaults from 'lodash/defaults';
 import TreeView from 'react-treeview';
-import 'react-treeview/react-treeview.css';
 import cx from 'classnames';
 
 import localization from '../../../lib/localization';
@@ -157,7 +156,7 @@ export class PublishersTree extends React.Component {
           </span>
         );
         return (
-          <div key={`panel${i}`} className="section tree-panel">
+          <div key={`panel${i}`} className="section fdk-report-tree-panel">
             <TreeView
               key={`${name}|${i}`}
               nodeLabel={label}
