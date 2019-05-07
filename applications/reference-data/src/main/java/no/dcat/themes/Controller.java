@@ -113,6 +113,20 @@ public class Controller {
         String [] returnValues = expanded.toArray(new String[0]);
         return returnValues;
     }
+    @CrossOrigin
+    @RequestMapping(value = "/loscodes/expandLosThemeByPaths", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public String[] expandLosThemesByPaths( String[] themes) {
+        if (themes == null || themes.length ==0) {
+            return null;
+        }
+        List<String> themesList = new ArrayList<>();
+        for (String str : themes) {
+            themesList.add(str);
+        }
+        List<String> expanded = losService.expandLosThemesByPaths(themesList);
+        String [] returnValues = expanded.toArray(new String[0]);
+        return returnValues;
+    }
 
     @CrossOrigin
     @RequestMapping(value = "/themes", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)

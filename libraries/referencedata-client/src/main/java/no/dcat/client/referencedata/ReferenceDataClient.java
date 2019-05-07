@@ -15,6 +15,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ReferenceDataClient {
+
     private String referenceDataUrl;
     private Map<String, Map<String, SkosCode>> allCodesCacheByCode;
 
@@ -112,6 +113,16 @@ public class ReferenceDataClient {
         RestTemplate restTemplate = new RestTemplate();
 
         ResponseEntity<List<String>> expandeds = restTemplate.exchange(referenceDataUrl + "/loscodes/expandLosTheme?themes={listForRest}", HttpMethod.GET, null, new ParameterizedTypeReference<List<String>>() {}, listForRest);
+        return expandeds.getBody();
+    }
+
+    public List<String> expandLOSTemaByLOSPath(String path) {
+        if (path == null || path.isEmpty()) {
+            return new ArrayList<>();
+        }
+        RestTemplate restTemplate = new RestTemplate();
+
+        ResponseEntity<List<String>> expandeds = restTemplate.exchange(referenceDataUrl + "/loscodes/expandLosThemeByPaths?themes={listForRest}", HttpMethod.GET, null, new ParameterizedTypeReference<List<String>>() {}, path);
         return expandeds.getBody();
     }
 }

@@ -1,5 +1,6 @@
 package no.fdk.searchapi.controller.datasetssearch;
 
+import no.dcat.client.referencedata.ReferenceDataClient;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.Operator;
 import org.elasticsearch.index.query.QueryBuilder;
@@ -56,7 +57,7 @@ public class DatasetsSearchQueryBuilder {
                         QueryBuilder filter = (QueryBuilder) (method.invoke(null, new Object[]{filterValue, this}));
                         // Difference between .must() and .filter() is that must keeps scores, while filter does not.
                         // We use .must() because of "q"-filter assigns scores.
-                        // For other parameters, scores are irrelevant and therefore can be included safely.
+                        // For other parameters, score s are irrelevant and therefore can be included safely.
                         if (filter != null) {
                             composedQuery.must(filter);
                         }
@@ -175,16 +176,14 @@ public class DatasetsSearchQueryBuilder {
         }
 
         static QueryBuilder losTheme(String losMainOrSubThemes, DatasetsSearchQueryBuilder queryBuilder) {
-            String[] themes = losMainOrSubThemes.split(",");
-            if (themes.length ==1) {
-                return QueryBuilders.termsQuery("losTheme.losPaths", themes);
-            } else {
-                QueryBuilder  builder = QueryBuilders.boolQuery();
-                for (String singleTheme : themes) {
-                    builder = ((BoolQueryBuilder) builder).must(QueryBuilders.termsQuery("losTheme.losPaths", singleTheme));
-                }
-                return builder;
+            String[] themes = losMainOrSubThemes.split("\\|");
+
+            QueryBuilder builder = QueryBuilders.boolQuery();
+            for (String expandedMainTheme : themes) {
+                String [] themesAndSubthemes = expandedMainTheme.split(",");
+                builder = ((BoolQueryBuilder) builder).must(QueryBuilders.termsQuery("losTheme.losPaths", themesAndSubthemes));
             }
+            return builder;
         }
 
         static QueryBuilder withSubject(String value, DatasetsSearchQueryBuilder queryBuilder) {

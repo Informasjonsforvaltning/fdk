@@ -13,10 +13,8 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class LOSService {
@@ -256,6 +254,17 @@ public class LOSService {
         return false;
     }
 
+    private static boolean isLosPath(String path) {
+        for (LosNode node : allLosNodes) {
+            for (String nodePath : node.getLosPaths()) {
+                if (nodePath.equalsIgnoreCase(path)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     public List<String> expandLosThemes(List<String> themes) {
         List<String> keyWords = new ArrayList<>();
         for (String theme : themes) {
@@ -264,6 +273,42 @@ public class LOSService {
             }
         }
         return keyWords;
+    }
+
+    public List<String> expandLosThemesByPaths(List<String> paths) {
+        List<String> keyWords = new ArrayList<>();
+        for (String path : paths) {
+            if (isLosPath(path)) {
+                keyWords.addAll(expandSinglePath(path));
+            }
+        }
+        return keyWords;
+    }
+
+    private static List<String> expandSinglePath(String path) {
+        List<String> expandedPaths = new ArrayList<>();
+        for (LosNode node : allLosNodes) {
+            if (hasLOSPathAsPathsegment(node.getLosPaths(), path)) {
+                expandedPaths.addAll(node.getLosPaths());
+            }
+        }
+        //Remove duplicates
+        return expandedPaths.stream().distinct().collect(Collectors.toList());
+    }
+
+    private static boolean hasLOSPathAsPathsegment(List<String> losPaths, String losPathToFind) {
+        if (losPaths == null || losPaths.size() == 0 || losPathToFind == null) {
+            return false;
+        }
+        for (String singlePath : losPaths) {
+            List<String> segments = Arrays.asList(singlePath.split("/"));
+            for (String singleSegment : segments) {
+                if (losPathToFind.equalsIgnoreCase(singleSegment)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     private static List<String> expandSingleTheme(String theme)  {

@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import no.dcat.client.referencedata.ReferenceDataClient;
 import no.dcat.shared.Dataset;
 import no.fdk.searchapi.service.ElasticsearchService;
 import org.elasticsearch.action.search.SearchRequestBuilder;
@@ -22,6 +23,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
@@ -34,11 +36,18 @@ import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 @RestController
 public class DatasetsSearchController {
     private static Logger logger = LoggerFactory.getLogger(DatasetsSearchController.class);
+    ReferenceDataClient referenceDataClient;
     private ElasticsearchService elasticsearch;
+
 
     @Autowired
     public DatasetsSearchController(ElasticsearchService elasticsearchService) {
         this.elasticsearch = elasticsearchService;
+        this.referenceDataClient = new ReferenceDataClient("http://localhost:8113");
+    }
+
+    private static boolean hasLOSFilter(Map<String, String> params) {
+        return params.containsKey("losTheme");
     }
 
     /**
@@ -106,6 +115,22 @@ public class DatasetsSearchController {
         int from = checkAndAdjustFrom((int) pageable.getOffset());
         int size = checkAndAdjustSize(pageable.getPageSize());
 
+        if (hasLOSFilter(params)) {
+            //Since the builder is static, it can not request expanded LOS expressions
+            //from reference-data, so we do it here instead.
+            String losFilters = params.get("losTheme");
+            if (losFilters != null && !losFilters.isEmpty()) {
+                List<String> mainTermsWithTheirExpansions = new ArrayList<>();
+                String[] themes = losFilters.split(",");
+
+                for (String theme : themes) {
+                    List<String> expanded = referenceDataClient.expandLOSTemaByLOSPath(theme);
+                    mainTermsWithTheirExpansions.add(expanded.stream().collect(Collectors.joining(",")));
+                }
+                params.put("losTheme", mainTermsWithTheirExpansions.stream().collect(Collectors.joining("|")));
+            }
+        }
+
         QueryBuilder searchQuery = new DatasetsSearchQueryBuilder()
             .lang(lang)
             .boostNationalComponents()
@@ -118,7 +143,6 @@ public class DatasetsSearchController {
             .setQuery(searchQuery)
             .setFrom(from)
             .setSize(size);
-
 
         if (isNotEmpty(aggregations)) {
             Set<String> selectedAggregationFields = new HashSet<>(Arrays.asList(aggregations.split(",")));

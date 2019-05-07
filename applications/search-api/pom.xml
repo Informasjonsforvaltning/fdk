@@ -71,11 +71,18 @@
             <version>20180813</version>
         </dependency>
 
+        <dependency>
+            <groupId>no.dcat</groupId>
+            <artifactId>referencedata-client</artifactId>
+            <version>1.5.0-SNAPSHOT</version>
+        </dependency>
+
         <!-- må ha actuator for å kjøre på openshift. kreves av readyness probe -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
+
 
         <dependency>
             <groupId>org.assertj</groupId>
