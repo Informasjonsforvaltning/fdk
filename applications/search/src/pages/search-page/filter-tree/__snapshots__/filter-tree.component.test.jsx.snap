@@ -8,15 +8,15 @@ exports[`should render FilterTree correctly with active filter 1`] = `
     className="fdk-panel__header"
   >
     <button
-      className="fdk-publisher-toggle p-0"
+      className="fdk-publisher-toggle p-0 d-flex justify-content-between align-items-center w-100"
       onClick={[Function]}
     >
-      <i
-        className="fa mr-2 fa-angle-up"
-      />
       <span>
         title
       </span>
+      <i
+        className="fa fa-angle-up"
+      />
     </button>
   </div>
   <Collapse
@@ -48,7 +48,7 @@ exports[`should render FilterTree correctly with active filter 1`] = `
         >
           <TreeView
             defaultCollapsed={true}
-            itemClassName="tree-view_main"
+            itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
             key="/STAT|0"
             nodeLabel={
               <FilterOption
@@ -66,6 +66,7 @@ exports[`should render FilterTree correctly with active filter 1`] = `
           >
             <TreeView
               defaultCollapsed={true}
+              itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
               key="/STAT/972417858|0"
               nodeLabel={
                 <FilterOption
@@ -144,6 +145,7 @@ exports[`should render FilterTree correctly with active filter 1`] = `
             </TreeView>
             <TreeView
               defaultCollapsed={true}
+              itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
               key="/STAT/972417874|1"
               nodeLabel={
                 <FilterOption
@@ -198,6 +200,7 @@ exports[`should render FilterTree correctly with active filter 1`] = `
             </TreeView>
             <TreeView
               defaultCollapsed={true}
+              itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
               key="/STAT/977161630|2"
               nodeLabel={
                 <FilterOption
@@ -240,6 +243,7 @@ exports[`should render FilterTree correctly with active filter 1`] = `
             </TreeView>
             <TreeView
               defaultCollapsed={true}
+              itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
               key="/STAT/972417882|3"
               nodeLabel={
                 <FilterOption
@@ -306,6 +310,7 @@ exports[`should render FilterTree correctly with active filter 1`] = `
             </TreeView>
             <TreeView
               defaultCollapsed={true}
+              itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
               key="/STAT/912660680|4"
               nodeLabel={
                 <FilterOption
@@ -396,6 +401,7 @@ exports[`should render FilterTree correctly with active filter 1`] = `
             </TreeView>
             <TreeView
               defaultCollapsed={true}
+              itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
               key="/STAT/972417904|5"
               nodeLabel={
                 <FilterOption
@@ -450,6 +456,7 @@ exports[`should render FilterTree correctly with active filter 1`] = `
             </TreeView>
             <TreeView
               defaultCollapsed={true}
+              itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
               key="/STAT/872417842|6"
               nodeLabel={
                 <FilterOption
@@ -528,6 +535,7 @@ exports[`should render FilterTree correctly with active filter 1`] = `
             </TreeView>
             <TreeView
               defaultCollapsed={true}
+              itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
               key="/STAT/972417807|7"
               nodeLabel={
                 <FilterOption
@@ -570,6 +578,7 @@ exports[`should render FilterTree correctly with active filter 1`] = `
             </TreeView>
             <TreeView
               defaultCollapsed={true}
+              itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
               key="/STAT/983887457|8"
               nodeLabel={
                 <FilterOption
@@ -612,6 +621,7 @@ exports[`should render FilterTree correctly with active filter 1`] = `
             </TreeView>
             <TreeView
               defaultCollapsed={true}
+              itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
               key="/STAT/972417866|9"
               nodeLabel={
                 <FilterOption
@@ -666,6 +676,7 @@ exports[`should render FilterTree correctly with active filter 1`] = `
             </TreeView>
             <TreeView
               defaultCollapsed={true}
+              itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
               key="/STAT/983887406|10"
               nodeLabel={
                 <FilterOption
@@ -683,6 +694,7 @@ exports[`should render FilterTree correctly with active filter 1`] = `
             >
               <TreeView
                 defaultCollapsed={true}
+                itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
                 key="/STAT/983887406/983544622|0"
                 nodeLabel={
                   <FilterOption
@@ -750,6 +762,7 @@ exports[`should render FilterTree correctly with active filter 1`] = `
             </TreeView>
             <TreeView
               defaultCollapsed={true}
+              itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
               key="/STAT/972417831|11"
               nodeLabel={
                 <FilterOption
@@ -780,6 +793,7 @@ exports[`should render FilterTree correctly with active filter 1`] = `
             </TreeView>
             <TreeView
               defaultCollapsed={true}
+              itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
               key="/STAT/972417920|12"
               nodeLabel={
                 <FilterOption
@@ -810,6 +824,7 @@ exports[`should render FilterTree correctly with active filter 1`] = `
             </TreeView>
             <TreeView
               defaultCollapsed={true}
+              itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
               key="/STAT/972417823|13"
               nodeLabel={
                 <FilterOption
@@ -864,6 +879,7 @@ exports[`should render FilterTree correctly with active filter 1`] = `
             />
             <TreeView
               defaultCollapsed={true}
+              itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
               key="/STAT/972417793|15"
               nodeLabel={
                 <FilterOption
@@ -960,7 +976,7 @@ exports[`should render FilterTree correctly with active filter 1`] = `
         >
           <TreeView
             defaultCollapsed={true}
-            itemClassName="tree-view_main"
+            itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
             key="/KOMMUNE|1"
             nodeLabel={
               <FilterOption
@@ -1272,7 +1288,7 @@ exports[`should render FilterTree correctly with active filter 1`] = `
         >
           <TreeView
             defaultCollapsed={true}
-            itemClassName="tree-view_main"
+            itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
             key="/PRIVAT|2"
             nodeLabel={
               <FilterOption
@@ -1416,7 +1432,7 @@ exports[`should render FilterTree correctly with active filter 1`] = `
         >
           <TreeView
             defaultCollapsed={true}
-            itemClassName="tree-view_main"
+            itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
             key="/ANNET|3"
             nodeLabel={
               <FilterOption
@@ -1524,7 +1540,7 @@ exports[`should render FilterTree correctly with active filter 1`] = `
         >
           <TreeView
             defaultCollapsed={true}
-            itemClassName="tree-view_main"
+            itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
             key="/FYLKE|4"
             nodeLabel={
               <FilterOption
@@ -1542,6 +1558,7 @@ exports[`should render FilterTree correctly with active filter 1`] = `
           >
             <TreeView
               defaultCollapsed={true}
+              itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
               key="/FYLKE/941388841|0"
               nodeLabel={
                 <FilterOption
@@ -1610,15 +1627,15 @@ exports[`should render FilterTree correctly with active sub filter 1`] = `
     className="fdk-panel__header"
   >
     <button
-      className="fdk-publisher-toggle p-0"
+      className="fdk-publisher-toggle p-0 d-flex justify-content-between align-items-center w-100"
       onClick={[Function]}
     >
-      <i
-        className="fa mr-2 fa-angle-up"
-      />
       <span>
         title
       </span>
+      <i
+        className="fa fa-angle-up"
+      />
     </button>
   </div>
   <Collapse
@@ -1650,7 +1667,7 @@ exports[`should render FilterTree correctly with active sub filter 1`] = `
         >
           <TreeView
             defaultCollapsed={true}
-            itemClassName="tree-view_main"
+            itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
             key="/STAT|0"
             nodeLabel={
               <FilterOption
@@ -1668,6 +1685,7 @@ exports[`should render FilterTree correctly with active sub filter 1`] = `
           >
             <TreeView
               defaultCollapsed={true}
+              itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
               key="/STAT/972417858|0"
               nodeLabel={
                 <FilterOption
@@ -1746,6 +1764,7 @@ exports[`should render FilterTree correctly with active sub filter 1`] = `
             </TreeView>
             <TreeView
               defaultCollapsed={true}
+              itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
               key="/STAT/972417874|1"
               nodeLabel={
                 <FilterOption
@@ -1800,6 +1819,7 @@ exports[`should render FilterTree correctly with active sub filter 1`] = `
             </TreeView>
             <TreeView
               defaultCollapsed={true}
+              itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
               key="/STAT/977161630|2"
               nodeLabel={
                 <FilterOption
@@ -1842,6 +1862,7 @@ exports[`should render FilterTree correctly with active sub filter 1`] = `
             </TreeView>
             <TreeView
               defaultCollapsed={true}
+              itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
               key="/STAT/972417882|3"
               nodeLabel={
                 <FilterOption
@@ -1908,6 +1929,7 @@ exports[`should render FilterTree correctly with active sub filter 1`] = `
             </TreeView>
             <TreeView
               defaultCollapsed={true}
+              itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
               key="/STAT/912660680|4"
               nodeLabel={
                 <FilterOption
@@ -1998,6 +2020,7 @@ exports[`should render FilterTree correctly with active sub filter 1`] = `
             </TreeView>
             <TreeView
               defaultCollapsed={true}
+              itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
               key="/STAT/972417904|5"
               nodeLabel={
                 <FilterOption
@@ -2052,6 +2075,7 @@ exports[`should render FilterTree correctly with active sub filter 1`] = `
             </TreeView>
             <TreeView
               defaultCollapsed={true}
+              itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
               key="/STAT/872417842|6"
               nodeLabel={
                 <FilterOption
@@ -2130,6 +2154,7 @@ exports[`should render FilterTree correctly with active sub filter 1`] = `
             </TreeView>
             <TreeView
               defaultCollapsed={true}
+              itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
               key="/STAT/972417807|7"
               nodeLabel={
                 <FilterOption
@@ -2172,6 +2197,7 @@ exports[`should render FilterTree correctly with active sub filter 1`] = `
             </TreeView>
             <TreeView
               defaultCollapsed={true}
+              itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
               key="/STAT/983887457|8"
               nodeLabel={
                 <FilterOption
@@ -2214,6 +2240,7 @@ exports[`should render FilterTree correctly with active sub filter 1`] = `
             </TreeView>
             <TreeView
               defaultCollapsed={true}
+              itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
               key="/STAT/972417866|9"
               nodeLabel={
                 <FilterOption
@@ -2268,6 +2295,7 @@ exports[`should render FilterTree correctly with active sub filter 1`] = `
             </TreeView>
             <TreeView
               defaultCollapsed={true}
+              itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
               key="/STAT/983887406|10"
               nodeLabel={
                 <FilterOption
@@ -2285,6 +2313,7 @@ exports[`should render FilterTree correctly with active sub filter 1`] = `
             >
               <TreeView
                 defaultCollapsed={true}
+                itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
                 key="/STAT/983887406/983544622|0"
                 nodeLabel={
                   <FilterOption
@@ -2352,6 +2381,7 @@ exports[`should render FilterTree correctly with active sub filter 1`] = `
             </TreeView>
             <TreeView
               defaultCollapsed={true}
+              itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
               key="/STAT/972417831|11"
               nodeLabel={
                 <FilterOption
@@ -2382,6 +2412,7 @@ exports[`should render FilterTree correctly with active sub filter 1`] = `
             </TreeView>
             <TreeView
               defaultCollapsed={true}
+              itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
               key="/STAT/972417920|12"
               nodeLabel={
                 <FilterOption
@@ -2412,6 +2443,7 @@ exports[`should render FilterTree correctly with active sub filter 1`] = `
             </TreeView>
             <TreeView
               defaultCollapsed={true}
+              itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
               key="/STAT/972417823|13"
               nodeLabel={
                 <FilterOption
@@ -2466,6 +2498,7 @@ exports[`should render FilterTree correctly with active sub filter 1`] = `
             />
             <TreeView
               defaultCollapsed={true}
+              itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
               key="/STAT/972417793|15"
               nodeLabel={
                 <FilterOption
@@ -2562,7 +2595,7 @@ exports[`should render FilterTree correctly with active sub filter 1`] = `
         >
           <TreeView
             defaultCollapsed={false}
-            itemClassName="tree-view_main"
+            itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
             key="/KOMMUNE|1"
             nodeLabel={
               <FilterOption
@@ -2874,7 +2907,7 @@ exports[`should render FilterTree correctly with active sub filter 1`] = `
         >
           <TreeView
             defaultCollapsed={true}
-            itemClassName="tree-view_main"
+            itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
             key="/PRIVAT|2"
             nodeLabel={
               <FilterOption
@@ -3018,7 +3051,7 @@ exports[`should render FilterTree correctly with active sub filter 1`] = `
         >
           <TreeView
             defaultCollapsed={true}
-            itemClassName="tree-view_main"
+            itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
             key="/ANNET|3"
             nodeLabel={
               <FilterOption
@@ -3126,7 +3159,7 @@ exports[`should render FilterTree correctly with active sub filter 1`] = `
         >
           <TreeView
             defaultCollapsed={true}
-            itemClassName="tree-view_main"
+            itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
             key="/FYLKE|4"
             nodeLabel={
               <FilterOption
@@ -3144,6 +3177,7 @@ exports[`should render FilterTree correctly with active sub filter 1`] = `
           >
             <TreeView
               defaultCollapsed={true}
+              itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
               key="/FYLKE/941388841|0"
               nodeLabel={
                 <FilterOption
@@ -3214,15 +3248,15 @@ exports[`should render FilterTree correctly with props 1`] = `
     className="fdk-panel__header"
   >
     <button
-      className="fdk-publisher-toggle p-0"
+      className="fdk-publisher-toggle p-0 d-flex justify-content-between align-items-center w-100"
       onClick={[Function]}
     >
-      <i
-        className="fa mr-2 fa-angle-up"
-      />
       <span>
         title
       </span>
+      <i
+        className="fa fa-angle-up"
+      />
     </button>
   </div>
   <Collapse
@@ -3254,7 +3288,7 @@ exports[`should render FilterTree correctly with props 1`] = `
         >
           <TreeView
             defaultCollapsed={true}
-            itemClassName="tree-view_main"
+            itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
             key="/STAT|0"
             nodeLabel={
               <FilterOption
@@ -3272,6 +3306,7 @@ exports[`should render FilterTree correctly with props 1`] = `
           >
             <TreeView
               defaultCollapsed={true}
+              itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
               key="/STAT/972417858|0"
               nodeLabel={
                 <FilterOption
@@ -3350,6 +3385,7 @@ exports[`should render FilterTree correctly with props 1`] = `
             </TreeView>
             <TreeView
               defaultCollapsed={true}
+              itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
               key="/STAT/972417874|1"
               nodeLabel={
                 <FilterOption
@@ -3404,6 +3440,7 @@ exports[`should render FilterTree correctly with props 1`] = `
             </TreeView>
             <TreeView
               defaultCollapsed={true}
+              itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
               key="/STAT/977161630|2"
               nodeLabel={
                 <FilterOption
@@ -3446,6 +3483,7 @@ exports[`should render FilterTree correctly with props 1`] = `
             </TreeView>
             <TreeView
               defaultCollapsed={true}
+              itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
               key="/STAT/972417882|3"
               nodeLabel={
                 <FilterOption
@@ -3512,6 +3550,7 @@ exports[`should render FilterTree correctly with props 1`] = `
             </TreeView>
             <TreeView
               defaultCollapsed={true}
+              itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
               key="/STAT/912660680|4"
               nodeLabel={
                 <FilterOption
@@ -3602,6 +3641,7 @@ exports[`should render FilterTree correctly with props 1`] = `
             </TreeView>
             <TreeView
               defaultCollapsed={true}
+              itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
               key="/STAT/972417904|5"
               nodeLabel={
                 <FilterOption
@@ -3656,6 +3696,7 @@ exports[`should render FilterTree correctly with props 1`] = `
             </TreeView>
             <TreeView
               defaultCollapsed={true}
+              itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
               key="/STAT/872417842|6"
               nodeLabel={
                 <FilterOption
@@ -3734,6 +3775,7 @@ exports[`should render FilterTree correctly with props 1`] = `
             </TreeView>
             <TreeView
               defaultCollapsed={true}
+              itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
               key="/STAT/972417807|7"
               nodeLabel={
                 <FilterOption
@@ -3776,6 +3818,7 @@ exports[`should render FilterTree correctly with props 1`] = `
             </TreeView>
             <TreeView
               defaultCollapsed={true}
+              itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
               key="/STAT/983887457|8"
               nodeLabel={
                 <FilterOption
@@ -3818,6 +3861,7 @@ exports[`should render FilterTree correctly with props 1`] = `
             </TreeView>
             <TreeView
               defaultCollapsed={true}
+              itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
               key="/STAT/972417866|9"
               nodeLabel={
                 <FilterOption
@@ -3872,6 +3916,7 @@ exports[`should render FilterTree correctly with props 1`] = `
             </TreeView>
             <TreeView
               defaultCollapsed={true}
+              itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
               key="/STAT/983887406|10"
               nodeLabel={
                 <FilterOption
@@ -3889,6 +3934,7 @@ exports[`should render FilterTree correctly with props 1`] = `
             >
               <TreeView
                 defaultCollapsed={true}
+                itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
                 key="/STAT/983887406/983544622|0"
                 nodeLabel={
                   <FilterOption
@@ -3956,6 +4002,7 @@ exports[`should render FilterTree correctly with props 1`] = `
             </TreeView>
             <TreeView
               defaultCollapsed={true}
+              itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
               key="/STAT/972417831|11"
               nodeLabel={
                 <FilterOption
@@ -3986,6 +4033,7 @@ exports[`should render FilterTree correctly with props 1`] = `
             </TreeView>
             <TreeView
               defaultCollapsed={true}
+              itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
               key="/STAT/972417920|12"
               nodeLabel={
                 <FilterOption
@@ -4016,6 +4064,7 @@ exports[`should render FilterTree correctly with props 1`] = `
             </TreeView>
             <TreeView
               defaultCollapsed={true}
+              itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
               key="/STAT/972417823|13"
               nodeLabel={
                 <FilterOption
@@ -4070,6 +4119,7 @@ exports[`should render FilterTree correctly with props 1`] = `
             />
             <TreeView
               defaultCollapsed={true}
+              itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
               key="/STAT/972417793|15"
               nodeLabel={
                 <FilterOption
@@ -4166,7 +4216,7 @@ exports[`should render FilterTree correctly with props 1`] = `
         >
           <TreeView
             defaultCollapsed={true}
-            itemClassName="tree-view_main"
+            itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
             key="/KOMMUNE|1"
             nodeLabel={
               <FilterOption
@@ -4478,7 +4528,7 @@ exports[`should render FilterTree correctly with props 1`] = `
         >
           <TreeView
             defaultCollapsed={true}
-            itemClassName="tree-view_main"
+            itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
             key="/PRIVAT|2"
             nodeLabel={
               <FilterOption
@@ -4622,7 +4672,7 @@ exports[`should render FilterTree correctly with props 1`] = `
         >
           <TreeView
             defaultCollapsed={true}
-            itemClassName="tree-view_main"
+            itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
             key="/ANNET|3"
             nodeLabel={
               <FilterOption
@@ -4730,7 +4780,7 @@ exports[`should render FilterTree correctly with props 1`] = `
         >
           <TreeView
             defaultCollapsed={true}
-            itemClassName="tree-view_main"
+            itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
             key="/FYLKE|4"
             nodeLabel={
               <FilterOption
@@ -4748,6 +4798,7 @@ exports[`should render FilterTree correctly with props 1`] = `
           >
             <TreeView
               defaultCollapsed={true}
+              itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
               key="/FYLKE/941388841|0"
               nodeLabel={
                 <FilterOption

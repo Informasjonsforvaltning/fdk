@@ -12,7 +12,7 @@
       margin-bottom: 0;
     }
     .tree-view_children {
-      margin-left: 32px;
+      margin-left: 12px;
     }
 
     .tree-view_children-collapsed {
@@ -21,20 +21,16 @@
   }
   .tree-view_arrow {
     cursor: pointer;
-    margin-right: 6px;
-    display: inline-block;
+    color: $color-blue-dark;
+    font-size: 2rem;
+    font-family: FontAwesome;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    font-size: 2rem;
-    vertical-align: top;
     &:after {
-      content: '▾';
+      content: "\F106";
     }
-  }
-  .checkbox.indent {
-    margin-left: 19px;
   }
   .checkbox {
    width: 100%;
@@ -44,10 +40,10 @@
   }
   /* rotate the triangle to close it */
   .tree-view_arrow-collapsed {
-    -webkit-transform: rotate(-90deg);
-    -moz-transform: rotate(-90deg);
-    -ms-transform: rotate(-90deg);
-    transform: rotate(-90deg);
+    -webkit-transform: rotate(-180deg);
+    -moz-transform: rotate(-180deg);
+    -ms-transform: rotate(-180deg);
+    transform: rotate(-180deg);
   }
 
   .pre-scrollable {
