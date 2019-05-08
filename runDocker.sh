@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-. ./buildGroupsEnv.sh
+. buildCommands.sh
 
 for i in "${!BUILD_APPS[@]}"; do
     if [ "$1" == "${BUILD_APPS[$i]}" ]; then
