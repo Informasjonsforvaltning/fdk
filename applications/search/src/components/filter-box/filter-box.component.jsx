@@ -61,6 +61,10 @@ export class FilterBox extends React.Component {
 
     if (buckets) {
       const bucketsLength = buckets.length;
+      const openIconClass = cx('fa', 'mr-2', {
+        'fa-angle-double-down': !open,
+        'fa-angle-double-up': open
+      });
       return (
         <div>
           {options(buckets.slice(0, 5))}
@@ -70,6 +74,7 @@ export class FilterBox extends React.Component {
                 <div>{options(buckets.slice(5))}</div>
               </Collapse>
               <button className="fdk-toggleList" onClick={this.toggleList}>
+                <i className={openIconClass} />
                 {open
                   ? localization.facet.showfewer
                   : localization.facet.showmore}
@@ -85,7 +90,7 @@ export class FilterBox extends React.Component {
   render() {
     const { openFilter } = this.state;
     const { title, filter, onClick, activeFilter } = this.props;
-    const collapseIconClass = cx('fa', 'mr-2', {
+    const collapseIconClass = cx('fa', {
       'fa-angle-down': !openFilter,
       'fa-angle-up': openFilter
     });
@@ -94,11 +99,11 @@ export class FilterBox extends React.Component {
         <div className="fdk-panel--filter">
           <div className="fdk-panel__header">
             <button
-              className="fdk-toggleFilter p-0"
+              className="fdk-toggleFilter p-0 d-flex justify-content-between align-items-center w-100"
               onClick={this.toggleFilter}
             >
-              <i className={collapseIconClass} />
               <span>{title}</span>
+              <i className={collapseIconClass} />
             </button>
           </div>
           <Collapse isOpen={openFilter}>

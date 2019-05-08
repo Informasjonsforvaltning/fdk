@@ -7,20 +7,24 @@
   .fdk-panel__header {
     border-bottom: 1px solid $color6;
     color: $color1;
-    line-height: 2.25rem;
+    line-height: 2em;
     margin-bottom: .5em;
-    padding: 1em 2em;
+    padding: 1em 1.5em;
     button {
       border: none;
       background-color: transparent;
       cursor: pointer;
       font-size: 1.875rem;
       font-weight: 500;
+      i {
+        color: $color-blue-dark;
+        font-size: 2rem;
+      }
     }
   }
   .fdk-panel__content {
     font-size: 1.5rem;
-    padding: .5em 2em;
+    padding: .5em 1.5em;
 
     .fdk-items-list {
       button {
@@ -28,11 +32,9 @@
         border: none;
         cursor: pointer;
         padding: 0;
-        font-weight: 700;
       }
-      .checkbox {
-        margin-top: 0;
-        margin-bottom: .3em;
+      .fdk-toggleList {
+        color: $color-blue-dark;
       }
     }
   }
