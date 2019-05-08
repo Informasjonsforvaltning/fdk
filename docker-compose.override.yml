@@ -16,6 +16,7 @@ services:
       - ES_JAVA_OPTS=-Xms512m -Xmx512m
 
   fuseki:
+    build: ./applications/fuseki
     restart: always
     volumes:
       - ./data/fuseki:/etc/fuseki/databases/
