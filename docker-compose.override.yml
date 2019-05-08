@@ -46,6 +46,7 @@ services:
     restart: always
 
   nginx-registration-ssl:
+    build: ./applications/nginx-registration-ssl
     image: dcatno/nginx-registration-ssl:latest
     restart: always
     ports:

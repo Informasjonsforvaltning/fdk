@@ -14,7 +14,6 @@
 
         <module>nginx-search</module>
         <module>search-api</module>
-        <module>nginx-registration-ssl</module>
         <module>registration-api</module>
         <module>registration-auth</module>
 
