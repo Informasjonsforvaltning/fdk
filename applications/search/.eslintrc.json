@@ -7,7 +7,7 @@
     "jest": true
   },
   "extends": ["airbnb", "prettier", "prettier/react"],
-  "plugins": ["prettier"],
+  "plugins": ["prettier", "react-hooks"],
   "parser": "babel-eslint",
   "globals": {
     "$": false
@@ -37,6 +37,7 @@
       "specialLink": [ "hrefLeft", "hrefRight", "to" ],
       "aspects": [ "noHref", "invalidHref", "preferButton" ]
     }],
-    "prefer-destructuring":"off"
+    "prefer-destructuring":"off",
+    "react-hooks/rules-of-hooks": "error"
   }
 }
