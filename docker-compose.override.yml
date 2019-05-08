@@ -42,6 +42,7 @@ services:
       - "8080:8080"
 
   nginx-registration:
+    build: ./applications/nginx-registration
     restart: always
 
   nginx-registration-ssl:
