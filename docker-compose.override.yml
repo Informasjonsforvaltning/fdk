@@ -37,6 +37,7 @@ services:
 
 ### ingress modules
   nginx-search:
+    build: ./applications/nginx-search
     restart: always
     ports:
       - "8080:8080"
