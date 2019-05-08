@@ -1,16 +1,14 @@
 #!/usr/bin/env bash
 
 i=0
-BUILD_APPS[$i]="e2e"
-BUILD_CMD[$i]="( cd applications/e2e && docker build -t dcatno/e2e:latest . )"
 
-i=$((i+1))
-BUILD_APPS[$i]="search"
-BUILD_CMD[$i]="( cd applications/search && ./runAllBuild.sh )"
+docker_apps="e2e search registration-react"
 
-i=$((i+1))
-BUILD_APPS[$i]="registration-react"
-BUILD_CMD[$i]="( cd applications/registration-react && ./runAllBuild.sh )"
+for docker_app in $docker_apps; do
+    i=$((i+1))
+    BUILD_APPS[$i]=$docker_app
+    BUILD_CMD[$i]="( cd applications/$docker_app && ./buildDocker.sh )"
+done
 
 maven_apps="fuseki harvester harvester-api nginx-search nginx-registration reference-data registration-api registration-auth api-cat concept-cat informationmodel-cat search-api"
 
