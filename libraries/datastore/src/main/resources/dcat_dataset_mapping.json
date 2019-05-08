@@ -135,6 +135,15 @@
           }
         }
       },
+      "expandedLosTema": {
+        "type": "text",
+        "analyzer": "norwegian",
+        "fields": {
+          "raw": {
+            "type": "keyword"
+          }
+        }
+      },
       "losTheme": {
         "properties": {
           "losPaths" : {

@@ -113,7 +113,7 @@ public class ReferenceDataClient {
         RestTemplate restTemplate = new RestTemplate();
 
         ResponseEntity<List<String>> expandeds = restTemplate.exchange(referenceDataUrl + "/loscodes/expandLosTheme?themes={listForRest}", HttpMethod.GET, null, new ParameterizedTypeReference<List<String>>() {}, listForRest);
-        return expandeds.getBody();
+        return expandeds.getBody().stream().map(String::toLowerCase).collect(Collectors.toList());
     }
 
     public List<String> expandLOSTemaByLOSPath(String path) {
@@ -123,7 +123,7 @@ public class ReferenceDataClient {
         RestTemplate restTemplate = new RestTemplate();
 
         ResponseEntity<List<String>> expandeds = restTemplate.exchange(referenceDataUrl + "/loscodes/expandLosThemeByPaths?themes={listForRest}", HttpMethod.GET, null, new ParameterizedTypeReference<List<String>>() {}, path);
-        return expandeds.getBody();
+        return expandeds.getBody().stream().map(String::toLowerCase).collect(Collectors.toList());
     }
 }
 
