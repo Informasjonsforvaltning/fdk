@@ -16,12 +16,14 @@ import org.elasticsearch.search.sort.SortOrder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.PostConstruct;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -39,11 +41,17 @@ public class DatasetsSearchController {
     ReferenceDataClient referenceDataClient;
     private ElasticsearchService elasticsearch;
 
+    @Value("${application.referenceDataUrl}")
+    private String referenceDataUrl;
+
+    @PostConstruct
+    public void initialize() {
+        this.referenceDataClient = new ReferenceDataClient(referenceDataUrl);
+    }
 
     @Autowired
     public DatasetsSearchController(ElasticsearchService elasticsearchService) {
         this.elasticsearch = elasticsearchService;
-        this.referenceDataClient = new ReferenceDataClient("http://localhost:8113");
     }
 
     private static boolean hasLOSFilter(Map<String, String> params) {
