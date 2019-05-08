@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-. ./buildGroupsEnv.sh
+. buildCommands.sh
 
 # We will build what is needed and download images that are missing
 for i in "${!BUILD_APPS[@]}"; do

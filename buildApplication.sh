@@ -11,7 +11,7 @@ echo "Starting build of application $BUILD_APP"
 echo "----------------------------------"
 
 #build
-echo "Launching group build command"
+echo "Launching build command"
 eval $BUILD_CMD
 
 echo "Done build of application $BUILD_APP"
