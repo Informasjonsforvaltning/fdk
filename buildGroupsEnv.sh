@@ -2,7 +2,7 @@
 
 i=0
 
-docker_apps="e2e search registration-react"
+docker_apps="e2e search registration-react fuseki"
 
 for docker_app in $docker_apps; do
     i=$((i+1))
@@ -10,7 +10,7 @@ for docker_app in $docker_apps; do
     BUILD_CMD[$i]="( cd applications/$docker_app && ./buildDocker.sh )"
 done
 
-maven_apps="fuseki harvester harvester-api nginx-search nginx-registration reference-data registration-api registration-auth api-cat concept-cat informationmodel-cat search-api"
+maven_apps="harvester harvester-api nginx-search nginx-registration reference-data registration-api registration-auth api-cat concept-cat informationmodel-cat search-api"
 
 for maven_app in $maven_apps; do
     i=$((i+1))

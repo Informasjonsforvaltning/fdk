@@ -10,8 +10,6 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>fuseki</module>
-
         <module>reference-data</module>
 
         <module>nginx-search</module>
