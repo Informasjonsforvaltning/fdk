@@ -300,11 +300,29 @@ public class LOSService {
         if (losPaths == null || losPaths.size() == 0 || losPathToFind == null) {
             return false;
         }
+        int slashCount = org.springframework.util.StringUtils.countOccurrencesOf(losPathToFind, "/");
+        boolean isSubTheme = slashCount == 1;
+
         for (String singlePath : losPaths) {
             List<String> segments = Arrays.asList(singlePath.split("/"));
             for (String singleSegment : segments) {
                 if (losPathToFind.equalsIgnoreCase(singleSegment)) {
                     return true;
+                }
+            }
+
+            if (singlePath.equalsIgnoreCase(losPathToFind)) {
+                return true;
+            }
+            if (isSubTheme) {
+                //We are searching for a subtheme and the node we are comparing with is an Emne (arbeid/arbeidsliv/mobbing)
+                if (org.springframework.util.StringUtils.countOccurrencesOf(singlePath, "/") == 2) {
+                    int firstIndex = singlePath.indexOf("/");
+                    int secoundIndex = singlePath.indexOf("/", firstIndex+1);
+                    String choppedEmne = singlePath.substring(0, secoundIndex);
+                    if (choppedEmne.equalsIgnoreCase(losPathToFind)) {
+                        return true;
+                    }
                 }
             }
         }
