@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import no.dcat.client.referencedata.ReferenceDataClient;
 import no.dcat.shared.Dataset;
 import no.fdk.searchapi.service.ElasticsearchService;
 import org.elasticsearch.action.search.SearchRequestBuilder;
@@ -15,13 +16,16 @@ import org.elasticsearch.search.sort.SortOrder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.PostConstruct;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
@@ -34,11 +38,24 @@ import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 @RestController
 public class DatasetsSearchController {
     private static Logger logger = LoggerFactory.getLogger(DatasetsSearchController.class);
+    ReferenceDataClient referenceDataClient;
     private ElasticsearchService elasticsearch;
+
+    @Value("${application.referenceDataUrl}")
+    private String referenceDataUrl;
+
+    @PostConstruct
+    public void initialize() {
+        this.referenceDataClient = new ReferenceDataClient(referenceDataUrl);
+    }
 
     @Autowired
     public DatasetsSearchController(ElasticsearchService elasticsearchService) {
         this.elasticsearch = elasticsearchService;
+    }
+
+    private static boolean hasLOSFilter(Map<String, String> params) {
+        return params.containsKey("losTheme");
     }
 
     /**
@@ -106,6 +123,22 @@ public class DatasetsSearchController {
         int from = checkAndAdjustFrom((int) pageable.getOffset());
         int size = checkAndAdjustSize(pageable.getPageSize());
 
+        if (hasLOSFilter(params)) {
+            //Since the builder is static, it can not request expanded LOS expressions
+            //from reference-data, so we do it here instead.
+            String losFilters = params.get("losTheme");
+            if (losFilters != null && !losFilters.isEmpty()) {
+                List<String> mainTermsWithTheirExpansions = new ArrayList<>();
+                String[] themes = losFilters.split(",");
+
+                for (String theme : themes) {
+                    List<String> expanded = referenceDataClient.expandLOSTemaByLOSPath(theme);
+                    mainTermsWithTheirExpansions.add(expanded.stream().collect(Collectors.joining(",")));
+                }
+                params.put("losTheme", mainTermsWithTheirExpansions.stream().collect(Collectors.joining("|")));
+            }
+        }
+
         QueryBuilder searchQuery = new DatasetsSearchQueryBuilder()
             .lang(lang)
             .boostNationalComponents()
@@ -118,7 +151,6 @@ public class DatasetsSearchController {
             .setQuery(searchQuery)
             .setFrom(from)
             .setSize(size);
-
 
         if (isNotEmpty(aggregations)) {
             Set<String> selectedAggregationFields = new HashSet<>(Arrays.asList(aggregations.split(",")));

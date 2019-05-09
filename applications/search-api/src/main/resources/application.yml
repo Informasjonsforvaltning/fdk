@@ -3,6 +3,7 @@ logging:
   level.no: ${LOG_LEVEL:DEBUG}
 application:
   fusekiService: http://fuseki:8080/fuseki
+  referenceDataUrl: http://reference-data:8080
 elastic:
   clusterNodes: ${FDK_ES_CLUSTERNODES:elasticsearch5:9300}
   clusterName: ${FDK_ES_CLUSTERNAME:elasticsearch}
@@ -12,6 +13,7 @@ elastic:
 spring:
   profiles: develop, unit-integration
 application:
+  referenceDataUrl: http://localhost:8112 #http://localhost:8113
   fusekiService: http://localhost:3030/fuseki
 elastic:
   clusterNodes: localhost:9300
