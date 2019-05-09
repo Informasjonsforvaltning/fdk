@@ -101,6 +101,11 @@ services:
 #    ports:
 #      - "8128:8080"
 
+  nginx-enhetsregisteret-proxy:
+    build: ./applications/nginx-enhetsregisteret-proxy
+    ports:
+      - "8130:8080"
+
 ### nodejs modules
 
   search:
