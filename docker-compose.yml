@@ -9,6 +9,9 @@ services:
     expose:
       - "9200"
       - "9300"
+    environment:
+      - cluster.name
+      - xpack.security.enabled
 
   fuseki:
     image: dcatno/fuseki:latest
@@ -21,6 +24,9 @@ services:
     image: jboss/keycloak:6.0.1
     expose:
       - "8080"
+    environment:
+      - KEYCLOAK_USER
+      - KEYCLOAK_PASSWORD
 
 ### ingress modules
   nginx-search:
@@ -49,11 +55,17 @@ services:
     image: dcatno/search:latest
     expose:
       - "3000"
+    environment:
+      - NODE_ENV
+      - DISQUS_SHORTNAME
 
   registration-react:
     image: dcatno/registration-react:latest
     expose:
       - "4300"
+    environment:
+      - NODE_ENV
+      - SEARCH_HOSTNAME
 
 ### java modules
   api-cat:
