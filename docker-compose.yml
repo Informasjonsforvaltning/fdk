@@ -71,6 +71,11 @@ services:
       - ALTINN_SSL_BR_CRT_PEM
       - ALTINN_SSL_BR_KEY_PEM
 
+  nginx-enhetsregisteret-proxy:
+    image: dcatno/nginx-enhetsregisteret-proxy
+    expose:
+      - "8080"
+
 ### nodejs modules
   search:
     image: dcatno/search:latest
