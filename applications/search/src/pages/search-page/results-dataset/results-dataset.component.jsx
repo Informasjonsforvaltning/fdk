@@ -230,7 +230,7 @@ export const ResultsDatasetPure = ({
                   title={localization.facet.theme}
                   filter={datasetAggregations.theme}
                   onClick={onFilterTheme}
-                  activeFilter={locationSearch.los}
+                  activeFilter={locationSearch.theme}
                   themesItems={themesItems}
                 />
                 <FilterBox
