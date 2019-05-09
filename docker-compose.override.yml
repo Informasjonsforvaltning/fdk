@@ -3,7 +3,6 @@ version: "3"
 services:
 ### external modules
   elasticsearch5:
-    restart: always
     volumes:
       - ./data/esdata5:/usr/share/elasticsearch/data
     ports:
@@ -17,7 +16,6 @@ services:
 
   fuseki:
     build: ./applications/fuseki
-    restart: always
     volumes:
       - ./data/fuseki:/etc/fuseki/databases/
     ports:
@@ -38,18 +36,15 @@ services:
 ### ingress modules
   nginx-search:
     build: ./applications/nginx-search
-    restart: always
     ports:
       - "8080:8080"
 
   nginx-registration:
     build: ./applications/nginx-registration
-    restart: always
 
   nginx-registration-ssl:
     build: ./applications/nginx-registration-ssl
     image: dcatno/nginx-registration-ssl:latest
-    restart: always
     ports:
       - "8098:443"
     depends_on:
@@ -60,7 +55,6 @@ services:
 
   search:
     build: ./applications/search
-    restart: always
     command: npm start
     ports:
       - "3000:3000"
@@ -73,7 +67,6 @@ services:
 
   registration-react:
     build: ./applications/registration-react
-    restart: always
     command: npm start
     ports:
       - "4300:4300"
@@ -86,7 +79,6 @@ services:
 
 ### java modules
   api-cat:
-    restart: always
     ports:
       - "8102:8080"
     environment:
@@ -97,7 +89,6 @@ services:
       - LOG_FORMAT=compact
 
   concept-cat:
-    restart: always
     ports:
       - "8104:8080"
     environment:
@@ -105,7 +96,6 @@ services:
       - LOG_LEVEL
 
   informationmodel-cat:
-    restart: always
     ports:
       - "8108:8080"
     environment:
@@ -113,7 +103,6 @@ services:
     - LOG_LEVEL
 
   harvester:
-    restart: always
     ports:
       - "8082:8080"
     environment:
@@ -125,7 +114,6 @@ services:
       - harvester_adminPassword=password
 
   harvester-api:
-    restart: always
     ports:
       - "8106:8080"
     environment:
@@ -138,14 +126,12 @@ services:
       - harvestRecordRetentionDays=30
 
   reference-data:
-    restart: always
     ports:
       - "8112:8080"
     environment:
       - JAVA_OPTS=-Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
 
   registration-api:
-    restart: always
     ports:
       - "8114:8080"
     environment:
@@ -164,7 +150,6 @@ services:
       - LOG_LEVEL
 
   search-api:
-    restart: always
     ports:
       - "8118:8080"
     environment:
@@ -175,7 +160,6 @@ services:
 
 ### test and mock modules
   registration-auth:
-    restart: always
     ports:
       - "8116:8080"
     environment:
