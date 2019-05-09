@@ -26,8 +26,6 @@ services:
       - ./applications-external/sso/import:/tmp/keycloak/import
       - ./applications-external/sso/export:/tmp/keycloak/export
     environment:
-      - KEYCLOAK_USER
-      - KEYCLOAK_PASSWORD
       - KEYCLOAK_LOGLEVEL=DEBUG
     command: -b 0.0.0.0 -Dkeycloak.migration.action=import -Dkeycloak.migration.provider=dir -Dkeycloak.migration.dir=/tmp/keycloak/import -Dkeycloak.migration.strategy=OVERWRITE_EXISTING
     ports:
@@ -62,8 +60,6 @@ services:
       - ./applications/search/src:/usr/src/app/src
     environment:
       - REDUX_LOG
-      - NODE_ENV
-      - DISQUS_SHORTNAME
 
   registration-react:
     build: ./applications/registration-react
@@ -74,8 +70,6 @@ services:
       - ./applications/registration-react/src:/usr/src/app/src
     environment:
       - REGISTRATION_LANGUAGE
-      - NODE_ENV
-      - SEARCH_HOSTNAME
 
 ### java modules
   api-cat:
@@ -83,8 +77,6 @@ services:
       - "8102:8080"
     environment:
       - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
-      - FDK_ES_CLUSTERNODES=elasticsearch5:9300
-      - FDK_ES_CLUSTERNAME=elasticsearch
       - LOG_LEVEL
       - LOG_FORMAT=compact
 
@@ -107,9 +99,6 @@ services:
       - "8082:8080"
     environment:
       - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
-      - fuseki.dcatServiceUri=http://fuseki:8080/fuseki/dcat
-      - fuseki.adminServiceUri=http://fuseki:8080/fuseki/admin
-      - application.harvesterUrl=http://harvester-api:8080
       - harvester_adminUsername=test_admin
       - harvester_adminPassword=password
 
@@ -118,10 +107,6 @@ services:
       - "8106:8080"
     environment:
       - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx1024M -Dspring.profiles.active=docker
-      - FDK_ES_CLUSTERNODES=elasticsearch5:9300
-      - FDK_ES_CLUSTERNAME=elasticsearch
-      - fuseki.dcatServiceUri=http://fuseki:8080/fuseki/dcat
-      - fuseki.adminServiceUri=http://fuseki:8080/fuseki/admin
       - application.crawlerThreadPoolSize=2
       - harvestRecordRetentionDays=30
 
@@ -136,9 +121,6 @@ services:
       - "8114:8080"
     environment:
       - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
-      - FDK_ES_CLUSTERNODES=elasticsearch5:9300
-      - FDK_ES_CLUSTERNAME=elasticsearch
-      - registrationAPI_clusterName=elasticsearch
       - registrationApi_altinnServiceUrl=http://registration-auth:8080/
       - registrationApi_apikey=${registrationApi_apikey}
       - registrationApi_clientSSLCertificateKeystoreLocation=conf/dummy-client-SSL-cert.p12
@@ -154,8 +136,6 @@ services:
       - "8118:8080"
     environment:
       - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
-      - FDK_ES_CLUSTERNODES=elasticsearch5:9300
-      - FDK_ES_CLUSTERNAME=elasticsearch
 
 
 ### test and mock modules

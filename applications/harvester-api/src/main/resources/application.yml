@@ -19,8 +19,8 @@ elastic:
   clusterNodes: ${FDK_ES_CLUSTERNODES:elasticsearch5:9300}
   clusterName: ${FDK_ES_CLUSTERNAME:elasticsearch}
 fuseki:
-  dcatServiceUri: ${fusekiDcatServiceUri:http://fuseki:8080/fuseki/dcat}
-  adminServiceUri: ${fusekiAdminServiceUri:http://fuseki:8080/fuseki/admin}
+  dcatServiceUri: http://fuseki:8080/fuseki/dcat
+  adminServiceUri: http://fuseki:8080/fuseki/admin
 
 ---
 spring:
