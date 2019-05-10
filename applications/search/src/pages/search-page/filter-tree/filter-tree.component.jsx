@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import TreeView from 'react-treeview';
 import cx from 'classnames';
@@ -163,111 +163,92 @@ const mainTree = ({
     );
   });
 
-export class FilterTree extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      openFilter: true,
-      openList: false
-    };
-    this.toggleFilter = this.toggleFilter.bind(this);
-    this.toggleList = this.toggleList.bind(this);
-    this.onChange = this.onChange.bind(this);
-  }
+export const FilterTree = props => {
+  const {
+    title,
+    aggregations,
+    handleFiltering,
+    activeFilter,
+    referenceDataItems,
+    collapseItems
+  } = props;
 
-  onChange(value) {
-    if (!value) {
-      this.props.onSearch(null, '');
-    } else {
-      this.props.onSearch(value.name, value.orgPath);
-    }
-  }
+  const [openFilter, setOpenFilter] = useState(true);
+  const [openList, setOpenList] = useState(false);
 
-  toggleFilter() {
-    this.setState({ openFilter: !this.state.openFilter });
-  }
+  const handleToggleOpenFilter = () => {
+    setOpenFilter(!openFilter);
+  };
 
-  toggleList() {
-    this.setState({ openList: !this.state.openList });
-  }
+  const handleToggleOpenList = () => {
+    setOpenList(!openList);
+  };
 
-  render() {
-    const { openFilter, openList } = this.state;
-    const {
-      title,
-      aggregations,
-      handleFiltering,
-      activeFilter,
-      referenceDataItems,
-      collapseItems
-    } = this.props;
+  const aggregationsForest = keyPrefixForest(aggregations);
 
-    const aggregationsForest = keyPrefixForest(aggregations);
-
-    const collapseIconClass = cx('fa', {
-      'fa-angle-down': !this.state.openFilter,
-      'fa-angle-up': this.state.openFilter
+  const collapseIconClass = cx('fa', {
+    'fa-angle-down': !openFilter,
+    'fa-angle-up': openFilter
+  });
+  if (Array.isArray(aggregations) && aggregations.length > 0) {
+    const openIconClass = cx('fa', 'mr-2', {
+      'fa-angle-double-down': !openList,
+      'fa-angle-double-up': openList
     });
-    if (Array.isArray(aggregations) && aggregations.length > 0) {
-      const openIconClass = cx('fa', 'mr-2', {
-        'fa-angle-double-down': !openList,
-        'fa-angle-double-up': openList
-      });
-      return (
-        <div className="fdk-filter-tree">
-          <div className="fdk-panel__header">
-            <button
-              className="fdk-publisher-toggle p-0 d-flex justify-content-between align-items-center w-100"
-              onClick={this.toggleFilter}
-            >
-              <span>{title}</span>
-              <i className={collapseIconClass} />
-            </button>
-          </div>
-          <Collapse isOpen={openFilter}>
-            <div className="fdk-panel__content">
-              <div className="fdk-items-list">
-                {mainTree({
-                  aggregationsForest: collapseItems
-                    ? aggregationsForest.slice(0, 5)
-                    : aggregationsForest,
-                  activeFilter,
-                  referenceDataItems,
-                  handleFiltering
-                })}
-                {collapseItems &&
-                  aggregationsForest.length > 5 && (
-                    <div>
-                      <Collapse isOpen={openList}>
-                        <div>
-                          {mainTree({
-                            aggregationsForest: aggregationsForest.slice(5),
-                            activeFilter,
-                            referenceDataItems,
-                            handleFiltering
-                          })}
-                        </div>
-                      </Collapse>
-                      <button
-                        className="fdk-toggleList"
-                        onClick={this.toggleList}
-                      >
-                        <i className={openIconClass} />
-                        {openList
-                          ? localization.facet.showfewer
-                          : localization.facet.showmore}
-                      </button>
-                    </div>
-                  )}
-              </div>
-            </div>
-          </Collapse>
+    return (
+      <div className="fdk-filter-tree">
+        <div className="fdk-panel__header">
+          <button
+            className="fdk-publisher-toggle p-0 d-flex justify-content-between align-items-center w-100"
+            onClick={handleToggleOpenFilter}
+          >
+            <span>{title}</span>
+            <i className={collapseIconClass} />
+          </button>
         </div>
-      );
-    }
-    return null;
+        <Collapse isOpen={openFilter}>
+          <div className="fdk-panel__content">
+            <div className="fdk-items-list">
+              {mainTree({
+                aggregationsForest: collapseItems
+                  ? aggregationsForest.slice(0, 5)
+                  : aggregationsForest,
+                activeFilter,
+                referenceDataItems,
+                handleFiltering
+              })}
+              {collapseItems &&
+                aggregationsForest.length > 5 && (
+                  <div>
+                    <Collapse isOpen={openList}>
+                      <div>
+                        {mainTree({
+                          aggregationsForest: aggregationsForest.slice(5),
+                          activeFilter,
+                          referenceDataItems,
+                          handleFiltering
+                        })}
+                      </div>
+                    </Collapse>
+                    <button
+                      className="fdk-toggleList"
+                      onClick={handleToggleOpenList}
+                    >
+                      <i className={openIconClass} />
+                      {openList
+                        ? localization.facet.showfewer
+                        : localization.facet.showmore}
+                    </button>
+                  </div>
+                )}
+            </div>
+          </div>
+        </Collapse>
+      </div>
+    );
   }
-}
+  return null;
+};
 
 FilterTree.defaultProps = {
   title: null,

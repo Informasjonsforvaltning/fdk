@@ -56,5 +56,5 @@ test('should render FilterTree correctly with active sub filter', () => {
 
 test('should handle toggleFilter', () => {
   wrapper.find('button.fdk-publisher-toggle').simulate('click');
-  expect(wrapper.state('openFilter')).toBe(false);
+  expect(wrapper).toMatchSnapshot();
 });
