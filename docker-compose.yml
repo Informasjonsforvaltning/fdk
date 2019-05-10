@@ -50,6 +50,17 @@ services:
       - registration-api
       - reference-data
 
+### external service proxies
+  nginx-altinn-proxy:
+    image: dcatno/nginx-altinn-proxy
+    expose:
+      - "8080"
+    environment:
+      - ALTINN_HOST
+      - ALTINN_API_KEY
+      - ALTINN_SSL_BR_CRT_PEM
+      - ALTINN_SSL_BR_KEY_PEM
+
 ### nodejs modules
   search:
     image: dcatno/search:latest
