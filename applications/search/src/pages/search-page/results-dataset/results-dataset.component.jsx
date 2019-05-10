@@ -46,7 +46,7 @@ function _renderFilterModal({
               losItems
             )}
             handleFiltering={onFilterLos}
-            activeFilter={locationSearch.los}
+            activeFilter={locationSearch.losTheme}
             referenceDataItems={losItems}
           />
           <FilterBox
