@@ -56,6 +56,17 @@ services:
       - nginx-registration
       - registration-react
 
+### external service proxies
+  nginx-altinn-proxy:
+    build: ./applications/nginx-altinn-proxy
+    ports:
+      - "8126:8080"
+
+#  nginx-altinn-proxy-mock:
+#    build: ./applications/nginx-altinn-proxy-mock
+#    ports:
+#      - "8128:8080"
+
 ### nodejs modules
 
   search:
