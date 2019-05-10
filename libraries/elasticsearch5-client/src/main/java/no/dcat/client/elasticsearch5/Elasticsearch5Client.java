@@ -224,23 +224,27 @@ public class Elasticsearch5Client implements AutoCloseable {
     }
 
     public void initializeAliasAndIndexMapping(String alias) throws IOException {
+        logger.debug("Initializing elastic5 client for alias {}", alias);
 
         if (!aliasExists(alias)) {
+            logger.debug("Alias {} did not exist - creating for the first time");
             // this will be run first time to create the first index and its alias
             String newIndexName = incrementIndexName(alias);
             createIndexIfNotExists(alias, newIndexName);
             reindex(alias, newIndexName);
             deleteIndex(alias);
             swithchAlias(alias, null, newIndexName);
-
+            logger.debug("Alias {} created for the first time", alias);
             return;
         }
 
         String currentIndexName = getIndexForAlias(alias);
 
         if (indexExists(currentIndexName)) {
+            logger.debug("Alias {} exist, checking mapping", alias);
 
             if (!isMappingOK(alias, currentIndexName)) {
+                logger.debug("Alias {} mapping not ok, re-indexing ", alias);
                 // mapping is not OK therefore reindex
                 String newIndexName = incrementIndexName(currentIndexName);
 
