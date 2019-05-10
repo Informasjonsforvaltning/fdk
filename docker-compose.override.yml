@@ -136,6 +136,7 @@ services:
       - fuseki.adminServiceUri=http://fuseki:8080/fuseki/admin
       - application.crawlerThreadPoolSize=2
       - harvestRecordRetentionDays=30
+      - LOG_FORMAT=compact
 
   reference-data:
     restart: always
