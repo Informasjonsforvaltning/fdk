@@ -1,31 +1,47 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-    <include resource="org/springframework/boot/logging/logback/base.xml"/>
-    <logger name="org.springframework.web" level="WARN"/>
-    <logger name="org.apache.http.wire" level="WARN"/>
-    <logger name="org.apache.jena" level="ERROR"/>
-	<logger name="org.elasticsearch" level ="WARN"/>
-	<logger name="no.difi.dcat" level ="INFO"/>
-	<logger name="no.dcat" level = "DEBUG"/>
+    <property resource="application.yml" />
 
+    <!-- use Spring default values -->
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
 
-    <timestamp key="datetime" datePattern="yyyy-MM-dd HH:mm:ss"/>
+    <appender name="compact" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+            <charset>utf8</charset>
+        </encoder>
+    </appender>
 
-	<appender name="harvester-logger" class="ch.qos.logback.core.ConsoleAppender">
-		<encoder>
-			<pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{35} - %msg%n</pattern>
-		</encoder>
-	</appender>
+    <appender name="json" class="ch.qos.logback.core.ConsoleAppender">
+        <target>System.out</target>
+        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+            <providers>
+                <timestamp>
+                    <fieldName>timestamp</fieldName>
+                </timestamp>
+                <loggerName/>
+                <logLevel>
+                    <fieldName>severity</fieldName>
+                </logLevel>
+                <message/>
+                <stackHash/>
+                <stackTrace>
+                    <throwableConverter class="net.logstash.logback.stacktrace.ShortenedThrowableConverter">
+                        <maxDepthPerThrowable>30</maxDepthPerThrowable>
+                        <maxLength>2048</maxLength>
+                        <shortenedClassNameLength>20</shortenedClassNameLength>
+                        <rootCauseFirst>true</rootCauseFirst>
+                    </throwableConverter>
+                </stackTrace>
+            </providers>
+        </encoder>
+    </appender>
 
-	<!--
-	<appender name="harvestresult-file-logger" class="ch.qos.logback.core.FileAppender">
-		<file>harvestlog-xxx.txt</file>
-		<encoder>
-			<pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{35} - %msg%n</pattern>
-		</encoder>
-	</appender>
-	-->
+    <appender name="json-async" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="json"/>
+    </appender>
 
-
+    <root level="debug">
+        <appender-ref ref="${LOG_FORMAT:-json-async}" />
+    </root>
 
 </configuration>

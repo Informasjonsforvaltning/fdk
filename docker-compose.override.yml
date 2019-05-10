@@ -109,6 +109,7 @@ services:
       - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx1024M -Dspring.profiles.active=docker
       - application.crawlerThreadPoolSize=2
       - harvestRecordRetentionDays=30
+      - LOG_FORMAT=compact
 
   reference-data:
     ports:
