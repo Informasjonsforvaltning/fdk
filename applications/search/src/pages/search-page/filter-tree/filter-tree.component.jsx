@@ -62,6 +62,7 @@ const subTree = ({
           key={`${node.key}|${i}`}
           nodeLabel={label}
           defaultCollapsed={collapsed}
+          itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
         >
           {subTree({
             aggregations: node.children,
@@ -136,7 +137,7 @@ const mainTree = ({
             key={`${node.key}|${i}`}
             nodeLabel={label}
             defaultCollapsed={collapsed}
-            itemClassName="tree-view_main"
+            itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
           >
             {subTree({
               aggregations: node.children,
@@ -203,20 +204,24 @@ export class FilterTree extends React.Component {
 
     const aggregationsForest = keyPrefixForest(aggregations);
 
-    const collapseIconClass = cx('fa', 'mr-2', {
+    const collapseIconClass = cx('fa', {
       'fa-angle-down': !this.state.openFilter,
       'fa-angle-up': this.state.openFilter
     });
     if (Array.isArray(aggregations) && aggregations.length > 0) {
+      const openIconClass = cx('fa', 'mr-2', {
+        'fa-angle-double-down': !openList,
+        'fa-angle-double-up': openList
+      });
       return (
         <div className="fdk-filter-tree">
           <div className="fdk-panel__header">
             <button
-              className="fdk-publisher-toggle p-0"
+              className="fdk-publisher-toggle p-0 d-flex justify-content-between align-items-center w-100"
               onClick={this.toggleFilter}
             >
-              <i className={collapseIconClass} />
               <span>{title}</span>
+              <i className={collapseIconClass} />
             </button>
           </div>
           <Collapse isOpen={openFilter}>
@@ -247,6 +252,7 @@ export class FilterTree extends React.Component {
                         className="fdk-toggleList"
                         onClick={this.toggleList}
                       >
+                        <i className={openIconClass} />
                         {openList
                           ? localization.facet.showfewer
                           : localization.facet.showmore}
