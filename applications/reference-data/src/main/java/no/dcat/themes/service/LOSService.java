@@ -341,34 +341,38 @@ public class LOSService {
                 keyWords.add(nameInLanguage);
             }
 
-            //if emneord : add the synonyms, else add children (and childrens children)
             if (!node.isTema) {
+                //This is an Emneord
                 keyWords.addAll(node.getSynonyms());
-
                 //get the grandparents
                 for (URI parentURI : node.getParents()) {
                     LosNode parentNode = getByURI(parentURI);
+                    for (String langCode : parentNode.getName().keySet()) {
+                        keyWords.add(parentNode.getName().get(langCode));//Add the parent
+                    }
                     for (URI grandparentURI : parentNode.getParents()) {
                         LosNode grandParentNode = getByURI(grandparentURI);
                         for (String langCode : grandParentNode.getName().keySet()) {
-                            keyWords.add(grandParentNode.getName().get(langCode));
+                            keyWords.add(grandParentNode.getName().get(langCode)); //Add the parent's parent
                         }
                     }
                 }
-
             } else {
+                //This is either a toplevel Tema or a subTema
                 List<LosNode> children = new ArrayList<>();
-
-                //Add the immediate parent(s)
-                for (URI parentURI : node.getParents()) {
-                    LosNode parentNode = getByURI(parentURI);
-                    for (String langCode : parentNode.getName().keySet()) {
-                        keyWords.add(parentNode.getName().get(langCode));
+                //Add the immediate parent(s) - if any!
+                if (node.getParents() != null && !node.getParents().isEmpty()) {
+                    for (URI parentURI : node.getParents()) {
+                        LosNode parentNode = getByURI(parentURI);
+                        for (String langCode : parentNode.getName().keySet()) {
+                            keyWords.add(parentNode.getName().get(langCode));
+                        }
                     }
                 }
                 for (URI child : node.getChildren()) {
                     children.add(getByURI(child));
                 }
+
                 boolean hasGrandChildren = node.parents == null;//Only toplevel Tema has grandchildren
                 if (hasGrandChildren) {
                     List<LosNode> childrensChildren = new ArrayList<>();
@@ -380,11 +384,11 @@ public class LOSService {
                         }
                     }
                     children.addAll(childrensChildren);
-                    for (LosNode child : childrensChildren) {
-                        //Add all the names in all the languages
-                        for (String langCode : child.getName().keySet()) {
-                            keyWords.add(child.getName().get(langCode));
-                        }
+                }
+                for (LosNode child : children) {
+                    //Add all the names in all the languages
+                    for (String langCode : child.getName().keySet()) {
+                        keyWords.add(child.getName().get(langCode));
                     }
                 }
             }
