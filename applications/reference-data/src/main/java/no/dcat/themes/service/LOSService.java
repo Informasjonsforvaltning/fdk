@@ -344,8 +344,28 @@ public class LOSService {
             //if emneord : add the synonyms, else add children (and childrens children)
             if (!node.isTema) {
                 keyWords.addAll(node.getSynonyms());
+
+                //get the grandparents
+                for (URI parentURI : node.getParents()) {
+                    LosNode parentNode = getByURI(parentURI);
+                    for (URI grandparentURI : parentNode.getParents()) {
+                        LosNode grandParentNode = getByURI(grandparentURI);
+                        for (String langCode : grandParentNode.getName().keySet()) {
+                            keyWords.add(grandParentNode.getName().get(langCode));
+                        }
+                    }
+                }
+
             } else {
                 List<LosNode> children = new ArrayList<>();
+
+                //Add the immediate parent(s)
+                for (URI parentURI : node.getParents()) {
+                    LosNode parentNode = getByURI(parentURI);
+                    for (String langCode : parentNode.getName().keySet()) {
+                        keyWords.add(parentNode.getName().get(langCode));
+                    }
+                }
                 for (URI child : node.getChildren()) {
                     children.add(getByURI(child));
                 }
