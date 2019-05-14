@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.4.1](https://github.com/Informasjonsforvaltning/fdk/compare/v1.4.0...v1.4.1) (2019-05-14)
+
+
+### Bug Fixes
+
+* **e2e:** Fixed build script ([6d4add0](https://github.com/Informasjonsforvaltning/fdk/commit/6d4add0))
+* **e2e:** Fixed npm run script for Windows. ([a5efe07](https://github.com/Informasjonsforvaltning/fdk/commit/a5efe07))
+* **search:** [#1730](https://github.com/Informasjonsforvaltning/fdk/issues/1730) update tab counts when searching ([110add2](https://github.com/Informasjonsforvaltning/fdk/commit/110add2))
+* **search:** [#1747](https://github.com/Informasjonsforvaltning/fdk/issues/1747) do not scroll to top when filtering ([cef8e0e](https://github.com/Informasjonsforvaltning/fdk/commit/cef8e0e))
+* **search:** Changed from Virksomhet to Eier. ([8da1f9d](https://github.com/Informasjonsforvaltning/fdk/commit/8da1f9d))
+* **search-api:** Fix for issue 1754: Filters for LOS themes should be AND, not OR. ([9cd66c3](https://github.com/Informasjonsforvaltning/fdk/commit/9cd66c3))
+
+
+
+# Change Log
+
+All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
 # [1.4.0](https://github.com/Informasjonsforvaltning/fdk/compare/v1.3.0...v1.4.0) (2019-04-29)
 
 
