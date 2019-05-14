@@ -37,9 +37,9 @@ services:
 #      - ./applications/sso/deployments:/opt/jboss/keycloak/standalone/deployments
     environment:
       - KEYCLOAK_LOGLEVEL=DEBUG
-    command: -b 0.0.0.0 -Dkeycloak.migration.action=import -Dkeycloak.migration.provider=dir -Dkeycloak.migration.dir=/tmp/keycloak/import -Dkeycloak.migration.strategy=OVERWRITE_EXISTING
+    command: -b 0.0.0.0 -Dkeycloak.migration.action=import -Dkeycloak.migration.provider=dir -Dkeycloak.migration.dir=/tmp/keycloak/import -Dkeycloak.migration.strategy=OVERWRITE_EXISTING -Djboss.socket.binding.port-offset=4
     ports:
-      - "8084:8080"
+      - "8084:8084"
 
 ### ingress modules
   nginx-search:

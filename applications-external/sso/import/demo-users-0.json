@@ -8,7 +8,7 @@
     "totp" : false,
     "emailVerified" : false,
     "attributes" : {
-      "pid" : [ "123" ]
+      "pid" : [ "01066800187" ]
     },
     "credentials" : [ {
       "type" : "password",
