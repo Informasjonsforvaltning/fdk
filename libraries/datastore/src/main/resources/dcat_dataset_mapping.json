@@ -147,7 +147,9 @@
       "losTheme": {
         "properties": {
           "losPaths" : {
-            "type": "keyword"
+            "type": "text",
+            "fielddata": true,
+            "analyzer": "path-analyzer"
           }
         }
       },
