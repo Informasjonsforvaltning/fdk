@@ -96,7 +96,7 @@
     "nohits": "Søket ga dessverre ingen treff"
   },
   "facet": {
-    "organisation": "Virksomhet",
+    "organisation": "Eier",
     "theme": "Tema",
     "accessRight": "Tilgang",
     "concept": "Anbefalt term",

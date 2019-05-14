@@ -194,7 +194,7 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
                 collapseItems={false}
                 handleFiltering={[Function]}
                 referenceDataItems={null}
-                title="Organization"
+                title="Owner"
               />
               <FilterBox
                 activeFilter={null}
@@ -336,7 +336,7 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
           collapseItems={false}
           handleFiltering={[Function]}
           referenceDataItems={null}
-          title="Organization"
+          title="Owner"
         />
         <FilterBox
           activeFilter={null}
