@@ -96,7 +96,7 @@
     "nohits": "Sorry, no hits"
   },
   "facet": {
-    "organisation": "Organization",
+    "organisation": "Owner",
     "theme": "Theme",
     "accessRight": "Access",
     "concept": "Preferred term",
