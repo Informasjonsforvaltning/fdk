@@ -202,6 +202,11 @@ services:
     environment:
       - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
 
+  user-api:
+    ports:
+      - "8124:8080"
+    depends_on:
+      - nginx-altinn-proxy-mock
 
 ### test and mock modules
   registration-auth:
