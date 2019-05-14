@@ -150,6 +150,11 @@ services:
     depends_on:
       - elasticsearch5
 
+  user-api:
+    image: dcatno/user-api:latest
+    expose:
+      - "8080"
+
 ### test and mock modules
   registration-auth:
     image: dcatno/registration-auth:latest
