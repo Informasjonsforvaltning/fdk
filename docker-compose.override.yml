@@ -32,6 +32,10 @@ services:
     volumes:
       - ./applications-external/sso/import:/tmp/keycloak/import
       - ./applications-external/sso/export:/tmp/keycloak/export
+      # until better method is found, use this for deploy:
+      # cp libraries/keycloak-user-storage-rest/target/keycloak-user-storage-rest.jar applications-external/sso/deployments/
+      - ./applications-external/sso/deployments:/opt/jboss/keycloak/standalone/deployments
+
     environment:
       - KEYCLOAK_LOGLEVEL=DEBUG
     command: -b 0.0.0.0 -Dkeycloak.migration.action=import -Dkeycloak.migration.provider=dir -Dkeycloak.migration.dir=/tmp/keycloak/import -Dkeycloak.migration.strategy=OVERWRITE_EXISTING
