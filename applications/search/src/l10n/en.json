@@ -115,6 +115,7 @@
     },
     "provenance": "Provenance",
     "provider": "Provider",
+    "responsible": "Responsible",
     "format": "Format"
   },
   "result": {
@@ -346,6 +347,7 @@
       "structure": "Structure",
       "json": "JSON Schema"
     },
+    "responsible": "Responsible:",
     "relatedAPIHeader": "Belongs to API"
   }
 }

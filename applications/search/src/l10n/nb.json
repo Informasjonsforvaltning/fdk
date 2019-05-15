@@ -115,6 +115,7 @@
     },
     "provenance": "Opphav",
     "provider": "Tilbyder",
+    "responsible": "Ansvarlig",
     "format": "Format"
   },
   "result": {
@@ -346,6 +347,7 @@
       "structure": "Struktur",
       "json": "JSON Schema"
     },
+    "responsible": "Ansvarlig:",
     "relatedAPIHeader": "Tilhører API"
   }
 }
