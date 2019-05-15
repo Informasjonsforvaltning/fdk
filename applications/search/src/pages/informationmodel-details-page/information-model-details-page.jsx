@@ -64,7 +64,7 @@ const renderRelatedApi = (referencedApis, publisherItems) => {
         <SearchHitHeader
           title={item.title}
           titleLink={`/apis/${encodeURIComponent(item.id)}`}
-          publisherLabel={localization.api.provider}
+          publisherLabel={localization.provider+":"}
           publisher={item.publisher}
           publisherItems={publisherItems}
           tag="h4"
@@ -127,7 +127,7 @@ export const InformationModelDetailsPage = props => {
 
             <SearchHitHeader
               title={getTranslateText(informationModelItem.title)}
-              publisherLabel={localization.api.provider}
+              publisherLabel={localization.provider+":"}
               publisher={informationModelItem.publisher}
               publisherItems={publisherItems}
               nationalComponent={informationModelItem.nationalComponent}

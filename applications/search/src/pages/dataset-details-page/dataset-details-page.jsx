@@ -308,7 +308,7 @@ const renderAPIDistribution = (
           <SearchHitHeader
             title={referencedApi.title}
             titleLink={`/apis/${encodeURIComponent(referencedApi.id)}`}
-            publisherLabel={localization.api.provider}
+            publisherLabel={localization.provider+":"}
             publisher={referencedApi.publisher}
             publisherItems={publisherItems}
             tag="h4"

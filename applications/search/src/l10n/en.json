@@ -29,6 +29,7 @@
   "name": "Name",
   "newsFromDatakatalogenOnTwitter": "News from Datakatalogen on Twitter",
   "type": "Type",
+  "provider": "Provider",
   "statusRemoved": "This version of API is removed.",
   "statusDeprecated": "This version of API has expired and will be phased out {0} {1}. ",
   "statusReplacedUrl": "Ny versjon er dokumentert her.",
@@ -114,7 +115,6 @@
       "ANNET": "Other"
     },
     "provenance": "Provenance",
-    "provider": "Provider",
     "format": "Format"
   },
   "result": {
@@ -326,7 +326,6 @@
       "performance": "Performance",
       "availability": "Availability"
     },
-    "provider": "Provider:",
     "linkDatasetReference": "Link to dataset reference"
   },
   "concept": {
