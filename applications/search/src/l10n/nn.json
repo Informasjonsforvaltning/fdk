@@ -29,6 +29,7 @@
   "responsible": "Ansvarleg",
   "name": "Namn",
   "type": "Type",
+  "provider": "Tilbydar",
   "statusRemoved": "Denne versjonen av API-et er avvikla.",
   "statusDeprecated": "Denne versjonen av API-et er forelda og vil fases ut {0} {1}. ",
   "statusReplacedUrl": "Ny versjon er dokumentert her.",
@@ -114,7 +115,6 @@
       "ANNET": "Anna"
     },
     "provenance": "Opphav",
-    "provider": "Tilbydar",
     "format": "Format"
   },
   "result": {
@@ -326,7 +326,6 @@
       "performance": "Kapasitet og Ytelse",
       "availability": "Pålitelegheit"
     },
-    "provider": "Tilbydar: ",
     "linkDatasetReference": "Lenke til datasettreferanse"
   },
   "concept": {

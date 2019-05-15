@@ -30,7 +30,7 @@ const renderHeaderLink = (item, publisher, publishers, referenceData) => {
         tag="h2"
         title={getTranslateText(title)}
         titleLink={link}
-        publisherLabel={localization.api.provider}
+        publisherLabel={localization.provider+":"}
         publisher={publisher}
         publisherItems={publishers}
         nationalComponent={item.nationalComponent}
