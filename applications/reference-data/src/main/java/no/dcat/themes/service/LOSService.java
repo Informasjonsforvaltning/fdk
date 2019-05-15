@@ -329,6 +329,7 @@ public class LOSService {
         return false;
     }
 
+    //Precondition: Theme is an actual Los Theme
     private static List<String> expandSingleTheme(String theme)  {
         List<String> keyWords = new ArrayList<>();
 
@@ -358,37 +359,13 @@ public class LOSService {
                     }
                 }
             } else {
-                //This is either a toplevel Tema or a subTema
-                List<LosNode> children = new ArrayList<>();
-                //Add the immediate parent(s) - if any!
+                //This is either a toplevel Tema or a subTema - so we should add the tema itself and its parents, if any
                 if (node.getParents() != null && !node.getParents().isEmpty()) {
                     for (URI parentURI : node.getParents()) {
                         LosNode parentNode = getByURI(parentURI);
                         for (String langCode : parentNode.getName().keySet()) {
                             keyWords.add(parentNode.getName().get(langCode));
                         }
-                    }
-                }
-                for (URI child : node.getChildren()) {
-                    children.add(getByURI(child));
-                }
-
-                boolean hasGrandChildren = node.parents == null;//Only toplevel Tema has grandchildren
-                if (hasGrandChildren) {
-                    List<LosNode> childrensChildren = new ArrayList<>();
-                    for (LosNode child : children) {
-                        List<URI> grandChildren = child.getChildren();
-                        for (URI grandChild : grandChildren) {
-                            LosNode grandChildNode = getByURI(grandChild);
-                            childrensChildren.add(grandChildNode);
-                        }
-                    }
-                    children.addAll(childrensChildren);
-                }
-                for (LosNode child : children) {
-                    //Add all the names in all the languages
-                    for (String langCode : child.getName().keySet()) {
-                        keyWords.add(child.getName().get(langCode));
                     }
                 }
             }
