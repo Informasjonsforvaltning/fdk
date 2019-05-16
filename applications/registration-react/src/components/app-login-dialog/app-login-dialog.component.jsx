@@ -7,8 +7,7 @@ import { resetUser } from '../../actions/index';
 import localization from '../../lib/localization';
 import './app-login-dialog.scss';
 
-// const LoginDialog = props => {
-export class LoginDialog extends React.Component {
+export class LoginDialogPure extends React.Component {
   componentWillMount() {
     if (this.props.loggedOut) {
       axios
@@ -77,11 +76,11 @@ export class LoginDialog extends React.Component {
   }
 }
 
-LoginDialog.defaultProps = {
+LoginDialogPure.defaultProps = {
   loggedOut: false
 };
 
-LoginDialog.propTypes = {
+LoginDialogPure.propTypes = {
   dispatch: PropTypes.func.isRequired,
   loggedOut: PropTypes.bool
 };
@@ -97,4 +96,4 @@ function mapStateToProps({ user }) {
   };
 }
 
-export default connect(mapStateToProps)(LoginDialog);
+export const LoginDialog = connect(mapStateToProps)(LoginDialogPure);
