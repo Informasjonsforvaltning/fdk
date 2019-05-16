@@ -47,6 +47,7 @@ exports[`should handle toggleFilter 1`] = `
           key="panel0"
         >
           <TreeView
+            className="/STAT"
             defaultCollapsed={true}
             itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
             key="/STAT|0"
@@ -63,6 +64,7 @@ exports[`should handle toggleFilter 1`] = `
                 value="/STAT"
               />
             }
+            onClick={[Function]}
           >
             <TreeView
               defaultCollapsed={true}
@@ -975,6 +977,7 @@ exports[`should handle toggleFilter 1`] = `
           key="panel1"
         >
           <TreeView
+            className="/KOMMUNE"
             defaultCollapsed={true}
             itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
             key="/KOMMUNE|1"
@@ -991,6 +994,7 @@ exports[`should handle toggleFilter 1`] = `
                 value="/KOMMUNE"
               />
             }
+            onClick={[Function]}
           >
             <FilterOption
               active={false}
@@ -1287,6 +1291,7 @@ exports[`should handle toggleFilter 1`] = `
           key="panel2"
         >
           <TreeView
+            className="/PRIVAT"
             defaultCollapsed={true}
             itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
             key="/PRIVAT|2"
@@ -1303,6 +1308,7 @@ exports[`should handle toggleFilter 1`] = `
                 value="/PRIVAT"
               />
             }
+            onClick={[Function]}
           >
             <FilterOption
               active={false}
@@ -1431,6 +1437,7 @@ exports[`should handle toggleFilter 1`] = `
           key="panel3"
         >
           <TreeView
+            className="/ANNET"
             defaultCollapsed={true}
             itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
             key="/ANNET|3"
@@ -1447,6 +1454,7 @@ exports[`should handle toggleFilter 1`] = `
                 value="/ANNET"
               />
             }
+            onClick={[Function]}
           >
             <FilterOption
               active={false}
@@ -1539,6 +1547,7 @@ exports[`should handle toggleFilter 1`] = `
           key="panel4"
         >
           <TreeView
+            className="/FYLKE"
             defaultCollapsed={true}
             itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
             key="/FYLKE|4"
@@ -1555,6 +1564,7 @@ exports[`should handle toggleFilter 1`] = `
                 value="/FYLKE"
               />
             }
+            onClick={[Function]}
           >
             <TreeView
               defaultCollapsed={true}
@@ -1666,6 +1676,7 @@ exports[`should render FilterTree correctly with active filter 1`] = `
           key="panel0"
         >
           <TreeView
+            className="/STAT"
             defaultCollapsed={true}
             itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
             key="/STAT|0"
@@ -1682,6 +1693,7 @@ exports[`should render FilterTree correctly with active filter 1`] = `
                 value="/STAT"
               />
             }
+            onClick={[Function]}
           >
             <TreeView
               defaultCollapsed={true}
@@ -2594,6 +2606,7 @@ exports[`should render FilterTree correctly with active filter 1`] = `
           key="panel1"
         >
           <TreeView
+            className="/KOMMUNE"
             defaultCollapsed={true}
             itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
             key="/KOMMUNE|1"
@@ -2610,6 +2623,7 @@ exports[`should render FilterTree correctly with active filter 1`] = `
                 value="/KOMMUNE"
               />
             }
+            onClick={[Function]}
           >
             <FilterOption
               active={false}
@@ -2906,6 +2920,7 @@ exports[`should render FilterTree correctly with active filter 1`] = `
           key="panel2"
         >
           <TreeView
+            className="/PRIVAT"
             defaultCollapsed={true}
             itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
             key="/PRIVAT|2"
@@ -2922,6 +2937,7 @@ exports[`should render FilterTree correctly with active filter 1`] = `
                 value="/PRIVAT"
               />
             }
+            onClick={[Function]}
           >
             <FilterOption
               active={false}
@@ -3050,6 +3066,7 @@ exports[`should render FilterTree correctly with active filter 1`] = `
           key="panel3"
         >
           <TreeView
+            className="/ANNET"
             defaultCollapsed={true}
             itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
             key="/ANNET|3"
@@ -3066,6 +3083,7 @@ exports[`should render FilterTree correctly with active filter 1`] = `
                 value="/ANNET"
               />
             }
+            onClick={[Function]}
           >
             <FilterOption
               active={false}
@@ -3158,6 +3176,7 @@ exports[`should render FilterTree correctly with active filter 1`] = `
           key="panel4"
         >
           <TreeView
+            className="/FYLKE"
             defaultCollapsed={true}
             itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
             key="/FYLKE|4"
@@ -3174,6 +3193,7 @@ exports[`should render FilterTree correctly with active filter 1`] = `
                 value="/FYLKE"
               />
             }
+            onClick={[Function]}
           >
             <TreeView
               defaultCollapsed={true}
@@ -3285,6 +3305,7 @@ exports[`should render FilterTree correctly with active sub filter 1`] = `
           key="panel0"
         >
           <TreeView
+            className="/STAT"
             defaultCollapsed={true}
             itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
             key="/STAT|0"
@@ -3301,6 +3322,7 @@ exports[`should render FilterTree correctly with active sub filter 1`] = `
                 value="/STAT"
               />
             }
+            onClick={[Function]}
           >
             <TreeView
               defaultCollapsed={true}
@@ -4213,6 +4235,7 @@ exports[`should render FilterTree correctly with active sub filter 1`] = `
           key="panel1"
         >
           <TreeView
+            className="/KOMMUNE"
             defaultCollapsed={false}
             itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
             key="/KOMMUNE|1"
@@ -4229,6 +4252,7 @@ exports[`should render FilterTree correctly with active sub filter 1`] = `
                 value="/KOMMUNE"
               />
             }
+            onClick={[Function]}
           >
             <FilterOption
               active={false}
@@ -4525,6 +4549,7 @@ exports[`should render FilterTree correctly with active sub filter 1`] = `
           key="panel2"
         >
           <TreeView
+            className="/PRIVAT"
             defaultCollapsed={true}
             itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
             key="/PRIVAT|2"
@@ -4541,6 +4566,7 @@ exports[`should render FilterTree correctly with active sub filter 1`] = `
                 value="/PRIVAT"
               />
             }
+            onClick={[Function]}
           >
             <FilterOption
               active={false}
@@ -4669,6 +4695,7 @@ exports[`should render FilterTree correctly with active sub filter 1`] = `
           key="panel3"
         >
           <TreeView
+            className="/ANNET"
             defaultCollapsed={true}
             itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
             key="/ANNET|3"
@@ -4685,6 +4712,7 @@ exports[`should render FilterTree correctly with active sub filter 1`] = `
                 value="/ANNET"
               />
             }
+            onClick={[Function]}
           >
             <FilterOption
               active={false}
@@ -4777,6 +4805,7 @@ exports[`should render FilterTree correctly with active sub filter 1`] = `
           key="panel4"
         >
           <TreeView
+            className="/FYLKE"
             defaultCollapsed={true}
             itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
             key="/FYLKE|4"
@@ -4793,6 +4822,7 @@ exports[`should render FilterTree correctly with active sub filter 1`] = `
                 value="/FYLKE"
               />
             }
+            onClick={[Function]}
           >
             <TreeView
               defaultCollapsed={true}
@@ -4906,6 +4936,7 @@ exports[`should render FilterTree correctly with props 1`] = `
           key="panel0"
         >
           <TreeView
+            className="/STAT"
             defaultCollapsed={true}
             itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
             key="/STAT|0"
@@ -4922,6 +4953,7 @@ exports[`should render FilterTree correctly with props 1`] = `
                 value="/STAT"
               />
             }
+            onClick={[Function]}
           >
             <TreeView
               defaultCollapsed={true}
@@ -5834,6 +5866,7 @@ exports[`should render FilterTree correctly with props 1`] = `
           key="panel1"
         >
           <TreeView
+            className="/KOMMUNE"
             defaultCollapsed={true}
             itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
             key="/KOMMUNE|1"
@@ -5850,6 +5883,7 @@ exports[`should render FilterTree correctly with props 1`] = `
                 value="/KOMMUNE"
               />
             }
+            onClick={[Function]}
           >
             <FilterOption
               active={false}
@@ -6146,6 +6180,7 @@ exports[`should render FilterTree correctly with props 1`] = `
           key="panel2"
         >
           <TreeView
+            className="/PRIVAT"
             defaultCollapsed={true}
             itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
             key="/PRIVAT|2"
@@ -6162,6 +6197,7 @@ exports[`should render FilterTree correctly with props 1`] = `
                 value="/PRIVAT"
               />
             }
+            onClick={[Function]}
           >
             <FilterOption
               active={false}
@@ -6290,6 +6326,7 @@ exports[`should render FilterTree correctly with props 1`] = `
           key="panel3"
         >
           <TreeView
+            className="/ANNET"
             defaultCollapsed={true}
             itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
             key="/ANNET|3"
@@ -6306,6 +6343,7 @@ exports[`should render FilterTree correctly with props 1`] = `
                 value="/ANNET"
               />
             }
+            onClick={[Function]}
           >
             <FilterOption
               active={false}
@@ -6398,6 +6436,7 @@ exports[`should render FilterTree correctly with props 1`] = `
           key="panel4"
         >
           <TreeView
+            className="/FYLKE"
             defaultCollapsed={true}
             itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
             key="/FYLKE|4"
@@ -6414,6 +6453,7 @@ exports[`should render FilterTree correctly with props 1`] = `
                 value="/FYLKE"
               />
             }
+            onClick={[Function]}
           >
             <TreeView
               defaultCollapsed={true}
