@@ -10,7 +10,7 @@ import '../../assets/style/react-tags-override.scss';
 import './styles';
 import './app-header.scss';
 
-export class Header extends React.Component {
+export class HeaderPure extends React.Component {
   constructor(props) {
     super(props);
     this.toggle = this.toggle.bind(this);
@@ -110,11 +110,11 @@ export class Header extends React.Component {
   }
 }
 
-Header.defaultProps = {
+HeaderPure.defaultProps = {
   userItem: null
 };
 
-Header.propTypes = {
+HeaderPure.propTypes = {
   dispatch: PropTypes.func.isRequired,
   userItem: PropTypes.object,
   location: PropTypes.object.isRequired
@@ -131,4 +131,4 @@ function mapStateToProps(props) {
   };
 }
 
-export default withRouter(connect(mapStateToProps)(Header));
+export const Header = withRouter(connect(mapStateToProps)(HeaderPure));

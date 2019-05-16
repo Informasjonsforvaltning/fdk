@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { Header } from './app-header.component';
+import { HeaderPure } from './app-header.component';
 
 let defaultProps;
 let wrapper;
@@ -11,7 +11,7 @@ beforeEach(() => {
   defaultProps = {
     dispatch
   };
-  wrapper = shallow(<Header {...defaultProps} />);
+  wrapper = shallow(<HeaderPure {...defaultProps} />);
 });
 
 test('should render Header correctly', () => {

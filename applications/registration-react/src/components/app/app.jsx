@@ -10,7 +10,7 @@ import { ConnectedDatasetsListPage } from '../../pages/dataset-list-page/connect
 import { ConnectedAPIListPage } from '../../pages/api-list-page/connected-api-list-page';
 import { ConnectedAPIRegistrationPage } from '../../pages/api-registration-page/connected-api-registration-page';
 import { ConnectedDatasetRegistrationPage } from '../../pages/dataset-registration-page/connected-dataset-registration-page';
-import Header from '../../components/app-header/app-header.component';
+import { Header } from '../../components/app-header/app-header.component';
 import { Breadcrumbs } from '../../components/breadcrumbs/breadcrumbs.component';
 import Footer from '../../components/app-footer/app-footer.component';
 import { LoginDialog } from '../../components/app-login-dialog/app-login-dialog.component';
