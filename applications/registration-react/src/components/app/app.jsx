@@ -4,7 +4,7 @@ import _ from 'lodash';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import localization from '../../lib/localization';
-import ProtectedRoute from '../../app-protected-route/app-protected-route.component';
+import { ProtectedRoute } from '../../app-protected-route/app-protected-route.component';
 import { ConnectedCatalogsPage } from '../../pages/catalogs-page/connected-catalogs-page';
 import { ConnectedDatasetsListPage } from '../../pages/dataset-list-page/connected-dataset-list-page';
 import { ConnectedAPIListPage } from '../../pages/api-list-page/connected-api-list-page';

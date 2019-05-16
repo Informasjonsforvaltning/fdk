@@ -2,8 +2,9 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { createMockStore } from 'redux-test-utils';
 import shallowWithStore from '../../test/shallowWithStore';
-import ProtectedRouteComponent, {
-  ProtectedRoute
+import {
+  ProtectedRoute,
+  ProtectedRoutePure
 } from './app-protected-route.component';
 import user from '../../test/fixtures/user';
 
@@ -18,10 +19,10 @@ beforeEach(() => {
     userItem: user.userItem,
     isFetchingUser: false
   };
-  wrapper = shallow(<ProtectedRoute {...defaultProps} />);
+  wrapper = shallow(<ProtectedRoutePure {...defaultProps} />);
 });
 
-test('should render ProtectedRoute correctly', () => {
+test('should render ProtectedRoutePure correctly', () => {
   expect(wrapper).toHaveLength(1);
 });
 
@@ -30,6 +31,6 @@ test('should render FormAccessRightsSchema correctly', () => {
     user
   };
   const store = createMockStore(testState);
-  wrapper = shallowWithStore(<ProtectedRouteComponent />, store);
+  wrapper = shallowWithStore(<ProtectedRoute />, store);
   expect(wrapper).toHaveLength(1);
 });

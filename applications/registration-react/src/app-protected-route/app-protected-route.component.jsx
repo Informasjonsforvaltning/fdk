@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Redirect } from 'react-router-dom';
+import { Redirect, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import IdleTimer from 'react-idle-timer';
@@ -8,7 +8,7 @@ import localization from '../lib/localization';
 import { fetchUserIfNeeded } from '../actions/index';
 import TimeoutModal from './timeout-modal/timeout-modal.component';
 
-export class ProtectedRoute extends React.Component {
+export class ProtectedRoutePure extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -80,13 +80,13 @@ export class ProtectedRoute extends React.Component {
   }
 }
 
-ProtectedRoute.defaultProps = {
+ProtectedRoutePure.defaultProps = {
   userItem: null,
   isFetchingUser: false,
   component: null
 };
 
-ProtectedRoute.propTypes = {
+ProtectedRoutePure.propTypes = {
   dispatch: PropTypes.func.isRequired,
   userItem: PropTypes.object,
   isFetchingUser: PropTypes.bool,
@@ -104,4 +104,4 @@ function mapStateToProps({ user }) {
   };
 }
 
-export default connect(mapStateToProps)(ProtectedRoute);
+export const ProtectedRoute = connect(mapStateToProps)(ProtectedRoutePure);
