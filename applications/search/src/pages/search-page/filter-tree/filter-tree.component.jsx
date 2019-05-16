@@ -11,7 +11,7 @@ import { getTranslateText } from '../../../lib/translateText';
 import './filter-tree.scss';
 import { keyPrefixForest } from '../../../lib/key-prefix-forest';
 
-const isItemCollapsed = (itemOrgPath, chosenOrgPath) => {
+const isItemCollapsed = (itemOrgPath, chosenOrgPath, openArrows) => {
   if (chosenOrgPath && chosenOrgPath !== undefined) {
     const parentOrgPath = chosenOrgPath.substr(
       0,
@@ -20,6 +20,9 @@ const isItemCollapsed = (itemOrgPath, chosenOrgPath) => {
     if (parentOrgPath.indexOf(itemOrgPath) !== -1) {
       return false;
     }
+  }
+  if (_.includes(openArrows, itemOrgPath)) {
+    return false;
   }
   return true;
 };
@@ -36,7 +39,9 @@ const subTree = ({
   aggregations,
   activeFilter,
   referenceDataItems,
-  handleFiltering
+  handleFiltering,
+  onClickArrow,
+  openArrows
 }) =>
   aggregations.map((node, i) => {
     const name =
@@ -55,7 +60,7 @@ const subTree = ({
         displayClass={hasSomeChildren(node) ? 'inline-block' : ''}
       />
     );
-    const collapsed = isItemCollapsed(node.key, activeFilter);
+    const collapsed = isItemCollapsed(node.key, activeFilter, openArrows);
     if (hasSomeChildren(node)) {
       return (
         <TreeView
@@ -63,6 +68,7 @@ const subTree = ({
           nodeLabel={label}
           defaultCollapsed={collapsed}
           itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
+          onClick={onClickArrow}
         >
           {subTree({
             aggregations: node.children,
@@ -91,11 +97,13 @@ const mainTree = ({
   aggregationsForest,
   activeFilter,
   referenceDataItems,
-  handleFiltering
+  handleFiltering,
+  onClickArrow,
+  openArrows
 }) =>
   Array.isArray(aggregationsForest) &&
   aggregationsForest.map((node, i) => {
-    const collapsed = isItemCollapsed(node.key, activeFilter);
+    const collapsed = isItemCollapsed(node.key, activeFilter, openArrows);
 
     let name = node.key;
     if (referenceDataItems) {
@@ -135,9 +143,11 @@ const mainTree = ({
         <div key={`panel${i}`} className="section">
           <TreeView
             key={`${node.key}|${i}`}
+            className={node.key}
             nodeLabel={label}
             defaultCollapsed={collapsed}
             itemClassName="tree-view_main d-flex flex-row-reverse align-items-start"
+            onClick={onClickArrow}
           >
             {subTree({
               aggregations: node.children,
@@ -175,6 +185,7 @@ export const FilterTree = props => {
 
   const [openFilter, setOpenFilter] = useState(true);
   const [openList, setOpenList] = useState(false);
+  const [openArrows, setOpenArrows] = useState([]);
 
   const handleToggleOpenFilter = () => {
     setOpenFilter(!openFilter);
@@ -182,6 +193,22 @@ export const FilterTree = props => {
 
   const handleToggleOpenList = () => {
     setOpenList(!openList);
+  };
+
+  const onClickArrow = e => {
+    const classNames = e.target.className.split(' ');
+    if (_.includes(classNames, 'tree-view_arrow-collapsed')) {
+      setOpenArrows([...openArrows, classNames[0]]);
+    } else {
+      // close arrow -> remove from state
+      const updatedArray = openArrows.map(item => {
+        if (item !== classNames[0]) {
+          return item;
+        }
+        return undefined;
+      });
+      setOpenArrows(_.reject(updatedArray, _.isNil));
+    }
   };
 
   const aggregationsForest = keyPrefixForest(aggregations);
@@ -215,7 +242,9 @@ export const FilterTree = props => {
                   : aggregationsForest,
                 activeFilter,
                 referenceDataItems,
-                handleFiltering
+                handleFiltering,
+                onClickArrow,
+                openArrows
               })}
               {collapseItems &&
                 aggregationsForest.length > 5 && (
