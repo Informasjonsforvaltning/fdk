@@ -13,7 +13,7 @@ import { ConnectedDatasetRegistrationPage } from '../../pages/dataset-registrati
 import Header from '../../components/app-header/app-header.component';
 import { Breadcrumbs } from '../../components/breadcrumbs/breadcrumbs.component';
 import Footer from '../../components/app-footer/app-footer.component';
-import LoginDialog from '../../components/app-login-dialog/app-login-dialog.component';
+import { LoginDialog } from '../../components/app-login-dialog/app-login-dialog.component';
 import { ConnectedApiImportPage } from '../../pages/api-import-page/connected-api-import-page';
 
 const routes = (
