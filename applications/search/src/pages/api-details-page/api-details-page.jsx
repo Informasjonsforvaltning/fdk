@@ -433,7 +433,7 @@ export const ApiDetailsPage = ({
 
             <SearchHitHeader
               title={getTranslateText(apiItem.title)}
-              publisherLabel={localization.provider+":"}
+              publisherLabel={`${localization.provider}:`}
               publisher={apiItem.publisher}
               publisherItems={publisherItems}
               nationalComponent={apiItem.nationalComponent}
