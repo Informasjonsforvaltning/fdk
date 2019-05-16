@@ -109,7 +109,7 @@ exports[`should render ResultsInformationModel correctly with hits 1`] = `
                 collapseItems={false}
                 handleFiltering={[Function]}
                 referenceDataItems={null}
-                title="Provider"
+                title="Responsible"
               />
             </div>
           </ModalBody>
@@ -132,7 +132,7 @@ exports[`should render ResultsInformationModel correctly with hits 1`] = `
           collapseItems={false}
           handleFiltering={[Function]}
           referenceDataItems={null}
-          title="Provider"
+          title="Responsible"
         />
       </div>
     </aside>

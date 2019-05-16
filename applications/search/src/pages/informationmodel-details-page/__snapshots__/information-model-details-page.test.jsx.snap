@@ -33,7 +33,7 @@ exports[`should render InformationModelDetailsPage correctly with informationMod
           nationalComponent={false}
           publisher={null}
           publisherItems={null}
-          publisherLabel="Provider:"
+          publisherLabel="Responsible:"
           publisherTag="span"
           referenceData={null}
           statusCode={null}

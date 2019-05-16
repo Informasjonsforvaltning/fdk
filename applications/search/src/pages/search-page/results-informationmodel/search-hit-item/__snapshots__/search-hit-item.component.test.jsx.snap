@@ -38,7 +38,7 @@ exports[`should render informatiomModel-SearchHitItem correctly 1`] = `
         }
       }
       publisherItems={null}
-      publisherLabel="Provider:"
+      publisherLabel="Responsible:"
       publisherTag="span"
       referenceData={null}
       statusCode={null}
