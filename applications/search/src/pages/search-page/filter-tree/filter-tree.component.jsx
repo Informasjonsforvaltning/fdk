@@ -255,7 +255,9 @@ export const FilterTree = props => {
                           aggregationsForest: aggregationsForest.slice(5),
                           activeFilter,
                           referenceDataItems,
-                          handleFiltering
+                          handleFiltering,
+                          onClickArrow,
+                          openArrows
                         })}
                       </div>
                     </Collapse>
