@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.4.2](https://github.com/Informasjonsforvaltning/fdk/compare/v1.4.1...v1.4.2) (2019-05-20)
+
+
+### Bug Fixes
+
+* **search:** [#1743](https://github.com/Informasjonsforvaltning/fdk/issues/1743) Change "Provider"-string field to "Responsible" ([c41c305](https://github.com/Informasjonsforvaltning/fdk/commit/c41c305))
+* **search:** [#1759](https://github.com/Informasjonsforvaltning/fdk/issues/1759) remember filter tree open nodes ([4fcb127](https://github.com/Informasjonsforvaltning/fdk/commit/4fcb127))
+
+
+
+# Change Log
+
+All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
 ## [1.4.1](https://github.com/Informasjonsforvaltning/fdk/compare/v1.4.0...v1.4.1) (2019-05-14)
 
 
