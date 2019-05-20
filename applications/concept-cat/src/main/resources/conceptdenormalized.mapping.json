@@ -17,6 +17,9 @@
             "fielddata": true,
             "analyzer": "norwegian"
           },
+          "uri": {
+            "enabled" : false
+          },
           "prefLabel": {
             "properties": {
               "no": {
