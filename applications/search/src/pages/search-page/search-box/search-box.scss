@@ -27,29 +27,31 @@
   }
 
   .fdk-button-filter {
-    background-color: $color1;
+    background-color: $color-blue-dark;
     color: $color0;
     height: 54px;
     margin: 0;
     border-radius: 5px 0 0 5px;
+    border-color: $color-blue-dark;
     box-shadow: 0 4px 8px rgba(45, 55, 65, 0.2);
+    border: 0px;
     &:hover, &:focus {
       color: $color0;
-      border-color: $color1;
+      border-color: $color-blue-dark;
     }
   }
 
   .fdk-button-search {
-    background-color: $color1;
+    background-color: $color-blue-dark;
     color: $color0;
     margin: 0;
     border-radius: 0 5px 5px 0;
-    border-color: $color1;
+    border-color: $color-blue-dark;
     box-shadow: 0 4px 8px rgba(45, 55, 65, 0.2);
     height: 54px;
     &:hover, &:focus {
       color: $color0;
-      border-color: $color1;
+      border-color: $color-blue-dark;
     }
   }
 }

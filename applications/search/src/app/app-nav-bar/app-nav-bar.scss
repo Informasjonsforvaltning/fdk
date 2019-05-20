@@ -1,0 +1,27 @@
+@import '../../../node_modules/designsystemet/fdk-designsystem-bootstrap4/scss/colors.scss';
+
+.fdk-header {
+  .nav {
+    a {
+      color: $color-blue-dark !important;
+    }
+  }
+}
+
+.fdk-button-lang {
+  font-size: 1.5rem !important;
+  background-color: transparent !important;
+  border-color: transparent !important;
+  text-shadow: none !important;
+  box-shadow: none !important;
+  background-image: none !important;
+  text-decoration: none !important;
+  margin-right: .5em !important;
+  color: $color-blue-dark !important;
+  font-size: 1.5rem;
+  &:focus, &:active, &:hover {
+    color: $color-blue-dark !important;
+    background-color: transparent !important;
+    border-color: transparent !important;
+  }
+}
