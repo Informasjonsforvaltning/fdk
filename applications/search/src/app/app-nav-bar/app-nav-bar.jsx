@@ -16,6 +16,7 @@ import {
   PATHNAME_ABOUT,
   PATHNAME_ABOUT_REGISTRATION
 } from '../../constants/constants';
+import './app-nav-bar.scss'
 
 export function AppNavBar(props) {
   return (
@@ -38,7 +39,7 @@ export function AppNavBar(props) {
             <Nav className="d-none d-lg-inline-flex">
               <NavItem>
                 <Link className="nav-link" to={PATHNAME_ABOUT}>
-                  {localization.about.about}
+                  {localization.menu.about}
                 </Link>
               </NavItem>
               <NavItem>
@@ -52,12 +53,13 @@ export function AppNavBar(props) {
                 </Link>
               </NavItem>
             </Nav>
-
+          </div>
+          <div>
             <UncontrolledDropdown className="d-none d-lg-inline">
-              <DropdownToggle className="fdk-button-language" caret>
+              <DropdownToggle className="fdk-button-lang" caret>
                 {localization.lang.chosenLanguage}
               </DropdownToggle>
-              <DropdownMenu right className="fdk-dropdownmenu">
+              <DropdownMenu left className="fdk-dropdownmenu">
                 <DropdownItem onClick={() => props.onChangeLanguage('nb')}>
                   {localization.lang['norwegian-nb']}
                 </DropdownItem>
@@ -81,7 +83,7 @@ export function AppNavBar(props) {
               >
                 {localization.app.menu}
               </DropdownToggle>
-              <DropdownMenu right className="fdk-dropdownmenu">
+              <DropdownMenu left className="fdk-dropdownmenu">
                 <Link className="dropdown-item" to={PATHNAME_ABOUT}>
                   {localization.about.about}
                 </Link>
