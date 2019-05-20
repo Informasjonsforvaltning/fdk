@@ -142,6 +142,7 @@ public class DatasetsSearchController {
         QueryBuilder searchQuery = new DatasetsSearchQueryBuilder()
             .lang(lang)
             .boostNationalComponents()
+            .boostTitle(params.get("q"))  //If the term the user searches for is a direct hit for the title of the dataset, that result should come first
             .addFilters(params)
             .build();
 

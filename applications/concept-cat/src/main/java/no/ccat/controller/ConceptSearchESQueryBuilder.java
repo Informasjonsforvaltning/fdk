@@ -51,4 +51,20 @@ public class ConceptSearchESQueryBuilder {
         }
         return this;
     }
+
+    ConceptSearchESQueryBuilder boostPrefLabel(String preflabel) {
+        if (preflabel == null || preflabel.isEmpty()) {
+            return this;
+        }
+        QueryBuilder nbQuery = QueryBuilders.matchPhrasePrefixQuery("prefLabel.nb", preflabel).analyzer("norwegian").maxExpansions(15);
+        QueryBuilder noQuery = QueryBuilders.matchPhrasePrefixQuery("prefLabel.no", preflabel).analyzer("norwegian").maxExpansions(15);
+        QueryBuilder nnQuery = QueryBuilders.matchPhrasePrefixQuery("prefLabel.nn", preflabel).analyzer("norwegian").maxExpansions(15);
+        QueryBuilder enQuery = QueryBuilders.matchPhrasePrefixQuery("prefLabel.en", preflabel).analyzer("english").maxExpansions(15);
+
+        composedQuery.should(nbQuery.boost(2));
+        composedQuery.should(noQuery.boost(2));
+        composedQuery.should(nnQuery.boost(2));
+        composedQuery.should(enQuery.boost(2));
+        return this;
+    }
 }

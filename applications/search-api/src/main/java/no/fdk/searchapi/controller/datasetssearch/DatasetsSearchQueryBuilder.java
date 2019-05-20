@@ -43,6 +43,22 @@ public class DatasetsSearchQueryBuilder {
         return this;
     }
 
+    DatasetsSearchQueryBuilder boostTitle(String title) {
+        if (title == null || title.isEmpty()) {
+            return this;
+        }
+        QueryBuilder nbQuery = QueryBuilders.matchPhrasePrefixQuery("title.nb", title).analyzer("norwegian").maxExpansions(15);
+        QueryBuilder noQuery = QueryBuilders.matchPhrasePrefixQuery("title.no", title).analyzer("norwegian").maxExpansions(15);
+        QueryBuilder nnQuery = QueryBuilders.matchPhrasePrefixQuery("title.nn", title).analyzer("norwegian").maxExpansions(15);
+        QueryBuilder enQuery = QueryBuilders.matchPhrasePrefixQuery("title.en", title).analyzer("english").maxExpansions(15);
+
+        composedQuery.should(nbQuery.boost(2));
+        composedQuery.should(noQuery.boost(2));
+        composedQuery.should(nnQuery.boost(2));
+        composedQuery.should(enQuery.boost(2));
+        return this;
+    }
+
     DatasetsSearchQueryBuilder addFilters(Map<String, String> params) {
         for (Map.Entry<String, String> entry : params.entrySet()) {
             String filterName = entry.getKey();

@@ -88,6 +88,7 @@ public class ConceptSearchController {
 
         QueryBuilder searchQuery = new ConceptSearchESQueryBuilder()
             .addParams(params)
+            .boostPrefLabel(params.get("q")) //If the term the user searches for is a direct hit for the preflabel/actual term of the concept, that result should come first
             .build();
 
         NativeSearchQuery finalQuery = new NativeSearchQueryBuilder()
