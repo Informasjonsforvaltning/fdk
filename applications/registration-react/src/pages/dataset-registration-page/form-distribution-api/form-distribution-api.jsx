@@ -1,104 +1,46 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Field, FieldArray } from 'redux-form';
+import { connect } from 'react-redux';
 import _ from 'lodash';
-import { Link } from 'react-router-dom';
 
-import localization from '../../../lib/localization';
-import Helptext from '../../../components/helptext/helptext.component';
-import { InputTagsAPIsField } from '../field-tagsinput-apis/field-tagsinput-apis.component';
+import { ResolvedFormDistributionAPI } from './resolved-form-distribution-api';
+import { textType, licenseType } from '../../../schemaTypes';
 
-export const renderDistributionsAPI = componentProps => {
-  const { helptextItems } = componentProps;
-  return (
-    <div className="form-group">
-      <Helptext
-        title={localization.schema.distributionAPI.helptext.api}
-        helptextItems={helptextItems.Distribution_api}
-      />
-      <Field
-        name="distribution"
-        type="text"
-        component={InputTagsAPIsField}
-        label={localization.schema.concept.conceptLabel}
-        fieldLabel="no"
-      />
-    </div>
-  );
-};
-
-const renderConnectedApisByDatasetId = (
-  connectedApisByDatasetId,
-  searchHostname
-) => {
-  if (
-    !(
-      connectedApisByDatasetId &&
-      _.get(connectedApisByDatasetId, 'hits').length > 0
-    )
-  ) {
-    return null;
+export const distributionTypes = values => {
+  let distributions = null;
+  if (values && values.length > 0) {
+    distributions = values.map(item => ({
+      id: item.id ? item.id : '',
+      description: item.description ? item.description : textType,
+      accessURL: item.accessURL ? item.accessURL : [],
+      license: item.license ? item.license : licenseType,
+      conformsTo: item.conformsTo ? item.conformsTo : [],
+      page: item.page && item.page.length > 0 ? item.page : [licenseType],
+      format: item.format ? item.format : [],
+      type: item.type ? item.type : '',
+      accessService: item.accessService ? item.accessService : null
+    }));
+  } else {
+    distributions = [];
   }
+  return distributions;
+};
 
-  const children = items =>
-    items.map(item => (
-      <div
-        key={item.id}
-        className="d-flex align-items-center border-bottom py-3"
-      >
-        <span className="w-75">
-          <Link
-            target="_blank"
-            rel="noopener noreferrer"
-            to={`https://${searchHostname}/apis/${item.id}`}
-          >
-            {item.title}
-          </Link>
-        </span>
-        <span className="w-25 breakword">
-          {_.get(item, ['publisher', 'name'])}
-        </span>
-      </div>
-    ));
-
-  return (
-    <div className="px-3 mt-5 mb-5">
-      <div className="d-flex border-bottom py-3">
-        <span className="w-75">
-          <strong>{localization.connectedAPI}</strong>
-        </span>
-        <span className="w-25">
-          <strong>Tilbyder</strong>
-        </span>
-      </div>
-      {children(_.get(connectedApisByDatasetId, 'hits'))}
-    </div>
+const mapStateToProps = (state, ownProps) => {
+  const { datasetItem } = ownProps;
+  const searchHostname = _.get(
+    state,
+    ['config', 'searchHostname'],
+    'fellesdatakatalog.brreg.no'
   );
+  return {
+    initialValues: {
+      distribution: distributionTypes(_.get(datasetItem, 'distribution'))
+    },
+    searchHostname
+  };
 };
 
-export const FormDistributionAPI = props => {
-  const { helptextItems, connectedApisByDatasetId, searchHostname } = props;
-  return (
-    <React.Fragment>
-      <form>
-        <FieldArray
-          name="distribution"
-          component={renderDistributionsAPI}
-          helptextItems={helptextItems}
-        />
-      </form>
-      {renderConnectedApisByDatasetId(connectedApisByDatasetId, searchHostname)}
-    </React.Fragment>
-  );
-};
+export const ConnectedFormDistributionApi = connect(mapStateToProps)(
+  ResolvedFormDistributionAPI
+);
 
-FormDistributionAPI.defaultProps = {
-  connectedApisByDatasetId: null,
-  searchHostname: null
-};
-
-FormDistributionAPI.propTypes = {
-  helptextItems: PropTypes.object.isRequired,
-  connectedApisByDatasetId: PropTypes.object,
-  searchHostname: PropTypes.string
-};
+export const FormDistributionApi = ConnectedFormDistributionApi;
