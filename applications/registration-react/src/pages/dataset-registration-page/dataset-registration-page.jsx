@@ -21,7 +21,7 @@ import { ConnectedFormContactPoint } from './form-contactPoint/connected-form-co
 import { ConnectedFormContents } from './form-contents/connected-form-contents.component';
 import { StatusBarWithState } from '../../components/status-bar/status-bar.component';
 import { ConnectedFormPublish } from './connected-form-publish/connected-form-publish';
-import { ConnectedFormDistributionAPI } from './form-distribution-api/connected-form-distribution-api';
+import { FormDistributionApi } from './form-distribution-api/form-distribution-api';
 import { ConnectedFormLOS } from './form-los/connected-form-los.component';
 import {
   titleValues,
@@ -356,7 +356,7 @@ export class RegDataset extends React.Component {
                   title={localization.datasets.formTemplates.distributionAPI}
                   values={distributionAPIValues(distribution.values)}
                 >
-                  <ConnectedFormDistributionAPI
+                  <FormDistributionApi
                     datasetItem={datasetItem}
                     helptextItems={helptextItems}
                     catalogId={catalogId}
