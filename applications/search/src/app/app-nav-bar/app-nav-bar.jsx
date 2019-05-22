@@ -16,7 +16,7 @@ import {
   PATHNAME_ABOUT,
   PATHNAME_ABOUT_REGISTRATION
 } from '../../constants/constants';
-import './app-nav-bar.scss'
+import './app-nav-bar.scss';
 
 export function AppNavBar(props) {
   return (
@@ -59,7 +59,7 @@ export function AppNavBar(props) {
               <DropdownToggle className="fdk-button-lang" caret>
                 {localization.lang.chosenLanguage}
               </DropdownToggle>
-              <DropdownMenu left className="fdk-dropdownmenu">
+              <DropdownMenu right className="fdk-dropdownmenu">
                 <DropdownItem onClick={() => props.onChangeLanguage('nb')}>
                   {localization.lang['norwegian-nb']}
                 </DropdownItem>
@@ -83,7 +83,7 @@ export function AppNavBar(props) {
               >
                 {localization.app.menu}
               </DropdownToggle>
-              <DropdownMenu left className="fdk-dropdownmenu">
+              <DropdownMenu right className="fdk-dropdownmenu">
                 <Link className="dropdown-item" to={PATHNAME_ABOUT}>
                   {localization.about.about}
                 </Link>
