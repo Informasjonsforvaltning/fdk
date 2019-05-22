@@ -1,6 +1,7 @@
 import { reduxForm, getFormValues } from 'redux-form';
 import { connect } from 'react-redux';
 import _ from 'lodash';
+import { compose } from 'recompose';
 
 import { FormCatalogPure } from './form-catalog-pure';
 import validate from './form-catalog-validations';
@@ -9,16 +10,17 @@ import shouldAsyncValidate from '../../../lib/shouldAsyncValidate';
 import { textType } from '../../../schemaTypes';
 import './form-catalog.scss';
 
-const FormCatalogFormConfigured = reduxForm({
-  form: 'catalog',
-  validate,
-  shouldAsyncValidate,
-  asyncValidate: putCatalogDataset,
-  asyncChangeFields: []
-})(
+const formConfigurer = compose(
+  reduxForm({
+    form: 'catalog',
+    validate,
+    shouldAsyncValidate,
+    asyncValidate: putCatalogDataset,
+    asyncChangeFields: []
+  }),
   connect(state => ({
     values: getFormValues('catalog')(state)
-  }))(FormCatalogPure)
+  }))
 );
 
 const mapStateToProps = ({ catalog, config }, ownProps) => {
@@ -45,5 +47,9 @@ const mapStateToProps = ({ catalog, config }, ownProps) => {
   };
 };
 
-export const FormCatalog = connect(mapStateToProps)(FormCatalogFormConfigured);
-/* eslint-enable no-class-assign */
+const enhance = compose(
+  connect(mapStateToProps),
+  formConfigurer
+);
+
+export const FormCatalog = enhance(FormCatalogPure);
