@@ -5,10 +5,10 @@ import { Provider } from 'react-redux';
 
 import { configureStore } from './redux/configureStore';
 import { ConnectedFeatureToggleProvider } from './components/feature-toggle/connected-feature-toggle-provider';
-import { ConnectedApp } from './app/connected-app';
 import { InjectablesContext } from './lib/injectables';
 import { getConfig } from './services/config';
 import { configureLocalization } from './lib/localization';
+import { App } from './app/app';
 
 async function configureInjectables() {
   const config = await getConfig();
@@ -25,7 +25,7 @@ async function render() {
     <InjectablesContext.Provider value={injectables}>
       <Provider store={injectables.store}>
         <ConnectedFeatureToggleProvider>
-          <ConnectedApp />
+          <App />
         </ConnectedFeatureToggleProvider>
       </Provider>
     </InjectablesContext.Provider>,
