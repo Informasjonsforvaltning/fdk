@@ -123,6 +123,8 @@ export class InputTagsAPIsField extends React.Component {
             handleDelete={this.handleDelete}
             handleAddition={this.handleAddition}
             handleInputChange={this.handleInputChange}
+            // silences input component proptypes warning (onChange has to be declared on input when value is given)
+            inputAttributes={{ onChange: _.noop }}
           />
         </div>
       </div>
