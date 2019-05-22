@@ -1,3 +1,4 @@
+const _ = require('lodash');
 const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -25,13 +26,12 @@ module.exports = {
     const port = Number(process.env.PORT || 4300);
     app.set('port', port);
 
-    app.use('/config.json', (req, res) =>
-      res.json({
-        registrationLanguage: process.env.REGISTRATION_LANGUAGE || 'nb',
-        searchHostname:
-          process.env.SEARCH_HOSTNAME || 'fellesdatakatalog.brreg.no'
-      })
-    );
+    app.use('/env.json', (req, res) => {
+      const vars = ['REGISTRATION_LANGUAGE', 'SEARCH_HOSTNAME'];
+      const values = vars.map(varName => process.env[varName]);
+      const envObj = _.zipObject(vars, values);
+      res.json(envObj);
+    });
 
     if (!env.production) {
       const compiler = webpack(config);
