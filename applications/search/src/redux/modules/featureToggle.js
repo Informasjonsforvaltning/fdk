@@ -14,7 +14,7 @@ const initialState = {
 
 const filterCurrentToggles = fp.pick(Object.keys(FEATURES));
 
-export function featureToggleResolver(state = initialState, action) {
+export function featureToggleReducer(state = initialState, action) {
   switch (action.type) {
     case 'STORE_INIT':
       // after rehydrating the store, keep only currently supported toggles
