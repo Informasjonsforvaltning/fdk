@@ -36,7 +36,7 @@ export function fetchConceptsIfNeededAction(query) {
 
 const initialState = {};
 
-export function concepts(state = initialState, action) {
+export function conceptReducer(state = initialState, action) {
   switch (action.type) {
     case CONCEPTS_REQUEST:
       return {

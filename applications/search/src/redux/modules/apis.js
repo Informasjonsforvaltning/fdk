@@ -34,7 +34,7 @@ export function fetchApisIfNeededAction(query) {
 
 const initialState = {};
 
-export function apis(state = initialState, action) {
+export function apisReducer(state = initialState, action) {
   switch (action.type) {
     case APIS_REQUEST:
       return {
