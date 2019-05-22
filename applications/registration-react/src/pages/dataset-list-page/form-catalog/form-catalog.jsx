@@ -9,6 +9,7 @@ import { putCatalogDataset } from './async-catalog-dataset';
 import shouldAsyncValidate from '../../../lib/shouldAsyncValidate';
 import { textType } from '../../../schemaTypes';
 import './form-catalog.scss';
+import { withInjectablesMapper } from '../../../lib/injectables';
 
 const formConfigurer = compose(
   reduxForm({
@@ -22,9 +23,8 @@ const formConfigurer = compose(
   }))
 );
 
-const mapStateToProps = ({ catalog, config }, ownProps) => {
-  const registrationLanguage = _.get(config, 'registrationLanguage', 'nb');
-  const { catalogId } = ownProps;
+const mapStateToProps = ({ catalog }, ownProps) => {
+  const { catalogId, registrationLanguage } = ownProps;
   return {
     initialValues: {
       id: catalogId,
@@ -46,7 +46,12 @@ const mapStateToProps = ({ catalog, config }, ownProps) => {
   };
 };
 
+const injector = withInjectablesMapper(injectables => ({
+  registrationLanguage: injectables.config.registrationLanguage
+}));
+
 const enhance = compose(
+  injector,
   connect(mapStateToProps),
   formConfigurer
 );
