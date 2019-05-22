@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 
 import { configureStore } from './redux/configureStore';
-import { ConnectedFeatureToggleProvider } from './components/connected-feature-toggle-provider';
+import { ConnectedFeatureToggleProvider } from './components/feature-toggle/connected-feature-toggle-provider';
 import { ConnectedApp } from './components/app/connected-app';
 
 const store = configureStore();
