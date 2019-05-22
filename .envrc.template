@@ -3,6 +3,8 @@
 export REDUX_LOG=false
 export LOG_LEVEL=DEBUG
 
+export SEARCH_HOSTNAME=localhost:8080
+
 export KEYCLOAK_USER=admin
 export KEYCLOAK_PASSWORD=admin
 

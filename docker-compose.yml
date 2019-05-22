@@ -65,6 +65,7 @@ services:
       - "4300"
     environment:
       - NODE_ENV
+      - REGISTRATION_LANGUAGE
       - SEARCH_HOSTNAME
 
 ### java modules
