@@ -19,6 +19,7 @@ export const SearchBoxPure = props => {
     searchText,
     inputText,
     setInputText,
+    clearInputTextHandler,
     touched
   } = props;
   let refSearchBox; // eslint-disable-line no-unused-vars
@@ -54,6 +55,15 @@ export const SearchBoxPure = props => {
                 value={touched ? inputText : searchText}
                 onChange={e => setInputText(e)}
                 autoComplete="off"
+              />
+              <div
+                role="button"
+                tabIndex="0"
+                className="clear-icon"
+                onClick={e => {
+                  clearInputTextHandler(e);
+                }}
+                onKeyDown={() => {}}
               />
             </label>
           </form>
@@ -98,6 +108,7 @@ SearchBoxPure.defaultProps = {
   countInformationModels: null,
   inputText: null,
   setInputText: _.noop,
+  clearInputTextHandler: _.noop,
   touched: false
 };
 
@@ -111,6 +122,7 @@ SearchBoxPure.propTypes = {
   open: PropTypes.func.isRequired,
   inputText: PropTypes.string,
   setInputText: PropTypes.func,
+  clearInputTextHandler: PropTypes.func,
   touched: PropTypes.bool
 };
 
@@ -121,7 +133,13 @@ const enhance = compose(
     setInputText: props => event => {
       event.preventDefault();
       props.setTouched(true);
-      props.setInputText(event.target.value !== '' ? event.target.value : '');
+      props.setInputText(event.target.value);
+    },
+    clearInputTextHandler: props => event => {
+      event.preventDefault();
+      props.setTouched(false);
+      props.setInputText('');
+      props.onSearchSubmit('');
     }
   })
 );

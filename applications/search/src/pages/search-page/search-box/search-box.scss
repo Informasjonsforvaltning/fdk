@@ -1,5 +1,24 @@
 @import '../../../../node_modules/designsystemet/fdk-designsystem-bootstrap4/scss/colors.scss';
 
+
+
+/*  Search box clear-icon for mobile devices */
+.clear-icon:after {
+  content: '';
+  background-image: url('../../../static/img/icon-add.svg');
+  display: block;
+  vertical-align: middle;
+  outline: 0;
+  cursor: pointer;
+  position: absolute;
+  z-index: 1;
+
+  width: 0.5em;
+  height: 0.5em;
+  right: 85px;
+  top: 22px;
+}
+
 .fdk-search-flex {
   display: flex;
   align-items: flex-start;
@@ -22,7 +41,7 @@
       height: 54px;
       width: 100%;
       padding: 12px 16px;
-      margin: 0 0 10px 0px;
+      margin: 0 0 10px 0;
     }
   }
 
@@ -34,7 +53,7 @@
     border-radius: 5px 0 0 5px;
     border-color: $color-blue-dark;
     box-shadow: 0 4px 8px rgba(45, 55, 65, 0.2);
-    border: 0px;
+    border: 0;
     &:hover, &:focus {
       color: $color0;
       border-color: $color-blue-dark;
@@ -58,6 +77,14 @@
 
 /* Medium Devices, Desktops */
 @media only screen and (min-width : 992px) {
+
+  /*  Search box clear-icon for desktops */
+  .clear-icon:after {
+    width: 1em;
+    height: 1em;
+    right: 120px;
+    top: 24px;
+  }
 
   .fdk-search-flex {
     .fdk-search-box {
