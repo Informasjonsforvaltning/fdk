@@ -6,14 +6,29 @@ import { Provider } from 'react-redux';
 import { configureStore } from './redux/configureStore';
 import { ConnectedFeatureToggleProvider } from './components/feature-toggle/connected-feature-toggle-provider';
 import { ConnectedApp } from './app/connected-app';
+import { InjectablesContext } from './lib/injectables';
+import { getConfig } from './services/config';
 
-const store = configureStore();
+async function configureInjectables() {
+  const config = await getConfig();
+  const store = configureStore();
 
-ReactDOM.render(
-  <Provider store={store}>
-    <ConnectedFeatureToggleProvider>
-      <ConnectedApp />
-    </ConnectedFeatureToggleProvider>
-  </Provider>,
-  document.getElementById('root')
-);
+  return { config, store };
+}
+
+async function render() {
+  const injectables = await configureInjectables();
+
+  ReactDOM.render(
+    <InjectablesContext.Provider value={injectables}>
+      <Provider store={injectables.store}>
+        <ConnectedFeatureToggleProvider>
+          <ConnectedApp />
+        </ConnectedFeatureToggleProvider>
+      </Provider>
+    </InjectablesContext.Provider>,
+    document.getElementById('root')
+  );
+}
+
+render().catch(console.error);
