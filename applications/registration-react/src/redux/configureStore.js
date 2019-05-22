@@ -24,6 +24,7 @@ export function configureStore() {
   );
 
   const store = createStore(rootReducer, /* preloadedState, */ enhancer);
+  store.dispatch({ type: 'STORE_INIT' });
 
   if (module.hot) {
     module.hot.accept('./rootReducer', () => {
