@@ -36,7 +36,7 @@ export function fetchDatasetsIfNeededAction(query) {
 
 const initialState = {};
 
-export function datasets(state = initialState, action) {
+export function datasetsReducer(state = initialState, action) {
   switch (action.type) {
     case DATASETS_REQUEST:
       return {

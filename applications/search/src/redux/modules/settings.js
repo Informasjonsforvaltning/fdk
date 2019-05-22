@@ -11,7 +11,7 @@ const initialState = {
   language: 'nb'
 };
 
-export function settingsResolver(state = initialState, action) {
+export function settingsReducer(state = initialState, action) {
   switch (action.type) {
     case SETTINGS_PATCH:
       return { ...state, ...action.settings };
