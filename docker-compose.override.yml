@@ -68,6 +68,8 @@ services:
       - "4300:4300"
     volumes:
       - ./applications/registration-react/src:/usr/src/app/src
+    environment:
+      - REDUX_LOG
 
 ### java modules
   api-cat:

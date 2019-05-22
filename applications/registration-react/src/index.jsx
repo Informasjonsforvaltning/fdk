@@ -12,7 +12,7 @@ import { App } from './app/app';
 
 async function configureInjectables() {
   const config = await getConfig();
-  const store = configureStore();
+  const store = configureStore(config.store);
   const localization = configureLocalization(config.registrationLanguage);
 
   return { config, store, localization };

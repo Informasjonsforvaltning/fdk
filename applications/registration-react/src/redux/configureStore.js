@@ -10,9 +10,10 @@ function selectCompose() {
   return window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 }
 
-export function configureStore() {
+export function configureStore(storeConfig) {
   const middlewares = [thunk, apiMiddleware];
-  if (process.env.NODE_ENV !== 'production') {
+
+  if (storeConfig.useLogger) {
     middlewares.push(createLogger());
   }
 
