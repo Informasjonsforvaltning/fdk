@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`should render FormCatalog correctly 1`] = `
+exports[`should render FormCatalogPure correctly 1`] = `
 <form
   className="mb-5 fdk-reg-catalogs"
 >

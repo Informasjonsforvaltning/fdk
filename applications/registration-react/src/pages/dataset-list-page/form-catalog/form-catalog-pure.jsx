@@ -11,7 +11,7 @@ import InputField from '../../../components/field-input/field-input.component';
 import InputTitleField from '../../../components/field-input-title/field-input-title.component';
 import TextAreaField from '../../../components/field-textarea/field-textarea.component';
 
-export class FormCatalog extends React.Component {
+export class FormCatalogPure extends React.Component {
   constructor(props) {
     super(props);
     this.toggleTitle = this.toggleTitle.bind(this);
@@ -113,14 +113,12 @@ export class FormCatalog extends React.Component {
   }
 }
 
-FormCatalog.defaultProps = {
+FormCatalogPure.defaultProps = {
   initialValues: null,
   values: null
 };
-FormCatalog.propTypes = {
+FormCatalogPure.propTypes = {
   helptextItems: PropTypes.object.isRequired,
   initialValues: PropTypes.object,
   values: PropTypes.object
 };
-
-export default FormCatalog;
