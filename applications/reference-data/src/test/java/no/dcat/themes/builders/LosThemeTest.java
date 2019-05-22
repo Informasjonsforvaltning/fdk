@@ -2,14 +2,12 @@ package no.dcat.themes.builders;
 
 import no.dcat.shared.SkosCode;
 import no.dcat.themes.Controller;
-import no.fdk.test.testcategories.UnitTest;
+import no.fdk.test.testcategories.IntegrationTest;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Profile;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
@@ -19,8 +17,7 @@ import static org.junit.Assert.assertThat;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
-@Category(UnitTest.class)
-@ActiveProfiles(profiles = "unit-integration")
+@Category(IntegrationTest.class)
 public class LosThemeTest {
 
     @Autowired
