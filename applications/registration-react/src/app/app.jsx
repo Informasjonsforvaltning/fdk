@@ -3,18 +3,18 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-import localization from '../../lib/localization';
-import { ProtectedRoute } from '../../app-protected-route/app-protected-route.component';
-import { ConnectedCatalogsPage } from '../../pages/catalogs-page/connected-catalogs-page';
-import { ConnectedDatasetsListPage } from '../../pages/dataset-list-page/connected-dataset-list-page';
-import { ConnectedAPIListPage } from '../../pages/api-list-page/connected-api-list-page';
-import { ConnectedAPIRegistrationPage } from '../../pages/api-registration-page/connected-api-registration-page';
-import { ConnectedDatasetRegistrationPage } from '../../pages/dataset-registration-page/connected-dataset-registration-page';
-import { Header } from '../../components/app-header/app-header.component';
-import { Breadcrumbs } from '../../components/breadcrumbs/breadcrumbs.component';
-import Footer from '../../components/app-footer/app-footer.component';
-import { LoginDialog } from '../../components/app-login-dialog/app-login-dialog.component';
-import { ConnectedApiImportPage } from '../../pages/api-import-page/connected-api-import-page';
+import localization from '../lib/localization';
+import { ProtectedRoute } from '../app-protected-route/app-protected-route.component';
+import { ConnectedCatalogsPage } from '../pages/catalogs-page/connected-catalogs-page';
+import { ConnectedDatasetsListPage } from '../pages/dataset-list-page/connected-dataset-list-page';
+import { ConnectedAPIListPage } from '../pages/api-list-page/connected-api-list-page';
+import { ConnectedAPIRegistrationPage } from '../pages/api-registration-page/connected-api-registration-page';
+import { ConnectedDatasetRegistrationPage } from '../pages/dataset-registration-page/connected-dataset-registration-page';
+import { Header } from '../components/app-header/app-header.component';
+import { Breadcrumbs } from '../components/breadcrumbs/breadcrumbs.component';
+import Footer from '../components/app-footer/app-footer.component';
+import { LoginDialog } from '../components/app-login-dialog/app-login-dialog.component';
+import { ConnectedApiImportPage } from '../pages/api-import-page/connected-api-import-page';
 
 const routes = (
   <Switch>
