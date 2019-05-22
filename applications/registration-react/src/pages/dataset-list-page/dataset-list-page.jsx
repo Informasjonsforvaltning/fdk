@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 
 import localization from '../../lib/localization';
-import FormCatalog from './form-catalog/connected-form-catalog.component';
+import { FormCatalog } from './form-catalog/form-catalog';
 import DatasetItemsList from './items-list/item-list.component';
 import { AlertMessage } from '../../components/alert-message/alert-message.component';
 import './dataset-list-page.scss';

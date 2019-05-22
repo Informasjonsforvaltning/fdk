@@ -1,28 +1,18 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import { FormCatalog } from './form-catalog.component';
-import helptext from '../../../../test/fixtures/helptext';
+import { createMockStore } from 'redux-test-utils';
+import shallowWithStore from '../../../../test/shallowWithStore';
+import { FormCatalog } from './form-catalog';
+import catalogs from '../../../../test/fixtures/catalogs';
 
-let defaultProps;
 let wrapper;
 
-beforeEach(() => {
-  const { helptextItems } = helptext;
-  defaultProps = {
-    helptextItems,
-    initialValues: {
-      title: 'Title',
-      publisher: 'Publisher'
-    },
-    values: {
-      description: {
-        nb: 'Beskrivelse'
-      }
+test('should render FormCatalogPure correctly', () => {
+  const testState = {
+    catalog: {
+      catalogItem: catalogs.catalogItems[0]
     }
   };
-  wrapper = shallow(<FormCatalog {...defaultProps} />);
-});
-
-test('should render FormCatalog correctly', () => {
-  expect(wrapper).toMatchSnapshot();
+  const store = createMockStore(testState);
+  wrapper = shallowWithStore(<FormCatalog />, store);
+  expect(wrapper).toHaveLength(1);
 });
