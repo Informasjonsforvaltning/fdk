@@ -19,6 +19,7 @@ application:
   # harvest every sixth hour
   harvestCron: 0 0 */6 * * *
   harvestsourcesuris:
+    urlOverride : ${CONCEPT_CAT_HARVEST_URL_OVERRIDE:}
     uriList:
       - "https://data.brreg.no/begrep/"
       - "https://data.skatteetaten.no/begreper/"
