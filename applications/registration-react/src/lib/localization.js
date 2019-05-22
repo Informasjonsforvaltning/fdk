@@ -7,3 +7,8 @@ const localization = new LocalizedStrings({
 });
 
 export default localization;
+
+export function configureLocalization(language) {
+  localization.setLanguage(language);
+  return localization;
+}
