@@ -19,7 +19,6 @@ import apiFormStatus from './modules/api-form-status';
 import { datasetFormStatus } from './modules/dataset-form-status';
 import { apiCatalog } from './modules/apiCatalogs';
 import { referenceDataReducer } from './modules/referenceData';
-import { config } from './modules/config';
 
 const rootReducer = combineReducers({
   form: formReducer,
@@ -41,8 +40,7 @@ const rootReducer = combineReducers({
   apiFormStatus,
   datasetFormStatus,
   apiCatalog,
-  referenceData: referenceDataReducer,
-  config
+  referenceData: referenceDataReducer
 });
 
 export default rootReducer;
