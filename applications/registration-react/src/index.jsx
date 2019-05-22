@@ -8,12 +8,14 @@ import { ConnectedFeatureToggleProvider } from './components/feature-toggle/conn
 import { ConnectedApp } from './app/connected-app';
 import { InjectablesContext } from './lib/injectables';
 import { getConfig } from './services/config';
+import { configureLocalization } from './lib/localization';
 
 async function configureInjectables() {
   const config = await getConfig();
   const store = configureStore();
+  const localization = configureLocalization(config.registrationLanguage);
 
-  return { config, store };
+  return { config, store, localization };
 }
 
 async function render() {
