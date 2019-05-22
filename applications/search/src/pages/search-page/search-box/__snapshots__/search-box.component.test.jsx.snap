@@ -37,6 +37,13 @@ exports[`should render SearchBoxPure correctly 1`] = `
             type="search"
             value="enhetsregister"
           />
+          <div
+            className="clear-icon"
+            onClick={[Function]}
+            onKeyDown={[Function]}
+            role="button"
+            tabIndex="0"
+          />
         </label>
       </form>
     </div>
