@@ -2,7 +2,8 @@ import axios from 'axios';
 
 const createConfig = env => ({
   registrationLanguage: env.REGISTRATION_LANGUAGE || 'nb',
-  searchHostname: env.SEARCH_HOSTNAME || 'fellesdatakatalog.brreg.no'
+  searchHost:
+    `https://${env.SEARCH_HOSTNAME}` || 'https://fellesdatakatalog.brreg.no'
 });
 
 export const getConfig = async () => {

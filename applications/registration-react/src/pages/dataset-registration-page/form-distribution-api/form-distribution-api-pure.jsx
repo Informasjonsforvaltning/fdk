@@ -29,7 +29,7 @@ export const renderDistributionsAPI = componentProps => {
 
 const renderConnectedApisByDatasetId = (
   connectedApisByDatasetId,
-  searchHostname
+  searchHost
 ) => {
   if (
     !(
@@ -50,7 +50,7 @@ const renderConnectedApisByDatasetId = (
           <Link
             target="_blank"
             rel="noopener noreferrer"
-            to={`https://${searchHostname}/apis/${item.id}`}
+            to={`${searchHost}/apis/${item.id}`}
           >
             {item.title}
           </Link>
@@ -77,7 +77,7 @@ const renderConnectedApisByDatasetId = (
 };
 
 export const FormDistributionApiPure = props => {
-  const { helptextItems, connectedApisByDatasetId, searchHostname } = props;
+  const { helptextItems, connectedApisByDatasetId, searchHost } = props;
   return (
     <React.Fragment>
       <form>
@@ -87,18 +87,18 @@ export const FormDistributionApiPure = props => {
           helptextItems={helptextItems}
         />
       </form>
-      {renderConnectedApisByDatasetId(connectedApisByDatasetId, searchHostname)}
+      {renderConnectedApisByDatasetId(connectedApisByDatasetId, searchHost)}
     </React.Fragment>
   );
 };
 
 FormDistributionApiPure.defaultProps = {
   connectedApisByDatasetId: null,
-  searchHostname: null
+  searchHost: ''
 };
 
 FormDistributionApiPure.propTypes = {
   helptextItems: PropTypes.object.isRequired,
   connectedApisByDatasetId: PropTypes.object,
-  searchHostname: PropTypes.string
+  searchHost: PropTypes.string
 };
