@@ -4,9 +4,9 @@ import { fetchActions } from '../fetchActions';
 export const REFERENCEEDATA_REQUEST = 'REFERENCEEDATA_REQUEST';
 export const REFERENCEEDATA_SUCCESS = 'REFERENCEEDATA_SUCCESS';
 export const REFERENCEEDATA_FAILURE = 'REFERENCEEDATA_FAILURE';
-export const REFERENCEDATA_APISTATUS = 'apistatus';
-export const REFERENCEDATA_APISERVICETYPE = 'apiservicetype';
-export const REFERENCEDATA_LOS = 'los';
+export const REFERENCEDATA_PATH_APISTATUS = 'codes/apistatus';
+export const REFERENCEDATA_PATH_APISERVICETYPE = 'codes/apiservicetype';
+export const REFERENCEDATA_PATH_LOS = 'los';
 
 function shouldFetch(metaState) {
   const threshold = 60 * 1000; // seconds
@@ -17,32 +17,14 @@ function shouldFetch(metaState) {
   );
 }
 
-export function fetchReferenceDataIfNeededAction(code) {
+export function fetchReferenceDataIfNeededAction(path) {
   return (dispatch, getState) => {
-    if (shouldFetch(_.get(getState(), ['referenceData', 'meta', code]))) {
+    if (shouldFetch(_.get(getState(), ['referenceData', 'meta', path]))) {
       dispatch(
-        fetchActions(`/reference-data/codes/${code}`, [
-          { type: REFERENCEEDATA_REQUEST, meta: { code } },
-          { type: REFERENCEEDATA_SUCCESS, meta: { code } },
-          { type: REFERENCEEDATA_FAILURE, meta: { code } }
-        ])
-      );
-    }
-  };
-}
-
-export function fetchReferenceDataLosIfNeededAction() {
-  return (dispatch, getState) => {
-    if (
-      shouldFetch(
-        _.get(getState(), ['referenceData', 'meta', REFERENCEDATA_LOS])
-      )
-    ) {
-      dispatch(
-        fetchActions(`/reference-data/${REFERENCEDATA_LOS}`, [
-          { type: REFERENCEEDATA_REQUEST, meta: { code: REFERENCEDATA_LOS } },
-          { type: REFERENCEEDATA_SUCCESS, meta: { code: REFERENCEDATA_LOS } },
-          { type: REFERENCEEDATA_FAILURE, meta: { code: REFERENCEDATA_LOS } }
+        fetchActions(`/reference-data/${path}`, [
+          { type: REFERENCEEDATA_REQUEST, meta: { path } },
+          { type: REFERENCEEDATA_SUCCESS, meta: { path } },
+          { type: REFERENCEEDATA_FAILURE, meta: { path } }
         ])
       );
     }
@@ -61,7 +43,7 @@ export function referenceDataReducer(state = initialState, action) {
         items: { ...state.items },
         meta: {
           ...state.meta,
-          [action.meta.code]: { isFetching: true, lastFetch: null }
+          [action.meta.path]: { isFetching: true, lastFetch: null }
         }
       };
 
@@ -69,11 +51,11 @@ export function referenceDataReducer(state = initialState, action) {
       return {
         items: {
           ...state.items,
-          [action.meta.code]: action.payload
+          [action.meta.path]: action.payload
         },
         meta: {
           ...state.meta,
-          [action.meta.code]: { isFetching: false, lastFetch: Date.now() }
+          [action.meta.path]: { isFetching: false, lastFetch: Date.now() }
         }
       };
     }
@@ -81,11 +63,11 @@ export function referenceDataReducer(state = initialState, action) {
       return {
         items: {
           ...state.items,
-          [action.meta.code]: undefined
+          [action.meta.path]: undefined
         },
         meta: {
           ...state.meta,
-          [action.meta.code]: { isFetching: false, lastFetch: null }
+          [action.meta.path]: { isFetching: false, lastFetch: null }
         }
       };
     }
@@ -93,9 +75,6 @@ export function referenceDataReducer(state = initialState, action) {
       return state;
   }
 }
-
-export const getReferenceDataByUri = (referenceData, code, uri) =>
-  _.find(_.get(referenceData, ['items', code]), { uri });
 
 export const getAllLosParentNodes = losItems =>
   _.filter(losItems, { parents: null });
