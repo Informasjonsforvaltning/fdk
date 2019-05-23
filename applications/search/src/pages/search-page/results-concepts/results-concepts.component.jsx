@@ -96,7 +96,7 @@ function _renderFilterModal({
       <ModalBody>
         <div className="search-filters">
           <FilterTree
-            title={localization.facet.organisation}
+            title={localization.responsible}
             aggregations={publisherCounts}
             handleFiltering={onFilterPublisherHierarchy}
             activeFilter={locationSearch.orgPath}
@@ -206,7 +206,7 @@ export const ResultsConceptsPure = ({
                   publishers
                 })}
                 <FilterTree
-                  title={localization.facet.organisation}
+                  title={localization.responsible}
                   aggregations={publisherCounts}
                   handleFiltering={onFilterPublisherHierarchy}
                   activeFilter={locationSearch.orgPath}
