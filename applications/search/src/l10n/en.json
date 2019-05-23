@@ -60,7 +60,7 @@
     "conceptsCompare": "Compare concepts"
   },
   "query": {
-    "intro": "Search for datasets...",
+    "intro": "Search for contents",
     "do": "Search",
     "clear": "Clear all filters"
   },
