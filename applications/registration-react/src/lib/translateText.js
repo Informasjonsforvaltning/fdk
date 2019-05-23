@@ -1,12 +1,15 @@
 import localization from './localization';
 
-export default function getTranslateText(
-  textObj,
-  selectedLanguage = localization.getLanguage()
-) {
-  if (!textObj || typeof textObj !== 'object') {
+export function getTranslateText(textObj, language) {
+  const selectedLanguage = language || localization.getLanguage();
+  if (typeof textObj === 'string') {
     return textObj;
   }
+
+  if (textObj === null || typeof textObj !== 'object') {
+    return null;
+  }
+
   return (
     textObj[selectedLanguage] ||
     textObj.nb ||

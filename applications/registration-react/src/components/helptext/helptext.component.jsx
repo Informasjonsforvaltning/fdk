@@ -5,7 +5,7 @@ import { Collapse } from 'reactstrap';
 import _ from 'lodash';
 import { withStateHandlers } from 'recompose';
 
-import getTranslateText from '../../lib/translateText';
+import { getTranslateText } from '../../lib/translateText';
 import localization from '../../lib/localization';
 import './helptext.scss';
 

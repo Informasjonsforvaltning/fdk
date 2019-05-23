@@ -5,7 +5,7 @@ import 'react-treeview/react-treeview.css';
 import _ from 'lodash';
 
 import localization from '../../../../lib/localization';
-import getTranslateText from '../../../../lib/translateText';
+import { getTranslateText } from '../../../../lib/translateText';
 import {
   getAllLosParentNodes,
   getAllLosChildrenNodes

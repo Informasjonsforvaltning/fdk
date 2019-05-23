@@ -5,7 +5,7 @@ import _ from 'lodash';
 
 import localization from '../../lib/localization';
 import { Catalog } from './catalogs/catalogs.component';
-import getTranslateText from '../../lib/translateText';
+import { getTranslateText } from '../../lib/translateText';
 import { getDatasetItemsCount } from '../../redux/modules/datasets';
 import { getAPIItemsCount } from '../../redux/modules/apis';
 import './catalogs-page.scss';

@@ -2,7 +2,7 @@ import _ from 'lodash';
 import moment from 'moment';
 
 import localization from '../../lib/localization';
-import getTranslateText from '../../lib/translateText';
+import { getTranslateText } from '../../lib/translateText';
 
 export const titleValues = values => {
   if (values) {
