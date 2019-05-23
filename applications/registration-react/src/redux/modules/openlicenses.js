@@ -15,16 +15,10 @@ export default function openlicenses(
         isFetchingOpenLicenses: true
       };
     case OPENLICENSES_SUCCESS: {
-      const openLicenseItems = action.payload.map(item => ({
-        uri: item.uri,
-        code: item.code,
-        prefLabel_no: item.prefLabel.no,
-        prefLabel_nb: item.prefLabel.nb
-      }));
       return {
         ...state,
         isFetchingOpenLicenses: false,
-        openLicenseItems
+        openLicenseItems: action.payload
       };
     }
     case OPENLICENSES_FAILURE:

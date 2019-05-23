@@ -21,11 +21,7 @@ export default function referenceDatasets(
         action.payload,
         ['_embedded', 'datasets'],
         []
-      ).map(item => ({
-        id: _.get(item, 'id'),
-        uri: _.get(item, 'uri'),
-        prefLabel_no: _.get(item, ['title', 'nb'])
-      }));
+      );
       return {
         ...state,
         isFetchingReferenceDatasets: false,

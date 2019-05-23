@@ -70,16 +70,10 @@ export function referenceDataReducer(state = initialState, action) {
       };
 
     case REFERENCEEDATA_SUCCESS: {
-      const items = action.payload.map(item => ({
-        uri: item.uri,
-        code: item.code,
-        prefLabel_no: item.prefLabel.nb,
-        prefLabel_nb: item.prefLabel.nb
-      }));
       return {
         items: {
           ...state.items,
-          [action.meta.code]: items
+          [action.meta.code]: action.payload
         },
         meta: {
           ...state.meta,

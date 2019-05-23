@@ -1,10 +1,8 @@
-import _ from 'lodash';
 import {
   FREQUENCY_REQUEST,
   FREQUENCY_SUCCESS,
   FREQUENCY_FAILURE
 } from '../../constants/ActionTypes';
-import { getTranslateText } from '../../lib/translateText';
 
 export default function provenance(
   state = { isFetchingFrequency: false, frequencyItems: null },
@@ -17,15 +15,10 @@ export default function provenance(
         isFetchingFrequency: true
       };
     case FREQUENCY_SUCCESS: {
-      const frequencyItems = action.payload.map(item => ({
-        uri: item.uri,
-        code: item.code,
-        prefLabel_no: getTranslateText(_.get(item, 'prefLabel'))
-      }));
       return {
         ...state,
         isFetchingFrequency: false,
-        frequencyItems
+        frequencyItems: action.payload
       };
     }
     case FREQUENCY_FAILURE: {
