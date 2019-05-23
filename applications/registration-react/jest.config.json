@@ -3,6 +3,7 @@
   "testMatch": ["<rootDir>/test/**/(test).js?(x)", "**/?(*.)(test).js?(x)"],
   "testPathIgnorePatterns": ["/node_modules/", "<rootDir>/test/jestsetup.js", "<rootDir>/test/fixtures/", "/target/"],
   "setupFiles": [
+    "@babel/polyfill",
     "raf/polyfill",
     "<rootDir>/test/jestsetup.js"
   ],
