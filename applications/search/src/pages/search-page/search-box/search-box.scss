@@ -1,7 +1,5 @@
 @import '../../../../node_modules/designsystemet/fdk-designsystem-bootstrap4/scss/colors.scss';
 
-
-
 /*  Search box clear-icon for mobile devices */
 .clear-icon:after {
   content: '';
@@ -12,11 +10,10 @@
   cursor: pointer;
   position: absolute;
   z-index: 1;
-
-  width: 0.5em;
-  height: 0.5em;
-  right: 85px;
-  top: 22px;
+  width: 0.7em;
+  height: 0.7em;
+  right: 15px;
+  top: 20px;
 }
 
 .fdk-search-flex {
@@ -25,6 +22,7 @@
   font-size: 2rem;
 
   .fdk-search-box {
+    position: relative;
     width: 100%;
     .glyphicon-search-frontpage {
       top: 20px;
@@ -82,7 +80,7 @@
   .clear-icon:after {
     width: 1em;
     height: 1em;
-    right: 120px;
+    right: 20px;
     top: 24px;
   }
 
