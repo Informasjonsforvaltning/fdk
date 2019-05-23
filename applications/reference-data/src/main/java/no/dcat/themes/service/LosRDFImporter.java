@@ -177,7 +177,7 @@ public class LosRDFImporter {
 
         //Hovedkategori - /<keyword>
         if (node.getParents() == null || node.getParents().isEmpty()) {
-            generatedPaths.add("/" + getMostSaneName(node));
+            generatedPaths.add(getMostSaneName(node).toLowerCase());
             return generatedPaths;
         }
 
@@ -190,7 +190,7 @@ public class LosRDFImporter {
 
             for (URI u : hovedKategoriURIs) {
                 String subCategory = getKeywordFromURI(currentNode.getUri());
-                hovedKategoriPaths.add(getKeywordFromURI(u) + "/" + subCategory);
+                hovedKategoriPaths.add((getKeywordFromURI(u) + "/" + subCategory).toLowerCase());
             }
             return hovedKategoriPaths;
         }
@@ -199,11 +199,11 @@ public class LosRDFImporter {
         List<String> allPaths = new ArrayList<>();
 
         List<URI> subCategoryURIs = node.getParents();
-        for (URI us : subCategoryURIs) {
-            LosNode subCategoryLosnode = getByURI(us, allLosNodes);
+        for (URI subCategory : subCategoryURIs) {
+            LosNode subCategoryLosnode = getByURI(subCategory, allLosNodes);
             List<URI> hovedCategories = subCategoryLosnode.getParents();
-            for (URI uh : hovedCategories) {
-                allPaths.add("/" + getKeywordFromURI(uh) + "/" + getKeywordFromURI(us) + "/" + getMostSaneName(node));
+            for (URI hovedCategory : hovedCategories) {
+                allPaths.add((getKeywordFromURI(hovedCategory) + "/" + getKeywordFromURI(subCategory) + "/" + getMostSaneName(node)).toLowerCase());
             }
         }
         return allPaths;
