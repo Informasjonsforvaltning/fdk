@@ -9,7 +9,10 @@ const createConfig = env => {
   return {
     store: { useLogger: env.REDUX_LOG === 'true' },
     registrationLanguage: env.REGISTRATION_LANGUAGE || 'nb',
-    searchHost
+    searchHost,
+    referenceDataApi: {
+      host: env.REFERENCE_DATA_HOST || searchHost
+    }
   };
 };
 

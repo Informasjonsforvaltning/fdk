@@ -9,13 +9,15 @@ import { InjectablesContext } from './lib/injectables';
 import { getConfig } from './services/config';
 import { configureLocalization } from './lib/localization';
 import { App } from './app/app';
+import { configureReferenceDataApi } from './api/reference-data-api';
 
 async function configureInjectables() {
   const config = await getConfig();
   const store = configureStore(config.store);
   const localization = configureLocalization(config.registrationLanguage);
+  const referenceDataApi = configureReferenceDataApi(config.referenceDataApi);
 
-  return { config, store, localization };
+  return { config, store, localization, referenceDataApi };
 }
 
 async function render() {
