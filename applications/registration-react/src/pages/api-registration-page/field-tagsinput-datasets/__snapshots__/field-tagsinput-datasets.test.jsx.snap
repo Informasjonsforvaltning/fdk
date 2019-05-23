@@ -13,6 +13,7 @@ exports[`should render InputTagsDatasetsField correctly 1`] = `
       allowNew={false}
       autofocus={false}
       autoresize={true}
+      clearInputOnDelete={true}
       delimiterChars={Array []}
       delimiters={
         Array [
@@ -28,6 +29,7 @@ exports[`should render InputTagsDatasetsField correctly 1`] = `
       minQueryLength={2}
       placeholder=""
       suggestions={Array []}
+      suggestionsFilter={null}
       tagComponent={null}
       tags={
         Array [

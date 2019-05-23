@@ -69,7 +69,7 @@
     "react-router-breadcrumbs-hoc": "^2.1.5",
     "react-router-dom": "^4.2.2",
     "react-select": "^1.2.1",
-    "react-tag-autocomplete": "^5.7.0",
+    "react-tag-autocomplete": "^5.11.1",
     "react-tagsinput": "^3.19.0",
     "react-treeview": "^0.4.7",
     "reactstrap": "^6.3.0",
