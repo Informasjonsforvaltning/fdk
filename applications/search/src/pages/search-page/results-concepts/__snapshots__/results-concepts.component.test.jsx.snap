@@ -111,7 +111,7 @@ exports[`should render ResultsConcepts correctly with hits 1`] = `
                   collapseItems={false}
                   handleFiltering={[Function]}
                   referenceDataItems={null}
-                  title="Owner"
+                  title="Responsible"
                 />
               </div>
             </ModalBody>
@@ -134,7 +134,7 @@ exports[`should render ResultsConcepts correctly with hits 1`] = `
             collapseItems={false}
             handleFiltering={[Function]}
             referenceDataItems={null}
-            title="Owner"
+            title="Responsible"
           />
         </div>
       </div>
