@@ -4,7 +4,7 @@ import {
   FREQUENCY_SUCCESS,
   FREQUENCY_FAILURE
 } from '../../constants/ActionTypes';
-import getTranslateText from '../../lib/translateText';
+import { getTranslateText } from '../../lib/translateText';
 
 export default function provenance(
   state = { isFetchingFrequency: false, frequencyItems: null },

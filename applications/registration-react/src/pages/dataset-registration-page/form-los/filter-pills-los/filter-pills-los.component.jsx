@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 
-import getTranslateText from '../../../../lib/translateText';
+import { getTranslateText } from '../../../../lib/translateText';
 import { getLosItemsFromInput } from '../field-tree-los/field-tree-los-helper';
 import { handleUpdateField } from '../form-helper';
 import './filter-pills-los.scss';

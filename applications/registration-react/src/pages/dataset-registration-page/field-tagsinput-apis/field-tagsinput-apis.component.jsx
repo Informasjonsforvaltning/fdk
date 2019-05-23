@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import ReactTags from 'react-tag-autocomplete';
 
-import getTranslateText from '../../../lib/translateText';
+import { getTranslateText } from '../../../lib/translateText';
 import { getAPIByTitlePrefix } from '../../../api/apis';
 import localization from '../../../lib/localization';
 

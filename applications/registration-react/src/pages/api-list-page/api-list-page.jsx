@@ -7,7 +7,7 @@ import { withState, withHandlers, compose } from 'recompose';
 
 import localization from '../../lib/localization';
 import ListItems from '../../components/list-items/list-items.component';
-import getTranslateText from '../../lib/translateText';
+import { getTranslateText } from '../../lib/translateText';
 import { validateURL } from '../../validation/validation';
 import { AlertMessage } from '../../components/alert-message/alert-message.component';
 

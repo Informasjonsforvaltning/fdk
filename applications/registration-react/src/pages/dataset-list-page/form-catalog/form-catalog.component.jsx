@@ -5,7 +5,7 @@ import cx from 'classnames';
 import { Collapse } from 'reactstrap';
 
 import localization from '../../../lib/localization';
-import getTranslateText from '../../../lib/translateText';
+import { getTranslateText } from '../../../lib/translateText';
 import Helptext from '../../../components/helptext/helptext.component';
 import InputField from '../../../components/field-input/field-input.component';
 import InputTitleField from '../../../components/field-input-title/field-input-title.component';
