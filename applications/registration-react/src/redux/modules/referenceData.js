@@ -7,7 +7,6 @@ export const REFERENCEEDATA_FAILURE = 'REFERENCEEDATA_FAILURE';
 export const REFERENCEDATA_APISTATUS = 'apistatus';
 export const REFERENCEDATA_APISERVICETYPE = 'apiservicetype';
 export const REFERENCEDATA_LOS = 'los';
-export const REFERENCEEDATA_LOS_SUCCESS = 'REFERENCEEDATA_LOS_SUCCESS';
 
 function shouldFetch(metaState) {
   const threshold = 60 * 1000; // seconds
@@ -42,10 +41,7 @@ export function fetchReferenceDataLosIfNeededAction() {
       dispatch(
         fetchActions(`/reference-data/${REFERENCEDATA_LOS}`, [
           { type: REFERENCEEDATA_REQUEST, meta: { code: REFERENCEDATA_LOS } },
-          {
-            type: REFERENCEEDATA_LOS_SUCCESS,
-            meta: { code: REFERENCEDATA_LOS }
-          },
+          { type: REFERENCEEDATA_SUCCESS, meta: { code: REFERENCEDATA_LOS } },
           { type: REFERENCEEDATA_FAILURE, meta: { code: REFERENCEDATA_LOS } }
         ])
       );
@@ -70,18 +66,6 @@ export function referenceDataReducer(state = initialState, action) {
       };
 
     case REFERENCEEDATA_SUCCESS: {
-      return {
-        items: {
-          ...state.items,
-          [action.meta.code]: action.payload
-        },
-        meta: {
-          ...state.meta,
-          [action.meta.code]: { isFetching: false, lastFetch: Date.now() }
-        }
-      };
-    }
-    case REFERENCEEDATA_LOS_SUCCESS: {
       return {
         items: {
           ...state.items,
