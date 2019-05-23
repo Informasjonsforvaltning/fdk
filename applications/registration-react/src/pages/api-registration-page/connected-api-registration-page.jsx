@@ -11,8 +11,8 @@ import { getApiFormStatusById } from '../../redux/modules/api-form-status';
 import { fetchHelptextsIfNeeded } from '../../redux/modules/helptexts';
 import { fetchCatalogIfNeeded } from '../../redux/modules/catalog';
 import {
-  REFERENCEDATA_APISTATUS,
-  REFERENCEDATA_APISERVICETYPE,
+  REFERENCEDATA_PATH_APISTATUS,
+  REFERENCEDATA_PATH_APISERVICETYPE,
   fetchReferenceDataIfNeededAction
 } from '../../redux/modules/referenceData';
 import { ResolvedAPIRegistrationPage } from './resolved-api-registration-page';
@@ -46,11 +46,11 @@ const mapStateToProps = (
     history: _.get(ownProps, 'history'),
     match: _.get(ownProps, 'match'),
     apiStatusItems: _.filter(
-      _.get(referenceData, ['items', 'apistatus']),
+      _.get(referenceData, ['items', REFERENCEDATA_PATH_APISTATUS]),
       item => !!item.code
     ),
     apiServiceTypeItems: _.filter(
-      _.get(referenceData, ['items', 'apiservicetype']),
+      _.get(referenceData, ['items', REFERENCEDATA_PATH_APISERVICETYPE]),
       item => !!item.code
     )
   };
@@ -61,9 +61,11 @@ const mapDispatchToProps = dispatch => ({
   fetchApisIfNeeded: catalogId => dispatch(fetchApisIfNeededAction(catalogId)),
   fetchHelptextsIfNeeded: () => dispatch(fetchHelptextsIfNeeded()),
   fetchApiStatusIfNeeded: () =>
-    dispatch(fetchReferenceDataIfNeededAction(REFERENCEDATA_APISTATUS)),
+    dispatch(fetchReferenceDataIfNeededAction(REFERENCEDATA_PATH_APISTATUS)),
   fetchApiServiceTypeIfNeeded: () =>
-    dispatch(fetchReferenceDataIfNeededAction(REFERENCEDATA_APISERVICETYPE)),
+    dispatch(
+      fetchReferenceDataIfNeededAction(REFERENCEDATA_PATH_APISERVICETYPE)
+    ),
   deleteApiItem: (catalogId, apiId) =>
     dispatch(deleteApiAction(catalogId, apiId)),
   apiSuccess: apiItem => dispatch(apiSuccessAction(apiItem))
