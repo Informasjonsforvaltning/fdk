@@ -29,6 +29,7 @@ const renderReferenceFields = (
         name={`${item}.source`}
         component={SelectField}
         items={referenceDatasetsItems}
+        labelKey="title"
       />
     </div>
     <div className="d-flex align-items-end">

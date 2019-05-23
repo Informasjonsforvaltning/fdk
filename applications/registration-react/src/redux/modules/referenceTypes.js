@@ -16,16 +16,10 @@ export default function referenceTypes(
       };
     }
     case REFERENCETYPES_SUCCESS: {
-      const referenceTypesItems = action.payload.map(item => ({
-        uri: item.uri,
-        code: item.code,
-        prefLabel_no: item.prefLabel.nb,
-        prefLabel_nb: item.prefLabel.nb
-      }));
       return {
         ...state,
         isFetchingReferenceTypes: false,
-        referenceTypesItems
+        referenceTypesItems: action.payload
       };
     }
     case REFERENCETYPES_FAILURE: {

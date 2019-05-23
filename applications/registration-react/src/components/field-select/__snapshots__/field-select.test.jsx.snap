@@ -25,7 +25,7 @@ exports[`should render SelectField correctly 1`] = `
     inputProps={Object {}}
     isLoading={false}
     joinValues={false}
-    labelKey="prefLabel_no"
+    labelKey="label"
     matchPos="any"
     matchProp="any"
     menuBuffer={0}
@@ -39,6 +39,7 @@ exports[`should render SelectField correctly 1`] = `
     onSelectResetsInput={true}
     openOnClick={true}
     optionComponent={[Function]}
+    optionRenderer={[Function]}
     options={
       Array [
         Object {
@@ -171,6 +172,7 @@ exports[`should render SelectField correctly 1`] = `
     trimFilter={true}
     valueComponent={[Function]}
     valueKey="uri"
+    valueRenderer={[Function]}
   />
 </div>
 `;

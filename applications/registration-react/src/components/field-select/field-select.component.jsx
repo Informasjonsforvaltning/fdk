@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
 import 'react-select/dist/react-select.css';
+import { getTranslateText } from '../../lib/translateText';
 
 const handleChange = (props, selectedValue, valueKey, saveObject) => {
   const { input, items } = props;
@@ -35,6 +36,7 @@ const SelectField = ({
   meta: { touched, error, warning },
   items,
   valueKey = 'uri',
+  labelKey = 'prefLabel',
   saveObject
 }) => {
   let referencedInputObject;
@@ -56,7 +58,8 @@ const SelectField = ({
             : input.value[valueKey]
         }
         valueKey={valueKey}
-        labelKey="prefLabel_no"
+        optionRenderer={option => getTranslateText(option[labelKey])}
+        valueRenderer={option => getTranslateText(option[labelKey])}
         onChange={selectedValue =>
           handleChange({ input, items }, selectedValue, valueKey, saveObject)
         }
@@ -78,6 +81,7 @@ SelectField.defaultProps = {
   meta: null,
   items: null,
   valueKey: 'uri',
+  labelKey: 'prefLabel',
   saveObject: true
 };
 
@@ -86,6 +90,7 @@ SelectField.propTypes = {
   meta: PropTypes.object,
   items: PropTypes.array,
   valueKey: PropTypes.string,
+  labelKey: PropTypes.string,
   saveObject: PropTypes.bool
 };
 
