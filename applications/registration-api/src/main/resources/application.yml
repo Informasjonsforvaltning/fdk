@@ -78,7 +78,7 @@ spring:
 application:
   authentication:
     includedOrgforms: ADOS,FKF,FYLK,IKS,KF,KIRK,KOMM,ORGL,SF,STAT,SÆR
-    includedOrgnr: 974760673
+    includedOrgnr: 974760673,920210023,938275130
   openDataEnhet: ${FDK_ENHETSREGISTERET_URL:https://data.brreg.no/enhetsregisteret/api/enheter/}
 server:
   tomcat:
