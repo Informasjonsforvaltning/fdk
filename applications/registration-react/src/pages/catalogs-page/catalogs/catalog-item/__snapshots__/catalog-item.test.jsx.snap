@@ -6,7 +6,6 @@ exports[`should render CatalogItem correctly with itemsCount set to 10 1`] = `
 >
   <Link
     className="catalog-item"
-    replace={false}
     to="/catalogs/123/datasets"
   >
     <div
@@ -35,7 +34,6 @@ exports[`should render CatalogItem correctly with missing itemsCount 1`] = `
 >
   <Link
     className="catalog-item"
-    replace={false}
     to="/catalogs/123/datasets"
   >
     <div

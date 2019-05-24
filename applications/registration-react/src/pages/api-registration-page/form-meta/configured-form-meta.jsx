@@ -6,8 +6,7 @@ import shouldAsyncValidate from '../../../lib/shouldAsyncValidate';
 const config = {
   form: 'apiMeta',
   shouldAsyncValidate,
-  asyncValidate,
-  asyncChangeFields: []
+  asyncValidate
 };
 
 export const ConfiguredFormMeta = reduxForm(config)(FormMeta);
