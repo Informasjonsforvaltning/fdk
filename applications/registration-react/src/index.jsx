@@ -10,14 +10,24 @@ import { getConfig } from './services/config';
 import { configureLocalization } from './lib/localization';
 import { App } from './app/app';
 import { configureReferenceDataApi } from './api/reference-data-api';
+import { configureReferenceDataApiActions } from './redux/modules/referenceData';
 
 async function configureInjectables() {
   const config = await getConfig();
   const store = configureStore(config.store);
   const localization = configureLocalization(config.registrationLanguage);
   const referenceDataApi = configureReferenceDataApi(config.referenceDataApi);
+  const referenceDataApiActions = configureReferenceDataApiActions(
+    referenceDataApi
+  );
 
-  return { config, store, localization, referenceDataApi };
+  return {
+    config,
+    store,
+    localization,
+    referenceDataApi,
+    referenceDataApiActions
+  };
 }
 
 async function render() {

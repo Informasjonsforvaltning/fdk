@@ -11,7 +11,6 @@ import { getApiFormStatusById } from '../../redux/modules/api-form-status';
 import { fetchHelptextsIfNeeded } from '../../redux/modules/helptexts';
 import { fetchCatalogIfNeeded } from '../../redux/modules/catalog';
 import {
-  fetchReferenceDataIfNeededAction,
   REFERENCEDATA_PATH_APISERVICETYPE,
   REFERENCEDATA_PATH_APISTATUS
 } from '../../redux/modules/referenceData';
@@ -58,13 +57,22 @@ const mapStateToProps = (
 const mapDispatchToProps = (dispatch, ownProps) => ({
   onAfterRender: () => {
     const catalogId = _.get(ownProps, ['match', 'params', 'catalogId']);
+    const { referenceDataApiActions } = ownProps;
 
     batch(() => {
       dispatch(fetchCatalogIfNeeded(catalogId));
       dispatch(fetchApisIfNeededAction(catalogId));
       dispatch(fetchHelptextsIfNeeded());
-      dispatch(fetchReferenceDataIfNeededAction(REFERENCEDATA_PATH_APISTATUS));
-      dispatch(fetchReferenceDataIfNeededAction(REFERENCEDATA_PATH_APISERVICETYPE));
+      dispatch(
+        referenceDataApiActions.fetchReferenceDataIfNeededAction(
+          REFERENCEDATA_PATH_APISTATUS
+        )
+      );
+      dispatch(
+        referenceDataApiActions.fetchReferenceDataIfNeededAction(
+          REFERENCEDATA_PATH_APISERVICETYPE
+        )
+      );
     });
   },
   deleteApiItem: (catalogId, apiId) =>

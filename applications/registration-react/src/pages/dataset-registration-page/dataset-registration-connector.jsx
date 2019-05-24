@@ -9,7 +9,6 @@ import {
 } from '../../redux/modules/datasets';
 import { fetchHelptextsIfNeeded } from '../../redux/modules/helptexts';
 import {
-  fetchReferenceDataIfNeededAction,
   REFERENCEDATA_PATH_FREQUENCY,
   REFERENCEDATA_PATH_LOS,
   REFERENCEDATA_PATH_OPENLICENCES,
@@ -117,20 +116,41 @@ const mapStateToProps = (
 const mapDispatchToProps = (dispatch, ownProps) => ({
   onChangeDatasetId: () => {
     const catalogId = _.get(ownProps, ['match', 'params', 'catalogId']);
+    const { referenceDataApiActions } = ownProps;
 
     batch(() => {
       dispatch(fetchDatasetsIfNeeded(catalogId));
       dispatch(fetchHelptextsIfNeeded());
-      dispatch(fetchReferenceDataIfNeededAction(REFERENCEDATA_PATH_PROVENANCE));
-      dispatch(fetchReferenceDataIfNeededAction(REFERENCEDATA_PATH_FREQUENCY));
-      dispatch(fetchReferenceDataIfNeededAction(REFERENCEDATA_PATH_THEMES));
       dispatch(
-        fetchReferenceDataIfNeededAction(REFERENCEDATA_PATH_REFERENCETYPES)
+        referenceDataApiActions.fetchReferenceDataIfNeededAction(
+          REFERENCEDATA_PATH_PROVENANCE
+        )
       );
       dispatch(
-        fetchReferenceDataIfNeededAction(REFERENCEDATA_PATH_OPENLICENCES)
+        referenceDataApiActions.fetchReferenceDataIfNeededAction(
+          REFERENCEDATA_PATH_FREQUENCY
+        )
       );
-      dispatch(fetchReferenceDataIfNeededAction(REFERENCEDATA_PATH_LOS));
+      dispatch(
+        referenceDataApiActions.fetchReferenceDataIfNeededAction(
+          REFERENCEDATA_PATH_THEMES
+        )
+      );
+      dispatch(
+        referenceDataApiActions.fetchReferenceDataIfNeededAction(
+          REFERENCEDATA_PATH_REFERENCETYPES
+        )
+      );
+      dispatch(
+        referenceDataApiActions.fetchReferenceDataIfNeededAction(
+          REFERENCEDATA_PATH_OPENLICENCES
+        )
+      );
+      dispatch(
+        referenceDataApiActions.fetchReferenceDataIfNeededAction(
+          REFERENCEDATA_PATH_LOS
+        )
+      );
     });
   },
 
