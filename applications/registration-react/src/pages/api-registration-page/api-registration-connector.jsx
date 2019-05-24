@@ -1,4 +1,4 @@
-import { connect } from 'react-redux';
+import { batch, connect } from 'react-redux';
 import _ from 'lodash';
 
 import {
@@ -55,16 +55,18 @@ const mapStateToProps = (
   };
 };
 
-const mapDispatchToProps = dispatch => ({
-  fetchCatalogIfNeeded: catalogId => dispatch(fetchCatalogIfNeeded(catalogId)),
-  fetchApisIfNeeded: catalogId => dispatch(fetchApisIfNeededAction(catalogId)),
-  fetchHelptextsIfNeeded: () => dispatch(fetchHelptextsIfNeeded()),
-  fetchApiStatusIfNeeded: () =>
-    dispatch(fetchReferenceDataIfNeededAction(REFERENCEDATA_PATH_APISTATUS)),
-  fetchApiServiceTypeIfNeeded: () =>
-    dispatch(
-      fetchReferenceDataIfNeededAction(REFERENCEDATA_PATH_APISERVICETYPE)
-    ),
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  onAfterRender: () => {
+    const catalogId = _.get(ownProps, ['match', 'params', 'catalogId']);
+
+    batch(() => {
+      dispatch(fetchCatalogIfNeeded(catalogId));
+      dispatch(fetchApisIfNeededAction(catalogId));
+      dispatch(fetchHelptextsIfNeeded());
+      dispatch(fetchReferenceDataIfNeededAction(REFERENCEDATA_PATH_APISTATUS));
+      dispatch(fetchReferenceDataIfNeededAction(REFERENCEDATA_PATH_APISERVICETYPE));
+    });
+  },
   deleteApiItem: (catalogId, apiId) =>
     dispatch(deleteApiAction(catalogId, apiId)),
   apiSuccess: apiItem => dispatch(apiSuccessAction(apiItem))

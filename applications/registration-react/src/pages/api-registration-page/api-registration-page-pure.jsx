@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { parse } from 'qs';
@@ -18,11 +18,7 @@ import { ConnectedFormPublish } from './connected-form-publish/connected-form-pu
 import { APISpecificationInfo } from './api-specification-info.component';
 
 export const ApiRegistrationPagePure = ({
-  fetchCatalogIfNeeded,
-  fetchApisIfNeeded,
-  fetchHelptextsIfNeeded,
-  fetchApiStatusIfNeeded,
-  fetchApiServiceTypeIfNeeded,
+  onAfterRender,
   deleteApiItem,
   catalogItem,
   lastSaved,
@@ -53,11 +49,7 @@ export const ApiRegistrationPagePure = ({
     parse(_.get(location, 'search'), { ignoreQueryPrefix: true }) || {};
   const info = _.get(item, ['apiSpecification', 'info']);
 
-  fetchCatalogIfNeeded(catalogId);
-  fetchApisIfNeeded(catalogId);
-  fetchHelptextsIfNeeded();
-  fetchApiStatusIfNeeded();
-  fetchApiServiceTypeIfNeeded();
+  useEffect(onAfterRender);
 
   const deleteApi = () => {
     // const { history, match } = props;
@@ -263,11 +255,7 @@ export const ApiRegistrationPagePure = ({
 };
 
 ApiRegistrationPagePure.defaultProps = {
-  fetchCatalogIfNeeded: _.noop,
-  fetchApisIfNeeded: _.noop,
-  fetchHelptextsIfNeeded: _.noop,
-  fetchApiStatusIfNeeded: _.noop,
-  fetchApiServiceTypeIfNeeded: _.noop,
+  onAfterRender: _.noop,
   deleteApiItem: _.noop,
   catalogItem: null,
   lastSaved: null,
@@ -294,11 +282,7 @@ ApiRegistrationPagePure.defaultProps = {
 };
 
 ApiRegistrationPagePure.propTypes = {
-  fetchCatalogIfNeeded: PropTypes.func,
-  fetchApisIfNeeded: PropTypes.func,
-  fetchHelptextsIfNeeded: PropTypes.func,
-  fetchApiStatusIfNeeded: PropTypes.func,
-  fetchApiServiceTypeIfNeeded: PropTypes.func,
+  onAfterRender: PropTypes.func,
   deleteApiItem: PropTypes.func,
   catalogItem: PropTypes.object,
   lastSaved: PropTypes.string,
