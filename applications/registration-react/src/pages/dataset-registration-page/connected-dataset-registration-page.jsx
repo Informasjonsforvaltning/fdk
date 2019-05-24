@@ -1,6 +1,6 @@
-import { RegDataset } from './dataset-registration-page';
+import { DatasetRegistrationPagePure } from './dataset-registration-page-pure';
 import { datasetRegistrationConnector } from './dataset-registration-connector';
 
 export const ConnectedDatasetRegistrationPage = datasetRegistrationConnector(
-  RegDataset
+  DatasetRegistrationPagePure
 );

@@ -53,7 +53,7 @@ const isAllowedToPublish = (
   return true;
 };
 
-export class RegDataset extends React.Component {
+export class DatasetRegistrationPagePure extends React.Component {
   constructor(props) {
     super(props);
 
@@ -443,7 +443,7 @@ export class RegDataset extends React.Component {
   }
 }
 
-RegDataset.defaultProps = {
+DatasetRegistrationPagePure.defaultProps = {
   match: null,
   catalogId: null,
   datasetId: null,
@@ -486,7 +486,7 @@ RegDataset.defaultProps = {
   losItems: null
 };
 
-RegDataset.propTypes = {
+DatasetRegistrationPagePure.propTypes = {
   match: PropTypes.object,
   catalogId: PropTypes.string,
   datasetId: PropTypes.string,
