@@ -1,6 +1,5 @@
 import _ from 'lodash';
 import { resolve } from 'react-resolver';
-import { APIRegistrationPage } from './api-registration-page';
 import { getPublisherByOrgNr } from '../../api/get-publisher-by-orgnr';
 import { getDatasetByURI } from '../../api/datasets';
 
@@ -20,6 +19,4 @@ const mapProps = {
   }
 };
 
-export const ResolvedAPIRegistrationPage = resolve(mapProps)(
-  APIRegistrationPage
-);
+export const apiRegistrationResolver = resolve(mapProps);
