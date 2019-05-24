@@ -53,6 +53,30 @@ const isAllowedToPublish = (
   return true;
 };
 
+function deleteApi({
+  history,
+  match,
+  catalogId,
+  datasetItem,
+  deleteDatasetItem
+}) {
+  return axios
+    .delete(match.url)
+    .then(() => {
+      deleteDatasetItem(catalogId, _.get(datasetItem, 'id'));
+      if (history) {
+        history.push({
+          pathname: `/catalogs/${catalogId}/datasets`,
+          state: { confirmDelete: true }
+        });
+      }
+    })
+    .catch(response => {
+      const { error } = response;
+      return Promise.reject(error);
+    });
+}
+
 export class DatasetRegistrationPagePure extends React.Component {
   constructor(props) {
     super(props);
@@ -67,33 +91,6 @@ export class DatasetRegistrationPagePure extends React.Component {
     this.props.fetchReferenceTypesIfNeeded();
     this.props.fetchOpenLicensesIfNeeded();
     this.props.fetchReferenceDataLos();
-    this.deleteApi = this.deleteApi.bind(this);
-  }
-
-  deleteApi() {
-    const {
-      history,
-      match,
-      catalogId,
-      datasetItem,
-      deleteDatasetItem
-    } = this.props;
-
-    return axios
-      .delete(match.url)
-      .then(() => {
-        deleteDatasetItem(catalogId, _.get(datasetItem, 'id'));
-        if (history) {
-          history.push({
-            pathname: `/catalogs/${catalogId}/datasets`,
-            state: { confirmDelete: true }
-          });
-        }
-      })
-      .catch(response => {
-        const { error } = response;
-        return Promise.reject(error);
-      });
   }
 
   render() {
@@ -126,7 +123,10 @@ export class DatasetRegistrationPagePure extends React.Component {
       registrationStatus,
       catalogId,
       datasetId,
-      losItems
+      losItems,
+      history,
+      match,
+      deleteDatasetItem
     } = this.props;
     const datasetURL = window.location.pathname;
     const catalogDatasetsURL = datasetURL.substring(
@@ -411,7 +411,15 @@ export class DatasetRegistrationPagePure extends React.Component {
                   }
                   error={error}
                   justPublishedOrUnPublished={justPublishedOrUnPublished}
-                  onDelete={this.deleteApi}
+                  onDelete={() =>
+                    deleteApi({
+                      history,
+                      match,
+                      catalogId,
+                      datasetItem,
+                      deleteDatasetItem
+                    })
+                  }
                   allowPublish={isAllowedToPublish(
                     registrationStatus ||
                       _.get(datasetItem, 'registrationStatus', 'DRAFT'),
