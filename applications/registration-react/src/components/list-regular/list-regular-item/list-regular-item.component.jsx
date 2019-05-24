@@ -18,5 +18,5 @@ ListRegularItem.defaultProps = {
 
 ListRegularItem.propTypes = {
   asideContent: PropTypes.string,
-  mainContent: PropTypes.string
+  mainContent: PropTypes.oneOfType([PropTypes.string, PropTypes.element])
 };
