@@ -6,7 +6,7 @@ import { ConnectedCatalogsPage } from '../pages/catalogs-page/connected-catalogs
 import { ConnectedDatasetsListPage } from '../pages/dataset-list-page/connected-dataset-list-page';
 import { ConnectedAPIListPage } from '../pages/api-list-page/connected-api-list-page';
 import { ApiRegistrationPage } from '../pages/api-registration-page/api-registration-page';
-import { ConnectedDatasetRegistrationPage } from '../pages/dataset-registration-page/connected-dataset-registration-page';
+import { DatasetRegistrationPage } from '../pages/dataset-registration-page/dataset-registration-page';
 import { Header } from '../components/app-header/app-header.component';
 import { Breadcrumbs } from '../components/breadcrumbs/breadcrumbs.component';
 import Footer from '../components/app-footer/app-footer.component';
@@ -30,7 +30,7 @@ const Routes = (
     <ProtectedRoute
       exact
       path="/catalogs/:catalogId/datasets/:id"
-      component={ConnectedDatasetRegistrationPage}
+      component={DatasetRegistrationPage}
     />
     <ProtectedRoute
       exact
