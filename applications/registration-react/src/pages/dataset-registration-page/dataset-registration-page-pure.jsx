@@ -79,12 +79,8 @@ export class DatasetRegistrationPagePure extends React.Component {
       deleteDatasetItem
     } = this.props;
 
-    const api = {
-      Authorization: `Basic user:password`
-    };
-
     return axios
-      .delete(match.url, { headers: api })
+      .delete(match.url)
       .then(() => {
         deleteDatasetItem(catalogId, _.get(datasetItem, 'id'));
         if (history) {
