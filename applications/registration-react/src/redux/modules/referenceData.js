@@ -1,5 +1,6 @@
 import _ from 'lodash';
-import { fetchActions } from '../fetchActions';
+import axios from 'axios';
+import { reduxFsaThunk } from '../../lib/redux-fsa-thunk';
 
 const REFERENCEDATA_REQUEST = 'REFERENCEDATA_REQUEST';
 const REFERENCEDATA_SUCCESS = 'REFERENCEDATA_SUCCESS';
@@ -25,15 +26,18 @@ function shouldFetch(metaState) {
 
 export function fetchReferenceDataIfNeededAction(path) {
   return (dispatch, getState) => {
-    if (shouldFetch(_.get(getState(), ['referenceData', 'meta', path]))) {
-      dispatch(
-        fetchActions(`/reference-data/${path}`, [
-          { type: REFERENCEDATA_REQUEST, meta: { path } },
-          { type: REFERENCEDATA_SUCCESS, meta: { path } },
-          { type: REFERENCEDATA_FAILURE, meta: { path } }
-        ])
-      );
+    if (!shouldFetch(_.get(getState(), ['referenceData', 'meta', path]))) {
+      return;
     }
+
+    const task = () => axios.get(`/reference-data/${path}`).then(r => r.data);
+    const typeMap = {
+      onBeforeStart: { type: REFERENCEDATA_REQUEST, meta: { path } },
+      onSuccess: { type: REFERENCEDATA_SUCCESS, meta: { path } },
+      onError: { type: REFERENCEDATA_FAILURE, meta: { path } }
+    };
+    const thunk = reduxFsaThunk(task, typeMap);
+    dispatch(thunk);
   };
 }
 
