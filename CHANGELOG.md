@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+# [1.5.0](https://github.com/Informasjonsforvaltning/fdk/compare/v1.4.2...v1.5.0) (2019-05-24)
+
+
+### Bug Fixes
+
+* **registration-react:** Bump react-tag-autocomplete. Fixes console warning of ReactTags not setting onChange handler for input component ([0159584](https://github.com/Informasjonsforvaltning/fdk/commit/0159584))
+* **search:** [#1806](https://github.com/Informasjonsforvaltning/fdk/issues/1806) Chnaged colors on search and filter button. ([52157d5](https://github.com/Informasjonsforvaltning/fdk/commit/52157d5))
+* **search:** Update helptext in searchbox. ([d352405](https://github.com/Informasjonsforvaltning/fdk/commit/d352405))
+
+
+### Features
+
+* **search:** [#1851](https://github.com/Informasjonsforvaltning/fdk/issues/1851) Cross in searchbar for clearing text. ([ccd059a](https://github.com/Informasjonsforvaltning/fdk/commit/ccd059a))
+
+
+
+# Change Log
+
+All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
 ## [1.4.2](https://github.com/Informasjonsforvaltning/fdk/compare/v1.4.1...v1.4.2) (2019-05-20)
 
 
