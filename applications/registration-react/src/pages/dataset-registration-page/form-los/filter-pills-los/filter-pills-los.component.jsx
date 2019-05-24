@@ -34,7 +34,7 @@ const renderFilterPills = (input, losItems) => {
                 type="text"
                 defaultValue={_.get(item, 'uri')}
                 checked={false}
-                onClick={e => {
+                onChange={e => {
                   handleUpdateField(input, e);
                 }}
                 label={getTranslateText(_.get(item, 'name'))}
