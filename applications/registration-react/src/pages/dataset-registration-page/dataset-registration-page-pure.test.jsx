@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { RegDataset } from './dataset-registration-page';
+import { DatasetRegistrationPagePure } from './dataset-registration-page-pure';
 import helptexts from '../../../test/fixtures/helptext';
 
 let defaultProps;
@@ -30,10 +30,10 @@ beforeEach(() => {
     helptextItems: helptexts.helptextItems,
     isFetching: false
   };
-  wrapper = shallow(<RegDataset {...defaultProps} />);
+  wrapper = shallow(<DatasetRegistrationPagePure {...defaultProps} />);
 });
 
-test('should render RegDataset correctly', () => {
+test('should render DatasetRegistrationPagePure correctly', () => {
   expect(wrapper).toHaveLength(1);
   expect(wrapper).toMatchSnapshot();
 });
