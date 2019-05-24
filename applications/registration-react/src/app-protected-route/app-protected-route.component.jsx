@@ -90,7 +90,7 @@ ProtectedRoutePure.propTypes = {
   dispatch: PropTypes.func.isRequired,
   userItem: PropTypes.object,
   isFetchingUser: PropTypes.bool,
-  component: PropTypes.func
+  component: PropTypes.oneOfType([PropTypes.func, PropTypes.object])
 };
 
 function mapStateToProps({ user }) {

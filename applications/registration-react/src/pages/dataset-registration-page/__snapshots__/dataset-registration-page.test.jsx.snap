@@ -15,7 +15,6 @@ exports[`should render RegDataset correctly 1`] = `
       />
       <Link
         className="fdk-text-size-small fdk-color1 font-weight-light"
-        replace={false}
         to=""
       >
         Tilbake til katalogen

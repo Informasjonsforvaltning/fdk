@@ -13,8 +13,7 @@ const FormCatalog = reduxForm({
   form: 'catalog',
   validate,
   shouldAsyncValidate,
-  asyncValidate: putCatalogDataset,
-  asyncChangeFields: []
+  asyncValidate: putCatalogDataset
 })(
   connect(state => ({
     values: getFormValues('catalog')(state)

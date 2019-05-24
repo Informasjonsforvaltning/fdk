@@ -6,7 +6,6 @@ exports[`should render ListItem correctly "DRAFT" item 1`] = `
 >
   <Link
     className="w-100"
-    replace={false}
     to="/catalogs/123/datasets/1"
   >
     <div
@@ -40,7 +39,6 @@ exports[`should render ListItem correctly "PUBLISH" item 1`] = `
 >
   <Link
     className="w-100"
-    replace={false}
     to="/catalogs/123/datasets/1"
   >
     <div
@@ -74,7 +72,6 @@ exports[`should render ListItem correctly when missing title 1`] = `
 >
   <Link
     className="w-100"
-    replace={false}
     to="/catalogs/123/datasets/1"
   >
     <div

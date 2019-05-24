@@ -7,8 +7,7 @@ import { asyncValidateDatasetInvokePatch } from '../formsLib/asyncValidateDatase
 const config = {
   form: 'contactPoint',
   validate,
-  asyncValidate: asyncValidateDatasetInvokePatch,
-  asyncChangeFields: []
+  asyncValidate: asyncValidateDatasetInvokePatch
 };
 
 export const ConfiguredFormTitle = reduxForm(config)(FormContactPoint);

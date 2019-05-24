@@ -9,8 +9,7 @@ const config = {
   form: 'title',
   validate,
   shouldAsyncValidate,
-  asyncValidate: asyncValidateDatasetInvokePatch,
-  asyncChangeFields: []
+  asyncValidate: asyncValidateDatasetInvokePatch
 };
 
 export const ConfiguredFormTitle = reduxForm(config)(FormTitle);

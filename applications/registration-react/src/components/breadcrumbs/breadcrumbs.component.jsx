@@ -10,18 +10,28 @@ import './breadcrumbs.scss';
 
 // define some custom breadcrumbs for certain routes (optional)
 const routes = [
-  { path: '/', breadcrumb: <PathNameBreadcrumb pathName="home" /> },
+  {
+    path: '/',
+    breadcrumb: props => <PathNameBreadcrumb pathName="home" {...props} />
+  },
   {
     path: '/catalogs/:catalogId/apis',
-    breadcrumb: <PathNameBreadcrumb pathName="API-descriptions" />
+    breadcrumb: props => (
+      <PathNameBreadcrumb pathName="API-descriptions" {...props} />
+    )
   },
   {
     path: '/catalogs/:catalogId/datasets',
-    breadcrumb: <PathNameBreadcrumb pathName="Datasets" />
+    breadcrumb: props => <PathNameBreadcrumb pathName="Datasets" {...props} />
   },
   {
     path: '/catalogs/:catalogId/apis/import',
-    breadcrumb: <PathNameBreadcrumb pathName="Register a new API-description" />
+    breadcrumb: props => (
+      <PathNameBreadcrumb
+        pathName="Register a new API-description"
+        {...props}
+      />
+    )
   },
   {
     path: '/catalogs/:catalogId/apis/:id',
@@ -49,14 +59,14 @@ const PureBreadcrumbs = ({ breadcrumbs }) => {
             {breadcrumbs.map((breadcrumb, index) => (
               <span key={breadcrumb.key}>
                 {index < breadcrumbs.length - 1 && (
-                  <React.Fragment>
-                    <NavLink to={breadcrumb.props.match.url}>
-                      {breadcrumb}
+                  <>
+                    <NavLink to={breadcrumb.match.url}>
+                      {breadcrumb.breadcrumb}
                     </NavLink>
                     <i className="fa fa-angle-right fdk-fa-path" />
-                  </React.Fragment>
+                  </>
                 )}
-                {index === breadcrumbs.length - 1 && breadcrumb}
+                {index === breadcrumbs.length - 1 && breadcrumb.breadcrumb}
               </span>
             ))}
           </p>
