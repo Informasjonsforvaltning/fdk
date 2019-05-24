@@ -5,7 +5,7 @@ import { ProtectedRoute } from '../app-protected-route/app-protected-route.compo
 import { ConnectedCatalogsPage } from '../pages/catalogs-page/connected-catalogs-page';
 import { ConnectedDatasetsListPage } from '../pages/dataset-list-page/connected-dataset-list-page';
 import { ConnectedAPIListPage } from '../pages/api-list-page/connected-api-list-page';
-import { ConnectedAPIRegistrationPage } from '../pages/api-registration-page/connected-api-registration-page';
+import { ApiRegistrationPage } from '../pages/api-registration-page/api-registration-page';
 import { ConnectedDatasetRegistrationPage } from '../pages/dataset-registration-page/connected-dataset-registration-page';
 import { Header } from '../components/app-header/app-header.component';
 import { Breadcrumbs } from '../components/breadcrumbs/breadcrumbs.component';
@@ -45,7 +45,7 @@ const Routes = (
     <ProtectedRoute
       exact
       path="/catalogs/:catalogId/apis/:id"
-      component={ConnectedAPIRegistrationPage}
+      component={ApiRegistrationPage}
     />
   </Switch>
 );
