@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import _ from 'lodash';
-import { APIRegistrationPage } from './api-registration-page';
+import { ApiRegistrationPagePure } from './api-registration-page-pure';
 import apisResponse from '../../mock/apis.response.json';
 
 const item = _.find(apisResponse._embedded.apiRegistrations, {
@@ -19,9 +19,9 @@ beforeEach(() => {
     fetchHelptextsIfNeeded,
     fetchCatalogIfNeeded
   };
-  wrapper = shallow(<APIRegistrationPage {...defaultProps} />);
+  wrapper = shallow(<ApiRegistrationPagePure {...defaultProps} />);
 });
 
-test('should render APIRegistrationPage correctly', () => {
+test('should render ApiRegistrationPagePure correctly', () => {
   expect(wrapper).toMatchSnapshot();
 });
