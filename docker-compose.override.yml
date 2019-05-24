@@ -123,6 +123,9 @@ services:
       - "8112:8080"
     environment:
       - JAVA_OPTS=-Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
+      - FDK_SQL_JDBC_CONNECTION=jdbc:postgresql://postgres:5432/postgres?currentSchema=fdkreference
+      - FDK_SQL_USERNAME=postgres
+      - FDK_SQL_PASSWORD=password
 
   registration-api:
     ports:
