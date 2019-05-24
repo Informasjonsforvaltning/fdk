@@ -1,6 +1,7 @@
-import { ResolvedAPIRegistrationPage } from './resolved-api-registration-page';
 import { apiRegistrationConnector } from './api-registration-connector';
+import { APIRegistrationPage } from './api-registration-page';
+import { apiRegistrationResolver } from './api-registration-resolver';
 
 export const ConnectedAPIRegistrationPage = apiRegistrationConnector(
-  ResolvedAPIRegistrationPage
+  apiRegistrationResolver(APIRegistrationPage)
 );
