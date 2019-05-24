@@ -1,9 +1,10 @@
 import _ from 'lodash';
 import { fetchActions } from '../fetchActions';
 
-export const REFERENCEEDATA_REQUEST = 'REFERENCEEDATA_REQUEST';
-export const REFERENCEEDATA_SUCCESS = 'REFERENCEEDATA_SUCCESS';
-export const REFERENCEEDATA_FAILURE = 'REFERENCEEDATA_FAILURE';
+const REFERENCEDATA_REQUEST = 'REFERENCEDATA_REQUEST';
+const REFERENCEDATA_SUCCESS = 'REFERENCEDATA_SUCCESS';
+const REFERENCEDATA_FAILURE = 'REFERENCEDATA_FAILURE';
+
 export const REFERENCEDATA_PATH_APISTATUS = 'codes/apistatus';
 export const REFERENCEDATA_PATH_APISERVICETYPE = 'codes/apiservicetype';
 export const REFERENCEDATA_PATH_LOS = 'los';
@@ -22,9 +23,9 @@ export function fetchReferenceDataIfNeededAction(path) {
     if (shouldFetch(_.get(getState(), ['referenceData', 'meta', path]))) {
       dispatch(
         fetchActions(`/reference-data/${path}`, [
-          { type: REFERENCEEDATA_REQUEST, meta: { path } },
-          { type: REFERENCEEDATA_SUCCESS, meta: { path } },
-          { type: REFERENCEEDATA_FAILURE, meta: { path } }
+          { type: REFERENCEDATA_REQUEST, meta: { path } },
+          { type: REFERENCEDATA_SUCCESS, meta: { path } },
+          { type: REFERENCEDATA_FAILURE, meta: { path } }
         ])
       );
     }
@@ -38,7 +39,7 @@ const initialState = {
 
 export function referenceDataReducer(state = initialState, action) {
   switch (action.type) {
-    case REFERENCEEDATA_REQUEST:
+    case REFERENCEDATA_REQUEST:
       return {
         items: { ...state.items },
         meta: {
@@ -47,7 +48,7 @@ export function referenceDataReducer(state = initialState, action) {
         }
       };
 
-    case REFERENCEEDATA_SUCCESS: {
+    case REFERENCEDATA_SUCCESS: {
       return {
         items: {
           ...state.items,
@@ -59,7 +60,7 @@ export function referenceDataReducer(state = initialState, action) {
         }
       };
     }
-    case REFERENCEEDATA_FAILURE: {
+    case REFERENCEDATA_FAILURE: {
       return {
         items: {
           ...state.items,
