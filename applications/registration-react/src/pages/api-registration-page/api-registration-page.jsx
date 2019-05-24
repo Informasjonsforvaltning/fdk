@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { parse } from 'qs';
 import axios from 'axios';
-import { withState, withHandlers, compose } from 'recompose';
 
 import { getTranslateText } from '../../lib/translateText';
 import localization from '../../lib/localization';
@@ -17,6 +16,7 @@ import { ConnectedFormApiStatus } from './form-apiStatus/connected-form-apiStatu
 import { StatusBarWithState } from '../../components/status-bar/status-bar.component';
 import { ConnectedFormPublish } from './connected-form-publish/connected-form-publish';
 import { APISpecificationInfo } from './api-specification-info.component';
+import { apiRegistrationStateEnhancer } from './api-registration-state-enhancer';
 
 export const APIRegistrationPagePure = ({
   fetchCatalogIfNeeded,
@@ -325,31 +325,7 @@ APIRegistrationPagePure.propTypes = {
   history: PropTypes.object
 };
 
-const enhance = compose(
-  withState(
-    'showImportSpecificationButtons',
-    'toggleShowImportSpecificationButtons',
-    false
-  ),
-  withState('showImportError', 'setShowImportError', false),
-  withState('showImportSuccess', 'setShowImportSuccess', false),
-  withHandlers({
-    onToggleShowImportSpecificationButtons: props => e => {
-      if (e) {
-        e.preventDefault();
-      }
-      props.toggleShowImportSpecificationButtons(
-        !props.showImportSpecificationButtons
-      );
-    },
-    handleShowImportError: props => value => {
-      props.setShowImportError(value);
-    },
-    handleShowImportSuccess: props => value => {
-      props.setShowImportSuccess(value);
-    }
-  })
+export const APIRegistrationPageWithState = apiRegistrationStateEnhancer(
+  APIRegistrationPagePure
 );
-
-export const APIRegistrationPageWithState = enhance(APIRegistrationPagePure);
 export const APIRegistrationPage = APIRegistrationPageWithState;
