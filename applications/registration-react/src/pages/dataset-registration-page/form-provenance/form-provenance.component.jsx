@@ -24,37 +24,37 @@ export const renderProvenance = componentProps => {
   const { input, label, provenanceItems } = componentProps;
   let provenanceNodes;
   if (provenanceItems) {
-    provenanceNodes = Object.keys(provenanceItems).map(key => {
-      if (provenanceItems[key].code) {
-        const { code } = provenanceItems[key];
+    provenanceNodes = provenanceItems.map(provenanceItem => {
+      if (provenanceItem.code) {
+        const { code } = provenanceItem;
         return (
-          <div key={key} className="form-check fdk-form-checkbox">
+          <div key={code} className="form-check fdk-form-checkbox">
             <input
               type="checkbox"
               name="provenance"
-              id={provenanceItems[key].code}
-              value={provenanceItems[key].code}
+              id={code}
+              value={code}
               checked={
                 input.value &&
                 input.value.uri &&
-                input.value.uri.includes(`${provenanceItems[key].uri}`)
+                input.value.uri.includes(`${provenanceItem.uri}`)
                   ? 'checked'
                   : ''
               }
               onChange={e =>
-                handleProvenanceChange(componentProps, e, provenanceItems[code])
+                handleProvenanceChange(componentProps, e, provenanceItem)
               }
             />
             {/* eslint-disable jsx-a11y/label-has-for */}
             <label
               className="form-check-label fdk-form-check-label"
-              htmlFor={provenanceItems[key].code}
+              htmlFor={code}
             />
             {/* eslint-enable jsx-a11y/label-has-for */}
             <span>
-              {provenanceItems[key].prefLabel[localization.getLanguage()] ||
-                provenanceItems[key].prefLabel.no ||
-                provenanceItems[key].prefLabel.nb}
+              {provenanceItem.prefLabel[localization.getLanguage()] ||
+                provenanceItem.prefLabel.no ||
+                provenanceItem.prefLabel.nb}
             </span>
           </div>
         );

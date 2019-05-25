@@ -500,7 +500,7 @@ RegDataset.propTypes = {
   datasetId: PropTypes.string,
   helptextItems: PropTypes.object,
   themesItems: PropTypes.array,
-  provenanceItems: PropTypes.object,
+  provenanceItems: PropTypes.array,
   frequencyItems: PropTypes.array,
   title: PropTypes.object,
   accessRights: PropTypes.object,
