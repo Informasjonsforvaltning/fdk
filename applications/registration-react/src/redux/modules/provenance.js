@@ -16,14 +16,10 @@ export default function provenance(
       };
     }
     case PROVENANCE_SUCCESS: {
-      const objFromArray = action.payload.reduce((accumulator, current) => {
-        accumulator[current.code] = current; // eslint-disable-line no-param-reassign
-        return accumulator;
-      }, {});
       return {
         ...state,
         isFetchingProvenance: false,
-        provenanceItems: objFromArray
+        provenanceItems: action.payload
       };
     }
     case PROVENANCE_FAILURE: {
