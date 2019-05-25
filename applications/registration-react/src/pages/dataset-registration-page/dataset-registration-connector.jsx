@@ -1,4 +1,4 @@
-import { connect } from 'react-redux';
+import { batch, connect } from 'react-redux';
 import _ from 'lodash';
 
 import {
@@ -114,26 +114,28 @@ const mapStateToProps = (
   };
 };
 
-const mapDispatchToProps = dispatch => ({
-  fetchProvenanceIfNeeded: () =>
-    dispatch(fetchReferenceDataIfNeededAction(REFERENCEDATA_PATH_PROVENANCE)),
-  fetchFrequencyIfNeeded: () =>
-    dispatch(fetchReferenceDataIfNeededAction(REFERENCEDATA_PATH_FREQUENCY)),
-  fetchThemesIfNeeded: () =>
-    dispatch(fetchReferenceDataIfNeededAction(REFERENCEDATA_PATH_THEMES)),
-  fetchReferenceTypesIfNeeded: () =>
-    dispatch(
-      fetchReferenceDataIfNeededAction(REFERENCEDATA_PATH_REFERENCETYPES)
-    ),
-  fetchOpenLicensesIfNeeded: () =>
-    dispatch(fetchReferenceDataIfNeededAction(REFERENCEDATA_PATH_OPENLICENCES)),
-  fetchHelptextsIfNeeded: () => dispatch(fetchHelptextsIfNeeded()),
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  onChangeDatasetId: () => {
+    const catalogId = _.get(ownProps, ['match', 'params', 'catalogId']);
+
+    batch(() => {
+      dispatch(fetchDatasetsIfNeeded(catalogId));
+      dispatch(fetchHelptextsIfNeeded());
+      dispatch(fetchReferenceDataIfNeededAction(REFERENCEDATA_PATH_PROVENANCE));
+      dispatch(fetchReferenceDataIfNeededAction(REFERENCEDATA_PATH_FREQUENCY));
+      dispatch(fetchReferenceDataIfNeededAction(REFERENCEDATA_PATH_THEMES));
+      dispatch(
+        fetchReferenceDataIfNeededAction(REFERENCEDATA_PATH_REFERENCETYPES)
+      );
+      dispatch(
+        fetchReferenceDataIfNeededAction(REFERENCEDATA_PATH_OPENLICENCES)
+      );
+      dispatch(fetchReferenceDataIfNeededAction(REFERENCEDATA_PATH_LOS));
+    });
+  },
+
   deleteDatasetItem: (catalogId, id) =>
-    dispatch(deleteDatasetItemAction(catalogId, id)),
-  fetchDatasetsIfNeeded: catalogId =>
-    dispatch(fetchDatasetsIfNeeded(catalogId)),
-  fetchReferenceDataLos: () =>
-    dispatch(fetchReferenceDataIfNeededAction(REFERENCEDATA_PATH_LOS))
+    dispatch(deleteDatasetItemAction(catalogId, id))
 });
 
 export const datasetRegistrationConnector = connect(
