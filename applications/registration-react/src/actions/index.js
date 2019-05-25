@@ -41,18 +41,6 @@ export function fetchFrequencyIfNeeded() {
     );
 }
 
-export function fetchThemesIfNeeded() {
-  return (dispatch, getState) =>
-    shouldFetchApi(getState().themes) &&
-    dispatch(
-      fetchActions('/reference-data/themes', [
-        actions.THEMES_REQUEST,
-        actions.THEMES_SUCCESS,
-        actions.THEMES_FAILURE
-      ])
-    );
-}
-
 export function fetchUserIfNeeded() {
   return (dispatch, getState) =>
     shouldFetchApi(getState().user) &&

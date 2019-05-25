@@ -4,7 +4,6 @@ import _ from 'lodash';
 import {
   fetchProvenanceIfNeeded,
   fetchFrequencyIfNeeded,
-  fetchThemesIfNeeded,
   fetchReferenceDatasetsIfNeeded
 } from '../../actions/index';
 import {
@@ -17,7 +16,8 @@ import {
   fetchReferenceDataIfNeededAction,
   REFERENCEDATA_PATH_LOS,
   REFERENCEDATA_PATH_OPENLICENCES,
-  REFERENCEDATA_PATH_REFERENCETYPES
+  REFERENCEDATA_PATH_REFERENCETYPES,
+  REFERENCEDATA_PATH_THEMES
 } from '../../redux/modules/referenceData';
 import { getDatasetFormStatusById } from '../../redux/modules/dataset-form-status';
 import { RegDataset } from './dataset-registration-page';
@@ -27,7 +27,6 @@ const mapStateToProps = (
     helptexts,
     provenance,
     frequency,
-    themes,
     referenceDatasets,
     form,
     datasetFormStatus,
@@ -49,10 +48,6 @@ const mapStateToProps = (
 
   const { frequencyItems } = frequency || {
     frequencyItems: null
-  };
-
-  const { themesItems } = themes || {
-    themesItems: null
   };
 
   const { referenceDatasetsItems } = referenceDatasets || {
@@ -90,7 +85,7 @@ const mapStateToProps = (
     helptextItems,
     provenanceItems,
     frequencyItems,
-    themesItems,
+    themesItems: _.get(referenceData, ['items', REFERENCEDATA_PATH_THEMES]),
     referenceTypesItems: _.get(referenceData, [
       'items',
       REFERENCEDATA_PATH_REFERENCETYPES
@@ -140,7 +135,8 @@ const mapStateToProps = (
 const mapDispatchToProps = dispatch => ({
   fetchProvenanceIfNeeded: () => dispatch(fetchProvenanceIfNeeded()),
   fetchFrequencyIfNeeded: () => dispatch(fetchFrequencyIfNeeded()),
-  fetchThemesIfNeeded: () => dispatch(fetchThemesIfNeeded()),
+  fetchThemesIfNeeded: () =>
+    dispatch(fetchReferenceDataIfNeededAction(REFERENCEDATA_PATH_THEMES)),
   fetchReferenceTypesIfNeeded: () =>
     dispatch(
       fetchReferenceDataIfNeededAction(REFERENCEDATA_PATH_REFERENCETYPES)

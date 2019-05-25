@@ -3,7 +3,6 @@ import { reducer as formReducer } from 'redux-form';
 import helptexts from './modules/helptexts';
 import provenance from './modules/provenance';
 import frequency from './modules/frequency';
-import themes from './modules/themes';
 import user from './modules/user';
 import app from './modules/app';
 import referenceDatasets from './modules/referenceDatasets';
@@ -25,7 +24,6 @@ const rootReducer = combineReducers({
   helptexts,
   provenance,
   frequency,
-  themes,
   user,
   referenceDatasets,
   catalog,
