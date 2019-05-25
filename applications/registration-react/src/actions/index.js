@@ -29,18 +29,6 @@ export function fetchProvenanceIfNeeded() {
     );
 }
 
-export function fetchFrequencyIfNeeded() {
-  return (dispatch, getState) =>
-    shouldFetchApi(getState().frequency) &&
-    dispatch(
-      fetchActions('/reference-data/codes/frequency', [
-        actions.FREQUENCY_REQUEST,
-        actions.FREQUENCY_SUCCESS,
-        actions.FREQUENCY_FAILURE
-      ])
-    );
-}
-
 export function fetchUserIfNeeded() {
   return (dispatch, getState) =>
     shouldFetchApi(getState().user) &&

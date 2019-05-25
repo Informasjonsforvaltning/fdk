@@ -3,7 +3,6 @@ import _ from 'lodash';
 
 import {
   fetchProvenanceIfNeeded,
-  fetchFrequencyIfNeeded,
   fetchReferenceDatasetsIfNeeded
 } from '../../actions/index';
 import {
@@ -14,6 +13,7 @@ import {
 import { fetchHelptextsIfNeeded } from '../../redux/modules/helptexts';
 import {
   fetchReferenceDataIfNeededAction,
+  REFERENCEDATA_PATH_FREQUENCY,
   REFERENCEDATA_PATH_LOS,
   REFERENCEDATA_PATH_OPENLICENCES,
   REFERENCEDATA_PATH_REFERENCETYPES,
@@ -26,7 +26,6 @@ const mapStateToProps = (
   {
     helptexts,
     provenance,
-    frequency,
     referenceDatasets,
     form,
     datasetFormStatus,
@@ -44,10 +43,6 @@ const mapStateToProps = (
 
   const { provenanceItems } = provenance || {
     provenanceItems: null
-  };
-
-  const { frequencyItems } = frequency || {
-    frequencyItems: null
   };
 
   const { referenceDatasetsItems } = referenceDatasets || {
@@ -84,7 +79,10 @@ const mapStateToProps = (
   return {
     helptextItems,
     provenanceItems,
-    frequencyItems,
+    frequencyItems: _.get(referenceData, [
+      'items',
+      REFERENCEDATA_PATH_FREQUENCY
+    ]),
     themesItems: _.get(referenceData, ['items', REFERENCEDATA_PATH_THEMES]),
     referenceTypesItems: _.get(referenceData, [
       'items',
@@ -134,7 +132,8 @@ const mapStateToProps = (
 
 const mapDispatchToProps = dispatch => ({
   fetchProvenanceIfNeeded: () => dispatch(fetchProvenanceIfNeeded()),
-  fetchFrequencyIfNeeded: () => dispatch(fetchFrequencyIfNeeded()),
+  fetchFrequencyIfNeeded: () =>
+    dispatch(fetchReferenceDataIfNeededAction(REFERENCEDATA_PATH_FREQUENCY)),
   fetchThemesIfNeeded: () =>
     dispatch(fetchReferenceDataIfNeededAction(REFERENCEDATA_PATH_THEMES)),
   fetchReferenceTypesIfNeeded: () =>
