@@ -7,6 +7,7 @@ const REFERENCEDATA_FAILURE = 'REFERENCEDATA_FAILURE';
 
 export const REFERENCEDATA_PATH_APISERVICETYPE = 'codes/apiservicetype';
 export const REFERENCEDATA_PATH_APISTATUS = 'codes/apistatus';
+export const REFERENCEDATA_PATH_FREQUENCY = 'codes/frequency';
 export const REFERENCEDATA_PATH_OPENLICENCES = 'codes/openlicenses';
 export const REFERENCEDATA_PATH_REFERENCETYPES = 'codes/referencetypes';
 export const REFERENCEDATA_PATH_LOS = 'los';
