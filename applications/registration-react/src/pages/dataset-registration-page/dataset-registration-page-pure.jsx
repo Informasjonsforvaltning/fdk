@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { Link } from 'react-router-dom';
@@ -79,6 +79,7 @@ function deleteApi({
 
 export function DatasetRegistrationPagePure(props) {
   const {
+    onChangeDatasetId,
     helptextItems,
     themesItems,
     provenanceItems,
@@ -113,14 +114,7 @@ export function DatasetRegistrationPagePure(props) {
     deleteDatasetItem
   } = props;
 
-  props.fetchDatasetsIfNeeded(catalogId);
-  props.fetchHelptextsIfNeeded();
-  props.fetchProvenanceIfNeeded();
-  props.fetchFrequencyIfNeeded();
-  props.fetchThemesIfNeeded();
-  props.fetchReferenceTypesIfNeeded();
-  props.fetchOpenLicensesIfNeeded();
-  props.fetchReferenceDataLos();
+  useEffect(onChangeDatasetId, [props.datasetId]);
 
   const datasetURL = window.location.pathname;
   const catalogDatasetsURL = datasetURL.substring(
@@ -440,6 +434,7 @@ export function DatasetRegistrationPagePure(props) {
 }
 
 DatasetRegistrationPagePure.defaultProps = {
+  onChangeDatasetId: _.noop,
   match: null,
   catalogId: null,
   datasetId: null,
@@ -466,14 +461,6 @@ DatasetRegistrationPagePure.defaultProps = {
   referenceTypesItems: null,
   referenceDatasetsItems: null,
   openLicenseItems: null,
-  fetchProvenanceIfNeeded: _.noop,
-  fetchFrequencyIfNeeded: _.noop,
-  fetchThemesIfNeeded: _.noop,
-  fetchReferenceTypesIfNeeded: _.noop,
-  fetchOpenLicensesIfNeeded: _.noop,
-  fetchHelptextsIfNeeded: _.noop,
-  fetchDatasetsIfNeeded: _.noop,
-  fetchReferenceDataLos: _.noop,
   isSaving: false,
   error: null,
   justPublishedOrUnPublished: false,
@@ -483,6 +470,7 @@ DatasetRegistrationPagePure.defaultProps = {
 };
 
 DatasetRegistrationPagePure.propTypes = {
+  onChangeDatasetId: PropTypes.func,
   match: PropTypes.object,
   catalogId: PropTypes.string,
   datasetId: PropTypes.string,
@@ -509,14 +497,6 @@ DatasetRegistrationPagePure.propTypes = {
   referenceTypesItems: PropTypes.array,
   referenceDatasetsItems: PropTypes.array,
   openLicenseItems: PropTypes.array,
-  fetchProvenanceIfNeeded: PropTypes.func,
-  fetchFrequencyIfNeeded: PropTypes.func,
-  fetchThemesIfNeeded: PropTypes.func,
-  fetchReferenceTypesIfNeeded: PropTypes.func,
-  fetchOpenLicensesIfNeeded: PropTypes.func,
-  fetchHelptextsIfNeeded: PropTypes.func,
-  fetchDatasetsIfNeeded: PropTypes.func,
-  fetchReferenceDataLos: PropTypes.func,
   isSaving: PropTypes.bool,
   error: PropTypes.number,
   justPublishedOrUnPublished: PropTypes.bool,
