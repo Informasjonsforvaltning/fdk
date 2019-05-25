@@ -57,7 +57,7 @@ export class RegDataset extends React.Component {
   constructor(props) {
     super(props);
 
-    const { catalogId, fetchReferenceDataLos } = this.props;
+    const { catalogId } = this.props;
 
     this.props.fetchDatasetsIfNeeded(catalogId);
     this.props.fetchHelptextsIfNeeded();
@@ -66,7 +66,7 @@ export class RegDataset extends React.Component {
     this.props.fetchThemesIfNeeded();
     this.props.fetchReferenceTypesIfNeeded();
     this.props.fetchOpenLicensesIfNeeded();
-    fetchReferenceDataLos();
+    this.props.fetchReferenceDataLos();
     this.deleteApi = this.deleteApi.bind(this);
   }
 

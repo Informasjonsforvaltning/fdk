@@ -77,18 +77,6 @@ export function fetchReferenceTypesIfNeeded() {
     );
 }
 
-export function fetchOpenLicensesIfNeeded() {
-  return (dispatch, getState) =>
-    shouldFetchApi(getState().openlicenses) &&
-    dispatch(
-      fetchActions('reference-data/codes/openlicenses', [
-        actions.OPENLICENSES_REQUEST,
-        actions.OPENLICENSES_SUCCESS,
-        actions.OPENLICENSES_FAILURE
-      ])
-    );
-}
-
 export function publishDataset(value) {
   return dispatch =>
     dispatch({
