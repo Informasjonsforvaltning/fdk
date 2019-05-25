@@ -9,6 +9,7 @@ export const REFERENCEDATA_PATH_APISERVICETYPE = 'codes/apiservicetype';
 export const REFERENCEDATA_PATH_APISTATUS = 'codes/apistatus';
 export const REFERENCEDATA_PATH_FREQUENCY = 'codes/frequency';
 export const REFERENCEDATA_PATH_OPENLICENCES = 'codes/openlicenses';
+export const REFERENCEDATA_PATH_PROVENANCE = 'codes/provenancestatement';
 export const REFERENCEDATA_PATH_REFERENCETYPES = 'codes/referencetypes';
 export const REFERENCEDATA_PATH_LOS = 'los';
 export const REFERENCEDATA_PATH_THEMES = 'themes';
