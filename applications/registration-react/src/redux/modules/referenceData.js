@@ -10,6 +10,7 @@ export const REFERENCEDATA_PATH_APISTATUS = 'codes/apistatus';
 export const REFERENCEDATA_PATH_OPENLICENCES = 'codes/openlicenses';
 export const REFERENCEDATA_PATH_REFERENCETYPES = 'codes/referencetypes';
 export const REFERENCEDATA_PATH_LOS = 'los';
+export const REFERENCEDATA_PATH_THEMES = 'themes';
 
 function shouldFetch(metaState) {
   const threshold = 60 * 1000; // seconds
