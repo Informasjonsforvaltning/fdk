@@ -65,18 +65,6 @@ export function fetchUserIfNeeded() {
     );
 }
 
-export function fetchReferenceTypesIfNeeded() {
-  return (dispatch, getState) =>
-    shouldFetchApi(getState().referenceTypes) &&
-    dispatch(
-      fetchActions('/reference-data/codes/referencetypes', [
-        actions.REFERENCETYPES_REQUEST,
-        actions.REFERENCETYPES_SUCCESS,
-        actions.REFERENCETYPES_FAILURE
-      ])
-    );
-}
-
 export function publishDataset(value) {
   return dispatch =>
     dispatch({

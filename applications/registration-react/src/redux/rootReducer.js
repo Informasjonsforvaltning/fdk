@@ -6,7 +6,6 @@ import frequency from './modules/frequency';
 import themes from './modules/themes';
 import user from './modules/user';
 import app from './modules/app';
-import referenceTypes from './modules/referenceTypes';
 import referenceDatasets from './modules/referenceDatasets';
 import catalog from './modules/catalog';
 import datasets from './modules/datasets';
@@ -28,7 +27,6 @@ const rootReducer = combineReducers({
   frequency,
   themes,
   user,
-  referenceTypes,
   referenceDatasets,
   catalog,
   datasets,
