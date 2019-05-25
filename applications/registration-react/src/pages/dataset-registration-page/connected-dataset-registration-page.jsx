@@ -1,10 +1,7 @@
 import { connect } from 'react-redux';
 import _ from 'lodash';
 
-import {
-  fetchProvenanceIfNeeded,
-  fetchReferenceDatasetsIfNeeded
-} from '../../actions/index';
+import { fetchReferenceDatasetsIfNeeded } from '../../actions/index';
 import {
   fetchDatasetsIfNeeded,
   deleteDatasetItemAction,
@@ -16,6 +13,7 @@ import {
   REFERENCEDATA_PATH_FREQUENCY,
   REFERENCEDATA_PATH_LOS,
   REFERENCEDATA_PATH_OPENLICENCES,
+  REFERENCEDATA_PATH_PROVENANCE,
   REFERENCEDATA_PATH_REFERENCETYPES,
   REFERENCEDATA_PATH_THEMES
 } from '../../redux/modules/referenceData';
@@ -25,7 +23,6 @@ import { RegDataset } from './dataset-registration-page';
 const mapStateToProps = (
   {
     helptexts,
-    provenance,
     referenceDatasets,
     form,
     datasetFormStatus,
@@ -39,10 +36,6 @@ const mapStateToProps = (
 
   const { helptextItems } = helptexts || {
     helptextItems: null
-  };
-
-  const { provenanceItems } = provenance || {
-    provenanceItems: null
   };
 
   const { referenceDatasetsItems } = referenceDatasets || {
@@ -78,7 +71,10 @@ const mapStateToProps = (
 
   return {
     helptextItems,
-    provenanceItems,
+    provenanceItems: _.get(referenceData, [
+      'items',
+      REFERENCEDATA_PATH_PROVENANCE
+    ]),
     frequencyItems: _.get(referenceData, [
       'items',
       REFERENCEDATA_PATH_FREQUENCY
@@ -131,7 +127,8 @@ const mapStateToProps = (
 };
 
 const mapDispatchToProps = dispatch => ({
-  fetchProvenanceIfNeeded: () => dispatch(fetchProvenanceIfNeeded()),
+  fetchProvenanceIfNeeded: () =>
+    dispatch(fetchReferenceDataIfNeededAction(REFERENCEDATA_PATH_PROVENANCE)),
   fetchFrequencyIfNeeded: () =>
     dispatch(fetchReferenceDataIfNeededAction(REFERENCEDATA_PATH_FREQUENCY)),
   fetchThemesIfNeeded: () =>

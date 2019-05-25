@@ -17,18 +17,6 @@ export function fetchReferenceDatasetsIfNeeded(datasetURL) {
     );
 }
 
-export function fetchProvenanceIfNeeded() {
-  return (dispatch, getState) =>
-    shouldFetchApi(getState().provenance) &&
-    dispatch(
-      fetchActions('/reference-data/codes/provenancestatement', [
-        actions.PROVENANCE_REQUEST,
-        actions.PROVENANCE_SUCCESS,
-        actions.PROVENANCE_FAILURE
-      ])
-    );
-}
-
 export function fetchUserIfNeeded() {
   return (dispatch, getState) =>
     shouldFetchApi(getState().user) &&
