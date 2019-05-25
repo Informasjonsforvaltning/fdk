@@ -5,18 +5,6 @@ function shouldFetchApi(state) {
   return !state.isFetching;
 }
 
-export function fetchDatasetIfNeeded(datasetURL) {
-  return (dispatch, getState) =>
-    shouldFetchApi(getState().dataset) &&
-    dispatch(
-      fetchActions(datasetURL, [
-        actions.DATASET_REQUEST,
-        actions.DATASET_SUCCESS,
-        actions.DATASET_FAILURE
-      ])
-    );
-}
-
 export function fetchReferenceDatasetsIfNeeded(datasetURL) {
   return (dispatch, getState) =>
     shouldFetchApi(getState().referenceDatasets) &&
