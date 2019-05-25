@@ -6,8 +6,7 @@ import {
   fetchFrequencyIfNeeded,
   fetchThemesIfNeeded,
   fetchReferenceTypesIfNeeded,
-  fetchReferenceDatasetsIfNeeded,
-  fetchOpenLicensesIfNeeded
+  fetchReferenceDatasetsIfNeeded
 } from '../../actions/index';
 import {
   fetchDatasetsIfNeeded,
@@ -17,7 +16,8 @@ import {
 import { fetchHelptextsIfNeeded } from '../../redux/modules/helptexts';
 import {
   fetchReferenceDataIfNeededAction,
-  REFERENCEDATA_PATH_LOS
+  REFERENCEDATA_PATH_LOS,
+  REFERENCEDATA_PATH_OPENLICENCES
 } from '../../redux/modules/referenceData';
 import { getDatasetFormStatusById } from '../../redux/modules/dataset-form-status';
 import { RegDataset } from './dataset-registration-page';
@@ -30,7 +30,6 @@ const mapStateToProps = (
     themes,
     referenceTypes,
     referenceDatasets,
-    openlicenses,
     form,
     datasetFormStatus,
     datasets,
@@ -63,10 +62,6 @@ const mapStateToProps = (
 
   const { referenceDatasetsItems } = referenceDatasets || {
     referenceDatasetsItems: null
-  };
-
-  const { openLicenseItems } = openlicenses || {
-    openLicenseItems: null
   };
 
   const title = form && form.title ? form.title : {};
@@ -103,7 +98,10 @@ const mapStateToProps = (
     themesItems,
     referenceTypesItems,
     referenceDatasetsItems,
-    openLicenseItems,
+    openLicenseItems: _.get(referenceData, [
+      'items',
+      REFERENCEDATA_PATH_OPENLICENCES
+    ]),
     title,
     accessRights,
     formThemes,
@@ -148,7 +146,8 @@ const mapDispatchToProps = dispatch => ({
   fetchReferenceTypesIfNeeded: () => dispatch(fetchReferenceTypesIfNeeded()),
   fetchReferenceDatasetsIfNeeded: catalogDatasetsURL =>
     dispatch(fetchReferenceDatasetsIfNeeded(catalogDatasetsURL)),
-  fetchOpenLicensesIfNeeded: () => dispatch(fetchOpenLicensesIfNeeded()),
+  fetchOpenLicensesIfNeeded: () =>
+    dispatch(fetchReferenceDataIfNeededAction(REFERENCEDATA_PATH_OPENLICENCES)),
   fetchHelptextsIfNeeded: () => dispatch(fetchHelptextsIfNeeded()),
   deleteDatasetItem: (catalogId, id) =>
     dispatch(deleteDatasetItemAction(catalogId, id)),

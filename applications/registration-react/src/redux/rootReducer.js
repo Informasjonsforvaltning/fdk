@@ -11,7 +11,6 @@ import referenceDatasets from './modules/referenceDatasets';
 import catalog from './modules/catalog';
 import datasets from './modules/datasets';
 import catalogs from './modules/catalogs';
-import openlicenses from './modules/openlicenses';
 import apis from './modules/apis';
 import { featureToggleReducer } from './modules/featureToggle';
 import apiFormStatus from './modules/api-form-status';
@@ -34,7 +33,6 @@ const rootReducer = combineReducers({
   catalog,
   datasets,
   catalogs,
-  openlicenses,
   apis,
   apiFormStatus,
   datasetFormStatus,
