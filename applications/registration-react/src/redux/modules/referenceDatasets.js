@@ -6,14 +6,14 @@ import {
 } from '../../constants/ActionTypes';
 
 export default function referenceDatasets(
-  state = { isFetchingReferenceDatasets: false, referenceDatasetsItems: null },
+  state = { isFetching: false, referenceDatasetsItems: null },
   action
 ) {
   switch (action.type) {
     case REFERENCEDATASETS_REQUEST: {
       return {
         ...state,
-        isFetchingReferenceDatasets: true
+        isFetching: true
       };
     }
     case REFERENCEDATASETS_SUCCESS: {
@@ -28,14 +28,14 @@ export default function referenceDatasets(
       }));
       return {
         ...state,
-        isFetchingReferenceDatasets: false,
+        isFetching: false,
         referenceDatasetsItems
       };
     }
     case REFERENCEDATASETS_FAILURE: {
       return {
         ...state,
-        isFetchingReferenceDatasets: false,
+        isFetching: false,
         referenceDatasetsItems: null
       };
     }
