@@ -5,7 +5,6 @@ import {
   fetchProvenanceIfNeeded,
   fetchFrequencyIfNeeded,
   fetchThemesIfNeeded,
-  fetchReferenceTypesIfNeeded,
   fetchReferenceDatasetsIfNeeded
 } from '../../actions/index';
 import {
@@ -17,7 +16,8 @@ import { fetchHelptextsIfNeeded } from '../../redux/modules/helptexts';
 import {
   fetchReferenceDataIfNeededAction,
   REFERENCEDATA_PATH_LOS,
-  REFERENCEDATA_PATH_OPENLICENCES
+  REFERENCEDATA_PATH_OPENLICENCES,
+  REFERENCEDATA_PATH_REFERENCETYPES
 } from '../../redux/modules/referenceData';
 import { getDatasetFormStatusById } from '../../redux/modules/dataset-form-status';
 import { RegDataset } from './dataset-registration-page';
@@ -28,7 +28,6 @@ const mapStateToProps = (
     provenance,
     frequency,
     themes,
-    referenceTypes,
     referenceDatasets,
     form,
     datasetFormStatus,
@@ -54,10 +53,6 @@ const mapStateToProps = (
 
   const { themesItems } = themes || {
     themesItems: null
-  };
-
-  const { referenceTypesItems } = referenceTypes || {
-    referenceTypesItems: null
   };
 
   const { referenceDatasetsItems } = referenceDatasets || {
@@ -96,7 +91,10 @@ const mapStateToProps = (
     provenanceItems,
     frequencyItems,
     themesItems,
-    referenceTypesItems,
+    referenceTypesItems: _.get(referenceData, [
+      'items',
+      REFERENCEDATA_PATH_REFERENCETYPES
+    ]),
     referenceDatasetsItems,
     openLicenseItems: _.get(referenceData, [
       'items',
@@ -143,7 +141,10 @@ const mapDispatchToProps = dispatch => ({
   fetchProvenanceIfNeeded: () => dispatch(fetchProvenanceIfNeeded()),
   fetchFrequencyIfNeeded: () => dispatch(fetchFrequencyIfNeeded()),
   fetchThemesIfNeeded: () => dispatch(fetchThemesIfNeeded()),
-  fetchReferenceTypesIfNeeded: () => dispatch(fetchReferenceTypesIfNeeded()),
+  fetchReferenceTypesIfNeeded: () =>
+    dispatch(
+      fetchReferenceDataIfNeededAction(REFERENCEDATA_PATH_REFERENCETYPES)
+    ),
   fetchReferenceDatasetsIfNeeded: catalogDatasetsURL =>
     dispatch(fetchReferenceDatasetsIfNeeded(catalogDatasetsURL)),
   fetchOpenLicensesIfNeeded: () =>
