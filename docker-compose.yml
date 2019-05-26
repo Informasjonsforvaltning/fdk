@@ -73,6 +73,7 @@ services:
     environment:
       - NODE_ENV
       - REGISTRATION_LANGUAGE
+      - SEARCH_HOST
       - SEARCH_HOSTNAME
 
 ### java modules
