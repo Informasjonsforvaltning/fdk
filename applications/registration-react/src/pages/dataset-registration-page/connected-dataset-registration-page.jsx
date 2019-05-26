@@ -1,11 +1,11 @@
 import { connect } from 'react-redux';
 import _ from 'lodash';
 
-import { fetchReferenceDatasetsIfNeeded } from '../../actions/index';
 import {
   fetchDatasetsIfNeeded,
   deleteDatasetItemAction,
-  getDatasetItemByDatasetiId
+  getDatasetItemByDatasetiId,
+  getDatasetItemsByCatalogId
 } from '../../redux/modules/datasets';
 import { fetchHelptextsIfNeeded } from '../../redux/modules/helptexts';
 import {
@@ -21,14 +21,7 @@ import { getDatasetFormStatusById } from '../../redux/modules/dataset-form-statu
 import { RegDataset } from './dataset-registration-page';
 
 const mapStateToProps = (
-  {
-    helptexts,
-    referenceDatasets,
-    form,
-    datasetFormStatus,
-    datasets,
-    referenceData
-  },
+  { helptexts, form, datasetFormStatus, datasets, referenceData },
   ownProps
 ) => {
   const id = _.get(ownProps, ['match', 'params', 'id']);
@@ -36,10 +29,6 @@ const mapStateToProps = (
 
   const { helptextItems } = helptexts || {
     helptextItems: null
-  };
-
-  const { referenceDatasetsItems } = referenceDatasets || {
-    referenceDatasetsItems: null
   };
 
   const title = form && form.title ? form.title : {};
@@ -84,7 +73,7 @@ const mapStateToProps = (
       'items',
       REFERENCEDATA_PATH_REFERENCETYPES
     ]),
-    referenceDatasetsItems,
+    referenceDatasetsItems: getDatasetItemsByCatalogId(datasets, catalogId),
     openLicenseItems: _.get(referenceData, [
       'items',
       REFERENCEDATA_PATH_OPENLICENCES
@@ -137,8 +126,6 @@ const mapDispatchToProps = dispatch => ({
     dispatch(
       fetchReferenceDataIfNeededAction(REFERENCEDATA_PATH_REFERENCETYPES)
     ),
-  fetchReferenceDatasetsIfNeeded: catalogDatasetsURL =>
-    dispatch(fetchReferenceDatasetsIfNeeded(catalogDatasetsURL)),
   fetchOpenLicensesIfNeeded: () =>
     dispatch(fetchReferenceDataIfNeededAction(REFERENCEDATA_PATH_OPENLICENCES)),
   fetchHelptextsIfNeeded: () => dispatch(fetchHelptextsIfNeeded()),

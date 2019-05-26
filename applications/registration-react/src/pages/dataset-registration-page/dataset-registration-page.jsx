@@ -70,13 +70,6 @@ export class RegDataset extends React.Component {
     this.deleteApi = this.deleteApi.bind(this);
   }
 
-  componentWillMount() {
-    const { catalogId } = this.props;
-    this.props.fetchReferenceDatasetsIfNeeded(
-      `/catalogs/${catalogId}/datasets?size=100`
-    );
-  }
-
   deleteApi() {
     const {
       history,
@@ -481,7 +474,6 @@ RegDataset.defaultProps = {
   fetchFrequencyIfNeeded: _.noop,
   fetchThemesIfNeeded: _.noop,
   fetchReferenceTypesIfNeeded: _.noop,
-  fetchReferenceDatasetsIfNeeded: _.noop,
   fetchOpenLicensesIfNeeded: _.noop,
   fetchHelptextsIfNeeded: _.noop,
   fetchDatasetsIfNeeded: _.noop,
@@ -525,7 +517,6 @@ RegDataset.propTypes = {
   fetchFrequencyIfNeeded: PropTypes.func,
   fetchThemesIfNeeded: PropTypes.func,
   fetchReferenceTypesIfNeeded: PropTypes.func,
-  fetchReferenceDatasetsIfNeeded: PropTypes.func,
   fetchOpenLicensesIfNeeded: PropTypes.func,
   fetchHelptextsIfNeeded: PropTypes.func,
   fetchDatasetsIfNeeded: PropTypes.func,
