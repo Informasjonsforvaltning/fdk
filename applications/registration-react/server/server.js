@@ -27,7 +27,12 @@ module.exports = {
     app.set('port', port);
 
     app.use('/env.json', (req, res) => {
-      const vars = ['REGISTRATION_LANGUAGE', 'SEARCH_HOSTNAME', 'REDUX_LOG'];
+      const vars = [
+        'REGISTRATION_LANGUAGE',
+        'SEARCH_HOST',
+        'SEARCH_HOSTNAME',
+        'REDUX_LOG'
+      ];
       const values = vars.map(varName => process.env[varName]);
       const envObj = _.zipObject(vars, values);
       res.json(envObj);

@@ -1,11 +1,17 @@
 import axios from 'axios';
 
-const createConfig = env => ({
-  store: { useLogger: env.REDUX_LOG === 'true' },
-  registrationLanguage: env.REGISTRATION_LANGUAGE || 'nb',
-  searchHost:
-    `https://${env.SEARCH_HOSTNAME}` || 'https://fellesdatakatalog.brreg.no'
-});
+const createConfig = env => {
+  const searchHost =
+    env.SEARCH_HOST ||
+    `https://${env.SEARCH_HOSTNAME}` ||
+    'https://fellesdatakatalog.brreg.no';
+
+  return {
+    store: { useLogger: env.REDUX_LOG === 'true' },
+    registrationLanguage: env.REGISTRATION_LANGUAGE || 'nb',
+    searchHost
+  };
+};
 
 export const getConfig = async () => {
   const response = await axios.get('/env.json');
