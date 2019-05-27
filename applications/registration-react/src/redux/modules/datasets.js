@@ -4,7 +4,6 @@ import { fetchActions } from '../fetchActions';
 export const DATASETS_REQUEST = 'DATASETS_REQUEST';
 export const DATASETS_SUCCESS = 'DATASETS_SUCCESS';
 export const DATASETS_FAILURE = 'DATASETS_FAILURE';
-export const DATASETS_ITEM_SET_STATUS = 'DATASETS_ITEM_SET_STATUS';
 export const DATASETS_ITEM_DELETE = 'DATASETS_ITEM_DELETE';
 export const DATASET_SUCCESS = 'DATASET_SUCCESS';
 
@@ -28,13 +27,6 @@ export function fetchDatasetsIfNeeded(catalogId) {
       ])
     );
 }
-
-export const setDatasetItemStatusAction = (catalogId, datasetId, status) => ({
-  type: DATASETS_ITEM_SET_STATUS,
-  catalogId,
-  datasetId,
-  status
-});
 
 export const deleteDatasetItemAction = (catalogId, datasetId) => ({
   type: DATASETS_ITEM_DELETE,
@@ -102,19 +94,6 @@ export default function datasets(state = initialState, action) {
         }
       };
     }
-    case DATASETS_ITEM_SET_STATUS:
-      return {
-        ...state,
-        [action.catalogId]: {
-          items: {
-            ..._.get(state, [action.catalogId, 'items']),
-            [action.datasetId]: {
-              ..._.get(state, [action.catalogId, 'items', action.datasetId]),
-              registrationStatus: action.status
-            }
-          }
-        }
-      };
     case DATASETS_ITEM_DELETE:
       return {
         ...state,
