@@ -4,7 +4,7 @@ import { datasetRegistrationConnector } from './dataset-registration-connector';
 import { withInjectables } from '../../lib/injectables';
 
 const enhance = compose(
-  withInjectables(['referenceDataApiActions']),
+  withInjectables(['referenceDataApiActions', 'datasetApiActions']),
   datasetRegistrationConnector
 );
 export const DatasetRegistrationPage = enhance(DatasetRegistrationPagePure);

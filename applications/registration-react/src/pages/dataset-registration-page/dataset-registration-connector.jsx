@@ -3,7 +3,6 @@ import _ from 'lodash';
 
 import {
   fetchDatasetsIfNeeded,
-  deleteDatasetItemAction,
   getDatasetItemByDatasetiId,
   getDatasetItemsByCatalogId
 } from '../../redux/modules/datasets';
@@ -113,10 +112,12 @@ const mapStateToProps = (
   };
 };
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
+const mapDispatchToProps = (
+  dispatch,
+  { match, referenceDataApiActions, datasetApiActions }
+) => ({
   onChangeDatasetId: () => {
-    const catalogId = _.get(ownProps, ['match', 'params', 'catalogId']);
-    const { referenceDataApiActions } = ownProps;
+    const catalogId = _.get(match, ['params', 'catalogId']);
 
     batch(() => {
       dispatch(fetchDatasetsIfNeeded(catalogId));
@@ -154,8 +155,8 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     });
   },
 
-  deleteDatasetItem: (catalogId, id) =>
-    dispatch(deleteDatasetItemAction(catalogId, id))
+  deleteDatasetItem: (catalogId, datasetId) =>
+    dispatch(datasetApiActions.deleteDatasetAction(catalogId, datasetId))
 });
 
 export const datasetRegistrationConnector = connect(

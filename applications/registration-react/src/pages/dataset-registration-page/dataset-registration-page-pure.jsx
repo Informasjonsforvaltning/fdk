@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 
 import localization from '../../lib/localization';
 import { FormTemplateWithState } from '../../components/form-template/form-template-with-state.component';
@@ -53,28 +52,19 @@ const isAllowedToPublish = (
   return true;
 };
 
-function deleteApi({
+async function deleteAndNavigateToList({
   history,
-  match,
   catalogId,
-  datasetItem,
+  datasetId,
   deleteDatasetItem
 }) {
-  return axios
-    .delete(match.url)
-    .then(() => {
-      deleteDatasetItem(catalogId, _.get(datasetItem, 'id'));
-      if (history) {
-        history.push({
-          pathname: `/catalogs/${catalogId}/datasets`,
-          state: { confirmDelete: true }
-        });
-      }
-    })
-    .catch(response => {
-      const { error } = response;
-      return Promise.reject(error);
+  await deleteDatasetItem(catalogId, datasetId);
+  if (history) {
+    history.push({
+      pathname: `/catalogs/${catalogId}/datasets`,
+      state: { confirmDelete: true }
     });
+  }
 }
 
 export function DatasetRegistrationPagePure(props) {
@@ -110,7 +100,6 @@ export function DatasetRegistrationPagePure(props) {
     datasetId,
     losItems,
     history,
-    match,
     deleteDatasetItem
   } = props;
 
@@ -399,11 +388,10 @@ export function DatasetRegistrationPagePure(props) {
                 error={error}
                 justPublishedOrUnPublished={justPublishedOrUnPublished}
                 onDelete={() =>
-                  deleteApi({
+                  deleteAndNavigateToList({
                     history,
-                    match,
                     catalogId,
-                    datasetItem,
+                    datasetId,
                     deleteDatasetItem
                   })
                 }
@@ -435,7 +423,6 @@ export function DatasetRegistrationPagePure(props) {
 
 DatasetRegistrationPagePure.defaultProps = {
   onChangeDatasetId: _.noop,
-  match: null,
   catalogId: null,
   datasetId: null,
   helptextItems: null,
@@ -471,7 +458,6 @@ DatasetRegistrationPagePure.defaultProps = {
 
 DatasetRegistrationPagePure.propTypes = {
   onChangeDatasetId: PropTypes.func,
-  match: PropTypes.object,
   catalogId: PropTypes.string,
   datasetId: PropTypes.string,
   helptextItems: PropTypes.object,

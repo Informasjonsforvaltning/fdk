@@ -12,6 +12,9 @@ const createConfig = env => {
     searchHost,
     referenceDataApi: {
       host: env.REFERENCE_DATA_HOST || searchHost
+    },
+    registrationApi: {
+      host: '/'
     }
   };
 };

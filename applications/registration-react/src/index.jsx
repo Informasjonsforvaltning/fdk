@@ -11,6 +11,8 @@ import { configureLocalization } from './lib/localization';
 import { App } from './app/app';
 import { configureReferenceDataApi } from './api/reference-data-api';
 import { configureReferenceDataApiActions } from './redux/modules/referenceData';
+import { configureRegistrationApi } from './api/registration-api';
+import { configureDatasetApiActions } from './redux/modules/datasets';
 
 async function configureInjectables() {
   const config = await getConfig();
@@ -20,13 +22,17 @@ async function configureInjectables() {
   const referenceDataApiActions = configureReferenceDataApiActions(
     referenceDataApi
   );
+  const registrationApi = configureRegistrationApi(config.registrationApi);
+  const datasetApiActions = configureDatasetApiActions(registrationApi);
 
   return {
     config,
     store,
     localization,
     referenceDataApi,
-    referenceDataApiActions
+    referenceDataApiActions,
+    registrationApi,
+    datasetApiActions
   };
 }
 

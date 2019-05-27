@@ -47,6 +47,15 @@ export const datasetSuccessAction = payload => ({
   payload
 });
 
+export function configureDatasetApiActions(registrationApi) {
+  return {
+    deleteDatasetAction: (catalogId, datasetId) => async dispatch => {
+      await registrationApi.deleteDataset(catalogId, datasetId);
+      dispatch(deleteDatasetItemAction(catalogId, datasetId));
+    }
+  };
+}
+
 const initialState = {};
 
 export default function datasets(state = initialState, action) {
