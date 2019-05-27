@@ -17,14 +17,6 @@ export function fetchUserIfNeeded() {
     );
 }
 
-export function publishDataset(value) {
-  return dispatch =>
-    dispatch({
-      type: actions.PUBLISHDATASET,
-      registrationStatus: value
-    });
-}
-
 export function datasetLastSaved(value) {
   return dispatch =>
     dispatch({
