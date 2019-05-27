@@ -2,7 +2,7 @@ package no.dcat.themes.builders;
 
 import no.dcat.shared.SkosCode;
 import no.dcat.themes.Controller;
-import no.fdk.test.testcategories.UnitTest;
+import no.fdk.test.testcategories.IntegrationTest;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
@@ -17,7 +17,7 @@ import static org.junit.Assert.assertThat;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
-@Category(UnitTest.class)
+@Category(IntegrationTest.class)
 public class LosThemeTest {
 
     @Autowired
