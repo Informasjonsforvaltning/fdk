@@ -100,8 +100,8 @@ public class ConceptHarvester {
             return someString;
 
         } catch (IOException e) {
-            logger.warn("Downloading concepts from url failed:" + harvestSourceUri);
-            logger.trace("Got exception when trying to harvest from url " + harvestSourceUri ,e);
+            logger.warn("Downloading concepts from url failed: {} Exception {}", harvestSourceUri, e.toString());
+            logger.trace("Got exception when trying to harvest from url {} {}", harvestSourceUri , e.getStackTrace());
         }
         return "";
     }
