@@ -2,7 +2,7 @@ import _ from 'lodash';
 import { fetchActions } from '../fetchActions';
 
 const CATALOG_REQUEST = 'CATALOG_REQUEST';
-const CATALOG_SUCCESS = 'CATALOG_SUCCESS';
+export const CATALOG_SUCCESS = 'CATALOG_SUCCESS';
 const CATALOG_FAILURE = 'CATALOG_FAILURE';
 
 function shouldFetch(metaState) {
