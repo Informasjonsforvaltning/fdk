@@ -28,6 +28,9 @@ public class ConnectionManager {
 
     @PostConstruct
     public void makeSureSchemaExistsSinceLiquibaseCantDoThatYet() throws SQLException {
+        boolean somePasswordHasBeenDefined = (password != null && password.length() > 0);
+        logger.debug("Connection Manager, starting up. JDBC Url from environment is {}. Username is  {}. A password has been defined: {}", jdbcURL, username, somePasswordHasBeenDefined);
+
         Connection connection = DriverManager.getConnection(jdbcURL,username,password);
         connection.setAutoCommit(false);
 
