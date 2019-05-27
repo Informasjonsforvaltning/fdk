@@ -17,14 +17,6 @@ export function fetchUserIfNeeded() {
     );
 }
 
-export function datasetLastSaved(value) {
-  return dispatch =>
-    dispatch({
-      type: actions.DATASET_LAST_SAVED,
-      lastSaved: value
-    });
-}
-
 export function resetUser() {
   return dispatch =>
     dispatch({
