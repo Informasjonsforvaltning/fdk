@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { datasetLastSaved } from '../../../actions';
+import { CATALOG_SUCCESS } from '../../../redux/modules/catalog';
 
 export const putCatalogDataset = (values, dispatch) => {
   const postURL = window.location.pathname;
@@ -7,11 +7,14 @@ export const putCatalogDataset = (values, dispatch) => {
 
   return axios
     .put(catalogDatasetsURL, values)
-    .then(response => {
-      if (dispatch) {
-        dispatch(datasetLastSaved(response.data._lastModified));
-      }
-    })
+    .then(r => r.data)
+    .then(payload =>
+      dispatch({
+        type: CATALOG_SUCCESS,
+        meta: { catalogId: payload.id },
+        payload
+      })
+    )
     .catch(response => {
       const { error } = response;
       return Promise.reject(error);
