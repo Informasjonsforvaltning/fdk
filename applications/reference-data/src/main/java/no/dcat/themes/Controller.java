@@ -39,9 +39,6 @@ public class Controller {
     private CodesService codesService;
 
     @Autowired
-    private HelpTextService helpTextService;
-
-    @Autowired
     private ThemesService themesService;
 
     @Autowired
@@ -132,24 +129,6 @@ public class Controller {
     @RequestMapping(value = "/themes", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public List<DataTheme> themes() {
         return themesService.getThemes();
-    }
-
-    @CrossOrigin
-    @RequestMapping(value = "/helptexts", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public List<HelpText> helpTexts() {
-
-        return helpTextService.getHelpTexts();
-
-    }
-
-    @CrossOrigin
-    @RequestMapping(value = "/helptexts/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    @ExceptionHandler(NotFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public HelpText helpTexts(@PathVariable(name = "id") String id) {
-
-        return helpTextService.getHelpTexts(id);
-
     }
 
     @PreAuthorize("hasAuthority('INTERNAL_CALL')")

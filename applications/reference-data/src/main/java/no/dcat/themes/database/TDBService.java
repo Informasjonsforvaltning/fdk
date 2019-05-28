@@ -30,7 +30,6 @@ public class TDBService {
     static private final Logger logger = LoggerFactory.getLogger(TDBService.class);
 
     static public final String THEMES_GRAPH = "http://data.brreg.no/fdk/themes-graph";
-    static public final String HELPTEXTS_GRAPH = "http://data.brreg.no/fdk/helptexts-graph";
 
     private final Dataset dataset;
 
@@ -70,10 +69,6 @@ public class TDBService {
         Model m = FileManager.get().loadModel("rdf/data-theme-skos.rdf");
         changeLanguageNoToNb(DatasetFactory.create(m));
         overwrite(THEMES_GRAPH, m);
-        Model hm = FileManager.get().loadModel("rdf/hjelpetekster.ttl");
-        changeLanguageNoToNb(DatasetFactory.create(hm));
-        overwrite(HELPTEXTS_GRAPH, hm);
-
     }
 
     private void changeLanguageNoToNb(Dataset dataset) {
