@@ -6,7 +6,6 @@ import { compose } from 'recompose';
 import { FormCatalogPure } from './form-catalog-pure';
 import validate from './form-catalog-validations';
 import { putCatalogDataset } from './async-catalog-dataset';
-import shouldAsyncValidate from '../../../lib/shouldAsyncValidate';
 import { textType } from '../../../schemaTypes';
 import './form-catalog.scss';
 import { withInjectablesMapper } from '../../../lib/injectables';
@@ -15,7 +14,7 @@ const formConfigurer = compose(
   reduxForm({
     form: 'catalog',
     validate,
-    shouldAsyncValidate,
+    shouldAsyncValidate: _.stubTrue, // override default, save even if sync validation fails
     asyncValidate: putCatalogDataset
   }),
   connect(state => ({
