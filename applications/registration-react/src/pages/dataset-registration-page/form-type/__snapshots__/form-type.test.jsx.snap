@@ -6,21 +6,7 @@ exports[`should render FormType, { renderLandingpage  correctly 1`] = `
     className="form-group"
   >
     <withStateHandlers(Helptext)
-      helptextItems={
-        Object {
-          "description": Object {
-            "nb": "Referanse til en klassifisering av datasettets type innhold. Refererer til EU publication office sine datasett-typer.
-* Datasett som anses som å inneholde data angis med “Data”
-* Datasett som anses som metadata (f.eks. Kodelister, Taksonomier og Tesauri) skal angis tilsvarende
-* Datasett som anses som testdata angis som “Testdata”",
-          },
-          "id": "Dataset_type",
-          "shortdesc": Object {
-            "nb": "Referanse til en klassifisering av datasettets type innhold. Refererer til EU publication office sine datasett-typer",
-          },
-          "uri": "http://brreg.no/fdk/fields#Dataset_type",
-        }
-      }
+      term="Dataset_type"
       title="Type"
     />
     <Field

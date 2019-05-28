@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Field, FieldArray } from 'redux-form';
 
 import localization from '../../../lib/localization';
@@ -39,34 +38,27 @@ export const renderInformationModel = compopnentProps => {
   );
 };
 
-export const FormInformationModel = props => {
-  const { helptextItems } = props;
-  return (
-    <form>
-      <div className="form-group">
-        {
-          <div className="mt-4">
-            <div className="form-group">
-              <Helptext
-                title={
-                  localization.schema.informationModel.helptext.informationModel
-                }
-                helptextItems={helptextItems.Dataset_informationModel}
-              />
-              <FieldArray
-                name="informationModel"
-                component={renderInformationModel}
-                titleLabel={localization.schema.informationModel.titleLabel}
-                linkLabel={localization.schema.informationModel.linkLabel}
-              />
-            </div>
+export const FormInformationModel = () => (
+  <form>
+    <div className="form-group">
+      {
+        <div className="mt-4">
+          <div className="form-group">
+            <Helptext
+              title={
+                localization.schema.informationModel.helptext.informationModel
+              }
+              term="Dataset_informationModel"
+            />
+            <FieldArray
+              name="informationModel"
+              component={renderInformationModel}
+              titleLabel={localization.schema.informationModel.titleLabel}
+              linkLabel={localization.schema.informationModel.linkLabel}
+            />
           </div>
-        }
-      </div>
-    </form>
-  );
-};
-
-FormInformationModel.propTypes = {
-  helptextItems: PropTypes.object.isRequired
-};
+        </div>
+      }
+    </div>
+  </form>
+);

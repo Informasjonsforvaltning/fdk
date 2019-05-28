@@ -29,25 +29,3 @@ export const ConnectedCatalogsPage = connect(
   mapStateToProps,
   mapDispatchToProps
 )(RegCatalogs);
-
-/*
-const mapStateToProps = ({ helptexts, catalog, datasets }) => {
-  const { helptextItems } = helptexts || {};
-  return {
-    helptextItems,
-    catalog,
-    datasets
-  };
-};
-
-const mapDispatchToProps = dispatch => ({
-  fetchHelptextsIfNeeded: () => dispatch(fetchHelptextsIfNeeded()),
-  fetchCatalogIfNeeded: catalogId => dispatch(fetchCatalogIfNeeded(catalogId)),
-  fetchDatasetsIfNeeded: catalogId => dispatch(fetchDatasetsIfNeeded(catalogId))
-});
-
-export const ConnectedDatasetsListPage = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(DatasetsListPage);
-  */

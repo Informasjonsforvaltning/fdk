@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Field, FieldArray } from 'redux-form';
 
 import localization from '../../../lib/localization';
@@ -41,80 +40,69 @@ export const renderStandard = fieldProps => {
   );
 };
 
-export const FormContentsComponent = props => {
-  const { helptextItems } = props;
-  return (
-    <form>
-      <div className="form-group">
-        {
-          <div className="mt-4">
-            <div className="form-group">
-              <Helptext
-                title={localization.schema.content.helptext.conformsTo}
-                helptextItems={helptextItems.Dataset_conformsTo}
-              />
-              <FieldArray
-                name="conformsTo"
-                component={renderStandard}
-                titleLabel={localization.schema.common.titleLabel}
-                linkLabel={localization.schema.common.linkLabel}
-              />
-            </div>
+export const FormContentsComponent = () => (
+  <form>
+    <div className="form-group">
+      {
+        <div className="mt-4">
+          <div className="form-group">
+            <Helptext
+              title={localization.schema.content.helptext.conformsTo}
+              term="Dataset_conformsTo"
+            />
+            <FieldArray
+              name="conformsTo"
+              component={renderStandard}
+              titleLabel={localization.schema.common.titleLabel}
+              linkLabel={localization.schema.common.linkLabel}
+            />
           </div>
-        }
-      </div>
-      <div className="form-group">
-        <Helptext
-          title={localization.schema.content.helptext.relevance}
-          helptextItems={helptextItems.Dataset_hasQualityAnnotation_relevance}
-        />
-        <Field
-          name={`hasRelevanceAnnotation.hasBody.${localization.getLanguage()}`}
-          component={TextAreaField}
-          label={localization.schema.content.hasRelevanceAnnotationLabel}
-        />
-      </div>
-      <div className="form-group">
-        <Helptext
-          title={localization.schema.content.helptext.completeness}
-          helptextItems={
-            helptextItems.Dataset_hasQualityAnnotation_completeness
-          }
-        />
-        <Field
-          name={`hasCompletenessAnnotation.hasBody.${localization.getLanguage()}`}
-          component={TextAreaField}
-          label={localization.schema.content.hasCompletenessAnnotationLabel}
-        />
-      </div>
-      <div className="form-group">
-        <Helptext
-          title={localization.schema.content.helptext.accuracy}
-          helptextItems={helptextItems.Dataset_hasQualityAnnotation_accuracy}
-        />
-        <Field
-          name={`hasAccuracyAnnotation.hasBody.${localization.getLanguage()}`}
-          component={TextAreaField}
-          label={localization.schema.content.hasAccuracyAnnotationLabel}
-        />
-      </div>
-      <div className="form-group">
-        <Helptext
-          title={localization.schema.content.helptext.availability}
-          helptextItems={
-            helptextItems.Dataset_hasQualityAnnotation_availability
-          }
-        />
-        <Field
-          name={`hasAvailabilityAnnotation.hasBody.${localization.getLanguage()}`}
-          component={TextAreaField}
-          label={localization.schema.content.hasAvailabilityAnnotationLabel}
-        />
-      </div>
-    </form>
-  );
-};
-
-FormContentsComponent.propTypes = {
-  helptextItems: PropTypes.object.isRequired
-};
+        </div>
+      }
+    </div>
+    <div className="form-group">
+      <Helptext
+        title={localization.schema.content.helptext.relevance}
+        term="Dataset_hasQualityAnnotation_relevance"
+      />
+      <Field
+        name={`hasRelevanceAnnotation.hasBody.${localization.getLanguage()}`}
+        component={TextAreaField}
+        label={localization.schema.content.hasRelevanceAnnotationLabel}
+      />
+    </div>
+    <div className="form-group">
+      <Helptext
+        title={localization.schema.content.helptext.completeness}
+        term="Dataset_hasQualityAnnotation_completeness"
+      />
+      <Field
+        name={`hasCompletenessAnnotation.hasBody.${localization.getLanguage()}`}
+        component={TextAreaField}
+        label={localization.schema.content.hasCompletenessAnnotationLabel}
+      />
+    </div>
+    <div className="form-group">
+      <Helptext
+        title={localization.schema.content.helptext.accuracy}
+        term="Dataset_hasQualityAnnotation_accuracy"
+      />
+      <Field
+        name={`hasAccuracyAnnotation.hasBody.${localization.getLanguage()}`}
+        component={TextAreaField}
+        label={localization.schema.content.hasAccuracyAnnotationLabel}
+      />
+    </div>
+    <div className="form-group">
+      <Helptext
+        title={localization.schema.content.helptext.availability}
+        term="Dataset_hasQualityAnnotation_availability"
+      />
+      <Field
+        name={`hasAvailabilityAnnotation.hasBody.${localization.getLanguage()}`}
+        component={TextAreaField}
+        label={localization.schema.content.hasAvailabilityAnnotationLabel}
+      />
+    </div>
+  </form>
+);

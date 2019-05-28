@@ -1,6 +1,5 @@
 import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form';
-import helptexts from './modules/helptexts';
 import user from './modules/user';
 import catalog from './modules/catalog';
 import datasets from './modules/datasets';
@@ -15,7 +14,6 @@ import { referenceDataReducer } from './modules/referenceData';
 const rootReducer = combineReducers({
   form: formReducer,
   featureToggle: featureToggleReducer,
-  helptexts,
   user,
   catalog,
   datasets,

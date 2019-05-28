@@ -70,7 +70,6 @@ async function deleteAndNavigateToList({
 export function DatasetRegistrationPagePure(props) {
   const {
     onChangeDatasetId,
-    helptextItems,
     themesItems,
     provenanceItems,
     frequencyItems,
@@ -144,7 +143,6 @@ export function DatasetRegistrationPagePure(props) {
           </Link>
         </div>
         {datasetItem &&
-          helptextItems &&
           title &&
           themesItems &&
           provenanceItems &&
@@ -162,7 +160,6 @@ export function DatasetRegistrationPagePure(props) {
               >
                 <ConnectedFormTitle
                   datasetItem={datasetItem}
-                  helptextItems={helptextItems}
                   catalogId={catalogId}
                   datasetId={datasetId}
                 />
@@ -176,7 +173,6 @@ export function DatasetRegistrationPagePure(props) {
               >
                 <ConnectedFormAccessRights
                   datasetItem={datasetItem}
-                  helptextItems={helptextItems}
                   catalogId={catalogId}
                   datasetId={datasetId}
                 />
@@ -191,7 +187,6 @@ export function DatasetRegistrationPagePure(props) {
                 <ConnectedFormLOS
                   datasetItem={datasetItem}
                   losItems={losItems}
-                  helptextItems={helptextItems}
                   catalogId={catalogId}
                   datasetId={datasetId}
                 />
@@ -205,7 +200,6 @@ export function DatasetRegistrationPagePure(props) {
                 <ConnectedFormThemes
                   datasetItem={datasetItem}
                   themesItems={themesItems}
-                  helptextItems={helptextItems}
                   catalogId={catalogId}
                   datasetId={datasetId}
                 />
@@ -218,7 +212,6 @@ export function DatasetRegistrationPagePure(props) {
               >
                 <ConnectedFormType
                   datasetItem={datasetItem}
-                  helptextItems={helptextItems}
                   catalogId={catalogId}
                   datasetId={datasetId}
                 />
@@ -231,7 +224,6 @@ export function DatasetRegistrationPagePure(props) {
               >
                 <ConnectedFormConcept
                   datasetItem={datasetItem}
-                  helptextItems={helptextItems}
                   catalogId={catalogId}
                   datasetId={datasetId}
                 />
@@ -244,7 +236,6 @@ export function DatasetRegistrationPagePure(props) {
               >
                 <ConnectedFormSpatial
                   datasetItem={datasetItem}
-                  helptextItems={helptextItems}
                   catalogId={catalogId}
                   datasetId={datasetId}
                 />
@@ -259,7 +250,6 @@ export function DatasetRegistrationPagePure(props) {
                   datasetItem={datasetItem}
                   provenanceItems={provenanceItems}
                   frequencyItems={frequencyItems}
-                  helptextItems={helptextItems}
                   catalogId={catalogId}
                   datasetId={datasetId}
                 />
@@ -272,7 +262,6 @@ export function DatasetRegistrationPagePure(props) {
               >
                 <ConnectedFormContents
                   datasetItem={datasetItem}
-                  helptextItems={helptextItems}
                   catalogId={catalogId}
                   datasetId={datasetId}
                 />
@@ -285,7 +274,6 @@ export function DatasetRegistrationPagePure(props) {
               >
                 <ConnectedFormInformationModel
                   datasetItem={datasetItem}
-                  helptextItems={helptextItems}
                   catalogId={catalogId}
                   datasetId={datasetId}
                 />
@@ -299,7 +287,6 @@ export function DatasetRegistrationPagePure(props) {
                   datasetItem={datasetItem}
                   referenceTypesItems={referenceTypesItems}
                   referenceDatasetsItems={referenceDatasetsItems}
-                  helptextItems={helptextItems}
                   catalogId={catalogId}
                   datasetId={datasetId}
                 />
@@ -312,7 +299,6 @@ export function DatasetRegistrationPagePure(props) {
               >
                 <ConnectedFormContactPoint
                   datasetItem={datasetItem}
-                  helptextItems={helptextItems}
                   catalogId={catalogId}
                   datasetId={datasetId}
                 />
@@ -324,7 +310,6 @@ export function DatasetRegistrationPagePure(props) {
               >
                 <FormDistributionApi
                   datasetItem={datasetItem}
-                  helptextItems={helptextItems}
                   catalogId={catalogId}
                   datasetId={datasetId}
                   datasetUri={_.get(datasetItem, 'uri')}
@@ -346,7 +331,6 @@ export function DatasetRegistrationPagePure(props) {
                 <ConnectedFormDistribution
                   datasetItem={datasetItem}
                   openLicenseItems={openLicenseItems}
-                  helptextItems={helptextItems}
                   catalogId={catalogId}
                   datasetId={datasetId}
                 />
@@ -367,7 +351,6 @@ export function DatasetRegistrationPagePure(props) {
                 <ConnectedFormSample
                   datasetItem={datasetItem}
                   openLicenseItems={openLicenseItems}
-                  helptextItems={helptextItems}
                   catalogId={catalogId}
                   datasetId={datasetId}
                 />
@@ -425,7 +408,6 @@ DatasetRegistrationPagePure.defaultProps = {
   onChangeDatasetId: _.noop,
   catalogId: null,
   datasetId: null,
-  helptextItems: null,
   themesItems: null,
   provenanceItems: null,
   frequencyItems: null,
@@ -460,7 +442,6 @@ DatasetRegistrationPagePure.propTypes = {
   onChangeDatasetId: PropTypes.func,
   catalogId: PropTypes.string,
   datasetId: PropTypes.string,
-  helptextItems: PropTypes.object,
   themesItems: PropTypes.array,
   provenanceItems: PropTypes.array,
   frequencyItems: PropTypes.array,

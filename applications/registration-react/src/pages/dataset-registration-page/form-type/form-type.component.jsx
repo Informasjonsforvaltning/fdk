@@ -8,13 +8,13 @@ import Helptext from '../../../components/helptext/helptext.component';
 import CheckBoxFieldType from './field-checkbox-type/field-checkbox.component';
 
 export const FormType = props => {
-  const { syncErrors, helptextItems } = props;
+  const { syncErrors } = props;
   return (
     <form>
       <div className="form-group">
         <Helptext
           title={localization.schema.type.helptext.type}
-          helptextItems={helptextItems.Dataset_type}
+          term="Dataset_type"
         />
         <Field name="type" component={CheckBoxFieldType} />
         {_.get(syncErrors, 'errorType') && (
@@ -32,6 +32,5 @@ FormType.defaultProps = {
 };
 
 FormType.propTypes = {
-  syncErrors: PropTypes.object,
-  helptextItems: PropTypes.object.isRequired
+  syncErrors: PropTypes.object
 };

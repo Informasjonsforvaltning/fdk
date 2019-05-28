@@ -1,9 +1,10 @@
 import LocalizedStrings from 'react-localization';
 
-import nb from '../l10n/nb.json';
+import terms from '../l10n/nb.json';
+import helptexts from '../l10n/helptexts.nb';
 
 const localization = new LocalizedStrings({
-  nb
+  nb: { ...terms, helptexts }
 });
 
 export default localization;

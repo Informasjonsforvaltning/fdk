@@ -4,16 +4,12 @@ import {
   FormInformationModel,
   renderInformationModel
 } from './form-informationmodel.component';
-import helptext from '../../../../test/fixtures/helptext';
 
 let defaultProps;
 let wrapper;
 
 beforeEach(() => {
-  const { helptextItems } = helptext;
-  defaultProps = {
-    helptextItems
-  };
+  defaultProps = {};
   wrapper = shallow(<FormInformationModel {...defaultProps} />);
 });
 

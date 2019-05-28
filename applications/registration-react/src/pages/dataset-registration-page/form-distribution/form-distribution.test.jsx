@@ -6,7 +6,6 @@ import {
   renderDistributionLandingpage
 } from './form-distribution.component';
 import { distributionTypes } from './connected-form-distribution.component';
-import helptext from '../../../../test/fixtures/helptext';
 import openlicenses from '../../../../test/fixtures/openlicenses';
 import distribution from '../../../../test/fixtures/distributions';
 
@@ -14,14 +13,12 @@ let defaultProps;
 let wrapper;
 
 beforeEach(() => {
-  const { helptextItems } = helptext;
   const { openLicenseItems } = openlicenses;
   defaultProps = {
     initialValues: {
       distribution: distributionTypes(distribution),
       openLicenseItems
-    },
-    helptextItems
+    }
   };
   wrapper = shallow(<FormDistribution {...defaultProps} />);
 });

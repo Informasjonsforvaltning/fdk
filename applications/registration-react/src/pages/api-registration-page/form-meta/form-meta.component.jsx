@@ -1,48 +1,35 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
-import _ from 'lodash';
 import localization from '../../../lib/localization';
 import Helptext from '../../../components/helptext/helptext.component';
 import InputField from '../../../components/field-input/field-input.component';
 
-export const FormMeta = ({ helptextItems }) => (
+export const FormMeta = () => (
   <form>
     <div className="form-group">
-      <Helptext
-        title={localization.schema.apiMeta.helptext.cost}
-        helptextItems={_.get(helptextItems, 'Cost')}
-      />
+      <Helptext title={localization.schema.apiMeta.helptext.cost} term="Cost" />
       <Field name="cost" component={InputField} />
     </div>
     <div className="form-group">
       <Helptext
         title={localization.schema.apiMeta.helptext.usageLimitation}
-        helptextItems={_.get(helptextItems, 'Traffic_Limits')}
+        term="Traffic_Limits"
       />
       <Field name="usageLimitation" component={InputField} />
     </div>
     <div className="form-group">
       <Helptext
         title={localization.schema.apiMeta.helptext.performance}
-        helptextItems={_.get(helptextItems, 'Performance')}
+        term="Performance"
       />
       <Field name="performance" component={InputField} />
     </div>
     <div className="form-group">
       <Helptext
         title={localization.schema.apiMeta.helptext.availability}
-        helptextItems={_.get(helptextItems, 'Availability')}
+        term="Availability"
       />
       <Field name="availability" component={InputField} />
     </div>
   </form>
 );
-
-FormMeta.defaultProps = {
-  helptextItems: null
-};
-
-FormMeta.propTypes = {
-  helptextItems: PropTypes.object
-};

@@ -31,7 +31,7 @@ export class FormCatalogPure extends React.Component {
   }
 
   render() {
-    const { helptextItems, initialValues, values } = this.props;
+    const { initialValues, values } = this.props;
     const { title, publisher } = initialValues;
 
     const collapseClass = cx(
@@ -98,7 +98,7 @@ export class FormCatalogPure extends React.Component {
               <Helptext
                 title={localization.schema.catalog.helptext.title}
                 required
-                helptextItems={helptextItems.Catalog_title}
+                term="Catalog_title"
               />
               <Field
                 name={`description.${localization.getLanguage()}`}
@@ -118,7 +118,6 @@ FormCatalogPure.defaultProps = {
   values: null
 };
 FormCatalogPure.propTypes = {
-  helptextItems: PropTypes.object.isRequired,
   initialValues: PropTypes.object,
   values: PropTypes.object
 };

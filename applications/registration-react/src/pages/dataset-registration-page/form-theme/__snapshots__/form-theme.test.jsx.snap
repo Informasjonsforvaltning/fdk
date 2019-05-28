@@ -8,19 +8,7 @@ exports[`should render FormThemes correctly with theme 1`] = `
     className="form-group"
   >
     <withStateHandlers(Helptext)
-      helptextItems={
-        Object {
-          "description": Object {
-            "nb": "For å kunne sortere datasettet inn under gitte kategorier er det behov for tema
-* Ett eller flere temaer velges fra den kontrollerte listen av EU-temaer.",
-          },
-          "id": "Dataset_theme",
-          "shortdesc": Object {
-            "nb": "Ett eller flere temaer velges fra den kontrollerte listen av EU-temaer",
-          },
-          "uri": "http://brreg.no/fdk/fields#Dataset_theme",
-        }
-      }
+      term="Dataset_theme"
       title="Tema"
     />
     <AlertMessage

@@ -4,16 +4,12 @@ import {
   FormContentsComponent,
   renderStandard
 } from './form-contents.component';
-import helptext from '../../../../test/fixtures/helptext';
 
 let defaultProps;
 let wrapper;
 
 beforeEach(() => {
-  const { helptextItems } = helptext;
-  defaultProps = {
-    helptextItems
-  };
+  defaultProps = {};
   wrapper = shallow(<FormContentsComponent {...defaultProps} />);
 });
 

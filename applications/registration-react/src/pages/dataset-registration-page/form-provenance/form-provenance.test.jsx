@@ -1,7 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { FormProvenance } from './form-provenance.component';
-import helptext from '../../../../test/fixtures/helptext';
 import frequency from '../../../../test/fixtures/frequency';
 import provenance from '../../../../test/fixtures/provenance';
 
@@ -9,7 +8,6 @@ let defaultProps;
 let wrapper;
 
 beforeEach(() => {
-  const { helptextItems } = helptext;
   const { frequencyItems } = frequency;
   const { provenanceItems } = provenance;
   defaultProps = {
@@ -17,7 +15,6 @@ beforeEach(() => {
       frequencyItems,
       provenanceItems
     },
-    helptextItems,
     provenanceItems,
     input: {
       name: 'provenance',

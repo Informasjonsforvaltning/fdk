@@ -36,7 +36,6 @@ export const renderDistributions = componentProps => {
     catalogId,
     datasetId,
     fields,
-    helptextItems,
     openLicenseItems,
     initialValues,
     dispatch
@@ -74,7 +73,7 @@ export const renderDistributions = componentProps => {
               <div className="form-group">
                 <Helptext
                   title={localization.schema.distribution.helptext.type}
-                  helptextItems={helptextItems.Distribution_type}
+                  term="Distribution_type"
                 />
                 <Field
                   name={`${distribution}.type`}
@@ -104,7 +103,7 @@ export const renderDistributions = componentProps => {
               <div className="form-group">
                 <Helptext
                   title={localization.schema.distribution.helptext.accessURL}
-                  helptextItems={helptextItems.Distribution_accessURL}
+                  term="Distribution_accessURL"
                 />
                 <Field
                   name={`${distribution}.accessURL.0`}
@@ -116,7 +115,7 @@ export const renderDistributions = componentProps => {
               <div className="form-group">
                 <Helptext
                   title={localization.schema.distribution.helptext.format}
-                  helptextItems={helptextItems.Distribution_format}
+                  term="Distribution_format"
                   required
                 />
                 <Field
@@ -130,7 +129,7 @@ export const renderDistributions = componentProps => {
               <div className="form-group">
                 <Helptext
                   title={localization.schema.distribution.helptext.license}
-                  helptextItems={helptextItems.Distribution_modified}
+                  term="Distribution_modified"
                 />
                 <Field
                   name={`${distribution}.license`}
@@ -141,7 +140,7 @@ export const renderDistributions = componentProps => {
               <div className="form-group">
                 <Helptext
                   title={localization.schema.distribution.helptext.description}
-                  helptextItems={helptextItems.Distribution_description}
+                  term="Distribution_description"
                 />
                 <Field
                   name={`${distribution}.description.${localization.getLanguage()}`}
@@ -155,19 +154,18 @@ export const renderDistributions = componentProps => {
                   title={
                     localization.schema.distribution.helptext.documentation
                   }
-                  helptextItems={helptextItems.Distribution_documentation}
+                  term="Distribution_documentation"
                 />
                 <FieldArray
                   name={`${distribution}.page`}
                   component={renderDistributionLandingpage}
-                  helptextItems={helptextItems}
                 />
               </div>
 
               <div className="form-group">
                 <Helptext
                   title={localization.schema.distribution.helptext.conformsTo}
-                  helptextItems={helptextItems.Distribution_conformsTo}
+                  term="Distribution_conformsTo"
                 />
                 <div className="d-flex">
                   <div className="w-50">
@@ -216,20 +214,13 @@ export const renderDistributions = componentProps => {
 };
 
 export const FormDistribution = props => {
-  const {
-    helptextItems,
-    initialValues,
-    dispatch,
-    catalogId,
-    datasetId
-  } = props;
+  const { initialValues, dispatch, catalogId, datasetId } = props;
   const { openLicenseItems } = initialValues;
   return (
     <form>
       <FieldArray
         name="distribution"
         component={renderDistributions}
-        helptextItems={helptextItems}
         openLicenseItems={openLicenseItems}
         initialValues={initialValues}
         dispatch={dispatch}
@@ -248,7 +239,6 @@ FormDistribution.defaultProps = {
 };
 FormDistribution.propTypes = {
   initialValues: PropTypes.object.isRequired,
-  helptextItems: PropTypes.object.isRequired,
   dispatch: PropTypes.func,
   catalogId: PropTypes.string,
   datasetId: PropTypes.string

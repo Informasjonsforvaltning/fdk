@@ -12,20 +12,7 @@ exports[`should render FormContentsComponent, { renderS correctly 1`] = `
         className="form-group"
       >
         <withStateHandlers(Helptext)
-          helptextItems={
-            Object {
-              "description": Object {
-                "nb": "Det er behov for å vite om et datasett er i henhold til gitt(e) standard(er).
-* Benyttes til å angi at et datasett er i samsvar med en standard, spesifikasjon eller implementasjonsregel. Eksempel: Et datasett er i samsvar med SOSI 4.5 som  innholdsstandard. 
-* For referanser til maskinlesbare informasjonsmodeller, skal egenskapen “innholdsspesifikasjon benyttes”",
-              },
-              "id": "Dataset_conformsTo",
-              "shortdesc": Object {
-                "nb": "Angi at et datasett er i samsvar med en standard, spesifikasjon eller implementasjonsregel.",
-              },
-              "uri": "http://brreg.no/fdk/fields#Dataset_conformsTo",
-            }
-          }
+          term="Dataset_conformsTo"
           title="Standard"
         />
         <FieldArray
@@ -41,20 +28,7 @@ exports[`should render FormContentsComponent, { renderS correctly 1`] = `
     className="form-group"
   >
     <withStateHandlers(Helptext)
-      helptextItems={
-        Object {
-          "description": Object {
-            "nb": "Avvik eller tilleggsopplysninger knyttet til datasettes relevans i ulike brukskontekster
-* En vurdering om det er bruksområder datasettet er spesielt velegnet eller ikke bør brukes.",
-          },
-          "id": "Dataset_hasQualityAnnotation_relevance",
-          "shortdesc": Object {
-            "nb": "Avvik eller tilleggsopplysninger knyttet til datasettes relevans i ulike brukskontekster
-",
-          },
-          "uri": "http://brreg.no/fdk/fields#Dataset_hasQualityAnnotation_relevance",
-        }
-      }
+      term="Dataset_hasQualityAnnotation_relevance"
       title="Relevans"
     />
     <Field
@@ -67,20 +41,7 @@ exports[`should render FormContentsComponent, { renderS correctly 1`] = `
     className="form-group"
   >
     <withStateHandlers(Helptext)
-      helptextItems={
-        Object {
-          "description": Object {
-            "nb": "I hvilken grad inneholder datasettet forventede opplysninger
-* Kompletthet tolkes i forhold til formålet (utvalget)
-* Inneholder datasettet de objekter som nevnt i formålet? ",
-          },
-          "id": "Dataset_hasQualityAnnotation_completeness",
-          "shortdesc": Object {
-            "nb": "I hvilken grad inneholder datasettet alle objekter som nevnt i formålet",
-          },
-          "uri": "http://brreg.no/fdk/fields#Dataset_hasQualityAnnotation_completeness",
-        }
-      }
+      term="Dataset_hasQualityAnnotation_completeness"
       title="Kompletthet"
     />
     <Field
@@ -93,20 +54,7 @@ exports[`should render FormContentsComponent, { renderS correctly 1`] = `
     className="form-group"
   >
     <withStateHandlers(Helptext)
-      helptextItems={
-        Object {
-          "description": Object {
-            "nb": "I hvilken grad datasettet korrekt representerer intensjonen som er angitt av dataeier i formålet
-Nøyaktighet skal tolkes i forhold til formålet. 
-",
-          },
-          "id": "Dataset_hasQualityAnnotation_accuracy",
-          "shortdesc": Object {
-            "nb": "I hvilken grad er innholdet i samsvar med formålet.",
-          },
-          "uri": "http://brreg.no/fdk/fields#Dataset_hasQualityAnnotation_accuracy",
-        }
-      }
+      term="Dataset_hasQualityAnnotation_accuracy"
       title="Nøyaktighet"
     />
     <Field
@@ -119,21 +67,7 @@ Nøyaktighet skal tolkes i forhold til formålet.
     className="form-group"
   >
     <withStateHandlers(Helptext)
-      helptextItems={
-        Object {
-          "description": Object {
-            "nb": "Avvik eller tilleggsopplysninger knyttet til datasettets tilgjengelighet
-* Tilgjengelighet tolkes i forhold til tilgangsnivå og ev. begrensninger utover det som er angitt i behandlingsgrunnlag, skjermings- og utleveringshjemmel.
-* Dersom datasettet er åpent men mangler distribusjoner bør årsaken angis her.
-",
-          },
-          "id": "Dataset_hasQualityAnnotation_availability",
-          "shortdesc": Object {
-            "nb": "Avvik eller tilleggsopplysninger knyttet til datasettes tilgjengelighet.",
-          },
-          "uri": "http://brreg.no/fdk/fields#Dataset_hasQualityAnnotation_availability",
-        }
-      }
+      term="Dataset_hasQualityAnnotation_availability"
       title="Tilgjengelighet"
     />
     <Field

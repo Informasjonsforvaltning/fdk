@@ -74,20 +74,14 @@ export const renderTemporal = componentProps => {
 };
 
 export const FormSpatial = props => {
-  const {
-    helptextItems,
-    initialValues,
-    dispatch,
-    catalogId,
-    datasetId
-  } = props;
+  const { initialValues, dispatch, catalogId, datasetId } = props;
   if (initialValues) {
     return (
       <form>
         <div className="form-group">
           <Helptext
             title={localization.schema.spatial.helptext.spatial}
-            helptextItems={helptextItems.Dataset_spatial}
+            term="Dataset_spatial"
           />
           <Field
             name="spatial"
@@ -100,7 +94,7 @@ export const FormSpatial = props => {
         <div className="form-group">
           <Helptext
             title={localization.schema.spatial.helptext.temporal}
-            helptextItems={helptextItems.Dataset_temporal}
+            term="Dataset_temporal"
           />
           <FieldArray
             name="temporal"
@@ -113,7 +107,7 @@ export const FormSpatial = props => {
         <div className="form-group">
           <Helptext
             title={localization.schema.spatial.helptext.issued}
-            helptextItems={helptextItems.Dataset_issued}
+            term="Dataset_issued"
           />
           <Field
             name="issued"
@@ -125,7 +119,7 @@ export const FormSpatial = props => {
         <div className="form-group">
           <Helptext
             title={localization.schema.spatial.helptext.language}
-            helptextItems={helptextItems.Dataset_language}
+            term="Dataset_language"
           />
           <Field name="language" component={CheckboxField} />
         </div>
@@ -144,7 +138,6 @@ FormSpatial.defaultProps = {
 
 FormSpatial.propTypes = {
   initialValues: PropTypes.object,
-  helptextItems: PropTypes.object.isRequired,
   dispatch: PropTypes.func,
   catalogId: PropTypes.string,
   datasetId: PropTypes.string

@@ -1,16 +1,13 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { FormReference, renderReference } from './form-reference.component';
-import helptext from '../../../../test/fixtures/helptext';
 
 let defaultProps;
 let wrapper;
 
 beforeEach(() => {
-  const { helptextItems } = helptext;
   defaultProps = {
-    initialValues: {},
-    helptextItems
+    initialValues: {}
   };
   wrapper = shallow(<FormReference {...defaultProps} />);
 });

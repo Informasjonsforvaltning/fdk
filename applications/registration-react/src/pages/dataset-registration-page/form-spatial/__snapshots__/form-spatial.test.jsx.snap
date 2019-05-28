@@ -8,23 +8,7 @@ exports[`should render FormSpatial correctly with initialValues 1`] = `
     className="form-group"
   >
     <withStateHandlers(Helptext)
-      helptextItems={
-        Object {
-          "description": Object {
-            "nb": "Det er ønskelig å synliggjøre om datasettets utvalg er begrenset til bestemte geografiske områder.
-* Angi geografisk avgrensning dersom datasett kun har innhold fra visse områder. “Observert hekking av grågås i Oppdal” er datasettets geografiske omfang begrenset til kommunen Oppdal. 
-* Benytt eksisterende avgrensninger som kommuner, fylker m.v. 
-* Bør referere til geografiske områder angitt med URI-er (f.eks. Sentralt Stedsnavnsregister eller Administrative grenser fra Kartverket) 
-* Flere områder kan angis om relevant
-* Dersom det finnes en tilsvarende landsdekkende oversikt, bør dette beskrives som et separat datasett, og disse relateres. (se også “relasjoner mellom datasett”).  f.eks. Observert hekking av grågås i Norge",
-          },
-          "id": "Dataset_spatial",
-          "shortdesc": Object {
-            "nb": "Angi geografisk avgrensning dersom datasett kun har innhold fra visse områder. Referer til geografiske områder angitt med URI fra GeoNames",
-          },
-          "uri": "http://brreg.no/fdk/fields#Dataset_spatial",
-        }
-      }
+      term="Dataset_spatial"
       title="Geografisk avgrensning"
     />
     <Field
@@ -39,26 +23,7 @@ exports[`should render FormSpatial correctly with initialValues 1`] = `
     className="form-group"
   >
     <withStateHandlers(Helptext)
-      helptextItems={
-        Object {
-          "description": Object {
-            "nb": "En tidsromangivelse er nødvendig for datasett hvor innholdet dekker et avgrenset tidsrom. 
-* Angi tidsmessig  avgrensning dersom datasett kun har innhold fra visse perioder. For mange datasett knyttet til registerfunksjoner vil tidsrom være direkte koblet mot oppdateringsfrekvens. For andre datasett vil tidsrom være vesentlig i forhold til forståelse av bruk av dataene, f.eks folketellinger.
-* Dersom det er angitt en periode med årstall, tolkes dette som fra og med 1. januar første år til og med 31. desember siste år. 
-* Ved ett årstall på begynnelse, men ikke angitt slutt, tolkes det at datasettet har data også i en ubestemt fremtid og tilsvarende om startdatoen mangler antas det at det er ikke angitt om datasettet har en start. 
-* Dersom det finnes en tilsvarende komplett oversikt, bør også dette beskrives som et eget datasett, og disse relateres.  (se også “4.25 Relasjoner mellom datasett”)
-* Dersom datasettet er en av flere i en tidsserie anbefales det at det lages et overordnet datasett for tidsserien uten distribusjoner som peker på hver datasett.
-* Det benyttes tidsstempel for registreringen av første og siste dataelement i datasettet. 
-* Det kan angis flere tidsperioder per datasett, men det anbefales at periodene ikke er overlappende.
-* Relativ avgrensning i tid fra tidspunkt for uttrekk (eksempelvis fra og med dato for forrige påbegynte semester og til og med avslutning av påfølgende semester)",
-          },
-          "id": "Dataset_temporal",
-          "shortdesc": Object {
-            "nb": "Angi tidsmessig  avgrensning dersom datasett kun har innhold fra visse perioder. Dersom det finnes en tilsvarende komplett oversikt, bør også dette beskrives som et eget datasett",
-          },
-          "uri": "http://brreg.no/fdk/fields#Dataset_temporal",
-        }
-      }
+      term="Dataset_temporal"
       title="Tidsmessig avgrenset til"
     />
     <FieldArray
@@ -73,21 +38,7 @@ exports[`should render FormSpatial correctly with initialValues 1`] = `
     className="form-group"
   >
     <withStateHandlers(Helptext)
-      helptextItems={
-        Object {
-          "description": Object {
-            "nb": "For å forstå når datasettet er operativt og tilgjengelig angis tidspunkt for utgivelse. 
-* Angis som tidspunkt (dato alene tolkes som kl. 00:00)
-* Tidspunktet angir når innholdet i datasettet gjøres tilgjengelig. Dette er ikke alltid  samsvarende med når den enkelte distribusjonen er tilgjengelig.  * Og heller ikke når beskrivelsen om datasettet utgis (katalogpostens utgivelse).
-Tidspunkt angis med xsd:dateTime. Dette inkluderer utvidelser av kapittel 5.4 i ISO 8601 med tidssoner) [-]CCYY-MM-DDThh:mm:ss[Z|(+|-)hh:mm]",
-          },
-          "id": "Dataset_issued",
-          "shortdesc": Object {
-            "nb": "Tidspunktet angir når innholdet i datasettet gjøres tilgjengelig.",
-          },
-          "uri": "http://brreg.no/fdk/fields#Dataset_issued",
-        }
-      }
+      term="Dataset_issued"
       title="Utgivelsesdato"
     />
     <Field
@@ -101,23 +52,7 @@ Tidspunkt angis med xsd:dateTime. Dette inkluderer utvidelser av kapittel 5.4 i 
     className="form-group"
   >
     <withStateHandlers(Helptext)
-      helptextItems={
-        Object {
-          "description": Object {
-            "nb": "For å forstå hvilket språk innholdet til datasettet har angis dette
-* Det er hovedspråket benyttet i datasettets innhold som skal angis 
-* Er datasettet uten språklige tekster angis ikke språk
-* Inneholder datasett tekster på flere språk, og det ikke er tydelig hva som er hovedspråket, angis ikke språk
-* Språk angis fra en liste av gyldige språk fra EUs autoritetsliste.
-",
-          },
-          "id": "Dataset_language",
-          "shortdesc": Object {
-            "nb": "Hovedspråket benyttet i datasettets innhold angis",
-          },
-          "uri": "http://brreg.no/fdk/fields#Dataset_language",
-        }
-      }
+      term="Dataset_language"
       title="Språk"
     />
     <Field
