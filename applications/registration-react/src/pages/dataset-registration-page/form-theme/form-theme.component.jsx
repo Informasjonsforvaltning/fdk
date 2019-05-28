@@ -9,7 +9,7 @@ import CheckboxFieldTheme from './theme-checkbox/theme-checkbox.component';
 import { AlertMessage } from '../../../components/alert-message/alert-message.component';
 
 export const FormThemes = props => {
-  const { syncErrors, helptextItems, initialValues } = props;
+  const { syncErrors, initialValues } = props;
   const { theme, themesItems } = initialValues;
   if (theme && themesItems) {
     return (
@@ -17,7 +17,7 @@ export const FormThemes = props => {
         <div className="form-group">
           <Helptext
             title={localization.schema.theme.helptext.theme}
-            helptextItems={helptextItems.Dataset_theme}
+            term="Dataset_theme"
           />
           <AlertMessage type="warning">
             <i className="fa fa-info-circle mr-2" />
@@ -47,6 +47,5 @@ FormThemes.defaultProps = {
 
 FormThemes.propTypes = {
   initialValues: PropTypes.object,
-  syncErrors: PropTypes.object,
-  helptextItems: PropTypes.object.isRequired
+  syncErrors: PropTypes.object
 };

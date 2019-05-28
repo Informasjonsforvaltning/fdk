@@ -6,21 +6,7 @@ exports[`should render FormConcept correctly 1`] = `
     className="form-group"
   >
     <withStateHandlers(Helptext)
-      helptextItems={
-        Object {
-          "description": Object {
-            "nb": "For å beskrive viktigste typer innhold i datasettet refereres det til begreper i begrepskataloger som også gir mulighet til å utnytte synonymer
-* innholdstyper i datasettet beskrives med referanse til begreper i begrepskatalog 
-* dersom det ikke kan benyttes en begrepskatalog brukes emneord. 
-Et datasett skal lenke til de aktuelle og sentrale begrepene i en begrepskatalog. Ved å henvise til gjennomarbeidede definisjoner som virksomheten selv er ansvarlig for å vedlikeholde, sikrer vi at det er tydelig hvordan et begrep brukt i datasettet skal forstås og at denne forståelsen til en hver tid er riktig og oppdatert. Vi ønsker at alle datasettene skal ha lenker til de aktuelle begrepene i virksomhetens katalog, slik at det er tydelig definert hva begrepene innebærer",
-          },
-          "id": "Dataset_content",
-          "shortdesc": Object {
-            "nb": "innholdstyper i datasettet beskrives med referanse til begreper i begrepskatalog",
-          },
-          "uri": "http://brreg.no/fdk/fields#Dataset_content",
-        }
-      }
+      term="Dataset_content"
       title="Begrep"
     />
     <Field
@@ -35,22 +21,7 @@ Et datasett skal lenke til de aktuelle og sentrale begrepene i en begrepskatalog
     className="form-group"
   >
     <withStateHandlers(Helptext)
-      helptextItems={
-        Object {
-          "description": Object {
-            "nb": "Ord og uttrykk som hjelper brukeren til å finne datasettet inkluderes (der det ikke er eksplisitt angitt referanser til begreper)  
-* Angi synonymer til hjelp i søk 
-* Angi sentralt innhold i datasettet som ikke finnes begrepsdefinisjoner for enda 
-I noen tilfeller mangler noen av begrepsdefinisjonene som er sentrale for å beskrive datasettet, eller man har et ord som ikke formelt forbindes med datasettet men som man vet at mange likevel bruker. Da kan vi bruke dette feltet for å sørge for at disse søkeordene likevel gir treff i søkemotoren.
-",
-          },
-          "id": "Dataset_keyword",
-          "shortdesc": Object {
-            "nb": "Angi synonymer og andre ord som kan hjelpe i søk. Sentralt innhold i datasettet som ikke ennå har begrepsdefinisjoner.",
-          },
-          "uri": "http://brreg.no/fdk/fields#Dataset_keyword",
-        }
-      }
+      term="Dataset_keyword"
       title="Søkeord"
     />
     <Field
@@ -70,21 +41,7 @@ exports[`should render FormConcept correctly with syncErrors 1`] = `
     className="form-group"
   >
     <withStateHandlers(Helptext)
-      helptextItems={
-        Object {
-          "description": Object {
-            "nb": "For å beskrive viktigste typer innhold i datasettet refereres det til begreper i begrepskataloger som også gir mulighet til å utnytte synonymer
-* innholdstyper i datasettet beskrives med referanse til begreper i begrepskatalog 
-* dersom det ikke kan benyttes en begrepskatalog brukes emneord. 
-Et datasett skal lenke til de aktuelle og sentrale begrepene i en begrepskatalog. Ved å henvise til gjennomarbeidede definisjoner som virksomheten selv er ansvarlig for å vedlikeholde, sikrer vi at det er tydelig hvordan et begrep brukt i datasettet skal forstås og at denne forståelsen til en hver tid er riktig og oppdatert. Vi ønsker at alle datasettene skal ha lenker til de aktuelle begrepene i virksomhetens katalog, slik at det er tydelig definert hva begrepene innebærer",
-          },
-          "id": "Dataset_content",
-          "shortdesc": Object {
-            "nb": "innholdstyper i datasettet beskrives med referanse til begreper i begrepskatalog",
-          },
-          "uri": "http://brreg.no/fdk/fields#Dataset_content",
-        }
-      }
+      term="Dataset_content"
       title="Begrep"
     />
     <Field
@@ -99,22 +56,7 @@ Et datasett skal lenke til de aktuelle og sentrale begrepene i en begrepskatalog
     className="form-group"
   >
     <withStateHandlers(Helptext)
-      helptextItems={
-        Object {
-          "description": Object {
-            "nb": "Ord og uttrykk som hjelper brukeren til å finne datasettet inkluderes (der det ikke er eksplisitt angitt referanser til begreper)  
-* Angi synonymer til hjelp i søk 
-* Angi sentralt innhold i datasettet som ikke finnes begrepsdefinisjoner for enda 
-I noen tilfeller mangler noen av begrepsdefinisjonene som er sentrale for å beskrive datasettet, eller man har et ord som ikke formelt forbindes med datasettet men som man vet at mange likevel bruker. Da kan vi bruke dette feltet for å sørge for at disse søkeordene likevel gir treff i søkemotoren.
-",
-          },
-          "id": "Dataset_keyword",
-          "shortdesc": Object {
-            "nb": "Angi synonymer og andre ord som kan hjelpe i søk. Sentralt innhold i datasettet som ikke ennå har begrepsdefinisjoner.",
-          },
-          "uri": "http://brreg.no/fdk/fields#Dataset_keyword",
-        }
-      }
+      term="Dataset_keyword"
       title="Søkeord"
     />
     <Field

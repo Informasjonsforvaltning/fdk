@@ -36,8 +36,7 @@ export const FormLOSPure = ({
       <div className="form-group">
         <Helptext
           title={localization.schema.los.helptext.title}
-          abstract={localization.helptexts.themesLos.abstract}
-          description={localization.helptexts.themesLos.description}
+          term="themesLos"
         />
 
         <Autocomplete

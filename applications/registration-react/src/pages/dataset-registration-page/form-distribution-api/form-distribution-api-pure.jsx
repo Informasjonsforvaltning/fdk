@@ -8,24 +8,21 @@ import localization from '../../../lib/localization';
 import Helptext from '../../../components/helptext/helptext.component';
 import { InputTagsAPIsField } from '../field-tagsinput-apis/field-tagsinput-apis.component';
 
-export const renderDistributionsAPI = componentProps => {
-  const { helptextItems } = componentProps;
-  return (
-    <div className="form-group">
-      <Helptext
-        title={localization.schema.distributionAPI.helptext.api}
-        helptextItems={helptextItems.Distribution_api}
-      />
-      <Field
-        name="distribution"
-        type="text"
-        component={InputTagsAPIsField}
-        label={localization.schema.concept.conceptLabel}
-        fieldLabel="no"
-      />
-    </div>
-  );
-};
+export const renderDistributionsAPI = () => (
+  <div className="form-group">
+    <Helptext
+      title={localization.schema.distributionAPI.helptext.api}
+      term="Distribution_api"
+    />
+    <Field
+      name="distribution"
+      type="text"
+      component={InputTagsAPIsField}
+      label={localization.schema.concept.conceptLabel}
+      fieldLabel="no"
+    />
+  </div>
+);
 
 const renderConnectedApisByDatasetId = (
   connectedApisByDatasetId,
@@ -77,15 +74,11 @@ const renderConnectedApisByDatasetId = (
 };
 
 export const FormDistributionApiPure = props => {
-  const { helptextItems, connectedApisByDatasetId, searchHost } = props;
+  const { connectedApisByDatasetId, searchHost } = props;
   return (
     <React.Fragment>
       <form>
-        <FieldArray
-          name="distribution"
-          component={renderDistributionsAPI}
-          helptextItems={helptextItems}
-        />
+        <FieldArray name="distribution" component={renderDistributionsAPI} />
       </form>
       {renderConnectedApisByDatasetId(connectedApisByDatasetId, searchHost)}
     </React.Fragment>
@@ -98,7 +91,6 @@ FormDistributionApiPure.defaultProps = {
 };
 
 FormDistributionApiPure.propTypes = {
-  helptextItems: PropTypes.object.isRequired,
   connectedApisByDatasetId: PropTypes.object,
   searchHost: PropTypes.string
 };

@@ -6,7 +6,6 @@ import {
   getDatasetItemByDatasetiId,
   getDatasetItemsByCatalogId
 } from '../../redux/modules/datasets';
-import { fetchHelptextsIfNeeded } from '../../redux/modules/helptexts';
 import {
   REFERENCEDATA_PATH_FREQUENCY,
   REFERENCEDATA_PATH_LOS,
@@ -18,15 +17,11 @@ import {
 import { getDatasetFormStatusById } from '../../redux/modules/dataset-form-status';
 
 const mapStateToProps = (
-  { helptexts, form, datasetFormStatus, datasets, referenceData },
+  { form, datasetFormStatus, datasets, referenceData },
   ownProps
 ) => {
   const id = _.get(ownProps, ['match', 'params', 'id']);
   const catalogId = _.get(ownProps, ['match', 'params', 'catalogId']);
-
-  const { helptextItems } = helptexts || {
-    helptextItems: null
-  };
 
   const title = form && form.title ? form.title : {};
 
@@ -56,7 +51,6 @@ const mapStateToProps = (
   const sample = form && form.sample ? form.sample : {};
 
   return {
-    helptextItems,
     provenanceItems: _.get(referenceData, [
       'items',
       REFERENCEDATA_PATH_PROVENANCE
@@ -121,7 +115,6 @@ const mapDispatchToProps = (
 
     batch(() => {
       dispatch(fetchDatasetsIfNeeded(catalogId));
-      dispatch(fetchHelptextsIfNeeded());
       dispatch(
         referenceDataApiActions.fetchReferenceDataIfNeededAction(
           REFERENCEDATA_PATH_PROVENANCE

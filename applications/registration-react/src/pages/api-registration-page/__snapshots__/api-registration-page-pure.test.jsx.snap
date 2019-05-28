@@ -395,7 +395,6 @@ Eksempel på endring som medfører versjonering:
               "registrationStatus": "DRAFT",
             }
           }
-          helptextItems={null}
           match={null}
         />
       </withState(withHandlers(FormTemplate))>
@@ -586,7 +585,6 @@ Eksempel på endring som medfører versjonering:
               "registrationStatus": "DRAFT",
             }
           }
-          helptextItems={null}
           match={null}
         />
       </withState(withHandlers(FormTemplate))>
@@ -778,7 +776,6 @@ Eksempel på endring som medfører versjonering:
             }
           }
           apiServiceTypeItems={null}
-          helptextItems={null}
           match={null}
         />
       </withState(withHandlers(FormTemplate))>
@@ -970,7 +967,6 @@ Eksempel på endring som medfører versjonering:
             }
           }
           apiStatusItems={null}
-          helptextItems={null}
           match={null}
         />
       </withState(withHandlers(FormTemplate))>
@@ -1161,7 +1157,6 @@ Eksempel på endring som medfører versjonering:
               "registrationStatus": "DRAFT",
             }
           }
-          helptextItems={null}
           match={null}
           referencedDatasets={null}
         />

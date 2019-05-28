@@ -1,23 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import _ from 'lodash';
 import { Field } from 'redux-form';
 import localization from '../../../lib/localization';
 import Helptext from '../../../components/helptext/helptext.component';
 import { InputTagsDatasetsField } from '../field-tagsinput-datasets/field-tagsinput-datasets.components';
 
-export const FormRelatedDatasets = ({
-  helptextItems,
-  orgPath,
-  referencedDatasets
-}) => (
+export const FormRelatedDatasets = ({ orgPath, referencedDatasets }) => (
   <form>
     <div className="form-group">
       <Helptext
         title={
           localization.schema.apiDatasetReferences.helptext.datasetReferences
         }
-        helptextItems={_.get(helptextItems, 'Related_dataset')}
+        term="Related_dataset"
       />
       <Field
         name="datasetUris"
@@ -33,13 +28,11 @@ export const FormRelatedDatasets = ({
 );
 
 FormRelatedDatasets.defaultProps = {
-  helptextItems: null,
   orgPath: null,
   referencedDatasets: null
 };
 
 FormRelatedDatasets.propTypes = {
-  helptextItems: PropTypes.object,
   orgPath: PropTypes.string,
   referencedDatasets: PropTypes.array
 };

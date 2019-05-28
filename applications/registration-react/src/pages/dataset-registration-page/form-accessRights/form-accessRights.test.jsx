@@ -4,16 +4,13 @@ import {
   FormAccessRights,
   renderLegalBasis
 } from './form-accessRights.component';
-import helptext from '../../../../test/fixtures/helptext';
 
 let defaultProps;
 let wrapper;
 
 beforeEach(() => {
-  const { helptextItems } = helptext;
   defaultProps = {
     syncErrors: null,
-    helptextItems,
     hasAccessRightsURI: 'hasAccessRightsURI',
     fields: [
       { _isFieldArray: true, length: 1, name: 'legalBasisForRestriction' }

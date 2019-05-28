@@ -67,7 +67,7 @@ export const renderProvenance = componentProps => {
 };
 
 export const FormProvenance = props => {
-  const { helptextItems, initialValues } = props;
+  const { initialValues } = props;
   const { provenance, provenanceItems, frequencyItems } = initialValues;
   if (provenance) {
     return (
@@ -75,7 +75,7 @@ export const FormProvenance = props => {
         <div className="form-group">
           <Helptext
             title={localization.schema.provenance.helptext.provenance}
-            helptextItems={helptextItems.Dataset_provenance}
+            term="Dataset_provenance"
           />
           <Field
             name="provenance"
@@ -86,7 +86,7 @@ export const FormProvenance = props => {
         <div className="form-group">
           <Helptext
             title={localization.schema.provenance.helptext.accruralPeriodicity}
-            helptextItems={helptextItems.Dataset_accruralPeriodicity}
+            term="Dataset_accruralPeriodicity"
           />
           <Field
             name="accrualPeriodicity"
@@ -97,7 +97,7 @@ export const FormProvenance = props => {
         <div className="form-group">
           <Helptext
             title={localization.schema.provenance.helptext.modified}
-            helptextItems={helptextItems.Dataset_modified}
+            term="Dataset_modified"
           />
           <Field
             name="modified"
@@ -109,9 +109,7 @@ export const FormProvenance = props => {
         <div className="form-group">
           <Helptext
             title={localization.schema.provenance.helptext.currentness}
-            helptextItems={
-              helptextItems.Dataset_hasQualityAnnotation_currentness
-            }
+            term="Dataset_hasQualityAnnotation_currentness"
           />
           <Field
             name={`hasCurrentnessAnnotation.hasBody.${localization.getLanguage()}`}
@@ -130,6 +128,5 @@ FormProvenance.defaultProps = {
 };
 
 FormProvenance.propTypes = {
-  initialValues: PropTypes.object,
-  helptextItems: PropTypes.object.isRequired
+  initialValues: PropTypes.object
 };

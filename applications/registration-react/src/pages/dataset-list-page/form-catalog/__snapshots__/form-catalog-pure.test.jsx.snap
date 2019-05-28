@@ -70,21 +70,8 @@ exports[`should render FormCatalogPure correctly 1`] = `
         className="form-group"
       >
         <withStateHandlers(Helptext)
-          helptextItems={
-            Object {
-              "description": Object {
-                "nb": "Kortfattet om katalogen
-* Angi, uten å liste, hvilke datasett den omfatter, 
-* f.eks. datasettene til Brønnøysundregistrene.",
-              },
-              "id": "Catalog_title",
-              "shortdesc": Object {
-                "nb": "Kortfattet om katalogen. Angi, uten å liste, hvilke datasett den omfatter.",
-              },
-              "uri": "http://brreg.no/fdk/fields#Catalog_title",
-            }
-          }
           required={true}
+          term="Catalog_title"
           title="Beskrivelse"
         />
         <Field

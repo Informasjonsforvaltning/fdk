@@ -1,18 +1,16 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
-import _ from 'lodash';
 import localization from '../../../lib/localization';
 import Helptext from '../../../components/helptext/helptext.component';
 import RadioField from '../../../components/field-radio/field-radio.component';
 import './form-access.scss';
 
-export const FormAccess = ({ helptextItems }) => (
+export const FormAccess = () => (
   <form>
     <div className="form-group mb-5 api-access">
       <Helptext
         title={localization.schema.apiAccess.helptext.isOpenAccess}
-        helptextItems={_.get(helptextItems, 'isOpenAccess')}
+        term="isOpenAccess"
       />
       <Field
         name="isOpenAccess"
@@ -34,7 +32,7 @@ export const FormAccess = ({ helptextItems }) => (
     <div className="form-group mb-5 api-access">
       <Helptext
         title={localization.schema.apiAccess.helptext.isOpenLicense}
-        helptextItems={_.get(helptextItems, 'isOpenLicense')}
+        term="isOpenLicense"
       />
       <Field
         name="isOpenLicense"
@@ -56,7 +54,7 @@ export const FormAccess = ({ helptextItems }) => (
     <div className="form-group mb-5 api-access">
       <Helptext
         title={localization.schema.apiAccess.helptext.isFree}
-        helptextItems={_.get(helptextItems, 'isFree')}
+        term="isFree"
       />
       <Field
         name="isFree"
@@ -78,7 +76,7 @@ export const FormAccess = ({ helptextItems }) => (
     <div className="form-group mb-5 api-access">
       <Helptext
         title={localization.schema.apiAccess.helptext.nationalComponent}
-        helptextItems={_.get(helptextItems, 'nationalComponent')}
+        term="nationalComponent"
       />
       <Field
         name="nationalComponent"
@@ -99,11 +97,3 @@ export const FormAccess = ({ helptextItems }) => (
     </div>
   </form>
 );
-
-FormAccess.defaultProps = {
-  helptextItems: null
-};
-
-FormAccess.propTypes = {
-  helptextItems: PropTypes.object
-};

@@ -9,13 +9,13 @@ import InputTagsFieldConcepts from './input-tags-concepts/input-tags-concepts.co
 import InputTagsFieldArray from '../../../components/field-input-tags-objects/field-input-tags-objects.component';
 
 export const FormConcept = props => {
-  const { syncErrors, helptextItems } = props;
+  const { syncErrors } = props;
   return (
     <form>
       <div className="form-group">
         <Helptext
           title={localization.schema.concept.helptext.content}
-          helptextItems={helptextItems.Dataset_content}
+          term="Dataset_content"
         />
         <Field
           name="concepts"
@@ -28,7 +28,7 @@ export const FormConcept = props => {
       <div className="form-group">
         <Helptext
           title={localization.schema.concept.helptext.keyword}
-          helptextItems={helptextItems.Dataset_keyword}
+          term="Dataset_keyword"
         />
         <Field
           name="keyword"
@@ -51,6 +51,5 @@ FormConcept.defaultProps = {
   syncErrors: null
 };
 FormConcept.propTypes = {
-  syncErrors: PropTypes.object,
-  helptextItems: PropTypes.object.isRequired
+  syncErrors: PropTypes.object
 };

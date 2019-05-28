@@ -10,10 +10,8 @@ import './dataset-list-page.scss';
 
 export const DatasetsListPage = props => {
   const {
-    helptextItems,
     catalog,
     datasetItems,
-    fetchHelptextsIfNeeded,
     fetchCatalogIfNeeded,
     fetchDatasetsIfNeeded,
     match,
@@ -25,8 +23,6 @@ export const DatasetsListPage = props => {
     fetchCatalogIfNeeded(catalogId);
     fetchDatasetsIfNeeded(catalogId);
   }
-
-  fetchHelptextsIfNeeded();
 
   return (
     <div className="container">
@@ -44,32 +40,24 @@ export const DatasetsListPage = props => {
         <div className="col-12" />
       </div>
       <div className="row mb-2 mb-md-5">
-        {helptextItems &&
-          _.get(catalog, ['items', catalogId]) && (
-            <div className="col-12 fdk-reg-datasets-list">
-              <FormCatalog
-                catalogId={catalogId}
-                helptextItems={helptextItems}
-              />
-              <DatasetItemsList
-                catalogId={catalogId}
-                datasetItems={datasetItems}
-                defaultEmptyListText={
-                  localization.listItems.missingDatasetItems
-                }
-              />
-            </div>
-          )}
+        {_.get(catalog, ['items', catalogId]) && (
+          <div className="col-12 fdk-reg-datasets-list">
+            <FormCatalog catalogId={catalogId} />
+            <DatasetItemsList
+              catalogId={catalogId}
+              datasetItems={datasetItems}
+              defaultEmptyListText={localization.listItems.missingDatasetItems}
+            />
+          </div>
+        )}
       </div>
     </div>
   );
 };
 
 DatasetsListPage.defaultProps = {
-  helptextItems: null,
   catalog: null,
   datasetItems: null,
-  fetchHelptextsIfNeeded: () => {},
   fetchCatalogIfNeeded: () => {},
   fetchDatasetsIfNeeded: () => {},
   match: null,
@@ -77,10 +65,8 @@ DatasetsListPage.defaultProps = {
 };
 
 DatasetsListPage.propTypes = {
-  helptextItems: PropTypes.object,
   catalog: PropTypes.object,
   datasetItems: PropTypes.array,
-  fetchHelptextsIfNeeded: PropTypes.func,
   fetchCatalogIfNeeded: PropTypes.func,
   fetchDatasetsIfNeeded: PropTypes.func,
   match: PropTypes.object,

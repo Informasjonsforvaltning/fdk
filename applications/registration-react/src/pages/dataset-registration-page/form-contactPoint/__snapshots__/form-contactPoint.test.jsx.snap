@@ -6,20 +6,7 @@ exports[`should render FormContactPoint correctly 1`] = `
     className="form-group"
   >
     <withStateHandlers(Helptext)
-      helptextItems={
-        Object {
-          "description": Object {
-            "nb": "Kontaktpunkt angis med organisasjonsenhet
-Dette kan være navnet til en gruppe, avdeling, seksjon eller liknende i organisasjonen. ",
-          },
-          "id": "ContactPoint_organizational-unit",
-          "shortdesc": Object {
-            "nb": "Kontaktpunkt angis med organisasjonsenhet
-Dette kan være navnet til en gruppe, avdeling, seksjon eller liknende i organisasjonen.",
-          },
-          "uri": "http://brreg.no/fdk/fields#ContactPoint_organizational-unit",
-        }
-      }
+      term="ContactPoint_organizational-unit"
       title="Kontaktpunkt"
     />
     <Field
@@ -32,18 +19,7 @@ Dette kan være navnet til en gruppe, avdeling, seksjon eller liknende i organis
     className="form-group"
   >
     <withStateHandlers(Helptext)
-      helptextItems={
-        Object {
-          "description": Object {
-            "nb": "Angi referanse til kontaktskjema på web dersom dette er en ønsket kontaktform",
-          },
-          "id": "ContactPoint_hasURL",
-          "shortdesc": Object {
-            "nb": "Angi referanse til kontaktskjema på web dersom dette er en ønsket kontaktform",
-          },
-          "uri": "http://brreg.no/fdk/fields#ContactPoint_hasURL",
-        }
-      }
+      term="ContactPoint_hasURL"
       title="Kontaktskjema"
     />
     <Field
@@ -56,18 +32,7 @@ Dette kan være navnet til en gruppe, avdeling, seksjon eller liknende i organis
     className="form-group"
   >
     <withStateHandlers(Helptext)
-      helptextItems={
-        Object {
-          "description": Object {
-            "nb": "Angi e-postadresse for kontaktpunktet dersom dette er en ønsket kontaktform",
-          },
-          "id": "ContactPoint_hasEmail",
-          "shortdesc": Object {
-            "nb": "Angi e-postadresse for kontaktpunktet dersom dette er en ønsket kontaktform",
-          },
-          "uri": "http://brreg.no/fdk/fields#ContactPoint_hasEmail",
-        }
-      }
+      term="ContactPoint_hasEmail"
       title="E-post"
     />
     <Field
@@ -80,18 +45,7 @@ Dette kan være navnet til en gruppe, avdeling, seksjon eller liknende i organis
     className="form-group"
   >
     <withStateHandlers(Helptext)
-      helptextItems={
-        Object {
-          "description": Object {
-            "nb": "Angi telefonnummer for kontaktpunktet dersom dette er en ønsket kontaktform",
-          },
-          "id": "ContactPoint_hasTelephone",
-          "shortdesc": Object {
-            "nb": "Angi telefonnummer for kontaktpunktet dersom dette er en ønsket kontaktform",
-          },
-          "uri": "http://brreg.no/fdk/fields#ContactPoint_hasTelephone",
-        }
-      }
+      term="ContactPoint_hasTelephone"
       title="Telefon"
     />
     <div

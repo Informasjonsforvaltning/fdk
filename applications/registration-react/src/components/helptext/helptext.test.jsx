@@ -1,17 +1,15 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import Helptext from './helptext.component';
-import helptext from '../../../test/fixtures/helptext';
+import { Helptext } from './helptext.component';
 
 let defaultProps;
 let wrapper;
 
 beforeEach(() => {
-  const { helptextItems } = helptext;
   defaultProps = {
     title: 'Title',
     required: false,
-    helptextItems
+    term: 'Catalog_title'
   };
   wrapper = shallow(<Helptext {...defaultProps} />);
 });

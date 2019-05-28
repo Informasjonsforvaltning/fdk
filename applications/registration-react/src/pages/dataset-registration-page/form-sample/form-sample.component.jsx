@@ -11,13 +11,7 @@ import { handleDatasetDeleteFieldPatch } from '../formsLib/formHandlerDatasetPat
 import { textType, licenseType } from '../../../schemaTypes';
 
 export const renderSamples = componentProps => {
-  const {
-    catalogId,
-    datasetId,
-    fields,
-    helptextItems,
-    dispatch
-  } = componentProps;
+  const { catalogId, datasetId, fields, dispatch } = componentProps;
   return (
     <div>
       {fields &&
@@ -55,7 +49,7 @@ export const renderSamples = componentProps => {
             <div className="form-group">
               <Helptext
                 title={localization.schema.sample.helptext.format}
-                helptextItems={helptextItems.Distribution_format}
+                term="Distribution_format"
               />
               <Field
                 name={`${sample}.format`}
@@ -103,13 +97,12 @@ export const renderSamples = componentProps => {
 };
 
 export const FormSample = props => {
-  const { helptextItems, dispatch, catalogId, datasetId } = props;
+  const { dispatch, catalogId, datasetId } = props;
   return (
     <form>
       <FieldArray
         name="sample"
         component={renderSamples}
-        helptextItems={helptextItems}
         dispatch={dispatch}
         catalogId={catalogId}
         datasetId={datasetId}
@@ -125,7 +118,6 @@ FormSample.defaultProps = {
 };
 
 FormSample.propTypes = {
-  helptextItems: PropTypes.object.isRequired,
   dispatch: PropTypes.func,
   catalogId: PropTypes.string,
   datasetId: PropTypes.string

@@ -12,19 +12,7 @@ exports[`should render FormInformationModel, { renderS correctly 1`] = `
         className="form-group"
       >
         <withStateHandlers(Helptext)
-          helptextItems={
-            Object {
-              "description": Object {
-                "nb": "En eksplisitt referanse til informasjonsmodell
-* Benyttes til å angi en maskinlesbar referanse til informasjonsmodell.",
-              },
-              "id": "Dataset_informationModel",
-              "shortdesc": Object {
-                "nb": "Refereranse til datasettets informasjonsmodell",
-              },
-              "uri": "http://brreg.no/fdk/fields#Dataset_informationModel",
-            }
-          }
+          term="Dataset_informationModel"
           title="Informasjonsmodell"
         />
         <FieldArray

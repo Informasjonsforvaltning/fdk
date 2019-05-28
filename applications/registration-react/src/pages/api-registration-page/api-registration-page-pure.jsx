@@ -26,7 +26,6 @@ export const ApiRegistrationPagePure = ({
   error,
   justPublishedOrUnPublished,
   registrationStatus,
-  helptextItems,
   item,
   location,
   match,
@@ -159,11 +158,7 @@ export const ApiRegistrationPagePure = ({
                 showInitially
                 title={localization.schema.apiAccess.title}
               >
-                <ConnectedFormAccess
-                  apiItem={item}
-                  match={match}
-                  helptextItems={helptextItems}
-                />
+                <ConnectedFormAccess apiItem={item} match={match} />
               </FormTemplateWithState>
             </div>
           </div>
@@ -173,11 +168,7 @@ export const ApiRegistrationPagePure = ({
                 showInitially
                 title={localization.schema.apiMeta.title}
               >
-                <ConnectedFormMeta
-                  apiItem={item}
-                  match={match}
-                  helptextItems={helptextItems}
-                />
+                <ConnectedFormMeta apiItem={item} match={match} />
               </FormTemplateWithState>
             </div>
           </div>
@@ -190,7 +181,6 @@ export const ApiRegistrationPagePure = ({
                 <ConnectedFormApiServiceType
                   apiItem={item}
                   match={match}
-                  helptextItems={helptextItems}
                   apiServiceTypeItems={apiServiceTypeItems}
                 />
               </FormTemplateWithState>
@@ -206,7 +196,6 @@ export const ApiRegistrationPagePure = ({
                   match={match}
                   apiItem={item}
                   apiStatusItems={apiStatusItems}
-                  helptextItems={helptextItems}
                 />
               </FormTemplateWithState>
             </div>
@@ -222,7 +211,6 @@ export const ApiRegistrationPagePure = ({
                   apiItem={item}
                   match={match}
                   orgPath={_.get(publisher, 'orgPath')}
-                  helptextItems={helptextItems}
                   referencedDatasets={referencedDatasets}
                 />
               </FormTemplateWithState>
@@ -263,7 +251,6 @@ ApiRegistrationPagePure.defaultProps = {
   error: null,
   justPublishedOrUnPublished: false,
   registrationStatus: null,
-  helptextItems: null,
   apiStatusItems: null,
   apiServiceTypeItems: null,
   item: null,
@@ -290,7 +277,6 @@ ApiRegistrationPagePure.propTypes = {
   error: PropTypes.number,
   justPublishedOrUnPublished: PropTypes.bool,
   registrationStatus: PropTypes.string,
-  helptextItems: PropTypes.object,
   apiStatusItems: PropTypes.array,
   apiServiceTypeItems: PropTypes.array,
   item: PropTypes.object,

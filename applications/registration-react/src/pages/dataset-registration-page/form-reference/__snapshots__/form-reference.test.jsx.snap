@@ -6,20 +6,7 @@ exports[`should render FormReference correctly 1`] = `
     className="form-group"
   >
     <withStateHandlers(Helptext)
-      helptextItems={
-        Object {
-          "description": Object {
-            "nb": "En generell relasjon som peker til ressurser som er relatert til datasettet.
-
-Angi referanser til andre datasett som gir supplerende informasjon om innholdet. Kan f.eks. være å relatere til et kodeverk.",
-          },
-          "id": "Dataset_relation",
-          "shortdesc": Object {
-            "nb": "Referanse til andre datasett som gir supplerende informasjon om innholdet, f.eks. et kodeverk.",
-          },
-          "uri": "http://brreg.no/fdk/fields#Dataset_relation",
-        }
-      }
+      terms="Dataset_relation"
       title="Relasjoner"
     />
     <FieldArray

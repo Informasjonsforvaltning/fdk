@@ -82,7 +82,6 @@ export const renderLegalBasis = customProps => {
 export const FormAccessRights = props => {
   const {
     syncErrors,
-    helptextItems,
     hasAccessRightsURI,
     dispatch,
     catalogId,
@@ -95,7 +94,7 @@ export const FormAccessRights = props => {
       <div className="form-group">
         <Helptext
           title={localization.schema.accessRights.heading}
-          helptextItems={helptextItems.Dataset_accessRights}
+          term="Dataset_accessRights"
         />
         <Field
           name="accessRights.uri"
@@ -140,7 +139,7 @@ export const FormAccessRights = props => {
                   localization.schema.accessRights.legalBasisForRestriction
                     .heading
                 }
-                helptextItems={helptextItems.Dataset_legalBasisForRestriction}
+                term="Dataset_legalBasisForRestriction"
               />
               <FieldArray
                 name="legalBasisForRestriction"
@@ -165,7 +164,7 @@ export const FormAccessRights = props => {
                   localization.schema.accessRights.legalBasisForProcessing
                     .heading
                 }
-                helptextItems={helptextItems.Dataset_legalBasisForProcessing}
+                term="Dataset_legalBasisForProcessing"
               />
               <FieldArray
                 name="legalBasisForProcessing"
@@ -189,7 +188,7 @@ export const FormAccessRights = props => {
                 title={
                   localization.schema.accessRights.legalBasisForAccess.heading
                 }
-                helptextItems={helptextItems.Dataset_legalBasisForAccess}
+                term="Dataset_legalBasisForAccess"
               />
               <FieldArray
                 name="legalBasisForAccess"
@@ -222,7 +221,6 @@ FormAccessRights.defaultProps = {
 };
 FormAccessRights.propTypes = {
   syncErrors: PropTypes.object,
-  helptextItems: PropTypes.object.isRequired,
   hasAccessRightsURI: PropTypes.string,
   dispatch: PropTypes.func,
   catalogId: PropTypes.string,

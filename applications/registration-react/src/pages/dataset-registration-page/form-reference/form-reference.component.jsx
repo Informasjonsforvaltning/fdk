@@ -86,13 +86,7 @@ export const renderReference = componentProps => {
 };
 
 export const FormReference = props => {
-  const {
-    helptextItems,
-    initialValues,
-    dispatch,
-    catalogId,
-    datasetId
-  } = props;
+  const { initialValues, dispatch, catalogId, datasetId } = props;
   const { referenceTypesItems, referenceDatasetsItems } = initialValues;
   if (initialValues) {
     return (
@@ -100,7 +94,7 @@ export const FormReference = props => {
         <div className="form-group">
           <Helptext
             title={localization.schema.reference.helptext.reference}
-            helptextItems={helptextItems.Dataset_relation}
+            terms="Dataset_relation"
           />
           <FieldArray
             name="references"
@@ -127,7 +121,6 @@ FormReference.defaultProps = {
 
 FormReference.propTypes = {
   initialValues: PropTypes.object,
-  helptextItems: PropTypes.object.isRequired,
   dispatch: PropTypes.func,
   catalogId: PropTypes.string,
   datasetId: PropTypes.string

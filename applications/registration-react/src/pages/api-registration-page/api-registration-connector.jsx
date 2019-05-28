@@ -8,7 +8,6 @@ import {
   getApiItemsByApiId
 } from '../../redux/modules/apis';
 import { getApiFormStatusById } from '../../redux/modules/api-form-status';
-import { fetchHelptextsIfNeeded } from '../../redux/modules/helptexts';
 import { fetchCatalogIfNeeded } from '../../redux/modules/catalog';
 import {
   REFERENCEDATA_PATH_APISERVICETYPE,
@@ -16,13 +15,9 @@ import {
 } from '../../redux/modules/referenceData';
 
 const mapStateToProps = (
-  { apiFormStatus, apis, helptexts, catalog, referenceData },
+  { apiFormStatus, apis, catalog, referenceData },
   ownProps
 ) => {
-  const { helptextItems } = helptexts || {
-    helptextItems: null
-  };
-
   const catalogId = _.get(ownProps, ['match', 'params', 'catalogId']);
   const apiId = _.get(ownProps, ['match', 'params', 'id']);
 
@@ -40,7 +35,6 @@ const mapStateToProps = (
       'status'
     ),
     item: getApiItemsByApiId(apis, catalogId, apiId),
-    helptextItems,
     history: _.get(ownProps, 'history'),
     match: _.get(ownProps, 'match'),
     apiStatusItems: _.filter(
@@ -62,7 +56,6 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     batch(() => {
       dispatch(fetchCatalogIfNeeded(catalogId));
       dispatch(fetchApisIfNeededAction(catalogId));
-      dispatch(fetchHelptextsIfNeeded());
       dispatch(
         referenceDataApiActions.fetchReferenceDataIfNeededAction(
           REFERENCEDATA_PATH_APISTATUS

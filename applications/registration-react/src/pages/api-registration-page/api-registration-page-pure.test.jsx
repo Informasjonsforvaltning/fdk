@@ -12,12 +12,8 @@ let defaultProps;
 let wrapper;
 
 beforeEach(() => {
-  const fetchHelptextsIfNeeded = jest.fn();
-  const fetchCatalogIfNeeded = jest.fn();
   defaultProps = {
-    item,
-    fetchHelptextsIfNeeded,
-    fetchCatalogIfNeeded
+    item
   };
   wrapper = shallow(<ApiRegistrationPagePure {...defaultProps} />);
 });

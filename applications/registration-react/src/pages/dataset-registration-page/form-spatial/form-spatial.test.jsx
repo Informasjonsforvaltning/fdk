@@ -5,16 +5,12 @@ import {
   renderTemporal,
   renderTemporalFields
 } from './form-spatial.component';
-import helptext from '../../../../test/fixtures/helptext';
 
 let defaultProps;
 let wrapper;
 
 beforeEach(() => {
-  const { helptextItems } = helptext;
-  defaultProps = {
-    helptextItems
-  };
+  defaultProps = {};
   wrapper = shallow(<FormSpatial {...defaultProps} />);
 });
 
