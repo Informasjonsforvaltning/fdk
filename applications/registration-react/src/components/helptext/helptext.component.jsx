@@ -10,23 +10,15 @@ import localization from '../../lib/localization';
 import './helptext.scss';
 
 export const Helptext = props => {
-  const {
-    title,
-    required,
-    abstract,
-    description,
-    helptextItems,
-    toggleShowAll,
-    showAll
-  } = props;
+  const { title, required, helptextItems, toggleShowAll, showAll } = props;
 
   const collapseClass = cx('fa', 'fdk-fa-left', {
     'fa-angle-double-down': !showAll,
     'fa-angle-double-up': showAll
   });
 
-  const shortdesc = abstract || _.get(helptextItems, 'shortdesc');
-  const descriptionText = description || _.get(helptextItems, 'description');
+  const shortdesc = _.get(helptextItems, 'shortdesc');
+  const descriptionText = _.get(helptextItems, 'description');
 
   return (
     <div className="fdk-reg-helptext mb-3 p-3">
@@ -83,8 +75,6 @@ export const Helptext = props => {
 Helptext.defaultProps = {
   title: '',
   required: false,
-  abstract: null,
-  description: null,
   helptextItems: null,
   toggleShowAll: _.noop,
   showAll: false
@@ -93,8 +83,6 @@ Helptext.defaultProps = {
 Helptext.propTypes = {
   title: PropTypes.string,
   required: PropTypes.bool,
-  abstract: PropTypes.string,
-  description: PropTypes.string,
   helptextItems: PropTypes.object,
   toggleShowAll: PropTypes.func,
   showAll: PropTypes.bool
