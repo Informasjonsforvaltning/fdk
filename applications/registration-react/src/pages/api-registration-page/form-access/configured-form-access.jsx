@@ -1,11 +1,9 @@
 import { reduxForm } from 'redux-form';
 import { FormAccess } from './form-access.component';
 import { asyncValidate } from '../async-patch/async-patch';
-import shouldAsyncValidate from '../../../lib/shouldAsyncValidate';
 
 const config = {
   form: 'apiAccess',
-  shouldAsyncValidate,
   asyncValidate
 };
 
