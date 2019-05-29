@@ -1,72 +1,30 @@
 package no.dcat.themes.service;
 
-import jdk.nashorn.api.scripting.URLReader;
-import org.apache.jena.rdf.model.*;
-import org.apache.jena.vocabulary.RDF;
-import org.apache.jena.vocabulary.SKOS;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
-import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 public class LOSService {
 
-    public static final String defaultLanguage = "nb";
     static private final Logger logger = LoggerFactory.getLogger(LOSService.class);
     private static List<LosNode> allLosNodes;
     private static HashMap<String, LosNode> allLosNodesByURI;
-
-    @Autowired
-    JdbcTemplate jdbcTemplate;
-
     @Autowired
     public LosRDFImporter losRDFImporter;
 
-    @Autowired
-    LOSStorage losStorage;
-
-    public List<LosNode> getAll() {
-        return allLosNodes;
-    }
-
-    @EventListener(ApplicationReadyEvent.class)
-    public void loadLOSTemaAfterStartup() {
-
-        Boolean losTemaHasBeenHarvested = losStorage.hasLosBeenPreviouslyHarvested();
-
-        List<LosNode> allLosNodesTMP = new ArrayList<>();
-        HashMap<String, LosNode> allLosNodesByURITMP = new HashMap<>();
-
-        if (!losTemaHasBeenHarvested) {
-            losRDFImporter.importFromLosSource(allLosNodesTMP, allLosNodesByURITMP);
-            losStorage.saveAllNodes(allLosNodesTMP, allLosNodesByURITMP);
-        } else {
-            losStorage.loadAllNodes(allLosNodesTMP, allLosNodesByURITMP);
-        }
-
-        allLosNodes = allLosNodesTMP;
-        allLosNodesByURI = allLosNodesByURITMP;
-    }
-
-    public void fillDatastructure() {
-        List<LosNode> allLosNodesTMP = new ArrayList<>();
-        HashMap<String, LosNode> allLosNodesByURITMP = new HashMap<>();
-
-        losRDFImporter.importFromLosSource(allLosNodesTMP, allLosNodesByURITMP);
-        allLosNodes = allLosNodesTMP;
-    }
+    private Boolean losTemaHasBeenHarvested = false;
 
     public static LosNode getByURI(URI keyword) {
         String uriAsString = keyword.toString();
@@ -78,20 +36,9 @@ public class LOSService {
         return null;
     }
 
-    public static LosNode getByURIString (String uri) throws URISyntaxException {
+    public static LosNode getByURIString(String uri) throws URISyntaxException {
         URI actualURI = new URI(uri);
         return getByURI(actualURI);
-    }
-    public boolean hasLosThemes(List<String> themes) {
-        if (themes == null || themes.isEmpty()) {
-            return false;
-        }
-        for (String theme : themes) {
-            if (isLosTheme(theme)) {
-                return true;
-            }
-        }
-        return false;
     }
 
     private static boolean isLosTheme(String theme) {
@@ -114,26 +61,6 @@ public class LOSService {
             }
         }
         return false;
-    }
-
-    public List<String> expandLosThemes(List<String> themes) {
-        List<String> keyWords = new ArrayList<>();
-        for (String theme : themes) {
-            if (isLosTheme(theme)) {
-                keyWords.addAll(expandSingleTheme(theme));
-            }
-        }
-        return keyWords;
-    }
-
-    public List<String> expandLosThemesByPaths(List<String> paths) {
-        List<String> keyWords = new ArrayList<>();
-        for (String path : paths) {
-            if (isLosPath(path)) {
-                keyWords.addAll(expandSinglePath(path));
-            }
-        }
-        return keyWords;
     }
 
     private static List<String> expandSinglePath(String path) {
@@ -169,7 +96,7 @@ public class LOSService {
                 //We are searching for a subtheme and the node we are comparing with is an Emne (arbeid/arbeidsliv/mobbing)
                 if (org.springframework.util.StringUtils.countOccurrencesOf(singlePath, "/") == 2) {
                     int firstIndex = singlePath.indexOf("/");
-                    int secoundIndex = singlePath.indexOf("/", firstIndex+1);
+                    int secoundIndex = singlePath.indexOf("/", firstIndex + 1);
                     String choppedEmne = singlePath.substring(0, secoundIndex);
                     if (choppedEmne.equalsIgnoreCase(losPathToFind)) {
                         return true;
@@ -180,7 +107,7 @@ public class LOSService {
         return false;
     }
 
-    private static List<String> expandSingleTheme(String theme)  {
+    private static List<String> expandSingleTheme(String theme) {
         List<String> keyWords = new ArrayList<>();
 
         try {
@@ -247,6 +174,63 @@ public class LOSService {
             logger.debug("While expanding LOS Theme, got exeption for theme " + theme, use);
         }
 
+        return keyWords;
+    }
+
+    public List<LosNode> getAll() {
+        return allLosNodes;
+    }
+
+    @EventListener(ApplicationReadyEvent.class)
+    public void loadLOSTemaAfterStartup() {
+
+        List<LosNode> allLosNodesTMP = new ArrayList<>();
+        HashMap<String, LosNode> allLosNodesByURITMP = new HashMap<>();
+
+        if (!losTemaHasBeenHarvested) {
+            losRDFImporter.importFromLosSource(allLosNodesTMP, allLosNodesByURITMP);
+        }
+        allLosNodes = allLosNodesTMP;
+        allLosNodesByURI = allLosNodesByURITMP;
+    }
+
+    public void fillDatastructure() {
+        List<LosNode> allLosNodesTMP = new ArrayList<>();
+        HashMap<String, LosNode> allLosNodesByURITMP = new HashMap<>();
+
+        losRDFImporter.importFromLosSource(allLosNodesTMP, allLosNodesByURITMP);
+        allLosNodes = allLosNodesTMP;
+    }
+
+    public boolean hasLosThemes(List<String> themes) {
+        if (themes == null || themes.isEmpty()) {
+            return false;
+        }
+        for (String theme : themes) {
+            if (isLosTheme(theme)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public List<String> expandLosThemes(List<String> themes) {
+        List<String> keyWords = new ArrayList<>();
+        for (String theme : themes) {
+            if (isLosTheme(theme)) {
+                keyWords.addAll(expandSingleTheme(theme));
+            }
+        }
+        return keyWords;
+    }
+
+    public List<String> expandLosThemesByPaths(List<String> paths) {
+        List<String> keyWords = new ArrayList<>();
+        for (String path : paths) {
+            if (isLosPath(path)) {
+                keyWords.addAll(expandSinglePath(path));
+            }
+        }
         return keyWords;
     }
 }
