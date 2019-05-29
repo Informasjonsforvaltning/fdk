@@ -1,14 +1,4 @@
 spring:
-  datasource:
-    url: ${FDK_SQL_JDBC_CONNECTION}
-    username: ${FDK_SQL_USERNAME}
-    password: ${FDK_SQL_PASSWORD}
-
-  liquibase:
-    url: ${FDK_SQL_JDBC_CONNECTION}
-    user: ${FDK_SQL_USERNAME}
-    password: ${FDK_SQL_PASSWORD}
-    change-log: classpath:liquibase/changelog/changelog-master.xml
 logging:
   level.root: ERROR
   level.o.a: ERROR
@@ -35,16 +25,6 @@ management:
 
 spring:
   profiles: develop,unit-integration
-  datasource:
-    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=fdkreference
-    username: postgres
-    password: password
-
-  liquibase:
-    url: jdbc:postgresql://localhost:5432/postgres
-    user: postgres
-    password: password
-    change-log: classpath:liquibase/changelog/changelog-master.xml
 server:
   port: 8113
 
