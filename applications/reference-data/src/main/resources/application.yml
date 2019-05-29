@@ -5,7 +5,7 @@ logging:
   level.o.apache: ERROR
   level.no.brreg: ERROR
   level.no.difi: ERROR
-  level.no.dcat: INFO
+  level.no: ${LOG_LEVEL:DEBUG}
   level.org.springframework: WARN
   level.org.springframework.web: WARN
 server:
