@@ -21,35 +21,8 @@ const mapStateToProps = (
 ) => {
   const id = _.get(ownProps, ['match', 'params', 'id']);
   const catalogId = _.get(ownProps, ['match', 'params', 'catalogId']);
-
-  const title = form && form.title ? form.title : {};
-
-  const accessRights = form && form.accessRights ? form.accessRights : {};
-
-  const formThemes = form && form.themes ? form.themes : {};
-
-  const type = form && form.type ? form.type : {};
-
-  const concept = form && form.concept ? form.concept : {};
-
-  const spatial = form && form.spatial ? form.spatial : {};
-
-  const formProvenance = form && form.provenance ? form.provenance : {};
-
-  const contents = form && form.contents ? form.contents : {};
-
-  const informationModel =
-    form && form.informationModel ? form.informationModel : {};
-
-  const reference = form && form.reference ? form.reference : {};
-
-  const contactPoint = form && form.contactPoint ? form.contactPoint : {};
-
-  const distribution = form && form.distribution ? form.distribution : {};
-
-  const sample = form && form.sample ? form.sample : {};
-
   return {
+    form,
     provenanceItems: _.get(referenceData, [
       'items',
       REFERENCEDATA_PATH_PROVENANCE
@@ -68,19 +41,6 @@ const mapStateToProps = (
       'items',
       REFERENCEDATA_PATH_OPENLICENCES
     ]),
-    title,
-    accessRights,
-    formThemes,
-    type,
-    concept,
-    spatial,
-    formProvenance,
-    contents,
-    informationModel,
-    reference,
-    contactPoint,
-    distribution,
-    sample,
     lastSaved: _.get(
       getDatasetFormStatusById(datasetFormStatus, id),
       'lastSaved'

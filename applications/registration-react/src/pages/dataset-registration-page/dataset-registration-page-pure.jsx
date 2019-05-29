@@ -69,22 +69,10 @@ async function deleteAndNavigateToList({
 
 export function DatasetRegistrationPagePure(props) {
   const {
+    form,
     themesItems,
     provenanceItems,
     frequencyItems,
-    title,
-    accessRights,
-    formThemes,
-    type,
-    concept,
-    spatial,
-    formProvenance,
-    contents,
-    informationModel,
-    reference,
-    contactPoint,
-    distribution,
-    sample,
     datasetItem,
     referenceTypesItems,
     referenceDatasetsItems,
@@ -107,25 +95,8 @@ export function DatasetRegistrationPagePure(props) {
     datasetURL.lastIndexOf('/')
   );
 
-  const syncErrors = !!(
-    (title && title.syncErrors) ||
-    (accessRights && accessRights.syncErrors) ||
-    (formThemes && formThemes.syncErrors) ||
-    (type && type.syncErrors) ||
-    (concept && concept.syncErrors) ||
-    (spatial && spatial.syncErrors) ||
-    (formProvenance && formProvenance.syncErrors) ||
-    (contents && contents.syncErrors) ||
-    (informationModel && informationModel.syncErrors) ||
-    (contactPoint && contactPoint.syncErrors) ||
-    (sample &&
-      sample.syncErrors &&
-      sample.syncErrors.sample &&
-      sample.syncErrors.sample.length > 0)
-  );
-
-  const distributionErrors =
-    distribution && distribution.syncErrors ? distribution.syncErrors : null;
+  const syncErrors = _.some(_.mapValues(form, subform => subform.syncErrors));
+  const distributionErrors = !!_.get(form, ['distribution', 'syncErrors']);
 
   return (
     <div className="container">
@@ -140,7 +111,7 @@ export function DatasetRegistrationPagePure(props) {
           </Link>
         </div>
         {datasetItem &&
-          title &&
+          form &&
           themesItems &&
           provenanceItems &&
           frequencyItems &&
@@ -152,8 +123,8 @@ export function DatasetRegistrationPagePure(props) {
               <FormTemplateWithState
                 title={localization.datasets.formTemplates.title}
                 required
-                values={titleValues(title.values)}
-                syncErrors={title.syncErrors}
+                values={titleValues(form.title && form.title.values)}
+                syncErrors={form.title && form.title.syncErrors}
               >
                 <ConnectedFormTitle
                   datasetItem={datasetItem}
@@ -165,8 +136,10 @@ export function DatasetRegistrationPagePure(props) {
               <FormTemplateWithState
                 title={localization.datasets.formTemplates.accessRight}
                 required
-                values={accessRightsValues(accessRights.values)}
-                syncErrors={accessRights.syncErrors}
+                values={accessRightsValues(
+                  form.accessRights && form.accessRights.values
+                )}
+                syncErrors={form.accessRights && form.accessRights.syncErrors}
               >
                 <ConnectedFormAccessRights
                   datasetItem={datasetItem}
@@ -178,8 +151,11 @@ export function DatasetRegistrationPagePure(props) {
               <FormTemplateWithState
                 title={localization.datasets.formTemplates.theme}
                 required
-                values={losValues(formThemes.values, losItems)}
-                syncErrors={formThemes.syncErrors}
+                values={losValues(
+                  form.formThemes && form.formThemes.values,
+                  losItems
+                )}
+                syncErrors={form.formThemes && form.formThemes.syncErrors}
               >
                 <ConnectedFormLOS
                   datasetItem={datasetItem}
@@ -191,8 +167,8 @@ export function DatasetRegistrationPagePure(props) {
 
               <FormTemplateWithState
                 title={localization.datasets.formTemplates.euTheme}
-                values={themesValues(formThemes.values)}
-                syncErrors={formThemes.syncErrors}
+                values={themesValues(form.formThemes && form.formThemes.values)}
+                syncErrors={form.formThemes && form.formThemes.syncErrors}
               >
                 <ConnectedFormThemes
                   datasetItem={datasetItem}
@@ -204,8 +180,8 @@ export function DatasetRegistrationPagePure(props) {
 
               <FormTemplateWithState
                 title={localization.datasets.formTemplates.type}
-                values={typeValues(type.values)}
-                syncErrors={type.syncErrors}
+                values={typeValues(form.type && form.type.values)}
+                syncErrors={form.type && form.type.syncErrors}
               >
                 <ConnectedFormType
                   datasetItem={datasetItem}
@@ -216,8 +192,8 @@ export function DatasetRegistrationPagePure(props) {
 
               <FormTemplateWithState
                 title={localization.datasets.formTemplates.concept}
-                values={conceptValues(concept.values)}
-                syncErrors={concept.syncErrors}
+                values={conceptValues(form.concept && form.concept.values)}
+                syncErrors={form.concept && form.concept.syncErrors}
               >
                 <ConnectedFormConcept
                   datasetItem={datasetItem}
@@ -228,8 +204,8 @@ export function DatasetRegistrationPagePure(props) {
 
               <FormTemplateWithState
                 title={localization.datasets.formTemplates.spatial}
-                values={spatialValues(spatial.values)}
-                syncErrors={spatial.syncErrors}
+                values={spatialValues(form.spatial && form.spatial.values)}
+                syncErrors={form.spatial && form.spatial.syncErrors}
               >
                 <ConnectedFormSpatial
                   datasetItem={datasetItem}
@@ -240,8 +216,12 @@ export function DatasetRegistrationPagePure(props) {
 
               <FormTemplateWithState
                 title={localization.datasets.formTemplates.provenance}
-                values={provenanceValues(formProvenance.values)}
-                syncErrors={formProvenance.syncErrors}
+                values={provenanceValues(
+                  form.formProvenance && form.formProvenance.values
+                )}
+                syncErrors={
+                  form.formProvenance && form.formProvenance.syncErrors
+                }
               >
                 <ConnectedFormProvenance
                   datasetItem={datasetItem}
@@ -254,8 +234,8 @@ export function DatasetRegistrationPagePure(props) {
 
               <FormTemplateWithState
                 title={localization.datasets.formTemplates.content}
-                values={contentsValues(contents.values)}
-                syncErrors={contents.syncErrors}
+                values={contentsValues(form.contents && form.contents.values)}
+                syncErrors={form.contents && form.contents.syncErrors}
               >
                 <ConnectedFormContents
                   datasetItem={datasetItem}
@@ -266,8 +246,12 @@ export function DatasetRegistrationPagePure(props) {
 
               <FormTemplateWithState
                 title={localization.datasets.formTemplates.informationModel}
-                values={informationModelValues(informationModel.values)}
-                syncErrors={informationModel.syncErrors}
+                values={informationModelValues(
+                  form.informationModel && form.informationModel.values
+                )}
+                syncErrors={
+                  form.informationModel && form.informationModel.syncErrors
+                }
               >
                 <ConnectedFormInformationModel
                   datasetItem={datasetItem}
@@ -278,7 +262,9 @@ export function DatasetRegistrationPagePure(props) {
 
               <FormTemplateWithState
                 title={localization.datasets.formTemplates.reference}
-                values={referenceValues(reference.values)}
+                values={referenceValues(
+                  form.reference && form.reference.values
+                )}
               >
                 <ConnectedFormReference
                   datasetItem={datasetItem}
@@ -291,8 +277,10 @@ export function DatasetRegistrationPagePure(props) {
 
               <FormTemplateWithState
                 title={localization.datasets.formTemplates.contactInformation}
-                values={contactPointValues(contactPoint.values)}
-                syncErrors={contactPoint.syncErrors}
+                values={contactPointValues(
+                  form.contactPoint && form.contactPoint.values
+                )}
+                syncErrors={form.contactPoint && form.contactPoint.syncErrors}
               >
                 <ConnectedFormContactPoint
                   datasetItem={datasetItem}
@@ -303,7 +291,9 @@ export function DatasetRegistrationPagePure(props) {
 
               <FormTemplateWithState
                 title={localization.datasets.formTemplates.distributionAPI}
-                values={distributionAPIValues(distribution.values)}
+                values={distributionAPIValues(
+                  form.contactPoint && form.contactPoint.values
+                )}
               >
                 <FormDistributionApi
                   datasetItem={datasetItem}
@@ -316,12 +306,16 @@ export function DatasetRegistrationPagePure(props) {
               <FormTemplateWithState
                 title={localization.datasets.formTemplates.distribution}
                 backgroundBlue
-                values={distributionValues(distribution.values)}
+                values={distributionValues(
+                  form.distribution && form.distribution.values
+                )}
                 syncErrors={
-                  distribution.syncErrors &&
-                  distribution.syncErrors.distribution &&
-                  JSON.stringify(distribution.syncErrors.distribution) !== '{}'
-                    ? distribution.syncErrors.distribution
+                  form.distribution &&
+                  form.distribution.syncErrors &&
+                  form.distribution.syncErrors.distribution &&
+                  JSON.stringify(form.distribution.syncErrors.distribution) !==
+                    '{}'
+                    ? form.distribution.syncErrors.distribution
                     : null
                 }
               >
@@ -336,12 +330,13 @@ export function DatasetRegistrationPagePure(props) {
               <FormTemplateWithState
                 title={localization.datasets.formTemplates.sample}
                 backgroundBlue
-                values={sampleValues(sample.values)}
+                values={sampleValues(form.sample && form.sample.values)}
                 syncErrors={
-                  sample.syncErrors &&
-                  sample.syncErrors.sample &&
-                  sample.syncErrors.sample.length > 0
-                    ? sample.syncErrors.sample
+                  form.sample &&
+                  form.sample.syncErrors &&
+                  form.sample.syncErrors.sample &&
+                  form.sample.syncErrors.sample.length > 0
+                    ? form.sample.syncErrors.sample
                     : null
                 }
               >
@@ -407,19 +402,7 @@ DatasetRegistrationPagePure.defaultProps = {
   themesItems: null,
   provenanceItems: null,
   frequencyItems: null,
-  title: null,
-  accessRights: null,
-  formThemes: null,
-  type: null,
-  concept: null,
-  spatial: null,
-  formProvenance: null,
-  contents: null,
-  informationModel: null,
-  reference: null,
-  contactPoint: null,
-  distribution: null,
-  sample: null,
+  form: {},
   registrationStatus: null,
   lastSaved: null,
   datasetItem: null,
@@ -440,19 +423,7 @@ DatasetRegistrationPagePure.propTypes = {
   themesItems: PropTypes.array,
   provenanceItems: PropTypes.array,
   frequencyItems: PropTypes.array,
-  title: PropTypes.object,
-  accessRights: PropTypes.object,
-  formThemes: PropTypes.object,
-  type: PropTypes.object,
-  concept: PropTypes.object,
-  spatial: PropTypes.object,
-  formProvenance: PropTypes.object,
-  contents: PropTypes.object,
-  informationModel: PropTypes.object,
-  reference: PropTypes.object,
-  contactPoint: PropTypes.object,
-  distribution: PropTypes.object,
-  sample: PropTypes.object,
+  form: PropTypes.object,
   registrationStatus: PropTypes.string,
   lastSaved: PropTypes.string,
   datasetItem: PropTypes.object,
