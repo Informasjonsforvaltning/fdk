@@ -1,8 +1,10 @@
 import { connect } from 'react-redux';
+import { compose } from 'recompose';
 import _ from 'lodash';
 
-import { ConfiguredFormDistribution } from './configured-form-distribution';
-import { textType, licenseType } from '../../../schemaTypes';
+import { formConfigurer } from './form-configurer';
+import { licenseType, textType } from '../../../schemaTypes';
+import { FormDistributionPure } from './form-distribution-pure';
 
 export const distributionTypes = values => {
   let distributions = null;
@@ -34,6 +36,9 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-export const FormDistribution = connect(mapStateToProps)(
-  ConfiguredFormDistribution
+const enhance = compose(
+  connect(mapStateToProps),
+  formConfigurer
 );
+
+export const FormDistribution = enhance(FormDistributionPure);
