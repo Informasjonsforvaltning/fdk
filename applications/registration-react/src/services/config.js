@@ -3,7 +3,7 @@ import axios from 'axios';
 const createConfig = env => {
   const searchHost =
     env.SEARCH_HOST ||
-    `https://${env.SEARCH_HOSTNAME}` ||
+    (env.SEARCH_HOSTNAME && `https://${env.SEARCH_HOSTNAME}`) ||
     'https://fellesdatakatalog.brreg.no';
 
   return {
