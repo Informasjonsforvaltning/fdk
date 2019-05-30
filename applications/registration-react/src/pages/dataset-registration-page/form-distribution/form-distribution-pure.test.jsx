@@ -5,7 +5,7 @@ import {
   renderDistributions,
   renderDistributionLandingpage
 } from './form-distribution-pure';
-import { distributionTypes } from './connected-form-distribution.component';
+import { distributionTypes } from './form-distribution';
 import openlicenses from '../../../../test/fixtures/openlicenses';
 import distribution from '../../../../test/fixtures/distributions';
 
