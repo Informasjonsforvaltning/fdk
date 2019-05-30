@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { Link } from 'react-router-dom';
@@ -69,7 +69,6 @@ async function deleteAndNavigateToList({
 
 export function DatasetRegistrationPagePure(props) {
   const {
-    onChangeDatasetId,
     themesItems,
     provenanceItems,
     frequencyItems,
@@ -101,8 +100,6 @@ export function DatasetRegistrationPagePure(props) {
     history,
     deleteDatasetItem
   } = props;
-
-  useEffect(onChangeDatasetId, [props.datasetId]);
 
   const datasetURL = window.location.pathname;
   const catalogDatasetsURL = datasetURL.substring(
@@ -405,7 +402,6 @@ export function DatasetRegistrationPagePure(props) {
 }
 
 DatasetRegistrationPagePure.defaultProps = {
-  onChangeDatasetId: _.noop,
   catalogId: null,
   datasetId: null,
   themesItems: null,
@@ -439,7 +435,6 @@ DatasetRegistrationPagePure.defaultProps = {
 };
 
 DatasetRegistrationPagePure.propTypes = {
-  onChangeDatasetId: PropTypes.func,
   catalogId: PropTypes.string,
   datasetId: PropTypes.string,
   themesItems: PropTypes.array,

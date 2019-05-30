@@ -1,8 +1,7 @@
-import { batch, connect } from 'react-redux';
+import { connect } from 'react-redux';
 import _ from 'lodash';
 
 import {
-  fetchDatasetsIfNeeded,
   getDatasetItemByDatasetiId,
   getDatasetItemsByCatalogId
 } from '../../redux/modules/datasets';
@@ -106,48 +105,7 @@ const mapStateToProps = (
   };
 };
 
-const mapDispatchToProps = (
-  dispatch,
-  { match, referenceDataApiActions, datasetApiActions }
-) => ({
-  onChangeDatasetId: () => {
-    const catalogId = _.get(match, ['params', 'catalogId']);
-
-    batch(() => {
-      dispatch(fetchDatasetsIfNeeded(catalogId));
-      dispatch(
-        referenceDataApiActions.fetchReferenceDataIfNeededAction(
-          REFERENCEDATA_PATH_PROVENANCE
-        )
-      );
-      dispatch(
-        referenceDataApiActions.fetchReferenceDataIfNeededAction(
-          REFERENCEDATA_PATH_FREQUENCY
-        )
-      );
-      dispatch(
-        referenceDataApiActions.fetchReferenceDataIfNeededAction(
-          REFERENCEDATA_PATH_THEMES
-        )
-      );
-      dispatch(
-        referenceDataApiActions.fetchReferenceDataIfNeededAction(
-          REFERENCEDATA_PATH_REFERENCETYPES
-        )
-      );
-      dispatch(
-        referenceDataApiActions.fetchReferenceDataIfNeededAction(
-          REFERENCEDATA_PATH_OPENLICENCES
-        )
-      );
-      dispatch(
-        referenceDataApiActions.fetchReferenceDataIfNeededAction(
-          REFERENCEDATA_PATH_LOS
-        )
-      );
-    });
-  },
-
+const mapDispatchToProps = (dispatch, { datasetApiActions }) => ({
   deleteDatasetItem: (catalogId, datasetId) =>
     dispatch(datasetApiActions.deleteDatasetAction(catalogId, datasetId))
 });
