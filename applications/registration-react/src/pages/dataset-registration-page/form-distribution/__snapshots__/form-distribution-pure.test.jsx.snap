@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`should render FormDistribution correctly 1`] = `
+exports[`should render FormDistributionPure correctly 1`] = `
 <form>
   <FieldArray
     catalogId={null}

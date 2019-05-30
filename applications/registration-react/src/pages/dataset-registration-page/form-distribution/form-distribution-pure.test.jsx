@@ -1,10 +1,10 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import {
-  FormDistribution,
+  FormDistributionPure,
   renderDistributions,
   renderDistributionLandingpage
-} from './form-distribution.component';
+} from './form-distribution-pure';
 import { distributionTypes } from './connected-form-distribution.component';
 import openlicenses from '../../../../test/fixtures/openlicenses';
 import distribution from '../../../../test/fixtures/distributions';
@@ -20,10 +20,10 @@ beforeEach(() => {
       openLicenseItems
     }
   };
-  wrapper = shallow(<FormDistribution {...defaultProps} />);
+  wrapper = shallow(<FormDistributionPure {...defaultProps} />);
 });
 
-test('should render FormDistribution correctly', () => {
+test('should render FormDistributionPure correctly', () => {
   expect(wrapper).toMatchSnapshot();
 });
 
