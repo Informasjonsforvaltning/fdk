@@ -1,8 +1,8 @@
-import { batch, connect } from 'react-redux';
+import { connect } from 'react-redux';
+import { compose } from 'recompose';
 import _ from 'lodash';
 
 import {
-  fetchDatasetsIfNeeded,
   getDatasetItemByDatasetiId,
   getDatasetItemsByCatalogId
 } from '../../redux/modules/datasets';
@@ -15,6 +15,7 @@ import {
   REFERENCEDATA_PATH_THEMES
 } from '../../redux/modules/referenceData';
 import { getDatasetFormStatusById } from '../../redux/modules/dataset-form-status';
+import { withInjectables } from '../../lib/injectables';
 
 const mapStateToProps = (
   { form, datasetFormStatus, datasets, referenceData },
@@ -106,53 +107,15 @@ const mapStateToProps = (
   };
 };
 
-const mapDispatchToProps = (
-  dispatch,
-  { match, referenceDataApiActions, datasetApiActions }
-) => ({
-  onChangeDatasetId: () => {
-    const catalogId = _.get(match, ['params', 'catalogId']);
-
-    batch(() => {
-      dispatch(fetchDatasetsIfNeeded(catalogId));
-      dispatch(
-        referenceDataApiActions.fetchReferenceDataIfNeededAction(
-          REFERENCEDATA_PATH_PROVENANCE
-        )
-      );
-      dispatch(
-        referenceDataApiActions.fetchReferenceDataIfNeededAction(
-          REFERENCEDATA_PATH_FREQUENCY
-        )
-      );
-      dispatch(
-        referenceDataApiActions.fetchReferenceDataIfNeededAction(
-          REFERENCEDATA_PATH_THEMES
-        )
-      );
-      dispatch(
-        referenceDataApiActions.fetchReferenceDataIfNeededAction(
-          REFERENCEDATA_PATH_REFERENCETYPES
-        )
-      );
-      dispatch(
-        referenceDataApiActions.fetchReferenceDataIfNeededAction(
-          REFERENCEDATA_PATH_OPENLICENCES
-        )
-      );
-      dispatch(
-        referenceDataApiActions.fetchReferenceDataIfNeededAction(
-          REFERENCEDATA_PATH_LOS
-        )
-      );
-    });
-  },
-
+const mapDispatchToProps = (dispatch, { datasetApiActions }) => ({
   deleteDatasetItem: (catalogId, datasetId) =>
     dispatch(datasetApiActions.deleteDatasetAction(catalogId, datasetId))
 });
 
-export const datasetRegistrationConnector = connect(
-  mapStateToProps,
-  mapDispatchToProps
+export const datasetRegistrationConnector = compose(
+  withInjectables(['datasetApiActions']),
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )
 );
