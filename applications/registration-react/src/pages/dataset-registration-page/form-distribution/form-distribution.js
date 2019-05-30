@@ -1,8 +1,13 @@
 import { connect } from 'react-redux';
+import { compose } from 'recompose';
 import _ from 'lodash';
+import { reduxForm } from 'redux-form';
+import _throttle from 'lodash/throttle';
 
-import { ConfiguredFormDistribution } from './configured-form-distribution';
-import { textType, licenseType } from '../../../schemaTypes';
+import { licenseType, textType } from '../../../schemaTypes';
+import { FormDistributionPure } from './form-distribution-pure';
+import validate from './form-distribution-validations';
+import { asyncValidateDatasetInvokePatch } from '../formsLib/asyncValidateDatasetInvokePatch';
 
 export const distributionTypes = values => {
   let distributions = null;
@@ -34,6 +39,15 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-export const FormDistribution = connect(mapStateToProps)(
-  ConfiguredFormDistribution
+const formConfigurer = reduxForm({
+  form: 'distribution',
+  validate,
+  asyncValidate: _throttle(asyncValidateDatasetInvokePatch, 250)
+});
+
+const enhance = compose(
+  connect(mapStateToProps),
+  formConfigurer
 );
+
+export const FormDistribution = enhance(FormDistributionPure);
