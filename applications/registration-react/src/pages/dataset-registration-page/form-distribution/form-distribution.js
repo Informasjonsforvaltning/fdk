@@ -34,6 +34,6 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-export const ConnectedFormDistribution = connect(mapStateToProps)(
+export const FormDistribution = connect(mapStateToProps)(
   ConfiguredFormDistribution
 );
