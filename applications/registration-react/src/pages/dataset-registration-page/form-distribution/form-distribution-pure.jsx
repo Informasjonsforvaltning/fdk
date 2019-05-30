@@ -213,7 +213,7 @@ export const renderDistributions = componentProps => {
   );
 };
 
-export const FormDistribution = props => {
+export const FormDistributionPure = props => {
   const { initialValues, dispatch, catalogId, datasetId } = props;
   const { openLicenseItems } = initialValues;
   return (
@@ -231,13 +231,13 @@ export const FormDistribution = props => {
   );
 };
 
-FormDistribution.defaultProps = {
+FormDistributionPure.defaultProps = {
   initialValues: null,
   dispatch: null,
   catalogId: null,
   datasetId: null
 };
-FormDistribution.propTypes = {
+FormDistributionPure.propTypes = {
   initialValues: PropTypes.object.isRequired,
   dispatch: PropTypes.func,
   catalogId: PropTypes.string,
