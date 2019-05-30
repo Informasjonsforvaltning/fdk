@@ -15,7 +15,6 @@ import {
   REFERENCEDATA_PATH_THEMES
 } from '../../redux/modules/referenceData';
 import { getDatasetFormStatusById } from '../../redux/modules/dataset-form-status';
-import { datasetRegistrationEnsureDataThunk } from './dataset-registration-ensure-data-thunk';
 
 const mapStateToProps = (
   { form, datasetFormStatus, datasets, referenceData },
@@ -105,10 +104,8 @@ const mapStateToProps = (
   };
 };
 
-const mapDispatchToProps = (dispatch, { catalogId }) => ({
-  onChangeDatasetId: () =>
-    dispatch(datasetRegistrationEnsureDataThunk(catalogId)),
-
+const mapDispatchToProps = dispatch => ({
+  dispatch,
   deleteDatasetItem: (catalogId, datasetId) =>
     dispatch(deleteDatasetAction(catalogId, datasetId))
 });

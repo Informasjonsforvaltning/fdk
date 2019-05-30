@@ -40,6 +40,7 @@ import {
   sampleValues
 } from './dataset-registration-page.logic';
 import './dataset-registration-page.scss';
+import { datasetRegistrationEnsureDataThunk } from './dataset-registration-ensure-data-thunk';
 
 const isAllowedToPublish = (
   registrationStatus,
@@ -69,7 +70,6 @@ async function deleteAndNavigateToList({
 
 export function DatasetRegistrationPagePure(props) {
   const {
-    onChangeDatasetId,
     themesItems,
     provenanceItems,
     frequencyItems,
@@ -99,10 +99,13 @@ export function DatasetRegistrationPagePure(props) {
     datasetId,
     losItems,
     history,
-    deleteDatasetItem
+    deleteDatasetItem,
+    dispatch
   } = props;
 
-  useEffect(onChangeDatasetId, [props.datasetId]);
+  useEffect(() => dispatch(datasetRegistrationEnsureDataThunk(catalogId)), [
+    catalogId
+  ]);
 
   const datasetURL = window.location.pathname;
   const catalogDatasetsURL = datasetURL.substring(
@@ -405,7 +408,6 @@ export function DatasetRegistrationPagePure(props) {
 }
 
 DatasetRegistrationPagePure.defaultProps = {
-  onChangeDatasetId: _.noop,
   catalogId: null,
   datasetId: null,
   themesItems: null,
@@ -434,12 +436,12 @@ DatasetRegistrationPagePure.defaultProps = {
   error: null,
   justPublishedOrUnPublished: false,
   deleteDatasetItem: _.noop,
+  dispatch: _.noop,
   history: null,
   losItems: null
 };
 
 DatasetRegistrationPagePure.propTypes = {
-  onChangeDatasetId: PropTypes.func,
   catalogId: PropTypes.string,
   datasetId: PropTypes.string,
   themesItems: PropTypes.array,
@@ -468,6 +470,7 @@ DatasetRegistrationPagePure.propTypes = {
   error: PropTypes.number,
   justPublishedOrUnPublished: PropTypes.bool,
   deleteDatasetItem: PropTypes.func,
+  dispatch: PropTypes.func,
   history: PropTypes.object,
   losItems: PropTypes.array
 };
