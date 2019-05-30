@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import localization from '../../lib/localization';
 import { FormTemplateWithState } from '../../components/form-template/form-template-with-state.component';
 import { ConnectedFormTitle } from './form-title/connected-form-title.component';
-import { ConnectedFormDistribution } from './form-distribution/connected-form-distribution.component';
+import { FormDistribution } from './form-distribution/form-distribution';
 import { ConnectedFormSample } from './form-sample/connected-form-sample.component';
 import { ConnectedFormSpatial } from './form-spatial/connected-form-spatial.component';
 import { ConnectedFormProvenance } from './form-provenance/connected-form-provenance.component';
@@ -328,7 +328,7 @@ export function DatasetRegistrationPagePure(props) {
                     : null
                 }
               >
-                <ConnectedFormDistribution
+                <FormDistribution
                   datasetItem={datasetItem}
                   openLicenseItems={openLicenseItems}
                   catalogId={catalogId}
