@@ -1,13 +1,13 @@
 import { compose } from 'recompose';
 import { FormDistributionApiPure } from './form-distribution-api-pure';
-import { resolver } from './resolver';
+import { formDistributionApiResolver } from './form-distribution-api-resolver';
 import { formConfigurer } from './form-configurer';
 import { propsEnhancer } from './props-enhancer';
 
 const enhance = compose(
   propsEnhancer,
   formConfigurer,
-  resolver
+  formDistributionApiResolver
 );
 
 export const FormDistributionApi = enhance(FormDistributionApiPure);
