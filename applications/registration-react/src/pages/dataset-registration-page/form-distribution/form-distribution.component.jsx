@@ -12,7 +12,7 @@ import RadioField from '../../../components/field-radio/field-radio.component';
 import SelectField from '../../../components/field-select/field-select.component';
 import { handleDatasetDeleteFieldPatch } from '../formsLib/formHandlerDatasetPatch';
 import { textType, licenseType } from '../../../schemaTypes';
-import { minLength } from '../../../validation/validation';
+// import { minLength } from '../../../validation/validation';
 
 export const renderDistributionLandingpage = componentProps => {
   const { fields } = componentProps;
@@ -123,7 +123,9 @@ export const renderDistributions = componentProps => {
                   type="text"
                   component={InputTagsField}
                   label={localization.schema.distribution.formatLabel}
-                  validate={[minLength(1)]}
+                  // todo Proper fix needed. right now is temporarily removed because
+                  //  validation somehow causes render loop
+                  // validate={[minLength(1)]}
                 />
               </div>
               <div className="form-group">
