@@ -1,6 +1,4 @@
-import { connect } from 'react-redux';
-import { compose } from 'recompose';
-import _ from 'lodash';
+import { compose, withProps } from 'recompose';
 import { reduxForm } from 'redux-form';
 import _throttle from 'lodash/throttle';
 
@@ -9,14 +7,11 @@ import { distributionTypes } from './distribution-types';
 import validate from './form-distribution-validations';
 import { asyncValidateDatasetInvokePatch } from '../formsLib/asyncValidateDatasetInvokePatch';
 
-const mapStateToProps = (state, ownProps) => {
-  const { datasetItem } = ownProps;
-  return {
-    initialValues: {
-      distribution: distributionTypes(_.get(datasetItem, 'distribution'))
-    }
-  };
-};
+const setInitialValues = withProps(({ datasetItem: { distribution } }) => ({
+  initialValues: {
+    distribution: distributionTypes(distribution)
+  }
+}));
 
 const formConfigurer = reduxForm({
   form: 'distribution',
@@ -25,7 +20,7 @@ const formConfigurer = reduxForm({
 });
 
 const enhance = compose(
-  connect(mapStateToProps),
+  setInitialValues,
   formConfigurer
 );
 
