@@ -5,8 +5,8 @@ import { getApiByDatasetUri } from '../../../api/apis';
 const memoizedGetApiByDatasetUri = _.memoize(getApiByDatasetUri);
 
 const mapProps = {
-  connectedApisByDatasetId: props =>
-    memoizedGetApiByDatasetUri(_.get(props, 'datasetUri'), 'id,title,publisher')
+  connectedApisByDatasetId: ({ datasetUri }) =>
+    memoizedGetApiByDatasetUri(datasetUri, 'id,title,publisher')
 };
 
-export const resolver = resolve(mapProps);
+export const formDistributionApiResolver = resolve(mapProps);
