@@ -418,7 +418,7 @@ const renderStickyMenu = datasetItem => {
   return <StickyMenu menuItems={menuItems} />;
 };
 
-export const DatasetDetailsPage = props => {
+export const DatasetDetailsPagePure = props => {
   const {
     datasetItem,
     referencedItems,
@@ -514,7 +514,7 @@ export const DatasetDetailsPage = props => {
   );
 };
 
-DatasetDetailsPage.defaultProps = {
+DatasetDetailsPagePure.defaultProps = {
   datasetItem: null,
   referencedItems: null,
   referenceData: null,
@@ -524,7 +524,7 @@ DatasetDetailsPage.defaultProps = {
   referencedAPIsFromDistribution: null
 };
 
-DatasetDetailsPage.propTypes = {
+DatasetDetailsPagePure.propTypes = {
   datasetItem: PropTypes.object,
   referencedItems: PropTypes.array,
   referenceData: PropTypes.object,

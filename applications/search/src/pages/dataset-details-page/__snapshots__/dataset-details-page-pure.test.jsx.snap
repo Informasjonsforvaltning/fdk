@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`should render DatasetDetailsPage correctly with datasetItem 1`] = `
+exports[`should render DatasetDetailsPagePure correctly with datasetItem 1`] = `
 <main
   className="container"
   id="content"
@@ -1285,4 +1285,4 @@ exports[`should render DatasetDetailsPage correctly with datasetItem 1`] = `
 </main>
 `;
 
-exports[`should render DatasetDetailsPage correctly with no datasetItem 1`] = `""`;
+exports[`should render DatasetDetailsPagePure correctly with no datasetItem 1`] = `""`;
