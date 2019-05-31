@@ -10,11 +10,10 @@ import validate from './form-distribution-validations';
 import { asyncValidateDatasetInvokePatch } from '../formsLib/asyncValidateDatasetInvokePatch';
 
 const mapStateToProps = (state, ownProps) => {
-  const { datasetItem, openLicenseItems } = ownProps;
+  const { datasetItem } = ownProps;
   return {
     initialValues: {
-      distribution: distributionTypes(_.get(datasetItem, 'distribution')),
-      openLicenseItems
+      distribution: distributionTypes(_.get(datasetItem, 'distribution'))
     }
   };
 };
