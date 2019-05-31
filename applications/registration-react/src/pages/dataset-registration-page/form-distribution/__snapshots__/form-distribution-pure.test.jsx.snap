@@ -61,25 +61,7 @@ exports[`should render FormDistributionPure correctly 1`] = `
       }
     }
     name="distribution"
-    openLicenseItems={
-      Array [
-        Object {
-          "code": "CC BY 4.0",
-          "prefLabel_no": "Creative Commons Navngivelse 4.0 Internasjonal",
-          "uri": "http://creativecommons.org/licenses/by/4.0/",
-        },
-        Object {
-          "code": "CC0 1.0",
-          "prefLabel_no": "Creative Commons Universal Fristatus-erklæring",
-          "uri": "http://creativecommons.org/publicdomain/zero/1.0/",
-        },
-        Object {
-          "code": "NLOD",
-          "prefLabel_no": "Norsk lisens for offentlige data",
-          "uri": "http://data.norge.no/nlod/",
-        },
-      ]
-    }
+    openLicenseItems={Array []}
   />
 </form>
 `;

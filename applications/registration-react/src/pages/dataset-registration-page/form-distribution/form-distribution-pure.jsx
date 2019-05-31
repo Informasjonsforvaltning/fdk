@@ -216,8 +216,13 @@ export const renderDistributions = componentProps => {
 };
 
 export const FormDistributionPure = props => {
-  const { initialValues, dispatch, catalogId, datasetId } = props;
-  const { openLicenseItems } = initialValues;
+  const {
+    initialValues,
+    openLicenseItems,
+    dispatch,
+    catalogId,
+    datasetId
+  } = props;
   return (
     <form>
       <FieldArray
@@ -237,11 +242,13 @@ FormDistributionPure.defaultProps = {
   initialValues: null,
   dispatch: null,
   catalogId: null,
-  datasetId: null
+  datasetId: null,
+  openLicenseItems: []
 };
 FormDistributionPure.propTypes = {
   initialValues: PropTypes.object.isRequired,
   dispatch: PropTypes.func,
   catalogId: PropTypes.string,
-  datasetId: PropTypes.string
+  datasetId: PropTypes.string,
+  openLicenseItems: PropTypes.array
 };
