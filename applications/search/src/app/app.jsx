@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import localization from '../lib/localization';
 import { ConnectedSearchPage } from '../pages/search-page/connected-search-page';
-import { ConnectedDatasetDetailsPage } from '../pages/dataset-details-page/connected-dataset-details-page';
+import { DatasetDetailsPage } from '../pages/dataset-details-page/dataset-details-page';
 import { ConnectedApiDetailsPage } from '../pages/api-details-page/connected-api-details-page';
 import { ConnectedConceptDetailsPage } from '../pages/concept-details-page/connected-concept-details-page';
 import { ConnectedConceptComparePage } from '../pages/concept-compare-page/connected-concept-compare-page';
@@ -98,7 +98,7 @@ export function App(props) {
             <Route
               exact
               path={`${PATHNAME_DATASET_DETAILS}/:id`}
-              component={ConnectedDatasetDetailsPage}
+              component={DatasetDetailsPage}
             />
             <Route exact path="/apis/:id" component={ConnectedApiDetailsPage} />
             <Route

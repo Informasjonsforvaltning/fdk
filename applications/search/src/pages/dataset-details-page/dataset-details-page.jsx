@@ -21,7 +21,7 @@ const mapDispatchToProps = dispatch => ({
   fetchLosIfNeeded: () => dispatch(fetchReferenceDataLosIfNeededAction())
 });
 
-export const ConnectedDatasetDetailsPage = connect(
+export const DatasetDetailsPage = connect(
   mapStateToProps,
   mapDispatchToProps
 )(ResolvedDatasetDetailsPage);
