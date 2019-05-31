@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import { resolve } from 'react-resolver';
 import { getDataset, getDatasetByURI } from '../../api/datasets';
-import { DatasetDetailsPage } from './dataset-details-page';
+import { DatasetDetailsPagePure } from './dataset-details-page-pure';
 import { getApi } from '../../api/apis';
 
 const memoizedGetDataset = _.memoize(getDataset);
@@ -35,4 +35,4 @@ const mapProps = {
   }
 };
 
-export const ResolvedDatasetDetailsPage = resolve(mapProps)(DatasetDetailsPage);
+export const ResolvedDatasetDetailsPage = resolve(mapProps)(DatasetDetailsPagePure);
