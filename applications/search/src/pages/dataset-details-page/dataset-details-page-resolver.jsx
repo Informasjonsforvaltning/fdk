@@ -1,11 +1,12 @@
 import _ from 'lodash';
 import { resolve } from 'react-resolver';
 import { getDataset, getDatasetByURI } from '../../api/datasets';
-import { getApi } from '../../api/apis';
+import { getApi, getApisByDatasetUri } from '../../api/apis';
 
 const memoizedGetDataset = _.memoize(getDataset);
 const memoizedGetDatasetByURI = _.memoize(getDatasetByURI);
 const memoizedGetApi = _.memoize(getApi);
+const memoizedGetApisByDatasetUri = _.memoize(getApisByDatasetUri);
 
 const mapProps = {
   datasetItem: props => memoizedGetDataset(props.match.params.id),
@@ -20,7 +21,7 @@ const mapProps = {
     const result = await Promise.all(promiseMap);
     return result;
   },
-  referencedAPIsFromDistribution: async props => {
+  apis: async props => {
     const datasetItem = await memoizedGetDataset(props.match.params.id);
     const apiIdArray = _.get(datasetItem, 'distribution', [])
       .filter(item => item.accessService)
@@ -29,8 +30,14 @@ const mapProps = {
       );
 
     const promiseMap = apiIdArray.map(id => memoizedGetApi(id));
-    const result = await Promise.all(promiseMap);
-    return result;
+    const referencedAPIsFromDistribution = await Promise.all(promiseMap);
+    const apisReferringToDataset = await memoizedGetApisByDatasetUri(datasetItem.uri);
+
+    return _.chain([...referencedAPIsFromDistribution, ...apisReferringToDataset])
+      .filter()
+      .uniqBy('id')
+      .value();
+
   }
 };
 

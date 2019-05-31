@@ -22,3 +22,23 @@ export const getApiByHarvestSourceUri = harvestSourceUri =>
     .get(`${apisUrlBase}?harvestSourceUri=${harvestSourceUri}`)
     .then(response => response.data)
     .catch(e => console.log(JSON.stringify(e))); // eslint-disable-line no-console
+
+export const getApisByDatasetUri = async (datasetUri, returnFields) => {
+  const query = `${qs.stringify(
+    {
+      dataseturi: datasetUri,
+      returnFields
+    },
+    { addQueryPrefix: true }
+  )}`;
+
+  const url = `/api/apis${query}`;
+
+  const response = await axios
+    .get(url)
+    .catch(e => console.log(JSON.stringify(e))); // eslint-disable-line no-console
+
+  return _.get(response, ['data', 'hits']);
+};
+
+

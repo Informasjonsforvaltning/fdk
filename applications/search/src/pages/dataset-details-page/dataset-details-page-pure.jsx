@@ -18,10 +18,7 @@ import { BoxRegular } from '../../components/box-regular/box-regular.component';
 import { LinkExternal } from '../../components/link-external/link-external.component';
 import { DistributionHeading } from './distribution-heading/distribution-heading.component';
 import { StickyMenu } from '../../components/sticky-menu/sticky-menu.component';
-import {
-  REFERENCEDATA_REFERENCETYPES,
-  REFERENCEDATA_DISTRIBUTIONTYPE
-} from '../../redux/modules/referenceData';
+import { REFERENCEDATA_DISTRIBUTIONTYPE, REFERENCEDATA_REFERENCETYPES } from '../../redux/modules/referenceData';
 import { SearchHitHeader } from '../../components/search-hit-header/search-hit-header.component';
 import { getFirstLineOfText } from '../../lib/stringUtils';
 
@@ -277,65 +274,42 @@ const renderDistribution = (
   );
 };
 
-const renderAPIDistribution = (
-  heading,
-  showCount,
-  distribution,
-  referenceData,
-  publisherItems,
-  referencedAPIsFromDistribution
-) => {
-  if (!(distribution && distribution.length > 0)) {
-    return null;
+const renderApis = (
+  {
+    heading,
+    publisherItems,
+    apis
   }
-
-  const apiReferenceItems = items =>
-    items.map((item, index) => {
-      const apiId = _.get(item, [
-        'accessService',
-        'endpointDescription',
-        0,
-        'uri'
-      ]);
-      const referencedApi = _.find(referencedAPIsFromDistribution, {
-        id: apiId
-      });
-      if (!referencedApi) {
-        return null;
-      }
-      return (
-        <div key={`reference-${index}`} className="list-regular--item pt-5">
-          <SearchHitHeader
-            title={referencedApi.title}
-            titleLink={`/apis/${encodeURIComponent(referencedApi.id)}`}
-            publisherLabel={`${localization.provider}:`}
-            publisher={referencedApi.publisher}
-            publisherItems={publisherItems}
-            tag="h4"
-          />
-          <div className="uu-invisible" aria-hidden="false">
-            Beskrivelse av api
-          </div>
-          {getFirstLineOfText(getTranslateText(referencedApi.description))}
-        </div>
-      );
-    });
+) => {
+  const renderApi = api => (
+    <div key={`reference-${api.id}`} className="list-regular--item pt-5">
+      <SearchHitHeader
+        title={api.title}
+        titleLink={`/apis/${encodeURIComponent(api.id)}`}
+        publisherLabel={`${localization.provider}:`}
+        publisher={api.publisher}
+        publisherItems={publisherItems}
+        tag="h4"
+      />
+      <div className="uu-invisible" aria-hidden="false">
+        Beskrivelse av api
+      </div>
+      {getFirstLineOfText(getTranslateText(api.description))}
+    </div>
+  );
 
   return (
     <div className="dataset-distributions">
       <ListRegular title={heading}>
-        {apiReferenceItems(distribution)}
+        {apis.map(renderApi)}
       </ListRegular>
     </div>
   );
 };
 
-const renderStickyMenu = datasetItem => {
+const renderStickyMenu = (datasetItem, apis) => {
   const menuItems = [];
 
-  const distributionTypeAPI = _.get(datasetItem, 'distribution', []).filter(
-    item => item.accessService
-  );
   const distributionsNotTypeAPI = _.get(datasetItem, 'distribution', []).filter(
     item => !item.accessService
   );
@@ -351,11 +325,11 @@ const renderStickyMenu = datasetItem => {
       prefLabel: localization.dataset.keyInfo
     });
   }
-  if (distributionTypeAPI && distributionTypeAPI.length > 0) {
+  if (apis.length > 0) {
     menuItems.push({
       name: localization.formatString(
         localization.dataset.distributionsAPI,
-        distributionTypeAPI.length
+        apis.length
       ),
       prefLabel: localization.dataset.distibutionsAPILabel
     });
@@ -424,7 +398,7 @@ export const DatasetDetailsPagePure = props => {
     referencedItems,
     referenceData,
     publisherItems,
-    referencedAPIsFromDistribution,
+    apis,
     fetchReferenceDataIfNeeded,
     fetchLosIfNeeded
   } = props;
@@ -437,23 +411,18 @@ export const DatasetDetailsPagePure = props => {
     return null;
   }
 
+
   const meta = {
     title: getTranslateText(_.get(datasetItem, 'title')),
     description: getTranslateText(_.get(datasetItem, 'description'))
   };
-
-  const filteredAPIDistributions = _.get(
-    datasetItem,
-    'distribution',
-    []
-  ).filter(item => item.accessService);
 
   return (
     <main id="content" className="container">
       <article>
         <div className="row">
           <div className="col-12 col-lg-4 ">
-            {renderStickyMenu(datasetItem)}
+            {renderStickyMenu(datasetItem, apis)}
           </div>
 
           <div className="col-12 col-lg-8">
@@ -468,16 +437,15 @@ export const DatasetDetailsPagePure = props => {
 
             {renderKeyInfo(datasetItem)}
 
-            {renderAPIDistribution(
-              localization.formatString(
-                localization.dataset.distributionsAPI,
-                filteredAPIDistributions.length
-              ),
-              true,
-              filteredAPIDistributions,
-              referenceData,
-              publisherItems,
-              referencedAPIsFromDistribution
+            {apis.length > 0 && renderApis(
+              {
+                heading: localization.formatString(
+                  localization.dataset.distributionsAPI,
+                  apis.length
+                ),
+                publisherItems,
+                apis
+              }
             )}
 
             {renderDistribution(
@@ -521,7 +489,7 @@ DatasetDetailsPagePure.defaultProps = {
   fetchReferenceDataIfNeeded: _.noop,
   fetchLosIfNeeded: _.noop,
   publisherItems: null,
-  referencedAPIsFromDistribution: null
+  apis: []
 };
 
 DatasetDetailsPagePure.propTypes = {
@@ -531,5 +499,5 @@ DatasetDetailsPagePure.propTypes = {
   fetchReferenceDataIfNeeded: PropTypes.func,
   fetchLosIfNeeded: PropTypes.func,
   publisherItems: PropTypes.object,
-  referencedAPIsFromDistribution: PropTypes.array
+  apis: PropTypes.array
 };
