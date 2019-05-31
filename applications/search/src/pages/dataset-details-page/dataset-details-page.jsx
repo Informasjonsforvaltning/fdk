@@ -1,9 +1,11 @@
 import { connect } from 'react-redux';
+import { compose } from 'recompose';
 import {
   fetchReferenceDataIfNeededAction,
   fetchReferenceDataLosIfNeededAction
 } from '../../redux/modules/referenceData';
-import { ResolvedDatasetDetailsPage } from './resolved-dataset-details-page';
+import { DatasetDetailsPagePure } from "./dataset-details-page-pure";
+import { datasetDetailsPageResolver } from "./dataset-details-page-resolver";
 
 const mapStateToProps = ({ referenceData, publishers }) => {
   const { publisherItems } = publishers || {
@@ -21,7 +23,13 @@ const mapDispatchToProps = dispatch => ({
   fetchLosIfNeeded: () => dispatch(fetchReferenceDataLosIfNeededAction())
 });
 
-export const DatasetDetailsPage = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ResolvedDatasetDetailsPage);
+const enhance = compose(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  ),
+  datasetDetailsPageResolver
+);
+
+export const DatasetDetailsPage = enhance(DatasetDetailsPagePure);
+
