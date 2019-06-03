@@ -11,7 +11,10 @@ const createConfig = env => {
     registrationLanguage: env.REGISTRATION_LANGUAGE || 'nb',
     searchHost,
     referenceDataApi: {
-      host: env.REFERENCE_DATA_HOST || searchHost
+      host: env.REFERENCE_DATA_HOST || searchHost,
+      headers: {
+        authorization: env.REFERENCE_DATA_AUTHORIZATION || undefined
+      }
     },
     registrationApi: {
       host: '/'
