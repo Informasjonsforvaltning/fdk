@@ -32,6 +32,7 @@ module.exports = {
         'SEARCH_HOST',
         'SEARCH_HOSTNAME',
         'REDUX_LOG',
+        'REFERENCE_DATA_HOST',
         'REFERENCE_DATA_AUTHORIZATION'
       ];
       const values = vars.map(varName => process.env[varName]);
