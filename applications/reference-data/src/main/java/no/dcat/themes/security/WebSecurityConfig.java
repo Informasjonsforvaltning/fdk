@@ -8,7 +8,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
 
@@ -24,6 +24,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         this.applicationSettings = applicationSettings;
     }
 
+    protected WebSecurityConfig() {
+        super(true);
+    }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.httpBasic();
@@ -31,21 +35,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues());
     }
 
-    protected WebSecurityConfig() {
-        super(true);
-    }
-
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        PasswordEncoder passwordEncoder = NoOpPasswordEncoder.getInstance();
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
         auth
-                .inMemoryAuthentication()
-                .passwordEncoder(passwordEncoder)
-                .withUser(
-                        applicationSettings.getHttpUsername())
-                        .password(passwordEncoder.encode(applicationSettings.getHttpPassword()))
-                        .authorities(Authorities.INTERNAL_CALL);
+            .inMemoryAuthentication()
+            .passwordEncoder(passwordEncoder)
+            .withUser(
+                applicationSettings.getHttpUsername())
+            .password(passwordEncoder.encode(applicationSettings.getHttpPassword()))
+            .authorities(Authorities.INTERNAL_CALL);
     }
 
 
