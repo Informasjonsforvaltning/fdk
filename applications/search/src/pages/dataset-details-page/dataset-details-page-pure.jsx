@@ -18,7 +18,10 @@ import { BoxRegular } from '../../components/box-regular/box-regular.component';
 import { LinkExternal } from '../../components/link-external/link-external.component';
 import { DistributionHeading } from './distribution-heading/distribution-heading.component';
 import { StickyMenu } from '../../components/sticky-menu/sticky-menu.component';
-import { REFERENCEDATA_DISTRIBUTIONTYPE, REFERENCEDATA_REFERENCETYPES } from '../../redux/modules/referenceData';
+import {
+  REFERENCEDATA_DISTRIBUTIONTYPE,
+  REFERENCEDATA_REFERENCETYPES
+} from '../../redux/modules/referenceData';
 import { SearchHitHeader } from '../../components/search-hit-header/search-hit-header.component';
 import { getFirstLineOfText } from '../../lib/stringUtils';
 
@@ -274,13 +277,7 @@ const renderDistribution = (
   );
 };
 
-const renderApis = (
-  {
-    heading,
-    publisherItems,
-    apis
-  }
-) => {
+const renderApis = ({ heading, publisherItems, apis }) => {
   const renderApi = api => (
     <div key={`reference-${api.id}`} className="list-regular--item pt-5">
       <SearchHitHeader
@@ -300,9 +297,7 @@ const renderApis = (
 
   return (
     <div className="dataset-distributions">
-      <ListRegular title={heading}>
-        {apis.map(renderApi)}
-      </ListRegular>
+      <ListRegular title={heading}>{apis.map(renderApi)}</ListRegular>
     </div>
   );
 };
@@ -411,7 +406,6 @@ export const DatasetDetailsPagePure = props => {
     return null;
   }
 
-
   const meta = {
     title: getTranslateText(_.get(datasetItem, 'title')),
     description: getTranslateText(_.get(datasetItem, 'description'))
@@ -437,16 +431,15 @@ export const DatasetDetailsPagePure = props => {
 
             {renderKeyInfo(datasetItem)}
 
-            {apis.length > 0 && renderApis(
-              {
+            {apis.length > 0 &&
+              renderApis({
                 heading: localization.formatString(
                   localization.dataset.distributionsAPI,
                   apis.length
                 ),
                 publisherItems,
                 apis
-              }
-            )}
+              })}
 
             {renderDistribution(
               localization.dataset.distributions,

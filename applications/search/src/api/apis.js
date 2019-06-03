@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import qs from 'qs';
 import axios from 'axios';
 
@@ -40,5 +41,3 @@ export const getApisByDatasetUri = async (datasetUri, returnFields) => {
 
   return _.get(response, ['data', 'hits']);
 };
-
-

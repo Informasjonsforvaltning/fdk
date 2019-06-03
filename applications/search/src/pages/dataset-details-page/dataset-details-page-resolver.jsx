@@ -31,13 +31,17 @@ const mapProps = {
 
     const promiseMap = apiIdArray.map(id => memoizedGetApi(id));
     const referencedAPIsFromDistribution = await Promise.all(promiseMap);
-    const apisReferringToDataset = await memoizedGetApisByDatasetUri(datasetItem.uri);
+    const apisReferringToDataset = await memoizedGetApisByDatasetUri(
+      datasetItem.uri
+    );
 
-    return _.chain([...referencedAPIsFromDistribution, ...apisReferringToDataset])
+    return _.chain([
+      ...referencedAPIsFromDistribution,
+      ...apisReferringToDataset
+    ])
       .filter()
       .uniqBy('id')
       .value();
-
   }
 };
 

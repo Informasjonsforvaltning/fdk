@@ -4,8 +4,8 @@ import {
   fetchReferenceDataIfNeededAction,
   fetchReferenceDataLosIfNeededAction
 } from '../../redux/modules/referenceData';
-import { DatasetDetailsPagePure } from "./dataset-details-page-pure";
-import { datasetDetailsPageResolver } from "./dataset-details-page-resolver";
+import { DatasetDetailsPagePure } from './dataset-details-page-pure';
+import { datasetDetailsPageResolver } from './dataset-details-page-resolver';
 
 const mapStateToProps = ({ referenceData, publishers }) => {
   const { publisherItems } = publishers || {
@@ -32,4 +32,3 @@ const enhance = compose(
 );
 
 export const DatasetDetailsPage = enhance(DatasetDetailsPagePure);
-

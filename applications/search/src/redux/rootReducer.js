@@ -19,8 +19,8 @@ export const rootReducer = combineReducers({
   catalogs: catalogsReducer,
   referenceData: referenceDataReducer,
   conceptsCompare: conceptsCompareReducer,
-  datasets:datasetsReducer,
-  apis:apisReducer,
-  concepts:conceptReducer,
+  datasets: datasetsReducer,
+  apis: apisReducer,
+  concepts: conceptReducer,
   informationModels: informationModelsReducer
 });
