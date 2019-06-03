@@ -115,8 +115,16 @@
   },
   "jest": {
     "testURL": "http://localhost/",
-    "testMatch": ["<rootDir>/test/**/(test).js?(x)", "**/?(*.)(test).js?(x)"],
-    "testPathIgnorePatterns": ["/node_modules/", "<rootDir>/test/jestsetup.js", "<rootDir>/test/fixtures/", "/target/"],
+    "testMatch": [
+      "<rootDir>/test/**/(test).js?(x)",
+      "**/?(*.)(test).js?(x)"
+    ],
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "<rootDir>/test/jestsetup.js",
+      "<rootDir>/test/fixtures/",
+      "/target/"
+    ],
     "setupFiles": [
       "@babel/polyfill",
       "raf/polyfill",
@@ -129,7 +137,11 @@
       "^.+\\.(css|less|scss)$": "identity-obj-proxy"
     },
     "collectCoverage": true,
-    "collectCoverageFrom": ["src/components/**/*.{js,jsx}", "src/pages/**/*.{js,jsx}", "src/validation/*.js"],
+    "collectCoverageFrom": [
+      "src/components/**/*.{js,jsx}",
+      "src/pages/**/*.{js,jsx}",
+      "src/validation/*.js"
+    ],
     "coverageDirectory": "coverage"
   }
 }
