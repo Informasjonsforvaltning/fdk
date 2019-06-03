@@ -31,7 +31,8 @@ module.exports = {
         'REGISTRATION_LANGUAGE',
         'SEARCH_HOST',
         'SEARCH_HOSTNAME',
-        'REDUX_LOG'
+        'REDUX_LOG',
+        'REFERENCE_DATA_AUTHORIZATION'
       ];
       const values = vars.map(varName => process.env[varName]);
       const envObj = _.zipObject(vars, values);
