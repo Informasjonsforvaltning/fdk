@@ -177,7 +177,7 @@ public class LosRDFImporter {
 
         //Hovedkategori - /<keyword>
         if (node.getParents() == null || node.getParents().isEmpty()) {
-            generatedPaths.add(getMostSaneName(node).toLowerCase());
+            generatedPaths.add(getKeywordFromURI(node.getUri()).toLowerCase());
             return generatedPaths;
         }
 
