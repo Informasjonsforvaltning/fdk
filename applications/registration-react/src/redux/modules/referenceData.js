@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import { reduxFsaThunk } from '../../lib/redux-fsa-thunk';
+import { referenceDataApi } from '../../api/reference-data-api';
 
 const REFERENCEDATA_REQUEST = 'REFERENCEDATA_REQUEST';
 const REFERENCEDATA_SUCCESS = 'REFERENCEDATA_SUCCESS';
@@ -23,23 +24,22 @@ function shouldFetch(metaState) {
   );
 }
 
-export function configureReferenceDataApiActions(referenceDataApi) {
-  return {
-    fetchReferenceDataIfNeededAction: path => (dispatch, getState) => {
-      if (!shouldFetch(_.get(getState(), ['referenceData', 'meta', path]))) {
-        return;
-      }
-      const task = () => referenceDataApi.get(path);
-      const typeMap = {
-        onBeforeStart: { type: REFERENCEDATA_REQUEST, meta: { path } },
-        onSuccess: { type: REFERENCEDATA_SUCCESS, meta: { path } },
-        onError: { type: REFERENCEDATA_FAILURE, meta: { path } }
-      };
-      const thunk = reduxFsaThunk(task, typeMap);
-      dispatch(thunk);
-    }
+export const fetchReferenceDataIfNeededAction = path => (
+  dispatch,
+  getState
+) => {
+  if (!shouldFetch(_.get(getState(), ['referenceData', 'meta', path]))) {
+    return;
+  }
+  const task = () => referenceDataApi.get(path);
+  const typeMap = {
+    onBeforeStart: { type: REFERENCEDATA_REQUEST, meta: { path } },
+    onSuccess: { type: REFERENCEDATA_SUCCESS, meta: { path } },
+    onError: { type: REFERENCEDATA_FAILURE, meta: { path } }
   };
-}
+  const thunk = reduxFsaThunk(task, typeMap);
+  dispatch(thunk);
+};
 
 const initialState = {
   items: {},

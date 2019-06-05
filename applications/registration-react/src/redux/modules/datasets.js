@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import { fetchActions } from '../fetchActions';
+import { registrationApi } from '../../api/registration-api';
 
 export const DATASETS_REQUEST = 'DATASETS_REQUEST';
 export const DATASETS_SUCCESS = 'DATASETS_SUCCESS';
@@ -39,14 +40,10 @@ export const datasetSuccessAction = payload => ({
   payload
 });
 
-export function configureDatasetApiActions(registrationApi) {
-  return {
-    deleteDatasetAction: (catalogId, datasetId) => async dispatch => {
-      await registrationApi.deleteDataset(catalogId, datasetId);
-      dispatch(deleteDatasetItemAction(catalogId, datasetId));
-    }
-  };
-}
+export const deleteDatasetAction = (catalogId, datasetId) => async dispatch => {
+  await registrationApi.deleteDataset(catalogId, datasetId);
+  dispatch(deleteDatasetItemAction(catalogId, datasetId));
+};
 
 const initialState = {};
 

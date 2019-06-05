@@ -10,6 +10,7 @@ import {
 import { getApiFormStatusById } from '../../redux/modules/api-form-status';
 import { fetchCatalogIfNeeded } from '../../redux/modules/catalog';
 import {
+  fetchReferenceDataIfNeededAction,
   REFERENCEDATA_PATH_APISERVICETYPE,
   REFERENCEDATA_PATH_APISTATUS
 } from '../../redux/modules/referenceData';
@@ -51,20 +52,13 @@ const mapStateToProps = (
 const mapDispatchToProps = (dispatch, ownProps) => ({
   onAfterRender: () => {
     const catalogId = _.get(ownProps, ['match', 'params', 'catalogId']);
-    const { referenceDataApiActions } = ownProps;
 
     batch(() => {
       dispatch(fetchCatalogIfNeeded(catalogId));
       dispatch(fetchApisIfNeededAction(catalogId));
+      dispatch(fetchReferenceDataIfNeededAction(REFERENCEDATA_PATH_APISTATUS));
       dispatch(
-        referenceDataApiActions.fetchReferenceDataIfNeededAction(
-          REFERENCEDATA_PATH_APISTATUS
-        )
-      );
-      dispatch(
-        referenceDataApiActions.fetchReferenceDataIfNeededAction(
-          REFERENCEDATA_PATH_APISERVICETYPE
-        )
+        fetchReferenceDataIfNeededAction(REFERENCEDATA_PATH_APISERVICETYPE)
       );
     });
   },
