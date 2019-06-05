@@ -20,7 +20,7 @@ export function fetchDatasetsIfNeeded(catalogId) {
   return (dispatch, getState) =>
     shouldFetch(_.get(getState(), ['datasets', catalogId, 'meta'])) &&
     dispatch(
-      fetchActions(`/catalogs/${catalogId}/datasets`, [
+      fetchActions(`/catalogs/${catalogId}/datasets?size=1000`, [
         { type: DATASETS_REQUEST, meta: { catalogId } },
         { type: DATASETS_SUCCESS, meta: { catalogId } },
         { type: DATASETS_FAILURE, meta: { catalogId } }
