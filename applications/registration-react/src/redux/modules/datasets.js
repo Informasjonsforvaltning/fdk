@@ -40,7 +40,7 @@ export const datasetSuccessAction = payload => ({
   payload
 });
 
-export const deleteDatasetAction = (catalogId, datasetId) => async dispatch => {
+export const deleteDatasetThunk = (catalogId, datasetId) => async dispatch => {
   await registrationApi.deleteDataset(catalogId, datasetId);
   dispatch(deleteDatasetItemAction(catalogId, datasetId));
 };

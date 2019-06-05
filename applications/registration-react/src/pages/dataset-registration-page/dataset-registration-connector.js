@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import _ from 'lodash';
 
 import {
-  deleteDatasetAction,
+  deleteDatasetThunk,
   getDatasetItemByDatasetiId,
   getDatasetItemsByCatalogId
 } from '../../redux/modules/datasets';
@@ -105,13 +105,10 @@ const mapStateToProps = (
   };
 };
 
-const mapDispatchToProps = (dispatch, { catalogId }) => ({
-  onChangeDatasetId: () =>
-    dispatch(datasetRegistrationEnsureDataThunk(catalogId)),
-
-  deleteDatasetItem: (catalogId, datasetId) =>
-    dispatch(deleteDatasetAction(catalogId, datasetId))
-});
+const mapDispatchToProps = {
+  dispatchEnsureData: datasetRegistrationEnsureDataThunk,
+  dispatchDeleteDataset: deleteDatasetThunk
+};
 
 export const datasetRegistrationConnector = connect(
   mapStateToProps,
