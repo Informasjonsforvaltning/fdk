@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import localization from '../../../lib/localization';
 import Helptext from '../../../components/helptext/helptext.component';
 import { InputTagsAPIsField } from '../field-tagsinput-apis/field-tagsinput-apis.component';
-import { config } from '../../../services/config';
+import { getConfig } from '../../../config';
 
 export const renderDistributionsAPI = () => (
   <div className="form-group">
@@ -45,7 +45,7 @@ const renderConnectedApisByDatasetId = connectedApisByDatasetId => {
           <Link
             target="_blank"
             rel="noopener noreferrer"
-            to={`${config.searchHost}/apis/${item.id}`}
+            to={`${getConfig().searchHost}/apis/${item.id}`}
           >
             {item.title}
           </Link>

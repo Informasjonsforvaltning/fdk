@@ -5,35 +5,36 @@ import { Provider } from 'react-redux';
 
 import { configureStore } from './redux/configureStore';
 import { ConnectedFeatureToggleProvider } from './components/feature-toggle/connected-feature-toggle-provider';
-import { getConfig } from './services/config';
+import { getConfig, loadConfig } from './config';
 import { configureLocalization } from './lib/localization';
 import { App } from './app/app';
 import { configureReferenceDataApi } from './api/reference-data-api';
 import { configureRegistrationApi } from './api/registration-api';
 
-async function configureServices() {
-  const config = await getConfig();
-  const store = configureStore(config);
-  configureLocalization(config.registrationLanguage);
-  configureReferenceDataApi(config.referenceDataApi);
-  configureRegistrationApi(config.registrationApi);
-
-  return {
-    store
-  };
-}
-
-async function render() {
-  const { store } = await configureServices();
-
-  ReactDOM.render(
+function AppRoot(store) {
+  return (
     <Provider store={store}>
       <ConnectedFeatureToggleProvider>
         <App />
       </ConnectedFeatureToggleProvider>
-    </Provider>,
-    document.getElementById('root')
+    </Provider>
   );
 }
 
-render().catch(console.error);
+async function configureServices() {
+  const store = configureStore(getConfig().store);
+  configureLocalization(getConfig().registrationLanguage);
+  configureReferenceDataApi(getConfig().referenceDataApi);
+  configureRegistrationApi(getConfig().registrationApi);
+
+  return { store };
+}
+
+function render({ store }) {
+  ReactDOM.render(AppRoot(store), document.getElementById('root'));
+}
+
+loadConfig()
+  .then(configureServices)
+  .then(render)
+  .catch(console.error);
