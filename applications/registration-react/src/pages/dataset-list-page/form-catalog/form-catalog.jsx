@@ -8,7 +8,7 @@ import validate from './form-catalog-validations';
 import { putCatalogDataset } from './async-catalog-dataset';
 import { textType } from '../../../schemaTypes';
 import './form-catalog.scss';
-import { config } from '../../../services/config';
+import { getConfig } from '../../../config';
 
 const formConfigurer = compose(
   reduxForm({
@@ -30,7 +30,7 @@ const mapStateToProps = ({ catalog }, ownProps) => {
       title:
         _.get(
           catalog,
-          ['items', catalogId, 'title', config.registrationLanguage],
+          ['items', catalogId, 'title', getConfig().registrationLanguage],
           ''
         ).length > 0
           ? _.get(catalog, ['items', catalogId, 'title'])
@@ -38,7 +38,7 @@ const mapStateToProps = ({ catalog }, ownProps) => {
       description:
         _.get(
           catalog,
-          ['items', catalogId, 'description', config.registrationLanguage],
+          ['items', catalogId, 'description', getConfig().registrationLanguage],
           ''
         ).length > 0
           ? _.get(catalog, ['items', catalogId, 'description'])
