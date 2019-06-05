@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import localization from '../../../lib/localization';
 import Helptext from '../../../components/helptext/helptext.component';
 import { InputTagsAPIsField } from '../field-tagsinput-apis/field-tagsinput-apis.component';
+import { config } from '../../../services/config';
 
 export const renderDistributionsAPI = () => (
   <div className="form-group">
@@ -24,10 +25,7 @@ export const renderDistributionsAPI = () => (
   </div>
 );
 
-const renderConnectedApisByDatasetId = (
-  connectedApisByDatasetId,
-  searchHost
-) => {
+const renderConnectedApisByDatasetId = connectedApisByDatasetId => {
   if (
     !(
       connectedApisByDatasetId &&
@@ -47,7 +45,7 @@ const renderConnectedApisByDatasetId = (
           <Link
             target="_blank"
             rel="noopener noreferrer"
-            to={`${searchHost}/apis/${item.id}`}
+            to={`${config.searchHost}/apis/${item.id}`}
           >
             {item.title}
           </Link>
@@ -74,23 +72,21 @@ const renderConnectedApisByDatasetId = (
 };
 
 export const FormDistributionApiPure = props => {
-  const { connectedApisByDatasetId, searchHost } = props;
+  const { connectedApisByDatasetId } = props;
   return (
     <React.Fragment>
       <form>
         <FieldArray name="distribution" component={renderDistributionsAPI} />
       </form>
-      {renderConnectedApisByDatasetId(connectedApisByDatasetId, searchHost)}
+      {renderConnectedApisByDatasetId(connectedApisByDatasetId)}
     </React.Fragment>
   );
 };
 
 FormDistributionApiPure.defaultProps = {
-  connectedApisByDatasetId: null,
-  searchHost: ''
+  connectedApisByDatasetId: null
 };
 
 FormDistributionApiPure.propTypes = {
-  connectedApisByDatasetId: PropTypes.object,
-  searchHost: PropTypes.string
+  connectedApisByDatasetId: PropTypes.object
 };

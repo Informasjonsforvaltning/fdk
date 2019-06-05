@@ -1,19 +1,29 @@
 import url from 'url';
 
-export const configureReferenceDataApi = referenceDataApiConfig => {
-  const { host, headers = {} } = referenceDataApiConfig;
-  const { authorization } = headers;
-  const rootUrl = url.resolve(host, '/reference-data/');
+const referenceDataApiConfig = {};
 
+export const configureReferenceDataApi = newReferenceDataApiConfig =>
+  Object.assign(referenceDataApiConfig, newReferenceDataApiConfig);
+
+const fetchOptions = () => {
+  const {
+    headers: { authorization }
+  } = referenceDataApiConfig;
   const options = {};
   if (authorization) {
     Object.assign(options, { headers: { authorization } });
   }
+  return options;
+};
 
-  const resolvePath = path => url.resolve(rootUrl, path);
+const rootUrl = () =>
+  url.resolve(referenceDataApiConfig.host, '/reference-data/');
 
-  return {
-    get: path =>
-      fetch(resolvePath(path), options).then(response => response.json())
-  };
+const resolvePath = path => url.resolve(rootUrl(), path);
+
+const get = path =>
+  fetch(resolvePath(path), fetchOptions()).then(response => response.json());
+
+export const referenceDataApi = {
+  get
 };

@@ -22,8 +22,10 @@ const createConfig = env => {
   };
 };
 
+export const config = createConfig({});
+
 export const getConfig = async () => {
   const response = await axios.get('/env.json');
   const env = response.data;
-  return createConfig(env);
+  return Object.assign(config, createConfig(env));
 };

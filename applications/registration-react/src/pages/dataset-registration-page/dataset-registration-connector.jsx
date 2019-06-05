@@ -2,11 +2,13 @@ import { batch, connect } from 'react-redux';
 import _ from 'lodash';
 
 import {
+  deleteDatasetAction,
   fetchDatasetsIfNeeded,
   getDatasetItemByDatasetiId,
   getDatasetItemsByCatalogId
 } from '../../redux/modules/datasets';
 import {
+  fetchReferenceDataIfNeededAction,
   REFERENCEDATA_PATH_FREQUENCY,
   REFERENCEDATA_PATH_LOS,
   REFERENCEDATA_PATH_OPENLICENCES,
@@ -106,50 +108,27 @@ const mapStateToProps = (
   };
 };
 
-const mapDispatchToProps = (
-  dispatch,
-  { match, referenceDataApiActions, datasetApiActions }
-) => ({
+const mapDispatchToProps = (dispatch, { match }) => ({
   onChangeDatasetId: () => {
     const catalogId = _.get(match, ['params', 'catalogId']);
 
     batch(() => {
       dispatch(fetchDatasetsIfNeeded(catalogId));
+      dispatch(fetchReferenceDataIfNeededAction(REFERENCEDATA_PATH_PROVENANCE));
+      dispatch(fetchReferenceDataIfNeededAction(REFERENCEDATA_PATH_FREQUENCY));
+      dispatch(fetchReferenceDataIfNeededAction(REFERENCEDATA_PATH_THEMES));
       dispatch(
-        referenceDataApiActions.fetchReferenceDataIfNeededAction(
-          REFERENCEDATA_PATH_PROVENANCE
-        )
+        fetchReferenceDataIfNeededAction(REFERENCEDATA_PATH_REFERENCETYPES)
       );
       dispatch(
-        referenceDataApiActions.fetchReferenceDataIfNeededAction(
-          REFERENCEDATA_PATH_FREQUENCY
-        )
+        fetchReferenceDataIfNeededAction(REFERENCEDATA_PATH_OPENLICENCES)
       );
-      dispatch(
-        referenceDataApiActions.fetchReferenceDataIfNeededAction(
-          REFERENCEDATA_PATH_THEMES
-        )
-      );
-      dispatch(
-        referenceDataApiActions.fetchReferenceDataIfNeededAction(
-          REFERENCEDATA_PATH_REFERENCETYPES
-        )
-      );
-      dispatch(
-        referenceDataApiActions.fetchReferenceDataIfNeededAction(
-          REFERENCEDATA_PATH_OPENLICENCES
-        )
-      );
-      dispatch(
-        referenceDataApiActions.fetchReferenceDataIfNeededAction(
-          REFERENCEDATA_PATH_LOS
-        )
-      );
+      dispatch(fetchReferenceDataIfNeededAction(REFERENCEDATA_PATH_LOS));
     });
   },
 
   deleteDatasetItem: (catalogId, datasetId) =>
-    dispatch(datasetApiActions.deleteDatasetAction(catalogId, datasetId))
+    dispatch(deleteDatasetAction(catalogId, datasetId))
 });
 
 export const datasetRegistrationConnector = connect(

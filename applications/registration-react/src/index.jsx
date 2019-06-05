@@ -5,48 +5,33 @@ import { Provider } from 'react-redux';
 
 import { configureStore } from './redux/configureStore';
 import { ConnectedFeatureToggleProvider } from './components/feature-toggle/connected-feature-toggle-provider';
-import { InjectablesContext } from './lib/injectables';
 import { getConfig } from './services/config';
 import { configureLocalization } from './lib/localization';
 import { App } from './app/app';
 import { configureReferenceDataApi } from './api/reference-data-api';
-import { configureReferenceDataApiActions } from './redux/modules/referenceData';
 import { configureRegistrationApi } from './api/registration-api';
-import { configureDatasetApiActions } from './redux/modules/datasets';
 
-async function configureInjectables() {
+async function configureServices() {
   const config = await getConfig();
-  const store = configureStore(config.store);
-  const localization = configureLocalization(config.registrationLanguage);
-  const referenceDataApi = configureReferenceDataApi(config.referenceDataApi);
-  const referenceDataApiActions = configureReferenceDataApiActions(
-    referenceDataApi
-  );
-  const registrationApi = configureRegistrationApi(config.registrationApi);
-  const datasetApiActions = configureDatasetApiActions(registrationApi);
+  const store = configureStore(config);
+  configureLocalization(config.registrationLanguage);
+  configureReferenceDataApi(config.referenceDataApi);
+  configureRegistrationApi(config.registrationApi);
 
   return {
-    config,
-    store,
-    localization,
-    referenceDataApi,
-    referenceDataApiActions,
-    registrationApi,
-    datasetApiActions
+    store
   };
 }
 
 async function render() {
-  const injectables = await configureInjectables();
+  const { store } = await configureServices();
 
   ReactDOM.render(
-    <InjectablesContext.Provider value={injectables}>
-      <Provider store={injectables.store}>
-        <ConnectedFeatureToggleProvider>
-          <App />
-        </ConnectedFeatureToggleProvider>
-      </Provider>
-    </InjectablesContext.Provider>,
+    <Provider store={store}>
+      <ConnectedFeatureToggleProvider>
+        <App />
+      </ConnectedFeatureToggleProvider>
+    </Provider>,
     document.getElementById('root')
   );
 }

@@ -8,7 +8,7 @@ import validate from './form-catalog-validations';
 import { putCatalogDataset } from './async-catalog-dataset';
 import { textType } from '../../../schemaTypes';
 import './form-catalog.scss';
-import { withInjectablesMapper } from '../../../lib/injectables';
+import { config } from '../../../services/config';
 
 const formConfigurer = compose(
   reduxForm({
@@ -23,19 +23,22 @@ const formConfigurer = compose(
 );
 
 const mapStateToProps = ({ catalog }, ownProps) => {
-  const { catalogId, registrationLanguage } = ownProps;
+  const { catalogId } = ownProps;
   return {
     initialValues: {
       id: catalogId,
       title:
-        _.get(catalog, ['items', catalogId, 'title', registrationLanguage], '')
-          .length > 0
+        _.get(
+          catalog,
+          ['items', catalogId, 'title', config.registrationLanguage],
+          ''
+        ).length > 0
           ? _.get(catalog, ['items', catalogId, 'title'])
           : textType,
       description:
         _.get(
           catalog,
-          ['items', catalogId, 'description', registrationLanguage],
+          ['items', catalogId, 'description', config.registrationLanguage],
           ''
         ).length > 0
           ? _.get(catalog, ['items', catalogId, 'description'])
@@ -45,12 +48,7 @@ const mapStateToProps = ({ catalog }, ownProps) => {
   };
 };
 
-const injector = withInjectablesMapper(injectables => ({
-  registrationLanguage: injectables.config.registrationLanguage
-}));
-
 const enhance = compose(
-  injector,
   connect(mapStateToProps),
   formConfigurer
 );
