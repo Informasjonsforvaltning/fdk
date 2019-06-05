@@ -56,9 +56,9 @@ async function deleteAndNavigateToList({
   history,
   catalogId,
   datasetId,
-  deleteDatasetItem
+  dispatchDeleteDataset
 }) {
-  await deleteDatasetItem(catalogId, datasetId);
+  await dispatchDeleteDataset(catalogId, datasetId);
   if (history) {
     history.push({
       pathname: `/catalogs/${catalogId}/datasets`,
@@ -69,7 +69,7 @@ async function deleteAndNavigateToList({
 
 export function DatasetRegistrationPagePure(props) {
   const {
-    onChangeDatasetId,
+    dispatchEnsureData,
     themesItems,
     provenanceItems,
     frequencyItems,
@@ -99,10 +99,13 @@ export function DatasetRegistrationPagePure(props) {
     datasetId,
     losItems,
     history,
-    deleteDatasetItem
+    dispatchDeleteDataset
   } = props;
 
-  useEffect(onChangeDatasetId, [props.datasetId]);
+  useEffect(() => dispatchEnsureData(catalogId, datasetId), [
+    props.catalogId,
+    props.datasetId
+  ]);
 
   const datasetURL = window.location.pathname;
   const catalogDatasetsURL = datasetURL.substring(
@@ -375,7 +378,7 @@ export function DatasetRegistrationPagePure(props) {
                     history,
                     catalogId,
                     datasetId,
-                    deleteDatasetItem
+                    dispatchDeleteDataset
                   })
                 }
                 allowPublish={isAllowedToPublish(
@@ -405,7 +408,8 @@ export function DatasetRegistrationPagePure(props) {
 }
 
 DatasetRegistrationPagePure.defaultProps = {
-  onChangeDatasetId: _.noop,
+  dispatchEnsureData: _.noop,
+  dispatchDeleteDataset: _.noop,
   catalogId: null,
   datasetId: null,
   themesItems: null,
@@ -433,13 +437,13 @@ DatasetRegistrationPagePure.defaultProps = {
   isSaving: false,
   error: null,
   justPublishedOrUnPublished: false,
-  deleteDatasetItem: _.noop,
   history: null,
   losItems: null
 };
 
 DatasetRegistrationPagePure.propTypes = {
-  onChangeDatasetId: PropTypes.func,
+  dispatchEnsureData: PropTypes.func,
+  dispatchDeleteDataset: PropTypes.func,
   catalogId: PropTypes.string,
   datasetId: PropTypes.string,
   themesItems: PropTypes.array,
@@ -467,7 +471,6 @@ DatasetRegistrationPagePure.propTypes = {
   isSaving: PropTypes.bool,
   error: PropTypes.number,
   justPublishedOrUnPublished: PropTypes.bool,
-  deleteDatasetItem: PropTypes.func,
   history: PropTypes.object,
   losItems: PropTypes.array
 };

@@ -10,7 +10,10 @@ import {
   REFERENCEDATA_PATH_THEMES
 } from '../../redux/modules/referenceData';
 
-export const datasetRegistrationEnsureDataThunk = catalogId => dispatch => {
+export const datasetRegistrationEnsureDataThunk = (
+  catalogId,
+  datasetId // eslint-disable-line no-unused-vars
+) => dispatch => {
   batch(() => {
     dispatch(fetchDatasetsIfNeeded(catalogId));
     dispatch(fetchReferenceDataIfNeededAction(REFERENCEDATA_PATH_PROVENANCE));
