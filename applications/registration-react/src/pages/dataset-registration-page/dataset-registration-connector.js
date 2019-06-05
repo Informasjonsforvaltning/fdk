@@ -20,11 +20,8 @@ import { getDatasetFormStatusById } from '../../redux/modules/dataset-form-statu
 
 const mapStateToProps = (
   { form, datasetFormStatus, datasets, referenceData },
-  ownProps
+  { catalogId, datasetId }
 ) => {
-  const id = _.get(ownProps, ['match', 'params', 'id']);
-  const catalogId = _.get(ownProps, ['match', 'params', 'catalogId']);
-
   const title = form && form.title ? form.title : {};
 
   const accessRights = form && form.accessRights ? form.accessRights : {};
@@ -85,33 +82,32 @@ const mapStateToProps = (
     distribution,
     sample,
     lastSaved: _.get(
-      getDatasetFormStatusById(datasetFormStatus, id),
+      getDatasetFormStatusById(datasetFormStatus, datasetId),
       'lastSaved'
     ),
     isSaving: _.get(
-      getDatasetFormStatusById(datasetFormStatus, id),
+      getDatasetFormStatusById(datasetFormStatus, datasetId),
       'isSaving'
     ),
-    error: _.get(getDatasetFormStatusById(datasetFormStatus, id), 'error'),
+    error: _.get(
+      getDatasetFormStatusById(datasetFormStatus, datasetId),
+      'error'
+    ),
     justPublishedOrUnPublished: _.get(
-      getDatasetFormStatusById(datasetFormStatus, id),
+      getDatasetFormStatusById(datasetFormStatus, datasetId),
       'justPublishedOrUnPublished'
     ),
     registrationStatus: _.get(
-      getDatasetFormStatusById(datasetFormStatus, id),
+      getDatasetFormStatusById(datasetFormStatus, datasetId),
       'status'
     ),
-    datasetItem: getDatasetItemByDatasetiId(datasets, catalogId, id),
-    catalogId,
-    datasetId: id,
+    datasetItem: getDatasetItemByDatasetiId(datasets, catalogId, datasetId),
     losItems: _.get(referenceData, ['items', REFERENCEDATA_PATH_LOS])
   };
 };
 
-const mapDispatchToProps = (dispatch, { match }) => ({
+const mapDispatchToProps = (dispatch, { catalogId }) => ({
   onChangeDatasetId: () => {
-    const catalogId = _.get(match, ['params', 'catalogId']);
-
     batch(() => {
       dispatch(fetchDatasetsIfNeeded(catalogId));
       dispatch(fetchReferenceDataIfNeededAction(REFERENCEDATA_PATH_PROVENANCE));

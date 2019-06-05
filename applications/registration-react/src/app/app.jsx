@@ -29,7 +29,7 @@ const Routes = (
     />
     <ProtectedRoute
       exact
-      path="/catalogs/:catalogId/datasets/:id"
+      path="/catalogs/:catalogId/datasets/:datasetId"
       component={DatasetRegistrationPage}
     />
     <ProtectedRoute
