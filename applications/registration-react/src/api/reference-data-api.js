@@ -16,10 +16,10 @@ const fetchOptions = () => {
   return options;
 };
 
-const rootUrl = () =>
+const getRootUrl = () =>
   url.resolve(referenceDataApiConfig.host, '/reference-data/');
 
-const resolvePath = path => url.resolve(rootUrl(), path);
+const resolvePath = path => url.resolve(getRootUrl(), path);
 
 const get = path =>
   fetch(resolvePath(path), fetchOptions()).then(response => response.json());
