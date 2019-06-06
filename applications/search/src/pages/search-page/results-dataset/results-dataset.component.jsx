@@ -51,7 +51,7 @@ function _renderFilterModal({
           />
           <FilterBox
             htmlKey={1}
-            title={localization.facet.theme}
+            title={localization.facet.themeEU}
             filter={datasetAggregations.theme}
             onClick={onFilterTheme}
             activeFilter={locationSearch.theme}
