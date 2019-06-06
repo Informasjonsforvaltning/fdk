@@ -1,9 +1,9 @@
 import _ from 'lodash';
-import { compose, mapProps } from 'recompose';
+import { compose, withProps } from 'recompose';
 import { DatasetRegistrationPagePure } from './dataset-registration-page-pure';
 import { datasetRegistrationConnector } from './dataset-registration-connector';
 
-const mapRouteParams = mapProps(({ match: { params } }) =>
+const mapRouteParams = withProps(({ match: { params } }) =>
   _.pick(params, ['catalogId', 'datasetId'])
 );
 
