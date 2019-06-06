@@ -31,49 +31,37 @@ export const DatasetQuality = props => {
   return (
     <ListRegular title={localization.dataset.quality}>
       {provenance && (
-        <React.Fragment>
-          <TwoColRow col1={localization.dataset.provenance} col2={provenance} />
-        </React.Fragment>
+        <TwoColRow col1={localization.dataset.provenance} col2={provenance} />
       )}
       {hasCurrentnessAnnotation && (
-        <React.Fragment>
-          <TwoColRow
-            col1={localization.dataset.currentness}
-            col2={hasCurrentnessAnnotation}
-          />
-        </React.Fragment>
+        <TwoColRow
+          col1={localization.dataset.currentness}
+          col2={hasCurrentnessAnnotation}
+        />
       )}
       {completenessAnnotation && (
-        <React.Fragment>
-          <TwoColRow
-            col1={localization.dataset.completenessAnnotation}
-            col2={completenessAnnotation}
-          />
-        </React.Fragment>
+        <TwoColRow
+          col1={localization.dataset.completenessAnnotation}
+          col2={completenessAnnotation}
+        />
       )}
       {accuracyAnnotation && (
-        <React.Fragment>
-          <TwoColRow
-            col1={localization.dataset.accuracyAnnotation}
-            col2={accuracyAnnotation}
-          />
-        </React.Fragment>
+        <TwoColRow
+          col1={localization.dataset.accuracyAnnotation}
+          col2={accuracyAnnotation}
+        />
       )}
       {relevanceAnnotation && (
-        <React.Fragment>
-          <TwoColRow
-            col1={localization.dataset.relevanceAnnotation}
-            col2={relevanceAnnotation}
-          />
-        </React.Fragment>
+        <TwoColRow
+          col1={localization.dataset.relevanceAnnotation}
+          col2={relevanceAnnotation}
+        />
       )}
       {availabilityAnnotations && (
-        <React.Fragment>
-          <TwoColRow
-            col1={localization.dataset.availabilityAnnotations}
-            col2={availabilityAnnotations}
-          />
-        </React.Fragment>
+        <TwoColRow
+          col1={localization.dataset.availabilityAnnotations}
+          col2={availabilityAnnotations}
+        />
       )}
     </ListRegular>
   );

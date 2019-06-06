@@ -6,17 +6,15 @@ export const InputFile = props => {
   const { className, onChange, children } = props;
 
   return (
-    <React.Fragment>
-      <label className={`inputfile ${className}`} htmlFor="file">
-        <input
-          className="inputfile"
-          id="file"
-          type="file"
-          onChange={e => onChange(e)}
-        />
-        {children}
-      </label>
-    </React.Fragment>
+    <label className={`inputfile ${className}`} htmlFor="file">
+      <input
+        className="inputfile"
+        id="file"
+        type="file"
+        onChange={e => onChange(e)}
+      />
+      {children}
+    </label>
   );
 };
 

@@ -162,7 +162,7 @@ export const ConceptComparePage = props => {
           <div className="col-12">
             <DocumentMeta {...meta} />
             {conceptsCompare && (
-              <React.Fragment>
+              <>
                 <h1 className="title">
                   {localization.menu.conceptsCompare} ({
                     Object.keys(conceptsCompare).length
@@ -216,7 +216,7 @@ export const ConceptComparePage = props => {
                     </tbody>
                   </table>
                 </section>
-              </React.Fragment>
+              </>
             )}
           </div>
         </div>

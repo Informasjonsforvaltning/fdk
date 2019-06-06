@@ -60,10 +60,10 @@ function AppRoot(store) {
       <Provider store={store}>
         <ConnectedFeatureToggleProvider>
           <BrowserRouter>
-            <React.Fragment>
+            <>
               <Route path="/" component={Analytics} />
               <Route path="/" component={ConnectedApp} />
-            </React.Fragment>
+            </>
           </BrowserRouter>
         </ConnectedFeatureToggleProvider>
       </Provider>

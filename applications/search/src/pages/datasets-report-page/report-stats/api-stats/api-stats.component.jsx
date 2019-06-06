@@ -18,87 +18,81 @@ export const APIStats = props => {
     encodedOrgPath !== null ? `&orgPath=${encodedOrgPath}` : '';
 
   const openApi = (
-    <React.Fragment>
-      <div className="d-flex flex-column flex-fill py-5">
-        <StatBox label={localization.report.aggregation.apiOpenForAll}>
-          <img src="/static/img/icon-api-access-all.svg" alt="icon" />
-          <Link
-            title={localization.report.aggregation.apiOpenForAll}
-            className="mb-3"
-            to={`/apis?isOpenAccess=true${orgPathParam}`}
-          >
-            {stats.openAccess}
-          </Link>
-        </StatBox>
+    <div className="d-flex flex-column flex-fill py-5">
+      <StatBox label={localization.report.aggregation.apiOpenForAll}>
+        <img src="/static/img/icon-api-access-all.svg" alt="icon" />
+        <Link
+          title={localization.report.aggregation.apiOpenForAll}
+          className="mb-3"
+          to={`/apis?isOpenAccess=true${orgPathParam}`}
+        >
+          {stats.openAccess}
+        </Link>
+      </StatBox>
 
-        <StatBox label={localization.report.aggregation.apiNotOpenForAll}>
-          <img src="/static/img/icon-api-access-limited.svg" alt="icon" />
-          <Link
-            title={localization.report.aggregation.apiNotOpenForAll}
-            className="mb-3"
-            to={`/apis?isOpenAccess=false${orgPathParam}`}
-          >
-            {stats.notOpenAccess}
-          </Link>
-        </StatBox>
-      </div>
-    </React.Fragment>
+      <StatBox label={localization.report.aggregation.apiNotOpenForAll}>
+        <img src="/static/img/icon-api-access-limited.svg" alt="icon" />
+        <Link
+          title={localization.report.aggregation.apiNotOpenForAll}
+          className="mb-3"
+          to={`/apis?isOpenAccess=false${orgPathParam}`}
+        >
+          {stats.notOpenAccess}
+        </Link>
+      </StatBox>
+    </div>
   );
 
   const license = (
-    <React.Fragment>
-      <div className="d-flex flex-column flex-fill py-5">
-        <StatBox label={localization.report.aggregation.apiOpenLicense}>
-          <img src="/static/img/icon-api-license-open.svg" alt="icon" />
-          <Link
-            title={localization.report.aggregation.apiOpenLicense}
-            className="mb-3"
-            to={`/apis?isOpenLicense=true${orgPathParam}`}
-          >
-            {stats.openLicense}
-          </Link>
-        </StatBox>
+    <div className="d-flex flex-column flex-fill py-5">
+      <StatBox label={localization.report.aggregation.apiOpenLicense}>
+        <img src="/static/img/icon-api-license-open.svg" alt="icon" />
+        <Link
+          title={localization.report.aggregation.apiOpenLicense}
+          className="mb-3"
+          to={`/apis?isOpenLicense=true${orgPathParam}`}
+        >
+          {stats.openLicense}
+        </Link>
+      </StatBox>
 
-        <StatBox label={localization.report.aggregation.apiNotOpenLicense}>
-          <img src="/static/img/icon-api-license-not-open.svg" alt="icon" />
-          <Link
-            title={localization.report.aggregation.apiNotOpenLicense}
-            className="mb-3"
-            to={`/apis?isOpenLicense=false${orgPathParam}`}
-          >
-            {stats.notOpenLicense}
-          </Link>
-        </StatBox>
-      </div>
-    </React.Fragment>
+      <StatBox label={localization.report.aggregation.apiNotOpenLicense}>
+        <img src="/static/img/icon-api-license-not-open.svg" alt="icon" />
+        <Link
+          title={localization.report.aggregation.apiNotOpenLicense}
+          className="mb-3"
+          to={`/apis?isOpenLicense=false${orgPathParam}`}
+        >
+          {stats.notOpenLicense}
+        </Link>
+      </StatBox>
+    </div>
   );
 
   const freeUsage = (
-    <React.Fragment>
-      <div className="d-flex flex-column flex-fill py-5">
-        <StatBox label={localization.report.aggregation.apiFreeUsage}>
-          <img src="/static/img/icon-api-cost-none.svg" alt="icon" />
-          <Link
-            title={localization.report.aggregation.apiFreeUsage}
-            className="mb-3"
-            to={`/apis?isFree=true${orgPathParam}`}
-          >
-            {stats.freeUsage}
-          </Link>
-        </StatBox>
+    <div className="d-flex flex-column flex-fill py-5">
+      <StatBox label={localization.report.aggregation.apiFreeUsage}>
+        <img src="/static/img/icon-api-cost-none.svg" alt="icon" />
+        <Link
+          title={localization.report.aggregation.apiFreeUsage}
+          className="mb-3"
+          to={`/apis?isFree=true${orgPathParam}`}
+        >
+          {stats.freeUsage}
+        </Link>
+      </StatBox>
 
-        <StatBox label={localization.report.aggregation.apiNotFreeUsage}>
-          <img src="/static/img/icon-api-cost.svg" alt="icon" />
-          <Link
-            title={localization.report.aggregation.apiNotFreeUsage}
-            className="mb-3"
-            to={`/apis?isFree=false${orgPathParam}`}
-          >
-            {stats.notFreeUsage}
-          </Link>
-        </StatBox>
-      </div>
-    </React.Fragment>
+      <StatBox label={localization.report.aggregation.apiNotFreeUsage}>
+        <img src="/static/img/icon-api-cost.svg" alt="icon" />
+        <Link
+          title={localization.report.aggregation.apiNotFreeUsage}
+          className="mb-3"
+          to={`/apis?isFree=false${orgPathParam}`}
+        >
+          {stats.notFreeUsage}
+        </Link>
+      </StatBox>
+    </div>
   );
 
   const formatListItem = stats.formatCounts.map(formatRecord => (
@@ -139,16 +133,14 @@ export const APIStats = props => {
   );
 
   return (
-    <React.Fragment>
-      <div className="px-0 fdk-container-stats">
-        <div className="d-flex">
-          {openApi}
-          {license}
-          {freeUsage}
-        </div>
-        {formatList}
+    <div className="px-0 fdk-container-stats">
+      <div className="d-flex">
+        {openApi}
+        {license}
+        {freeUsage}
       </div>
-    </React.Fragment>
+      {formatList}
+    </div>
   );
 };
 

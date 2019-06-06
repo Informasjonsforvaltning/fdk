@@ -42,11 +42,11 @@ export const HarvestDate = props => {
   }
 
   return (
-    <React.Fragment>
+    <>
       {renderHarvested(harvest)}
       {renderHarvestSeparator(harvest)}
       {renderLastChanged(harvest)}
-    </React.Fragment>
+    </>
   );
 };
 

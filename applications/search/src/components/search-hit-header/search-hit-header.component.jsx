@@ -50,11 +50,9 @@ const renderThemes = (theme, losItems) => {
 
 const renderTitle = (Tag, title, titleLink) => {
   const titleTag = (Tag, title) => (
-    <React.Fragment>
-      <Tag className="mr-3" name={title}>
-        {title}
-      </Tag>
-    </React.Fragment>
+    <Tag className="mr-3" name={title}>
+      {title}
+    </Tag>
   );
   if (titleLink) {
     return (
@@ -86,7 +84,7 @@ export const SearchHitHeader = props => {
   } = props;
 
   return (
-    <React.Fragment>
+    <>
       {title && (
         <div className="mb-2 d-flex flex-wrap align-items-center">
           {renderTitle(Tag, title, titleLink)}
@@ -123,7 +121,7 @@ export const SearchHitHeader = props => {
             _.get(referenceData, ['items', REFERENCEDATA_LOS])
           )}
       </div>
-    </React.Fragment>
+    </>
   );
 };
 

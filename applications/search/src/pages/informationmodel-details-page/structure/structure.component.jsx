@@ -17,7 +17,7 @@ export const Structure = ({ definitions }) => {
   }
 
   return (
-    <React.Fragment>
+    <>
       <div
         style={{ marginLeft: '16px' }}
         className="d-flex schema-collapse--item"
@@ -30,7 +30,7 @@ export const Structure = ({ definitions }) => {
         </div>
       </div>
       {renderModelComponents(definitions)}
-    </React.Fragment>
+    </>
   );
 };
 
