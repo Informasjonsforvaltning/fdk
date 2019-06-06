@@ -8,6 +8,7 @@ exports[`should render InputTitleField correctly 1`] = `
     <button
       className="fdk-edit ml-2 mt-2 nowrap"
       onClick={[Function]}
+      type="button"
     >
       <i
         className="fa fa-pencil mr-2"

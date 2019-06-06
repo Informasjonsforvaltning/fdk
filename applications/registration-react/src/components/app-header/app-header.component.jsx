@@ -13,34 +13,32 @@ import './app-header.scss';
 export class HeaderPure extends React.Component {
   constructor(props) {
     super(props);
+    const { dispatch } = props;
     this.toggle = this.toggle.bind(this);
     this.state = {
       dropdownOpen: false
     };
-    this.props.dispatch(fetchUserIfNeeded());
+    dispatch(fetchUserIfNeeded());
   }
 
   toggle() {
-    this.setState({
-      dropdownOpen: !this.state.dropdownOpen
-    });
+    const { dropdownOpen } = this.state;
+    this.setState({ dropdownOpen: !dropdownOpen });
   }
 
   render() {
     let headerTitle;
-    if (this.props.location) {
-      switch (this.props.location.pathname.split('/')[3]) {
-        case 'datasets':
-          headerTitle = localization.header['Registration of Datasets'];
-          break;
-        case 'apis':
-          headerTitle = localization.header["Registration of API's"];
-          break;
-        default:
-          headerTitle = localization.app.title;
-      }
+    const { location, userItem } = this.props;
+    switch (location.pathname.split('/')[3]) {
+      case 'datasets':
+        headerTitle = localization.header['Registration of Datasets'];
+        break;
+      case 'apis':
+        headerTitle = localization.header["Registration of API's"];
+        break;
+      default:
+        headerTitle = localization.app.title;
     }
-    const { userItem } = this.props;
     return (
       <header>
         <div>

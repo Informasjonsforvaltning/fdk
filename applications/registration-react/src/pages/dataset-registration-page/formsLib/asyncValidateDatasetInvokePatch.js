@@ -8,7 +8,6 @@ import {
 import { datasetSuccessAction } from '../../../redux/modules/datasets';
 import { patchDataset } from '../../../api/datasets';
 
-/* eslint-disable no-param-reassign */
 export const asyncValidateDatasetInvokePatch = (values, dispatch, props) => {
   const { catalogId, datasetId } = props;
 
@@ -59,4 +58,3 @@ export const asyncValidateDatasetInvokePatch = (values, dispatch, props) => {
       return Promise.reject(error);
     });
 };
-/* eslint-enable no-param-reassign */

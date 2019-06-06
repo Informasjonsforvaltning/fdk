@@ -64,7 +64,7 @@ export default function datasets(state = initialState, action) {
         '_embedded',
         'datasets'
       ]).reduce((accumulator, current) => {
-        accumulator[current.id] = current; // eslint-disable-line no-param-reassign
+        accumulator[current.id] = current;
         return accumulator;
       }, {});
       return {

@@ -365,7 +365,8 @@ const renderExpiredOrDeprecatedVersion = item => {
         )}
       </AlertMessage>
     );
-  } else if (statusCode === 'DEPRECATED') {
+  }
+  if (statusCode === 'DEPRECATED') {
     return (
       <AlertMessage type="info">
         <span>

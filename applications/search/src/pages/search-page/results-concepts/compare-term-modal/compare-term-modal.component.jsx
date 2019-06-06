@@ -48,8 +48,10 @@ export class CompareTermModal extends React.Component {
   }
 
   render() {
+    const { terms, handleDeleteTerm } = this.props;
+    const { showModal, showBar } = this.state;
     let cols = 'col-md-';
-    switch (12 / this.props.terms.length) {
+    switch (12 / terms.length) {
       case 6:
         cols += '6';
         break;
@@ -65,10 +67,9 @@ export class CompareTermModal extends React.Component {
       items.map((item, index) => (
         <div className={cols} key={`remove-${index}${item.uri}`}>
           <button
+            type="button"
             className="fdk-concepts-compare-rm-term fdk-button-small fdk-fullwidth mt-5 fdk-modal-button"
-            onClick={() => {
-              this.props.handleDeleteTerm(index);
-            }}
+            onClick={() => handleDeleteTerm(index)}
           >
             <i className="fa fa-times fdk-color0" />
             &nbsp;
@@ -80,6 +81,7 @@ export class CompareTermModal extends React.Component {
     const bottomModalLabel = (
       <div>
         <button
+          type="button"
           className="bottom-modal-label fdk-button fdk-button-cta fdk-modal-button"
           onClick={() => {
             this.open('BOTTOM');
@@ -88,7 +90,7 @@ export class CompareTermModal extends React.Component {
           <i className="fa fa-chevron-up fdk-color0" />
           &nbsp;
           {localization.compare.added +
-            this.props.terms.length +
+            terms.length +
             localization.compare.toCompare}
         </button>
       </div>
@@ -97,13 +99,14 @@ export class CompareTermModal extends React.Component {
     return (
       <div className="d-flex justify-content-center">
         <button
+          type="button"
           className="fdk-button-small fdk-color-blue-dark"
           onClick={this.open}
         >
           {localization.compare.openCompare}
         </button>
         <Modal
-          isOpen={this.state.showModal}
+          isOpen={showModal}
           toggle={this.close}
           className="fdk-modal modal-lg"
         >
@@ -113,13 +116,11 @@ export class CompareTermModal extends React.Component {
             {localization.compare.compare}
           </ModalHeader>
           <ModalBody>
-            <CompareTermModalContent terms={this.props.terms} cols={cols} />
-            <div className="row">{removeTerms(this.props.terms)}</div>
+            <CompareTermModalContent terms={terms} cols={cols} />
+            <div className="row">{removeTerms(terms)}</div>
           </ModalBody>
         </Modal>
-        {this.state.showBar && this.props.terms.length > 0
-          ? bottomModalLabel
-          : null}
+        {showBar && terms.length > 0 ? bottomModalLabel : null}
       </div>
     );
   }

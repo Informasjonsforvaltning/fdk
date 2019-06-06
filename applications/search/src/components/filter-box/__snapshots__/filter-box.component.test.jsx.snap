@@ -10,6 +10,7 @@ exports[`should render FilterBox correctly 1`] = `
     <button
       className="fdk-toggleFilter p-0 d-flex justify-content-between align-items-center w-100"
       onClick={[Function]}
+      type="button"
     >
       <span>
         Testbox
@@ -247,6 +248,7 @@ exports[`should render FilterBox correctly 1`] = `
             <button
               className="fdk-toggleList"
               onClick={[Function]}
+              type="button"
             >
               <i
                 className="fa mr-2 fa-angle-double-down"
@@ -271,6 +273,7 @@ exports[`should render FilterBox correctly with activeFilter 1`] = `
     <button
       className="fdk-toggleFilter p-0 d-flex justify-content-between align-items-center w-100"
       onClick={[Function]}
+      type="button"
     >
       <span>
         Testbox
@@ -508,6 +511,7 @@ exports[`should render FilterBox correctly with activeFilter 1`] = `
             <button
               className="fdk-toggleList"
               onClick={[Function]}
+              type="button"
             >
               <i
                 className="fa mr-2 fa-angle-double-down"

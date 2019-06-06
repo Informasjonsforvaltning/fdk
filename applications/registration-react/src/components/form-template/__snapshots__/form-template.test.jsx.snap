@@ -7,6 +7,7 @@ exports[`should render FormTemplate correctly 1`] = `
   <button
     className="fdk-collapseButton fdk-btn-no-border w-100 p-0"
     onClick={[Function]}
+    type="button"
   >
     <div
       className="d-flex align-items-center"

@@ -72,15 +72,16 @@ export class InputTagsAPIsField extends React.Component {
   }
 
   handleDelete(i) {
-    const tags = this.state.tags.slice(0);
-    tags.splice(i, 1);
-    this.setState({ tags });
+    const { tags } = this.state;
+    const newTags = [...tags];
+    newTags.splice(i, 1);
+    this.setState({ tags: newTags });
     removeTagFromInput(i, this.props);
   }
 
   handleAddition(tag) {
-    const tags = [].concat(this.state.tags, tag);
-    this.setState({ tags });
+    const { tags } = this.state;
+    this.setState({ tags: [...tags, tag] });
     addTagToInput(tag, this.props);
   }
 
@@ -112,14 +113,15 @@ export class InputTagsAPIsField extends React.Component {
   }
 
   render() {
+    const { tags, suggestions } = this.state;
     return (
       <div className="pl-2">
         <div className="d-flex align-items-center">
           <ReactTags
             autofocus={false}
             placeholder=""
-            tags={this.state.tags}
-            suggestions={this.state.suggestions}
+            tags={tags}
+            suggestions={suggestions}
             handleDelete={this.handleDelete}
             handleAddition={this.handleAddition}
             handleInputChange={this.handleInputChange}

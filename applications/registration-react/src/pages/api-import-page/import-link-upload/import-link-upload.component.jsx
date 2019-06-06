@@ -29,6 +29,7 @@ export const ImportLinkUpload = props => {
           <AlertMessage type="danger">
             {localization.api.import.importApiSpecLinkError}
             <button
+              type="button"
               className="fdk-button-small fdk-color-blue-dark"
               onClick={handleCancelImport}
             >

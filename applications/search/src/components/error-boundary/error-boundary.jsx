@@ -28,11 +28,11 @@ export class ErrorBoundary extends React.Component {
   }
 
   render() {
-    if (!this.state.hasError) {
-      return this.props.children;
+    const { hasError, errorObj, errorInfo } = this.state;
+    const { children } = this.props;
+    if (!hasError) {
+      return children;
     }
-
-    const { errorObj, errorInfo } = this.state;
 
     return (
       <ErrorMessage

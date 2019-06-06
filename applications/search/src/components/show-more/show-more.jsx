@@ -50,7 +50,11 @@ export const ShowMorePure = ({
     content = (
       <>
         {_renderContent()}
-        <button className="fdk-button-small" onClick={toggleShowAll}>
+        <button
+          type="button"
+          className="fdk-button-small"
+          onClick={toggleShowAll}
+        >
           <i className="fa mr-2 fa-angle-double-up" />
           <span>{showLessButtonText || localization.showLess}</span>
         </button>
@@ -61,7 +65,11 @@ export const ShowMorePure = ({
     content = (
       <>
         {_renderContent('show-more__cropped-box')}
-        <button className="fdk-button-small" onClick={toggleShowAll}>
+        <button
+          type="button"
+          className="fdk-button-small"
+          onClick={toggleShowAll}
+        >
           <i className="fa mr-2 fa-angle-double-down" />
           <span>{showMoreButtonText || localization.showMore}</span>
         </button>

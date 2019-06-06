@@ -103,10 +103,13 @@ function getSchema(model) {
   return JSON.parse(schemaJson);
 }
 
-export const InformationModelDetailsPage = props => {
-  props.fetchPublishersIfNeeded();
-
-  const { informationModelItem, publisherItems, referencedApis } = props;
+export const InformationModelDetailsPage = ({
+  fetchPublishersIfNeeded,
+  informationModelItem,
+  publisherItems,
+  referencedApis
+}) => {
+  fetchPublishersIfNeeded();
 
   if (!informationModelItem) {
     return null;

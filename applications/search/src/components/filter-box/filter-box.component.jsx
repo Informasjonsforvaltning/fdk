@@ -20,11 +20,13 @@ export class FilterBox extends React.Component {
   }
 
   toggleFilter() {
-    this.setState({ openFilter: !this.state.openFilter });
+    const { openFilter } = this.state;
+    this.setState({ openFilter: !openFilter });
   }
 
   toggleList() {
-    this.setState({ open: !this.state.open });
+    const { open } = this.state;
+    this.setState({ open: !open });
   }
 
   _renderOptions({ buckets }, onClick, activeFilter) {
@@ -73,7 +75,11 @@ export class FilterBox extends React.Component {
               <Collapse isOpen={open}>
                 <div>{options(buckets.slice(5))}</div>
               </Collapse>
-              <button className="fdk-toggleList" onClick={this.toggleList}>
+              <button
+                type="button"
+                className="fdk-toggleList"
+                onClick={this.toggleList}
+              >
                 <i className={openIconClass} />
                 {open
                   ? localization.facet.showfewer
@@ -99,6 +105,7 @@ export class FilterBox extends React.Component {
         <div className="fdk-panel--filter">
           <div className="fdk-panel__header">
             <button
+              type="button"
               className="fdk-toggleFilter p-0 d-flex justify-content-between align-items-center w-100"
               onClick={this.toggleFilter}
             >

@@ -10,7 +10,7 @@ import {
   getAllLosParentNodes,
   getAllLosChildrenNodes
 } from '../../../../redux/modules/referenceData';
-import { TreeLosOption } from '../field-tree-los/field-tree-los-option.component';
+import { TreeLosOption } from './field-tree-los-option.component';
 import {
   isNodeActive,
   getTopicsToDisplay,

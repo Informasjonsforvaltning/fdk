@@ -17,7 +17,6 @@ const InputTagsFieldArray = props => {
   if (input && input.value && input.value.length > 0) {
     tagNodes = input.value.map(item => item[fieldLabel]);
   }
-  /* eslint-disable */
   return (
     <div className="pl-2">
       <label className="fdk-form-label w-100" htmlFor={input.name}>
@@ -33,7 +32,6 @@ const InputTagsFieldArray = props => {
       </label>
     </div>
   );
-  /* eslint-enable */
 };
 
 InputTagsFieldArray.defaultProps = {

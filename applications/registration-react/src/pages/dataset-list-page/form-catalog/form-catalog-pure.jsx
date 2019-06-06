@@ -23,15 +23,18 @@ export class FormCatalogPure extends React.Component {
   }
 
   toggleTitle() {
-    this.setState({ collapseTitle: !this.state.collapseTitle });
+    const { collapseTitle } = this.state;
+    this.setState({ collapseTitle: !collapseTitle });
   }
 
   toggleDescription() {
-    this.setState({ collapse: !this.state.collapse });
+    const { collapse } = this.state;
+    this.setState({ collapse: !collapse });
   }
 
   render() {
     const { initialValues, values } = this.props;
+    const { collapse, collapseTitle } = this.state;
     const { title, publisher } = initialValues;
 
     const collapseClass = cx(
@@ -39,12 +42,12 @@ export class FormCatalogPure extends React.Component {
       'fdk-reg_backgroundDefault',
       'fdk-datasets-description',
       {
-        'fdk-reg_collapse_open': this.state.collapse
+        'fdk-reg_collapse_open': collapse
       }
     );
 
     const fieldClass = cx('fdk-title-input', {
-      'w-100': this.state.collapseTitle
+      'w-100': collapseTitle
     });
 
     return (
@@ -55,7 +58,7 @@ export class FormCatalogPure extends React.Component {
         <div className="d-flex align-items-center justify-content-between">
           {title &&
             title.nb &&
-            !this.state.collapseTitle && (
+            !collapseTitle && (
               <h1 className="w-75 fdk-text-strong">
                 {getTranslateText(title, localization.getLanguage())}
               </h1>
@@ -65,7 +68,7 @@ export class FormCatalogPure extends React.Component {
               name={`title.${localization.getLanguage()}`}
               component={InputTitleField}
               label={localization.schema.common.titleLabel}
-              hideInput={this.state.collapseTitle}
+              hideInput={collapseTitle}
               onToggleTitle={this.toggleTitle}
             />
           </div>
@@ -84,6 +87,7 @@ export class FormCatalogPure extends React.Component {
               {getTranslateText(values.description, localization.getLanguage())}
             </div>
             <button
+              type="button"
               onClick={e => {
                 e.preventDefault();
                 this.toggleDescription();
@@ -93,7 +97,7 @@ export class FormCatalogPure extends React.Component {
               {localization.schema.catalog.editDescriptionLabel}
             </button>
           </div>
-          <Collapse className="mt-3" isOpen={this.state.collapse}>
+          <Collapse className="mt-3" isOpen={collapse}>
             <div className="form-group">
               <Helptext
                 title={localization.schema.catalog.helptext.title}

@@ -10,6 +10,7 @@ exports[`should handle toggleFilter 1`] = `
     <button
       className="fdk-publisher-toggle p-0 d-flex justify-content-between align-items-center w-100"
       onClick={[Function]}
+      type="button"
     >
       <span>
         title
@@ -1639,6 +1640,7 @@ exports[`should render FilterTree correctly with active filter 1`] = `
     <button
       className="fdk-publisher-toggle p-0 d-flex justify-content-between align-items-center w-100"
       onClick={[Function]}
+      type="button"
     >
       <span>
         title
@@ -3268,6 +3270,7 @@ exports[`should render FilterTree correctly with active sub filter 1`] = `
     <button
       className="fdk-publisher-toggle p-0 d-flex justify-content-between align-items-center w-100"
       onClick={[Function]}
+      type="button"
     >
       <span>
         title
@@ -4899,6 +4902,7 @@ exports[`should render FilterTree correctly with props 1`] = `
     <button
       className="fdk-publisher-toggle p-0 d-flex justify-content-between align-items-center w-100"
       onClick={[Function]}
+      type="button"
     >
       <span>
         title

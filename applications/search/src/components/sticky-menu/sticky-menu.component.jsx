@@ -31,12 +31,12 @@ const renderMenu = menuItems => {
   return <ul className="p-0">{children(menuItems)}</ul>;
 };
 
-export const StickyMenu = props => (
+export const StickyMenu = ({ menuItems }) => (
   <nav className="sticky-menu sticky-top py-5 py-md-4" aria-hidden="true">
     <span className="uu-invisible" aria-hidden="false">
       Sidemeny:
     </span>
-    {renderMenu(props.menuItems)}
+    {renderMenu(menuItems)}
   </nav>
 );
 

@@ -29,14 +29,16 @@ const formatItems = format => {
 export class DatasetDistribution extends React.Component {
   constructor(props) {
     super(props);
+    const { defaultopenCollapse } = props;
     this.state = {
-      openCollapse: this.props.defaultopenCollapse
+      openCollapse: defaultopenCollapse
     };
     this.toggle = this.toggle.bind(this);
   }
 
   toggle() {
-    this.setState({ openCollapse: !this.state.openCollapse });
+    const { openCollapse } = this.state;
+    this.setState({ openCollapse: !openCollapse });
   }
 
   renderType() {
@@ -185,7 +187,7 @@ export class DatasetDistribution extends React.Component {
                   </span>
                 </div>
                 <div className="col-8">{formatItems(format)}</div>
-                <button onClick={this.toggle}>
+                <button type="button" onClick={this.toggle}>
                   <i
                     className={`fa fdk-color-blue-dark ${
                       openCollapse ? 'fa-chevron-up' : 'fa-chevron-down'

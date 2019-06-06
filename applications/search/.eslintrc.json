@@ -6,8 +6,8 @@
     "mocha": true,
     "jest": true
   },
-  "extends": ["airbnb", "prettier", "prettier/react"],
-  "plugins": ["prettier", "react-hooks"],
+  "extends": ["airbnb", "prettier", "prettier/react","plugin:eslint-comments/recommended"],
+  "plugins": ["prettier", "react-hooks", "eslint-comments"],
   "parser": "babel-eslint",
   "globals": {
     "$": false
@@ -38,6 +38,8 @@
       "aspects": [ "noHref", "invalidHref", "preferButton" ]
     }],
     "prefer-destructuring":"off",
-    "react-hooks/rules-of-hooks": "error"
+    "react-hooks/rules-of-hooks": "error",
+    "eslint-comments/no-unused-disable": "error",
+    "jsx-a11y/label-has-for": "off" //*deprecated for label-has-associated-control
   }
 }

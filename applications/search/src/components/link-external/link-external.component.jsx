@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export const LinkExternal = props => (
-  <a href={props.uri}>
-    {props.prefLabel}
+export const LinkExternal = ({ uri, prefLabel }) => (
+  <a href={uri}>
+    {prefLabel}
     <i className="fa fa-external-link fdk-fa-right" />
   </a>
 );

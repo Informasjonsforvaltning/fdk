@@ -24,6 +24,7 @@ export const ImportFileUpload = props => {
         <AlertMessage type="danger">
           {localization.api.import.importApiSpecFileError}
           <button
+            type="button"
             className="fdk-button-small fdk-color-blue-dark"
             onClick={handleShowLinkImport}
           >

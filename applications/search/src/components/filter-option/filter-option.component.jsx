@@ -46,7 +46,6 @@ export const FilterOption = props => {
 
   return (
     <div className={`checkbox ${displayClass}`}>
-      {/* eslint-disable jsx-a11y/no-noninteractive-element-to-interactive-role */}
       <label
         className="checkbox_label"
         onKeyPress={() => {
@@ -71,7 +70,6 @@ export const FilterOption = props => {
         <span className="checkbox-replacement" />
         {textLabel} ({count})
       </label>
-      {/* eslint-enable jsx-a11y/no-noninteractive-element-to-interactive-role */}
     </div>
   );
 };

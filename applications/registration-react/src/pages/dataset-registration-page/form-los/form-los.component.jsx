@@ -48,6 +48,7 @@ export const FormLOSPure = ({
               <input type="text" className="form-control" {...props} />
               <span className="input-group-btn input-group-append">
                 <button
+                  type="button"
                   className="btn btn-default input-group-text"
                   onClick={() =>
                     onClearSearchInput(

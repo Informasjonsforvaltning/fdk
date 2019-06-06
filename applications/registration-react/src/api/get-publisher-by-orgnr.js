@@ -5,7 +5,7 @@ export const getPublisherByOrgNr = async orgNr => {
 
   const response = await axios
     .get(url)
-    .catch(e => console.error(JSON.stringify(e))); // eslint-disable-line no-console;
+    .catch(e => console.error(JSON.stringify(e)));
 
   return response && response.data;
 };

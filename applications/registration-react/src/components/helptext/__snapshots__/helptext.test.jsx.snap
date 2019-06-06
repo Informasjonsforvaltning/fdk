@@ -25,6 +25,7 @@ exports[`should render Helptext correctly 1`] = `
     <button
       className="fdk-btn-no-border text-left p-0 ml-1 fdk-reg-helptext-more align-self-start"
       onClick={[Function]}
+      type="button"
     >
       <i
         className="fa fdk-fa-left fa-angle-double-down"

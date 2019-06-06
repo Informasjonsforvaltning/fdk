@@ -15,10 +15,10 @@ export const getConcept = id =>
   axios
     .get(`${conceptsUrlBase}/${id}`)
     .then(response => response.data)
-    .catch(e => console.error(JSON.stringify(e))); // eslint-disable-line no-console;
+    .catch(e => console.error(JSON.stringify(e)));
 
 export const getConceptsByURIs = uris =>
   axios
     .get(`${conceptsSearchUrl({ uris })}`)
     .then(response => response.data)
-    .catch(e => console.log(JSON.stringify(e))); // eslint-disable-line no-console
+    .catch(e => console.error(JSON.stringify(e)));

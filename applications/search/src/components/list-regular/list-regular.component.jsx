@@ -2,8 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './list-regular.scss';
 
-export const ListRegular = props => {
-  const { title, bottomMargin } = props;
+export const ListRegular = ({ title, bottomMargin, children }) => {
   return (
     <section
       className={`list-regular ${bottomMargin ? 'mb-5' : ''}`}
@@ -14,7 +13,7 @@ export const ListRegular = props => {
           <h3>{title}</h3>
         </div>
       )}
-      {props.children}
+      {children}
     </section>
   );
 };

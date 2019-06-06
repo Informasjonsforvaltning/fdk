@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-/* eslint-disable */
 const TextAreaField = ({
   input,
   label,
@@ -19,7 +18,6 @@ const TextAreaField = ({
         (warning && <div className="alert alert-warning mt-3">{warning}</div>))}
   </div>
 );
-/* eslint-enable */
 
 TextAreaField.defaultProps = {
   showLabel: false,

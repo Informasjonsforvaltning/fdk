@@ -40,6 +40,7 @@ export default class InputTitleField extends React.Component {
           )}
           {!hideInput && (
             <button
+              type="button"
               className="fdk-edit ml-2 mt-2 nowrap"
               onClick={e => {
                 e.preventDefault();

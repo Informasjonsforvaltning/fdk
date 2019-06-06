@@ -14,22 +14,27 @@ export default class TimeoutModal extends React.Component {
     this.logoutSession = this.logoutSession.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (this.state.timer === null && nextProps.modal === true) {
+  componentWillReceiveProps({ modal }) {
+    const { timer } = this.state;
+
+    if (timer === null && modal === true) {
       const timer = setInterval(this.tick, 1000);
       this.setState({ timer });
     }
   }
 
   tick() {
+    const { counter } = this.state;
     this.setState({
-      counter: this.state.counter - 1
+      counter: counter - 1
     });
   }
 
   refreshSession() {
-    this.props.refreshSession();
-    clearInterval(this.state.timer);
+    const { refreshSession } = this.props;
+    const { timer } = this.state;
+    refreshSession();
+    clearInterval(timer);
     this.setState({
       timer: null,
       counter: 120
@@ -37,12 +42,16 @@ export default class TimeoutModal extends React.Component {
   }
 
   logoutSession() {
-    clearInterval(this.state.timer);
+    const { toggle } = this.props;
+
+    const { timer } = this.state;
+
+    clearInterval(timer);
     this.setState({
       timer: null,
       counter: 120
     });
-    this.props.toggle();
+    toggle();
   }
 
   render() {
@@ -55,7 +64,7 @@ export default class TimeoutModal extends React.Component {
       buttonConfirm,
       buttonLogout
     } = this.props;
-    const seconds = this.state.counter;
+    const { counter: seconds } = this.state;
     const minutes = Math.floor(seconds / 60);
     let minutesText = `${minutes} minutter og `;
     let secondsText = `${seconds % 60} sekunder.`;

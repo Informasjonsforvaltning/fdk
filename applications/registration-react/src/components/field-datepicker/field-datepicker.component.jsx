@@ -13,8 +13,8 @@ const DatepickerField = props => {
   const { input, label, showLabel } = props;
   return (
     <div className="pl-2">
-      {/* eslint-disable jsx-a11y/label-has-for */}
       <label className="fdk-form-label" htmlFor={input.name}>
+        {' '}
         {showLabel ? label : null}
         {input.value &&
           input.value !== 'Invalid date' && (
@@ -41,7 +41,6 @@ const DatepickerField = props => {
           />
         )}
       </label>
-      {/* eslint-enable jsx-a11y/label-has-for */}
     </div>
   );
 };

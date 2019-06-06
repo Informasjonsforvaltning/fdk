@@ -15,6 +15,7 @@ exports[`should render ModelComponentPure with props 1`] = `
           "marginRight": "16px",
         }
       }
+      type="button"
     >
       <div
         className="d-flex align-items-center"

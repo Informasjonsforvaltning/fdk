@@ -9,6 +9,7 @@ exports[`should render SortButtons correctly 1`] = `
     name="sortFieldasc"
     onClick={[Function]}
     title="Stigende"
+    type="button"
   >
     <i
       className="fa fa-sort-up fdk-color0"
@@ -19,6 +20,7 @@ exports[`should render SortButtons correctly 1`] = `
     name="sortFielddesc"
     onClick={[Function]}
     title="Synkende"
+    type="button"
   >
     <i
       className="fa fa-sort-down fdk-color0"

@@ -50,6 +50,7 @@ const renderName = (collapseIconClass, onToggle, name, propertiesIsEmpty) => {
   }
   return (
     <button
+      type="button"
       style={{ marginRight: '16px' }}
       className="bg-transparent border-0 p-0 d-flex align-items-center w-50 node"
       onClick={onToggle}
@@ -82,7 +83,8 @@ const renderType = (type, nativeType) => {
         </ScrollLink>
       </div>
     );
-  } else if (!type && nativeType) {
+  }
+  if (!type && nativeType) {
     return <div className="d-flex w-50">{nativeType}</div>;
   }
   return null;

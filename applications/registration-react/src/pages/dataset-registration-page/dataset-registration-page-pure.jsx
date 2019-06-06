@@ -103,8 +103,8 @@ export function DatasetRegistrationPagePure(props) {
   } = props;
 
   useEffect(() => dispatchEnsureData(catalogId, datasetId), [
-    props.catalogId,
-    props.datasetId
+    catalogId,
+    datasetId
   ]);
 
   const datasetURL = window.location.pathname;

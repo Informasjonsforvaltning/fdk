@@ -35,7 +35,8 @@ export class Tabs extends React.Component {
   }
 
   toggle(tab) {
-    if (this.state.activeTab !== tab) {
+    const { activeTab } = this.state;
+    if (activeTab !== tab) {
       this.setState({
         activeTab: tab
       });

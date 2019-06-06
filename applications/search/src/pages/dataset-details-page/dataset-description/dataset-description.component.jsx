@@ -19,7 +19,8 @@ export class DatasetDescription extends React.Component {
   }
 
   toggleShowAll() {
-    this.setState({ showAll: !this.state.showAll });
+    const { showAll } = this.state;
+    this.setState({ showAll: !showAll });
   }
 
   render() {

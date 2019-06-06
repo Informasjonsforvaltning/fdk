@@ -19,7 +19,7 @@ export default class AppImportModal extends React.Component {
     const { url } = this.state;
     const { handleAction } = this.props;
     if (url && url !== '') {
-      handleAction(this.state.url);
+      handleAction(url);
       this.setState({
         url: null,
         errorMsg: null
@@ -57,6 +57,7 @@ export default class AppImportModal extends React.Component {
       btnConfirm,
       btnCancel
     } = this.props;
+    const { errorMsg } = this.state;
     return (
       <div>
         <Modal isOpen={modal} toggle={() => toggle} className={className}>
@@ -73,10 +74,8 @@ export default class AppImportModal extends React.Component {
                   onChange={e => this.handleChangeURL(e)}
                 />
               </label>
-              {this.state.errorMsg && (
-                <div className="alert alert-danger mt-3 w-100">
-                  {this.state.errorMsg}
-                </div>
+              {errorMsg && (
+                <div className="alert alert-danger mt-3 w-100">{errorMsg}</div>
               )}
             </div>
           </ModalBody>

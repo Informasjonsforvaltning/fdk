@@ -2,20 +2,23 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
-const AppDeleteModal = props => (
+const AppDeleteModal = ({
+  modal,
+  toggle,
+  className,
+  title,
+  body,
+  handleAction
+}) => (
   <div>
-    <Modal
-      isOpen={props.modal}
-      toggle={() => props.toggle}
-      className={props.className}
-    >
-      <ModalHeader toggle={props.toggle}>{props.title}</ModalHeader>
-      <ModalBody>{props.body}</ModalBody>
+    <Modal isOpen={modal} toggle={() => toggle} className={className}>
+      <ModalHeader toggle={toggle}>{title}</ModalHeader>
+      <ModalBody>{body}</ModalBody>
       <ModalFooter className="d-flex justify-content-center">
-        <Button color="danger" onClick={() => props.handleAction()}>
+        <Button color="danger" onClick={handleAction}>
           Ja, slett datasettet
         </Button>
-        <Button color="primary" onClick={props.toggle}>
+        <Button color="primary" onClick={toggle}>
           Nei, behold datasettet
         </Button>
       </ModalFooter>
