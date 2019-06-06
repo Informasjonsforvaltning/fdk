@@ -151,7 +151,7 @@ export const ApiRegistrationPagePure = ({
       </div>
 
       {item && (
-        <React.Fragment>
+        <>
           <div className="row mb-5">
             <div className="col-12">
               <FormTemplateWithState
@@ -236,7 +236,7 @@ export const ApiRegistrationPagePure = ({
               />
             }
           />
-        </React.Fragment>
+        </>
       )}
     </div>
   );

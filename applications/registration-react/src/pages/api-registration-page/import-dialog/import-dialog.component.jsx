@@ -81,7 +81,7 @@ export const ImportDialogPure = ({
 
   if (!showLinkImport) {
     return (
-      <React.Fragment>
+      <>
         <Button
           className="mr-3 fdk-button"
           color="primary"
@@ -103,7 +103,7 @@ export const ImportDialogPure = ({
         >
           {localization.api.import.cancel}
         </Button>
-      </React.Fragment>
+      </>
     );
   }
   return (

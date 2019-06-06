@@ -74,12 +74,12 @@ const renderConnectedApisByDatasetId = connectedApisByDatasetId => {
 export const FormDistributionApiPure = props => {
   const { connectedApisByDatasetId } = props;
   return (
-    <React.Fragment>
+    <>
       <form>
         <FieldArray name="distribution" component={renderDistributionsAPI} />
       </form>
       {renderConnectedApisByDatasetId(connectedApisByDatasetId)}
-    </React.Fragment>
+    </>
   );
 };
 

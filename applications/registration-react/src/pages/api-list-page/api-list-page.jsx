@@ -164,7 +164,7 @@ export const APIListPage = props => {
               </Button>
             )}
             {showHarvestLink && (
-              <React.Fragment>
+              <>
                 <label className="d-flex flex-grow-1 mb-0" htmlFor="importUrl">
                   <span className="align-self-center">
                     {localization.api.harvest.labelHarvestUrl}
@@ -195,7 +195,7 @@ export const APIListPage = props => {
                 >
                   {localization.app.cancel}
                 </button>
-              </React.Fragment>
+              </>
             )}
           </div>
           {touched &&
@@ -209,13 +209,13 @@ export const APIListPage = props => {
 
       {apiCatalogs &&
         harvestedApiItems && (
-          <React.Fragment>
+          <>
             <div className="row mb-2">
               <div className="col-12">
                 <h2>{localization.api.harvest.harvestedFromCatalogTitle}</h2>
 
                 {!showHarvestLink && (
-                  <React.Fragment>
+                  <>
                     <span>{apiCatalogs.harvestSourceUri}</span>
                     <button
                       className="btn bg-transparent fdk-color-blue-dark"
@@ -224,7 +224,7 @@ export const APIListPage = props => {
                       <i className="fa fa-pencil mr-2" />
                       {localization.api.harvest.changeHarvestUrl}
                     </button>
-                  </React.Fragment>
+                  </>
                 )}
                 {showHarvestLink && (
                   <div className="d-flex">
@@ -285,11 +285,11 @@ export const APIListPage = props => {
                 </div>
               )}
             </div>
-          </React.Fragment>
+          </>
         )}
 
       {registeredApiItems && (
-        <React.Fragment>
+        <>
           {(apiCatalogs || registeredApiItems.length > 0) && (
             <div className="row mb-3">
               <div className="col-12">
@@ -317,7 +317,7 @@ export const APIListPage = props => {
               </div>
             </div>
           )}
-        </React.Fragment>
+        </>
       )}
     </div>
   );

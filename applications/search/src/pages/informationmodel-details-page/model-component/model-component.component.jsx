@@ -113,7 +113,7 @@ export const ModelComponentPure = props => {
   );
 
   return (
-    <React.Fragment>
+    <>
       <div className="d-flex">
         {renderName(collapseIconClass, onToggle, name, propertiesIsEmpty)}
 
@@ -122,7 +122,7 @@ export const ModelComponentPure = props => {
       <Collapse className="mt-2" isOpen={collapse}>
         {renderProperties(properties)}
       </Collapse>
-    </React.Fragment>
+    </>
   );
 };
 

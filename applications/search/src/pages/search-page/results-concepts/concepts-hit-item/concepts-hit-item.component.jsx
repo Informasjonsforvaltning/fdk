@@ -52,7 +52,7 @@ const renderTitle = (title, id, deprecated = false) => {
   const link = `/concepts/${id}`;
 
   return (
-    <React.Fragment>
+    <>
       <Link
         className="search-hit__title-link"
         title={`${localization.apiLabel}: ${title}`}
@@ -67,7 +67,7 @@ const renderTitle = (title, id, deprecated = false) => {
           ({localization.deprecated})
         </span>
       )}
-    </React.Fragment>
+    </>
   );
 };
 
@@ -148,36 +148,34 @@ export const ConceptsHitItem = props => {
   });
 
   return (
-    <React.Fragment>
-      <article
-        className={searchHitClass}
-        title={`Begrep: ${getTranslateText(_.get(result, 'prefLabel'))}`}
-      >
-        <span className="uu-invisible" aria-hidden="false">
-          Søketreff begrep.
-        </span>
+    <article
+      className={searchHitClass}
+      title={`Begrep: ${getTranslateText(_.get(result, 'prefLabel'))}`}
+    >
+      <span className="uu-invisible" aria-hidden="false">
+        Søketreff begrep.
+      </span>
 
-        <div className="mb-2 d-flex flex-wrap align-items-baseline justify-content-between">
-          {renderTitle(
-            getTranslateText(_.get(result, 'prefLabel')),
-            _.get(result, 'id')
-          )}
+      <div className="mb-2 d-flex flex-wrap align-items-baseline justify-content-between">
+        {renderTitle(
+          getTranslateText(_.get(result, 'prefLabel')),
+          _.get(result, 'id')
+        )}
 
-          {renderAddRemoveCompareButton(
-            result,
-            showCompareButton,
-            onAddConcept,
-            onDeleteConcept
-          )}
-        </div>
+        {renderAddRemoveCompareButton(
+          result,
+          showCompareButton,
+          onAddConcept,
+          onDeleteConcept
+        )}
+      </div>
 
-        {renderPublisher(_.get(result, 'publisher'))}
+      {renderPublisher(_.get(result, 'publisher'))}
 
-        {renderDescription(_.get(result, ['definition', 'text']))}
+      {renderDescription(_.get(result, ['definition', 'text']))}
 
-        {renderSource(_.get(result, ['definition', 'source']))}
-      </article>
-    </React.Fragment>
+      {renderSource(_.get(result, ['definition', 'source']))}
+    </article>
   );
 };
 

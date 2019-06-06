@@ -121,10 +121,10 @@ export const DatasetInfo = props => {
   const { datasetItem, referenceData, referencedItems } = props;
   const { references, spatial, temporal } = datasetItem || {};
   return (
-    <React.Fragment>
+    <>
       {renderReferences(references, referencedItems, referenceData)}
       {renderRestrictions(spatial, temporal)}
-    </React.Fragment>
+    </>
   );
 };
 

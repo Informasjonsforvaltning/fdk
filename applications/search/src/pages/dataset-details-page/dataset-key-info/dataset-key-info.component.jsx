@@ -68,12 +68,10 @@ const renderLegalBasis = (title, legalBasis) => {
   }
 
   return (
-    <React.Fragment>
-      <div className="d-flex list-regular--item">
-        <div className="col-4 pl-0 fdk-text-strong">{title}</div>
-        <div className="col-8">{childrenLegalBasis(legalBasis)}</div>
-      </div>
-    </React.Fragment>
+    <div className="d-flex list-regular--item">
+      <div className="col-4 pl-0 fdk-text-strong">{title}</div>
+      <div className="col-8">{childrenLegalBasis(legalBasis)}</div>
+    </div>
   );
 };
 
@@ -82,11 +80,7 @@ const renderType = type => {
     return null;
   }
 
-  return (
-    <React.Fragment>
-      <TwoColRow col1={localization.dataset.type} col2={type} />
-    </React.Fragment>
-  );
+  return <TwoColRow col1={localization.dataset.type} col2={type} />;
 };
 
 const renderConformsTo = conformsTo => {
@@ -104,14 +98,12 @@ const renderConformsTo = conformsTo => {
   }
 
   return (
-    <React.Fragment>
-      <div className="d-flex list-regular--item">
-        <div className="col-4 pl-0 fdk-text-strong">
-          {localization.dataset.conformsTo}
-        </div>
-        <div className="col-8">{children(conformsTo)}</div>
+    <div className="d-flex list-regular--item">
+      <div className="col-4 pl-0 fdk-text-strong">
+        {localization.dataset.conformsTo}
       </div>
-    </React.Fragment>
+      <div className="col-8">{children(conformsTo)}</div>
+    </div>
   );
 };
 
@@ -133,14 +125,12 @@ const renderInformationModel = informationModel => {
   }
 
   return (
-    <React.Fragment>
-      <div className="d-flex list-regular--item">
-        <div className="col-4 pl-0 fdk-text-strong">
-          {localization.dataset.informationModel}
-        </div>
-        <div className="col-8">{children(informationModel)}</div>
+    <div className="d-flex list-regular--item">
+      <div className="col-4 pl-0 fdk-text-strong">
+        {localization.dataset.informationModel}
       </div>
-    </React.Fragment>
+      <div className="col-8">{children(informationModel)}</div>
+    </div>
   );
 };
 
@@ -157,14 +147,12 @@ const renderLanguage = language => {
   }
 
   return (
-    <React.Fragment>
-      <div className="d-flex list-regular--item">
-        <div className="col-4 pl-0 fdk-text-strong">
-          {localization.dataset.language}
-        </div>
-        <div className="col-8">{children(language)}</div>
+    <div className="d-flex list-regular--item">
+      <div className="col-4 pl-0 fdk-text-strong">
+        {localization.dataset.language}
       </div>
-    </React.Fragment>
+      <div className="col-8">{children(language)}</div>
+    </div>
   );
 };
 

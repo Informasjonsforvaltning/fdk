@@ -68,10 +68,10 @@ export class Tabs extends React.Component {
     const { activeTab } = this.state;
     const { tabContent } = this.props;
     return (
-      <React.Fragment>
+      <>
         {this.renderNavItems(tabContent, activeTab)}
         {renderTabContent(tabContent, activeTab)}
-      </React.Fragment>
+      </>
     );
   }
 }

@@ -141,7 +141,7 @@ export const DatasetStats = props => {
   );
 
   const distributions = (
-    <React.Fragment>
+    <>
       <div className="d-flex flex-fill py-5 border-top flex-wrap flex-md-nowrap">
         <StatBox
           label={localization.report.aggregation.publicWithDistributions}
@@ -267,7 +267,7 @@ export const DatasetStats = props => {
           </Link>
         </StatBox>
       </div>
-    </React.Fragment>
+    </>
   );
 
   const national = (
@@ -374,16 +374,14 @@ export const DatasetStats = props => {
   );
 
   return (
-    <React.Fragment>
-      <div className="px-0 fdk-container-stats">
-        {accessLevel}
-        {opendata}
-        {distributions}
-        {national}
-        {concepts}
-        {catalogList}
-      </div>
-    </React.Fragment>
+    <div className="px-0 fdk-container-stats">
+      {accessLevel}
+      {opendata}
+      {distributions}
+      {national}
+      {concepts}
+      {catalogList}
+    </div>
   );
 };
 

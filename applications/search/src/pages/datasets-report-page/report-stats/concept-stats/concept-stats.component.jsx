@@ -89,7 +89,7 @@ export const ConceptStats = props => {
       )}
 
       {Object.keys(_.get(stats, 'publisher', [])).length > 0 && (
-        <React.Fragment>
+        <>
           <div className="d-flex mt-5 mb-5 justify-content-center">
             <strong>{localization.report.conceptsFrom}</strong>
           </div>
@@ -98,19 +98,17 @@ export const ConceptStats = props => {
             <div>{localization.page.termTab}</div>
           </div>
           {catalogListItem}
-        </React.Fragment>
+        </>
       )}
     </div>
   );
 
   return (
-    <React.Fragment>
-      <div className="px-0 fdk-container-stats">
-        {conceptsRelatedToDatasets}
-        {renderMostUsedConcepts}
-        {catalogList}
-      </div>
-    </React.Fragment>
+    <div className="px-0 fdk-container-stats">
+      {conceptsRelatedToDatasets}
+      {renderMostUsedConcepts}
+      {catalogList}
+    </div>
   );
 };
 

@@ -52,7 +52,7 @@ const StatusBar = props => {
   };
 
   return (
-    <React.Fragment>
+    <>
       {confirmDelete && (
         <div className="form-status-bar-confirmDelete d-flex align-items-center justify-content-between alert-danger">
           <div>
@@ -131,12 +131,12 @@ const StatusBar = props => {
               <span>
                 {localization.formStatus.error.saving}
                 {lastSaved && (
-                  <React.Fragment>
+                  <>
                     {` ${localization.app.lastSaved} `}
                     <Moment locale="nb" calendar={calendarStrings}>
                       {lastSaved}
                     </Moment>
-                  </React.Fragment>
+                  </>
                 )}
               </span>
             )}
@@ -165,7 +165,7 @@ const StatusBar = props => {
           )}
         </div>
       </div>
-    </React.Fragment>
+    </>
   );
 };
 

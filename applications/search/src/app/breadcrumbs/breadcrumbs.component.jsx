@@ -54,12 +54,12 @@ const PureBreadcrumbs = ({ breadcrumbs }) => {
           {breadcrumbs.map((breadcrumb, index) => (
             <span key={breadcrumb.key}>
               {index < breadcrumbs.length - 1 && (
-                <React.Fragment>
+                <>
                   <NavLink to={breadcrumb.props.match.url}>
                     {breadcrumb}
                   </NavLink>
                   <i className="fa fa-angle-right fdk-fa-path" />
-                </React.Fragment>
+                </>
               )}
               {index === breadcrumbs.length - 1 && breadcrumb}
             </span>
