@@ -99,6 +99,7 @@
   "facet": {
     "organisation": "Owner",
     "theme": "Theme",
+    "themeEU": "EU-theme (phasing out)",
     "accessRight": "Access",
     "concept": "Preferred term",
     "legal": "Legal",

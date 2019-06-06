@@ -138,7 +138,7 @@ exports[`should render ResultsDataset correctly with hits 1`] = `
                 htmlKey={1}
                 onClick={[Function]}
                 themesItems={null}
-                title="Theme"
+                title="EU-theme (phasing out)"
               />
               <FilterBox
                 activeFilter={null}
