@@ -67,6 +67,7 @@ const StatusBar = props => {
               {localization.formStatus.confirmDelete}
             </Button>
             <button
+              type="button"
               className="btn bg-transparent fdk-color-blue-dark"
               onClick={onToggleConfirmDelete}
             >
@@ -82,6 +83,7 @@ const StatusBar = props => {
           </div>
           <div>
             <button
+              type="button"
               className="btn bg-transparent fdk-color-blue-dark"
               onClick={onToggleShowDialogRequiredFields}
             >
@@ -156,6 +158,7 @@ const StatusBar = props => {
             )}
           {!error && (
             <button
+              type="button"
               className="btn bg-transparent fdk-color-blue-dark"
               disabled={published || isSaving || error}
               onClick={onToggleConfirmDelete}

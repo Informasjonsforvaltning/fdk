@@ -33,10 +33,11 @@ export class ProtectedRoutePure extends React.Component {
   }
 
   refreshSession() {
+    const { dispatch } = this.props;
     this.setState({
       showInactiveWarning: false
     });
-    this.props.dispatch(fetchUserIfNeeded());
+    dispatch(fetchUserIfNeeded());
   }
 
   render() {
@@ -46,6 +47,7 @@ export class ProtectedRoutePure extends React.Component {
       component: Component,
       ...props
     } = this.props;
+    const { showInactiveWarning } = this.state;
     return (
       <IdleTimer
         element={document}
@@ -66,7 +68,7 @@ export class ProtectedRoutePure extends React.Component {
           />
         )}
         <TimeoutModal
-          modal={this.state.showInactiveWarning}
+          modal={showInactiveWarning}
           toggle={this.toggle}
           refreshSession={this.refreshSession}
           title={localization.inactiveSessionWarning.title}

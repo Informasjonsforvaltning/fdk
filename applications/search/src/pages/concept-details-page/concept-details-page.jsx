@@ -215,10 +215,12 @@ const renderStickyMenu = conceptItem => {
 
   return <StickyMenu menuItems={menuItems} />;
 };
-export const ConceptDetailsPage = props => {
-  props.fetchPublishersIfNeeded();
-
-  const { conceptItem, publisherItems } = props;
+export const ConceptDetailsPage = ({
+  conceptItem,
+  publisherItems,
+  fetchPublishersIfNeeded
+}) => {
+  fetchPublishersIfNeeded();
 
   if (!conceptItem) {
     return null;

@@ -7,6 +7,7 @@ exports[`should render CompareTermModal correctly with one term 1`] = `
   <button
     className="fdk-button-small fdk-color-blue-dark"
     onClick={[Function]}
+    type="button"
   >
     Show comparison
   </button>
@@ -122,6 +123,7 @@ exports[`should render CompareTermModal correctly with one term 1`] = `
           <button
             className="fdk-concepts-compare-rm-term fdk-button-small fdk-fullwidth mt-5 fdk-modal-button"
             onClick={[Function]}
+            type="button"
           >
             <i
               className="fa fa-times fdk-color0"
@@ -137,6 +139,7 @@ exports[`should render CompareTermModal correctly with one term 1`] = `
     <button
       className="bottom-modal-label fdk-button fdk-button-cta fdk-modal-button"
       onClick={[Function]}
+      type="button"
     >
       <i
         className="fa fa-chevron-up fdk-color0"
@@ -155,6 +158,7 @@ exports[`should render CompareTermModal correctly with props 1`] = `
   <button
     className="fdk-button-small fdk-color-blue-dark"
     onClick={[Function]}
+    type="button"
   >
     Show comparison
   </button>
@@ -377,6 +381,7 @@ exports[`should render CompareTermModal correctly with props 1`] = `
           <button
             className="fdk-concepts-compare-rm-term fdk-button-small fdk-fullwidth mt-5 fdk-modal-button"
             onClick={[Function]}
+            type="button"
           >
             <i
               className="fa fa-times fdk-color0"
@@ -392,6 +397,7 @@ exports[`should render CompareTermModal correctly with props 1`] = `
           <button
             className="fdk-concepts-compare-rm-term fdk-button-small fdk-fullwidth mt-5 fdk-modal-button"
             onClick={[Function]}
+            type="button"
           >
             <i
               className="fa fa-times fdk-color0"
@@ -407,6 +413,7 @@ exports[`should render CompareTermModal correctly with props 1`] = `
     <button
       className="bottom-modal-label fdk-button fdk-button-cta fdk-modal-button"
       onClick={[Function]}
+      type="button"
     >
       <i
         className="fa fa-chevron-up fdk-color0"

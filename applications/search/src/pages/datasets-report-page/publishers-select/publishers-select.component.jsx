@@ -6,8 +6,8 @@ import PropTypes from 'prop-types';
 import localization from '../../../lib/localization';
 import './publishers-select.scss';
 
-export function PublishersSelect(props) {
-  const options = _.chain(props.publishers)
+export function PublishersSelect({ publishers, value, onChange }) {
+  const options = _.chain(publishers)
     .values()
     .sortBy('name')
     .value();
@@ -20,8 +20,8 @@ export function PublishersSelect(props) {
       <Select
         placeholder={localization.report.searchPublisherPlaceholder}
         searchPromptText={localization.report.typeToSearch}
-        value={props.value}
-        onChange={props.onChange}
+        value={value}
+        onChange={onChange}
         valueKey="orgPath"
         labelKey="name"
         options={options}

@@ -9,17 +9,19 @@ import './app-login-dialog.scss';
 
 export class LoginDialogPure extends React.Component {
   componentWillMount() {
-    if (this.props.loggedOut) {
+    const { loggedOut, dispatch } = this.props;
+    if (loggedOut) {
       axios
         .get('/logout')
         .then(() => {
-          this.props.dispatch(resetUser());
+          dispatch(resetUser());
         })
         .catch(() => {
-          this.props.dispatch(resetUser());
+          dispatch(resetUser());
         });
     }
   }
+
   render() {
     const { loggedOut } = this.props;
     return (

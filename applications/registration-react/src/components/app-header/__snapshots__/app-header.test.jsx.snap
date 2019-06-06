@@ -6,7 +6,7 @@ exports[`should render Header correctly 1`] = `
     <a
       aria-hidden="true"
       className="uu-invisible"
-      href="/#content"
+      href="abc#content"
       id="focus-element"
     >
       Hopp til hovedinnhold
@@ -16,7 +16,7 @@ exports[`should render Header correctly 1`] = `
     id="skip-link-wrap"
   >
     <a
-      href="/#content"
+      href="abc#content"
       id="skip-link"
     >
       Hopp til hovedinnhold
@@ -55,7 +55,9 @@ exports[`should render Header correctly 1`] = `
           className="col-6 col-md-4 d-flex justify-content-center align-items-center"
         >
           <span>
-            <strong />
+            <strong>
+              Registrering
+            </strong>
           </span>
         </div>
         <div

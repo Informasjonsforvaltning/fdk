@@ -16,7 +16,6 @@ const renderFilterPills = (input, losItems) => {
         let inputRef;
         return (
           <div key={`filter-${index}-${_.get(item, 'uri')}`}>
-            {/* eslint-disable jsx-a11y/no-noninteractive-element-to-interactive-role */}
             <label
               className="mr-2 mb-1 fdk-badge badge badge-secondary fdk-text-size-15"
               onKeyPress={() => {
@@ -44,7 +43,6 @@ const renderFilterPills = (input, losItems) => {
                 {getTranslateText(_.get(item, 'name'))}
               </span>
             </label>
-            {/* eslint-enable jsx-a11y/no-noninteractive-element-to-interactive-role */}
           </div>
         );
       }

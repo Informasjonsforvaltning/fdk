@@ -15,6 +15,7 @@ export const CompareTerms = props => {
       <div className="d-flex align-items-baseline justify-content-between">
         <h3 className="">{title}</h3>
         <button
+          type="button"
           className="btn fdk-text-size-15 fdk-color-blue-dark bg-transparent"
           onClick={() => {
             onDeleteTerm(uri);

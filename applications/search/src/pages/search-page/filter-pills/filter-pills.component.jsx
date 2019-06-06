@@ -90,7 +90,8 @@ export const FilterPills = ({
           location,
           key
         });
-      } else if (key === 'losTheme') {
+      }
+      if (key === 'losTheme') {
         return renderThemePill({
           themesItems: losItems,
           keyValue,

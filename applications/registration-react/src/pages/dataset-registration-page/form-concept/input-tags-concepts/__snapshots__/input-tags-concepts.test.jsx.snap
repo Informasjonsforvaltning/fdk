@@ -8,6 +8,7 @@ exports[`should render InputTagsFieldConcepts correctly 1`] = `
     className="fdk-form-label w-100"
     htmlFor="subject"
   >
+     
     label
     <div
       className="d-flex align-items-center"

@@ -15,7 +15,8 @@ export const FormTemplate = props => {
     syncErrors,
     required,
     collapse,
-    onToggle
+    onToggle,
+    children
   } = props;
 
   const collapseClass = cx('fdk-reg_collapse', {
@@ -39,7 +40,7 @@ export const FormTemplate = props => {
 
   return (
     <div className={collapseClass}>
-      <button className={buttonClass} onClick={onToggle}>
+      <button type="button" className={buttonClass} onClick={onToggle}>
         <div className="d-flex align-items-center">
           <i className={collapseIconClass} />
           <h2 className="mb-0 text-ellipsis">{title}</h2>
@@ -63,7 +64,7 @@ export const FormTemplate = props => {
           )}
       </button>
       <Collapse className={collapseContentClass} isOpen={collapse}>
-        {props.children}
+        {children}
       </Collapse>
     </div>
   );

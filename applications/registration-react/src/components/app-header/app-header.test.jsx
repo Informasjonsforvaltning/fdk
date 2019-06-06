@@ -9,7 +9,8 @@ let dispatch;
 beforeEach(() => {
   dispatch = jest.fn();
   defaultProps = {
-    dispatch
+    dispatch,
+    location: { pathname: 'abc' }
   };
   wrapper = shallow(<HeaderPure {...defaultProps} />);
 });

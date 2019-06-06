@@ -2,17 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
-const AppModal = props => (
+const AppModal = ({ modal, toggle, className, title, body }) => (
   <div>
-    <Modal
-      isOpen={props.modal}
-      toggle={() => props.toggle}
-      className={props.className}
-    >
-      <ModalHeader toggle={props.toggle}>{props.title}</ModalHeader>
-      <ModalBody>{props.body}</ModalBody>
+    <Modal isOpen={modal} toggle={() => toggle} className={className}>
+      <ModalHeader toggle={toggle}>{title}</ModalHeader>
+      <ModalBody>{body}</ModalBody>
       <ModalFooter>
-        <Button color="danger" onClick={props.toggle}>
+        <Button color="danger" onClick={toggle}>
           Ok
         </Button>
       </ModalFooter>

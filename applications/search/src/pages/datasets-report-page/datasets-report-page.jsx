@@ -11,10 +11,15 @@ import { getParamFromLocation } from '../../lib/addOrReplaceUrlParam';
 import { ResolvedReportStats } from './report-stats/resolved-report-stats';
 import { isFilterActive } from './filter-helper';
 
-export function DatasetsReportPage(props) {
+export function DatasetsReportPage({
+  location,
+  history,
+  fetchPublishersIfNeeded,
+  publishers
+}) {
   function selectPublisher(publisher) {
     const orgPath = publisher && publisher.orgPath;
-    const currentSearch = qs.parse(props.location.search, {
+    const currentSearch = qs.parse(location.search, {
       ignoreQueryPrefix: true
     });
     const newSearch = { ...currentSearch, orgPath };
@@ -26,17 +31,17 @@ export function DatasetsReportPage(props) {
 
     // This is react-router browserHistory object
     // https://github.com/ReactTraining/history
-    props.history.push({ search: newSearchStr });
+    history.push({ search: newSearchStr });
   }
 
   function clearSearch() {
     selectPublisher(null);
   }
 
-  props.fetchPublishersIfNeeded();
+  fetchPublishersIfNeeded();
 
-  const orgPath = getParamFromLocation(props.location, 'orgPath');
-  const selectedPublisher = _.get(props.publishers, [orgPath], null);
+  const orgPath = getParamFromLocation(location, 'orgPath');
+  const selectedPublisher = _.get(publishers, [orgPath], null);
 
   return (
     <section className="container">
@@ -52,7 +57,7 @@ export function DatasetsReportPage(props) {
             </Button>
           )}
           <PublishersSelect
-            publishers={props.publishers}
+            publishers={publishers}
             onChange={selectPublisher}
             value={selectedPublisher}
           />

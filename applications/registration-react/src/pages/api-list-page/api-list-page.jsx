@@ -190,6 +190,7 @@ export const APIListPage = props => {
                   {localization.api.harvest.harvestAction}
                 </Button>
                 <button
+                  type="button"
                   className="btn bg-transparent fdk-color-blue-dark"
                   onClick={onToggle}
                 >
@@ -218,6 +219,7 @@ export const APIListPage = props => {
                   <>
                     <span>{apiCatalogs.harvestSourceUri}</span>
                     <button
+                      type="button"
                       className="btn bg-transparent fdk-color-blue-dark"
                       onClick={onToggle}
                     >
@@ -242,6 +244,7 @@ export const APIListPage = props => {
                       />
                     </label>
                     <Button
+                      type="button"
                       className="ml-3 btn btn-primary fdk-button"
                       color={
                         !touched || !!error || harvestUrl === ''
@@ -254,6 +257,7 @@ export const APIListPage = props => {
                       {localization.api.harvest.harvestAction}
                     </Button>
                     <button
+                      type="button"
                       className="btn bg-transparent fdk-color-blue-dark"
                       onClick={onToggle}
                     >

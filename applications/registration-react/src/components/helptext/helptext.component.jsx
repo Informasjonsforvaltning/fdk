@@ -41,6 +41,7 @@ export const Helptext = props => {
         )}
         {description && (
           <button
+            type="button"
             className="fdk-btn-no-border text-left p-0 ml-1 fdk-reg-helptext-more align-self-start"
             onClick={toggleShowAll}
           >

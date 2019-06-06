@@ -6,6 +6,7 @@ const SortButtons = props => {
   return (
     <div className="d-flex flex-column">
       <button
+        type="button"
         name={`${field}asc`}
         className={`d-flex sortButton transparentButton ${
           sortField === `${field}` && sortType === 'asc'
@@ -18,6 +19,7 @@ const SortButtons = props => {
         <i className="fa fa-sort-up fdk-color0" />
       </button>
       <button
+        type="button"
         name={`${field}desc`}
         className={`d-flex sortButton transparentButton ${
           sortField === `${field}` && sortType === 'desc'

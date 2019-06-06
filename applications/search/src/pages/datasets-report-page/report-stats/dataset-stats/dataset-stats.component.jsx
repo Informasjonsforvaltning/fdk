@@ -14,7 +14,8 @@ const calculatePercent = (number, total) => {
   const calculatedValue = (number / total) * 100;
   if (calculatedValue === 0) {
     return calculatedValue;
-  } else if (calculatedValue < 1) {
+  }
+  if (calculatedValue < 1) {
     return 1;
   }
   return calculatedValue;
@@ -24,9 +25,11 @@ const calculateSize = (number, total) => {
   const calculatedValue = (number / total) * 100;
   if (calculatedValue < 25) {
     return 'small';
-  } else if (calculatedValue >= 25 && calculatedValue < 50) {
+  }
+  if (calculatedValue >= 25 && calculatedValue < 50) {
     return 'medium';
-  } else if (calculatedValue >= 50 && calculatedValue < 75) {
+  }
+  if (calculatedValue >= 50 && calculatedValue < 75) {
     return 'large';
   }
   return 'xlarge';

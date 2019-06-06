@@ -14,7 +14,6 @@ const InputTagsField = props => {
     meta: { touched, error, warning },
     showLabel
   } = props;
-  /* eslint-disable */
   return (
     <div className="pl-2">
       <label className="fdk-form-label w-100" htmlFor={input.name}>
@@ -38,7 +37,6 @@ const InputTagsField = props => {
           )))}
     </div>
   );
-  /* eslint-enable */
 };
 
 InputTagsField.defaultProps = {

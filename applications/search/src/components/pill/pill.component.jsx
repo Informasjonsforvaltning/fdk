@@ -12,7 +12,7 @@ export const Pill = ({ label, handleOnClick }) => {
   return (
     <div className="d-flex align-items-center fdk-text-size-15 fdk-bg-color-dark-1 fdk-color-grey-4 fdk-filter-pill mr-2 mb-2 fade-in-500">
       <span className="text-ellipsis">{label}</span>
-      <button className="d-flex" onClick={handleOnClick}>
+      <button type="button" className="d-flex" onClick={handleOnClick}>
         <i className="fa fa-times-circle fdk-bg-color-dark-1 fdk-color-grey-4" />
       </button>
     </div>

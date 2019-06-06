@@ -29,10 +29,10 @@ import ScrollToTop from '../components/scroll-to-top/scrollToTop.component';
 import '../assets/css/bootstrap-override.scss';
 import './styles';
 
-export function App(props) {
+export function App({ language }) {
   // react-localization is a stateful library, so we set the required language on each full-app render
   // and full-render app each time when the language is changed
-  localization.setLanguage(props.language);
+  localization.setLanguage(language);
 
   return (
     <div>

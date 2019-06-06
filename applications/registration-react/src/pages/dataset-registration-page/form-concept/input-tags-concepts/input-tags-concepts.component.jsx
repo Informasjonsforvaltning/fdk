@@ -170,8 +170,8 @@ class InputTagsFieldConcepts extends React.Component {
     }
     return (
       <div className="pl-2">
-        {/* eslint-disable jsx-a11y/label-has-for */}
         <label className="fdk-form-label w-100" htmlFor={input.name}>
+          {' '}
           {showLabel ? label : null}
           <div className="d-flex align-items-center">
             <TagsInput

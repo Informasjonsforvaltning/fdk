@@ -14,7 +14,7 @@ export const getInformationmodel = id =>
   axios
     .get(`${informationmodelsUrlBase}/${id}`)
     .then(response => response.data)
-    .catch(e => console.error(JSON.stringify(e))); // eslint-disable-line no-console;
+    .catch(e => console.error(JSON.stringify(e)));
 
 export const getinformationModelByHarvestSourceUri = harvestSourceUri =>
   axios
@@ -22,4 +22,4 @@ export const getinformationModelByHarvestSourceUri = harvestSourceUri =>
     .then(response => response.data)
     // harvestSourceUri is identificator, so there can be only one.
     .then(data => _.get(data, ['_embedded', 'informationmodels', 0]))
-    .catch(e => console.log(JSON.stringify(e))); // eslint-disable-line no-console
+    .catch(e => console.error(JSON.stringify(e)));

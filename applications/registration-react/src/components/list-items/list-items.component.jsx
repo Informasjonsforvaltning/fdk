@@ -117,7 +117,6 @@ export const ListItems = props => {
 };
 
 ListItems.defaultProps = {
-  catalogId: null,
   items: null,
   itemTitleField: ['title'],
   sortField: null,

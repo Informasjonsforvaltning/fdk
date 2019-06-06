@@ -239,7 +239,6 @@ export const FormDistributionPure = props => {
 };
 
 FormDistributionPure.defaultProps = {
-  initialValues: null,
   dispatch: null,
   catalogId: null,
   datasetId: null,

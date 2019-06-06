@@ -36,16 +36,11 @@ export class PublishersTree extends React.Component {
       baseURL: this.host,
       headers: this.options.headers
     });
-    this.onChange = this.onChange.bind(this);
     this.loadDatasetFromServer = this.loadDatasetFromServer.bind(this);
   }
 
   componentDidMount() {
     this.loadDatasetFromServer();
-  }
-
-  onChange(value) {
-    this.props.onChange(value);
   }
 
   // @params: the function has no param but the query need dataset id from prop
@@ -66,8 +61,12 @@ export class PublishersTree extends React.Component {
   }
 
   render() {
-    const { hits } = this.state.source;
-    const orgPath = this.props.value && this.props.value.orgPath;
+    const { onChange, value } = this.props;
+    const { orgPath } = value || {};
+
+    const {
+      source: { hits }
+    } = this.state;
 
     const subTree = hits =>
       hits.map((node, i) => {
@@ -80,12 +79,8 @@ export class PublishersTree extends React.Component {
         const label = (
           <span
             className="node"
-            onClick={() => {
-              this.onChange(node);
-            }}
-            onKeyPress={() => {
-              this.onChange(node);
-            }}
+            onClick={() => onChange(node)}
+            onKeyPress={() => onChange(node)}
             role="button"
             tabIndex="0"
           >
@@ -111,12 +106,8 @@ export class PublishersTree extends React.Component {
             className={`node tree-view_item ${
               node.orgPath === orgPath ? 'tree-item_chosen' : ''
             }`}
-            onClick={() => {
-              this.onChange(node);
-            }}
-            onKeyPress={() => {
-              this.onChange(node);
-            }}
+            onClick={() => onChange(node)}
+            onKeyPress={() => onChange(node)}
             role="button"
             tabIndex="0"
           >
@@ -143,12 +134,8 @@ export class PublishersTree extends React.Component {
         const label = (
           <span
             className="mainTree-btn node"
-            onClick={() => {
-              this.onChange(node);
-            }}
-            onKeyPress={() => {
-              this.onChange(node);
-            }}
+            onClick={() => onChange(node)}
+            onKeyPress={() => onChange(node)}
             role="button"
             tabIndex="0"
           >

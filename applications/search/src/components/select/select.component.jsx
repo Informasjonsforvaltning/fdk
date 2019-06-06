@@ -32,19 +32,18 @@ export class Select extends React.Component {
 
   render() {
     const { items } = this.props;
+    const { selectedValue } = this.state;
     return (
       <UncontrolledDropdown
         id="search-result-dropdown-1"
         className="ml-auto"
-        title={`${localization.sort.by} ${
-          localization.sort[this.state.selectedValue]
-        }`}
+        title={`${localization.sort.by} ${localization.sort[selectedValue]}`}
         aria-label={`Sorter søkeresultat, ${localization.sort.by} ${
-          localization.sort[this.state.selectedValue]
+          localization.sort[selectedValue]
         }`}
       >
         <DropdownToggle className="fdk-button" caret color="primary" title="">
-          {localization.sort.by} {localization.sort[this.state.selectedValue]}
+          {localization.sort.by} {localization.sort[selectedValue]}
         </DropdownToggle>
         <DropdownMenu right className="fdk-dropdownmenu">
           {map(items, (item, idx) => {

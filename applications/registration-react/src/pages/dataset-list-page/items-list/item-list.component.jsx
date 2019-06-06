@@ -54,7 +54,8 @@ class DatasetItemsList extends React.Component {
   }
 
   toggleImportModal() {
-    this.setState({ showImportModal: !this.state.showImportModal });
+    const { showImportModal } = this.state;
+    this.setState({ showImportModal: !showImportModal });
   }
 
   handleImportDataset(url) {
@@ -87,12 +88,13 @@ class DatasetItemsList extends React.Component {
   }
 
   render() {
-    const { sortField, sortType } = this.state;
+    const { sortField, sortType, showImportModal } = this.state;
     const { catalogId, datasetItems } = this.props;
     return (
       <div>
         <div className="d-flex mb-3">
           <button
+            type="button"
             className="fdk-button fdk-button-cta"
             onClick={handleCreateDataset}
           >
@@ -100,6 +102,7 @@ class DatasetItemsList extends React.Component {
             {localization.datasets.list.btnNewDataset}
           </button>
           <button
+            type="button"
             className="ml-2 transparentButton"
             onClick={this.toggleImportModal}
           >
@@ -118,7 +121,7 @@ class DatasetItemsList extends React.Component {
         />
 
         <ImportModal
-          modal={this.state.showImportModal}
+          modal={showImportModal}
           handleAction={this.handleImportDataset}
           toggle={this.toggleImportModal}
           title={localization.datasets.import.title}

@@ -226,6 +226,7 @@ export const FilterTree = props => {
       <div className="fdk-filter-tree">
         <div className="fdk-panel__header">
           <button
+            type="button"
             className="fdk-publisher-toggle p-0 d-flex justify-content-between align-items-center w-100"
             onClick={handleToggleOpenFilter}
           >
@@ -262,6 +263,7 @@ export const FilterTree = props => {
                       </div>
                     </Collapse>
                     <button
+                      type="button"
                       className="fdk-toggleList"
                       onClick={handleToggleOpenList}
                     >

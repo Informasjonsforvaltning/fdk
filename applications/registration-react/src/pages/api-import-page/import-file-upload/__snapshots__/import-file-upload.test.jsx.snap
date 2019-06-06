@@ -19,6 +19,7 @@ exports[`should render ImportFileUpload correctly 1`] = `
       <button
         className="fdk-button-small fdk-color-blue-dark"
         onClick={[Function]}
+        type="button"
       >
         importere via lenke
       </button>

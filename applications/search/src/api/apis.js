@@ -16,13 +16,13 @@ export const getApi = id =>
   axios
     .get(`${apisUrlBase}/${id}`)
     .then(response => response.data)
-    .catch(e => console.error(JSON.stringify(e))); // eslint-disable-line no-console;
+    .catch(e => console.error(JSON.stringify(e)));
 
 export const getApiByHarvestSourceUri = harvestSourceUri =>
   axios
     .get(`${apisUrlBase}?harvestSourceUri=${harvestSourceUri}`)
     .then(response => response.data)
-    .catch(e => console.log(JSON.stringify(e))); // eslint-disable-line no-console
+    .catch(e => console.error(JSON.stringify(e)));
 
 export const getApisByDatasetUri = async (datasetUri, returnFields) => {
   const query = `${qs.stringify(
@@ -37,7 +37,7 @@ export const getApisByDatasetUri = async (datasetUri, returnFields) => {
 
   const response = await axios
     .get(url)
-    .catch(e => console.log(JSON.stringify(e))); // eslint-disable-line no-console
+    .catch(e => console.error(JSON.stringify(e)));
 
   return _.get(response, ['data', 'hits']);
 };

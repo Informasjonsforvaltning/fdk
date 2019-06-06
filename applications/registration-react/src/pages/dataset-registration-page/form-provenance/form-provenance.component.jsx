@@ -45,12 +45,11 @@ export const renderProvenance = componentProps => {
                 handleProvenanceChange(componentProps, e, provenanceItem)
               }
             />
-            {/* eslint-disable jsx-a11y/label-has-for */}
+            {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
             <label
               className="form-check-label fdk-form-check-label"
               htmlFor={code}
             />
-            {/* eslint-enable jsx-a11y/label-has-for */}
             <span>
               {provenanceItem.prefLabel[localization.getLanguage()] ||
                 provenanceItem.prefLabel.no ||

@@ -8,6 +8,7 @@ exports[`should render DatepickerField correctly 1`] = `
     className="fdk-form-label"
     htmlFor="date"
   >
+     
     label
     <DatePicker
       allowSameDay={false}

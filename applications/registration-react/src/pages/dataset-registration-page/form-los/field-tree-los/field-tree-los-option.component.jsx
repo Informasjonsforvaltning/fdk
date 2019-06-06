@@ -10,7 +10,6 @@ export const TreeLosOption = props => {
 
   return (
     <div className={`checkbox ${displayClass}`}>
-      {/* eslint-disable jsx-a11y/no-noninteractive-element-to-interactive-role */}
       <label
         className="checkbox_label"
         onKeyPress={() => {
@@ -35,7 +34,6 @@ export const TreeLosOption = props => {
         <span className="checkbox-replacement" />
         {label}
       </label>
-      {/* eslint-enable jsx-a11y/no-noninteractive-element-to-interactive-role */}
     </div>
   );
 };
