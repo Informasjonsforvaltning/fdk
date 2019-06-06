@@ -5,8 +5,8 @@ const registrationApiConfig = {};
 export const configureRegistrationApi = newRegistrationApiConfig =>
   Object.assign(registrationApiConfig, newRegistrationApiConfig);
 
-const rootUrl = () => registrationApiConfig.host;
-const resolveUrl = path => url.resolve(rootUrl, path);
+const getRootUrl = () => registrationApiConfig.host;
+const resolveUrl = path => url.resolve(getRootUrl(), path);
 
 const datasetUrl = (catalogId, datasetId) =>
   resolveUrl(`catalogs/${catalogId}/datasets/${datasetId}`);
