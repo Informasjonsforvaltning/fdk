@@ -10,6 +10,59 @@ import 'moment/locale/nb';
 import localization from '../../lib/localization';
 import './status-bar.scss';
 
+const renderConfirmDeleteOverlayDialog = ({
+  type,
+  onDelete,
+  toggleShowConfirmDelete
+}) => (
+  <div className="form-status-bar-confirmDelete d-flex align-items-center justify-content-between alert-danger">
+    <div>
+      <span>{localization.formStatus[type].confirmDeleteMessage}</span>
+    </div>
+    <div>
+      <Button className="fdk-button mr-3" color="primary" onClick={onDelete}>
+        {localization.formStatus.confirmDelete}
+      </Button>
+      <button
+        type="button"
+        className="btn bg-transparent fdk-color-blue-dark"
+        onClick={toggleShowConfirmDelete}
+      >
+        {localization.formStatus.cancelDelete}
+      </button>
+    </div>
+  </div>
+);
+renderConfirmDeleteOverlayDialog.propTypes = {
+  type: PropTypes.oneOf(['dataset', 'api']).isRequired,
+  onDelete: PropTypes.func.isRequired,
+  toggleShowConfirmDelete: PropTypes.func.isRequired
+};
+
+const renderValidationErrorOverlayDialog = ({
+  type,
+  toggleShowValidationError
+}) => (
+  <div className="form-status-bar-confirmDelete d-flex align-items-center justify-content-between alert-danger">
+    <div>
+      <span>{localization.formStatus[type].requiredFieldsMissing}</span>
+    </div>
+    <div>
+      <button
+        type="button"
+        className="btn bg-transparent fdk-color-blue-dark"
+        onClick={toggleShowValidationError}
+      >
+        {localization.app.cancel}
+      </button>
+    </div>
+  </div>
+);
+renderValidationErrorOverlayDialog.propTypes = {
+  type: PropTypes.oneOf(['dataset', 'api']).isRequired,
+  toggleShowValidationError: PropTypes.func.isRequired
+};
+
 export const StatusBar = props => {
   const {
     type,
@@ -40,8 +93,7 @@ export const StatusBar = props => {
     {
       'alert-primary': !justPublishedOrUnPublished,
       'alert-success': justPublishedOrUnPublished,
-      'alert-warning': error,
-      'alert-danger': showConfirmDelete
+      'alert-warning': error
     }
   );
 
@@ -56,45 +108,14 @@ export const StatusBar = props => {
 
   return (
     <>
-      {showConfirmDelete && (
-        <div className="form-status-bar-confirmDelete d-flex align-items-center justify-content-between alert-danger">
-          <div>
-            <span>{localization.formStatus[type].confirmDeleteMessage}</span>
-          </div>
-          <div>
-            <Button
-              className="fdk-button mr-3"
-              color="primary"
-              onClick={onDelete}
-            >
-              {localization.formStatus.confirmDelete}
-            </Button>
-            <button
-              type="button"
-              className="btn bg-transparent fdk-color-blue-dark"
-              onClick={toggleShowConfirmDelete}
-            >
-              {localization.formStatus.cancelDelete}
-            </button>
-          </div>
-        </div>
-      )}
-      {showValidatonError && (
-        <div className="form-status-bar-confirmDelete d-flex align-items-center justify-content-between alert-danger">
-          <div>
-            <span>{localization.formStatus[type].requiredFieldsMissing}</span>
-          </div>
-          <div>
-            <button
-              type="button"
-              className="btn bg-transparent fdk-color-blue-dark"
-              onClick={toggleShowValidationError}
-            >
-              {localization.app.cancel}
-            </button>
-          </div>
-        </div>
-      )}
+      {showConfirmDelete &&
+        renderConfirmDeleteOverlayDialog({
+          type,
+          onDelete,
+          toggleShowConfirmDelete
+        })}
+      {showValidatonError &&
+        renderValidationErrorOverlayDialog({ type, toggleShowValidationError })}
       <div className={statusBarClassnames}>
         <div>
           {justPublishedOrUnPublished &&
