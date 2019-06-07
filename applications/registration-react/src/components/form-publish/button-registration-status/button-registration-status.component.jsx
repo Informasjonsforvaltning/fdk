@@ -12,17 +12,27 @@ const handleChange = (props, registrationStatus) => {
 export const ButtonRegistrationStatus = props => {
   const { input } = props;
   const registrationStatus = _.get(input, 'value');
-  if (registrationStatus !== 'DRAFT') {
-    return null;
+  const isPublished = registrationStatus === 'PUBLISH';
+
+  if (!isPublished) {
+    return (
+      <Button
+        id="dataset-setPublish-button"
+        className="fdk-button mr-3"
+        color="primary"
+        onClick={() => handleChange(props, 'PUBLISH')}
+      >
+        Publiser
+      </Button>
+    );
   }
   return (
     <Button
-      id="dataset-setPublish-button"
-      className="fdk-button mr-3"
-      color="primary"
-      onClick={() => handleChange(props, 'PUBLISH')}
+      id="dataset-setDraft-button"
+      className="fdk-button shadow-none bg-transparent btn-outline-primary mr-3"
+      onClick={() => handleChange(props, 'DRAFT')}
     >
-      Publiser
+      Avpubliser
     </Button>
   );
 };
