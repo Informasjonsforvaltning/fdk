@@ -95,6 +95,26 @@ renderValidationErrorOverlayDialog.propTypes = {
   toggleShowValidationError: PropTypes.func.isRequired
 };
 
+const renderMessageForPublishStatusChange = ({ published, type }) =>
+  published
+    ? `${localization.formStatus.type[type]} ${
+        localization.formStatus.published
+      }.`
+    : `${localization.formStatus.type[type]} ${
+        localization.formStatus.unPublished
+      }.`;
+
+const renderMessageForUpdate = ({ isSaving, published }) => {
+  if (isSaving) {
+    return `${localization.formStatus.isSaving}...`;
+  }
+
+  if (published) {
+    return `${localization.formStatus.changesUpdated}.`;
+  }
+  return `${localization.formStatus.savedAsDraft}.`;
+};
+
 export const StatusBar = props => {
   const {
     type,
@@ -116,18 +136,15 @@ export const StatusBar = props => {
   const toggleShowValidationError = () =>
     setShowValidationError(!showValidatonError);
 
-  const statusBarClassnames = cx(
-    'form-status-bar',
-    'd-flex',
-    'align-items-center',
-    'justify-content-between',
-    'fadeFromBottom-500',
-    {
-      'alert-primary': !justPublishedOrUnPublished,
-      'alert-success': justPublishedOrUnPublished,
-      'alert-warning': error
-    }
-  );
+  let messageClass;
+  let message;
+  if (justPublishedOrUnPublished) {
+    messageClass = 'alert-success';
+    message = renderMessageForPublishStatusChange({ published, type });
+  } else {
+    messageClass = 'alert-primary';
+    message = renderMessageForUpdate({ isSaving, published });
+  }
 
   return (
     <>
@@ -140,39 +157,17 @@ export const StatusBar = props => {
         })}
       {showValidatonError &&
         renderValidationErrorOverlayDialog({ type, toggleShowValidationError })}
-      <div className={statusBarClassnames}>
-        <div>
-          {justPublishedOrUnPublished &&
-            published && (
-              <span>
-                {localization.formStatus.type[type]}{' '}
-                {localization.formStatus.published}.
-              </span>
-            )}
-          {justPublishedOrUnPublished &&
-            !published && (
-              <span>
-                {localization.formStatus.type[type]}{' '}
-                {localization.formStatus.unPublished}.
-              </span>
-            )}
-
-          {!error &&
-            !justPublishedOrUnPublished &&
-            isSaving && <span>{localization.formStatus.isSaving}...</span>}
-
-          {!error &&
-            !justPublishedOrUnPublished &&
-            lastSaved &&
-            !isSaving &&
-            !published && <span>{localization.formStatus.savedAsDraft}.</span>}
-
-          {!error &&
-            !justPublishedOrUnPublished &&
-            lastSaved &&
-            !isSaving &&
-            published && <span>{localization.formStatus.changesUpdated}.</span>}
-        </div>
+      <div
+        className={cx(
+          'form-status-bar',
+          'd-flex',
+          'align-items-center',
+          'justify-content-between',
+          'fadeFromBottom-500',
+          messageClass
+        )}
+      >
+        <div>{message}</div>
         <div className="d-flex">
           {allowPublish && formComponent}
           {!allowPublish && (
