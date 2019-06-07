@@ -1163,7 +1163,8 @@ Eksempel på endring som medfører versjonering:
       </withState(withHandlers(FormTemplate))>
     </div>
   </div>
-  <withState(withState(withHandlers(StatusBar)))
+  <StatusBar
+    allowPublish={true}
     error={null}
     formComponent={
       <Memo(ConnectFunction)

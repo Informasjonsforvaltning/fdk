@@ -1,8 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import _ from 'lodash';
-import { withState, withHandlers, compose } from 'recompose';
 import { Button } from 'reactstrap';
 import moment from 'moment';
 import Moment from 'react-moment';
@@ -11,7 +10,7 @@ import 'moment/locale/nb';
 import localization from '../../lib/localization';
 import './status-bar.scss';
 
-const StatusBar = props => {
+export const StatusBar = props => {
   const {
     type,
     isSaving,
@@ -20,13 +19,17 @@ const StatusBar = props => {
     published,
     justPublishedOrUnPublished,
     onDelete,
-    confirmDelete,
-    onToggleConfirmDelete,
-    showDialogRequiredFields,
-    onToggleShowDialogRequiredFields,
     formComponent,
     allowPublish
   } = props;
+
+  const [showConfirmDelete, setShowConfirmDelete] = useState(false);
+  const toggleShowConfirmDelete = () =>
+    setShowConfirmDelete(!showConfirmDelete);
+
+  const [showValidatonError, setShowValidationError] = useState(false);
+  const toggleShowValidationError = () =>
+    setShowValidationError(!showValidatonError);
 
   const statusBarClassnames = cx(
     'form-status-bar',
@@ -38,7 +41,7 @@ const StatusBar = props => {
       'alert-primary': !justPublishedOrUnPublished,
       'alert-success': justPublishedOrUnPublished,
       'alert-warning': error,
-      'alert-danger': confirmDelete
+      'alert-danger': showConfirmDelete
     }
   );
 
@@ -53,7 +56,7 @@ const StatusBar = props => {
 
   return (
     <>
-      {confirmDelete && (
+      {showConfirmDelete && (
         <div className="form-status-bar-confirmDelete d-flex align-items-center justify-content-between alert-danger">
           <div>
             <span>{localization.formStatus[type].confirmDeleteMessage}</span>
@@ -69,14 +72,14 @@ const StatusBar = props => {
             <button
               type="button"
               className="btn bg-transparent fdk-color-blue-dark"
-              onClick={onToggleConfirmDelete}
+              onClick={toggleShowConfirmDelete}
             >
               {localization.formStatus.cancelDelete}
             </button>
           </div>
         </div>
       )}
-      {showDialogRequiredFields && (
+      {showValidatonError && (
         <div className="form-status-bar-confirmDelete d-flex align-items-center justify-content-between alert-danger">
           <div>
             <span>{localization.formStatus[type].requiredFieldsMissing}</span>
@@ -85,7 +88,7 @@ const StatusBar = props => {
             <button
               type="button"
               className="btn bg-transparent fdk-color-blue-dark"
-              onClick={onToggleShowDialogRequiredFields}
+              onClick={toggleShowValidationError}
             >
               {localization.app.cancel}
             </button>
@@ -152,7 +155,7 @@ const StatusBar = props => {
                 id="dataset-setPublish-button"
                 className="fdk-button mr-3"
                 color="primary"
-                onClick={onToggleShowDialogRequiredFields}
+                onClick={toggleShowValidationError}
               >
                 {localization.formStatus.publish}
               </Button>
@@ -162,7 +165,7 @@ const StatusBar = props => {
               type="button"
               className="btn bg-transparent fdk-color-blue-dark"
               disabled={published || isSaving || error}
-              onClick={onToggleConfirmDelete}
+              onClick={toggleShowConfirmDelete}
             >
               {localization.formStatus.delete}
             </button>
@@ -180,10 +183,6 @@ StatusBar.defaultProps = {
   published: false,
   justPublishedOrUnPublished: false,
   onDelete: _.noop,
-  confirmDelete: false,
-  onToggleConfirmDelete: _.noop,
-  showDialogRequiredFields: false,
-  onToggleShowDialogRequiredFields: _.noop,
   formComponent: null,
   allowPublish: true
 };
@@ -196,31 +195,6 @@ StatusBar.propTypes = {
   published: PropTypes.bool,
   justPublishedOrUnPublished: PropTypes.bool,
   onDelete: PropTypes.func,
-  confirmDelete: PropTypes.bool,
-  onToggleConfirmDelete: PropTypes.func,
-  showDialogRequiredFields: PropTypes.bool,
-  onToggleShowDialogRequiredFields: PropTypes.func,
   formComponent: PropTypes.object,
   allowPublish: PropTypes.bool
 };
-
-const enhance = compose(
-  withState('confirmDelete', 'toggleConfirmDelete', false),
-  withState(
-    'showDialogRequiredFields',
-    'toggleShowDialogRequiredFields',
-    false
-  ),
-  withHandlers({
-    onToggleConfirmDelete: props => e => {
-      e.preventDefault();
-      props.toggleConfirmDelete(!props.confirmDelete);
-    },
-    onToggleShowDialogRequiredFields: props => e => {
-      e.preventDefault();
-      props.toggleShowDialogRequiredFields(!props.showDialogRequiredFields);
-    }
-  })
-);
-
-export const StatusBarWithState = enhance(StatusBar);
