@@ -29,10 +29,9 @@
     "@babel/polyfill": "^7.0.0-beta.54",
     "@babel/preset-env": "^7.3.1",
     "@babel/preset-react": "^7.0.0-beta.54",
-    "axios": "^0.16.2",
+    "axios": "^0.19.0",
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^8.2.6",
-    "babel-jest": "^23.4.0",
     "babel-loader": "^8.0.0-beta.4",
     "body-parser": "^1.18.3",
     "bootstrap": "^4.3.1",
@@ -93,6 +92,7 @@
     "whatwg-fetch": "^2.0.4"
   },
   "devDependencies": {
+    "babel-jest": "^24.8.0",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.9.1",
     "enzyme-to-json": "^3.3.3",
@@ -108,7 +108,7 @@
     "eslint-plugin-react-hooks": "^1.6.0",
     "husky": "^0.14.3",
     "identity-obj-proxy": "^3.0.0",
-    "jest": "^22.4.3",
+    "jest": "^24.8.0",
     "lint-staged": "^4.3.0",
     "prettier": "1.13.7"
   },
@@ -127,6 +127,7 @@
       "/target/"
     ],
     "setupFiles": [
+      "@babel/polyfill",
       "raf/polyfill",
       "<rootDir>/test/jestsetup.js"
     ],
