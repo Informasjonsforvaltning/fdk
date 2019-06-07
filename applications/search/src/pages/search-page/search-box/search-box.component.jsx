@@ -25,7 +25,7 @@ export const SearchBoxPure = props => {
   let refSearchBox; // eslint-disable-line no-unused-vars
   return (
     <div className="row pt-5 pb-5">
-      <div className="col-12 col-lg-8 offset-lg-2 fdk-search-flex">
+      <div className="col-12 col-lg-8 offset-lg-2 fdk-search-flex d-flex">
         <div className="d-inline d-lg-none">
           <button
             type="button"
@@ -35,7 +35,7 @@ export const SearchBoxPure = props => {
             Filter
           </button>
         </div>
-        <div className="fdk-search-box">
+        <div className="fdk-search-box flex-grow-1">
           <form
             onSubmit={e => {
               e.preventDefault();
