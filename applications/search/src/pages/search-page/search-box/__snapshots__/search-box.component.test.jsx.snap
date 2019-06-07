@@ -5,7 +5,7 @@ exports[`should render SearchBoxPure correctly 1`] = `
   className="row pt-5 pb-5"
 >
   <div
-    className="col-12 col-lg-8 offset-lg-2 fdk-search-flex"
+    className="col-12 col-lg-8 offset-lg-2 fdk-search-flex d-flex"
   >
     <div
       className="d-inline d-lg-none"
@@ -19,7 +19,7 @@ exports[`should render SearchBoxPure correctly 1`] = `
       </button>
     </div>
     <div
-      className="fdk-search-box"
+      className="fdk-search-box flex-grow-1"
     >
       <form
         onSubmit={[Function]}
