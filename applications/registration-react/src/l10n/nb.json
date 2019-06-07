@@ -467,7 +467,7 @@
     "cancelDelete": "Nei, avbryt",
     "error": {
       "saving": "Det har oppstått problemer med å lagre.",
-      "network": "Det ser ikke ut som du er koblet til internett. Koble til for å fortsette"
+      "network": "Det ser ikke ut som du er koblet til internett. Koble til for å fortsette."
     },
     "api": {
       "confirmDeleteMessage": "Er du sikker på at du vil slette API-beskrivelsen permanent?"

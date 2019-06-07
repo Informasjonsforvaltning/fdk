@@ -4,18 +4,50 @@ import cx from 'classnames';
 import _ from 'lodash';
 import { Button } from 'reactstrap';
 import moment from 'moment';
-import Moment from 'react-moment';
 import 'moment/locale/nb';
 
 import localization from '../../lib/localization';
 import './status-bar.scss';
+
+const renderErrorMessage = ({ error }) =>
+  error.error === 'network_error'
+    ? localization.formStatus.error.network
+    : localization.formStatus.error.saving;
+
+const renderLastSavedMessage = ({ lastSaved }) => {
+  const formatLastSaved = lastSaved =>
+    moment(lastSaved).calendar(null, {
+      lastDay: '[i går kl.] LT',
+      sameDay() {
+        return `[for ${this.fromNow()}]`;
+      },
+      lastWeek: '[på] dddd [kl.] LT',
+      sameElse: 'DD.MM.YYYY'
+    });
+
+  return ` ${localization.app.lastSaved} ${formatLastSaved(lastSaved)}.`;
+};
+
+const renderErrorOverlay = ({ error, lastSaved }) => (
+  <div className="form-status-bar-overlay d-flex align-items-center justify-content-between alert-warning">
+    {renderErrorMessage({ error, lastSaved })}
+    {lastSaved && renderLastSavedMessage({ lastSaved })}
+  </div>
+);
+renderErrorOverlay.defaultProps = {
+  lastSaved: ''
+};
+renderErrorOverlay.propTypes = {
+  error: PropTypes.object.isRequired,
+  lastSaved: PropTypes.string
+};
 
 const renderConfirmDeleteOverlayDialog = ({
   type,
   onDelete,
   toggleShowConfirmDelete
 }) => (
-  <div className="form-status-bar-confirmDelete d-flex align-items-center justify-content-between alert-danger">
+  <div className="form-status-bar-overlay d-flex align-items-center justify-content-between alert-danger">
     <div>
       <span>{localization.formStatus[type].confirmDeleteMessage}</span>
     </div>
@@ -43,7 +75,7 @@ const renderValidationErrorOverlayDialog = ({
   type,
   toggleShowValidationError
 }) => (
-  <div className="form-status-bar-confirmDelete d-flex align-items-center justify-content-between alert-danger">
+  <div className="form-status-bar-overlay d-flex align-items-center justify-content-between alert-danger">
     <div>
       <span>{localization.formStatus[type].requiredFieldsMissing}</span>
     </div>
@@ -97,17 +129,9 @@ export const StatusBar = props => {
     }
   );
 
-  const calendarStrings = {
-    lastDay: '[i går kl.] LT',
-    sameDay() {
-      return `[for ${moment(lastSaved).fromNow()}]`;
-    },
-    lastWeek: '[på] dddd [kl.] LT',
-    sameElse: 'DD.MM.YYYY'
-  };
-
   return (
     <>
+      {error && renderErrorOverlay({ error, lastSaved })}
       {showConfirmDelete &&
         renderConfirmDeleteOverlayDialog({
           type,
@@ -148,49 +172,28 @@ export const StatusBar = props => {
             lastSaved &&
             !isSaving &&
             published && <span>{localization.formStatus.changesUpdated}.</span>}
-
-          {error &&
-            error.error === 'network_error' && (
-              <span>{localization.formStatus.error.network}</span>
-            )}
-          {error &&
-            error.error !== 'network_error' && (
-              <span>
-                {localization.formStatus.error.saving}
-                {lastSaved && (
-                  <>
-                    {` ${localization.app.lastSaved} `}
-                    <Moment locale="nb" calendar={calendarStrings}>
-                      {lastSaved}
-                    </Moment>
-                  </>
-                )}
-              </span>
-            )}
         </div>
         <div className="d-flex">
-          {!error && allowPublish && formComponent}
-          {!error &&
-            !allowPublish && (
-              <Button
-                id="dataset-setPublish-button"
-                className="fdk-button mr-3"
-                color="primary"
-                onClick={toggleShowValidationError}
-              >
-                {localization.formStatus.publish}
-              </Button>
-            )}
-          {!error && (
-            <button
-              type="button"
-              className="btn bg-transparent fdk-color-blue-dark"
-              disabled={published || isSaving || error}
-              onClick={toggleShowConfirmDelete}
+          {allowPublish && formComponent}
+          {!allowPublish && (
+            <Button
+              id="dataset-setPublish-button"
+              className="fdk-button mr-3"
+              color="primary"
+              onClick={toggleShowValidationError}
             >
-              {localization.formStatus.delete}
-            </button>
+              {localization.formStatus.publish}
+            </Button>
           )}
+
+          <button
+            type="button"
+            className="btn bg-transparent fdk-color-blue-dark"
+            disabled={published || isSaving || error}
+            onClick={toggleShowConfirmDelete}
+          >
+            {localization.formStatus.delete}
+          </button>
         </div>
       </div>
     </>
