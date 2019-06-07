@@ -21,7 +21,6 @@ export const ApiRegistrationPagePure = ({
   onAfterRender,
   deleteApiItem,
   catalogItem,
-  lastSaved,
   isSaving,
   error,
   justPublishedOrUnPublished,
@@ -220,7 +219,7 @@ export const ApiRegistrationPagePure = ({
           <StatusBar
             type="api"
             isSaving={isSaving}
-            lastSaved={lastSaved}
+            lastSaved={item._lastModified}
             published={
               registrationStatus
                 ? !!(registrationStatus === 'PUBLISH')
@@ -246,7 +245,6 @@ ApiRegistrationPagePure.defaultProps = {
   onAfterRender: _.noop,
   deleteApiItem: _.noop,
   catalogItem: null,
-  lastSaved: null,
   isSaving: false,
   error: null,
   justPublishedOrUnPublished: false,
@@ -272,7 +270,6 @@ ApiRegistrationPagePure.propTypes = {
   onAfterRender: PropTypes.func,
   deleteApiItem: PropTypes.func,
   catalogItem: PropTypes.object,
-  lastSaved: PropTypes.string,
   isSaving: PropTypes.bool,
   error: PropTypes.object,
   justPublishedOrUnPublished: PropTypes.bool,

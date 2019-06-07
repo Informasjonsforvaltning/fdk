@@ -34,12 +34,7 @@ export const handleDatasetDeleteFieldPatch = (
 
   return patchDataset(catalogId, datasetId, body)
     .then(response => {
-      dispatch(
-        datasetFormPatchSuccessAction(
-          _.get(response, ['data', 'id']),
-          _.get(response, ['data', '_lastModified'])
-        )
-      );
+      dispatch(datasetFormPatchSuccessAction(_.get(response, ['data', 'id'])));
       dispatch(datasetSuccessAction(response));
     })
     .catch(error =>

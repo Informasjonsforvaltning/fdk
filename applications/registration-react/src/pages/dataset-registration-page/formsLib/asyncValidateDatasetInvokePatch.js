@@ -23,12 +23,7 @@ export const asyncValidateDatasetInvokePatch = (values, dispatch, props) => {
   return patchDataset(catalogId, datasetId, values)
     .then(response => {
       const datasetRegistration = response && response.data;
-      dispatch(
-        datasetFormPatchSuccessAction(
-          _.get(response, ['data', 'id']),
-          _.get(response, ['data', '_lastModified'])
-        )
-      );
+      dispatch(datasetFormPatchSuccessAction(_.get(response, ['data', 'id'])));
       if (_.get(values, 'registrationStatus')) {
         dispatch(
           datasetFormPatchJustPublishedOrUnPublishedAction(

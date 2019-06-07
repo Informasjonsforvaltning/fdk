@@ -90,7 +90,6 @@ export function DatasetRegistrationPagePure(props) {
     referenceTypesItems,
     referenceDatasetsItems,
     openLicenseItems,
-    lastSaved,
     isSaving,
     error,
     justPublishedOrUnPublished,
@@ -362,7 +361,7 @@ export function DatasetRegistrationPagePure(props) {
               <StatusBar
                 type="dataset"
                 isSaving={isSaving}
-                lastSaved={lastSaved}
+                lastSaved={datasetItem._lastModified}
                 published={
                   registrationStatus
                     ? !!(registrationStatus === 'PUBLISH')
@@ -429,7 +428,6 @@ DatasetRegistrationPagePure.defaultProps = {
   distribution: null,
   sample: null,
   registrationStatus: null,
-  lastSaved: null,
   datasetItem: null,
   referenceTypesItems: null,
   referenceDatasetsItems: null,
@@ -463,7 +461,6 @@ DatasetRegistrationPagePure.propTypes = {
   distribution: PropTypes.object,
   sample: PropTypes.object,
   registrationStatus: PropTypes.string,
-  lastSaved: PropTypes.string,
   datasetItem: PropTypes.object,
   referenceTypesItems: PropTypes.array,
   referenceDatasetsItems: PropTypes.array,

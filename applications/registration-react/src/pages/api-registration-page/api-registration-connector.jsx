@@ -24,7 +24,6 @@ const mapStateToProps = (
 
   return {
     catalogItem: _.get(catalog, ['items', catalogId]),
-    lastSaved: _.get(getApiFormStatusById(apiFormStatus, apiId), 'lastSaved'),
     isSaving: _.get(getApiFormStatusById(apiFormStatus, apiId), 'isSaving'),
     error: _.get(getApiFormStatusById(apiFormStatus, apiId), 'error'),
     justPublishedOrUnPublished: _.get(
