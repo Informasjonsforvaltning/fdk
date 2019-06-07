@@ -529,7 +529,6 @@ exports[`should render ReportStats correctly 1`] = `
             Object {
               "body": <ConceptStats
                 isFilterActive={false}
-                mostUsedConcepts={undefined}
                 publishers={null}
                 stats={Object {}}
               />,

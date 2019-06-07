@@ -29,7 +29,7 @@
     "@babel/polyfill": "^7.0.0-beta.54",
     "@babel/preset-env": "^7.3.1",
     "@babel/preset-react": "^7.0.0-beta.54",
-    "axios": "^0.17.1",
+    "axios": "^0.19.0",
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^8.2.1",
     "babel-loader": "^8.0.0-beta.4",

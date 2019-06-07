@@ -94,7 +94,7 @@ exports[`should render ConceptDetailsPage correctly with conceptItem 1`] = `
             <a
               href="/api/concepts/14"
             >
-              null/api/concepts/14
+              http://localhost/api/concepts/14
             </a>
           </div>
         </ListRegular>
