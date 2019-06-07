@@ -18,7 +18,7 @@ import { ConnectedFormReference } from './form-reference/connected-form-referenc
 import { ConnectedFormInformationModel } from './form-informationmodel/connected-form-informationmodel.component';
 import { ConnectedFormContactPoint } from './form-contactPoint/connected-form-contactPoint.component';
 import { ConnectedFormContents } from './form-contents/connected-form-contents.component';
-import { StatusBarWithState } from '../../components/status-bar/status-bar.component';
+import { StatusBar } from '../../components/status-bar/status-bar.component';
 import { ConnectedFormPublish } from './connected-form-publish/connected-form-publish';
 import { FormDistributionApi } from './form-distribution-api/form-distribution-api';
 import { ConnectedFormLOS } from './form-los/connected-form-los.component';
@@ -359,7 +359,7 @@ export function DatasetRegistrationPagePure(props) {
                 />
               </FormTemplateWithState>
 
-              <StatusBarWithState
+              <StatusBar
                 type="dataset"
                 isSaving={isSaving}
                 lastSaved={lastSaved}

@@ -13,7 +13,7 @@ import { ConnectedFormApiServiceType } from './form-api-service-type/connected-f
 import { ConnectedFormAccess } from './form-access/connected-form-access';
 import { ConnectedFormRelatedDatasets } from './form-relatedDatasets/connected-form-related-datasets';
 import { ConnectedFormApiStatus } from './form-apiStatus/connected-form-apiStatus';
-import { StatusBarWithState } from '../../components/status-bar/status-bar.component';
+import { StatusBar } from '../../components/status-bar/status-bar.component';
 import { ConnectedFormPublish } from './connected-form-publish/connected-form-publish';
 import { APISpecificationInfo } from './api-specification-info.component';
 
@@ -217,7 +217,7 @@ export const ApiRegistrationPagePure = ({
             </div>
           </div>
 
-          <StatusBarWithState
+          <StatusBar
             type="api"
             isSaving={isSaving}
             lastSaved={lastSaved}
