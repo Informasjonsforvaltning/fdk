@@ -6,11 +6,10 @@ export const DATASET_FORM_STATUS_SAVE_ERROR = 'DATASET_FORM_STATUS_SAVE_ERROR';
 export const DATASET_FORM_STATUS_JUSTPUBLISHEDORUNPUBLISHED =
   'DATASET_FORM_STATUS_JUSTPUBLISHEDORUNPUBLISHED';
 
-export const datasetFormPatchSuccessAction = (datasetId, lastSavedDate) => ({
+export const datasetFormPatchSuccessAction = datasetId => ({
   type: DATASET_FORM_STATUS_LAST_SAVED,
   payload: {
-    datasetId,
-    datasetLastSaved: lastSavedDate
+    datasetId
   }
 });
 
@@ -59,7 +58,6 @@ export function datasetFormStatus(state = initialState, action) {
         ...state,
         [action.payload.datasetId]: {
           ..._.get(state, _.get(action.payload, 'datasetId'), []),
-          lastSaved: action.payload.datasetLastSaved,
           isSaving: false,
           error: null
         }

@@ -6,11 +6,10 @@ export const API_FORM_STATUS_SAVE_ERROR = 'API_FORM_STATUS_SAVE_ERROR';
 export const API_FORM_STATUS_JUSTPUBLISHEDORUNPUBLISHED =
   'API_FORM_STATUS_JUSTPUBLISHEDORUNPUBLISHED';
 
-export const apiFormPatchSuccessAction = (apiId, lastSavedDate) => ({
+export const apiFormPatchSuccessAction = apiId => ({
   type: API_FORM_STATUS_LAST_SAVED,
   payload: {
-    apiId,
-    apiLastSaved: lastSavedDate
+    apiId
   }
 });
 
@@ -59,7 +58,6 @@ export default function apiFormStatus(state = initialState, action) {
         ...state,
         [action.payload.apiId]: {
           ..._.get(state, _.get(action.payload, 'apiId'), []),
-          lastSaved: action.payload.apiLastSaved,
           isSaving: false,
           error: null
         }

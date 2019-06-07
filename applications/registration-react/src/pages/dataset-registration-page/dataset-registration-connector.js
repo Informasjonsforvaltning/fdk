@@ -80,10 +80,6 @@ const mapStateToProps = (
     contactPoint,
     distribution,
     sample,
-    lastSaved: _.get(
-      getDatasetFormStatusById(datasetFormStatus, datasetId),
-      'lastSaved'
-    ),
     isSaving: _.get(
       getDatasetFormStatusById(datasetFormStatus, datasetId),
       'isSaving'
