@@ -469,7 +469,7 @@ DatasetRegistrationPagePure.propTypes = {
   referenceDatasetsItems: PropTypes.array,
   openLicenseItems: PropTypes.array,
   isSaving: PropTypes.bool,
-  error: PropTypes.number,
+  error: PropTypes.object,
   justPublishedOrUnPublished: PropTypes.bool,
   history: PropTypes.object,
   losItems: PropTypes.array

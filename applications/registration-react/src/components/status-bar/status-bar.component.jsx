@@ -125,11 +125,12 @@ const StatusBar = props => {
             !isSaving &&
             published && <span>{localization.formStatus.changesUpdated}.</span>}
 
-          {error === 'network' && (
-            <span>{localization.formStatus.error.network}</span>
-          )}
           {error &&
-            error !== 'network' && (
+            error.error === 'network_error' && (
+              <span>{localization.formStatus.error.network}</span>
+            )}
+          {error &&
+            error.error !== 'network_error' && (
               <span>
                 {localization.formStatus.error.saving}
                 {lastSaved && (
@@ -191,7 +192,7 @@ StatusBar.propTypes = {
   type: PropTypes.oneOf(['dataset', 'api']).isRequired,
   isSaving: PropTypes.bool,
   lastSaved: PropTypes.string,
-  error: PropTypes.number,
+  error: PropTypes.object,
   published: PropTypes.bool,
   justPublishedOrUnPublished: PropTypes.bool,
   onDelete: PropTypes.func,
