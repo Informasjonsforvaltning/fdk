@@ -360,12 +360,8 @@ export function DatasetRegistrationPagePure(props) {
                 isSaving={datasetFormStatus && datasetFormStatus.isSaving}
                 lastSaved={datasetItem._lastModified}
                 published={
-                  datasetFormStatus && datasetFormStatus.registrationStatus
-                    ? !!(datasetFormStatus.registrationStatus === 'PUBLISH')
-                    : !!(
-                        _.get(datasetItem, 'registrationStatus', 'DRAFT') ===
-                        'PUBLISH'
-                      )
+                  _.get(datasetItem, 'registrationStatus', 'DRAFT') ===
+                  'PUBLISH'
                 }
                 error={datasetFormStatus && datasetFormStatus.error}
                 justPublishedOrUnPublished={

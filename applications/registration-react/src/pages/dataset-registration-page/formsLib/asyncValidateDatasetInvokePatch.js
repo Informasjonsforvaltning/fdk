@@ -28,16 +28,14 @@ export const asyncValidateDatasetInvokePatch = (values, dispatch, props) => {
         dispatch(
           datasetFormPatchJustPublishedOrUnPublishedAction(
             _.get(response, ['data', 'id']),
-            true,
-            _.get(values, 'registrationStatus')
+            true
           )
         );
       } else {
         dispatch(
           datasetFormPatchJustPublishedOrUnPublishedAction(
             _.get(response, ['data', 'id']),
-            false,
-            _.get(response, ['data', 'registrationStatus'])
+            false
           )
         );
       }

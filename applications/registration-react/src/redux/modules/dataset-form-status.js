@@ -30,14 +30,12 @@ export const datasetFormPatchErrorAction = (datasetId, error) => ({
 
 export const datasetFormPatchJustPublishedOrUnPublishedAction = (
   datasetId,
-  justChanged,
-  status
+  justChanged
 ) => ({
   type: DATASET_FORM_STATUS_JUSTPUBLISHEDORUNPUBLISHED,
   payload: {
     datasetId,
-    justChanged,
-    status
+    justChanged
   }
 });
 
@@ -73,8 +71,7 @@ export function datasetFormStatus(state = initialState, action) {
       return {
         ...state,
         [action.payload.datasetId]: {
-          justPublishedOrUnPublished: action.payload.justChanged,
-          status: action.payload.status
+          justPublishedOrUnPublished: action.payload.justChanged
         }
       };
     default:
