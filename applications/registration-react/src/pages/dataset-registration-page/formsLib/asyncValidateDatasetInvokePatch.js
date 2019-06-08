@@ -17,33 +17,36 @@ export const asyncValidateDatasetInvokePatch = (values, dispatch, props) => {
   }
 
   if (datasetId) {
-    dispatch(datasetFormPatchIsSavingAction(datasetId));
+    dispatch(datasetFormPatchIsSavingAction({ datasetId }));
   }
 
   return patchDataset(catalogId, datasetId, values)
     .then(response => {
       const datasetRegistration = response && response.data;
-      dispatch(datasetFormPatchSuccessAction(_.get(response, ['data', 'id'])));
+      dispatch(datasetFormPatchSuccessAction({ datasetId }));
       if (_.get(values, 'registrationStatus')) {
         dispatch(
-          datasetFormPatchJustPublishedOrUnPublishedAction(
-            _.get(response, ['data', 'id']),
-            true
-          )
+          datasetFormPatchJustPublishedOrUnPublishedAction({
+            datasetId,
+            justChanged: true
+          })
         );
       } else {
         dispatch(
-          datasetFormPatchJustPublishedOrUnPublishedAction(
-            _.get(response, ['data', 'id']),
-            false
-          )
+          datasetFormPatchJustPublishedOrUnPublishedAction({
+            datasetId,
+            justChanged: false
+          })
         );
       }
       dispatch(datasetSuccessAction(datasetRegistration));
     })
     .catch(error =>
       dispatch(
-        datasetFormPatchErrorAction(datasetId, normalizeAxiosError(error))
+        datasetFormPatchErrorAction({
+          datasetId,
+          error: normalizeAxiosError(error)
+        })
       )
     );
 };
