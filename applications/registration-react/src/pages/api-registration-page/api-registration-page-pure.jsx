@@ -274,7 +274,7 @@ ApiRegistrationPagePure.propTypes = {
   catalogItem: PropTypes.object,
   lastSaved: PropTypes.string,
   isSaving: PropTypes.bool,
-  error: PropTypes.number,
+  error: PropTypes.object,
   justPublishedOrUnPublished: PropTypes.bool,
   registrationStatus: PropTypes.string,
   apiStatusItems: PropTypes.array,

@@ -8,6 +8,7 @@ import {
 } from '../../../redux/modules/api-form-status';
 import { apiSuccessAction } from '../../../redux/modules/apis';
 import { stringToNoolean } from '../../../lib/noolean';
+import { normalizeAxiosError } from '../../../lib/normalize-axios-error';
 
 const nooleanFields = [
   'isFree',
@@ -39,12 +40,7 @@ export const asyncValidate = (values, dispatch, props) => {
     .then(response => {
       const apiRegistration = response && response.data;
       if (apiRegistration) {
-        dispatch(
-          apiFormPatchSuccessAction(
-            apiRegistration.id,
-            apiRegistration._lastModified
-          )
-        );
+        dispatch(apiFormPatchSuccessAction(apiRegistration.id));
         if (_.get(values, 'registrationStatus')) {
           dispatch(
             apiFormPatchJustPublishedOrUnPublishedAction(
@@ -65,15 +61,7 @@ export const asyncValidate = (values, dispatch, props) => {
         }
       }
     })
-    .catch(response => {
-      if (dispatch) {
-        dispatch(
-          apiFormPatchErrorAction(
-            apiId,
-            _.get(response, ['response', 'status'], 'network')
-          )
-        );
-      }
-      console.log(JSON.stringify(response)); // eslint-disable-line no-console
-    });
+    .catch(error =>
+      dispatch(apiFormPatchErrorAction(apiId, normalizeAxiosError(error)))
+    );
 };

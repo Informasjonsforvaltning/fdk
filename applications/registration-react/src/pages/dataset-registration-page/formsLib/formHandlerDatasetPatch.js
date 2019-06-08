@@ -1,12 +1,13 @@
 import _ from 'lodash';
 import {
-  datasetFormPatchSuccessAction,
+  datasetFormPatchErrorAction,
   datasetFormPatchIsSavingAction,
-  datasetFormPatchErrorAction
+  datasetFormPatchSuccessAction
 } from '../../../redux/modules/dataset-form-status';
 import { datasetSuccessAction } from '../../../redux/modules/datasets';
 
 import { patchDataset } from '../../../api/datasets';
+import { normalizeAxiosError } from '../../../lib/normalize-axios-error';
 
 export const handleDatasetDeleteFieldPatch = (
   catalogId,
@@ -41,12 +42,9 @@ export const handleDatasetDeleteFieldPatch = (
       );
       dispatch(datasetSuccessAction(response));
     })
-    .catch(response => {
+    .catch(error =>
       dispatch(
-        datasetFormPatchErrorAction(
-          datasetId,
-          _.get(response, ['response', 'status'], 'network')
-        )
-      );
-    });
+        datasetFormPatchErrorAction(datasetId, normalizeAxiosError(error))
+      )
+    );
 };

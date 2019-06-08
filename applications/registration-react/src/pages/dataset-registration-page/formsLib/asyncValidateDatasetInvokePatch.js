@@ -1,12 +1,13 @@
 import _ from 'lodash';
 import {
-  datasetFormPatchSuccessAction,
-  datasetFormPatchIsSavingAction,
   datasetFormPatchErrorAction,
-  datasetFormPatchJustPublishedOrUnPublishedAction
+  datasetFormPatchIsSavingAction,
+  datasetFormPatchJustPublishedOrUnPublishedAction,
+  datasetFormPatchSuccessAction
 } from '../../../redux/modules/dataset-form-status';
 import { datasetSuccessAction } from '../../../redux/modules/datasets';
 import { patchDataset } from '../../../api/datasets';
+import { normalizeAxiosError } from '../../../lib/normalize-axios-error';
 
 export const asyncValidateDatasetInvokePatch = (values, dispatch, props) => {
   const { catalogId, datasetId } = props;
@@ -47,14 +48,9 @@ export const asyncValidateDatasetInvokePatch = (values, dispatch, props) => {
       }
       dispatch(datasetSuccessAction(datasetRegistration));
     })
-    .catch(response => {
-      const { error } = response;
+    .catch(error =>
       dispatch(
-        datasetFormPatchErrorAction(
-          datasetId,
-          _.get(response, ['response', 'status'], 'network')
-        )
-      );
-      return Promise.reject(error);
-    });
+        datasetFormPatchErrorAction(datasetId, normalizeAxiosError(error))
+      )
+    );
 };
