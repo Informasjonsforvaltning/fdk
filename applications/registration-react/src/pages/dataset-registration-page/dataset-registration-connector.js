@@ -21,34 +21,9 @@ const mapStateToProps = (state, { catalogId, datasetId }) => {
   const { form, datasets, referenceData } = state;
   const datasetFormStatus = selectorForDatasetFormStatus(datasetId)(state);
 
-  const title = form && form.title ? form.title : {};
-
-  const accessRights = form && form.accessRights ? form.accessRights : {};
-
-  const formThemes = form && form.themes ? form.themes : {};
-
-  const type = form && form.type ? form.type : {};
-
-  const concept = form && form.concept ? form.concept : {};
-
-  const spatial = form && form.spatial ? form.spatial : {};
-
-  const formProvenance = form && form.provenance ? form.provenance : {};
-
-  const contents = form && form.contents ? form.contents : {};
-
-  const informationModel =
-    form && form.informationModel ? form.informationModel : {};
-
-  const reference = form && form.reference ? form.reference : {};
-
-  const contactPoint = form && form.contactPoint ? form.contactPoint : {};
-
-  const distribution = form && form.distribution ? form.distribution : {};
-
-  const sample = form && form.sample ? form.sample : {};
-
   return {
+    form,
+    datasetFormStatus,
     provenanceItems: _.get(referenceData, [
       'items',
       REFERENCEDATA_PATH_PROVENANCE
@@ -67,20 +42,6 @@ const mapStateToProps = (state, { catalogId, datasetId }) => {
       'items',
       REFERENCEDATA_PATH_OPENLICENCES
     ]),
-    title,
-    accessRights,
-    formThemes,
-    type,
-    concept,
-    spatial,
-    formProvenance,
-    contents,
-    informationModel,
-    reference,
-    contactPoint,
-    distribution,
-    sample,
-    datasetFormStatus,
     datasetItem: getDatasetItemByDatasetiId(datasets, catalogId, datasetId),
     losItems: _.get(referenceData, ['items', REFERENCEDATA_PATH_LOS])
   };

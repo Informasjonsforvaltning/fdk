@@ -41,16 +41,9 @@ import {
 } from './dataset-registration-page.logic';
 import './dataset-registration-page.scss';
 
-const isAllowedToPublish = (
-  registrationStatus,
-  syncErrors,
-  distributionErrors
-) => {
-  if (registrationStatus === 'DRAFT' && (syncErrors || distributionErrors)) {
-    return false;
-  }
-  return true;
-};
+// check the validation state of all rendered forms
+const isAllowedToPublish = form =>
+  !_.some(_.mapValues(form, subform => subform.syncErrors));
 
 async function deleteAndNavigateToList({
   history,
@@ -70,22 +63,10 @@ async function deleteAndNavigateToList({
 export function DatasetRegistrationPagePure(props) {
   const {
     dispatchEnsureData,
+    form,
     themesItems,
     provenanceItems,
     frequencyItems,
-    title,
-    accessRights,
-    formThemes,
-    type,
-    concept,
-    spatial,
-    formProvenance,
-    contents,
-    informationModel,
-    reference,
-    contactPoint,
-    distribution,
-    sample,
     datasetItem,
     referenceTypesItems,
     referenceDatasetsItems,
@@ -98,6 +79,23 @@ export function DatasetRegistrationPagePure(props) {
     dispatchDeleteDataset
   } = props;
 
+  const {
+    title = {},
+    accessRights = {},
+    formThemes = {},
+    type = {},
+    concept = {},
+    spatial = {},
+    formProvenance = {},
+    contents = {},
+    informationModel = {},
+    reference = {},
+    contactPoint = {},
+    distribution = {},
+    sample = {}
+  } =
+    form || {};
+
   useEffect(() => dispatchEnsureData(catalogId, datasetId), [
     catalogId,
     datasetId
@@ -108,26 +106,6 @@ export function DatasetRegistrationPagePure(props) {
     0,
     datasetURL.lastIndexOf('/')
   );
-
-  const syncErrors = !!(
-    (title && title.syncErrors) ||
-    (accessRights && accessRights.syncErrors) ||
-    (formThemes && formThemes.syncErrors) ||
-    (type && type.syncErrors) ||
-    (concept && concept.syncErrors) ||
-    (spatial && spatial.syncErrors) ||
-    (formProvenance && formProvenance.syncErrors) ||
-    (contents && contents.syncErrors) ||
-    (informationModel && informationModel.syncErrors) ||
-    (contactPoint && contactPoint.syncErrors) ||
-    (sample &&
-      sample.syncErrors &&
-      sample.syncErrors.sample &&
-      sample.syncErrors.sample.length > 0)
-  );
-
-  const distributionErrors =
-    distribution && distribution.syncErrors ? distribution.syncErrors : null;
 
   return (
     <div className="container">
@@ -142,7 +120,6 @@ export function DatasetRegistrationPagePure(props) {
           </Link>
         </div>
         {datasetItem &&
-          title &&
           themesItems &&
           provenanceItems &&
           frequencyItems &&
@@ -319,13 +296,7 @@ export function DatasetRegistrationPagePure(props) {
                 title={localization.datasets.formTemplates.distribution}
                 backgroundBlue
                 values={distributionValues(distribution.values)}
-                syncErrors={
-                  distribution.syncErrors &&
-                  distribution.syncErrors.distribution &&
-                  JSON.stringify(distribution.syncErrors.distribution) !== '{}'
-                    ? distribution.syncErrors.distribution
-                    : null
-                }
+                syncErrors={distribution.syncErrors}
               >
                 <FormDistribution
                   datasetItem={datasetItem}
@@ -339,13 +310,7 @@ export function DatasetRegistrationPagePure(props) {
                 title={localization.datasets.formTemplates.sample}
                 backgroundBlue
                 values={sampleValues(sample.values)}
-                syncErrors={
-                  sample.syncErrors &&
-                  sample.syncErrors.sample &&
-                  sample.syncErrors.sample.length > 0
-                    ? sample.syncErrors.sample
-                    : null
-                }
+                syncErrors={sample.syncErrors}
               >
                 <ConnectedFormSample
                   datasetItem={datasetItem}
@@ -376,12 +341,7 @@ export function DatasetRegistrationPagePure(props) {
                     dispatchDeleteDataset
                   })
                 }
-                allowPublish={isAllowedToPublish(
-                  (datasetFormStatus && datasetFormStatus.registrationStatus) ||
-                    _.get(datasetItem, 'registrationStatus', 'DRAFT'),
-                  syncErrors,
-                  distributionErrors
-                )}
+                allowPublish={isAllowedToPublish(form)}
                 formComponent={
                   <ConnectedFormPublish
                     initialItemStatus={_.get(
@@ -410,19 +370,7 @@ DatasetRegistrationPagePure.defaultProps = {
   themesItems: null,
   provenanceItems: null,
   frequencyItems: null,
-  title: null,
-  accessRights: null,
-  formThemes: null,
-  type: null,
-  concept: null,
-  spatial: null,
-  formProvenance: null,
-  contents: null,
-  informationModel: null,
-  reference: null,
-  contactPoint: null,
-  distribution: null,
-  sample: null,
+  form: {},
   datasetItem: null,
   referenceTypesItems: null,
   referenceDatasetsItems: null,
@@ -440,19 +388,7 @@ DatasetRegistrationPagePure.propTypes = {
   themesItems: PropTypes.array,
   provenanceItems: PropTypes.array,
   frequencyItems: PropTypes.array,
-  title: PropTypes.object,
-  accessRights: PropTypes.object,
-  formThemes: PropTypes.object,
-  type: PropTypes.object,
-  concept: PropTypes.object,
-  spatial: PropTypes.object,
-  formProvenance: PropTypes.object,
-  contents: PropTypes.object,
-  informationModel: PropTypes.object,
-  reference: PropTypes.object,
-  contactPoint: PropTypes.object,
-  distribution: PropTypes.object,
-  sample: PropTypes.object,
+  form: PropTypes.object,
   datasetItem: PropTypes.object,
   referenceTypesItems: PropTypes.array,
   referenceDatasetsItems: PropTypes.array,
