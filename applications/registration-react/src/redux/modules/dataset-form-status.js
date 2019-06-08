@@ -6,21 +6,21 @@ export const DATASET_FORM_STATUS_SAVE_ERROR = 'DATASET_FORM_STATUS_SAVE_ERROR';
 export const DATASET_FORM_STATUS_JUSTPUBLISHEDORUNPUBLISHED =
   'DATASET_FORM_STATUS_JUSTPUBLISHEDORUNPUBLISHED';
 
-export const datasetFormPatchSuccessAction = datasetId => ({
+export const datasetFormPatchSuccessAction = ({ datasetId }) => ({
   type: DATASET_FORM_STATUS_LAST_SAVED,
   payload: {
     datasetId
   }
 });
 
-export const datasetFormPatchIsSavingAction = datasetId => ({
+export const datasetFormPatchIsSavingAction = ({ datasetId }) => ({
   type: DATASET_FORM_STATUS_IS_SAVING,
   payload: {
     datasetId
   }
 });
 
-export const datasetFormPatchErrorAction = (datasetId, error) => ({
+export const datasetFormPatchErrorAction = ({ datasetId, error }) => ({
   type: DATASET_FORM_STATUS_SAVE_ERROR,
   payload: {
     datasetId,
@@ -28,10 +28,10 @@ export const datasetFormPatchErrorAction = (datasetId, error) => ({
   }
 });
 
-export const datasetFormPatchJustPublishedOrUnPublishedAction = (
+export const datasetFormPatchJustPublishedOrUnPublishedAction = ({
   datasetId,
   justChanged
-) => ({
+}) => ({
   type: DATASET_FORM_STATUS_JUSTPUBLISHEDORUNPUBLISHED,
   payload: {
     datasetId,
@@ -43,37 +43,36 @@ const initialState = {};
 
 export function datasetFormStatus(state = initialState, action) {
   switch (action.type) {
-    case DATASET_FORM_STATUS_IS_SAVING:
+    case DATASET_FORM_STATUS_IS_SAVING: {
+      const { datasetId } = action.payload;
       return {
         ...state,
-        [action.payload.datasetId]: {
-          isSaving: true
-        }
+        [datasetId]: { isSaving: true }
       };
-    case DATASET_FORM_STATUS_LAST_SAVED:
+    }
+    case DATASET_FORM_STATUS_LAST_SAVED: {
+      const { datasetId } = action.payload;
       return {
         ...state,
-        [action.payload.datasetId]: {
-          isSaving: false,
-          error: null
-        }
+        [datasetId]: {}
       };
-    case DATASET_FORM_STATUS_SAVE_ERROR:
+    }
+    case DATASET_FORM_STATUS_SAVE_ERROR: {
+      const { datasetId, error } = action.payload;
       return {
         ...state,
-        [action.payload.datasetId]: {
-          isSaving: false,
-          justPublishedOrUnPublished: false,
-          error: action.payload.error
-        }
+        [datasetId]: { error }
       };
-    case DATASET_FORM_STATUS_JUSTPUBLISHEDORUNPUBLISHED:
+    }
+    case DATASET_FORM_STATUS_JUSTPUBLISHEDORUNPUBLISHED: {
+      const { datasetId, justChanged } = action.payload;
       return {
         ...state,
-        [action.payload.datasetId]: {
-          justPublishedOrUnPublished: action.payload.justChanged
+        [datasetId]: {
+          justPublishedOrUnPublished: justChanged
         }
       };
+    }
     default:
       return state;
   }

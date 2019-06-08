@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import {
   datasetFormPatchErrorAction,
   datasetFormPatchIsSavingAction,
@@ -29,17 +28,20 @@ export const handleDatasetDeleteFieldPatch = (
   }
 
   if (datasetId) {
-    dispatch(datasetFormPatchIsSavingAction(datasetId));
+    dispatch(datasetFormPatchIsSavingAction({ datasetId }));
   }
 
   return patchDataset(catalogId, datasetId, body)
     .then(response => {
-      dispatch(datasetFormPatchSuccessAction(_.get(response, ['data', 'id'])));
+      dispatch(datasetFormPatchSuccessAction({ datasetId }));
       dispatch(datasetSuccessAction(response));
     })
     .catch(error =>
       dispatch(
-        datasetFormPatchErrorAction(datasetId, normalizeAxiosError(error))
+        datasetFormPatchErrorAction({
+          datasetId,
+          error: normalizeAxiosError(error)
+        })
       )
     );
 };
