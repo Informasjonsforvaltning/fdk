@@ -23,21 +23,21 @@ import { ConnectedFormPublish } from './connected-form-publish/connected-form-pu
 import { FormDistributionApi } from './form-distribution-api/form-distribution-api';
 import { ConnectedFormLOS } from './form-los/connected-form-los.component';
 import {
-  titleValues,
   accessRightsValues,
-  themesValues,
-  losValues,
-  typeValues,
   conceptValues,
-  spatialValues,
-  provenanceValues,
-  contentsValues,
-  informationModelValues,
-  referenceValues,
   contactPointValues,
-  distributionValues,
+  contentsValues,
   distributionAPIValues,
-  sampleValues
+  distributionValues,
+  informationModelValues,
+  losValues,
+  provenanceValues,
+  referenceValues,
+  sampleValues,
+  spatialValues,
+  themesValues,
+  titleValues,
+  typeValues
 } from './dataset-registration-page.logic';
 import './dataset-registration-page.scss';
 
@@ -90,10 +90,7 @@ export function DatasetRegistrationPagePure(props) {
     referenceTypesItems,
     referenceDatasetsItems,
     openLicenseItems,
-    isSaving,
-    error,
-    justPublishedOrUnPublished,
-    registrationStatus,
+    datasetFormStatus,
     catalogId,
     datasetId,
     losItems,
@@ -360,18 +357,21 @@ export function DatasetRegistrationPagePure(props) {
 
               <StatusBar
                 type="dataset"
-                isSaving={isSaving}
+                isSaving={datasetFormStatus && datasetFormStatus.isSaving}
                 lastSaved={datasetItem._lastModified}
                 published={
-                  registrationStatus
-                    ? !!(registrationStatus === 'PUBLISH')
+                  datasetFormStatus && datasetFormStatus.registrationStatus
+                    ? !!(datasetFormStatus.registrationStatus === 'PUBLISH')
                     : !!(
                         _.get(datasetItem, 'registrationStatus', 'DRAFT') ===
                         'PUBLISH'
                       )
                 }
-                error={error}
-                justPublishedOrUnPublished={justPublishedOrUnPublished}
+                error={datasetFormStatus && datasetFormStatus.error}
+                justPublishedOrUnPublished={
+                  datasetFormStatus &&
+                  datasetFormStatus.justPublishedOrUnPublished
+                }
                 onDelete={() =>
                   deleteAndNavigateToList({
                     history,
@@ -381,7 +381,7 @@ export function DatasetRegistrationPagePure(props) {
                   })
                 }
                 allowPublish={isAllowedToPublish(
-                  registrationStatus ||
+                  (datasetFormStatus && datasetFormStatus.registrationStatus) ||
                     _.get(datasetItem, 'registrationStatus', 'DRAFT'),
                   syncErrors,
                   distributionErrors
@@ -427,14 +427,11 @@ DatasetRegistrationPagePure.defaultProps = {
   contactPoint: null,
   distribution: null,
   sample: null,
-  registrationStatus: null,
   datasetItem: null,
   referenceTypesItems: null,
   referenceDatasetsItems: null,
   openLicenseItems: null,
-  isSaving: false,
-  error: null,
-  justPublishedOrUnPublished: false,
+  datasetFormStatus: null,
   history: null,
   losItems: null
 };
@@ -460,14 +457,11 @@ DatasetRegistrationPagePure.propTypes = {
   contactPoint: PropTypes.object,
   distribution: PropTypes.object,
   sample: PropTypes.object,
-  registrationStatus: PropTypes.string,
   datasetItem: PropTypes.object,
   referenceTypesItems: PropTypes.array,
   referenceDatasetsItems: PropTypes.array,
   openLicenseItems: PropTypes.array,
-  isSaving: PropTypes.bool,
-  error: PropTypes.object,
-  justPublishedOrUnPublished: PropTypes.bool,
+  datasetFormStatus: PropTypes.object,
   history: PropTypes.object,
   losItems: PropTypes.array
 };

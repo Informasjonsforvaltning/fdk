@@ -14,13 +14,13 @@ import {
   REFERENCEDATA_PATH_REFERENCETYPES,
   REFERENCEDATA_PATH_THEMES
 } from '../../redux/modules/referenceData';
-import { getDatasetFormStatusById } from '../../redux/modules/dataset-form-status';
+import { selectorForDatasetFormStatus } from '../../redux/modules/dataset-form-status';
 import { datasetRegistrationEnsureDataThunk } from './dataset-registration-ensure-data-thunk';
 
-const mapStateToProps = (
-  { form, datasetFormStatus, datasets, referenceData },
-  { catalogId, datasetId }
-) => {
+const mapStateToProps = (state, { catalogId, datasetId }) => {
+  const { form, datasets, referenceData } = state;
+  const datasetFormStatus = selectorForDatasetFormStatus(datasetId)(state);
+
   const title = form && form.title ? form.title : {};
 
   const accessRights = form && form.accessRights ? form.accessRights : {};
@@ -80,22 +80,7 @@ const mapStateToProps = (
     contactPoint,
     distribution,
     sample,
-    isSaving: _.get(
-      getDatasetFormStatusById(datasetFormStatus, datasetId),
-      'isSaving'
-    ),
-    error: _.get(
-      getDatasetFormStatusById(datasetFormStatus, datasetId),
-      'error'
-    ),
-    justPublishedOrUnPublished: _.get(
-      getDatasetFormStatusById(datasetFormStatus, datasetId),
-      'justPublishedOrUnPublished'
-    ),
-    registrationStatus: _.get(
-      getDatasetFormStatusById(datasetFormStatus, datasetId),
-      'status'
-    ),
+    datasetFormStatus,
     datasetItem: getDatasetItemByDatasetiId(datasets, catalogId, datasetId),
     losItems: _.get(referenceData, ['items', REFERENCEDATA_PATH_LOS])
   };

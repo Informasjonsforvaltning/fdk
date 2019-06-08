@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import { compose } from 'recompose';
 
 export const DATASET_FORM_STATUS_LAST_SAVED = 'DATASET_FORM_STATUS_LAST_SAVED';
 export const DATASET_FORM_STATUS_IS_SAVING = 'DATASET_FORM_STATUS_IS_SAVING';
@@ -49,7 +50,6 @@ export function datasetFormStatus(state = initialState, action) {
       return {
         ...state,
         [action.payload.datasetId]: {
-          ..._.get(state, _.get(action.payload, 'datasetId'), []),
           isSaving: true
         }
       };
@@ -86,5 +86,10 @@ export function datasetFormStatus(state = initialState, action) {
   }
 }
 
-export const getDatasetFormStatusById = (datasetFormStatus, datasetId) =>
-  _.get(datasetFormStatus, datasetId);
+const selectorForDatasetFormStatusState = state => state.datasetFormStatus;
+
+export const selectorForDatasetFormStatus = datasetId =>
+  compose(
+    state => state[datasetId],
+    selectorForDatasetFormStatusState
+  );
