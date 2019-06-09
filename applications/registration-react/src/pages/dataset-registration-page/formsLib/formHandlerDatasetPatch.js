@@ -16,24 +16,21 @@ export const handleDatasetDeleteFieldPatch = (
   indexToRemove,
   dispatch
 ) => {
+  if (!datasetId) {
+    throw new Error('datasetId required');
+  }
+
   fieldValues.remove(indexToRemove);
   const values = fieldValues.getAll();
   values.splice(indexToRemove, 1);
-  const body = {
-    [valueKey]: values
-  };
 
-  if (typeof dispatch !== 'function') {
-    throw new Error('dispatch must be a function');
-  }
+  const patch = { [valueKey]: values };
 
-  if (datasetId) {
-    dispatch(datasetFormPatchIsSavingAction({ datasetId }));
-  }
+  dispatch(datasetFormPatchIsSavingAction({ datasetId }));
 
-  return patchDataset(catalogId, datasetId, body)
+  return patchDataset(catalogId, datasetId, patch)
     .then(response => {
-      dispatch(datasetFormPatchSuccessAction({ datasetId }));
+      dispatch(datasetFormPatchSuccessAction({ datasetId, patch }));
       dispatch(datasetSuccessAction(response));
     })
     .catch(error =>

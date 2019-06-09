@@ -1,8 +1,6 @@
-import _ from 'lodash';
 import {
   datasetFormPatchErrorAction,
   datasetFormPatchIsSavingAction,
-  datasetFormPatchJustPublishedOrUnPublishedAction,
   datasetFormPatchSuccessAction
 } from '../../../redux/modules/dataset-form-status';
 import { datasetSuccessAction } from '../../../redux/modules/datasets';
@@ -12,34 +10,19 @@ import { normalizeAxiosError } from '../../../lib/normalize-axios-error';
 export const asyncValidateDatasetInvokePatch = (values, dispatch, props) => {
   const { catalogId, datasetId } = props;
 
-  if (typeof dispatch !== 'function') {
-    throw new Error('dispatch must be a function');
+  if (!(catalogId && datasetId)) {
+    throw new Error('datasetId required');
   }
 
-  if (datasetId) {
-    dispatch(datasetFormPatchIsSavingAction({ datasetId }));
-  }
+  const patch = values;
 
-  return patchDataset(catalogId, datasetId, values)
+  dispatch(datasetFormPatchIsSavingAction({ datasetId }));
+
+  return patchDataset(catalogId, datasetId, patch)
     .then(response => {
-      const datasetRegistration = response && response.data;
-      dispatch(datasetFormPatchSuccessAction({ datasetId }));
-      if (_.get(values, 'registrationStatus')) {
-        dispatch(
-          datasetFormPatchJustPublishedOrUnPublishedAction({
-            datasetId,
-            justChanged: true
-          })
-        );
-      } else {
-        dispatch(
-          datasetFormPatchJustPublishedOrUnPublishedAction({
-            datasetId,
-            justChanged: false
-          })
-        );
-      }
-      dispatch(datasetSuccessAction(datasetRegistration));
+      const dataset = response && response.data;
+      dispatch(datasetFormPatchSuccessAction({ datasetId, patch }));
+      dispatch(datasetSuccessAction(dataset));
     })
     .catch(error =>
       dispatch(
