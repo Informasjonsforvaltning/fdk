@@ -6,14 +6,14 @@ import _ from 'lodash';
 import localization from '../../lib/localization';
 import { Catalog } from './catalogs/catalogs.component';
 import { getTranslateText } from '../../lib/translateText';
-import { getDatasetItemsCount } from '../../redux/modules/datasets';
+import { selectorForCatalogDatasetsFromDatasetsState } from '../../redux/modules/datasets';
 import { getAPIItemsCount } from '../../redux/modules/apis';
 import './catalogs-page.scss';
 
 const renderCatalogs = props => {
   const {
     catalogItems,
-    datasets,
+    datasetsState,
     apis,
     fetchDatasetsIfNeeded,
     fetchApisIfNeeded
@@ -33,13 +33,19 @@ const renderCatalogs = props => {
           </h2>
         </div>
         <CardGroup>
-          {datasets && (
+          {datasetsState && (
             <Catalog
               key={`datasets-${catalog.id}`}
               catalogId={catalog.id}
               type="datasets"
               fetchItems={fetchDatasetsIfNeeded}
-              itemsCount={getDatasetItemsCount(datasets, catalog.id)}
+              itemsCount={
+                Object.keys(
+                  selectorForCatalogDatasetsFromDatasetsState(catalog.id)(
+                    datasetsState
+                  )
+                ).length
+              }
             />
           )}
           {apis && (
