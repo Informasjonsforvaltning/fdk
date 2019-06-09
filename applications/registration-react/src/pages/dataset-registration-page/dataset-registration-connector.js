@@ -3,8 +3,8 @@ import _ from 'lodash';
 
 import {
   deleteDatasetThunk,
-  getDatasetItemByDatasetiId,
-  getDatasetItemsByCatalogId
+  selectorForDataset,
+  selectorForDatasetsInCatalog
 } from '../../redux/modules/datasets';
 import {
   REFERENCEDATA_PATH_FREQUENCY,
@@ -18,12 +18,17 @@ import { selectorForDatasetFormStatus } from '../../redux/modules/dataset-form-s
 import { datasetRegistrationEnsureDataThunk } from './dataset-registration-ensure-data-thunk';
 
 const mapStateToProps = (state, { catalogId, datasetId }) => {
-  const { form, datasets, referenceData } = state;
+  const { form, referenceData } = state;
   const datasetFormStatus = selectorForDatasetFormStatus(datasetId)(state);
+  const datasetItem = selectorForDataset(catalogId, datasetId)(state);
+  const referenceDatasetsItems = Object.values(
+    selectorForDatasetsInCatalog(catalogId)(state)
+  );
 
   return {
     form,
     datasetFormStatus,
+    datasetItem,
     provenanceItems: _.get(referenceData, [
       'items',
       REFERENCEDATA_PATH_PROVENANCE
@@ -37,12 +42,11 @@ const mapStateToProps = (state, { catalogId, datasetId }) => {
       'items',
       REFERENCEDATA_PATH_REFERENCETYPES
     ]),
-    referenceDatasetsItems: getDatasetItemsByCatalogId(datasets, catalogId),
+    referenceDatasetsItems,
     openLicenseItems: _.get(referenceData, [
       'items',
       REFERENCEDATA_PATH_OPENLICENCES
     ]),
-    datasetItem: getDatasetItemByDatasetiId(datasets, catalogId, datasetId),
     losItems: _.get(referenceData, ['items', REFERENCEDATA_PATH_LOS])
   };
 };

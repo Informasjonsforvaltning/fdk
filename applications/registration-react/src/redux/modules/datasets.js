@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import { compose } from 'recompose';
 import { fetchActions } from '../fetchActions';
 import { registrationApi } from '../../api/registration-api';
 
@@ -112,11 +113,20 @@ export default function datasets(state = initialState, action) {
   }
 }
 
-export const getDatasetItemsByCatalogId = (datasets, catalogId) =>
-  Object.values(_.get(datasets, [catalogId, 'items'], {}));
-
-export const getDatasetItemsCount = (datasets, catalogId) =>
-  getDatasetItemsByCatalogId(datasets, catalogId).length;
-
 export const getDatasetItemByDatasetiId = (datasets, catalogId, id) =>
   _.get(datasets, [catalogId, 'items', id]);
+
+export const selectorForDatasetsState = state => state.datasets;
+export const selectorForCatalogDatasetsFromDatasetsState = catalogId => datasetsState =>
+  _.get(datasetsState, [catalogId, 'items'], {});
+
+export const selectorForDatasetsInCatalog = catalogId =>
+  compose(
+    selectorForCatalogDatasetsFromDatasetsState(catalogId),
+    selectorForDatasetsState
+  );
+export const selectorForDataset = (catalogId, datasetId) =>
+  compose(
+    datasets => datasets[datasetId],
+    selectorForDatasetsInCatalog(catalogId)
+  );

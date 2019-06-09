@@ -1,17 +1,19 @@
 import { connect } from 'react-redux';
 import { fetchCatalogsIfNeeded } from '../../redux/modules/catalogs';
-import { fetchDatasetsIfNeeded } from '../../redux/modules/datasets';
+import {
+  fetchDatasetsIfNeeded,
+  selectorForDatasetsState
+} from '../../redux/modules/datasets';
 import { fetchApisIfNeededAction } from '../../redux/modules/apis';
 import { RegCatalogs } from './catalogs-page';
 
-function mapStateToProps({ catalogs, datasets, apis }) {
-  const { catalogItems, isFetching } = catalogs || {
-    catalogItems: null
-  };
-
+function mapStateToProps(state) {
+  const { catalogs, apis } = state;
+  const { catalogItems, isFetching } = catalogs || {};
+  const datasetsState = selectorForDatasetsState(state);
   return {
     catalogItems,
-    datasets,
+    datasetsState,
     apis,
     isFetching
   };

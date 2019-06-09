@@ -3,16 +3,17 @@ import _ from 'lodash';
 
 import {
   fetchDatasetsIfNeeded,
-  getDatasetItemsByCatalogId
+  selectorForDatasetsInCatalog
 } from '../../redux/modules/datasets';
 import { fetchCatalogIfNeeded } from '../../redux/modules/catalog';
 import { DatasetsListPage } from './dataset-list-page';
 
-const mapStateToProps = ({ catalog, datasets }, ownProps) => {
+const mapStateToProps = (state, ownProps) => {
+  const { catalog } = state;
   const catalogId = _.get(ownProps, ['match', 'params', 'catalogId']);
   return {
     catalog,
-    datasetItems: getDatasetItemsByCatalogId(datasets, catalogId)
+    datasetItems: Object.values(selectorForDatasetsInCatalog(catalogId)(state))
   };
 };
 
