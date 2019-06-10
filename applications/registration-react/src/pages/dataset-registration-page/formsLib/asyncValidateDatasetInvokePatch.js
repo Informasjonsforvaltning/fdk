@@ -7,14 +7,14 @@ import { datasetSuccessAction } from '../../../redux/modules/datasets';
 import { patchDataset } from '../../../api/datasets';
 import { normalizeAxiosError } from '../../../lib/normalize-axios-error';
 
-export const asyncValidateDatasetInvokePatch = (values, dispatch, props) => {
-  const { catalogId, datasetId } = props;
-
+export const datasetFormPatchThunk = ({
+  catalogId,
+  datasetId,
+  patch
+}) => dispatch => {
   if (!(catalogId && datasetId)) {
-    throw new Error('datasetId required');
+    throw new Error('catalogId and datasetId required');
   }
-
-  const patch = values;
 
   dispatch(datasetFormPatchIsSavingAction({ datasetId }));
 
@@ -32,4 +32,14 @@ export const asyncValidateDatasetInvokePatch = (values, dispatch, props) => {
         })
       )
     );
+};
+
+export const asyncValidateDatasetInvokePatch = (values, dispatch, props) => {
+  const { catalogId, datasetId } = props;
+
+  const patch = values;
+
+  const thunk = datasetFormPatchThunk({ catalogId, datasetId, patch });
+
+  return dispatch(thunk);
 };
