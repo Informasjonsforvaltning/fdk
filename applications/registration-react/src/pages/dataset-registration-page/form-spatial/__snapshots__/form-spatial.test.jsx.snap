@@ -27,11 +27,9 @@ exports[`should render FormSpatial correctly with initialValues 1`] = `
       title="Tidsmessig avgrenset til"
     />
     <FieldArray
-      catalogId={null}
       component={[Function]}
-      datasetId={null}
-      dispatch={null}
       name="temporal"
+      onDeleteFieldAtIndex={[Function]}
     />
   </div>
   <div
