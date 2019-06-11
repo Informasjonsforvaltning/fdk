@@ -88,12 +88,10 @@ exports[`should render FormAccessRights correctly with syncErrors 1`] = `
           title="Skjermingshjemmel"
         />
         <FieldArray
-          catalogId={null}
           component={[Function]}
-          datasetId={null}
-          dispatch={null}
           linkLabel="Lenke"
           name="legalBasisForRestriction"
+          onDeleteFieldAtIndex={[Function]}
           titleLabel="Tittel"
         />
       </div>
@@ -105,12 +103,10 @@ exports[`should render FormAccessRights correctly with syncErrors 1`] = `
           title="Behandlingsgrunnlag"
         />
         <FieldArray
-          catalogId={null}
           component={[Function]}
-          datasetId={null}
-          dispatch={null}
           linkLabel="Lenke"
           name="legalBasisForProcessing"
+          onDeleteFieldAtIndex={[Function]}
           titleLabel="Tittel"
         />
       </div>
@@ -122,12 +118,10 @@ exports[`should render FormAccessRights correctly with syncErrors 1`] = `
           title="Utleveringshjemmel"
         />
         <FieldArray
-          catalogId={null}
           component={[Function]}
-          datasetId={null}
-          dispatch={null}
           linkLabel="Lenke"
           name="legalBasisForAccess"
+          onDeleteFieldAtIndex={[Function]}
           titleLabel="Tittel"
         />
       </div>

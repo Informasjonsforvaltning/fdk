@@ -1,14 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Field, FieldArray } from 'redux-form';
-import _ from 'lodash';
 
 import localization from '../../../lib/localization';
 import Helptext from '../../../components/helptext/helptext.component';
 import InputField from '../../../components/field-input/field-input.component';
 import RadioField from '../../../components/field-radio/field-radio.component';
-import { handleDatasetDeleteFieldPatch } from '../formsLib/formHandlerDatasetPatch';
 import { legalBasisType } from '../../../schemaTypes';
+import { datasetFormPatchThunk } from '../formsLib/asyncValidateDatasetInvokePatch';
 
 /*
  Resets fields when radio button "Offentlig" is chosen.
@@ -19,13 +18,20 @@ const resetFields = props => {
   props.change('legalBasisForAccess', [legalBasisType]);
 };
 
-export const renderLegalBasisFields = (item, index, fields, customProps) => (
+export const renderLegalBasisFields = ({
+  item,
+  index,
+  fields,
+  titleLabel,
+  linkLabel,
+  onDeleteFieldAtIndex
+}) => (
   <div className="d-flex mb-2" key={index}>
     <div className="w-50">
       <Field
         name={`${item}.prefLabel.${localization.getLanguage()}`}
         component={InputField}
-        label={customProps.titleLabel}
+        label={titleLabel}
         showLabel
       />
     </div>
@@ -33,7 +39,7 @@ export const renderLegalBasisFields = (item, index, fields, customProps) => (
       <Field
         name={`${item}.uri`}
         component={InputField}
-        label={customProps.linkLabel}
+        label={linkLabel}
         showLabel
       />
     </div>
@@ -42,30 +48,40 @@ export const renderLegalBasisFields = (item, index, fields, customProps) => (
         className="fdk-btn-no-border"
         type="button"
         title="Remove legal basis"
-        onClick={() => {
-          handleDatasetDeleteFieldPatch(
-            _.get(customProps, 'catalogId'),
-            _.get(customProps, 'datasetId'),
-            fields.name,
-            fields,
-            index,
-            customProps.dispatch
-          );
-        }}
+        onClick={() => onDeleteFieldAtIndex(fields, index)}
       >
         <i className="fa fa-trash mr-2" />
       </button>
     </div>
   </div>
 );
+renderLegalBasisFields.propTypes = {
+  item: PropTypes.object.isRequired,
+  index: PropTypes.number.isRequired,
+  fields: PropTypes.object.isRequired,
+  titleLabel: PropTypes.string.isRequired,
+  linkLabel: PropTypes.string.isRequired,
+  onDeleteFieldAtIndex: PropTypes.func.isRequired
+};
 
-export const renderLegalBasis = customProps => {
-  const { fields } = customProps;
+export const renderLegalBasis = ({
+  fields,
+  titleLabel,
+  linkLabel,
+  onDeleteFieldAtIndex
+}) => {
   return (
     <div>
       {fields &&
         fields.map((item, index) =>
-          renderLegalBasisFields(item, index, fields, customProps)
+          renderLegalBasisFields({
+            item,
+            index,
+            fields,
+            titleLabel,
+            linkLabel,
+            onDeleteFieldAtIndex
+          })
         )}
       <button
         className="fdk-btn-no-border"
@@ -78,7 +94,12 @@ export const renderLegalBasis = customProps => {
     </div>
   );
 };
-
+renderLegalBasis.propTypes = {
+  fields: PropTypes.object.isRequired,
+  titleLabel: PropTypes.string.isRequired,
+  linkLabel: PropTypes.string.isRequired,
+  onDeleteFieldAtIndex: PropTypes.func.isRequired
+};
 export const FormAccessRights = props => {
   const {
     syncErrors,
@@ -88,7 +109,14 @@ export const FormAccessRights = props => {
     datasetId
   } = props;
   const accessRight = syncErrors ? syncErrors.accessRight : null;
-
+  const deleteFieldAtIndex = (fields, index) => {
+    const values = fields.getAll();
+    // use splice instead of skip, for changing the bound value
+    values.splice(index, 1);
+    const patch = { [fields.name]: values };
+    const thunk = datasetFormPatchThunk({ catalogId, datasetId, patch });
+    dispatch(thunk);
+  };
   return (
     <form>
       <div className="form-group">
@@ -152,9 +180,7 @@ export const FormAccessRights = props => {
                   localization.schema.accessRights.legalBasisForRestriction
                     .linkLabel
                 }
-                dispatch={dispatch}
-                catalogId={catalogId}
-                datasetId={datasetId}
+                onDeleteFieldAtIndex={deleteFieldAtIndex}
               />
             </div>
 
@@ -177,9 +203,7 @@ export const FormAccessRights = props => {
                   localization.schema.accessRights.legalBasisForProcessing
                     .linkLabel
                 }
-                dispatch={dispatch}
-                catalogId={catalogId}
-                datasetId={datasetId}
+                onDeleteFieldAtIndex={deleteFieldAtIndex}
               />
             </div>
 
@@ -200,9 +224,7 @@ export const FormAccessRights = props => {
                 linkLabel={
                   localization.schema.accessRights.legalBasisForAccess.linkLabel
                 }
-                dispatch={dispatch}
-                catalogId={catalogId}
-                datasetId={datasetId}
+                onDeleteFieldAtIndex={deleteFieldAtIndex}
               />
             </div>
           </div>
