@@ -1,16 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Field, FieldArray } from 'redux-form';
-import _ from 'lodash';
 
 import localization from '../../../lib/localization';
 import Helptext from '../../../components/helptext/helptext.component';
 import InputTagsFieldArray from '../../../components/field-input-tags-objects/field-input-tags-objects.component';
 import DatepickerField from '../../../components/field-datepicker/field-datepicker.component';
 import CheckboxField from '../../../components/field-checkbox/field-checkbox.component';
-import { handleDatasetDeleteFieldPatch } from '../formsLib/formHandlerDatasetPatch';
+import { datasetFormPatchThunk } from '../formsLib/asyncValidateDatasetInvokePatch';
 
-export const renderTemporalFields = (item, index, fields, componentProps) => (
+export const renderTemporalFields = ({
+  item,
+  index,
+  fields,
+  onDeleteFieldAtIndex
+}) => (
   <div className="d-flex mb-2" key={index}>
     <div className="w-50">
       <Field
@@ -35,31 +39,26 @@ export const renderTemporalFields = (item, index, fields, componentProps) => (
         className="fdk-btn-no-border"
         type="button"
         title="Remove temporal"
-        onClick={() => {
-          handleDatasetDeleteFieldPatch(
-            _.get(componentProps, 'catalogId'),
-            _.get(componentProps, 'datasetId'),
-            'temporal',
-            fields,
-            index,
-            componentProps.dispatch
-          );
-        }}
+        onClick={() => onDeleteFieldAtIndex(fields, index)}
       >
         <i className="fa fa-trash mr-2" />
       </button>
     </div>
   </div>
 );
+renderTemporalFields.propTypes = {
+  item: PropTypes.object.isRequired,
+  index: PropTypes.number.isRequired,
+  fields: PropTypes.object.isRequired,
+  onDeleteFieldAtIndex: PropTypes.func.isRequired
+};
 
-export const renderTemporal = componentProps => {
-  const { fields } = componentProps;
-
+export const renderTemporal = ({ fields, onDeleteFieldAtIndex }) => {
   return (
     <div>
       {fields &&
         fields.map((item, index) =>
-          renderTemporalFields(item, index, fields, componentProps)
+          renderTemporalFields({ item, index, fields, onDeleteFieldAtIndex })
         )}
       <button
         className="fdk-btn-no-border"
@@ -72,9 +71,25 @@ export const renderTemporal = componentProps => {
     </div>
   );
 };
+renderTemporal.propTypes = {
+  fields: PropTypes.object.isRequired,
+  onDeleteFieldAtIndex: PropTypes.func.isRequired
+};
 
-export const FormSpatial = props => {
-  const { initialValues, dispatch, catalogId, datasetId } = props;
+export const FormSpatial = ({
+  initialValues,
+  dispatch,
+  catalogId,
+  datasetId
+}) => {
+  const deleteFieldAtIndex = (fields, index) => {
+    const values = fields.getAll();
+    // use splice instead of skip, for changing the bound value
+    values.splice(index, 1);
+    const patch = { [fields.name]: values };
+    const thunk = datasetFormPatchThunk({ catalogId, datasetId, patch });
+    dispatch(thunk);
+  };
   if (initialValues) {
     return (
       <form>
@@ -99,9 +114,7 @@ export const FormSpatial = props => {
           <FieldArray
             name="temporal"
             component={renderTemporal}
-            dispatch={dispatch}
-            catalogId={catalogId}
-            datasetId={datasetId}
+            onDeleteFieldAtIndex={deleteFieldAtIndex}
           />
         </div>
         <div className="form-group">

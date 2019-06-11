@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React from 'react';
 import { shallow } from 'enzyme';
 import {
@@ -41,12 +42,19 @@ test('should render FormSpatial correctly with initialValues', () => {
 });
 
 test('should render renderTemporal correctly', () => {
-  wrapper = shallow(renderTemporal(defaultProps));
+  wrapper = shallow(renderTemporal({ item: {} }));
   expect(wrapper).toMatchSnapshot();
 });
 
 test('should render renderTemporalFields correctly', () => {
   const temporal = [{}];
-  wrapper = shallow(renderTemporalFields(temporal, 0, null, defaultProps));
+  wrapper = shallow(
+    renderTemporalFields({
+      item: temporal,
+      index: 0,
+      fields: null,
+      onDeleteFieldAtIndex: _.noop
+    })
+  );
   expect(wrapper).toMatchSnapshot();
 });
