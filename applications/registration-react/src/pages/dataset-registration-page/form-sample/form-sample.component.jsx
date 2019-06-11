@@ -7,11 +7,10 @@ import Helptext from '../../../components/helptext/helptext.component';
 import InputField from '../../../components/field-input/field-input.component';
 import InputTagsField from '../../../components/field-input-tags/field-input-tags.component';
 import TextAreaField from '../../../components/field-textarea/field-textarea.component';
-import { handleDatasetDeleteFieldPatch } from '../formsLib/formHandlerDatasetPatch';
-import { textType, licenseType } from '../../../schemaTypes';
+import { licenseType, textType } from '../../../schemaTypes';
+import { datasetFormPatchThunk } from '../formsLib/asyncValidateDatasetInvokePatch';
 
-export const renderSamples = componentProps => {
-  const { catalogId, datasetId, fields, dispatch } = componentProps;
+export const renderSamples = ({ fields, onDeleteFieldAtIndex }) => {
   return (
     <div>
       {fields &&
@@ -22,16 +21,7 @@ export const renderSamples = componentProps => {
                 className="fdk-btn-no-border"
                 type="button"
                 title={localization.schema.sample.removeSample}
-                onClick={() => {
-                  handleDatasetDeleteFieldPatch(
-                    catalogId,
-                    datasetId,
-                    'sample',
-                    fields,
-                    index,
-                    dispatch
-                  );
-                }}
+                onClick={() => onDeleteFieldAtIndex(fields, index)}
               >
                 <i className="fa fa-trash mr-2" />
                 {localization.schema.sample.deleteSampleLabel}
@@ -95,17 +85,27 @@ export const renderSamples = componentProps => {
     </div>
   );
 };
+renderSamples.propTypes = {
+  fields: PropTypes.object.isRequired,
+  onDeleteFieldAtIndex: PropTypes.func.isRequired
+};
 
-export const FormSample = props => {
-  const { dispatch, catalogId, datasetId } = props;
+export const FormSample = ({ dispatch, catalogId, datasetId }) => {
+  const deleteFieldAtIndex = (fields, index) => {
+    const values = fields.getAll();
+    // use splice instead of skip, for changing the bound value
+    values.splice(index, 1);
+    const patch = { [fields.name]: values };
+    const thunk = datasetFormPatchThunk({ catalogId, datasetId, patch });
+    dispatch(thunk);
+  };
+
   return (
     <form>
       <FieldArray
         name="sample"
         component={renderSamples}
-        dispatch={dispatch}
-        catalogId={catalogId}
-        datasetId={datasetId}
+        onDeleteFieldAtIndex={deleteFieldAtIndex}
       />
     </form>
   );
