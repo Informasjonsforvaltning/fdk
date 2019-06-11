@@ -10,11 +10,9 @@ exports[`should render FormReference correctly 1`] = `
       title="Relasjoner"
     />
     <FieldArray
-      catalogId={null}
       component={[Function]}
-      datasetId={null}
-      dispatch={null}
       name="references"
+      onDeleteFieldAtIndex={[Function]}
     />
   </div>
 </form>

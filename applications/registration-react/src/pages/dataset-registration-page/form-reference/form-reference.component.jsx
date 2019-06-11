@@ -1,21 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Field, FieldArray } from 'redux-form';
-import _ from 'lodash';
 
 import localization from '../../../lib/localization';
 import Helptext from '../../../components/helptext/helptext.component';
 import SelectField from '../../../components/field-select/field-select.component';
-import { handleDatasetDeleteFieldPatch } from '../formsLib/formHandlerDatasetPatch';
+import { datasetFormPatchThunk } from '../formsLib/asyncValidateDatasetInvokePatch';
 
-const renderReferenceFields = (
+const renderReferenceFields = ({
   item,
   index,
   fields,
-  componentProps,
   referenceTypesItems,
-  referenceDatasetsItems
-) => (
+  referenceDatasetsItems,
+  onDeleteFieldAtIndex
+}) => (
   <div className="d-flex mb-2" key={index}>
     <div className="w-50">
       <Field
@@ -37,41 +36,40 @@ const renderReferenceFields = (
         className="fdk-btn-no-border"
         type="button"
         title="Remove reference"
-        onClick={() => {
-          handleDatasetDeleteFieldPatch(
-            _.get(componentProps, 'catalogId'),
-            _.get(componentProps, 'datasetId'),
-            'references',
-            fields,
-            index,
-            componentProps.dispatch
-          );
-        }}
+        onClick={() => onDeleteFieldAtIndex(fields, index)}
       >
         <i className="fa fa-trash mr-2" />
       </button>
     </div>
   </div>
 );
+renderReferenceFields.propTypes = {
+  item: PropTypes.object.isRequired,
+  index: PropTypes.number.isRequired,
+  fields: PropTypes.object.isRequired,
+  referenceTypesItems: PropTypes.array.isRequired,
+  referenceDatasetsItems: PropTypes.array.isRequired,
+  onDeleteFieldAtIndex: PropTypes.func.isRequired
+};
 
-export const renderReference = componentProps => {
-  const {
-    fields,
-    referenceTypesItems,
-    referenceDatasetsItems
-  } = componentProps;
+export const renderReference = ({
+  fields,
+  referenceTypesItems,
+  referenceDatasetsItems,
+  onDeleteFieldAtIndex
+}) => {
   return (
     <div>
       {fields &&
         fields.map((item, index) =>
-          renderReferenceFields(
+          renderReferenceFields({
             item,
             index,
             fields,
-            componentProps,
             referenceTypesItems,
-            referenceDatasetsItems
-          )
+            referenceDatasetsItems,
+            onDeleteFieldAtIndex
+          })
         )}
       <button
         className="fdk-btn-no-border"
@@ -84,10 +82,24 @@ export const renderReference = componentProps => {
     </div>
   );
 };
-
+renderReference.propTypes = {
+  fields: PropTypes.object.isRequired,
+  referenceTypesItems: PropTypes.array.isRequired,
+  referenceDatasetsItems: PropTypes.array.isRequired,
+  onDeleteFieldAtIndex: PropTypes.func.isRequired
+};
 export const FormReference = props => {
   const { initialValues, dispatch, catalogId, datasetId } = props;
   const { referenceTypesItems, referenceDatasetsItems } = initialValues;
+  const deleteFieldAtIndex = (fields, index) => {
+    const values = fields.getAll();
+    // use splice instead of skip, for changing the bound value
+    values.splice(index, 1);
+    const patch = { [fields.name]: values };
+    const thunk = datasetFormPatchThunk({ catalogId, datasetId, patch });
+    dispatch(thunk);
+  };
+
   if (initialValues) {
     return (
       <form>
@@ -101,9 +113,7 @@ export const FormReference = props => {
             component={renderReference}
             referenceTypesItems={referenceTypesItems}
             referenceDatasetsItems={referenceDatasetsItems}
-            dispatch={dispatch}
-            catalogId={catalogId}
-            datasetId={datasetId}
+            onDeleteFieldAtIndex={deleteFieldAtIndex}
           />
         </div>
       </form>
