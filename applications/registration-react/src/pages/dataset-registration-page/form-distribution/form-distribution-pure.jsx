@@ -10,12 +10,11 @@ import InputTagsField from '../../../components/field-input-tags/field-input-tag
 import TextAreaField from '../../../components/field-textarea/field-textarea.component';
 import RadioField from '../../../components/field-radio/field-radio.component';
 import SelectField from '../../../components/field-select/field-select.component';
-import { handleDatasetDeleteFieldPatch } from '../formsLib/formHandlerDatasetPatch';
-import { textType, licenseType } from '../../../schemaTypes';
+import { licenseType, textType } from '../../../schemaTypes';
+import { datasetFormPatchThunk } from '../formsLib/asyncValidateDatasetInvokePatch';
 // import { minLength } from '../../../validation/validation';
 
-export const renderDistributionLandingpage = componentProps => {
-  const { fields } = componentProps;
+export const renderDistributionLandingpage = ({ fields }) => {
   return (
     <div>
       {fields &&
@@ -30,16 +29,16 @@ export const renderDistributionLandingpage = componentProps => {
     </div>
   );
 };
+renderDistributionLandingpage.propTypes = {
+  fields: PropTypes.object.isRequired
+};
 
-export const renderDistributions = componentProps => {
-  const {
-    catalogId,
-    datasetId,
-    fields,
-    openLicenseItems,
-    initialValues,
-    dispatch
-  } = componentProps;
+export const renderDistributions = ({
+  fields,
+  openLicenseItems,
+  initialValues,
+  onDeleteFieldAtIndex
+}) => {
   return (
     <div>
       {fields &&
@@ -55,16 +54,7 @@ export const renderDistributions = componentProps => {
                   className="fdk-btn-no-border"
                   type="button"
                   title="Remove distribution"
-                  onClick={() => {
-                    handleDatasetDeleteFieldPatch(
-                      catalogId,
-                      datasetId,
-                      'distribution',
-                      fields,
-                      index,
-                      dispatch
-                    );
-                  }}
+                  onClick={() => onDeleteFieldAtIndex(fields, index)}
                 >
                   <i className="fa fa-trash mr-2" />
                   {localization.schema.distribution.deleteDistributionLabel}
@@ -214,15 +204,29 @@ export const renderDistributions = componentProps => {
     </div>
   );
 };
+renderDistributions.propTypes = {
+  fields: PropTypes.object.isRequired,
+  initialValues: PropTypes.object.isRequired,
+  openLicenseItems: PropTypes.array.isRequired,
+  onDeleteFieldAtIndex: PropTypes.func.isRequired
+};
 
-export const FormDistributionPure = props => {
-  const {
-    initialValues,
-    openLicenseItems,
-    dispatch,
-    catalogId,
-    datasetId
-  } = props;
+export const FormDistributionPure = ({
+  initialValues,
+  openLicenseItems,
+  dispatch,
+  catalogId,
+  datasetId
+}) => {
+  const deleteFieldAtIndex = (fields, index) => {
+    const values = fields.getAll();
+    // use splice instead of skip, for changing the bound value
+    values.splice(index, 1);
+    const patch = { [fields.name]: values };
+    const thunk = datasetFormPatchThunk({ catalogId, datasetId, patch });
+    dispatch(thunk);
+  };
+
   return (
     <form>
       <FieldArray
@@ -230,9 +234,7 @@ export const FormDistributionPure = props => {
         component={renderDistributions}
         openLicenseItems={openLicenseItems}
         initialValues={initialValues}
-        dispatch={dispatch}
-        catalogId={catalogId}
-        datasetId={datasetId}
+        onDeleteFieldAtIndex={deleteFieldAtIndex}
       />
     </form>
   );

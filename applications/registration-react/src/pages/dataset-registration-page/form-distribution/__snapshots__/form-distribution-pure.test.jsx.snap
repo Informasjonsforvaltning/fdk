@@ -3,10 +3,7 @@
 exports[`should render FormDistributionPure correctly 1`] = `
 <form>
   <FieldArray
-    catalogId={null}
     component={[Function]}
-    datasetId={null}
-    dispatch={null}
     initialValues={
       Object {
         "distribution": Array [
@@ -61,6 +58,7 @@ exports[`should render FormDistributionPure correctly 1`] = `
       }
     }
     name="distribution"
+    onDeleteFieldAtIndex={[Function]}
     openLicenseItems={Array []}
   />
 </form>
