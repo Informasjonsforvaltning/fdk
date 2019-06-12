@@ -32,6 +32,18 @@ export const patchMethod = (path, body) =>
     .catch(normalizeFetchError)
     .then(normalizeFetchResponse);
 
+export const postMethod = (path, body) =>
+  fetch(resolveUrl(path), {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json', // required for cors
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(body)
+  })
+    .catch(normalizeFetchError)
+    .then(normalizeFetchResponse);
+
 export const getMethod = path =>
   fetch(resolveUrl(path))
     .catch(normalizeFetchError)
