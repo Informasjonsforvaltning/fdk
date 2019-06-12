@@ -6,7 +6,7 @@ import {
   selectorForDatasetsInCatalog
 } from '../../redux/modules/datasets';
 import { fetchCatalogIfNeeded } from '../../redux/modules/catalog';
-import { DatasetsListPage } from './dataset-list-page';
+import { DatasetsListPagePure } from './dataset-list-page-pure';
 
 const mapStateToProps = (state, ownProps) => {
   const { catalog } = state;
@@ -25,4 +25,4 @@ const mapDispatchToProps = dispatch => ({
 export const ConnectedDatasetsListPage = connect(
   mapStateToProps,
   mapDispatchToProps
-)(DatasetsListPage);
+)(DatasetsListPagePure);
