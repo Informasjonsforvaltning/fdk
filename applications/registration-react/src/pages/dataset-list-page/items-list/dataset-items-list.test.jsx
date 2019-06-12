@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import DatasetItemsList from './item-list.component';
+import { DatasetItemsList } from './dataset-item-list.component';
 import datasetItems from './__fixtures/datasetItems';
 
 let defaultProps;

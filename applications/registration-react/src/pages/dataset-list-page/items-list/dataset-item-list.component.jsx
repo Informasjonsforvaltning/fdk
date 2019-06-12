@@ -6,7 +6,7 @@ import _ from 'lodash';
 import localization from '../../../lib/localization';
 import ImportModal from '../../../components/import-modal/import-modal.component';
 import { ListItems } from '../../../components/list-items/list-items.component';
-import './items-list.scss';
+import './dataset-items-list.scss';
 
 const handleCreateDataset = () => {
   const catalogURL = window.location.pathname;
@@ -33,7 +33,7 @@ const handleCreateDataset = () => {
     });
 };
 
-class DatasetItemsList extends React.Component {
+export class DatasetItemsList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -143,5 +143,3 @@ DatasetItemsList.propTypes = {
   catalogId: PropTypes.string.isRequired,
   datasetItems: PropTypes.array
 };
-
-export default DatasetItemsList;
