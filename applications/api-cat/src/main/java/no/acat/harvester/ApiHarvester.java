@@ -125,7 +125,7 @@ public class ApiHarvester {
         Iterable<CSVRecord> records;
 
         try (Reader input = new BufferedReader(new InputStreamReader(apiCatalogCsvFile.getInputStream()))) {
-            records = CSVFormat.EXCEL.withHeader().withDelimiter(';').parse(input);
+            records = CSVFormat.EXCEL.withHeader().withDelimiter(',').parse(input);
 
             for (CSVRecord line : records) {
                 ApiRegistrationPublic apiRegistration = new ApiRegistrationPublic();
@@ -137,6 +137,7 @@ public class ApiHarvester {
                 apiRegistration.setNationalComponent("true".equals(line.get("NationalComponent")));
                 Set<String> datasetUris = new HashSet<>(Arrays.asList(line.get("DatasetRefs").split(",")));
                 apiRegistration.setDatasetUris(datasetUris);
+                apiRegistration.setServiceType(line.get("ServiceType"));
 
                 result.add(apiRegistration);
             }
