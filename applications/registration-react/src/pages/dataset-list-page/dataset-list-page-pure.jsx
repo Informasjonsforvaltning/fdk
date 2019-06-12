@@ -8,7 +8,7 @@ import DatasetItemsList from './items-list/item-list.component';
 import { AlertMessage } from '../../components/alert-message/alert-message.component';
 import './dataset-list-page.scss';
 
-export const DatasetsListPage = props => {
+export const DatasetsListPagePure = props => {
   const {
     catalog,
     datasetItems,
@@ -55,7 +55,7 @@ export const DatasetsListPage = props => {
   );
 };
 
-DatasetsListPage.defaultProps = {
+DatasetsListPagePure.defaultProps = {
   catalog: null,
   datasetItems: null,
   fetchCatalogIfNeeded: () => {},
@@ -64,7 +64,7 @@ DatasetsListPage.defaultProps = {
   location: null
 };
 
-DatasetsListPage.propTypes = {
+DatasetsListPagePure.propTypes = {
   catalog: PropTypes.object,
   datasetItems: PropTypes.array,
   fetchCatalogIfNeeded: PropTypes.func,

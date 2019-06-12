@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { DatasetsListPage } from './dataset-list-page';
+import { DatasetsListPagePure } from './dataset-list-page-pure';
 import catalog from './__fixtures/catalog';
 
 let defaultProps;
@@ -14,9 +14,9 @@ beforeEach(() => {
     fetchCatalogIfNeeded,
     fetchDatasetsIfNeeded
   };
-  wrapper = shallow(<DatasetsListPage {...defaultProps} />);
+  wrapper = shallow(<DatasetsListPagePure {...defaultProps} />);
 });
 
-test('should render DatasetsListPage correctly', () => {
+test('should render DatasetsListPagePure correctly', () => {
   expect(wrapper).toMatchSnapshot();
 });

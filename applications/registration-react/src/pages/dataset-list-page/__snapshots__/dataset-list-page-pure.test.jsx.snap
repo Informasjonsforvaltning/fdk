@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`should render DatasetsListPage correctly 1`] = `
+exports[`should render DatasetsListPagePure correctly 1`] = `
 <div
   className="container"
 >
