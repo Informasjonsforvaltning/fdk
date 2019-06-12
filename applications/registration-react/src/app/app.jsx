@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import { ProtectedRoute } from '../app-protected-route/app-protected-route.component';
 import { ConnectedCatalogsPage } from '../pages/catalogs-page/connected-catalogs-page';
-import { ConnectedDatasetsListPage } from '../pages/dataset-list-page/connected-dataset-list-page';
+import { DatasetsListPage } from '../pages/dataset-list-page/dataset-list-page';
 import { ConnectedAPIListPage } from '../pages/api-list-page/connected-api-list-page';
 import { ApiRegistrationPage } from '../pages/api-registration-page/api-registration-page';
 import { DatasetRegistrationPage } from '../pages/dataset-registration-page/dataset-registration-page';
@@ -25,7 +25,7 @@ const Routes = (
     <ProtectedRoute
       exact
       path="/catalogs/:catalogId/datasets"
-      component={ConnectedDatasetsListPage}
+      component={DatasetsListPage}
     />
     <ProtectedRoute
       exact

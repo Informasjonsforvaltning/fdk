@@ -22,7 +22,7 @@ const mapDispatchToProps = dispatch => ({
   fetchDatasetsIfNeeded: catalogId => dispatch(fetchDatasetsIfNeeded(catalogId))
 });
 
-export const ConnectedDatasetsListPage = connect(
+export const DatasetsListPage = connect(
   mapStateToProps,
   mapDispatchToProps
 )(DatasetsListPagePure);
