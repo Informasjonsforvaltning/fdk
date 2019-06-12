@@ -1,4 +1,8 @@
 import url from 'url';
+import {
+  normalizeFetchError,
+  normalizeFetchResponse
+} from '../lib/normalize-fetch-response';
 
 const registrationApiConfig = {};
 
@@ -11,23 +15,20 @@ const resolveUrl = path => url.resolve(getRootUrl(), path);
 const datasetUrl = (catalogId, datasetId) =>
   resolveUrl(`catalogs/${catalogId}/datasets/${datasetId}`);
 
-const validateResponse = response => {
-  if (!response.ok) {
-    throw new Error(`Fetch error: ${response.status} ${response.statusText}`);
-  }
-  return response;
-};
-
 const deleteMethod = url =>
   fetch(url, {
     method: 'DELETE',
     headers: { Accept: 'application/json' } // required for cors
-  }).then(validateResponse);
+  })
+    .catch(normalizeFetchError)
+    .then(normalizeFetchResponse);
 
-const getMethod = url => fetch(url).then(validateResponse);
+const getMethod = url =>
+  fetch(url)
+    .catch(normalizeFetchError)
+    .then(normalizeFetchResponse);
 
-const get = path =>
-  getMethod(resolveUrl(path)).then(response => response.json());
+const get = path => getMethod(resolveUrl(path));
 
 const deleteDataset = (catalogId, datasetId) =>
   deleteMethod(datasetUrl(catalogId, datasetId));
