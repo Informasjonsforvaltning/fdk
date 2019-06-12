@@ -41,9 +41,11 @@ export const datasetSuccessAction = payload => ({
   payload
 });
 
-export const deleteDatasetThunk = (catalogId, datasetId) => async dispatch => {
-  await registrationApi.deleteDataset(catalogId, datasetId);
-  dispatch(deleteDatasetItemAction(catalogId, datasetId));
+export const deleteDatasetThunk = (catalogId, datasetId) => dispatch => {
+  return registrationApi
+    .deleteDataset(catalogId, datasetId)
+    .then(() => dispatch(deleteDatasetItemAction(catalogId, datasetId)))
+    .catch(console.error);
 };
 
 const initialState = {};
