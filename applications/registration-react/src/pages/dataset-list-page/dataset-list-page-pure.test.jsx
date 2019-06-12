@@ -10,6 +10,7 @@ beforeEach(() => {
   const fetchCatalogIfNeeded = jest.fn();
   const fetchDatasetsIfNeeded = jest.fn();
   defaultProps = {
+    catalogId: catalog.item.id,
     catalog,
     fetchCatalogIfNeeded,
     fetchDatasetsIfNeeded

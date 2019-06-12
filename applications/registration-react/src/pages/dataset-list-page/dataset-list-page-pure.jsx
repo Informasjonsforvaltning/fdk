@@ -10,15 +10,14 @@ import './dataset-list-page.scss';
 
 export const DatasetsListPagePure = props => {
   const {
+    catalogId,
     catalog,
     datasetItems,
     fetchCatalogIfNeeded,
     fetchDatasetsIfNeeded,
-    match,
     location
   } = props;
 
-  const catalogId = _.get(match, ['params', 'catalogId']);
   if (catalogId) {
     fetchCatalogIfNeeded(catalogId);
     fetchDatasetsIfNeeded(catalogId);
@@ -60,15 +59,14 @@ DatasetsListPagePure.defaultProps = {
   datasetItems: null,
   fetchCatalogIfNeeded: () => {},
   fetchDatasetsIfNeeded: () => {},
-  match: null,
   location: null
 };
 
 DatasetsListPagePure.propTypes = {
+  catalogId: PropTypes.string.isRequired,
   catalog: PropTypes.object,
   datasetItems: PropTypes.array,
   fetchCatalogIfNeeded: PropTypes.func,
   fetchDatasetsIfNeeded: PropTypes.func,
-  match: PropTypes.object,
   location: PropTypes.object
 };
