@@ -4,7 +4,7 @@ import _ from 'lodash';
 
 import localization from '../../lib/localization';
 import { FormCatalog } from './form-catalog/form-catalog';
-import DatasetItemsList from './items-list/item-list.component';
+import { DatasetItemsList } from './items-list/dataset-item-list.component';
 import { AlertMessage } from '../../components/alert-message/alert-message.component';
 import './dataset-list-page.scss';
 
