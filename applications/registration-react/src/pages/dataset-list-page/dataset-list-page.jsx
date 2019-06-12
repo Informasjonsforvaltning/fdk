@@ -1,4 +1,4 @@
-import { connect } from 'react-redux';
+import { batch, connect } from 'react-redux';
 import { compose, withProps } from 'recompose';
 import _ from 'lodash';
 
@@ -22,8 +22,12 @@ const mapStateToProps = (state, { catalogId }) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  fetchCatalogIfNeeded: catalogId => dispatch(fetchCatalogIfNeeded(catalogId)),
-  fetchDatasetsIfNeeded: catalogId => dispatch(fetchDatasetsIfNeeded(catalogId))
+  dispatchEnsureData: catalogId => {
+    batch(() => {
+      dispatch(fetchCatalogIfNeeded(catalogId));
+      dispatch(fetchDatasetsIfNeeded(catalogId));
+    });
+  }
 });
 
 export const enhance = compose(

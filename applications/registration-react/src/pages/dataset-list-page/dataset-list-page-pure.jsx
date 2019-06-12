@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 
@@ -13,15 +13,11 @@ export const DatasetsListPagePure = props => {
     catalogId,
     catalog,
     datasetItems,
-    fetchCatalogIfNeeded,
-    fetchDatasetsIfNeeded,
-    location
+    location,
+    dispatchEnsureData
   } = props;
 
-  if (catalogId) {
-    fetchCatalogIfNeeded(catalogId);
-    fetchDatasetsIfNeeded(catalogId);
-  }
+  useEffect(() => dispatchEnsureData(catalogId), [catalogId]);
 
   return (
     <div className="container">
@@ -57,16 +53,14 @@ export const DatasetsListPagePure = props => {
 DatasetsListPagePure.defaultProps = {
   catalog: null,
   datasetItems: null,
-  fetchCatalogIfNeeded: () => {},
-  fetchDatasetsIfNeeded: () => {},
-  location: null
+  location: null,
+  dispatchEnsureData: _.noop
 };
 
 DatasetsListPagePure.propTypes = {
   catalogId: PropTypes.string.isRequired,
   catalog: PropTypes.object,
   datasetItems: PropTypes.array,
-  fetchCatalogIfNeeded: PropTypes.func,
-  fetchDatasetsIfNeeded: PropTypes.func,
-  location: PropTypes.object
+  location: PropTypes.object,
+  dispatchEnsureData: PropTypes.func
 };
