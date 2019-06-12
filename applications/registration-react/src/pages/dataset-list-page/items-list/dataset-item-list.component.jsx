@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import _ from 'lodash';
@@ -33,37 +33,23 @@ const handleCreateDataset = () => {
     });
 };
 
-export class DatasetItemsList extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      sortField: '',
-      sortType: '',
-      showImportModal: false
-    };
-    this.onSortField = this.onSortField.bind(this);
-    this.toggleImportModal = this.toggleImportModal.bind(this);
-    this.handleImportDataset = this.handleImportDataset.bind(this);
-  }
+export const DatasetItemsList = props => {
+  const { catalogId, datasetItems } = props;
 
-  onSortField(field, type) {
-    this.setState({
-      sortField: field,
-      sortType: type
-    });
-  }
+  const [sortField, setSortField] = useState('');
+  const [sortType, setSortType] = useState('');
+  const [showImportModal, setShowImportModal] = useState(false);
+  const toggleShowImportModal = () => setShowImportModal(!showImportModal);
 
-  toggleImportModal() {
-    const { showImportModal } = this.state;
-    this.setState({ showImportModal: !showImportModal });
-  }
+  const onSortField = (field, type) => {
+    setSortField(field);
+    setSortType(type);
+  };
 
-  handleImportDataset(url) {
+  const handleImportDataset = url => {
     const catalogURL = window.location.pathname;
 
-    this.setState({
-      showImportModal: false
-    });
+    setShowImportModal(false);
 
     const header = {
       Accept: 'application/json'
@@ -85,55 +71,51 @@ export class DatasetItemsList extends React.Component {
         const { error } = response;
         return Promise.reject(error);
       });
-  }
+  };
 
-  render() {
-    const { sortField, sortType, showImportModal } = this.state;
-    const { catalogId, datasetItems } = this.props;
-    return (
-      <div>
-        <div className="d-flex mb-3">
-          <button
-            type="button"
-            className="fdk-button fdk-button-cta"
-            onClick={handleCreateDataset}
-          >
-            <i className="fa fa-plus fdk-color0 mr-2" />
-            {localization.datasets.list.btnNewDataset}
-          </button>
-          <button
-            type="button"
-            className="ml-2 transparentButton"
-            onClick={this.toggleImportModal}
-          >
-            <i className="fa fa-plus fdk-color1 mr-2" />
-            {localization.datasets.list.btnImportDataset}
-          </button>
-        </div>
-
-        <ListItems
-          catalogId={catalogId}
-          items={datasetItems}
-          sortField={sortField}
-          sortType={sortType}
-          onSortField={this.onSortField}
-          prefixPath={`/catalogs/${catalogId}/datasets`}
-        />
-
-        <ImportModal
-          modal={showImportModal}
-          handleAction={this.handleImportDataset}
-          toggle={this.toggleImportModal}
-          title={localization.datasets.import.title}
-          body={localization.datasets.import.body}
-          setURL={localization.datasets.import.setURL}
-          btnCancel={localization.app.cancel}
-          btnConfirm={localization.app.import}
-        />
+  return (
+    <div>
+      <div className="d-flex mb-3">
+        <button
+          type="button"
+          className="fdk-button fdk-button-cta"
+          onClick={handleCreateDataset}
+        >
+          <i className="fa fa-plus fdk-color0 mr-2" />
+          {localization.datasets.list.btnNewDataset}
+        </button>
+        <button
+          type="button"
+          className="ml-2 transparentButton"
+          onClick={toggleShowImportModal}
+        >
+          <i className="fa fa-plus fdk-color1 mr-2" />
+          {localization.datasets.list.btnImportDataset}
+        </button>
       </div>
-    );
-  }
-}
+
+      <ListItems
+        catalogId={catalogId}
+        items={datasetItems}
+        sortField={sortField}
+        sortType={sortType}
+        onSortField={onSortField}
+        prefixPath={`/catalogs/${catalogId}/datasets`}
+      />
+
+      <ImportModal
+        modal={showImportModal}
+        handleAction={handleImportDataset}
+        toggle={toggleShowImportModal}
+        title={localization.datasets.import.title}
+        body={localization.datasets.import.body}
+        setURL={localization.datasets.import.setURL}
+        btnCancel={localization.app.cancel}
+        btnConfirm={localization.app.import}
+      />
+    </div>
+  );
+};
 
 DatasetItemsList.defaultProps = {
   datasetItems: null
