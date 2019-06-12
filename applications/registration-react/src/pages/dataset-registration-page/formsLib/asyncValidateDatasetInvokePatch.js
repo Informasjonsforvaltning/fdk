@@ -4,8 +4,7 @@ import {
   datasetFormPatchSuccessAction
 } from '../../../redux/modules/dataset-form-status';
 import { datasetSuccessAction } from '../../../redux/modules/datasets';
-import { patchDataset } from '../../../api/datasets';
-import { normalizeAxiosError } from '../../../lib/normalize-axios-error';
+import { patchDataset } from '../../../api/dataset-registration-api';
 
 export const datasetFormPatchThunk = ({
   catalogId,
@@ -19,8 +18,7 @@ export const datasetFormPatchThunk = ({
   dispatch(datasetFormPatchIsSavingAction({ datasetId }));
 
   return patchDataset(catalogId, datasetId, patch)
-    .then(response => {
-      const dataset = response && response.data;
+    .then(dataset => {
       dispatch(datasetFormPatchSuccessAction({ datasetId, patch }));
       dispatch(datasetSuccessAction(dataset));
     })
@@ -28,7 +26,7 @@ export const datasetFormPatchThunk = ({
       dispatch(
         datasetFormPatchErrorAction({
           datasetId,
-          error: normalizeAxiosError(error)
+          error
         })
       )
     );
