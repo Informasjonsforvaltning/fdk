@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import { compose } from 'recompose';
 import _ from 'lodash';
 
 import {
@@ -22,7 +23,11 @@ const mapDispatchToProps = dispatch => ({
   fetchDatasetsIfNeeded: catalogId => dispatch(fetchDatasetsIfNeeded(catalogId))
 });
 
-export const DatasetsListPage = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(DatasetsListPagePure);
+export const enhance = compose(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )
+);
+
+export const DatasetsListPage = enhance(DatasetsListPagePure);
