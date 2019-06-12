@@ -14,7 +14,8 @@ export const DatasetsListPagePure = props => {
     catalog,
     datasetItems,
     location,
-    dispatchEnsureData
+    dispatchEnsureData,
+    onClickCreateDataset
   } = props;
 
   useEffect(() => dispatchEnsureData(catalogId), [catalogId]);
@@ -42,6 +43,7 @@ export const DatasetsListPagePure = props => {
               catalogId={catalogId}
               datasetItems={datasetItems}
               defaultEmptyListText={localization.listItems.missingDatasetItems}
+              onClickCreateDataset={onClickCreateDataset}
             />
           </div>
         )}
@@ -54,7 +56,8 @@ DatasetsListPagePure.defaultProps = {
   catalog: null,
   datasetItems: null,
   location: null,
-  dispatchEnsureData: _.noop
+  dispatchEnsureData: _.noop,
+  onClickCreateDataset: _.noop
 };
 
 DatasetsListPagePure.propTypes = {
@@ -62,5 +65,6 @@ DatasetsListPagePure.propTypes = {
   catalog: PropTypes.object,
   datasetItems: PropTypes.array,
   location: PropTypes.object,
-  dispatchEnsureData: PropTypes.func
+  dispatchEnsureData: PropTypes.func,
+  onClickCreateDataset: PropTypes.func
 };

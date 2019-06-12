@@ -8,34 +8,11 @@ import ImportModal from '../../../components/import-modal/import-modal.component
 import { ListItems } from '../../../components/list-items/list-items.component';
 import './dataset-items-list.scss';
 
-const handleCreateDataset = () => {
-  const catalogURL = window.location.pathname;
-
-  const header = {
-    Accept: 'application/json'
-  };
-
-  const getInit = {
-    headers: header,
-    credentials: 'same-origin'
-  };
-
-  return axios
-    .post(`${catalogURL}/`, getInit)
-    .then(response => {
-      window.location.replace(
-        `${catalogURL}/${_.get(response, ['data', 'id'])}`
-      );
-    })
-    .catch(response => {
-      const { error } = response;
-      return Promise.reject(error);
-    });
-};
-
-export const DatasetItemsList = props => {
-  const { catalogId, datasetItems } = props;
-
+export const DatasetItemsList = ({
+  catalogId,
+  datasetItems,
+  onClickCreateDataset
+}) => {
   const [sortField, setSortField] = useState('');
   const [sortType, setSortType] = useState('');
   const [showImportModal, setShowImportModal] = useState(false);
@@ -79,7 +56,7 @@ export const DatasetItemsList = props => {
         <button
           type="button"
           className="fdk-button fdk-button-cta"
-          onClick={handleCreateDataset}
+          onClick={() => onClickCreateDataset(catalogId)}
         >
           <i className="fa fa-plus fdk-color0 mr-2" />
           {localization.datasets.list.btnNewDataset}
@@ -118,10 +95,12 @@ export const DatasetItemsList = props => {
 };
 
 DatasetItemsList.defaultProps = {
-  datasetItems: null
+  datasetItems: null,
+  onClickCreateDataset: _.noop
 };
 
 DatasetItemsList.propTypes = {
   catalogId: PropTypes.string.isRequired,
-  datasetItems: PropTypes.array
+  datasetItems: PropTypes.array,
+  onClickCreateDataset: PropTypes.func
 };
