@@ -30,15 +30,5 @@ export const getDatasetByTitlePrefix = async (
   return response && response.data;
 };
 
-export const getDatasetById = async (id, catalogId) => {
-  const url = `/catalogs/${catalogId}/datasets/${id}`;
-
-  const response = await axios
-    .get(url)
-    .catch(e => console.log(JSON.stringify(e))); // eslint-disable-line no-console
-
-  return response && response.data;
-};
-
 export const patchDataset = (catalogId, datasetId, body) =>
   axios.patch(`${datasetUrlBase}/${catalogId}/datasets/${datasetId}`, body);
