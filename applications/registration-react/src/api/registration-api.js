@@ -12,28 +12,15 @@ export const configureRegistrationApi = newRegistrationApiConfig =>
 const getRootUrl = () => registrationApiConfig.host;
 const resolveUrl = path => url.resolve(getRootUrl(), path);
 
-const datasetUrl = (catalogId, datasetId) =>
-  resolveUrl(`catalogs/${catalogId}/datasets/${datasetId}`);
-
-const deleteMethod = url =>
-  fetch(url, {
+export const deleteMethod = path =>
+  fetch(resolveUrl(path), {
     method: 'DELETE',
     headers: { Accept: 'application/json' } // required for cors
   })
     .catch(normalizeFetchError)
     .then(normalizeFetchResponse);
 
-const getMethod = url =>
-  fetch(url)
+export const getMethod = path =>
+  fetch(resolveUrl(path))
     .catch(normalizeFetchError)
     .then(normalizeFetchResponse);
-
-const get = path => getMethod(resolveUrl(path));
-
-const deleteDataset = (catalogId, datasetId) =>
-  deleteMethod(datasetUrl(catalogId, datasetId));
-
-export const registrationApi = {
-  get,
-  deleteDataset
-};

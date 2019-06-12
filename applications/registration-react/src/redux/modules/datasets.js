@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import { compose } from 'recompose';
 import { fetchActions } from '../fetchActions';
-import { registrationApi } from '../../api/registration-api';
+import { deleteDataset } from '../../api/dataset-registration-api';
 
 export const DATASETS_REQUEST = 'DATASETS_REQUEST';
 export const DATASETS_SUCCESS = 'DATASETS_SUCCESS';
@@ -42,8 +42,7 @@ export const datasetSuccessAction = payload => ({
 });
 
 export const deleteDatasetThunk = (catalogId, datasetId) => dispatch => {
-  return registrationApi
-    .deleteDataset(catalogId, datasetId)
+  return deleteDataset(catalogId, datasetId)
     .then(() => dispatch(deleteDatasetItemAction(catalogId, datasetId)))
     .catch(console.error);
 };
