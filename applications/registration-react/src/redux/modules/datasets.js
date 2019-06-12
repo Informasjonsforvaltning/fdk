@@ -36,9 +36,9 @@ export const deleteDatasetItemAction = (catalogId, datasetId) => ({
   datasetId
 });
 
-export const datasetSuccessAction = payload => ({
+export const datasetSuccessAction = dataset => ({
   type: DATASET_SUCCESS,
-  payload
+  payload: dataset
 });
 
 export const deleteDatasetThunk = (catalogId, datasetId) => dispatch => {
@@ -91,13 +91,15 @@ export default function datasets(state = initialState, action) {
         }
       };
     case DATASET_SUCCESS: {
-      const items = _.get(state, [action.payload.catalogId, 'items']);
+      const dataset = action.payload;
+      const { catalogId, id } = dataset;
+      const items = _.get(state, [catalogId, 'items']);
       return {
         ...state,
-        [action.payload.catalogId]: {
+        [catalogId]: {
           items: {
             ...items,
-            [action.payload.id]: action.payload
+            [id]: dataset
           }
         }
       };
