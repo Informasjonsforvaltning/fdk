@@ -25,20 +25,6 @@ test('should render DatasetItemsList correctly with datasetItems', () => {
   expect(wrapper).toMatchSnapshot();
 });
 
-test('should render DatasetItemsList correctly sortField equal title', () => {
-  wrapper.setState({
-    sortField: 'title'
-  });
-  expect(wrapper).toMatchSnapshot();
-});
-
-test('should render DatasetItemsList correctly sortField equal title', () => {
-  wrapper.setState({
-    sortField: 'registrationStatus'
-  });
-  expect(wrapper).toMatchSnapshot();
-});
-
 test('should render DatasetItemsList correctly with missing items', () => {
   wrapper.setProps({
     datasetItems: null
