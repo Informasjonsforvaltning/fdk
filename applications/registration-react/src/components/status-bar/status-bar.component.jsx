@@ -10,7 +10,7 @@ import localization from '../../lib/localization';
 import './status-bar.scss';
 
 const renderErrorMessage = ({ error }) =>
-  error.error === 'network_error'
+  error.code === 'network_error'
     ? localization.formStatus.error.network
     : localization.formStatus.error.saving;
 

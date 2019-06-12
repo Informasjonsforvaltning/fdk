@@ -20,6 +20,18 @@ export const deleteMethod = path =>
     .catch(normalizeFetchError)
     .then(normalizeFetchResponse);
 
+export const patchMethod = (path, body) =>
+  fetch(resolveUrl(path), {
+    method: 'PATCH',
+    headers: {
+      Accept: 'application/json', // required for cors
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(body)
+  })
+    .catch(normalizeFetchError)
+    .then(normalizeFetchResponse);
+
 export const getMethod = path =>
   fetch(resolveUrl(path))
     .catch(normalizeFetchError)
