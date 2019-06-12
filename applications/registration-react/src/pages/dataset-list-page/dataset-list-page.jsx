@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { compose } from 'recompose';
+import { compose, withProps } from 'recompose';
 import _ from 'lodash';
 
 import {
@@ -9,9 +9,12 @@ import {
 import { fetchCatalogIfNeeded } from '../../redux/modules/catalog';
 import { DatasetsListPagePure } from './dataset-list-page-pure';
 
-const mapStateToProps = (state, ownProps) => {
+const mapRouteParams = withProps(({ match: { params } }) =>
+  _.pick(params, ['catalogId'])
+);
+
+const mapStateToProps = (state, { catalogId }) => {
   const { catalog } = state;
-  const catalogId = _.get(ownProps, ['match', 'params', 'catalogId']);
   return {
     catalog,
     datasetItems: Object.values(selectorForDatasetsInCatalog(catalogId)(state))
@@ -24,6 +27,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export const enhance = compose(
+  mapRouteParams,
   connect(
     mapStateToProps,
     mapDispatchToProps
