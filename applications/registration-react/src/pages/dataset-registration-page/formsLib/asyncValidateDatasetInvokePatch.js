@@ -35,9 +35,7 @@ export const datasetFormPatchThunk = ({
 export const asyncValidateDatasetInvokePatch = (values, dispatch, props) => {
   const { catalogId, datasetId } = props;
 
-  const patch = values;
-
-  const thunk = datasetFormPatchThunk({ catalogId, datasetId, patch });
-
-  return dispatch(thunk);
+  return dispatch(
+    datasetFormPatchThunk({ catalogId, datasetId, patch: values })
+  ).catch(console.error); // handle rejects because form validation api expects certain format of rejects
 };

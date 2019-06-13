@@ -5,7 +5,7 @@ import { compose } from 'recompose';
 
 import { FormCatalogPure } from './form-catalog-pure';
 import validate from './form-catalog-validations';
-import { putCatalogDataset } from './async-catalog-dataset';
+import { asyncValidateCatalog } from './async-validate-catalog';
 import { textType } from '../../../schemaTypes';
 import './form-catalog.scss';
 import { getConfig } from '../../../config';
@@ -15,7 +15,7 @@ const formConfigurer = compose(
     form: 'catalog',
     validate,
     shouldAsyncValidate: _.stubTrue, // override default, save even if sync validation fails
-    asyncValidate: putCatalogDataset
+    asyncValidate: asyncValidateCatalog
   }),
   connect(state => ({
     values: getFormValues('catalog')(state)

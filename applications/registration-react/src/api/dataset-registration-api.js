@@ -1,7 +1,8 @@
 import {
   registrationApiDelete,
   registrationApiPatch,
-  registrationApiPost
+  registrationApiPost,
+  registrationApiPut
 } from './registration-api';
 
 export const catalogPath = catalogId => `/catalogs/${catalogId}`;
@@ -19,3 +20,6 @@ export const patchDataset = (catalogId, datasetId, patch) =>
 
 export const createDataset = catalogId =>
   registrationApiPost(datasetListPath(catalogId), {});
+
+export const saveCatalog = catalog =>
+  registrationApiPut(catalogPath(catalog.id), catalog);
