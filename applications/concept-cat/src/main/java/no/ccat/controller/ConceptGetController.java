@@ -30,6 +30,7 @@ public class ConceptGetController {
     @ApiOperation(value = "Get a specific concept", response = ConceptDenormalized.class)
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = "application/json")
     public ConceptDenormalized getConceptDenormalized(@PathVariable String id) throws NotFoundException {
+        logger.info("MARKER! GET /concepts/{}", id);
         logger.debug("GET /concepts/{}", id);
         Optional<ConceptDenormalized> conceptDenormalizedOptional = conceptDenormalizedRepository.findById(id);
 
