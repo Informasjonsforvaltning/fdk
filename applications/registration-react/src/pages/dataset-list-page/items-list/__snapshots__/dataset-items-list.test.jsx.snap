@@ -15,16 +15,6 @@ exports[`should render DatasetItemsList correctly with datasetItems 1`] = `
       />
       Legg til ny datasettbeskrivelse
     </button>
-    <button
-      className="ml-2 transparentButton"
-      onClick={[Function]}
-      type="button"
-    >
-      <i
-        className="fa fa-plus fdk-color1 mr-2"
-      />
-      Importer datasett
-    </button>
   </div>
   <ListItems
     catalogId="123"
@@ -39,17 +29,6 @@ exports[`should render DatasetItemsList correctly with datasetItems 1`] = `
     prefixPath="/catalogs/123/datasets"
     sortField=""
     sortType=""
-  />
-  <AppImportModal
-    body="DCAT-modellen som blir importert må inneholde en katalog som har samme organisasjonsnr som katalogen du redigerer. Kun datasett som er med i denne katalogen vil bli importert."
-    btnCancel="Avbryt"
-    btnConfirm="Importer"
-    className={null}
-    handleAction={[Function]}
-    modal={false}
-    setURL="Angi url til DCAT ressurs:"
-    title="Importer datasett fra DCAT RDF ressurs."
-    toggle={[Function]}
   />
 </div>
 `;
@@ -69,16 +48,6 @@ exports[`should render DatasetItemsList correctly with missing datasetItems 1`] 
       />
       Legg til ny datasettbeskrivelse
     </button>
-    <button
-      className="ml-2 transparentButton"
-      onClick={[Function]}
-      type="button"
-    >
-      <i
-        className="fa fa-plus fdk-color1 mr-2"
-      />
-      Importer datasett
-    </button>
   </div>
   <ListItems
     catalogId="123"
@@ -93,17 +62,6 @@ exports[`should render DatasetItemsList correctly with missing datasetItems 1`] 
     prefixPath="/catalogs/123/datasets"
     sortField=""
     sortType=""
-  />
-  <AppImportModal
-    body="DCAT-modellen som blir importert må inneholde en katalog som har samme organisasjonsnr som katalogen du redigerer. Kun datasett som er med i denne katalogen vil bli importert."
-    btnCancel="Avbryt"
-    btnConfirm="Importer"
-    className={null}
-    handleAction={[Function]}
-    modal={false}
-    setURL="Angi url til DCAT ressurs:"
-    title="Importer datasett fra DCAT RDF ressurs."
-    toggle={[Function]}
   />
 </div>
 `;
@@ -123,16 +81,6 @@ exports[`should render DatasetItemsList correctly with missing items 1`] = `
       />
       Legg til ny datasettbeskrivelse
     </button>
-    <button
-      className="ml-2 transparentButton"
-      onClick={[Function]}
-      type="button"
-    >
-      <i
-        className="fa fa-plus fdk-color1 mr-2"
-      />
-      Importer datasett
-    </button>
   </div>
   <ListItems
     catalogId="123"
@@ -147,17 +95,6 @@ exports[`should render DatasetItemsList correctly with missing items 1`] = `
     prefixPath="/catalogs/123/datasets"
     sortField=""
     sortType=""
-  />
-  <AppImportModal
-    body="DCAT-modellen som blir importert må inneholde en katalog som har samme organisasjonsnr som katalogen du redigerer. Kun datasett som er med i denne katalogen vil bli importert."
-    btnCancel="Avbryt"
-    btnConfirm="Importer"
-    className={null}
-    handleAction={[Function]}
-    modal={false}
-    setURL="Angi url til DCAT ressurs:"
-    title="Importer datasett fra DCAT RDF ressurs."
-    toggle={[Function]}
   />
 </div>
 `;
