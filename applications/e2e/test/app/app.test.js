@@ -78,15 +78,15 @@ describe('SUITE: Main page', () => {
       await page.waitForSelector('#content[data-test-id="apis"]');
     });
 
-    describe("WHEN: Enter search text 'FS' + enter", () => {
+    describe("WHEN: Enter search text 'ks' + enter", () => {
       beforeAll(async () => {
         const searchBox = await page.$('input[name=searchBox]');
-        await searchBox.type(`fs${String.fromCharCode(13)}`);
+        await searchBox.type(`ks${String.fromCharCode(13)}`);
         await page.waitForSelector('#content[data-test-id="apis"]');
         await delay(5000); // TODO wait for network success /api/apis/search
       });
 
-      test("ART:API-201 THEN: Results block is displayed with exactly 1 api item that contains 'FS-API'", async () => {
+      test("ART:API-201 THEN: Results block is displayed with exactly 1 api item that contains 'KS Fiks'", async () => {
         const apiArticleSelector = '#content[data-test-id="apis"] article';
 
         const articleTexts = await page.$$eval(apiArticleSelector, els =>
@@ -94,7 +94,7 @@ describe('SUITE: Main page', () => {
         );
 
         expect(articleTexts).toHaveLength(1);
-        expect(articleTexts[0]).toContain('FS-API');
+        expect(articleTexts[0]).toContain('KS Fiks');
       });
     });
   });
