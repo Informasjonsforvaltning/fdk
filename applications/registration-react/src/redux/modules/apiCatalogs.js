@@ -1,6 +1,7 @@
 import _ from 'lodash';
-import { post, get } from 'axios';
+import { post } from 'axios';
 import { fetchApisIfNeededAction } from './apis';
+import { getApiCatalog } from '../../api/api-registration-api';
 
 export const API_CATALOG_REQUEST = 'API_CATALOG_REQUEST';
 export const API_CATALOG_SUCCESS = 'API_CATALOG_SUCCESS';
@@ -24,15 +25,13 @@ function forceRetryIfPending(apiCatalog, dispatch, catalogId) {
   const retryTimeout = 1000;
   if (isApiCatalogHarvestPending(apiCatalog)) {
     setTimeout(() => {
-      dispatch(fetchApiCatalogIfNeededAction(catalogId, true)); // eslint-disable-line no-use-before-define
+      dispatch(fetchApiCatalogIfNeededThunk(catalogId, true)); // eslint-disable-line no-use-before-define
       dispatch(fetchApisIfNeededAction(catalogId, true));
     }, retryTimeout);
   }
 }
 
-export function fetchApiCatalogIfNeededAction(catalogId, force) {
-  const url = `/catalogs/${catalogId}/apicatalog`;
-
+export function fetchApiCatalogIfNeededThunk(catalogId, force) {
   return async (dispatch, getState) => {
     // early exit if not forced and if cache is frece
     if (
@@ -47,8 +46,7 @@ export function fetchApiCatalogIfNeededAction(catalogId, force) {
 
     dispatch({ type: API_CATALOG_REQUEST, meta: { catalogId, force } });
     try {
-      const response = await get(url);
-      const apiCatalog = response.data;
+      const apiCatalog = await getApiCatalog(catalogId);
       dispatch({
         type: API_CATALOG_SUCCESS,
         meta: { catalogId, force },

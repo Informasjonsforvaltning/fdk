@@ -1,9 +1,12 @@
 import {
   registrationApiDelete,
+  registrationApiGet,
   registrationApiPatch
 } from './registration-api';
 
 export const catalogPath = catalogId => `/catalogs/${catalogId}`;
+export const apiCatalogPath = catalogId =>
+  `${catalogPath(catalogId)}/apicatalog`;
 export const apiListPath = catalogId => `${catalogPath(catalogId)}/apis`;
 
 export const apiPath = (catalogId, apidId) =>
@@ -14,3 +17,6 @@ export const deleteApi = (catalogId, apidId) =>
 
 export const patchApi = (catalogId, apidId, patch) =>
   registrationApiPatch(apiPath(catalogId, apidId), patch);
+
+export const getApiCatalog = catalogId =>
+  registrationApiGet(apiCatalogPath(catalogId));
