@@ -1,7 +1,6 @@
 import _ from 'lodash';
-import { post } from 'axios';
 import { fetchApisIfNeededAction } from './apis';
-import { getApiCatalog } from '../../api/api-registration-api';
+import { getApiCatalog, postApiCatalog } from '../../api/api-registration-api';
 
 export const API_CATALOG_REQUEST = 'API_CATALOG_REQUEST';
 export const API_CATALOG_SUCCESS = 'API_CATALOG_SUCCESS';
@@ -63,13 +62,11 @@ export function fetchApiCatalogIfNeededThunk(catalogId, force) {
   };
 }
 
-export function postApiCatalogAction(catalogId, data) {
-  const url = `/catalogs/${catalogId}/apicatalog`;
+export function postApiCatalogThunk(catalogId, data) {
   return async dispatch => {
     dispatch({ type: API_CATALOG_REQUEST, meta: { catalogId } });
     try {
-      const response = await post(url, data);
-      const apiCatalog = response.data;
+      const apiCatalog = await postApiCatalog(catalogId, data);
       dispatch({
         type: API_CATALOG_SUCCESS,
         meta: { catalogId },

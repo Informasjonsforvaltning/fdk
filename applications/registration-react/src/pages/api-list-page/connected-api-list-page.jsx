@@ -4,7 +4,7 @@ import { fetchApisIfNeededAction } from '../../redux/modules/apis';
 import { fetchCatalogIfNeeded } from '../../redux/modules/catalog';
 import {
   fetchApiCatalogIfNeededThunk,
-  postApiCatalogAction
+  postApiCatalogThunk
 } from '../../redux/modules/apiCatalogs';
 import { EnhancedAPIListPage } from './api-list-page';
 
@@ -39,7 +39,7 @@ const mapDispatchToProps = dispatch => ({
   fetchApiCatalogIfNeeded: catalogId =>
     dispatch(fetchApiCatalogIfNeededThunk(catalogId)),
   postApiCatalogAction: (catalogId, data) =>
-    dispatch(postApiCatalogAction(catalogId, data))
+    dispatch(postApiCatalogThunk(catalogId, data))
 });
 
 export const ConnectedAPIListPage = connect(
