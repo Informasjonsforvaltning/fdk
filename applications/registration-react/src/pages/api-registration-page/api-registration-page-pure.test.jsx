@@ -13,6 +13,8 @@ let wrapper;
 
 beforeEach(() => {
   defaultProps = {
+    catalogId: item.catalogId,
+    apiId: item.id,
     item
   };
   wrapper = shallow(<ApiRegistrationPagePure {...defaultProps} />);

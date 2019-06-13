@@ -44,7 +44,7 @@ const Routes = (
     />
     <ProtectedRoute
       exact
-      path="/catalogs/:catalogId/apis/:id"
+      path="/catalogs/:catalogId/apis/:apiId"
       component={ApiRegistrationPage}
     />
   </Switch>
