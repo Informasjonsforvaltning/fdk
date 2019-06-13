@@ -42,9 +42,9 @@ export const datasetSuccessAction = dataset => ({
 });
 
 export const deleteDatasetThunk = (catalogId, datasetId) => dispatch => {
-  return deleteDataset(catalogId, datasetId)
-    .then(() => dispatch(deleteDatasetItemAction(catalogId, datasetId)))
-    .catch(console.error);
+  return deleteDataset(catalogId, datasetId).then(() =>
+    dispatch(deleteDatasetItemAction(catalogId, datasetId))
+  );
 };
 
 const initialState = {};

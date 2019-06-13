@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { parse } from 'qs';
-import axios from 'axios';
 
 import { getTranslateText } from '../../lib/translateText';
 import localization from '../../lib/localization';
@@ -17,11 +16,26 @@ import { StatusBar } from '../../components/status-bar/status-bar.component';
 import { ConnectedFormPublish } from './connected-form-publish/connected-form-publish';
 import { APISpecificationInfo } from './api-specification-info.component';
 
+async function deleteAndNavigateToList({
+  history,
+  catalogId,
+  apiId,
+  dispatchDeleteApi
+}) {
+  await dispatchDeleteApi(catalogId, apiId);
+  if (history) {
+    history.push({
+      pathname: `/catalogs/${catalogId}/apis`,
+      state: { confirmDelete: true }
+    });
+  }
+}
+
 export const ApiRegistrationPagePure = ({
   catalogId,
   apiId,
   dispatchEnsureData,
-  deleteApiItem,
+  dispatchDeleteApi,
   catalogItem,
   isSaving,
   error,
@@ -29,7 +43,6 @@ export const ApiRegistrationPagePure = ({
   registrationStatus,
   item,
   location,
-  match,
   publisher,
   referencedDatasets,
   showImportError,
@@ -48,29 +61,6 @@ export const ApiRegistrationPagePure = ({
   const info = _.get(item, ['apiSpecification', 'info']);
 
   useEffect(dispatchEnsureData, [catalogId, apiId]);
-
-  const deleteApi = () => {
-    // const { history, match } = props;
-    const api = {
-      Authorization: `Basic user:password`
-    };
-
-    return axios
-      .delete(match.url, { headers: api })
-      .then(() => {
-        deleteApiItem(catalogId, _.get(item, 'id'));
-        if (history) {
-          history.push({
-            pathname: `/catalogs/${catalogId}/apis`,
-            state: { confirmDelete: true }
-          });
-        }
-      })
-      .catch(response => {
-        const { error } = response;
-        return Promise.reject(error);
-      });
-  };
 
   return (
     <div className="container">
@@ -224,7 +214,14 @@ export const ApiRegistrationPagePure = ({
             }
             error={error}
             justPublishedOrUnPublished={justPublishedOrUnPublished}
-            onDelete={deleteApi}
+            onDelete={() =>
+              deleteAndNavigateToList({
+                history,
+                catalogId,
+                apiId,
+                dispatchDeleteApi
+              })
+            }
             formComponent={
               <ConnectedFormPublish
                 initialItemStatus={_.get(item, 'registrationStatus', '')}
@@ -240,7 +237,7 @@ export const ApiRegistrationPagePure = ({
 
 ApiRegistrationPagePure.defaultProps = {
   dispatchEnsureData: _.noop,
-  deleteApiItem: _.noop,
+  dispatchDeleteApi: _.noop,
   catalogItem: null,
   isSaving: false,
   error: null,
@@ -250,7 +247,6 @@ ApiRegistrationPagePure.defaultProps = {
   apiServiceTypeItems: null,
   item: null,
   location: null,
-  match: null,
   publisher: null,
   referencedDatasets: null,
   showImportError: false,
@@ -267,7 +263,7 @@ ApiRegistrationPagePure.propTypes = {
   catalogId: PropTypes.string.isRequired,
   apiId: PropTypes.string.isRequired,
   dispatchEnsureData: PropTypes.func,
-  deleteApiItem: PropTypes.func,
+  dispatchDeleteApi: PropTypes.func,
   catalogItem: PropTypes.object,
   isSaving: PropTypes.bool,
   error: PropTypes.object,
@@ -277,7 +273,6 @@ ApiRegistrationPagePure.propTypes = {
   apiServiceTypeItems: PropTypes.array,
   item: PropTypes.object,
   location: PropTypes.object,
-  match: PropTypes.object,
   publisher: PropTypes.object,
   referencedDatasets: PropTypes.array,
   showImportError: PropTypes.bool,

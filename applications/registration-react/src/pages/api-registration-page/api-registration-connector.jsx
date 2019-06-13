@@ -3,7 +3,7 @@ import _ from 'lodash';
 
 import {
   apiSuccessAction,
-  deleteApiAction,
+  deleteApiThunk,
   fetchApisIfNeededAction,
   getApiItemsByApiId
 } from '../../redux/modules/apis';
@@ -55,8 +55,8 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
       );
     });
   },
-  deleteApiItem: (catalogId, apiId) =>
-    dispatch(deleteApiAction(catalogId, apiId)),
+  dispatchDeleteApi: (catalogId, apiId) =>
+    dispatch(deleteApiThunk(catalogId, apiId)),
   apiSuccess: apiItem => dispatch(apiSuccessAction(apiItem))
 });
 
