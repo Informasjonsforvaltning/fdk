@@ -43,7 +43,7 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  onAfterRender: () => {
+  dispatchEnsureData: () => {
     const { catalogId } = ownProps;
 
     batch(() => {
