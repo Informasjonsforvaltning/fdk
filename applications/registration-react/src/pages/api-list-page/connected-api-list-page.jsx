@@ -3,7 +3,7 @@ import _ from 'lodash';
 import { fetchApisIfNeededAction } from '../../redux/modules/apis';
 import { fetchCatalogIfNeeded } from '../../redux/modules/catalog';
 import {
-  fetchApiCatalogIfNeededAction,
+  fetchApiCatalogIfNeededThunk,
   postApiCatalogAction
 } from '../../redux/modules/apiCatalogs';
 import { EnhancedAPIListPage } from './api-list-page';
@@ -37,7 +37,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch(fetchCatalogIfNeeded(catalogURL)),
   fetchApisIfNeeded: catalogId => dispatch(fetchApisIfNeededAction(catalogId)),
   fetchApiCatalogIfNeeded: catalogId =>
-    dispatch(fetchApiCatalogIfNeededAction(catalogId)),
+    dispatch(fetchApiCatalogIfNeededThunk(catalogId)),
   postApiCatalogAction: (catalogId, data) =>
     dispatch(postApiCatalogAction(catalogId, data))
 });
