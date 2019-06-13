@@ -3,7 +3,6 @@ import _ from 'lodash';
 import {
   apiFormPatchErrorAction,
   apiFormPatchIsSavingAction,
-  apiFormPatchJustPublishedOrUnPublishedAction,
   apiFormPatchSuccessAction
 } from '../../../redux/modules/api-form-status';
 import { apiSuccessAction } from '../../../redux/modules/apis';
@@ -32,32 +31,15 @@ export const asyncValidate = (values, dispatch, props) => {
   }
   dispatch(apiFormPatchIsSavingAction(apiId));
 
-  const patchValues = convertToPatchValues(values);
+  const patch = convertToPatchValues(values);
 
   return axios
-    .patch(apiPath(catalogId, apiId), patchValues)
+    .patch(apiPath(catalogId, apiId), patch)
     .then(response => {
       const apiRegistration = response && response.data;
       if (apiRegistration) {
-        dispatch(apiFormPatchSuccessAction(apiRegistration.id));
-        if (_.get(values, 'registrationStatus')) {
-          dispatch(
-            apiFormPatchJustPublishedOrUnPublishedAction(
-              apiRegistration.id,
-              true,
-              apiRegistration.registrationStatus
-            )
-          );
-          dispatch(apiSuccessAction(apiRegistration));
-        } else {
-          dispatch(
-            apiFormPatchJustPublishedOrUnPublishedAction(
-              apiRegistration.id,
-              false,
-              apiRegistration.registrationStatus
-            )
-          );
-        }
+        dispatch(apiFormPatchSuccessAction({ apiId, patch }));
+        dispatch(apiSuccessAction(apiRegistration));
       }
     })
     .catch(error =>
