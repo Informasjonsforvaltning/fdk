@@ -12,39 +12,23 @@ export const configureRegistrationApi = newRegistrationApiConfig =>
 const getRootUrl = () => registrationApiConfig.host;
 const resolveUrl = path => url.resolve(getRootUrl(), path);
 
-export const deleteMethod = path =>
-  fetch(resolveUrl(path), {
-    method: 'DELETE',
-    headers: { Accept: 'application/json' } // required for cors
-  })
+export const registrationApi = (method, path, jsonBody) => {
+  const headers = { Accept: 'application/json' }; // required for cors
+  if (jsonBody) {
+    Object.assign(headers, { 'Content-Type': 'application/json' });
+  }
+  const body = jsonBody && JSON.stringify(jsonBody);
+  return fetch(resolveUrl(path), { method, headers, body })
     .catch(normalizeFetchError)
     .then(normalizeFetchResponse);
+};
 
-export const patchMethod = (path, body) =>
-  fetch(resolveUrl(path), {
-    method: 'PATCH',
-    headers: {
-      Accept: 'application/json', // required for cors
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(body)
-  })
-    .catch(normalizeFetchError)
-    .then(normalizeFetchResponse);
+export const registrationApiDelete = path => registrationApi('DELETE', path);
 
-export const postMethod = (path, body) =>
-  fetch(resolveUrl(path), {
-    method: 'POST',
-    headers: {
-      Accept: 'application/json', // required for cors
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(body)
-  })
-    .catch(normalizeFetchError)
-    .then(normalizeFetchResponse);
+export const registrationApiPatch = (path, body) =>
+  registrationApi('PATCH', path, body);
 
-export const getMethod = path =>
-  fetch(resolveUrl(path))
-    .catch(normalizeFetchError)
-    .then(normalizeFetchResponse);
+export const registrationApiPost = (path, body) =>
+  registrationApi('POST', path, body);
+
+export const registrationApiGet = path => registrationApi('GET', path);
