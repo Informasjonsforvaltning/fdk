@@ -18,6 +18,8 @@ import { ConnectedFormPublish } from './connected-form-publish/connected-form-pu
 import { APISpecificationInfo } from './api-specification-info.component';
 
 export const ApiRegistrationPagePure = ({
+  catalogId,
+  apiId,
   onAfterRender,
   deleteApiItem,
   catalogItem,
@@ -41,8 +43,6 @@ export const ApiRegistrationPagePure = ({
   apiStatusItems,
   apiServiceTypeItems
 }) => {
-  const catalogId = _.get(match, ['params', 'catalogId']);
-  const apiId = _.get(match, ['params', 'id']);
   const searchQuery =
     parse(_.get(location, 'search'), { ignoreQueryPrefix: true }) || {};
   const info = _.get(item, ['apiSpecification', 'info']);
@@ -157,7 +157,7 @@ export const ApiRegistrationPagePure = ({
                 showInitially
                 title={localization.schema.apiAccess.title}
               >
-                <ConnectedFormAccess apiItem={item} match={match} />
+                <ConnectedFormAccess apiItem={item} />
               </FormTemplateWithState>
             </div>
           </div>
@@ -167,7 +167,7 @@ export const ApiRegistrationPagePure = ({
                 showInitially
                 title={localization.schema.apiMeta.title}
               >
-                <ConnectedFormMeta apiItem={item} match={match} />
+                <ConnectedFormMeta apiItem={item} />
               </FormTemplateWithState>
             </div>
           </div>
@@ -179,7 +179,6 @@ export const ApiRegistrationPagePure = ({
               >
                 <ConnectedFormApiServiceType
                   apiItem={item}
-                  match={match}
                   apiServiceTypeItems={apiServiceTypeItems}
                 />
               </FormTemplateWithState>
@@ -192,7 +191,6 @@ export const ApiRegistrationPagePure = ({
                 title={localization.schema.apiStatus.title}
               >
                 <ConnectedFormApiStatus
-                  match={match}
                   apiItem={item}
                   apiStatusItems={apiStatusItems}
                 />
@@ -208,7 +206,6 @@ export const ApiRegistrationPagePure = ({
               >
                 <ConnectedFormRelatedDatasets
                   apiItem={item}
-                  match={match}
                   orgPath={_.get(publisher, 'orgPath')}
                   referencedDatasets={referencedDatasets}
                 />
@@ -231,7 +228,7 @@ export const ApiRegistrationPagePure = ({
             formComponent={
               <ConnectedFormPublish
                 initialItemStatus={_.get(item, 'registrationStatus', '')}
-                match={match}
+                apiItem={item}
               />
             }
           />
@@ -267,6 +264,8 @@ ApiRegistrationPagePure.defaultProps = {
 };
 
 ApiRegistrationPagePure.propTypes = {
+  catalogId: PropTypes.string.isRequired,
+  apiId: PropTypes.string.isRequired,
   onAfterRender: PropTypes.func,
   deleteApiItem: PropTypes.func,
   catalogItem: PropTypes.object,

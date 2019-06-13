@@ -9,6 +9,7 @@ import {
 import { apiSuccessAction } from '../../../redux/modules/apis';
 import { stringToNoolean } from '../../../lib/noolean';
 import { normalizeAxiosError } from '../../../lib/normalize-axios-error';
+import { apiPath } from '../../../api/api-registration-api';
 
 const nooleanFields = [
   'isFree',
@@ -22,21 +23,19 @@ const convertToPatchValues = formValues =>
   _.mapValues(formValues, convertToPatchValue);
 
 export const asyncValidate = (values, dispatch, props) => {
-  const { match } = props;
-  const apiId = _.get(match, ['params', 'id']);
+  const {
+    apiItem: { id: apiId, catalogId }
+  } = props;
 
-  if (typeof dispatch !== 'function') {
-    throw new Error('dispatch must be a function');
+  if (!(catalogId && apiId)) {
+    throw new Error('catalogId and apiId required');
   }
-
-  if (apiId) {
-    dispatch(apiFormPatchIsSavingAction(apiId));
-  }
+  dispatch(apiFormPatchIsSavingAction(apiId));
 
   const patchValues = convertToPatchValues(values);
 
   return axios
-    .patch(_.get(match, 'url'), patchValues)
+    .patch(apiPath(catalogId, apiId), patchValues)
     .then(response => {
       const apiRegistration = response && response.data;
       if (apiRegistration) {

@@ -15,13 +15,9 @@ import {
   REFERENCEDATA_PATH_APISTATUS
 } from '../../redux/modules/referenceData';
 
-const mapStateToProps = (
-  { apiFormStatus, apis, catalog, referenceData },
-  ownProps
-) => {
-  const catalogId = _.get(ownProps, ['match', 'params', 'catalogId']);
-  const apiId = _.get(ownProps, ['match', 'params', 'id']);
-
+const mapStateToProps = (state, ownProps) => {
+  const { apiFormStatus, apis, catalog, referenceData } = state;
+  const { catalogId, apiId } = ownProps;
   return {
     catalogItem: _.get(catalog, ['items', catalogId]),
     isSaving: _.get(getApiFormStatusById(apiFormStatus, apiId), 'isSaving'),
@@ -35,8 +31,6 @@ const mapStateToProps = (
       'status'
     ),
     item: getApiItemsByApiId(apis, catalogId, apiId),
-    history: _.get(ownProps, 'history'),
-    match: _.get(ownProps, 'match'),
     apiStatusItems: _.filter(
       _.get(referenceData, ['items', REFERENCEDATA_PATH_APISTATUS]),
       item => !!item.code
@@ -50,7 +44,7 @@ const mapStateToProps = (
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   onAfterRender: () => {
-    const catalogId = _.get(ownProps, ['match', 'params', 'catalogId']);
+    const { catalogId } = ownProps;
 
     batch(() => {
       dispatch(fetchCatalogIfNeeded(catalogId));
