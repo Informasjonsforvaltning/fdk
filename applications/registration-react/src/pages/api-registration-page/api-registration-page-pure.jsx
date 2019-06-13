@@ -20,7 +20,7 @@ import { APISpecificationInfo } from './api-specification-info.component';
 export const ApiRegistrationPagePure = ({
   catalogId,
   apiId,
-  onAfterRender,
+  dispatchEnsureData,
   deleteApiItem,
   catalogItem,
   isSaving,
@@ -47,7 +47,7 @@ export const ApiRegistrationPagePure = ({
     parse(_.get(location, 'search'), { ignoreQueryPrefix: true }) || {};
   const info = _.get(item, ['apiSpecification', 'info']);
 
-  useEffect(onAfterRender);
+  useEffect(dispatchEnsureData, [catalogId, apiId]);
 
   const deleteApi = () => {
     // const { history, match } = props;
@@ -239,7 +239,7 @@ export const ApiRegistrationPagePure = ({
 };
 
 ApiRegistrationPagePure.defaultProps = {
-  onAfterRender: _.noop,
+  dispatchEnsureData: _.noop,
   deleteApiItem: _.noop,
   catalogItem: null,
   isSaving: false,
@@ -266,7 +266,7 @@ ApiRegistrationPagePure.defaultProps = {
 ApiRegistrationPagePure.propTypes = {
   catalogId: PropTypes.string.isRequired,
   apiId: PropTypes.string.isRequired,
-  onAfterRender: PropTypes.func,
+  dispatchEnsureData: PropTypes.func,
   deleteApiItem: PropTypes.func,
   catalogItem: PropTypes.object,
   isSaving: PropTypes.bool,
