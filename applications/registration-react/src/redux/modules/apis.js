@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import { fetchActions } from '../fetchActions';
+import { deleteApi } from '../../api/api-registration-api';
 
 export const APIS_REQUEST = 'APIS_REQUEST';
 export const APIS_SUCCESS = 'APIS_SUCCESS';
@@ -54,6 +55,11 @@ export const deleteApiAction = (catalogId, apiId) => ({
   catalogId,
   apiId
 });
+
+export const deleteApiThunk = (catalogId, apiId) => async dispatch => {
+  await deleteApi(catalogId, apiId);
+  dispatch(deleteApiAction(catalogId, apiId));
+};
 
 const initialState = {};
 
