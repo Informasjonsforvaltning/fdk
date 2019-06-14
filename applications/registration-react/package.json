@@ -59,7 +59,7 @@
     "react-datepicker": "^1.0.4",
     "react-dom": "^16.8.6",
     "react-feature-toggles": "^3.0.3",
-    "react-idle-timer": "^2.0.0",
+    "react-idle-timer": "^4.2.5",
     "react-input-autosize": "^2.2.1",
     "react-localization": "^0.1.4",
     "react-moment": "^0.7.0",
