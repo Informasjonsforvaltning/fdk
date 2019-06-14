@@ -2,11 +2,11 @@ import React from 'react';
 import _ from 'lodash';
 import { shallow } from 'enzyme';
 
-import { normalizeAggregations } from '../../lib/normalizeAggregations';
 import { ConceptComparePage } from './concept-compare-page';
-import concepts from './__fixtures/conceptsApiResponse.json';
+import conceptsResponse from './__fixtures/conceptsApiResponse.json';
 
-const conceptItems = normalizeAggregations(concepts);
+const conceptItems = _.get(conceptsResponse, ['_embedded', 'concepts']);
+const conceptsCompare = _.keyBy(conceptItems, 'id');
 
 test('should render ConceptComparePage correctly with no apiItem', () => {
   const wrapper = shallow(<ConceptComparePage />);
@@ -15,9 +15,7 @@ test('should render ConceptComparePage correctly with no apiItem', () => {
 
 test('should render ConceptComparePage correctly with conceptItem', () => {
   const wrapper = shallow(
-    <ConceptComparePage
-      conceptsCompare={_.get(conceptItems, ['_embedded', 'concepts'])}
-    />
+    <ConceptComparePage conceptsCompare={conceptsCompare} />
   );
   expect(wrapper).toMatchSnapshot();
 });
