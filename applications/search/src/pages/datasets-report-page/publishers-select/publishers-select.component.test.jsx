@@ -9,6 +9,7 @@ let wrapper;
 beforeEach(() => {
   onSearch = jest.fn();
   defaultProps = {
+    publishers: {},
     onSearch,
     value: 'STAT'
   };
