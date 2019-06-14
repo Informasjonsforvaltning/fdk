@@ -34,6 +34,7 @@ services:
     environment:
       - KEYCLOAK_USER
       - KEYCLOAK_PASSWORD
+      - DB_VENDOR=h2
 
 ### ingress modules
   nginx-search:
