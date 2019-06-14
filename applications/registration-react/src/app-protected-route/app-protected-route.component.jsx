@@ -49,12 +49,7 @@ export class ProtectedRoutePure extends React.Component {
     } = this.props;
     const { showInactiveWarning } = this.state;
     return (
-      <IdleTimer
-        element={document}
-        idleAction={this.onIdle}
-        timeout={27.5 * 60 * 1000} // gir idle warning etter 27,5 minutter
-        format="DD.MM.YYYY HH:MM:ss.SSS"
-      >
+      <>
         {!isFetchingUser && (
           <Route
             {...props}
@@ -67,6 +62,12 @@ export class ProtectedRoutePure extends React.Component {
             }
           />
         )}
+        <IdleTimer
+          element={document}
+          onIdle={this.onIdle}
+          timeout={27.5 * 60 * 1000} // gir idle warning etter 27,5 minutter
+          debounce={5000}
+        />
         <TimeoutModal
           modal={showInactiveWarning}
           toggle={this.toggle}
@@ -77,7 +78,7 @@ export class ProtectedRoutePure extends React.Component {
           buttonConfirm={localization.inactiveSessionWarning.buttonStayLoggedIn}
           buttonLogout={localization.inactiveSessionWarning.buttonLogOut}
         />
-      </IdleTimer>
+      </>
     );
   }
 }
