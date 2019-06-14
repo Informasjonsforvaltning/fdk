@@ -1,5 +1,3 @@
-import { config } from "./config";
-
-console.log("Set jest timeout to:", config.jestTimeout);
+import { config } from './config';
 
 jest.setTimeout(config.jestTimeout);

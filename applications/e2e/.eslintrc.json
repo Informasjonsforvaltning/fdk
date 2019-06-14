@@ -1,0 +1,35 @@
+{
+  "env": {
+    "browser": true,
+    "es6": true,
+    "node": true,
+    "mocha": true,
+    "jest": true
+  },
+  "extends": ["airbnb", "prettier","plugin:eslint-comments/recommended"],
+  "plugins": ["prettier", "eslint-comments"],
+  "parser": "babel-eslint",
+  "globals": {
+    "$": false
+  },
+  "rules": {
+    "prettier/prettier": [ // customizing prettier rules (unfortunately not many of them are customizable)
+      "error",
+      {
+        "singleQuote": true
+      }
+    ],
+    "no-console": ["error", { "allow": ["warn", "error"] }],
+    "import/no-named-as-default": 2,
+    "import/prefer-default-export": 0,
+    "no-else-return": 2,
+    "no-shadow": 0,
+    "no-underscore-dangle": 0,
+    "wrap-iife": 2,
+    "no-param-reassign": ["error", { "props": true, "ignorePropertyModificationsFor": ["accumulator"] }],
+    "no-restricted-globals": ["error", "event", "fdescribe"],
+    "react/no-danger": 0,
+    "prefer-destructuring":"off",
+    "eslint-comments/no-unused-disable": "error"
+  }
+}

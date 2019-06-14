@@ -2,7 +2,6 @@ const fs = require('fs');
 const path = require('path');
 const Json2csvParser = require('json2csv').Parser;
 
-
 class AllResultsCsvReporter {
   constructor(globalConfig, options) {
     this._globalConfig = globalConfig;
@@ -18,18 +17,16 @@ class AllResultsCsvReporter {
   }
 
   onRunComplete(contexts, results) {
-
     const output = [];
 
-    for (const testFile of results.testResults) {
-      for (const testCase of testFile.testResults) {
-
+    results.testResults.forEach(testFile => {
+      testFile.testResults.forEach(testCase => {
         const ancestors = testCase.ancestorTitles || [];
         const artRefMatches = JSON.stringify(testCase).match(/ART:\S+/g) || [];
         const artRefs = artRefMatches.map(match => match.replace('ART:', ''));
         const artRefsUnique = Array.from(new Set(artRefs));
-        if (artRefsUnique.length == 0) {
-          continue;
+        if (artRefsUnique.length === 0) {
+          return;
         }
 
         const outputItem = {
@@ -43,18 +40,22 @@ class AllResultsCsvReporter {
         };
 
         output.push(outputItem);
-      }
-    }
+      });
+    });
 
     const parser = new Json2csvParser({ delimiter: ';' });
     const csv = parser.parse(output);
-    fs.writeFile(path.join(this._options.outputDir, this._options.outputFile), csv, err => {
-      if (err) {
-        console.error(err);
-      } else {
-        console.log(`write all results to ${this._options.outputFile}`);
+    fs.writeFile(
+      path.join(this._options.outputDir, this._options.outputFile),
+      csv,
+      err => {
+        if (err) {
+          console.error(err);
+        } else {
+          console.warn(`Report written to ${this._options.outputFile}`);
+        }
       }
-    });
+    );
   }
 }
 
