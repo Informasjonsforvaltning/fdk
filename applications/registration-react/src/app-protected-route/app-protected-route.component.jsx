@@ -33,18 +33,8 @@ export const ProtectedRoutePure = props => {
 
   return (
     <>
-      {!isFetchingUser && (
-        <Route
-          {...props}
-          render={props =>
-            userItem && userItem.name !== '' ? (
-              <Component {...props} />
-            ) : (
-              <Redirect {...props} to="/loggin" />
-            )
-          }
-        />
-      )}
+      {!isFetchingUser && !userItem && <Redirect to="/loggin" />}
+      {userItem && <Route {...props} component={Component} />}
       <IdleTimer
         element={document}
         onIdle={() => setShowInactiveWarning(true)}
