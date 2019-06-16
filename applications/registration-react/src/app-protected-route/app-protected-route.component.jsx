@@ -5,13 +5,17 @@ import PropTypes from 'prop-types';
 import IdleTimer from 'react-idle-timer';
 
 import localization from '../lib/localization';
-import { fetchUserIfNeeded } from '../actions/index';
+import {
+  authenticateAction,
+  selectIsAuthenticating,
+  selectUser
+} from '../redux/modules/auth';
 import TimeoutModal from './timeout-modal/timeout-modal.component';
 
 export const ProtectedRoutePure = props => {
   const {
-    userItem,
-    isFetchingUser,
+    user,
+    isAuthenticating,
     component: Component,
     history,
     dispatch
@@ -28,13 +32,13 @@ export const ProtectedRoutePure = props => {
 
   const refreshSession = () => {
     setShowInactiveWarning(false);
-    dispatch(fetchUserIfNeeded());
+    dispatch(authenticateAction());
   };
 
   return (
     <>
-      {!isFetchingUser && !userItem && <Redirect to="/loggin" />}
-      {userItem && <Route {...props} component={Component} />}
+      {!isAuthenticating && !user && <Redirect to="/loggin" />}
+      {user && <Route {...props} component={Component} />}
       <IdleTimer
         element={document}
         onIdle={() => setShowInactiveWarning(true)}
@@ -56,28 +60,24 @@ export const ProtectedRoutePure = props => {
 };
 
 ProtectedRoutePure.defaultProps = {
-  userItem: null,
+  user: null,
   history: null,
-  isFetchingUser: false,
+  isAuthenticating: false,
   component: null
 };
 
 ProtectedRoutePure.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  userItem: PropTypes.object,
+  user: PropTypes.object,
   history: PropTypes.object,
-  isFetchingUser: PropTypes.bool,
+  isAuthenticating: PropTypes.bool,
   component: PropTypes.oneOfType([PropTypes.func, PropTypes.object])
 };
 
-function mapStateToProps({ user }) {
-  const { userItem, isFetchingUser } = user || {
-    userItem: null,
-    isFetchingUser: false
-  };
+function mapStateToProps(state) {
   return {
-    userItem,
-    isFetchingUser
+    user: selectUser(state),
+    isAuthenticating: selectIsAuthenticating(state)
   };
 }
 

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 
-import { resetUser } from '../../actions/index';
+import { logoutAction } from '../../redux/modules/auth';
 import localization from '../../lib/localization';
 import './app-login-dialog.scss';
 
@@ -14,10 +14,10 @@ export class LoginDialogPure extends React.Component {
       axios
         .get('/logout')
         .then(() => {
-          dispatch(resetUser());
+          dispatch(logoutAction());
         })
         .catch(() => {
-          dispatch(resetUser());
+          dispatch(logoutAction());
         });
     }
   }
