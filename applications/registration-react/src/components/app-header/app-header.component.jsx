@@ -8,8 +8,9 @@ import '../../assets/style/bootstrap-override.scss';
 import '../../assets/style/react-tags-override.scss';
 import './styles';
 import './app-header.scss';
+import { selectUser } from '../../redux/modules/auth';
 
-export const HeaderPure = ({ location, userItem }) => {
+export const HeaderPure = ({ location, user }) => {
   let headerTitle;
   switch (location.pathname.split('/')[3]) {
     case 'datasets':
@@ -60,21 +61,21 @@ export const HeaderPure = ({ location, userItem }) => {
               </span>
             </div>
             <div className="col-md-4 d-flex align-items-center fdk-header-text_items justify-content-end">
-              {userItem &&
-                userItem.name && (
+              {user &&
+                user.name && (
                   <div className="mr-4">
                     <i className="fa fa-user fdk-fa-left fdk-color-cta3" />
-                    {userItem.name}
+                    {user.name}
                   </div>
                 )}
-              {userItem && (
+              {user && (
                 <div className="mr-4 fdk-auth-link">
                   <a href={`${window.location.origin}/logout`}>
                     {localization.app.logOut}
                   </a>
                 </div>
               )}
-              {!userItem && (
+              {!user && (
                 <div className="mr-4 fdk-auth-link">
                   <a href={`${window.location.origin}/login`}>
                     {localization.app.logIn}
@@ -90,23 +91,14 @@ export const HeaderPure = ({ location, userItem }) => {
 };
 
 HeaderPure.defaultProps = {
-  userItem: null
+  user: null
 };
 
 HeaderPure.propTypes = {
-  userItem: PropTypes.object,
+  user: PropTypes.object,
   location: PropTypes.object.isRequired
 };
 
-function mapStateToProps(props) {
-  const { user } = props;
-  const { userItem } = user || {
-    userItem: null
-  };
-
-  return {
-    userItem
-  };
-}
+const mapStateToProps = state => ({ user: selectUser(state) });
 
 export const Header = withRouter(connect(mapStateToProps)(HeaderPure));
