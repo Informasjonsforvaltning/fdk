@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
-import { fetchUserIfNeeded } from '../../actions/index';
 import localization from '../../lib/localization';
 import '../../assets/style/bootstrap-override.scss';
 import '../../assets/style/react-tags-override.scss';
@@ -13,12 +12,10 @@ import './app-header.scss';
 export class HeaderPure extends React.Component {
   constructor(props) {
     super(props);
-    const { dispatch } = props;
     this.toggle = this.toggle.bind(this);
     this.state = {
       dropdownOpen: false
     };
-    dispatch(fetchUserIfNeeded());
   }
 
   toggle() {
@@ -113,7 +110,6 @@ HeaderPure.defaultProps = {
 };
 
 HeaderPure.propTypes = {
-  dispatch: PropTypes.func.isRequired,
   userItem: PropTypes.object,
   location: PropTypes.object.isRequired
 };

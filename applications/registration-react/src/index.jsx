@@ -10,6 +10,7 @@ import { configureLocalization } from './lib/localization';
 import { App } from './app/app';
 import { configureReferenceDataApi } from './api/reference-data-api';
 import { configureRegistrationApi } from './api/registration-api';
+import { fetchUserIfNeeded } from './actions';
 
 function AppRoot(store) {
   return (
@@ -26,6 +27,8 @@ async function configureServices() {
   configureLocalization(getConfig().registrationLanguage);
   configureReferenceDataApi(getConfig().referenceDataApi);
   configureRegistrationApi(getConfig().registrationApi);
+
+  store.dispatch(fetchUserIfNeeded());
 
   return { store };
 }
