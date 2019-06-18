@@ -82,7 +82,7 @@ export function DatasetRegistrationPagePure(props) {
   const {
     title = {},
     accessRights = {},
-    formThemes = {},
+    themes = {},
     type = {},
     concept = {},
     spatial = {},
@@ -157,8 +157,8 @@ export function DatasetRegistrationPagePure(props) {
               <FormTemplateWithState
                 title={localization.datasets.formTemplates.theme}
                 required
-                values={losValues(formThemes.values, losItems)}
-                syncErrors={formThemes.syncErrors}
+                values={losValues(themes.values, losItems)}
+                syncErrors={themes.syncErrors}
               >
                 <ConnectedFormLOS
                   datasetItem={datasetItem}
@@ -170,8 +170,8 @@ export function DatasetRegistrationPagePure(props) {
 
               <FormTemplateWithState
                 title={localization.datasets.formTemplates.euTheme}
-                values={themesValues(formThemes.values)}
-                syncErrors={formThemes.syncErrors}
+                values={themesValues(themes.values)}
+                syncErrors={themes.syncErrors}
               >
                 <ConnectedFormThemes
                   datasetItem={datasetItem}
