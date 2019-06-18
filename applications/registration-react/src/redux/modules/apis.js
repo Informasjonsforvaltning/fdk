@@ -111,7 +111,7 @@ export default function apis(state = initialState, action) {
       };
     case API_SUCCESS: {
       const items = _.get(state, [action.payload.catalogId, 'items']);
-      const isNew = !!_.find(items, { id: action.payload.id });
+      const isNew = !_.find(items, { id: action.payload.id });
       const newItems = isNew
         ? [...items, action.payload]
         : items.map(
