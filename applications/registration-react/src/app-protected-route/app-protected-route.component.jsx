@@ -6,7 +6,7 @@ import IdleTimer from 'react-idle-timer';
 
 import localization from '../lib/localization';
 import {
-  authenticateAction,
+  authenticateThunk,
   selectIsAuthenticating,
   selectUser
 } from '../redux/modules/auth';
@@ -32,7 +32,7 @@ export const ProtectedRoutePure = props => {
 
   const refreshSession = () => {
     setShowInactiveWarning(false);
-    dispatch(authenticateAction());
+    dispatch(authenticateThunk());
   };
 
   return (

@@ -10,7 +10,7 @@ import { configureLocalization } from './lib/localization';
 import { App } from './app/app';
 import { configureReferenceDataApi } from './api/reference-data-api';
 import { configureRegistrationApi } from './api/registration-api';
-import { authenticateAction } from './redux/modules/auth';
+import { authenticateThunk } from './redux/modules/auth';
 
 function AppRoot(store) {
   return (
@@ -28,7 +28,7 @@ async function configureServices() {
   configureReferenceDataApi(getConfig().referenceDataApi);
   configureRegistrationApi(getConfig().registrationApi);
 
-  store.dispatch(authenticateAction());
+  store.dispatch(authenticateThunk());
 
   return { store };
 }
