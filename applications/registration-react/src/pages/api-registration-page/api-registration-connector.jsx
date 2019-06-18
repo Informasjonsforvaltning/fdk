@@ -26,10 +26,6 @@ const mapStateToProps = (state, ownProps) => {
       getApiFormStatusById(apiFormStatus, apiId),
       'justPublishedOrUnPublished'
     ),
-    registrationStatus: _.get(
-      getApiFormStatusById(apiFormStatus, apiId),
-      'status'
-    ),
     item: getApiItemsByApiId(apis, catalogId, apiId),
     apiStatusItems: _.filter(
       _.get(referenceData, ['items', REFERENCEDATA_PATH_APISTATUS]),
