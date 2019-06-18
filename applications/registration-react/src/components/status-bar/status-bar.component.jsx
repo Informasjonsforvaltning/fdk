@@ -146,6 +146,17 @@ export const StatusBar = props => {
     message = renderMessageForUpdate({ isSaving, published });
   }
 
+  const renderToggleShowValidationButton = () => (
+    <Button
+      id="dataset-setPublish-button"
+      className="fdk-button mr-3"
+      color="primary"
+      onClick={toggleShowValidationError}
+    >
+      {localization.formStatus.publish}
+    </Button>
+  );
+
   return (
     <>
       {error && renderErrorOverlay({ error, lastSaved })}
@@ -169,17 +180,10 @@ export const StatusBar = props => {
       >
         <div>{message}</div>
         <div className="d-flex">
-          {allowPublish && formComponent}
-          {!allowPublish && (
-            <Button
-              id="dataset-setPublish-button"
-              className="fdk-button mr-3"
-              color="primary"
-              onClick={toggleShowValidationError}
-            >
-              {localization.formStatus.publish}
-            </Button>
-          )}
+          {/* if it is not allowed to publish, it is still a llowed to unpublish */}
+          {allowPublish || published
+            ? formComponent
+            : renderToggleShowValidationButton()}
 
           <button
             type="button"
