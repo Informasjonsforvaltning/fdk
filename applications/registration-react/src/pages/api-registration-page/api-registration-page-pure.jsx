@@ -40,7 +40,6 @@ export const ApiRegistrationPagePure = ({
   isSaving,
   error,
   justPublishedOrUnPublished,
-  registrationStatus,
   item,
   location,
   publisher,
@@ -207,11 +206,7 @@ export const ApiRegistrationPagePure = ({
             type="api"
             isSaving={isSaving}
             lastSaved={item._lastModified}
-            published={
-              registrationStatus
-                ? !!(registrationStatus === 'PUBLISH')
-                : !!(_.get(item, 'registrationStatus', 'DRAFT') === 'PUBLISH')
-            }
+            published={item.registrationStatus === 'PUBLISH'}
             error={error}
             justPublishedOrUnPublished={justPublishedOrUnPublished}
             onDelete={() =>
@@ -242,7 +237,6 @@ ApiRegistrationPagePure.defaultProps = {
   isSaving: false,
   error: null,
   justPublishedOrUnPublished: false,
-  registrationStatus: null,
   apiStatusItems: null,
   apiServiceTypeItems: null,
   item: null,
@@ -268,7 +262,6 @@ ApiRegistrationPagePure.propTypes = {
   isSaving: PropTypes.bool,
   error: PropTypes.object,
   justPublishedOrUnPublished: PropTypes.bool,
-  registrationStatus: PropTypes.string,
   apiStatusItems: PropTypes.array,
   apiServiceTypeItems: PropTypes.array,
   item: PropTypes.object,
