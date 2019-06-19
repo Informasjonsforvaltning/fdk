@@ -4,8 +4,8 @@ import {
   registrationApiPost,
   registrationApiPut
 } from './registration-api';
+import { catalogPath } from './catalog-registration-api';
 
-export const catalogPath = catalogId => `/catalogs/${catalogId}`;
 export const datasetListPath = catalogId =>
   `${catalogPath(catalogId)}/datasets/`; // todo, post method is implemented on / currently.
 
