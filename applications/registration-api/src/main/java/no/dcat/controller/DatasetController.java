@@ -20,6 +20,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.PagedResources;
+import org.springframework.hateoas.Resource;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -61,7 +62,7 @@ public class DatasetController {
      */
     @PreAuthorize("hasPermission(#catalogId, 'write')")
     @RequestMapping(value = "", method = GET, produces = APPLICATION_JSON_UTF8_VALUE)
-    public PagedResources<Dataset> listDatasets(@PathVariable("catalogId") String catalogId, Pageable pageable, PagedResourcesAssembler assembler) {
+    public PagedResources<Resource<Dataset>> listDatasets(@PathVariable("catalogId") String catalogId, Pageable pageable, PagedResourcesAssembler<Dataset> assembler) {
 
         Page<Dataset> datasets = datasetRepository.findByCatalogId(catalogId, pageable);
         return assembler.toResource(datasets);

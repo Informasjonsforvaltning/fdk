@@ -79,8 +79,7 @@ public class CatalogController {
     @RequestMapping(value = "",
         method = GET,
         produces = APPLICATION_JSON_UTF8_VALUE)
-    public PagedResources<Resource<Catalog>> listCatalogs(Pageable pageable,
-                                                          PagedResourcesAssembler<Catalog> assembler) {
+    public PagedResources<Resource<Catalog>> listCatalogs(Pageable pageable, PagedResourcesAssembler<Catalog> assembler) {
 
         Authentication auth = springSecurityContextBean.getAuthentication();
 
