@@ -65,8 +65,7 @@ const renderCatalogs = props => {
 
 export const RegCatalogs = props => {
   const { isFetching, catalogItems, fetchCatalogsIfNeeded } = props;
-  const catalogsURL = '/catalogs';
-  fetchCatalogsIfNeeded(catalogsURL);
+  fetchCatalogsIfNeeded();
   return (
     <div className="container">
       {catalogItems && renderCatalogs(props)}

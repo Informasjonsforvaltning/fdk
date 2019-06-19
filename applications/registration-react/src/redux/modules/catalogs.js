@@ -15,11 +15,11 @@ function shouldFetch(metaState) {
   );
 }
 
-export function fetchCatalogsIfNeeded(catalogsURL) {
+export function fetchCatalogsIfNeeded() {
   return (dispatch, getState) =>
     shouldFetch(_.get(getState(), 'catalogs')) &&
     dispatch(
-      fetchActions(catalogsURL, [
+      fetchActions('/catalogs', [
         CATALOGS_REQUEST,
         CATALOGS_SUCCESS,
         CATALOGS_FAILURE
