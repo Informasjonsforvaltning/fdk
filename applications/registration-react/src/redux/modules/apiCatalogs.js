@@ -35,10 +35,7 @@ export function fetchApiCatalogIfNeededThunk(catalogId, force) {
     // early exit if not forced and if cache is frece
     if (
       !force &&
-      !shouldFetch(
-        _.get(getState(), ['apiCatalog', catalogId, 'meta']),
-        _.get(getState(), ['apiCatalog', catalogId, 'item'])
-      )
+      !shouldFetch(_.get(getState(), ['apiCatalog', catalogId, 'meta']))
     ) {
       return;
     }

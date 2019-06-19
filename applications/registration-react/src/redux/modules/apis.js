@@ -22,10 +22,7 @@ export function fetchApisIfNeededAction(catalogId, force) {
   return (dispatch, getState) => {
     if (
       !force &&
-      !shouldFetch(
-        _.get(getState(), ['apis', catalogId, 'meta']),
-        _.get(getState(), ['apiCatalog', catalogId, 'item'])
-      )
+      !shouldFetch(_.get(getState(), ['apis', catalogId, 'meta']))
     ) {
       return;
     }
