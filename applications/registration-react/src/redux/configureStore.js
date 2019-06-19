@@ -2,7 +2,6 @@ import { applyMiddleware, compose, createStore } from 'redux';
 import thunk from 'redux-thunk';
 import { createLogger } from 'redux-logger';
 import persistState from 'redux-localstorage';
-import { apiMiddleware } from 'redux-api-middleware';
 
 import rootReducer from './rootReducer';
 
@@ -11,7 +10,7 @@ function selectCompose() {
 }
 
 export function configureStore(storeConfig) {
-  const middlewares = [thunk, apiMiddleware];
+  const middlewares = [thunk];
 
   if (storeConfig.useLogger) {
     middlewares.push(createLogger());

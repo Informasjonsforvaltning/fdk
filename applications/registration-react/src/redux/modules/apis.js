@@ -1,6 +1,7 @@
 import _ from 'lodash';
-import { fetchActions } from '../fetchActions';
-import { deleteApi } from '../../api/api-registration-api';
+import { apiListAllPath, deleteApi } from '../../api/api-registration-api';
+import { reduxFsaThunk } from '../../lib/redux-fsa-thunk';
+import { registrationApiGet } from '../../api/registration-api';
 
 export const APIS_REQUEST = 'APIS_REQUEST';
 export const APIS_SUCCESS = 'APIS_SUCCESS';
@@ -28,11 +29,11 @@ export function fetchApisIfNeededAction(catalogId, force) {
     }
 
     dispatch(
-      fetchActions(`/catalogs/${catalogId}/apis?size=1000`, [
-        { type: APIS_REQUEST, meta: { catalogId, force } },
-        { type: APIS_SUCCESS, meta: { catalogId, force } },
-        { type: APIS_FAILURE, meta: { catalogId, force } }
-      ])
+      reduxFsaThunk(() => registrationApiGet(apiListAllPath(catalogId)), {
+        onBeforeStart: { type: APIS_REQUEST, meta: { catalogId, force } },
+        onSuccess: { type: APIS_SUCCESS, meta: { catalogId, force } },
+        onError: { type: APIS_FAILURE, meta: { catalogId, force } }
+      })
     );
   };
 }
