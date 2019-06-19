@@ -20,8 +20,7 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = dispatch => ({
-  fetchCatalogsIfNeeded: catalogsURL =>
-    dispatch(fetchCatalogsIfNeeded(catalogsURL)),
+  fetchCatalogsIfNeeded: () => dispatch(fetchCatalogsIfNeeded()),
   fetchDatasetsIfNeeded: catalogId =>
     dispatch(fetchDatasetsIfNeeded(catalogId)),
   fetchApisIfNeeded: catalogId => dispatch(fetchApisIfNeededAction(catalogId))
