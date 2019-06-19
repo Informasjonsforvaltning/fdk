@@ -17,6 +17,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.PagedResources;
+import org.springframework.hateoas.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -63,10 +64,10 @@ public class ApiRegistrationController {
     @PreAuthorize("hasPermission(#catalogId, 'write')")
     @CrossOrigin
     @RequestMapping(value = "", method = GET, produces = APPLICATION_JSON_UTF8_VALUE)
-    public PagedResources<ApiRegistration> listApiRegistrations(
+    public PagedResources<Resource<ApiRegistration>> listApiRegistrations(
         @PathVariable("catalogId") String catalogId,
         Pageable pageable,
-        PagedResourcesAssembler assembler
+        PagedResourcesAssembler<ApiRegistration> assembler
     ) {
         Page<ApiRegistration> apiRegistrations = apiRegistrationRepository.findByCatalogId(catalogId, pageable);
 
