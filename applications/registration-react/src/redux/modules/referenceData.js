@@ -24,22 +24,15 @@ function shouldFetch(metaState) {
   );
 }
 
-export const fetchReferenceDataIfNeededAction = path => (
-  dispatch,
-  getState
-) => {
-  if (!shouldFetch(_.get(getState(), ['referenceData', 'meta', path]))) {
-    return;
-  }
-  const task = () => referenceDataApi.get(path);
-  const typeMap = {
-    onBeforeStart: { type: REFERENCEDATA_REQUEST, meta: { path } },
-    onSuccess: { type: REFERENCEDATA_SUCCESS, meta: { path } },
-    onError: { type: REFERENCEDATA_FAILURE, meta: { path } }
-  };
-  const thunk = reduxFsaThunk(task, typeMap);
-  dispatch(thunk);
-};
+export const fetchReferenceDataIfNeededAction = path => (dispatch, getState) =>
+  shouldFetch(_.get(getState(), ['referenceData', 'meta', path])) &&
+  dispatch(
+    reduxFsaThunk(() => referenceDataApi.get(path), {
+      onBeforeStart: { type: REFERENCEDATA_REQUEST, meta: { path } },
+      onSuccess: { type: REFERENCEDATA_SUCCESS, meta: { path } },
+      onError: { type: REFERENCEDATA_FAILURE, meta: { path } }
+    })
+  );
 
 const initialState = {
   items: {},
