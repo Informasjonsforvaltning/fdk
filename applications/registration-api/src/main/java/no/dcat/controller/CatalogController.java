@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.PagedResources;
@@ -87,6 +88,10 @@ public class CatalogController {
 
         for (GrantedAuthority authority : auth.getAuthorities()) {
             validCatalogs.add(authority.getAuthority());
+        }
+
+        if (validCatalogs.size() == 0) {
+            return assembler.toResource(new PageImpl<>(new ArrayList<>(), pageable, 0));
         }
 
         createCatalogsIfNeeded(validCatalogs);
