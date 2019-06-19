@@ -1,7 +1,11 @@
 import _ from 'lodash';
 import { compose } from 'recompose';
-import { fetchActions } from '../fetchActions';
-import { deleteDataset } from '../../api/dataset-registration-api';
+import {
+  datasetListAllPath,
+  deleteDataset
+} from '../../api/dataset-registration-api';
+import { reduxFsaThunk } from '../../lib/redux-fsa-thunk';
+import { registrationApiGet } from '../../api/registration-api';
 
 export const DATASETS_REQUEST = 'DATASETS_REQUEST';
 export const DATASETS_SUCCESS = 'DATASETS_SUCCESS';
@@ -21,11 +25,11 @@ function shouldFetch(metaState) {
 export const fetchDatasetsIfNeeded = catalogId => (dispatch, getState) =>
   shouldFetch(_.get(getState(), ['datasets', catalogId, 'meta'])) &&
   dispatch(
-    fetchActions(`/catalogs/${catalogId}/datasets?size=1000`, [
-      { type: DATASETS_REQUEST, meta: { catalogId } },
-      { type: DATASETS_SUCCESS, meta: { catalogId } },
-      { type: DATASETS_FAILURE, meta: { catalogId } }
-    ])
+    reduxFsaThunk(() => registrationApiGet(datasetListAllPath(catalogId)), {
+      onBeforeStart: { type: DATASETS_REQUEST, meta: { catalogId } },
+      onSuccess: { type: DATASETS_SUCCESS, meta: { catalogId } },
+      onError: { type: DATASETS_FAILURE, meta: { catalogId } }
+    })
   );
 
 export const deleteDatasetItemAction = (catalogId, datasetId) => ({

@@ -9,6 +9,9 @@ import { catalogPath } from './catalog-registration-api';
 export const datasetListPath = catalogId =>
   `${catalogPath(catalogId)}/datasets`;
 
+export const datasetListAllPath = catalogId =>
+  `${datasetListPath(catalogId)}?size=1000`;
+
 export const datasetPath = (catalogId, datasetId) =>
   `${datasetListPath(catalogId)}/${datasetId}`;
 

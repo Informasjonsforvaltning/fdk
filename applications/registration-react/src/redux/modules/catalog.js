@@ -1,5 +1,7 @@
 import _ from 'lodash';
-import { fetchActions } from '../fetchActions';
+import { registrationApiGet } from '../../api/registration-api';
+import { reduxFsaThunk } from '../../lib/redux-fsa-thunk';
+import { catalogPath } from '../../api/catalog-registration-api';
 
 const CATALOG_REQUEST = 'CATALOG_REQUEST';
 export const CATALOG_SUCCESS = 'CATALOG_SUCCESS';
@@ -17,11 +19,11 @@ function shouldFetch(metaState) {
 export const fetchCatalogIfNeeded = catalogId => (dispatch, getState) =>
   shouldFetch(_.get(getState(), ['catalog', 'meta', catalogId])) &&
   dispatch(
-    fetchActions(`/catalogs/${catalogId}`, [
-      { type: CATALOG_REQUEST, meta: { catalogId } },
-      { type: CATALOG_SUCCESS, meta: { catalogId } },
-      { type: CATALOG_FAILURE, meta: { catalogId } }
-    ])
+    reduxFsaThunk(() => registrationApiGet(catalogPath(catalogId)), {
+      onBeforeStart: { type: CATALOG_REQUEST, meta: { catalogId } },
+      onSuccess: { type: CATALOG_SUCCESS, meta: { catalogId } },
+      onError: { type: CATALOG_FAILURE, meta: { catalogId } }
+    })
   );
 
 const initialState = {};

@@ -8,7 +8,11 @@ import { catalogPath } from './catalog-registration-api';
 
 export const apiCatalogPath = catalogId =>
   `${catalogPath(catalogId)}/apicatalog`;
+
 export const apiListPath = catalogId => `${catalogPath(catalogId)}/apis`;
+
+export const apiListAllPath = catalogId =>
+  `${apiListPath(catalogId)}?size=1000`;
 
 export const apiPath = (catalogId, apidId) =>
   `${apiListPath(catalogId)}/${apidId}`;

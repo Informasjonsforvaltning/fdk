@@ -4,7 +4,9 @@ import {
   CATALOGS_REQUEST,
   CATALOGS_SUCCESS
 } from '../../constants/ActionTypes';
-import { fetchActions } from '../fetchActions';
+import { registrationApiGet } from '../../api/registration-api';
+import { reduxFsaThunk } from '../../lib/redux-fsa-thunk';
+import { catalogsPath } from '../../api/catalog-registration-api';
 
 function shouldFetch(metaState) {
   const threshold = 60 * 1000; // seconds
@@ -18,11 +20,11 @@ function shouldFetch(metaState) {
 export const fetchCatalogsIfNeeded = () => (dispatch, getState) =>
   shouldFetch(_.get(getState(), 'catalogs')) &&
   dispatch(
-    fetchActions('/catalogs', [
-      CATALOGS_REQUEST,
-      CATALOGS_SUCCESS,
-      CATALOGS_FAILURE
-    ])
+    reduxFsaThunk(() => registrationApiGet(catalogsPath), {
+      onBeforeStart: { type: CATALOGS_REQUEST },
+      onSuccess: { type: CATALOGS_SUCCESS },
+      onError: { type: CATALOGS_FAILURE }
+    })
   );
 
 const initialState = { isFetchingCatalogs: false, catalogItems: null };

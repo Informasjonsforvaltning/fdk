@@ -1,5 +1,5 @@
 import { compose } from 'recompose';
-import { fetchActions } from '../fetchActions';
+import { reduxFsaThunk } from '../../lib/redux-fsa-thunk';
 
 export const AUTH_INIT = 'AUTH_INIT';
 export const AUTH_SUCCESS = 'AUTH_SUCCESS';
@@ -21,7 +21,11 @@ export const selectIsAuthenticating = compose(
 export const authenticateThunk = () => (dispatch, getState) =>
   !selectIsAuthenticating(getState()) &&
   dispatch(
-    fetchActions('/innloggetBruker', [AUTH_INIT, AUTH_SUCCESS, AUTH_ERROR])
+    reduxFsaThunk(() => fetch('/innloggetBruker'), {
+      onBeforeStart: { type: AUTH_INIT },
+      onSuccess: { type: AUTH_SUCCESS },
+      onError: { type: AUTH_ERROR }
+    })
   );
 
 export const logoutThunk = () => dispatch => dispatch({ type: AUTH_LOGOUT });
