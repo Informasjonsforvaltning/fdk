@@ -14,19 +14,15 @@ function shouldFetch(metaState) {
   );
 }
 
-export function fetchCatalogIfNeeded(catalogId) {
-  return (dispatch, getState) => {
-    if (shouldFetch(_.get(getState(), ['catalog', 'meta', catalogId]))) {
-      dispatch(
-        fetchActions(`/catalogs/${catalogId}`, [
-          { type: CATALOG_REQUEST, meta: { catalogId } },
-          { type: CATALOG_SUCCESS, meta: { catalogId } },
-          { type: CATALOG_FAILURE, meta: { catalogId } }
-        ])
-      );
-    }
-  };
-}
+export const fetchCatalogIfNeeded = catalogId => (dispatch, getState) =>
+  shouldFetch(_.get(getState(), ['catalog', 'meta', catalogId])) &&
+  dispatch(
+    fetchActions(`/catalogs/${catalogId}`, [
+      { type: CATALOG_REQUEST, meta: { catalogId } },
+      { type: CATALOG_SUCCESS, meta: { catalogId } },
+      { type: CATALOG_FAILURE, meta: { catalogId } }
+    ])
+  );
 
 const initialState = {};
 

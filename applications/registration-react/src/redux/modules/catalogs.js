@@ -1,8 +1,8 @@
 import _ from 'lodash';
 import {
+  CATALOGS_FAILURE,
   CATALOGS_REQUEST,
-  CATALOGS_SUCCESS,
-  CATALOGS_FAILURE
+  CATALOGS_SUCCESS
 } from '../../constants/ActionTypes';
 import { fetchActions } from '../fetchActions';
 
@@ -15,17 +15,15 @@ function shouldFetch(metaState) {
   );
 }
 
-export function fetchCatalogsIfNeeded() {
-  return (dispatch, getState) =>
-    shouldFetch(_.get(getState(), 'catalogs')) &&
-    dispatch(
-      fetchActions('/catalogs', [
-        CATALOGS_REQUEST,
-        CATALOGS_SUCCESS,
-        CATALOGS_FAILURE
-      ])
-    );
-}
+export const fetchCatalogsIfNeeded = () => (dispatch, getState) =>
+  shouldFetch(_.get(getState(), 'catalogs')) &&
+  dispatch(
+    fetchActions('/catalogs', [
+      CATALOGS_REQUEST,
+      CATALOGS_SUCCESS,
+      CATALOGS_FAILURE
+    ])
+  );
 
 const initialState = { isFetchingCatalogs: false, catalogItems: null };
 
