@@ -4,8 +4,8 @@ import {
   registrationApiPatch,
   registrationApiPost
 } from './registration-api';
+import { catalogPath } from './catalog-registration-api';
 
-export const catalogPath = catalogId => `/catalogs/${catalogId}`;
 export const apiCatalogPath = catalogId =>
   `${catalogPath(catalogId)}/apicatalog`;
 export const apiListPath = catalogId => `${catalogPath(catalogId)}/apis`;
