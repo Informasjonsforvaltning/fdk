@@ -97,7 +97,7 @@ public class DatasetController {
      * @return HTTP 200 OK if dataset could be could be created.
      */
     @PreAuthorize("hasPermission(#catalogId, 'write')")
-    @RequestMapping(value = "/", method = POST, consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "", method = POST, consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_UTF8_VALUE)
     public Dataset saveDataset(@PathVariable("catalogId") String catalogId, @RequestBody Dataset data) throws NotFoundException {
 
         Optional<Catalog> catalogOptional = catalogRepository.findById(catalogId);

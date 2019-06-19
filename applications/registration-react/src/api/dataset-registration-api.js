@@ -7,10 +7,10 @@ import {
 import { catalogPath } from './catalog-registration-api';
 
 export const datasetListPath = catalogId =>
-  `${catalogPath(catalogId)}/datasets/`; // todo, post method is implemented on / currently.
+  `${catalogPath(catalogId)}/datasets`;
 
 export const datasetPath = (catalogId, datasetId) =>
-  `${datasetListPath(catalogId)}${datasetId}`;
+  `${datasetListPath(catalogId)}/${datasetId}`;
 
 export const deleteDataset = (catalogId, datasetId) =>
   registrationApiDelete(datasetPath(catalogId, datasetId));
