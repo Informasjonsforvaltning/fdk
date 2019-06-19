@@ -8,6 +8,8 @@ import no.dcat.service.EnhetService;
 import no.dcat.service.HarvesterService;
 import no.dcat.shared.Publisher;
 import no.dcat.shared.admin.DcatSourceDto;
+import no.fdk.webutils.exceptions.BadRequestException;
+import no.fdk.webutils.exceptions.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +18,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.PagedResources;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.hateoas.Resource;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -26,7 +26,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
-import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.web.bind.annotation.RequestMethod.*;
@@ -79,8 +78,8 @@ public class CatalogController {
     @RequestMapping(value = "",
         method = GET,
         produces = APPLICATION_JSON_UTF8_VALUE)
-    public HttpEntity<PagedResources<Catalog>> listCatalogs(Pageable pageable,
-                                                            PagedResourcesAssembler assembler) {
+    public PagedResources<Resource<Catalog>> listCatalogs(Pageable pageable,
+                                                          PagedResourcesAssembler<Catalog> assembler) {
 
         Authentication auth = springSecurityContextBean.getAuthentication();
 
@@ -94,7 +93,7 @@ public class CatalogController {
 
         Page<Catalog> catalogs = catalogRepository.findByIdIn(new ArrayList<>(validCatalogs), pageable);
 
-        return new ResponseEntity<>(assembler.toResource(catalogs), OK);
+        return assembler.toResource(catalogs);
     }
 
     /**
@@ -108,17 +107,17 @@ public class CatalogController {
     @RequestMapping(value = "", method = POST,
         consumes = APPLICATION_JSON_VALUE,
         produces = APPLICATION_JSON_UTF8_VALUE)
-    public HttpEntity<Catalog> createCatalog(@RequestBody Catalog catalog) {
+    public Catalog createCatalog(@RequestBody Catalog catalog) throws BadRequestException {
 
         logger.info("Create catalog: {}. Details {}", catalog.getId(), catalog.toString());
         if (catalog.getId() == null) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            throw new BadRequestException();
         }
 
         Catalog savedCatalog = saveCatalog(catalog);
         createDatasourceInHarvester(catalog);
 
-        return new ResponseEntity<>(savedCatalog, OK);
+        return savedCatalog;
     }
 
     Catalog saveCatalog(Catalog catalog) {
@@ -156,16 +155,16 @@ public class CatalogController {
         method = PUT,
         consumes = APPLICATION_JSON_VALUE,
         produces = APPLICATION_JSON_UTF8_VALUE)
-    public HttpEntity<Catalog> updateCatalog(@PathVariable("id") String id,
-                                             @RequestBody Catalog catalog) {
+    public Catalog updateCatalog(@PathVariable("id") String id,
+                                 @RequestBody Catalog catalog) throws NotFoundException, BadRequestException {
         logger.info("Modify catalog: " + catalog.toString());
 
         if (!catalogRepository.findById(id).isPresent()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            throw new NotFoundException();
         }
 
         if (!catalog.getId().equals(id)) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            throw new BadRequestException();
         }
 
         if (catalog.getPublisher() == null) {
@@ -178,7 +177,7 @@ public class CatalogController {
 
         Catalog savedCatalog = catalogRepository.save(catalog);
 
-        return new ResponseEntity<>(savedCatalog, OK);
+        return savedCatalog;
     }
 
     /**
@@ -191,13 +190,11 @@ public class CatalogController {
     @CrossOrigin
     @RequestMapping(value = "/{id}", method = DELETE,
         produces = APPLICATION_JSON_UTF8_VALUE)
-    public HttpEntity<String> removeCatalog(@PathVariable("id") String id) {
+    public void removeCatalog(@PathVariable("id") String id) {
         logger.info("Delete catalog: " + id);
         catalogRepository.deleteById(id);
 
         //TODO: FDK-1024 slett fra harvester hvis den finnes der. OBS miljøer.
-
-        return new ResponseEntity<>(OK);
     }
 
     /**
@@ -210,12 +207,8 @@ public class CatalogController {
     @CrossOrigin
     @RequestMapping(value = "/{id}", method = GET,
         produces = APPLICATION_JSON_UTF8_VALUE)
-    public HttpEntity<Catalog> getCatalog(@PathVariable("id") String id) {
-        Optional<Catalog> catalogOptional = catalogRepository.findById(id);
-        if (!catalogOptional.isPresent()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(catalogOptional.get(), OK);
+    public Catalog getCatalog(@PathVariable("id") String id) throws NotFoundException {
+        return catalogRepository.findById(id).orElseThrow(NotFoundException::new);
     }
 
 
@@ -229,12 +222,16 @@ public class CatalogController {
         }
 
         Catalog newCatalog = new Catalog(orgnr);
+
         String organizationName = entityNameService.getOrganizationName(orgnr);
         if (organizationName != null) {
             newCatalog.getTitle().put("nb", "Datakatalog for " + organizationName);
         }
 
-        createCatalog(newCatalog);
+        try {
+            createCatalog(newCatalog);
+        } catch (BadRequestException ignore) {
+        }
     }
 
     /**
