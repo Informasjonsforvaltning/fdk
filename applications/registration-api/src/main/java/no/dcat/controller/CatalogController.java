@@ -8,7 +8,6 @@ import no.dcat.service.EnhetService;
 import no.dcat.service.HarvesterService;
 import no.dcat.shared.Publisher;
 import no.dcat.shared.admin.DcatSourceDto;
-import org.elasticsearch.index.IndexNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -224,38 +223,19 @@ public class CatalogController {
         organizations.forEach(this::createCatalogIfNotExists);
     }
 
-    Catalog createCatalogIfNotExists(String orgnr) {
+    void createCatalogIfNotExists(String orgnr) {
         if (!orgnr.matches("\\d{9}")) {
-            return null;
-        }
-        boolean noIndex = false;
-        Optional<Catalog> catalogOptional = Optional.empty();
-
-        try {
-            catalogOptional = catalogRepository.findById(orgnr);
-        } catch (IndexNotFoundException infe) {
-            noIndex = true;
+            return;
         }
 
-
-        if (noIndex || (!catalogOptional.isPresent())) {
-
-            Catalog newCatalog = new Catalog(orgnr);
-
-            String organizationName = entityNameService.getOrganizationName(orgnr);
-            if (organizationName != null) {
-                newCatalog.getTitle().put("nb", "Datakatalog for " + organizationName);
-            }
-            HttpEntity<Catalog> response = createCatalog(newCatalog);
-            if (response.getBody() == null) {
-                return null;
-            }
-
-            return newCatalog;
+        Catalog newCatalog = new Catalog(orgnr);
+        String organizationName = entityNameService.getOrganizationName(orgnr);
+        if (organizationName != null) {
+            newCatalog.getTitle().put("nb", "Datakatalog for " + organizationName);
         }
-        return catalogOptional.get();
+
+        createCatalog(newCatalog);
     }
-
 
     /**
      * Create a new data source for the catalog in harvester,
