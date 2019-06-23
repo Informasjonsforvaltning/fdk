@@ -21,11 +21,18 @@ export const selectIsAuthenticating = compose(
 export const authenticateThunk = () => (dispatch, getState) =>
   !selectIsAuthenticating(getState()) &&
   dispatch(
-    reduxFsaThunk(() => fetch('/innloggetBruker'), {
-      onBeforeStart: { type: AUTH_INIT },
-      onSuccess: { type: AUTH_SUCCESS },
-      onError: { type: AUTH_ERROR }
-    })
+    reduxFsaThunk(
+      () =>
+        fetch('/innloggetBruker', {
+          method: 'GET',
+          headers: { Accept: 'application/json' }
+        }).then(r => r.json()),
+      {
+        onBeforeStart: { type: AUTH_INIT },
+        onSuccess: { type: AUTH_SUCCESS },
+        onError: { type: AUTH_ERROR }
+      }
+    )
   );
 
 export const logoutThunk = () => dispatch => dispatch({ type: AUTH_LOGOUT });
