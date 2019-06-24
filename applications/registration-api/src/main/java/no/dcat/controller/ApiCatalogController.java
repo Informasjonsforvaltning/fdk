@@ -37,7 +37,7 @@ public class ApiCatalogController {
         this.apiCatalogHarvesterService = apiCatalogHarvesterService;
     }
 
-    @PreAuthorize("hasPermission(#catalogId, 'write')")
+    @PreAuthorize("hasPermission(#catalogId, 'publisher', 'admin')")
     @CrossOrigin
     @RequestMapping(
         value = "",
@@ -54,7 +54,7 @@ public class ApiCatalogController {
         return apiCatalogOptional.get();
     }
 
-    @PreAuthorize("hasPermission(#catalogId, 'write')")
+    @PreAuthorize("hasPermission(#catalogId, 'publisher', 'admin')")
     @CrossOrigin
     @RequestMapping(
         value = "",
@@ -87,7 +87,7 @@ public class ApiCatalogController {
         return apiCatalogSaved;
     }
 
-    @PreAuthorize("hasPermission(#catalogId, 'write')")
+    @PreAuthorize("hasPermission(#catalogId, 'publisher', 'admin')")
     @CrossOrigin
     @RequestMapping(
         value = "",

@@ -106,7 +106,7 @@ public class CatalogController {
      * @param catalog catalog skeleton to copy from
      * @return new catalog object
      */
-    @PreAuthorize("hasPermission(#catalog.id, 'write')")
+    @PreAuthorize("hasPermission(#catalog.id, 'publisher', 'admin')")
     @CrossOrigin
     @RequestMapping(value = "", method = POST,
         consumes = APPLICATION_JSON_VALUE,
@@ -153,7 +153,7 @@ public class CatalogController {
      * @param catalog the catalog object with fields to update
      * @return the saved catalog
      */
-    @PreAuthorize("hasPermission(#catalog.id, 'write')")
+    @PreAuthorize("hasPermission(#catalog.id, 'publisher', 'admin')")
     @CrossOrigin
     @RequestMapping(value = "/{id}",
         method = PUT,
@@ -190,7 +190,7 @@ public class CatalogController {
      * @param id the catalog id to delet
      * @return acknowledgement of success or failure
      */
-    @PreAuthorize("hasPermission(#id, 'write')")
+    @PreAuthorize("hasPermission(#id, 'publisher', 'admin')")
     @CrossOrigin
     @RequestMapping(value = "/{id}", method = DELETE,
         produces = APPLICATION_JSON_UTF8_VALUE)
@@ -207,7 +207,7 @@ public class CatalogController {
      * @param id of the catalog
      * @return the catalog if it exist
      */
-    @PreAuthorize("hasPermission(#id, 'read')")
+    @PreAuthorize("hasPermission(#id, 'publisher', 'admin')")
     @CrossOrigin
     @RequestMapping(value = "/{id}", method = GET,
         produces = APPLICATION_JSON_UTF8_VALUE)

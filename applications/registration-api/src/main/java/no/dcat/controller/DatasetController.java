@@ -60,7 +60,7 @@ public class DatasetController {
      * @param pageable  number of datasets returned
      * @return List of data sets, with hyperlinks to other pages in search result
      */
-    @PreAuthorize("hasPermission(#catalogId, 'write')")
+    @PreAuthorize("hasPermission(#catalogId, 'publisher', 'admin')")
     @RequestMapping(value = "", method = GET, produces = APPLICATION_JSON_UTF8_VALUE)
     public PagedResources<Resource<Dataset>> listDatasets(@PathVariable("catalogId") String catalogId, Pageable pageable, PagedResourcesAssembler<Dataset> assembler) {
 
@@ -76,7 +76,7 @@ public class DatasetController {
      * @return complete dataset. HTTP status 200 OK is returned if dataset is found.
      * If dataset is not found, HTTP 404 Not found is returned, with an empty body.
      */
-    @PreAuthorize("hasPermission(#catalogId, 'write')")
+    @PreAuthorize("hasPermission(#catalogId, 'publisher', 'admin')")
     @RequestMapping(value = "/{id}", method = GET, produces = APPLICATION_JSON_UTF8_VALUE)
     public Dataset getDataset(@PathVariable("catalogId") String catalogId, @PathVariable("id") String id) throws NotFoundException {
 
@@ -97,7 +97,7 @@ public class DatasetController {
      * @param data
      * @return HTTP 200 OK if dataset could be could be created.
      */
-    @PreAuthorize("hasPermission(#catalogId, 'write')")
+    @PreAuthorize("hasPermission(#catalogId, 'publisher', 'admin')")
     @RequestMapping(value = "", method = POST, consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_UTF8_VALUE)
     public Dataset saveDataset(@PathVariable("catalogId") String catalogId, @RequestBody Dataset data) throws NotFoundException {
 
@@ -118,7 +118,7 @@ public class DatasetController {
      * @param dataset
      * @return HTTP 200 OK if dataset could be could be created.
      */
-    @PreAuthorize("hasPermission(#catalogId, 'write')")
+    @PreAuthorize("hasPermission(#catalogId, 'publisher', 'admin')")
     @RequestMapping(value = "/{id}", method = PUT, consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_UTF8_VALUE)
     public Dataset saveDataset(@PathVariable("catalogId") String catalogId, @PathVariable("id") String datasetId, @RequestBody Dataset dataset) throws NotFoundException {
         logger.info("PUT requestbody dataset: " + dataset.toString());
@@ -144,7 +144,7 @@ public class DatasetController {
      * @param updates Objects in datatset to be updated
      * @return HTTP 200 OK if dataset could be could be updated.
      */
-    @PreAuthorize("hasPermission(#catalogId, 'write')")
+    @PreAuthorize("hasPermission(#catalogId, 'publisher', 'admin')")
     @RequestMapping(value = "/{id}", method = PATCH, consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_UTF8_VALUE)
     public Dataset updateDataset(@PathVariable("catalogId") String catalogId,
                                  @PathVariable("id") String datasetId,
@@ -250,7 +250,7 @@ and it is quite high in priority list.
      * @return HTTP status 200 OK is returned if dataset was successfully deleted. Body empty.
      * If dataset is not found, HTTP 404 Not found is returned, with an empty body.
      */
-    @PreAuthorize("hasPermission(#catalogId, 'write')")
+    @PreAuthorize("hasPermission(#catalogId, 'publisher', 'admin')")
     @CrossOrigin
     @RequestMapping(value = "/{id}", method = DELETE, produces = APPLICATION_JSON_UTF8_VALUE)
     public void deleteDataset(@PathVariable("catalogId") String catalogId, @PathVariable("id") String id) throws NotFoundException {

@@ -59,7 +59,7 @@ public class ImportController {
         this.datasetRepository = datasetRepository;
     }
 
-    @PreAuthorize("hasPermission(#catalogId, 'write')")
+    @PreAuthorize("hasPermission(#catalogId, 'publisher', 'admin')")
     @CrossOrigin
     @RequestMapping(value = "",
         method = POST,
