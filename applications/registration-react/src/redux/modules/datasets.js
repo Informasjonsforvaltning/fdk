@@ -64,10 +64,11 @@ export default function datasets(state = initialState, action) {
         }
       };
     case DATASETS_SUCCESS: {
-      const objFromArray = _.get(action.payload, [
-        '_embedded',
-        'datasets'
-      ]).reduce((accumulator, current) => {
+      const objFromArray = _.get(
+        action.payload,
+        ['_embedded', 'datasets'],
+        []
+      ).reduce((accumulator, current) => {
         accumulator[current.id] = current;
         return accumulator;
       }, {});
