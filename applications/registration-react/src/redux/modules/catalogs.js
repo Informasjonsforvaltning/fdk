@@ -1,12 +1,12 @@
 import _ from 'lodash';
-import {
-  CATALOGS_FAILURE,
-  CATALOGS_REQUEST,
-  CATALOGS_SUCCESS
-} from '../../constants/ActionTypes';
+
 import { registrationApiGet } from '../../api/registration-api';
 import { reduxFsaThunk } from '../../lib/redux-fsa-thunk';
 import { catalogsPath } from '../../api/catalog-registration-api';
+
+export const CATALOGS_REQUEST = 'CATALOGS_REQUEST';
+export const CATALOGS_SUCCESS = 'CATALOGS_SUCCESS';
+export const CATALOGS_FAILURE = 'CATALOGS_FAILURE';
 
 function shouldFetch(metaState) {
   const threshold = 60 * 1000; // seconds
