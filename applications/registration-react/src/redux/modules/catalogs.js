@@ -27,7 +27,12 @@ export const fetchCatalogsIfNeeded = () => (dispatch, getState) =>
     })
   );
 
-const initialState = { isFetchingCatalogs: false, catalogItems: null };
+const initialState = {
+  isFetching: false,
+  catalogItems: null,
+  lastFetch: null,
+  error: null
+};
 
 export default function catalogs(state = initialState, action) {
   switch (action.type) {
@@ -36,20 +41,23 @@ export default function catalogs(state = initialState, action) {
         ...state,
         isFetching: true,
         lastFetch: null
+        // do not overwrite the current result or error
       };
     case CATALOGS_SUCCESS:
       return {
         ...state,
         isFetching: false,
         lastFetch: Date.now(),
-        catalogItems: _.get(action.payload, ['_embedded', 'catalogs'])
+        catalogItems: _.get(action.payload, ['_embedded', 'catalogs']),
+        error: null
       };
     case CATALOGS_FAILURE:
       return {
         ...state,
         isFetching: false,
-        lastFetch: null,
-        catalogItems: null
+        lastFetch: Date.now(),
+        catalogItems: null,
+        error: action.error
       };
     default:
       return state;
