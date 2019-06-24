@@ -61,7 +61,7 @@ public class ApiRegistrationController {
      * @param pageable
      * @return List of api registrations
      */
-    @PreAuthorize("hasPermission(#catalogId, 'write')")
+    @PreAuthorize("hasPermission(#catalogId,'publisher', 'admin')")
     @CrossOrigin
     @RequestMapping(value = "", method = GET, produces = APPLICATION_JSON_UTF8_VALUE)
     public PagedResources<Resource<ApiRegistration>> listApiRegistrations(
@@ -80,7 +80,7 @@ public class ApiRegistrationController {
      * @param id Identifier of apiRegistration
      * @return complete apiRegistration
      */
-    @PreAuthorize("hasPermission(#catalogId, 'write')")
+    @PreAuthorize("hasPermission(#catalogId, 'publisher', 'admin')")
     @CrossOrigin
     @RequestMapping(value = "/{id}", method = GET, produces = APPLICATION_JSON_UTF8_VALUE)
     public ApiRegistration getApiRegistration(
@@ -96,7 +96,7 @@ public class ApiRegistrationController {
      * @param data
      * @return ApiRegistration
      */
-    @PreAuthorize("hasPermission(#catalogId, 'write')")
+    @PreAuthorize("hasPermission(#catalogId, 'publisher', 'admin')")
     @CrossOrigin
     @RequestMapping(
         value = "",
@@ -136,7 +136,7 @@ public class ApiRegistrationController {
      * @return HTTP status 204 NO CONTENT is returned if apiRegistration was successfully deleted. If
      * apiRegistration is not found, HTTP 404 Not found is returned
      */
-    @PreAuthorize("hasPermission(#catalogId, 'write')")
+    @PreAuthorize("hasPermission(#catalogId, 'publisher', 'admin')")
     @CrossOrigin
     @RequestMapping(value = "/{id}", method = DELETE, produces = APPLICATION_JSON_UTF8_VALUE)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
@@ -164,7 +164,7 @@ public class ApiRegistrationController {
      * @param updates Objects in apiRegistration to be updated
      * @return apiRegistration
      */
-    @PreAuthorize("hasPermission(#catalogId, 'write')")
+    @PreAuthorize("hasPermission(#catalogId,'publisher', 'admin')")
     @CrossOrigin
     @RequestMapping(
         value = "/{id}",
