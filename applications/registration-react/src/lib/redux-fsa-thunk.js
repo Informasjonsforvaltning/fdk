@@ -2,11 +2,11 @@
 // Flux Standard Action: https://github.com/redux-utilities/flux-standard-action)
 
 export function reduxFsaThunk(task, typeMap) {
-  return dispatch => {
+  return async dispatch => {
     if (typeMap.onBeforeStart) {
-      dispatch(typeMap.onBeforeStart);
+      await dispatch(typeMap.onBeforeStart);
     }
-    task()
+    return task()
       .then(payload => dispatch({ ...typeMap.onSuccess, payload }))
       .catch(error => dispatch({ ...typeMap.onError, error }));
   };
