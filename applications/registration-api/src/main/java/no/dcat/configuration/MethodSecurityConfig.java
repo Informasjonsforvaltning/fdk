@@ -14,18 +14,18 @@ import org.springframework.security.config.annotation.method.configuration.Globa
 public class MethodSecurityConfig extends GlobalMethodSecurityConfiguration {
     private static Logger logger = LoggerFactory.getLogger(MethodSecurityConfig.class);
 
-    private final CatalogPermissionEvaluator catalogPermissionEvaluator;
+    private final FdkPermissionEvaluator fdkPermissionEvaluator;
 
     public MethodSecurityConfig() {
         logger.info("method config");
-        this.catalogPermissionEvaluator = new CatalogPermissionEvaluator();
+        this.fdkPermissionEvaluator = new FdkPermissionEvaluator();
     }
 
     @Override
     protected MethodSecurityExpressionHandler createExpressionHandler() {
         DefaultMethodSecurityExpressionHandler expressionHandler = new DefaultMethodSecurityExpressionHandler();
 
-        expressionHandler.setPermissionEvaluator(catalogPermissionEvaluator);
+        expressionHandler.setPermissionEvaluator(fdkPermissionEvaluator);
 
         return expressionHandler;
     }
