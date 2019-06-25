@@ -18,5 +18,11 @@ for maven_app in $maven_apps; do
     BUILD_CMD[$i]="mvn clean install -B -T 2C --projects applications/$maven_app --also-make"
 done
 
+# our jenkins job selects build container based on that the build command starts with "mvn", therefore we user mvn here
+i=$((i+1))
+BUILD_APPS[$i]="sso"
+BUILD_CMD[$i]="mvn -v  && ( cd applications/sso && ./buildDocker.sh )"
+
+
 export BUILD_APPS
 export BUILD_CMD
