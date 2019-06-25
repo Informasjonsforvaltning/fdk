@@ -2,6 +2,43 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+# [1.6.0](https://github.com/Informasjonsforvaltning/fdk/compare/v1.5.0...v1.6.0) (2019-06-25)
+
+
+### Bug Fixes
+
+* **e2e:** Fix e2e container build issue by upgrading base container to node:12-slim ([3de3b68](https://github.com/Informasjonsforvaltning/fdk/commit/3de3b68))
+* **e2e:** Update tests after change of default set of apis ([67bc8e8](https://github.com/Informasjonsforvaltning/fdk/commit/67bc8e8))
+* **reference-data:** Enable all hosts in Cors configuration for reference-data ([85aca0d](https://github.com/Informasjonsforvaltning/fdk/commit/85aca0d))
+* **registration-api:** Allow accessing /catalogs without any authorities without crashing in elasticsearch in-expression ([58df600](https://github.com/Informasjonsforvaltning/fdk/commit/58df600))
+* **registration-react:** [#1973](https://github.com/Informasjonsforvaltning/fdk/issues/1973) Allow unpublishing in case of validation errors ([5e03450](https://github.com/Informasjonsforvaltning/fdk/commit/5e03450))
+* **registration-react:** [#1973](https://github.com/Informasjonsforvaltning/fdk/issues/1973) Fix validation indicators on dataset Los and Theme fields ([6a35906](https://github.com/Informasjonsforvaltning/fdk/commit/6a35906))
+* **registration-react:** [#1980](https://github.com/Informasjonsforvaltning/fdk/issues/1980) Fix user information request parameters ([ca0b943](https://github.com/Informasjonsforvaltning/fdk/commit/ca0b943))
+* **registration-react:** Allow configuring authorization for reference-data service ([67df037](https://github.com/Informasjonsforvaltning/fdk/commit/67df037))
+* **registration-react:** Cache error response of catalogs request, in order to avoid infinite request loop. ([c1b51cb](https://github.com/Informasjonsforvaltning/fdk/commit/c1b51cb))
+* **registration-react:** Expose REFERENCE_DATA_HOST variable in env.json in express server ([5b18668](https://github.com/Informasjonsforvaltning/fdk/commit/5b18668))
+* **registration-react:** Fix console warning on FilterPillsLos component not setting onChange attribute ([db97ef1](https://github.com/Informasjonsforvaltning/fdk/commit/db97ef1))
+* **registration-react:** Fix console warning on invalid proptype for ListRegularItem mainContent proptype ([f51a99c](https://github.com/Informasjonsforvaltning/fdk/commit/f51a99c))
+* **registration-react:** Fix invalid defaulting chain of searchHost in config ([e25129d](https://github.com/Informasjonsforvaltning/fdk/commit/e25129d))
+* **registration-react:** Fix invalid detection of new items in merging patch action in apis store. ([629226d](https://github.com/Informasjonsforvaltning/fdk/commit/629226d))
+* **registration-react:** Fix rendering error on empty datasets query response ([246b14d](https://github.com/Informasjonsforvaltning/fdk/commit/246b14d))
+* **registration-react:** Fix scroll position on editing api-registration, by filtering data loading effect only to be run on apiId change ([d74e589](https://github.com/Informasjonsforvaltning/fdk/commit/d74e589))
+* **registration-react:** Temporarily disable validation of distribution format field in dataset registration page, because it causes render loop ([d4555a9](https://github.com/Informasjonsforvaltning/fdk/commit/d4555a9))
+* **registration-react:** Update feature toggle store implementation to be like in search. Fixes error in console. ([70b14d3](https://github.com/Informasjonsforvaltning/fdk/commit/70b14d3))
+* **registration-react:** Use correct action on response of catalog put request ([f93acc6](https://github.com/Informasjonsforvaltning/fdk/commit/f93acc6))
+* **registration-react:** Use REDUX_LOG environment variable for enabling redux logger. Fixes verbose log in typical development environment ([463d490](https://github.com/Informasjonsforvaltning/fdk/commit/463d490))
+* **search:** [#1656](https://github.com/Informasjonsforvaltning/fdk/issues/1656) Combine datasets api list on dataset detail page from declaration of distributions and api dataset references. ([7ba18dc](https://github.com/Informasjonsforvaltning/fdk/commit/7ba18dc))
+* **search:** [#1863](https://github.com/Informasjonsforvaltning/fdk/issues/1863) Changed owner to responsible ([801cce6](https://github.com/Informasjonsforvaltning/fdk/commit/801cce6))
+* **search:** Bump react-localization to 1.0.13 to fix bug in phrase template replacement, for example in dataset details sticky menu ([f44abb0](https://github.com/Informasjonsforvaltning/fdk/commit/f44abb0))
+* **search:** Fixed position for "clear search" for english language. ([81702af](https://github.com/Informasjonsforvaltning/fdk/commit/81702af))
+* **sso:** Set DB_VENDOR to embedded h2, due to just existence of existence "postgres" host caused keycloak to use it. ([57b32f4](https://github.com/Informasjonsforvaltning/fdk/commit/57b32f4))
+
+
+
+# Change Log
+
+All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
 # [1.5.0](https://github.com/Informasjonsforvaltning/fdk/compare/v1.4.2...v1.5.0) (2019-05-24)
 
 
