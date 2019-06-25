@@ -11,6 +11,7 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>altinn-client</module>
         <module>api-cat-bindings</module>
         <module>api-cat-common</module>
         <module>api-cat-converters</module>
