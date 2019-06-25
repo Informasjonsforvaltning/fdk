@@ -28,13 +28,15 @@ services:
       - "5432"
 
   sso:
-    image: jboss/keycloak:6.0.1
+    image: dcatno/sso:latest
     expose:
       - "8080"
     environment:
       - KEYCLOAK_USER
       - KEYCLOAK_PASSWORD
-      - DB_VENDOR=h2
+      - IDPORTEN_CLIENT_ID
+      - IDPORTEN_CLIENT_SECRET
+      - IDPORTEN_OIDC_ROOT
 
 ### ingress modules
   nginx-search:
@@ -60,7 +62,7 @@ services:
 
 ### external service proxies
   nginx-altinn-proxy:
-    image: dcatno/nginx-altinn-proxy
+    image: dcatno/nginx-altinn-proxy:latest
     expose:
       - "8080"
     environment:

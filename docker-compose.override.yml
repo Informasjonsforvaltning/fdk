@@ -30,11 +30,13 @@ services:
 
   sso:
     volumes:
-      - ./applications/sso/import:/tmp/keycloak/import
       - ./applications/sso/export:/tmp/keycloak/export
+# Alternatively, override import and deployments of the built container
+#      - ./applications/sso/import:/tmp/keycloak/import
+# cp libraries/keycloak-user-storage-rest/target/keycloak-user-storage-rest.jar applications-external/sso/deployments/
+#      - ./applications/sso/deployments:/opt/jboss/keycloak/standalone/deployments
     environment:
       - KEYCLOAK_LOGLEVEL=DEBUG
-    command: -b 0.0.0.0 -Dkeycloak.migration.action=import -Dkeycloak.migration.provider=dir -Dkeycloak.migration.dir=/tmp/keycloak/import -Dkeycloak.migration.strategy=OVERWRITE_EXISTING
     ports:
       - "8084:8080"
 
