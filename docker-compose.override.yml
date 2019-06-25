@@ -30,8 +30,8 @@ services:
 
   sso:
     volumes:
-      - ./applications-external/sso/import:/tmp/keycloak/import
-      - ./applications-external/sso/export:/tmp/keycloak/export
+      - ./applications/sso/import:/tmp/keycloak/import
+      - ./applications/sso/export:/tmp/keycloak/export
     environment:
       - KEYCLOAK_LOGLEVEL=DEBUG
     command: -b 0.0.0.0 -Dkeycloak.migration.action=import -Dkeycloak.migration.provider=dir -Dkeycloak.migration.dir=/tmp/keycloak/import -Dkeycloak.migration.strategy=OVERWRITE_EXISTING
