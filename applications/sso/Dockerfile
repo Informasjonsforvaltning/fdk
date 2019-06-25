@@ -4,6 +4,9 @@ ENV DB_VENDOR h2
 
 COPY tools /opt/fdk/tools
 
+# deployments are compiled SPI implementation modules. E.g. Federated rest user storage module.
+COPY deployments /opt/jboss/keycloak/standalone/deployments
+
 # SSO service does not have permanent database.
 # On service (re)start we will restore the database from the previously exported state.
 # When exporting state, it needs to be converted to a template file that has environment variable placeholders in it
