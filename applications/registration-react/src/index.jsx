@@ -12,6 +12,8 @@ import { configureReferenceDataApi } from './api/reference-data-api';
 import { configureRegistrationApi } from './api/registration-api';
 import { authenticateThunk } from './redux/modules/auth';
 
+import './styles';
+
 function AppRoot(store) {
   return (
     <Provider store={store}>
