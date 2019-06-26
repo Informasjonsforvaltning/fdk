@@ -57,7 +57,7 @@ export default function catalogs(state = initialState, action) {
         isFetching: false,
         lastFetch: Date.now(),
         catalogItems: null,
-        error: action.error
+        error: action.payload
       };
     default:
       return state;
