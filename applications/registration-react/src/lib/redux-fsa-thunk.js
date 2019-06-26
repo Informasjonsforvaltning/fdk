@@ -8,6 +8,8 @@ export function reduxFsaThunk(task, typeMap) {
     }
     return task()
       .then(payload => dispatch({ ...typeMap.onSuccess, payload }))
-      .catch(error => dispatch({ ...typeMap.onError, error }));
+      .catch(error =>
+        dispatch({ ...typeMap.onError, payload: error, error: true })
+      );
   };
 }
