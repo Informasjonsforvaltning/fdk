@@ -1,5 +1,6 @@
 import { compose } from 'recompose';
 import { reduxFsaThunk } from '../../lib/redux-fsa-thunk';
+import { authService } from '../../auth-service';
 
 export const AUTH_INIT = 'AUTH_INIT';
 export const AUTH_SUCCESS = 'AUTH_SUCCESS';
@@ -18,24 +19,24 @@ export const selectIsAuthenticating = compose(
   selectAuthState
 );
 
-export const authenticateThunk = () => (dispatch, getState) =>
+export const getUserProfileThunk = () => (dispatch, getState) =>
   !selectIsAuthenticating(getState()) &&
   dispatch(
-    reduxFsaThunk(
-      () =>
-        fetch('/innloggetBruker', {
-          method: 'GET',
-          headers: { Accept: 'application/json' }
-        }).then(r => r.json()),
-      {
-        onBeforeStart: { type: AUTH_INIT },
-        onSuccess: { type: AUTH_SUCCESS },
-        onError: { type: AUTH_ERROR }
-      }
-    )
+    reduxFsaThunk(() => authService.getUserProfile(), {
+      onBeforeStart: { type: AUTH_INIT },
+      onSuccess: { type: AUTH_SUCCESS },
+      onError: { type: AUTH_ERROR }
+    })
   );
 
-export const logoutThunk = () => dispatch => dispatch({ type: AUTH_LOGOUT });
+export const loginThunk = () => async () => {
+  await authService.login();
+};
+
+export const logoutThunk = () => async () => {
+  await authService.logout();
+  window.location = '/loggedOut'; // todo, causes reload but this is changed soon
+};
 
 const initialState = {
   user: undefined,
