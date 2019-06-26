@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
 
+import { withRouter } from 'react-router';
 import localization from '../../lib/localization';
 import './app-header.scss';
-import { selectUser } from '../../redux/modules/auth';
+import { loginThunk, logoutThunk, selectUser } from '../../redux/modules/auth';
 
-export const HeaderPure = ({ location, user }) => {
+export const HeaderPure = ({ location, user, dispatch }) => {
   let headerTitle;
   switch (location.pathname.split('/')[3]) {
     case 'datasets':
@@ -19,6 +19,17 @@ export const HeaderPure = ({ location, user }) => {
     default:
       headerTitle = localization.app.title;
   }
+
+  const logOut = e => {
+    e.preventDefault();
+    dispatch(logoutThunk());
+  };
+
+  const login = e => {
+    e.preventDefault();
+    dispatch(loginThunk());
+  };
+
   return (
     <header>
       <div>
@@ -67,16 +78,24 @@ export const HeaderPure = ({ location, user }) => {
                 )}
               {user && (
                 <div className="mr-4 fdk-auth-link">
-                  <a href={`${window.location.origin}/logout`}>
+                  <button
+                    onClick={logOut}
+                    className="fdk-btn-no-border"
+                    type="button"
+                  >
                     {localization.app.logOut}
-                  </a>
+                  </button>
                 </div>
               )}
               {!user && (
                 <div className="mr-4 fdk-auth-link">
-                  <a href={`${window.location.origin}/login`}>
+                  <button
+                    onClick={login}
+                    className="fdk-btn-no-border"
+                    type="button"
+                  >
                     {localization.app.logIn}
-                  </a>
+                  </button>
                 </div>
               )}
             </div>
@@ -93,7 +112,8 @@ HeaderPure.defaultProps = {
 
 HeaderPure.propTypes = {
   user: PropTypes.object,
-  location: PropTypes.object.isRequired
+  location: PropTypes.object.isRequired,
+  dispatch: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({ user: selectUser(state) });

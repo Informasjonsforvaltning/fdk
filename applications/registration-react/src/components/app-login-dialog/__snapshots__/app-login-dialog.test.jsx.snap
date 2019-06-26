@@ -32,12 +32,14 @@ exports[`should render LoginDialog correctly 1`] = `
           <div
             className="mt-5 mb-5"
           >
-            <a
+            <Button
               className="fdk-button fdk-button-cta"
-              href="/login"
+              color="secondary"
+              onClick={[Function]}
+              tag="button"
             >
               Logg inn
-            </a>
+            </Button>
           </div>
           <div
             className="fdk-text-size-small fdk-text-line-medium"

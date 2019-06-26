@@ -6,33 +6,26 @@ import IdleTimer from 'react-idle-timer';
 
 import localization from '../lib/localization';
 import {
-  authenticateThunk,
+  getUserProfileThunk,
+  logoutThunk,
   selectIsAuthenticating,
   selectUser
 } from '../redux/modules/auth';
 import TimeoutModal from './timeout-modal/timeout-modal.component';
 
 export const ProtectedRoutePure = props => {
-  const {
-    user,
-    isAuthenticating,
-    component: Component,
-    history,
-    dispatch
-  } = props;
+  const { user, isAuthenticating, component: Component, dispatch } = props;
 
   const [showInactiveWarning, setShowInactiveWarning] = useState(false);
 
   const logOut = () => {
     setShowInactiveWarning(false);
-    if (history) {
-      history.push('/loggedOut');
-    }
+    dispatch(logoutThunk());
   };
 
   const refreshSession = () => {
     setShowInactiveWarning(false);
-    dispatch(authenticateThunk());
+    dispatch(getUserProfileThunk());
   };
 
   return (

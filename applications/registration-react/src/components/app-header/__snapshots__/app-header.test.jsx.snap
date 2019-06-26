@@ -66,11 +66,13 @@ exports[`should render Header correctly 1`] = `
           <div
             className="mr-4 fdk-auth-link"
           >
-            <a
-              href="http://localhost/login"
+            <button
+              className="fdk-btn-no-border"
+              onClick={[Function]}
+              type="button"
             >
               Logg inn
-            </a>
+            </button>
           </div>
         </div>
       </div>
