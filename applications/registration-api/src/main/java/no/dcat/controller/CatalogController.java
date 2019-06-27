@@ -47,15 +47,6 @@ public class CatalogController {
 
     EnhetService enhetService;
 
-    @Value("${saml.sso.context-provider.lb.server-name}")
-    private String serverName;
-
-    @Value("${saml.sso.context-provider.lb.server-port}")
-    private String serverPort;
-
-    @Value("${saml.sso.context-provider.lb.include-server-port-in-request-url}")
-    private boolean includeServerPortInUrl;
-
     @Value("${application.openDataEnhet}")
     private String openDataEnhetsregisteret;
 
@@ -276,19 +267,6 @@ public class CatalogController {
      * @return String containing base uri
      */
     public String getRegistrationBaseUrl() {
-
-        /*
-        Temporary: use internal url instead of external one due to routing issues
-
-        StringBuilder host = new StringBuilder();
-        String protocol = "https://";
-        host.append(protocol);
-        host.append(serverName);
-        if (includeServerPortInUrl) {
-            host.append(":").append(serverPort);
-        }
-        return host.toString();
-        */
         return "http://registration-api:8080";
     }
 
