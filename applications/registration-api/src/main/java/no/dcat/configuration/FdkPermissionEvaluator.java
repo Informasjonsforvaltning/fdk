@@ -2,7 +2,7 @@ package no.dcat.configuration;
 
 import org.springframework.security.access.PermissionEvaluator;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.io.Serializable;
 
@@ -13,16 +13,8 @@ public class FdkPermissionEvaluator implements PermissionEvaluator {
     }
 
     public boolean hasPermission(Authentication authentication, Serializable targetId, String targetType, Object permission) {
+        SimpleGrantedAuthority requiredAuthority = new SimpleGrantedAuthority((String) targetId);
 
-        boolean authorized = false;
-
-        for (GrantedAuthority authority : authentication.getAuthorities()) {
-            if (authority.getAuthority().equals(targetId)) {
-                authorized = true;
-                break;
-            }
-        }
-
-        return authorized;
+        return authentication.getAuthorities().contains(requiredAuthority);
     }
 }
