@@ -92,10 +92,10 @@ services:
     ports:
       - "8126:8080"
 
-#  nginx-altinn-proxy-mock:
-#    build: ./applications/nginx-altinn-proxy-mock
-#    ports:
-#      - "8128:8080"
+  nginx-altinn-proxy-mock:
+    build: ./applications/nginx-altinn-proxy-mock
+    ports:
+      - "8128:8080"
 
   nginx-enhetsregisteret-proxy:
     build: ./applications/nginx-enhetsregisteret-proxy
