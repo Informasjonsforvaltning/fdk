@@ -401,6 +401,7 @@
     },
     "datasets": "Datasettkatalog",
     "apis": "API-katalog",
+    "concepts": "Begrepskatalog",
     "type": {
       "datasets": "datasett",
       "apis": "API-er"

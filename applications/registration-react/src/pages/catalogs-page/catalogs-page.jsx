@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { CardGroup } from 'reactstrap';
 import _ from 'lodash';
-
 import localization from '../../lib/localization';
 import { Catalog } from './catalogs/catalogs.component';
 import { getTranslateText } from '../../lib/translateText';
@@ -57,6 +56,13 @@ const renderCatalogs = props => {
               itemsCount={getAPIItemsCount(apis, catalog.id)}
             />
           )}
+          {
+            <Catalog
+              key={`concepts-${catalog.id}`}
+              catalogId={catalog.id}
+              type="concepts"
+            />
+          }
         </CardGroup>
       </div>
     </div>

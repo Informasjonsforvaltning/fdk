@@ -6,15 +6,46 @@ import localization from '../../../../lib/localization';
 import './catalog-item.component.scss';
 
 export const CatalogItem = props => {
-  const { publisherId, type, itemsCount } = props;
+  const { type, itemsCount, linkUri } = props;
+
   const iconClass = cx('catalog-icon', {
     'catalog-icon--dataset': type === 'datasets',
-    'catalog-icon--api': type === 'apis'
+    'catalog-icon--api': type === 'apis',
+    'catalog-icon--concepts': type === 'concepts'
   });
+
+  const itemClass = cx(
+    'catalog-item__body',
+    'd-flex',
+    'flex-column',
+    'align-items-center',
+    {
+      beta: type === 'concepts',
+      'h-100': !itemsCount
+    }
+  );
+
+  if (type === 'concepts') {
+    return (
+      <div className="col-md-4 pl-0">
+        <a className="catalog-item" href={linkUri}>
+          <div className={itemClass}>
+            <h3 className={iconClass}>{localization.catalogs[type]}</h3>
+            {itemsCount && (
+              <span className="fdk-text-size-small fdk-color-dark-2">
+                {itemsCount} {localization.catalogs.type[type]}
+              </span>
+            )}
+          </div>
+        </a>
+      </div>
+    );
+  }
+
   return (
     <div className="col-md-4 pl-0">
-      <Link className="catalog-item" to={`/catalogs/${publisherId}/${type}`}>
-        <div className="catalog-item__body d-flex flex-column align-items-center">
+      <Link className="catalog-item" to={linkUri}>
+        <div className={itemClass}>
           <h3 className={iconClass}>{localization.catalogs[type]}</h3>
           {itemsCount && (
             <span className="fdk-text-size-small fdk-color-dark-2">
@@ -32,7 +63,7 @@ CatalogItem.defaultProps = {
 };
 
 CatalogItem.propTypes = {
-  publisherId: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
-  itemsCount: PropTypes.number
+  itemsCount: PropTypes.number,
+  linkUri: PropTypes.string.isRequired
 };

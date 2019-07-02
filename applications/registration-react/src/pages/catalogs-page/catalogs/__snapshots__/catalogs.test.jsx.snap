@@ -4,6 +4,7 @@ exports[`should render Catalog correctly with minimum props 1`] = `
 <CatalogItem
   itemsCount={null}
   key="910244132"
+  linkUri="/catalogs/910244132/datasets"
   publisherId="910244132"
   type="datasets"
 />
@@ -13,6 +14,7 @@ exports[`should render Catalog correctly with one dataset item 1`] = `
 <CatalogItem
   itemsCount={null}
   key="910244132"
+  linkUri="/catalogs/910244132/datasets"
   publisherId="910244132"
   type="datasets"
 />

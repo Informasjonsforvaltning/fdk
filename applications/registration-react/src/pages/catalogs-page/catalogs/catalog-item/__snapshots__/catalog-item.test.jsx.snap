@@ -6,7 +6,6 @@ exports[`should render CatalogItem correctly with itemsCount set to 10 1`] = `
 >
   <Link
     className="catalog-item"
-    to="/catalogs/123/datasets"
   >
     <div
       className="catalog-item__body d-flex flex-column align-items-center"
@@ -34,10 +33,9 @@ exports[`should render CatalogItem correctly with missing itemsCount 1`] = `
 >
   <Link
     className="catalog-item"
-    to="/catalogs/123/datasets"
   >
     <div
-      className="catalog-item__body d-flex flex-column align-items-center"
+      className="catalog-item__body d-flex flex-column align-items-center h-100"
     >
       <h3
         className="catalog-icon catalog-icon--dataset"

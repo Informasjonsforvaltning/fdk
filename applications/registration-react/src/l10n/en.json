@@ -397,8 +397,9 @@
       "accessTitle": "Do you need access?",
       "accessText": "Read more about how you get access here"
     },
-    "datasets": "Datasettkatalog",
-    "apis": "API-katalog",
+    "datasets": "Dataset Catalog",
+    "apis": "API-catalog",
+    "concepts": "Concept Catalog",
     "type": {
       "datasets": "datasett",
       "apis": "API-er"
