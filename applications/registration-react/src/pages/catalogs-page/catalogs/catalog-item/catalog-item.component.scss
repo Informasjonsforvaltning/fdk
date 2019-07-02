@@ -2,6 +2,8 @@
 @import '../../../../../node_modules/designsystemet/fdk-designsystem-bootstrap4/scss/mixins.scss';
 
 .catalog-item {
+
+
   color: $color-dark-1;
   text-decoration: none;
   &:hover, &:focus, &:active {
@@ -10,12 +12,23 @@
 }
 
 .catalog-item__body {
+
+
+  &.beta {
+    background-image: url("/static/img/banner-beta.svg");
+    background-repeat: no-repeat;
+    background-position: top right;
+    background-size: 3em;
+  }
+
   background-color: $color_white;
+
   border-radius: 5px;
   padding: 2em;
   word-wrap: break-word;
   @include fdk-shadow--regular;
   @include fdk-grow--regular;
+
   &:focus, &:active {
     box-shadow: none;
     transform: none;
@@ -30,15 +43,15 @@
 }
 
 .catalog-icon--dataset {
-  background-image: url("/static/img/icon-catalog-dataset.svg");
+  background-image: url("/static/img/icon-catalog-dataset-lg.svg");
 }
 
 .catalog-icon--api {
-  background-image: url("/static/img/icon-catalog-api.svg");
+  background-image: url("/static/img/icon-catalog-api-lg.svg");
 }
 
-.catalog-icon--begrep {
-  background-image: url("/static/img/icon-catalog-begrep.svg");
+.catalog-icon--concepts {
+  background-image: url("/static/img/icon-catalog-concept-lg.svg");
 }
 
 .catalog-icon--protokoll {
