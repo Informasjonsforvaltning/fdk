@@ -2,13 +2,21 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 
+import { getConfig } from '../../../config';
 import { CatalogItem } from './catalog-item/catalog-item.component';
 
 export const Catalog = props => {
   const { catalogId, type, fetchItems, itemsCount } = props;
   fetchItems(catalogId);
+
+  const linkUri =
+    type === 'concepts'
+      ? `${getConfig().conceptRegistrationApi.host}/${catalogId}`
+      : `/catalogs/${catalogId}/${type}`;
+
   return (
     <CatalogItem
+      linkUri={linkUri}
       key={catalogId}
       publisherId={catalogId}
       type={type}
