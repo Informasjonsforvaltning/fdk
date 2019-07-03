@@ -88,7 +88,8 @@ services:
       - ./applications/registration-react/src:/usr/src/app/src
     environment:
       - REDUX_LOG
-      - CONCEPT_REGISTRATION_API_HOST=http://localhost:8083
+      - CONCEPT_REGISTRATION_API_HOST=http://localhost:8100
+      - CONCEPT_REGISTRATION_HOST=http://localhost:8083
 
 ### java modules
   api-cat:
