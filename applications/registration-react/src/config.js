@@ -19,8 +19,9 @@ const createConfig = env => {
     registrationApi: {
       host: '/'
     },
-    conceptRegistrationApi: {
-      host: env.CONCEPT_REGISTRATION_API_HOST || undefined
+    conceptRegistration: {
+      host: env.CONCEPT_REGISTRATION_HOST || undefined,
+      api: env.CONCEPT_REGISTRATION_API_HOST || undefined
     }
   };
 };
