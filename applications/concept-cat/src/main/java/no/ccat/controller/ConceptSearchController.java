@@ -124,6 +124,8 @@ public class ConceptSearchController {
             aggregatedPage.getTotalPages()
         );
 
+        logger.info("usagecount concept "+concepts.size());
+
         PagedResources<ConceptDenormalized> conceptResources = new PagedResources<>(concepts, pageMetadata);
 
         if (aggregatedPage.hasAggregations()) {
