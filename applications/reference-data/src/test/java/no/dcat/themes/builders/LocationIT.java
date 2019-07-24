@@ -1,5 +1,6 @@
 package no.dcat.themes.builders;
 
+import no.dcat.datastore.domain.dcat.builders.RdfModelLoader;
 import no.dcat.shared.SkosCode;
 import no.dcat.shared.Types;
 import no.dcat.themes.database.TDBConnection;
@@ -7,6 +8,8 @@ import no.dcat.themes.database.TDBInferenceService;
 import no.dcat.themes.database.TDBService;
 import no.dcat.themes.service.CodesService;
 import no.fdk.test.testcategories.IntegrationTest;
+import org.apache.jena.rdf.model.*;
+import org.apache.jena.rdf.model.impl.StatementImpl;
 import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -18,6 +21,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -99,4 +104,38 @@ public class LocationIT {
         assertThat(actual.size(), Matchers.is(4));
     }
 
+    @Ignore
+    @Test
+    public void debugModel() throws Throwable {
+        URL testURL = new URL("http://sws.geonames.org/3143242/");
+        Model model = RdfModelLoader.loadModel(testURL);
+
+        List<RDFNode> rdfNodesFromObjects = new ArrayList<>();
+        List<RDFNode> rdfNodesFromSubjects = new ArrayList<>();
+        List<Statement> statementsFromTheModel = new ArrayList<>();
+
+        NodeIterator allObjects = model.listObjects();
+        ResIterator allSubjects = model.listSubjects();
+        StmtIterator allStatements = model.listStatements();
+
+        allObjects.forEachRemaining(e -> {
+            if (e instanceof RDFNode) {
+                rdfNodesFromObjects.add(e);
+            }
+        });
+
+        allSubjects.forEachRemaining(s -> {
+            if (s instanceof RDFNode) {
+                rdfNodesFromSubjects.add(s);
+            }
+        });
+
+        allStatements.forEachRemaining(st -> {
+            if (st instanceof StatementImpl) {
+                statementsFromTheModel.add(st);
+            }
+        });
+
+        logger.info("Statements: " + statementsFromTheModel + "Objects " + allObjects + allSubjects);
+    }
 }
