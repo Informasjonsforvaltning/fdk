@@ -16,21 +16,36 @@ exports[`should render ApiDetailsPage correctly with apiItem 1`] = `
           description="Provides a basic search api against the National API Directory of Norway"
           title="National API Directory Search API"
         />
-        <HarvestDate
-          harvest={
-            Object {
-              "changed": Array [
-                "2018-12-21T09:27:29.577Z",
-                "2019-01-07T16:53:37.588Z",
-                "2019-01-07T16:54:19.940Z",
-              ],
-              "firstHarvested": "2018-12-19T09:52:51.883Z",
-              "lastChanged": "2019-01-07T16:54:19.940Z",
-              "lastHarvested": "2019-01-07T16:54:19.940Z",
+        <div
+          className="d-flex fdk-detail-date mb-5"
+        >
+          <i
+            className="align-self-center fdk-icon-catalog-api mr-2"
+          />
+          <strong
+            className="align-self-center"
+          >
+            API-description
+             
+          </strong>
+          <HarvestDate
+            className="align-self-center"
+            harvest={
+              Object {
+                "changed": Array [
+                  "2018-12-21T09:27:29.577Z",
+                  "2019-01-07T16:53:37.588Z",
+                  "2019-01-07T16:54:19.940Z",
+                ],
+                "firstHarvested": "2018-12-19T09:52:51.883Z",
+                "lastChanged": "2019-01-07T16:54:19.940Z",
+                "lastHarvested": "2019-01-07T16:54:19.940Z",
+              }
             }
-          }
-        />
+          />
+        </div>
         <SearchHitHeader
+          darkThemeBackground={true}
           nationalComponent={false}
           publisher={
             Object {
@@ -237,10 +252,25 @@ exports[`should render ApiDetailsPage correctly with missing api-properties 1`] 
           description={null}
           title={null}
         />
-        <HarvestDate
-          harvest={null}
-        />
+        <div
+          className="d-flex fdk-detail-date mb-5"
+        >
+          <i
+            className="align-self-center fdk-icon-catalog-api mr-2"
+          />
+          <strong
+            className="align-self-center"
+          >
+            API-description
+             
+          </strong>
+          <HarvestDate
+            className="align-self-center"
+            harvest={null}
+          />
+        </div>
         <SearchHitHeader
+          darkThemeBackground={true}
           nationalComponent={false}
           publisher={null}
           publisherItems={null}

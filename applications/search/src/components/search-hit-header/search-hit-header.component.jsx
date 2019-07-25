@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { Link } from 'react-router-dom';
+import cx from 'classnames';
 
-import { LabelNational } from '../label-national/label-national.component';
 import { LabelStatus } from '../label-status/label-status.component';
 import { PublisherLabel } from '../publisher-label/publisher-label.component';
 import { getPublisherByOrgNr } from '../../redux/modules/publishers';
@@ -11,6 +11,7 @@ import { REFERENCEDATA_LOS } from '../../redux/modules/referenceData';
 import { getTranslateText } from '../../lib/translateText';
 import localization from '../../lib/localization';
 import './search-hit-header.scss';
+import { LabelNational } from '../label-national/label-national.component';
 
 const renderPublisher = (publisherLabel, publisher, publisherItems) => {
   if (!publisher) {
@@ -23,16 +24,18 @@ const renderPublisher = (publisherLabel, publisher, publisherItems) => {
   );
 };
 
-const renderThemes = (theme, losItems) => {
+const renderThemes = (theme, losItems, darkThemeBackground) => {
+  const themeClass = cx('align-self-center mr-2 mb-2', {
+    'fdk-label': !darkThemeBackground,
+    'fdk-label-details': darkThemeBackground
+  });
+
   let themeNodes;
   if (theme) {
     themeNodes = theme.map((singleTheme, index) => {
       const losItem = _.find(losItems, { uri: singleTheme.id });
       return (
-        <div
-          key={`dataset-description-theme-${index}`}
-          className="fdk-label mr-2 mb-2"
-        >
+        <div key={`dataset-description-theme-${index}`} className={themeClass}>
           <span className="uu-invisible" aria-hidden="false">
             Datasettets tema.
           </span>
@@ -80,7 +83,8 @@ export const SearchHitHeader = props => {
     theme,
     nationalComponent,
     statusCode,
-    referenceData
+    referenceData,
+    darkThemeBackground
   } = props;
 
   return (
@@ -93,11 +97,6 @@ export const SearchHitHeader = props => {
               statusCode={statusCode}
               referenceData={referenceData}
             />
-          )}
-          {nationalComponent && (
-            <div className="ml-auto">
-              <LabelNational />
-            </div>
           )}
         </div>
       )}
@@ -114,13 +113,20 @@ export const SearchHitHeader = props => {
               publisherItem={publisher}
             />
           )}
-
-        {theme &&
-          renderThemes(
-            theme,
-            _.get(referenceData, ['items', REFERENCEDATA_LOS])
-          )}
       </div>
+
+      {(nationalComponent || theme) && (
+        <div className="mb-4 d-flex flex-wrap align-items-baseline align-items-center">
+          {nationalComponent && <LabelNational />}
+
+          {theme &&
+            renderThemes(
+              theme,
+              _.get(referenceData, ['items', REFERENCEDATA_LOS]),
+              darkThemeBackground
+            )}
+        </div>
+      )}
     </>
   );
 };
@@ -136,7 +142,8 @@ SearchHitHeader.defaultProps = {
   theme: null,
   nationalComponent: false,
   statusCode: null,
-  referenceData: null
+  referenceData: null,
+  darkThemeBackground: false
 };
 
 SearchHitHeader.propTypes = {
@@ -150,5 +157,6 @@ SearchHitHeader.propTypes = {
   theme: PropTypes.array,
   nationalComponent: PropTypes.bool,
   statusCode: PropTypes.string,
-  referenceData: PropTypes.object
+  referenceData: PropTypes.object,
+  darkThemeBackground: PropTypes.bool
 };

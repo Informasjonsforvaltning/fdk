@@ -238,8 +238,15 @@ export const ConceptDetailsPage = ({
           <div className="col-12 col-lg-8  offset-lg-4">
             <DocumentMeta {...meta} />
 
-            <div className="fdk-detail-date mb-5">
-              <HarvestDate harvest={_.get(conceptItem, 'harvest')} />
+            <div className="d-flex align-items-center fdk-detail-date mb-5">
+              <i className="align-self-center fdk-icon-catalog-concept mr-2" />
+              <strong className="align-self-center">
+                {localization.concept.conceptDescription}&nbsp;
+              </strong>
+              <HarvestDate
+                className="align-self-center"
+                harvest={_.get(conceptItem, 'harvest')}
+              />
             </div>
 
             <SearchHitHeader
@@ -248,6 +255,7 @@ export const ConceptDetailsPage = ({
               publisher={_.get(conceptItem, 'publisher')}
               publisherTag="span"
               publisherItems={publisherItems}
+              darkThemeBackground
             />
           </div>
         </div>

@@ -63,21 +63,25 @@ const renderAccessRights = accessRight => {
     code: null
   };
   let accessRightsIconClass;
+  let accessRightsColorClass;
   let accessRightsLabel;
 
   switch (code) {
     case 'NON_PUBLIC':
-      accessRightsIconClass = 'fdk-color-unntatt fa-lock';
+      accessRightsIconClass = 'fdk-icon-non-public';
+      accessRightsColorClass = 'fdk-color-unntatt fdk-themes-text';
       accessRightsLabel =
         localization.dataset.accessRights.authorityCode.nonPublicDetailsLabel;
       break;
     case 'RESTRICTED':
-      accessRightsIconClass = 'fdk-color-begrenset fa-unlock-alt';
+      accessRightsIconClass = 'fdk-icon-restricted';
+      accessRightsColorClass = 'fdk-color-begrenset fdk-themes-text';
       accessRightsLabel =
         localization.dataset.accessRights.authorityCode.restrictedDetailsLabel;
       break;
     case 'PUBLIC':
-      accessRightsIconClass = 'fdk-color-offentlig fa-unlock';
+      accessRightsIconClass = 'fdk-icon-public';
+      accessRightsColorClass = 'fdk-color-offentlig fdk-themes-text';
       accessRightsLabel =
         localization.dataset.accessRights.authorityCode.publicDetailsLabel;
       break;
@@ -87,8 +91,8 @@ const renderAccessRights = accessRight => {
 
   return (
     <div className="d-flex align-items-center mb-4">
-      <i className={`fa fa-2x mr-2 ${accessRightsIconClass}`} />
-      <strong>{accessRightsLabel}</strong>
+      <i className={`mr-2 ${accessRightsIconClass}`} />
+      <div className={accessRightsColorClass}>{accessRightsLabel}</div>
     </div>
   );
 };
@@ -145,6 +149,7 @@ export const SearchHitItem = props => {
             theme={theme}
             nationalComponent={_.get(provenance, 'code') === 'NASJONAL'}
             referenceData={referenceData}
+            darkThemeBackground={false}
           />
         </header>
         <p className="fdk-text-size-medium">

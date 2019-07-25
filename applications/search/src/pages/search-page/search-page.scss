@@ -4,18 +4,18 @@
    ========================================================================== */
 
 .top-section-search {
-  background-color: $color-cta4;
+  background-color: $color-blue-light;
 }
 
 .sk-hits-stats__info {
   color: $color1;
-  font-size: 2rem;
+  font-size: 1.6rem;
   font-weight: 500;
 }
 
 .fdk-button.fdk-button-black-toggle {
     background-color: transparent;
-    color: #000;
+    color: $color-blue-dark;
     border-color: black;
     box-shadow: none;
     min-width:120px;
@@ -31,7 +31,7 @@
   border-bottom-left-radius:0;
 }
 .fdk-button.fdk-button-black-toggle:hover, .fdk-button.fdk-button-black-toggle:not(.disabled):not(.disabled):active {
-  color:black;
+  color:$color-blue-dark;
   background: transparent;
 }
 .fdk-button.fdk-button-black-toggle:focus {
@@ -174,10 +174,10 @@
 /* Small Devices, Tablets */
 @media only screen and (min-width: 768px) {
   .top-section-search--image {
-    background-image: url(../../static/img/illustration-login.svg);
+    background-image: url(../../static/img/illustration-search.svg);
     background-repeat: no-repeat;
     background-position: right;
-    background-size: 50%;
+    background-size: 100%;
   }
 }
 

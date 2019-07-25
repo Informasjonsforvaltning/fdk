@@ -432,7 +432,17 @@ export const ApiDetailsPage = ({
         <div className="row">
           <div className="col-12 col-lg-8 offset-lg-4">
             <DocumentMeta {...meta} />
-            <HarvestDate harvest={apiItem.harvest} />
+
+            <div className="d-flex fdk-detail-date mb-5">
+              <i className="align-self-center fdk-icon-catalog-api mr-2" />
+              <strong className="align-self-center">
+                {localization.api.apiDescription}&nbsp;
+              </strong>
+              <HarvestDate
+                className="align-self-center"
+                harvest={apiItem.harvest}
+              />
+            </div>
 
             <SearchHitHeader
               title={getTranslateText(apiItem.title)}
@@ -442,6 +452,7 @@ export const ApiDetailsPage = ({
               nationalComponent={apiItem.nationalComponent}
               statusCode={apiItem.statusCode}
               referenceData={referenceData}
+              darkThemeBackground
             />
 
             {renderExpiredOrDeprecatedVersion(apiItem)}

@@ -3,13 +3,14 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import Moment from 'react-moment';
 import localization from '../../lib/localization';
+import './harvest-date.scss';
 
 const renderHarvested = harvest => {
   if (!_.get(harvest, 'firstHarvested')) {
     return null;
   }
   return (
-    <span>
+    <span className="d-flex flex-wrap align-content-center">
       {localization.dataset.firstHarvested}&nbsp;
       <Moment format="DD.MM.YYYY">{harvest.firstHarvested}</Moment>
     </span>
@@ -18,7 +19,11 @@ const renderHarvested = harvest => {
 
 const renderHarvestSeparator = harvest => {
   if (_.get(harvest, 'firstHarvested') && _.get(harvest, 'lastChanged')) {
-    return <span>&nbsp;/&nbsp;</span>;
+    return (
+      <span className="d-flex flex-wrap align-content-center">
+        &nbsp;/&nbsp;
+      </span>
+    );
   }
   return null;
 };
@@ -28,7 +33,7 @@ const renderLastChanged = harvest => {
     return null;
   }
   return (
-    <span>
+    <span className="d-flex flex-wrap align-content-center">
       {localization.dataset.lastChanged}&nbsp;
       <Moment format="DD.MM.YYYY">{_.get(harvest, 'lastChanged')}</Moment>
     </span>

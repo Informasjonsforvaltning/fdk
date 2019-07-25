@@ -2,7 +2,9 @@
 
 exports[`should render HarvestDate with harvest dates 1`] = `
 <Fragment>
-  <span>
+  <span
+    className="d-flex flex-wrap align-content-center"
+  >
     Published in The National Data Directory
      
     <t
@@ -23,10 +25,14 @@ exports[`should render HarvestDate with harvest dates 1`] = `
       2018-06-25T19":51:05+0200
     </t>
   </span>
-  <span>
+  <span
+    className="d-flex flex-wrap align-content-center"
+  >
      / 
   </span>
-  <span>
+  <span
+    className="d-flex flex-wrap align-content-center"
+  >
     Last changed in The National Data Directory
      
     <t

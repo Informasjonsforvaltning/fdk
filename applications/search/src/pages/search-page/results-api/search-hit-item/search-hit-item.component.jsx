@@ -36,6 +36,7 @@ const renderHeaderLink = (item, publisher, publishers, referenceData) => {
         nationalComponent={item.nationalComponent}
         statusCode={item.statusCode}
         referenceData={referenceData}
+        detialsPage={false}
       />
     </header>
   );
