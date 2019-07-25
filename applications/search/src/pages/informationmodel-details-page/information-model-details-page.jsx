@@ -11,6 +11,7 @@ import { StickyMenu } from '../../components/sticky-menu/sticky-menu.component';
 import { ListRegular } from '../../components/list-regular/list-regular.component';
 import { Tabs } from '../../components/tabs/tabs.component';
 import { Structure } from './structure/structure.component';
+import './information-model-details-page.scss';
 
 const renderJSONSchema = schema => {
   if (!schema) {
@@ -68,6 +69,7 @@ const renderRelatedApi = (referencedApis, publisherItems) => {
           publisher={item.publisher}
           publisherItems={publisherItems}
           tag="h4"
+          darkThemeBackground
         />
       </div>
     ));
@@ -126,7 +128,17 @@ export const InformationModelDetailsPage = ({
         <div className="row">
           <div className="col-12 col-lg-9 offset-lg-3">
             <DocumentMeta {...meta} />
-            <HarvestDate harvest={informationModelItem.harvest} />
+
+            <div className="d-flex align-items-center fdk-detail-date mb-5">
+              <i className="align-self-center fdk-icon-catalog-infomodel mr-2" />
+              <strong className="align-self-center">
+                {localization.infoMod.informationModelDescription}&nbsp;
+              </strong>
+              <HarvestDate
+                className="align-self-center"
+                harvest={informationModelItem.harvest}
+              />
+            </div>
 
             <SearchHitHeader
               title={getTranslateText(informationModelItem.title)}
@@ -134,6 +146,7 @@ export const InformationModelDetailsPage = ({
               publisher={informationModelItem.publisher}
               publisherItems={publisherItems}
               nationalComponent={informationModelItem.nationalComponent}
+              darkThemeBackground
             />
           </div>
         </div>

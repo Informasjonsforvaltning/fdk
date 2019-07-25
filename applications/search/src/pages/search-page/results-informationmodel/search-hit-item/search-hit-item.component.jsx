@@ -25,6 +25,7 @@ const renderHeaderLink = (item, publisher, publishers) => {
         publisher={publisher}
         publisherItems={publishers}
         nationalComponent={item.nationalComponent}
+        darkThemeBackground={false}
       />
     </header>
   );

@@ -17,21 +17,25 @@ const renderAccessRights = accessRight => {
     code: null
   };
   let accessRightsIconClass;
+  let accessRightsColorClass;
   let accessRightsLabel;
 
   switch (code) {
     case 'NON_PUBLIC':
-      accessRightsIconClass = 'fdk-color-unntatt fa-lock';
+      accessRightsIconClass = 'fdk-icon-non-public';
+      accessRightsColorClass = 'fdk-color-unntatt fdk-themes-text';
       accessRightsLabel =
         localization.dataset.accessRights.authorityCode.nonPublicDetailsLabel;
       break;
     case 'RESTRICTED':
-      accessRightsIconClass = 'fdk-color-begrenset fa-unlock-alt';
+      accessRightsIconClass = 'fdk-icon-restricted';
+      accessRightsColorClass = 'fdk-color-begrenset fdk-themes-text';
       accessRightsLabel =
         localization.dataset.accessRights.authorityCode.restrictedDetailsLabel;
       break;
     case 'PUBLIC':
-      accessRightsIconClass = 'fdk-color-offentlig fa-unlock';
+      accessRightsIconClass = 'fdk-icon-public';
+      accessRightsColorClass = 'fdk-color-offentlig fdk-themes-text';
       accessRightsLabel =
         localization.dataset.accessRights.authorityCode.publicDetailsLabel;
       break;
@@ -41,12 +45,12 @@ const renderAccessRights = accessRight => {
 
   return (
     <div className="d-flex list-regular--item">
-      <div className="col-4 pl-0 fdk-text-strong">
+      <div className="align-self-center col-4 pl-0 fdk-text-strong">
         {localization.accessLevel}
       </div>
-      <div className="col-8">
-        <i className={`fa fdk-fa-left ${accessRightsIconClass}`} />
-        {accessRightsLabel}
+      <div className="col-8 d-flex">
+        <i className={`${accessRightsIconClass} mr-3`} />
+        <span className={accessRightsColorClass}>{accessRightsLabel}</span>
       </div>
     </div>
   );

@@ -10,17 +10,21 @@ exports[`should render DatasetKeyInfo correctly 1`] = `
       className="d-flex list-regular--item"
     >
       <div
-        className="col-4 pl-0 fdk-text-strong"
+        className="align-self-center col-4 pl-0 fdk-text-strong"
       >
         Accesslevel
       </div>
       <div
-        className="col-8"
+        className="col-8 d-flex"
       >
         <i
-          className="fa fdk-fa-left fdk-color-offentlig fa-unlock"
+          className="fdk-icon-public mr-3"
         />
-        Dataset is public
+        <span
+          className="fdk-color-offentlig fdk-themes-text"
+        >
+          Dataset is public
+        </span>
       </div>
     </div>
   </ListRegular>

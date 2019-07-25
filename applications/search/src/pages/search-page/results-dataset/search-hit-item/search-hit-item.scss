@@ -2,3 +2,25 @@
 .fdk-a-search-hit {
   text-decoration: none;
 }
+
+.fdk-themes-text {
+  padding-top: 0.5em;
+}
+
+.fdk-icon-public {
+  background-image: url("/static/img/icon-dataset-public-md.svg");
+  width: 2em; 
+  height: 2em;
+}
+
+.fdk-icon-non-public {
+  background-image: url("/static/img/icon-dataset-not-public-md.svg");
+  width: 2em; 
+  height: 2em;
+}
+
+.fdk-icon-restricted {
+  background-image: url("/static/img/icon-dataset-restricted-md.svg");
+  width: 2em; 
+  height: 2em;
+}

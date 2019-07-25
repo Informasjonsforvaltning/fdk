@@ -14,6 +14,7 @@ exports[`should render SearchHitItem 1`] = `
     </span>
     <header>
       <SearchHitHeader
+        darkThemeBackground={false}
         nationalComponent={true}
         publisher={
           Object {
@@ -113,11 +114,13 @@ exports[`should render SearchHitItem 1`] = `
       className="d-flex align-items-center mb-4"
     >
       <i
-        className="fa fa-2x mr-2 fdk-color-offentlig fa-unlock"
+        className="mr-2 fdk-icon-public"
       />
-      <strong>
+      <div
+        className="fdk-color-offentlig fdk-themes-text"
+      >
         Dataset is public
-      </strong>
+      </div>
     </div>
     <div
       className="d-flex flex-wrap mb-4"

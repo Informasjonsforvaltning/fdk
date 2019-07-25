@@ -8,6 +8,7 @@ import { ShowMore } from '../../../components/show-more/show-more';
 import { HarvestDate } from '../../../components/harvest-date/harvest-date.component';
 import { SearchHitHeader } from '../../../components/search-hit-header/search-hit-header.component';
 import { getTranslateText } from '../../../lib/translateText';
+import './dataset-description.scss';
 
 export class DatasetDescription extends React.Component {
   constructor(props) {
@@ -33,7 +34,11 @@ export class DatasetDescription extends React.Component {
 
     return (
       <header>
-        <div className="fdk-detail-date mb-5">
+        <div className="d-flex flex-wrap align-content-center fdk-detail-date mb-5">
+          <i className="align-self-center fdk-icon-catalog-dataset mr-2" />
+          <strong className="align-self-center">
+            {localization.dataset.datasetdescription}&nbsp;
+          </strong>
           <HarvestDate harvest={harvest} />
         </div>
 
@@ -44,6 +49,7 @@ export class DatasetDescription extends React.Component {
           theme={theme}
           nationalComponent={_.get(provenance, 'code') === 'NASJONAL'}
           referenceData={referenceData}
+          darkThemeBackground
         />
 
         {descriptionFormatted && (

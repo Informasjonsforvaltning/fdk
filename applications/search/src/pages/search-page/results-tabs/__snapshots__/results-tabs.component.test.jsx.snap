@@ -11,10 +11,11 @@ exports[`should render ResultsTabs with "Concepts" active correctly 1`] = `
       className="search-results-tabs d-flex align-items-center justify-content-center flex-wrap"
     >
       <li
-        className="d-flex justify-content-center"
+        className="d-flex justify-content-center align-self-center"
       >
         <Link
           aria-label="Link til side for datasett:"
+          className="d-flex justify-content-center"
           replace={false}
           to={
             Object {
@@ -23,12 +24,17 @@ exports[`should render ResultsTabs with "Concepts" active correctly 1`] = `
             }
           }
         >
-          Datasets
-          <span>
+          <i
+            className="mr-2 search-results-tab-dataset"
+          />
+          <div
+            className="align-self-center"
+          >
+            Datasets
              (
             985
             )
-          </span>
+          </div>
         </Link>
       </li>
       <li
@@ -36,6 +42,7 @@ exports[`should render ResultsTabs with "Concepts" active correctly 1`] = `
       >
         <Link
           aria-label="Link til side for api:"
+          className="d-flex justify-content-center"
           replace={false}
           to={
             Object {
@@ -44,12 +51,17 @@ exports[`should render ResultsTabs with "Concepts" active correctly 1`] = `
             }
           }
         >
-          APIs
-          <span>
+          <i
+            className="mr-2 search-results-tab-api"
+          />
+          <div
+            className="align-self-center"
+          >
+            APIs
              (
             4
             )
-          </span>
+          </div>
         </Link>
       </li>
       <li
@@ -57,6 +69,7 @@ exports[`should render ResultsTabs with "Concepts" active correctly 1`] = `
       >
         <Link
           aria-label="Link til side for begrep:"
+          className="d-flex justify-content-center"
           replace={false}
           to={
             Object {
@@ -65,12 +78,17 @@ exports[`should render ResultsTabs with "Concepts" active correctly 1`] = `
             }
           }
         >
-          Concepts
-          <span>
+          <i
+            className="mr-2 search-results-tab-term"
+          />
+          <div
+            className="align-self-center"
+          >
+            Concepts
              (
             1
             )
-          </span>
+          </div>
         </Link>
       </li>
       <li
@@ -78,6 +96,7 @@ exports[`should render ResultsTabs with "Concepts" active correctly 1`] = `
       >
         <Link
           aria-label="Link til side for informasjonsmodell:"
+          className="d-flex justify-content-center"
           replace={false}
           to={
             Object {
@@ -86,11 +105,16 @@ exports[`should render ResultsTabs with "Concepts" active correctly 1`] = `
             }
           }
         >
-          Information models
-          <span>
+          <i
+            className="mr-2 search-results-tab-infomodel"
+          />
+          <div
+            className="align-self-center mr-4"
+          >
+            Information models
              (
             )
-          </span>
+          </div>
         </Link>
       </li>
     </ul>
@@ -109,10 +133,11 @@ exports[`should render ResultsTabs with "Dataset" active correctly 1`] = `
       className="search-results-tabs d-flex align-items-center justify-content-center flex-wrap"
     >
       <li
-        className="d-flex justify-content-center li-active"
+        className="d-flex justify-content-center align-self-center li-active"
       >
         <Link
           aria-label="Link til side for datasett:"
+          className="d-flex justify-content-center"
           replace={false}
           to={
             Object {
@@ -121,12 +146,17 @@ exports[`should render ResultsTabs with "Dataset" active correctly 1`] = `
             }
           }
         >
-          Datasets
-          <span>
+          <i
+            className="mr-2 search-results-tab-dataset"
+          />
+          <div
+            className="align-self-center"
+          >
+            Datasets
              (
             985
             )
-          </span>
+          </div>
         </Link>
       </li>
       <li
@@ -134,6 +164,7 @@ exports[`should render ResultsTabs with "Dataset" active correctly 1`] = `
       >
         <Link
           aria-label="Link til side for api:"
+          className="d-flex justify-content-center"
           replace={false}
           to={
             Object {
@@ -142,12 +173,17 @@ exports[`should render ResultsTabs with "Dataset" active correctly 1`] = `
             }
           }
         >
-          APIs
-          <span>
+          <i
+            className="mr-2 search-results-tab-api"
+          />
+          <div
+            className="align-self-center"
+          >
+            APIs
              (
             4
             )
-          </span>
+          </div>
         </Link>
       </li>
       <li
@@ -155,6 +191,7 @@ exports[`should render ResultsTabs with "Dataset" active correctly 1`] = `
       >
         <Link
           aria-label="Link til side for begrep:"
+          className="d-flex justify-content-center"
           replace={false}
           to={
             Object {
@@ -163,12 +200,17 @@ exports[`should render ResultsTabs with "Dataset" active correctly 1`] = `
             }
           }
         >
-          Concepts
-          <span>
+          <i
+            className="mr-2 search-results-tab-term"
+          />
+          <div
+            className="align-self-center"
+          >
+            Concepts
              (
             1
             )
-          </span>
+          </div>
         </Link>
       </li>
       <li
@@ -176,6 +218,7 @@ exports[`should render ResultsTabs with "Dataset" active correctly 1`] = `
       >
         <Link
           aria-label="Link til side for informasjonsmodell:"
+          className="d-flex justify-content-center"
           replace={false}
           to={
             Object {
@@ -184,11 +227,16 @@ exports[`should render ResultsTabs with "Dataset" active correctly 1`] = `
             }
           }
         >
-          Information models
-          <span>
+          <i
+            className="mr-2 search-results-tab-infomodel"
+          />
+          <div
+            className="align-self-center mr-4"
+          >
+            Information models
              (
             )
-          </span>
+          </div>
         </Link>
       </li>
     </ul>

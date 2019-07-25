@@ -17,9 +17,19 @@ exports[`should render ConceptDetailsPage correctly with conceptItem 1`] = `
           title="engelsk preflabel14"
         />
         <div
-          className="fdk-detail-date mb-5"
+          className="d-flex align-items-center fdk-detail-date mb-5"
         >
+          <i
+            className="align-self-center fdk-icon-catalog-concept mr-2"
+          />
+          <strong
+            className="align-self-center"
+          >
+            Concept description
+             
+          </strong>
           <HarvestDate
+            className="align-self-center"
             harvest={
               Object {
                 "firstHarvested": "2018-11-12T08:13:43.584+0000",
@@ -29,6 +39,7 @@ exports[`should render ConceptDetailsPage correctly with conceptItem 1`] = `
           />
         </div>
         <SearchHitHeader
+          darkThemeBackground={true}
           nationalComponent={false}
           publisher={
             Object {

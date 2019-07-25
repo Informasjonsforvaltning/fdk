@@ -142,7 +142,6 @@
     "sample": "Eksempeldata tilgjengeleg",
     "NationalBuildingBlock": "Autoritativ kilde",
     "bruker": "Brukerinnsamla data",
-    "nasjonal": "Autoritativ kilde",
     "tredjepart": "Tredjepart",
     "vedtak": "Vedtak",
     "distributionType": "Distribusjonstype"
@@ -152,7 +151,8 @@
     "accessRight": "Datasettet er",
     "title": "Datasett",
     "type": "Type",
-    "firstHarvested": "Publisert i Felles datakatalog",
+    "datasetdescription": "Datasettbeskrivelse",
+    "firstHarvested": "publisert i Felles datakatalog",
     "lastChanged": "Sist endra i Felles datakatalog",
     "conformsTo": "Innhaldsstandard",
     "informationModel": "Informasjonsmodell",
@@ -327,7 +327,8 @@
       "performance": "Kapasitet og Ytelse",
       "availability": "Pålitelegheit"
     },
-    "linkDatasetReference": "Lenke til datasettreferanse"
+    "linkDatasetReference": "Lenke til datasettreferanse",
+    "apiDescription": "API-beskrivelse"
   },
   "concept": {
     "remarkHeader": "Merknad",
@@ -338,7 +339,8 @@
     "hiddenLabel": "Frårådd term",
     "definition": "Definisjon",
     "identifier": "Identifikator",
-    "sample": "Eksempel"
+    "sample": "Eksempel",
+    "conceptDescription": "Begrepsbeskrivelse"
   },
   "infoMod": {
     "infoModHeader": "Informasjonsmodell",
@@ -346,6 +348,7 @@
       "structure": "Struktur",
       "json": "JSON Schema"
     },
-    "relatedAPIHeader": "Høyrer til API"
+    "relatedAPIHeader": "Høyrer til API",
+    "informationModelDescription": "Informasjonsmodelbeskrivelse"
   }
 }

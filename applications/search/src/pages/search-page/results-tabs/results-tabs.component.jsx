@@ -27,16 +27,20 @@ export const ResultsTabsPure = ({
       <div className="col-12">
         <ul className="search-results-tabs d-flex align-items-center justify-content-center flex-wrap">
           <li
-            className={cx('d-flex justify-content-center', {
+            className={cx('d-flex justify-content-center align-self-center', {
               'li-active': activePath === PATHNAME_DATASETS
             })}
           >
             <Link
+              className="d-flex justify-content-center"
               to={getLinkForTab(location, PATHNAME_DATASETS)}
               aria-label="Link til side for datasett:"
             >
-              {localization.page.datasetTab}
-              <span>&nbsp;({countDatasets})</span>
+              <i className="mr-2 search-results-tab-dataset" />
+
+              <div className="align-self-center">
+                {localization.page.datasetTab}&nbsp;({countDatasets})
+              </div>
             </Link>
           </li>
           <li
@@ -45,11 +49,15 @@ export const ResultsTabsPure = ({
             })}
           >
             <Link
+              className="d-flex justify-content-center"
               to={getLinkForTab(location, PATHNAME_APIS)}
               aria-label="Link til side for api:"
             >
-              {localization.page.apiTab}
-              <span>&nbsp;({countApis})</span>
+              <i className="mr-2 search-results-tab-api" />
+
+              <div className="align-self-center">
+                {localization.page.apiTab}&nbsp;({countApis})
+              </div>
             </Link>
           </li>
           <li
@@ -58,11 +66,15 @@ export const ResultsTabsPure = ({
             })}
           >
             <Link
+              className="d-flex justify-content-center"
               to={getLinkForTab(location, PATHNAME_CONCEPTS)}
               aria-label="Link til side for begrep:"
             >
-              {localization.page.termTab}
-              <span>&nbsp;({countTerms})</span>
+              <i className="mr-2 search-results-tab-term" />
+
+              <div className="align-self-center">
+                {localization.page.termTab}&nbsp;({countTerms})
+              </div>
             </Link>
           </li>
           <li
@@ -71,11 +83,17 @@ export const ResultsTabsPure = ({
             })}
           >
             <Link
+              className="d-flex justify-content-center"
               to={getLinkForTab(location, PATHNAME_INFORMATIONMODELS)}
               aria-label="Link til side for informasjonsmodell:"
             >
-              {localization.page.informationModelTab}
-              <span>&nbsp;({countInformationModels})</span>
+              <i className="mr-2 search-results-tab-infomodel" />
+
+              <div className="align-self-center mr-4">
+                {localization.page.informationModelTab}&nbsp;({
+                  countInformationModels
+                })
+              </div>
             </Link>
           </li>
         </ul>

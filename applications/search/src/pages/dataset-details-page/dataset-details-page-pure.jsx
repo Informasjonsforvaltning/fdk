@@ -287,6 +287,7 @@ const renderApis = ({ heading, publisherItems, apis }) => {
         publisher={api.publisher}
         publisherItems={publisherItems}
         tag="h4"
+        darkThemeBackground
       />
       <div className="uu-invisible" aria-hidden="false">
         Beskrivelse av api
