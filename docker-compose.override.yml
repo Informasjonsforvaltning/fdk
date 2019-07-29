@@ -28,6 +28,15 @@ services:
     ports:
       - "5432:5432"
 
+# OIDC requires host names to be available both in service and for browsers for redirects.
+# The simplest way to achieve this is to register the service names as hostnames also in the host machine hosts file:
+# mac: /private/etc/hosts
+# windows c:\Windows\System32\Drivers\etc\hosts
+
+# add two lines:
+# 127.0.0.1       sso
+# 127.0.0.1       sso-idporten-mock
+
   sso:
     build: ./applications/sso
     volumes:
@@ -40,6 +49,20 @@ services:
 #      - KEYCLOAK_LOGLEVEL=DEBUG
     ports:
       - "8084:8080"
+
+  sso-idporten-mock:
+    build: ./applications/sso-idporten-mock
+    # import is copied in Dockerfile, but could alternatively be overridden here
+    volumes:
+      - ./applications/sso-idporten-mock/export:/tmp/keycloak/export
+      - ./applications/sso-idporten-mock/import:/tmp/keycloak/import
+    environment:
+      - KEYCLOAK_USER=admin
+      - KEYCLOAK_PASSWORD=admin
+      - DB_VENDOR=h2
+#      - KEYCLOAK_LOGLEVEL=DEBUG
+    ports:
+      - "8086:8080"
 
 ### ingress modules
   nginx-search:
