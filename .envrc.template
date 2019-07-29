@@ -13,8 +13,15 @@ export KEYCLOAK_PASSWORD=admin
 # secrets - never commit in git
 
 export DISQUS_SHORTNAME=CHANGE_ME
+
+# This is host for difi test environment, that should be only used in our it1 environmemt.
+# in st1 and in dev, we should use local mock service (once it is available)
+export IDPORTEN_OIDC_ROOT=https://oidc-ver2.difi.no/idporten-oidc-provider
 export IDPORTEN_CLIENT_ID=CHANGE_ME
 export IDPORTEN_CLIENT_SECRET=CHANGE_ME
+
+# This is host for altinn test environment, that should be only used in our it1 environmemt.
+# in st1 and in dev, we should use local mock service (once it is available)
 export ALTINN_HOST=https://tt02.altinn.no
 export ALTINN_API_KEY=CHANGE_ME;
 export ALTINN_SSL_BR_CRT_PEM=$(<./conf/altinn/br-altinn-client.crt.pem)

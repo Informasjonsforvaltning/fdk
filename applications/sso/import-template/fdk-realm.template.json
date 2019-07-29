@@ -850,7 +850,7 @@
   "adminEventsEnabled" : false,
   "adminEventsDetailsEnabled" : false,
   "identityProviders" : [ {
-    "alias" : "oidc",
+    "alias" : "idporten-oidc",
     "displayName" : "ID-porten",
     "internalId" : "71ff374a-18c7-48e9-9930-0c19592f1bfa",
     "providerId" : "oidc",
@@ -866,14 +866,14 @@
       "hideOnLoginPage" : "",
       "validateSignature" : "true",
       "clientId" : "${IDPORTEN_CLIENT_ID}",
-      "tokenUrl" : "https://oidc-ver2.difi.no/idporten-oidc-provider/token",
+      "tokenUrl" : "${IDPORTEN_OIDC_ROOT}/token",
       "uiLocales" : "",
-      "jwksUrl" : "https://oidc-ver2.difi.no/idporten-oidc-provider/jwk",
+      "jwksUrl" : "${IDPORTEN_OIDC_ROOT}/jwk",
       "backchannelSupported" : "",
-      "issuer" : "https://oidc-ver2.difi.no/idporten-oidc-provider/",
+      "issuer" : "${IDPORTEN_OIDC_ROOT}/",
       "useJwksUrl" : "true",
       "loginHint" : "",
-      "authorizationUrl" : "https://oidc-ver2.difi.no/idporten-oidc-provider/authorize",
+      "authorizationUrl" : "${IDPORTEN_OIDC_ROOT}/authorize",
       "disableUserInfo" : "",
       "clientSecret" : "${IDPORTEN_CLIENT_SECRET}"
     }
@@ -881,7 +881,7 @@
   "identityProviderMappers" : [ {
     "id" : "d30922ec-c8c8-4dda-ab08-a7ddfd408169",
     "name" : "admin",
-    "identityProviderAlias" : "oidc",
+    "identityProviderAlias" : "idporten-oidc",
     "identityProviderMapper" : "oidc-username-idp-mapper",
     "config" : {
       "template" : "idp.${pid}"
@@ -889,7 +889,7 @@
   }, {
     "id" : "57e0406b-dc71-43eb-87a5-4a656b5da100",
     "name" : "pid",
-    "identityProviderAlias" : "oidc",
+    "identityProviderAlias" : "idporten-oidc",
     "identityProviderMapper" : "oidc-user-attribute-idp-mapper",
     "config" : {
       "claim": "pid",
@@ -1068,6 +1068,7 @@
       "userSetupAllowed" : false,
       "autheticatorFlow" : false
     }, {
+      "authenticatorConfig" : "default-idporten-config",
       "authenticator" : "identity-provider-redirector",
       "requirement" : "ALTERNATIVE",
       "priority" : 25,
@@ -1333,6 +1334,12 @@
       "require.password.update.after.registration" : "false"
     }
   }, {
+    "id" : "e64d7cd7-aa69-4b47-8c6c-aaa4ff3ffbf7",
+    "alias" : "default-idporten-config",
+    "config" : {
+      "defaultProvider" : "idporten-oidc"
+    }
+  }, {
     "id" : "048bd0f8-b2ea-4b77-b8ed-18c396ea546c",
     "alias" : "review profile config",
     "config" : {
@@ -1407,6 +1414,6 @@
     "waitIncrementSeconds" : "60",
     "offlineSessionMaxLifespanEnabled" : "false"
   },
-  "keycloakVersion" : "4.8.3.Final",
+  "keycloakVersion" : "6.0.1",
   "userManagedAccessAllowed" : false
 }

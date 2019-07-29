@@ -29,14 +29,15 @@ services:
       - "5432:5432"
 
   sso:
+    build: ./applications/sso
     volumes:
       - ./applications/sso/export:/tmp/keycloak/export
-# Alternatively, override import and deployments of the built container
+# import and deployments are copied in Dockerfile, but alternatively, they can be linked:
 #      - ./applications/sso/import:/tmp/keycloak/import
 # cp libraries/keycloak-user-storage-rest/target/keycloak-user-storage-rest.jar applications-external/sso/deployments/
 #      - ./applications/sso/deployments:/opt/jboss/keycloak/standalone/deployments
-    environment:
-      - KEYCLOAK_LOGLEVEL=DEBUG
+#    environment:
+#      - KEYCLOAK_LOGLEVEL=DEBUG
     ports:
       - "8084:8080"
 
