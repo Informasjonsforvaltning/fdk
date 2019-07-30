@@ -1,0 +1,71 @@
+[
+	{
+		"ServiceOwnerCode" : "SKD",
+		"OrganizationNumber" : "974761076",
+		"ServiceOwnerName" : "Norwegian Tax Administration",
+		"ServiceName" : "A01 a-melding",
+		"ServiceCode" : "3906",
+		"ServiceEditionCode" : "141205",
+		"ValidFrom" : "2019-02-07T08:00:00",
+		"ValidTo" : "2099-10-21T10:00:00",
+		"ServiceType" : "FormTask",
+		"EnterpriseUserEnabled" : "true",
+		"Forms" : [
+				{
+					"FormID" : "14091",
+					"FormName" : "A01 a-melding",
+					"FormType" : "MainForm",
+					"DataFormatID" : "3940",
+					"DataFormatVersion" : "20161021",
+					"XsdSchemaUrl" : "https://www.altinn.no/api/metadata/formtask/3906/141205/forms/3940/20161021/xsd",
+					"JsonSchema" : "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"
+				}
+			]
+	},
+	{
+		"ServiceOwnerCode" : "SKD",
+		"OrganizationNumber" : "974761076",
+		"ServiceOwnerName" : "Norwegian Tax Administration",
+		"ServiceName" : "A02 a-melding innsending fra system",
+		"ServiceCode" : "3357",
+		"ServiceEditionCode" : "130429",
+		"ValidFrom" : "2017-01-31T08:00:00",
+		"ValidTo" : "2999-12-31T13:00:00",
+		"ServiceType" : "FormTask",
+		"EnterpriseUserEnabled" : "true",
+		"Forms" : [
+				{
+					"FormID" : "8373",
+					"FormName" : "A02 a-melding submission from system",
+					"FormType" : "MainForm",
+					"DataFormatID" : "4166",
+					"DataFormatVersion" : "35895",
+					"XsdSchemaUrl" : "https://www.altinn.no/api/metadata/formtask/3357/130429/forms/4166/35895/xsd",
+					"JsonSchema" : "H4sIAAAAAAAAA7VWy27aQBRdw1dETnaNX+TVsCpS0gqpTaqCKqSqsgZ8IYPtGXdmQEERn9P+SH6s87CNwTaBRTZg3ee559wZ+6Xdss745AkSZJ10T6wnIdKu6845JbYxO5TNXPN4ap2rcBzq0MytQrVdrFLQDjqew0RoW8poCkxg4Mrz0m61WlYCcYjJrDBI0xmDqU49dUOYYoIFpoS7Pa8TIDuLDzAhHIh+nDIU8BUXkATfLF1jLX/XqiMmU7rpNRp8Hdo8YjgVBC2J7jG4/3E/CEaDu+DL/YNCqePu7BkQYEhQtgTG59QEdxzP8f0iSlaTI3HgnDJTrDd6fDjJMk5uHV/G32ThuqCc3hTy/Avbu7K966Hvdf2Lbqfj3HiXH7xO1/OyBAURGE1SSQd+LuvBZSHuEOo+87AIToCnaAJNce4gQkIACCSAHMalq1Bm9bNQXvCW62bcIU3keBtSS73yAjSEOC4iDhMz7y2QSS9r4TudnNlFtoNTFHPIjJTVGAmOYzSODUmCLXK7UHZhz+ZAxmwR7bohBjmeKFa6XHIqNwTFgihyQiTQbu6u385lbRSqUtEU4q//GKGMR2CPacQFkmTY2C4Y3QIlAkVKwGkSSCUYHi+EqERxSOz8qJXtkeR6jMcxpgKialbKXv8ac+m4LBHDiJgevVhIQUtOwRDhcqxk9zz5jm/lR7V01Dcn9rA1Kd0dNVeMtisiP2sE3xld4hDYll9GTGRjsbkSDPzMVyjPJZf50me+T1KzYe4fJXEv4xusImh9XoOjHzYjuPSvr98dwE8pBDZC1KO4uPp4e/VOMPpE74PahMekb3StatLwJmhIru+jvaKUcnCTauamQ3u7k8XgzwIz0Jr+2rd1DauwT6A3Wds/bub8nUNVQvXIaqOPhKwurPZmoLflaTxo+Ggtq/K1y/8FoiNA6HuyH8o7G09xpG6dA9E8VBOP1bymd65AzTwNi/kWvdtfTAfwqxKOnQRXUusm2Pl4awKef0BUr70G4EOQL7naMx2hWG9CghCBQ8v1euxx9s1kHEtECXsjijqGarapxNTuZVrONMMfGFwebU9KPqN5EWvPChCzE0rEU+m7ub3+D3sx688HDAAA"
+				}
+			]
+	},
+	{
+		"ServiceOwnerCode" : "SKD",
+		"OrganizationNumber" : "974761076",
+		"ServiceOwnerName" : "Norwegian Tax Administration",
+		"ServiceName" : "A04 Declaration of paid work at home where a private individual is the employer",
+		"ServiceCode" : "3743",
+		"ServiceEditionCode" : "140516",
+		"ValidFrom" : "2019-05-28T08:00:00",
+		"ValidTo" : "2025-01-01T00:26:00",
+		"ServiceType" : "FormTask",
+		"EnterpriseUserEnabled" : "true",
+		"Forms" : [
+				{
+					"FormID" : "14603",
+					"FormName" : "A04 Declaration of paid work at home where a private individual is the employer",
+					"FormType" : "MainForm",
+					"DataFormatID" : "4444",
+					"DataFormatVersion" : "32407",
+					"XsdSchemaUrl" : "https://www.altinn.no/api/metadata/formtask/3743/140516/forms/4444/32407/xsd",
+					"JsonSchema" : "H4sIAAAAAAAAA81ZbW/bNhD+HP+KQu2HbaibNE0wrJ/mommWIamHJgjWFUFBR2eFEUVqJGXUK/zfR9K2REmkTNlJtqINCuru4d1zLzwy3wd70QtxewcZip69fRbdSZm/3d+/F4wOl8uvGE/2l/99Hr3U4jg2oqvPWtSsy3kO5gOb3MOtNGs5ZzlwiUHoL98He3t7UQYkxjQpF9TSCw5To/p8P4YpplhiRsX+yfvR6deLyAgt1M+FhrQEKsyVpAXp2Nmsx0iiD4xnSP7B2QzHwGvflcStQpbGmsuTTyeX2o/yW+mjkFz7YH/79ZuIr9bf/8zISCqZSSEhKoUWLx12nMV+C47Un0c34Bq4UHT6rXhzeHTw8yOZcQ4z4IgKaG7vyYlKvkIb1FEjDn8XmIPh9UtX5D3h6CLJZflq6Wa9v2ZgROeV48oOyQsYVFY6/fYmLdHCimchcSzygqYykK33SLIrVa8u5lNEgCoWMoQotHLQAzga8XFysdRwgmISg5gLCVkg4hWkQl5A/Al0LqXiXpHsQlb8SyQl8Itl/xDtuvHscBYDlXiKU0UGd2JnDw/J8pzMBdWoOcGpxEkg9Lit6MFP0Cy0an4vOI6xSE+U1RKkE1HkHKFUZfsVJhOUQrtPd+1wabR7F6WdL854dDLapmNdinapORgNqDnKuEjrcQ5j4mNbsS8rjr1djjWjGuDVBCQimglMp7qv6XJTIVd/gaYE5JjHNDzo7wLRXOk2wzwVLLuD0F52XSm0+bRpCbUqgC5RZB90LIo4Vt0J0jSYGMIgv2TZb0CUMcRdcEU24hNQLT3B+jCYJXgaSkbQBkqEUlHIMujqOGM9To7eeeve0JW6167oP3EtVkRhSiWkUmRMStX5WujluIM4R/PatJNheqaalzH4wP6A16sWUMeB0rTAUlq4TEbbZo4j5R6wPfUZgVo+/w8yYUWr6ht3jAQPRXUlF+50my7SaD0dmfvfJSw0J4pavjbzKSQtRr4QeJNCe+vVCg+cMKw5O7VEXG7fPC0gUsgHAZrzNHT2+6xF+5a4g9JtStxFsBXQ5jWypjozp4m59fRQ+1wnpnuLpXX6UsXaM0GXpnco6Bi89IG9++nuGnjq1ogJiJSr9k5EMBNnrTbidUTFMgYS3sG0sCuDC6l8FMC3H4EYI8LbFROE+NkpLyglKNGXmj7Tmx95izBuDl6dz85AnZsJq931Xa9vZl1lz3haq+3K8A29vTS88t/S9eTHkiRXAm7YdOmZrWqrVWeKZY2neTVNqNZvSo9cM2nbgn59xJ3C/kcdvd04OWWxTO4ZcAdd4TOcSFap3tHpezRsJ3JQl+OQmJ6dshhUau9wwdmM5DxhGd2BRa3sHAvrVLzbqQtUsIpGPUAJJIX2cLlJyWEg/rrJiRVa77M+JGgNgreZBUIiunXBNcLeqd0izKVHi2yyvoat9NaPqR3brPkw7w7Lx3M17cFQ4gzqHljvqP3w5oD4MGNU3tUAzTNqKAOOy1CgZmsycelhdXwkDfJaJbOR6i14rmOAwBnyW+nYdnXwu6Qn6hMgWhPvy4EKuvAqdEe8hrN6a7VQQDnTKGqWZggRq3Dp3FyerRWgCViDTlnNXQngeq63DPH0KEvaAEwVczVYp4CFm6Fv58pclfRq8fD4OMRUb4JvNtLxUNA21ItfM/b18fqWHeXm9xeGr+iHLwfDX9Dwn9Hwr6+vhjc//hQFudS4dQccyTNEko94htBr7yPBzr/EK/c4fII93jzBHkePtwfxTPDmY+dsjBtjefM+MdD/Fv8C1yd5DNIfAAA="
+				}
+			]
+	}
+]
