@@ -861,7 +861,7 @@
     "addReadTokenRoleOnCreate" : false,
     "authenticateByDefault" : false,
     "linkOnly" : false,
-    "firstBrokerLoginFlowAlias" : "first broker login",
+    "firstBrokerLoginFlowAlias" : "link accounts",
     "config" : {
       "hideOnLoginPage" : "",
       "validateSignature" : "true",
@@ -1230,6 +1230,26 @@
       "authenticator" : "auth-spnego",
       "requirement" : "DISABLED",
       "priority" : 40,
+      "userSetupAllowed" : false,
+      "autheticatorFlow" : false
+    } ]
+  }, {
+    "id" : "75fa480c-84d5-4680-b32c-9c38a171e95f",
+    "alias" : "link accounts",
+    "description" : "",
+    "providerId" : "basic-flow",
+    "topLevel" : true,
+    "builtIn" : false,
+    "authenticationExecutions" : [ {
+      "authenticator" : "idp-create-user-if-unique",
+      "requirement" : "ALTERNATIVE",
+      "priority" : 0,
+      "userSetupAllowed" : false,
+      "autheticatorFlow" : false
+    }, {
+      "authenticator" : "idp-auto-link",
+      "requirement" : "ALTERNATIVE",
+      "priority" : 1,
       "userSetupAllowed" : false,
       "autheticatorFlow" : false
     } ]
