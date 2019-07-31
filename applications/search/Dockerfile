@@ -17,7 +17,7 @@ COPY package.json /usr/src/app/package.json
 COPY package-lock.json /usr/src/app/package-lock.json
 
 # Install app dependencies
-RUN npm install --only=production --loglevel=warn
+RUN npm install --loglevel=warn
 
 COPY server /usr/src/app/server
 COPY start.js /usr/src/app/
@@ -26,6 +26,12 @@ COPY webpack.* /usr/src/app/
 
 # most volatile directory latest, in order to reuse layers.
 COPY src /usr/src/app/src
+
+COPY test /usr/src/app/test
+RUN npm test
+
+RUN npm prune --production
+RUN rm -rf /usr/src/app/test
 
 RUN npm run build
 
