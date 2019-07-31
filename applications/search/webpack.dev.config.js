@@ -7,7 +7,12 @@ module.exports = {
   mode: 'development',
   devtool: 'cheap-module-source-map',
   context: path.join(__dirname),
-  entry: ['@babel/polyfill', 'whatwg-fetch', './src/index.jsx'],
+  entry: [
+    'core-js/stable',
+    'regenerator-runtime/runtime',
+    'whatwg-fetch',
+    './src/index.jsx'
+  ],
   output: {
     path: path.join(__dirname, 'dist'),
     filename: 'bundle.js',
