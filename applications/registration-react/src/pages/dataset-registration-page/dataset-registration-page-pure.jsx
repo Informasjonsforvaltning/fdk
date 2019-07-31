@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
-import { Link } from 'react-router-dom';
 
 import localization from '../../lib/localization';
 import { FormTemplateWithState } from '../../components/form-template/form-template-with-state.component';
@@ -101,24 +100,9 @@ export function DatasetRegistrationPagePure(props) {
     datasetId
   ]);
 
-  const datasetURL = window.location.pathname;
-  const catalogDatasetsURL = datasetURL.substring(
-    0,
-    datasetURL.lastIndexOf('/')
-  );
-
   return (
     <div className="container">
       <div className="row mb-2 mb-md-5">
-        <div className="col-md-2">
-          <i className="fa fa-arrow-left mr-2" />
-          <Link
-            className="fdk-text-size-small fdk-color1 font-weight-light"
-            to={catalogDatasetsURL}
-          >
-            {localization.datasets.backToCatalog}
-          </Link>
-        </div>
         {datasetItem &&
           themesItems &&
           provenanceItems &&
@@ -127,7 +111,7 @@ export function DatasetRegistrationPagePure(props) {
           referenceDatasetsItems &&
           openLicenseItems &&
           losItems && (
-            <div className="col-md-8">
+            <div className="col-12">
               <FormTemplateWithState
                 title={localization.datasets.formTemplates.title}
                 required

@@ -9,19 +9,6 @@ exports[`should render DatasetRegistrationPagePure correctly 1`] = `
   >
     <div
       className="col-md-2"
-    >
-      <i
-        className="fa fa-arrow-left mr-2"
-      />
-      <Link
-        className="fdk-text-size-small fdk-color1 font-weight-light"
-        to=""
-      >
-        Tilbake til katalogen
-      </Link>
-    </div>
-    <div
-      className="col-md-2"
     />
   </div>
 </div>
