@@ -129,8 +129,6 @@
       "/target/"
     ],
     "setupFiles": [
-      "@babel/polyfill",
-      "raf/polyfill",
       "<rootDir>/test/jestsetup.js"
     ],
     "transform": {
