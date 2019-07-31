@@ -880,15 +880,15 @@
   } ],
   "identityProviderMappers" : [ {
     "id" : "d30922ec-c8c8-4dda-ab08-a7ddfd408169",
-    "name" : "admin",
+    "name" : "username template",
     "identityProviderAlias" : "oidc",
     "identityProviderMapper" : "oidc-username-idp-mapper",
     "config" : {
-      "template" : "idp.${pid}"
+      "template" : "idp.${CLAIM.pid}"
     }
   }, {
     "id" : "57e0406b-dc71-43eb-87a5-4a656b5da100",
-    "name" : "pid",
+    "name" : "pid attribute",
     "identityProviderAlias" : "oidc",
     "identityProviderMapper" : "oidc-user-attribute-idp-mapper",
     "config" : {
