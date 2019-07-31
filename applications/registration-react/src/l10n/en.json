@@ -350,7 +350,6 @@
     "buttonLogOut": "No, log out"
   },
   "datasets": {
-    "backToCatalog": "Back to catalog",
     "list": {
       "btnNewDataset": "Add dataset description",
       "btnImportDataset": "Import dataset"

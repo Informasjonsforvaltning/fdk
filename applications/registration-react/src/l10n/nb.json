@@ -352,7 +352,6 @@
     "buttonLogOut": "Nei, logg ut"
   },
   "datasets": {
-    "backToCatalog": "Tilbake til katalogen",
     "list": {
       "btnNewDataset": "Legg til ny datasettbeskrivelse",
       "btnImportDataset": "Importer datasett"
