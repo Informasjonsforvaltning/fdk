@@ -850,7 +850,7 @@
   "adminEventsEnabled" : false,
   "adminEventsDetailsEnabled" : false,
   "identityProviders" : [ {
-    "alias" : "idporten-oidc",
+    "alias" : "oidc",
     "displayName" : "ID-porten",
     "internalId" : "71ff374a-18c7-48e9-9930-0c19592f1bfa",
     "providerId" : "oidc",
@@ -881,7 +881,7 @@
   "identityProviderMappers" : [ {
     "id" : "d30922ec-c8c8-4dda-ab08-a7ddfd408169",
     "name" : "admin",
-    "identityProviderAlias" : "idporten-oidc",
+    "identityProviderAlias" : "oidc",
     "identityProviderMapper" : "oidc-username-idp-mapper",
     "config" : {
       "template" : "idp.${pid}"
@@ -889,7 +889,7 @@
   }, {
     "id" : "57e0406b-dc71-43eb-87a5-4a656b5da100",
     "name" : "pid",
-    "identityProviderAlias" : "idporten-oidc",
+    "identityProviderAlias" : "oidc",
     "identityProviderMapper" : "oidc-user-attribute-idp-mapper",
     "config" : {
       "claim": "pid",
@@ -1337,7 +1337,7 @@
     "id" : "e64d7cd7-aa69-4b47-8c6c-aaa4ff3ffbf7",
     "alias" : "default-idporten-config",
     "config" : {
-      "defaultProvider" : "idporten-oidc"
+      "defaultProvider" : "oidc"
     }
   }, {
     "id" : "048bd0f8-b2ea-4b77-b8ed-18c396ea546c",
