@@ -62,7 +62,7 @@ services:
       - DB_VENDOR=h2
 #      - KEYCLOAK_LOGLEVEL=DEBUG
     ports:
-      - "8086:8080"
+      - "8086:8086"
 
 ### ingress modules
   nginx-search:
