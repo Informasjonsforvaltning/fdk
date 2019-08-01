@@ -866,14 +866,14 @@
       "hideOnLoginPage" : "",
       "validateSignature" : "true",
       "clientId" : "${IDPORTEN_CLIENT_ID}",
-      "tokenUrl" : "${IDPORTEN_OIDC_ROOT}/token",
+      "tokenUrl" : "${IDPORTEN_OIDC_TOKEN_URL}",
       "uiLocales" : "",
-      "jwksUrl" : "${IDPORTEN_OIDC_ROOT}/jwk",
+      "jwksUrl" : "${IDPORTEN_OIDC_JWKS_URL}",
       "backchannelSupported" : "",
-      "issuer" : "${IDPORTEN_OIDC_ROOT}/",
+      "issuer" : "${IDPORTEN_OIDC_ISSUER}",
       "useJwksUrl" : "true",
       "loginHint" : "",
-      "authorizationUrl" : "${IDPORTEN_OIDC_ROOT}/authorize",
+      "authorizationUrl" : "${IDPORTEN_OIDC_AUTHORIZATION_URL}",
       "disableUserInfo" : "",
       "clientSecret" : "${IDPORTEN_CLIENT_SECRET}"
     }
