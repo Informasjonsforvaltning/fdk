@@ -1,15 +1,22 @@
 #!/bin/bash
 
-ESCAPED_IDPORTEN_OIDC_ROOT=${IDPORTEN_OIDC_ROOT//\//\\\/}
-
 echo "Processing import template"
 echo "IDPORTEN_OIDC_ROOT=$IDPORTEN_OIDC_ROOT"
-echo "ESCAPED_IDPORTEN_OIDC_ROOT=$ESCAPED_IDPORTEN_OIDC_ROOT"
 echo "IDPORTEN_CLIENT_ID=$IDPORTEN_CLIENT_ID"
 
-sed -e 's/${IDPORTEN_CLIENT_ID}/'$IDPORTEN_CLIENT_ID'/g' \
- -e 's/${IDPORTEN_CLIENT_SECRET}/'$IDPORTEN_CLIENT_SECRET'/g' \
- -e 's/${IDPORTEN_OIDC_ROOT}/'$ESCAPED_IDPORTEN_OIDC_ROOT'/g' \
+OIDC_CONF=$(curl $IDPORTEN_OIDC_ROOT/.well-known/openid-configuration)
+
+IDPORTEN_OIDC_ISSUER=$(echo $OIDC_CONF | jq ".issuer" -r)
+IDPORTEN_OIDC_AUTHORIZATION_URL=$(echo $OIDC_CONF | jq ".authorization_endpoint" -r)
+IDPORTEN_OIDC_TOKEN_URL=$(echo $OIDC_CONF | jq ".token_endpoint" -r)
+IDPORTEN_OIDC_JWKS_URL=$(echo $OIDC_CONF | jq ".jwks_uri" -r)
+
+sed -e 's,${IDPORTEN_CLIENT_ID},'$IDPORTEN_CLIENT_ID',g' \
+ -e 's,${IDPORTEN_CLIENT_SECRET},'$IDPORTEN_CLIENT_SECRET',g' \
+ -e 's,${IDPORTEN_OIDC_ISSUER},'$IDPORTEN_OIDC_ISSUER',g' \
+ -e 's,${IDPORTEN_OIDC_AUTHORIZATION_URL},'$IDPORTEN_OIDC_AUTHORIZATION_URL',g' \
+ -e 's,${IDPORTEN_OIDC_TOKEN_URL},'$IDPORTEN_OIDC_TOKEN_URL',g' \
+ -e 's,${IDPORTEN_OIDC_JWKS_URL},'$IDPORTEN_OIDC_JWKS_URL',g' \
   </tmp/keycloak/import-template/fdk-realm.template.json >/tmp/keycloak/import/fdk-realm.json
 
 exec /opt/jboss/tools/docker-entrypoint.sh $@
