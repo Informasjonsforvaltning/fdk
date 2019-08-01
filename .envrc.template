@@ -14,11 +14,17 @@ export KEYCLOAK_PASSWORD=admin
 
 export DISQUS_SHORTNAME=CHANGE_ME
 
-# This is host for difi test environment, that should be only used in our it1 environmemt.
-# in st1 and in dev, we should use local mock service (once it is available)
-export IDPORTEN_OIDC_ROOT=https://oidc-ver2.difi.no/idporten-oidc-provider
-export IDPORTEN_CLIENT_ID=CHANGE_ME
-export IDPORTEN_CLIENT_SECRET=CHANGE_ME
+# This is ID-porten host in difi test environment, use this in it1 environmemt.
+# In dev and st1, use local mock service (below)
+# In prod use difi prod host (when available)
+#export IDPORTEN_OIDC_ROOT=https://oidc-ver2.difi.no/idporten-oidc-provider
+#export IDPORTEN_CLIENT_ID=CHANGE_ME
+#export IDPORTEN_CLIENT_SECRET=CHANGE_ME
+
+# This is local mock for ID-Porten, use this in dev and ut1
+export IDPORTEN_OIDC_ROOT=http://sso-idporten-mock:8086/auth/realms/idporten-mock
+export IDPORTEN_CLIENT_ID=oidc_brreg_fellesdatakatalog
+export IDPORTEN_CLIENT_SECRET=29a2cfe1-1a61-4a04-bf84-64d70a340d04
 
 # This is host for altinn test environment, that should be only used in our it1 environmemt.
 # in st1 and in dev, we should use local mock service (once it is available)

@@ -49,6 +49,11 @@ services:
 #      - KEYCLOAK_LOGLEVEL=DEBUG
     ports:
       - "8084:8080"
+# sso-idporten-mock serves ./well-known/openid-configuration endpoint
+# fail and restart until the endpoint is ready.
+    restart: on-failure
+    depends_on:
+      - sso-idporten-mock
 
   sso-idporten-mock:
     build: ./applications/sso-idporten-mock
