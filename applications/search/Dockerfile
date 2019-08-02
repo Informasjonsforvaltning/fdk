@@ -1,7 +1,7 @@
 FROM node:12-alpine
 
 #the only reason why we need git here, is that we have designsystem in another github repo
-RUN apk add --no-cache git
+RUN apk add --no-cache git gettext
 # to run localhost docker
 RUN npm init -y
 RUN npm config set unsafe-perm true
@@ -37,4 +37,7 @@ RUN npm run build
 
 EXPOSE 3000
 
-CMD ["pm2-docker", "start.js"]
+COPY entrypoint.sh /usr/src/app/
+RUN chmod +x entrypoint.sh
+
+ENTRYPOINT ./entrypoint.sh

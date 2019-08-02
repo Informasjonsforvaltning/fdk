@@ -1,4 +1,3 @@
-const _ = require('lodash');
 const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -24,24 +23,7 @@ module.exports = {
     const port = Number(process.env.PORT || 3000);
     app.set('port', port);
 
-    app.use('/env.json', (req, res) => {
-      const vars = [
-        'REDUX_LOG',
-        'DISQUS_SHORTNAME'
-        /*
-TODO:
- There are currently lots of environment dependent configuration hardcoded in client code.
- Keep the list until the migration is gradually done:
-  Twitter
-  Analytics
-  hotjar
-  registration host
-*/
-      ];
-      const values = vars.map(varName => process.env[varName]);
-      const envObj = _.zipObject(vars, values);
-      res.json(envObj);
-    });
+    app.use('/env.json', express.static(path.join(__dirname, 'env.json')));
 
     if (!production) {
       const compiler = webpack(webpackConfig);
