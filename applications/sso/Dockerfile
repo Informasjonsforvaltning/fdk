@@ -6,14 +6,10 @@ COPY tools /opt/fdk/tools
 
 # SSO service does not have permanent database.
 # On service (re)start we will restore the database from the previously exported state.
-# Normally (other than dev environments) don't have any static import files, so this directory is just a
-# target directory placeholder for preprocessed templates
+# When exporting state, it needs to be converted to a template file that has environment variable placeholders in it
+# If needed (in dev environment) additional static realms can be included in imports.
 COPY import /tmp/keycloak/import
-
-# Template files for generating import files. Templates have environment variable placeholders.
 COPY import-template /tmp/keycloak/import-template
-
-# Allow script user write generated imports
 USER root
 RUN chmod o+w /tmp/keycloak/import
 USER 1000
