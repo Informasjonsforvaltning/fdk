@@ -153,32 +153,6 @@ exports[`should render api-ApiEndpoints correctly 1`] = `
       className="col-7"
     />
   </div>
-  <div
-    className="d-flex list-regular--item"
-  >
-    <div
-      className="col-12 pl-0"
-    >
-      <a
-        className="mr-5"
-        href="https://data.brreg.no/enhetsregisteret/api/docs/index.html"
-      >
-        Documentation
-        <i
-          className="fa fa-external-link fdk-fa-right"
-        />
-      </a>
-      <a
-        className="mr-5"
-        href="https://raw.githubusercontent.com/brreg/openAPI/master/specs/enhetsregisteret.json"
-      >
-        Specification
-        <i
-          className="fa fa-external-link fdk-fa-right"
-        />
-      </a>
-    </div>
-  </div>
 </section>
 `;
 

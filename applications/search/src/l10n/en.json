@@ -313,6 +313,11 @@
       "isOpenLicense": "Open license",
       "isNotOpenLicense": "License not open"
     },
+    "servers": {
+      "title": "Start using the API",
+      "url": "Server URL",
+      "description": "Description"
+    },
     "endpoints": {
       "operations": "Operations",
       "operation": "Operation",

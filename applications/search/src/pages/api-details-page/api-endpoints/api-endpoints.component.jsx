@@ -43,32 +43,8 @@ export const renderPaths = paths => {
   return renderedMethods;
 };
 
-const renderLinks = (apiSpecUrl, apiDocUrl) => {
-  if (apiSpecUrl || apiDocUrl) {
-    return (
-      <div className="d-flex list-regular--item">
-        <div className="col-12 pl-0">
-          {apiDocUrl && (
-            <a href={apiDocUrl} className="mr-5">
-              {localization.documentation}
-              <i className="fa fa-external-link fdk-fa-right" />
-            </a>
-          )}
-          {apiSpecUrl && (
-            <a href={apiSpecUrl} className="mr-5">
-              {localization.specification}
-              <i className="fa fa-external-link fdk-fa-right" />
-            </a>
-          )}
-        </div>
-      </div>
-    );
-  }
-  return null;
-};
-
 export const ApiEndpoints = props => {
-  const { name, paths, apiSpecUrl, apiDocUrl } = props;
+  const { name, paths } = props;
   return (
     <section className="mb-5 list-regular" name={name}>
       <div className="d-flex list-regular--item">
@@ -80,21 +56,16 @@ export const ApiEndpoints = props => {
         </div>
       </div>
       {renderPaths(paths)}
-      {renderLinks(apiSpecUrl, apiDocUrl)}
     </section>
   );
 };
 
 ApiEndpoints.defaultProps = {
   name: null,
-  paths: null,
-  apiSpecUrl: null,
-  apiDocUrl: null
+  paths: null
 };
 
 ApiEndpoints.propTypes = {
   name: PropTypes.string,
-  paths: PropTypes.object,
-  apiSpecUrl: PropTypes.string,
-  apiDocUrl: PropTypes.string
+  paths: PropTypes.object
 };
