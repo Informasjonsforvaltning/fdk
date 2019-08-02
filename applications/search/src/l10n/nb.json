@@ -313,6 +313,11 @@
       "isOpenLicense": "Åpen lisens",
       "isNotOpenLicense": "Ikke åpen lisens"
     },
+    "servers": {
+      "title": "Ta i bruk API-et",
+      "url": "Server URL",
+      "description": "Beskrivelse"
+    },
     "endpoints": {
       "operations": "Operasjoner",
       "operation": "Operasjon",

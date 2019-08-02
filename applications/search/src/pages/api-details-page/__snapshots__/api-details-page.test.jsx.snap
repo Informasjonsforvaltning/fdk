@@ -138,9 +138,8 @@ exports[`should render ApiDetailsPage correctly with apiItem 1`] = `
             </span>
           </div>
         </ListRegular>
+        0
         <ApiEndpoints
-          apiDocUrl={null}
-          apiSpecUrl="https://raw.githubusercontent.com/brreg/openAPI/master/specs/api-cat.json"
           name="Operations"
           paths={
             Object {
@@ -308,6 +307,7 @@ exports[`should render ApiDetailsPage correctly with missing api-properties 1`] 
         <div
           className="access-icons mb-5 d-flex justify-content-between"
         />
+        0
         <ListRegular
           bottomMargin={true}
           title="Terms and restrictions"

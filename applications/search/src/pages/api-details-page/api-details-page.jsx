@@ -8,6 +8,7 @@ import localization from '../../lib/localization';
 import { getTranslateText } from '../../lib/translateText';
 import { HarvestDate } from '../../components/harvest-date/harvest-date.component';
 import { SearchHitHeader } from '../../components/search-hit-header/search-hit-header.component';
+import ApiUsageInstruction from './api-usage-instruction/api-usage-instruction.component';
 import { ApiEndpoints } from './api-endpoints/api-endpoints.component';
 import { ShowMore } from '../../components/show-more/show-more';
 import { StickyMenu } from '../../components/sticky-menu/sticky-menu.component';
@@ -65,6 +66,16 @@ const renderFormats = formats => {
     </ListRegular>
   );
 };
+
+const renderApiUsageInstruction = (servers, apiSpecUrl, apiDocUrl) =>
+  servers &&
+  servers.length && (
+    <ApiUsageInstruction
+      servers={servers}
+      apiSpecUrl={apiSpecUrl}
+      apiDocUrl={apiDocUrl}
+    />
+  );
 
 const renderApiEndpoints = (paths, apiSpecUrl, apiDocUrl) => {
   if (!paths) {
@@ -211,8 +222,7 @@ const renderTermsAndRestrictions = (
 
   return (
     <ListRegular
-      title={localization.api.termsAndRestrictions.termsAndRestrictions}
-    >
+      title={localization.api.termsAndRestrictions.termsAndRestrictions}>
       {termsOfService && (
         <TwoColRow
           col1={localization.api.termsAndRestrictions.termsOfService}
@@ -275,6 +285,12 @@ const renderStickyMenu = (apiItem, informationModels) => {
     menuItems.push({
       name: localization.format,
       prefLabel: localization.format
+    });
+  }
+  if (_.get(apiItem, ['apiSpecification', 'servers'], []).length) {
+    menuItems.push({
+      name: localization.api.servers.title,
+      prefLabel: localization.api.servers.title
     });
   }
   if (_.get(apiItem, ['apiSpecification', 'paths'])) {
@@ -476,12 +492,17 @@ export const ApiDetailsPage = ({
               {isOpenLicense === true && iconIsOpenLicense()}
               {isOpenLicense === false && iconIsNotOpenLicense()}
             </div>
+
             {renderFormats(apiItem.formats)}
 
-            {renderApiEndpoints(
-              apiItem.apiSpecification && apiItem.apiSpecification.paths,
+            {renderApiUsageInstruction(
+              _.get(apiItem, ['apiSpecification', 'servers'], []),
               apiItem.apiSpecUrl || internalApiSpecUrl,
               apiItem.apiDocUrl
+            )}
+
+            {renderApiEndpoints(
+              apiItem.apiSpecification && apiItem.apiSpecification.paths
             )}
 
             {renderAPIInfo({})}
