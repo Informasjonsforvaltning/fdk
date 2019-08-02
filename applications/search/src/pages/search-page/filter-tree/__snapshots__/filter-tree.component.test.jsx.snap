@@ -16,7 +16,7 @@ exports[`should handle toggleFilter 1`] = `
         title
       </span>
       <i
-        className="fa fa-angle-up"
+        className="fa fa-angle-down"
       />
     </button>
   </div>
@@ -25,7 +25,7 @@ exports[`should handle toggleFilter 1`] = `
     enter={true}
     exit={true}
     in={false}
-    isOpen={true}
+    isOpen={false}
     mountOnEnter={false}
     onEnter={[Function]}
     onEntered={[Function]}
