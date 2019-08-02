@@ -40,9 +40,11 @@ services:
   sso:
     build: ./applications/sso
     volumes:
+#this allows to run command "npm run keycloak-export"
       - ./applications/sso/export:/tmp/keycloak/export
 # import and deployments are copied in Dockerfile, but alternatively, they can be linked:
 #      - ./applications/sso/import:/tmp/keycloak/import
+#      - ./applications/sso/import:/tmp/keycloak/import-template
 # cp libraries/keycloak-user-storage-rest/target/keycloak-user-storage-rest.jar applications-external/sso/deployments/
 #      - ./applications/sso/deployments:/opt/jboss/keycloak/standalone/deployments
 #    environment:
@@ -59,6 +61,7 @@ services:
     build: ./applications/sso-idporten-mock
     # import is copied in Dockerfile, but could alternatively be overridden here
     volumes:
+      #this allows to run command "npm run keycloak-export-idporten"
       - ./applications/sso-idporten-mock/export:/tmp/keycloak/export
       - ./applications/sso-idporten-mock/import:/tmp/keycloak/import
     environment:
