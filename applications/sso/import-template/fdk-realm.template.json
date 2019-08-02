@@ -884,16 +884,7 @@
     "identityProviderAlias" : "oidc",
     "identityProviderMapper" : "oidc-username-idp-mapper",
     "config" : {
-      "template" : "idp.${CLAIM.pid}"
-    }
-  }, {
-    "id" : "57e0406b-dc71-43eb-87a5-4a656b5da100",
-    "name" : "pid attribute",
-    "identityProviderAlias" : "oidc",
-    "identityProviderMapper" : "oidc-user-attribute-idp-mapper",
-    "config" : {
-      "claim": "pid",
-      "user.attribute": "pid"
+      "template" : "${CLAIM.pid}"
     }
   } ],
   "components" : {
