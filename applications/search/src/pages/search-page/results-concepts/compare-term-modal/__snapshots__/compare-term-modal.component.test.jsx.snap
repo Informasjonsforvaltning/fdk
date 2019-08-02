@@ -37,6 +37,7 @@ exports[`should render CompareTermModal correctly with one term 1`] = `
     zIndex={1050}
   >
     <ModalHeader
+      charCode={215}
       closeAriaLabel="Close"
       tag="h5"
       toggle={[Function]}
@@ -188,6 +189,7 @@ exports[`should render CompareTermModal correctly with props 1`] = `
     zIndex={1050}
   >
     <ModalHeader
+      charCode={215}
       closeAriaLabel="Close"
       tag="h5"
       toggle={[Function]}
