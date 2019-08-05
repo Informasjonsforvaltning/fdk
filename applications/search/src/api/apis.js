@@ -12,6 +12,7 @@ export const apisSearchUrl = query =>
     { addQueryPrefix: true }
   )}`;
 
+// NOTE: Response of this function can be mocked using mock files in src/mock
 export const getApi = id =>
   axios
     .get(`${apisUrlBase}/${id}`)
