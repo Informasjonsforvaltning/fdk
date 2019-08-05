@@ -137,7 +137,6 @@ public class AuthorizationService {
                 }
             } else {
                 organisations.add(entry.getOrganizationNumber());
-                entityNameService.setOrganizationName(entry.getOrganizationNumber(), entry.getName());
             }
         }
 

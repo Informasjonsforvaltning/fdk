@@ -1,6 +1,5 @@
 package no.dcat.controller;
 
-import no.dcat.authorization.EntityNameService;
 import no.dcat.configuration.SpringSecurityContextBean;
 import no.dcat.model.Catalog;
 import no.dcat.service.CatalogRepository;
@@ -41,8 +40,6 @@ public class CatalogController {
 
     private final SpringSecurityContextBean springSecurityContextBean;
 
-    private final EntityNameService entityNameService;
-
     private final HarvesterService harvesterService;
 
     EnhetService enhetService;
@@ -52,10 +49,9 @@ public class CatalogController {
 
 
     @Autowired
-    public CatalogController(CatalogRepository catalogRepository, SpringSecurityContextBean springSecurityContextBean, EntityNameService entityNameService, HarvesterService harvesterService, EnhetService enhetService) {
+    public CatalogController(CatalogRepository catalogRepository, SpringSecurityContextBean springSecurityContextBean, HarvesterService harvesterService, EnhetService enhetService) {
         this.catalogRepository = catalogRepository;
         this.springSecurityContextBean = springSecurityContextBean;
-        this.entityNameService = entityNameService;
         this.harvesterService = harvesterService;
         this.enhetService = enhetService;
     }
@@ -126,12 +122,12 @@ public class CatalogController {
     }
 
     Publisher getPublisher(Catalog catalog) {
-        String uri = openDataEnhetsregisteret + catalog.getId();
-        Enhet enhet = enhetService.getByOrgNr(catalog.getId(), entityNameService);
+        Enhet enhet = enhetService.getByOrgNr(catalog.getId());
 
         Publisher publisher = new Publisher();
         publisher.setId(catalog.getId());
         publisher.setName(enhet.getNavn());
+        String uri = openDataEnhetsregisteret + catalog.getId();
         publisher.setUri(uri);
 
         return publisher;
@@ -218,7 +214,7 @@ public class CatalogController {
 
         Catalog newCatalog = new Catalog(orgnr);
 
-        String organizationName = entityNameService.getOrganizationName(orgnr);
+        String organizationName = enhetService.getByOrgNr(orgnr).getNavn();
         if (organizationName != null) {
             newCatalog.getTitle().put("nb", "Datakatalog for " + organizationName);
         }
