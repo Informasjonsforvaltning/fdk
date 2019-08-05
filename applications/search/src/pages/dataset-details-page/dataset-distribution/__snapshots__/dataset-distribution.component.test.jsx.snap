@@ -73,6 +73,7 @@ exports[`should render DatasetDistribution correctly 1`] = `
     >
       <TwoColRow
         col1="AccessURL"
+        col1Width={null}
         col2={
           Array [
             <LinkExternal
@@ -81,6 +82,7 @@ exports[`should render DatasetDistribution correctly 1`] = `
             />,
           ]
         }
+        col2Width={null}
       />
     </Collapse>
   </ListRegular>

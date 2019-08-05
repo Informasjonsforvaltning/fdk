@@ -115,6 +115,7 @@ exports[`should render ConceptDetailsPage correctly with conceptItem 1`] = `
         >
           <TwoColRow
             col1="Email"
+            col1Width={null}
             col2={
               <a
                 href="mailto:mailto:informasjonsforvaltning@brreg.no"
@@ -124,10 +125,13 @@ exports[`should render ConceptDetailsPage correctly with conceptItem 1`] = `
                 mailto:informasjonsforvaltning@brreg.no
               </a>
             }
+            col2Width={null}
           />
           <TwoColRow
             col1="Phone"
+            col1Width={null}
             col2="47 750 07 500"
+            col2Width={null}
           />
         </ListRegular>
         <div
