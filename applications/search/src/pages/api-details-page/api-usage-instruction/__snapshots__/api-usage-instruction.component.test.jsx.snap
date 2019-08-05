@@ -28,9 +28,9 @@ exports[`should render api-ApiUsageInstruction correctly 1`] = `
     </div>
   </div>
   <TwoColRow
-    col1="https://data.brreg.no/enhetsregisteret/api"
-    col2="Produksjon"
-    key="https://data.brreg.no/enhetsregisteret/apiProduksjon"
+    col1="https://fellesdatakatalog.brreg.no/api-cat/apis"
+    col2="The production API server"
+    key="https://fellesdatakatalog.brreg.no/api-cat/apisThe production API server"
   />
   <div
     className="d-flex list-regular--item"
@@ -40,7 +40,7 @@ exports[`should render api-ApiUsageInstruction correctly 1`] = `
     >
       <a
         className="mr-5"
-        href="https://data.brreg.no/enhetsregisteret/api/docs/index.html"
+        href="https://informasjonsforvaltning.github.io/felles-datakatalog/api-katalog/api/"
       >
         Documentation
         <i
@@ -49,7 +49,7 @@ exports[`should render api-ApiUsageInstruction correctly 1`] = `
       </a>
       <a
         className="mr-5"
-        href="https://raw.githubusercontent.com/brreg/openAPI/master/specs/enhetsregisteret.json"
+        href="https://raw.githubusercontent.com/brreg/openAPI/master/specs/api-cat.json"
       >
         Specification
         <i
@@ -89,9 +89,9 @@ exports[`should render api-ApiUsageInstruction correctly apiSpecUrl and apiDocUr
     </div>
   </div>
   <TwoColRow
-    col1="https://data.brreg.no/enhetsregisteret/api"
-    col2="Produksjon"
-    key="https://data.brreg.no/enhetsregisteret/apiProduksjon"
+    col1="https://fellesdatakatalog.brreg.no/api-cat/apis"
+    col2="The production API server"
+    key="https://fellesdatakatalog.brreg.no/api-cat/apisThe production API server"
   />
 </ListRegular>
 `;
@@ -124,9 +124,9 @@ exports[`should render api-ApiUsageInstruction correctly apiSpecUrl is not set 1
     </div>
   </div>
   <TwoColRow
-    col1="https://data.brreg.no/enhetsregisteret/api"
-    col2="Produksjon"
-    key="https://data.brreg.no/enhetsregisteret/apiProduksjon"
+    col1="https://fellesdatakatalog.brreg.no/api-cat/apis"
+    col2="The production API server"
+    key="https://fellesdatakatalog.brreg.no/api-cat/apisThe production API server"
   />
   <div
     className="d-flex list-regular--item"
@@ -136,7 +136,7 @@ exports[`should render api-ApiUsageInstruction correctly apiSpecUrl is not set 1
     >
       <a
         className="mr-5"
-        href="https://data.brreg.no/enhetsregisteret/api/docs/index.html"
+        href="https://informasjonsforvaltning.github.io/felles-datakatalog/api-katalog/api/"
       >
         Documentation
         <i
@@ -176,9 +176,9 @@ exports[`should render api-ApiUsageInstruction correctly apiSpecUrl is not set 2
     </div>
   </div>
   <TwoColRow
-    col1="https://data.brreg.no/enhetsregisteret/api"
-    col2="Produksjon"
-    key="https://data.brreg.no/enhetsregisteret/apiProduksjon"
+    col1="https://fellesdatakatalog.brreg.no/api-cat/apis"
+    col2="The production API server"
+    key="https://fellesdatakatalog.brreg.no/api-cat/apisThe production API server"
   />
   <div
     className="d-flex list-regular--item"
@@ -188,7 +188,7 @@ exports[`should render api-ApiUsageInstruction correctly apiSpecUrl is not set 2
     >
       <a
         className="mr-5"
-        href="https://raw.githubusercontent.com/brreg/openAPI/master/specs/enhetsregisteret.json"
+        href="https://raw.githubusercontent.com/brreg/openAPI/master/specs/api-cat.json"
       >
         Specification
         <i
