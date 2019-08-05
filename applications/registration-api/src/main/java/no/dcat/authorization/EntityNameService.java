@@ -11,15 +11,6 @@ import java.util.Map;
 @Service
 public class EntityNameService {
     private Map<String, String> userNames = new HashMap<>();
-    private Map<String, String> organizationNames = new HashMap<>();
-
-    public String getOrganizationName(String organizationId) {
-        return organizationNames.get(organizationId);
-    }
-
-    public void setOrganizationName(String organizationId, String organizationName) {
-        organizationNames.put(organizationId,organizationName);
-    }
 
     public String getUserName(String id) {
         return userNames.get(id);
