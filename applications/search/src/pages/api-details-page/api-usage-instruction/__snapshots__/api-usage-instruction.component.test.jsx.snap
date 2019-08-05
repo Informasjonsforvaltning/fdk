@@ -9,7 +9,7 @@ exports[`should render api-ApiUsageInstruction correctly 1`] = `
     className="d-flex list-regular--item"
   >
     <div
-      className="col-4 pl-0"
+      className="col-7 pl-0"
     >
       <h4
         className=""
@@ -18,7 +18,7 @@ exports[`should render api-ApiUsageInstruction correctly 1`] = `
       </h4>
     </div>
     <div
-      className="col-8"
+      className="col-5"
     >
       <h4
         className=""
@@ -29,7 +29,9 @@ exports[`should render api-ApiUsageInstruction correctly 1`] = `
   </div>
   <TwoColRow
     col1="https://fellesdatakatalog.brreg.no/api-cat/apis"
+    col1Width={7}
     col2="The production API server"
+    col2Width={5}
     key="https://fellesdatakatalog.brreg.no/api-cat/apisThe production API server"
   />
   <div
@@ -70,7 +72,7 @@ exports[`should render api-ApiUsageInstruction correctly apiSpecUrl and apiDocUr
     className="d-flex list-regular--item"
   >
     <div
-      className="col-4 pl-0"
+      className="col-7 pl-0"
     >
       <h4
         className=""
@@ -79,7 +81,7 @@ exports[`should render api-ApiUsageInstruction correctly apiSpecUrl and apiDocUr
       </h4>
     </div>
     <div
-      className="col-8"
+      className="col-5"
     >
       <h4
         className=""
@@ -90,7 +92,9 @@ exports[`should render api-ApiUsageInstruction correctly apiSpecUrl and apiDocUr
   </div>
   <TwoColRow
     col1="https://fellesdatakatalog.brreg.no/api-cat/apis"
+    col1Width={7}
     col2="The production API server"
+    col2Width={5}
     key="https://fellesdatakatalog.brreg.no/api-cat/apisThe production API server"
   />
 </ListRegular>
@@ -105,7 +109,7 @@ exports[`should render api-ApiUsageInstruction correctly apiSpecUrl is not set 1
     className="d-flex list-regular--item"
   >
     <div
-      className="col-4 pl-0"
+      className="col-7 pl-0"
     >
       <h4
         className=""
@@ -114,7 +118,7 @@ exports[`should render api-ApiUsageInstruction correctly apiSpecUrl is not set 1
       </h4>
     </div>
     <div
-      className="col-8"
+      className="col-5"
     >
       <h4
         className=""
@@ -125,7 +129,9 @@ exports[`should render api-ApiUsageInstruction correctly apiSpecUrl is not set 1
   </div>
   <TwoColRow
     col1="https://fellesdatakatalog.brreg.no/api-cat/apis"
+    col1Width={7}
     col2="The production API server"
+    col2Width={5}
     key="https://fellesdatakatalog.brreg.no/api-cat/apisThe production API server"
   />
   <div
@@ -157,7 +163,7 @@ exports[`should render api-ApiUsageInstruction correctly apiSpecUrl is not set 2
     className="d-flex list-regular--item"
   >
     <div
-      className="col-4 pl-0"
+      className="col-7 pl-0"
     >
       <h4
         className=""
@@ -166,7 +172,7 @@ exports[`should render api-ApiUsageInstruction correctly apiSpecUrl is not set 2
       </h4>
     </div>
     <div
-      className="col-8"
+      className="col-5"
     >
       <h4
         className=""
@@ -177,7 +183,9 @@ exports[`should render api-ApiUsageInstruction correctly apiSpecUrl is not set 2
   </div>
   <TwoColRow
     col1="https://fellesdatakatalog.brreg.no/api-cat/apis"
+    col1Width={7}
     col2="The production API server"
+    col2Width={5}
     key="https://fellesdatakatalog.brreg.no/api-cat/apisThe production API server"
   />
   <div
@@ -209,7 +217,7 @@ exports[`should render api-ApiUsageInstruction correctly with no props 1`] = `
     className="d-flex list-regular--item"
   >
     <div
-      className="col-4 pl-0"
+      className="col-7 pl-0"
     >
       <h4
         className=""
@@ -218,7 +226,7 @@ exports[`should render api-ApiUsageInstruction correctly with no props 1`] = `
       </h4>
     </div>
     <div
-      className="col-8"
+      className="col-5"
     >
       <h4
         className=""

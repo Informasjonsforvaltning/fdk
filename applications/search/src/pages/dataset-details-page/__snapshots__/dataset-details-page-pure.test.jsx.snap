@@ -1261,6 +1261,7 @@ exports[`should render DatasetDetailsPagePure correctly with datasetItem 1`] = `
         >
           <TwoColRow
             col1="Email"
+            col1Width={null}
             col2={
               <a
                 href="mailto:kundesenter@kartverket.no"
@@ -1270,6 +1271,7 @@ exports[`should render DatasetDetailsPagePure correctly with datasetItem 1`] = `
                 kundesenter@kartverket.no
               </a>
             }
+            col2Width={null}
           />
         </ListRegular>
         <div

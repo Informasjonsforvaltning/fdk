@@ -7,19 +7,27 @@ exports[`should render DatasetQuality correctly 1`] = `
 >
   <TwoColRow
     col1="Completeness"
+    col1Width={null}
     col2="comleteness"
+    col2Width={null}
   />
   <TwoColRow
     col1="Accuracy"
+    col1Width={null}
     col2="accuracy"
+    col2Width={null}
   />
   <TwoColRow
     col1="Relevance"
+    col1Width={null}
     col2="relevance"
+    col2Width={null}
   />
   <TwoColRow
     col1="Availability"
+    col1Width={null}
     col2="availability"
+    col2Width={null}
   />
 </ListRegular>
 `;

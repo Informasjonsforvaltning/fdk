@@ -273,6 +273,7 @@ exports[`should render ApiDetailsPage correctly with apiItem 1`] = `
         >
           <TwoColRow
             col1="Terms of service"
+            col1Width={null}
             col2={
               <a
                 href="https://fellesdatakatalog.brreg.no/about"
@@ -283,9 +284,11 @@ exports[`should render ApiDetailsPage correctly with apiItem 1`] = `
                 />
               </a>
             }
+            col2Width={null}
           />
           <TwoColRow
             col1="License"
+            col1Width={null}
             col2={
               <a
                 href="http://data.norge.no/nlod/no/2.0"
@@ -296,10 +299,13 @@ exports[`should render ApiDetailsPage correctly with apiItem 1`] = `
                 />
               </a>
             }
+            col2Width={null}
           />
           <TwoColRow
             col1="Price"
+            col1Width={null}
             col2="Gratis"
+            col2Width={null}
           />
         </ListRegular>
         <ListRegular
@@ -308,6 +314,7 @@ exports[`should render ApiDetailsPage correctly with apiItem 1`] = `
         >
           <TwoColRow
             col1="Contact point"
+            col1Width={null}
             col2={
               <a
                 href="https://fellesdatakatalog.brreg.no"
@@ -318,9 +325,11 @@ exports[`should render ApiDetailsPage correctly with apiItem 1`] = `
                 />
               </a>
             }
+            col2Width={null}
           />
           <TwoColRow
             col1="Email"
+            col1Width={null}
             col2={
               <a
                 href="mailto:fellesdatakatalog@brreg.no"
@@ -330,6 +339,7 @@ exports[`should render ApiDetailsPage correctly with apiItem 1`] = `
                 fellesdatakatalog@brreg.no
               </a>
             }
+            col2Width={null}
           />
         </ListRegular>
         <div
@@ -424,6 +434,7 @@ exports[`should render ApiDetailsPage correctly with missing api-properties 1`] 
         >
           <TwoColRow
             col1="Terms of service"
+            col1Width={null}
             col2={
               <a
                 href="https://fellesdatakatalog.brreg.no/about"
@@ -434,9 +445,11 @@ exports[`should render ApiDetailsPage correctly with missing api-properties 1`] 
                 />
               </a>
             }
+            col2Width={null}
           />
           <TwoColRow
             col1="License"
+            col1Width={null}
             col2={
               <a
                 href="http://data.norge.no/nlod/no/2.0"
@@ -447,6 +460,7 @@ exports[`should render ApiDetailsPage correctly with missing api-properties 1`] 
                 />
               </a>
             }
+            col2Width={null}
           />
         </ListRegular>
         <div
