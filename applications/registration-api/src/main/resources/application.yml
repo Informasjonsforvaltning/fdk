@@ -23,6 +23,9 @@ application:
   apiRootUrl: http://nginx-search:8080/api
   # harvest every sixth hour
   harvestCron: 0 0 */6 * * *
+  authentication:
+    includedOrgforms: ADOS,FKF,FYLK,IKS,KF,KIRK,KOMM,ORGL,SF,STAT,SÆR
+    includedOrgnr: 974760673,920210023,938275130
 
 
 spring:
@@ -68,54 +71,6 @@ saml:
     logout:
       default-target-url: /
 
----
-spring:
-  profiles: prod
-  data:
-    elasticsearch:
-      clusterNodes: ${FDK_ES_CLUSTERNODES:elasticsearch5:9300}
-      clusterName: ${FDK_ES_CLUSTERNAME:elasticsearch}
-application:
-  authentication:
-    includedOrgforms: ADOS,FKF,FYLK,IKS,KF,KIRK,KOMM,ORGL,SF,STAT,SÆR
-    includedOrgnr: 974760673,920210023,938275130
-  openDataEnhet: ${FDK_ENHETSREGISTERET_URL:https://data.brreg.no/enhetsregisteret/api/enheter/}
-server:
-  tomcat:
-    accesslog:
-      enabled: true
-    basedir: /tmp/fdk
-
----
-spring:
-  profiles: it1
-server:
-  tomcat:
-    accesslog:
-      enabled: true
-    basedir: /tmp/fdk
-
----
-# soon obsolete
-spring:
-  profiles: st1
-  data:
-    elasticsearch:
-      clusterNodes: ${FDK_ES_CLUSTERNODES:elasticsearch5:9300}
-      clusterName: ${FDK_ES_CLUSTERNAME:elasticsearch}
-server:
-  tomcat:
-    accesslog:
-      enabled: true
-    basedir: /tmp/fdk
-
----
-spring:
-  profiles: prod-localauth
-  data:
-    elasticsearch:
-      clusterNodes: ${FDK_ES_CLUSTERNODES:elasticsearch5:9300}
-      clusterName: ${FDK_ES_CLUSTERNAME:elasticsearch}
 server:
   tomcat:
     accesslog:
@@ -161,11 +116,3 @@ application:
   apiKey: 1234-abcde-56789-fghij
   harvesterUrl: http://localhost:8082
 
-
----
-spring:
-  profiles: docker
-  data:
-    elasticsearch:
-      clusterNodes: ${FDK_ES_CLUSTERNODES:elasticsearch5:9300}
-      clusterName: ${FDK_ES_CLUSTERNAME:elasticsearch}
