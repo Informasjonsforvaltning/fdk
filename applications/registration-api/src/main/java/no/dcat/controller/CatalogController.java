@@ -127,7 +127,7 @@ public class CatalogController {
 
     Publisher getPublisher(Catalog catalog) {
         String uri = openDataEnhetsregisteret + catalog.getId();
-        Enhet enhet = enhetService.getByOrgNr(catalog.getId(), uri, entityNameService);
+        Enhet enhet = enhetService.getByOrgNr(catalog.getId(), entityNameService);
 
         Publisher publisher = new Publisher();
         publisher.setId(catalog.getId());
