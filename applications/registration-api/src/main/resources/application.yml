@@ -20,6 +20,7 @@ application:
   harvesterPassword: ${registrationApi_harvesterPassword:password}
   harvesterUrl: http://harvester:8080
   openDataEnhet: ${FDK_ENHETSREGISTERET_URL:https://data.brreg.no/enhetsregisteret/api/enheter/}
+  openDataEnhetProxy: ${FDK_ENHETSREGISTERET_PROXY_URL:http://nginx-enhetsregisteret-proxy:8080/enhetsregisteret/api/enheter/}
   apiRootUrl: http://nginx-search:8080/api
   # harvest every sixth hour
   harvestCron: 0 0 */6 * * *

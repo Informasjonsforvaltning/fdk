@@ -25,17 +25,17 @@ public class OpenDataAuthorizedOrgformService implements AuthorizedOrgformServic
     @Value("${application.authentication.includedOrgnr}")
     private String[] authorizedOrgnr;
 
-    @Value("${application.openDataEnhet}")
-    private String openDataEnhetsregisteret;
+    @Value("${application.openDataEnhetProxy}")
+    private String openDataEnhetsregisteretProxy;
 
     @Override
     public boolean isIncluded(Entity entry) {
         ResponseEntity<OpenDataEnhet> response;
         try {
-            response = restTemplate.getForEntity(openDataEnhetsregisteret + entry.getOrganizationNumber(), OpenDataEnhet.class);
+            response = restTemplate.getForEntity(openDataEnhetsregisteretProxy + entry.getOrganizationNumber(), OpenDataEnhet.class);
             return response.getStatusCode().is2xxSuccessful() && isAuthorisedOrganisation(response.getBody());
         } catch (RuntimeException rte) {
-            logger.warn("Error in getting entity from {} on {}", openDataEnhetsregisteret, entry.getOrganizationNumber());
+            logger.warn("Error in getting entity from {} on {}", openDataEnhetsregisteretProxy, entry.getOrganizationNumber());
             logger.warn("Actual error", rte);
 
             //if enhetsregisteret webservice is unavailable, do not include organisation
@@ -69,7 +69,7 @@ public class OpenDataAuthorizedOrgformService implements AuthorizedOrgformServic
         this.authorizedOrgnr = authorizedOrgnr;
     }
 
-    void setOpenDataEnhetsregisteret(String openDataEnhetsregisteret) {
-        this.openDataEnhetsregisteret = openDataEnhetsregisteret;
+    void setOpenDataEnhetsregisteretProxy(String openDataEnhetsregisteretProxy) {
+        this.openDataEnhetsregisteretProxy = openDataEnhetsregisteretProxy;
     }
 }

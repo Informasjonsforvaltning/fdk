@@ -32,7 +32,7 @@ public class OpenDataAuthorizedOrgformServiceTest {
         openDataAuthorizedOrgformService.setRestTemplate(restTemplate);
         openDataAuthorizedOrgformService.setAuthorizedCodes(new String[]{"ORGL"});
         openDataAuthorizedOrgformService.setAuthorizedOrgnr(new String[]{"980123456"});
-        openDataAuthorizedOrgformService.setOpenDataEnhetsregisteret("data.brreg.no/enheter/");
+        openDataAuthorizedOrgformService.setOpenDataEnhetsregisteretProxy("data.brreg.no/enheter/");
     }
 
     @Test
