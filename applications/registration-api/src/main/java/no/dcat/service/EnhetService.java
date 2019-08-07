@@ -17,8 +17,9 @@ public class EnhetService {
 
     public Enhet getByOrgNr(String orgnr) {
         RestTemplate restTemplate = new RestTemplate();
-
-        return restTemplate.getForObject(openDataEnhetsregisteretProxy + orgnr, Enhet.class);
+        String url = openDataEnhetsregisteretProxy + orgnr;
+        logger.debug("Calling enhetsregiseretproxy: {}", url);
+        return restTemplate.getForObject(url, Enhet.class);
 
     }
 
