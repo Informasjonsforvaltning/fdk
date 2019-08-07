@@ -336,7 +336,7 @@ const renderStickyMenu = (apiItem, informationModels) => {
       prefLabel: localization.contactInfo
     });
   }
-  return <StickyMenu menuItems={menuItems} />;
+  return <StickyMenu title={localization.goTo} menuItems={menuItems} />;
 };
 
 const renderServiceType = (serviceType, referenceData) => {

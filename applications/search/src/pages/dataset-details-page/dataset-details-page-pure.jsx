@@ -385,7 +385,7 @@ const renderStickyMenu = (datasetItem, apis) => {
       prefLabel: localization.contactInfo
     });
   }
-  return <StickyMenu menuItems={menuItems} />;
+  return <StickyMenu title={localization.goTo} menuItems={menuItems} />;
 };
 
 export const DatasetDetailsPagePure = props => {

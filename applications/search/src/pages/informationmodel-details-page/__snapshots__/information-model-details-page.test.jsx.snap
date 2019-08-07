@@ -74,6 +74,7 @@ exports[`should render InformationModelDetailsPage correctly with informationMod
               },
             ]
           }
+          title="Go to"
         />
       </div>
       <section

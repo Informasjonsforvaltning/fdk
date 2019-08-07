@@ -31,20 +31,23 @@ const renderMenu = menuItems => {
   return <ul className="p-0">{children(menuItems)}</ul>;
 };
 
-export const StickyMenu = ({ menuItems }) => (
+export const StickyMenu = ({ title, menuItems }) => (
   <nav className="sticky-menu sticky-top py-5 py-md-4" aria-hidden="true">
     <span className="uu-invisible" aria-hidden="false">
       Sidemeny:
     </span>
+    {title && <h3 className="pb-3">{title}</h3>}
     {renderMenu(menuItems)}
   </nav>
 );
 
 StickyMenu.defaultProps = {
+  title: null,
   menuItems: null
 };
 
 StickyMenu.propTypes = {
+  title: PropTypes.string,
   menuItems: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string.isRequired,

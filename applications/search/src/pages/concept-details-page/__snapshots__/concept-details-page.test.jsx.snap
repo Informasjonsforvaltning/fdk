@@ -85,6 +85,7 @@ exports[`should render ConceptDetailsPage correctly with conceptItem 1`] = `
               },
             ]
           }
+          title="Go to"
         />
       </div>
       <section

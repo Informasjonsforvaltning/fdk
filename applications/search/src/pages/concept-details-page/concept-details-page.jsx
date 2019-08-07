@@ -213,7 +213,7 @@ const renderStickyMenu = conceptItem => {
     });
   }
 
-  return <StickyMenu menuItems={menuItems} />;
+  return <StickyMenu title={localization.goTo} menuItems={menuItems} />;
 };
 export const ConceptDetailsPage = ({
   conceptItem,
