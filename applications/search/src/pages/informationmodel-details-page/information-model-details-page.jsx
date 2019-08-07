@@ -97,7 +97,7 @@ const renderStickyMenu = (informationModelItem, referencedApis) => {
     });
   }
 
-  return <StickyMenu menuItems={menuItems} />;
+  return <StickyMenu title={localization.goTo} menuItems={menuItems} />;
 };
 
 function getSchema(model) {

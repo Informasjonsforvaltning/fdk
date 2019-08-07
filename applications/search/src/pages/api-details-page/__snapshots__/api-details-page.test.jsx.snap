@@ -120,6 +120,7 @@ exports[`should render ApiDetailsPage correctly with apiItem 1`] = `
               },
             ]
           }
+          title="Go to"
         />
       </div>
       <section
@@ -419,6 +420,7 @@ exports[`should render ApiDetailsPage correctly with missing api-properties 1`] 
               },
             ]
           }
+          title="Go to"
         />
       </div>
       <section

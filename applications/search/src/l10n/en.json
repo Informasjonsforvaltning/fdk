@@ -36,6 +36,7 @@
   "during": "during",
   "datasetLabel": "Dataset",
   "activeFilter": "Enabled filters",
+  "goTo": "Go to",
   "app": {
     "menu": "Menu"
   },

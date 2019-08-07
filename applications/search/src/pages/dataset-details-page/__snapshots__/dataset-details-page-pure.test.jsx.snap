@@ -37,6 +37,7 @@ exports[`should render DatasetDetailsPagePure correctly with datasetItem 1`] = `
               },
             ]
           }
+          title="Go to"
         />
       </div>
       <div
