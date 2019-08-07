@@ -6,13 +6,13 @@
   li {
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
-    border-color: $color-red-1;
+    border-color: $color-danger;
     list-style-type: none;
     button, a {
       background: none;
       border: 0;
       box-sizing: border-box;
-      color: $color-blue-dark;
+      color: $color-link;
       padding: .4em 1em;
       font-weight: 500;
       text-decoration: none;
@@ -20,8 +20,8 @@
   }
 
   .li-active {
-    color: $color-blue-dark;
-    background-color: $color6;
+    color: $color-link;
+    background-color: $color-neutral-lightest;
     font-size: 1.8rem;
 
     &.beta {
@@ -32,7 +32,7 @@
     }
 
     button, a {
-      color: $color1 !important;
+      color: $color-neutral-darkest !important;
     }
   }
 }

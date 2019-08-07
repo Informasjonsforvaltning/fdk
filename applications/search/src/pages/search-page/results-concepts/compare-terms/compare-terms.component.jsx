@@ -16,7 +16,7 @@ export const CompareTerms = props => {
         <h3 className="">{title}</h3>
         <button
           type="button"
-          className="btn fdk-text-size-15 fdk-color-blue-dark bg-transparent"
+          className="btn fdk-text-size-15 fdk-color-link bg-transparent"
           onClick={() => {
             onDeleteTerm(uri);
           }}

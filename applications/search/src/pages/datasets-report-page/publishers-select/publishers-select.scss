@@ -2,12 +2,12 @@
 @import '../../../../node_modules/designsystemet/fdk-designsystem-bootstrap4/scss/colors';
 
 .fdk-report-search-publishers {
-  background-color: $color5;
+  background-color: $color-neutral-lighter;
   padding: 1.2em;
   margin: .5em auto;
   border-radius: 5px;
   .fdk-report-search-publishers__header {
-    color: $color1;
+    color: $color-neutral-darkest;
     font-size: 1.875rem;
     line-height: 2.25rem;
     font-weight: 500;

@@ -1,12 +1,12 @@
 @import '../../../node_modules/designsystemet/fdk-designsystem-bootstrap4/scss/colors.scss';
 
 .fdk-panel--filter, .fdk-filter-tree {
-  background-color: $color5;
+  background-color: $color-neutral-lighter;
   margin-bottom: .5em;
   border-radius: 5px;
   .fdk-panel__header {
-    border-bottom: 1px solid $color6;
-    color: $color1;
+    border-bottom: 1px solid $color-neutral-lightest;
+    color: $color-neutral-darkest;
     line-height: 2em;
     margin-bottom: .5em;
     padding: 1em 1.5em;
@@ -17,7 +17,7 @@
       font-size: 1.875rem;
       font-weight: 500;
       i {
-        color: $color-blue-dark;
+        color: $color-link;
         font-size: 2rem;
       }
     }
@@ -34,7 +34,7 @@
         padding: 0;
       }
       .fdk-toggleList {
-        color: $color-blue-dark;
+        color: $color-link;
       }
     }
   }

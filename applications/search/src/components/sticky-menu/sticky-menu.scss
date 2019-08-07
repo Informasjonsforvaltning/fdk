@@ -1,18 +1,18 @@
 @import '../../../node_modules/designsystemet/fdk-designsystem-bootstrap4/scss/colors.scss';
 
 .sticky-menu {
-  background-color: $color6;
+  background-color: $color-neutral-lightest;
   position: sticky;
   position: -webkit-sticky;
   top: 0;
   ul {
     list-style: none;
     li {
-      color: $color-cta2;
+      color: $color-primary02;
       a {
         cursor: pointer;
         &.active {
-          color: $color1;
+          color: $color-neutral-darkest;
           font-weight: 500;
         }
       }

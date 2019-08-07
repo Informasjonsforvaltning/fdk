@@ -3,12 +3,12 @@
 /***************  **************************/
 /*********** Bootstrap overrides **********/
 /*****************************************/
-$primary:       $color-blue-dark !default;
-$secondary:     $color-dark-2 !default;
-$success:       $color-green-1 !default;
-$info:          $color-blue-light !default;
-$warning:       $color-yellow-1 !default;
-$danger:        $color-red-1 !default;
+$primary:       $color-link !default;
+$secondary:     $color-neutral-dark !default;
+$success:       $color-success !default;
+$info:          $color-primary-lighter !default;
+$warning:       $color-warning !default;
+$danger:        $color-danger !default;
 
 input[type=text]::-ms-clear {  display: none; width : 0; height: 0; }
 input[type=text]::-ms-reveal {  display: none; width : 0; height: 0; }

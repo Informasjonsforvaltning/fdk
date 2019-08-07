@@ -113,7 +113,7 @@ const renderRemoveItem = (items, history, conceptIdsArray, removeConcept) => {
       <td key={`row-button-${index}`}>
         <button
           type="button"
-          className="btn fdk-text-size-15 fdk-color-blue-dark bg-transparent"
+          className="btn fdk-text-size-15 fdk-color-link bg-transparent"
           onClick={() => {
             onDeleteConcept(
               _.get(items, [item, 'id']),

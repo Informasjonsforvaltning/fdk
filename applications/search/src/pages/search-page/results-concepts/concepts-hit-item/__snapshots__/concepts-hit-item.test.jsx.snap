@@ -28,7 +28,7 @@ exports[`should render ConceptsHitItem correctly 1`] = `
       </h2>
     </Link>
     <button
-      className="btn fdk-color-blue-dark bg-transparent fdk-text-size-15 fade-in-400"
+      className="btn fdk-color-link bg-transparent fdk-text-size-15 fade-in-400"
       onClick={[Function]}
       type="button"
     >

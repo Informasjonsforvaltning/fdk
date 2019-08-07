@@ -4,18 +4,18 @@
    ========================================================================== */
 
 .top-section-search {
-  background-color: $color-blue-light;
+  background-color: $color-primary-lighter;
 }
 
 .sk-hits-stats__info {
-  color: $color1;
+  color: $color-neutral-darkest;
   font-size: 1.6rem;
   font-weight: 500;
 }
 
 .fdk-button.fdk-button-black-toggle {
     background-color: transparent;
-    color: $color-blue-dark;
+    color: $color-link;
     border-color: black;
     box-shadow: none;
     min-width:120px;
@@ -31,7 +31,7 @@
   border-bottom-left-radius:0;
 }
 .fdk-button.fdk-button-black-toggle:hover, .fdk-button.fdk-button-black-toggle:not(.disabled):not(.disabled):active {
-  color:$color-blue-dark;
+  color:$color-link;
   background: transparent;
 }
 .fdk-button.fdk-button-black-toggle:focus {
@@ -54,18 +54,18 @@
     a, span {
       background-color: transparent !important;
       border: none !important;
-      color: $color1 !important;
+      color: $color-neutral-darkest !important;
       font-size: 1.2rem;
       padding: .5em !important;
       &:hover {
-        background-color: $color5 !important;
+        background-color: $color-neutral-lighter !important;
       }
     }
   }
   li.active {
     a {
-      background-color: $color1 !important;
-      color: $color0 !important;
+      background-color: $color-neutral-darkest !important;
+      color: $color-white !important;
     }
   }
   li.previous {
@@ -111,18 +111,18 @@
       a, span {
         background-color: transparent !important;
         border: none !important;
-        color: $color1 !important;
+        color: $color-neutral-darkest !important;
         font-size: 1.5rem !important;
         padding: .5em 1em !important;
         &:hover {
-          background-color: $color5 !important;
+          background-color: $color-neutral-lighter !important;
         }
       }
     }
     li.active {
       a {
-        background-color: $color1 !important;
-        color: $color0 !important;
+        background-color: $color-neutral-darkest !important;
+        color: $color-white !important;
       }
     }
     li.previous {

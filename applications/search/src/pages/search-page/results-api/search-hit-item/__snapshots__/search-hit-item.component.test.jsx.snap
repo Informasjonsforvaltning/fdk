@@ -154,7 +154,7 @@ exports[`should render api-SearchHitItem with long description 1`] = `
     className="access-icons mt-2 d-flex justify-content-between"
   >
     <span
-      className="access-icon flex-fill fdk-color-red-1"
+      className="access-icon flex-fill fdk-color-danger"
     >
       <span
         className="icon2-icon-api-cost"
@@ -169,7 +169,7 @@ exports[`should render api-SearchHitItem with long description 1`] = `
       Not free
     </span>
     <span
-      className="access-icon flex-fill fdk-color-red-1"
+      className="access-icon flex-fill fdk-color-danger"
     >
       <span
         className="icon2-icon-api-access-not-limited"
@@ -184,7 +184,7 @@ exports[`should render api-SearchHitItem with long description 1`] = `
       Not public access
     </span>
     <span
-      className="access-icon flex-fill fdk-color-red-1"
+      className="access-icon flex-fill fdk-color-danger"
     >
       <span
         className="icon2-icon-api-license"

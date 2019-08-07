@@ -333,7 +333,7 @@ export const DatasetStats = props => {
 
   const catalogListItem = stats.catalogCounts.map(catalogRecord => (
     <div
-      className="d-flex justify-content-between fdk-bg-color-grey-4 rounded p-4 mb-1"
+      className="d-flex justify-content-between fdk-bg-color-neutral-lightest rounded p-4 mb-1"
       key={catalogRecord.key}
     >
       <div>
@@ -368,7 +368,7 @@ export const DatasetStats = props => {
           {localization.report.catalogsFrom} {name}
         </strong>
       </div>
-      <div className="d-flex justify-content-between fdk-bg-color-dark-1 fdk-color-white rounded p-4 mb-1">
+      <div className="d-flex justify-content-between fdk-bg-color-neutral-darkest fdk-color-white rounded p-4 mb-1">
         <div>{localization.report.catalogs}</div>
         <div>{localization.datasetLabel}</div>
       </div>

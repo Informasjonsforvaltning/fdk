@@ -107,7 +107,7 @@ export const ModelComponentPure = props => {
     'fa',
     'font-weight-bold',
     'mr-2',
-    'fdk-color-blue-dark',
+    'fdk-color-link',
     {
       'fa-angle-down': !collapse,
       'fa-angle-up': collapse

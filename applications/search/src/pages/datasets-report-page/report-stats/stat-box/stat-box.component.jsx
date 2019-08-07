@@ -41,16 +41,16 @@ export const StatBox = props => {
       'stat-box-circle--large': iconBgSize === 'large',
       'stat-box-circle--medium': iconBgSize === 'medium',
       'stat-box-circle--small': iconBgSize === 'small',
-      'fdk-bg-color-green-2': iconBgColor === 'green',
-      'fdk-bg-color-yellow-2': iconBgColor === 'yellow',
-      'fdk-bg-color-red-2': iconBgColor === 'red',
-      'fdk-bg-color-grey-2': iconBgColor === 'grey',
-      'fdk-color-green-1': iconColor === 'green',
-      'fdk-color-yellow-1': iconColor === 'yellow',
-      'fdk-color-red-1': iconColor === 'red',
-      'fdk-color-blue': iconColor === 'blue',
-      'fdk-color-grey-1': iconColor === 'grey',
-      'fdk-color-dark-2': iconColor === 'dark'
+      'fdk-bg-color-success-lighter': iconBgColor === 'green',
+      'fdk-bg-color-warning-lighter': iconBgColor === 'yellow',
+      'fdk-bg-color-danger-lighter': iconBgColor === 'red',
+      'fdk-bg-color-neutral-lighter': iconBgColor === 'grey',
+      'fdk-color-success': iconColor === 'green',
+      'fdk-color-warning': iconColor === 'yellow',
+      'fdk-color-danger': iconColor === 'red',
+      'fdk-color-primary': iconColor === 'blue',
+      'fdk-color-neutral-light': iconColor === 'grey',
+      'fdk-color-neutral-dark': iconColor === 'dark'
     }
   );
 

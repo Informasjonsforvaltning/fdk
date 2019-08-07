@@ -189,7 +189,7 @@ export class DatasetDistribution extends React.Component {
                 <div className="col-8">{formatItems(format)}</div>
                 <button type="button" onClick={this.toggle}>
                   <i
-                    className={`fa fdk-color-blue-dark ${
+                    className={`fa fdk-color-link ${
                       openCollapse ? 'fa-chevron-up' : 'fa-chevron-down'
                     }`}
                   />

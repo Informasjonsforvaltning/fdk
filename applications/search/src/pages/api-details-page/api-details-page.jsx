@@ -222,7 +222,8 @@ const renderTermsAndRestrictions = (
 
   return (
     <ListRegular
-      title={localization.api.termsAndRestrictions.termsAndRestrictions}>
+      title={localization.api.termsAndRestrictions.termsAndRestrictions}
+    >
       {termsOfService && (
         <TwoColRow
           col1={localization.api.termsAndRestrictions.termsOfService}
