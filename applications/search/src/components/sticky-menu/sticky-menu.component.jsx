@@ -21,15 +21,12 @@ const renderMenuItem = menuItem => (
   </li>
 );
 
-const renderMenu = menuItems => {
-  if (!menuItems) {
-    return null;
-  }
-  const children = menuItems =>
-    menuItems.map(menuItem => renderMenuItem(menuItem));
-
-  return <ul className="p-0">{children(menuItems)}</ul>;
-};
+const renderMenu = menuItems =>
+  menuItems && (
+    <ul className="p-0">
+      {menuItems.map(menuItem => renderMenuItem(menuItem))}
+    </ul>
+  );
 
 export const StickyMenu = ({ menuItems }) => (
   <nav className="sticky-menu sticky-top py-5 py-md-4" aria-hidden="true">
