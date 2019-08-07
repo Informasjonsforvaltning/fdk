@@ -38,28 +38,6 @@ exports[`should render ConceptDetailsPage correctly with conceptItem 1`] = `
             }
           />
         </div>
-        <SearchHitHeader
-          darkThemeBackground={true}
-          nationalComponent={false}
-          publisher={
-            Object {
-              "orgPath": "/ba/be/bi/14",
-              "prefLabel": Object {
-                "en": "engelsk pub preflabel14",
-                "no": "norsk pub preflabel14",
-              },
-            }
-          }
-          publisherItems={null}
-          publisherLabel="Responsible:"
-          publisherTag="span"
-          referenceData={null}
-          statusCode={null}
-          tag="h1"
-          theme={null}
-          title="engelsk preflabel14"
-          titleLink={null}
-        />
       </div>
     </div>
     <div
@@ -91,11 +69,37 @@ exports[`should render ConceptDetailsPage correctly with conceptItem 1`] = `
       <section
         className="col-12 col-lg-8 mt-3"
       >
-        <withStateHandlers(ShowMorePure)
-          showMoreButtonText="Show the full description"
+        <div
+          name="engelsk preflabel14"
         >
-          engelsk definition14
-        </withStateHandlers(ShowMorePure)>
+          <SearchHitHeader
+            darkThemeBackground={true}
+            nationalComponent={false}
+            publisher={
+              Object {
+                "orgPath": "/ba/be/bi/14",
+                "prefLabel": Object {
+                  "en": "engelsk pub preflabel14",
+                  "no": "norsk pub preflabel14",
+                },
+              }
+            }
+            publisherItems={null}
+            publisherLabel="Responsible:"
+            publisherTag="span"
+            referenceData={null}
+            statusCode={null}
+            tag="h1"
+            theme={null}
+            title="engelsk preflabel14"
+            titleLink={null}
+          />
+          <withStateHandlers(ShowMorePure)
+            showMoreButtonText="Show the full description"
+          >
+            engelsk definition14
+          </withStateHandlers(ShowMorePure)>
+        </div>
         <ListRegular
           bottomMargin={true}
           title="Identifier"

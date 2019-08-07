@@ -43,20 +43,6 @@ exports[`should render InformationModelDetailsPage correctly with informationMod
             }
           />
         </div>
-        <SearchHitHeader
-          darkThemeBackground={true}
-          nationalComponent={false}
-          publisher={null}
-          publisherItems={null}
-          publisherLabel="Responsible:"
-          publisherTag="span"
-          referenceData={null}
-          statusCode={null}
-          tag="h1"
-          theme={null}
-          title="Åpne Data fra Enhetsregisteret - API Dokumentasjon"
-          titleLink={null}
-        />
       </div>
     </div>
     <div
@@ -80,6 +66,20 @@ exports[`should render InformationModelDetailsPage correctly with informationMod
       <section
         className="col-12 col-lg-9 mt-3"
       >
+        <SearchHitHeader
+          darkThemeBackground={true}
+          nationalComponent={false}
+          publisher={null}
+          publisherItems={null}
+          publisherLabel="Responsible:"
+          publisherTag="span"
+          referenceData={null}
+          statusCode={null}
+          tag="h1"
+          theme={null}
+          title="Åpne Data fra Enhetsregisteret - API Dokumentasjon"
+          titleLink={null}
+        />
         <ListRegular
           bottomMargin={true}
           title="Information model"

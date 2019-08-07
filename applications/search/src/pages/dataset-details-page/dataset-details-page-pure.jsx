@@ -13,6 +13,7 @@ import { DatasetInfo } from './dataset-info/dataset-info.component';
 import { DatasetQuality } from './dataset-quality/dataset-quality.component';
 import { getTranslateText } from '../../lib/translateText';
 import { ListRegular } from '../../components/list-regular/list-regular.component';
+import { HarvestDate } from '../../components/harvest-date/harvest-date.component';
 import { TwoColRow } from '../../components/list-regular/twoColRow/twoColRow';
 import { BoxRegular } from '../../components/box-regular/box-regular.component';
 import { LinkExternal } from '../../components/link-external/link-external.component';
@@ -24,6 +25,7 @@ import {
 } from '../../redux/modules/referenceData';
 import { SearchHitHeader } from '../../components/search-hit-header/search-hit-header.component';
 import { getFirstLineOfText } from '../../lib/stringUtils';
+import './dataset-details-page.scss';
 
 const renderPublished = datasetItem => {
   if (!datasetItem) {
@@ -416,19 +418,34 @@ export const DatasetDetailsPagePure = props => {
     <main id="content" className="container">
       <article>
         <div className="row">
+          <div className="col-12 col-lg-8 offset-lg-4">
+            <DocumentMeta {...meta} />
+
+            <div className="d-flex fdk-detail-date mb-5">
+              <i className="align-self-center fdk-icon-catalog-dataset mr-2" />
+              <strong className="align-self-center">
+                {localization.dataset.datasetdescription}&nbsp;
+              </strong>
+              <HarvestDate
+                className="align-self-center"
+                harvest={_.get(datasetItem, 'harvest')}
+              />
+            </div>
+          </div>
+        </div>
+        <div className="row">
           <div className="col-12 col-lg-4 ">
             {renderStickyMenu(datasetItem, apis)}
           </div>
 
-          <div className="col-12 col-lg-8">
-            <DocumentMeta {...meta} />
-
-            <DatasetDescription
-              datasetItem={datasetItem}
-              referenceData={referenceData}
-            />
-
-            {renderPublished(datasetItem)}
+          <div className="col-12 col-lg-8 mt-3">
+            <div name={meta.title}>
+              <DatasetDescription
+                datasetItem={datasetItem}
+                referenceData={referenceData}
+              />
+              {renderPublished(datasetItem)}
+            </div>
 
             {renderKeyInfo(datasetItem)}
 

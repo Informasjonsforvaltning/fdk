@@ -5,10 +5,8 @@ import sanitizeHtml from 'sanitize-html';
 
 import localization from '../../../lib/localization';
 import { ShowMore } from '../../../components/show-more/show-more';
-import { HarvestDate } from '../../../components/harvest-date/harvest-date.component';
 import { SearchHitHeader } from '../../../components/search-hit-header/search-hit-header.component';
 import { getTranslateText } from '../../../lib/translateText';
-import './dataset-description.scss';
 
 export class DatasetDescription extends React.Component {
   constructor(props) {
@@ -26,7 +24,7 @@ export class DatasetDescription extends React.Component {
 
   render() {
     const { datasetItem, referenceData } = this.props;
-    const { harvest, publisher, theme, provenance } = datasetItem || {};
+    const { publisher, theme, provenance } = datasetItem || {};
     let { title, descriptionFormatted, objective } = datasetItem || {};
     title = getTranslateText(title);
     descriptionFormatted = getTranslateText(descriptionFormatted);
@@ -34,14 +32,6 @@ export class DatasetDescription extends React.Component {
 
     return (
       <header>
-        <div className="d-flex flex-wrap align-content-center fdk-detail-date mb-5">
-          <i className="align-self-center fdk-icon-catalog-dataset mr-2" />
-          <strong className="align-self-center">
-            {localization.dataset.datasetdescription}&nbsp;
-          </strong>
-          <HarvestDate harvest={harvest} />
-        </div>
-
         <SearchHitHeader
           title={title}
           publisherLabel={localization.search_hit.owned}
