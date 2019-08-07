@@ -1,5 +1,7 @@
 FROM jboss/keycloak:6.0.1
 
+ENV DB_VENDOR h2
+
 COPY import /tmp/keycloak/import
 
 # port offset 6 is set because we want the server to be accessible both from host and from the sso container in local network claster.

@@ -2,7 +2,7 @@
 
 i=0
 
-docker_apps="e2e search registration-react fuseki nginx-registration nginx-search nginx-altinn-proxy sso"
+docker_apps="e2e search registration-react fuseki nginx-registration nginx-search nginx-altinn-proxy sso sso-idporten-mock"
 
 for docker_app in $docker_apps; do
     i=$((i+1))
