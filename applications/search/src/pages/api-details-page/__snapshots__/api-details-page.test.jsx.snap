@@ -145,7 +145,7 @@ exports[`should render ApiDetailsPage correctly with apiItem 1`] = `
             className="access-icons mb-5 d-flex justify-content-between"
           >
             <span
-              className="access-icon flex-fill fdk-color-green-1"
+              className="access-icon flex-fill fdk-color-success"
             >
               <span
                 className="icon2-icon-api-cost-none"
@@ -169,7 +169,7 @@ exports[`should render ApiDetailsPage correctly with apiItem 1`] = `
               Free
             </span>
             <span
-              className="access-icon flex-fill fdk-color-green-1"
+              className="access-icon flex-fill fdk-color-success"
             >
               <span
                 className="icon2-icon-api-access-all"
@@ -190,7 +190,7 @@ exports[`should render ApiDetailsPage correctly with apiItem 1`] = `
               Public access
             </span>
             <span
-              className="access-icon flex-fill fdk-color-green-1"
+              className="access-icon flex-fill fdk-color-success"
             >
               <span
                 className="icon2-icon-api-license-open"

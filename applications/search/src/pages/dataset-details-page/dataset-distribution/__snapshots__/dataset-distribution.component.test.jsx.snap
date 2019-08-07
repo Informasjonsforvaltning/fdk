@@ -35,7 +35,7 @@ exports[`should render DatasetDistribution correctly 1`] = `
           type="button"
         >
           <i
-            className="fa fdk-color-blue-dark fa-chevron-down"
+            className="fa fdk-color-link fa-chevron-down"
           />
         </button>
       </div>

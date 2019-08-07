@@ -6,7 +6,7 @@
     overflow-x: hidden;
     .tree-view_item {
       border-top: none;
-      color: $color1;
+      color: $color-neutral-darkest;
       white-space: nowrap;
       margin-top: 0;
       margin-bottom: 0;
@@ -21,7 +21,7 @@
   }
   .tree-view_arrow {
     cursor: pointer;
-    color: $color-blue-dark;
+    color: $color-link;
     font-size: 2rem;
     font-family: FontAwesome;
     -webkit-user-select: none;

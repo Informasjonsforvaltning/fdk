@@ -5,8 +5,8 @@
   top: 10%;
 }
 .modal-header {  
-  background-color: $color1; 
-  color: $color0;
+  background-color: $color-neutral-darkest; 
+  color: $color-white;
   padding-left: 2em !important;
   padding-right: 2em !important;
   h4 {    
@@ -18,8 +18,8 @@
 }
 
 .modal-body {
-  background-color: $color0; 
-  color: $color1;
+  background-color: $color-white; 
+  color: $color-neutral-darkest;
   padding: 1.5em !important;
   h5 {
     color: inherit;

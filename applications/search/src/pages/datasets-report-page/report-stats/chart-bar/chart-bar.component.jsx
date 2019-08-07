@@ -8,10 +8,10 @@ import './chart-bar.scss';
 export const ChartBar = props => {
   const { componentKey, percentHeight, barColor } = props;
   const barClass = cx({
-    'fdk-bg-color-green-2': barColor === 'green',
-    'fdk-bg-color-yellow-2': barColor === 'yellow',
-    'fdk-bg-color-red-2': barColor === 'red',
-    'fdk-bg-color-grey-2': barColor === 'grey'
+    'fdk-bg-color-success-lighter': barColor === 'green',
+    'fdk-bg-color-warning-lighter': barColor === 'yellow',
+    'fdk-bg-color-danger-lighter': barColor === 'red',
+    'fdk-bg-color-neutral-lighter': barColor === 'grey'
   });
 
   return (

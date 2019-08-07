@@ -71,7 +71,7 @@ export class CompareTermModal extends React.Component {
             className="fdk-concepts-compare-rm-term fdk-button-small fdk-fullwidth mt-5 fdk-modal-button"
             onClick={() => handleDeleteTerm(index)}
           >
-            <i className="fa fa-times fdk-color0" />
+            <i className="fa fa-times fdk-white" />
             &nbsp;
             {localization.compare.remove}
           </button>
@@ -87,7 +87,7 @@ export class CompareTermModal extends React.Component {
             this.open('BOTTOM');
           }}
         >
-          <i className="fa fa-chevron-up fdk-color0" />
+          <i className="fa fa-chevron-up fdk-white" />
           &nbsp;
           {localization.compare.added +
             terms.length +
@@ -100,7 +100,7 @@ export class CompareTermModal extends React.Component {
       <div className="d-flex justify-content-center">
         <button
           type="button"
-          className="fdk-button-small fdk-color-blue-dark"
+          className="fdk-button-small fdk-color-link"
           onClick={this.open}
         >
           {localization.compare.openCompare}
@@ -111,7 +111,7 @@ export class CompareTermModal extends React.Component {
           className="fdk-modal modal-lg"
         >
           <ModalHeader toggle={this.close}>
-            <i className="fa fa-chevron-down fdk-fa-left fa-lg fdk-color0" />
+            <i className="fa fa-chevron-down fdk-fa-left fa-lg fdk-white" />
             &nbsp;
             {localization.compare.compare}
           </ModalHeader>

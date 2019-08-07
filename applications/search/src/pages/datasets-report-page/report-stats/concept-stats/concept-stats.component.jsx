@@ -55,7 +55,7 @@ export const ConceptStats = props => {
     const publisherItem = getPublisherByOrgNr(publishers, publisherRecord.key);
     return (
       <div
-        className="d-flex justify-content-between fdk-bg-color-grey-4 rounded p-4 mb-1"
+        className="d-flex justify-content-between fdk-bg-color-neutral-lightest rounded p-4 mb-1"
         key={publisherRecord.key}
       >
         <div>
@@ -93,7 +93,7 @@ export const ConceptStats = props => {
           <div className="d-flex mt-5 mb-5 justify-content-center">
             <strong>{localization.report.conceptsFrom}</strong>
           </div>
-          <div className="d-flex justify-content-between fdk-bg-color-dark-1 fdk-color-white rounded p-4 mb-1">
+          <div className="d-flex justify-content-between fdk-bg-color-neutral-darkest fdk-color-white rounded p-4 mb-1">
             <div>{localization.report.conceptsCatalog}</div>
             <div>{localization.page.termTab}</div>
           </div>

@@ -110,7 +110,7 @@ exports[`should render ConceptComparePage correctly with conceptItem 1`] = `
                   key="row-button-0"
                 >
                   <button
-                    className="btn fdk-text-size-15 fdk-color-blue-dark bg-transparent"
+                    className="btn fdk-text-size-15 fdk-color-link bg-transparent"
                     onClick={[Function]}
                     type="button"
                   >
@@ -125,7 +125,7 @@ exports[`should render ConceptComparePage correctly with conceptItem 1`] = `
                   key="row-button-1"
                 >
                   <button
-                    className="btn fdk-text-size-15 fdk-color-blue-dark bg-transparent"
+                    className="btn fdk-text-size-15 fdk-color-link bg-transparent"
                     onClick={[Function]}
                     type="button"
                   >
@@ -140,7 +140,7 @@ exports[`should render ConceptComparePage correctly with conceptItem 1`] = `
                   key="row-button-2"
                 >
                   <button
-                    className="btn fdk-text-size-15 fdk-color-blue-dark bg-transparent"
+                    className="btn fdk-text-size-15 fdk-color-link bg-transparent"
                     onClick={[Function]}
                     type="button"
                   >

@@ -13,7 +13,7 @@ exports[`should render CompareTerms correctly 1`] = `
       Preflabel 1
     </h3>
     <button
-      className="btn fdk-text-size-15 fdk-color-blue-dark bg-transparent"
+      className="btn fdk-text-size-15 fdk-color-link bg-transparent"
       onClick={[Function]}
       type="button"
     >

@@ -97,7 +97,7 @@ export const APIStats = props => {
 
   const formatListItem = stats.formatCounts.map(formatRecord => (
     <div
-      className="d-flex justify-content-between fdk-bg-color-grey-4 rounded p-4 mb-1"
+      className="d-flex justify-content-between fdk-bg-color-neutral-lightest rounded p-4 mb-1"
       key={formatRecord.key}
     >
       <div>
@@ -124,7 +124,7 @@ export const APIStats = props => {
       <div className="d-flex mt-5 mb-5 justify-content-center">
         <strong>{localization.report.distributionFormat}</strong>
       </div>
-      <div className="d-flex justify-content-between fdk-bg-color-dark-1 fdk-color-white rounded p-4 mb-1">
+      <div className="d-flex justify-content-between fdk-bg-color-neutral-darkest fdk-color-white rounded p-4 mb-1">
         <div>{localization.format}</div>
         <div>{localization.report.apis}</div>
       </div>

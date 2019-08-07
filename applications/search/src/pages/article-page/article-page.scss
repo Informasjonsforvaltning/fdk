@@ -19,16 +19,16 @@
     display: flex;
   }
   @at-root #{&}--white {
-    background-color: $color0;
+    background-color: $color-white;
   }
   @at-root #{&}--yellow {
-    background-color: $color-yellow2;
+    background-color: $color-warning;
   }
 
   @at-root #{&}--border {
-    border-left: 1px solid $color4;
-    border-right:  1px solid $color4;
-    border-bottom:  1px solid $color4;
+    border-left: 1px solid $color-neutral-light;
+    border-right:  1px solid $color-neutral-light;
+    border-bottom:  1px solid $color-neutral-light;
   }
 
   @at-root #{&}--italic {
@@ -57,7 +57,7 @@
   }
 
   @at-root #{&}__feedback {
-    border-top: 2px solid $color4;
+    border-top: 2px solid $color-neutral-light;
     @at-root #{&}__left {
       display: flex;
       flex-direction: column;

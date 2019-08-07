@@ -21,7 +21,7 @@ exports[`should render ModelComponentPure with props 1`] = `
         className="d-flex align-items-center"
       >
         <i
-          className="fa font-weight-bold mr-2 fdk-color-blue-dark fa-angle-down"
+          className="fa font-weight-bold mr-2 fdk-color-link fa-angle-down"
         />
         <span
           className="d-flex w-50 fdk-text-extra-strong"

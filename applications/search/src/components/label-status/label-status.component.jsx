@@ -14,10 +14,10 @@ export const LabelStatus = ({ tag: Tag, statusCode, referenceData }) => {
     return null;
   }
   const labelClass = cx({
-    'fdk-color-dark-1':
+    'fdk-color-neutral-darkest':
       statusCode.toUpperCase() === 'DEPRECATED' ||
       statusCode.toUpperCase() === 'EXPERIMENTAL',
-    'fdk-color-red': statusCode.toUpperCase() === 'REMOVED'
+    'fdk-color-danger': statusCode.toUpperCase() === 'REMOVED'
   });
 
   const apiStatusLabel = getTranslateText(

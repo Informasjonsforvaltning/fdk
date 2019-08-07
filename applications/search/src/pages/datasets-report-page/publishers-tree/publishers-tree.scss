@@ -20,7 +20,7 @@
   .tree-view_children {
     margin-left: 16px;
     .tree-view_item {
-      border-top: 1px solid $color6;
+      border-top: 1px solid $color-neutral-lightest;
       padding: 1rem 0;
       outline: none;
       span {
@@ -30,7 +30,7 @@
   }
 
   .tree-item_chosen {
-    color: $color-cta2;
+    color: $color-primary02;
     font-weight: 600;
     margin-left: -16px !important;
     padding-left: 16px !important;
