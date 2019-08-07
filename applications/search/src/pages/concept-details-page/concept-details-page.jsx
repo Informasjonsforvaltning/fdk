@@ -248,15 +248,6 @@ export const ConceptDetailsPage = ({
                 harvest={_.get(conceptItem, 'harvest')}
               />
             </div>
-
-            <SearchHitHeader
-              title={getTranslateText(_.get(conceptItem, 'prefLabel'))}
-              publisherLabel={`${localization.responsible}:`}
-              publisher={_.get(conceptItem, 'publisher')}
-              publisherTag="span"
-              publisherItems={publisherItems}
-              darkThemeBackground
-            />
           </div>
         </div>
 
@@ -265,8 +256,19 @@ export const ConceptDetailsPage = ({
             {renderStickyMenu(conceptItem)}
           </div>
           <section className="col-12 col-lg-8 mt-3">
-            {renderDescription(_.get(conceptItem, ['definition', 'text']))}
-            {renderSource(_.get(conceptItem, ['definition', 'source']))}
+            <div name={getTranslateText(_.get(conceptItem, 'prefLabel'))}>
+              <SearchHitHeader
+                title={getTranslateText(_.get(conceptItem, 'prefLabel'))}
+                publisherLabel={`${localization.responsible}:`}
+                publisher={_.get(conceptItem, 'publisher')}
+                publisherTag="span"
+                publisherItems={publisherItems}
+                darkThemeBackground
+              />
+              {renderDescription(_.get(conceptItem, ['definition', 'text']))}
+              {renderSource(_.get(conceptItem, ['definition', 'source']))}
+            </div>
+
             {renderRemark(_.get(conceptItem, ['definition', 'remark']))}
             {renderSample(_.get(conceptItem, 'example'))}
             {renderSubject(_.get(conceptItem, 'subject'))}

@@ -139,15 +139,6 @@ export const InformationModelDetailsPage = ({
                 harvest={informationModelItem.harvest}
               />
             </div>
-
-            <SearchHitHeader
-              title={getTranslateText(informationModelItem.title)}
-              publisherLabel={`${localization.responsible}:`}
-              publisher={informationModelItem.publisher}
-              publisherItems={publisherItems}
-              nationalComponent={informationModelItem.nationalComponent}
-              darkThemeBackground
-            />
           </div>
         </div>
 
@@ -157,6 +148,15 @@ export const InformationModelDetailsPage = ({
           </div>
 
           <section className="col-12 col-lg-9 mt-3">
+            <SearchHitHeader
+              title={getTranslateText(informationModelItem.title)}
+              publisherLabel={`${localization.responsible}:`}
+              publisher={informationModelItem.publisher}
+              publisherItems={publisherItems}
+              nationalComponent={informationModelItem.nationalComponent}
+              darkThemeBackground
+            />
+
             {renderModels(getSchema(informationModelItem))}
 
             {renderRelatedApi(_.get(referencedApis, 'hits'), publisherItems)}

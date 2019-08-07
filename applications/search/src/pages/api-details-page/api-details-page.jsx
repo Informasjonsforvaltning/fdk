@@ -459,19 +459,6 @@ export const ApiDetailsPage = ({
                 harvest={apiItem.harvest}
               />
             </div>
-
-            <SearchHitHeader
-              title={getTranslateText(apiItem.title)}
-              publisherLabel={`${localization.provider}:`}
-              publisher={apiItem.publisher}
-              publisherItems={publisherItems}
-              nationalComponent={apiItem.nationalComponent}
-              statusCode={apiItem.statusCode}
-              referenceData={referenceData}
-              darkThemeBackground
-            />
-
-            {renderExpiredOrDeprecatedVersion(apiItem)}
           </div>
         </div>
 
@@ -481,16 +468,30 @@ export const ApiDetailsPage = ({
           </div>
 
           <section className="col-12 col-lg-8 mt-3 api-details-section">
-            {renderDescription(
-              apiItem.descriptionFormatted || apiItem.description
-            )}
-            <div className="access-icons mb-5 d-flex justify-content-between">
-              {isFree === true && iconIsFree()}
-              {isFree === false && iconIsNotFree()}
-              {isOpenAccess === true && iconIsOpenAccess()}
-              {isOpenAccess === false && iconIsNotOpenAccess()}
-              {isOpenLicense === true && iconIsOpenLicense()}
-              {isOpenLicense === false && iconIsNotOpenLicense()}
+            <div name={getTranslateText(apiItem.title)}>
+              <SearchHitHeader
+                title={getTranslateText(apiItem.title)}
+                publisherLabel={`${localization.provider}:`}
+                publisher={apiItem.publisher}
+                publisherItems={publisherItems}
+                nationalComponent={apiItem.nationalComponent}
+                statusCode={apiItem.statusCode}
+                referenceData={referenceData}
+                darkThemeBackground
+              />
+              {renderExpiredOrDeprecatedVersion(apiItem)}
+              /dataset-details-page-pure.test.j
+              {renderDescription(
+                apiItem.descriptionFormatted || apiItem.description
+              )}
+              <div className="access-icons mb-5 d-flex justify-content-between">
+                {isFree === true && iconIsFree()}
+                {isFree === false && iconIsNotFree()}
+                {isOpenAccess === true && iconIsOpenAccess()}
+                {isOpenAccess === false && iconIsNotOpenAccess()}
+                {isOpenLicense === true && iconIsOpenLicense()}
+                {isOpenLicense === false && iconIsNotOpenLicense()}
+              </div>
             </div>
 
             {renderFormats(apiItem.formats)}

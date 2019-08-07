@@ -55,30 +55,6 @@ exports[`should render ApiDetailsPage correctly with apiItem 1`] = `
             }
           />
         </div>
-        <SearchHitHeader
-          darkThemeBackground={true}
-          nationalComponent={false}
-          publisher={
-            Object {
-              "id": "974760673",
-              "name": "REGISTERENHETEN I BRØNNØYSUND",
-              "orgPath": "/STAT/912660680/974760673",
-              "prefLabel": Object {
-                "no": "Brønnøysundregistrene",
-              },
-              "uri": "http://data.brreg.no/enhetsregisteret/enhet/974760673",
-            }
-          }
-          publisherItems={null}
-          publisherLabel="Provider:"
-          publisherTag="span"
-          referenceData={null}
-          statusCode={null}
-          tag="h1"
-          theme={null}
-          title="National API Directory Search API"
-          titleLink={null}
-        />
       </div>
     </div>
     <div
@@ -126,92 +102,121 @@ exports[`should render ApiDetailsPage correctly with apiItem 1`] = `
       <section
         className="col-12 col-lg-8 mt-3 api-details-section"
       >
-        <withStateHandlers(ShowMorePure)
-          showMoreButtonText="Show the full description"
+        <div
+          name="National API Directory Search API"
         >
-          <div
-            dangerouslySetInnerHTML={
+          <SearchHitHeader
+            darkThemeBackground={true}
+            nationalComponent={false}
+            publisher={
               Object {
-                "__html": "<p>Provides a basic search api against the National API Directory of Norway</p>",
+                "id": "974760673",
+                "name": "REGISTERENHETEN I BRØNNØYSUND",
+                "orgPath": "/STAT/912660680/974760673",
+                "prefLabel": Object {
+                  "no": "Brønnøysundregistrene",
+                },
+                "uri": "http://data.brreg.no/enhetsregisteret/enhet/974760673",
               }
             }
+            publisherItems={null}
+            publisherLabel="Provider:"
+            publisherTag="span"
+            referenceData={null}
+            statusCode={null}
+            tag="h1"
+            theme={null}
+            title="National API Directory Search API"
+            titleLink={null}
           />
-        </withStateHandlers(ShowMorePure)>
-        <div
-          className="access-icons mb-5 d-flex justify-content-between"
-        >
-          <span
-            className="access-icon flex-fill fdk-color-green-1"
+          /dataset-details-page-pure.test.j
+          <withStateHandlers(ShowMorePure)
+            showMoreButtonText="Show the full description"
+          >
+            <div
+              dangerouslySetInnerHTML={
+                Object {
+                  "__html": "<p>Provides a basic search api against the National API Directory of Norway</p>",
+                }
+              }
+            />
+          </withStateHandlers(ShowMorePure)>
+          <div
+            className="access-icons mb-5 d-flex justify-content-between"
           >
             <span
-              className="icon2-icon-api-cost-none"
+              className="access-icon flex-fill fdk-color-green-1"
             >
               <span
-                className="path1"
-              />
-              <span
-                className="path2"
-              />
-              <span
-                className="path3"
-              />
-              <span
-                className="path4"
-              />
-              <span
-                className="path5"
-              />
+                className="icon2-icon-api-cost-none"
+              >
+                <span
+                  className="path1"
+                />
+                <span
+                  className="path2"
+                />
+                <span
+                  className="path3"
+                />
+                <span
+                  className="path4"
+                />
+                <span
+                  className="path5"
+                />
+              </span>
+              Free
             </span>
-            Free
-          </span>
-          <span
-            className="access-icon flex-fill fdk-color-green-1"
-          >
             <span
-              className="icon2-icon-api-access-all"
+              className="access-icon flex-fill fdk-color-green-1"
             >
               <span
-                className="path1"
-              />
-              <span
-                className="path2"
-              />
-              <span
-                className="path3"
-              />
-              <span
-                className="path4"
-              />
+                className="icon2-icon-api-access-all"
+              >
+                <span
+                  className="path1"
+                />
+                <span
+                  className="path2"
+                />
+                <span
+                  className="path3"
+                />
+                <span
+                  className="path4"
+                />
+              </span>
+              Public access
             </span>
-            Public access
-          </span>
-          <span
-            className="access-icon flex-fill fdk-color-green-1"
-          >
             <span
-              className="icon2-icon-api-license-open"
+              className="access-icon flex-fill fdk-color-green-1"
             >
               <span
-                className="path1"
-              />
-              <span
-                className="path2"
-              />
-              <span
-                className="path3"
-              />
-              <span
-                className="path4"
-              />
-              <span
-                className="path5"
-              />
-              <span
-                className="path6"
-              />
+                className="icon2-icon-api-license-open"
+              >
+                <span
+                  className="path1"
+                />
+                <span
+                  className="path2"
+                />
+                <span
+                  className="path3"
+                />
+                <span
+                  className="path4"
+                />
+                <span
+                  className="path5"
+                />
+                <span
+                  className="path6"
+                />
+              </span>
+              Open license
             </span>
-            Open license
-          </span>
+          </div>
         </div>
         <ListRegular
           bottomMargin={true}
@@ -389,20 +394,6 @@ exports[`should render ApiDetailsPage correctly with missing api-properties 1`] 
             harvest={null}
           />
         </div>
-        <SearchHitHeader
-          darkThemeBackground={true}
-          nationalComponent={false}
-          publisher={null}
-          publisherItems={null}
-          publisherLabel="Provider:"
-          publisherTag="span"
-          referenceData={null}
-          statusCode={null}
-          tag="h1"
-          theme={null}
-          title={null}
-          titleLink={null}
-        />
       </div>
     </div>
     <div
@@ -427,8 +418,27 @@ exports[`should render ApiDetailsPage correctly with missing api-properties 1`] 
         className="col-12 col-lg-8 mt-3 api-details-section"
       >
         <div
-          className="access-icons mb-5 d-flex justify-content-between"
-        />
+          name={null}
+        >
+          <SearchHitHeader
+            darkThemeBackground={true}
+            nationalComponent={false}
+            publisher={null}
+            publisherItems={null}
+            publisherLabel="Provider:"
+            publisherTag="span"
+            referenceData={null}
+            statusCode={null}
+            tag="h1"
+            theme={null}
+            title={null}
+            titleLink={null}
+          />
+          /dataset-details-page-pure.test.j
+          <div
+            className="access-icons mb-5 d-flex justify-content-between"
+          />
+        </div>
         0
         <ListRegular
           bottomMargin={true}
