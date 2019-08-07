@@ -32,7 +32,9 @@ public class OpenDataAuthorizedOrgformService implements AuthorizedOrgformServic
     public boolean isIncluded(Entity entry) {
         ResponseEntity<OpenDataEnhet> response;
         try {
-            response = restTemplate.getForEntity(openDataEnhetsregisteretProxy + entry.getOrganizationNumber(), OpenDataEnhet.class);
+            String url = openDataEnhetsregisteretProxy + entry.getOrganizationNumber();
+            logger.debug("Calling enhetsregiseretproxy: {}", url);
+            response = restTemplate.getForEntity(url, OpenDataEnhet.class);
             return response.getStatusCode().is2xxSuccessful() && isAuthorisedOrganisation(response.getBody());
         } catch (RuntimeException rte) {
             logger.warn("Error in getting entity from {} on {}", openDataEnhetsregisteretProxy, entry.getOrganizationNumber());
