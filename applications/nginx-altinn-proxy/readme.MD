@@ -7,7 +7,7 @@ Features:
 2. proxy url rewrite
 3. (todo) caching
 
-Demo:
+Demo localhost:
 
 ```
 # set up required variables in env
@@ -20,6 +20,16 @@ docker-compose up -d nginx-altinn-proxy
 
 #test
 curl "http://localhost:8126/api/serviceowner/reportees?ForceEIAuthentication&subject=01066800187&servicecode=4814&serviceedition=3"
+```
+
+Test in it1, run in any container in cluster:
+```
+curl "http://nginx-altinn-proxy:8080/api/serviceowner/reportees?ForceEIAuthentication&subject=01066800187&servicecode=4814&serviceedition=3"
+```
+
+Test in prod, run in any container in cluster:
+```
+curl "http://nginx-altinn-proxy:8080/api/serviceowner/reportees?ForceEIAuthentication&subject=29037816165&servicecode=4814&serviceedition=3"
 ```
 
 
