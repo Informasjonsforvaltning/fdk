@@ -5,7 +5,7 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>no.dcat</groupId>
+    <groupId>no.fdk</groupId>
     <artifactId>concept-cat</artifactId>
     <version>2.0.0-SNAPSHOT</version>
     <packaging>jar</packaging>
@@ -64,7 +64,7 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>no.dcat</groupId>
+            <groupId>no.fdk</groupId>
             <artifactId>test</artifactId>
             <version>1.1.0-SNAPSHOT</version>
             <scope>test</scope>
@@ -85,7 +85,7 @@
             <artifactId>gson</artifactId>
         </dependency>
         <dependency>
-            <groupId>no.dcat</groupId>
+            <groupId>no.fdk</groupId>
             <artifactId>webutils-spring</artifactId>
             <version>1.4.0-SNAPSHOT</version>
         </dependency>
@@ -102,17 +102,17 @@
             <type>pom</type>
         </dependency>
         <dependency>
-            <groupId>no.dcat</groupId>
+            <groupId>no.fdk</groupId>
             <artifactId>publisher-cat-client</artifactId>
             <version>1.5.0-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>no.dcat</groupId>
+            <groupId>no.fdk</groupId>
             <artifactId>elasticsearch5-client</artifactId>
             <version>1.3.0-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>no.dcat</groupId>
+            <groupId>no.fdk</groupId>
             <artifactId>concept-cat-common</artifactId>
             <version>1.1.0-SNAPSHOT</version>
             <scope>compile</scope>

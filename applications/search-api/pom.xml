@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>no.dcat</groupId>
+    <groupId>no.fdk</groupId>
     <artifactId>search-api</artifactId>
     <packaging>jar</packaging>
     <version>2.0.0-SNAPSHOT</version>
@@ -72,7 +72,7 @@
         </dependency>
 
         <dependency>
-            <groupId>no.dcat</groupId>
+            <groupId>no.fdk</groupId>
             <artifactId>referencedata-client</artifactId>
             <version>1.5.0-SNAPSHOT</version>
         </dependency>
@@ -90,18 +90,18 @@
         </dependency>
 
         <dependency>
-            <groupId>no.dcat</groupId>
+            <groupId>no.fdk</groupId>
             <artifactId>datastore</artifactId>
             <version>1.6.0-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>no.dcat</groupId>
+            <groupId>no.fdk</groupId>
             <artifactId>elasticsearch5-test</artifactId>
             <version>1.1.0-SNAPHOT</version>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>no.dcat</groupId>
+            <groupId>no.fdk</groupId>
             <artifactId>elasticsearch5-client</artifactId>
             <version>1.3.0-SNAPSHOT</version>
         </dependency>
@@ -124,7 +124,7 @@
         </dependency>
 
         <dependency>
-            <groupId>no.dcat</groupId>
+            <groupId>no.fdk</groupId>
             <artifactId>webutils-spring</artifactId>
             <version>1.4.0-SNAPSHOT</version>
         </dependency>
@@ -148,7 +148,7 @@
         </dependency>
 
         <dependency>
-            <groupId>no.dcat</groupId>
+            <groupId>no.fdk</groupId>
             <artifactId>test</artifactId>
             <version>1.1.0-SNAPSHOT</version>
             <scope>test</scope>
