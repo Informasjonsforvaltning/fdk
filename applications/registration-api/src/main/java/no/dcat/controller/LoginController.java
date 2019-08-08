@@ -2,7 +2,7 @@ package no.dcat.controller;
 
 import no.dcat.authorization.EntityNameService;
 import no.dcat.configuration.FdkSamlUserDetails;
-import no.dcat.configuration.SpringSecurityContextBean;
+import no.dcat.service.SpringSecurityContextService;
 import no.dcat.model.user.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,13 +24,13 @@ public class LoginController {
 
     private static Logger logger = LoggerFactory.getLogger(LoginController.class);
 
-     private SpringSecurityContextBean springSecurityContextBean;
+     private SpringSecurityContextService springSecurityContextService;
 
     private final EntityNameService entityNameService;
 
     @Autowired
-    public LoginController(SpringSecurityContextBean springSecurityContextBean, EntityNameService entityNameService) {
-        this.springSecurityContextBean = springSecurityContextBean;
+    public LoginController(SpringSecurityContextService springSecurityContextService, EntityNameService entityNameService) {
+        this.springSecurityContextService = springSecurityContextService;
         this.entityNameService = entityNameService;
     }
 
@@ -38,7 +38,7 @@ public class LoginController {
     @CrossOrigin
     @RequestMapping(value = "/innloggetBruker", method = GET)
     HttpEntity<User> innloggetBruker() {
-        Authentication authentication = springSecurityContextBean.getAuthentication();
+        Authentication authentication = springSecurityContextService.getAuthentication();
 
         User user = new User();
 
@@ -63,7 +63,7 @@ public class LoginController {
     String getLoginError() {
         logger.debug("login error");
 
-        Authentication authentication = springSecurityContextBean.getAuthentication();
+        Authentication authentication = springSecurityContextService.getAuthentication();
 
         User user = new User();
 
