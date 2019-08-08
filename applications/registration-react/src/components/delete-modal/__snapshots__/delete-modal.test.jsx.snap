@@ -28,6 +28,7 @@ exports[`should render AppDeleteModal correctly 1`] = `
     zIndex={1050}
   >
     <ModalHeader
+      charCode={215}
       closeAriaLabel="Close"
       tag="h5"
       toggle={[MockFunction]}
