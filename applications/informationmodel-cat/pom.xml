@@ -78,12 +78,12 @@
             <artifactId>gson</artifactId>
         </dependency>
         <dependency>
-            <groupId>no.dcat</groupId>
+            <groupId>no.fdk</groupId>
             <artifactId>webutils-spring</artifactId>
             <version>1.4.0-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>no.dcat</groupId>
+            <groupId>no.fdk</groupId>
             <artifactId>elasticsearch5-client</artifactId>
             <version>1.3.0-SNAPSHOT</version>
         </dependency>
@@ -93,17 +93,17 @@
             <version>2.0.3</version>
         </dependency>
         <dependency>
-            <groupId>no.dcat</groupId>
+            <groupId>no.fdk</groupId>
             <artifactId>registration-api-bindings</artifactId>
             <version>1.8.0-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>no.dcat</groupId>
+            <groupId>no.fdk</groupId>
             <artifactId>api-cat-converters</artifactId>
             <version>1.8.0-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>no.dcat</groupId>
+            <groupId>no.fdk</groupId>
             <artifactId>publisher-cat-client</artifactId>
             <version>1.5.0-SNAPSHOT</version>
         </dependency>
