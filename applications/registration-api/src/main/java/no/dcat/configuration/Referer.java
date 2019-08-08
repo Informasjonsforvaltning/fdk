@@ -1,4 +1,4 @@
-package no.dcat.config;
+package no.dcat.configuration;
 
 import javax.servlet.http.HttpServletRequest;
 import java.net.MalformedURLException;
