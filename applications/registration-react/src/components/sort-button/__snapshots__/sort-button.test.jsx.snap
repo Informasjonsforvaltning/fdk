@@ -12,7 +12,7 @@ exports[`should render SortButtons correctly 1`] = `
     type="button"
   >
     <i
-      className="fa fa-sort-up fdk-color0"
+      className="fa fa-sort-up fdk-color-white"
     />
   </button>
   <button
@@ -23,7 +23,7 @@ exports[`should render SortButtons correctly 1`] = `
     type="button"
   >
     <i
-      className="fa fa-sort-down fdk-color0"
+      className="fa fa-sort-down fdk-color-white"
     />
   </button>
 </div>

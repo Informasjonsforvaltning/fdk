@@ -12,7 +12,7 @@
 
   &:after {
     content: '\F002';
-    color: $color-dark-2;
+    color: $color-neutral-dark;
     font-family: FontAwesome;
     right: 1em;
     top: 15px;
@@ -37,9 +37,9 @@
   box-sizing: border-box;
   margin: 0 .4em .4em 0;
   padding: 6px 8px;
-  border: 1px solid $color-dark-2;
+  border: 1px solid $color-neutral-dark;
   border-radius: 2px;
-  background: $color-grey-3;
+  background: $color-neutral-lightest;
 
   /* match the font styles */
   font-size: inherit;
@@ -47,7 +47,7 @@
 
   &:after {
     content: '\2715';
-    color: $color-dark-2;
+    color: $color-neutral-dark;
     margin-left: 8px;
   }
   &:hover, &:focus {

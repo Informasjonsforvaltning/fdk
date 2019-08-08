@@ -57,7 +57,7 @@ const renderConfirmDeleteOverlayDialog = ({
       </Button>
       <button
         type="button"
-        className="btn bg-transparent fdk-color-blue-dark"
+        className="btn bg-transparent fdk-color-link"
         onClick={toggleShowConfirmDelete}
       >
         {localization.formStatus.cancelDelete}
@@ -82,7 +82,7 @@ const renderValidationErrorOverlayDialog = ({
     <div>
       <button
         type="button"
-        className="btn bg-transparent fdk-color-blue-dark"
+        className="btn bg-transparent fdk-color-link"
         onClick={toggleShowValidationError}
       >
         {localization.app.cancel}
@@ -187,7 +187,7 @@ export const StatusBar = props => {
 
           <button
             type="button"
-            className="btn bg-transparent fdk-color-blue-dark"
+            className="btn bg-transparent fdk-color-link"
             disabled={published || isSaving || error}
             onClick={toggleShowConfirmDelete}
           >

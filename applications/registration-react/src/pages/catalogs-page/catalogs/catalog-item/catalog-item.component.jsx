@@ -32,7 +32,7 @@ export const CatalogItem = props => {
           <div className={itemClass}>
             <h3 className={iconClass}>{localization.catalogs[type]}</h3>
             {itemsCount && (
-              <span className="fdk-text-size-small fdk-color-dark-2">
+              <span className="fdk-text-size-small fdk-color-neutral-dark">
                 {itemsCount} {localization.catalogs.type[type]}
               </span>
             )}
@@ -48,7 +48,7 @@ export const CatalogItem = props => {
         <div className={itemClass}>
           <h3 className={iconClass}>{localization.catalogs[type]}</h3>
           {itemsCount && (
-            <span className="fdk-text-size-small fdk-color-dark-2">
+            <span className="fdk-text-size-small fdk-color-neutral-dark">
               {itemsCount} {localization.catalogs.type[type]}
             </span>
           )}

@@ -97,7 +97,7 @@ export const ImportDialogPure = ({
         </InputFile>
         <Button
           testid="button-cancel"
-          className="fdk-color-blue-dark fdk-bg-color-white"
+          className="fdk-color-link fdk-bg-color-white"
           color="transparent"
           onClick={onCancel}
         >

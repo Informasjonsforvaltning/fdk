@@ -20,7 +20,7 @@ export const LoginDialogPure = ({ loggedOut, dispatch }) => {
             <div className="col-12 col-md-8">
               {loggedOut && (
                 <div
-                  className="mt-2 alert alert-warning fdk-text-size-small fdk-color1"
+                  className="mt-2 alert alert-warning fdk-text-size-small fdk-color-neutral-darkest"
                   role="alert"
                 >
                   <span>

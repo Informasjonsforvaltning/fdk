@@ -72,7 +72,7 @@ export const HeaderPure = ({ location, user, dispatch }) => {
               {user &&
                 user.name && (
                   <div className="mr-4">
-                    <i className="fa fa-user fdk-fa-left fdk-color-cta3" />
+                    <i className="fa fa-user fdk-fa-left fdk-color-primary03" />
                     {user.name}
                   </div>
                 )}

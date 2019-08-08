@@ -17,7 +17,7 @@ exports[`should render ImportFileUpload correctly 1`] = `
     >
       Noe gikk galt med importen. Kontroller at du har valgt riktig fil, eller prøv å 
       <button
-        className="fdk-button-small fdk-color-blue-dark"
+        className="fdk-button-small fdk-color-link"
         onClick={[Function]}
         type="button"
       >
@@ -43,7 +43,7 @@ exports[`should render ImportFileUpload correctly 1`] = `
     Importer ny fil
   </InputFile>
   <Button
-    className="fdk-color-blue-dark fdk-bg-color-white"
+    className="fdk-color-link fdk-bg-color-white"
     color="transparent"
     onClick={[MockFunction]}
     tag="button"

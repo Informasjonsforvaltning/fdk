@@ -2,7 +2,7 @@
 
 .form-status-bar {
   background-color: rgba(170, 230, 255, 0.9);
-  border-top: 1px solid $color-blue;
+  border-top: 1px solid $color-primary;
   padding: 0 5em;
   position: fixed;
   bottom: 0;
@@ -14,7 +14,7 @@
 }
 
 .form-status-bar-overlay {
-  border-top: 1px solid $color-blue;
+  border-top: 1px solid $color-primary;
   padding: 0 5em;
   position: fixed;
   bottom: 0;

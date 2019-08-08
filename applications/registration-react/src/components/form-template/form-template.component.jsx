@@ -51,13 +51,13 @@ export const FormTemplate = props => {
           )}
           {syncErrors && (
             <div className="d-flex justify-content-end fdk-syncError-icon">
-              <i className="fa fa-exclamation-triangle fdk-color-red ml-2" />
+              <i className="fa fa-exclamation-triangle fdk-color-danger ml-2" />
             </div>
           )}
         </div>
         {!collapse &&
           values && (
-            <div className="d-flex text-left fdk-text-size-small fdk-color3">
+            <div className="d-flex text-left fdk-text-size-small fdk-color-neutral-dark">
               <i className="fa fa-2x fa-angle-down mr-2 visibilityHidden" />
               <span className="text-ellipsis">{values}</span>
             </div>

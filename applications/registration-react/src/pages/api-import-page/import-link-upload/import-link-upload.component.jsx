@@ -30,7 +30,7 @@ export const ImportLinkUpload = props => {
             {localization.api.import.importApiSpecLinkError}
             <button
               type="button"
-              className="fdk-button-small fdk-color-blue-dark"
+              className="fdk-button-small fdk-color-link"
               onClick={handleCancelImport}
             >
               {localization.api.import.toImportFile}
@@ -65,7 +65,7 @@ export const ImportLinkUpload = props => {
       </Button>
       <Button
         testid="button-cancel"
-        className="fdk-color-blue-dark fdk-bg-color-white"
+        className="fdk-color-link fdk-bg-color-white"
         color="transparent"
         onClick={handleCancelImport}
       >

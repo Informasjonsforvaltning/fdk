@@ -83,7 +83,7 @@ export class FormCatalogPure extends React.Component {
 
         <div className={collapseClass}>
           <div className="d-flex justify-content-between w-100">
-            <div className="d-flex fdk-color1">
+            <div className="d-flex fdk-color-neutral-darkest">
               {getTranslateText(values.description, localization.getLanguage())}
             </div>
             <button

@@ -25,7 +25,7 @@ export const ImportFileUpload = props => {
           {localization.api.import.importApiSpecFileError}
           <button
             type="button"
-            className="fdk-button-small fdk-color-blue-dark"
+            className="fdk-button-small fdk-color-link"
             onClick={handleShowLinkImport}
           >
             {localization.api.import.toImportLink}
@@ -43,7 +43,7 @@ export const ImportFileUpload = props => {
         {localization.api.import.importNewFile}
       </InputFile>
       <Button
-        className="fdk-color-blue-dark fdk-bg-color-white"
+        className="fdk-color-link fdk-bg-color-white"
         color="transparent"
         onClick={handleCancelImport}
       >
