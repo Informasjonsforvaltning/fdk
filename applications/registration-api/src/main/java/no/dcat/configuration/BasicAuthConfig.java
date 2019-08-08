@@ -1,4 +1,4 @@
-package no.dcat.config;
+package no.dcat.configuration;
 
 import no.dcat.authorization.AuthorizationService;
 import no.dcat.authorization.AuthorizationServiceException;
@@ -25,7 +25,7 @@ import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuc
 import java.util.HashSet;
 import java.util.Set;
 
-import static no.dcat.config.Roles.ROLE_USER;
+import static no.dcat.configuration.Roles.ROLE_USER;
 
 /**
  * Created by bjg on 19.06.2017.

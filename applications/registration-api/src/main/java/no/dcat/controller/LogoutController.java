@@ -1,7 +1,7 @@
 package no.dcat.controller;
 
-import no.dcat.config.FdkSamlUserDetails;
-import no.dcat.config.Referer;
+import no.dcat.configuration.FdkSamlUserDetails;
+import no.dcat.configuration.Referer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;

@@ -1,4 +1,4 @@
-package no.dcat.config;
+package no.dcat.configuration;
 
 import com.github.ulisesbocchio.spring.boot.security.saml.annotation.EnableSAMLSSO;
 import com.github.ulisesbocchio.spring.boot.security.saml.bean.SAMLConfigurerBean;
@@ -23,9 +23,9 @@ import javax.annotation.PostConstruct;
 @Configuration
 @Profile( {"prod", "st1"})
 @EnableSAMLSSO
-public class SamlAuthConfig extends ServiceProviderConfigurerAdapter {
+public class SecurityConfigurer extends ServiceProviderConfigurerAdapter {
 
-    private static final Logger logger = LoggerFactory.getLogger(SamlAuthConfig.class);
+    private static final Logger logger = LoggerFactory.getLogger(SecurityConfigurer.class);
 
     @Bean
     SAMLConfigurerBean saml() {

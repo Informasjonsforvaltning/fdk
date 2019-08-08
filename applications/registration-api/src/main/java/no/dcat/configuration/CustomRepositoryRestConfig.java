@@ -1,4 +1,4 @@
-package no.dcat.config;
+package no.dcat.configuration;
 
 import no.ccat.common.model.Concept;
 import no.dcat.model.ApiRegistration;

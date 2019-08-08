@@ -1,7 +1,7 @@
 package no.dcat.controller;
 
 import no.dcat.authorization.EntityNameService;
-import no.dcat.config.FdkSamlUserDetails;
+import no.dcat.configuration.FdkSamlUserDetails;
 import no.dcat.configuration.SpringSecurityContextBean;
 import no.dcat.model.user.User;
 import org.slf4j.Logger;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import static no.dcat.config.Roles.ROLE_USER;
+import static no.dcat.configuration.Roles.ROLE_USER;
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 

@@ -1,4 +1,4 @@
-package no.dcat.config;
+package no.dcat.configuration;
 
 import com.github.ulisesbocchio.spring.boot.security.saml.user.SAMLUserDetails;
 import no.dcat.authorization.AuthorizationService;

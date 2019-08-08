@@ -1,4 +1,4 @@
-package no.dcat.config;
+package no.dcat.configuration;
 
 import no.dcat.authorization.AuthorizationService;
 import no.dcat.authorization.AuthorizationServiceException;
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.HashSet;
 import java.util.Set;
 
-import static no.dcat.config.Roles.ROLE_USER;
+import static no.dcat.configuration.Roles.ROLE_USER;
 
 @Service
 public class FdkSamlUserDetailsService implements SAMLUserDetailsService {

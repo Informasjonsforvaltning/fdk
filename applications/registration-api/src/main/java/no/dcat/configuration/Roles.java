@@ -1,4 +1,4 @@
-package no.dcat.config;
+package no.dcat.configuration;
 
 public final class Roles {
 
