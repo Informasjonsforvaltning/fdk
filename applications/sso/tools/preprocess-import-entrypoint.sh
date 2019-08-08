@@ -1,10 +1,17 @@
 #!/bin/bash
 
+__dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
 echo "Processing import template"
 echo "IDPORTEN_OIDC_ROOT=$IDPORTEN_OIDC_ROOT"
 echo "IDPORTEN_CLIENT_ID=$IDPORTEN_CLIENT_ID"
 
-OIDC_CONF=$(curl $IDPORTEN_OIDC_ROOT/.well-known/openid-configuration)
+
+OIDC_CONF_ADDRESS=$IDPORTEN_OIDC_ROOT/.well-known/openid-configuration
+
+source ${__dir}/wait_for_http_200.sh $OIDC_CONF_ADDRESS
+
+OIDC_CONF=$(curl $OIDC_CONF_ADDRESS)
 
 if [ -z "$OIDC_CONF" ]
 then
