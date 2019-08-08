@@ -77,6 +77,9 @@ services:
 
   nginx-registration:
     build: ./applications/nginx-registration
+    depends_on:
+      - registration-api
+      - registration-react
 
   nginx-registration-ssl:
     build: ./applications/nginx-registration-ssl
@@ -85,7 +88,6 @@ services:
       - "8098:443"
     depends_on:
       - nginx-registration
-      - registration-react
 
 ### external service proxies
   nginx-altinn-proxy:
