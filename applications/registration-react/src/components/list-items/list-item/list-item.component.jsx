@@ -14,7 +14,7 @@ export const ListItem = props => {
   }
 
   const itemClass = cx('w-75', 'fdk-text-size-small', {
-    'fdk-color2': !title
+    'fdk-color-neutral-darkest2': !title
   });
 
   return (
@@ -27,13 +27,13 @@ export const ListItem = props => {
           <div className="d-flex w-25 justify-content-between">
             {status === 'PUBLISH' && (
               <span>
-                <i className="fa fa-circle fdk-color-cta mr-2 d-none d-sm-inline" />
+                <i className="fa fa-circle fdk-color-primary0 mr-2 d-none d-sm-inline" />
                 <span>{localization.listItems.statusPublished}</span>
               </span>
             )}
             {status === 'DRAFT' && (
               <span>
-                <i className="fa fa-circle fdk-color3 mr-2 d-none d-sm-inline" />
+                <i className="fa fa-circle fdk-color-neutral-dark mr-2 d-none d-sm-inline" />
                 <span>{localization.listItems.statusDraft}</span>
               </span>
             )}

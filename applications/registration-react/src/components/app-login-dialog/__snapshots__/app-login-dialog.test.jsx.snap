@@ -17,7 +17,7 @@ exports[`should render LoginDialog correctly 1`] = `
           className="col-12 col-md-8"
         >
           <div
-            className="mt-2 alert alert-warning fdk-text-size-small fdk-color1"
+            className="mt-2 alert alert-warning fdk-text-size-small fdk-color-neutral-darkest"
             role="alert"
           >
             <span>

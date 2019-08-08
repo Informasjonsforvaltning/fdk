@@ -16,7 +16,7 @@ exports[`should render CatalogItem correctly with itemsCount set to 10 1`] = `
         Datasettkatalog
       </h3>
       <span
-        className="fdk-text-size-small fdk-color-dark-2"
+        className="fdk-text-size-small fdk-color-neutral-dark"
       >
         10
          

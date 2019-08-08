@@ -191,7 +191,7 @@ export const APIListPage = props => {
                 </Button>
                 <button
                   type="button"
-                  className="btn bg-transparent fdk-color-blue-dark"
+                  className="btn bg-transparent fdk-color-link"
                   onClick={onToggle}
                 >
                   {localization.app.cancel}
@@ -220,7 +220,7 @@ export const APIListPage = props => {
                     <span>{apiCatalogs.harvestSourceUri}</span>
                     <button
                       type="button"
-                      className="btn bg-transparent fdk-color-blue-dark"
+                      className="btn bg-transparent fdk-color-link"
                       onClick={onToggle}
                     >
                       <i className="fa fa-pencil mr-2" />
@@ -258,7 +258,7 @@ export const APIListPage = props => {
                     </Button>
                     <button
                       type="button"
-                      className="btn bg-transparent fdk-color-blue-dark"
+                      className="btn bg-transparent fdk-color-link"
                       onClick={onToggle}
                     >
                       {localization.app.cancel}

@@ -60,7 +60,7 @@ const renderItems = (
   }
   return (
     <div className="fdk-list-item d-flex">
-      <span className="fdk-text-size-small fdk-color2">
+      <span className="fdk-text-size-small fdk-color-neutral-darkest2">
         {defaultEmptyListText}
       </span>
     </div>

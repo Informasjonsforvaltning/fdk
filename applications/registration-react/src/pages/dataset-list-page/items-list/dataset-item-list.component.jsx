@@ -27,7 +27,7 @@ export const DatasetItemsList = ({
           className="fdk-button fdk-button-cta"
           onClick={() => onClickCreateDataset(catalogId)}
         >
-          <i className="fa fa-plus fdk-color0 mr-2" />
+          <i className="fa fa-plus fdk-color-white mr-2" />
           {localization.datasets.list.btnNewDataset}
         </button>
       </div>

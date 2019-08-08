@@ -16,7 +16,7 @@ const SortButtons = props => {
         onClick={() => onSortField(`${field}`, 'asc')}
         title="Stigende"
       >
-        <i className="fa fa-sort-up fdk-color0" />
+        <i className="fa fa-sort-up fdk-color-white" />
       </button>
       <button
         type="button"
@@ -29,7 +29,7 @@ const SortButtons = props => {
         onClick={() => onSortField(`${field}`, 'desc')}
         title="Synkende"
       >
-        <i className="fa fa-sort-down fdk-color0" />
+        <i className="fa fa-sort-down fdk-color-white" />
       </button>
     </div>
   );

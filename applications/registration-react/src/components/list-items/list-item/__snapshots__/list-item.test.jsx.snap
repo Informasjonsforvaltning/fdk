@@ -21,7 +21,7 @@ exports[`should render ListItem correctly "DRAFT" item 1`] = `
       >
         <span>
           <i
-            className="fa fa-circle fdk-color3 mr-2 d-none d-sm-inline"
+            className="fa fa-circle fdk-color-neutral-dark mr-2 d-none d-sm-inline"
           />
           <span>
             Utkast
@@ -54,7 +54,7 @@ exports[`should render ListItem correctly "PUBLISH" item 1`] = `
       >
         <span>
           <i
-            className="fa fa-circle fdk-color-cta mr-2 d-none d-sm-inline"
+            className="fa fa-circle fdk-color-primary0 mr-2 d-none d-sm-inline"
           />
           <span>
             Publisert
@@ -78,7 +78,7 @@ exports[`should render ListItem correctly when missing title 1`] = `
       className="d-flex justify-content-between"
     >
       <span
-        className="w-75 fdk-text-size-small fdk-color2"
+        className="w-75 fdk-text-size-small fdk-color-neutral-darkest2"
       >
         Mangler tittel
       </span>
@@ -87,7 +87,7 @@ exports[`should render ListItem correctly when missing title 1`] = `
       >
         <span>
           <i
-            className="fa fa-circle fdk-color3 mr-2 d-none d-sm-inline"
+            className="fa fa-circle fdk-color-neutral-dark mr-2 d-none d-sm-inline"
           />
           <span>
             Utkast

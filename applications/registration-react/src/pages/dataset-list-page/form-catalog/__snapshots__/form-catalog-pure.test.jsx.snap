@@ -35,7 +35,7 @@ exports[`should render FormCatalogPure correctly 1`] = `
       className="d-flex justify-content-between w-100"
     >
       <div
-        className="d-flex fdk-color1"
+        className="d-flex fdk-color-neutral-darkest"
       >
         Beskrivelse
       </div>

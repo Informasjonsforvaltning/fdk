@@ -64,7 +64,7 @@ export const FormLOSPure = ({
           )}
           renderItem={(item, isHighlighted) => {
             const itemClass = cx('px-2', {
-              'fdk-bg-color-grey-3': isHighlighted
+              'fdk-bg-color-neutral-lightest': isHighlighted
             });
             return (
               <div key={item.uri} className={itemClass}>

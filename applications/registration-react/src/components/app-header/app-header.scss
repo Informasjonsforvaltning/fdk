@@ -6,7 +6,7 @@
 
 .fdk-auth-link {
   a {
-    color: $color1;
+    color: $color-neutral-darkest;
     font-size: 1.4rem;
   }
 }
@@ -14,18 +14,18 @@
 .dropdown-menu {
   .dropdown-item {
     &:focus, &:active {
-      background-color: $color0;
+      background-color: $color-white;
     }
     a {
       &:hover {
-        color: $color-cta2;
+        color: $color-primary02;
       }
     }
   }
 }
 
 .fdk-breadcrumb {
-  color: $color1;
+  color: $color-neutral-darkest;
   font-size: 1.4rem;
   padding: 2em 2.4em;
   margin-bottom: 2.4em;
