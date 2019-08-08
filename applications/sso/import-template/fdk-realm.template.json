@@ -875,6 +875,7 @@
       "loginHint" : "",
       "authorizationUrl" : "${IDPORTEN_OIDC_AUTHORIZATION_URL}",
       "disableUserInfo" : "",
+      "logoutUrl" : "${IDPORTEN_OIDC_LOGOUT_URL}",
       "clientSecret" : "${IDPORTEN_CLIENT_SECRET}"
     }
   } ],
