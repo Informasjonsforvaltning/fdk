@@ -1,6 +1,6 @@
 package no.dcat.controller;
 
-import no.dcat.configuration.SpringSecurityContextBean;
+import no.dcat.service.SpringSecurityContextService;
 import no.dcat.model.Catalog;
 import no.dcat.service.CatalogRepository;
 import no.dcat.service.EnhetService;
@@ -38,7 +38,7 @@ public class CatalogController {
 
     private final CatalogRepository catalogRepository;
 
-    private final SpringSecurityContextBean springSecurityContextBean;
+    private final SpringSecurityContextService springSecurityContextService;
 
     private final HarvesterService harvesterService;
 
@@ -49,9 +49,9 @@ public class CatalogController {
 
 
     @Autowired
-    public CatalogController(CatalogRepository catalogRepository, SpringSecurityContextBean springSecurityContextBean, HarvesterService harvesterService, EnhetService enhetService) {
+    public CatalogController(CatalogRepository catalogRepository, SpringSecurityContextService springSecurityContextService, HarvesterService harvesterService, EnhetService enhetService) {
         this.catalogRepository = catalogRepository;
-        this.springSecurityContextBean = springSecurityContextBean;
+        this.springSecurityContextService = springSecurityContextService;
         this.harvesterService = harvesterService;
         this.enhetService = enhetService;
     }
@@ -68,7 +68,7 @@ public class CatalogController {
         produces = APPLICATION_JSON_UTF8_VALUE)
     public PagedResources<Resource<Catalog>> listCatalogs(Pageable pageable, PagedResourcesAssembler<Catalog> assembler) {
 
-        Authentication auth = springSecurityContextBean.getAuthentication();
+        Authentication auth = springSecurityContextService.getAuthentication();
 
         Set<String> validCatalogs = new HashSet<>();
 
