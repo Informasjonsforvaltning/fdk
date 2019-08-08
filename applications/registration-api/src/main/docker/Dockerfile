@@ -11,6 +11,6 @@ RUN ls -l conf/
 
 VOLUME /tmp
 ADD *-exec.jar app.jar
-RUN sh -c 'touch /app.jar'
+
 CMD java -jar $JAVA_OPTS app.jar
 
