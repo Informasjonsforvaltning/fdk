@@ -1,6 +1,6 @@
 import { compose } from 'recompose';
 import { reduxFsaThunk } from '../../lib/redux-fsa-thunk';
-import { authService } from '../../auth-service';
+import { authService } from '../../auth/auth-service';
 
 export const AUTH_INIT = 'AUTH_INIT';
 export const AUTH_SUCCESS = 'AUTH_SUCCESS';
