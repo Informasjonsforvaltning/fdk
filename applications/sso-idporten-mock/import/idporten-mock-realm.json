@@ -371,7 +371,7 @@
     "enabled" : true,
     "clientAuthenticatorType" : "client-secret",
     "secret" : "29a2cfe1-1a61-4a04-bf84-64d70a340d04",
-    "redirectUris" : [ "http://sso:8084/auth/realms/fdk/broker/idporten-oidc/endpoint/logout_response", "http://sso:8084/auth/realms/fdk/broker/idporten-oidc/endpoint/post_logout" ],
+    "redirectUris" : [ "http://sso:8084/auth/realms/fdk/broker/idporten-oidc/endpoint/logout_response", "http://sso:8084/auth/realms/fdk/broker/idporten-oidc/endpoint" ],
     "webOrigins" : [ "http://sso:8084" ],
     "notBefore" : 0,
     "bearerOnly" : false,
