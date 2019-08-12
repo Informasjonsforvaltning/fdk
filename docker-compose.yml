@@ -36,7 +36,9 @@ services:
       - KEYCLOAK_PASSWORD
       - IDPORTEN_CLIENT_ID
       - IDPORTEN_CLIENT_SECRET
+      # if SSO_HOST and IDPORTEN_OIDC are on the same host, then deploy mock setup is deployed
       - IDPORTEN_OIDC_ROOT
+      - SSO_HOST
 
 ### ingress modules
   nginx-search:
