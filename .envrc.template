@@ -22,7 +22,8 @@ export DISQUS_SHORTNAME=CHANGE_ME
 #export IDPORTEN_CLIENT_SECRET=CHANGE_ME
 
 # This is local mock for ID-Porten, use this in dev and ut1
-export IDPORTEN_OIDC_ROOT=http://sso-idporten-mock:8086/auth/realms/idporten-mock
+export SSO_HOST=http://sso:8084
+export IDPORTEN_OIDC_ROOT=http://sso:8084/auth/realms/idporten-mock
 export IDPORTEN_CLIENT_ID=oidc_brreg_fellesdatakatalog
 export IDPORTEN_CLIENT_SECRET=29a2cfe1-1a61-4a04-bf84-64d70a340d04
 
