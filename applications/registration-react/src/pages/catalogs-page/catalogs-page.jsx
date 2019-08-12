@@ -22,6 +22,10 @@ const renderCatalogs = props => {
     return null;
   }
 
+  const canShowConcepts = localStorage.getItem(
+    'FEATURE_TOGGLE_CONCEPT_REGISTRATION'
+  );
+
   return catalogItems.map(catalog => (
     <div key={_.get(catalog, 'id')} className="row mb-2 mb-md-5">
       <div className="col-12">
@@ -56,13 +60,13 @@ const renderCatalogs = props => {
               itemsCount={getAPIItemsCount(apis, catalog.id)}
             />
           )}
-          {
+          {canShowConcepts && (
             <Catalog
               key={`concepts-${catalog.id}`}
               catalogId={catalog.id}
               type="concepts"
             />
-          }
+          )}
         </CardGroup>
       </div>
     </div>
