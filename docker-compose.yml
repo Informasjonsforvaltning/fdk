@@ -30,7 +30,7 @@ services:
   sso:
     image: dcatno/sso:latest
     expose:
-      - "8080"
+      - "8084"
     environment:
       - KEYCLOAK_USER
       - KEYCLOAK_PASSWORD
