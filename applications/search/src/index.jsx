@@ -7,7 +7,6 @@ import ReactGA from 'react-ga';
 import { hotjar } from 'react-hotjar';
 
 import { configureStore } from './redux/configureStore';
-import { ConnectedFeatureToggleProvider } from './components/feature-toggle/connected-feature-toggle-provider';
 import { ConnectedApp } from './app/connected-app';
 import { ErrorBoundary } from './components/error-boundary/error-boundary';
 import { getConfig, loadConfig } from './config';
@@ -58,14 +57,12 @@ function AppRoot(store) {
   return (
     <ErrorBoundary>
       <Provider store={store}>
-        <ConnectedFeatureToggleProvider>
-          <BrowserRouter>
-            <>
-              <Route path="/" component={Analytics} />
-              <Route path="/" component={ConnectedApp} />
-            </>
-          </BrowserRouter>
-        </ConnectedFeatureToggleProvider>
+        <BrowserRouter>
+          <>
+            <Route path="/" component={Analytics} />
+            <Route path="/" component={ConnectedApp} />
+          </>
+        </BrowserRouter>
       </Provider>
     </ErrorBoundary>
   );

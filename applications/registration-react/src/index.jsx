@@ -4,7 +4,6 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 
 import { configureStore } from './redux/configureStore';
-import { ConnectedFeatureToggleProvider } from './components/feature-toggle/connected-feature-toggle-provider';
 import { getConfig, loadConfig } from './config';
 import { configureLocalization } from './lib/localization';
 import { App } from './app/app';
@@ -17,9 +16,7 @@ import './styles';
 function AppRoot(store) {
   return (
     <Provider store={store}>
-      <ConnectedFeatureToggleProvider>
-        <App />
-      </ConnectedFeatureToggleProvider>
+      <App />
     </Provider>
   );
 }
