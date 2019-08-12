@@ -77,9 +77,6 @@ services:
 
   nginx-registration:
     build: ./applications/nginx-registration
-    depends_on:
-      - registration-api
-      - registration-react
 
   nginx-registration-ssl:
     build: ./applications/nginx-registration-ssl

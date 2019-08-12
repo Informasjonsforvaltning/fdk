@@ -59,6 +59,9 @@ services:
       - registration-react
       - registration-api
       - reference-data
+      - search-api
+      - api-cat
+      - concept-cat
 
 ### external service proxies
   nginx-altinn-proxy:
