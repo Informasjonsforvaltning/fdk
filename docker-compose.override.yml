@@ -50,7 +50,7 @@ services:
 #    environment:
 #      - KEYCLOAK_LOGLEVEL=DEBUG
     ports:
-      - "8084:8080"
+      - "8084:8084"
     depends_on:
       - sso-idporten-mock
 

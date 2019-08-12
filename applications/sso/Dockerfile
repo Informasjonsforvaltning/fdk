@@ -16,4 +16,8 @@ USER 1000
 
 ENTRYPOINT [ "/opt/fdk/tools/preprocess-import-entrypoint.sh" ]
 
-CMD ["-b", "0.0.0.0", "-Dkeycloak.migration.action=import", "-Dkeycloak.migration.provider=dir", "-Dkeycloak.migration.dir=/tmp/keycloak/import", "-Dkeycloak.migration.strategy=OVERWRITE_EXISTING"]
+# port offset 4 is set because we want the server to be accessible both from host and from the sso container in local network claster.
+# host name is made available by specifying it in the hosts file in host machine.
+# port offset will cause changing port to 8084 which will be the same as exposed port to host.
+
+CMD ["-b", "0.0.0.0", "-Dkeycloak.migration.action=import", "-Dkeycloak.migration.provider=dir", "-Dkeycloak.migration.dir=/tmp/keycloak/import", "-Dkeycloak.migration.strategy=OVERWRITE_EXISTING", "-Djboss.socket.binding.port-offset=4"]
