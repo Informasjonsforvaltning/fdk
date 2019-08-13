@@ -1,1 +1,14 @@
-[{"Name":"MICHELLE WESTLIE","Type":"Person","SocialSecurityNumber":"03096000854"},{"Name":"RAMSUND OG ROGNAN REVISJON","Type":"Enterprise","OrganizationNumber":"910244132","OrganizationForm":"KF","Status":"Active"}]
+[
+  {
+    "Name": "MICHELLE WESTLIE",
+    "Type": "Person",
+    "SocialSecurityNumber": "03096000854"
+  },
+  {
+    "Name": "RAMSUND OG ROGNAN REVISJON",
+    "Type": "Enterprise",
+    "OrganizationNumber": "910244132",
+    "OrganizationForm": "KF",
+    "Status": "Active"
+  }
+]
