@@ -35,11 +35,8 @@ public class UsersController {
         // and we interpret it as admin in fdk system
 
         Person altinnPerson = altinnClient.getPerson(id).orElseThrow(NotFoundException::new);
-        // todo filter orgform or whitelist organisationnumber
-        //  includedOrgforms: ADOS,FKF,FYLK,IKS,KF,KIRK,KOMM,ORGL,SF,STAT,SÆR
-        //  includedOrgnr: 974760673
 
-        return new User(altinnPerson);
+        return new UserAltinnAdapter(altinnPerson);
     }
 
 
