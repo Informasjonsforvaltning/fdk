@@ -28,7 +28,20 @@ public class AltinnClient {
         this.altinnProxyHost = altinnProxyHost;
     }
 
-    List<Subject> getReportees(String socialSecurityNumber) {
+    private static Optional<Subject> extractPersonSubject(String socialSecurityNumber, List<Subject> reportees) {
+        return reportees.stream()
+            .filter(s -> "Person".equals(s.type) && socialSecurityNumber.equals(s.socialSecurityNumber))
+            .findFirst();
+    }
+
+    private static List<Organisation> extractOrganisations(List<Subject> reportees) {
+        return reportees.stream()
+            .filter(s -> "Enterprise".equals(s.type))
+            .map(Organisation::new)
+            .collect(Collectors.toList());
+    }
+
+    private List<Subject> getReportees(String socialSecurityNumber) {
         RestTemplate restTemplate = new RestTemplate();
 
         String reporteesUrlTemplate = altinnProxyHost + "/api/serviceowner/reportees?ForceEIAuthentication&subject={subject}&servicecode=4814&serviceedition=3";
@@ -39,17 +52,11 @@ public class AltinnClient {
     }
 
     public Optional<Person> getPerson(String socialSecurityNumber) {
-        return getReportees(socialSecurityNumber).stream()
-            .filter(s -> "Person".equals(s.type) && socialSecurityNumber.equals(s.socialSecurityNumber))
-            .findFirst().map(Person::new);
-    }
+        List<Subject> reportees = getReportees(socialSecurityNumber);
 
-    public List<Organisation> getOrganisations(String subjectId) {
-        List<Subject> reportees = getReportees(subjectId);
-        return reportees.stream()
-            .filter(s -> "Enterprise".equals(s.type))
-            .map(Organisation::new)
-            .collect(Collectors.toList());
+        Optional<Subject> personSubject = extractPersonSubject(socialSecurityNumber, reportees);
+
+        return personSubject.map(ps -> new Person(ps, extractOrganisations(reportees)));
     }
 
 }

@@ -1,7 +1,6 @@
 package no.fdk.userapi;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import no.fdk.altinn.Organisation;
 import no.fdk.altinn.Person;
 
 import java.util.Arrays;
@@ -11,12 +10,10 @@ import java.util.stream.Collectors;
 
 //todo, this is actually an adapter. Declare JsonProperty on abstract class instead
 public class User {
-    List<Organisation> organisations;
     private Person person;
 
-    User(Person person, List<Organisation> organisations) {
+    User(Person person) {
         this.person = person;
-        this.organisations = organisations;
     }
 
     public String getId() {
@@ -38,7 +35,7 @@ public class User {
 
     @JsonProperty("fdk_access")
     public String getPrivileges() {
-        List<String> privilegesList = organisations.stream().map(o -> "publisher:" + o.getOrganisationNumber() + ":admin").collect(Collectors.toList());
+        List<String> privilegesList = person.getOrganisations().stream().map(o -> "publisher:" + o.getOrganisationNumber() + ":admin").collect(Collectors.toList());
         return String.join(" ", privilegesList);
     }
 }
