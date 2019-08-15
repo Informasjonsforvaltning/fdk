@@ -1,4 +1,4 @@
-package no.dcat.controller;
+package no.dcat.model;
 
 import lombok.Data;
 
