@@ -21,55 +21,58 @@ import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuc
 import javax.annotation.PostConstruct;
 
 @Configuration
-@Profile( {"prod", "st1"})
+@Profile({"prod", "st1"})
 @EnableSAMLSSO
 public class SecurityConfigurer extends ServiceProviderConfigurerAdapter {
 
     private static final Logger logger = LoggerFactory.getLogger(SecurityConfigurer.class);
+    @Autowired
+    FdkSamlUserDetailsService fdkSamlUserDetailsService;
+    @Value("${saml.sso.context-provider.lb.scheme}")
+    String contextProviderLbScheme;
+    @Value("${saml.sso.context-provider.lb.context-path}")
+    String contextProviderLbContextPath;
+    @Value("${saml.sso.context-provider.lb.server-name}")
+    String contextProviderLbServerName;
+    @Value("${saml.sso.context-provider.lb.server-port}")
+    String contextProviderLbServerPort;
+    @Value("${saml.sso.context-provider.lb.include-server-port-in-request-url}")
+    boolean contextProviderLbIncludeServerPortInRequestUrl;
+    private String frontendBaseUrl;
 
     @Bean
     SAMLConfigurerBean saml() {
         return new SAMLConfigurerBean();
     }
 
-    @Autowired
-    FdkSamlUserDetailsService fdkSamlUserDetailsService;
-
     @Override
     public void configure(HttpSecurity http) throws Exception {
         logger.info("saml-configure http security ...");
 
-        // @formatter:off
-        http
-            .httpBasic()
-                .disable()
-            .csrf()
-                .disable()
-                    .anonymous()
-        .and()
-            .apply(saml())
-        .and()
-            .authorizeRequests()
-                .antMatchers("/*.js").permitAll()
-                .antMatchers("/*.woff2").permitAll()
-                .antMatchers("/*.woff").permitAll()
-                .antMatchers("/*.ttf").permitAll()
-                .antMatchers("/assets/**").permitAll()
-                .antMatchers("/loggetut").permitAll()
-                .antMatchers("/loginerror").permitAll()
-                .antMatchers("/logout").permitAll()
-                .requestMatchers(saml().endpointsMatcher()).permitAll()
-                .antMatchers(HttpMethod.GET, "/actuator/**").permitAll()
-        .and()
-            .authorizeRequests()
-                .antMatchers(HttpMethod.GET,"/catalogs/**").permitAll()
-                .antMatchers(HttpMethod.GET, "/public/**").permitAll()
-                .anyRequest().authenticated()
-        .and()
-            .logout()
-                .logoutUrl("/logout")
-        ;
-        // @formatter:on
+        http.httpBasic().disable();
+
+        http.csrf().disable();
+
+        http.anonymous();
+
+        http.apply(saml());
+
+        http.authorizeRequests()
+            .antMatchers("/*.js").permitAll()
+            .antMatchers("/*.woff2").permitAll()
+            .antMatchers("/*.woff").permitAll()
+            .antMatchers("/*.ttf").permitAll()
+            .antMatchers("/assets/**").permitAll()
+            .antMatchers("/loggetut").permitAll()
+            .antMatchers("/loginerror").permitAll()
+            .antMatchers("/logout").permitAll()
+            .requestMatchers(saml().endpointsMatcher()).permitAll()
+            .antMatchers(HttpMethod.GET, "/actuator/**").permitAll()
+            .antMatchers(HttpMethod.GET, "/catalogs/**").permitAll()
+            .antMatchers(HttpMethod.GET, "/public/**").permitAll()
+            .anyRequest().authenticated();
+
+        http.logout().logoutUrl("/logout");
     }
 
     @Override
@@ -80,38 +83,20 @@ public class SecurityConfigurer extends ServiceProviderConfigurerAdapter {
         serviceProvider
             .authenticationProvider().userDetailsService(fdkSamlUserDetailsService)
             .and()
-                .sso()
-                    .successHandler(loginSuccessHandler())
+            .sso()
+            .successHandler(loginSuccessHandler())
             .and()
-                .logout()
-                    .successHandler(logoutSuccesHandler());
+            .logout()
+            .successHandler(logoutSuccesHandler());
         // @formatter:on
     }
 
-
-    @Value("${saml.sso.context-provider.lb.scheme}")
-    String contextProviderLbScheme;
-
-    @Value("${saml.sso.context-provider.lb.context-path}")
-    String contextProviderLbContextPath;
-
-    @Value("${saml.sso.context-provider.lb.server-name}")
-    String contextProviderLbServerName;
-
-    @Value("${saml.sso.context-provider.lb.server-port}")
-    String contextProviderLbServerPort;
-
-    @Value("${saml.sso.context-provider.lb.include-server-port-in-request-url}")
-    boolean contextProviderLbIncludeServerPortInRequestUrl;
-
-    private String frontendBaseUrl;
-
     @PostConstruct
-    public void postConstruct(){
+    public void postConstruct() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder
-                .append(contextProviderLbScheme).append("://")
-                .append(contextProviderLbServerName);
+            .append(contextProviderLbScheme).append("://")
+            .append(contextProviderLbServerName);
         if (contextProviderLbIncludeServerPortInRequestUrl) {
             stringBuilder.append(":").append(contextProviderLbServerPort);
         }
