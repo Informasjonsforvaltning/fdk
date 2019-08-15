@@ -17,6 +17,7 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler;
+import org.springframework.web.cors.CorsConfiguration;
 
 import javax.annotation.PostConstruct;
 
@@ -56,6 +57,8 @@ public class SecurityConfigurer extends ServiceProviderConfigurerAdapter {
         http.anonymous();
 
         http.apply(saml());
+
+        http.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues());
 
         http.authorizeRequests()
             .antMatchers("/*.js").permitAll()
