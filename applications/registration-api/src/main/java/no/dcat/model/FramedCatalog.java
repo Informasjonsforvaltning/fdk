@@ -1,4 +1,4 @@
-package no.dcat.controller;
+package no.dcat.model;
 
 import com.google.gson.annotations.SerializedName;
 import no.dcat.model.Catalog;

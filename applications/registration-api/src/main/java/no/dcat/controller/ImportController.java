@@ -6,6 +6,7 @@ import com.google.gson.GsonBuilder;
 import no.dcat.datastore.domain.dcat.builders.DcatReader;
 import no.dcat.model.Catalog;
 import no.dcat.model.Dataset;
+import no.dcat.model.FramedCatalog;
 import no.dcat.service.CatalogRepository;
 import no.dcat.service.DatasetRepository;
 import no.dcat.shared.SkosCode;

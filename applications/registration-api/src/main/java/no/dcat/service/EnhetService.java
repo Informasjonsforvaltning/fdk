@@ -1,6 +1,6 @@
 package no.dcat.service;
 
-import no.dcat.controller.Enhet;
+import no.dcat.model.Enhet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;

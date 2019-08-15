@@ -1,5 +1,6 @@
 package no.dcat.controller;
 
+import no.dcat.model.Enhet;
 import no.dcat.service.SpringSecurityContextService;
 import no.dcat.model.Catalog;
 import no.dcat.service.CatalogRepository;
