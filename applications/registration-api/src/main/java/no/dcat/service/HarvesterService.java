@@ -17,15 +17,15 @@ import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by bjg on 02.02.2018.
- *
+ * <p>
  * Handles communication with harvester,
  * so that registration-api can create harvest
  * data sources for its catalogs
- *
  */
 @Service
 public class HarvesterService {
@@ -52,25 +52,18 @@ public class HarvesterService {
         String uri = harvesterUrl + "/api/admin/dcat-sources";
         logger.debug("harvester uri: {}", uri);
 
-        ResponseEntity<List<DcatSourceDto>> response = null;
         try {
-            response = restTemplate.exchange(
-                    uri,
-                    HttpMethod.GET,
-                    new HttpEntity<>(createHeaders(harvesterUsername, harvesterPassword)),
-                    new ParameterizedTypeReference<List<DcatSourceDto>>() {});
+            ResponseEntity<List<DcatSourceDto>> response = restTemplate.exchange(
+                uri,
+                HttpMethod.GET,
+                new HttpEntity<>(createHeaders(harvesterUsername, harvesterPassword)),
+                new ParameterizedTypeReference<List<DcatSourceDto>>() {
+                });
+            return response.getBody();
         } catch (Exception e) {
-            String possibleResponse = "";
-            if (response!= null) {
-                possibleResponse = response.toString();
-            }
             logger.error("Failed to get list of dcat sources from harvester-api: {}", e.getLocalizedMessage());
-            logger.error("response from harvester: {}", possibleResponse);
+            return new ArrayList<>();
         }
-
-        logger.debug("response status code: {}", response.getStatusCode());
-
-        return response.getBody();
     }
 
 
