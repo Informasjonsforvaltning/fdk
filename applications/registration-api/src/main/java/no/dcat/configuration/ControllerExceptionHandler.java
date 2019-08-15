@@ -1,4 +1,4 @@
-package no.dcat.controller;
+package no.dcat.configuration;
 
 import no.fdk.webutils.exceptions.GlobalControllerExceptionHandler;
 import org.springframework.web.bind.annotation.ControllerAdvice;
