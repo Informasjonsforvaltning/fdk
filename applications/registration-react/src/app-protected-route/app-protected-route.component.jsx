@@ -5,32 +5,24 @@ import PropTypes from 'prop-types';
 import IdleTimer from 'react-idle-timer';
 
 import localization from '../lib/localization';
-import {
-  getUserProfileThunk,
-  selectIsFetching,
-  selectUser
-} from '../redux/modules/user';
+import { selectUser } from '../redux/modules/user';
 import TimeoutModal from './timeout-modal/timeout-modal.component';
 import { logout } from '../auth/auth-service';
 
 export const ProtectedRoutePure = props => {
-  const { user, isAuthenticating, component: Component, dispatch } = props;
+  const { user, component: Component } = props;
 
   const [showInactiveWarning, setShowInactiveWarning] = useState(false);
 
   const onLogout = () => {
     setShowInactiveWarning(false);
-    logout().catch(console.error);
+    logout();
   };
 
   const refreshSession = () => {
+    // token is automatically renewed by the auth-service, so here we just close the popup.
     setShowInactiveWarning(false);
-    dispatch(getUserProfileThunk());
   };
-
-  if (isAuthenticating) {
-    return null;
-  }
 
   if (!user) {
     return <Redirect to="/loggin" />;
@@ -61,21 +53,18 @@ export const ProtectedRoutePure = props => {
 
 ProtectedRoutePure.defaultProps = {
   user: null,
-  isAuthenticating: false,
   component: null
 };
 
 ProtectedRoutePure.propTypes = {
   dispatch: PropTypes.func.isRequired,
   user: PropTypes.object,
-  isAuthenticating: PropTypes.bool,
   component: PropTypes.oneOfType([PropTypes.func, PropTypes.object])
 };
 
 function mapStateToProps(state) {
   return {
-    user: selectUser(state),
-    isAuthenticating: selectIsFetching(state)
+    user: selectUser(state)
   };
 }
 
