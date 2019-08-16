@@ -59,6 +59,7 @@ public class ConceptHarvester {
         String theEntireDocument = null;
 
         if (isRunningForDeveloperLocally) {
+            logger.info("Harvester isRunningForDeveloperLocally==true");
             theEntireDocument = readFileFully("c:\\tmp\\localConceptsFile.txt");
         } else {
             theEntireDocument = readURLFully(harvestUri);
