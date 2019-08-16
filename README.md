@@ -54,8 +54,9 @@ Prerequisite: Make sure you have local admin on your computer, as gitbash has to
         ```
         ./install-dependencies-mac.sh
         ```
+3) Configure `.envrc` based on `.envrc.template`. Optionally install [direnv](https://direnv.net/docs/installation.md) to lock the variables to the main working directory
     
-3) Compile, create docker images and run the entire project:
+4) Compile, create docker images and run the entire project:
 
     If you are running windows, you also need to make sure you have installed node.js:
     https://nodejs.org/en/download/
@@ -76,7 +77,7 @@ Prerequisite: Make sure you have local admin on your computer, as gitbash has to
      docker-compose up -d --build registration-react
      ```
 
-4) If images are already built, project can be run: 
+5) If images are already built, project can be run: 
 
 	```
 	docker-compose up -d
@@ -94,7 +95,7 @@ Prerequisite: Make sure you have local admin on your computer, as gitbash has to
 	docker-compose logs -f registration
 	```
 
-5)  Open solution
+6)  Open solution
   
       Search site: [http://localhost:8080](http://localhost:8080)
 
