@@ -157,9 +157,14 @@ public class RDFToModelTransformer {
     }
 
     public List<ConceptDenormalized> getConceptsFromStream(Reader reader) {
-        final Model model = ModelFactory.createDefaultModel();
-        model.read(reader, null, "TURTLE");//Base and lang is just untested dummy values
-        return getConceptsFromModel(model);
+        try {
+            final Model model = ModelFactory.createDefaultModel();
+            model.read(reader, null, "TURTLE");//Base and lang is just untested dummy values
+            return getConceptsFromModel(model);
+        } catch (Exception e) {
+            logger.info("Got error while reading model: " + e.getMessage());
+            return Collections.<ConceptDenormalized>emptyList();
+        }
     }
 
     public List<ConceptDenormalized> getConceptsFromModel(Model model) {
