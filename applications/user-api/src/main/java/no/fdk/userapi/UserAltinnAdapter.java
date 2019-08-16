@@ -11,7 +11,10 @@ import java.util.stream.Collectors;
 
 public class UserAltinnAdapter implements User {
     private Person person;
-    private List<String> INCLUDED_ORGNR = Arrays.asList("920210023"/* “GJELDSREGISTERET AS”*/);
+    private List<String> INCLUDED_ORGNR = Arrays.asList(
+        "920210023"     /* this matches in prod system "GJELDSREGISTERET AS”*/
+        , "910258028"   /* this matches in mock data "LILAND OG ERDAL REVISJON", used in dev, ut1, st1 and it1*/
+    );
     private List<String> INCLUDED_ORGFORM = Arrays.asList("ADOS", "FKF", "FYLK", "IKS", "KF", "KIRK", "KOMM", "ORGL", "SF", "STAT", "SÆR");
     private Predicate<Organisation> organisationPrivilegeFilter = (o) -> INCLUDED_ORGNR.contains(o.getOrganisationNumber()) || INCLUDED_ORGFORM.contains(o.getOrganisationForm());
 
