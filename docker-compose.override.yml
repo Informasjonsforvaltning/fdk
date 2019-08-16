@@ -1,7 +1,10 @@
 version: "3"
 
 services:
-### external modules
+
+  ### external modules
+  ####################################
+
   elasticsearch5:
     volumes:
       - ./data/esdata5:/usr/share/elasticsearch/data
@@ -28,32 +31,33 @@ services:
     ports:
       - "5432:5432"
 
-# OIDC requires host names to be available both in service and for browsers for redirects.
-# The simplest way to achieve this is to register the service names as hostnames also in the host machine hosts file:
-# mac: /private/etc/hosts
-# windows c:\Windows\System32\Drivers\etc\hosts
+  # OIDC requires host names to be available both in service and for browsers for redirects.
+  # The simplest way to achieve this is to register the service names as hostnames also in the host machine hosts file:
+  # mac: /private/etc/hosts
+  # windows c:\Windows\System32\Drivers\etc\hosts
 
-# add two lines:
-# 127.0.0.1       sso
-# 127.0.0.1       sso-idporten-mock
+  # add one line:
+  # 127.0.0.1       sso
 
   sso:
     build: ./applications/sso
     volumes:
-#this allows to run command "npm run keycloak-export"
+      #this allows to run command "npm run keycloak-export"
       - ./applications/sso/export:/tmp/keycloak/export
-#with link, et is enough to restart container to perform, instead of rebuild
+      #with link, et is enough to restart container to perform, instead of rebuild
       - ./applications/sso/import:/tmp/keycloak/import
       - ./applications/sso/import-template:/tmp/keycloak/import-template
       - ./applications/sso/tools:/opt/fdk/tools
-# cp libraries/keycloak-user-storage-rest/target/keycloak-user-storage-rest.jar applications-external/sso/deployments/
-#      - ./applications/sso/deployments:/opt/jboss/keycloak/standalone/deployments
-#    environment:
-#      - KEYCLOAK_LOGLEVEL=DEBUG
+    # cp libraries/keycloak-user-storage-rest/target/keycloak-user-storage-rest.jar applications-external/sso/deployments/
+    #      - ./applications/sso/deployments:/opt/jboss/keycloak/standalone/deployments
+    #    environment:
+    #      - KEYCLOAK_LOGLEVEL=DEBUG
     ports:
       - "8084:8084"
 
-### ingress modules
+  ### ingress modules
+  ##################################
+
   nginx-search:
     build: ./applications/nginx-search
     ports:
@@ -70,28 +74,21 @@ services:
     depends_on:
       - nginx-registration
 
-### external service proxies
+  ### external service proxies
+  ##################################
+
   nginx-altinn-proxy:
     build: ./applications/nginx-altinn-proxy
     ports:
       - "8126:8080"
-
-  nginx-altinn-proxy-mock:
-    build: ./applications/nginx-altinn-proxy-mock
-    ports:
-      - "8128:8080"
 
   nginx-enhetsregisteret-proxy:
     build: ./applications/nginx-enhetsregisteret-proxy
     ports:
       - "8130:8080"
 
-  nginx-enhetsregisteret-proxy-mock:
-    build: ./applications/nginx-enhetsregisteret-proxy-mock
-    ports:
-      - "8132:8080"
-
-### nodejs modules
+  ### nodejs services
+  ####################################
 
   search:
     build: ./applications/search
@@ -115,7 +112,9 @@ services:
       - CONCEPT_REGISTRATION_API_HOST=http://localhost:8100
       - CONCEPT_REGISTRATION_HOST=http://localhost:8083
 
-### java modules
+  ### java services
+  #############################
+
   api-cat:
     ports:
       - "8102:8080"
@@ -135,8 +134,8 @@ services:
     ports:
       - "8108:8080"
     environment:
-    - JAVA_OPTS=-Djava.security.egd=file:/dev/./urandom -Xmx512M -Dspring.profiles.active=docker
-    - LOG_LEVEL
+      - JAVA_OPTS=-Djava.security.egd=file:/dev/./urandom -Xmx512M -Dspring.profiles.active=docker
+      - LOG_LEVEL
 
   harvester:
     ports:
@@ -192,7 +191,19 @@ services:
     depends_on:
       - nginx-altinn-proxy-mock
 
-### test and mock modules
+  ### test and mock modules
+  ###########################
+
+  nginx-altinn-proxy-mock:
+    build: ./applications/nginx-altinn-proxy-mock
+    ports:
+      - "8128:8080"
+
+  nginx-enhetsregisteret-proxy-mock:
+    build: ./applications/nginx-enhetsregisteret-proxy-mock
+    ports:
+      - "8132:8080"
+
   registration-auth:
     ports:
       - "8116:8080"

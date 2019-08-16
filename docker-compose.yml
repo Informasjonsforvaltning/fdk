@@ -1,7 +1,10 @@
 version: "3"
 
 services:
-### external modules
+
+  ### external modules
+  ####################################
+
   elasticsearch5:
     image: docker.elastic.co/elasticsearch/elasticsearch:5.6.9
     volumes:
@@ -40,7 +43,9 @@ services:
       - IDPORTEN_OIDC_ROOT
       - SSO_HOST
 
-### ingress modules
+  ### ingress modules
+  ##################################
+
   nginx-search:
     image: dcatno/nginx-search:latest
     expose:
@@ -65,7 +70,9 @@ services:
       - api-cat
       - concept-cat
 
-### external service proxies
+  ### external service proxies
+  ##################################
+
   nginx-altinn-proxy:
     image: dcatno/nginx-altinn-proxy:latest
     expose:
@@ -81,7 +88,9 @@ services:
     expose:
       - "8080"
 
-### nodejs modules
+  ### nodejs services
+  ####################################
+
   search:
     image: dcatno/search:latest
     expose:
@@ -101,7 +110,9 @@ services:
       - SEARCH_HOSTNAME
       - REFERENCE_DATA_HOST
 
-### java modules
+  ### java services
+  #############################
+
   api-cat:
     image: dcatno/api-cat:latest
     expose:
@@ -171,12 +182,25 @@ services:
     environment:
       - ALTINN_PROXY_HOST
 
-### test and mock modules
+  ### test and mock modules
+  ###########################
+
+  nginx-altinn-proxy-mock:
+    build: dcatno/nginx-altinn-proxy-mock:latest
+    expose:
+      - "8080"
+
+  nginx-enhetsregisteret-proxy-mock:
+    build: dcatno/nginx-enhetsregisteret-proxy-mock:latest
+    expose:
+      - "8080"
+
   registration-auth:
     image: dcatno/registration-auth:latest
     expose:
       - "8080"
 
+  # TODO this is not a service, does not need to be always started, implement as "run" command instead
   e2e:
     image: dcatno/e2e:latest
     volumes:
