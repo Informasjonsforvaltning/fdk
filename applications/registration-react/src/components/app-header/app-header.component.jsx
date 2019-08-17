@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-
+import { compose } from 'recompose';
 import { withRouter } from 'react-router';
+
 import localization from '../../lib/localization';
 import './app-header.scss';
 import { loginThunk, logoutThunk, selectUser } from '../../redux/modules/auth';
@@ -118,4 +119,9 @@ HeaderPure.propTypes = {
 
 const mapStateToProps = state => ({ user: selectUser(state) });
 
-export const Header = withRouter(connect(mapStateToProps)(HeaderPure));
+const enhance = compose(
+  withRouter,
+  connect(mapStateToProps)
+);
+
+export const Header = enhance(HeaderPure);
