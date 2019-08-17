@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { HeaderPure } from './app-header.component';
+import { AppHeaderPure } from './app-header.component';
 
 let defaultProps;
 let wrapper;
@@ -12,9 +12,9 @@ beforeEach(() => {
     dispatch,
     location: { pathname: 'abc' }
   };
-  wrapper = shallow(<HeaderPure {...defaultProps} />);
+  wrapper = shallow(<AppHeaderPure {...defaultProps} />);
 });
 
-test('should render Header correctly', () => {
+test('should render AppHeader correctly', () => {
   expect(wrapper).toMatchSnapshot();
 });
