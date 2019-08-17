@@ -7,7 +7,7 @@ import IdleTimer from 'react-idle-timer';
 import localization from '../lib/localization';
 import {
   getUserProfileThunk,
-  selectIsAuthenticating,
+  selectIsFetching,
   selectUser
 } from '../redux/modules/user';
 import TimeoutModal from './timeout-modal/timeout-modal.component';
@@ -54,7 +54,6 @@ export const ProtectedRoutePure = props => {
 
 ProtectedRoutePure.defaultProps = {
   user: null,
-  history: null,
   isAuthenticating: false,
   component: null
 };
@@ -62,7 +61,6 @@ ProtectedRoutePure.defaultProps = {
 ProtectedRoutePure.propTypes = {
   dispatch: PropTypes.func.isRequired,
   user: PropTypes.object,
-  history: PropTypes.object,
   isAuthenticating: PropTypes.bool,
   component: PropTypes.oneOfType([PropTypes.func, PropTypes.object])
 };
@@ -70,7 +68,7 @@ ProtectedRoutePure.propTypes = {
 function mapStateToProps(state) {
   return {
     user: selectUser(state),
-    isAuthenticating: selectIsAuthenticating(state)
+    isAuthenticating: selectIsFetching(state)
   };
 }
 

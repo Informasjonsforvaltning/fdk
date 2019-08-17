@@ -2,10 +2,9 @@ import { compose } from 'recompose';
 import { reduxFsaThunk } from '../../lib/redux-fsa-thunk';
 import { authService } from '../../auth/auth-service';
 
-export const AUTH_INIT = 'AUTH_INIT';
-export const AUTH_SUCCESS = 'AUTH_SUCCESS';
-export const AUTH_ERROR = 'AUTH_ERROR';
-export const AUTH_LOGOUT = 'AUTH_LOGOUT';
+export const USER_REQUEST = 'USER_REQUEST';
+export const USER_SUCCESS = 'USER_SUCCESS';
+export const USER_FAILURE = 'USER_FAILURE';
 
 export const selectAuthState = state => state.user;
 
@@ -14,45 +13,40 @@ export const selectUser = compose(
   selectAuthState
 );
 
-export const selectIsAuthenticating = compose(
-  authState => !!authState.isAuthenticating,
+export const selectIsFetching = compose(
+  authState => !!authState.isFetching,
   selectAuthState
 );
 
 export const getUserProfileThunk = () => (dispatch, getState) =>
-  !selectIsAuthenticating(getState()) &&
+  !selectIsFetching(getState()) &&
   dispatch(
     reduxFsaThunk(() => authService.getUserProfile(), {
-      onBeforeStart: { type: AUTH_INIT },
-      onSuccess: { type: AUTH_SUCCESS },
-      onError: { type: AUTH_ERROR }
+      onBeforeStart: { type: USER_REQUEST },
+      onSuccess: { type: USER_SUCCESS },
+      onError: { type: USER_FAILURE }
     })
   );
 
 const initialState = {
   user: undefined,
-  isAuthenticating: undefined,
-  error: undefined
+  isFetching: undefined
 };
 
 export default function user(state = initialState, action) {
   switch (action.type) {
-    case AUTH_INIT:
+    case USER_REQUEST:
       return {
-        ...state, // do not remove current user while waiting for new, but clear error
-        isAuthenticating: true,
-        error: undefined
+        // do not remove current user while waiting for new, but clear error
+        user: state.user,
+        isFetching: true
       };
-    case AUTH_SUCCESS:
+    case USER_SUCCESS:
       return {
         user: action.payload
       };
-    case AUTH_ERROR:
-      return {
-        error: action.payload
-      };
-    case AUTH_LOGOUT:
-      return { ...initialState };
+    case USER_FAILURE:
+      return initialState;
     default:
       return state;
   }
