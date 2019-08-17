@@ -9,7 +9,7 @@ import {
   getUserProfileThunk,
   selectIsAuthenticating,
   selectUser
-} from '../redux/modules/auth';
+} from '../redux/modules/user';
 import TimeoutModal from './timeout-modal/timeout-modal.component';
 import { authService } from '../auth/auth-service';
 

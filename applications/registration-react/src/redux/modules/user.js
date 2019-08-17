@@ -7,7 +7,7 @@ export const AUTH_SUCCESS = 'AUTH_SUCCESS';
 export const AUTH_ERROR = 'AUTH_ERROR';
 export const AUTH_LOGOUT = 'AUTH_LOGOUT';
 
-export const selectAuthState = state => state.auth;
+export const selectAuthState = state => state.user;
 
 export const selectUser = compose(
   authState => authState.user,
@@ -35,7 +35,7 @@ const initialState = {
   error: undefined
 };
 
-export default function auth(state = initialState, action) {
+export default function user(state = initialState, action) {
   switch (action.type) {
     case AUTH_INIT:
       return {

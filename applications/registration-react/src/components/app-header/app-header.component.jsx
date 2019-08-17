@@ -6,7 +6,7 @@ import { withRouter } from 'react-router';
 
 import localization from '../../lib/localization';
 import './app-header.scss';
-import { selectUser } from '../../redux/modules/auth';
+import { selectUser } from '../../redux/modules/user';
 import { authService } from '../../auth/auth-service';
 
 export const AppHeaderPure = ({ location, user }) => {
