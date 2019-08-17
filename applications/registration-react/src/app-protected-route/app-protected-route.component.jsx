@@ -7,20 +7,20 @@ import IdleTimer from 'react-idle-timer';
 import localization from '../lib/localization';
 import {
   getUserProfileThunk,
-  logoutThunk,
   selectIsAuthenticating,
   selectUser
 } from '../redux/modules/auth';
 import TimeoutModal from './timeout-modal/timeout-modal.component';
+import { authService } from '../auth/auth-service';
 
 export const ProtectedRoutePure = props => {
   const { user, isAuthenticating, component: Component, dispatch } = props;
 
   const [showInactiveWarning, setShowInactiveWarning] = useState(false);
 
-  const logOut = () => {
+  const logOut = async () => {
     setShowInactiveWarning(false);
-    dispatch(logoutThunk());
+    await authService.logout();
   };
 
   const refreshSession = () => {

@@ -1,5 +1,6 @@
 async function logout() {
   await fetch('/logout');
+  window.location = '/loggedOut';
 }
 
 function login() {

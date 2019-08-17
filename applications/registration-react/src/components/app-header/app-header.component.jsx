@@ -6,9 +6,10 @@ import { withRouter } from 'react-router';
 
 import localization from '../../lib/localization';
 import './app-header.scss';
-import { loginThunk, logoutThunk, selectUser } from '../../redux/modules/auth';
+import { selectUser } from '../../redux/modules/auth';
+import { authService } from '../../auth/auth-service';
 
-export const AppHeaderPure = ({ location, user, dispatch }) => {
+export const AppHeaderPure = ({ location, user }) => {
   let headerTitle;
   switch (location.pathname.split('/')[3]) {
     case 'datasets':
@@ -21,14 +22,14 @@ export const AppHeaderPure = ({ location, user, dispatch }) => {
       headerTitle = localization.app.title;
   }
 
-  const logOut = e => {
+  const logOut = async e => {
     e.preventDefault();
-    dispatch(logoutThunk());
+    await authService.logout();
   };
 
   const login = e => {
     e.preventDefault();
-    dispatch(loginThunk());
+    authService.login();
   };
 
   return (
@@ -113,8 +114,7 @@ AppHeaderPure.defaultProps = {
 
 AppHeaderPure.propTypes = {
   user: PropTypes.object,
-  location: PropTypes.object.isRequired,
-  dispatch: PropTypes.func.isRequired
+  location: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({ user: selectUser(state) });
