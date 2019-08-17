@@ -4,12 +4,19 @@
 export function reduxFsaThunk(task, typeMap) {
   return async dispatch => {
     if (typeMap.onBeforeStart) {
-      await dispatch(typeMap.onBeforeStart);
+      await dispatch({ ...typeMap.onBeforeStart });
     }
-    return task()
-      .then(payload => dispatch({ ...typeMap.onSuccess, payload }))
-      .catch(error =>
-        dispatch({ ...typeMap.onError, payload: error, error: true })
-      );
+
+    try {
+      const payload = await task();
+
+      if (typeMap.onSuccess) {
+        await dispatch({ ...typeMap.onSuccess, payload });
+      }
+    } catch (error) {
+      if (typeMap.onError) {
+        await dispatch({ ...typeMap.onError, payload: error, error: true });
+      }
+    }
   };
 }
