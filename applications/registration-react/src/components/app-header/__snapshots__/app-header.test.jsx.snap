@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`should render Header correctly 1`] = `
+exports[`should render AppHeader correctly 1`] = `
 <header>
   <div>
     <a

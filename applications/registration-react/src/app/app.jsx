@@ -7,7 +7,7 @@ import { DatasetsListPage } from '../pages/dataset-list-page/dataset-list-page';
 import { ConnectedAPIListPage } from '../pages/api-list-page/connected-api-list-page';
 import { ApiRegistrationPage } from '../pages/api-registration-page/api-registration-page';
 import { DatasetRegistrationPage } from '../pages/dataset-registration-page/dataset-registration-page';
-import { Header } from '../components/app-header/app-header.component';
+import { AppHeader } from '../components/app-header/app-header.component';
 import { Breadcrumbs } from '../components/breadcrumbs/breadcrumbs.component';
 import Footer from '../components/app-footer/app-footer.component';
 import { LoginDialog } from '../components/app-login-dialog/app-login-dialog.component';
@@ -53,7 +53,7 @@ const Routes = (
 export const App = () => (
   <BrowserRouter>
     <div className="d-flex flex-column site">
-      <Header />
+      <AppHeader />
       <Breadcrumbs />
       <div className="site-content d-flex flex-column pt-5">{Routes}</div>
       <Footer />

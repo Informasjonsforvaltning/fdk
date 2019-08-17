@@ -8,7 +8,7 @@ import localization from '../../lib/localization';
 import './app-header.scss';
 import { loginThunk, logoutThunk, selectUser } from '../../redux/modules/auth';
 
-export const HeaderPure = ({ location, user, dispatch }) => {
+export const AppHeaderPure = ({ location, user, dispatch }) => {
   let headerTitle;
   switch (location.pathname.split('/')[3]) {
     case 'datasets':
@@ -107,11 +107,11 @@ export const HeaderPure = ({ location, user, dispatch }) => {
   );
 };
 
-HeaderPure.defaultProps = {
+AppHeaderPure.defaultProps = {
   user: null
 };
 
-HeaderPure.propTypes = {
+AppHeaderPure.propTypes = {
   user: PropTypes.object,
   location: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired
@@ -124,4 +124,4 @@ const enhance = compose(
   connect(mapStateToProps)
 );
 
-export const Header = enhance(HeaderPure);
+export const AppHeader = enhance(AppHeaderPure);
