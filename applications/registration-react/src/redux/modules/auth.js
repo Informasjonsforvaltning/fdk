@@ -29,15 +29,6 @@ export const getUserProfileThunk = () => (dispatch, getState) =>
     })
   );
 
-export const loginThunk = () => async () => {
-  await authService.login();
-};
-
-export const logoutThunk = () => async () => {
-  await authService.logout();
-  window.location = '/loggedOut'; // todo, causes reload but this is changed soon
-};
-
 const initialState = {
   user: undefined,
   isAuthenticating: undefined,

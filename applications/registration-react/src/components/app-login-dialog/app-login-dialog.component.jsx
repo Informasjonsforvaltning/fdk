@@ -4,14 +4,10 @@ import { Button } from 'reactstrap';
 import PropTypes from 'prop-types';
 
 import localization from '../../lib/localization';
+import { authService } from '../../auth/auth-service';
 import './app-login-dialog.scss';
-import { loginThunk } from '../../redux/modules/auth';
 
-export const LoginDialogPure = ({ loggedOut, dispatch }) => {
-  const login = () => {
-    dispatch(loginThunk());
-  };
-
+export const LoginDialogPure = ({ loggedOut }) => {
   return (
     <div className="login-dialog-wrapper p-5">
       <div className="container">
@@ -42,7 +38,10 @@ export const LoginDialogPure = ({ loggedOut, dispatch }) => {
                 </div>
               )}
               <div className="mt-5 mb-5">
-                <Button className="fdk-button fdk-button-cta" onClick={login}>
+                <Button
+                  className="fdk-button fdk-button-cta"
+                  onClick={authService.login}
+                >
                   {localization.app.logIn}
                 </Button>
               </div>
@@ -70,7 +69,6 @@ LoginDialogPure.defaultProps = {
 };
 
 LoginDialogPure.propTypes = {
-  dispatch: PropTypes.func.isRequired,
   loggedOut: PropTypes.bool
 };
 
