@@ -28,10 +28,17 @@ export const ProtectedRoutePure = props => {
     dispatch(getUserProfileThunk());
   };
 
+  if (isAuthenticating) {
+    return null;
+  }
+
+  if (!user) {
+    return <Redirect to="/loggin" />;
+  }
+
   return (
     <>
-      {!isAuthenticating && !user && <Redirect to="/loggin" />}
-      {user && <Route {...props} component={Component} />}
+      <Route {...props} component={Component} />
       <IdleTimer
         element={document}
         onIdle={() => setShowInactiveWarning(true)}
