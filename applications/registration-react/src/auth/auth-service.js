@@ -1,22 +1,16 @@
-async function logout() {
+export async function logout() {
   await fetch('/logout');
   window.location = '/loggedOut';
 }
 
-function login() {
+export function login() {
   window.location = '/login';
 }
 
-async function getUserProfile() {
+export async function getUserProfile() {
   const r = await fetch('/innloggetBruker', {
     method: 'GET',
     headers: { Accept: 'application/json' }
   });
   return r.json();
 }
-
-export const authService = {
-  login,
-  getUserProfile,
-  logout
-};

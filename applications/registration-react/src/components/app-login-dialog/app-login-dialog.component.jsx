@@ -4,7 +4,7 @@ import { Button } from 'reactstrap';
 import PropTypes from 'prop-types';
 
 import localization from '../../lib/localization';
-import { authService } from '../../auth/auth-service';
+import { login } from '../../auth/auth-service';
 import './app-login-dialog.scss';
 
 export const LoginDialogPure = ({ loggedOut }) => {
@@ -38,10 +38,7 @@ export const LoginDialogPure = ({ loggedOut }) => {
                 </div>
               )}
               <div className="mt-5 mb-5">
-                <Button
-                  className="fdk-button fdk-button-cta"
-                  onClick={authService.login}
-                >
+                <Button className="fdk-button fdk-button-cta" onClick={login}>
                   {localization.app.logIn}
                 </Button>
               </div>

@@ -1,6 +1,6 @@
 import { compose } from 'recompose';
 import { reduxFsaThunk } from '../../lib/redux-fsa-thunk';
-import { authService } from '../../auth/auth-service';
+import { getUserProfile } from '../../auth/auth-service';
 
 export const USER_REQUEST = 'USER_REQUEST';
 export const USER_SUCCESS = 'USER_SUCCESS';
@@ -21,7 +21,7 @@ export const selectIsFetching = compose(
 export const getUserProfileThunk = () => (dispatch, getState) =>
   !selectIsFetching(getState()) &&
   dispatch(
-    reduxFsaThunk(() => authService.getUserProfile(), {
+    reduxFsaThunk(() => getUserProfile(), {
       onBeforeStart: { type: USER_REQUEST },
       onSuccess: { type: USER_SUCCESS },
       onError: { type: USER_FAILURE }
