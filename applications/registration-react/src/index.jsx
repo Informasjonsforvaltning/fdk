@@ -13,15 +13,8 @@ import { getUserProfileThunk } from './redux/modules/user';
 
 import './styles';
 
-function AppRoot(store) {
-  return (
-    <Provider store={store}>
-      <App />
-    </Provider>
-  );
-}
-
 async function configureServices() {
+  await loadConfig();
   const store = configureStore(getConfig().store);
   configureLocalization(getConfig().registrationLanguage);
   configureReferenceDataApi(getConfig().referenceDataApi);
@@ -32,11 +25,16 @@ async function configureServices() {
   return { store };
 }
 
-function render({ store }) {
-  ReactDOM.render(AppRoot(store), document.getElementById('root'));
+async function main() {
+  const { store } = await configureServices();
+
+  const app = (
+    <Provider store={store}>
+      <App />
+    </Provider>
+  );
+
+  ReactDOM.render(app, document.getElementById('root'));
 }
 
-loadConfig()
-  .then(configureServices)
-  .then(render)
-  .catch(console.error);
+main().catch(console.error);
