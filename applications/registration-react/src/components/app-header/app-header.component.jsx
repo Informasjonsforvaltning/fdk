@@ -7,7 +7,7 @@ import { withRouter } from 'react-router';
 import localization from '../../lib/localization';
 import './app-header.scss';
 import { selectUser } from '../../redux/modules/user';
-import { authService } from '../../auth/auth-service';
+import { login, logout } from '../../auth/auth-service';
 
 export const AppHeaderPure = ({ location, user }) => {
   let headerTitle;
@@ -22,14 +22,14 @@ export const AppHeaderPure = ({ location, user }) => {
       headerTitle = localization.app.title;
   }
 
-  const logOut = async e => {
+  const onClickLogout = e => {
     e.preventDefault();
-    await authService.logout();
+    logout().catch(console.error);
   };
 
-  const login = e => {
+  const onClickLogin = e => {
     e.preventDefault();
-    authService.login();
+    login();
   };
 
   return (
@@ -81,7 +81,7 @@ export const AppHeaderPure = ({ location, user }) => {
               {user && (
                 <div className="mr-4 fdk-auth-link">
                   <button
-                    onClick={logOut}
+                    onClick={onClickLogout}
                     className="fdk-btn-no-border"
                     type="button"
                   >
@@ -92,7 +92,7 @@ export const AppHeaderPure = ({ location, user }) => {
               {!user && (
                 <div className="mr-4 fdk-auth-link">
                   <button
-                    onClick={login}
+                    onClick={onClickLogin}
                     className="fdk-btn-no-border"
                     type="button"
                   >

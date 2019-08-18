@@ -11,16 +11,16 @@ import {
   selectUser
 } from '../redux/modules/user';
 import TimeoutModal from './timeout-modal/timeout-modal.component';
-import { authService } from '../auth/auth-service';
+import { logout } from '../auth/auth-service';
 
 export const ProtectedRoutePure = props => {
   const { user, isAuthenticating, component: Component, dispatch } = props;
 
   const [showInactiveWarning, setShowInactiveWarning] = useState(false);
 
-  const logOut = async () => {
+  const onLogout = () => {
     setShowInactiveWarning(false);
-    await authService.logout();
+    logout().catch(console.error);
   };
 
   const refreshSession = () => {
@@ -47,7 +47,7 @@ export const ProtectedRoutePure = props => {
       />
       <TimeoutModal
         modal={showInactiveWarning}
-        toggle={logOut}
+        toggle={onLogout}
         refreshSession={refreshSession}
         title={localization.inactiveSessionWarning.title}
         ingress={localization.inactiveSessionWarning.loggingOut}
