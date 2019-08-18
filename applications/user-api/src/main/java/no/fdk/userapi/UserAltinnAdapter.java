@@ -39,10 +39,10 @@ public class UserAltinnAdapter implements User {
         return getNames().get(getNames().size() - 1);
     }
 
-    public String getPrivileges() {
+    public String getAuthorities() {
         List<String> privilegesList = person.getOrganisations().stream()
             .filter(organisationPrivilegeFilter)
             .map(o -> "publisher:" + o.getOrganisationNumber() + ":admin").collect(Collectors.toList());
-        return String.join(" ", privilegesList);
+        return String.join(",", privilegesList);
     }
 }
