@@ -1,7 +1,5 @@
 package no.fdk.userapi;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 interface User {
     String getId();
 
@@ -9,6 +7,5 @@ interface User {
 
     String getLastName();
 
-    @JsonProperty("fdk_access")
-    String getPrivileges();
+    String getAuthorities();
 }

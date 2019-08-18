@@ -22,7 +22,7 @@ public class RestUserAdapter extends AbstractUserAdapter {
         put("lastName", "lastName");
     }};
     private static final Map<String, String> attributeMap = new HashMap<String, String>() {{
-        put("fdk_access", "fdk_access");
+        put("authorities", "authorities");
     }};
     protected Map<String, String> userData;
 
