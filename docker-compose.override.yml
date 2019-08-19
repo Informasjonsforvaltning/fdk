@@ -177,6 +177,7 @@ services:
       - registrationApi_ipKeyPassword=${registrationApi_ipKeyPassword}
       - registrationApi_ipStorePassword=${registrationApi_ipStorePassword}
       - LOG_LEVEL
+      - LOG_FORMAT=compact
       - FDK_ENHETSREGISTERET_PROXY_URL=http://nginx-enhetsregisteret-proxy-mock:8080/enhetsregisteret/api/enheter/
 
   search-api:
