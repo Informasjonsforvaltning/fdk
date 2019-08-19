@@ -14,7 +14,7 @@ export const ListItem = props => {
   }
 
   const itemClass = cx('w-75', 'fdk-text-size-small', {
-    'fdk-color-neutral-darkest2': !title
+    'fdk-color-neutral-darkest': !title
   });
 
   return (
