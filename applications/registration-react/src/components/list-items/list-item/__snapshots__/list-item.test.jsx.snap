@@ -78,7 +78,7 @@ exports[`should render ListItem correctly when missing title 1`] = `
       className="d-flex justify-content-between"
     >
       <span
-        className="w-75 fdk-text-size-small fdk-color-neutral-darkest2"
+        className="w-75 fdk-text-size-small fdk-color-neutral-darkest"
       >
         Mangler tittel
       </span>
