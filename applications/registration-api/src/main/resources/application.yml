@@ -1,8 +1,8 @@
 logging:
-  level.root: ERROR
-  level.no: ${LOG_LEVEL:INFO}
+  level.root: WARN
+  level.no: ${LOG_LEVEL:DEBUG}
   level.org.springframework: INFO
-  level.org.springframework.web: ERROR
+  level.org.springframework.web: INFO
   level.org.springframework.data.elasticsearch.core: ${LOG_LEVEL:INFO}
   level.org.opensaml: INFO
 application:
