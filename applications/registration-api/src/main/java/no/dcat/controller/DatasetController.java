@@ -160,7 +160,7 @@ public class DatasetController {
             throw new NotFoundException();
         }
 
-        logger.info("found old dataset: {}" + oldDataset.getTitle().get("nb"));
+        logger.info("found old dataset: {}", oldDataset.getId());
 
         JsonObject oldDatasetJson = gson.toJsonTree(oldDataset).getAsJsonObject();
         List<Concept> conceptListFromReq;
