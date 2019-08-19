@@ -74,7 +74,7 @@ export const AppHeaderPure = ({ location, user }) => {
               {user &&
                 user.name && (
                   <div className="mr-4">
-                    <i className="fa fa-user fdk-fa-left fdk-color-primary03" />
+                    <i className="fa fa-user fdk-fa-left fdk-color-primary" />
                     {user.name}
                   </div>
                 )}
