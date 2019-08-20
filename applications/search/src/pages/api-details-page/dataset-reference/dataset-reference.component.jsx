@@ -18,17 +18,17 @@ const renderAccessRights = accessRight => {
 
   switch (code) {
     case 'NON_PUBLIC':
-      accessRightsIconClass = 'fdk-color-unntatt fa-lock';
+      accessRightsIconClass = 'fdk-color-unntatt fdk-icon-non-public';
       accessRightsLabel =
         localization.dataset.accessRights.authorityCode.nonPublicDetailsLabel;
       break;
     case 'RESTRICTED':
-      accessRightsIconClass = 'fdk-color-begrenset fa-unlock-alt';
+      accessRightsIconClass = 'fdk-color-begrenset fdk-icon-restricted';
       accessRightsLabel =
         localization.dataset.accessRights.authorityCode.restrictedDetailsLabel;
       break;
     case 'PUBLIC':
-      accessRightsIconClass = 'fdk-color-offentlig fa-unlock';
+      accessRightsIconClass = 'fdk-color-offentlig fdk-icon-public';
       accessRightsLabel =
         localization.dataset.accessRights.authorityCode.publicDetailsLabel;
       break;
@@ -37,9 +37,9 @@ const renderAccessRights = accessRight => {
   }
 
   return (
-    <div>
-      <i className={`fa fa-2x fdk-fa-left ${accessRightsIconClass}`} />
-      <strong>{accessRightsLabel}</strong>
+    <div className="d-flex align-items-center">
+      <i className={`fa fdk-fa-left ${accessRightsIconClass}`} />
+      <strong style={{ marginTop: '6px' }}>{accessRightsLabel}</strong>
     </div>
   );
 };
