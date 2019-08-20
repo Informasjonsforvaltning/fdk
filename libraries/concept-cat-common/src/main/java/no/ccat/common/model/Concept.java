@@ -18,6 +18,9 @@ public class Concept {
     @ApiModelProperty("identifier")
     private String identifier;
 
+    @ApiModelProperty("The definition [skosno:bruksområde]")
+    private Map<String, String> application;
+
     @ApiModelProperty("The definition [skosno:Definisjon]")
     private Definition definition;
 

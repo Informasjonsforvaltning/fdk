@@ -37,10 +37,11 @@ public class RDFToModelTransformerTest {
 
         List<ConceptDenormalized> concepts = transformer.getConceptsFromStream(reader);
 
-        assertEquals("We should get 1 concept", concepts.size(), 1);
+        assertEquals("We should get 1 concept", 1, concepts.size());
 
         ConceptDenormalized testConcept = concepts.get(0);
         assertNotNull(testConcept.getExample());
         assertNotNull(testConcept.getDefinition());
+        assertEquals("brukbrukbruk",testConcept.getApplication().get("nb"));
     }
 }
