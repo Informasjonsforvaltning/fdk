@@ -62,6 +62,7 @@ public class ApiRegistrationController {
      * @return List of api registrations
      */
     @PreAuthorize("hasPermission(#catalogId,'publisher', 'admin')")
+    @CrossOrigin
     @RequestMapping(value = "", method = GET, produces = APPLICATION_JSON_UTF8_VALUE)
     public PagedResources<Resource<ApiRegistration>> listApiRegistrations(
         @PathVariable("catalogId") String catalogId,
@@ -80,6 +81,7 @@ public class ApiRegistrationController {
      * @return complete apiRegistration
      */
     @PreAuthorize("hasPermission(#catalogId, 'publisher', 'admin')")
+    @CrossOrigin
     @RequestMapping(value = "/{id}", method = GET, produces = APPLICATION_JSON_UTF8_VALUE)
     public ApiRegistration getApiRegistration(
         @PathVariable("catalogId") String catalogId,
@@ -95,6 +97,7 @@ public class ApiRegistrationController {
      * @return ApiRegistration
      */
     @PreAuthorize("hasPermission(#catalogId, 'publisher', 'admin')")
+    @CrossOrigin
     @RequestMapping(
         value = "",
         method = POST,
@@ -134,6 +137,7 @@ public class ApiRegistrationController {
      * apiRegistration is not found, HTTP 404 Not found is returned
      */
     @PreAuthorize("hasPermission(#catalogId, 'publisher', 'admin')")
+    @CrossOrigin
     @RequestMapping(value = "/{id}", method = DELETE, produces = APPLICATION_JSON_UTF8_VALUE)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void deleteApiRegistration(
@@ -161,6 +165,7 @@ public class ApiRegistrationController {
      * @return apiRegistration
      */
     @PreAuthorize("hasPermission(#catalogId,'publisher', 'admin')")
+    @CrossOrigin
     @RequestMapping(
         value = "/{id}",
         method = PATCH,

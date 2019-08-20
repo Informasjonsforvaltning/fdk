@@ -58,14 +58,6 @@ public class SecurityConfigurer extends ServiceProviderConfigurerAdapter {
 
         http.apply(saml());
 
-        http.cors().configurationSource(request -> {
-            CorsConfiguration config = new CorsConfiguration();
-            config.applyPermitDefaultValues();
-            config.addAllowedMethod(HttpMethod.PATCH);
-            config.addAllowedMethod(HttpMethod.DELETE);
-            return config;
-        });
-
         http.authorizeRequests()
             .antMatchers("/*.js").permitAll()
             .antMatchers("/*.woff2").permitAll()

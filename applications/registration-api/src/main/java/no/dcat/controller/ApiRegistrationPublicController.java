@@ -45,6 +45,7 @@ public class ApiRegistrationPublicController {
      *
      * @return complete apiRegistration
      */
+    @CrossOrigin
     @RequestMapping(
         value = "/apis",
         method = GET,
