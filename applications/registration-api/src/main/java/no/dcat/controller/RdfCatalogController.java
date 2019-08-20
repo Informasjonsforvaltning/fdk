@@ -41,6 +41,7 @@ public class RdfCatalogController {
 
 
 
+    @CrossOrigin
     @RequestMapping(value = "/{id}",
             method = RequestMethod.GET,
             produces = {"text/turtle", "application/ld+json", "application/rdf+xml"})

@@ -61,6 +61,7 @@ public class ImportController {
     }
 
     @PreAuthorize("hasPermission(#catalogId, 'publisher', 'admin')")
+    @CrossOrigin
     @RequestMapping(value = "",
         method = POST,
         produces = APPLICATION_JSON_UTF8_VALUE)

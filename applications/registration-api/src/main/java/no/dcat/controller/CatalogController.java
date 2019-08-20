@@ -63,6 +63,7 @@ public class CatalogController {
      *
      * @return
      */
+    @CrossOrigin
     @RequestMapping(value = "",
         method = GET,
         produces = APPLICATION_JSON_UTF8_VALUE)
@@ -94,6 +95,7 @@ public class CatalogController {
      * @return new catalog object
      */
     @PreAuthorize("hasPermission(#catalog.id, 'publisher', 'admin')")
+    @CrossOrigin
     @RequestMapping(value = "", method = POST,
         consumes = APPLICATION_JSON_VALUE,
         produces = APPLICATION_JSON_UTF8_VALUE)
@@ -140,6 +142,7 @@ public class CatalogController {
      * @return the saved catalog
      */
     @PreAuthorize("hasPermission(#catalog.id, 'publisher', 'admin')")
+    @CrossOrigin
     @RequestMapping(value = "/{id}",
         method = PUT,
         consumes = APPLICATION_JSON_VALUE,
@@ -176,6 +179,7 @@ public class CatalogController {
      * @return acknowledgement of success or failure
      */
     @PreAuthorize("hasPermission(#id, 'publisher', 'admin')")
+    @CrossOrigin
     @RequestMapping(value = "/{id}", method = DELETE,
         produces = APPLICATION_JSON_UTF8_VALUE)
     public void removeCatalog(@PathVariable("id") String id) {
@@ -192,6 +196,7 @@ public class CatalogController {
      * @return the catalog if it exist
      */
     @PreAuthorize("hasPermission(#id, 'publisher', 'admin')")
+    @CrossOrigin
     @RequestMapping(value = "/{id}", method = GET,
         produces = APPLICATION_JSON_UTF8_VALUE)
     public Catalog getCatalog(@PathVariable("id") String id) throws NotFoundException {

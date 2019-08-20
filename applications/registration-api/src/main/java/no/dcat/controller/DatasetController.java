@@ -32,6 +32,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.web.bind.annotation.RequestMethod.*;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/catalogs/{catalogId}/datasets")
 public class DatasetController {
@@ -250,6 +251,7 @@ and it is quite high in priority list.
      * If dataset is not found, HTTP 404 Not found is returned, with an empty body.
      */
     @PreAuthorize("hasPermission(#catalogId, 'publisher', 'admin')")
+    @CrossOrigin
     @RequestMapping(value = "/{id}", method = DELETE, produces = APPLICATION_JSON_UTF8_VALUE)
     public void deleteDataset(@PathVariable("catalogId") String catalogId, @PathVariable("id") String id) throws NotFoundException {
         Optional<Dataset> oldDatasetOptional = datasetRepository.findById(id);

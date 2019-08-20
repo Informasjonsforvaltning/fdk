@@ -35,6 +35,7 @@ public class LoginController {
     }
 
 
+    @CrossOrigin
     @RequestMapping(value = "/innloggetBruker", method = GET)
     HttpEntity<User> innloggetBruker() {
         Authentication authentication = springSecurityContextService.getAuthentication();
@@ -57,6 +58,7 @@ public class LoginController {
         }
     }
 
+    @CrossOrigin
     @RequestMapping(value = "/loginerror", method = GET)
     String getLoginError() {
         logger.debug("login error");

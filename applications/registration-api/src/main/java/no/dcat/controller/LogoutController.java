@@ -23,6 +23,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 public class LogoutController {
     private static Logger logger = LoggerFactory.getLogger(LogoutController.class);
 
+    @CrossOrigin
     @RequestMapping(value = "/logout", method = GET)
     public ModelAndView logout(Authentication auth, HttpServletRequest request) throws MalformedURLException {
         logger.debug("[LogoutController]: handling request /logout");
