@@ -27,7 +27,7 @@ export const ListItem = props => {
           <div className="d-flex w-25 justify-content-between">
             {status === 'PUBLISH' && (
               <span>
-                <i className="fa fa-circle fdk-color-primary0 mr-2 d-none d-sm-inline" />
+                <i className="fa fa-circle fdk-color-primary mr-2 d-none d-sm-inline" />
                 <span>{localization.listItems.statusPublished}</span>
               </span>
             )}

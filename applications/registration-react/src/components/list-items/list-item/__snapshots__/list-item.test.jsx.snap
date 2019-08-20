@@ -54,7 +54,7 @@ exports[`should render ListItem correctly "PUBLISH" item 1`] = `
       >
         <span>
           <i
-            className="fa fa-circle fdk-color-primary0 mr-2 d-none d-sm-inline"
+            className="fa fa-circle fdk-color-primary mr-2 d-none d-sm-inline"
           />
           <span>
             Publisert
