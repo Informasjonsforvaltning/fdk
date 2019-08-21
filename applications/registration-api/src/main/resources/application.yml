@@ -96,6 +96,7 @@ application:
   harvesterUrl: http://localhost:8082
   altinnServiceUrl: http://localhost:8077
   apiRootUrl: http://localhost:8080/api
+  openDataEnhetProxy: http://localhost:8132/enhetsregisteret/api/enheter/ #mock
 
 ---
 spring:
