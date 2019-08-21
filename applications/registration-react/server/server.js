@@ -35,7 +35,8 @@ module.exports = {
         'REFERENCE_DATA_HOST',
         'REFERENCE_DATA_AUTHORIZATION',
         'CONCEPT_REGISTRATION_API_HOST',
-        'CONCEPT_REGISTRATION_HOST'
+        'CONCEPT_REGISTRATION_HOST',
+        'SSO_HOST'
       ];
       const values = vars.map(varName => process.env[varName]);
       const envObj = _.zipObject(vars, values);
