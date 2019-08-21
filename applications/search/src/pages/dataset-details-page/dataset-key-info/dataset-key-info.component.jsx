@@ -29,7 +29,7 @@ const renderAccessRights = accessRight => {
       break;
     case 'RESTRICTED':
       accessRightsIconClass = 'fdk-icon-restricted';
-      accessRightsColorClass = 'fdk-color-begrenset fdk-themes-text';
+      accessRightsColorClass = 'fdk-color-restricted';
       accessRightsLabel =
         localization.dataset.accessRights.authorityCode.restrictedDetailsLabel;
       break;

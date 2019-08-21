@@ -1,3 +1,4 @@
+@import '../../../../../node_modules/designsystemet/fdk-designsystem-bootstrap4/scss/colors.scss';
 
 .fdk-a-search-hit {
   text-decoration: none;
@@ -23,4 +24,8 @@
   background-image: url("/static/img/icon-dataset-restricted-md.svg");
   width: 2em; 
   height: 2em;
+}
+
+.fdk-color-restricted {
+  color: $color-warning-darker !important;
 }

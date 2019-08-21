@@ -23,7 +23,7 @@ const renderAccessRights = accessRight => {
         localization.dataset.accessRights.authorityCode.nonPublicDetailsLabel;
       break;
     case 'RESTRICTED':
-      accessRightsIconClass = 'fdk-color-begrenset fdk-icon-restricted';
+      accessRightsIconClass = 'fdk-color-restricted fdk-icon-restricted';
       accessRightsLabel =
         localization.dataset.accessRights.authorityCode.restrictedDetailsLabel;
       break;

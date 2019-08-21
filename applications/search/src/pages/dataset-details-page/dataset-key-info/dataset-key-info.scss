@@ -1,5 +1,11 @@
+@import '../../../../node_modules/designsystemet/fdk-designsystem-bootstrap4/scss/colors.scss';
+
 .legal-basis ul, .legal-basis ul {
   list-style: none;
   padding:0;
   margin-bottom: 2rem;
+}
+
+.fdk-color-restricted {
+  color: $color-warning-darker !important;
 }
