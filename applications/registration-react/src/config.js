@@ -17,17 +17,7 @@ const createConfig = env => {
       }
     },
     registrationApi: {
-      // in cluster through proxy, assuming frontend comes from the same origin
       host: '/'
-      // to call api on host
-      // host: 'http://localhost:8115/'
-      // direct api in docker-compose cluster, bypassing ingress proxy
-      // host: 'http://localhost:8114/'
-    },
-    keycloak: {
-      realm: 'fdk',
-      url: `${env.SSO_HOST}/auth`,
-      clientId: 'fdk-registration-public'
     },
     conceptRegistration: {
       host: env.CONCEPT_REGISTRATION_HOST || undefined,

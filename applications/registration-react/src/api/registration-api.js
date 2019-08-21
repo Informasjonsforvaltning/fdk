@@ -3,7 +3,6 @@ import {
   normalizeFetchError,
   normalizeFetchResponse
 } from '../lib/normalize-fetch-response';
-import { getToken } from '../auth/auth-service';
 
 const registrationApiConfig = {};
 
@@ -13,11 +12,8 @@ export const configureRegistrationApi = newRegistrationApiConfig =>
 const getRootUrl = () => registrationApiConfig.host;
 const resolveUrl = path => url.resolve(getRootUrl(), path);
 
-export const registrationApi = async (method, path, jsonBody) => {
-  const headers = {
-    Accept: 'application/json', // required for cors
-    Authorization: `Bearer ${await getToken()}`
-  };
+export const registrationApi = (method, path, jsonBody) => {
+  const headers = { Accept: 'application/json' }; // required for cors
   if (jsonBody) {
     Object.assign(headers, { 'Content-Type': 'application/json' });
   }
