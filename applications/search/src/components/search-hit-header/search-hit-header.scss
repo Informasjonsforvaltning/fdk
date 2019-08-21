@@ -2,12 +2,16 @@
 
 .search-hit__title-link {
   text-decoration: none;
-  color: $color-link;
+  @include themify($themes) {
+    color: themed('color-text-link');
+  }
 }
 
 .fdk-label {
-  background-color: $color-neutral-lightest !important;
-  color: $color-neutral-dark !important;
+  @include themify($themes) {
+    background-color: themed('color-neutral-lightest');
+    color: themed('color-neutral-dark');
+  }
   font-size: 1.4rem !important;
   border-radius: .9em !important;
   padding: .0em .6em .0em .6em !important;
@@ -16,8 +20,10 @@
 }
 
 .fdk-national-component {
-  background-color: $color-neutral-darkest !important;
-  color: $color-neutral-lightest !important;
+  @include themify($themes) {
+    background-color: themed('color-neutral-darkest');
+    color: themed('color-neutral-lightest');
+  }
   font-size: 1.4rem !important;
   border-radius: .9em !important;
   padding: .0em .6em .0em .6em !important;
@@ -26,8 +32,10 @@
 }
 
 .fdk-label-details {
-  background-color: $color-neutral-light !important;
-  color: $color-neutral-darkest !important;
+  @include themify($themes) {
+    background-color: themed('color-neutral-light');
+    color: themed('color-neutral-darkest');
+  }
   font-size: 1.4rem !important;
   border-radius: .9em !important;
   padding: .0em .6em .0em .6em !important;

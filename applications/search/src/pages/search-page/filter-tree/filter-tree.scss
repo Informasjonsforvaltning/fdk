@@ -6,7 +6,9 @@
     overflow-x: hidden;
     .tree-view_item {
       border-top: none;
-      color: $color-neutral-darkest;
+      @include themify($themes) {
+        color: themed('color-text-default');
+      }
       white-space: nowrap;
       margin-top: 0;
       margin-bottom: 0;
@@ -21,7 +23,9 @@
   }
   .tree-view_arrow {
     cursor: pointer;
-    color: $color-link;
+    @include themify($themes) {
+      color: themed('color-text-link');
+    }
     font-size: 2rem;
     font-family: FontAwesome;
     -webkit-user-select: none;

@@ -14,11 +14,13 @@
 }
 
 .fdk-button.fdk-button-black-toggle {
-    background-color: transparent;
-    color: $color-link;
-    border-color: black;
-    box-shadow: none;
-    min-width:120px;
+  background-color: transparent;
+  @include themify($themes) {
+    color: themed('color-text-link') !important;
+  }
+  border-color: black;
+  box-shadow: none;
+  min-width:120px;
 }
 .fdk-button.fdk-button-black-toggle:first-child {
   border-right:none;
@@ -31,15 +33,16 @@
   border-bottom-left-radius:0;
 }
 .fdk-button.fdk-button-black-toggle:hover, .fdk-button.fdk-button-black-toggle:not(.disabled):not(.disabled):active {
-  color:$color-link;
   background: transparent;
 }
 .fdk-button.fdk-button-black-toggle:focus {
     box-shadow: none;
 }
 .fdk-button.fdk-button-black-toggle.selected {
-  background: black;
-  color: white;
+  color: $color-white !important;
+  @include themify($themes) {
+    background-color: themed('color-neutral-darker');
+  }
 }
 /*  SEARCHPAGE PAGINATION  */
 .pagination {
@@ -54,11 +57,15 @@
     a, span {
       background-color: transparent !important;
       border: none !important;
-      color: $color-neutral-darkest !important;
       font-size: 1.2rem;
       padding: .5em !important;
+      @include themify($themes) {
+        color: themed('color-text-link') !important;
+      }
       &:hover {
-        background-color: $color-neutral-lighter !important;
+        @include themify($themes) {
+          background-color: themed('color-neutral-lighter') !important;
+        }
       }
     }
   }
@@ -66,6 +73,10 @@
     a {
       background-color: $color-neutral-darkest !important;
       color: $color-white !important;
+      @include themify($themes) {
+        background-color: themed('color-neutral-darkest') !important;
+        color: themed('')
+      }
     }
   }
   li.previous {
@@ -111,18 +122,24 @@
       a, span {
         background-color: transparent !important;
         border: none !important;
-        color: $color-neutral-darkest !important;
+        @include themify($themes) {
+          color: themed('color-text-link') !important;
+        }
         font-size: 1.5rem !important;
         padding: .5em 1em !important;
         &:hover {
-          background-color: $color-neutral-lighter !important;
+          @include themify($themes) {
+            background-color: themed('color-neutral-lighter') !important;
+          }
         }
       }
     }
     li.active {
       a {
-        background-color: $color-neutral-darkest !important;
         color: $color-white !important;
+        @include themify($themes) {
+          background-color: themed('color-neutral-darkest') !important;
+        }
       }
     }
     li.previous {

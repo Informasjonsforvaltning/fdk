@@ -1,18 +1,24 @@
 @import '../../../node_modules/designsystemet/fdk-designsystem-bootstrap4/scss/colors.scss';
 
 .sticky-menu {
-  background-color: $color-neutral-lightest;
+  @include themify($themes) {
+    background-color: themed('color-neutral-lightest');
+  }
   position: sticky;
   position: -webkit-sticky;
   top: 0;
   ul {
     list-style: none;
     li {
-      color: $color-link;
+      @include themify($themes) {
+        color: themed('color-text-link');
+      }
       a {
         cursor: pointer;
         &.active {
-          color: $color-neutral-darkest;
+          @include themify($themes) {
+            color: themed('color-text-default');
+          }
           font-weight: 500;
         }
       }

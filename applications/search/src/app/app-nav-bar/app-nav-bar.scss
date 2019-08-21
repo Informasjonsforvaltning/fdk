@@ -3,7 +3,9 @@
 .fdk-header {
   .nav {
     a {
-      color: $color-link !important;
+      @include themify($themes) {
+        color: themed('color-text-link') !important;
+      }
     }
   }
 }
@@ -17,10 +19,14 @@
   background-image: none !important;
   text-decoration: none !important;
   margin-right: .5em !important;
-  color: $color-link !important;
+  @include themify($themes) {
+    color: themed('color-text-link') !important;
+  }
   font-size: 1.5rem;
   &:focus, &:active, &:hover {
-    color: $color-link !important;
+    @include themify($themes) {
+      color: themed('color-text-link') !important;
+    }
     background-color: transparent !important;
     border-color: transparent !important;
   }
