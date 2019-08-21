@@ -5,6 +5,7 @@ export REDUX_LOG=false
 export LOG_LEVEL=DEBUG
 
 export SEARCH_HOST=http://localhost:8080
+export REGISTRATION_HOST=http://localhost:8098
 
 export KEYCLOAK_USER=admin
 export KEYCLOAK_PASSWORD=admin

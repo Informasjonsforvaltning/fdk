@@ -5,6 +5,7 @@ __dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 echo "Processing import template"
 echo "IDPORTEN_OIDC_ROOT=$IDPORTEN_OIDC_ROOT"
 echo "IDPORTEN_CLIENT_ID=$IDPORTEN_CLIENT_ID"
+echo "REGISTRATION_HOST=$REGISTRATION_HOST"
 
 if [[ $IDPORTEN_OIDC_ROOT =~ ^$SSO_HOST ]]; then
     # identiy provider is on the same server (another realm)
@@ -51,6 +52,7 @@ sed -e 's,${IDPORTEN_CLIENT_ID},'$IDPORTEN_CLIENT_ID',g' \
  -e 's,${IDPORTEN_OIDC_TOKEN_URL},'$IDPORTEN_OIDC_TOKEN_URL',g' \
  -e 's,${IDPORTEN_OIDC_JWKS_URL},'$IDPORTEN_OIDC_JWKS_URL',g' \
  -e 's,${IDPORTEN_OIDC_LOGOUT_URL},'$IDPORTEN_OIDC_LOGOUT_URL',g' \
+ -e 's,${REGISTRATION_HOST},'$REGISTRATION_HOST',g' \
   </tmp/keycloak/import-template/fdk-realm.template.json >/tmp/keycloak/import/fdk-realm.json
 
 exec /opt/jboss/tools/docker-entrypoint.sh $@
