@@ -23,6 +23,9 @@ export const deleteApi = (catalogId, apidId) =>
 export const patchApi = (catalogId, apidId, patch) =>
   registrationApiPatch(apiPath(catalogId, apidId), patch);
 
+export const postApi = (catalogId, newApi) =>
+  registrationApiPost(apiListPath(catalogId), newApi);
+
 export const getApiCatalog = catalogId =>
   registrationApiGet(apiCatalogPath(catalogId));
 
