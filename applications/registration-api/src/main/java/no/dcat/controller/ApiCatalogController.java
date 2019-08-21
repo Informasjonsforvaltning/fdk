@@ -18,7 +18,6 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.web.bind.annotation.RequestMethod.*;
 
-@CrossOrigin
 @RestController
 @RequestMapping(value = "/catalogs/{catalogId}/apicatalog")
 public class ApiCatalogController {
@@ -38,7 +37,6 @@ public class ApiCatalogController {
     }
 
     @PreAuthorize("hasPermission(#catalogId, 'publisher', 'admin')")
-    @CrossOrigin
     @RequestMapping(
         value = "",
         method = GET,
@@ -55,7 +53,6 @@ public class ApiCatalogController {
     }
 
     @PreAuthorize("hasPermission(#catalogId, 'publisher', 'admin')")
-    @CrossOrigin
     @RequestMapping(
         value = "",
         method = POST,
@@ -88,7 +85,6 @@ public class ApiCatalogController {
     }
 
     @PreAuthorize("hasPermission(#catalogId, 'publisher', 'admin')")
-    @CrossOrigin
     @RequestMapping(
         value = "",
         method = DELETE,
