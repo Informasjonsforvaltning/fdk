@@ -3,7 +3,7 @@
 exports[`should render HarvestDate with harvest dates 1`] = `
 <Fragment>
   <span
-    className="d-flex flex-wrap align-content-center"
+    className="d-flex flex-wrap align-self-center"
   >
     Published in The National Data Directory
      
@@ -26,12 +26,12 @@ exports[`should render HarvestDate with harvest dates 1`] = `
     </t>
   </span>
   <span
-    className="d-flex flex-wrap align-content-center"
+    className="d-flex flex-wrap align-self-center"
   >
      / 
   </span>
   <span
-    className="d-flex flex-wrap align-content-center"
+    className="d-flex flex-wrap align-self-center"
   >
     Last changed in The National Data Directory
      

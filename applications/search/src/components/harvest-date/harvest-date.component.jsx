@@ -10,7 +10,7 @@ const renderHarvested = harvest => {
     return null;
   }
   return (
-    <span className="d-flex flex-wrap align-content-center">
+    <span className="d-flex flex-wrap align-self-center">
       {localization.dataset.firstHarvested}&nbsp;
       <Moment format="DD.MM.YYYY">{harvest.firstHarvested}</Moment>
     </span>
@@ -20,7 +20,7 @@ const renderHarvested = harvest => {
 const renderHarvestSeparator = harvest => {
   if (_.get(harvest, 'firstHarvested') && _.get(harvest, 'lastChanged')) {
     return (
-      <span className="d-flex flex-wrap align-content-center">
+      <span className="d-flex flex-wrap align-self-center">
         &nbsp;/&nbsp;
       </span>
     );
@@ -33,7 +33,7 @@ const renderLastChanged = harvest => {
     return null;
   }
   return (
-    <span className="d-flex flex-wrap align-content-center">
+    <span className="d-flex flex-wrap align-self-center">
       {localization.dataset.lastChanged}&nbsp;
       <Moment format="DD.MM.YYYY">{_.get(harvest, 'lastChanged')}</Moment>
     </span>
