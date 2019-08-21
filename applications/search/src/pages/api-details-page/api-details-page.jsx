@@ -481,7 +481,7 @@ export const ApiDetailsPage = ({
                 darkThemeBackground
               />
               {renderExpiredOrDeprecatedVersion(apiItem)}
-              /dataset-details-page-pure.test.j
+
               {renderDescription(
                 apiItem.descriptionFormatted || apiItem.description
               )}
