@@ -10,7 +10,6 @@ import no.dcat.shared.Publisher;
 import no.dcat.shared.admin.DcatSourceDto;
 import no.fdk.webutils.exceptions.BadRequestException;
 import no.fdk.webutils.exceptions.NotFoundException;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +27,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
-import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.web.bind.annotation.RequestMethod.*;
@@ -75,11 +73,7 @@ public class CatalogController {
         Set<String> validCatalogs = new HashSet<>();
 
         for (GrantedAuthority authority : auth.getAuthorities()) {
-            String authorityString = authority.getAuthority();
-            String publisher = StringUtils.substringBetween(authorityString, "publisher:", ":");
-            if (isNotEmpty(publisher)) {
-                validCatalogs.add(publisher);
-            }
+            validCatalogs.add(authority.getAuthority());
         }
 
         if (validCatalogs.size() == 0) {

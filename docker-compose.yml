@@ -110,7 +110,6 @@ services:
       - SEARCH_HOST
       - SEARCH_HOSTNAME
       - REFERENCE_DATA_HOST
-      - SSO_HOST
 
   ### java services
   #############################

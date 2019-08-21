@@ -9,8 +9,7 @@ import { configureLocalization } from './lib/localization';
 import { App } from './app/app';
 import { configureReferenceDataApi } from './api/reference-data-api';
 import { configureRegistrationApi } from './api/registration-api';
-import { userFailureAction, userSuccessAction } from './redux/modules/user';
-import { configureAuth, getUserProfile } from './auth/auth-service';
+import { getUserProfileThunk } from './redux/modules/user';
 
 import './styles';
 
@@ -21,13 +20,7 @@ async function configureServices() {
   configureReferenceDataApi(getConfig().referenceDataApi);
   configureRegistrationApi(getConfig().registrationApi);
 
-  await configureAuth({
-    onAuthSuccess: () => {
-      const user = getUserProfile();
-      store.dispatch(userSuccessAction({ user }));
-    },
-    onAuthError: error => store.dispatch(userFailureAction({ error }))
-  });
+  store.dispatch(getUserProfileThunk());
 
   return { store };
 }

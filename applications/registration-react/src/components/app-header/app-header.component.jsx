@@ -24,7 +24,7 @@ export const AppHeaderPure = ({ location, user }) => {
 
   const onClickLogout = e => {
     e.preventDefault();
-    logout();
+    logout().catch(console.error);
   };
 
   const onClickLogin = e => {

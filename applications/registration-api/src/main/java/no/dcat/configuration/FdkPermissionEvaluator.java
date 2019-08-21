@@ -17,10 +17,8 @@ public class FdkPermissionEvaluator implements PermissionEvaluator {
     }
 
     public boolean hasPermission(Authentication authentication, Serializable targetId, String targetType, Object permission) {
-        SimpleGrantedAuthority requiredAuthority = new SimpleGrantedAuthority(targetType + ":" + targetId + ":" + permission);
-
+        SimpleGrantedAuthority requiredAuthority = new SimpleGrantedAuthority((String) targetId);
         logger.debug("Checking authrorizattion: granted={} required={} ", authentication.getAuthorities(), requiredAuthority);
-
         return authentication.getAuthorities().contains(requiredAuthority);
     }
 }
