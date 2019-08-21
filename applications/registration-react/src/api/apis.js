@@ -1,13 +1,6 @@
 import axios from 'axios';
 import qs from 'qs';
 
-const apisUrlBase = '/catalogs';
-
-export const patchApi = (catalogId, apiId, body) =>
-  axios
-    .patch(`${apisUrlBase}/${catalogId}/apis/${apiId}`, body)
-    .then(response => response.data);
-
 export const getAPIByTitlePrefix = async (
   title = '',
   orgPath,
