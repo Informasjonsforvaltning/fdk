@@ -8,12 +8,6 @@ logging:
 application:
   themesServiceUrl: http://reference-data:8080
   catalogUriPrefix: http://localhost:8099
-  apikey: ${registrationApi_apikey:12345-ABCDE-67890-FGHIJ}
-  altinnServiceUrl: ${registrationApi_altinnServiceUrl:http://registration-auth:8080}
-  altinnServiceCode: ${registrationApi_altinnServiceCode:4814}
-  altinnServiceEdition: ${registrationApi_altinnServiceEdition:3}
-  clientSSLCertificateKeystoreLocation: ${registrationApi_clientSSLCertificateKeystoreLocation:conf/dummy-client-SSL-cert.p12}
-  clientSSLCertificateKeystorePassword: ${registrationApi_clientSSLCertificateKeystorePassword:password}
   httpUsername: ${themesHttpUsername:user}
   httpPassword: ${themesHttpPassword:password}
   harvesterUsername: ${registrationApi_harvesterUsername:test_admin}
@@ -39,38 +33,11 @@ spring:
       clusterNodes: ${FDK_ES_CLUSTERNODES:elasticsearch5:9300}
       clusterName: ${FDK_ES_CLUSTERNAME:elasticsearch}
 
-saml:
-  sso:
-    metadata-generator:
-      entity-id: difi.brreg.datakatalog.registrering.${registrationApi_OpenshiftEnvironment:dev}
-    idp:
-      metadata-location: file:${registrationApi_idportenMetadataFile:conf/idporten/idporten-ver2.difi.no-v3_signed_meta.xml}
-      localMetadataLocation: file:conf/idporten/difi.brreg.datakatalog.registrering.${registrationApi_OpenshiftEnvironment:dev}.xml
-    metadata-manager:
-      refresh-check-interval: -1
-    key-manager:
-      public-key-pem-location: file:conf/idporten/difi.brreg.datakatalog.registrering.${registrationApi_OpenshiftEnvironment:dev}.xml
-      store-location: file:conf/idporten/difi.brreg.datakatalog.registrering.${registrationApi_OpenshiftEnvironment:dev}.jks
-      store-pass: ${registrationApi_ipStorePassword}
-      default-key: difi.brreg.datakatalog.registrering.${registrationApi_OpenshiftEnvironment:dev}
-      key-passwords:
-        difi.brreg.datakatalog.registrering.it1: ${registrationApi_ipKeyPassword}
-        difi.brreg.datakatalog.registrering.st1: ${registrationApi_ipKeyPassword}
-        difi.brreg.datakatalog.registrering.ppe: ${registrationApi_ipKeyPassword}
-        difi.brreg.datakatalog.registrering.prd: ${registrationApi_ipKeyPassword}
-        difi.brreg.datakatalog.registrering.tt1: ${registrationApi_ipKeyPassword}
-        difi.brreg.datakatalog.registrering.ut1: ${registrationApi_ipKeyPassword}
-        difi.brreg.datakatalog.registrering.st2: ${registrationApi_ipKeyPassword}
-        difi.brreg.datakatalog.registrering.dev: ${registrationApi_ipKeyPassword}
-    context-provider:
-      lb:
-        context-path: /
-        include-server-port-in-request-url: ${registrationApi_IncludeServerPortInRequestUrl:true}
-        scheme: https
-        server-name: ${registrationApi_ServerName:localhost}
-        server-port: ${registrationApi_ServerPort:8099}
-    logout:
-      default-target-url: /
+security:
+  oauth2:
+    resource:
+      id: fdk-registration-api
+      jwk.key-set-uri: http://sso:8084/auth/realms/fdk/protocol/openid-connect/certs
 
 server:
   tomcat:
@@ -87,17 +54,15 @@ spring:
       clusterName: elasticsearch
 server:
   port: 8115
-  ssl:
-    key-store: conf/idporten/ssldevelop.p12
-    key-store-password: changeit
-    key-store-type: PKCS12
-    key-alias: tomcat
 application:
   harvesterUrl: http://localhost:8082
-  altinnServiceUrl: http://localhost:8077
   apiRootUrl: http://localhost:8080/api
   openDataEnhetProxy: http://localhost:8132/enhetsregisteret/api/enheter/ #mock
 
+security:
+  oauth2:
+    resource:
+      jwk.key-set-uri: http://localhost:8084/auth/realms/fdk/protocol/openid-connect/certs
 ---
 spring:
   profiles: unit-integration
@@ -110,11 +75,5 @@ spring:
           enabled: true
 application:
   themesServiceUrl: http://localhost:8100
-  clientSSLCertificateKeystoreLocation: ../../conf/dummy-client-SSL-cert.p12
-  clientSSLCertificateKeystorePassword: password
-  altinnServiceUrl: http://localhost:8077
-  altinnServiceCode: 1234
-  altinnServiceEdition: 42
-  apiKey: 1234-abcde-56789-fghij
   harvesterUrl: http://localhost:8082
 
