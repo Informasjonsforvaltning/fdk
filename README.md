@@ -43,7 +43,7 @@ Prerequisite: Make sure you have local admin on your computer, as gitbash has to
 
 1) Clone this repo
   
-2) Install Java8, Maven and Docker. 
+1) Install Java8, Maven and Docker. 
    	
     - If you are running Windows. Make sure you manually add the correct Maven path in windows "environment Variables"
     - Also make sure you have set correct JAVA_HOME path to environment variables.
@@ -54,9 +54,21 @@ Prerequisite: Make sure you have local admin on your computer, as gitbash has to
         ```
         ./install-dependencies-mac.sh
         ```
-3) Configure `.envrc` based on `.envrc.template`. Optionally install [direnv](https://direnv.net/docs/installation.md) to lock the variables to the main working directory
+1) Configure `.envrc` based on `.envrc.template`. Optionally install [direnv](https://direnv.net/docs/installation.md) to lock the variables to the main working directory
+
+1) OIDC with federated identity provider requires that the local identity provider calls the token endpoint of federated identity provider. At the same time, the user browser is redirected to the federeted identity provider as well. This means that the federated indentity provider host must be available both in the cluster network and in the developers host machine, using the same address.<br><br> One way how to do it, is to accept that from within the cluster network, the location of the federated identity provider is locally configured to IDPORTEN_OIDC_ROOT=http://sso:8084/auth/realms/idporten-mock (see .envrc.template).<br><br>
+To make the same address available also on the host machine, one has to:
+    * define "sso" in hosts file
+    * in docker compose and service, ensure port mapping is identical (8084 to 8084)
+
+    The simplest way to achieve this is to register the service names as hostnames also in the host machine hosts file: on mac: `/private/etc/hosts`, on windows `c:\Windows\System32\Drivers\etc\hosts`. <br><br>
+ Add one line: 
+  
+      ```
+      # 127.0.0.1       sso
+      ```
     
-4) Compile, create docker images and run the entire project:
+1) Compile, create docker images and run the entire project:
 
     If you are running windows, you also need to make sure you have installed node.js:
     https://nodejs.org/en/download/
@@ -77,7 +89,7 @@ Prerequisite: Make sure you have local admin on your computer, as gitbash has to
      docker-compose up -d --build registration-react
      ```
 
-5) If images are already built, project can be run: 
+6) If images are already built, project can be run: 
 
 	```
 	docker-compose up -d

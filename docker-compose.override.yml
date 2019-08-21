@@ -31,14 +31,6 @@ services:
     ports:
       - "5432:5432"
 
-  # OIDC requires host names to be available both in service and for browsers for redirects.
-  # The simplest way to achieve this is to register the service names as hostnames also in the host machine hosts file:
-  # mac: /private/etc/hosts
-  # windows c:\Windows\System32\Drivers\etc\hosts
-
-  # add one line:
-  # 127.0.0.1       sso
-
   sso:
     build: ./applications/sso
     volumes:
