@@ -129,7 +129,6 @@ exports[`should render ApiDetailsPage correctly with apiItem 1`] = `
             title="National API Directory Search API"
             titleLink={null}
           />
-          /dataset-details-page-pure.test.j
           <withStateHandlers(ShowMorePure)
             showMoreButtonText="Show the full description"
           >
@@ -434,7 +433,6 @@ exports[`should render ApiDetailsPage correctly with missing api-properties 1`] 
             title={null}
             titleLink={null}
           />
-          /dataset-details-page-pure.test.j
           <div
             className="access-icons mb-5 d-flex justify-content-between"
           />
