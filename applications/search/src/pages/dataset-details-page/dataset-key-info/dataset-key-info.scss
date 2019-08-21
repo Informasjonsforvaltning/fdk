@@ -7,5 +7,7 @@
 }
 
 .fdk-color-restricted {
-  color: $color-warning-darker !important;
+  @include themify($themes) {
+    color: themed('color-warning-darker') !important;
+  }
 }

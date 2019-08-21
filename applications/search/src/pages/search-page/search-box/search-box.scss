@@ -30,7 +30,9 @@
       width: 100%
     }
     input.fdk-search {
-      color: $color-neutral-darkest;
+      @include themify($themes) {
+        color: themed('color-neutral-darkest');
+      }
       border: none;
       border-radius: 0;
       box-shadow: 0 4px 8px rgba(45, 55, 65, 0.2);
@@ -43,31 +45,39 @@
   }
 
   .fdk-button-filter {
-    background-color: $color-link;
-    color: $color-white;
     height: 54px;
     margin: 0;
     border-radius: 5px 0 0 5px;
-    border-color: $color-link;
     box-shadow: 0 4px 8px rgba(45, 55, 65, 0.2);
     border: 0;
+    @include themify($themes) {
+      background-color: themed('color-button-primary');
+      color: themed('color-button-text-primary');
+      border-color: themed('color-button-primary');
+    }
     &:hover, &:focus {
-      color: $color-white;
-      border-color: $color-link;
+      @include themify($themes) {
+        color: themed('color-button-text-primary');
+        border-color: themed('color-button-primary');
+      }
     }
   }
 
   .fdk-button-search {
-    background-color: $color-link;
-    color: $color-white;
     margin: 0;
     border-radius: 0 5px 5px 0;
-    border-color: $color-link;
     box-shadow: 0 4px 8px rgba(45, 55, 65, 0.2);
     height: 54px;
+    @include themify($themes) {
+      background-color: themed('color-button-primary');
+      color: themed('color-button-text-primary');
+      border-color: themed('color-button-primary');
+    }
     &:hover, &:focus {
-      color: $color-white;
-      border-color: $color-link;
+      @include themify($themes) {
+        color: themed('color-button-text-primary');
+        border-color: themed('color-button-primary');
+      }
     }
   }
 }
