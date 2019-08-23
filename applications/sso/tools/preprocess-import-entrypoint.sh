@@ -6,10 +6,12 @@ echo "Processing import template"
 echo "IDPORTEN_OIDC_ROOT=$IDPORTEN_OIDC_ROOT"
 echo "IDPORTEN_CLIENT_ID=$IDPORTEN_CLIENT_ID"
 echo "REGISTRATION_HOST=$REGISTRATION_HOST"
+echo "SSO_HOST=$SSO_HOST"
 
 if [[ $IDPORTEN_OIDC_ROOT =~ ^$SSO_HOST ]]; then
     # identiy provider is on the same server (another realm)
     # we cannot query configuration before server has started
+    echo "using local idp mock"
 
    sed -e 's,${SSO_HOST},'$SSO_HOST',g' \
   </tmp/keycloak/import-template/idporten-mock-realm.template.json >/tmp/keycloak/import/idporten-mock-realm.json
@@ -22,6 +24,8 @@ if [[ $IDPORTEN_OIDC_ROOT =~ ^$SSO_HOST ]]; then
     IDPORTEN_OIDC_JWKS_URL=${IDPORTEN_OIDC_ROOT}/protocol/openid-connect/certs
     IDPORTEN_OIDC_LOGOUT_URL=${IDPORTEN_OIDC_ROOT}/protocol/openid-connect/logout
 else
+    echo "using remote idp"
+
     # identity provider is in another server
     # wait until configuration file becomes available and parse it
     OIDC_CONF_ADDRESS=$IDPORTEN_OIDC_ROOT/.well-known/openid-configuration
