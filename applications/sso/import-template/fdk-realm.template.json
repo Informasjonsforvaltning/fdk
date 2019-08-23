@@ -515,6 +515,17 @@
         "claim.name" : "user_name",
         "jsonType.label" : "String"
       }
+    }, {
+      "id" : "f12158db-f283-433d-b70b-8a048240ff8b",
+      "name" : "include concept-catalogue audience",
+      "protocol" : "openid-connect",
+      "protocolMapper" : "oidc-audience-mapper",
+      "consentRequired" : false,
+      "config" : {
+        "included.client.audience" : "concept-catalogue",
+        "id.token.claim" : "false",
+        "access.token.claim" : "true"
+      }
     } ],
     "defaultClientScopes" : [ "web-origins", "role_list", "roles", "profile", "email" ],
     "optionalClientScopes" : [ "address", "phone", "offline_access" ]
