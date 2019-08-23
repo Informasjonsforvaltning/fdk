@@ -124,6 +124,18 @@ const renderIdentifiers = id => {
   );
 };
 
+const renderDatasets = datasets =>
+  datasets &&
+  datasets.length > 0 && (
+    <ListRegular title={localization.concept.datasetReferences}>
+      {datasets.map(({ id, title }) => (
+        <li key={id} className="d-flex list-regular--item">
+          <a href={`/datasets/${id}`}>{title[localization.getLanguage()]}</a>
+        </li>
+      ))}
+    </ListRegular>
+  );
+
 const renderContactPoint = contactPoint => {
   if (!(_.get(contactPoint, 'email') || _.get(contactPoint, 'telephone'))) {
     return null;
@@ -137,8 +149,7 @@ const renderContactPoint = contactPoint => {
             <a
               title={_.get(contactPoint, 'email')}
               href={`mailto:${_.get(contactPoint, 'email')}`}
-              rel="noopener noreferrer"
-            >
+              rel="noopener noreferrer">
               {_.get(contactPoint, 'email')}
             </a>
           }
@@ -206,6 +217,13 @@ const renderStickyMenu = conceptItem => {
     prefLabel: localization.concept.identifier
   });
 
+  if (conceptItem.datasets && conceptItem.datasets.length > 0) {
+    menuItems.push({
+      name: localization.concept.datasetReferences,
+      prefLabel: localization.concept.datasetReferences
+    });
+  }
+
   if (_.get(conceptItem, 'contactPoint')) {
     menuItems.push({
       name: localization.contactInfo,
@@ -217,6 +235,7 @@ const renderStickyMenu = conceptItem => {
 };
 export const ConceptDetailsPage = ({
   conceptItem,
+  conceptDatasetReferences,
   publisherItems,
   fetchPublishersIfNeeded
 }) => {
@@ -253,7 +272,10 @@ export const ConceptDetailsPage = ({
 
         <div className="row">
           <div className="col-12 col-lg-4 ">
-            {renderStickyMenu(conceptItem)}
+            {renderStickyMenu({
+              ...conceptItem,
+              datasets: conceptDatasetReferences
+            })}
           </div>
           <section className="col-12 col-lg-8 mt-3">
             <div name={getTranslateText(_.get(conceptItem, 'prefLabel'))}>
@@ -277,6 +299,7 @@ export const ConceptDetailsPage = ({
               _.get(conceptItem, 'hiddenLabel')
             )}
             {renderIdentifiers(_.get(conceptItem, 'id'))}
+            {renderDatasets(conceptDatasetReferences)}
             {renderContactPoint(_.get(conceptItem, 'contactPoint'))}
             <div style={{ height: '75vh' }} />
           </section>

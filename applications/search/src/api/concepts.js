@@ -1,7 +1,8 @@
 import axios from 'axios';
 import qs from 'qs';
 
-export const conceptsUrlBase = `/api/concepts`;
+export const datasetsUrlBase = '/datasets';
+export const conceptsUrlBase = '/api/concepts';
 
 export const searchAggregations = 'orgPath';
 
@@ -11,11 +12,23 @@ export const conceptsSearchUrl = query =>
     { addQueryPrefix: true }
   )}`;
 
-export const getConcept = id =>
+export const getDatasets = async id =>
+  fetch(
+    `${datasetsUrlBase}/?subject=${conceptsUrlBase}/${id}&returnfields=id,uri,title`,
+    {
+      headers: { Accept: 'application/json' }
+    }
+  )
+    .then(r => r.json())
+    .then(r => (r.hits && r.hits.hits) || [])
+    .then(r => r.map(hit => hit._source))
+    .catch(() => []);
+
+export const getConcept = async id =>
   axios
     .get(`${conceptsUrlBase}/${id}`)
     .then(response => response.data)
-    .catch(e => console.error(JSON.stringify(e)));
+    .catch(console.error);
 
 export const getConceptsByURIs = uris =>
   axios
