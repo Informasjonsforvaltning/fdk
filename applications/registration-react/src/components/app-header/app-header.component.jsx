@@ -22,16 +22,6 @@ export const AppHeaderPure = ({ location, user }) => {
       headerTitle = localization.app.title;
   }
 
-  const onClickLogout = e => {
-    e.preventDefault();
-    logout();
-  };
-
-  const onClickLogin = e => {
-    e.preventDefault();
-    login();
-  };
-
   return (
     <header>
       <div>
@@ -81,9 +71,9 @@ export const AppHeaderPure = ({ location, user }) => {
               {user && (
                 <div className="mr-4 fdk-auth-link">
                   <button
-                    onClick={onClickLogout}
-                    className="fdk-btn-no-border"
+                    onClick={logout}
                     type="button"
+                    className="fdk-btn-no-border"
                   >
                     {localization.app.logOut}
                   </button>
@@ -92,9 +82,9 @@ export const AppHeaderPure = ({ location, user }) => {
               {!user && (
                 <div className="mr-4 fdk-auth-link">
                   <button
-                    onClick={onClickLogin}
-                    className="fdk-btn-no-border"
+                    onClick={login}
                     type="button"
+                    className="fdk-btn-no-border"
                   >
                     {localization.app.logIn}
                   </button>
