@@ -346,7 +346,8 @@
     "definition": "Definisjon",
     "identifier": "Identifikator",
     "sample": "Eksempel",
-    "conceptDescription": "Begrepsbeskrivelse"
+    "conceptDescription": "Begrepsbeskrivelse",
+    "datasetReferences": "Brukt i datasett"
   },
   "infoMod": {
     "infoModHeader": "Informasjonsmodell",

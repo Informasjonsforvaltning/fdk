@@ -346,7 +346,8 @@
     "definition": "Definition",
     "identifier": "Identifier",
     "sample": "Sample",
-    "conceptDescription": "Concept description"
+    "conceptDescription": "Concept description",
+    "datasetReferences": "Reference to datasets"
   },
   "infoMod": {
     "infoModHeader": "Information model",
