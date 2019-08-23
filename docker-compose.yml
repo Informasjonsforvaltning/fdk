@@ -43,6 +43,7 @@ services:
       - IDPORTEN_OIDC_ROOT
       - SSO_HOST
       - REGISTRATION_HOST
+      - CONCEPT_CATALOGUE_HOST
 
   ### ingress modules
   ##################################
