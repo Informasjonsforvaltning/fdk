@@ -12,9 +12,11 @@ export const conceptsSearchUrl = query =>
     { addQueryPrefix: true }
   )}`;
 
-export const getDatasets = async id =>
-  fetch(
-    `${datasetsUrlBase}/?subject=${conceptsUrlBase}/${id}&returnfields=id,uri,title`,
+export const getDatasets = async id => {
+  // NOTE: prod-like concept URI is used for all environments and may be a subject to change in the future
+  const subject = `https://fellesdatakatalog.brreg.no/api/concepts/${id}`;
+  return fetch(
+    `${datasetsUrlBase}/?subject=${subject}&returnfields=id,uri,title`,
     {
       headers: { Accept: 'application/json' }
     }
@@ -23,6 +25,7 @@ export const getDatasets = async id =>
     .then(r => (r.hits && r.hits.hits) || [])
     .then(r => r.map(hit => hit._source))
     .catch(() => []);
+};
 
 export const getConcept = async id =>
   axios
