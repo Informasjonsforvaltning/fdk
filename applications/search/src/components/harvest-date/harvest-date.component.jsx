@@ -20,9 +20,7 @@ const renderHarvested = harvest => {
 const renderHarvestSeparator = harvest => {
   if (_.get(harvest, 'firstHarvested') && _.get(harvest, 'lastChanged')) {
     return (
-      <span className="d-flex flex-wrap align-self-center">
-        &nbsp;/&nbsp;
-      </span>
+      <span className="d-flex flex-wrap align-self-center">&nbsp;/&nbsp;</span>
     );
   }
   return null;
