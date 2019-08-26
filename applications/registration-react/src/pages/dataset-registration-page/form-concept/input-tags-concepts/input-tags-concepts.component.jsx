@@ -5,7 +5,7 @@ import TagsInput from 'react-tagsinput';
 import AutosizeInput from 'react-input-autosize';
 import _ from 'lodash';
 
-import { searchConcepts } from '../../../../api/get-concept-by-title-prefix';
+import { searchConcepts } from '../../../../api/search-api/concepts';
 import { getTranslateText } from '../../../../lib/translateText';
 import '../../../../components/field-input-tags/field-input-tags.scss';
 
