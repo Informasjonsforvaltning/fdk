@@ -1,12 +1,12 @@
 import _ from 'lodash';
 import { resolve } from 'react-resolver';
-import { getApiByDatasetUri } from '../../../api/apis';
+import { searchApis } from '../../../api/apis';
 
-const memoizedGetApiByDatasetUri = _.memoize(getApiByDatasetUri);
+const memoizedSearchApis = _.memoize(searchApis, JSON.stringify);
 
 const mapProps = {
   connectedApisByDatasetId: ({ datasetUri }) =>
-    memoizedGetApiByDatasetUri(datasetUri, 'id,title,publisher')
+    memoizedSearchApis({ datasetUri, returnFields: 'id,title,publisher' })
 };
 
 export const formDistributionApiResolver = resolve(mapProps);

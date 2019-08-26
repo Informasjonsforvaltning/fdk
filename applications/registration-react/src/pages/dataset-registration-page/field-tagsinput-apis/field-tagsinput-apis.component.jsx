@@ -4,7 +4,7 @@ import _ from 'lodash';
 import ReactTags from 'react-tag-autocomplete';
 
 import { getTranslateText } from '../../../lib/translateText';
-import { getAPIByTitlePrefix } from '../../../api/apis';
+import { searchApis } from '../../../api/apis';
 import localization from '../../../lib/localization';
 
 const TYPE_API = 'API';
@@ -90,10 +90,9 @@ export class InputTagsAPIsField extends React.Component {
   }
 
   loadSuggestions(value) {
-    const returnFields = 'title,uri';
     const suggestionItems = [];
 
-    getAPIByTitlePrefix(value, _.get(this.props, 'orgPath'), returnFields)
+    searchApis({ title: value, returnFields: 'title,uri' })
       .then(responseData => {
         _.get(responseData, 'hits', []).forEach(item => {
           suggestionItems.push({
