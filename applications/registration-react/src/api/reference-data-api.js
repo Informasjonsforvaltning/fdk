@@ -6,10 +6,8 @@ export const configureReferenceDataApi = newReferenceDataApiConfig =>
   Object.assign(referenceDataApiConfig, newReferenceDataApiConfig);
 
 const fetchOptions = () => {
-  const {
-    headers: { authorization }
-  } = referenceDataApiConfig;
   const options = {};
+  const { authorization } = referenceDataApiConfig;
   if (authorization) {
     Object.assign(options, { headers: { authorization } });
   }
