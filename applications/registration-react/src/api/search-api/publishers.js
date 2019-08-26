@@ -1,5 +1,5 @@
-import { searchApiGet } from './search-api/host';
-import { getConfig } from '../config';
+import { searchApiGet } from './host';
+import { getConfig } from '../../config';
 
 export const getPublisherByOrgNr = orgNr =>
   searchApiGet({
