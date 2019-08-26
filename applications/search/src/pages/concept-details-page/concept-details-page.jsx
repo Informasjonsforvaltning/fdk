@@ -149,7 +149,8 @@ const renderContactPoint = contactPoint => {
             <a
               title={_.get(contactPoint, 'email')}
               href={`mailto:${_.get(contactPoint, 'email')}`}
-              rel="noopener noreferrer">
+              rel="noopener noreferrer"
+            >
               {_.get(contactPoint, 'email')}
             </a>
           }
