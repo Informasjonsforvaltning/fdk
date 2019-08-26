@@ -14,6 +14,7 @@ const createConfig = env => {
     searchHost,
     referenceDataApi: defaultToSearchApi(env.REFERENCE_DATA_HOST),
     apiApi: defaultToSearchApi(env.API_API_HOST),
+    datasetApi: defaultToSearchApi(env.DATASET_API_HOST),
     registrationApi: {
       // default configuration runs in cluster through proxy, assuming frontend comes from the same origin
       host: ''

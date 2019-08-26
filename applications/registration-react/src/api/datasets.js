@@ -1,11 +1,16 @@
-import axios from 'axios';
+import { getConfig } from '../config';
+import { searchApiGet } from './search-api/host';
 
 export const getDatasetByURI = uri =>
-  axios
-    .get('/search-api/datasets/byuri', { params: { uri } })
-    .then(r => r.data);
+  searchApiGet({
+    url: `${getConfig().datasetApi.host}/api/datasets/byuri`,
+    params: { uri },
+    authorization: getConfig().datasetApi.authorization
+  });
 
 export const searchDatasets = ({ title, orgPath, returnFields }) =>
-  axios
-    .get('/search-api/datasets', { params: { title, orgPath, returnFields } })
-    .then(r => r.data);
+  searchApiGet({
+    url: `${getConfig().datasetApi.host}/api/datasets`,
+    params: { title, orgPath, returnFields },
+    authorization: getConfig().datasetApi.authorization
+  });
