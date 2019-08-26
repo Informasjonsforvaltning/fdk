@@ -4,15 +4,16 @@ import { createLogger } from 'redux-logger';
 import persistState from 'redux-localstorage';
 
 import rootReducer from './rootReducer';
+import { getConfig } from '../config';
 
 function selectCompose() {
   return window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 }
 
-export function configureStore(storeConfig) {
+export function configureStore() {
   const middlewares = [thunk];
 
-  if (storeConfig.useLogger) {
+  if (getConfig().store.useLogger) {
     middlewares.push(createLogger());
   }
 

@@ -1,13 +1,9 @@
 import url from 'url';
-
-const referenceDataApiConfig = {};
-
-export const configureReferenceDataApi = newReferenceDataApiConfig =>
-  Object.assign(referenceDataApiConfig, newReferenceDataApiConfig);
+import { getConfig } from '../config';
 
 const fetchOptions = () => {
   const options = {};
-  const { authorization } = referenceDataApiConfig;
+  const { authorization } = getConfig().referenceDataApi;
   if (authorization) {
     Object.assign(options, { headers: { authorization } });
   }
@@ -15,7 +11,7 @@ const fetchOptions = () => {
 };
 
 const getRootUrl = () =>
-  url.resolve(referenceDataApiConfig.host, '/reference-data/');
+  url.resolve(getConfig().referenceDataApi.host, '/reference-data/');
 
 const resolvePath = path => url.resolve(getRootUrl(), path);
 
