@@ -74,20 +74,22 @@ services:
   ### external service proxies
   ##################################
 
-  nginx-altinn-proxy:
-    image: dcatno/nginx-altinn-proxy:latest
-    expose:
-      - "8080"
-    environment:
-      - ALTINN_HOST
-      - ALTINN_API_KEY
-      - ALTINN_SSL_BR_CRT_PEM
-      - ALTINN_SSL_BR_KEY_PEM
+#docker-compose does not allow removing services this is actually prod configuration
+#  nginx-altinn-proxy:
+#    image: dcatno/nginx-altinn-proxy:latest
+#    expose:
+#      - "8080"
+#    environment:
+#      - ALTINN_HOST
+#      - ALTINN_API_KEY
+#      - ALTINN_SSL_BR_CRT_PEM
+#      - ALTINN_SSL_BR_KEY_PEM
 
-  nginx-enhetsregisteret-proxy:
-    image: dcatno/nginx-enhetsregisteret-proxy
-    expose:
-      - "8080"
+#docker-compose does not allow removing services this is actually prod configuration
+#  nginx-enhetsregisteret-proxy:
+#    image: dcatno/nginx-enhetsregisteret-proxy
+#    expose:
+#      - "8080"
 
   ### nodejs services
   ####################################
@@ -180,7 +182,8 @@ services:
     expose:
       - "8080"
     depends_on:
-      - nginx-altinn-proxy
+      # in prod, it would be ngninx-altinn-proxy
+      - nginx-altinn-proxy-mock
     environment:
       - ALTINN_PROXY_HOST
 
