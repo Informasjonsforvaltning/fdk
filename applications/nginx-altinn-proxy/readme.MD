@@ -19,17 +19,17 @@ edit .envrc
 docker-compose up -d nginx-altinn-proxy
 
 #test
-curl "http://localhost:8126/api/serviceowner/reportees?ForceEIAuthentication&subject=01066800187&servicecode=4814&serviceedition=3"
+curl "http://localhost:8126/api/serviceowner/reportees?ForceEIAuthentication&subject=01066800187&servicecode=4814&serviceedition=1"
 ```
 
 Test in it1, run in any container in cluster:
 ```
-curl "http://nginx-altinn-proxy:8080/api/serviceowner/reportees?ForceEIAuthentication&subject=01066800187&servicecode=4814&serviceedition=3"
+curl "http://nginx-altinn-proxy:8080/api/serviceowner/reportees?ForceEIAuthentication&subject=01066800187&servicecode=4814&serviceedition=1"
 ```
 
 Test in prod, run in any container in cluster:
 ```
-curl "http://nginx-altinn-proxy:8080/api/serviceowner/reportees?ForceEIAuthentication&subject=29037816165&servicecode=4814&serviceedition=3"
+curl "http://nginx-altinn-proxy:8080/api/serviceowner/reportees?ForceEIAuthentication&subject=29037816165&servicecode=4814&serviceedition=1"
 ```
 
 
@@ -37,11 +37,11 @@ Debug:
 
 If the above proxy test fails, check that straight service query works
 ```
-curl "https://tt02.altinn.no/api/serviceowner/reportees?ForceEIAuthentication&subject=01066800187&servicecode=4814&serviceedition=3" --key ../../conf/altinn/br-altinn-client.key.pem --cert ../../conf/altinn/br-altinn-client.crt.pem -H "ApiKey:$ALTINN_API_KEY"
+curl "https://tt02.altinn.no/api/serviceowner/reportees?ForceEIAuthentication&subject=01066800187&servicecode=4814&serviceedition=1" --key ../../conf/altinn/br-altinn-client.key.pem --cert ../../conf/altinn/br-altinn-client.crt.pem -H "ApiKey:$ALTINN_API_KEY"
 ```
 
 Do the same in container:
 ```
 apk --no-cache add curl
-curl "https://tt02.altinn.no/api/serviceowner/reportees?ForceEIAuthentication&subject=01066800187&servicecode=4814&serviceedition=3" --key /etc/nginx/client.key.pem --cert /etc/nginx/client.crt.pem -H "ApiKey:$ALTINN_API_KEY"
+curl "https://tt02.altinn.no/api/serviceowner/reportees?ForceEIAuthentication&subject=01066800187&servicecode=4814&serviceedition=1" --key /etc/nginx/client.key.pem --cert /etc/nginx/client.crt.pem -H "ApiKey:$ALTINN_API_KEY"
 ```
