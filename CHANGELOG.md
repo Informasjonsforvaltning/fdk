@@ -2,6 +2,57 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+# [1.7.0](https://github.com/Informasjonsforvaltning/fdk/compare/v1.6.0...v1.7.0) (2019-08-26)
+
+
+### Bug Fixes
+
+* **registration-api:** Fix null point error on dcat-sources query ([08f5d80](https://github.com/Informasjonsforvaltning/fdk/commit/08f5d80))
+* **registration-react:** [#2033](https://github.com/Informasjonsforvaltning/fdk/issues/2033) increase dataset registration page width ([ecd564f](https://github.com/Informasjonsforvaltning/fdk/commit/ecd564f))
+* **registration-react:** [#2099](https://github.com/Informasjonsforvaltning/fdk/issues/2099) Implement feature toggle FEATURE_TOGGLE_CONCEPT_REGISTRATION ([7b64f6a](https://github.com/Informasjonsforvaltning/fdk/commit/7b64f6a))
+* **registration-react:** Change css class from fdk-color-neutral-darkest2 to fdk-color-neutral-darkest ([cccedaf](https://github.com/Informasjonsforvaltning/fdk/commit/cccedaf))
+* **registration-react:** Changed css color from $color-primary04 to $color-primary-lighter ([b3dda57](https://github.com/Informasjonsforvaltning/fdk/commit/b3dda57))
+* **registration-react:** Changed from css class fdk-color-primary03 to fdk-color-primary ([4f02300](https://github.com/Informasjonsforvaltning/fdk/commit/4f02300))
+* **registration-react:** Flux standard action, says that error action has error in payload, not in error attribute ([00fd26f](https://github.com/Informasjonsforvaltning/fdk/commit/00fd26f))
+* **registration-react:** In ProtectedRoutePure, only initialize IdleTimer, when user has logged on. ([ddf8fd5](https://github.com/Informasjonsforvaltning/fdk/commit/ddf8fd5))
+* **registration-react:** move tests to container to ensure platform independent build ([2fad538](https://github.com/Informasjonsforvaltning/fdk/commit/2fad538))
+* **search:** [#1675](https://github.com/Informasjonsforvaltning/fdk/issues/1675) add dataset origin so that subject would be complete ([b5dd1f6](https://github.com/Informasjonsforvaltning/fdk/commit/b5dd1f6))
+* **search:** [#2053](https://github.com/Informasjonsforvaltning/fdk/issues/2053) Fixed center text, changed align-content-center to align-self-center. ([4f59a8a](https://github.com/Informasjonsforvaltning/fdk/commit/4f59a8a))
+* **search:** [#2054](https://github.com/Informasjonsforvaltning/fdk/issues/2054) Changed name of icon file. ([d393077](https://github.com/Informasjonsforvaltning/fdk/commit/d393077))
+* **search:** [#2145](https://github.com/Informasjonsforvaltning/fdk/issues/2145) Fixed colors for warning and searchhit header. ([b766fc9](https://github.com/Informasjonsforvaltning/fdk/commit/b766fc9))
+* **search:** [#2155](https://github.com/Informasjonsforvaltning/fdk/issues/2155) fix env.json.template to generate valid json when empty variables ([6d3be73](https://github.com/Informasjonsforvaltning/fdk/commit/6d3be73))
+* **search:** [#2187](https://github.com/Informasjonsforvaltning/fdk/issues/2187) use translations with fallback ([0e3cdb3](https://github.com/Informasjonsforvaltning/fdk/commit/0e3cdb3))
+* **search:** fix details page structure ([756cd5f](https://github.com/Informasjonsforvaltning/fdk/commit/756cd5f))
+* **search:** move tests to container to ensure platform independent build ([1fbab52](https://github.com/Informasjonsforvaltning/fdk/commit/1fbab52))
+* **search,registration-react:** Using design colors ([5f7e65e](https://github.com/Informasjonsforvaltning/fdk/commit/5f7e65e))
+* **sso:** [#1958](https://github.com/Informasjonsforvaltning/fdk/issues/1958) Fix broker name for ID-Porten identity provider ([921681e](https://github.com/Informasjonsforvaltning/fdk/commit/921681e))
+* **sso:** Use identity provider alias "oidc" temporarily, because this is what is currently configured as allowed return url in idporten oidc provider. ([1f821c3](https://github.com/Informasjonsforvaltning/fdk/commit/1f821c3))
+
+
+### Features
+
+* **altinn-proxy:** [#1358](https://github.com/Informasjonsforvaltning/fdk/issues/1358) Create client lib for accessing Altinn through proxy ([f95d386](https://github.com/Informasjonsforvaltning/fdk/commit/f95d386))
+* **concept-cat:** Usage statistics ([a01745e](https://github.com/Informasjonsforvaltning/fdk/commit/a01745e))
+* **enhetsregisteret-proxy:** [#1358](https://github.com/Informasjonsforvaltning/fdk/issues/1358) Create proxy service for accessing enhetsregisteret ([ad8291e](https://github.com/Informasjonsforvaltning/fdk/commit/ad8291e))
+* **enhetsregisteret-proxy-mock:** Mock service for enhetsregisteret to fill in corrresponding data for altinn mock ([15cc7bd](https://github.com/Informasjonsforvaltning/fdk/commit/15cc7bd))
+* **redux-fsa-thunk:** Make onSuccess and onError properties optional in ReduxFsaThunk library ([c69f06d](https://github.com/Informasjonsforvaltning/fdk/commit/c69f06d))
+* **registration-react:** [#1843](https://github.com/Informasjonsforvaltning/fdk/issues/1843) add link to concept client ([0c03d9e](https://github.com/Informasjonsforvaltning/fdk/commit/0c03d9e))
+* **search:** [#1674](https://github.com/Informasjonsforvaltning/fdk/issues/1674) show references to datasets on concept details page ([ea92717](https://github.com/Informasjonsforvaltning/fdk/commit/ea92717))
+* **search:** [#1888](https://github.com/Informasjonsforvaltning/fdk/issues/1888) update styling on search portal. ([937a64a](https://github.com/Informasjonsforvaltning/fdk/commit/937a64a))
+* **search:** [#1979](https://github.com/Informasjonsforvaltning/fdk/issues/1979) add new api-usage-instruction component and tests ([2f0ef5e](https://github.com/Informasjonsforvaltning/fdk/commit/2f0ef5e))
+* **search:** add title to sticky-menu component ([506e3bc](https://github.com/Informasjonsforvaltning/fdk/commit/506e3bc))
+* **sso:** [#1757](https://github.com/Informasjonsforvaltning/fdk/issues/1757) Implement keycloak user storage service provider for integrating with REST-based user service ([c6714b2](https://github.com/Informasjonsforvaltning/fdk/commit/c6714b2))
+* **sso:** [#2140](https://github.com/Informasjonsforvaltning/fdk/issues/2140) add concept-catalogue audience to fdk-registraction-public access token ([9fa0fae](https://github.com/Informasjonsforvaltning/fdk/commit/9fa0fae))
+* **sso:** [#2140](https://github.com/Informasjonsforvaltning/fdk/issues/2140) add concept-catalogue client to sso configuration ([e1d9d11](https://github.com/Informasjonsforvaltning/fdk/commit/e1d9d11))
+* **sso:** [#2140](https://github.com/Informasjonsforvaltning/fdk/issues/2140) add concept-catalogue-gui client ([a56a7af](https://github.com/Informasjonsforvaltning/fdk/commit/a56a7af))
+* **user-api:** [#1689](https://github.com/Informasjonsforvaltning/fdk/issues/1689) User api service ([ce17376](https://github.com/Informasjonsforvaltning/fdk/commit/ce17376))
+
+
+
+# Change Log
+
+All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
 # [1.6.0](https://github.com/Informasjonsforvaltning/fdk/compare/v1.5.0...v1.6.0) (2019-06-25)
 
 
