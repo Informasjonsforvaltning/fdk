@@ -1,8 +1,9 @@
-import axios from 'axios';
+import { getConfig } from '../config';
+import { searchApiGet } from './search-api/host';
 
 export const searchConcepts = ({ prefLabel, returnFields }) =>
-  axios
-    .get('/api/concepts', {
-      params: { preflabel: prefLabel, returnFields }
-    })
-    .then(r => r.data);
+  searchApiGet({
+    url: `${getConfig().conceptApi.host}/api/concepts`,
+    params: { preflabel: prefLabel, returnFields },
+    authorization: getConfig().conceptApi.authorization
+  });
