@@ -1,7 +1,9 @@
-import axios from 'axios';
+import { getConfig } from '../config';
+import { searchApiGet } from './search-api/host';
 
 export const searchApis = ({ title, datasetUri, returnFields }) =>
-  axios({
-    url: `/api/apis`,
-    params: { title, dataseturi: datasetUri, returnFields }
-  }).then(r => r.data);
+  searchApiGet({
+    url: `${getConfig().apiApi.host}/api/apis`,
+    params: { title, dataseturi: datasetUri, returnFields },
+    authorization: getConfig().apiApi.authorization
+  });

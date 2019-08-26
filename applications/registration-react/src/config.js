@@ -13,6 +13,7 @@ const createConfig = env => {
     registrationLanguage: env.REGISTRATION_LANGUAGE || 'nb',
     searchHost,
     referenceDataApi: defaultToSearchApi(env.REFERENCE_DATA_HOST),
+    apiApi: defaultToSearchApi(env.API_API_HOST),
     registrationApi: {
       // default configuration runs in cluster through proxy, assuming frontend comes from the same origin
       host: ''
