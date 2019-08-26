@@ -30,7 +30,6 @@ module.exports = {
       const vars = [
         'REGISTRATION_LANGUAGE',
         'SEARCH_HOST',
-        'SEARCH_HOSTNAME',
         'REDUX_LOG',
         'REFERENCE_DATA_HOST',
         'REFERENCE_DATA_AUTHORIZATION',
