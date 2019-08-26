@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
 
 import localization from '../lib/localization';
 import { ConnectedSearchPage } from '../pages/search-page/connected-search-page';
@@ -26,6 +27,7 @@ import {
   PATHNAME_ABOUT_REGISTRATION
 } from '../constants/constants';
 import ScrollToTop from '../components/scroll-to-top/scrollToTop.component';
+import { getConfig } from '../config';
 import '../assets/css/bootstrap-override.scss';
 import './styles';
 
@@ -33,9 +35,12 @@ export function App({ language }) {
   // react-localization is a stateful library, so we set the required language on each full-app render
   // and full-render app each time when the language is changed
   localization.setLanguage(language);
-
+  const themeClass = cx({
+    'theme-nap': getConfig().themeNap,
+    'theme-fdk': !getConfig().themeNap
+  });
   return (
-    <div>
+    <div className={themeClass}>
       <div>
         <a
           id="focus-element"

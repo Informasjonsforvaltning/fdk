@@ -1,7 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`should render App correctly 1`] = `
-<div>
+<div
+  className="theme-fdk"
+>
   <div>
     <a
       aria-hidden="true"
