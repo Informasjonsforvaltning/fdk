@@ -7,7 +7,7 @@ services:
 
   elasticsearch5:
     volumes:
-      - ./data/esdata5:/usr/share/elasticsearch/data
+      - /usr/share/elasticsearch/data
     ports:
       - "9200:9200"
       - "9300:9300"
@@ -20,7 +20,7 @@ services:
   fuseki:
     build: ./applications/fuseki
     volumes:
-      - ./data/fuseki:/etc/fuseki/databases/
+      - /etc/fuseki/databases/
     ports:
       - "3030:8080"
 
@@ -50,8 +50,17 @@ services:
       - ./applications/sso/tools:/opt/fdk/tools
     # cp libraries/keycloak-user-storage-rest/target/keycloak-user-storage-rest.jar applications-external/sso/deployments/
     #      - ./applications/sso/deployments:/opt/jboss/keycloak/standalone/deployments
-    #    environment:
+    environment:
+      - KEYCLOAK_USER=admin
+      - KEYCLOAK_PASSWORD=admin
     #      - KEYCLOAK_LOGLEVEL=DEBUG
+      - SSO_HOST=http://localhost:8084
+      - REGISTRATION_HOST=http://localhost:8098
+      - CONCEPT_CATALOGUE_HOST=http://localhost:8202
+    # This is local mock for ID-Porten, use this in dev, ut1 and st1. in it1 use idporten test, and in prod use idporten prod
+      - IDPORTEN_OIDC_ROOT=http://localhost:8084/auth/realms/idporten-mock
+      - IDPORTEN_CLIENT_ID=oidc_brreg_fellesdatakatalog
+      - IDPORTEN_CLIENT_SECRET=29a2cfe1-1a61-4a04-bf84-64d70a340d04
     ports:
       - "8084:8084"
 
@@ -71,15 +80,17 @@ services:
   ### external service proxies
   ##################################
 
-  nginx-altinn-proxy:
-    build: ./applications/nginx-altinn-proxy
-    ports:
-      - "8126:8080"
+  # disabled in dev because we use mock
+  # nginx-altinn-proxy:
+  #   build: ../fdk/applications/nginx-altinn-proxy
+  #   ports:
+  #     - "8126:8080"
 
-  nginx-enhetsregisteret-proxy:
-    build: ./applications/nginx-enhetsregisteret-proxy
-    ports:
-      - "8130:8080"
+  # disabled in dev because we use mock
+  #nginx-enhetsregisteret-proxy:
+  #  build: ./applications/nginx-enhetsregisteret-proxy
+  #  ports:
+  #    - "8130:8080"
 
   ### nodejs services
   ####################################
@@ -92,7 +103,8 @@ services:
     volumes:
       - ./applications/search/src:/usr/src/app/src
     environment:
-      - REDUX_LOG
+      - REDUX_LOG=""
+      - DISQUS_SHORTNAME=CHANGE_ME
 
   registration-react:
     build: ./applications/registration-react
@@ -102,9 +114,11 @@ services:
     volumes:
       - ./applications/registration-react/src:/usr/src/app/src
     environment:
-      - REDUX_LOG
+      - REDUX_LOG=""
       - CONCEPT_REGISTRATION_API_HOST=http://localhost:8200
       - CONCEPT_REGISTRATION_HOST=http://localhost:8202
+      - SEARCH_HOST=http://localhost:8080
+      - SSO_HOST=http://localhost:8084
 
   ### java services
   #############################
@@ -114,7 +128,7 @@ services:
       - "8102:8080"
     environment:
       - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
-      - LOG_LEVEL
+      - LOG_LEVEL=DEBUG
       - LOG_FORMAT=compact
 
   concept-cat:
@@ -122,14 +136,14 @@ services:
       - "8104:8080"
     environment:
       - JAVA_OPTS=-Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
-      - LOG_LEVEL
+      - LOG_LEVEL=DEBUG
 
   informationmodel-cat:
     ports:
       - "8108:8080"
     environment:
       - JAVA_OPTS=-Djava.security.egd=file:/dev/./urandom -Xmx512M -Dspring.profiles.active=docker
-      - LOG_LEVEL
+      - LOG_LEVEL=DEBUG
 
   harvester:
     ports:
@@ -164,7 +178,7 @@ services:
       - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
       - registrationApi_harvesterUsername=test_admin
       - registrationApi_harvesterPassword=password
-      - LOG_LEVEL
+      - LOG_LEVEL=DEBUG
       - LOG_FORMAT=compact
       - FDK_ENHETSREGISTERET_PROXY_URL=http://nginx-enhetsregisteret-proxy-mock:8080/enhetsregisteret/api/enheter/
 
@@ -177,6 +191,8 @@ services:
   user-api:
     ports:
       - "8124:8080"
+    environment:
+      - ALTINN_PROXY_HOST=http://nginx-altinn-proxy-mock:8080
     depends_on:
       - nginx-altinn-proxy-mock
 
