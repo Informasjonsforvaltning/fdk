@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import { resolve } from 'react-resolver';
-import { searchApis } from '../../../api/apis';
+import { searchApis } from '../../../api/search-api/apis';
 
 const memoizedSearchApis = _.memoize(searchApis, JSON.stringify);
 
