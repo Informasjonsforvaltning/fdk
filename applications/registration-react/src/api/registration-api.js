@@ -4,13 +4,9 @@ import {
   normalizeFetchResponse
 } from '../lib/normalize-fetch-response';
 import { getToken } from '../auth/auth-service';
+import { getConfig } from '../config';
 
-const registrationApiConfig = {};
-
-export const configureRegistrationApi = newRegistrationApiConfig =>
-  Object.assign(registrationApiConfig, newRegistrationApiConfig);
-
-const getRootUrl = () => registrationApiConfig.host;
+const getRootUrl = () => getConfig().registrationApi.host;
 const resolveUrl = path => url.resolve(getRootUrl(), path);
 
 export const registrationApi = async (method, path, jsonBody) => {
