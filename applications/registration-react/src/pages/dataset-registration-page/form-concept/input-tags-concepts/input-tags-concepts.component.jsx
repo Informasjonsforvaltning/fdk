@@ -5,7 +5,7 @@ import TagsInput from 'react-tagsinput';
 import AutosizeInput from 'react-input-autosize';
 import _ from 'lodash';
 
-import { getConceptByTitlePrefix } from '../../../../api/get-concept-by-title-prefix';
+import { searchConcepts } from '../../../../api/get-concept-by-title-prefix';
 import { getTranslateText } from '../../../../lib/translateText';
 import '../../../../components/field-input-tags/field-input-tags.scss';
 
@@ -81,7 +81,6 @@ class InputTagsFieldConcepts extends React.Component {
   }
 
   loadSuggestions(value) {
-    const returnFields = 'uri,definition.text';
     // Cancel the previous request
     if (this.lastRequestId !== null) {
       clearTimeout(this.lastRequestId);
@@ -93,7 +92,7 @@ class InputTagsFieldConcepts extends React.Component {
 
     const concepts = [];
 
-    getConceptByTitlePrefix(value, returnFields)
+    searchConcepts({ prefLabel: value, returnFields: 'uri,definition.text' })
       .then(responseData => {
         _.get(responseData, ['_embedded', 'concepts'], []).forEach(item => {
           concepts.push(item);
