@@ -2,17 +2,17 @@ import axios from 'axios';
 
 const createConfig = env => {
   const searchHost = env.SEARCH_HOST || 'https://fellesdatakatalog.brreg.no';
+  const searchApi = {
+    host: env.SEARCH_API_HOST || searchHost,
+    authorization: env.SEARCH_API_AUTHORIZATION || undefined
+  };
+  const defaultToSearchApi = host => (host ? { host } : searchApi);
 
   return {
     store: { useLogger: env.REDUX_LOG === 'true' },
     registrationLanguage: env.REGISTRATION_LANGUAGE || 'nb',
     searchHost,
-    referenceDataApi: {
-      host: env.REFERENCE_DATA_HOST || searchHost,
-      headers: {
-        authorization: env.REFERENCE_DATA_AUTHORIZATION || undefined
-      }
-    },
+    referenceDataApi: defaultToSearchApi(env.REFERENCE_DATA_HOST),
     registrationApi: {
       // in cluster through proxy, assuming frontend comes from the same origin
       host: '/'
