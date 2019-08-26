@@ -1,10 +1,7 @@
 import axios from 'axios';
 
 const createConfig = env => {
-  const searchHost =
-    env.SEARCH_HOST ||
-    (env.SEARCH_HOSTNAME && `https://${env.SEARCH_HOSTNAME}`) ||
-    'https://fellesdatakatalog.brreg.no';
+  const searchHost = env.SEARCH_HOST || 'https://fellesdatakatalog.brreg.no';
 
   return {
     store: { useLogger: env.REDUX_LOG === 'true' },
