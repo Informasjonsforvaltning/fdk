@@ -9,14 +9,10 @@ const memoizedGetDatasetByURI = _.memoize(getDatasetByURI);
 const mapProps = {
   publisher: props =>
     memoizedGetPublisherByOrgNr(_.get(props.match, ['params', 'catalogId'])),
-  referencedDatasets: async props => {
-    const urlArray = _.get(props.item, 'datasetUris', []).map(item => item);
-    const promiseMap = urlArray.map(url =>
-      memoizedGetDatasetByURI(encodeURIComponent(url))
-    );
-    const result = await Promise.all(promiseMap);
-    return result;
-  }
+  referencedDatasets: props =>
+    Promise.all(
+      _.get(props.item, 'datasetUris', []).map(memoizedGetDatasetByURI)
+    )
 };
 
 export const apiRegistrationResolver = resolve(mapProps);

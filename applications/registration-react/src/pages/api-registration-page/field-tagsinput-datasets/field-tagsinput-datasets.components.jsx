@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import ReactTags from 'react-tag-autocomplete';
 import { getTranslateText } from '../../../lib/translateText';
-import { getDatasetByTitlePrefix } from '../../../api/datasets';
+import { searchDatasets } from '../../../api/datasets';
 
 const addTagToInput = (updates, props) => {
   const { input } = props;
@@ -71,15 +71,14 @@ export class InputTagsDatasetsField extends React.Component {
   }
 
   loadSuggestions(value) {
-    const returnFields = 'title,uri';
     const datasets = [];
+    const { orgPath } = this.props;
 
-    getDatasetByTitlePrefix(
-      value,
-      _.get(this.props, 'orgPath'),
-      false,
-      returnFields
-    )
+    searchDatasets({
+      title: value,
+      orgPath,
+      returnFields: 'title,uri'
+    })
       .then(responseData => {
         _.get(responseData, ['hits', 'hits'], []).forEach(item => {
           datasets.push({

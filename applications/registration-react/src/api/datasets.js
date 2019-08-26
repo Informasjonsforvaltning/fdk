@@ -1,29 +1,11 @@
 import axios from 'axios';
 
-export const getDatasetByURI = async uri => {
-  const url = `/search-api/datasets/byuri?uri=${uri}`;
+export const getDatasetByURI = uri =>
+  axios
+    .get('/search-api/datasets/byuri', { params: { uri } })
+    .then(r => r.data);
 
-  const response = await axios
-    .get(url)
-    .catch(e => console.log(JSON.stringify(e))); // eslint-disable-line no-console
-
-  return response && response.data;
-};
-
-export const getDatasetByTitlePrefix = async (
-  title = '',
-  orgPath,
-  returnFields
-) => {
-  const queryParams = `title=${title}${orgPath ? `&orgPath=${orgPath}` : ''}${
-    returnFields ? `&returnfields=${returnFields}` : ''
-  }`;
-
-  const url = `/search-api/datasets?${queryParams}`;
-
-  const response = await axios
-    .get(url)
-    .catch(e => console.log(JSON.stringify(e))); // eslint-disable-line no-console
-
-  return response && response.data;
-};
+export const searchDatasets = ({ title, orgPath, returnFields }) =>
+  axios
+    .get('/search-api/datasets', { params: { title, orgPath, returnFields } })
+    .then(r => r.data);
