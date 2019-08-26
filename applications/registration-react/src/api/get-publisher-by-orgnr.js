@@ -1,11 +1,8 @@
-import axios from 'axios';
+import { searchApiGet } from './search-api/host';
+import { getConfig } from '../config';
 
-export const getPublisherByOrgNr = async orgNr => {
-  const url = `/publishers/${orgNr}`;
-
-  const response = await axios
-    .get(url)
-    .catch(e => console.error(JSON.stringify(e)));
-
-  return response && response.data;
-};
+export const getPublisherByOrgNr = orgNr =>
+  searchApiGet({
+    url: `${getConfig().publisherApi.host}/publishers/${orgNr}`,
+    authorization: getConfig().publisherApi.authorization
+  });
