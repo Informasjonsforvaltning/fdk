@@ -1,5 +1,5 @@
-import { getConfig } from '../config';
-import { searchApiGet } from './search-api/host';
+import { getConfig } from '../../config';
+import { searchApiGet } from './host';
 
 export const getDatasetByURI = uri =>
   searchApiGet({

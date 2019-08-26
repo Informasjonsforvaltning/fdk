@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import ReactTags from 'react-tag-autocomplete';
 import { getTranslateText } from '../../../lib/translateText';
-import { searchDatasets } from '../../../api/datasets';
+import { searchDatasets } from '../../../api/search-api/datasets';
 
 const addTagToInput = (updates, props) => {
   const { input } = props;
