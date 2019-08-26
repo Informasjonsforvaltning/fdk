@@ -130,7 +130,7 @@ const renderDatasets = datasets =>
     <ListRegular title={localization.concept.datasetReferences}>
       {datasets.map(({ id, title }) => (
         <li key={id} className="d-flex list-regular--item">
-          <a href={`/datasets/${id}`}>{title[localization.getLanguage()]}</a>
+          <a href={`/datasets/${id}`}>{getTranslateText(title)}</a>
         </li>
       ))}
     </ListRegular>
