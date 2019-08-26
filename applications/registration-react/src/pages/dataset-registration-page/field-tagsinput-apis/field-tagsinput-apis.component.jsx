@@ -4,7 +4,7 @@ import _ from 'lodash';
 import ReactTags from 'react-tag-autocomplete';
 
 import { getTranslateText } from '../../../lib/translateText';
-import { searchApis } from '../../../api/apis';
+import { searchApis } from '../../../api/search-api/apis';
 import localization from '../../../lib/localization';
 
 const TYPE_API = 'API';
