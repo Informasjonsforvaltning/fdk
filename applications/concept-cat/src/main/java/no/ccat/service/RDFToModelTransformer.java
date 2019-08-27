@@ -21,6 +21,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /*
     Transform RDF/Turtle into our domain model (ConceptDenormalized and friends)
@@ -87,6 +88,16 @@ public class RDFToModelTransformer {
         return result;
     }
 
+    private static List<Map<String, String>> extractLanguageMapList(Resource resource, Property property) {
+        return resource.
+            listProperties(property)
+            .toList()
+            .stream()
+            .map(RDFToModelTransformer::extractLanguageMap)
+            .filter(Objects::nonNull)
+            .collect(Collectors.toList());
+    }
+
 
     protected static String extractPublisherOrgNrFromStmt(Resource publisherResource) {
         try {
@@ -121,6 +132,23 @@ public class RDFToModelTransformer {
         }
 
         return null;
+    }
+
+    private static Map<String, String> extractLanguageMap(Statement statement) {
+        Map<String, String> map = new HashMap<>();
+
+        String language = statement.getLanguage();
+        String string = statement.getString();
+
+        if (language == null || language.isEmpty()) {
+            language = defaultLanguage;
+        }
+
+        if (string != null && !string.isEmpty()) {
+            map.put(language, string);
+        }
+
+        return map.keySet().size() > 0 ? map : null;
     }
 
     public static Map<String, String> extractLanguageRDFSLabelFromLabel(Resource resource, Property property) {
@@ -207,7 +235,7 @@ public class RDFToModelTransformer {
 
         concept.setExample(extractLanguageLiteral(conceptResource, SKOS.example));
 
-        concept.setApplication(extractLanguageLiteral(conceptResource, SKOSNO.bruksområde));
+        concept.setApplication(extractLanguageMapList(conceptResource, SKOSNO.bruksområde));
 
         concept.setPrefLabel(extractLanguageLiteralFromLabel(conceptResource, SKOSXL.prefLabel));
 

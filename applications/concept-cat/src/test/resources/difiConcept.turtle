@@ -24,7 +24,7 @@
         rdfs:label "EU-kommisjonen Digital Single Market"@nb ;
           ] ;
         ] ;
-        skosno:bruksområde            "brukbrukbruk"@nb ;
+        skosno:bruksområde "tennis"@nb , "fotball"@nb ;
         dct:publisher <https://data.brreg.no/enhetsregisteret/api/enheter/991825827> ;
         skos:example "Dette eksempelet er et testeksempel som ikke har noe med begrepet det lever i "@nb ;
         dct:subject "Virksomhetsarkitektur"@nb ;
