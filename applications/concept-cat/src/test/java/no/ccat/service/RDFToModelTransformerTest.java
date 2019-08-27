@@ -42,6 +42,8 @@ public class RDFToModelTransformerTest {
         ConceptDenormalized testConcept = concepts.get(0);
         assertNotNull(testConcept.getExample());
         assertNotNull(testConcept.getDefinition());
-        assertEquals("brukbrukbruk",testConcept.getApplication().get("nb"));
+        assertEquals(2, testConcept.getApplication().size());
+        assertEquals("fotball",testConcept.getApplication().get(0).get("nb"));
+        assertEquals("tennis",testConcept.getApplication().get(1).get("nb"));
     }
 }

@@ -19,7 +19,7 @@ public class Concept {
     private String identifier;
 
     @ApiModelProperty("The definition [skosno:bruksområde]")
-    private Map<String, String> application;
+    private List<Map<String, String>> application;
 
     @ApiModelProperty("The definition [skosno:Definisjon]")
     private Definition definition;
@@ -44,6 +44,5 @@ public class Concept {
 
     @ApiModelProperty("Example  [skos:example]")
     private Map<String, String> example;
-
 
 }
