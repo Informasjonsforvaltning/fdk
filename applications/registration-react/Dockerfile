@@ -21,7 +21,6 @@ COPY package-lock.json /usr/src/app/package-lock.json
 RUN npm install --loglevel=warn
 
 COPY server /usr/src/app/server
-COPY start.js /usr/src/app/
 COPY .babelrc /usr/src/app/
 COPY webpack.* /usr/src/app/
 
@@ -38,4 +37,4 @@ RUN npm run build
 
 EXPOSE 4300
 
-CMD [ "pm2-docker", "start.js" ]
+CMD [ "pm2-docker", "./server/start.js" ]

@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "precommit": "lint-staged",
-    "start": "node start.js",
+    "start": "echo 'feature removed temporarily, run in container instead'",
     "dev": "webpack-dev-server --config webpack.dev.config.js",
     "build": "webpack --config webpack.prod.config.js -p",
     "lint": "eslint ./ --ext=.js,.jsx --fix",
