@@ -210,12 +210,6 @@ services:
     ports:
       - "8132:8080"
 
-  registration-auth:
-    ports:
-      - "8116:8080"
-    environment:
-      - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
-
   e2e:
     build: ./applications/e2e
     volumes:

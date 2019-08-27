@@ -167,8 +167,6 @@ The Registration Application consists of the following main modules:
   * registration, a React application which allow users to log in and edit or register metadata about datasets.
   * registration-api, a Java Spring Boot service which supports a REST API
   * registration-db, a Elasticsearch document database
-  * registration-auth, A Java Spring Boot service that act as a authentication and authorization service. Used
-  in develop and test to skip IDPorten and Altinn integrations.
   
 The Search Application consists of the following modules
   * search, a React application which allow users to search and view dataset descriptions.

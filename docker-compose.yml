@@ -161,7 +161,6 @@ services:
     depends_on:
       - elasticsearch5
       - reference-data
-      - registration-auth
       - api-cat
 
   reference-data:
@@ -198,11 +197,6 @@ services:
 
   nginx-enhetsregisteret-proxy-mock:
     build: dcatno/nginx-enhetsregisteret-proxy-mock:latest
-    expose:
-      - "8080"
-
-  registration-auth:
-    image: dcatno/registration-auth:latest
     expose:
       - "8080"
 

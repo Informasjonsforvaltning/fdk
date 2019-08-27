@@ -64,5 +64,4 @@ Registration api exposes several endpoints for CRUD on catalogs and dataset desc
 
 ## Dependencies
 * reference-data
-* registration-auth
 * elasticsearch
