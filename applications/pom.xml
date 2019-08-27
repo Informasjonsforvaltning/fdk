@@ -14,7 +14,6 @@
 
         <module>search-api</module>
         <module>registration-api</module>
-        <module>registration-auth</module>
 
         <module>harvester-api</module>
         <module>harvester</module>
