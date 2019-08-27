@@ -12,12 +12,6 @@ module.exports = {
     filename: 'bundle.js',
     publicPath: '/static/'
   },
-  stats: {
-    colors: true,
-    modules: true,
-    reasons: true,
-    errorDetails: true
-  },
   module: {
     rules: [
       {
@@ -92,10 +86,6 @@ module.exports = {
     ]
   },
   plugins: [
-    new webpack.LoaderOptionsPlugin({
-      minimize: true,
-      debug: false
-    }),
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     new webpack.optimize.OccurrenceOrderPlugin(true),
     new MiniCssExtractPlugin({
