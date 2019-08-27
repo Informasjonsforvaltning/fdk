@@ -340,6 +340,7 @@
     "remarkHeader": "Remark",
     "subjectHeader": "Domain",
     "subject": "Domain",
+    "application": "Application",
     "termHeader": "Alternative and hidden term",
     "altLabel": "Alternative term",
     "hiddenLabel": "Hidden term",
