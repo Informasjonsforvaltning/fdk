@@ -57,6 +57,7 @@ services:
       - SSO_HOST=http://localhost:8084
       - REGISTRATION_HOST=http://localhost:8098
       - CONCEPT_CATALOGUE_HOST=http://localhost:8202
+      - DEV_REGISTRATION_HOST=http://localhost:4301
     # This is local mock for ID-Porten, use this in dev, ut1 and st1. in it1 use idporten test, and in prod use idporten prod
       - IDPORTEN_OIDC_ROOT=http://localhost:8084/auth/realms/idporten-mock
       - IDPORTEN_CLIENT_ID=oidc_brreg_fellesdatakatalog
