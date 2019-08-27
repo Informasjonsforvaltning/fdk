@@ -87,10 +87,7 @@ module.exports = {
       filename: 'styles.css'
     }),
     new CopyWebpackPlugin(
-      [
-        { from: './src/assets/css/bootstrap*', to: './', flatten: true },
-        { from: './src/assets/img/*', to: './img', flatten: true }
-      ],
+      [{ from: './src/assets/img/*', to: './img', flatten: true }],
       {
         copyUnmodified: true
       }
