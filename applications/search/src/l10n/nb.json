@@ -340,6 +340,7 @@
     "remarkHeader": "Merknad",
     "subjectHeader": "Fag- og bruksområde",
     "subject": "Fagområde",
+    "application": "Bruksområde",
     "termHeader": "Tillatt og frarådet term",
     "altLabel": "Tillatt term",
     "hiddenLabel": "Frarådet term",

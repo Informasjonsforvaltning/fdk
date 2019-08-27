@@ -102,6 +102,10 @@ exports[`should render ConceptDetailsPage correctly with conceptItem 1`] = `
         </div>
         <ListRegular
           bottomMargin={true}
+          title="Domain"
+        />
+        <ListRegular
+          bottomMargin={true}
           title="Identifier"
         >
           <div

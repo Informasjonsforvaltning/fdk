@@ -65,11 +65,38 @@ const renderSubject = subject => {
     return null;
   }
   return (
+    <TwoColRow
+      col1={localization.concept.subject}
+      col2={getTranslateText(subject)}
+    />
+  );
+};
+
+const renderApplication = application => {
+  const applicationItems = items =>
+    items.map((item, index) => (
+      <span key={index}>
+        {index > 0 ? ', ' : ''}
+        {getTranslateText(item)}
+      </span>
+    ));
+
+  if (!application || application.length === 0) {
+    return null;
+  }
+  return (
+    <TwoColRow
+      col1={localization.concept.application}
+      col2={applicationItems(application)}
+    />
+  );
+};
+
+const renderSubjectAndApplication = (subject, application) => {
+  return (
     <ListRegular title={localization.concept.subjectHeader}>
-      <TwoColRow
-        col1={localization.concept.subject}
-        col2={getTranslateText(subject)}
-      />
+      {renderSubject(subject)}
+      {renderApplication(application)}
     </ListRegular>
   );
 };
@@ -294,7 +321,10 @@ export const ConceptDetailsPage = ({
 
             {renderRemark(_.get(conceptItem, ['definition', 'remark']))}
             {renderSample(_.get(conceptItem, 'example'))}
-            {renderSubject(_.get(conceptItem, 'subject'))}
+            {renderSubjectAndApplication(
+              _.get(conceptItem, 'subject'),
+              _.get(conceptItem, 'application')
+            )}
             {renderTerms(
               _.get(conceptItem, 'altLabel'),
               _.get(conceptItem, 'hiddenLabel')
