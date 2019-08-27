@@ -4,83 +4,54 @@ import { CardGroup } from 'reactstrap';
 import _ from 'lodash';
 import localization from '../../lib/localization';
 import { Catalog } from './catalogs/catalogs.component';
-import { getTranslateText } from '../../lib/translateText';
-import { selectorForCatalogDatasetsFromDatasetsState } from '../../redux/modules/datasets';
-import { getAPIItemsCount } from '../../redux/modules/apis';
 import './catalogs-page.scss';
 
-const renderCatalogs = props => {
-  const {
-    catalogItems,
-    datasetsState,
-    apis,
-    fetchDatasetsIfNeeded,
-    fetchApisIfNeeded
-  } = props;
-
-  if (!catalogItems) {
-    return null;
-  }
-
-  const canShowConcepts = localStorage.getItem(
-    'FEATURE_TOGGLE_CONCEPT_REGISTRATION'
-  );
-
-  return catalogItems.map(catalog => (
-    <div key={_.get(catalog, 'id')} className="row mb-2 mb-md-5">
+const renderPublishers = (publishers, fetchers) =>
+  Array.isArray(publishers) &&
+  publishers.map(({ id, name, catalogs }) => (
+    <div key={id} className="row mb-2 mb-md-5">
       <div className="col-12">
-        <div>
-          <h2 className="fdk-text-strong mb-4">
-            {getTranslateText(_.get(catalog, ['publisher', 'prefLabel'])) ||
-              _.get(catalog, ['publisher', 'name'], '')}
-          </h2>
-        </div>
+        <h2 className="fdk-text-strong mb-4">{name}</h2>
         <CardGroup>
-          {datasetsState && (
-            <Catalog
-              key={`datasets-${catalog.id}`}
-              catalogId={catalog.id}
-              type="datasets"
-              fetchItems={fetchDatasetsIfNeeded}
-              itemsCount={
-                Object.keys(
-                  selectorForCatalogDatasetsFromDatasetsState(catalog.id)(
-                    datasetsState
-                  )
-                ).length
-              }
-            />
-          )}
-          {apis && (
-            <Catalog
-              key={`apis-${catalog.id}`}
-              catalogId={catalog.id}
-              fetchItems={fetchApisIfNeeded}
-              type="apis"
-              itemsCount={getAPIItemsCount(apis, catalog.id)}
-            />
-          )}
-          {canShowConcepts && (
-            <Catalog
-              key={`concepts-${catalog.id}`}
-              catalogId={catalog.id}
-              type="concepts"
-            />
-          )}
+          {Array.isArray(catalogs) &&
+            catalogs.map(
+              ({ type, available, count }) =>
+                available && (
+                  <Catalog
+                    key={`${type}-${id}`}
+                    catalogId={id}
+                    type={type}
+                    itemsCount={count}
+                    fetchItems={fetchers[type]}
+                  />
+                )
+            )}
         </CardGroup>
       </div>
     </div>
   ));
-};
 
 export const RegCatalogs = props => {
-  const { isFetching, catalogItems, fetchCatalogsIfNeeded } = props;
+  const {
+    isFetching,
+    fetchCatalogsIfNeeded,
+    fetchDatasetsIfNeeded,
+    fetchApisIfNeeded,
+    publishers
+  } = props;
   fetchCatalogsIfNeeded();
+
+  const fetchers = {
+    datasets: fetchDatasetsIfNeeded,
+    apis: fetchApisIfNeeded
+  };
+
   return (
     <div className="container">
-      {catalogItems && renderCatalogs(props)}
+      {publishers && renderPublishers(publishers, fetchers)}
       {!isFetching &&
-        !catalogItems && (
+        !!publishers &&
+        publishers.length === 0 && (
           <div className="row mb-2 mb-md-5">
             <div id="no-catalogs">
               <h1 className="fdk-text-strong">
@@ -108,13 +79,13 @@ export const RegCatalogs = props => {
 };
 
 RegCatalogs.defaultProps = {
-  catalogItems: null,
+  publishers: [],
   isFetching: false,
   fetchCatalogsIfNeeded: _.noop
 };
 
 RegCatalogs.propTypes = {
-  catalogItems: PropTypes.array,
+  publishers: PropTypes.array,
   isFetching: PropTypes.bool,
   fetchCatalogsIfNeeded: PropTypes.func
 };

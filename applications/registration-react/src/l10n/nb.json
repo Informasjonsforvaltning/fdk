@@ -403,7 +403,8 @@
     "concepts": "Begrepskatalog",
     "type": {
       "datasets": "datasett",
-      "apis": "API-er"
+      "apis": "API-er",
+      "concepts": "begreper"
     }
   },
   "loginDialog": {

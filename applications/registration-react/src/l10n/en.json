@@ -401,7 +401,8 @@
     "concepts": "Concept Catalog",
     "type": {
       "datasets": "datasett",
-      "apis": "API-er"
+      "apis": "API-er",
+      "concepts": "concepts"
     }
   },
   "loginDialog": {

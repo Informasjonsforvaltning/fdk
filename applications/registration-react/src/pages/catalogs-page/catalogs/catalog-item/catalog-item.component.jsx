@@ -25,13 +25,14 @@ export const CatalogItem = props => {
     }
   );
 
+  // TODO: WHAT IS THE DIFFERENCE BETWEEN THIS ONE AND THE ONE BELOW?
   if (type === 'concepts') {
     return (
       <div className="col-md-4 pl-0">
         <a className="catalog-item" href={linkUri}>
           <div className={itemClass}>
             <h3 className={iconClass}>{localization.catalogs[type]}</h3>
-            {itemsCount && (
+            {Number.isInteger(itemsCount) && (
               <span className="fdk-text-size-small fdk-color-neutral-dark">
                 {itemsCount} {localization.catalogs.type[type]}
               </span>
@@ -47,7 +48,7 @@ export const CatalogItem = props => {
       <Link className="catalog-item" to={linkUri}>
         <div className={itemClass}>
           <h3 className={iconClass}>{localization.catalogs[type]}</h3>
-          {itemsCount && (
+          {Number.isInteger(itemsCount) && (
             <span className="fdk-text-size-small fdk-color-neutral-dark">
               {itemsCount} {localization.catalogs.type[type]}
             </span>
