@@ -40,6 +40,7 @@
     }],
     "react-hooks/rules-of-hooks": "error",
     "eslint-comments/no-unused-disable": "error",
-    "jsx-a11y/label-has-for": "off" //*deprecated for label-has-associated-control
+    "jsx-a11y/label-has-for": "off", //*deprecated for label-has-associated-control
+    "import/no-extraneous-dependencies": ["error", {"devDependencies": ["webpack.hostdev.config.js","**/*.test.js","**/*.test.jsx","test/*"]}]
   }
 }
