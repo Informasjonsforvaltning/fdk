@@ -4,6 +4,7 @@
 *.iml
 .DS_Store
 .idea
+.project
 
 # linked volumes
 data
@@ -14,6 +15,7 @@ reports
 # compilation targets
 node_modules
 target
+bin
 
 # random ad hoc exclusions, not sorted
 phantomjsdriver.log
