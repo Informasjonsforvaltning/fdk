@@ -81,11 +81,6 @@ module.exports = {
     minimize: false
   },
   plugins: [
-    new webpack.DefinePlugin({
-      'process.env': {
-        REGISTRATION_LANGUAGE: JSON.stringify(process.env.REGISTRATION_LANGUAGE)
-      }
-    }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
     new MiniCssExtractPlugin({

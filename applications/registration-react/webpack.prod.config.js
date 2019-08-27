@@ -92,12 +92,6 @@ module.exports = {
     ]
   },
   plugins: [
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: JSON.stringify('production'),
-        REGISTRATION_LANGUAGE: JSON.stringify(process.env.REGISTRATION_LANGUAGE)
-      }
-    }),
     new webpack.LoaderOptionsPlugin({
       minimize: true,
       debug: false
