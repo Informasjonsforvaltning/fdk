@@ -109,7 +109,6 @@ services:
 
   registration-react:
     build: ./applications/registration-react
-    command: npm start
     ports:
       - "4300:4300"
     volumes:
