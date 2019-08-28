@@ -14,12 +14,8 @@ const createConfig = env => {
     searchHost,
     referenceDataApi: defaultToSearchApi(env.REFERENCE_DATA_HOST),
     registrationApi: {
-      // in cluster through proxy, assuming frontend comes from the same origin
-      host: '/'
-      // to call api on host
-      // host: 'http://localhost:8115/'
-      // direct api in docker-compose cluster, bypassing ingress proxy
-      // host: 'http://localhost:8114/'
+      // default configuration runs in cluster through proxy, assuming frontend comes from the same origin
+      host: ''
     },
     keycloak: {
       realm: 'fdk',

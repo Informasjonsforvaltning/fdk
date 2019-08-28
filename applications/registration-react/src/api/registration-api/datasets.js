@@ -3,8 +3,8 @@ import {
   registrationApiPatch,
   registrationApiPost,
   registrationApiPut
-} from './registration-api';
-import { catalogPath } from './catalog-registration-api';
+} from './host';
+import { catalogPath } from './catalogs';
 
 export const datasetListPath = catalogId =>
   `${catalogPath(catalogId)}/datasets`;

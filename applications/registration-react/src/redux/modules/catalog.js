@@ -1,7 +1,7 @@
 import _ from 'lodash';
-import { registrationApiGet } from '../../api/registration-api';
+import { registrationApiGet } from '../../api/registration-api/host';
 import { reduxFsaThunk } from '../../lib/redux-fsa-thunk';
-import { catalogPath } from '../../api/catalog-registration-api';
+import { catalogPath } from '../../api/registration-api/catalogs';
 
 const CATALOG_REQUEST = 'CATALOG_REQUEST';
 export const CATALOG_SUCCESS = 'CATALOG_SUCCESS';
