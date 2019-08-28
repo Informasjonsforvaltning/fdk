@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import { reduxFsaThunk } from '../../lib/redux-fsa-thunk';
-import { referenceDataApi } from '../../api/reference-data-api';
+import { getReferenceData } from '../../api/search-api/reference-data';
 
 const REFERENCEDATA_REQUEST = 'REFERENCEDATA_REQUEST';
 const REFERENCEDATA_SUCCESS = 'REFERENCEDATA_SUCCESS';
@@ -27,7 +27,7 @@ function shouldFetch(metaState) {
 export const fetchReferenceDataIfNeededAction = path => (dispatch, getState) =>
   shouldFetch(_.get(getState(), ['referenceData', 'meta', path])) &&
   dispatch(
-    reduxFsaThunk(() => referenceDataApi.get(path), {
+    reduxFsaThunk(() => getReferenceData(path), {
       onBeforeStart: { type: REFERENCEDATA_REQUEST, meta: { path } },
       onSuccess: { type: REFERENCEDATA_SUCCESS, meta: { path } },
       onError: { type: REFERENCEDATA_FAILURE, meta: { path } }
