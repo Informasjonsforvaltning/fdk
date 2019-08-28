@@ -5,6 +5,7 @@
 
 .top-section-search {
   background-color: $color-primary-lighter;
+  min-height: 225px;
 }
 
 .sk-hits-stats__info {
@@ -195,7 +196,7 @@
     background-image: url(../../static/img/illustration-search.svg);
     background-repeat: no-repeat;
     background-position: right;
-    background-size: 100%;
+    background-size: 105%;
   }
 }
 

@@ -6,6 +6,7 @@ import _ from 'lodash';
 import { getParamFromUrl } from '../../../lib/addOrReplaceUrlParam';
 import localization from '../../../lib/localization';
 import { HitsStats } from './hits-stats/hits-stats.component';
+import { getConfig } from '../../../config';
 import './search-box.scss';
 
 export const SearchBoxPure = props => {
@@ -24,7 +25,7 @@ export const SearchBoxPure = props => {
   } = props;
   let refSearchBox; // eslint-disable-line no-unused-vars
   return (
-    <div className="row pt-5 pb-5">
+    <div className="container pt-5 pb-5">
       <div className="col-12 col-lg-8 offset-lg-2 fdk-search-flex d-flex">
         <div className="d-inline d-lg-none">
           <button
@@ -80,22 +81,24 @@ export const SearchBoxPure = props => {
           {localization.query.do}
         </button>
       </div>
-      <div className="col-md-12 text-center">
-        <HitsStats
-          countDatasets={countDatasets}
-          countTerms={countTerms}
-          countApis={countApis}
-          countInformationModels={countInformationModels}
-          filteringOrTextSearchPerformed={
-            !!(
-              getParamFromUrl('q') ||
-              getParamFromUrl('theme') ||
-              getParamFromUrl('accessRight') ||
-              getParamFromUrl('publisher')
-            )
-          }
-        />
-      </div>
+      {!getConfig().themeNap && (
+        <div className="col-md-12 text-center">
+          <HitsStats
+            countDatasets={countDatasets}
+            countTerms={countTerms}
+            countApis={countApis}
+            countInformationModels={countInformationModels}
+            filteringOrTextSearchPerformed={
+              !!(
+                getParamFromUrl('q') ||
+                getParamFromUrl('theme') ||
+                getParamFromUrl('accessRight') ||
+                getParamFromUrl('publisher')
+              )
+            }
+          />
+        </div>
+      )}
     </div>
   );
 };
