@@ -406,7 +406,7 @@
   },
   "loginDialog": {
     "title": "Welcome to registration for National Data Directory",
-    "ingress": "Here you can register and administrate dataset descriptions for your business. To gain access make sure you are logged in",
+    "ingress": "Here you can register and administrate dataset descriptions, API descriptions and concepts for your business. To gain access make sure you are logged in",
     "loggedOutMsgPart1": "You have been logged out. ",
     "loggedOutMsgPart2": "Your session has timed out, but all your changes have been saved. Log in to continue working with registration."
   },
