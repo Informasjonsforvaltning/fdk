@@ -11,7 +11,7 @@ export const Catalog = props => {
 
   const linkUri =
     type === 'concepts'
-      ? `${getConfig().conceptRegistration.host}/${catalogId}`
+      ? `${getConfig().conceptRegistrationHost}/${catalogId}`
       : `/catalogs/${catalogId}/${type}`;
 
   return (

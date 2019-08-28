@@ -12,7 +12,19 @@ const createConfig = env => {
   return {
     store: { useLogger: env.REDUX_LOG === 'true' },
     registrationLanguage: env.REGISTRATION_LANGUAGE || 'nb',
+    keycloak: {
+      realm: 'fdk',
+      url: `${env.SSO_HOST}/auth`,
+      clientId: 'fdk-registration-public'
+    },
+
+    // frontend hosts
     searchHost,
+    conceptRegistrationHost:
+      env.CONCEPT_REGISTRATION_HOST ||
+      'https://registrering-begrep.fellesdatakatalog.brreg.no',
+
+    // api modules
     referenceDataApi: defaultToSearchApi(env.REFERENCE_DATA_HOST),
     apiApi: defaultToSearchApi(env.API_API_HOST),
     datasetApi: defaultToSearchApi(env.DATASET_API_HOST),
@@ -20,14 +32,10 @@ const createConfig = env => {
     publisherApi: defaultToSearchApi(env.PUBLISHER_API_HOST),
     // default configuration runs in cluster through proxy, assuming frontend comes from the same origin
     registrationApi: { host: env.REGISTRATION_API_HOST || '' },
-    keycloak: {
-      realm: 'fdk',
-      url: `${env.SSO_HOST}/auth`,
-      clientId: 'fdk-registration-public'
-    },
-    conceptRegistration: {
-      host: env.CONCEPT_REGISTRATION_HOST || undefined,
-      api: env.CONCEPT_REGISTRATION_API_HOST || undefined
+    conceptRegistrationApi: {
+      host:
+        env.CONCEPT_REGISTRATION_API_HOST ||
+        'https://registrering-begrep-api.fellesdatakatalog.brreg.no'
     }
   };
 };
