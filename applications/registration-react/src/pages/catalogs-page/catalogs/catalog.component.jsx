@@ -2,10 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 
+import { resolve } from 'react-resolver';
 import { getConfig } from '../../../config';
 import { CatalogItem } from './catalog-item/catalog-item.component';
 
-export const Catalog = props => {
+export const CatalogPure = props => {
   const { catalogId, type, fetchItems, itemsCount } = props;
   fetchItems(catalogId);
 
@@ -25,15 +26,24 @@ export const Catalog = props => {
   );
 };
 
-Catalog.defaultProps = {
+CatalogPure.defaultProps = {
   catalogId: null,
   fetchItems: _.noop,
   itemsCount: null
 };
 
-Catalog.propTypes = {
+CatalogPure.propTypes = {
   catalogId: PropTypes.string,
   type: PropTypes.string.isRequired,
   fetchItems: PropTypes.func,
   itemsCount: PropTypes.number
 };
+
+const mapProps = {
+  itemsCount: props =>
+    props.type === 'concepts'
+      ? undefined // placeholder for api request promise
+      : props.itemsCount
+};
+
+export const Catalog = resolve(mapProps)(CatalogPure);
