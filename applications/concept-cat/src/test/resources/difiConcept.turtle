@@ -20,6 +20,10 @@
     skosno:betydningsbeskrivelse [
         a skosno:Definisjon ;
         rdfs:label "digital tjeneste som tilbys sluttbrukere gjennom elektronisk medium som PC eller mobile enheter."@nb ;
+        skosno:omfang [
+                rdfs:label "someomfangtekst"@nb ;
+                rdfs:seeAlso  <https://somewhere.com>
+                  ] ;
         dct:source [
         rdfs:label "EU-kommisjonen Digital Single Market"@nb ;
           ] ;
