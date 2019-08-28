@@ -1,7 +1,7 @@
 import _ from 'lodash';
-import { apiListAllPath, deleteApi } from '../../api/api-registration-api';
+import { apiListAllPath, deleteApi } from '../../api/registration-api/apis';
 import { reduxFsaThunk } from '../../lib/redux-fsa-thunk';
-import { registrationApiGet } from '../../api/registration-api';
+import { registrationApiGet } from '../../api/registration-api/host';
 
 export const APIS_REQUEST = 'APIS_REQUEST';
 export const APIS_SUCCESS = 'APIS_SUCCESS';

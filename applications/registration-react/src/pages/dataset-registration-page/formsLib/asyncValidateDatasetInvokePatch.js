@@ -4,7 +4,7 @@ import {
   datasetFormPatchSuccessAction
 } from '../../../redux/modules/dataset-form-status';
 import { datasetSuccessAction } from '../../../redux/modules/datasets';
-import { patchDataset } from '../../../api/dataset-registration-api';
+import { patchDataset } from '../../../api/registration-api/datasets';
 
 export const datasetFormPatchThunk = ({
   catalogId,

@@ -9,7 +9,10 @@ import {
 } from '../../redux/modules/datasets';
 import { fetchCatalogIfNeeded } from '../../redux/modules/catalog';
 import { DatasetsListPagePure } from './dataset-list-page-pure';
-import { createDataset, datasetPath } from '../../api/dataset-registration-api';
+import {
+  createDataset,
+  datasetPath
+} from '../../api/registration-api/datasets';
 
 const mapRouteParams = withProps(({ match: { params } }) =>
   _.pick(params, ['catalogId'])

@@ -6,7 +6,7 @@ import {
 } from '../../../redux/modules/api-form-status';
 import { apiSuccessAction } from '../../../redux/modules/apis';
 import { stringToNoolean } from '../../../lib/noolean';
-import { patchApi } from '../../../api/api-registration-api';
+import { patchApi } from '../../../api/registration-api/apis';
 
 const nooleanFields = [
   'isFree',
