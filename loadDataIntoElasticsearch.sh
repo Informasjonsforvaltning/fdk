@@ -42,7 +42,6 @@ function startLoad {
     loadDcat
     loadScat
     loadRegister
-    #loadAcat
     loadHarvest
 
     ENDTIME=`date "+%Y-%m-%dT%H_%M_%S"`
@@ -83,21 +82,6 @@ function loadRegister {
 
 }
 
-function loadAcat {
-    echo "******************"
-    echo "ACAT"
-    echo "******************"
-
-    curl -XDELETE ${targetElasticUrl}/acat
-
-    acatMapping=`cat applications/api-cat/src/main/resources/apispec.mapping.json`
-    acatMetadata="{ \"mappings\": ${acatMapping} }"
-
-    curl -XPUT ${targetElasticUrl}/acat -d "${acatMetadata}"
-
-    elasticdump --bulk=true --input=${source}_acat.json --output=${targetElasticUrl}/acat --type=data
-
-}
 
 function loadScat {
     echo "******************"
