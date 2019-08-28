@@ -31,6 +31,7 @@ public class SKOSNO {
        ########################################################## */
     public static final Property betydningsbeskrivelse = m.createProperty(uri + "betydningsbeskrivelse");
     public static final Property bruksområde = m.createProperty( uri + "bruksområde");
+    public static final Property omfang = m.createProperty( uri + "omfang");
 
     /**
      * Returns the namespace of the SKOS-NO schema as a string

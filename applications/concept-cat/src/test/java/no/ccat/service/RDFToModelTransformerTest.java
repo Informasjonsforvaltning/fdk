@@ -45,5 +45,7 @@ public class RDFToModelTransformerTest {
         assertEquals(2, testConcept.getApplication().size());
         assertEquals("fotball",testConcept.getApplication().get(0).get("nb"));
         assertEquals("tennis",testConcept.getApplication().get(1).get("nb"));
+        assertEquals("https://somewhere.com",testConcept.getDefinition().getRange().getUri());
+        assertEquals("someomfangtekst",testConcept.getDefinition().getRange().getText().get("nb"));
     }
 }

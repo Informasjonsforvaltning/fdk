@@ -4,6 +4,7 @@ import no.ccat.SKOSNO;
 import no.ccat.common.model.ContactPoint;
 import no.ccat.common.model.Definition;
 import no.ccat.common.model.Source;
+import no.ccat.common.model.TextAndURI;
 import no.ccat.model.ConceptDenormalized;
 import no.dcat.shared.HarvestMetadata;
 import no.dcat.shared.HarvestMetadataUtil;
@@ -55,6 +56,9 @@ public class RDFToModelTransformer {
         List<Resource> betydningsbeskivelses = getNamedSubPropertiesAsListOfResources(resource, SKOSNO.betydningsbeskrivelse);
 
         for (Resource betydningsbeskrivelse : betydningsbeskivelses) {
+            definition.setRange(extractTextAndUri(betydningsbeskrivelse, SKOSNO.omfang));
+
+
             //We may need to merge the different language strings from the different betydningsbeskrivelses
             Map<String, String> definitionAsLanguageLiteral = extractLanguageLiteral(betydningsbeskrivelse, RDFS.label);
             if (definitionAsLanguageLiteral != null) {
@@ -249,6 +253,19 @@ public class RDFToModelTransformer {
 
         return concept;
     }
+    private static TextAndURI extractTextAndUri(Resource resource, Property property) {
+        TextAndURI textURI = new TextAndURI();
+
+        Resource omfangResource = resource.getPropertyResourceValue(property);
+
+        textURI.setText(extractLanguageLiteral(omfangResource, RDFS.label));
+
+        Statement theURI = omfangResource.getProperty(RDFS.seeAlso);
+        if (theURI != null) {
+            textURI.setUri(getEntireURIFromStatement(theURI));
+        }
+        return textURI;
+    }
 
     private ContactPoint extractContactPoint(Resource resource) {
         ContactPoint contactPoint = new ContactPoint();
@@ -263,12 +280,12 @@ public class RDFToModelTransformer {
 
             Statement phoneStatement = contactPointResource.getProperty(VCARD4.hasTelephone);
             if (phoneStatement != null) {
-                String parsedPhoneNumber = parseURIFromStatement(phoneStatement);
+                String parsedPhoneNumber = getOnlySchemeSpesificPartOfURIFromStatement(phoneStatement);
                 contactPoint.setTelephone(parsedPhoneNumber);
             }
             Statement emailStatement = contactPointResource.getProperty(VCARD4.hasEmail);
             if (emailStatement != null) {
-                String parsedEmailAddress = parseURIFromStatement(emailStatement);
+                String parsedEmailAddress = getOnlySchemeSpesificPartOfURIFromStatement(emailStatement);
                 contactPoint.setEmail(parsedEmailAddress);
             }
         } catch (Exception e) {
@@ -278,17 +295,24 @@ public class RDFToModelTransformer {
         return contactPoint;
     }
 
-    private String parseURIFromStatement(Statement statement) {
+    private static String getEntireURIFromStatement(Statement statement) {
+        return parseUriFromStatement(statement).toString();
+    }
+
+    private static String getOnlySchemeSpesificPartOfURIFromStatement(Statement statement) {
+        return parseUriFromStatement(statement).getSchemeSpecificPart();
+    }
+
+    private static URI parseUriFromStatement(Statement statement) {
         if (statement.getObject().isResource() && statement.getResource().isURIResource()) {
             try {
                 URI uri = new URI(statement.getResource().getURI());
-                return uri.getSchemeSpecificPart();
-                //contactPoint.setEmail(uri.getSchemeSpecificPart());
+                return uri;
             } catch (URISyntaxException use) {
                 logger.error("Email URI not parsable :" + statement.getObject().toString());
             }
         }
-        return "";
+        return null;
     }
 
     private String buildLocalUri(String id) {

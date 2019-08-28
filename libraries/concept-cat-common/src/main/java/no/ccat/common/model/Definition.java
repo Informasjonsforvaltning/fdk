@@ -1,5 +1,6 @@
 package no.ccat.common.model;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.util.Date;
@@ -12,5 +13,9 @@ public class Definition {
 
     private Source source;
     private String targetGroup; // TODO this is string-enum
+
+    @ApiModelProperty("The range [skosno:Omfang]")
+    private TextAndURI range;
+
     private Date lastUpdated;
 }
