@@ -1,8 +1,5 @@
 import url from 'url';
-import {
-  normalizeFetchError,
-  normalizeFetchResponse
-} from '../lib/normalize-fetch-response';
+import { nfetch } from '../lib/normalized-fetch';
 import { getToken } from '../auth/auth-service';
 import { getConfig } from '../config';
 
@@ -18,9 +15,7 @@ export const registrationApi = async (method, path, jsonBody) => {
     Object.assign(headers, { 'Content-Type': 'application/json' });
   }
   const body = jsonBody && JSON.stringify(jsonBody);
-  return fetch(resolveUrl(path), { method, headers, body })
-    .catch(normalizeFetchError)
-    .then(normalizeFetchResponse);
+  return nfetch(resolveUrl(path), { method, headers, body });
 };
 
 export const registrationApiDelete = path => registrationApi('DELETE', path);

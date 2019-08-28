@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { nfetch } from './lib/normalized-fetch';
 
 const createConfig = env => {
   const searchHost = env.SEARCH_HOST || 'https://fellesdatakatalog.brreg.no';
@@ -38,7 +38,7 @@ const config = createConfig({});
 export const getConfig = () => config;
 
 export const loadConfig = async () => {
-  const response = await axios.get('/env.json');
-  const env = response.data;
+  const env = await nfetch('/env.json');
+
   Object.assign(config, createConfig(env));
 };

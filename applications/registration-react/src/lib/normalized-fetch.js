@@ -33,3 +33,9 @@ export function normalizeFetchError(error) {
     new ApiError(error.message, undefined, 'network_error')
   );
 }
+
+export function nfetch(request, conf) {
+  return fetch(request, conf)
+    .catch(normalizeFetchError)
+    .then(normalizeFetchResponse);
+}
