@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { CardGroup } from 'reactstrap';
 import _ from 'lodash';
 import localization from '../../lib/localization';
-import { Catalog } from './catalogs/catalogs.component';
+import { Catalog } from './catalogs/catalog.component';
 import { getTranslateText } from '../../lib/translateText';
 import { selectorForCatalogDatasetsFromDatasetsState } from '../../redux/modules/datasets';
 import { getAPIItemsCount } from '../../redux/modules/apis';
