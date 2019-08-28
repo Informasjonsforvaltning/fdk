@@ -120,6 +120,7 @@ export class InputTagsAPIsField extends React.Component {
             autofocus={false}
             placeholder=""
             tags={tags}
+            minQueryLength={1}
             suggestions={suggestions}
             handleDelete={this.handleDelete}
             handleAddition={this.handleAddition}
