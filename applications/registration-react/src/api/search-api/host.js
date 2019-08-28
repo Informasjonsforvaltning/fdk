@@ -8,5 +8,5 @@ but some are also under different root, e.g. reference-data
 For developer convenience, different sub-apis can be configured on different hosts.
 */
 
-export const searchApiGet = (url, authorization) =>
+export const searchApiGet = ({ url, authorization }) =>
   axios.get(url, { headers: { authorization } }).then(r => r.data);
