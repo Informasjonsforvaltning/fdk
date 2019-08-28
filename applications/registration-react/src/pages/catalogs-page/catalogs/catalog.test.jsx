@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { Catalog } from './catalog.component';
+import { CatalogPure } from './catalog.component';
 
 let defaultProps;
 let wrapper;
@@ -23,14 +23,14 @@ beforeEach(() => {
     type: 'datasets',
     fetchItems
   };
-  wrapper = shallow(<Catalog {...defaultProps} />);
+  wrapper = shallow(<CatalogPure {...defaultProps} />);
 });
 
-test('should render Catalog correctly with minimum props', () => {
+test('should render CatalogPure correctly with minimum props', () => {
   expect(wrapper).toMatchSnapshot();
 });
 
-test('should render Catalog correctly with one dataset item', () => {
+test('should render CatalogPure correctly with one dataset item', () => {
   wrapper.setProps({
     items
   });
