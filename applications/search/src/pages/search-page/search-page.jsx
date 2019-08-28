@@ -11,6 +11,7 @@ import { ResultsApi } from './results-api/results-api.component';
 import { ResultsInformationModel } from './results-informationmodel/results-informationmodel.component';
 import { SearchBox } from './search-box/search-box.component';
 import { ResultsTabs } from './results-tabs/results-tabs.component';
+import { getConfig } from '../../config';
 
 import './search-page.scss';
 import {
@@ -179,12 +180,14 @@ export const SearchPage = props => {
             countInformationModels={informationModelTotal}
             open={open}
           />
-          <ResultsTabs
-            countDatasets={datasetTotal}
-            countTerms={conceptTotal}
-            countApis={apiTotal}
-            countInformationModels={informationModelTotal}
-          />
+          {!getConfig().themeNap && (
+            <ResultsTabs
+              countDatasets={datasetTotal}
+              countTerms={conceptTotal}
+              countApis={apiTotal}
+              countInformationModels={informationModelTotal}
+            />
+          )}
         </div>
       </section>
       <div className="container">
