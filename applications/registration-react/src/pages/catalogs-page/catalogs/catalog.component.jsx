@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import _ from 'lodash';
+import memoize from 'lodash.memoize';
 
 import { resolve } from 'react-resolver';
 import { getConfig } from '../../../config';
 import { CatalogItem } from './catalog-item/catalog-item.component';
+import { getConceptCount } from '../../../api/concept-registration-api/host';
 
 export const CatalogPure = props => {
   const { catalogId, type, fetchItems, itemsCount } = props;
@@ -28,7 +29,7 @@ export const CatalogPure = props => {
 
 CatalogPure.defaultProps = {
   catalogId: null,
-  fetchItems: _.noop,
+  fetchItems: () => {},
   itemsCount: null
 };
 
@@ -39,10 +40,12 @@ CatalogPure.propTypes = {
   itemsCount: PropTypes.number
 };
 
+const memoizedGetConceptCount = memoize(getConceptCount);
+
 const mapProps = {
   itemsCount: props =>
     props.type === 'concepts'
-      ? undefined // placeholder for api request promise
+      ? memoizedGetConceptCount(props.catalogId) // placeholder for api request promise
       : props.itemsCount
 };
 
