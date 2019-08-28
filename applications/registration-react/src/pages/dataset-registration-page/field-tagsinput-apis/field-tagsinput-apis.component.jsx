@@ -92,7 +92,7 @@ export class InputTagsAPIsField extends React.Component {
   loadSuggestions(value) {
     const suggestionItems = [];
 
-    searchApis({ title: value, returnFields: 'title,uri' })
+    searchApis({ title: value, returnFields: 'title,id' })
       .then(responseData => {
         _.get(responseData, 'hits', []).forEach(item => {
           suggestionItems.push({
