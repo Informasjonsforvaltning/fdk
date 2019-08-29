@@ -346,6 +346,7 @@
     "hiddenLabel": "Frarådet term",
     "definition": "Definisjon",
     "identifier": "Identifikator",
+    "range": "Omfang",
     "sample": "Eksempel",
     "conceptDescription": "Begrepsbeskrivelse",
     "datasetReferences": "Brukt i datasett"
