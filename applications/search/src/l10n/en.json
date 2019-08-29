@@ -346,6 +346,7 @@
     "hiddenLabel": "Hidden term",
     "definition": "Definition",
     "identifier": "Identifier",
+    "range": "Range",
     "sample": "Sample",
     "conceptDescription": "Concept description",
     "datasetReferences": "Reference to datasets"

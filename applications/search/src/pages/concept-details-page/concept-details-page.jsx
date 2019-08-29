@@ -134,6 +134,22 @@ const renderTerms = (altLabel, hiddenLabel) => {
   );
 };
 
+const renderRange = range => {
+  if (!range) {
+    return null;
+  }
+  return (
+    <ListRegular title={localization.concept.range}>
+      <div className="d-flex list-regular--item">
+        <a href={_.get(range, 'uri', '')}>
+          {getTranslateText(_.get(range, 'text')) ||
+            getTranslateText(_.get(range, 'uri'))}
+        </a>
+      </div>
+    </ListRegular>
+  );
+};
+
 const renderIdentifiers = id => {
   if (!id) {
     return null;
@@ -240,6 +256,13 @@ const renderStickyMenu = conceptItem => {
     });
   }
 
+  if (getTranslateText(_.get(conceptItem, ['definition', 'range']))) {
+    menuItems.push({
+      name: localization.concept.range,
+      prefLabel: localization.concept.range
+    });
+  }
+
   menuItems.push({
     name: localization.concept.identifier,
     prefLabel: localization.concept.identifier
@@ -329,6 +352,7 @@ export const ConceptDetailsPage = ({
               _.get(conceptItem, 'altLabel'),
               _.get(conceptItem, 'hiddenLabel')
             )}
+            {renderRange(_.get(conceptItem, ['definition', 'range']))}
             {renderIdentifiers(_.get(conceptItem, 'id'))}
             {renderDatasets(conceptDatasetReferences)}
             {renderContactPoint(_.get(conceptItem, 'contactPoint'))}
