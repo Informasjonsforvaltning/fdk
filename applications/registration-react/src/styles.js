@@ -1,5 +1,4 @@
 import './assets/style/bootstrap-override.scss';
-import 'bootstrap/scss/bootstrap.scss';
 
 import './assets/style/react-tags-override.scss';
 
