@@ -93,6 +93,10 @@ const renderApplication = application => {
 };
 
 const renderSubjectAndApplication = (subject, application) => {
+  if (_.isEmpty(subject) && _.isEmpty(application)) {
+    return null;
+  }
+
   return (
     <ListRegular title={localization.concept.subjectHeader}>
       {renderSubject(subject)}
@@ -275,7 +279,10 @@ const renderStickyMenu = conceptItem => {
     });
   }
 
-  if (_.get(conceptItem, 'contactPoint')) {
+  if (
+    _.get(conceptItem, 'contactPoint') &&
+    !_.isEmpty(_.get(conceptItem, 'contactPoint'))
+  ) {
     menuItems.push({
       name: localization.contactInfo,
       prefLabel: localization.contactInfo
