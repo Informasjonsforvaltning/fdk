@@ -120,10 +120,12 @@ export class InputTagsDatasetsField extends React.Component {
 
 InputTagsDatasetsField.defaultProps = {
   input: null,
-  referencedDatasets: null
+  referencedDatasets: null,
+  orgPath: ''
 };
 
 InputTagsDatasetsField.propTypes = {
   input: PropTypes.object,
-  referencedDatasets: PropTypes.array
+  referencedDatasets: PropTypes.array,
+  orgPath: PropTypes.string
 };
