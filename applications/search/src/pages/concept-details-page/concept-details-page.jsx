@@ -28,20 +28,29 @@ const renderDescription = description => {
 };
 
 const renderSource = source => {
-  if (!source) {
+  if (!source && !_.isEmpty(source)) {
     return null;
   }
 
-  const { uri, prefLabel } = source;
+  const kildeItems = items =>
+    items.map((item, index) => (
+      <span key={index}>
+        {index > 0 ? ', ' : ''}
+        <LinkExternal
+          prefLabel={_.get(item, 'tekst')}
+          uri={_.get(item, 'uri')}
+        />
+      </span>
+    ));
+
+  const { forholdTilKilde, kilde } = source;
 
   return (
     <div className="fdk-ingress">
       <span>{localization.compare.source}:&nbsp;</span>
-      {uri ? (
-        <LinkExternal uri={uri} prefLabel={prefLabel || uri} />
-      ) : (
-        getTranslateText(prefLabel)
-      )}
+      <span>
+        {forholdTilKilde} {kilde && !_.isEmpty(kilde) && kildeItems(kilde)}
+      </span>
     </div>
   );
 };
@@ -349,7 +358,14 @@ export const ConceptDetailsPage = ({
                 darkThemeBackground
               />
               {renderDescription(_.get(conceptItem, ['definition', 'text']))}
-              {renderSource(_.get(conceptItem, ['definition', 'source']))}
+              {renderSource({
+                forholdTilKilde: 'BasertPaaUri',
+                kilde: [
+                  { tekst: 'test', uri: 'http:google.com' },
+                  { tekst: 'test2', uri: 'http://vg.no' }
+                ]
+              })}
+              {renderSource({ forholdTilKilde: 'Egendefinert', kilde: [] })}
             </div>
 
             {renderRemark(_.get(conceptItem, ['definition', 'remark']))}
