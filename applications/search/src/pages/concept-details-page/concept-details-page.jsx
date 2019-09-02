@@ -139,16 +139,16 @@ const renderTerms = (altLabel, hiddenLabel) => {
 };
 
 const renderRange = range => {
-  if (!range) {
+  if (!range || _.isEmpty(range)) {
     return null;
   }
   return (
     <ListRegular title={localization.concept.range}>
       <div className="d-flex list-regular--item">
-        <a href={_.get(range, 'uri', '')}>
-          {getTranslateText(_.get(range, 'text')) ||
-            getTranslateText(_.get(range, 'uri'))}
-        </a>
+        <LinkExternal
+          uri={_.get(range, 'uri')}
+          prefLabel={_.get(range, 'text') || _.get(range, 'uri')}
+        />
       </div>
     </ListRegular>
   );
@@ -260,7 +260,10 @@ const renderStickyMenu = conceptItem => {
     });
   }
 
-  if (getTranslateText(_.get(conceptItem, ['definition', 'range']))) {
+  if (
+    getTranslateText(_.get(conceptItem, ['definition', 'range', 'text'])) &&
+    !_.isEmpty(_.get(conceptItem, ['definition', 'range']))
+  ) {
     menuItems.push({
       name: localization.concept.range,
       prefLabel: localization.concept.range
