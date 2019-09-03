@@ -16,6 +16,9 @@
   "provider": "Provider",
   "category": "Category",
   "topic": "Topic",
+  "anbefaltTerm": "Preferred term",
+  "definition": "Definition",
+  "responsible": "Responsible",
   "header": {
     "Registration of Datasets": "Registration of datasets",
     "Registration of API's": "Registration of API's"

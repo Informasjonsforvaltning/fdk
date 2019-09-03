@@ -71,14 +71,15 @@
       .react-autosuggest__suggestion--highlighted {
         background-color: $color-neutral-lighter;
       }
-
-      .react-autosuggest__suggestions-container {
-        margin-top: 50px;
-      }
     }
   }
 
+  .react-autosuggest__suggestions-container {
+    display: none;
+  }
+
   .react-autosuggest__suggestions-container--open {
+    display: block;
     z-index: 10;
     box-shadow: 0 3px 12px rgba(35, 55, 65, 0.55);
     margin-top: 8px;
@@ -87,6 +88,12 @@
 
     .react-autosuggest__suggestion {
       padding: 0.5em;
+    }
+  }
+
+  .react_autosuggest__suggestions-heading {
+    .first {
+      padding-left: 0.5em;
     }
   }
 }
