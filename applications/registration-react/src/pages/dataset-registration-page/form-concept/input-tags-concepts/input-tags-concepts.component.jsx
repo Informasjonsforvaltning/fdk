@@ -5,6 +5,7 @@ import TagsInput from 'react-tagsinput';
 import AutosizeInput from 'react-input-autosize';
 import _ from 'lodash';
 
+import localization from '../../../../lib/localization';
 import { searchConcepts } from '../../../../api/search-api/concepts';
 import { getTranslateText } from '../../../../lib/translateText';
 import '../../../../components/field-input-tags/field-input-tags.scss';
@@ -36,14 +37,41 @@ const handleChange = (props, tags, changed, changedIndexes) => {
   }
 };
 
+const renderSuggestionContainer = (containerProps, children) => (
+  <div {...containerProps}>
+    <div className="d-flex mb-3 react_autosuggest__suggestions-heading">
+      <span className="w-25 first">
+        <strong>{localization.anbefaltTerm}</strong>
+      </span>
+      <div className="w-75 ml-5 d-flex">
+        <span className="w-50">
+          <strong>{localization.definition}</strong>
+        </span>
+        <span className="w-50 ml-5">
+          <strong>{localization.responsible}</strong>
+        </span>
+      </div>
+    </div>
+    {children}
+  </div>
+);
+
 const renderSuggestion = suggestion => (
   <div className="d-flex mb-3">
     <span className="w-25">
       {getTranslateText(_.get(suggestion, 'prefLabel'))}
     </span>
-    <span className="w-75 ml-5">
-      {getTranslateText(_.get(suggestion, ['definition', 'text']))}
-    </span>
+    <div className="w-75 ml-5 d-flex">
+      <span className="w-50">
+        {getTranslateText(_.get(suggestion, ['definition', 'text']))}
+      </span>
+      <span className="w-50 ml-5">
+        {getTranslateText(
+          _.get(suggestion, ['publisher', 'prefLabel']) ||
+            _.get(suggestion, ['publisher', 'name'])
+        )}
+      </span>
+    </div>
   </div>
 );
 
@@ -142,6 +170,9 @@ class InputTagsFieldConcepts extends React.Component {
           shouldRenderSuggestions={value => value && value.trim().length > 1}
           getSuggestionValue={suggestion => getSuggestionValue(suggestion)}
           renderSuggestion={suggestion => renderSuggestion(suggestion)}
+          renderSuggestionsContainer={({ containerProps, children }) =>
+            renderSuggestionContainer(containerProps, children)
+          }
           inputProps={{ ...props, onChange: handleOnChange }}
           onSuggestionSelected={(e, { suggestion }) => {
             addTag(suggestion);

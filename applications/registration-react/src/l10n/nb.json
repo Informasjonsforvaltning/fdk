@@ -18,6 +18,9 @@
   "provider": "Tilbyder",
   "category": "Kategori",
   "topic": "Emne",
+  "anbefaltTerm": "Anbefalt term",
+  "definition": "Definisjon",
+  "responsible": "Ansvarlig",
   "header": {
     "Registration of Datasets": "Registrering av datasett",
     "Registration of API's": "Registrering av API'er"
