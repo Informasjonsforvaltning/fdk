@@ -1,16 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
 
 const TextAreaField = ({
   input,
   label,
   type,
   meta: { touched, error, warning },
-  showLabel
+  showLabel,
+  language
 }) => (
-  <div className="pl-2">
+  <div className={cx('pl-2', { 'multilingual-field': !!language })}>
     <label className="fdk-form-label w-100" htmlFor={input.name}>
       {showLabel ? label : null}
+      {language && <span className="language-indicator">{language}</span>}
       <textarea rows="5" {...input} type={type} className="form-control" />
     </label>
     {touched &&
@@ -24,7 +27,8 @@ TextAreaField.defaultProps = {
   input: null,
   label: null,
   type: null,
-  meta: null
+  meta: null,
+  language: null
 };
 
 TextAreaField.propTypes = {
@@ -32,7 +36,8 @@ TextAreaField.propTypes = {
   input: PropTypes.object,
   label: PropTypes.string,
   type: PropTypes.string,
-  meta: PropTypes.object
+  meta: PropTypes.object,
+  language: PropTypes.string
 };
 
 export default TextAreaField;

@@ -4,6 +4,7 @@ import { Field, FieldArray } from 'redux-form';
 import localization from '../../../lib/localization';
 import Helptext from '../../../components/helptext/helptext.component';
 import InputField from '../../../components/field-input/field-input.component';
+import MultilingualField from '../../../components/multilingual-field/multilingual-field.component';
 import TextAreaField from '../../../components/field-textarea/field-textarea.component';
 
 export const renderLandingpage = componentProps => (
@@ -19,7 +20,7 @@ export const renderLandingpage = componentProps => (
   </div>
 );
 
-export const FormTitle = () => (
+export const FormTitle = ({ languages }) => (
   <form>
     <div className="form-group">
       <Helptext
@@ -27,9 +28,10 @@ export const FormTitle = () => (
         required
         term="Dataset_title"
       />
-      <Field
-        name={`title.${localization.getLanguage()}`}
+      <MultilingualField
+        name="title"
         component={InputField}
+        languages={languages}
         label={localization.schema.title.titleLabel}
       />
     </div>
@@ -39,9 +41,10 @@ export const FormTitle = () => (
         required
         term="Dataset_description"
       />
-      <Field
-        name={`description.${localization.getLanguage()}`}
+      <MultilingualField
+        name="description"
         component={TextAreaField}
+        languages={languages}
         label={localization.schema.title.descriptionLabel}
       />
     </div>

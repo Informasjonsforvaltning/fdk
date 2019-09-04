@@ -19,12 +19,30 @@
 .form-group {
   margin-bottom: 4.8rem;
   .fdk-form-label {
+    display: block;
+    position: relative;
     font-weight: 500;
     margin-bottom: 0;
+
+    .language-indicator {
+      position: absolute;
+      top: 10px;
+      margin-left: 10px;
+      text-transform: uppercase;
+
+      + input,
+      + textarea {
+        padding-left: 40px;
+      }
+
+      + textarea {
+        min-height: 41px;
+      }
+    }
   }
 
-  .fdk-form-field {
-
+  .multilingual-field:nth-of-type(n + 2) {
+    margin-top: 10px;
   }
 }
 

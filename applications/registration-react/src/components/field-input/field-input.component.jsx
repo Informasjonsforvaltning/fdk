@@ -1,17 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
 
 const InputField = ({
   input,
   label,
   type,
   meta: { touched, error, warning },
-  showLabel
+  showLabel,
+  language
 }) => (
-  <div className="pl-2">
+  <div className={cx('pl-2', { 'multilingual-field': !!language })}>
     <div className="d-flex align-items-center">
       <label className="fdk-form-label w-100" htmlFor={input.name}>
         {showLabel ? label : null}
+        {language && <span className="language-indicator">{language}</span>}
         <input {...input} type={type} className="form-control" />
       </label>
     </div>
@@ -26,7 +29,8 @@ InputField.defaultProps = {
   input: null,
   label: null,
   type: null,
-  meta: null
+  meta: null,
+  language: null
 };
 
 InputField.propTypes = {
@@ -34,7 +38,8 @@ InputField.propTypes = {
   input: PropTypes.object,
   label: PropTypes.string,
   type: PropTypes.string,
-  meta: PropTypes.object
+  meta: PropTypes.object,
+  language: PropTypes.string
 };
 
 export default InputField;
