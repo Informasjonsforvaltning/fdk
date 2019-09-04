@@ -10,10 +10,11 @@ exports[`should render FormTitle, { renderLandingpage  correctly 1`] = `
       term="Dataset_title"
       title="Tittel"
     />
-    <Field
+    <MultilingualField
       component={[Function]}
       label="Tittel"
-      name="title.nb"
+      languages={Array []}
+      name="title"
     />
   </div>
   <div
@@ -24,10 +25,11 @@ exports[`should render FormTitle, { renderLandingpage  correctly 1`] = `
       term="Dataset_description"
       title="Beskrivelse av datasettet"
     />
-    <Field
+    <MultilingualField
       component={[Function]}
       label="Beskrivelse"
-      name="description.nb"
+      languages={Array []}
+      name="description"
     />
   </div>
   <div

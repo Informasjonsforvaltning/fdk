@@ -100,6 +100,8 @@ export function DatasetRegistrationPagePure(props) {
     datasetId
   ]);
 
+  const languages = ['nb', 'nn', 'en'];
+
   return (
     <div className="container">
       <div className="row mb-2 mb-md-5">
@@ -122,6 +124,7 @@ export function DatasetRegistrationPagePure(props) {
                   datasetItem={datasetItem}
                   catalogId={catalogId}
                   datasetId={datasetId}
+                  languages={languages}
                 />
               </FormTemplateWithState>
 
