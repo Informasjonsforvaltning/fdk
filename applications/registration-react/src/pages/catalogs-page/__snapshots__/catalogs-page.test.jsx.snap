@@ -20,7 +20,13 @@ exports[`should render RegCatalogs correctly 1`] = `
       </div>
       <CardGroup
         tag="div"
-      />
+      >
+        <ItemsCountResolver
+          catalogId="910244132"
+          key="concepts-910244132"
+          type="concepts"
+        />
+      </CardGroup>
     </div>
   </div>
 </div>
