@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Field, FieldArray } from 'redux-form';
 
 import localization from '../../../lib/localization';
@@ -69,3 +70,11 @@ export const FormTitle = ({ languages }) => (
     </div>
   </form>
 );
+
+FormTitle.defaultProps = {
+  languages: []
+};
+
+FormTitle.propTypes = {
+  languages: PropTypes.array
+};

@@ -21,6 +21,7 @@ import { StatusBar } from '../../components/status-bar/status-bar.component';
 import { ConnectedFormPublish } from './connected-form-publish/connected-form-publish';
 import { FormDistributionApi } from './form-distribution-api/form-distribution-api';
 import { ConnectedFormLOS } from './form-los/connected-form-los.component';
+import LanguagePicker from '../../components/language-picker/language-picker.component';
 import {
   accessRightsValues,
   conceptValues,
@@ -75,7 +76,9 @@ export function DatasetRegistrationPagePure(props) {
     datasetId,
     losItems,
     history,
-    dispatchDeleteDataset
+    dispatchDeleteDataset,
+    languages,
+    toggleInputLanguage
   } = props;
 
   const {
@@ -100,8 +103,6 @@ export function DatasetRegistrationPagePure(props) {
     datasetId
   ]);
 
-  const languages = ['nb', 'nn', 'en'];
-
   return (
     <div className="container">
       <div className="row mb-2 mb-md-5">
@@ -114,6 +115,10 @@ export function DatasetRegistrationPagePure(props) {
           openLicenseItems &&
           losItems && (
             <div className="col-12">
+              <LanguagePicker
+                languages={languages}
+                toggleInputLanguage={toggleInputLanguage}
+              />
               <FormTemplateWithState
                 title={localization.datasets.formTemplates.title}
                 required
@@ -361,7 +366,9 @@ DatasetRegistrationPagePure.defaultProps = {
   openLicenseItems: null,
   datasetFormStatus: null,
   history: null,
-  losItems: null
+  losItems: null,
+  languages: [],
+  toggleInputLanguage: _.noop
 };
 
 DatasetRegistrationPagePure.propTypes = {
@@ -379,5 +386,7 @@ DatasetRegistrationPagePure.propTypes = {
   openLicenseItems: PropTypes.array,
   datasetFormStatus: PropTypes.object,
   history: PropTypes.object,
-  losItems: PropTypes.array
+  losItems: PropTypes.array,
+  languages: PropTypes.array,
+  toggleInputLanguage: PropTypes.func
 };

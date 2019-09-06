@@ -72,8 +72,10 @@
     "norwegian-nb": "Norwegian (bokmål)",
     "norwegian-nn": "Norwegian (nynorsk)",
     "english-en": "English",
-    "ENG": "English",
+    "ENG": "English (EN)",
     "NOR": "Norwegian",
+    "NO_NB": "Norwegian bokmål (NB)",
+    "NO_NN": "Norwegian nynorsk (NN)",
     "SMI": "Sami"
   },
   "menu": {
