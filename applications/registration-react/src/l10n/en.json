@@ -403,8 +403,9 @@
     "apis": "API-catalog",
     "concepts": "Concept Catalog",
     "type": {
-      "datasets": "datasett",
-      "apis": "API-er"
+      "datasets": "datasets",
+      "apis": "APIs",
+      "concepts": "concepts"
     }
   },
   "loginDialog": {

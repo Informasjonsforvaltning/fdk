@@ -42,6 +42,13 @@ exports[`should render CatalogItem correctly with missing itemsCount 1`] = `
       >
         Datasettkatalog
       </h3>
+      <span
+        className="fdk-text-size-small fdk-color-neutral-dark"
+      >
+        0
+         
+        datasett
+      </span>
     </div>
   </Link>
 </div>
