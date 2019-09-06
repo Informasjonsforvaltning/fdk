@@ -48,4 +48,13 @@ public class RDFToModelTransformerTest {
         assertEquals("https://somewhere.com",testConcept.getDefinition().getRange().getUri());
         assertEquals("someomfangtekst",testConcept.getDefinition().getRange().getText().get("nb"));
     }
+
+    @Test
+    public void testSourceInConceptAndHarvestFromConceptCatalogue() throws Throwable {
+        Reader reader = new InputStreamReader(new ClassPathResource("ConceptCatalogueHarvest.turtle").getInputStream());
+
+        List<ConceptDenormalized> concepts = transformer.getConceptsFromStream(reader);
+
+        assertEquals("We should get 2 concept", 2, concepts.size());
+    }
 }
