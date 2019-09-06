@@ -260,19 +260,21 @@ export const SearchPage = props => {
             />
           </Route>
         </Switch>
-        <div className="twitter-container d-flex justify-content-end mt-5">
-          <div className="twitter">
-            <h2>{localization.newsFromDatakatalogenOnTwitter}</h2>
-            <a
-              className="twitter-timeline"
-              data-width="600"
-              data-height="400"
-              href="https://twitter.com/datakatalogen?ref_src=twsrc%5Etfw"
-            >
-              Tweets by datakatalogen
-            </a>
+        {!getConfig().themeNap && (
+          <div className="twitter-container d-flex justify-content-end mt-5">
+            <div className="twitter">
+              <h2>{localization.newsFromDatakatalogenOnTwitter}</h2>
+              <a
+                className="twitter-timeline"
+                data-width="600"
+                data-height="400"
+                href="https://twitter.com/datakatalogen?ref_src=twsrc%5Etfw"
+              >
+                Tweets by datakatalogen
+              </a>
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );
