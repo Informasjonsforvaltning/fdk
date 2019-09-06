@@ -1,0 +1,16 @@
+.language-picker {
+  margin-bottom: 40px;
+
+  p {
+    margin-bottom: 10px;
+    font-size: 110%;
+  }
+
+  .language-button-group {
+    display: flex;
+
+    :nth-of-type(n + 2) {
+      margin-left: 10px;
+    }
+  }
+}

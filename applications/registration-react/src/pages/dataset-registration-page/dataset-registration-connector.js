@@ -6,6 +6,7 @@ import {
   selectorForDataset,
   selectorForDatasetsInCatalog
 } from '../../redux/modules/datasets';
+import { toggleInputLanguage } from '../../components/language-picker/redux/actions';
 import {
   REFERENCEDATA_PATH_FREQUENCY,
   REFERENCEDATA_PATH_LOS,
@@ -18,7 +19,11 @@ import { selectorForDatasetFormStatus } from '../../redux/modules/dataset-form-s
 import { datasetRegistrationEnsureDataThunk } from './dataset-registration-ensure-data-thunk';
 
 const mapStateToProps = (state, { catalogId, datasetId }) => {
-  const { form, referenceData } = state;
+  const {
+    form,
+    referenceData,
+    inputLanguage: { languages }
+  } = state;
   const datasetFormStatus = selectorForDatasetFormStatus(datasetId)(state);
   const datasetItem = selectorForDataset(catalogId, datasetId)(state);
   const referenceDatasetsItems = Object.values(
@@ -47,13 +52,15 @@ const mapStateToProps = (state, { catalogId, datasetId }) => {
       'items',
       REFERENCEDATA_PATH_OPENLICENCES
     ]),
-    losItems: _.get(referenceData, ['items', REFERENCEDATA_PATH_LOS])
+    losItems: _.get(referenceData, ['items', REFERENCEDATA_PATH_LOS]),
+    languages
   };
 };
 
 const mapDispatchToProps = {
   dispatchEnsureData: datasetRegistrationEnsureDataThunk,
-  dispatchDeleteDataset: deleteDatasetThunk
+  dispatchDeleteDataset: deleteDatasetThunk,
+  toggleInputLanguage
 };
 
 export const datasetRegistrationConnector = connect(

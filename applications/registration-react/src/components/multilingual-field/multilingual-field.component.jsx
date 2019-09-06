@@ -3,15 +3,22 @@ import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 
 const MultilingualField = ({ name, component, languages, label }) =>
-  languages.map(language => (
-    <Field
-      key={language}
-      name={`${name}.${language}`}
-      label={`${label}.${language}`}
-      component={component}
-      language={language}
-    />
-  ));
+  languages.map(({ code, selected }) => {
+    const isOnlyOneSelectedLanguage =
+      languages.filter(({ selected }) => selected).length === 1;
+
+    return (
+      selected && (
+        <Field
+          key={code}
+          name={`${name}.${code}`}
+          label={`${label}.${code}`}
+          component={component}
+          language={isOnlyOneSelectedLanguage ? undefined : code}
+        />
+      )
+    );
+  });
 
 MultilingualField.defaultProps = {
   name: null,
