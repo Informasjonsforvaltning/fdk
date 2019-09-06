@@ -2,6 +2,32 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+# [1.8.0](https://github.com/Informasjonsforvaltning/fdk/compare/v1.7.0...v1.8.0) (2019-09-06)
+
+
+### Bug Fixes
+
+* **concept-cat:** [#2197](https://github.com/Informasjonsforvaltning/fdk/issues/2197) change bruksområde type to list ([3aeebd9](https://github.com/Informasjonsforvaltning/fdk/commit/3aeebd9))
+* **registration-react:** Import bootstrap scss from js instead of scss, so that it would be bundled into vendors.css ([29dde1c](https://github.com/Informasjonsforvaltning/fdk/commit/29dde1c))
+* **search:** [#2179](https://github.com/Informasjonsforvaltning/fdk/issues/2179) add concept application to concept details page ([b6c9b82](https://github.com/Informasjonsforvaltning/fdk/commit/b6c9b82))
+
+
+### Features
+
+* **registration-react:** [#1760](https://github.com/Informasjonsforvaltning/fdk/issues/1760) add 'Ansvarlig', 'tilbyder' and 'eier' at concept live search ([9edc1da](https://github.com/Informasjonsforvaltning/fdk/commit/9edc1da))
+* **registration-react:** [#2140](https://github.com/Informasjonsforvaltning/fdk/issues/2140) Show the count of concepts on the concept registration link ([22f033e](https://github.com/Informasjonsforvaltning/fdk/commit/22f033e))
+* **registration-react:** Enable development on host ([9746e15](https://github.com/Informasjonsforvaltning/fdk/commit/9746e15))
+* **registration-react:** Read REGISTRATION_API_HOST from environment variable ([d5048c0](https://github.com/Informasjonsforvaltning/fdk/commit/d5048c0))
+* **search:** [#2139](https://github.com/Informasjonsforvaltning/fdk/issues/2139) Remove feature toggle from concepts link ([f612bb9](https://github.com/Informasjonsforvaltning/fdk/commit/f612bb9))
+* **sso:** [#2136](https://github.com/Informasjonsforvaltning/fdk/issues/2136) Allow development host for concept-catalogue-gui ([ca2e3c7](https://github.com/Informasjonsforvaltning/fdk/commit/ca2e3c7))
+* **sso:** Allow development host as fdk-registration-public client ([88f3a5a](https://github.com/Informasjonsforvaltning/fdk/commit/88f3a5a))
+
+
+
+# Change Log
+
+All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
 # [1.7.0](https://github.com/Informasjonsforvaltning/fdk/compare/v1.6.0...v1.7.0) (2019-08-26)
 
 
