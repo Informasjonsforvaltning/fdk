@@ -17,6 +17,7 @@ import {
   PATHNAME_ABOUT_REGISTRATION
 } from '../../constants/constants';
 import './app-nav-bar.scss';
+import { getConfig } from '../../config';
 
 export function AppNavBar(props) {
   return (
@@ -30,7 +31,11 @@ export function AppNavBar(props) {
               </span>
               <img
                 className="fdk-logo"
-                src="/static/img/fdk-logo@2x.png"
+                src={
+                  getConfig().themeNap
+                    ? '/static/img/logo-transport.svg'
+                    : '/static/img/fdk-logo@2x.png'
+                }
                 alt="Logo for Felles datakatalog"
               />
             </a>
