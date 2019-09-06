@@ -58,14 +58,16 @@ public class RDFToModelTransformer {
         for (Resource betydningsbeskrivelse : betydningsbeskivelses) {
             definition.setRange(extractTextAndUri(betydningsbeskrivelse, SKOSNO.omfang));
 
+            List<TextAndURI> sources = extractSources(definition, betydningsbeskrivelse);
+            definition.setSources(sources);
 
             //We may need to merge the different language strings from the different betydningsbeskrivelses
-            Map<String, String> definitionAsLanguageLiteral = extractLanguageLiteral(betydningsbeskrivelse, RDFS.label);
+            Map<String, String> definitionAsLanguageLiteral = extractLanguageLiteralFromResource(betydningsbeskrivelse, RDFS.label);
             if (definitionAsLanguageLiteral != null) {
                 definition.getText().putAll(definitionAsLanguageLiteral);
             }
 
-            Map<String, String> noteAsLanguageLiteral = extractLanguageLiteral(betydningsbeskrivelse, SKOS.scopeNote);
+            Map<String, String> noteAsLanguageLiteral = extractLanguageLiteralFromResource(betydningsbeskrivelse, SKOS.scopeNote);
             if (noteAsLanguageLiteral != null) {
                 definition.getRemark().putAll(noteAsLanguageLiteral);
             }
@@ -80,6 +82,50 @@ public class RDFToModelTransformer {
             }
         }
         return definition;
+    }
+
+    public static List<TextAndURI> extractSources(Definition definition, Resource resource) {
+        //Sources are implemented as an array of rdfs:label & rdfs:seeAlso in a dct:source
+
+        List<TextAndURI> results = new ArrayList<>();
+        Statement betydningsBeskrivelseContainingTheSources = resource.getProperty(SKOSNO.betydningsbeskrivelse);
+
+        if (betydningsBeskrivelseContainingTheSources != null) {
+            Resource realResource = betydningsBeskrivelseContainingTheSources.getResource();
+            Statement sourceStatement = realResource.getProperty(DCTerms.source);
+            Statement forholdTilKildeStmt = realResource.getProperty(SKOSNO.forholdTilKilde);
+            definition.setSourceRelationship(forholdTilKildeStmt.getObject().asResource().getLocalName());
+
+            results.addAll(directlyExtractSources(sourceStatement.getResource()));
+            logger.debug(forholdTilKildeStmt.toString());
+        }
+        return results;
+    }
+
+    public static List<TextAndURI> directlyExtractSources(Resource theSource) {
+        List<TextAndURI> results = new ArrayList<>();
+
+        StmtIterator iterator = theSource.listProperties(RDFS.label);
+        while (iterator.hasNext()) {
+            Statement stmt = iterator.next();
+            Map<String, String> theLabelContainingTheText = extractLiteralFromStatement(stmt);
+
+            TextAndURI tau = new TextAndURI();
+            tau.setText(theLabelContainingTheText);
+            results.add(tau);
+        }
+
+        StmtIterator seeAlsoIterator = theSource.listProperties(RDFS.seeAlso);
+        int indexPointer = 0;
+
+        while (seeAlsoIterator.hasNext()) {
+            Statement stmt = seeAlsoIterator.next();
+            String theURI = stmt.getObject().asResource().getLocalName(); //TODO: Verify with frode that this actually makes sense.
+            results.get(indexPointer).setUri(theURI); //This is by design brittle.
+            indexPointer++;
+        }
+
+        return results;
     }
 
     public static List<Map<String, String>> extractLanguageLiteralFromListOfLabels(Resource resource, Property property) {
@@ -115,7 +161,15 @@ public class RDFToModelTransformer {
         }
     }
 
-    public static Map<String, String> extractLanguageLiteral(Resource resource, Property property) {
+    public static Map<String, String> extractLiteralFromStatement(Statement stmt) {
+        Map<String, String> result = new HashMap<>();
+        String lang = stmt.getLanguage();
+        String value = stmt.getString();
+        result.put(lang, value);
+        return result;
+    }
+
+    public static Map<String, String> extractLanguageLiteralFromResource(Resource resource, Property property) {
         Map<String, String> map = new HashMap<>();
 
         StmtIterator iterator = resource.listProperties(property);
@@ -163,7 +217,7 @@ public class RDFToModelTransformer {
         RDFNode node = stmt.getObject();
         Resource subResource = node.asResource();
 
-        return extractLanguageLiteral(subResource, RDFS.label);
+        return extractLanguageLiteralFromResource(subResource, RDFS.label);
     }
 
 
@@ -175,7 +229,7 @@ public class RDFToModelTransformer {
         RDFNode node = stmt.getObject();
         Resource subResource = node.asResource();
 
-        return extractLanguageLiteral(subResource, SKOSXL.literalForm);
+        return extractLanguageLiteralFromResource(subResource, SKOSXL.literalForm);
     }
 
     public static List<Resource> getNamedSubPropertiesAsListOfResources(Resource source, Property target) {
@@ -235,9 +289,9 @@ public class RDFToModelTransformer {
 
         concept.setPublisher(extractPublisher(conceptResource, DCTerms.publisher));
 
-        concept.setSubject(extractLanguageLiteral(conceptResource, DCTerms.subject));
+        concept.setSubject(extractLanguageLiteralFromResource(conceptResource, DCTerms.subject));
 
-        concept.setExample(extractLanguageLiteral(conceptResource, SKOS.example));
+        concept.setExample(extractLanguageLiteralFromResource(conceptResource, SKOS.example));
 
         concept.setApplication(extractLanguageMapList(conceptResource, SKOSNO.bruksområde));
 
@@ -258,7 +312,7 @@ public class RDFToModelTransformer {
 
         Resource omfangResource = resource.getPropertyResourceValue(property);
 
-        textURI.setText(extractLanguageLiteral(omfangResource, RDFS.label));
+        textURI.setText(extractLanguageLiteralFromResource(omfangResource, RDFS.label));
 
         Statement theURI = omfangResource.getProperty(RDFS.seeAlso);
         if (theURI != null) {

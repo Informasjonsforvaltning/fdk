@@ -1,0 +1,80 @@
+@prefix schema: <http://schema.org/> .
+@prefix adms:  <http://www.w3.org/ns/adms#> .
+@prefix spdx:  <http://spdx.org/rdf/terms#> .
+@prefix iso:   <http://iso.org/25012/2008/dataquality/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix skosxl: <http://www.w3.org/2008/05/skos-xl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix dqv:   <http://www.w3.org/ns/dqv#> .
+@prefix skosno: <http://difi.no/skosno#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix vcard: <http://www.w3.org/2006/vcard/ns#> .
+@prefix xkos:  <http://rdf-vocabulary.ddialliance.org/xkos#> .
+@prefix oa:    <http://www.w3.org/ns/prov#> .
+@prefix dct:   <http://purl.org/dc/terms/> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix dcatno: <http://difi.no/dcatno#> .
+@prefix dcat:  <http://www.w3.org/ns/dcat#> .
+@prefix foaf:  <http://xmlns.com/foaf/0.1/> .
+
+<https://registrering-begrep.ut1.fellesdatakatalog.brreg.no/910244132/750689fb-049e-4e5e-8162-9f8e850e010d>
+        a                             skos:Concept ;
+        skosno:betydningsbeskrivelse  [ a                             skosno:Definisjon ;
+                                        rdfs:label                    "saft uten tilsatt sukker som er basert på epler"@nb ;
+                                        skosno:betydningsbeskrivelse  [ skosno:forholdTilKilde  skosno:egendefinert ;
+                                                                        dct:source              [ rdfs:label    "some more text"@nb , "some text"@nb ;
+                                                                                                  rdfs:seeAlso  <www.uio.no> , <www.uib.no>
+                                                                                                ]
+                                                                      ] ;
+                                        skosno:omfang                 [ rdfs:label
+                                                          ""@nb ] ;
+                                        dct:audience                  skosno:allmennheten ;
+                                        dct:modified                  "2019-06-21"^^xsd:date ;
+                                        skos:scopeNote                ""@nb
+                                      ] ;
+        skosno:bruksområde            "Særavgift/Særavgift - Avgift på alkoholfrie drikkevarer"@nb ;
+        dct:identifier                "750689fb-049e-4e5e-8162-9f8e850e010d" ;
+        dct:publisher                 <https://data.brreg.no/enhetsregisteret/api/enheter/910244132> ;
+        skos:example                  "DummyEksempel"@nb ;
+        skosxl:altLabel               [ a  skosxl:Label ] ;
+        skosxl:hiddenLabel            [ a  skosxl:Label ] ;
+        skosxl:prefLabel              [ a                   skosxl:Label ;
+                                        skosxl:literalForm  "eplesaft"@no
+                                      ] ;
+        dcat:contactPoint             [ a                   vcard:Organization ;
+                                        vcard:hasEmail      <mailto:> ;
+                                        vcard:hasTelephone  <tel:>
+                                      ] .
+
+<https://registrering-begrep.ut1.fellesdatakatalog.brreg.no/>
+        a               skos:Collection ;
+        rdfs:label      "910244132 sin samling" ;
+        dct:identifier  "https://registrering-begrep.ut1.fellesdatakatalog.brreg.no/" ;
+        dct:publisher   <https://data.brreg.no/enhetsregisteret/api/enheter/910244132> ;
+        skos:member     <https://registrering-begrep.ut1.fellesdatakatalog.brreg.no/910244132/613f38b8-9ec4-4473-a45f-bbf260f1c090> , <https://registrering-begrep.ut1.fellesdatakatalog.brreg.no/910244132/750689fb-049e-4e5e-8162-9f8e850e010d> .
+
+<https://registrering-begrep.ut1.fellesdatakatalog.brreg.no/910244132/613f38b8-9ec4-4473-a45f-bbf260f1c090>
+        a                             skos:Concept ;
+        skosno:betydningsbeskrivelse  [ a               skosno:Definisjon ;
+                                        rdfs:label      "verdien av nettoformue fremkommet som resultat av fastsetting"@nb ;
+                                        skosno:omfang   [ rdfs:label    "someomfangtekst"@nb ;
+                                                          rdfs:seeAlso  <http://somewhere.com>
+                                                        ] ;
+                                        dct:audience    skosno:allmennheten ;
+                                        dct:modified    "2019-06-21"^^xsd:date ;
+                                        skos:scopeNote  ""@nb
+                                      ] ;
+        skosno:bruksområde            "Særavgift/Særavgift - Avgift på alkoholfrie drikkevarer"@nb ;
+        dct:identifier                "613f38b8-9ec4-4473-a45f-bbf260f1c090" ;
+        dct:publisher                 <https://data.brreg.no/enhetsregisteret/api/enheter/910244132> ;
+        skos:example                  "DummyEksempel2"@nb ;
+        skosxl:altLabel               [ a  skosxl:Label ] ;
+        skosxl:hiddenLabel            [ a  skosxl:Label ] ;
+        skosxl:prefLabel              [ a                   skosxl:Label ;
+                                        skosxl:literalForm  "fastsatt nettoformue"@no
+                                      ] ;
+        dcat:contactPoint             [ a                   vcard:Organization ;
+                                        vcard:hasEmail      <mailto:noen@gmail.com> ;
+                                        vcard:hasTelephone  <tel:55555555>
+                                      ] .
