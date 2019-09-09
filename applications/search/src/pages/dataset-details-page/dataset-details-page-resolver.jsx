@@ -1,7 +1,9 @@
 import _ from 'lodash';
 import { resolve } from 'react-resolver';
 import { getDataset, getDatasetByURI } from '../../api/datasets';
-import { getApi, getApisByDatasetUri } from '../../api/apis';
+import { apisSearch, extractApis, getApi } from '../../api/apis';
+
+export const getApisByDatasetUri = dataseturi => apisSearch({ dataseturi }).then(extractApis).catch(() => []);
 
 const memoizedGetDataset = _.memoize(getDataset);
 const memoizedGetDatasetByURI = _.memoize(getDatasetByURI);
@@ -18,8 +20,7 @@ const mapProps = {
     const promiseMap = urlArray.map(url =>
       memoizedGetDatasetByURI(encodeURIComponent(url))
     );
-    const result = await Promise.all(promiseMap);
-    return result;
+    return Promise.all(promiseMap);
   },
   apis: async props => {
     const datasetItem = await memoizedGetDataset(props.match.params.id);
