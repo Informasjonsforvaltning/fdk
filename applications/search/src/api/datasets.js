@@ -1,16 +1,9 @@
 import axios from 'axios';
-import qs from 'qs';
 
 export const datasetsUrlBase = '/datasets';
 
-export const searchAggregations =
-  'accessRights,theme,orgPath,provenance,spatial,los';
-
-export const datasetsSearchUrl = query =>
-  `${datasetsUrlBase}${qs.stringify(
-    { ...query, aggregations: searchAggregations },
-    { addQueryPrefix: true }
-  )}`;
+export const datasetsSearch = params =>
+  axios(datasetsUrlBase, { params }).then(r => r.data);
 
 export const getDataset = id =>
   axios
