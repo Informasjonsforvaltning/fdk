@@ -1,14 +1,17 @@
 import _ from 'lodash';
+import first from 'lodash/first';
 import { resolve } from 'react-resolver';
 import { ApiDetailsPage } from './api-details-page';
 import { getApi } from '../../api/apis';
 import { getDatasetByURI } from '../../api/datasets';
-import { getinformationModelByHarvestSourceUri } from '../../api/informationmodels';
+import { extractInformationmodels, informationmodelsSearch } from '../../api/informationmodels';
+
+const getInformationModelByHarvestSourceUri = (harvestSourceUri) => informationmodelsSearch({ harvestSourceUri }).then(extractInformationmodels).then(first);
 
 const memoizedGetApi = _.memoize(getApi);
 const memoizedGetDatasetByURI = _.memoize(getDatasetByURI);
-const memoizedGetinformationModelByHarvestSourceUri = _.memoize(
-  getinformationModelByHarvestSourceUri
+const memoizedGetInformationModelByHarvestSourceUri = _.memoize(
+  getInformationModelByHarvestSourceUri
 );
 
 const mapProps = {
@@ -29,7 +32,7 @@ const mapProps = {
 
     const harvestSourceUri = _.get(apiItem, 'harvestSourceUri');
 
-    const informationmodel = await memoizedGetinformationModelByHarvestSourceUri(
+    const informationmodel = await memoizedGetInformationModelByHarvestSourceUri(
       harvestSourceUri
     );
 
