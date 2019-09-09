@@ -102,9 +102,9 @@ function _renderFilterModal({
 
 function _renderHits({ datasetItems, referenceData }) {
   if (datasetItems && Array.isArray(datasetItems)) {
-    return datasetItems.map(item => (
-      <ErrorBoundary key={item._source.id}>
-        <SearchHitItem result={item} referenceData={referenceData} />
+    return datasetItems.map(dataset => (
+      <ErrorBoundary key={dataset.id}>
+        <SearchHitItem dataset={dataset} referenceData={referenceData} />
       </ErrorBoundary>
     ));
   }

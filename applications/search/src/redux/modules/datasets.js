@@ -1,8 +1,7 @@
 import _ from 'lodash';
 import qs from 'qs';
 
-import { normalizeAggregations } from '../../lib/normalizeAggregations';
-import { datasetsSearch } from '../../api/datasets';
+import { datasetsSearch, extractAggregations, extractDatasets, extractTotal } from '../../api/datasets';
 import { reduxFsaThunk } from '../../lib/redux-fsa-thunk';
 
 export const DATASETS_REQUEST = 'DATASETS_REQUEST';
@@ -51,11 +50,9 @@ export function datasetsReducer(state = initialState, action) {
     case DATASETS_SUCCESS:
       return {
         ...state,
-        datasetItems: _.get(action.payload, ['hits', 'hits']),
-        datasetAggregations: _.get(normalizeAggregations(action.payload), [
-          'aggregations'
-        ]),
-        datasetTotal: _.get(action.payload, ['hits', 'total']),
+        datasetItems: extractDatasets(action.payload),
+        datasetAggregations: extractAggregations(action.payload),
+        datasetTotal: extractTotal(action.payload),
         meta: {
           isFetching: false,
           lastFetch: Date.now(),
