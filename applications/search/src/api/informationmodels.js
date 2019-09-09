@@ -7,10 +7,7 @@ export const informationmodelsSearch = params =>
   axios.get(informationmodelsUrlBase, { params }).then(r => r.data);
 
 export const getInformationmodel = id =>
-  axios
-    .get(`${informationmodelsUrlBase}/${id}`)
-    .then(response => response.data)
-    .catch(e => console.error(JSON.stringify(e)));
+  axios.get(`${informationmodelsUrlBase}/${id}`).then(r => r.data).catch(() => null);
 
 export const extractInformationmodels = searchResponse => get(searchResponse, ['_embedded', 'informationmodels']);
 

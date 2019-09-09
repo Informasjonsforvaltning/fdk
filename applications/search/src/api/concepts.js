@@ -6,10 +6,7 @@ export const conceptsUrlBase = '/api/concepts';
 export const conceptsSearch = params => axios(conceptsUrlBase, { params }).then(r => r.data);
 
 export const getConcept = async id =>
-  axios
-    .get(`${conceptsUrlBase}/${id}`)
-    .then(response => response.data)
-    .catch(console.error);
+  axios.get(`${conceptsUrlBase}/${id}`).then(r => r.data).catch(() => null);
 
 export const extractConcepts = searchResponse => get(searchResponse, ['_embedded', 'concepts']);
 
