@@ -4,13 +4,7 @@ import axios from 'axios';
 
 export const apisUrlBase = '/api/apis';
 
-export const searchAggregations = 'formats,orgPath';
-
-export const apisSearchUrl = query =>
-  `${apisUrlBase}${qs.stringify(
-    { ...query, aggregations: searchAggregations },
-    { addQueryPrefix: true }
-  )}`;
+export const apisSearch = params => axios(apisUrlBase, { params }).then(r => r.data);
 
 // NOTE: Response of this function can be mocked using mock files in src/mock
 export const getApi = id =>
@@ -42,3 +36,15 @@ export const getApisByDatasetUri = async (datasetUri, returnFields) => {
 
   return _.get(response, ['data', 'hits']);
 };
+
+export function extractApis(searchResponse) {
+  return searchResponse && searchResponse.hits || [];
+}
+
+export function extractTotal(searchResponse) {
+  return searchResponse && searchResponse.total;
+}
+
+export function extractAggregations(searchResponse) {
+  return searchResponse && searchResponse.aggregations;
+}
