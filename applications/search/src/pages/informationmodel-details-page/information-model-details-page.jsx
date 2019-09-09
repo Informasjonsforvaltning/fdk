@@ -90,7 +90,7 @@ const renderStickyMenu = (informationModelItem, referencedApis) => {
       prefLabel: localization.infoMod.infoModHeader
     });
   }
-  if (!_.isEmpty(_.get(referencedApis, 'hits'))) {
+  if (!_.isEmpty(referencedApis)) {
     menuItems.push({
       name: localization.infoMod.relatedAPIHeader,
       prefLabel: localization.infoMod.relatedAPIHeader
@@ -159,7 +159,7 @@ export const InformationModelDetailsPage = ({
 
             {renderModels(getSchema(informationModelItem))}
 
-            {renderRelatedApi(_.get(referencedApis, 'hits'), publisherItems)}
+            {renderRelatedApi(referencedApis, publisherItems)}
             <div style={{ height: '75vh' }} />
           </section>
         </div>
@@ -172,12 +172,12 @@ InformationModelDetailsPage.defaultProps = {
   informationModelItem: null,
   publisherItems: null,
   fetchPublishersIfNeeded: () => {},
-  referencedApis: null
+  referencedApis: []
 };
 
 InformationModelDetailsPage.propTypes = {
   informationModelItem: PropTypes.object,
   publisherItems: PropTypes.object,
   fetchPublishersIfNeeded: PropTypes.func,
-  referencedApis: PropTypes.object
+  referencedApis: PropTypes.array
 };
