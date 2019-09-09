@@ -4,12 +4,12 @@ import { getDatasetStats } from '../../../api/get-dataset-stats';
 import { ConnectedReportStats } from './connected-report-stats';
 import { getApiStats } from '../../../api/get-api-stats';
 import { getConceptStats } from '../../../api/get-concept-stats';
-import { getConceptsByURIs } from '../../../api/concepts';
+import { conceptsSearch, extractConcepts } from '../../../api/concepts';
 
 const memoizedGetDatasetStats = _.memoize(getDatasetStats);
 const memoizedGetApiStats = _.memoize(getApiStats);
 const memoizedGetConceptStats = _.memoize(getConceptStats);
-const memoizedGetConceptsByURIs = _.memoize(getConceptsByURIs);
+const memoizedSearchConcepts = _.memoize(conceptsSearch, JSON.stringify);
 
 const mapProps = {
   datasetStats: props => memoizedGetDatasetStats(_.get(props, 'orgPath')),
@@ -34,10 +34,9 @@ const mapProps = {
       }, [])
       .slice(0, 4);
 
-    const result = await Promise.resolve(
-      memoizedGetConceptsByURIs(mostUsedConceptsArray.join())
-    );
-    return _.get(result, ['_embedded', 'concepts']);
+    return Promise.resolve(
+      memoizedSearchConcepts({ uris: mostUsedConceptsArray.join() })
+    ).then(extractConcepts);
   }
 };
 
