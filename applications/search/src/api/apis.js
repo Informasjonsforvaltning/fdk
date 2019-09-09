@@ -13,12 +13,6 @@ export const getApi = id =>
     .then(response => response.data)
     .catch(e => console.error(JSON.stringify(e)));
 
-export const getApiByHarvestSourceUri = harvestSourceUri =>
-  axios
-    .get(`${apisUrlBase}?harvestSourceUri=${harvestSourceUri}`)
-    .then(response => response.data)
-    .catch(e => console.error(JSON.stringify(e)));
-
 export const getApisByDatasetUri = async (datasetUri, returnFields) => {
   const query = `${qs.stringify(
     {
