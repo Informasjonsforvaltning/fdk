@@ -33,7 +33,7 @@ export function extractStats(data) {
 const statsAggregations = `formats,orgPath,firstHarvested,publisher,openAccess,openLicence,freeUsage`;
 
 export const statsUrl = query =>
-  `${apisUrlBase}${qs.stringify(
+  `${apisUrlBase()}${qs.stringify(
     { ...query, size: 0, aggregations: statsAggregations },
     { addQueryPrefix: true }
   )}`;

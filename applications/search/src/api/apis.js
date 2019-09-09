@@ -1,12 +1,13 @@
 import axios from 'axios';
+import { getConfig } from '../config';
 
-export const apisUrlBase = '/api/apis';
+export const apisUrlBase = () => `${getConfig().apiApi.host}/api/apis`;
 
-export const apisSearch = params => axios(apisUrlBase, { params }).then(r => r.data);
+export const apisSearch = params => axios(apisUrlBase(), { params }).then(r => r.data);
 
 // NOTE: Response of this function can be mocked using mock files in src/mock
 export const getApi = id =>
-  axios.get(`${apisUrlBase}/${id}`).then(r => r.data).catch(() => null);
+  axios.get(`${apisUrlBase()}/${id}`).then(r => r.data).catch(() => null);
 
 export function extractApis(searchResponse) {
   return searchResponse && searchResponse.hits || [];
