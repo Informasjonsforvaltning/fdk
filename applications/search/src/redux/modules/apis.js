@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import qs from 'qs';
-import { fetchActions } from '../fetchActions';
-import { apisSearchUrl } from '../../api/apis';
+import { apisSearch, extractAggregations, extractApis, extractTotal } from '../../api/apis';
+import { reduxFsaThunk } from '../../lib/redux-fsa-thunk';
 
 export const APIS_REQUEST = 'APIS_REQUEST';
 export const APIS_SUCCESS = 'APIS_SUCCESS';
@@ -21,14 +21,16 @@ function shouldFetch(metaState, queryKey) {
 
 export function fetchApisIfNeededAction(query) {
   const queryKey = generateQueryKey(query);
+  const params = { ...query, aggregations: 'formats,orgPath' };
+
   return (dispatch, getState) =>
     shouldFetch(_.get(getState(), ['apis', 'meta']), queryKey) &&
     dispatch(
-      fetchActions(apisSearchUrl(query), [
-        { type: APIS_REQUEST, meta: { queryKey } },
-        { type: APIS_SUCCESS, meta: { queryKey } },
-        { type: APIS_FAILURE, meta: { queryKey } }
-      ])
+      reduxFsaThunk(() => apisSearch(params), {
+        onBeforeStart: { type: APIS_REQUEST, meta: { queryKey } },
+        onSuccess: { type: APIS_SUCCESS, meta: { queryKey } },
+        onError: { type: APIS_FAILURE, meta: { queryKey } }
+      })
     );
 }
 
@@ -48,9 +50,9 @@ export function apisReducer(state = initialState, action) {
     case APIS_SUCCESS:
       return {
         ...state,
-        apiItems: _.get(action.payload, 'hits'),
-        apiAggregations: _.get(action.payload, 'aggregations'),
-        apiTotal: _.get(action.payload, 'total'),
+        apiItems: extractApis(action.payload),
+        apiAggregations: extractAggregations(action.payload),
+        apiTotal: extractTotal(action.payload),
         meta: {
           isFetching: false,
           lastFetch: Date.now(),
