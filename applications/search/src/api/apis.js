@@ -6,10 +6,7 @@ export const apisSearch = params => axios(apisUrlBase, { params }).then(r => r.d
 
 // NOTE: Response of this function can be mocked using mock files in src/mock
 export const getApi = id =>
-  axios
-    .get(`${apisUrlBase}/${id}`)
-    .then(response => response.data)
-    .catch(e => console.error(JSON.stringify(e)));
+  axios.get(`${apisUrlBase}/${id}`).then(r => r.data).catch(() => null);
 
 export function extractApis(searchResponse) {
   return searchResponse && searchResponse.hits || [];
