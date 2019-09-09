@@ -1,13 +1,14 @@
 import axios from 'axios';
 import get from 'lodash/get';
+import { getConfig } from '../config';
 
-const informationmodelsUrlBase = `/api/informationmodels`;
+const informationmodelsUrlBase = () => `${getConfig().informationmodelApi.host}/api/informationmodels`;
 
 export const informationmodelsSearch = params =>
-  axios.get(informationmodelsUrlBase, { params }).then(r => r.data);
+  axios.get(informationmodelsUrlBase(), { params }).then(r => r.data);
 
 export const getInformationmodel = id =>
-  axios.get(`${informationmodelsUrlBase}/${id}`).then(r => r.data).catch(() => null);
+  axios.get(`${informationmodelsUrlBase()}/${id}`).then(r => r.data).catch(() => null);
 
 export const extractInformationmodels = searchResponse => get(searchResponse, ['_embedded', 'informationmodels']);
 
