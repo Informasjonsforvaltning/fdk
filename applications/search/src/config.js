@@ -21,6 +21,7 @@ const createConfig = env => {
     datasetApi: defaultToSearchApi(env.DATASET_API_HOST),
     apiApi:  defaultToSearchApi(env.API_API_HOST),
     conceptApi: defaultToSearchApi(env.CONCEPT_API_HOST),
+    informationmodelApi: defaultToSearchApi(env.INFORMATIONMODEL_API_HOST)
   };
 };
 
