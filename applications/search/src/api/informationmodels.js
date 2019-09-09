@@ -1,14 +1,11 @@
 import axios from 'axios';
-import qs from 'qs';
 import _ from 'lodash';
+import get from 'lodash/get';
 
 const informationmodelsUrlBase = `/api/informationmodels`;
 
-export const informationmodelsSearchUrl = query =>
-  `${informationmodelsUrlBase}${qs.stringify(
-    { ...query, aggregations: 'true' },
-    { addQueryPrefix: true }
-  )}`;
+export const informationmodelsSearch = params =>
+  axios.get(informationmodelsUrlBase, { params }).then(r => r.data);
 
 export const getInformationmodel = id =>
   axios
@@ -23,3 +20,9 @@ export const getinformationModelByHarvestSourceUri = harvestSourceUri =>
     // harvestSourceUri is identificator, so there can be only one.
     .then(data => _.get(data, ['_embedded', 'informationmodels', 0]))
     .catch(e => console.error(JSON.stringify(e)));
+
+export const extractInformationmodels = searchResponse => get(searchResponse, ['_embedded', 'informationmodels']);
+
+export const extractAggregations = searchResponse => get(searchResponse, 'aggregations');
+
+export const extractTotal = searchResponse => get(searchResponse, ['page', 'totalElements']);
