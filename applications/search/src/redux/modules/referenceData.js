@@ -1,5 +1,6 @@
 import _ from 'lodash';
-import { fetchActions } from '../fetchActions';
+import { reduxFsaThunk } from '../../lib/redux-fsa-thunk';
+import { getReferenceData } from '../../api/referenceData';
 
 export const REFERENCEEDATA_REQUEST = 'REFERENCEEDATA_REQUEST';
 export const REFERENCEEDATA_SUCCESS = 'REFERENCEEDATA_SUCCESS';
@@ -24,11 +25,11 @@ export function fetchReferenceDataIfNeededAction(code) {
   return (dispatch, getState) => {
     if (shouldFetch(_.get(getState(), ['referenceData', 'meta', code]))) {
       dispatch(
-        fetchActions(`/reference-data/codes/${code}`, [
-          { type: REFERENCEEDATA_REQUEST, meta: { code } },
-          { type: REFERENCEEDATA_SUCCESS, meta: { code } },
-          { type: REFERENCEEDATA_FAILURE, meta: { code } }
-        ])
+        reduxFsaThunk(() => getReferenceData(`codes/${code}`), {
+          onBeforeStart: { type: REFERENCEEDATA_REQUEST, meta: { code } },
+          onSuccess: { type: REFERENCEEDATA_SUCCESS, meta: { code } },
+          onError: { type: REFERENCEEDATA_FAILURE, meta: { code } }
+        })
       );
     }
   };
@@ -42,14 +43,11 @@ export function fetchReferenceDataLosIfNeededAction() {
       )
     ) {
       dispatch(
-        fetchActions(`/reference-data/${REFERENCEDATA_LOS}`, [
-          { type: REFERENCEEDATA_REQUEST, meta: { code: REFERENCEDATA_LOS } },
-          {
-            type: REFERENCEEDATA_LOS_SUCCESS,
-            meta: { code: REFERENCEDATA_LOS }
-          },
-          { type: REFERENCEEDATA_FAILURE, meta: { code: REFERENCEDATA_LOS } }
-        ])
+        reduxFsaThunk(() => getReferenceData(REFERENCEDATA_LOS), {
+          onBeforeStart: { type: REFERENCEEDATA_REQUEST, meta: { code: REFERENCEDATA_LOS } },
+          onSuccess: { type: REFERENCEEDATA_LOS_SUCCESS, meta: { code: REFERENCEDATA_LOS } },
+          onError: { type: REFERENCEEDATA_FAILURE, meta: { code: REFERENCEDATA_LOS } }
+        })
       );
     }
   };
