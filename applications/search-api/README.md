@@ -37,15 +37,6 @@ Query parameters
 - `sortfield=title` (sort datasets by title, publisher or modified)
 - `sortdirection=asc` (sort direction: asc or desc)
 
-## Search for Terms (concepts)
-
-Example `/terms?q=enhet`
-
-Query paramters
-- `q=enhet` (query for a specific term, searches in prefLabel, altLabel, definition or description)
-- `creator=DIFI` (terms of which has DIFI as creator)
-- `orgPath=/STAT/962738899` (all terms defined by government (STAT) and organization number 96273889 and any subunits)
-
 ## search for title and returnfields
 /datasets?title=Postnummer i Norge  (witch returns datasets with title)
 
