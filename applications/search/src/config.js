@@ -18,6 +18,7 @@ const createConfig = env => {
     themeNap:
       isNapHostname(window.location.hostname) ||
       !!localStorage.getItem('themeNap'),
+    datasetApi: defaultToSearchApi(env.DATASET_API_HOST),
     apiApi:  defaultToSearchApi(env.API_API_HOST),
     conceptApi: defaultToSearchApi(env.CONCEPT_API_HOST),
   };

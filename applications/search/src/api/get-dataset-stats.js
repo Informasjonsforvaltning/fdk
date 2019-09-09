@@ -64,7 +64,7 @@ export function extractStats(data) {
 const statsAggregations = `accessRights,theme,orgPath,provenance,spatial,los,firstHarvested,withDistribution,publicWithDistribution,nonpublicWithDistribution,publicWithoutDistribution,nonpublicWithoutDistribution,withSubject,catalog,opendata,nationalComponent,subject,distributionCountForTypeApi,distributionCountForTypeFeed,distributionCountForTypeFile`;
 
 export const statsUrl = query =>
-  `${datasetsUrlBase}${qs.stringify(
+  `${datasetsUrlBase()}${qs.stringify(
     { ...query, size: 0, aggregations: statsAggregations },
     { addQueryPrefix: true }
   )}`;
@@ -78,7 +78,7 @@ export const getDatasetStats = orgPath =>
     .catch(e => console.log(JSON.stringify(e))); // eslint-disable-line no-console
 
 export const getDatasetCountsBySubjectUri = query => {
-  const postUrl = `${datasetsUrlBase}/search${qs.stringify(
+  const postUrl = `${datasetsUrlBase()}/search${qs.stringify(
     { returnfields: 'subject.uri', size: 10000 },
     // todo size 10000 is currently overruled by server to be 100, fix the limit there, if we come closer to that limit of concept referrals from datasets
     // alternative is to implement paged querying here.
