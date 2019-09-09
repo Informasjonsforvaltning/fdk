@@ -1,5 +1,7 @@
 import _ from 'lodash';
-import { fetchActions } from '../fetchActions';
+import { reduxFsaThunk } from '../../lib/redux-fsa-thunk';
+import { getAllPublishers } from '../../api/publishers';
+import keyBy from 'lodash/keyBy';
 
 export const PUBLISHERS_REQUEST = 'PUBLISHERS_REQUEST';
 export const PUBLISHERS_SUCCESS = 'PUBLISHERS_SUCCESS';
@@ -18,11 +20,11 @@ export function fetchPublishersIfNeededAction() {
   return (dispatch, getState) => {
     if (shouldFetch(_.get(getState(), ['publishers', 'meta']))) {
       dispatch(
-        fetchActions('/publisher', [
-          PUBLISHERS_REQUEST,
-          PUBLISHERS_SUCCESS,
-          PUBLISHERS_FAILURE
-        ])
+        reduxFsaThunk(() => getAllPublishers(), {
+          onBeforeStart: { type: PUBLISHERS_REQUEST },
+          onSuccess: { type: PUBLISHERS_SUCCESS },
+          onError: { type: PUBLISHERS_FAILURE }
+        })
       );
     }
   };
@@ -42,20 +44,13 @@ export function publishersReducer(state = initialState, action) {
       };
     }
     case PUBLISHERS_SUCCESS: {
-      const objFromArray = action.payload.hits.hits.reduce(
-        (accumulator, current) => {
-          accumulator[current._source.orgPath] = current._source;
-          return accumulator;
-        },
-        {}
-      );
       return {
         ...state,
         meta: {
           isFetching: false,
           lastFetch: Date.now()
         },
-        publisherItems: objFromArray
+        publisherItems: keyBy(action.payload, 'orgPath')
       };
     }
     case PUBLISHERS_FAILURE: {
