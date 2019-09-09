@@ -29,5 +29,19 @@ export const getConfig = () => config;
 export const loadConfig = async () => {
   const response = await axios.get('/env.json');
   const env = response.data;
+
+  // The below method of configuration override is useful when using webpack devserver.
+
+  // override all env variables to ut1
+  // Object.assign(env, {
+  //   SEARCH_API_HOST: 'https://www.ut1.fellesdatakatalog.brreg.no',
+  //   SEARCH_API_AUTHORIZATION: 'Basic ZmRrOkJSUkVH',
+  // });
+
+  // override all env variables to local docker
+  // Object.assign(env, {
+  //   SEARCH_API_HOST: 'http://localhost:8080',
+  // });
+
   Object.assign(config, createConfig(env));
 };
