@@ -3,7 +3,7 @@ import axios from 'axios';
 import qs from 'qs';
 
 import { normalizeAggregations } from '../lib/normalizeAggregations';
-import { datasetsUrlBase, searchAggregations } from './datasets';
+import { datasetsUrlBase } from './datasets';
 
 function getFromBucketArray(data, aggregation, key) {
   const buckets = _.get(data, ['aggregations', aggregation, 'buckets'], []);
@@ -61,7 +61,7 @@ export function extractStats(data) {
   };
 }
 
-const statsAggregations = `${searchAggregations},firstHarvested,withDistribution,publicWithDistribution,nonpublicWithDistribution,publicWithoutDistribution,nonpublicWithoutDistribution,withSubject,catalog,opendata,nationalComponent,subject,distributionCountForTypeApi,distributionCountForTypeFeed,distributionCountForTypeFile`;
+const statsAggregations = `accessRights,theme,orgPath,provenance,spatial,los,firstHarvested,withDistribution,publicWithDistribution,nonpublicWithDistribution,publicWithoutDistribution,nonpublicWithoutDistribution,withSubject,catalog,opendata,nationalComponent,subject,distributionCountForTypeApi,distributionCountForTypeFeed,distributionCountForTypeFile`;
 
 export const statsUrl = query =>
   `${datasetsUrlBase}${qs.stringify(

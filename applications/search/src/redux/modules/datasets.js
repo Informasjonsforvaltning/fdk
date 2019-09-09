@@ -2,8 +2,8 @@ import _ from 'lodash';
 import qs from 'qs';
 
 import { normalizeAggregations } from '../../lib/normalizeAggregations';
-import { fetchActions } from '../fetchActions';
-import { datasetsSearchUrl } from '../../api/datasets';
+import { datasetsSearch } from '../../api/datasets';
+import { reduxFsaThunk } from '../../lib/redux-fsa-thunk';
 
 export const DATASETS_REQUEST = 'DATASETS_REQUEST';
 export const DATASETS_SUCCESS = 'DATASETS_SUCCESS';
@@ -23,14 +23,15 @@ function shouldFetch(metaState, queryKey) {
 
 export function fetchDatasetsIfNeededAction(query) {
   const queryKey = generateQueryKey(query);
+  const params = { ...query, aggregations: 'accessRights,theme,orgPath,provenance,spatial,los' };
   return (dispatch, getState) =>
     shouldFetch(_.get(getState(), ['datasets', 'meta']), queryKey) &&
     dispatch(
-      fetchActions(datasetsSearchUrl(query), [
-        { type: DATASETS_REQUEST, meta: { queryKey } },
-        { type: DATASETS_SUCCESS, meta: { queryKey } },
-        { type: DATASETS_FAILURE, meta: { queryKey } }
-      ])
+      reduxFsaThunk(() => datasetsSearch(params), {
+        onBeforeStart: { type: DATASETS_REQUEST, meta: { queryKey } },
+        onSuccess: { type: DATASETS_SUCCESS, meta: { queryKey } },
+        onError: { type: DATASETS_FAILURE, meta: { queryKey } }
+      })
     );
 }
 
