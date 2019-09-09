@@ -133,7 +133,7 @@ public class SubjectCrawler {
                 return result;
 
             } catch (Exception e) {
-                logger.warn("Subject {} could not be read. Reason {}", e.getLocalizedMessage());
+                logger.warn("Subject could not be read. Reason {}", e.getLocalizedMessage());
             }
 
         return null;

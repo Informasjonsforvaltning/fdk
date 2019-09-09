@@ -66,7 +66,11 @@ public class DcatValidation {
                     logger.error("QueryParseException in " + r.toString() + " : " + e.getMessage());
                     throw e;
                 } finally {
-                    IOUtils.closeQuietly(is);
+                    try {
+                        is.close();
+                    } catch (Throwable t) {
+                        //We silently swallow any errors on closing, any serious errors should have been caught and logged in the exception clause above
+                    }
                 }
 
                 while (resultSet != null && resultSet.hasNext()) {

@@ -1,9 +1,6 @@
 package no.dcat.themes.database;
 
-import org.apache.jena.query.Dataset;
-import org.apache.jena.query.Query;
-import org.apache.jena.query.QueryExecutionFactory;
-import org.apache.jena.query.QueryFactory;
+import org.apache.jena.query.*;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.reasoner.ReasonerRegistry;
@@ -40,10 +37,24 @@ public class TDBInferenceService {
     }
 
     public Model describeWithInference(String uri) {
-        Query query = QueryFactory.create("describe <" + uri + ">");
-        Model model = QueryExecutionFactory.create(query, tdbService.getDataset()).execDescribe();
-        return ModelFactory.createInfModel(ReasonerRegistry.getRDFSReasoner(), schema, model);
-
+        QueryExecution queryExection = null;
+        try {
+            Query query = QueryFactory.create("describe <" + uri + ">");
+            queryExection = QueryExecutionFactory.create(query, tdbService.getDataset());
+            Model model = queryExection.execDescribe();
+            return ModelFactory.createInfModel(ReasonerRegistry.getRDFSReasoner(), schema, model);
+        } catch (Throwable t) {
+            logger.error("Thrown error in describeWithInterface, for URI: {} ", uri);
+        } finally {
+            if (queryExection!=null) {
+                try {
+                    queryExection.close();
+                } catch (Throwable t) {
+                    //We silently swallow any errors on closing, any serious errors should have been caught and logged in the exception clause above
+                }
+            }
+        }
+        return null;
     }
 
     public Dataset getDataset() {
