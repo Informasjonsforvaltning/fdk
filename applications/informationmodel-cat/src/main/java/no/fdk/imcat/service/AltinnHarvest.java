@@ -131,10 +131,13 @@ public class AltinnHarvest {
     }
 
     private void loadAllInformationModelsFromOurAltInnAdapter() {
+        Scanner scanner = null;
+
         try {
             URL altinn = new URL(harvestSourceURIBase);
             logger.debug("Retrieving all schemas from altinn.  url: {} Expected load time approx 5 minutes", altinn);
-            String JSonSchemaFromFile = new Scanner(altinn.openStream(), "UTF-8").useDelimiter("\\A").next();
+            scanner = new Scanner(altinn.openStream(), "UTF-8");
+            String JSonSchemaFromFile = scanner.useDelimiter("\\A").next();
             logger.debug("Retrieved all schemas from altinn.  url: {} Now parsing", altinn);
             ObjectMapper objectMapper = new ObjectMapper();
             List<AltInnService> servicesInAltInn = objectMapper.readValue(JSonSchemaFromFile, new TypeReference<List<AltInnService>>() {
@@ -148,6 +151,14 @@ public class AltinnHarvest {
             }
         } catch (Throwable e) {
             logger.debug("Failed while reading information models from  ", e);
+        } finally  {
+            if (scanner != null) {
+                try {
+                    scanner.close();
+                } catch (Throwable t) {
+                    //We silently swallow any errors on closing, any serious errors should have been caught and logged in the exception clause above
+                }
+            }
         }
     }
 
