@@ -1,15 +1,9 @@
 import axios from 'axios';
-import qs from 'qs';
+import get from 'lodash/get';
 
 export const conceptsUrlBase = '/api/concepts';
 
-export const searchAggregations = 'orgPath';
-
-export const conceptsSearchUrl = query =>
-  `${conceptsUrlBase}${qs.stringify(
-    { ...query, aggregations: searchAggregations },
-    { addQueryPrefix: true }
-  )}`;
+export const conceptsSearch = params => axios(conceptsUrlBase, { params }).then(r => r.data);
 
 export const getConcept = async id =>
   axios
@@ -17,8 +11,8 @@ export const getConcept = async id =>
     .then(response => response.data)
     .catch(console.error);
 
-export const getConceptsByURIs = uris =>
-  axios
-    .get(`${conceptsSearchUrl({ uris })}`)
-    .then(response => response.data)
-    .catch(e => console.error(JSON.stringify(e)));
+export const extractConcepts = searchResponse => get(searchResponse, ['_embedded', 'concepts']);
+
+export const extractAggregations = searchResponse => get(searchResponse, 'aggregations');
+
+export const extractTotal = searchResponse => get(searchResponse, ['page', 'totalElements']);

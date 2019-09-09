@@ -1,8 +1,7 @@
 import _ from 'lodash';
 import qs from 'qs';
-
-import { fetchActions } from '../fetchActions';
-import { conceptsSearchUrl } from '../../api/concepts';
+import { conceptsSearch, extractAggregations, extractConcepts, extractTotal } from '../../api/concepts';
+import { reduxFsaThunk } from '../../lib/redux-fsa-thunk';
 
 export const CONCEPTS_REQUEST = 'CONCEPTS_REQUEST';
 export const CONCEPTS_SUCCESS = 'CONCEPTS_SUCCESS';
@@ -22,15 +21,16 @@ function shouldFetch(metaState, queryKey) {
 
 export function fetchConceptsIfNeededAction(query) {
   const queryKey = generateQueryKey(query);
+  const params = { ...query, aggregations: 'orgPath' };
 
   return (dispatch, getState) =>
     shouldFetch(_.get(getState(), ['concepts', 'meta']), queryKey) &&
     dispatch(
-      fetchActions(conceptsSearchUrl(query), [
-        { type: CONCEPTS_REQUEST, meta: { queryKey } },
-        { type: CONCEPTS_SUCCESS, meta: { queryKey } },
-        { type: CONCEPTS_FAILURE, meta: { queryKey } }
-      ])
+      reduxFsaThunk(() => conceptsSearch(params), {
+        onBeforeStart: { type: CONCEPTS_REQUEST, meta: { queryKey } },
+        onSuccess: { type: CONCEPTS_SUCCESS, meta: { queryKey } },
+        onError: { type: CONCEPTS_FAILURE, meta: { queryKey } }
+      })
     );
 }
 
@@ -50,9 +50,9 @@ export function conceptReducer(state = initialState, action) {
     case CONCEPTS_SUCCESS:
       return {
         ...state,
-        conceptItems: _.get(action.payload, ['_embedded', 'concepts']),
-        conceptAggregations: _.get(action.payload, 'aggregations'),
-        conceptTotal: _.get(action.payload, ['page', 'totalElements']),
+        conceptItems: extractConcepts(action.payload),
+        conceptAggregations: extractAggregations(action.payload),
+        conceptTotal: extractTotal(action.payload),
         meta: {
           isFetching: false,
           lastFetch: Date.now(),
