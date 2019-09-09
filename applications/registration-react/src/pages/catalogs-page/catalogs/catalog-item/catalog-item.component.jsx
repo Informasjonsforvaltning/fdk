@@ -31,11 +31,9 @@ export const CatalogItem = props => {
         <a className="catalog-item" href={linkUri}>
           <div className={itemClass}>
             <h3 className={iconClass}>{localization.catalogs[type]}</h3>
-            {itemsCount && (
-              <span className="fdk-text-size-small fdk-color-neutral-dark">
-                {itemsCount} {localization.catalogs.type[type]}
-              </span>
-            )}
+            <span className="fdk-text-size-small fdk-color-neutral-dark">
+              {itemsCount || 0} {localization.catalogs.type[type]}
+            </span>
           </div>
         </a>
       </div>
@@ -47,11 +45,9 @@ export const CatalogItem = props => {
       <Link className="catalog-item" to={linkUri}>
         <div className={itemClass}>
           <h3 className={iconClass}>{localization.catalogs[type]}</h3>
-          {itemsCount && (
-            <span className="fdk-text-size-small fdk-color-neutral-dark">
-              {itemsCount} {localization.catalogs.type[type]}
-            </span>
-          )}
+          <span className="fdk-text-size-small fdk-color-neutral-dark">
+            {itemsCount || 0} {localization.catalogs.type[type]}
+          </span>
         </div>
       </Link>
     </div>
