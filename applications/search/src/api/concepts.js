@@ -1,12 +1,13 @@
 import axios from 'axios';
 import get from 'lodash/get';
+import { getConfig } from '../config';
 
-export const conceptsUrlBase = '/api/concepts';
+export const conceptsUrlBase = () => `${getConfig().conceptApi.host}/api/concepts`;
 
-export const conceptsSearch = params => axios(conceptsUrlBase, { params }).then(r => r.data);
+export const conceptsSearch = params => axios(conceptsUrlBase(), { params }).then(r => r.data);
 
 export const getConcept = async id =>
-  axios.get(`${conceptsUrlBase}/${id}`).then(r => r.data).catch(() => null);
+  axios.get(`${conceptsUrlBase()}/${id}`).then(r => r.data).catch(() => null);
 
 export const extractConcepts = searchResponse => get(searchResponse, ['_embedded', 'concepts']);
 

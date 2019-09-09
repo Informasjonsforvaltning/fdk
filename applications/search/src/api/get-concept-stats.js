@@ -25,7 +25,7 @@ export function extractStats(data) {
 const statsAggregations = `firstHarvested,publisher`;
 
 export const statsUrl = query =>
-  `${conceptsUrlBase}${qs.stringify(
+  `${conceptsUrlBase()}${qs.stringify(
     {
       ...query,
       size: 10000,
