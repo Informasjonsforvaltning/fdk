@@ -110,8 +110,7 @@ const renderSample = dataset => {
 };
 
 export const SearchHitItem = props => {
-  const { referenceData, result } = props;
-  const { _source: dataset } = result || {};
+  const { referenceData, dataset } = props;
   const { id, publisher, theme, provenance, accessRights } = dataset || {};
   let { title, description, objective } = dataset || {};
   title = getTranslateText(title);
@@ -170,11 +169,11 @@ export const SearchHitItem = props => {
 };
 
 SearchHitItem.defaultProps = {
-  result: null,
+  dataset: null,
   referenceData: null
 };
 
 SearchHitItem.propTypes = {
-  result: PropTypes.shape({}),
+  dataset: PropTypes.object,
   referenceData: PropTypes.object
 };
