@@ -1,6 +1,5 @@
 import _ from 'lodash';
 import axios from 'axios';
-import qs from 'qs';
 
 import { normalizeAggregations } from '../lib/normalizeAggregations';
 import { apisUrlBase } from './apis';
@@ -30,18 +29,14 @@ export function extractStats(data) {
   };
 }
 
-const statsAggregations = `formats,orgPath,firstHarvested,publisher,openAccess,openLicence,freeUsage`;
-
-export const statsUrl = query =>
-  `${apisUrlBase()}${qs.stringify(
-    { ...query, size: 0, aggregations: statsAggregations },
-    { addQueryPrefix: true }
-  )}`;
-
-export const getApiStats = async orgPath => {
-  const response = await axios
-    .get(statsUrl({ orgPath }))
-    .catch(e => console.log(JSON.stringify(e))); // eslint-disable-line no-console
-
-  return response && extractStats(normalizeAggregations(response.data));
-};
+export const getApiStats = orgPath =>
+  axios.get(apisUrlBase(), {
+    params: {
+      orgPath,
+      size: 0,
+      aggregations: 'formats,orgPath,firstHarvested,publisher,openAccess,openLicence,freeUsage'
+    }
+  })
+    .then(r => r.data)
+    .then(normalizeAggregations)
+    .then(extractStats);
