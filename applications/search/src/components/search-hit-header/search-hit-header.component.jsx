@@ -7,7 +7,7 @@ import cx from 'classnames';
 import { LabelStatus } from '../label-status/label-status.component';
 import { PublisherLabel } from '../publisher-label/publisher-label.component';
 import { getPublisherByOrgNr } from '../../redux/modules/publishers';
-import { REFERENCEDATA_PATH_LOS } from '../../redux/modules/referenceData';
+import { getLosStructure } from '../../redux/modules/referenceData';
 import { getTranslateText } from '../../lib/translateText';
 import localization from '../../lib/localization';
 import './search-hit-header.scss';
@@ -39,11 +39,7 @@ const renderThemes = (theme, losItems, darkThemeBackground) => {
           <span className="uu-invisible" aria-hidden="false">
             Datasettets tema.
           </span>
-          {getTranslateText(
-            _.get(losItem, 'prefLabel') ||
-              _.get(losItem, 'name') ||
-              singleTheme.title
-          )}
+          {getTranslateText(_.get(losItem, 'prefLabel') || singleTheme.title)}
         </div>
       );
     });
@@ -87,6 +83,7 @@ export const SearchHitHeader = props => {
     darkThemeBackground
   } = props;
 
+  const losItems = getLosStructure(referenceData);
   return (
     <>
       {title && (
@@ -120,11 +117,11 @@ export const SearchHitHeader = props => {
           {nationalComponent && <LabelNational />}
 
           {theme &&
-            renderThemes(
-              theme,
-              _.get(referenceData, ['items', REFERENCEDATA_PATH_LOS]),
-              darkThemeBackground
-            )}
+          renderThemes(
+            theme,
+            losItems,
+            darkThemeBackground
+          )}
         </div>
       )}
     </>

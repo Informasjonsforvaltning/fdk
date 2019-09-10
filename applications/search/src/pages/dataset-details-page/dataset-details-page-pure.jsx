@@ -20,7 +20,7 @@ import { LinkExternal } from '../../components/link-external/link-external.compo
 import { DistributionHeading } from './distribution-heading/distribution-heading.component';
 import { StickyMenu } from '../../components/sticky-menu/sticky-menu.component';
 import {
-  REFERENCEDATA_PATH_DISTRIBUTIONTYPE,
+  REFERENCEDATA_PATH_DISTRIBUTIONTYPE, REFERENCEDATA_PATH_LOS,
   REFERENCEDATA_PATH_REFERENCETYPES
 } from '../../redux/modules/referenceData';
 import { SearchHitHeader } from '../../components/search-hit-header/search-hit-header.component';
@@ -397,13 +397,12 @@ export const DatasetDetailsPagePure = props => {
     referenceData,
     publisherItems,
     apis,
-    fetchReferenceDataIfNeeded,
-    fetchLosIfNeeded
+    fetchReferenceDataIfNeeded
   } = props;
 
   fetchReferenceDataIfNeeded(REFERENCEDATA_PATH_REFERENCETYPES);
   fetchReferenceDataIfNeeded(REFERENCEDATA_PATH_DISTRIBUTIONTYPE);
-  fetchLosIfNeeded();
+  fetchReferenceDataIfNeeded(REFERENCEDATA_PATH_LOS);
 
   if (!datasetItem) {
     return null;
@@ -498,7 +497,6 @@ DatasetDetailsPagePure.defaultProps = {
   referencedItems: null,
   referenceData: null,
   fetchReferenceDataIfNeeded: _.noop,
-  fetchLosIfNeeded: _.noop,
   publisherItems: null,
   apis: []
 };
@@ -508,7 +506,6 @@ DatasetDetailsPagePure.propTypes = {
   referencedItems: PropTypes.array,
   referenceData: PropTypes.object,
   fetchReferenceDataIfNeeded: PropTypes.func,
-  fetchLosIfNeeded: PropTypes.func,
   publisherItems: PropTypes.object,
   apis: PropTypes.array
 };

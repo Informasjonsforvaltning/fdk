@@ -11,10 +11,7 @@ import {
 } from '../../redux/modules/conceptsCompare';
 import { SearchPageWithState } from './search-page';
 import {
-  fetchReferenceDataIfNeededAction,
-  fetchReferenceDataLosIfNeededAction,
-  REFERENCEDATA_PATH_DISTRIBUTIONTYPE,
-  REFERENCEDATA_PATH_APISTATUS
+  fetchReferenceDataIfNeededAction
 } from '../../redux/modules/referenceData';
 
 const mapStateToProps = ({
@@ -97,15 +94,11 @@ const mapDispatchToProps = dispatch => ({
   fetchConceptsIfNeeded: query => dispatch(fetchConceptsIfNeededAction(query)),
   fetchThemesIfNeeded: () => dispatch(fetchThemesIfNeededAction()),
   fetchPublishersIfNeeded: () => dispatch(fetchPublishersIfNeededAction()),
-  fetchReferenceDataIfNeeded: () =>
-    dispatch(fetchReferenceDataIfNeededAction(REFERENCEDATA_PATH_DISTRIBUTIONTYPE)),
+  fetchReferenceDataIfNeeded: (path) => dispatch(fetchReferenceDataIfNeededAction(path)),
   addConcept: item => dispatch(addConceptAction(item)),
   removeConcept: uri => dispatch(removeConceptAction(uri)),
   fetchInformationModelsIfNeeded: query =>
-    dispatch(fetchInformationModelsIfNeededAction(query)),
-  fetchApiStatusIfNeeded: () =>
-    dispatch(fetchReferenceDataIfNeededAction(REFERENCEDATA_PATH_APISTATUS)),
-  fetchLosIfNeeded: () => dispatch(fetchReferenceDataLosIfNeededAction())
+    dispatch(fetchInformationModelsIfNeededAction(query))
 });
 
 export const ConnectedSearchPage = connect(
