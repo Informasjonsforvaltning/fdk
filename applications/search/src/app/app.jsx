@@ -85,38 +85,40 @@ export function App({ language }) {
             component={ConnectedSearchPage}
           />
           <ScrollToTop>
-            <Route
-              exact
-              path={`${PATHNAME_INFORMATIONMODELS}/:id`}
-              component={ConnectedInformationModelDetailsPage}
-            />
-            <Route
-              exact
-              path={`${PATHNAME_CONCEPTS}${PATHNAME_CONCEPTS_COMPARE}`}
-              component={ConnectedConceptComparePage}
-            />
-            <Route
-              exact
-              path={`${PATHNAME_CONCEPTS}/:id`}
-              component={ConnectedConceptDetailsPage}
-            />
-            <Route
-              exact
-              path={`${PATHNAME_DATASET_DETAILS}/:id`}
-              component={DatasetDetailsPage}
-            />
-            <Route exact path="/apis/:id" component={ConnectedApiDetailsPage} />
-            <Route
-              exact
-              path={PATHNAME_REPORTS}
-              component={ConnectedDatasetsReportPage}
-            />
-            <Route exact path={PATHNAME_ABOUT} component={AboutPage} />
-            <Route
-              exact
-              path={PATHNAME_ABOUT_REGISTRATION}
-              component={ArticlePage}
-            />
+            <Switch>
+              <Route
+                exact
+                path={`${PATHNAME_INFORMATIONMODELS}/:id`}
+                component={ConnectedInformationModelDetailsPage}
+              />
+              <Route
+                exact
+                path={`${PATHNAME_CONCEPTS}${PATHNAME_CONCEPTS_COMPARE}`}
+                component={ConnectedConceptComparePage}
+              />
+              <Route
+                exact
+                path={`${PATHNAME_CONCEPTS}/:id`}
+                component={ConnectedConceptDetailsPage}
+              />
+              <Route
+                exact
+                path={`${PATHNAME_DATASET_DETAILS}/:id`}
+                component={DatasetDetailsPage}
+              />
+              <Route exact path="/apis/:id" component={ConnectedApiDetailsPage} />
+              <Route
+                exact
+                path={PATHNAME_REPORTS}
+                component={ConnectedDatasetsReportPage}
+              />
+              <Route exact path={PATHNAME_ABOUT} component={AboutPage} />
+              <Route
+                exact
+                path={PATHNAME_ABOUT_REGISTRATION}
+                component={ArticlePage}
+              />
+            </Switch>
           </ScrollToTop>
         </Switch>
       </div>
