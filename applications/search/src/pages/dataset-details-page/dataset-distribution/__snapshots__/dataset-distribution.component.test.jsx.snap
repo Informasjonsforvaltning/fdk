@@ -77,6 +77,7 @@ exports[`should render DatasetDistribution correctly 1`] = `
         col2={
           Array [
             <LinkExternal
+              openInNewTab={false}
               prefLabel="https://kartkatalog.geonorge.no/metadata/uuid/45e9ba77-388c-40eb-87df-e34e9d9ab300"
               uri="https://kartkatalog.geonorge.no/metadata/uuid/45e9ba77-388c-40eb-87df-e34e9d9ab300"
             />,
