@@ -1,5 +1,4 @@
 import _ from 'lodash';
-import qs from 'qs';
 
 import {
   extractAggregations,
@@ -13,8 +12,6 @@ export const INFORMATIONMODELS_REQUEST = 'INFORMATIONMODELS_REQUEST';
 export const INFORMATIONMODELS_SUCCESS = 'INFORMATIONMODELS_SUCCESS';
 export const INFORMATIONMODELS_FAILURE = 'INFORMATIONMODELS_FAILURE';
 
-const generateQueryKey = query => qs.stringify(query, { skipNulls: true });
-
 function shouldFetch(metaState, queryKey) {
   const threshold = 60 * 1000; // seconds
   return (
@@ -26,7 +23,7 @@ function shouldFetch(metaState, queryKey) {
 }
 
 export function fetchInformationModelsIfNeededAction(query) {
-  const queryKey = generateQueryKey(query);
+  const queryKey = JSON.stringify(query);
 
   return (dispatch, getState) =>
     shouldFetch(_.get(getState(), ['informationModels', 'meta']), queryKey) &&
