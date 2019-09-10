@@ -3,7 +3,7 @@ import get from 'lodash/get';
 import { normalizeAggregations } from '../lib/normalizeAggregations';
 import { getConfig } from '../config';
 
-export const datasetsUrlBase = () => `${getConfig().datasetApi.host}/datasets`;
+export const datasetsUrlBase = () => `${getConfig().datasetApi.host}/api/datasets`;
 
 export const datasetsSearch = params => axios.get(datasetsUrlBase(), {
   params,
