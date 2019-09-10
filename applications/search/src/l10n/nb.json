@@ -359,5 +359,10 @@
     },
     "relatedAPIHeader": "Tilhører API",
     "informationModelDescription": "Informasjonsmodelbeskrivelse"
+  },
+  "sourceRelationship": {
+    "sitatFraKilde": "Sitat fra kilde",
+    "basertPåKilde": "Basert på kilde",
+    "egendefinert": "Egendefinert"
   }
 }

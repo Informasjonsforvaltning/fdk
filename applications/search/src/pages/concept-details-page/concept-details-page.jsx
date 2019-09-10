@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import DocumentMeta from 'react-document-meta';
@@ -27,24 +27,28 @@ const renderDescription = description => {
   );
 };
 
-const renderSource = source => {
-  if (!source) {
-    return null;
-  }
-
-  const { uri, prefLabel } = source;
-
-  return (
+const renderSource = ({ sourceRelationship, sources }) =>
+  sourceRelationship &&
+  !!sources.length && (
     <div className="fdk-ingress">
-      <span>{localization.compare.source}:&nbsp;</span>
-      {uri ? (
-        <LinkExternal uri={uri} prefLabel={prefLabel || uri} />
-      ) : (
-        getTranslateText(prefLabel)
-      )}
+      <span>
+        {`${localization.compare.source}: ${
+          localization.sourceRelationship[sourceRelationship]
+        }`}
+      </span>
+      {sources.map(({ text, uri }, index) => (
+        <Fragment key={`${text}-${uri}`}>
+          {index > 0 && ','}
+          &nbsp;
+          {uri ? (
+            <LinkExternal uri={uri} prefLabel={text || uri} />
+          ) : (
+            getTranslateText(text)
+          )}
+        </Fragment>
+      ))}
     </div>
   );
-};
 
 const renderRemark = remark => {
   if (!remark) {
@@ -311,6 +315,15 @@ export const ConceptDetailsPage = ({
     description: getTranslateText(_.get(conceptItem, ['definition', 'text']))
   };
 
+  const source = {
+    sourceRelationship: _.get(
+      conceptItem,
+      ['definition', 'sourceRelationship'],
+      ''
+    ),
+    sources: _.get(conceptItem, ['definition', 'sources'], [])
+  };
+
   return (
     <main id="content" className="container">
       <article>
@@ -349,7 +362,7 @@ export const ConceptDetailsPage = ({
                 darkThemeBackground
               />
               {renderDescription(_.get(conceptItem, ['definition', 'text']))}
-              {renderSource(_.get(conceptItem, ['definition', 'source']))}
+              {renderSource(source)}
             </div>
 
             {renderRemark(_.get(conceptItem, ['definition', 'remark']))}
