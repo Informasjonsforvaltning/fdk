@@ -1,5 +1,6 @@
 import _ from 'lodash';
-import { fetchActions } from '../fetchActions';
+import { reduxFsaThunk } from '../../lib/redux-fsa-thunk';
+import { getConcept } from '../../api/concepts';
 
 export const CONCEPTSCOMPARE_REQUEST = 'CONCEPTSCOMPARE_REQUEST';
 export const CONCEPTSCOMPARE_SUCCESS = 'CONCEPTSCOMPARE_SUCCESS';
@@ -22,11 +23,11 @@ export function fetchConceptsToCompareIfNeededAction(iDs) {
     iDs.filter(id => !!id).forEach(id => {
       if (shouldFetch(_.get(getState(), ['conceptsCompare', 'meta', id]))) {
         dispatch(
-          fetchActions(`/api/concepts/${id}`, [
-            { type: CONCEPTSCOMPARE_REQUEST, meta: { id } },
-            { type: CONCEPTSCOMPARE_SUCCESS, meta: { id } },
-            { type: CONCEPTSCOMPARE_FAILURE, meta: { id } }
-          ])
+          reduxFsaThunk(() => getConcept(id), {
+            onBeforeStart: { type: CONCEPTSCOMPARE_REQUEST, meta: { id } },
+            onSuccess: { type: CONCEPTSCOMPARE_SUCCESS, meta: { id } },
+            onError: { type: CONCEPTSCOMPARE_FAILURE, meta: { id } }
+          })
         );
       }
     });
