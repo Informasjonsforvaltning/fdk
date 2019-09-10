@@ -6,13 +6,21 @@ import { getConfig } from '../config';
 export const datasetsUrlBase = () =>
   `${getConfig().datasetApi.host}/api/datasets`;
 
-export const datasetsSearch = params =>
-  axios
-    .get(datasetsUrlBase(), {
-      params,
-      headers: { authorization: getConfig().datasetApi.authorization }
-    })
-    .then(r => r.data);
+export const datasetsSearch = params => {
+
+  // Filter out NAP data if filterTransportDatasets in conf is true
+  if ( getConfig().filterTransportDatasets ) {
+    Object.assign(params,{accessrights: 'PUBLIC',losTheme : 'TRAN'});
+  }
+
+  return axios
+  .get(datasetsUrlBase(), {
+    params,
+    headers: { authorization: getConfig().datasetApi.authorization }
+  })
+  .then(r => r.data);
+}
+
 
 export const getDataset = id =>
   axios
