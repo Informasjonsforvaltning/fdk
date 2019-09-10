@@ -8,6 +8,7 @@ import cx from 'classnames';
 
 import localization from '../../../lib/localization';
 import './publishers-tree.scss';
+import { getPublisherHierarchy } from '../../../api/publishers';
 
 export class PublishersTree extends React.Component {
   static isItemCollapsed(itemOrgPath, chosenOrgPath) {
@@ -46,13 +47,10 @@ export class PublishersTree extends React.Component {
   // @params: the function has no param but the query need dataset id from prop
   // loads all the info for this dataset
   loadDatasetFromServer() {
-    const url = `/publisher/hierarchy`;
-    axios
-      .get(url)
-      .then(res => {
-        const source = res.data;
+    getPublisherHierarchy()
+      .then(data => {
         this.setState({
-          source
+          source: data
         });
       })
       .catch(error => {
@@ -151,8 +149,8 @@ export class PublishersTree extends React.Component {
               itemClassName={chosenClass}
             >
               {node.children &&
-                node.children.length > 0 &&
-                subTree(node.children)}
+              node.children.length > 0 &&
+              subTree(node.children)}
             </TreeView>
           </div>
         );
