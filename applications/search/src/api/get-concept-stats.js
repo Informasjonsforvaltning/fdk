@@ -1,6 +1,5 @@
 import _ from 'lodash';
 import axios from 'axios';
-import qs from 'qs';
 
 import { normalizeAggregations } from '../lib/normalizeAggregations';
 import { conceptsUrlBase } from './concepts';
@@ -22,19 +21,6 @@ export function extractStats(data) {
   };
 }
 
-const statsAggregations = `firstHarvested,publisher`;
-
-export const statsUrl = query =>
-  `${conceptsUrlBase()}${qs.stringify(
-    {
-      ...query,
-      size: 10000,
-      returnfields: 'uri',
-      aggregations: statsAggregations
-    },
-    { addQueryPrefix: true }
-  )}`;
-
 const extractConcepts = data => _.get(data, '_embedded.concepts');
 
 const extractConceptUris = data =>
@@ -42,7 +28,16 @@ const extractConceptUris = data =>
 
 export const getConceptStats = orgPath =>
   axios
-    .get(statsUrl({ orgPath }))
+    .get(
+      conceptsUrlBase(),
+      {
+        params: {
+          orgPath, size: 10000,
+          returnfields: 'uri',
+          aggregations: 'firstHarvested,publisher'
+        }
+      }
+    )
     .then(response => response && response.data)
     .then(async data => {
       const stats = extractStats(normalizeAggregations(data));
@@ -51,5 +46,4 @@ export const getConceptStats = orgPath =>
       });
 
       return { ...stats, datasetCountsByConceptUri };
-    })
-    .catch(e => console.log(JSON.stringify(e))); // eslint-disable-line no-console
+    });
