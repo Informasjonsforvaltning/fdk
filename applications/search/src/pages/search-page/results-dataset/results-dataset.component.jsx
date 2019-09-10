@@ -14,7 +14,7 @@ import { ErrorBoundary } from '../../../components/error-boundary/error-boundary
 import { getSortfield, setPage, setSortfield } from '../search-location-helper';
 import { parseSearchParams } from '../../../lib/location-history-helper';
 import { FilterPills } from '../filter-pills/filter-pills.component';
-import { REFERENCEDATA_LOS } from '../../../redux/modules/referenceData';
+import { REFERENCEDATA_PATH_LOS } from '../../../redux/modules/referenceData';
 import { filterLosThemesFromAggregation } from '../los-aggregations-helper';
 
 function _renderFilterModal({
@@ -32,7 +32,7 @@ function _renderFilterModal({
   publishers,
   referenceData
 }) {
-  const losItems = _.get(referenceData, ['items', REFERENCEDATA_LOS]);
+  const losItems = _.get(referenceData, ['items', REFERENCEDATA_PATH_LOS]);
 
   return (
     <Modal isOpen={showFilterModal} toggle={closeFilterModal}>
@@ -42,7 +42,7 @@ function _renderFilterModal({
           <FilterTree
             title={localization.facet.theme}
             aggregations={filterLosThemesFromAggregation(
-              _.get(datasetAggregations, [REFERENCEDATA_LOS, 'buckets']),
+              _.get(datasetAggregations, ['los', 'buckets']),
               losItems
             )}
             handleFiltering={onFilterLos}
@@ -155,7 +155,7 @@ export const ResultsDatasetPure = ({
     window.scrollTo(0, 0);
   };
 
-  const losItems = _.get(referenceData, ['items', REFERENCEDATA_LOS]);
+  const losItems = _.get(referenceData, ['items', REFERENCEDATA_PATH_LOS]);
 
   return (
     <main id="content" data-test-id="datasets">
@@ -217,7 +217,7 @@ export const ResultsDatasetPure = ({
                 <FilterTree
                   title={localization.facet.theme}
                   aggregations={filterLosThemesFromAggregation(
-                    _.get(datasetAggregations, [REFERENCEDATA_LOS, 'buckets']),
+                    _.get(datasetAggregations, ['los', 'buckets']),
                     losItems
                   )}
                   handleFiltering={onFilterLos}

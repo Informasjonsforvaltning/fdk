@@ -9,7 +9,7 @@ import { ListRegular } from '../../../components/list-regular/list-regular.compo
 import { TwoColRow } from '../../../components/list-regular/twoColRow/twoColRow';
 import { LinkExternal } from '../../../components/link-external/link-external.component';
 import './dataset-info.scss';
-import { getReferenceDataByUri } from '../../../redux/modules/referenceData';
+import { getReferenceDataByUri, REFERENCEDATA_PATH_REFERENCETYPES } from '../../../redux/modules/referenceData';
 
 const renderReferences = (references, referencedItems, referenceData) => {
   const children = items =>
@@ -17,7 +17,7 @@ const renderReferences = (references, referencedItems, referenceData) => {
       const referenceTypeUri = _.get(item, ['referenceType', 'uri']);
       const referencedType = getReferenceDataByUri(
         referenceData,
-        'referencetypes',
+        REFERENCEDATA_PATH_REFERENCETYPES,
         referenceTypeUri
       );
 

@@ -8,7 +8,7 @@ import { SearchHitHeader } from '../../../../components/search-hit-header/search
 import './search-hit-item.scss';
 import {
   getReferenceDataByUri,
-  REFERENCEDATA_DISTRIBUTIONTYPE
+  REFERENCEDATA_PATH_DISTRIBUTIONTYPE
 } from '../../../../redux/modules/referenceData';
 
 const renderFormats = (source, referenceData) => {
@@ -26,7 +26,7 @@ const renderFormats = (source, referenceData) => {
       ) {
         const distributionType = getReferenceDataByUri(
           referenceData,
-          REFERENCEDATA_DISTRIBUTIONTYPE,
+          REFERENCEDATA_PATH_DISTRIBUTIONTYPE,
           type
         );
         if (distributionType) {

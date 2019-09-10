@@ -6,7 +6,7 @@ import _ from 'lodash';
 import { getTranslateText } from '../../lib/translateText';
 import {
   getReferenceDataByCode,
-  REFERENCEDATA_APISTATUS
+  REFERENCEDATA_PATH_APISTATUS
 } from '../../redux/modules/referenceData';
 
 export const LabelStatus = ({ tag: Tag, statusCode, referenceData }) => {
@@ -24,7 +24,7 @@ export const LabelStatus = ({ tag: Tag, statusCode, referenceData }) => {
     _.get(
       getReferenceDataByCode(
         referenceData,
-        REFERENCEDATA_APISTATUS,
+        REFERENCEDATA_PATH_APISTATUS,
         statusCode
       ),
       'prefLabel'

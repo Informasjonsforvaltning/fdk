@@ -20,8 +20,8 @@ import { LinkExternal } from '../../components/link-external/link-external.compo
 import { DistributionHeading } from './distribution-heading/distribution-heading.component';
 import { StickyMenu } from '../../components/sticky-menu/sticky-menu.component';
 import {
-  REFERENCEDATA_DISTRIBUTIONTYPE,
-  REFERENCEDATA_REFERENCETYPES
+  REFERENCEDATA_PATH_DISTRIBUTIONTYPE,
+  REFERENCEDATA_PATH_REFERENCETYPES
 } from '../../redux/modules/referenceData';
 import { SearchHitHeader } from '../../components/search-hit-header/search-hit-header.component';
 import { getFirstLineOfText } from '../../lib/stringUtils';
@@ -401,8 +401,8 @@ export const DatasetDetailsPagePure = props => {
     fetchLosIfNeeded
   } = props;
 
-  fetchReferenceDataIfNeeded(REFERENCEDATA_REFERENCETYPES);
-  fetchReferenceDataIfNeeded(REFERENCEDATA_DISTRIBUTIONTYPE);
+  fetchReferenceDataIfNeeded(REFERENCEDATA_PATH_REFERENCETYPES);
+  fetchReferenceDataIfNeeded(REFERENCEDATA_PATH_DISTRIBUTIONTYPE);
   fetchLosIfNeeded();
 
   if (!datasetItem) {

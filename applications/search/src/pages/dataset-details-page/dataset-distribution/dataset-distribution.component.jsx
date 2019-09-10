@@ -11,7 +11,7 @@ import { LinkExternal } from '../../../components/link-external/link-external.co
 import './dataset-distribution.scss';
 import {
   getReferenceDataByUri,
-  REFERENCEDATA_DISTRIBUTIONTYPE
+  REFERENCEDATA_PATH_DISTRIBUTIONTYPE
 } from '../../../redux/modules/referenceData';
 
 const formatItems = format => {
@@ -52,7 +52,7 @@ export class DatasetDistribution extends React.Component {
       if (type !== 'API' && type !== 'Feed' && type !== 'Nedlastbar fil') {
         const distributionType = getReferenceDataByUri(
           referenceData,
-          REFERENCEDATA_DISTRIBUTIONTYPE,
+          REFERENCEDATA_PATH_DISTRIBUTIONTYPE,
           type
         );
         if (distributionType) {

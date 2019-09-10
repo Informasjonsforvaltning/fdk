@@ -13,8 +13,8 @@ import { SearchPageWithState } from './search-page';
 import {
   fetchReferenceDataIfNeededAction,
   fetchReferenceDataLosIfNeededAction,
-  REFERENCEDATA_DISTRIBUTIONTYPE,
-  REFERENCEDATA_APISTATUS
+  REFERENCEDATA_PATH_DISTRIBUTIONTYPE,
+  REFERENCEDATA_PATH_APISTATUS
 } from '../../redux/modules/referenceData';
 
 const mapStateToProps = ({
@@ -98,13 +98,13 @@ const mapDispatchToProps = dispatch => ({
   fetchThemesIfNeeded: () => dispatch(fetchThemesIfNeededAction()),
   fetchPublishersIfNeeded: () => dispatch(fetchPublishersIfNeededAction()),
   fetchReferenceDataIfNeeded: () =>
-    dispatch(fetchReferenceDataIfNeededAction(REFERENCEDATA_DISTRIBUTIONTYPE)),
+    dispatch(fetchReferenceDataIfNeededAction(REFERENCEDATA_PATH_DISTRIBUTIONTYPE)),
   addConcept: item => dispatch(addConceptAction(item)),
   removeConcept: uri => dispatch(removeConceptAction(uri)),
   fetchInformationModelsIfNeeded: query =>
     dispatch(fetchInformationModelsIfNeededAction(query)),
   fetchApiStatusIfNeeded: () =>
-    dispatch(fetchReferenceDataIfNeededAction(REFERENCEDATA_APISTATUS)),
+    dispatch(fetchReferenceDataIfNeededAction(REFERENCEDATA_PATH_APISTATUS)),
   fetchLosIfNeeded: () => dispatch(fetchReferenceDataLosIfNeededAction())
 });
 

@@ -5,11 +5,13 @@ import { getReferenceData } from '../../api/referenceData';
 export const REFERENCEEDATA_REQUEST = 'REFERENCEEDATA_REQUEST';
 export const REFERENCEEDATA_SUCCESS = 'REFERENCEEDATA_SUCCESS';
 export const REFERENCEEDATA_FAILURE = 'REFERENCEEDATA_FAILURE';
-export const REFERENCEDATA_DISTRIBUTIONTYPE = 'distributiontype';
-export const REFERENCEDATA_REFERENCETYPES = 'referencetypes';
-export const REFERENCEDATA_APISTATUS = 'apistatus';
-export const REFERENCEDATA_APISERVICETYPE = 'apiservicetype';
-export const REFERENCEDATA_LOS = 'los';
+
+export const REFERENCEDATA_PATH_APISERVICETYPE = 'codes/apiservicetype';
+export const REFERENCEDATA_PATH_APISTATUS = 'codes/apistatus';
+export const REFERENCEDATA_PATH_DISTRIBUTIONTYPE = 'codes/distributiontype';
+export const REFERENCEDATA_PATH_REFERENCETYPES = 'codes/referencetypes';
+export const REFERENCEDATA_PATH_LOS = 'los';
+
 export const REFERENCEEDATA_LOS_SUCCESS = 'REFERENCEEDATA_LOS_SUCCESS';
 
 function shouldFetch(metaState) {
@@ -21,14 +23,14 @@ function shouldFetch(metaState) {
   );
 }
 
-export function fetchReferenceDataIfNeededAction(code) {
+export function fetchReferenceDataIfNeededAction(path) {
   return (dispatch, getState) => {
-    if (shouldFetch(_.get(getState(), ['referenceData', 'meta', code]))) {
+    if (shouldFetch(_.get(getState(), ['referenceData', 'meta', path]))) {
       dispatch(
-        reduxFsaThunk(() => getReferenceData(`codes/${code}`), {
-          onBeforeStart: { type: REFERENCEEDATA_REQUEST, meta: { code } },
-          onSuccess: { type: REFERENCEEDATA_SUCCESS, meta: { code } },
-          onError: { type: REFERENCEEDATA_FAILURE, meta: { code } }
+        reduxFsaThunk(() => getReferenceData(path), {
+          onBeforeStart: { type: REFERENCEEDATA_REQUEST, meta: { path } },
+          onSuccess: { type: REFERENCEEDATA_SUCCESS, meta: { path } },
+          onError: { type: REFERENCEEDATA_FAILURE, meta: { path } }
         })
       );
     }
@@ -39,14 +41,14 @@ export function fetchReferenceDataLosIfNeededAction() {
   return (dispatch, getState) => {
     if (
       shouldFetch(
-        _.get(getState(), ['referenceData', 'meta', REFERENCEDATA_LOS])
+        _.get(getState(), ['referenceData', 'meta', REFERENCEDATA_PATH_LOS])
       )
     ) {
       dispatch(
-        reduxFsaThunk(() => getReferenceData(REFERENCEDATA_LOS), {
-          onBeforeStart: { type: REFERENCEEDATA_REQUEST, meta: { code: REFERENCEDATA_LOS } },
-          onSuccess: { type: REFERENCEEDATA_LOS_SUCCESS, meta: { code: REFERENCEDATA_LOS } },
-          onError: { type: REFERENCEEDATA_FAILURE, meta: { code: REFERENCEDATA_LOS } }
+        reduxFsaThunk(() => getReferenceData(REFERENCEDATA_PATH_LOS), {
+          onBeforeStart: { type: REFERENCEEDATA_REQUEST, meta: { path: REFERENCEDATA_PATH_LOS } },
+          onSuccess: { type: REFERENCEEDATA_LOS_SUCCESS, meta: { path: REFERENCEDATA_PATH_LOS } },
+          onError: { type: REFERENCEEDATA_FAILURE, meta: { path: REFERENCEDATA_PATH_LOS } }
         })
       );
     }
@@ -65,7 +67,7 @@ export function referenceDataReducer(state = initialState, action) {
         items: { ...state.items },
         meta: {
           ...state.meta,
-          [action.meta.code]: { isFetching: true, lastFetch: null }
+          [action.meta.path]: { isFetching: true, lastFetch: null }
         }
       };
 
@@ -73,11 +75,11 @@ export function referenceDataReducer(state = initialState, action) {
       return {
         items: {
           ...state.items,
-          [action.meta.code]: action.payload
+          [action.meta.path]: action.payload
         },
         meta: {
           ...state.meta,
-          [action.meta.code]: { isFetching: false, lastFetch: Date.now() }
+          [action.meta.path]: { isFetching: false, lastFetch: Date.now() }
         }
       };
     }
@@ -93,11 +95,11 @@ export function referenceDataReducer(state = initialState, action) {
       return {
         items: {
           ...state.items,
-          [action.meta.code]: objFromArray
+          [action.meta.path]: objFromArray
         },
         meta: {
           ...state.meta,
-          [action.meta.code]: { isFetching: false, lastFetch: Date.now() }
+          [action.meta.path]: { isFetching: false, lastFetch: Date.now() }
         }
       };
     }
@@ -105,11 +107,11 @@ export function referenceDataReducer(state = initialState, action) {
       return {
         items: {
           ...state.items,
-          [action.meta.code]: undefined
+          [action.meta.path]: undefined
         },
         meta: {
           ...state.meta,
-          [action.meta.code]: { isFetching: false, lastFetch: null }
+          [action.meta.path]: { isFetching: false, lastFetch: null }
         }
       };
     }
@@ -118,8 +120,8 @@ export function referenceDataReducer(state = initialState, action) {
   }
 }
 
-export const getReferenceDataByUri = (referenceData, code, uri) =>
-  _.find(_.get(referenceData, ['items', code]), { uri });
+export const getReferenceDataByUri = (referenceData, path, uri) =>
+  _.find(_.get(referenceData, ['items', path]), { uri });
 
-export const getReferenceDataByCode = (referenceData, dataType, code) =>
-  _.find(_.get(referenceData, ['items', dataType]), { code });
+export const getReferenceDataByCode = (referenceData, path, code) =>
+  _.find(_.get(referenceData, ['items', path]), { code });

@@ -29,7 +29,7 @@ import {
 } from '../../components/api-icons';
 import {
   getReferenceDataByCode,
-  REFERENCEDATA_APISERVICETYPE
+  REFERENCEDATA_PATH_APISERVICETYPE
 } from '../../redux/modules/referenceData';
 import { getConfig } from '../../config';
 
@@ -346,7 +346,7 @@ const renderServiceType = (serviceType, referenceData) => {
   }
   const referenceDataServiceTypeItem = getReferenceDataByCode(
     referenceData,
-    REFERENCEDATA_APISERVICETYPE,
+    REFERENCEDATA_PATH_APISERVICETYPE,
     serviceType
   );
   return (
