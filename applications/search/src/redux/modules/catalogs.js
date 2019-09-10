@@ -1,5 +1,6 @@
 import _ from 'lodash';
-import { fetchActions } from '../fetchActions';
+import { reduxFsaThunk } from '../../lib/redux-fsa-thunk';
+import { getAllCatalogs } from '../../api/catalogs';
 
 export const CATALOGS_REQUEST = 'CATALOGS_REQUEST';
 export const CATALOGS_SUCCESS = 'CATALOGS_SUCCESS';
@@ -15,11 +16,11 @@ export function fetchCatalogsIfNeededAction() {
   return (dispatch, getState) => {
     if (shouldFetch(getState().catalogs)) {
       dispatch(
-        fetchActions('/catalogs', [
-          CATALOGS_REQUEST,
-          CATALOGS_SUCCESS,
-          CATALOGS_FAILURE
-        ])
+        reduxFsaThunk(() => getAllCatalogs(), {
+          onBeforeStart: { type: CATALOGS_REQUEST },
+          onSuccess: { type: CATALOGS_SUCCESS },
+          onError: { type: CATALOGS_FAILURE }
+        })
       );
     }
   };
