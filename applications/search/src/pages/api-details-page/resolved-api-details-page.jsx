@@ -22,7 +22,7 @@ const mapProps = {
     const promiseMap = urlArray.map(url =>
       memoizedGetDatasetByURI(encodeURIComponent(url))
     );
-    return Promise.all(promiseMap);
+    return (await Promise.all(promiseMap)).filter(Boolean);
   },
   referencedInformationModels: async props => {
     const apiItem = await memoizedGetApi(props.match.params.id);
