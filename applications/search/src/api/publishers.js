@@ -12,4 +12,11 @@ export const getAllPublishers = () =>
     .then(r => r.data)
     .then(extractPublishers);
 
+export const getPublisherHierarchy = () =>
+  axios.get(
+    `${publishersUrlBase()}/hierarchy`,
+    { headers: { authorization: getConfig().publisherApi.authorization } }
+  )
+    .then(r => r.data);
+
 export const extractPublishers = searchResponse => get(searchResponse, 'hits.hits', []).map(h => h._source);
