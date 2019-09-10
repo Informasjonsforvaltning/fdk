@@ -4,7 +4,7 @@ import { getConfig } from '../config';
 
 export const conceptsUrlBase = () => `${getConfig().conceptApi.host}/api/concepts`;
 
-export const conceptsSearch = params => axios(conceptsUrlBase(), { params }).then(r => r.data);
+export const conceptsSearch = params => axios.get(conceptsUrlBase(), { params }).then(r => r.data);
 
 export const getConcept = async id =>
   axios.get(`${conceptsUrlBase()}/${id}`).then(r => r.data).catch(() => null);
