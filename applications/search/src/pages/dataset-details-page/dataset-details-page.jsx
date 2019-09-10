@@ -1,9 +1,6 @@
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
-import {
-  fetchReferenceDataIfNeededAction,
-  fetchReferenceDataLosIfNeededAction
-} from '../../redux/modules/referenceData';
+import { fetchReferenceDataIfNeededAction } from '../../redux/modules/referenceData';
 import { DatasetDetailsPagePure } from './dataset-details-page-pure';
 import { datasetDetailsPageResolver } from './dataset-details-page-resolver';
 
@@ -18,9 +15,7 @@ const mapStateToProps = ({ referenceData, publishers }) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  fetchReferenceDataIfNeeded: code =>
-    dispatch(fetchReferenceDataIfNeededAction(code)),
-  fetchLosIfNeeded: () => dispatch(fetchReferenceDataLosIfNeededAction())
+  fetchReferenceDataIfNeeded: path => dispatch(fetchReferenceDataIfNeededAction(path))
 });
 
 const enhance = compose(

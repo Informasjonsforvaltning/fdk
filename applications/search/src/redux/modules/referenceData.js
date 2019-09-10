@@ -1,6 +1,9 @@
 import _ from 'lodash';
 import { reduxFsaThunk } from '../../lib/redux-fsa-thunk';
 import { getReferenceData } from '../../api/referenceData';
+import get from 'lodash/get';
+import keyBy from 'lodash/keyBy';
+import mapValues from 'lodash/mapValues';
 
 export const REFERENCEEDATA_REQUEST = 'REFERENCEEDATA_REQUEST';
 export const REFERENCEEDATA_SUCCESS = 'REFERENCEEDATA_SUCCESS';
@@ -11,8 +14,6 @@ export const REFERENCEDATA_PATH_APISTATUS = 'codes/apistatus';
 export const REFERENCEDATA_PATH_DISTRIBUTIONTYPE = 'codes/distributiontype';
 export const REFERENCEDATA_PATH_REFERENCETYPES = 'codes/referencetypes';
 export const REFERENCEDATA_PATH_LOS = 'los';
-
-export const REFERENCEEDATA_LOS_SUCCESS = 'REFERENCEEDATA_LOS_SUCCESS';
 
 function shouldFetch(metaState) {
   const threshold = 60 * 1000; // seconds
@@ -31,24 +32,6 @@ export function fetchReferenceDataIfNeededAction(path) {
           onBeforeStart: { type: REFERENCEEDATA_REQUEST, meta: { path } },
           onSuccess: { type: REFERENCEEDATA_SUCCESS, meta: { path } },
           onError: { type: REFERENCEEDATA_FAILURE, meta: { path } }
-        })
-      );
-    }
-  };
-}
-
-export function fetchReferenceDataLosIfNeededAction() {
-  return (dispatch, getState) => {
-    if (
-      shouldFetch(
-        _.get(getState(), ['referenceData', 'meta', REFERENCEDATA_PATH_LOS])
-      )
-    ) {
-      dispatch(
-        reduxFsaThunk(() => getReferenceData(REFERENCEDATA_PATH_LOS), {
-          onBeforeStart: { type: REFERENCEEDATA_REQUEST, meta: { path: REFERENCEDATA_PATH_LOS } },
-          onSuccess: { type: REFERENCEEDATA_LOS_SUCCESS, meta: { path: REFERENCEDATA_PATH_LOS } },
-          onError: { type: REFERENCEEDATA_FAILURE, meta: { path: REFERENCEDATA_PATH_LOS } }
         })
       );
     }
@@ -83,26 +66,6 @@ export function referenceDataReducer(state = initialState, action) {
         }
       };
     }
-    case REFERENCEEDATA_LOS_SUCCESS: {
-      const objFromArray = action.payload.reduce((accumulator, current) => {
-        accumulator[_.get(current, ['losPaths', 0], '').toLowerCase()] = {
-          prefLabel: current.name,
-          isTema: current.isTema,
-          uri: current.uri
-        };
-        return accumulator;
-      }, {});
-      return {
-        items: {
-          ...state.items,
-          [action.meta.path]: objFromArray
-        },
-        meta: {
-          ...state.meta,
-          [action.meta.path]: { isFetching: false, lastFetch: Date.now() }
-        }
-      };
-    }
     case REFERENCEEDATA_FAILURE: {
       return {
         items: {
@@ -125,3 +88,15 @@ export const getReferenceDataByUri = (referenceData, path, uri) =>
 
 export const getReferenceDataByCode = (referenceData, path, code) =>
   _.find(_.get(referenceData, ['items', path]), { code });
+
+export const getLosStructure = referenceData => {
+  const losList = get(referenceData, ['items', REFERENCEDATA_PATH_LOS], []);
+  const losStructure = keyBy(losList, item => get(item, ['losPaths', 0], '').toLowerCase());
+
+  const losStructureWithSelectedFields = mapValues(losStructure, item => ({
+    prefLabel: item.name,
+    isTema: item.isTema,
+    uri: item.uri
+  }));
+  return losStructureWithSelectedFields;
+};

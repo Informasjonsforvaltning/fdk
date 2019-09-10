@@ -27,6 +27,11 @@ import {
   setSearchText
 } from './search-location-helper';
 import localization from '../../lib/localization';
+import {
+  REFERENCEDATA_PATH_APISTATUS,
+  REFERENCEDATA_PATH_DISTRIBUTIONTYPE,
+  REFERENCEDATA_PATH_LOS
+} from '../../redux/modules/referenceData';
 
 const browser = detect();
 
@@ -39,8 +44,6 @@ export const SearchPage = props => {
     fetchPublishersIfNeeded,
     fetchReferenceDataIfNeeded,
     fetchInformationModelsIfNeeded,
-    fetchApiStatusIfNeeded,
-    fetchLosIfNeeded,
     history,
     datasetItems,
     datasetAggregations,
@@ -88,11 +91,11 @@ export const SearchPage = props => {
   fetchApisIfNeeded(apiSearchParams);
   fetchConceptsIfNeeded(conceptSearchParams);
   fetchInformationModelsIfNeeded(informationModelSearchParams);
-  fetchApiStatusIfNeeded();
-  fetchLosIfNeeded();
   fetchThemesIfNeeded();
   fetchPublishersIfNeeded();
-  fetchReferenceDataIfNeeded();
+  fetchReferenceDataIfNeeded(REFERENCEDATA_PATH_DISTRIBUTIONTYPE);
+  fetchReferenceDataIfNeeded(REFERENCEDATA_PATH_APISTATUS);
+  fetchReferenceDataIfNeeded(REFERENCEDATA_PATH_LOS);
 
   const handleSearchSubmit = searchText => {
     setSearchText(history, location, searchText);
