@@ -3,6 +3,7 @@
 exports[`should render LinkExternal correctly 1`] = `
 <a
   href="uri"
+  target="_self"
 >
   prefLabel
   <i

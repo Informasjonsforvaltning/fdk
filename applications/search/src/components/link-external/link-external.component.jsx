@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { getTranslateText } from "../../lib/translateText";
+import { getTranslateText } from '../../lib/translateText';
 
-export const LinkExternal = ({ uri, prefLabel }) => (
-  <a href={uri}>
+export const LinkExternal = ({ uri, prefLabel, openInNewTab }) => (
+  <a href={uri} target={openInNewTab ? '_blank' : '_self'}>
     {getTranslateText(prefLabel)}
     <i className="fa fa-external-link fdk-fa-right" />
   </a>
@@ -11,10 +11,12 @@ export const LinkExternal = ({ uri, prefLabel }) => (
 
 LinkExternal.defaultProps = {
   uri: '',
-  prefLabel: {}
+  prefLabel: {},
+  openInNewTab: false
 };
 
 LinkExternal.propTypes = {
   uri: PropTypes.string,
-  prefLabel: PropTypes.object
+  prefLabel: PropTypes.object,
+  openInNewTab: PropTypes.bool
 };

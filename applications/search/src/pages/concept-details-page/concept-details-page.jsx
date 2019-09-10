@@ -56,7 +56,7 @@ const renderSource = ({ sourceRelationship, sources }) => {
           {index > 0 && ','}
           &nbsp;
           {uri ? (
-            <LinkExternal uri={uri} prefLabel={text || uri} />
+            <LinkExternal uri={uri} prefLabel={text || uri} openInNewTab />
           ) : (
             getTranslateText(text)
           )}
@@ -216,8 +216,7 @@ const renderContactPoint = contactPoint => {
             <a
               title={_.get(contactPoint, 'email')}
               href={`mailto:${_.get(contactPoint, 'email')}`}
-              rel="noopener noreferrer"
-            >
+              rel="noopener noreferrer">
               {_.get(contactPoint, 'email')}
             </a>
           }

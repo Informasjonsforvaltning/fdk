@@ -19,6 +19,7 @@ exports[`should render DatasetInfo correctly 1`] = `
         className="col-8"
       >
         <LinkExternal
+          openInNewTab={false}
           prefLabel="http://referenced/dataset"
           uri="http://referenced/dataset"
         />
