@@ -4,7 +4,6 @@ import { fetchApisIfNeededAction } from '../../redux/modules/apis';
 import { fetchConceptsIfNeededAction } from '../../redux/modules/concepts';
 import { fetchInformationModelsIfNeededAction } from '../../redux/modules/informationModels';
 import { fetchPublishersIfNeededAction } from '../../redux/modules/publishers';
-import { fetchThemesIfNeededAction } from '../../redux/modules/themes';
 import {
   addConceptAction,
   removeConceptAction
@@ -19,7 +18,6 @@ const mapStateToProps = ({
   apis,
   concepts,
   informationModels,
-  themes,
   publishers,
   referenceData,
   conceptsCompare,
@@ -53,10 +51,6 @@ const mapStateToProps = ({
     informationModelTotal: null
   };
 
-  const { themesItems, isFetchingThemes } = themes || {
-    themesItems: null
-  };
-
   const { publisherItems, isFetchingPublishers } = publishers || {
     publisherItems: null
   };
@@ -78,8 +72,6 @@ const mapStateToProps = ({
     informationModelItems,
     informationModelAggregations,
     informationModelTotal,
-    themesItems,
-    isFetchingThemes,
     publisherItems,
     isFetchingPublishers,
     referenceData,
@@ -92,7 +84,6 @@ const mapDispatchToProps = dispatch => ({
   fetchDatasetsIfNeeded: query => dispatch(fetchDatasetsIfNeededAction(query)),
   fetchApisIfNeeded: query => dispatch(fetchApisIfNeededAction(query)),
   fetchConceptsIfNeeded: query => dispatch(fetchConceptsIfNeededAction(query)),
-  fetchThemesIfNeeded: () => dispatch(fetchThemesIfNeededAction()),
   fetchPublishersIfNeeded: () => dispatch(fetchPublishersIfNeededAction()),
   fetchReferenceDataIfNeeded: (path) => dispatch(fetchReferenceDataIfNeededAction(path)),
   addConcept: item => dispatch(addConceptAction(item)),
