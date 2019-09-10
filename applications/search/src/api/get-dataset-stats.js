@@ -1,6 +1,5 @@
 import _ from 'lodash';
 import axios from 'axios';
-import qs from 'qs';
 
 import { normalizeAggregations } from '../lib/normalizeAggregations';
 import { datasetsUrlBase } from './datasets';
@@ -61,32 +60,23 @@ export function extractStats(data) {
   };
 }
 
-const statsAggregations = `accessRights,theme,orgPath,provenance,spatial,los,firstHarvested,withDistribution,publicWithDistribution,nonpublicWithDistribution,publicWithoutDistribution,nonpublicWithoutDistribution,withSubject,catalog,opendata,nationalComponent,subject,distributionCountForTypeApi,distributionCountForTypeFeed,distributionCountForTypeFile`;
-
-export const statsUrl = query =>
-  `${datasetsUrlBase()}${qs.stringify(
-    { ...query, size: 0, aggregations: statsAggregations },
-    { addQueryPrefix: true }
-  )}`;
-
 export const getDatasetStats = orgPath =>
-  axios
-    .get(statsUrl({ orgPath }))
+  axios.get(datasetsUrlBase(), {
+    params: {
+      orgPath,
+      size: 0,
+      aggregations: 'accessRights,theme,orgPath,provenance,spatial,los,firstHarvested,withDistribution,publicWithDistribution,nonpublicWithDistribution,publicWithoutDistribution,nonpublicWithoutDistribution,withSubject,catalog,opendata,nationalComponent,subject,distributionCountForTypeApi,distributionCountForTypeFeed,distributionCountForTypeFile'
+    }
+  })
     .then(response => response && response.data)
     .then(normalizeAggregations)
-    .then(extractStats)
-    .catch(e => console.log(JSON.stringify(e))); // eslint-disable-line no-console
+    .then(extractStats);
 
-export const getDatasetCountsBySubjectUri = query => {
-  const postUrl = `${datasetsUrlBase()}/search${qs.stringify(
-    { returnfields: 'subject.uri', size: 10000 },
-    // todo size 10000 is currently overruled by server to be 100, fix the limit there, if we come closer to that limit of concept referrals from datasets
-    // alternative is to implement paged querying here.
-    { addQueryPrefix: true }
-  )}`;
-
-  return axios
-    .post(postUrl, query)
+export const getDatasetCountsBySubjectUri = query =>
+  axios.post(
+    `${datasetsUrlBase()}/search`,
+    query,
+    { params: { returnfields: 'subject.uri', size: 10000 } })
     .then(response => response && response.data)
     .then(data => _.get(data, 'hits.hits'))
     .then(datasets =>
@@ -98,6 +88,4 @@ export const getDatasetCountsBySubjectUri = query => {
       )
     )
     .then(_.flatten) // [[subject, ...],[subject, ...]] -> [subject..]
-    .then(subjects => _.groupBy(subjects, 'subjectUri'))
-    .catch(e => console.log(JSON.stringify(e))); // eslint-disable-line no-console
-};
+    .then(subjects => _.groupBy(subjects, 'subjectUri'));
