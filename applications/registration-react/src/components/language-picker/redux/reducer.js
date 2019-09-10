@@ -1,4 +1,4 @@
-import { RESET_INPUT_LANGUAGES, TOGGLE_INPUT_LANGUAGE } from './actionTypes';
+import { SET_INPUT_LANGUAGES, TOGGLE_INPUT_LANGUAGE } from './actionTypes';
 
 import localization from '../../../lib/localization';
 
@@ -28,14 +28,16 @@ const initialState = {
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
-    case RESET_INPUT_LANGUAGES: {
+    case SET_INPUT_LANGUAGES: {
       return {
         ...state,
-        languages: state.languages.map(({ code, title }) => ({
-          code,
-          title,
-          selected: code === NB
-        }))
+        languages: action.payload.languages.length
+          ? state.languages.map(({ code, title }) => ({
+              code,
+              title,
+              selected: action.payload.languages.includes(code)
+            }))
+          : initialState.languages
       };
     }
     case TOGGLE_INPUT_LANGUAGE: {

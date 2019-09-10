@@ -8,7 +8,6 @@ import {
   selectorForDatasetsInCatalog
 } from '../../redux/modules/datasets';
 import { fetchCatalogIfNeeded } from '../../redux/modules/catalog';
-import { resetInputLanguages } from '../../components/language-picker/redux/actions';
 import { DatasetsListPagePure } from './dataset-list-page-pure';
 import {
   createDataset,
@@ -31,7 +30,6 @@ const createDatasetAndNavigateThunk = (
   catalogId,
   history
 ) => async dispatch => {
-  dispatch(resetInputLanguages());
   const dataset = await createDataset(catalogId);
   dispatch(datasetSuccessAction(dataset));
   history.push(datasetPath(catalogId, dataset.id));

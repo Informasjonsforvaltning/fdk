@@ -1,8 +1,11 @@
-import { RESET_INPUT_LANGUAGES, TOGGLE_INPUT_LANGUAGE } from './actionTypes';
+import { SET_INPUT_LANGUAGES, TOGGLE_INPUT_LANGUAGE } from './actionTypes';
 
-export function resetInputLanguages() {
+export function setInputLanguages(languages = []) {
   return {
-    type: RESET_INPUT_LANGUAGES
+    type: SET_INPUT_LANGUAGES,
+    payload: {
+      languages
+    }
   };
 }
 

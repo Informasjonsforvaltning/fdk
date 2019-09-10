@@ -6,7 +6,10 @@ import {
   selectorForDataset,
   selectorForDatasetsInCatalog
 } from '../../redux/modules/datasets';
-import { toggleInputLanguage } from '../../components/language-picker/redux/actions';
+import {
+  setInputLanguages,
+  toggleInputLanguage
+} from '../../components/language-picker/redux/actions';
 import {
   REFERENCEDATA_PATH_FREQUENCY,
   REFERENCEDATA_PATH_LOS,
@@ -60,6 +63,7 @@ const mapStateToProps = (state, { catalogId, datasetId }) => {
 const mapDispatchToProps = {
   dispatchEnsureData: datasetRegistrationEnsureDataThunk,
   dispatchDeleteDataset: deleteDatasetThunk,
+  setInputLanguages,
   toggleInputLanguage
 };
 

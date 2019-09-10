@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 
@@ -78,6 +78,7 @@ export function DatasetRegistrationPagePure(props) {
     history,
     dispatchDeleteDataset,
     languages,
+    setInputLanguages,
     toggleInputLanguage
   } = props;
 
@@ -102,6 +103,37 @@ export function DatasetRegistrationPagePure(props) {
     catalogId,
     datasetId
   ]);
+
+  const [languagesDetermined, setLanguagesDetermined] = useState(false);
+
+  const getUsedLanguages = () => {
+    const translatableFields = ['title', 'description'];
+    return datasetItem
+      ? [
+          ...new Set(
+            translatableFields.reduce(
+              (previous, current) =>
+                previous.concat(
+                  Object.entries(datasetItem[current]).map(
+                    ([key, value]) => value && value.length && key
+                  )
+                ),
+              []
+            )
+          )
+        ]
+      : [];
+  };
+
+  useEffect(
+    () => {
+      if (datasetItem && !languagesDetermined) {
+        setInputLanguages(getUsedLanguages());
+        setLanguagesDetermined(true);
+      }
+    },
+    [datasetItem]
+  );
 
   return (
     <div className="container">
@@ -368,6 +400,7 @@ DatasetRegistrationPagePure.defaultProps = {
   history: null,
   losItems: null,
   languages: [],
+  setInputLanguages: _.noop,
   toggleInputLanguage: _.noop
 };
 
@@ -388,5 +421,6 @@ DatasetRegistrationPagePure.propTypes = {
   history: PropTypes.object,
   losItems: PropTypes.array,
   languages: PropTypes.array,
+  setInputLanguages: PropTypes.func,
   toggleInputLanguage: PropTypes.func
 };
