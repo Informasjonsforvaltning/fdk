@@ -359,5 +359,10 @@
     },
     "relatedAPIHeader": "Belongs to API",
     "informationModelDescription": "Informaiton Model Description"
+  },
+  "sourceRelationship": {
+    "sitatFraKilde": "Cited in",
+    "basertPåKilde": "Based on",
+    "egendefinert": "Defined in"
   }
 }
