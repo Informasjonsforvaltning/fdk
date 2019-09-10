@@ -14,7 +14,7 @@ import { ErrorBoundary } from '../../../components/error-boundary/error-boundary
 import { getSortfield, setPage, setSortfield } from '../search-location-helper';
 import { parseSearchParams } from '../../../lib/location-history-helper';
 import { FilterPills } from '../filter-pills/filter-pills.component';
-import { getLosStructure } from '../../../redux/modules/referenceData';
+import { getLosStructure, getThemesStructure } from '../../../redux/modules/referenceData';
 import { filterLosThemesFromAggregation } from '../los-aggregations-helper';
 
 function _renderFilterModal({
@@ -28,11 +28,11 @@ function _renderFilterModal({
   onFilterSpatial,
   onFilterLos,
   locationSearch,
-  themesItems,
   publishers,
   referenceData
 }) {
   const losItems = getLosStructure(referenceData);
+  const themesItems = getThemesStructure(referenceData);
 
   return (
     <Modal isOpen={showFilterModal} toggle={closeFilterModal}>
@@ -123,7 +123,6 @@ export const ResultsDatasetPure = ({
   onFilterProvenance,
   onFilterSpatial,
   onFilterLos,
-  themesItems,
   hitsPerPage,
   publishers,
   referenceData,
@@ -156,6 +155,7 @@ export const ResultsDatasetPure = ({
   };
 
   const losItems = getLosStructure(referenceData);
+  const themesItems = getThemesStructure(referenceData);
 
   return (
     <main id="content" data-test-id="datasets">
@@ -332,7 +332,6 @@ ResultsDatasetPure.propTypes = {
   onFilterProvenance: PropTypes.func,
   onFilterSpatial: PropTypes.func,
   onFilterLos: PropTypes.func,
-  themesItems: PropTypes.object,
   publishers: PropTypes.object,
   referenceData: PropTypes.object,
 

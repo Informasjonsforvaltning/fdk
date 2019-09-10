@@ -14,6 +14,7 @@ export const REFERENCEDATA_PATH_APISTATUS = 'codes/apistatus';
 export const REFERENCEDATA_PATH_DISTRIBUTIONTYPE = 'codes/distributiontype';
 export const REFERENCEDATA_PATH_REFERENCETYPES = 'codes/referencetypes';
 export const REFERENCEDATA_PATH_LOS = 'los';
+export const REFERENCEDATA_PATH_THEMES = 'themes';
 
 function shouldFetch(metaState) {
   const threshold = 60 * 1000; // seconds
@@ -100,3 +101,5 @@ export const getLosStructure = referenceData => {
   }));
   return losStructureWithSelectedFields;
 };
+
+export const getThemesStructure = referenceData => keyBy(get(referenceData, ['items', REFERENCEDATA_PATH_LOS], []), 'code');

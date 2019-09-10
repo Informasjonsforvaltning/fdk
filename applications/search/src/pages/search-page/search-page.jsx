@@ -30,7 +30,7 @@ import localization from '../../lib/localization';
 import {
   REFERENCEDATA_PATH_APISTATUS,
   REFERENCEDATA_PATH_DISTRIBUTIONTYPE,
-  REFERENCEDATA_PATH_LOS
+  REFERENCEDATA_PATH_LOS, REFERENCEDATA_PATH_THEMES
 } from '../../redux/modules/referenceData';
 
 const browser = detect();
@@ -40,7 +40,6 @@ export const SearchPage = props => {
     fetchDatasetsIfNeeded,
     fetchApisIfNeeded,
     fetchConceptsIfNeeded,
-    fetchThemesIfNeeded,
     fetchPublishersIfNeeded,
     fetchReferenceDataIfNeeded,
     fetchInformationModelsIfNeeded,
@@ -57,7 +56,6 @@ export const SearchPage = props => {
     informationModelItems,
     informationModelAggregations,
     informationModelTotal,
-    themesItems,
     publisherItems,
     referenceData,
     location,
@@ -91,11 +89,11 @@ export const SearchPage = props => {
   fetchApisIfNeeded(apiSearchParams);
   fetchConceptsIfNeeded(conceptSearchParams);
   fetchInformationModelsIfNeeded(informationModelSearchParams);
-  fetchThemesIfNeeded();
   fetchPublishersIfNeeded();
   fetchReferenceDataIfNeeded(REFERENCEDATA_PATH_DISTRIBUTIONTYPE);
   fetchReferenceDataIfNeeded(REFERENCEDATA_PATH_APISTATUS);
   fetchReferenceDataIfNeeded(REFERENCEDATA_PATH_LOS);
+  fetchReferenceDataIfNeeded(REFERENCEDATA_PATH_THEMES);
 
   const handleSearchSubmit = searchText => {
     setSearchText(history, location, searchText);
@@ -205,7 +203,6 @@ export const SearchPage = props => {
               onFilterProvenance={handleDatasetFilterProvenance}
               onFilterSpatial={handleDatasetFilterSpatial}
               onFilterLos={handleDatasetFilterLos}
-              themesItems={themesItems}
               publishers={publisherItems}
               referenceData={referenceData}
               hitsPerPage={HITS_PER_PAGE}
