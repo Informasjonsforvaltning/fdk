@@ -3,6 +3,7 @@ import axios from 'axios';
 
 import { normalizeAggregations } from '../lib/normalizeAggregations';
 import { datasetsUrlBase } from './datasets';
+import { getConfig } from '../config';
 
 function getFromBucketArray(data, aggregation, key) {
   const buckets = _.get(data, ['aggregations', aggregation, 'buckets'], []);
@@ -61,13 +62,17 @@ export function extractStats(data) {
 }
 
 export const getDatasetStats = orgPath =>
-  axios.get(datasetsUrlBase(), {
-    params: {
-      orgPath,
-      size: 0,
-      aggregations: 'accessRights,theme,orgPath,provenance,spatial,los,firstHarvested,withDistribution,publicWithDistribution,nonpublicWithDistribution,publicWithoutDistribution,nonpublicWithoutDistribution,withSubject,catalog,opendata,nationalComponent,subject,distributionCountForTypeApi,distributionCountForTypeFeed,distributionCountForTypeFile'
+  axios.get(
+    datasetsUrlBase(),
+    {
+      params: {
+        orgPath,
+        size: 0,
+        aggregations: 'accessRights,theme,orgPath,provenance,spatial,los,firstHarvested,withDistribution,publicWithDistribution,nonpublicWithDistribution,publicWithoutDistribution,nonpublicWithoutDistribution,withSubject,catalog,opendata,nationalComponent,subject,distributionCountForTypeApi,distributionCountForTypeFeed,distributionCountForTypeFile'
+      },
+      headers: { authorization: getConfig().datasetApi.authorization }
     }
-  })
+  )
     .then(response => response && response.data)
     .then(normalizeAggregations)
     .then(extractStats);
@@ -76,7 +81,11 @@ export const getDatasetCountsBySubjectUri = query =>
   axios.post(
     `${datasetsUrlBase()}/search`,
     query,
-    { params: { returnfields: 'subject.uri', size: 10000 } })
+    {
+      params: { returnfields: 'subject.uri', size: 10000 },
+      headers: { authorization: getConfig().datasetApi.authorization }
+    }
+  )
     .then(response => response && response.data)
     .then(data => _.get(data, 'hits.hits'))
     .then(datasets =>
