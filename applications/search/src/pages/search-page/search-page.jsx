@@ -163,32 +163,37 @@ export const SearchPage = props => {
     );
   };
 
-  const topSectionClass = cx('top-section-search', 'mb-4', {
-    'top-section-search--image': !!(browser && browser.name !== 'ie')
-  });
+  const topSectionClass = cx(
+    'top-section-search',
+    'mb-4',
+    'd-flex',
+    'flex-column',
+    'justify-content-between',
+    {
+      'top-section-search--image': !!(browser && browser.name !== 'ie')
+    }
+  );
 
   return (
     <div>
       <section className={topSectionClass}>
-        <div className="container">
-          <SearchBox
-            onSearchSubmit={handleSearchSubmit}
-            searchText={locationSearch.q || ''}
+        <SearchBox
+          onSearchSubmit={handleSearchSubmit}
+          searchText={locationSearch.q || ''}
+          countDatasets={datasetTotal}
+          countTerms={conceptTotal}
+          countApis={apiTotal}
+          countInformationModels={informationModelTotal}
+          open={open}
+        />
+        {!getConfig().themeNap && (
+          <ResultsTabs
             countDatasets={datasetTotal}
             countTerms={conceptTotal}
             countApis={apiTotal}
             countInformationModels={informationModelTotal}
-            open={open}
           />
-          {!getConfig().themeNap && (
-            <ResultsTabs
-              countDatasets={datasetTotal}
-              countTerms={conceptTotal}
-              countApis={apiTotal}
-              countInformationModels={informationModelTotal}
-            />
-          )}
-        </div>
+        )}
       </section>
       <div className="container">
         <Switch>
