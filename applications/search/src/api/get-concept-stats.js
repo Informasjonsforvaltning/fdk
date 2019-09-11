@@ -4,7 +4,6 @@ import axios from 'axios';
 import { normalizeAggregations } from '../lib/normalizeAggregations';
 import { conceptsUrlBase } from './concepts';
 import { getDatasetCountsBySubjectUri } from './get-dataset-stats';
-import { getConfig } from '../config';
 
 function getFromBucketArray(data, aggregation, key) {
   const buckets = _.get(data, ['aggregations', aggregation, 'buckets'], []);
@@ -28,17 +27,17 @@ const extractConceptUris = data =>
   _.map(extractConcepts(data), 'uri').join(',');
 
 export const getConceptStats = orgPath =>
-  axios.get(
-    conceptsUrlBase(),
-    {
-      params: {
-        orgPath, size: 10000,
-        returnfields: 'uri',
-        aggregations: 'firstHarvested,publisher'
-      },
-      headers: { authorization: getConfig().conceptApi.authorization }
-    }
-  )
+  axios
+    .get(
+      conceptsUrlBase(),
+      {
+        params: {
+          orgPath, size: 10000,
+          returnfields: 'uri',
+          aggregations: 'firstHarvested,publisher'
+        }
+      }
+    )
     .then(response => response && response.data)
     .then(async data => {
       const stats = extractStats(normalizeAggregations(data));

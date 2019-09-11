@@ -5,22 +5,10 @@ import { getConfig } from '../config';
 const informationmodelsUrlBase = () => `${getConfig().informationmodelApi.host}/api/informationmodels`;
 
 export const informationmodelsSearch = params =>
-  axios.get(
-    informationmodelsUrlBase(),
-    {
-      params,
-      headers: { authorization: getConfig().informationmodelApi.authorization }
-    }
-  )
-    .then(r => r.data);
+  axios.get(informationmodelsUrlBase(), { params }).then(r => r.data);
 
 export const getInformationmodel = id =>
-  axios.get(
-    `${informationmodelsUrlBase()}/${id}`,
-    { headers: { authorization: getConfig().informationmodelApi.authorization } }
-  )
-    .then(r => r.data)
-    .catch(() => null);
+  axios.get(`${informationmodelsUrlBase()}/${id}`).then(r => r.data).catch(() => null);
 
 export const extractInformationmodels = searchResponse => get(searchResponse, ['_embedded', 'informationmodels']);
 
