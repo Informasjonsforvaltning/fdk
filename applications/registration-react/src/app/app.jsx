@@ -52,7 +52,7 @@ const Routes = (
 
 export const App = () => (
   <BrowserRouter>
-    <div className="d-flex flex-column site">
+    <div className="d-flex flex-column site theme-fdk">
       <AppHeader />
       <Breadcrumbs />
       <div className="site-content d-flex flex-column pt-5">{Routes}</div>
