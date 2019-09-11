@@ -4,10 +4,18 @@ import { getConfig } from '../config';
 
 export const conceptsUrlBase = () => `${getConfig().conceptApi.host}/api/concepts`;
 
-export const conceptsSearch = params => axios.get(conceptsUrlBase(), { params }).then(r => r.data);
+export const conceptsSearch = params => axios.get(conceptsUrlBase(), {
+  params,
+  headers: { authorization: getConfig().conceptApi.authorization }
+}).then(r => r.data);
 
-export const getConcept = async id =>
-  axios.get(`${conceptsUrlBase()}/${id}`).then(r => r.data).catch(() => null);
+export const getConcept = id =>
+  axios.get(
+    `${conceptsUrlBase()}/${id}`,
+    { headers: { authorization: getConfig().conceptApi.authorization } }
+  )
+    .then(r => r.data)
+    .catch(() => null);
 
 export const extractConcepts = searchResponse => get(searchResponse, ['_embedded', 'concepts']);
 
