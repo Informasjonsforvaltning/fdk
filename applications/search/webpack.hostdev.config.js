@@ -20,6 +20,8 @@ module.exports = {
         res.json({
           REDUX_LOG: '',
           DISQUS_SHORTNAME: '',
+          SEARCH_API_HOST: process.env.SEARCH_API_HOST || 'http://localhost:8080',
+          SEARCH_API_AUTHORIZATION: process.env.SEARCH_API_AUTHORIZATION || ''
         })
       )
   },
