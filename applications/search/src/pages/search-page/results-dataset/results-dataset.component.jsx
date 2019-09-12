@@ -19,6 +19,7 @@ import {
   getThemesStructure
 } from '../../../redux/modules/referenceData';
 import { filterLosThemesFromAggregation } from '../los-aggregations-helper';
+import { getConfig } from '../../../config';
 
 function _renderFilterModal({
   showFilterModal,
@@ -60,13 +61,15 @@ function _renderFilterModal({
             activeFilter={locationSearch.theme}
             themesItems={themesItems}
           />
-          <FilterBox
-            htmlKey={2}
-            title={localization.facet.accessRight}
-            filter={datasetAggregations.accessRights}
-            onClick={onFilterAccessRights}
-            activeFilter={locationSearch.accessrights}
-          />
+          {!getConfig().themeNap && (
+            <FilterBox
+              htmlKey={2}
+              title={localization.facet.accessRight}
+              filter={datasetAggregations.accessRights}
+              onClick={onFilterAccessRights}
+              activeFilter={locationSearch.accessrights}
+            />
+          )}
           <FilterTree
             title={localization.facet.organisation}
             aggregations={datasetAggregations.orgPath.buckets}
@@ -236,13 +239,15 @@ export const ResultsDatasetPure = ({
                   activeFilter={locationSearch.theme}
                   themesItems={themesItems}
                 />
-                <FilterBox
-                  htmlKey={2}
-                  title={localization.facet.accessRight}
-                  filter={datasetAggregations.accessRights}
-                  onClick={onFilterAccessRights}
-                  activeFilter={locationSearch.accessrights}
-                />
+                {!getConfig().themeNap && (
+                  <FilterBox
+                    htmlKey={2}
+                    title={localization.facet.accessRight}
+                    filter={datasetAggregations.accessRights}
+                    onClick={onFilterAccessRights}
+                    activeFilter={locationSearch.accessrights}
+                  />
+                )}
                 <FilterTree
                   title={localization.facet.organisation}
                   aggregations={datasetAggregations.orgPath.buckets}
