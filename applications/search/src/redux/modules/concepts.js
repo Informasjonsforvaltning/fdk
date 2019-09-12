@@ -1,6 +1,11 @@
 import _ from 'lodash';
 import qs from 'qs';
-import { conceptsSearch, extractAggregations, extractConcepts, extractTotal } from '../../api/concepts';
+import {
+  conceptsSearch,
+  extractAggregations,
+  extractConcepts,
+  extractTotal
+} from '../../api/concepts';
 import { reduxFsaThunk } from '../../lib/redux-fsa-thunk';
 
 export const CONCEPTS_REQUEST = 'CONCEPTS_REQUEST';

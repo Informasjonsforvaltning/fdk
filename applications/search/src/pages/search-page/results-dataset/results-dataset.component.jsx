@@ -14,7 +14,10 @@ import { ErrorBoundary } from '../../../components/error-boundary/error-boundary
 import { getSortfield, setPage, setSortfield } from '../search-location-helper';
 import { parseSearchParams } from '../../../lib/location-history-helper';
 import { FilterPills } from '../filter-pills/filter-pills.component';
-import { getLosStructure, getThemesStructure } from '../../../redux/modules/referenceData';
+import {
+  getLosStructure,
+  getThemesStructure
+} from '../../../redux/modules/referenceData';
 import { filterLosThemesFromAggregation } from '../los-aggregations-helper';
 
 function _renderFilterModal({

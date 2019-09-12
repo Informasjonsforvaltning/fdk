@@ -116,12 +116,7 @@ export const SearchHitHeader = props => {
         <div className="mb-4 d-flex flex-wrap align-items-baseline align-items-center">
           {nationalComponent && <LabelNational />}
 
-          {theme &&
-          renderThemes(
-            theme,
-            losItems,
-            darkThemeBackground
-          )}
+          {theme && renderThemes(theme, losItems, darkThemeBackground)}
         </div>
       )}
     </>

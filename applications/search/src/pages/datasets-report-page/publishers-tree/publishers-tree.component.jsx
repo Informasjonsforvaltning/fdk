@@ -149,8 +149,8 @@ export class PublishersTree extends React.Component {
               itemClassName={chosenClass}
             >
               {node.children &&
-              node.children.length > 0 &&
-              subTree(node.children)}
+                node.children.length > 0 &&
+                subTree(node.children)}
             </TreeView>
           </div>
         );

@@ -5,7 +5,9 @@ import { getInformationmodel } from '../../api/informationmodels';
 import { apisSearch, extractApis } from '../../api/apis';
 
 export const getApiByHarvestSourceUri = harvestSourceUri =>
-  apisSearch({ harvestSourceUri }).then(extractApis).catch(() => []);
+  apisSearch({ harvestSourceUri })
+    .then(extractApis)
+    .catch(() => []);
 
 const memoizedGetInformationModel = _.memoize(getInformationmodel);
 const memoizedGetApiByHarvestSourceUri = _.memoize(getApiByHarvestSourceUri);

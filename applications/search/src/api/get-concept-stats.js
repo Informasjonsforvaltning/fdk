@@ -28,17 +28,16 @@ const extractConceptUris = data =>
   _.map(extractConcepts(data), 'uri').join(',');
 
 export const getConceptStats = orgPath =>
-  axios.get(
-    conceptsUrlBase(),
-    {
+  axios
+    .get(conceptsUrlBase(), {
       params: {
-        orgPath, size: 10000,
+        orgPath,
+        size: 10000,
         returnfields: 'uri',
         aggregations: 'firstHarvested,publisher'
       },
       headers: { authorization: getConfig().conceptApi.authorization }
-    }
-  )
+    })
     .then(response => response && response.data)
     .then(async data => {
       const stats = extractStats(normalizeAggregations(data));

@@ -9,9 +9,7 @@ import {
   removeConceptAction
 } from '../../redux/modules/conceptsCompare';
 import { SearchPageWithState } from './search-page';
-import {
-  fetchReferenceDataIfNeededAction
-} from '../../redux/modules/referenceData';
+import { fetchReferenceDataIfNeededAction } from '../../redux/modules/referenceData';
 
 const mapStateToProps = ({
   datasets,
@@ -85,7 +83,8 @@ const mapDispatchToProps = dispatch => ({
   fetchApisIfNeeded: query => dispatch(fetchApisIfNeededAction(query)),
   fetchConceptsIfNeeded: query => dispatch(fetchConceptsIfNeededAction(query)),
   fetchPublishersIfNeeded: () => dispatch(fetchPublishersIfNeededAction()),
-  fetchReferenceDataIfNeeded: (path) => dispatch(fetchReferenceDataIfNeededAction(path)),
+  fetchReferenceDataIfNeeded: path =>
+    dispatch(fetchReferenceDataIfNeededAction(path)),
   addConcept: item => dispatch(addConceptAction(item)),
   removeConcept: uri => dispatch(removeConceptAction(uri)),
   fetchInformationModelsIfNeeded: query =>
