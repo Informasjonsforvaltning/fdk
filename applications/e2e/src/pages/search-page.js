@@ -5,6 +5,7 @@ const datasetsContentSelector = '#content[data-test-id="datasets"]';
 export const searchBoxSelector = 'input[name=searchBox]';
 export const searchButtonSelector = 'button.fdk-button-search';
 export const activeTabSelector = '.search-results-tabs .li-active';
+export const apiTabSelector = '.search-results-tabs a[href="/apis"]';
 
 export class SearchPage {
   constructor(browserPage) {
