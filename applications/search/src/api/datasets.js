@@ -10,7 +10,7 @@ export const datasetsSearch = params => {
 
   // Filter out NAP data if filterTransportDatasets in conf is true
   if ( getConfig().filterTransportDatasets ) {
-    Object.assign(params,{accessrights: 'PUBLIC',losTheme : 'TRAN'});
+    Object.assign(params,{accessrights: 'PUBLIC',losTheme : 'trafikk-reiser-og-samferdsel'});
   }
 
   return axios
