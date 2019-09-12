@@ -4,6 +4,7 @@ const datasetsContentSelector = '#content[data-test-id="datasets"]';
 
 export const searchBoxSelector = 'input[name=searchBox]';
 export const searchButtonSelector = 'button.fdk-button-search';
+export const activeTabSelector = '.search-results-tabs .li-active';
 
 export class SearchPage {
   constructor(browserPage) {
@@ -22,6 +23,10 @@ export class SearchPage {
 
   waitForVisible(selector) {
     return this.browserPage.waitForSelector(selector, { visible: true });
+  }
+
+  selectorsContent(selector) {
+    return this.browserPage.$$eval(selector, els => els.map(e => e.innerText));
   }
 }
 

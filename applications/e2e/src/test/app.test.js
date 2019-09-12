@@ -2,6 +2,7 @@ import delay from 'delay';
 import * as browser from '../lib/browser';
 import { config } from '../../config';
 import {
+  activeTabSelector,
   navigateToSearchPage,
   searchBoxSelector,
   searchButtonSelector
@@ -34,14 +35,10 @@ describe('SUITE: Main page', () => {
         ).resolves.toBeTruthy();
       });
 
-      test('ART:API-705 THEN: Concepts tab is active', async () => {
-        const activeTabSelector = '.search-results-tabs .li-active';
-
-        const activeTabText = await page.$eval(
-          activeTabSelector,
-          el => el.innerText
-        );
-        expect(activeTabText).toContain('Datasett'); // default language is nb
+      test('ART:API-705 THEN: Dataset tab is active', async () => {
+        const activeTabLabels = await searchPage.selectorsContent(activeTabSelector);
+        expect(activeTabLabels).toHaveLength(1); // only one tab is active
+        expect(activeTabLabels[0]).toContain('Datasett'); // default language is nb
       });
 
       test('ART:API-705 THEN: Api tab label shows number larger than 3', async () => {
