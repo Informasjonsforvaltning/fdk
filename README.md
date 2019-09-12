@@ -131,7 +131,7 @@ Prerequisite: Make sure you have local admin on your computer, as gitbash has to
 
 	```
 	# run tests in chromim headless (no window, just report) 
-	cd applications/e2e ; npm t)
+	(cd applications/e2e ; npm t)
 
 	# run tests in chromium window opened
 	(cd applications/e2e ; npm run test:browser)
