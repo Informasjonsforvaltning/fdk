@@ -57,4 +57,14 @@ public class RDFToModelTransformerTest {
 
         assertEquals("We should get 2 concept", 2, concepts.size());
     }
+
+    @Test
+    public void testSourceInConceptAndHarvestFromDataBrregNo() throws Throwable {
+        // curl -i -H "Accept: text/turtle" https://data.brreg.no/begrep/ > data.brreg.no_begrep.turtle
+        Reader reader = new InputStreamReader(new ClassPathResource("data.brreg.no_begrep.turtle").getInputStream());
+
+        List<ConceptDenormalized> concepts = transformer.getConceptsFromStream(reader);
+
+        assertEquals("We should get 181 concept", 181, concepts.size());
+    }
 }
