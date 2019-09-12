@@ -1,7 +1,11 @@
 import delay from 'delay';
 import * as browser from '../lib/browser';
 import { config } from '../../config';
-import { navigateToSearchPage } from '../pages/search-page';
+import {
+  navigateToSearchPage,
+  searchBoxSelector,
+  searchButtonSelector
+} from '../pages/search-page';
 
 afterAll(() => {
   browser.close(); // we might not want to close the browser between each suite
@@ -15,15 +19,20 @@ describe('SUITE: Main page', () => {
 
   describe('GIVEN: Address is bar is blank', () => {
     describe('WHEN: Navigate to the search page', () => {
+      let searchPage;
       beforeAll(async () => {
-        await navigateToSearchPage(page);
+        searchPage = await navigateToSearchPage(page);
       });
 
       test("ART:API-705 THEN: Window has title 'Felles datakatalog'", async () =>
         expect(page.title()).resolves.toBe('Felles datakatalog'));
 
-      test('ART:API-705 THEN: Search box and button are visible', async () =>
-        expect(page.$('input[name=searchBox]')).resolves.toBeTruthy());
+      test('ART:API-705 THEN: Search box and button are visible', async () => {
+        expect(searchPage.hasVisible(searchBoxSelector)).resolves.toBeTruthy();
+        expect(
+          searchPage.hasVisible(searchButtonSelector)
+        ).resolves.toBeTruthy();
+      });
 
       test('ART:API-705 THEN: Concepts tab is active', async () => {
         const activeTabSelector = '.search-results-tabs .li-active';
