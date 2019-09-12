@@ -308,10 +308,12 @@ public class RDFToModelTransformer {
         return concept;
     }
     private static TextAndURI extractTextAndUri(Resource resource, Property property) {
-        TextAndURI textURI = new TextAndURI();
-
         Resource omfangResource = resource.getPropertyResourceValue(property);
+        if (omfangResource == null) {
+            return null;
+        }
 
+        TextAndURI textURI = new TextAndURI();
         textURI.setText(extractLanguageLiteralFromResource(omfangResource, RDFS.label));
 
         Statement theURI = omfangResource.getProperty(RDFS.seeAlso);
