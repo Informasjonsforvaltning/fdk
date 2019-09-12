@@ -1,5 +1,5 @@
 import delay from 'delay';
-import * as browser from '../../lib/browser';
+import * as browser from '../lib/browser';
 import { config } from '../../config';
 
 afterAll(() => {

@@ -2,10 +2,6 @@
   "name": "e2e",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
-  "directories": {
-    "test": "test"
-  },
   "scripts": {
     "precommit": "lint-staged",
     "test:browser": "bash -c \"BROWSER=chromium npm t\"",
@@ -54,16 +50,15 @@
       "<rootDir>/jestsetup.js"
     ],
     "testMatch": [
-      "<rootDir>/test/**/*.test.js",
-      "**/?(*.)(test).js?(x)"
+      "<rootDir>/src/test/**/*.test.js"
     ],
     "reporters": [
       "default",
-      "<rootDir>/lib/arts-reporter"
+      "<rootDir>/src/lib/arts-reporter"
     ],
     "testPathIgnorePatterns": [
       "/node_modules/",
-      "<rootDir>/test/fixtures/"
+      "<rootDir>/src/test/fixtures/"
     ]
   }
 }

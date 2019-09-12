@@ -1,5 +1,5 @@
 import puppeteer from 'puppeteer';
-import { config } from '../config';
+import { config } from '../../config';
 
 const browserConfig = {
   default: {},
