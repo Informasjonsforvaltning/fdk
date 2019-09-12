@@ -23,7 +23,9 @@ const mapDispatchToProps = dispatch => ({
   fetchApiStatusIfNeeded: () =>
     dispatch(fetchReferenceDataIfNeededAction(REFERENCEDATA_PATH_APISTATUS)),
   fetchApiServiceTypeIfNeeded: () =>
-    dispatch(fetchReferenceDataIfNeededAction(REFERENCEDATA_PATH_APISERVICETYPE))
+    dispatch(
+      fetchReferenceDataIfNeededAction(REFERENCEDATA_PATH_APISERVICETYPE)
+    )
 });
 
 export const ConnectedApiDetailsPage = connect(

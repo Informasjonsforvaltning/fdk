@@ -3,7 +3,10 @@ import { resolve } from 'react-resolver';
 import { getDataset, getDatasetByURI } from '../../api/datasets';
 import { apisSearch, extractApis, getApi } from '../../api/apis';
 
-export const getApisByDatasetUri = dataseturi => apisSearch({ dataseturi }).then(extractApis).catch(() => []);
+export const getApisByDatasetUri = dataseturi =>
+  apisSearch({ dataseturi })
+    .then(extractApis)
+    .catch(() => []);
 
 const memoizedGetDataset = _.memoize(getDataset);
 const memoizedGetDatasetByURI = _.memoize(getDatasetByURI);

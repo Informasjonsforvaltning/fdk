@@ -15,7 +15,8 @@ const mapStateToProps = ({ referenceData, publishers }) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  fetchReferenceDataIfNeeded: path => dispatch(fetchReferenceDataIfNeededAction(path))
+  fetchReferenceDataIfNeeded: path =>
+    dispatch(fetchReferenceDataIfNeededAction(path))
 });
 
 const enhance = compose(

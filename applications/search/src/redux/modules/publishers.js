@@ -1,7 +1,7 @@
 import _ from 'lodash';
+import keyBy from 'lodash/keyBy';
 import { reduxFsaThunk } from '../../lib/redux-fsa-thunk';
 import { getAllPublishers } from '../../api/publishers';
-import keyBy from 'lodash/keyBy';
 
 export const PUBLISHERS_REQUEST = 'PUBLISHERS_REQUEST';
 export const PUBLISHERS_SUCCESS = 'PUBLISHERS_SUCCESS';

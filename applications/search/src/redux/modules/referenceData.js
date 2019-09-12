@@ -1,9 +1,9 @@
 import _ from 'lodash';
-import { reduxFsaThunk } from '../../lib/redux-fsa-thunk';
-import { getReferenceData } from '../../api/referenceData';
 import get from 'lodash/get';
 import keyBy from 'lodash/keyBy';
 import mapValues from 'lodash/mapValues';
+import { getReferenceData } from '../../api/referenceData';
+import { reduxFsaThunk } from '../../lib/redux-fsa-thunk';
 
 export const REFERENCEEDATA_REQUEST = 'REFERENCEEDATA_REQUEST';
 export const REFERENCEEDATA_SUCCESS = 'REFERENCEEDATA_SUCCESS';
@@ -92,7 +92,9 @@ export const getReferenceDataByCode = (referenceData, path, code) =>
 
 export const getLosStructure = referenceData => {
   const losList = get(referenceData, ['items', REFERENCEDATA_PATH_LOS], []);
-  const losStructure = keyBy(losList, item => get(item, ['losPaths', 0], '').toLowerCase());
+  const losStructure = keyBy(losList, item =>
+    get(item, ['losPaths', 0], '').toLowerCase()
+  );
 
   const losStructureWithSelectedFields = mapValues(losStructure, item => ({
     prefLabel: item.name,
@@ -102,4 +104,5 @@ export const getLosStructure = referenceData => {
   return losStructureWithSelectedFields;
 };
 
-export const getThemesStructure = referenceData => keyBy(get(referenceData, ['items', REFERENCEDATA_PATH_LOS], []), 'code');
+export const getThemesStructure = referenceData =>
+  keyBy(get(referenceData, ['items', REFERENCEDATA_PATH_LOS], []), 'code');

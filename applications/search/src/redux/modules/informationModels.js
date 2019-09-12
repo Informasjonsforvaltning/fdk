@@ -28,11 +28,17 @@ export function fetchInformationModelsIfNeededAction(query) {
   return (dispatch, getState) =>
     shouldFetch(_.get(getState(), ['informationModels', 'meta']), queryKey) &&
     dispatch(
-      reduxFsaThunk(() => informationmodelsSearch({ ...query, aggregations: 'true' }), {
-        onBeforeStart: { type: INFORMATIONMODELS_REQUEST, meta: { queryKey } },
-        onSuccess: { type: INFORMATIONMODELS_SUCCESS, meta: { queryKey } },
-        onError: { type: INFORMATIONMODELS_FAILURE, meta: { queryKey } }
-      })
+      reduxFsaThunk(
+        () => informationmodelsSearch({ ...query, aggregations: 'true' }),
+        {
+          onBeforeStart: {
+            type: INFORMATIONMODELS_REQUEST,
+            meta: { queryKey }
+          },
+          onSuccess: { type: INFORMATIONMODELS_SUCCESS, meta: { queryKey } },
+          onError: { type: INFORMATIONMODELS_FAILURE, meta: { queryKey } }
+        }
+      )
     );
 }
 

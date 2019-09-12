@@ -31,7 +31,8 @@ import localization from '../../lib/localization';
 import {
   REFERENCEDATA_PATH_APISTATUS,
   REFERENCEDATA_PATH_DISTRIBUTIONTYPE,
-  REFERENCEDATA_PATH_LOS, REFERENCEDATA_PATH_THEMES
+  REFERENCEDATA_PATH_LOS,
+  REFERENCEDATA_PATH_THEMES
 } from '../../redux/modules/referenceData';
 
 const browser = detect();

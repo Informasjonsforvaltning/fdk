@@ -4,9 +4,15 @@ import { resolve } from 'react-resolver';
 import { ApiDetailsPage } from './api-details-page';
 import { getApi } from '../../api/apis';
 import { getDatasetByURI } from '../../api/datasets';
-import { extractInformationmodels, informationmodelsSearch } from '../../api/informationmodels';
+import {
+  extractInformationmodels,
+  informationmodelsSearch
+} from '../../api/informationmodels';
 
-const getInformationModelByHarvestSourceUri = (harvestSourceUri) => informationmodelsSearch({ harvestSourceUri }).then(extractInformationmodels).then(first);
+const getInformationModelByHarvestSourceUri = harvestSourceUri =>
+  informationmodelsSearch({ harvestSourceUri })
+    .then(extractInformationmodels)
+    .then(first);
 
 const memoizedGetApi = _.memoize(getApi);
 const memoizedGetDatasetByURI = _.memoize(getDatasetByURI);

@@ -1,6 +1,11 @@
 import _ from 'lodash';
 import qs from 'qs';
-import { apisSearch, extractAggregations, extractApis, extractTotal } from '../../api/apis';
+import {
+  apisSearch,
+  extractAggregations,
+  extractApis,
+  extractTotal
+} from '../../api/apis';
 import { reduxFsaThunk } from '../../lib/redux-fsa-thunk';
 
 export const APIS_REQUEST = 'APIS_REQUEST';

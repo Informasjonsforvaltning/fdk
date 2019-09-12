@@ -1,7 +1,12 @@
 import _ from 'lodash';
 import qs from 'qs';
 
-import { datasetsSearch, extractAggregations, extractDatasets, extractTotal } from '../../api/datasets';
+import {
+  datasetsSearch,
+  extractAggregations,
+  extractDatasets,
+  extractTotal
+} from '../../api/datasets';
 import { reduxFsaThunk } from '../../lib/redux-fsa-thunk';
 
 export const DATASETS_REQUEST = 'DATASETS_REQUEST';
@@ -22,7 +27,10 @@ function shouldFetch(metaState, queryKey) {
 
 export function fetchDatasetsIfNeededAction(query) {
   const queryKey = generateQueryKey(query);
-  const params = { ...query, aggregations: 'accessRights,theme,orgPath,provenance,spatial,los' };
+  const params = {
+    ...query,
+    aggregations: 'accessRights,theme,orgPath,provenance,spatial,los'
+  };
   return (dispatch, getState) =>
     shouldFetch(_.get(getState(), ['datasets', 'meta']), queryKey) &&
     dispatch(

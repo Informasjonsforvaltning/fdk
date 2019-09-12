@@ -106,7 +106,11 @@ export function App({ language }) {
                 path={`${PATHNAME_DATASET_DETAILS}/:id`}
                 component={DatasetDetailsPage}
               />
-              <Route exact path="/apis/:id" component={ConnectedApiDetailsPage} />
+              <Route
+                exact
+                path="/apis/:id"
+                component={ConnectedApiDetailsPage}
+              />
               <Route
                 exact
                 path={PATHNAME_REPORTS}
