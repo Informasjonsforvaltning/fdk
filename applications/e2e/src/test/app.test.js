@@ -1,4 +1,3 @@
-import delay from 'delay';
 import * as browser from '../lib/browser';
 import {
   activeTabSelector,
@@ -11,6 +10,7 @@ import {
   searchButtonSelector
 } from '../pages/search-page';
 import { extractNumber } from '../lib/extract-number';
+import delay from 'delay';
 
 afterAll(() => {
   browser.close(); // we might not want to close the browser between each suite
@@ -81,10 +81,10 @@ describe('SUITE: Main page', () => {
 
     describe("WHEN: Enter search text 'ks' + enter", () => {
       beforeAll(async () => {
-        const searchBox = await page.$('input[name=searchBox]');
-        await searchBox.type(`ks${String.fromCharCode(13)}`);
-        await page.waitForSelector('#content[data-test-id="apis"]');
-        await delay(5000); // TODO wait for network success /api/apis/search
+        const searchText = 'ks';
+        await searchPage.typeSearchTextAndEnter(searchText);
+        // wait for api call to be finished
+        delay(5000)
       });
 
       test("ART:API-201 THEN: Results block is displayed with exactly 1 api item that contains 'KS Fiks'", async () => {

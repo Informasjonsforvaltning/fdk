@@ -30,6 +30,12 @@ export class SearchPage {
   selectorsContent(selector) {
     return this.browserPage.$$eval(selector, els => els.map(e => e.innerText));
   }
+
+  async typeSearchTextAndEnter(text) {
+    const searchBox = await this.browserPage.$(searchBoxSelector);
+    await searchBox.type(text);
+    await searchBox.type(String.fromCharCode(13));
+  }
 }
 
 export async function navigateToSearchPage(browserPage) {
