@@ -88,11 +88,7 @@ describe('SUITE: Main page', () => {
       });
 
       test("ART:API-201 THEN: Results block is displayed with exactly 1 api item that contains 'KS Fiks'", async () => {
-        const apiArticleSelector = '#content[data-test-id="apis"] article';
-
-        const articleTexts = await page.$$eval(apiArticleSelector, els =>
-          els.map(el => el.innerText)
-        );
+        const articleTexts = await searchPage.selectorsContent(apiArticleSelector);
 
         expect(articleTexts).toHaveLength(1);
         expect(articleTexts[0]).toContain('KS Fiks');
