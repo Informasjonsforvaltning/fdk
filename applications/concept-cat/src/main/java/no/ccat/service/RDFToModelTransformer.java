@@ -120,7 +120,16 @@ public class RDFToModelTransformer {
 
         while (seeAlsoIterator.hasNext()) {
             Statement stmt = seeAlsoIterator.next();
-            String theURI = stmt.getObject().asResource().getLocalName(); //TODO: Verify with frode that this actually makes sense.
+            Resource uriResource = stmt.getObject().asResource();
+            String theURI;
+            try {
+                theURI = new URI(uriResource.getURI()).getScheme().equalsIgnoreCase("file")
+                    ? uriResource.getLocalName()
+                    : uriResource.getURI();
+            } catch (Exception e) {
+                theURI = uriResource.toString();
+            }
+
             results.get(indexPointer).setUri(theURI); //This is by design brittle.
             indexPointer++;
         }
@@ -307,6 +316,7 @@ public class RDFToModelTransformer {
 
         return concept;
     }
+
     private static TextAndURI extractTextAndUri(Resource resource, Property property) {
         Resource omfangResource = resource.getPropertyResourceValue(property);
         if (omfangResource == null) {

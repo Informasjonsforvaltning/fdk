@@ -23,8 +23,8 @@
         skosno:betydningsbeskrivelse  [ a                             skosno:Definisjon ;
                                         rdfs:label                    "saft uten tilsatt sukker som er basert på epler"@nb ;
                                         skosno:betydningsbeskrivelse  [ skosno:forholdTilKilde  skosno:egendefinert ;
-                                                                        dct:source              [ rdfs:label    "some more text"@nb , "some text"@nb ;
-                                                                                                  rdfs:seeAlso  <www.uio.no> , <www.uib.no>
+                                                                        dct:source              [ rdfs:label    "some more text"@nb , "some text"@nb , "even more text"@nb ;
+                                                                                                  rdfs:seeAlso  <www.uio.no> , <www.uib.no> , <https://vg.no>
                                                                                                 ]
                                                                       ] ;
                                         skosno:omfang                 [ rdfs:label
