@@ -1,6 +1,7 @@
 import delay from 'delay';
 import * as browser from '../lib/browser';
 import { config } from '../../config';
+import { navigateToSearchPage } from '../pages/search-page';
 
 afterAll(() => {
   browser.close(); // we might not want to close the browser between each suite
@@ -13,13 +14,9 @@ describe('SUITE: Main page', () => {
   });
 
   describe('GIVEN: Address is bar is blank', () => {
-    describe('WHEN: Navigate to the search address', () => {
+    describe('WHEN: Navigate to the search page', () => {
       beforeAll(async () => {
-        const datasetsContentSelector = '#content[data-test-id="datasets"]';
-
-        await page.goto(config.searchHost);
-        await page.waitForSelector(datasetsContentSelector);
-        await delay(5000); // TODO wait for network success /api/apis/search
+        await navigateToSearchPage(page);
       });
 
       test("ART:API-705 THEN: Window has title 'Felles datakatalog'", async () =>
