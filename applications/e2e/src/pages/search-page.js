@@ -7,6 +7,7 @@ export const searchButtonSelector = 'button.fdk-button-search';
 export const activeTabSelector = '.search-results-tabs .li-active';
 export const apiTabSelector = '.search-results-tabs a[href="/apis"]';
 export const apisContentSelector = '#content[data-test-id="apis"]';
+export const apiArticleSelector = '#content[data-test-id="apis"] article';
 
 export class SearchPage {
   constructor(browserPage) {
