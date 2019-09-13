@@ -1,11 +1,14 @@
 import delay from 'delay';
 import * as browser from '../lib/browser';
-import { config } from '../../config';
 import {
-  activeTabSelector, apiArticleSelector, apisContentSelector, apiTabSelector,
+  activeTabSelector,
+  apiArticleSelector,
+  apisContentSelector,
+  apiTabSelector,
   navigateToSearchPage,
+  navigateToSearchPageApiTab,
   searchBoxSelector,
-  searchButtonSelector, SearchPage
+  searchButtonSelector
 } from '../pages/search-page';
 import { extractNumber } from '../lib/extract-number';
 
@@ -71,9 +74,9 @@ describe('SUITE: Main page', () => {
   });
 
   describe('GIVEN: On search page apis tab', () => {
+    let searchPage;
     beforeAll(async () => {
-      await page.goto(`${config.searchHost}/apis`);
-      await page.waitForSelector('#content[data-test-id="apis"]');
+      searchPage = await navigateToSearchPageApiTab(page);
     });
 
     describe("WHEN: Enter search text 'ks' + enter", () => {
