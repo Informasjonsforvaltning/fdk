@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import _ from 'lodash';
@@ -105,21 +105,41 @@ const renderDescription = description => {
   );
 };
 
-const renderSource = source => {
-  if (!source) {
+const renderSource = ({ sourceRelationship = '', sources = [] }) => {
+  if (sourceRelationship === 'egendefinert') {
+    return (
+      <div>
+        <span>
+          {`${localization.compare.source}: ${
+            localization.sourceRelationship[sourceRelationship]
+          }`}
+        </span>
+      </div>
+    );
+  }
+
+  if (!sourceRelationship || sources.length === 0) {
     return null;
   }
 
-  const { uri, prefLabel } = source;
-
   return (
     <div>
-      <span>{localization.compare.source}:&nbsp;</span>
-      {uri ? (
-        <LinkExternal uri={uri} prefLabel={prefLabel || uri} />
-      ) : (
-        getTranslateText(prefLabel)
-      )}
+      <span>
+        {`${localization.compare.source}: ${
+          localization.sourceRelationship[sourceRelationship]
+        }`}
+      </span>
+      {sources.map(({ text, uri }, index) => (
+        <Fragment key={`${text}-${uri}`}>
+          {index > 0 && ','}
+          &nbsp;
+          {uri ? (
+            <LinkExternal uri={uri} prefLabel={text || uri} openInNewTab />
+          ) : (
+            getTranslateText(text)
+          )}
+        </Fragment>
+      ))}
     </div>
   );
 };
@@ -174,19 +194,18 @@ export const ConceptsHitItem = props => {
 
       {renderDescription(_.get(result, ['definition', 'text']))}
 
-      {renderSource(_.get(result, ['definition', 'source']))}
+      {renderSource(result.definition)}
     </article>
   );
 };
 
 ConceptsHitItem.defaultProps = {
-  result: null,
   concepts: null,
   fadeInCounter: 0
 };
 
 ConceptsHitItem.propTypes = {
-  result: PropTypes.shape({}),
+  result: PropTypes.shape({}).isRequired,
   concepts: PropTypes.object,
   onAddConcept: PropTypes.func.isRequired,
   onDeleteConcept: PropTypes.func.isRequired,

@@ -69,15 +69,18 @@ function _renderTerms({
   removeConcept
 }) {
   if (conceptItems && Array.isArray(conceptItems)) {
-    return conceptItems.map(item => (
-      <ConceptsHitItem
-        key={item.id}
-        result={item}
-        concepts={conceptsCompare}
-        onAddConcept={addConcept}
-        onDeleteConcept={removeConcept}
-      />
-    ));
+    return conceptItems.map(
+      item =>
+        item && (
+          <ConceptsHitItem
+            key={item.id}
+            result={item}
+            concepts={conceptsCompare}
+            onAddConcept={addConcept}
+            onDeleteConcept={removeConcept}
+          />
+        )
+    );
   }
   return null;
 }
