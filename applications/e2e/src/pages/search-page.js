@@ -9,14 +9,12 @@ export const apiTabSelector = '.search-results-tabs a[href="/apis"]';
 export const apisContentSelector = '#content[data-test-id="apis"]';
 export const apiArticleSelector = '#content[data-test-id="apis"] article';
 
+export const searchPageApiTabUrl = `${config.searchHost}/apis`;
+
 export class SearchPage {
   constructor(browserPage) {
     this.browserPage = browserPage;
-    this.click=browserPage.click.bind(browserPage);
-  }
-
-  async waitForPageLoad() {
-    await this.waitForVisible(datasetsContentSelector);
+    this.click = browserPage.click.bind(browserPage);
   }
 
   hasVisible(selector) {
@@ -37,6 +35,13 @@ export class SearchPage {
 export async function navigateToSearchPage(browserPage) {
   await browserPage.goto(config.searchHost);
   const searchPage = new SearchPage(browserPage);
-  await searchPage.waitForPageLoad();
+  await searchPage.waitForVisible(datasetsContentSelector);
+  return searchPage;
+}
+
+export async function navigateToSearchPageApiTab(browserPage) {
+  await browserPage.goto(searchPageApiTabUrl);
+  const searchPage = new SearchPage(browserPage);
+  await searchPage.waitForVisible(apisContentSelector);
   return searchPage;
 }
