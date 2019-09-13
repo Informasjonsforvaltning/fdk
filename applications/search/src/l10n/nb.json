@@ -361,8 +361,8 @@
     "informationModelDescription": "Informasjonsmodelbeskrivelse"
   },
   "sourceRelationship": {
-    "sitatFraKilde": "Sitat fra kilde",
-    "basertPåKilde": "Basert på kilde",
+    "sitatFraKilde": "Sitat fra",
+    "basertPåKilde": "Basert på",
     "egendefinert": "Egendefinert"
   }
 }
