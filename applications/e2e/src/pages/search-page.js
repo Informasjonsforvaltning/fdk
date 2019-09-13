@@ -6,10 +6,12 @@ export const searchBoxSelector = 'input[name=searchBox]';
 export const searchButtonSelector = 'button.fdk-button-search';
 export const activeTabSelector = '.search-results-tabs .li-active';
 export const apiTabSelector = '.search-results-tabs a[href="/apis"]';
+export const apisContentSelector = '#content[data-test-id="apis"]';
 
 export class SearchPage {
   constructor(browserPage) {
     this.browserPage = browserPage;
+    this.click=browserPage.click.bind(browserPage);
   }
 
   async waitForPageLoad() {

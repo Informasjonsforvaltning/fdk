@@ -2,10 +2,10 @@ import delay from 'delay';
 import * as browser from '../lib/browser';
 import { config } from '../../config';
 import {
-  activeTabSelector, apiTabSelector,
+  activeTabSelector, apisContentSelector, apiTabSelector,
   navigateToSearchPage,
   searchBoxSelector,
-  searchButtonSelector
+  searchButtonSelector, SearchPage
 } from '../pages/search-page';
 import { extractNumber } from '../lib/extract-number';
 
@@ -52,13 +52,14 @@ describe('SUITE: Main page', () => {
   });
 
   describe('GIVEN: On search page datasets tab', () => {
+    let searchPage;
+    beforeAll(async () => {
+      searchPage = await navigateToSearchPage(page);
+    });
+
     describe('WHEN: Click on "Apis" tab', () => {
       beforeAll(async () => {
-        await page.goto(config.searchHost);
-        const apiTabSelector = '.search-results-tabs a[href="/apis"]';
-        const apisContentSelector = '#content[data-test-id="apis"]';
-        await page.waitForSelector(apiTabSelector);
-        await page.click(apiTabSelector);
+        await searchPage.click(apiTabSelector);
         await page.waitForSelector(apisContentSelector);
       });
 
