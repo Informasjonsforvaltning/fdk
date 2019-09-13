@@ -11,12 +11,10 @@
     "lint": "eslint ./ --ext=.js --fix"
   },
   "lint-staged": {
-    "linters": {
-      "*.{js}": [
-        "eslint --ext=.js --fix",
-        "git add"
-      ]
-    }
+    "*.{js}": [
+      "eslint --fix",
+      "git add"
+    ]
   },
   "author": "",
   "license": "ISC",
@@ -37,7 +35,7 @@
     "eslint-plugin-prettier": "^3.1.0",
     "eslint-plugin-react": "^7.13.0",
     "jest": "^24.4.0",
-    "lint-staged": "^8.2.1",
+    "lint-staged": "^9.2.5",
     "prettier": "^1.18.2"
   },
   "dependencies": {
