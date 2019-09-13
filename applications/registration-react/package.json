@@ -13,12 +13,10 @@
     "tdd": "jest --watch"
   },
   "lint-staged": {
-    "linters": {
-      "*.{js,jsx}": [
-        "lint",
-        "git add"
-      ]
-    }
+    "*.{js,jsx}": [
+      "eslint --fix",
+      "git add"
+    ]
   },
   "author": "",
   "license": "ISC",
@@ -107,10 +105,9 @@
     "eslint-plugin-react": "^7.13.0",
     "eslint-plugin-react-hooks": "^1.6.0",
     "html-webpack-plugin": "^3.2.0",
-    "husky": "^3.0.2",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^24.8.0",
-    "lint-staged": "^6.0.1",
+    "lint-staged": "^9.2.5",
     "prettier": "1.13.7",
     "redux-test-utils": "^0.2.2",
     "rxjs-compat": "^6.5.2",
