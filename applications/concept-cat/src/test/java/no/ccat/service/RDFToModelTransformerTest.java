@@ -1,5 +1,6 @@
 package no.ccat.service;
 
+import no.ccat.common.model.TextAndURI;
 import no.ccat.model.ConceptDenormalized;
 import no.fdk.test.testcategories.UnitTest;
 import org.junit.Before;
@@ -66,5 +67,21 @@ public class RDFToModelTransformerTest {
         List<ConceptDenormalized> concepts = transformer.getConceptsFromStream(reader);
 
         assertEquals("We should get 181 concept", 181, concepts.size());
+    }
+
+    @Test
+    public void testSourceUrlShouldHaveProtocolIfSet() throws Throwable {
+        Reader reader = new InputStreamReader(new ClassPathResource("ConceptCatalogueHarvest.turtle").getInputStream());
+
+        List<ConceptDenormalized> concepts = transformer.getConceptsFromStream(reader);
+
+        ConceptDenormalized conceptOfInterest = concepts.get(1);
+
+        List<TextAndURI> sources = conceptOfInterest.getDefinition().getSources();
+
+        assertEquals("https://vg.no", sources.get(0).getUri());
+        assertEquals("www.uib.no", sources.get(1).getUri());
+        assertEquals("www.uio.no", sources.get(2).getUri());
+
     }
 }
