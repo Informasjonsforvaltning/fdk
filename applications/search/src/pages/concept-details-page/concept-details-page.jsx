@@ -27,9 +27,24 @@ const renderDescription = description => {
   );
 };
 
-const renderSource = ({ sourceRelationship, sources }) =>
-  sourceRelationship &&
-  !!sources.length && (
+const renderSource = ({ sourceRelationship, sources }) => {
+  if (sourceRelationship === 'egendefinert') {
+    return (
+      <div className="fdk-ingress">
+        <span>
+          {`${localization.compare.source}: ${
+            localization.sourceRelationship[sourceRelationship]
+          }`}
+        </span>
+      </div>
+    );
+  }
+
+  if (!sourceRelationship || sources.length === 0) {
+    return null;
+  }
+
+  return (
     <div className="fdk-ingress">
       <span>
         {`${localization.compare.source}: ${
@@ -49,6 +64,7 @@ const renderSource = ({ sourceRelationship, sources }) =>
       ))}
     </div>
   );
+};
 
 const renderRemark = remark => {
   if (!remark) {
