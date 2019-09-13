@@ -11,10 +11,9 @@
     "lint": "eslint ./ --ext=.js --fix"
   },
   "lint-staged": {
-    "gitDir": "../../",
     "linters": {
       "*.{js}": [
-        "lint",
+        "eslint --ext=.js --fix",
         "git add"
       ]
     }
