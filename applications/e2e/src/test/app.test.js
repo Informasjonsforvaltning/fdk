@@ -2,7 +2,7 @@ import delay from 'delay';
 import * as browser from '../lib/browser';
 import { config } from '../../config';
 import {
-  activeTabSelector, apisContentSelector, apiTabSelector,
+  activeTabSelector, apiArticleSelector, apisContentSelector, apiTabSelector,
   navigateToSearchPage,
   searchBoxSelector,
   searchButtonSelector, SearchPage
@@ -64,11 +64,8 @@ describe('SUITE: Main page', () => {
       });
 
       test('ART:API-201 THEN: Results block is displayed with more than 3 api items in it', async () => {
-        const apiArticleSelector = '#content[data-test-id="apis"] article';
-
-        const count = await page.$$eval(apiArticleSelector, els => els.length);
-
-        expect(count).toBeGreaterThan(3);
+        const articleTexts = await searchPage.selectorsContent(apiArticleSelector);
+        expect(articleTexts.length).toBeGreaterThan(3);
       });
     });
   });
