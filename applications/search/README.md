@@ -48,6 +48,7 @@ Based on the demands in this list which fullfills the level A requirements:
 
 
 
+
 1.1 Provide text alternatives for any non-text content so that it can be changed into other forms people need, such as large print, braille, speech, symbols or simpler language.
 
 1.2.1 For prerecorded audio-only and prerecorded video-only media, the following are true, except when the audio or video is a media alternative for text and is clearly labeled as such
