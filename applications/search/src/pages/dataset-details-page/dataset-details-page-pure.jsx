@@ -4,6 +4,7 @@ import _ from 'lodash';
 import DocumentMeta from 'react-document-meta';
 import Moment from 'react-moment';
 import { Link } from 'react-router-dom';
+import cx from 'classnames';
 
 import localization from '../../lib/localization';
 import { DatasetDescription } from './dataset-description/dataset-description.component';
@@ -27,6 +28,7 @@ import {
 import { SearchHitHeader } from '../../components/search-hit-header/search-hit-header.component';
 import { getFirstLineOfText } from '../../lib/stringUtils';
 import './dataset-details-page.scss';
+import { getConfig } from '../../config';
 
 const renderPublished = datasetItem => {
   if (!datasetItem) {
@@ -414,6 +416,11 @@ export const DatasetDetailsPagePure = props => {
     description: getTranslateText(_.get(datasetItem, 'description'))
   };
 
+  const datasetIconClass = cx('align-self-center', 'mr-2', {
+    'fdk-icon-catalog-dataset': !getConfig().themeNap,
+    'nap-icon-catalog-dataset': getConfig().themeNap
+  });
+
   return (
     <main id="content" className="container">
       <article>
@@ -422,7 +429,7 @@ export const DatasetDetailsPagePure = props => {
             <DocumentMeta {...meta} />
 
             <div className="d-flex fdk-detail-date mb-5">
-              <i className="align-self-center fdk-icon-catalog-dataset mr-2" />
+              <i className={datasetIconClass} />
               <strong className="align-self-center">
                 {localization.dataset.datasetdescription}&nbsp;
               </strong>
