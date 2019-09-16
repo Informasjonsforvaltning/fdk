@@ -8,6 +8,7 @@ Provides query and filtering capabilities for searching a collection of DCAT cat
 The search application access a search-api and a database cluster (elasticsearch/fuseki) and presents search results to the user in a web ui.
 
 
+
 ## License
 dcatno/search: [Apache License, version 2.0](http://www.apache.org/licenses/LICENSE-2.0)
 
