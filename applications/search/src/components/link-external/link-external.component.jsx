@@ -17,6 +17,9 @@ LinkExternal.defaultProps = {
 
 LinkExternal.propTypes = {
   uri: PropTypes.string,
-  prefLabel: PropTypes.object,
+  prefLabel: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object
+  ]),
   openInNewTab: PropTypes.bool
 };
