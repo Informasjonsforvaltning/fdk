@@ -20,7 +20,7 @@ exports[`should render DatasetDetailsPagePure correctly with datasetItem 1`] = `
           className="d-flex fdk-detail-date mb-5"
         >
           <i
-            className="align-self-center fdk-icon-catalog-dataset mr-2"
+            className="align-self-center mr-2 fdk-icon-catalog-dataset"
           />
           <strong
             className="align-self-center"
