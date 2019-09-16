@@ -51,16 +51,16 @@ export const loadConfig = async () => {
   // The below method of configuration override is useful when using webpack devserver.
 
   // override all env variables to ut1 (inspired by https://registrering.ut1.fellesdatakatalog.brreg.no/env.json)
-  // Object.assign(env, {
-  //   SEARCH_HOST: 'https://www.ut1.fellesdatakatalog.brreg.no',
-  //   SEARCH_API_AUTHORIZATION: 'Basic ZmRrOkJSUkVH',
-  //   REGISTRATION_API_HOST: 'https://registrering.ut1.fellesdatakatalog.brreg.no',
-  //   CONCEPT_REGISTRATION_API_HOST:
-  //     'https://registrering-begrep-api.ut1.fellesdatakatalog.brreg.no',
-  //   CONCEPT_REGISTRATION_HOST:
-  //     'https://registrering-begrep.ut1.fellesdatakatalog.brreg.no',
-  //   SSO_HOST: 'https://sso.ut1.fellesdatakatalog.brreg.no'
-  // });
+  Object.assign(env, {
+    SEARCH_HOST: 'https://www.ut1.fellesdatakatalog.brreg.no',
+    SEARCH_API_AUTHORIZATION: 'Basic ZmRrOkJSUkVH',
+    REGISTRATION_API_HOST: 'https://registrering.ut1.fellesdatakatalog.brreg.no',
+    CONCEPT_REGISTRATION_API_HOST:
+      'https://registrering-begrep-api.ut1.fellesdatakatalog.brreg.no',
+    CONCEPT_REGISTRATION_HOST:
+      'https://registrering-begrep.ut1.fellesdatakatalog.brreg.no',
+    SSO_HOST: 'https://sso.ut1.fellesdatakatalog.brreg.no'
+  });
 
   // override all env variables to local docker
   // Object.assign(env, {
