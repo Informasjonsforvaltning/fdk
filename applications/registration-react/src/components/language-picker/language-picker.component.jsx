@@ -22,12 +22,16 @@ const LanguagePicker = ({ languages, toggleInputLanguage }) => {
             key={code}
             className={cx('fdk-button border-0', {
               'fdk-bg-color-primary-lighter': !selected,
-              'fdk-color-link-darker': !selected
+              'fdk-color-link-darker': !selected,
+              'no-shadow': selected
             })}
             color={shouldDisableLanguage(code) ? 'secondary' : 'primary'}
             disabled={shouldDisableLanguage(code)}
             onClick={() => toggleInputLanguage(code)}>
-            {selected && <span>&#10004;</span>} {title}
+            {selected && (
+              <img src="/static/img/icon-checked-white-sm.svg" alt="icon" />
+            )}
+            {title}
           </Button>
         ))}
       </div>
