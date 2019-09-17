@@ -41,6 +41,7 @@ USER pptruser
 
 # Install app dependencies, including puppeteer
 RUN npm install --loglevel=warn
+RUN npm audit
 
 #WORKDIR /usr/src/app
 
