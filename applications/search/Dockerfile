@@ -18,6 +18,7 @@ COPY package-lock.json /usr/src/app/package-lock.json
 
 # Install app dependencies
 RUN npm install --loglevel=warn
+RUN npm audit
 
 COPY server /usr/src/app/server
 COPY start.js /usr/src/app/
