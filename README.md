@@ -1,6 +1,8 @@
 
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)](https://conventionalcommits.org)
 
+
+
 # The National Data Directory (Felles datakatalog)
 
 This repository contains the source code for the [National Data Directory](https://fellesdatakatalog.brreg.no) of Norway. 
