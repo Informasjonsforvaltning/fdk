@@ -11,7 +11,13 @@ export const datasetsSearch = params => {
   if (getConfig().filterTransportDatasets) {
     Object.assign(params, {
       accessrights: 'PUBLIC',
-      losTheme: 'trafikk-reiser-og-samferdsel'
+      losTheme: [
+        ...new Set(
+          ['trafikk-reiser-og-samferdsel'].concat(
+            params.losTheme ? params.losTheme.split(',') : []
+          )
+        )
+      ].join(',')
     });
   }
 
