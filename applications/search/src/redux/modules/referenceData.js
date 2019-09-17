@@ -105,4 +105,4 @@ export const getLosStructure = referenceData => {
 };
 
 export const getThemesStructure = referenceData =>
-  keyBy(get(referenceData, ['items', REFERENCEDATA_PATH_LOS], []), 'code');
+  keyBy(get(referenceData, ['items', REFERENCEDATA_PATH_THEMES], []), 'code');
