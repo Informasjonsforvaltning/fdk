@@ -327,6 +327,7 @@ export function DatasetRegistrationPagePure(props) {
                   openLicenseItems={openLicenseItems}
                   catalogId={catalogId}
                   datasetId={datasetId}
+                  languages={languages}
                 />
               </FormTemplateWithState>
 
