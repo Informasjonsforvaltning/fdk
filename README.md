@@ -3,6 +3,7 @@
 
 
 
+
 # The National Data Directory (Felles datakatalog)
 
 This repository contains the source code for the [National Data Directory](https://fellesdatakatalog.brreg.no) of Norway. 
