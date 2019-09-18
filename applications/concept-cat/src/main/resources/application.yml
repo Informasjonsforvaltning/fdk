@@ -24,6 +24,7 @@ application:
       - "https://data.brreg.no/begrep/"
       - "https://data.skatteetaten.no/begreper/"
       - "https://raw.githubusercontent.com/akhvidsten/skosmapping/master/Virksomhetsarkitektur"
+      - "https://registrering-begrep-api.fellesdatakatalog.brreg.no/collections?publisher=915429785"
 
 
 ---
@@ -43,5 +44,6 @@ application:
     - "https://data.brreg.no/begrep/"
     - "https://data.skatteetaten.no/begreper/"
     - "https://raw.githubusercontent.com/akhvidsten/skosmapping/master/Virksomhetsarkitektur"
+    - "https://registrering-begrep-api.fellesdatakatalog.brreg.no/collections?publisher=915429785"
 server:
   port: 8105
