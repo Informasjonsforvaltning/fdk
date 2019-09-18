@@ -545,7 +545,8 @@ ApiDetailsPage.defaultProps = {
   referenceData: null,
   fetchPublishersIfNeeded: () => {},
   fetchApiStatusIfNeeded: _.noop,
-  fetchApiServiceTypeIfNeeded: _.noop
+  fetchApiServiceTypeIfNeeded: _.noop,
+  referencedDatasets: []
 };
 
 ApiDetailsPage.propTypes = {
@@ -554,5 +555,6 @@ ApiDetailsPage.propTypes = {
   referenceData: PropTypes.object,
   fetchPublishersIfNeeded: PropTypes.func,
   fetchApiStatusIfNeeded: PropTypes.func,
-  fetchApiServiceTypeIfNeeded: PropTypes.func
+  fetchApiServiceTypeIfNeeded: PropTypes.func,
+  referencedDatasets: PropTypes.array
 };
