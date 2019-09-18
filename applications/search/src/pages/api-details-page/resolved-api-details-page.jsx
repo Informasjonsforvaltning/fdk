@@ -3,8 +3,15 @@ import first from 'lodash/first';
 import { resolve } from 'react-resolver';
 import { ApiDetailsPage } from './api-details-page';
 import { getApi } from '../../api/apis';
-import { getDatasetByURI } from '../../api/datasets';
-import { extractInformationmodels, informationmodelsSearch } from '../../api/informationmodels';
+import {
+  datasetsSearch,
+  extractDatasets,
+  getDatasetByURI
+} from '../../api/datasets';
+import {
+  extractInformationmodels,
+  informationmodelsSearch
+} from '../../api/informationmodels';
 
 const getInformationModelByHarvestSourceUri = harvestSourceUri =>
   informationmodelsSearch({ harvestSourceUri })
@@ -17,16 +24,26 @@ const memoizedGetInformationModelByHarvestSourceUri = _.memoize(
   getInformationModelByHarvestSourceUri
 );
 
+// todo when we migrate to dcat 2.0, we can have more reasonably link together datasets and apis,
+//  right now it is api id stored in that peculiar property.
+const getDatasetsByApiId = id =>
+  datasetsSearch({ distributionAccessServiceEndpointDescriptionUri: id }).then(
+    extractDatasets
+  );
+const memoizedGetDatasetsByApiId = _.memoize(getDatasetsByApiId);
+
 const mapProps = {
   apiItem: props => memoizedGetApi(props.match.params.id),
   referencedDatasets: async props => {
-    const getApi = await memoizedGetApi(props.match.params.id);
+    const id = props.match.params.id;
+    const getApi = await memoizedGetApi(id);
     const urlArray = _.get(getApi, 'datasetReferences', []).map(
       item => item.uri
     );
 
-    const promiseMap = urlArray.map(memoizedGetDatasetByURI);
-    return (await Promise.all(promiseMap)).filter(Boolean);
+    return (await Promise.all(urlArray.map(memoizedGetDatasetByURI)))
+      .concat(await memoizedGetDatasetsByApiId(id))
+      .filter(Boolean);
   },
   referencedInformationModels: async props => {
     const apiItem = await memoizedGetApi(props.match.params.id);
