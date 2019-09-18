@@ -1,11 +1,6 @@
 package no.fdk.searchapi.controller.datasetssearch;
 
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import no.dcat.client.referencedata.ReferenceDataClient;
-import no.dcat.shared.Dataset;
 import no.fdk.searchapi.service.ElasticsearchService;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
@@ -44,11 +39,6 @@ public class DatasetsSearchController {
     @Value("${application.referenceDataUrl}")
     private String referenceDataUrl;
 
-    @PostConstruct
-    public void initialize() {
-        this.referenceDataClient = new ReferenceDataClient(referenceDataUrl);
-    }
-
     @Autowired
     public DatasetsSearchController(ElasticsearchService elasticsearchService) {
         this.elasticsearch = elasticsearchService;
@@ -58,6 +48,11 @@ public class DatasetsSearchController {
         return params.containsKey("losTheme");
     }
 
+    @PostConstruct
+    public void initialize() {
+        this.referenceDataClient = new ReferenceDataClient(referenceDataUrl);
+    }
+
     /**
      * Compose and execute an elasticsearch query on dcat based on the input parameters.
      * <p>
@@ -65,53 +60,22 @@ public class DatasetsSearchController {
      * @return List of  elasticsearch records.
      */
     @CrossOrigin
-    @ApiOperation(value = "Queries the catalog for datasets.",
-        notes = "Returns a list of matching datasets wrapped in a elasticsearch response. " +
-            "Max number returned by a single query is 100. Size parameters greater than 100 will not return more than 100 datasets. " +
-            "In order to access all datasets, use multiple queries and increment from parameter.", response = Dataset.class)
     @RequestMapping(value = "/datasets", method = RequestMethod.GET, produces = "application/json")
-    @ApiImplicitParams({
-        @ApiImplicitParam(name = "q", dataType = "string", paramType = "query", value = "Full content search"),
-        @ApiImplicitParam(name = "title", dataType = "string", paramType = "query", value = "Title search"),
-        @ApiImplicitParam(name = "theme", dataType = "string", paramType = "query", value = "Filters on specified theme(s). ex. GOVE, or GOVE,SOCI"),
-        @ApiImplicitParam(name = "losTheme", dataType = "string", paramType = "query", value = "Filters on spesificed los theme(s)."),
-        @ApiImplicitParam(name = "accessrights", dataType = "string", paramType = "query", value = "Filters on accessrights, codes are PUBLIC, RESTRICTED or NON_PUBLIC"),
-        @ApiImplicitParam(name = "orgPath", dataType = "string", paramType = "query", value = "Filters on publisher's organization path (orgPath), e.g. /STAT/972417858/971040238"),
-        @ApiImplicitParam(name = "firstHarvested", dataType = "string", paramType = "query", defaultValue = "0", value = "Filters datasets that were first harvested x-days ago, e.g. a value of 100 will result in datasets that were harvested more than 100 days ago"),
-        @ApiImplicitParam(name = "provenance", dataType = "string", paramType = "query", value = "Filters datasets according to their provenance code, e.g. NASJONAL - nasjonal building block, VEDTAK - governmental decisions, BRUKER - user collected data and TREDJEPART - third party data"),
-        @ApiImplicitParam(name = "spatial", dataType = "string", paramType = "query", value = "Filters datasets according to their spatial label, e.g. Oslo, Norge"),
-        @ApiImplicitParam(name = "opendata", dataType = "string", paramType = "query", value = "Filters on distribution license and access rights. If true the distribution licence is open and the access rights are public."),
-        @ApiImplicitParam(name = "catalog", dataType = "string", paramType = "query", value = "Filters on catalog uri."),
-        @ApiImplicitParam(name = "withDistributions", dataType = "string", paramType = "query", value = "Filters only datasets that have or have not distributions. Allowed values: \"true\", \"false\""),
-        @ApiImplicitParam(name = "isPublic", dataType = "string", paramType = "query", value = "Filters only datasets that are public or not public. Allowed values: \"true\", \"false\""),
-        @ApiImplicitParam(name = "withSubject", dataType = "string", paramType = "query", value = "Filters only datasets that have any related concepts. Allowed values: \"true\""),
-        @ApiImplicitParam(name = "isNationalComponent", dataType = "string", paramType = "query", value = "Filters only datasets that are national compnents. Allowed values: \"true\""),
-        @ApiImplicitParam(name = "subject", dataType = "string", paramType = "query", value = "Filters on concept uri."),
-        @ApiImplicitParam(name = "distributionType", dataType = "string", paramType = "query", value = "Filters datasets that have a distribution of chosen type. Allowed values: \"API\",\"Feed\",\"Nedlastbar fil\" \""),
-        @ApiImplicitParam(name = "page", dataType = "string", paramType = "query", defaultValue = "0", value = "Page index. First page is 0"),
-        @ApiImplicitParam(name = "size", dataType = "string", paramType = "query", defaultValue = "10", value = "Page size")
-    })
     public ResponseEntity<String> search(
-        @ApiParam(hidden = true)
         @RequestParam Map<String, String> params,
 
-        @ApiParam("Specifies the language elements of the datasets to search in, default is nb")
         @RequestParam(value = "lang", defaultValue = "nb", required = false)
             String lang,
 
-        @ApiParam("Specifies the sort field. The only allowed value is \"modified\". Default is no value")
         @RequestParam(value = "sortfield", defaultValue = "", required = false)
             String sortfield,
 
-        @ApiParam("Specifies the sort direction of the sorted result. The directions are: asc for ascending and desc for descending")
         @RequestParam(value = "sortdirection", defaultValue = "desc", required = false)
             String sortdirection,
 
-        @ApiParam("Comma separated list of which fields should be returned. E.g id,uri,harvest,publisher")
         @RequestParam(value = "returnfields", defaultValue = "", required = false)
             String returnFields,
 
-        @ApiParam("Include aggregations")
         @RequestParam(value = "aggregations", defaultValue = "", required = false)
             String aggregations,
 
@@ -184,55 +148,24 @@ public class DatasetsSearchController {
     }
 
     @CrossOrigin
-    @ApiOperation(value = "Queries the catalog for datasets.",
-        notes = "Returns a list of matching datasets wrapped in a elasticsearch response. " +
-            "Max number returned by a single query is 100. Size parameters greater than 100 will not return more than 100 datasets. " +
-            "In order to access all datasets, use multiple queries and increment from parameter.", response = Dataset.class)
     @RequestMapping(value = "/datasets/search", method = RequestMethod.POST, produces = "application/json")
-    @ApiImplicitParams({
-        @ApiImplicitParam(name = "q", dataType = "string", paramType = "query", value = "Full content search"),
-        @ApiImplicitParam(name = "title", dataType = "string", paramType = "query", value = "Title search"),
-        @ApiImplicitParam(name = "theme", dataType = "string", paramType = "query", value = "Filters on specified theme(s). ex. GOVE, or GOVE,SOCI"),
-        @ApiImplicitParam(name = "accessrights", dataType = "string", paramType = "query", value = "Filters on accessrights, codes are PUBLIC, RESTRICTED or NON_PUBLIC"),
-        @ApiImplicitParam(name = "orgPath", dataType = "string", paramType = "query", value = "Filters on publisher's organization path (orgPath), e.g. /STAT/972417858/971040238"),
-        @ApiImplicitParam(name = "firstHarvested", dataType = "string", paramType = "query", defaultValue = "0", value = "Filters datasets that were first harvested x-days ago, e.g. a value of 100 will result in datasets that were harvested more than 100 days ago"),
-        @ApiImplicitParam(name = "provenance", dataType = "string", paramType = "query", value = "Filters datasets according to their provenance code, e.g. NASJONAL - nasjonal building block, VEDTAK - governmental decisions, BRUKER - user collected data and TREDJEPART - third party data"),
-        @ApiImplicitParam(name = "spatial", dataType = "string", paramType = "query", value = "Filters datasets according to their spatial label, e.g. Oslo, Norge"),
-        @ApiImplicitParam(name = "opendata", dataType = "string", paramType = "query", value = "Filters on distribution license and access rights. If true the distribution licence is open and the access rights are public."),
-        @ApiImplicitParam(name = "catalog", dataType = "string", paramType = "query", value = "Filters on catalog uri."),
-        @ApiImplicitParam(name = "withDistributions", dataType = "string", paramType = "query", value = "Filters only datasets that have or have not distributions. Allowed values: \"true\", \"false\""),
-        @ApiImplicitParam(name = "isPublic", dataType = "string", paramType = "query", value = "Filters only datasets that are public or not public. Allowed values: \"true\", \"false\""),
-        @ApiImplicitParam(name = "withSubject", dataType = "string", paramType = "query", value = "Filters only datasets that have any related concepts. Allowed values: \"true\""),
-        @ApiImplicitParam(name = "isNationalComponent", dataType = "string", paramType = "query", value = "Filters only datasets that are national compnents. Allowed values: \"true\""),
-        @ApiImplicitParam(name = "subject", dataType = "string", paramType = "query", value = "Filters on concept uri."),
-        @ApiImplicitParam(name = "distributionType", dataType = "string", paramType = "query", value = "Filters datasets that have a distribution of chosen type. Allowed values: \"API\",\"Feed\",\"Nedlastbar fil\" \""),
-        @ApiImplicitParam(name = "page", dataType = "string", paramType = "query", defaultValue = "0", value = "Page index. First page is 0"),
-        @ApiImplicitParam(name = "size", dataType = "string", paramType = "query", defaultValue = "10", value = "Page size")
-    })
     public ResponseEntity<String> searchPostHandler(
-        @ApiParam(hidden = true)
         @RequestParam Map<String, String> params,
 
-        @ApiParam(hidden = true)
         @RequestBody Map<String, Object> body,
 
-        @ApiParam("Specifies the language elements of the datasets to search in, default is nb")
         @RequestParam(value = "lang", defaultValue = "nb", required = false)
             String lang,
 
-        @ApiParam("Specifies the sort field. The only allowed value is \"modified\". Default is no value")
         @RequestParam(value = "sortfield", defaultValue = "", required = false)
             String sortfield,
 
-        @ApiParam("Specifies the sort direction of the sorted result. The directions are: asc for ascending and desc for descending")
         @RequestParam(value = "sortdirection", defaultValue = "desc", required = false)
             String sortdirection,
 
-        @ApiParam("Comma separated list of which fields should be returned. E.g id,uri,harvest,publisher")
         @RequestParam(value = "returnfields", defaultValue = "", required = false)
             String returnFields,
 
-        @ApiParam("Include aggregations")
         @RequestParam(value = "aggregations", defaultValue = "", required = false)
             String aggregations,
 

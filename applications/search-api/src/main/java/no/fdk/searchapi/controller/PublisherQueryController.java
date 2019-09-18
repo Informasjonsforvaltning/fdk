@@ -6,11 +6,9 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import lombok.Data;
-import no.fdk.searchapi.service.ElasticsearchService;
 import no.dcat.shared.Publisher;
+import no.fdk.searchapi.service.ElasticsearchService;
 import no.fdk.webutils.exceptions.NotFoundException;
 import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.search.SearchRequestBuilder;
@@ -53,11 +51,8 @@ public class PublisherQueryController {
      * @return The complete elasticsearch response on Json-format is returned..
      */
     @CrossOrigin
-    @ApiOperation(value = "Query for publishers.",
-        notes = "Returns the elasticsearch response with matching publishers", response = Publisher.class)
     @RequestMapping(value = QUERY_PUBLISHER, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> publishers(
-        @ApiParam("A query string to match a publisher name")
         @RequestParam(value = "q", defaultValue = "", required = false) String query) {
         logger.info("/publisher query: {}", query);
 
@@ -87,15 +82,12 @@ public class PublisherQueryController {
      * @return the record (JSON) of the retrieved publisher.
      */
     @CrossOrigin
-    @ApiOperation(
-        value = "Get a specific publisher by OrgNr",
-        response = Publisher.class)
     @RequestMapping(
         value = QUERY_GET_BY_ORGNR,
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
     public Publisher getPublisherByOrgNrHandler(
-        @ApiParam("Organization number") @PathVariable String orgNr)
+        @PathVariable String orgNr)
         throws NotFoundException {
         logger.info(String.format("Get publisher with OrgNr: %s", orgNr));
 
@@ -121,8 +113,6 @@ public class PublisherQueryController {
      * @return orgPath and name of all publisher with children in a tree as Json-format is returned..
      */
     @CrossOrigin
-    @ApiOperation(value = "Returns all publishers in a hierarchy.",
-        response = PublisherHit.class)
     @RequestMapping(value = QUERY_PUBLISHER_HIERARCHY, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Hits> publisherNames() {
         /**
