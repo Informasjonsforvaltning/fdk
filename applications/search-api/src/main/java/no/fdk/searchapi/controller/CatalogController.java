@@ -1,9 +1,6 @@
 package no.fdk.searchapi.controller;
 
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import no.dcat.shared.Catalog;
-import no.dcat.shared.Dataset;
 import org.apache.jena.query.*;
 import org.apache.jena.rdf.model.Literal;
 import org.apache.jena.rdf.model.Model;
@@ -59,20 +56,13 @@ public class CatalogController {
      * @return Formatted response based on acceptHeader {@link SupportedFormat}
      */
     @CrossOrigin
-    @ApiOperation(value = "Returns a specific harvested catalog according to the DCAT-AP-NO standard in one out of the three supported RDF formats.",
-        notes = "The three formats are: text/turtle, application/ld+json and application/rdf+xml", response = Catalog.class)
     @RequestMapping(value = "/catalogs", params = {"id", "format"},
         method = GET,
         consumes = MediaType.ALL_VALUE,
         produces = {"text/turtle", "application/ld+json", "application/rdf+xml"})
     public ResponseEntity<String> getCatalogDcat(
-        @ApiParam("The URI of the catalog as used in harvested file")
         @RequestParam(value = "id") String id,
-
-        @ApiParam("The result's format. An alternative to Accept header: json for json-ld, ttl -for turtle, xml or rdf for rdf-xml")
         @RequestParam(value = "format", required = false) String format,
-
-        @ApiParam("The result's format. Alternative to format query string: text/turtle, application/ld+json, application/rdf+xml")
         @RequestHeader(value = "Accept", required = false) String acceptHeader) {
 
         ResponseEntity<String> responseBody = invokeFusekiQuery(id, format, acceptHeader, CATALOG_QUERY_FILENAME);
@@ -85,7 +75,6 @@ public class CatalogController {
     }
 
     @CrossOrigin
-    @ApiOperation(value = "Returns a list of catalogs harvested.", response = Catalog.class)
     @RequestMapping(value = "/catalogs", method = GET, produces = "application/json")
     public List<Catalog> allCatalogs() {
         String queryString;
@@ -138,7 +127,6 @@ public class CatalogController {
      * @return html list of catalogs
      */
     @CrossOrigin
-    @ApiOperation(value = "Returns a HTML list of catalogs.", response = Catalog.class)
     @RequestMapping(value = "/catalogs",
         method = GET,
         produces = "text/html")
@@ -208,20 +196,13 @@ public class CatalogController {
      * @return Formatted response based on acceptHeader {@link SupportedFormat}
      */
     @CrossOrigin
-    @ApiOperation(value = "Returns a dataset description as it was imported into the RDF-database (before indexing in Elasticsearch). Follows DCAT-AP-NO standard in one out of the three supported RDF formats.",
-        notes = "The three formats are: text/turtle, application/ld+json and application/rdf+xml", response = Dataset.class)
     @RequestMapping(value = "/catalogs/datasets",
         method = GET,
         consumes = MediaType.ALL_VALUE,
         produces = {"text/turtle", "application/ld+json", "application/rdf+xml"})
     public ResponseEntity<String> getDatasetDcat(
-        @ApiParam("The uri of the dataset. The uri is given in the DCAT description.")
         @RequestParam(value = "uri") String uri,
-
-        @ApiParam("The result's format. An alternative to Accept header: json for json-ld, ttl -for turtle, xml or rdf for rdf-xml")
         @RequestParam(value = "format", required = false) String format,
-
-        @ApiParam("The result's format. Alternative to format query string: text/turtle, application/ld+json, application/rdf+xml")
         @RequestHeader(value = "Accept", defaultValue = "*/*", required = false) String acceptHeader) {
 
         ResponseEntity<String> responseBody = invokeFusekiQuery(uri, format, acceptHeader, DATASET_QUERY_FILENAME);

@@ -1,11 +1,9 @@
 package no.fdk.searchapi.controller;
 
 import com.google.gson.Gson;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import no.dcat.datastore.domain.dcat.builders.DcatBuilder;
-import no.fdk.searchapi.service.ElasticsearchService;
 import no.dcat.shared.Dataset;
+import no.fdk.searchapi.service.ElasticsearchService;
 import no.fdk.webutils.exceptions.NotFoundException;
 import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.search.SearchRequestBuilder;
@@ -48,16 +46,13 @@ public class DatasetsQueryController {
      * @return the record (JSON) of the retrieved dataset.
      */
     @CrossOrigin
-    @ApiOperation(
-        value = "Get a specific dataset",
-        response = Dataset.class)
     @RequestMapping(
         value = QUERY_GET_BY_ID,
         method = RequestMethod.GET,
         produces = {"application/json", "text/turtle", "application/ld+json", "application/rdf+xml"})
     public ResponseEntity<String> getDatasetByIdHandler(
         HttpServletRequest request,
-        @ApiParam("Dataset ID") @PathVariable String id) throws NotFoundException {
+        @PathVariable String id) throws NotFoundException {
         logger.info(String.format("Get dataset with id: %s", id));
 
         Dataset dataset = getDatasetById(id);
@@ -72,16 +67,12 @@ public class DatasetsQueryController {
     }
 
     @CrossOrigin
-    @ApiOperation(
-        value = "Get a specific dataset by its uri",
-        response = Dataset.class)
     @RequestMapping(
         value = QUERY_GET_BY_URI,
         method = RequestMethod.GET,
         produces = {"application/json", "text/turtle", "application/ld+json", "application/rdf+xml"})
     public ResponseEntity<String> getDatasetByUriHandler(
         HttpServletRequest request,
-        @ApiParam("Dataset uri")
         @RequestParam("uri") String uri) throws Exception {
         logger.info(String.format("Get dataset with uri: %s", uri));
 
