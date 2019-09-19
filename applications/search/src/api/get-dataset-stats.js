@@ -64,13 +64,13 @@ export function extractStats(data) {
 export const getDatasetStats = orgPath =>
   axios
     .get(datasetsUrlBase(), {
+      ...getConfig().datasetApi.config,
       params: {
         orgPath,
         size: 0,
         aggregations:
           'accessRights,theme,orgPath,provenance,spatial,los,firstHarvested,withDistribution,publicWithDistribution,nonpublicWithDistribution,publicWithoutDistribution,nonpublicWithoutDistribution,withSubject,catalog,opendata,nationalComponent,subject,distributionCountForTypeApi,distributionCountForTypeFeed,distributionCountForTypeFile'
-      },
-      headers: { authorization: getConfig().datasetApi.authorization }
+      }
     })
     .then(response => response && response.data)
     .then(normalizeAggregations)
@@ -79,8 +79,8 @@ export const getDatasetStats = orgPath =>
 export const getDatasetCountsBySubjectUri = query =>
   axios
     .post(`${datasetsUrlBase()}/search`, query, {
-      params: { returnfields: 'subject.uri', size: 10000 },
-      headers: { authorization: getConfig().datasetApi.authorization }
+      ...getConfig().datasetApi.config,
+      params: { returnfields: 'subject.uri', size: 10000 }
     })
     .then(response => response && response.data)
     .then(data => _.get(data, 'hits.hits'))

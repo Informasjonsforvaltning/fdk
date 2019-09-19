@@ -53,9 +53,7 @@ export class PublishersTree extends React.Component {
           source: data
         });
       })
-      .catch(error => {
-        console.error(error.response);
-      });
+      .catch(console.error);
   }
 
   render() {

@@ -6,17 +6,15 @@ export const apisUrlBase = () => `${getConfig().apiApi.host}/api/apis`;
 export const apisSearch = params =>
   axios
     .get(apisUrlBase(), {
-      params,
-      headers: { authorization: getConfig().apiApi.authorization }
+      ...getConfig().apiApi.config,
+      params
     })
     .then(r => r.data);
 
 // NOTE: Response of this function can be mocked using mock files in src/mock
 export const getApi = id =>
   axios
-    .get(`${apisUrlBase()}/${id}`, {
-      headers: { authorization: getConfig().apiApi.authorization }
-    })
+    .get(`${apisUrlBase()}/${id}`, getConfig().apiApi.config)
     .then(r => r.data)
     .catch(() => null);
 

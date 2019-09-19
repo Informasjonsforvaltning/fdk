@@ -8,16 +8,14 @@ const informationmodelsUrlBase = () =>
 export const informationmodelsSearch = params =>
   axios
     .get(informationmodelsUrlBase(), {
-      params,
-      headers: { authorization: getConfig().informationmodelApi.authorization }
+      ...getConfig().informationmodelApi.config,
+      params
     })
     .then(r => r.data);
 
 export const getInformationmodel = id =>
   axios
-    .get(`${informationmodelsUrlBase()}/${id}`, {
-      headers: { authorization: getConfig().informationmodelApi.authorization }
-    })
+    .get(`${informationmodelsUrlBase()}/${id}`,getConfig().informationmodelApi.config)
     .then(r => r.data)
     .catch(() => null);
 

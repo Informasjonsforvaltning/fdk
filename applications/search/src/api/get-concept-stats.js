@@ -30,13 +30,13 @@ const extractConceptUris = data =>
 export const getConceptStats = orgPath =>
   axios
     .get(conceptsUrlBase(), {
+      ...getConfig().conceptApi.config,
       params: {
         orgPath,
         size: 10000,
         returnfields: 'uri',
         aggregations: 'firstHarvested,publisher'
-      },
-      headers: { authorization: getConfig().conceptApi.authorization }
+      }
     })
     .then(response => response && response.data)
     .then(async data => {
