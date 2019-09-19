@@ -20,9 +20,7 @@ const mapProps = {
     const urlArray = _.get(datasetItem, 'references', []).map(item =>
       _.get(item, ['source', 'uri'])
     );
-    const promiseMap = urlArray.map(url =>
-      memoizedGetDatasetByURI(encodeURIComponent(url))
-    );
+    const promiseMap = urlArray.map(memoizedGetDatasetByURI);
     return Promise.all(promiseMap);
   },
   apis: async props => {
