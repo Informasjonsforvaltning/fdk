@@ -54,7 +54,11 @@ exports[`should render PublishersSelect correctly with props 1`] = `
     simpleValue={false}
     tabSelectsValue={true}
     trimFilter={true}
-    value="STAT"
+    value={
+      Object {
+        "orgPath": "STAT",
+      }
+    }
     valueComponent={[Function]}
     valueKey="orgPath"
   />
