@@ -1,5 +1,4 @@
 import { connect } from 'react-redux';
-import _ from 'lodash';
 
 import { ConfiguredFormSample } from './configured-form-sample';
 import { textType, licenseType } from '../../../schemaTypes';
@@ -27,7 +26,7 @@ const mapStateToProps = (state, ownProps) => {
   const { datasetItem, openLicenseItems } = ownProps;
   return {
     initialValues: {
-      sample: sampleTypes(_.get(datasetItem, 'sample')) || [{}],
+      sample: sampleTypes(datasetItem.sample) || [{}],
       openLicenseItems
     }
   };

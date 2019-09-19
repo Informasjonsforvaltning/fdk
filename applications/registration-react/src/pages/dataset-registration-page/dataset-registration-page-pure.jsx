@@ -111,7 +111,8 @@ export function DatasetRegistrationPagePure(props) {
     'title',
     'description',
     'objective',
-    'distribution'
+    'distribution',
+    'sample'
   ];
   const getUsedLanguages = () =>
     datasetItem
