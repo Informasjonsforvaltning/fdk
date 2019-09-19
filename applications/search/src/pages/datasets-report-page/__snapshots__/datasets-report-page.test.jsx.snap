@@ -12,6 +12,7 @@ exports[`should render DatasetsReportPage correctly 1`] = `
     >
       <PublishersSelect
         onChange={[Function]}
+        publishers={Object {}}
         value={null}
       />
       <PublishersResolver
