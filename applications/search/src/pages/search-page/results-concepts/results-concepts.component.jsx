@@ -270,7 +270,7 @@ ResultsConceptsPure.defaultProps = {
 
   hitsPerPage: 10,
 
-  conceptsCompare: null,
+  conceptsCompare: {},
   addConcept: _.noop,
   removeConcept: _.noop,
 

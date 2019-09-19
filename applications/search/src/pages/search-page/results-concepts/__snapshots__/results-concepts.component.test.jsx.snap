@@ -144,7 +144,7 @@ exports[`should render ResultsConcepts correctly with hits 1`] = `
       className="col-lg-8"
     >
       <ConceptsHitItem
-        concepts={null}
+        concepts={Object {}}
         fadeInCounter={0}
         onAddConcept={[Function]}
         onDeleteConcept={[Function]}
@@ -213,7 +213,7 @@ exports[`should render ResultsConcepts correctly with hits 1`] = `
         }
       />
       <ConceptsHitItem
-        concepts={null}
+        concepts={Object {}}
         fadeInCounter={0}
         onAddConcept={[Function]}
         onDeleteConcept={[Function]}

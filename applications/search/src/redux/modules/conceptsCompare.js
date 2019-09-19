@@ -49,7 +49,7 @@ export function removeConceptAction(id) {
 }
 
 const initialState = {
-  items: null,
+  items: {},
   meta: {}
 };
 

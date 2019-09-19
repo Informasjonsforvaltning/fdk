@@ -40,7 +40,7 @@ test('should handle onAddConcept', () => {
 test('should render ConceptsHitItem correctly with compare button not showing', () => {
   const props = {
     result: _.get(conceptItems, ['_embedded', 'concepts', 0]),
-    concepts: [_.get(conceptItems, ['_embedded', 'concepts', 0])],
+    concepts: _.keyBy([_.get(conceptItems, ['_embedded', 'concepts', 0])], 'id'),
     onAddConcept
   };
   const shallowWrapper = shallow(<ConceptsHitItem {...props} />);
