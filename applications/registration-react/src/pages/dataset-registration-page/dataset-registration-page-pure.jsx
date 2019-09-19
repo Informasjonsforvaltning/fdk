@@ -106,23 +106,59 @@ export function DatasetRegistrationPagePure(props) {
 
   const [languagesDetermined, setLanguagesDetermined] = useState(false);
 
-  const getUsedLanguages = () => {
-    const translatableFields = ['title', 'description'];
-    return datasetItem
-      ? [
-          ...new Set(
-            translatableFields.reduce(
-              (previous, current) =>
-                previous.concat(
-                  Object.entries(datasetItem[current]).map(
-                    ([key, value]) => value && value.length && key
-                  )
-                ),
-              []
-            )
-          )
-        ]
+  const translatableFields = ['title', 'description'];
+
+  const parseDataset = doc => {
+    if (Array.isArray(doc)) {
+      return doc.map(parseDataset).flat();
+    }
+
+    return typeof doc === 'object'
+      ? Object.entries(doc).reduce(
+          (previous, [key]) =>
+            previous.concat(
+              translatableFields.includes(key)
+                ? Object.keys(doc[key])
+                : parseDataset(doc[key])
+            ),
+          []
+        )
       : [];
+
+    // if (typeof doc === 'object') {
+    //   // const t = Object.keys(doc).filter(key => {
+    //   //   return translatableFields.includes(key);
+    //   // });
+    //   // console.log(t);
+    //   // debugger;
+
+    //   languagesUsed = languagesUsed.concat(
+    //     Object.entries(doc).reduce((previous, [key]) => {
+    //       return previous.concat(
+    //         translatableFields.includes(key)
+    //           ? Object.keys(doc[key])
+    //           : parseDataset(doc[key])
+    //       );
+    //     }, [])
+    //   );
+
+    //   // WORKS!!
+    //   // Object.entries(doc).forEach(([key]) => {
+    //   //   languagesUsed = languagesUsed.concat(
+    //   //     translatableFields.includes(key)
+    //   //       ? Object.keys(doc[key])
+    //   //       : parseDataset(doc[key])
+    //   //   );
+    //   // });
+    // }
+
+    // languagesUsed = languagesUsed.concat(something);
+
+    // return languagesUsed;
+  };
+
+  const getUsedLanguages = () => {
+    return datasetItem ? [...new Set(parseDataset(datasetItem))] : [];
   };
 
   useEffect(
