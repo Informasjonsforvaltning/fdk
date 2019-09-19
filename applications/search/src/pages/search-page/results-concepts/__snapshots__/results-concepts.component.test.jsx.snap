@@ -66,78 +66,6 @@ exports[`should render ResultsConcepts correctly with hits 1`] = `
           publishers={null}
           themesItems={null}
         />
-        <div>
-          <Modal
-            autoFocus={true}
-            backdrop={true}
-            backdropTransition={
-              Object {
-                "mountOnEnter": true,
-                "timeout": 150,
-              }
-            }
-            centered={false}
-            fade={true}
-            isOpen={false}
-            keyboard={true}
-            modalTransition={
-              Object {
-                "timeout": 300,
-              }
-            }
-            onClosed={[Function]}
-            onOpened={[Function]}
-            role="dialog"
-            toggle={[Function]}
-            zIndex={1050}
-          >
-            <ModalHeader
-              charCode={215}
-              closeAriaLabel="Close"
-              tag="h5"
-              toggle={[Function]}
-              wrapTag="div"
-            >
-              Filter
-            </ModalHeader>
-            <ModalBody
-              tag="div"
-            >
-              <div
-                className="search-filters"
-              >
-                <FilterTree
-                  activeFilter={null}
-                  aggregations={Array []}
-                  collapseItems={false}
-                  handleFiltering={[Function]}
-                  referenceDataItems={null}
-                  title="Responsible"
-                />
-              </div>
-            </ModalBody>
-            <ModalFooter
-              tag="div"
-            >
-              <Button
-                className="fdk-button-default fdk-button"
-                color="secondary"
-                onClick={[Function]}
-                tag="button"
-              >
-                Close
-              </Button>
-            </ModalFooter>
-          </Modal>
-          <FilterTree
-            activeFilter={null}
-            aggregations={Array []}
-            collapseItems={false}
-            handleFiltering={[Function]}
-            referenceDataItems={null}
-            title="Responsible"
-          />
-        </div>
       </div>
     </aside>
     <section
@@ -146,190 +74,386 @@ exports[`should render ResultsConcepts correctly with hits 1`] = `
       <ConceptsHitItem
         concepts={Object {}}
         fadeInCounter={0}
+        key="d092ccf9-93dd-4ef9-9a5a-d1a50f495d82"
         onAddConcept={[Function]}
         onDeleteConcept={[Function]}
         result={
           Object {
-            "_id": "https://data-david.github.io/Begrep/begrep/Enhet",
-            "_index": "scat",
-            "_score": 1,
-            "_source": Object {
-              "creator": Object {
-                "id": "974760673",
-                "naeringskode": Object {
-                  "code": "84.110",
-                  "prefLabel": Object {
-                    "no": "Generell offentlig administrasjon",
-                  },
-                  "uri": "http://www.ssb.no/nace/sn2007/84.110",
-                },
-                "name": "Brønnøysundregistrene",
-                "orgPath": "/STAT/912660680/974760673",
-                "organisasjonsform": "ORGL",
-                "overordnetEnhet": "912660680",
-                "sektorkode": Object {
-                  "code": "6100",
-                  "prefLabel": Object {
-                    "no": "Statsforvaltningen",
-                  },
-                  "uri": "http://www.brreg.no/sektorkode/6100",
-                },
-                "type": "no.dcat.datastore.domain.dcat.Publisher",
-                "uri": "http://data.brreg.no/enhetsregisteret/enhet/974760673",
-                "valid": true,
+            "altLabel": Array [
+              Object {
+                "nb": "familiebarnehage",
               },
-              "datasets": Array [
-                Object {
-                  "description": Object {
-                    "en": "Central Coordinating Register for Legal Entities is a register containing information on all legal entities in Norway - commercial enterprises and government agencies. Includes also businesses sole proprietorships, associations and other economic entities without registration duty, who have chosen to join the CCR on a voluntary basis.",
-                    "nb": "Enhetsregisteret inneholder oversikt over alle registrerte enheter Norge innen næringsliv, offentlig og frivillig sektor. Enhetsregisteret tildeler organisasjonsnummer, og samordner opplysninger om næringsliv og offentlige etater som finnes i ulike offentlige registre.",
-                  },
-                  "id": "b3abe917-f2c6-4bda-8e17-8982f95ba11f",
-                  "title": Object {
-                    "en": "Central Coordinating Register for Legal Entities",
-                    "nb": "Enhetsregisteret",
-                  },
-                  "uri": "http://data.brreg.no/datakatalog/dataset/974760673/2",
-                },
-              ],
-              "definition": Object {
-                "no": "alt som er registrert med et organisasjonsnummer ",
-              },
-              "identifier": "https://data-david.github.io/Begrep/begrep/Enhet",
-              "inScheme": Array [
-                "http://data-david.github.io/vokabular/Befolkning",
-              ],
-              "note": Object {
-                "no": "Alle hovedenheter, underenheter og organisasjonsledd som er identifisert med et organisasjonsnummer.",
-              },
-              "prefLabel": Object {
-                "no": "enhet",
-              },
-              "source": "https://jira.brreg.no/browse/BEGREP-208",
-              "uri": "https://data-david.github.io/Begrep/begrep/Enhet",
+            ],
+            "contactPoint": Object {
+              "email": "begrepskatalogen@skatteetaten.no",
             },
-            "_type": "subject",
+            "definition": Object {
+              "text": Object {
+                "nb": "institusjon for barn som er under skolepliktig alder",
+              },
+            },
+            "harvest": Object {
+              "firstHarvested": "2019-04-29T12:18:21.525+0000",
+              "lastHarvested": "2019-07-02T04:00:53.441+0000",
+            },
+            "hiddenLabel": Array [],
+            "id": "d092ccf9-93dd-4ef9-9a5a-d1a50f495d82",
+            "identifier": "http://begrepskatalogen/begrep/20b52ae3-9fe1-11e5-a9f8-e4115b280940",
+            "prefLabel": Object {
+              "nb": "barnehage",
+            },
+            "publisher": Object {
+              "name": "SKATTEETATEN",
+              "orgPath": "/STAT/972417807/974761076",
+              "prefLabel": Object {
+                "no": "SKATTEETATEN",
+              },
+              "uri": "http://data.brreg.no/enhetsregisteret/enhet/974761076",
+            },
+            "subject": Object {
+              "nb": "Tredjepartsopplysninger",
+            },
+            "uri": "https://fellesdatakatalog.brreg.no/api/concepts/d092ccf9-93dd-4ef9-9a5a-d1a50f495d82",
           }
         }
       />
       <ConceptsHitItem
         concepts={Object {}}
         fadeInCounter={0}
+        key="22ce6a6e-f629-4a75-826d-500cfc2d9e7a"
         onAddConcept={[Function]}
         onDeleteConcept={[Function]}
         result={
           Object {
-            "_id": "https://data-david.github.io/Begrep/begrep/Organisasjonsnummer",
-            "_index": "scat",
-            "_score": 1,
-            "_source": Object {
-              "altLabel": Array [
-                Object {
-                  "no": "Orgid",
-                },
-                Object {
-                  "no": "Orgnr",
-                },
-              ],
-              "datasets": Array [
-                Object {
-                  "description": Object {
-                    "nb": "Akvakulturregisteret inneholder oversikt over akvakulturtillatelser og enkelte vesentlige vedtak knyttet til disse. I tillegg inneholder registeret en oversikt over overføringer, pantsettelser og andre rettigheter som er tinglyst på tillatelsene.",
-                  },
-                  "id": "631b8f86-530e-44f0-b0b6-cad948c6b9b6",
-                  "title": Object {
-                    "en": "Aquaculture register",
-                    "nb": "Akvakulturregisteret",
-                  },
-                  "uri": "http://data.brreg.no/datakatalog/dataset/974760673/5",
-                },
-                Object {
-                  "description": Object {
-                    "en": "Register of clubs and associations. The purpose is to improve and simplify the interaction between NGOs and public authorities. The Registry will ensure systematic information that can strengthen the legitimacy and knowledge of the voluntary activity. Managed by Brønnøysund Registre",
-                    "nb": "Frivillighetsregisteret har oversikt over lag og foreninger i Norge, og har som formål å forenkle samhandlingen mellom frivillige organisasjoner og offentlig sektor. De som registrerer seg i Frivillighetsregisteret kan delta i grasrotandelen til Norsk Tipping, og motta/få momskompensasjon.",
-                  },
-                  "id": "6d71993e-4c9b-4d5b-9f57-c7f2cea1037b",
-                  "title": Object {
-                    "nb": "Frivillighetsregisteret",
-                  },
-                  "uri": "http://data.brreg.no/datakatalog/dataset/974760673/10",
-                },
-                Object {
-                  "description": Object {
-                    "nb": "Partiregisteret er et register over politiske parti i Norge. Hovedformålet med registeret er å gi part anledning til å skaffe seg enerett på partinavn.",
-                  },
-                  "id": "4abdf712-1c9d-49b9-b5f9-6c67a8983eda",
-                  "title": Object {
-                    "nb": "Partiregisteret",
-                  },
-                  "uri": "http://data.brreg.no/datakatalog/dataset/974760673/7",
-                },
-                Object {
-                  "description": Object {
-                    "nb": "Registeret for utøvere av alternativ behandling inneholder opplysninger om registrerte utøvere og godkjente utøverorganisasjoner. Registeret skal bidra med å vareta pasientvernet og forbrukerrettighetene for den som oppsøker en registrert alternativ behandler. I tillegg skal registeret medvirke til seriøsitet og ordnede forretningsvilkår",
-                  },
-                  "id": "e063a919-d4ba-4b78-9fe3-0c114cbcef68",
-                  "title": Object {
-                    "nb": "Registeret for utøvere av alternativ behandling",
-                  },
-                  "uri": "http://data.brreg.no/datakatalog/dataset/974760673/16",
-                },
-                Object {
-                  "description": Object {
-                    "en": "The Register of Business Enterprises registers Norwegian and foreign businesses in Norway, ensuring legal protection and financial overview. All businesses – with confining as well as complete responsibility – are obliged to register in the Register of Business Enterprises. The same applies to sole proprietorships engaging in trade with purchased goods or having more than five fully employed personell. Other sole proprietorships may register on a voluntary basis.",
-                    "nb": "Foretaksregisteret registrerer alle norske og utenlandske foretak i Norge, og skal sikre rettsvern og økonomisk oversikt. Enkeltpersonforetak som ikke driver handel med innkjøpte varer eller har mindre enn 5 ansatte i full stilling har ikke registreringsplikt, men har registreringsrett. Foretaksregisteret skal sikre rettsvern og økonomisk oversikt, og er en viktig kilde til informasjon om norsk næringsliv.",
-                  },
-                  "id": "97093ad6-661a-46f8-b4f6-681998661d03",
-                  "title": Object {
-                    "en": "Register of Business Enterprises",
-                    "nb": "Foretaksregisteret",
-                  },
-                  "uri": "http://data.brreg.no/datakatalog/dataset/974760673/1",
-                },
-                Object {
-                  "description": Object {
-                    "nb": "Løsøreregisteret er et tinglysingsregister for rettigheter og pant i løsøre. En tinglyst rettighet eller pant, gir rettsvern overfor kreditorer. Løsøreregisteret omfatter ikke tinglysning i fast eiendom, skip og luftfartøyer.",
-                  },
-                  "id": "510ebd85-15f5-40b8-8bad-dfb92234ee2a",
-                  "title": Object {
-                    "en": "Register of Mortgaged Movable Property",
-                    "nb": "Løsøreregisteret",
-                  },
-                  "uri": "http://data.brreg.no/datakatalog/dataset/974760673/3",
-                },
-                Object {
-                  "description": Object {
-                    "nb": "Registeret for offentlig støtte (ROFS) er et nasjonalt register for offentlige støttetildelinger som faller inn under EØS-avtalen. Registeret skal gjøre det enklere for offentlige myndigheter, som vurderer å gi offentlig støtte, å få informasjon om foretakene har fått annen offentlig støtte som må tas med i vurderingen.",
-                  },
-                  "id": "40000eb2-8bc8-4b63-a371-411c3270b7a0",
-                  "title": Object {
-                    "nb": "Registeret for offentlig støtte",
-                  },
-                  "uri": "http://data.brreg.no/datakatalog/dataset/974760673/15",
-                },
-                Object {
-                  "description": Object {
-                    "en": "The Register of Company Accounts receives yearly about 315 000 annual accounts from limited companies, saving banks, insurance companies and other accounting obligation companies in Norway. The yearly accounts contains accounting numbers in electronic formats. In addition attachments includes the annula report of the board, and notes, cash flow and auditors report where needed. All yearly accounts is availiable for everyone, and the most important datasource for everyone that wish to get understand the financial situation for Norwegian businesses.",
-                    "nb": "Regnskapsregisteret mottar årlig ca 315 000 (pr år 2017) årsregnskap fra aksjeselskaper, sparebanker, forsikringsselskaper og andre regnskapspliktige foretak i Norge. Årsregnskapene inneholder regnskapstall i elektronisk form. I tillegg er det vedlagt styrets årsberetning, noter, kontantstrømanalyse og revisors beretning, hvor dette kreves.",
-                  },
-                  "id": "1a3eda0a-4710-4209-8e9f-eb9d709f1540",
-                  "title": Object {
-                    "en": "Register of Company Accounts",
-                    "nb": "Regnskapsregisteret",
-                  },
-                  "uri": "http://data.brreg.no/datakatalog/dataset/974760673/4",
-                },
-              ],
-              "definition": Object {
-                "no": "Et nisifret nummer som tildeles av Enhetsregisteret for en organisasjon som skal operere som en offentlig aktør",
-              },
-              "identifier": "https://data-david.github.io/Begrep/begrep/Organisasjonsnummer",
-              "prefLabel": Object {
-                "no": "organisasjonsnummer",
-              },
-              "uri": "https://data-david.github.io/Begrep/begrep/Organisasjonsnummer",
+            "altLabel": Array [],
+            "contactPoint": Object {
+              "email": "begrepskatalogen@skatteetaten.no",
             },
-            "_type": "subject",
+            "definition": Object {
+              "remark": Object {
+                "nb": "Tilskudd utover en månedlig maksimalbeløp skal arbeidstakeren som har barnehageplassen skatte av.",
+              },
+              "source": Object {
+                "prefLabel": Object {
+                  "nb": "Veiledningen til A-ordningen, - FSFIN §5-15-5, 2. ledd",
+                },
+              },
+              "text": Object {
+                "nb": "økonomisk tilskudd fra arbeidsgiveren til en barnehage som ikke er arbeidsgiverens bedriftsbarnehage.",
+              },
+            },
+            "harvest": Object {
+              "firstHarvested": "2019-04-29T12:17:02.338+0000",
+              "lastHarvested": "2019-07-02T04:00:16.185+0000",
+            },
+            "hiddenLabel": Array [],
+            "id": "22ce6a6e-f629-4a75-826d-500cfc2d9e7a",
+            "identifier": "http://begrepskatalogen/begrep/8ea2df64-7662-11e6-a74e-7e18b36b3fd9",
+            "prefLabel": Object {
+              "nb": "tilskudd til barnehageplass",
+            },
+            "publisher": Object {
+              "name": "SKATTEETATEN",
+              "orgPath": "/STAT/972417807/974761076",
+              "prefLabel": Object {
+                "no": "SKATTEETATEN",
+              },
+              "uri": "http://data.brreg.no/enhetsregisteret/enhet/974761076",
+            },
+            "subject": Object {
+              "nb": "Formues- og inntektsskatt",
+            },
+            "uri": "https://fellesdatakatalog.brreg.no/api/concepts/22ce6a6e-f629-4a75-826d-500cfc2d9e7a",
+          }
+        }
+      />
+      <ConceptsHitItem
+        concepts={Object {}}
+        fadeInCounter={0}
+        key="815db2ae-b168-4d1e-9934-9a374a09a605"
+        onAddConcept={[Function]}
+        onDeleteConcept={[Function]}
+        result={
+          Object {
+            "altLabel": Array [],
+            "contactPoint": Object {
+              "email": "begrepskatalogen@skatteetaten.no",
+            },
+            "definition": Object {
+              "source": Object {
+                "prefLabel": Object {
+                  "nb": "FSFIN § 5-15-5",
+                },
+              },
+              "text": Object {
+                "nb": "skattfri fordel av plass i barnehage som arbeidsgiver gjennom eierandel eller innskudd disponerer til bruk for sine arbeidstakeres barn",
+              },
+            },
+            "harvest": Object {
+              "firstHarvested": "2019-04-29T12:16:53.227+0000",
+              "lastHarvested": "2019-07-02T04:00:12.564+0000",
+            },
+            "hiddenLabel": Array [],
+            "id": "815db2ae-b168-4d1e-9934-9a374a09a605",
+            "identifier": "http://begrepskatalogen/begrep/8ea2df2d-7662-11e6-a74e-7e18b36b3fd9",
+            "prefLabel": Object {
+              "nb": "fordel av bedriftsbarnehageplass",
+            },
+            "publisher": Object {
+              "name": "SKATTEETATEN",
+              "orgPath": "/STAT/972417807/974761076",
+              "prefLabel": Object {
+                "no": "SKATTEETATEN",
+              },
+              "uri": "http://data.brreg.no/enhetsregisteret/enhet/974761076",
+            },
+            "subject": Object {
+              "nb": "Formues- og inntektsskatt",
+            },
+            "uri": "https://fellesdatakatalog.brreg.no/api/concepts/815db2ae-b168-4d1e-9934-9a374a09a605",
+          }
+        }
+      />
+      <ConceptsHitItem
+        concepts={Object {}}
+        fadeInCounter={0}
+        key="8f1a3814-0cde-470e-aa3e-fc30bf1835a4"
+        onAddConcept={[Function]}
+        onDeleteConcept={[Function]}
+        result={
+          Object {
+            "altLabel": Array [],
+            "contactPoint": Object {
+              "email": "begrepskatalogen@skatteetaten.no",
+            },
+            "definition": Object {
+              "text": Object {
+                "nb": "faktisk kostnad som en gitt skattepliktig har i en gitt skattleggingsperionde for merkjøring for å bringe og hente barn ",
+              },
+            },
+            "example": Object {
+              "nb": "Bussbillett mellom hjem og barnehage mv., bompenger for omveien til og fra barnehagen",
+            },
+            "harvest": Object {
+              "firstHarvested": "2019-04-29T12:17:16.835+0000",
+              "lastHarvested": "2019-07-02T04:00:22.580+0000",
+            },
+            "hiddenLabel": Array [],
+            "id": "8f1a3814-0cde-470e-aa3e-fc30bf1835a4",
+            "identifier": "http://begrepskatalogen/begrep/46f4d715-4c6c-11e8-bb3e-005056821322",
+            "prefLabel": Object {
+              "nb": "faktisk kostnad for merkjøring for å bringe og hente barn",
+            },
+            "publisher": Object {
+              "name": "SKATTEETATEN",
+              "orgPath": "/STAT/972417807/974761076",
+              "prefLabel": Object {
+                "no": "SKATTEETATEN",
+              },
+              "uri": "http://data.brreg.no/enhetsregisteret/enhet/974761076",
+            },
+            "subject": Object {
+              "nb": "Formues- og inntektsskatt",
+            },
+            "uri": "https://fellesdatakatalog.brreg.no/api/concepts/8f1a3814-0cde-470e-aa3e-fc30bf1835a4",
+          }
+        }
+      />
+      <ConceptsHitItem
+        concepts={Object {}}
+        fadeInCounter={0}
+        key="30b843a4-0d19-41f7-aee3-7e79ec703d03"
+        onAddConcept={[Function]}
+        onDeleteConcept={[Function]}
+        result={
+          Object {
+            "altLabel": Array [
+              Object {
+                "nb": "betalt barnepass",
+              },
+            ],
+            "contactPoint": Object {
+              "email": "begrepskatalogen@skatteetaten.no",
+            },
+            "definition": Object {
+              "remark": Object {
+                "nb": "Dette omfatter ikke kostnader til mat, drikke og merkjøring for å bringe og hente barn",
+              },
+              "source": Object {
+                "prefLabel": Object {
+                  "nb": "Skatte-ABC, fagemnet Foreldrefradrag",
+                },
+              },
+              "text": Object {
+                "nb": "summen for en bestemt skattleggingsperiode av en gitt skattepliktigs utgifter til tilsyn i barnets hjem, i barnepassers hjem, barnehage, i skolefritidsordning på barneskole, institusjon mv., for barn som gir rett til foreldrefradrag.",
+              },
+            },
+            "harvest": Object {
+              "firstHarvested": "2019-04-29T12:17:50.112+0000",
+              "lastHarvested": "2019-07-02T04:00:37.283+0000",
+            },
+            "hiddenLabel": Array [],
+            "id": "30b843a4-0d19-41f7-aee3-7e79ec703d03",
+            "identifier": "http://begrepskatalogen/begrep/20b52ae7-9fe1-11e5-a9f8-e4115b280940",
+            "prefLabel": Object {
+              "nb": "oppholdskostnader ved pass og stell av barn",
+            },
+            "publisher": Object {
+              "name": "SKATTEETATEN",
+              "orgPath": "/STAT/972417807/974761076",
+              "prefLabel": Object {
+                "no": "SKATTEETATEN",
+              },
+              "uri": "http://data.brreg.no/enhetsregisteret/enhet/974761076",
+            },
+            "subject": Object {
+              "nb": "Tredjepartsopplysninger",
+            },
+            "uri": "https://fellesdatakatalog.brreg.no/api/concepts/30b843a4-0d19-41f7-aee3-7e79ec703d03",
+          }
+        }
+      />
+      <ConceptsHitItem
+        concepts={Object {}}
+        fadeInCounter={0}
+        key="d071c81d-0ae3-411a-8b47-bbdd99b87233"
+        onAddConcept={[Function]}
+        onDeleteConcept={[Function]}
+        result={
+          Object {
+            "altLabel": Array [],
+            "contactPoint": Object {
+              "email": "begrepskatalogen@skatteetaten.no",
+            },
+            "definition": Object {
+              "remark": Object {
+                "nb": "Pass og stell av barn vil omfatte tilsyn, pleie mv. av barnet. Dette kan skje i barnets hjem, i barnepassers hjem, barnehage, i skolefritidsordning på barneskole, institusjon mv. Som pass og stell av barn regnes også fritidsordninger for barn i regi av klubber og foreninger som driver aktiviteter innenfor eget interessefelt med mindre aktivitieten er sporadisk. Dette kan f.eks. være aktiviteter innenfor idrett, teater, musikk, barnekor, kulturskole mv. Det er et vilkår at ordningen er etablert som et alternativ til skolefritidsordning på barneskole. Trening med aldersbestemt lag regnes ikke som pass og stell av barn. Pass og stell må avgrenses mot",
+              },
+              "source": Object {
+                "prefLabel": Object {
+                  "nb": "Skatte-ABC, fagemnet \\"Foreldrefradrag\\"",
+                },
+              },
+              "text": Object {
+                "nb": "ivaretakelse av barnets velbefinnede ved at en eller flere ansvarlige personer er til stede og viser omsorg for barnet",
+              },
+            },
+            "harvest": Object {
+              "firstHarvested": "2019-04-29T12:16:53.845+0000",
+              "lastHarvested": "2019-07-02T04:00:12.965+0000",
+            },
+            "hiddenLabel": Array [],
+            "id": "d071c81d-0ae3-411a-8b47-bbdd99b87233",
+            "identifier": "http://begrepskatalogen/begrep/46f4d75b-4c6c-11e8-bb3e-005056821322",
+            "prefLabel": Object {
+              "nb": "pass og stell av barn",
+            },
+            "publisher": Object {
+              "name": "SKATTEETATEN",
+              "orgPath": "/STAT/972417807/974761076",
+              "prefLabel": Object {
+                "no": "SKATTEETATEN",
+              },
+              "uri": "http://data.brreg.no/enhetsregisteret/enhet/974761076",
+            },
+            "subject": Object {
+              "nb": "Formues- og inntektsskatt",
+            },
+            "uri": "https://fellesdatakatalog.brreg.no/api/concepts/d071c81d-0ae3-411a-8b47-bbdd99b87233",
+          }
+        }
+      />
+      <ConceptsHitItem
+        concepts={Object {}}
+        fadeInCounter={0}
+        key="5bb11bb8-806b-4c93-84f9-05da23679d1b"
+        onAddConcept={[Function]}
+        onDeleteConcept={[Function]}
+        result={
+          Object {
+            "altLabel": Array [],
+            "contactPoint": Object {
+              "email": "begrepskatalogen@skatteetaten.no",
+            },
+            "definition": Object {
+              "remark": Object {
+                "nb": "En dagmamma skal godkjennes av kommunen i henhold til \\"Forskrift om miljørettet helsevern i barnehager og skoler m.v\\" dersom: 1) Man får godtgjøring for regelmessig tilsyn med og omsorg for barn, 2) tilbyr ukentlig oppholdstid på mer enn ti timer og 3) antall barn som er tilstede samtidig, er tre eller flere (inkludert dagmammaens egne barn).
+
+Enten er foreldrene arbeidsgivere, eller dagmammaen er selvstendig næringsdrivende. Det er mange forenklede regler for dagmammajobb i forhold til andre arbeidsforhold. Bant annet skal det ikke betales arbeidsgiveravgift og dagmammaen trenger ikke nødvedigvis registrere seg som selvstedig næringsdrivende i Brønnøysundregistrene.",
+              },
+              "source": Object {
+                "prefLabel": Object {
+                  "nb": "snl.no",
+                },
+              },
+              "text": Object {
+                "nb": "person som passer andres barn regelmessig på dagtid, gjerne hele dager, og ofte mens foreldrene er på jobb. Passer som regel flere barn samtidig, enten hjemme hos seg selv eller hjemme hos ett av barna.",
+              },
+            },
+            "harvest": Object {
+              "firstHarvested": "2019-04-29T12:17:40.238+0000",
+              "lastHarvested": "2019-07-02T04:00:32.617+0000",
+            },
+            "hiddenLabel": Array [],
+            "id": "5bb11bb8-806b-4c93-84f9-05da23679d1b",
+            "identifier": "http://begrepskatalogen/begrep/dcfb471c-e484-11e6-9cb3-005056821322",
+            "prefLabel": Object {
+              "nb": "dagmamma i egen bolig",
+            },
+            "publisher": Object {
+              "name": "SKATTEETATEN",
+              "orgPath": "/STAT/972417807/974761076",
+              "prefLabel": Object {
+                "no": "SKATTEETATEN",
+              },
+              "uri": "http://data.brreg.no/enhetsregisteret/enhet/974761076",
+            },
+            "subject": Object {
+              "nb": "A-ordningen",
+            },
+            "uri": "https://fellesdatakatalog.brreg.no/api/concepts/5bb11bb8-806b-4c93-84f9-05da23679d1b",
+          }
+        }
+      />
+      <ConceptsHitItem
+        concepts={Object {}}
+        fadeInCounter={0}
+        key="572c21d8-dd74-41a0-8bc1-cc9ddcf2c430"
+        onAddConcept={[Function]}
+        onDeleteConcept={[Function]}
+        result={
+          Object {
+            "altLabel": Array [],
+            "contactPoint": Object {
+              "email": "begrepskatalogen@skatteetaten.no",
+            },
+            "definition": Object {
+              "text": Object {
+                "nb": "rent leketilbud uten de samme krav til pedagogiske personale som for barnehager",
+              },
+            },
+            "harvest": Object {
+              "firstHarvested": "2019-04-29T12:17:46.570+0000",
+              "lastHarvested": "2019-07-02T04:00:35.700+0000",
+            },
+            "hiddenLabel": Array [],
+            "id": "572c21d8-dd74-41a0-8bc1-cc9ddcf2c430",
+            "identifier": "http://begrepskatalogen/begrep/20b52ae4-9fe1-11e5-a9f8-e4115b280940",
+            "prefLabel": Object {
+              "nb": "barnepark",
+            },
+            "publisher": Object {
+              "name": "SKATTEETATEN",
+              "orgPath": "/STAT/972417807/974761076",
+              "prefLabel": Object {
+                "no": "SKATTEETATEN",
+              },
+              "uri": "http://data.brreg.no/enhetsregisteret/enhet/974761076",
+            },
+            "subject": Object {
+              "nb": "Tredjepartsopplysninger",
+            },
+            "uri": "https://fellesdatakatalog.brreg.no/api/concepts/572c21d8-dd74-41a0-8bc1-cc9ddcf2c430",
           }
         }
       />
