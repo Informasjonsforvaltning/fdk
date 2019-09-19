@@ -5,12 +5,13 @@ import { Field, FieldArray } from 'redux-form';
 import localization from '../../../lib/localization';
 import Helptext from '../../../components/helptext/helptext.component';
 import InputField from '../../../components/field-input/field-input.component';
+import MultilingualField from '../../../components/multilingual-field/multilingual-field.component';
 import InputTagsField from '../../../components/field-input-tags/field-input-tags.component';
 import TextAreaField from '../../../components/field-textarea/field-textarea.component';
 import { licenseType, textType } from '../../../schemaTypes';
 import { datasetFormPatchThunk } from '../formsLib/asyncValidateDatasetInvokePatch';
 
-export const renderSamples = ({ fields, onDeleteFieldAtIndex }) => {
+export const renderSamples = ({ fields, onDeleteFieldAtIndex, languages }) => {
   return (
     <div>
       {fields &&
@@ -21,8 +22,7 @@ export const renderSamples = ({ fields, onDeleteFieldAtIndex }) => {
                 className="fdk-btn-no-border"
                 type="button"
                 title={localization.schema.sample.removeSample}
-                onClick={() => onDeleteFieldAtIndex(fields, index)}
-              >
+                onClick={() => onDeleteFieldAtIndex(fields, index)}>
                 <i className="fa fa-trash mr-2" />
                 {localization.schema.sample.deleteSampleLabel}
               </button>
@@ -52,10 +52,11 @@ export const renderSamples = ({ fields, onDeleteFieldAtIndex }) => {
               <Helptext
                 title={localization.schema.sample.helptext.description}
               />
-              <Field
-                name={`${sample}.description.${localization.getLanguage()}`}
+              <MultilingualField
+                name={`${sample}.description`}
                 component={TextAreaField}
                 label={localization.schema.sample.descriptionLabel}
+                languages={languages}
               />
             </div>
           </div>
@@ -76,8 +77,7 @@ export const renderSamples = ({ fields, onDeleteFieldAtIndex }) => {
                 format: [],
                 type: ''
               })
-            }
-          >
+            }>
             <i className="fa fa-plus mr-2" />
             {localization.schema.sample.addSampleLabel}
           </button>
@@ -86,11 +86,12 @@ export const renderSamples = ({ fields, onDeleteFieldAtIndex }) => {
   );
 };
 renderSamples.propTypes = {
+  languages: PropTypes.array.isRequired,
   fields: PropTypes.object.isRequired,
   onDeleteFieldAtIndex: PropTypes.func.isRequired
 };
 
-export const FormSample = ({ dispatch, catalogId, datasetId }) => {
+export const FormSample = ({ dispatch, catalogId, datasetId, languages }) => {
   const deleteFieldAtIndex = (fields, index) => {
     const values = fields.getAll();
     // use splice instead of skip, for changing the bound value
@@ -106,6 +107,7 @@ export const FormSample = ({ dispatch, catalogId, datasetId }) => {
         name="sample"
         component={renderSamples}
         onDeleteFieldAtIndex={deleteFieldAtIndex}
+        languages={languages}
       />
     </form>
   );
@@ -114,11 +116,13 @@ export const FormSample = ({ dispatch, catalogId, datasetId }) => {
 FormSample.defaultProps = {
   dispatch: null,
   catalogId: null,
-  datasetId: null
+  datasetId: null,
+  languages: []
 };
 
 FormSample.propTypes = {
   dispatch: PropTypes.func,
   catalogId: PropTypes.string,
-  datasetId: PropTypes.string
+  datasetId: PropTypes.string,
+  languages: PropTypes.array
 };

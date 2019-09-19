@@ -1,11 +1,11 @@
 import { connect } from 'react-redux';
-import _ from 'lodash';
 
 import { ConfiguredFormSample } from './configured-form-sample';
 import { textType, licenseType } from '../../../schemaTypes';
 
 export const sampleTypes = values => {
   let samples = null;
+
   if (values && values.length > 0) {
     samples = values.map(item => ({
       id: item.id ? item.id : '',
@@ -27,7 +27,7 @@ const mapStateToProps = (state, ownProps) => {
   const { datasetItem, openLicenseItems } = ownProps;
   return {
     initialValues: {
-      sample: sampleTypes(_.get(datasetItem, 'sample')) || [{}],
+      sample: sampleTypes(datasetItem.sample) || [{}],
       openLicenseItems
     }
   };

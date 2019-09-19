@@ -155,8 +155,7 @@ export function DatasetRegistrationPagePure(props) {
                 title={localization.datasets.formTemplates.title}
                 required
                 values={titleValues(title.values)}
-                syncErrors={title.syncErrors}
-              >
+                syncErrors={title.syncErrors}>
                 <ConnectedFormTitle
                   datasetItem={datasetItem}
                   catalogId={catalogId}
@@ -169,8 +168,7 @@ export function DatasetRegistrationPagePure(props) {
                 title={localization.datasets.formTemplates.accessRight}
                 required
                 values={accessRightsValues(accessRights.values)}
-                syncErrors={accessRights.syncErrors}
-              >
+                syncErrors={accessRights.syncErrors}>
                 <ConnectedFormAccessRights
                   datasetItem={datasetItem}
                   catalogId={catalogId}
@@ -182,8 +180,7 @@ export function DatasetRegistrationPagePure(props) {
                 title={localization.datasets.formTemplates.theme}
                 required
                 values={losValues(themes.values, losItems)}
-                syncErrors={themes.syncErrors}
-              >
+                syncErrors={themes.syncErrors}>
                 <ConnectedFormLOS
                   datasetItem={datasetItem}
                   losItems={losItems}
@@ -195,8 +192,7 @@ export function DatasetRegistrationPagePure(props) {
               <FormTemplateWithState
                 title={localization.datasets.formTemplates.euTheme}
                 values={themesValues(themes.values)}
-                syncErrors={themes.syncErrors}
-              >
+                syncErrors={themes.syncErrors}>
                 <ConnectedFormThemes
                   datasetItem={datasetItem}
                   themesItems={themesItems}
@@ -208,8 +204,7 @@ export function DatasetRegistrationPagePure(props) {
               <FormTemplateWithState
                 title={localization.datasets.formTemplates.type}
                 values={typeValues(type.values)}
-                syncErrors={type.syncErrors}
-              >
+                syncErrors={type.syncErrors}>
                 <ConnectedFormType
                   datasetItem={datasetItem}
                   catalogId={catalogId}
@@ -220,8 +215,7 @@ export function DatasetRegistrationPagePure(props) {
               <FormTemplateWithState
                 title={localization.datasets.formTemplates.concept}
                 values={conceptValues(concept.values)}
-                syncErrors={concept.syncErrors}
-              >
+                syncErrors={concept.syncErrors}>
                 <ConnectedFormConcept
                   datasetItem={datasetItem}
                   catalogId={catalogId}
@@ -232,8 +226,7 @@ export function DatasetRegistrationPagePure(props) {
               <FormTemplateWithState
                 title={localization.datasets.formTemplates.spatial}
                 values={spatialValues(spatial.values)}
-                syncErrors={spatial.syncErrors}
-              >
+                syncErrors={spatial.syncErrors}>
                 <ConnectedFormSpatial
                   datasetItem={datasetItem}
                   catalogId={catalogId}
@@ -244,8 +237,7 @@ export function DatasetRegistrationPagePure(props) {
               <FormTemplateWithState
                 title={localization.datasets.formTemplates.provenance}
                 values={provenanceValues(formProvenance.values)}
-                syncErrors={formProvenance.syncErrors}
-              >
+                syncErrors={formProvenance.syncErrors}>
                 <ConnectedFormProvenance
                   datasetItem={datasetItem}
                   provenanceItems={provenanceItems}
@@ -258,8 +250,7 @@ export function DatasetRegistrationPagePure(props) {
               <FormTemplateWithState
                 title={localization.datasets.formTemplates.content}
                 values={contentsValues(contents.values)}
-                syncErrors={contents.syncErrors}
-              >
+                syncErrors={contents.syncErrors}>
                 <ConnectedFormContents
                   datasetItem={datasetItem}
                   catalogId={catalogId}
@@ -270,8 +261,7 @@ export function DatasetRegistrationPagePure(props) {
               <FormTemplateWithState
                 title={localization.datasets.formTemplates.informationModel}
                 values={informationModelValues(informationModel.values)}
-                syncErrors={informationModel.syncErrors}
-              >
+                syncErrors={informationModel.syncErrors}>
                 <ConnectedFormInformationModel
                   datasetItem={datasetItem}
                   catalogId={catalogId}
@@ -281,8 +271,7 @@ export function DatasetRegistrationPagePure(props) {
 
               <FormTemplateWithState
                 title={localization.datasets.formTemplates.reference}
-                values={referenceValues(reference.values)}
-              >
+                values={referenceValues(reference.values)}>
                 <ConnectedFormReference
                   datasetItem={datasetItem}
                   referenceTypesItems={referenceTypesItems}
@@ -295,8 +284,7 @@ export function DatasetRegistrationPagePure(props) {
               <FormTemplateWithState
                 title={localization.datasets.formTemplates.contactInformation}
                 values={contactPointValues(contactPoint.values)}
-                syncErrors={contactPoint.syncErrors}
-              >
+                syncErrors={contactPoint.syncErrors}>
                 <ConnectedFormContactPoint
                   datasetItem={datasetItem}
                   catalogId={catalogId}
@@ -306,8 +294,7 @@ export function DatasetRegistrationPagePure(props) {
 
               <FormTemplateWithState
                 title={localization.datasets.formTemplates.distributionAPI}
-                values={distributionAPIValues(distribution.values)}
-              >
+                values={distributionAPIValues(distribution.values)}>
                 <FormDistributionApi
                   datasetItem={datasetItem}
                   catalogId={catalogId}
@@ -320,8 +307,7 @@ export function DatasetRegistrationPagePure(props) {
                 title={localization.datasets.formTemplates.distribution}
                 backgroundBlue
                 values={distributionValues(distribution.values)}
-                syncErrors={distribution.syncErrors}
-              >
+                syncErrors={distribution.syncErrors}>
                 <FormDistribution
                   datasetItem={datasetItem}
                   openLicenseItems={openLicenseItems}
@@ -335,13 +321,13 @@ export function DatasetRegistrationPagePure(props) {
                 title={localization.datasets.formTemplates.sample}
                 backgroundBlue
                 values={sampleValues(sample.values)}
-                syncErrors={sample.syncErrors}
-              >
+                syncErrors={sample.syncErrors}>
                 <ConnectedFormSample
                   datasetItem={datasetItem}
                   openLicenseItems={openLicenseItems}
                   catalogId={catalogId}
                   datasetId={datasetId}
+                  languages={languages}
                 />
               </FormTemplateWithState>
 
