@@ -78,11 +78,13 @@ export function DatasetsReportPage({
 }
 
 DatasetsReportPage.defaultProps = {
-  fetchPublishersIfNeeded: _.noop
+  fetchPublishersIfNeeded: _.noop,
+  publishers:{}
 };
 
 DatasetsReportPage.propTypes = {
   fetchPublishersIfNeeded: PropTypes.func,
   location: PropTypes.object.isRequired,
-  history: PropTypes.object.isRequired
+  history: PropTypes.object.isRequired,
+  publishers: PropTypes.object
 };
