@@ -124,37 +124,6 @@ export function DatasetRegistrationPagePure(props) {
           []
         )
       : [];
-
-    // if (typeof doc === 'object') {
-    //   // const t = Object.keys(doc).filter(key => {
-    //   //   return translatableFields.includes(key);
-    //   // });
-    //   // console.log(t);
-    //   // debugger;
-
-    //   languagesUsed = languagesUsed.concat(
-    //     Object.entries(doc).reduce((previous, [key]) => {
-    //       return previous.concat(
-    //         translatableFields.includes(key)
-    //           ? Object.keys(doc[key])
-    //           : parseDataset(doc[key])
-    //       );
-    //     }, [])
-    //   );
-
-    //   // WORKS!!
-    //   // Object.entries(doc).forEach(([key]) => {
-    //   //   languagesUsed = languagesUsed.concat(
-    //   //     translatableFields.includes(key)
-    //   //       ? Object.keys(doc[key])
-    //   //       : parseDataset(doc[key])
-    //   //   );
-    //   // });
-    // }
-
-    // languagesUsed = languagesUsed.concat(something);
-
-    // return languagesUsed;
   };
 
   const getUsedLanguages = () => {
