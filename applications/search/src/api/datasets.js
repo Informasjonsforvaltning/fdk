@@ -23,25 +23,23 @@ export const datasetsSearch = params => {
 
   return axios
     .get(datasetsUrlBase(), {
-      params,
-      headers: { authorization: getConfig().datasetApi.authorization }
+      ...getConfig().datasetApi.config,
+      params
     })
     .then(r => r.data);
 };
 
 export const getDataset = id =>
   axios
-    .get(`${datasetsUrlBase()}/${id}`, {
-      headers: { authorization: getConfig().datasetApi.authorization }
-    })
+    .get(`${datasetsUrlBase()}/${id}`, getConfig().datasetApi.config)
     .then(r => r.data)
     .catch(() => null);
 
 export const getDatasetByURI = uri =>
   axios
     .get(`${datasetsUrlBase()}/byuri`, {
-      params: { uri },
-      headers: { authorization: getConfig().datasetApi.authorization }
+      ...getConfig().datasetApi.config,
+      params: { uri }
     })
     .then(r => r.data)
     .catch(() => null);

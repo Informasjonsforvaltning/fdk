@@ -33,13 +33,13 @@ export function extractStats(data) {
 export const getApiStats = orgPath =>
   axios
     .get(apisUrlBase(), {
+      ...getConfig().apiApi.config,
       params: {
         orgPath,
         size: 0,
         aggregations:
           'formats,orgPath,firstHarvested,publisher,openAccess,openLicence,freeUsage'
-      },
-      headers: { authorization: getConfig().apiApi.authorization }
+      }
     })
     .then(r => r.data)
     .then(normalizeAggregations)

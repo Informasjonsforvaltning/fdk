@@ -8,16 +8,14 @@ export const conceptsUrlBase = () =>
 export const conceptsSearch = params =>
   axios
     .get(conceptsUrlBase(), {
-      params,
-      headers: { authorization: getConfig().conceptApi.authorization }
+      ...getConfig().conceptApi.config,
+      params
     })
     .then(r => r.data);
 
 export const getConcept = id =>
   axios
-    .get(`${conceptsUrlBase()}/${id}`, {
-      headers: { authorization: getConfig().conceptApi.authorization }
-    })
+    .get(`${conceptsUrlBase()}/${id}`, getConfig().conceptApi.config)
     .then(r => r.data)
     .catch(() => null);
 

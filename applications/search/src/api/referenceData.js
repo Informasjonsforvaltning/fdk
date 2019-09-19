@@ -6,7 +6,5 @@ const referenceDataUrlBase = () =>
 
 export const getReferenceData = path =>
   axios
-    .get(`${referenceDataUrlBase()}/${path}`, {
-      headers: { authorization: getConfig().referenceDataApi.authorization }
-    })
+    .get(`${referenceDataUrlBase()}/${path}`, getConfig().referenceDataApi.config)
     .then(r => r.data);

@@ -6,17 +6,13 @@ const publishersUrlBase = () => `${getConfig().publisherApi.host}/publisher`;
 
 export const getAllPublishers = () =>
   axios
-    .get(publishersUrlBase(), {
-      headers: { authorization: getConfig().publisherApi.authorization }
-    })
+    .get(publishersUrlBase(),getConfig().publisherApi.config)
     .then(r => r.data)
     .then(extractPublishers);
 
 export const getPublisherHierarchy = () =>
   axios
-    .get(`${publishersUrlBase()}/hierarchy`, {
-      headers: { authorization: getConfig().publisherApi.authorization }
-    })
+    .get(`${publishersUrlBase()}/hierarchy`, getConfig().publisherApi.config)
     .then(r => r.data);
 
 export const extractPublishers = searchResponse =>
