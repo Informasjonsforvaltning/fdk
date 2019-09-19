@@ -1,0 +1,397 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns:foaf="http://xmlns.com/foaf/0.1/" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:void="http://www.w3.org/TR/void/" xmlns:skos="http://www.w3.org/2004/02/skos/core#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dct="http://purl.org/dc/terms/" xmlns:dctype="http://purl.org/dc/dcmitype/" xmlns:dcat="http://www.w3.org/ns/dcat#" xmlns:vcard="http://www.w3.org/2006/vcard/ns#" xmlns:adms="http://www.w3.org/ns/adms#" xmlns:xslUtils="java:org.fao.geonet.util.XslUtil" xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:owl="http://www.w3.org/2002/07/owl#" xmlns:locn="http://www.w3.org/ns/locn#" xmlns:gml="http://www.opengis.net/gml" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+    <dcat:Catalog rdf:about="http://www.geonorge.no/geonetwork">
+        <dct:title xml:lang="no">Geonorge</dct:title>
+        <dct:description>GeoNorge er den nasjonale katalogen for geografisk informasjon</dct:description>
+        <dct:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2019-02-04</dct:issued>
+        <rdfs:label xml:lang="no">GeoNorge</rdfs:label>
+        <foaf:homepage>http://www.geonorge.no/geonetwork</foaf:homepage>
+        <void:openSearchDescription>http://www.geonorge.no/geonetwork/srv/nor/portal.opensearch</void:openSearchDescription>
+        <void:uriLookupEndpoint>http://www.geonorge.no/geonetwork/srv/nor/rdf.search?any=</void:uriLookupEndpoint>
+        <dct:publisher rdf:resource="https://register.geonorge.no/register/organisasjoner/kartverket/kartverket" />
+        <dct:license rdf:resource="http://creativecommons.org/licenses/by/4.0/" />
+        <dct:language rdf:resource="http://publications.europa.eu/resource/authority/language/NOR" />
+        <dcat:themeTaxonomy rdf:resource="http://www.eionet.europa.eu/gemet/inspire_themes" />
+        <dcat:themeTaxonomy rdf:resource="http://publications.europa.eu/mdr/resource/authority/data-theme/html/data-theme-eng.html" />
+        <dcat:themeTaxonomy rdf:resource="https://register.geonorge.no/subregister/metadata-kodelister/kartverket/nasjonal-temainndeling" />
+        <dcat:dataset rdf:resource="https://kartkatalog.geonorge.no/Metadata/uuid/e4f40b02-7a32-4163-87af-d4121de48e6d" />
+        <dcat:dataset rdf:resource="https://kartkatalog.geonorge.no/Metadata/uuid/fc28749e-633d-4dcc-b4c3-c073720a0982" />
+        <dcat:dataset rdf:resource="https://kartkatalog.geonorge.no/Metadata/uuid/475ea963-622a-43ae-a018-6eae3b3dbfed" />
+        <dcat:dataset rdf:resource="https://kartkatalog.geonorge.no/Metadata/uuid/93d4fe8d-5db5-46b8-bfa1-2d1f6ca3972b" />
+        <dcat:dataset rdf:resource="https://kartkatalog.geonorge.no/Metadata/uuid/a9d0770d-8cd9-47af-bfd5-55014655e298" />
+        <dcat:dataset rdf:resource="https://kartkatalog.geonorge.no/Metadata/uuid/e64cbfc7-4ddf-4cad-a812-3e70e373f789" />
+        <dcat:dataset rdf:resource="https://kartkatalog.geonorge.no/Metadata/uuid/eea87664-d936-478e-897a-c38ca7c478a0" />
+        <dcat:dataset rdf:resource="https://kartkatalog.geonorge.no/Metadata/uuid/9042ecf7-157b-4925-801f-28db34bdd028" />
+        <dcat:dataset rdf:resource="https://kartkatalog.geonorge.no/Metadata/uuid/b7f89a26-75af-4ab8-9c78-8b232cfb4e5c" />
+        <dcat:dataset rdf:resource="https://kartkatalog.geonorge.no/Metadata/uuid/51d279f8-e2be-4f5e-9f72-1a53f7535ec1" />
+
+
+        <dct:modified rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2019-01-31</dct:modified>
+    </dcat:Catalog>
+    <dcat:Dataset rdf:about="https://kartkatalog.geonorge.no/Metadata/uuid/e4f40b02-7a32-4163-87af-d4121de48e6d">
+        <dct:identifier>e4f40b02-7a32-4163-87af-d4121de48e6d</dct:identifier>
+        <dct:title xml:lang="no">Naturtyper - marine</dct:title>
+        <dct:description xml:lang="no">Marine naturtyper etter DN håndbok 19 - Kartlegging av marint biologisk mangfold</dct:description>
+        <dcat:keyword xml:lang="no">fellesDatakatalog</dcat:keyword>
+        <dct:spatial parseType="Resource">
+            <locn:geometry datatype="http://www.opengis.net/ont/geosparql#gmlLiteral">
+                <![CDATA[<gml:Envelope srsName="http://www.opengis.net/def/crs/OGC/1.3/CRS84"><gml:lowerCorner>2 57</gml:lowerCorner><gml:upperCorner>33 72</gml:upperCorner></gml:Envelope>]]>
+            </locn:geometry>
+        </dct:spatial>
+        <foaf:thumbnail rdf:resource="https://editor.geonorge.no/thumbnails/e4f40b02-7a32-4163-87af-d4121de48e6d_20190125141255_Naturtyper_marine.png" />
+        <dct:updated rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2019-01-11</dct:updated>
+        <dct:publisher rdf:resource="https://register.geonorge.no/organisasjoner/miljodirektoratet/dd34c8ca-5e5c-4cfd-9b25-afeadd1bcbff" />
+        <dcat:contactPoint rdf:resource="https://register.geonorge.no/organisasjoner/miljodirektoratet/dd34c8ca-5e5c-4cfd-9b25-afeadd1bcbff" />
+        <dct:accrualPeriodicity>continual</dct:accrualPeriodicity>
+        <dcat:granularity />
+        <dct:license rdf:resource="http://data.norge.no/nlod/no/1.0" />
+        <dct:accessRights rdf:resource="http://publications.europa.eu/resource/authority/access-right/PUBLIC" />
+        <dcat:dataQuality />
+        <dcat:distribution rdf:resource="https://kartkatalog.geonorge.no/Metadata/uuid/e4f40b02-7a32-4163-87af-d4121de48e6d/SOSI" />
+    </dcat:Dataset>
+    <dcat:Distribution rdf:about="https://kartkatalog.geonorge.no/Metadata/uuid/e4f40b02-7a32-4163-87af-d4121de48e6d/SOSI">
+        <dct:title xml:lang="no">Egen nedlastningsside</dct:title>
+        <dct:description>Webside eller webløsning hvor en etat tibyr nedlastning av data direkte eller gjennom ulike grafiske brukergrensesnitt</dct:description>
+        <dct:format>SOSI</dct:format>
+        <dcat:accessURL rdf:resource="https://kartkatalog.geonorge.no/metadata/uuid/e4f40b02-7a32-4163-87af-d4121de48e6d" />
+        <dct:license rdf:resource="http://data.norge.no/nlod/no/1.0" />
+        <adms:status />
+    </dcat:Distribution>
+    <dcat:Dataset rdf:about="https://kartkatalog.geonorge.no/Metadata/uuid/fc28749e-633d-4dcc-b4c3-c073720a0982">
+        <dct:identifier>fc28749e-633d-4dcc-b4c3-c073720a0982</dct:identifier>
+        <dct:title xml:lang="no">Ramsarområder</dct:title>
+        <dct:description xml:lang="no">Datasettet viser norske verneområder med status som Ramsarområder, under den internasjonale Ramsarkonvensjonen. Alle norske Ramsarområder er vernet som Naturvernområder (eget datasett). Noen ganger omfatter Ramsar-statusen kun deler av det aktuelle naturvernområdet. Et Ramsarområde kan også omfatte areal i flere ulike naturvernområder. Hensikten med dette datasettet er derfor å definere helt entydig hvilke areal som omfattes av Ramsarkonvensjonen i Norge. I tillegg inneholder det en områdebeskrivelse på norsk, som forklarer om historikk og begrunnelse for at områdene har fått en så viktig internasjonal status</dct:description>
+        <dcat:keyword xml:lang="no">fellesDatakatalog</dcat:keyword>
+        <dct:spatial parseType="Resource">
+            <locn:geometry datatype="http://www.opengis.net/ont/geosparql#gmlLiteral">
+                <![CDATA[<gml:Envelope srsName="http://www.opengis.net/def/crs/OGC/1.3/CRS84"><gml:lowerCorner>2,00 57,00</gml:lowerCorner><gml:upperCorner>33,00 72,00</gml:upperCorner></gml:Envelope>]]>
+            </locn:geometry>
+        </dct:spatial>
+        <foaf:thumbnail rdf:resource="https://editor.geonorge.no/thumbnails/fc28749e-633d-4dcc-b4c3-c073720a0982_20190131144346_WMSServer.png" />
+        <dct:updated rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2019-01-31</dct:updated>
+        <dct:publisher rdf:resource="https://register.geonorge.no/organisasjoner/miljodirektoratet/dd34c8ca-5e5c-4cfd-9b25-afeadd1bcbff" />
+        <dcat:contactPoint rdf:resource="https://register.geonorge.no/organisasjoner/miljodirektoratet/dd34c8ca-5e5c-4cfd-9b25-afeadd1bcbff" />
+        <dct:accrualPeriodicity>asNeeded</dct:accrualPeriodicity>
+        <dcat:granularity />
+        <dct:license rdf:resource="http://data.norge.no/nlod/no/1.0" />
+        <dct:accessRights rdf:resource="http://publications.europa.eu/resource/authority/access-right/PUBLIC" />
+        <dcat:dataQuality />
+        <dcat:distribution rdf:resource="https://kartkatalog.geonorge.no/Metadata/uuid/fc28749e-633d-4dcc-b4c3-c073720a0982/FGDB" />
+        <dcat:distribution rdf:resource="https://kartkatalog.geonorge.no/Metadata/uuid/fc28749e-633d-4dcc-b4c3-c073720a0982/SOSI" />
+        <dcat:distribution rdf:resource="https://kartkatalog.geonorge.no/Metadata/uuid/fc28749e-633d-4dcc-b4c3-c073720a0982/GeoJSON" />
+    </dcat:Dataset>
+    <dcat:Distribution rdf:about="https://kartkatalog.geonorge.no/Metadata/uuid/fc28749e-633d-4dcc-b4c3-c073720a0982/FGDB">
+        <dct:title xml:lang="no">Egen nedlastningsside</dct:title>
+        <dct:description>Webside eller webløsning hvor en etat tibyr nedlastning av data direkte eller gjennom ulike grafiske brukergrensesnitt</dct:description>
+        <dct:format>FGDB</dct:format>
+        <dcat:accessURL rdf:resource="https://kartkatalog.geonorge.no/metadata/uuid/fc28749e-633d-4dcc-b4c3-c073720a0982" />
+        <dct:license rdf:resource="http://data.norge.no/nlod/no/1.0" />
+        <adms:status />
+    </dcat:Distribution>
+    <dcat:Distribution rdf:about="https://kartkatalog.geonorge.no/Metadata/uuid/fc28749e-633d-4dcc-b4c3-c073720a0982/SOSI">
+        <dct:title xml:lang="no">Egen nedlastningsside</dct:title>
+        <dct:description>Webside eller webløsning hvor en etat tibyr nedlastning av data direkte eller gjennom ulike grafiske brukergrensesnitt</dct:description>
+        <dct:format>SOSI</dct:format>
+        <dcat:accessURL rdf:resource="https://kartkatalog.geonorge.no/metadata/uuid/fc28749e-633d-4dcc-b4c3-c073720a0982" />
+        <dct:license rdf:resource="http://data.norge.no/nlod/no/1.0" />
+        <adms:status />
+    </dcat:Distribution>
+    <dcat:Distribution rdf:about="https://kartkatalog.geonorge.no/Metadata/uuid/fc28749e-633d-4dcc-b4c3-c073720a0982/GeoJSON">
+        <dct:title xml:lang="no">Egen nedlastningsside</dct:title>
+        <dct:description>Webside eller webløsning hvor en etat tibyr nedlastning av data direkte eller gjennom ulike grafiske brukergrensesnitt</dct:description>
+        <dct:format>GeoJSON</dct:format>
+        <dcat:accessURL rdf:resource="https://kartkatalog.geonorge.no/metadata/uuid/fc28749e-633d-4dcc-b4c3-c073720a0982" />
+        <dct:license rdf:resource="http://data.norge.no/nlod/no/1.0" />
+        <adms:status />
+    </dcat:Distribution>
+    <dcat:Dataset rdf:about="https://kartkatalog.geonorge.no/Metadata/uuid/475ea963-622a-43ae-a018-6eae3b3dbfed">
+        <dct:identifier>475ea963-622a-43ae-a018-6eae3b3dbfed</dct:identifier>
+        <dct:title xml:lang="no">Antarktis, illustrasjonskart</dct:title>
+        <dct:description xml:lang="no">Oversiktskart over Antarktis basert på trykt salgsutgave i målestokk 1:10 000 000.</dct:description>
+        <dcat:keyword xml:lang="no">fellesDatakatalog</dcat:keyword>
+        <dct:spatial parseType="Resource">
+            <locn:geometry datatype="http://www.opengis.net/ont/geosparql#gmlLiteral">
+                <![CDATA[<gml:Envelope srsName="http://www.opengis.net/def/crs/OGC/1.3/CRS84"><gml:lowerCorner>-180 -90</gml:lowerCorner><gml:upperCorner>180 -55</gml:upperCorner></gml:Envelope>]]>
+            </locn:geometry>
+        </dct:spatial>
+        <foaf:thumbnail rdf:resource="https://editor.geonorge.no/thumbnails/475ea963-622a-43ae-a018-6eae3b3dbfed_20181130142446_NPI_Antarctica.jpg" />
+        <dct:updated rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2018-11-30</dct:updated>
+        <dct:publisher rdf:resource="https://register.geonorge.no/organisasjoner/norsk-polarinstitutt/201ba4f4-bb5f-4a7c-b416-de2effee5fe1" />
+        <dcat:contactPoint rdf:resource="https://register.geonorge.no/organisasjoner/norsk-polarinstitutt/201ba4f4-bb5f-4a7c-b416-de2effee5fe1" />
+        <dct:accrualPeriodicity>unknown</dct:accrualPeriodicity>
+        <dcat:granularity />
+        <dct:license />
+        <dct:accessRights rdf:resource="http://publications.europa.eu/resource/authority/access-right/PUBLIC" />
+        <dcat:dataQuality />
+        <dcat:distribution rdf:resource="https://kartkatalog.geonorge.no/Metadata/uuid/475ea963-622a-43ae-a018-6eae3b3dbfed/JPEG" />
+    </dcat:Dataset>
+    <dcat:Distribution rdf:about="https://kartkatalog.geonorge.no/Metadata/uuid/475ea963-622a-43ae-a018-6eae3b3dbfed/JPEG">
+        <dct:title xml:lang="no">Egen nedlastningsside</dct:title>
+        <dct:description>Webside eller webløsning hvor en etat tibyr nedlastning av data direkte eller gjennom ulike grafiske brukergrensesnitt</dct:description>
+        <dct:format>JPEG</dct:format>
+        <dcat:accessURL rdf:resource="https://kartkatalog.geonorge.no/metadata/uuid/475ea963-622a-43ae-a018-6eae3b3dbfed" />
+        <dct:license />
+        <adms:status />
+    </dcat:Distribution>
+    <dcat:Dataset rdf:about="https://kartkatalog.geonorge.no/Metadata/uuid/93d4fe8d-5db5-46b8-bfa1-2d1f6ca3972b">
+        <dct:identifier>93d4fe8d-5db5-46b8-bfa1-2d1f6ca3972b</dct:identifier>
+        <dct:title xml:lang="no">Dronning Maud Land, illustrasjonskart</dct:title>
+        <dct:description xml:lang="no">Oversiktskart over det norske bilandet i Antarktis, Dronning Maud Land, basert på trykt salgsutgave i målestokk 1:2 500 000.</dct:description>
+        <dcat:keyword xml:lang="no">fellesDatakatalog</dcat:keyword>
+        <dct:spatial parseType="Resource">
+            <locn:geometry datatype="http://www.opengis.net/ont/geosparql#gmlLiteral">
+                <![CDATA[<gml:Envelope srsName="http://www.opengis.net/def/crs/OGC/1.3/CRS84"><gml:lowerCorner>-20 -90</gml:lowerCorner><gml:upperCorner>45 -65</gml:upperCorner></gml:Envelope>]]>
+            </locn:geometry>
+        </dct:spatial>
+        <foaf:thumbnail rdf:resource="https://editor.geonorge.no/thumbnails/93d4fe8d-5db5-46b8-bfa1-2d1f6ca3972b_20181130143314_NPI_DronningMaudLand.jpg" />
+        <dct:updated rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2018-11-30</dct:updated>
+        <dct:publisher rdf:resource="https://register.geonorge.no/organisasjoner/norsk-polarinstitutt/201ba4f4-bb5f-4a7c-b416-de2effee5fe1" />
+        <dcat:contactPoint rdf:resource="https://register.geonorge.no/organisasjoner/norsk-polarinstitutt/201ba4f4-bb5f-4a7c-b416-de2effee5fe1" />
+        <dct:accrualPeriodicity>unknown</dct:accrualPeriodicity>
+        <dcat:granularity />
+        <dct:license />
+        <dct:accessRights rdf:resource="http://publications.europa.eu/resource/authority/access-right/PUBLIC" />
+        <dcat:dataQuality />
+        <dcat:distribution rdf:resource="https://kartkatalog.geonorge.no/Metadata/uuid/93d4fe8d-5db5-46b8-bfa1-2d1f6ca3972b/PDF" />
+    </dcat:Dataset>
+    <dcat:Distribution rdf:about="https://kartkatalog.geonorge.no/Metadata/uuid/93d4fe8d-5db5-46b8-bfa1-2d1f6ca3972b/PDF">
+        <dct:title xml:lang="no">Egen nedlastningsside</dct:title>
+        <dct:description>Webside eller webløsning hvor en etat tibyr nedlastning av data direkte eller gjennom ulike grafiske brukergrensesnitt</dct:description>
+        <dct:format>PDF</dct:format>
+        <dcat:accessURL rdf:resource="https://kartkatalog.geonorge.no/metadata/uuid/93d4fe8d-5db5-46b8-bfa1-2d1f6ca3972b" />
+        <dct:license />
+        <adms:status />
+    </dcat:Distribution>
+    <dcat:Dataset rdf:about="https://kartkatalog.geonorge.no/Metadata/uuid/a9d0770d-8cd9-47af-bfd5-55014655e298">
+        <dct:identifier>a9d0770d-8cd9-47af-bfd5-55014655e298</dct:identifier>
+        <dct:title xml:lang="no">Fimbulheimen, illustrasjonskart</dct:title>
+        <dct:description xml:lang="no">Satellittbildekart i målestokk 1:250 000 over Fimbulheimen, sentralt i det norske bilandet Dronning Maud Land i Antarktis.</dct:description>
+        <dcat:keyword xml:lang="no">fellesDatakatalog</dcat:keyword>
+        <dct:spatial parseType="Resource">
+            <locn:geometry datatype="http://www.opengis.net/ont/geosparql#gmlLiteral">
+                <![CDATA[<gml:Envelope srsName="http://www.opengis.net/def/crs/OGC/1.3/CRS84"><gml:lowerCorner>-4 -73</gml:lowerCorner><gml:upperCorner>15 -70</gml:upperCorner></gml:Envelope>]]>
+            </locn:geometry>
+        </dct:spatial>
+        <foaf:thumbnail rdf:resource="https://editor.geonorge.no/thumbnails/a9d0770d-8cd9-47af-bfd5-55014655e298_20181130144652_NPI_Fimbulheimen.jpg" />
+        <dct:updated rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2018-11-30</dct:updated>
+        <dct:publisher rdf:resource="https://register.geonorge.no/organisasjoner/norsk-polarinstitutt/201ba4f4-bb5f-4a7c-b416-de2effee5fe1" />
+        <dcat:contactPoint rdf:resource="https://register.geonorge.no/organisasjoner/norsk-polarinstitutt/201ba4f4-bb5f-4a7c-b416-de2effee5fe1" />
+        <dct:accrualPeriodicity>unknown</dct:accrualPeriodicity>
+        <dcat:granularity />
+        <dct:license />
+        <dct:accessRights rdf:resource="http://publications.europa.eu/resource/authority/access-right/PUBLIC" />
+        <dcat:dataQuality />
+        <dcat:distribution rdf:resource="https://kartkatalog.geonorge.no/Metadata/uuid/a9d0770d-8cd9-47af-bfd5-55014655e298/TIFF" />
+        <dcat:distribution rdf:resource="https://kartkatalog.geonorge.no/Metadata/uuid/a9d0770d-8cd9-47af-bfd5-55014655e298/PDF" />
+    </dcat:Dataset>
+    <dcat:Distribution rdf:about="https://kartkatalog.geonorge.no/Metadata/uuid/a9d0770d-8cd9-47af-bfd5-55014655e298/TIFF">
+        <dct:title xml:lang="no">Egen nedlastningsside</dct:title>
+        <dct:description>Webside eller webløsning hvor en etat tibyr nedlastning av data direkte eller gjennom ulike grafiske brukergrensesnitt</dct:description>
+        <dct:format>TIFF</dct:format>
+        <dcat:accessURL rdf:resource="https://kartkatalog.geonorge.no/metadata/uuid/a9d0770d-8cd9-47af-bfd5-55014655e298" />
+        <dct:license />
+        <adms:status />
+    </dcat:Distribution>
+    <dcat:Distribution rdf:about="https://kartkatalog.geonorge.no/Metadata/uuid/a9d0770d-8cd9-47af-bfd5-55014655e298/PDF">
+        <dct:title xml:lang="no">Egen nedlastningsside</dct:title>
+        <dct:description>Webside eller webløsning hvor en etat tibyr nedlastning av data direkte eller gjennom ulike grafiske brukergrensesnitt</dct:description>
+        <dct:format>PDF</dct:format>
+        <dcat:accessURL rdf:resource="https://kartkatalog.geonorge.no/metadata/uuid/a9d0770d-8cd9-47af-bfd5-55014655e298" />
+        <dct:license />
+        <adms:status />
+    </dcat:Distribution>
+    <dcat:Dataset rdf:about="https://kartkatalog.geonorge.no/Metadata/uuid/e64cbfc7-4ddf-4cad-a812-3e70e373f789">
+        <dct:identifier>e64cbfc7-4ddf-4cad-a812-3e70e373f789</dct:identifier>
+        <dct:title xml:lang="no">Husmannsplasser - Vang historielag</dct:title>
+        <dct:description xml:lang="no">Husmannsplasser for Hamar kommune. De fleste husmannsplasser er i dag revet, og finnes bare som ruin eller tradisjon. Dette datasettet vil bli oppdatert i tiden fremover.</dct:description>
+        <dcat:keyword xml:lang="no">fellesDatakatalog</dcat:keyword>
+        <dct:spatial parseType="Resource">
+            <locn:geometry datatype="http://www.opengis.net/ont/geosparql#gmlLiteral">
+                <![CDATA[<gml:Envelope srsName="http://www.opengis.net/def/crs/OGC/1.3/CRS84"><gml:lowerCorner>10,98098 60,768984</gml:lowerCorner><gml:upperCorner>11,279686 61,236045</gml:upperCorner></gml:Envelope>]]>
+            </locn:geometry>
+        </dct:spatial>
+        <foaf:thumbnail rdf:resource="https://editor.geonorge.no/thumbnails/e64cbfc7-4ddf-4cad-a812-3e70e373f789_20190109134354_NIKU.png" />
+        <dct:updated rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2019-01-09</dct:updated>
+        <dct:publisher rdf:resource="https://register.geonorge.no/organisasjoner/norsk-institutt-for-kulturminneforskning/2000dcdc-023c-4c93-9e00-e363beb4ad9b" />
+        <dcat:contactPoint rdf:resource="https://register.geonorge.no/organisasjoner/norsk-institutt-for-kulturminneforskning/2000dcdc-023c-4c93-9e00-e363beb4ad9b" />
+        <dct:accrualPeriodicity>asNeeded</dct:accrualPeriodicity>
+        <dcat:granularity />
+        <dct:license />
+        <dct:accessRights rdf:resource="http://publications.europa.eu/resource/authority/access-right/PUBLIC" />
+        <dcat:dataQuality />
+        <dcat:distribution rdf:resource="https://kartkatalog.geonorge.no/Metadata/uuid/e64cbfc7-4ddf-4cad-a812-3e70e373f789/GeoJSON" />
+    </dcat:Dataset>
+    <dcat:Distribution rdf:about="https://kartkatalog.geonorge.no/Metadata/uuid/e64cbfc7-4ddf-4cad-a812-3e70e373f789/GeoJSON">
+        <dct:title xml:lang="no">Geonorge filnedlastning</dct:title>
+        <dct:description>Nedlastning gjennom Geonorge-portalen med sti til direkte til nedlastbar fil på nedlastningsserver</dct:description>
+        <dct:format>GeoJSON</dct:format>
+        <dcat:accessURL rdf:resource="https://kartkatalog.geonorge.no/metadata/uuid/e64cbfc7-4ddf-4cad-a812-3e70e373f789" />
+        <dct:license />
+        <adms:status />
+    </dcat:Distribution>
+    <dcat:Dataset rdf:about="https://kartkatalog.geonorge.no/Metadata/uuid/eea87664-d936-478e-897a-c38ca7c478a0">
+        <dct:identifier>eea87664-d936-478e-897a-c38ca7c478a0</dct:identifier>
+        <dct:title xml:lang="no">Kirkebygg -enkel</dct:title>
+        <dct:description xml:lang="no">Kirkebygg -enkel er et datasett basert på Kirkebyggdatabasen, det inneholder Kirkebygg i Norge med et utvalg egenskaper. Pr. 15.08.2018 er innholdet 2294 kirkebygg.
+            Kirkebyggdatabasen eies, drives og utvikles av Kirkelig arbeidsgiver- og interesseorganisasjon (KA) på oppdrag fra Kultur- og kirkedepartementet, som også finansierer utvikling og drift av databasen.</dct:description>
+        <dcat:keyword xml:lang="no">fellesDatakatalog</dcat:keyword>
+        <dct:spatial parseType="Resource">
+            <locn:geometry datatype="http://www.opengis.net/ont/geosparql#gmlLiteral">
+                <![CDATA[<gml:Envelope srsName="http://www.opengis.net/def/crs/OGC/1.3/CRS84"><gml:lowerCorner>2 57</gml:lowerCorner><gml:upperCorner>33 72</gml:upperCorner></gml:Envelope>]]>
+            </locn:geometry>
+        </dct:spatial>
+        <foaf:thumbnail rdf:resource="https://editor.geonorge.no/thumbnails/eea87664-d936-478e-897a-c38ca7c478a0_20180911115954_Bønsnes_krk.JPG" />
+        <dct:updated rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2018-08-08</dct:updated>
+        <dct:publisher rdf:resource="https://register.geonorge.no/organisasjoner/kulturdepartementet/ef8d7fb5-4767-4bc1-b994-63cad63a43f6" />
+        <dcat:contactPoint rdf:resource="https://register.geonorge.no/organisasjoner/kulturdepartementet/ef8d7fb5-4767-4bc1-b994-63cad63a43f6" />
+        <dct:accrualPeriodicity>fortnightly</dct:accrualPeriodicity>
+        <dcat:granularity />
+        <dct:license />
+        <dct:accessRights rdf:resource="http://publications.europa.eu/resource/authority/access-right/PUBLIC" />
+        <dcat:dataQuality />
+        <dcat:distribution rdf:resource="https://kartkatalog.geonorge.no/Metadata/uuid/eea87664-d936-478e-897a-c38ca7c478a0/GML" />
+        <dcat:distribution rdf:resource="https://kartkatalog.geonorge.no/Metadata/uuid/eea87664-d936-478e-897a-c38ca7c478a0/SOSI" />
+    </dcat:Dataset>
+    <dcat:Distribution rdf:about="https://kartkatalog.geonorge.no/Metadata/uuid/eea87664-d936-478e-897a-c38ca7c478a0/GML">
+        <dct:title xml:lang="no">Geonorge nedlastning</dct:title>
+        <dct:description>Nedlastning gjennom Geonorge-portalen ved bruk av handlevognsfunksjonalitet</dct:description>
+        <dct:format>GML</dct:format>
+        <dcat:accessURL rdf:resource="https://kartkatalog.geonorge.no/metadata/uuid/eea87664-d936-478e-897a-c38ca7c478a0" />
+        <dct:license />
+        <adms:status />
+    </dcat:Distribution>
+    <dcat:Distribution rdf:about="https://kartkatalog.geonorge.no/Metadata/uuid/eea87664-d936-478e-897a-c38ca7c478a0/SOSI">
+        <dct:title xml:lang="no">Geonorge nedlastning</dct:title>
+        <dct:description>Nedlastning gjennom Geonorge-portalen ved bruk av handlevognsfunksjonalitet</dct:description>
+        <dct:format>SOSI</dct:format>
+        <dcat:accessURL rdf:resource="https://kartkatalog.geonorge.no/metadata/uuid/eea87664-d936-478e-897a-c38ca7c478a0" />
+        <dct:license />
+        <adms:status />
+    </dcat:Distribution>
+    <dcat:Dataset rdf:about="https://kartkatalog.geonorge.no/Metadata/uuid/9042ecf7-157b-4925-801f-28db34bdd028">
+        <dct:identifier>9042ecf7-157b-4925-801f-28db34bdd028</dct:identifier>
+        <dct:title xml:lang="no">Militære forbudsområder innen Sjøforsvaret</dct:title>
+        <dct:description xml:lang="no">Datasettet inneholder geografisk avgrensning av militære forbudsområder i sjø, og er regulert gjennom Forskrift om militære forbudsområder innen Sjøforsvaret.</dct:description>
+        <dcat:keyword xml:lang="no">fellesDatakatalog</dcat:keyword>
+        <dct:spatial parseType="Resource">
+            <locn:geometry datatype="http://www.opengis.net/ont/geosparql#gmlLiteral">
+                <![CDATA[<gml:Envelope srsName="http://www.opengis.net/def/crs/OGC/1.3/CRS84"><gml:lowerCorner>2 57</gml:lowerCorner><gml:upperCorner>33 72</gml:upperCorner></gml:Envelope>]]>
+            </locn:geometry>
+        </dct:spatial>
+        <foaf:thumbnail rdf:resource="https://editor.geonorge.no/thumbnails/9042ecf7-157b-4925-801f-28db34bdd028_20180528115500_forbudsområder_skjermbilde.JPG" />
+        <dct:updated rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2018-05-28</dct:updated>
+        <dct:publisher rdf:resource="https://register.geonorge.no/organisasjoner/forsvaret/a735a0eb-dcd1-4068-8939-5af8c62b7bde" />
+        <dcat:contactPoint rdf:resource="https://register.geonorge.no/organisasjoner/forsvaret/a735a0eb-dcd1-4068-8939-5af8c62b7bde" />
+        <dct:accrualPeriodicity>asNeeded</dct:accrualPeriodicity>
+        <dcat:granularity />
+        <dct:license />
+        <dct:accessRights rdf:resource="http://publications.europa.eu/resource/authority/access-right/PUBLIC" />
+        <dcat:dataQuality />
+        <dcat:distribution rdf:resource="https://kartkatalog.geonorge.no/Metadata/uuid/9042ecf7-157b-4925-801f-28db34bdd028/ESRI+Filgeodatabase" />
+    </dcat:Dataset>
+    <dcat:Distribution rdf:about="https://kartkatalog.geonorge.no/Metadata/uuid/9042ecf7-157b-4925-801f-28db34bdd028/ESRI+Filgeodatabase">
+        <dct:title xml:lang="no">Ingen online tilgang</dct:title>
+        <dct:description>Datasettet er ikke tilgjengelig for direkte nedlastning</dct:description>
+        <dct:format>ESRI Filgeodatabase</dct:format>
+        <dcat:accessURL rdf:resource="https://kartkatalog.geonorge.no/metadata/uuid/9042ecf7-157b-4925-801f-28db34bdd028" />
+        <dct:license />
+        <adms:status />
+    </dcat:Distribution>
+    <dcat:Dataset rdf:about="https://kartkatalog.geonorge.no/Metadata/uuid/b7f89a26-75af-4ab8-9c78-8b232cfb4e5c">
+        <dct:identifier>b7f89a26-75af-4ab8-9c78-8b232cfb4e5c</dct:identifier>
+        <dct:title xml:lang="no">Sjøforsvarets skytefelt</dct:title>
+        <dct:description xml:lang="no">UNDER ARBEID
+
+            Sjøforsvarets skytefelt iht. siste versjon av dokumentet SDP 103.
+            Datasettet er ikke tilgjengelig i Geonorge ennå.</dct:description>
+        <dcat:keyword xml:lang="no">fellesDatakatalog</dcat:keyword>
+        <dct:spatial parseType="Resource">
+            <locn:geometry datatype="http://www.opengis.net/ont/geosparql#gmlLiteral">
+                <![CDATA[<gml:Envelope srsName="http://www.opengis.net/def/crs/OGC/1.3/CRS84"><gml:lowerCorner>2 57</gml:lowerCorner><gml:upperCorner>33 72</gml:upperCorner></gml:Envelope>]]>
+            </locn:geometry>
+        </dct:spatial>
+        <foaf:thumbnail rdf:resource="https://editor.geonorge.no/thumbnails/b7f89a26-75af-4ab8-9c78-8b232cfb4e5c_20180528132904_SØF%20sjø%20skjermbilde.JPG" />
+        <dct:updated rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2018-05-28</dct:updated>
+        <dct:publisher rdf:resource="https://register.geonorge.no/organisasjoner/forsvarsbygg/ea12b27b-acc6-414e-b5ea-fe7477c52ac7" />
+        <dcat:contactPoint rdf:resource="https://register.geonorge.no/organisasjoner/forsvarsbygg/ea12b27b-acc6-414e-b5ea-fe7477c52ac7" />
+        <dct:accrualPeriodicity>asNeeded</dct:accrualPeriodicity>
+        <dcat:granularity />
+        <dct:license />
+        <dct:accessRights rdf:resource="http://publications.europa.eu/resource/authority/access-right/RESTRICTED" />
+        <dcat:dataQuality />
+        <dcat:distribution rdf:resource="https://kartkatalog.geonorge.no/Metadata/uuid/b7f89a26-75af-4ab8-9c78-8b232cfb4e5c/ESRI+Filgeodatabase" />
+    </dcat:Dataset>
+    <dcat:Distribution rdf:about="https://kartkatalog.geonorge.no/Metadata/uuid/b7f89a26-75af-4ab8-9c78-8b232cfb4e5c/ESRI+Filgeodatabase">
+        <dct:title xml:lang="no">Ingen online tilgang</dct:title>
+        <dct:description>Datasettet er ikke tilgjengelig for direkte nedlastning</dct:description>
+        <dct:format>ESRI Filgeodatabase</dct:format>
+        <dcat:accessURL rdf:resource="https://kartkatalog.geonorge.no/metadata/uuid/b7f89a26-75af-4ab8-9c78-8b232cfb4e5c" />
+        <dct:license />
+        <adms:status />
+    </dcat:Distribution>
+    <dcat:Dataset rdf:about="https://kartkatalog.geonorge.no/Metadata/uuid/51d279f8-e2be-4f5e-9f72-1a53f7535ec1">
+        <dct:identifier>51d279f8-e2be-4f5e-9f72-1a53f7535ec1</dct:identifier>
+        <dct:title xml:lang="no">Statistiske enheter grunnkretser 2019</dct:title>
+        <dct:description xml:lang="no">Datasettet viser grunnkretsinndelingen i Norge. Grunnkretser er stabile statistiske enheter som ble opprettet i samarbeid mellom kommunen og Statistisk sentralbyrå (SSB).</dct:description>
+        <dcat:keyword xml:lang="no">fellesDatakatalog</dcat:keyword>
+        <dct:spatial parseType="Resource">
+            <locn:geometry datatype="http://www.opengis.net/ont/geosparql#gmlLiteral">
+                <![CDATA[<gml:Envelope srsName="http://www.opengis.net/def/crs/OGC/1.3/CRS84"><gml:lowerCorner>2 57</gml:lowerCorner><gml:upperCorner>33 72</gml:upperCorner></gml:Envelope>]]>
+            </locn:geometry>
+        </dct:spatial>
+        <dct:updated rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2019-01-01</dct:updated>
+        <dct:publisher rdf:resource="https://register.geonorge.no/organisasjoner/kartverket/10087020-f17c-45e1-8542-02acbcf3d8a3" />
+        <dcat:contactPoint rdf:resource="https://register.geonorge.no/organisasjoner/10087020-f17c-45e1-8542-02acbcf3d8a3" />
+        <dct:accrualPeriodicity>annually</dct:accrualPeriodicity>
+        <dcat:granularity />
+        <dct:license />
+        <dct:accessRights rdf:resource="http://publications.europa.eu/resource/authority/access-right/PUBLIC" />
+        <dcat:dataQuality />
+        <dcat:distribution rdf:resource="https://kartkatalog.geonorge.no/Metadata/uuid/51d279f8-e2be-4f5e-9f72-1a53f7535ec1/FGDB" />
+        <dcat:distribution rdf:resource="https://kartkatalog.geonorge.no/Metadata/uuid/51d279f8-e2be-4f5e-9f72-1a53f7535ec1/GEOJSON" />
+        <dcat:distribution rdf:resource="https://kartkatalog.geonorge.no/Metadata/uuid/51d279f8-e2be-4f5e-9f72-1a53f7535ec1/GML" />
+        <dcat:distribution rdf:resource="https://kartkatalog.geonorge.no/Metadata/uuid/51d279f8-e2be-4f5e-9f72-1a53f7535ec1/PostGIS" />
+        <dcat:distribution rdf:resource="https://kartkatalog.geonorge.no/Metadata/uuid/51d279f8-e2be-4f5e-9f72-1a53f7535ec1/SOSI" />
+    </dcat:Dataset>
+    <dcat:Distribution rdf:about="https://kartkatalog.geonorge.no/Metadata/uuid/51d279f8-e2be-4f5e-9f72-1a53f7535ec1/FGDB">
+        <dct:title xml:lang="no">Geonorge nedlastning</dct:title>
+        <dct:description>Nedlastning gjennom Geonorge-portalen ved bruk av handlevognsfunksjonalitet</dct:description>
+        <dct:format>FGDB</dct:format>
+        <dcat:accessURL rdf:resource="https://kartkatalog.geonorge.no/metadata/uuid/51d279f8-e2be-4f5e-9f72-1a53f7535ec1" />
+        <dct:license />
+        <adms:status />
+    </dcat:Distribution>
+    <dcat:Distribution rdf:about="https://kartkatalog.geonorge.no/Metadata/uuid/51d279f8-e2be-4f5e-9f72-1a53f7535ec1/GEOJSON">
+        <dct:title xml:lang="no">Geonorge nedlastning</dct:title>
+        <dct:description>Nedlastning gjennom Geonorge-portalen ved bruk av handlevognsfunksjonalitet</dct:description>
+        <dct:format>GEOJSON</dct:format>
+        <dcat:accessURL rdf:resource="https://kartkatalog.geonorge.no/metadata/uuid/51d279f8-e2be-4f5e-9f72-1a53f7535ec1" />
+        <dct:license />
+        <adms:status />
+    </dcat:Distribution>
+    <dcat:Distribution rdf:about="https://kartkatalog.geonorge.no/Metadata/uuid/51d279f8-e2be-4f5e-9f72-1a53f7535ec1/GML">
+        <dct:title xml:lang="no">Geonorge nedlastning</dct:title>
+        <dct:description>Nedlastning gjennom Geonorge-portalen ved bruk av handlevognsfunksjonalitet</dct:description>
+        <dct:format>GML</dct:format>
+        <dcat:accessURL rdf:resource="https://kartkatalog.geonorge.no/metadata/uuid/51d279f8-e2be-4f5e-9f72-1a53f7535ec1" />
+        <dct:license />
+        <adms:status />
+    </dcat:Distribution>
+    <dcat:Distribution rdf:about="https://kartkatalog.geonorge.no/Metadata/uuid/51d279f8-e2be-4f5e-9f72-1a53f7535ec1/PostGIS">
+        <dct:title xml:lang="no">Geonorge nedlastning</dct:title>
+        <dct:description>Nedlastning gjennom Geonorge-portalen ved bruk av handlevognsfunksjonalitet</dct:description>
+        <dct:format>PostGIS</dct:format>
+        <dcat:accessURL rdf:resource="https://kartkatalog.geonorge.no/metadata/uuid/51d279f8-e2be-4f5e-9f72-1a53f7535ec1" />
+        <dct:license />
+        <adms:status />
+    </dcat:Distribution>
+    <dcat:Distribution rdf:about="https://kartkatalog.geonorge.no/Metadata/uuid/51d279f8-e2be-4f5e-9f72-1a53f7535ec1/SOSI">
+        <dct:title xml:lang="no">Geonorge nedlastning</dct:title>
+        <dct:description>Nedlastning gjennom Geonorge-portalen ved bruk av handlevognsfunksjonalitet</dct:description>
+        <dct:format>SOSI</dct:format>
+        <dcat:accessURL rdf:resource="https://kartkatalog.geonorge.no/metadata/uuid/51d279f8-e2be-4f5e-9f72-1a53f7535ec1" />
+        <dct:license />
+        <adms:status />
+    </dcat:Distribution>
+
+</rdf:RDF>
