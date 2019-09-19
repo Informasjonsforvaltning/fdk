@@ -14,7 +14,7 @@ exports[`should render DatasetsReportPage correctly 1`] = `
         onChange={[Function]}
         value={null}
       />
-      <PublishersTree
+      <PublishersResolver
         onChange={[Function]}
         value={null}
       />

@@ -39,5 +39,5 @@ PublishersSelect.defaultProps = {
 PublishersSelect.propTypes = {
   publishers: PropTypes.object.isRequired,
   onChange: PropTypes.func,
-  value: PropTypes.string
+  value: PropTypes.object
 };

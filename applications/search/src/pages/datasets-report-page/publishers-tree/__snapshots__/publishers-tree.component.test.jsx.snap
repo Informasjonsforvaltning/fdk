@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`should render PublishersTree correctly with props 1`] = `
+exports[`should render PublishersTreePure correctly with props 1`] = `
 <div>
   <div
     className="section fdk-report-tree-panel"

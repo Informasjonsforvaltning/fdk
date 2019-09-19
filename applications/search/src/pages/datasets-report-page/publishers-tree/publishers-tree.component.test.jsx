@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { PublishersTree } from './publishers-tree.component';
-import publisherHierarchy from '../../../../test/fixtures/publisherHierarchy';
+import { PublishersTreePure } from './publishers-tree.component';
+import publishers from '../../../../test/fixtures/publisherHierarchy';
 
 let onSearch;
 let defaultProps;
@@ -12,14 +12,12 @@ beforeEach(() => {
 
   defaultProps = {
     onSearch,
-    orgPath: '/STAT/872417842/960885406'
+    orgPath: '/STAT/872417842/960885406',
+    publishers
   };
-  wrapper = shallow(<PublishersTree {...defaultProps} />);
-  wrapper.setState({
-    source: publisherHierarchy
-  });
+  wrapper = shallow(<PublishersTreePure {...defaultProps} />);
 });
 
-test('should render PublishersTree correctly with props', () => {
+test('should render PublishersTreePure correctly with props', () => {
   expect(wrapper).toMatchSnapshot();
 });
