@@ -187,7 +187,6 @@ public abstract class AbstractBuilder {
         return null;
     }
 
-
     public static List<SkosConcept> extractSkosConcept(Resource resource, Property property) {
         List<SkosConcept> result = new ArrayList<>();
         StmtIterator iterator = resource.listProperties(property);
@@ -225,6 +224,10 @@ public abstract class AbstractBuilder {
                     SkosConcept concept = SkosConcept.getInstance(source, prefLabel);
                     concept.setExtraType(type);
                     result.add(concept);
+                } else {
+                    //New case, we find a skosConcept, but it only contains the licence as an URI
+                    String theActualLicenceURI = skosConcept.getURI();
+                    result.add(SkosConcept.getInstance(theActualLicenceURI));
                 }
             } else {
                 if (statement.getObject().toString() != null && !statement.getObject().toString().isEmpty()) {

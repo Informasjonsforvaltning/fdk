@@ -36,7 +36,7 @@ public class CrawlerValidationIT {
     SubjectCrawler subjectCrawler;
 
     public DcatReader setupReader(Model model) {
-        return new DcatReader(model, "http://localhost:8100", "user", "password");
+        return new DcatReader(model, "http://localhost:8112", "user", "password");
     }
 
 
@@ -94,4 +94,25 @@ public class CrawlerValidationIT {
 
     }
 
+    @Test
+    public void readDataNorgeWithOpenLicences() throws Throwable {
+        Resource r = new ClassPathResource("datasets/datanorge.xml");
+        DcatSource dcatSource = new DcatSource();
+        dcatSource.setUrl("http://testurl");
+        CrawlerJob crawlerJob = new CrawlerJob(dcatSource, null, subjectCrawler);
+        Model model = crawlerJob.loadModelAndValidate(r.getURL());
+
+        DcatReader reader = setupReader(model);
+        List<Dataset> datasets = reader.getDatasets();
+
+        Dataset found = datasets.stream().filter(dataset ->
+            dataset.getUri().startsWith("https://kartkatalog.geonorge.no/Metadata/uuid/e4f40b02-7a32-4163-87af-d4121de48e6d"))
+            .findFirst().get();
+
+        assertThat("the distribution is open", found.getDistribution().get(0).getOpenLicense(), is(true));
+        assertThat("Licence has been extracted", found.getDistribution().get(0).getLicense().getUri(), is (notNullValue()));
+
+        assertThat("the dataset is found in modeldata", found, is(notNullValue()));
+        assertThat("the number of datasets in model", datasets.size(), is(10));
+    }
 }
