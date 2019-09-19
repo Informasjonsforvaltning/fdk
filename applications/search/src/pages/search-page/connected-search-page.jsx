@@ -54,7 +54,7 @@ const mapStateToProps = ({
   };
 
   const { items } = conceptsCompare || {
-    items: null
+    items: {}
   };
 
   return {

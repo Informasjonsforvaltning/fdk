@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import _ from 'lodash';
+import noop from 'lodash/noop';
 import { Link } from 'react-router-dom';
 
 import localization from '../../../../lib/localization';
@@ -152,7 +153,6 @@ export const ConceptsHitItem = props => {
     fadeInCounter,
     result
   } = props;
-
   let showCompareButton = true;
   if (concepts) {
     showCompareButton = !_.some(
@@ -200,14 +200,17 @@ export const ConceptsHitItem = props => {
 };
 
 ConceptsHitItem.defaultProps = {
-  concepts: null,
-  fadeInCounter: 0
+  concepts: {},
+  fadeInCounter: 0,
+  onAddConcept: noop,
+  onDeleteConcept: noop
+
 };
 
 ConceptsHitItem.propTypes = {
   result: PropTypes.shape({}).isRequired,
   concepts: PropTypes.object,
-  onAddConcept: PropTypes.func.isRequired,
-  onDeleteConcept: PropTypes.func.isRequired,
+  onAddConcept: PropTypes.func,
+  onDeleteConcept: PropTypes.func,
   fadeInCounter: PropTypes.number
 };
