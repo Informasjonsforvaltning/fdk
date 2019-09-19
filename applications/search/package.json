@@ -8,7 +8,8 @@
     "dev": "webpack-dev-server --hot --inline --config webpack.hostdev.config.js",
     "build": "webpack --config webpack.prod.config.js -p",
     "server": "export NODE_ENV=production && node start.js",
-    "test": "jest --coverage",
+    "test": "jest ",
+    "test:coverage": "jest --coverage",
     "tdd": "jest --watch",
     "lint": "eslint ./ --ext=.js,.jsx --fix"
   },
