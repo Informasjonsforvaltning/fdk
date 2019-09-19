@@ -55,7 +55,6 @@ public class CatalogController {
      * @param acceptHeader accepted format
      * @return Formatted response based on acceptHeader {@link SupportedFormat}
      */
-    @CrossOrigin
     @RequestMapping(value = "/catalogs", params = {"id", "format"},
         method = GET,
         consumes = MediaType.ALL_VALUE,
@@ -74,7 +73,6 @@ public class CatalogController {
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @CrossOrigin
     @RequestMapping(value = "/catalogs", method = GET, produces = "application/json")
     public List<Catalog> allCatalogs() {
         String queryString;
@@ -126,7 +124,6 @@ public class CatalogController {
      *
      * @return html list of catalogs
      */
-    @CrossOrigin
     @RequestMapping(value = "/catalogs",
         method = GET,
         produces = "text/html")
@@ -195,7 +192,6 @@ public class CatalogController {
      * @param acceptHeader accepted format
      * @return Formatted response based on acceptHeader {@link SupportedFormat}
      */
-    @CrossOrigin
     @RequestMapping(value = "/catalogs/datasets",
         method = GET,
         consumes = MediaType.ALL_VALUE,

@@ -59,7 +59,6 @@ public class DatasetsSearchController {
      *
      * @return List of  elasticsearch records.
      */
-    @CrossOrigin
     @RequestMapping(value = "/datasets", method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity<String> search(
         @RequestParam Map<String, String> params,
@@ -147,7 +146,6 @@ public class DatasetsSearchController {
         return new ResponseEntity<>(response.toString(), HttpStatus.OK);
     }
 
-    @CrossOrigin
     @RequestMapping(value = "/datasets/search", method = RequestMethod.POST, produces = "application/json")
     public ResponseEntity<String> searchPostHandler(
         @RequestParam Map<String, String> params,

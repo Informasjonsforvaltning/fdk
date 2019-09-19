@@ -45,7 +45,6 @@ public class DatasetsQueryController {
      *
      * @return the record (JSON) of the retrieved dataset.
      */
-    @CrossOrigin
     @RequestMapping(
         value = QUERY_GET_BY_ID,
         method = RequestMethod.GET,
@@ -66,7 +65,6 @@ public class DatasetsQueryController {
         return transformResponse(dataset, contentType);
     }
 
-    @CrossOrigin
     @RequestMapping(
         value = QUERY_GET_BY_URI,
         method = RequestMethod.GET,

@@ -50,7 +50,6 @@ public class PublisherQueryController {
      *
      * @return The complete elasticsearch response on Json-format is returned..
      */
-    @CrossOrigin
     @RequestMapping(value = QUERY_PUBLISHER, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> publishers(
         @RequestParam(value = "q", defaultValue = "", required = false) String query) {
@@ -81,7 +80,6 @@ public class PublisherQueryController {
      *
      * @return the record (JSON) of the retrieved publisher.
      */
-    @CrossOrigin
     @RequestMapping(
         value = QUERY_GET_BY_ORGNR,
         method = RequestMethod.GET,
@@ -112,7 +110,6 @@ public class PublisherQueryController {
      *
      * @return orgPath and name of all publisher with children in a tree as Json-format is returned..
      */
-    @CrossOrigin
     @RequestMapping(value = QUERY_PUBLISHER_HIERARCHY, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Hits> publisherNames() {
         /**
