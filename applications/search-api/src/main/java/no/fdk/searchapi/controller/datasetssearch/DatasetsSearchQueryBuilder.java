@@ -224,5 +224,11 @@ public class DatasetsSearchQueryBuilder {
         static QueryBuilder distributionType(String value, DatasetsSearchQueryBuilder queryBuilder) {
             return QueryBuilders.termQuery("distribution.type.keyword", value);
         }
+
+        static QueryBuilder distributionAccessServiceEndpointDescriptionUri(String value, DatasetsSearchQueryBuilder queryBuilder) {
+            //todo when both apis and datasets are migrated to dcat 2.0 standard, can we have more logical way how to refer api registration from dataset registration.
+            return QueryBuilders.termQuery("distribution.accessService.endpointDescription.uri.keyword", value);
+        }
+
     }
 }
