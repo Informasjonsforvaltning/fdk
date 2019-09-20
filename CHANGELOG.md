@@ -1,6 +1,40 @@
-# Change Log
+# Changelog
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+## [1.9.0](https://github.com/Informasjonsforvaltning/fdk/compare/v1.8.0...v1.9.0) (2019-09-20)
+
+
+### Bug Fixes
+
+* **concept-cat:** [#2128](https://github.com/Informasjonsforvaltning/fdk/issues/2128) harvest URI without removing protocol ([9fb6aa6](https://github.com/Informasjonsforvaltning/fdk/commit/9fb6aa6))
+* **e2e:** [#2299](https://github.com/Informasjonsforvaltning/fdk/issues/2299) Break build on audit error ([aa62b58](https://github.com/Informasjonsforvaltning/fdk/commit/aa62b58))
+* **reference-data:** Added versioned title of open licence NLOD ([8d6e179](https://github.com/Informasjonsforvaltning/fdk/commit/8d6e179))
+* **regisistration-react:** [#2299](https://github.com/Informasjonsforvaltning/fdk/issues/2299) Break build on audit error ([7ec1d3b](https://github.com/Informasjonsforvaltning/fdk/commit/7ec1d3b))
+* **registration-react:** [#2265](https://github.com/Informasjonsforvaltning/fdk/issues/2265) show correct languages when creating or returning to previously saved concept ([e398e55](https://github.com/Informasjonsforvaltning/fdk/commit/e398e55))
+* **registration-react:** [#2269](https://github.com/Informasjonsforvaltning/fdk/issues/2269) recreate saved data on refresh ([354fc42](https://github.com/Informasjonsforvaltning/fdk/commit/354fc42))
+* **registration-react:** [#2281](https://github.com/Informasjonsforvaltning/fdk/issues/2281) replace check mark with icon ([bfbbf24](https://github.com/Informasjonsforvaltning/fdk/commit/bfbbf24))
+* **search:** [#1643](https://github.com/Informasjonsforvaltning/fdk/issues/1643) Concatenate list of datasets that refer to the api into the related datasets list in api details page ([368306d](https://github.com/Informasjonsforvaltning/fdk/commit/368306d))
+* **search:** [#2128](https://github.com/Informasjonsforvaltning/fdk/issues/2128) user-defined concepts should also be visible ([d6f556a](https://github.com/Informasjonsforvaltning/fdk/commit/d6f556a))
+* **search:** [#2268](https://github.com/Informasjonsforvaltning/fdk/issues/2268) Fix dataset lookup query by removing double encoding of url parameter ([8aa5a37](https://github.com/Informasjonsforvaltning/fdk/commit/8aa5a37))
+* **search:** [#2276](https://github.com/Informasjonsforvaltning/fdk/issues/2276) allow external links to open in new tab ([dea00f4](https://github.com/Informasjonsforvaltning/fdk/commit/dea00f4))
+* **search:** [#2299](https://github.com/Informasjonsforvaltning/fdk/issues/2299) Break build on npm dependencies audit error ([7ba2d32](https://github.com/Informasjonsforvaltning/fdk/commit/7ba2d32))
+* **search:** [#2305](https://github.com/Informasjonsforvaltning/fdk/issues/2305) fix LOS theme filtering for NAP context ([bc973f5](https://github.com/Informasjonsforvaltning/fdk/commit/bc973f5))
+* **search:** [#2358](https://github.com/Informasjonsforvaltning/fdk/issues/2358) Fix double encoding of dataset by url lookup in dataset details page ([56965d1](https://github.com/Informasjonsforvaltning/fdk/commit/56965d1))
+* **search:** Use Switch to avoid double rendering of ambiguous routes concepts/compare and concepts/:id ([381606b](https://github.com/Informasjonsforvaltning/fdk/commit/381606b))
+* **search-api:** Allow post query without csrf for search ([cb9a610](https://github.com/Informasjonsforvaltning/fdk/commit/cb9a610))
+* **search-api:** Enable cors support for all endpoints ([d20d292](https://github.com/Informasjonsforvaltning/fdk/commit/d20d292))
+
+
+### Features
+
+* **registration-react:** [#2239](https://github.com/Informasjonsforvaltning/fdk/issues/2239) add input language picker component ([0ce9d2a](https://github.com/Informasjonsforvaltning/fdk/commit/0ce9d2a))
+* **registration-react:** [#2240](https://github.com/Informasjonsforvaltning/fdk/issues/2240) implement generic multilingual field ([df3ce3d](https://github.com/Informasjonsforvaltning/fdk/commit/df3ce3d))
+* **search:** [#2128](https://github.com/Informasjonsforvaltning/fdk/issues/2128) show sources correctly on concepts search page ([3614061](https://github.com/Informasjonsforvaltning/fdk/commit/3614061))
+* **search:** [#2128](https://github.com/Informasjonsforvaltning/fdk/issues/2128) show sources properly ([21ffeb3](https://github.com/Informasjonsforvaltning/fdk/commit/21ffeb3))
+* **search:** [#2145](https://github.com/Informasjonsforvaltning/fdk/issues/2145) add nap theming styles ([acbaf65](https://github.com/Informasjonsforvaltning/fdk/commit/acbaf65))
+* **search:** [#2254](https://github.com/Informasjonsforvaltning/fdk/issues/2254) hide accessRights filter if nap ([60e21d2](https://github.com/Informasjonsforvaltning/fdk/commit/60e21d2))
+* **search-api:** [#1644](https://github.com/Informasjonsforvaltning/fdk/issues/1644) Add search filter distributionAccessServiceEndpointDescriptionUri to allow looking for references to api ([c2445f7](https://github.com/Informasjonsforvaltning/fdk/commit/c2445f7))
 
 # [1.8.0](https://github.com/Informasjonsforvaltning/fdk/compare/v1.7.0...v1.8.0) (2019-09-06)
 
