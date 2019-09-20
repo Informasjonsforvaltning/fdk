@@ -18,7 +18,8 @@
     "precommit:e2e": "cd applications/e2e && npm run precommit",
     "precommit:registration-react": "cd applications/registration-react && npm run precommit",
     "precommit:search": "cd applications/search && npm run precommit",
-    "precommit": "npm-run-all precommit:*"
+    "precommit": "npm-run-all precommit:*",
+    "install": "(cd applications/e2e && npm i);(cd applications/search && npm i);(cd applications/registration-react && npm i);"
   },
   "repository": {
     "type": "git",
