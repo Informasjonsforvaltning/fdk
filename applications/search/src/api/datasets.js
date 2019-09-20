@@ -6,28 +6,31 @@ import { getConfig } from '../config';
 export const datasetsUrlBase = () =>
   `${getConfig().datasetApi.host}/api/datasets`;
 
-export const datasetsSearch = params => {
-  // Filter out NAP data if filterTransportDatasets in conf is true
-  if (getConfig().filterTransportDatasets) {
-    Object.assign(params, {
-      accessrights: 'PUBLIC',
-      losTheme: [
-        ...new Set(
-          ['trafikk-reiser-og-samferdsel'].concat(
-            params.losTheme ? params.losTheme.split(',') : []
+// Filter out NAP data if filterTransportDatasets in conf is true
+const transportProfileIfNeeded = params =>
+  getConfig().filterTransportDatasets
+    ? {
+        accessrights: 'PUBLIC',
+        losTheme: [
+          ...new Set(
+            ['trafikk-reiser-og-samferdsel'].concat(
+              params.losTheme ? params.losTheme.split(',') : []
+            )
           )
-        )
-      ].join(',')
-    });
-  }
+        ].join(',')
+      }
+    : undefined;
 
-  return axios
+export const datasetsSearch = params =>
+  axios
     .get(datasetsUrlBase(), {
       ...getConfig().datasetApi.config,
-      params
+      params: {
+        ...params,
+        ...transportProfileIfNeeded(params)
+      }
     })
     .then(r => r.data);
-};
 
 export const getDataset = id =>
   axios
