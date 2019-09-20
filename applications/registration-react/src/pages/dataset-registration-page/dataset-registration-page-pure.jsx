@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
+import pick from 'lodash/pick';
 
 import localization from '../../lib/localization';
 import { FormTemplateWithState } from '../../components/form-template/form-template-with-state.component';
@@ -40,6 +41,7 @@ import {
   typeValues
 } from './dataset-registration-page.logic';
 import './dataset-registration-page.scss';
+import { deepKeys } from '../../lib/deep-keys';
 
 // check the validation state of all rendered forms
 const isAllowedToPublish = form =>
@@ -105,24 +107,15 @@ export function DatasetRegistrationPagePure(props) {
 
   const [languagesDetermined, setLanguagesDetermined] = useState(false);
 
-  const getUsedLanguages = () => {
-    const translatableFields = ['title', 'description'];
-    return datasetItem
+  const translatableFields = ['title', 'description'];
+  const getUsedLanguages = () =>
+    datasetItem
       ? [
           ...new Set(
-            translatableFields.reduce(
-              (previous, current) =>
-                previous.concat(
-                  Object.entries(datasetItem[current]).map(
-                    ([key, value]) => value && value.length && key
-                  )
-                ),
-              []
-            )
+            deepKeys(pick(datasetItem, translatableFields), (_, v) => !!v)
           )
         ]
       : [];
-  };
 
   useEffect(() => {
     if (datasetItem && !languagesDetermined) {
