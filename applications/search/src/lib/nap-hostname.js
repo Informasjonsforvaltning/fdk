@@ -1,4 +1,4 @@
-import includes from 'lodash.includes';
+import includes from 'lodash/includes';
 
 const napHostnamesWhitelist = {
   hostnames: [
