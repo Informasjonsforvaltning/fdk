@@ -32,9 +32,8 @@ public class UsersController {
     public User getUserInfo(@PathVariable String id) throws NotFoundException {
         logger.debug("Request for user {}", id);
 
-        // simulate situation, where admin role gets assigned from Altinn.
         // Currently we only fetch one role association from Altinn
-        // and we interpret it as admin in fdk system
+        // and we interpret it as publisher admin role in fdk system
 
         Person altinnPerson = altinnClient.getPerson(id).orElseThrow(NotFoundException::new);
 
