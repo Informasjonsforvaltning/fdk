@@ -1,26 +1,28 @@
 import { connect } from 'react-redux';
 import moment from 'moment';
-import _ from 'lodash';
 
 import { ConfiguredFormProvenance } from './configured-form-provenance';
 import { currentnessAnnotationType } from '../../../schemaTypes';
 
-const mapStateToProps = (state, ownProps) => {
-  const { datasetItem, frequencyItems, provenanceItems } = ownProps;
+const mapStateToProps = (
+  state,
+  { datasetItem = {}, frequencyItems, provenanceItems }
+) => {
+  const {
+    provenance = {},
+    modified = null,
+    hasCurrentnessAnnotation = currentnessAnnotationType,
+    accrualPeriodicity
+  } = datasetItem;
+
   return {
     initialValues: {
       frequencyItems,
       provenanceItems,
-      provenance: _.get(datasetItem, 'provenance', {}),
-      modified: _.get(datasetItem, 'modified')
-        ? moment(_.get(datasetItem, 'modified')).format('YYYY-MM-DD')
-        : null,
-      hasCurrentnessAnnotation: _.get(
-        datasetItem,
-        'hasCurrentnessAnnotation',
-        currentnessAnnotationType
-      ),
-      accrualPeriodicity: _.get(datasetItem, 'accrualPeriodicity')
+      provenance,
+      modified: modified && moment(modified).format('YYYY-MM-DD'),
+      hasCurrentnessAnnotation,
+      accrualPeriodicity
     }
   };
 };

@@ -1,6 +1,5 @@
 import { getFormSyncErrors } from 'redux-form';
 import { connect } from 'react-redux';
-import _ from 'lodash';
 
 import { ConfiguredFormTitle } from './configured-form-contents';
 import {
@@ -11,34 +10,22 @@ import {
   availabilityAnnotationType
 } from '../../../schemaTypes';
 
-const mapStateToProps = ({ state }, ownProps) => {
-  const { datasetItem } = ownProps;
+const mapStateToProps = ({ state }, { datasetItem = {} }) => {
+  const {
+    conformsTo = [conformsToType],
+    hasRelevanceAnnotation = relevanceAnnotationType,
+    hasCompletenessAnnotation = completenessAnnotationType,
+    hasAccuracyAnnotation = accuracyAnnotationType,
+    hasAvailabilityAnnotation = availabilityAnnotationType
+  } = datasetItem;
+
   return {
     initialValues: {
-      conformsTo:
-        _.get(datasetItem, 'conformsTo', []).length > 0
-          ? _.get(datasetItem, 'conformsTo')
-          : [conformsToType],
-      hasRelevanceAnnotation: _.get(
-        datasetItem,
-        'hasRelevanceAnnotation',
-        relevanceAnnotationType
-      ),
-      hasCompletenessAnnotation: _.get(
-        datasetItem,
-        'hasCompletenessAnnotation',
-        completenessAnnotationType
-      ),
-      hasAccuracyAnnotation: _.get(
-        datasetItem,
-        'hasAccuracyAnnotation',
-        accuracyAnnotationType
-      ),
-      hasAvailabilityAnnotation: _.get(
-        datasetItem,
-        'hasAvailabilityAnnotation',
-        availabilityAnnotationType
-      )
+      conformsTo,
+      hasRelevanceAnnotation,
+      hasCompletenessAnnotation,
+      hasAccuracyAnnotation,
+      hasAvailabilityAnnotation
     },
     syncErrors: getFormSyncErrors('contents')(state)
   };
