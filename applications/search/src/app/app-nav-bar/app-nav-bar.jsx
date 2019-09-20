@@ -14,7 +14,8 @@ import localization from '../../lib/localization';
 import {
   PATHNAME_REPORTS,
   PATHNAME_ABOUT,
-  PATHNAME_ABOUT_REGISTRATION
+  PATHNAME_ABOUT_REGISTRATION,
+  PATHNAME_ABOUT_NAP
 } from '../../constants/constants';
 import './app-nav-bar.scss';
 import { getConfig } from '../../config';
@@ -41,23 +42,39 @@ export function AppNavBar(props) {
             </a>
           </div>
           <div>
-            <Nav className="d-none d-lg-inline-flex">
-              <NavItem>
-                <Link className="nav-link" to={PATHNAME_ABOUT}>
-                  {localization.menu.about}
-                </Link>
-              </NavItem>
-              <NavItem>
-                <Link className="nav-link" to={PATHNAME_ABOUT_REGISTRATION}>
-                  {localization.menu.aboutRegistration}
-                </Link>
-              </NavItem>
-              <NavItem>
-                <Link className="nav-link" to={PATHNAME_REPORTS}>
-                  {localization.menu.reports}
-                </Link>
-              </NavItem>
-            </Nav>
+            {!getConfig().themeNap && (
+              <Nav className="d-none d-lg-inline-flex">
+                <NavItem>
+                  <Link className="nav-link" to={PATHNAME_ABOUT}>
+                    {localization.menu.about}
+                  </Link>
+                </NavItem>
+                <NavItem>
+                  <Link className="nav-link" to={PATHNAME_ABOUT_REGISTRATION}>
+                    {localization.menu.aboutRegistration}
+                  </Link>
+                </NavItem>
+                <NavItem>
+                  <Link className="nav-link" to={PATHNAME_REPORTS}>
+                    {localization.menu.reports}
+                  </Link>
+                </NavItem>
+              </Nav>
+            )}
+            {getConfig().themeNap && (
+              <Nav className="d-none d-lg-inline-flex">
+                <NavItem>
+                  <Link className="nav-link" to={PATHNAME_ABOUT_NAP}>
+                    {localization.menu.aboutNap}
+                  </Link>
+                </NavItem>
+                <NavItem>
+                  <Link className="nav-link" to={PATHNAME_ABOUT_REGISTRATION}>
+                    {localization.menu.aboutRegistration}
+                  </Link>
+                </NavItem>
+              </Nav>
+            )}
           </div>
           <div>
             <UncontrolledDropdown className="d-none d-lg-inline">
@@ -88,29 +105,53 @@ export function AppNavBar(props) {
               >
                 {localization.app.menu}
               </DropdownToggle>
-              <DropdownMenu right className="fdk-dropdownmenu">
-                <Link className="dropdown-item" to={PATHNAME_ABOUT}>
-                  {localization.about.about}
-                </Link>
-                <Link
-                  className="dropdown-item"
-                  to={PATHNAME_ABOUT_REGISTRATION}
-                >
-                  {localization.menu.aboutRegistration}
-                </Link>
-                <Link className="dropdown-item" to={PATHNAME_REPORTS}>
-                  {localization.menu.reports}
-                </Link>
-                <DropdownItem onClick={() => props.onChangeLanguage('nb')}>
-                  {localization.lang['norwegian-nb']}
-                </DropdownItem>
-                <DropdownItem onClick={() => props.onChangeLanguage('nn')}>
-                  {localization.lang['norwegian-nn']}
-                </DropdownItem>
-                <DropdownItem onClick={() => props.onChangeLanguage('en')}>
-                  {localization.lang['english-en']}
-                </DropdownItem>
-              </DropdownMenu>
+              {!getConfig().themeNap && (
+                <DropdownMenu right className="fdk-dropdownmenu">
+                  <Link className="dropdown-item" to={PATHNAME_ABOUT}>
+                    {localization.about.about}
+                  </Link>
+                  <Link
+                    className="dropdown-item"
+                    to={PATHNAME_ABOUT_REGISTRATION}
+                  >
+                    {localization.menu.aboutRegistration}
+                  </Link>
+                  <Link className="dropdown-item" to={PATHNAME_REPORTS}>
+                    {localization.menu.reports}
+                  </Link>
+                  <DropdownItem onClick={() => props.onChangeLanguage('nb')}>
+                    {localization.lang['norwegian-nb']}
+                  </DropdownItem>
+                  <DropdownItem onClick={() => props.onChangeLanguage('nn')}>
+                    {localization.lang['norwegian-nn']}
+                  </DropdownItem>
+                  <DropdownItem onClick={() => props.onChangeLanguage('en')}>
+                    {localization.lang['english-en']}
+                  </DropdownItem>
+                </DropdownMenu>
+              )}
+              {getConfig().themeNap && (
+                <DropdownMenu right className="fdk-dropdownmenu">
+                  <Link className="dropdown-item" to={PATHNAME_ABOUT_NAP}>
+                    {localization.menu.aboutNap}
+                  </Link>
+                  <Link
+                    className="dropdown-item"
+                    to={PATHNAME_ABOUT_REGISTRATION}
+                  >
+                    {localization.menu.aboutRegistration}
+                  </Link>
+                  <DropdownItem onClick={() => props.onChangeLanguage('nb')}>
+                    {localization.lang['norwegian-nb']}
+                  </DropdownItem>
+                  <DropdownItem onClick={() => props.onChangeLanguage('nn')}>
+                    {localization.lang['norwegian-nn']}
+                  </DropdownItem>
+                  <DropdownItem onClick={() => props.onChangeLanguage('en')}>
+                    {localization.lang['english-en']}
+                  </DropdownItem>
+                </DropdownMenu>
+              )}
             </UncontrolledDropdown>
           </div>
         </div>
