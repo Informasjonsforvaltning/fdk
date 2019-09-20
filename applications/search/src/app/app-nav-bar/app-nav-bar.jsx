@@ -101,7 +101,7 @@ export function AppNavBar(props) {
               <DropdownToggle
                 className="fdk-button fdk-button-menu"
                 caret
-                color="primary"
+                color="none"
               >
                 {localization.app.menu}
               </DropdownToggle>
