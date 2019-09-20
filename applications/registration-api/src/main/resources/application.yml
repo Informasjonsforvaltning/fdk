@@ -20,7 +20,7 @@ application:
   harvestCron: 0 0 */6 * * *
   authentication:
     includedOrgforms: ADOS,FKF,FYLK,IKS,KF,KIRK,KOMM,ORGL,SF,STAT,SÆR
-    includedOrgnr: 974760673,920210023,938275130
+    includedOrgnr: 974760673,920210023,938275130,917422575
 
 
 spring:
