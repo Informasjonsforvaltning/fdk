@@ -56,8 +56,7 @@ export const renderDistributions = ({
                   className="fdk-btn-no-border"
                   type="button"
                   title="Remove distribution"
-                  onClick={() => onDeleteFieldAtIndex(fields, index)}
-                >
+                  onClick={() => onDeleteFieldAtIndex(fields, index)}>
                   <i className="fa fa-trash mr-2" />
                   {localization.schema.distribution.deleteDistributionLabel}
                 </button>
@@ -199,8 +198,7 @@ export const renderDistributions = ({
             format: [],
             type: ''
           })
-        }
-      >
+        }>
         <i className="fa fa-plus mr-2" />
         {localization.schema.distribution.addDistributionLabel}
       </button>
@@ -211,7 +209,8 @@ renderDistributions.propTypes = {
   fields: PropTypes.object.isRequired,
   initialValues: PropTypes.object.isRequired,
   openLicenseItems: PropTypes.array.isRequired,
-  onDeleteFieldAtIndex: PropTypes.func.isRequired
+  onDeleteFieldAtIndex: PropTypes.func.isRequired,
+  languages: PropTypes.array.isRequired
 };
 
 export const FormDistributionPure = ({
