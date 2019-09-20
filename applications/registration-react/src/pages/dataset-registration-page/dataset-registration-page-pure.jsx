@@ -106,29 +106,20 @@ export function DatasetRegistrationPagePure(props) {
 
   const [languagesDetermined, setLanguagesDetermined] = useState(false);
 
-  const translatableFields = ['title', 'description'];
+  const deepKeys = (obj, predicate) =>
+    Object.keys(obj).reduce(
+      (aggregate, key) =>
+        aggregate.concat(
+          predicate(key, obj[key]) ? key : [],
+          obj[key] !== null && typeof obj[key] === 'object'
+            ? deepKeys(obj[key], predicate)
+            : []
+        ),
+      []
+    );
 
-  const parseDataset = doc => {
-    if (Array.isArray(doc)) {
-      return doc.map(parseDataset).flat();
-    }
-
-    return typeof doc === 'object'
-      ? Object.entries(doc).reduce(
-          (previous, [key]) =>
-            previous.concat(
-              translatableFields.includes(key)
-                ? Object.keys(doc[key])
-                : parseDataset(doc[key])
-            ),
-          []
-        )
-      : [];
-  };
-
-  const getUsedLanguages = () => {
-    return datasetItem ? [...new Set(parseDataset(datasetItem))] : [];
-  };
+  const getUsedLanguages = () =>
+    datasetItem ? [...new Set(deepKeys(datasetItem, (_, v) => !!v))] : [];
 
   useEffect(
     () => {
@@ -225,6 +216,7 @@ export function DatasetRegistrationPagePure(props) {
                   datasetItem={datasetItem}
                   catalogId={catalogId}
                   datasetId={datasetId}
+                  languages={languages}
                 />
               </FormTemplateWithState>
 
@@ -249,6 +241,7 @@ export function DatasetRegistrationPagePure(props) {
                   frequencyItems={frequencyItems}
                   catalogId={catalogId}
                   datasetId={datasetId}
+                  languages={languages}
                 />
               </FormTemplateWithState>
 
@@ -260,6 +253,7 @@ export function DatasetRegistrationPagePure(props) {
                   datasetItem={datasetItem}
                   catalogId={catalogId}
                   datasetId={datasetId}
+                  languages={languages}
                 />
               </FormTemplateWithState>
 
