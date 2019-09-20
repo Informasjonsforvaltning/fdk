@@ -15,7 +15,10 @@ export const informationmodelsSearch = params =>
 
 export const getInformationmodel = id =>
   axios
-    .get(`${informationmodelsUrlBase()}/${id}`,getConfig().informationmodelApi.config)
+    .get(
+      `${informationmodelsUrlBase()}/${id}`,
+      getConfig().informationmodelApi.config
+    )
     .then(r => r.data)
     .catch(() => null);
 

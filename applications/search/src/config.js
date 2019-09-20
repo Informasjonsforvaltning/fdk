@@ -5,7 +5,9 @@ const createConfig = env => {
   const searchApi = {
     host: env.SEARCH_API_HOST || '',
     // in ut1 and st1, search api requires basic authentication
-    config: env.SEARCH_API_AUTHORIZATION ? { headers: { authorization: env.SEARCH_API_AUTHORIZATION } } : undefined
+    config: env.SEARCH_API_AUTHORIZATION
+      ? { headers: { authorization: env.SEARCH_API_AUTHORIZATION } }
+      : undefined
   };
   const defaultToSearchApi = host => (host ? { host } : searchApi);
 
