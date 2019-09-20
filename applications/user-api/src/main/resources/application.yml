@@ -15,6 +15,7 @@ application:
   # 910258028   /* this matches in mock data "LILAND OG ERDAL REVISJON", used in dev, ut1, st1 and it1*/
   orgNrWhitelist: ${ORGNR_WHITELIST:920210023,910258028}
   orgFormWhitelist: ${ORGFORM_WHITELIST:ADOS,FKF,FYLK,IKS,KF,KIRK,KOMM,ORGL,SF,STAT,SÆR}
+  adminList: ${ADMIN_LIST:23076102252} #MAUD GULLIKSEN
 
 ---
 #Utv-miljø lokalt på egen PC
