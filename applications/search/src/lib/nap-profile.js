@@ -9,6 +9,9 @@ const napHostnamesWhitelist = {
   ]
 };
 
-export function isNapHostname(hostname) {
-  return includes(napHostnamesWhitelist.hostnames, hostname);
+export function isNapProfile() {
+  return (
+    includes(napHostnamesWhitelist.hostnames, window.location.hostname) ||
+    localStorage.getItem('napProfile')
+  );
 }

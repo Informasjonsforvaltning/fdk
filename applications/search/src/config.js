@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { isNapHostname } from './lib/nap-hostname';
+import { isNapProfile } from './lib/nap-profile';
 
 const createConfig = env => {
   const searchApi = {
@@ -14,12 +14,8 @@ const createConfig = env => {
   return {
     store: { useLogger: env.REDUX_LOG === 'true' },
     disqusShortname: env.DISQUS_SHORTNAME,
-    filterTransportDatasets:
-      isNapHostname(window.location.hostname) ||
-      !!localStorage.getItem('filterTransportDatasets'),
-    themeNap:
-      isNapHostname(window.location.hostname) ||
-      !!localStorage.getItem('themeNap'),
+    filterTransportDatasets: isNapProfile(),
+    themeNap: isNapProfile(),
     datasetApi: defaultToSearchApi(env.DATASET_API_HOST),
     apiApi: defaultToSearchApi(env.API_API_HOST),
     conceptApi: defaultToSearchApi(env.CONCEPT_API_HOST),
