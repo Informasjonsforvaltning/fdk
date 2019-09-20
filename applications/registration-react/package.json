@@ -10,6 +10,7 @@
     "build": "webpack --config webpack.prod.config.js -p",
     "lint": "eslint ./ --ext=.js,.jsx --fix",
     "test": "jest",
+    "test:coverage": "jest --coverage",
     "tdd": "jest --watch"
   },
   "lint-staged": {
@@ -137,7 +138,7 @@
     "moduleNameMapper": {
       "^.+\\.(css|less|scss)$": "identity-obj-proxy"
     },
-    "collectCoverage": true,
+    "collectCoverage": false,
     "collectCoverageFrom": [
       "src/components/**/*.{js,jsx}",
       "src/pages/**/*.{js,jsx}",
