@@ -49,8 +49,8 @@ export const PublishersTreePure = props => {
           role="button"
           tabIndex="0"
         >
-            {name}
-          </span>
+          {name}
+        </span>
       );
       const collapsed = isItemCollapsed(node.orgPath, orgPath);
       if (node.children && node.children.length > 0) {
@@ -104,8 +104,8 @@ export const PublishersTreePure = props => {
           role="button"
           tabIndex="0"
         >
-            <strong>{name}</strong>
-          </span>
+          <strong>{name}</strong>
+        </span>
       );
       return (
         <div key={`panel${i}`} className="section fdk-report-tree-panel">
@@ -116,8 +116,8 @@ export const PublishersTreePure = props => {
             itemClassName={chosenClass}
           >
             {node.children &&
-            node.children.length > 0 &&
-            subTree(node.children)}
+              node.children.length > 0 &&
+              subTree(node.children)}
           </TreeView>
         </div>
       );
@@ -128,7 +128,6 @@ export const PublishersTreePure = props => {
   }
   return null;
 };
-
 
 PublishersTreePure.defaultProps = {
   onChange: _.noop,
@@ -141,7 +140,6 @@ PublishersTreePure.propTypes = {
   value: PropTypes.object,
   publishers: PropTypes.array
 };
-
 
 const mapProps = {
   publishers: () => memoizedLoadPublisherHierarhy()

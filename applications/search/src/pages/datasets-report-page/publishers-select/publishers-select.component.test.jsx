@@ -11,7 +11,7 @@ beforeEach(() => {
   defaultProps = {
     publishers: {},
     onSearch,
-    value: {orgPath:'STAT'}
+    value: { orgPath: 'STAT' }
   };
   wrapper = shallow(<PublishersSelect {...defaultProps} />);
 });

@@ -1,3 +1,4 @@
+import some from 'lodash/some';
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
@@ -58,7 +59,6 @@ export const StatBox = props => {
     [`fa-${iconType}`]: true
   });
 
-  console.log('piedata', pieData)
   return (
     <div className={statBoxClass}>
       {iconType && (
@@ -79,18 +79,19 @@ export const StatBox = props => {
           </Motion>
         </div>
       )}
-      {pieData && _.some(pieData,'value') && (
-        <div className="d-flex align-items-center stat-box--icon mb-5">
-          <PieChart
-            className={statBoxCircle}
-            data={pieData}
-            startAngle={0}
-            lineWidth={45}
-            animate
-            style={{ height: '12rem' }}
-          />
-        </div>
-      )}
+      {pieData &&
+        some(pieData, 'value') && (
+          <div className="d-flex align-items-center stat-box--icon mb-5">
+            <PieChart
+              className={statBoxCircle}
+              data={pieData}
+              startAngle={0}
+              lineWidth={45}
+              animate
+              style={{ height: '12rem' }}
+            />
+          </div>
+        )}
       {children}
       <span className="text-center">{label}</span>
     </div>

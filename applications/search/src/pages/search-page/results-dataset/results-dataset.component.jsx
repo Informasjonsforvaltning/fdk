@@ -316,7 +316,6 @@ ResultsDatasetPure.defaultProps = {
   onFilterProvenance: _.noop,
   onFilterSpatial: _.noop,
   onFilterLos: _.noop,
-  themesItems: null,
   publishers: null,
   referenceData: null,
 

@@ -204,7 +204,6 @@ ConceptsHitItem.defaultProps = {
   fadeInCounter: 0,
   onAddConcept: noop,
   onDeleteConcept: noop
-
 };
 
 ConceptsHitItem.propTypes = {

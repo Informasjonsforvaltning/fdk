@@ -79,7 +79,7 @@ export function DatasetsReportPage({
 
 DatasetsReportPage.defaultProps = {
   fetchPublishersIfNeeded: _.noop,
-  publishers:{}
+  publishers: {}
 };
 
 DatasetsReportPage.propTypes = {
