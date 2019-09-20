@@ -58,7 +58,8 @@
     "about": "Felles Datakatalog",
     "aboutRegistration": "Registrering",
     "reports": "Rapportar",
-    "conceptsCompare": "Samanlikne omgrep"
+    "conceptsCompare": "Samanlikne omgrep",
+    "aboutNap": "Nasjonalt tilgangspunkt for transportdata"
   },
   "query": {
     "intro": "Søk etter innhald",

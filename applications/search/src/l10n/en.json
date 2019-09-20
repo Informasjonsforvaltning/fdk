@@ -58,7 +58,8 @@
     "about": "About The National Data Catalog",
     "aboutRegistration": "Registration",
     "reports": "Reports",
-    "conceptsCompare": "Compare concepts"
+    "conceptsCompare": "Compare concepts",
+    "aboutNap": "About National Access Point for Transport Data"
   },
   "query": {
     "intro": "Search for contents",
