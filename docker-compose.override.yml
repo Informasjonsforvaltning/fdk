@@ -194,6 +194,8 @@ services:
       - "8124:8080"
     environment:
       - ALTINN_PROXY_HOST=http://nginx-altinn-proxy-mock:8080
+      - ORGNR_WHITELIST=920210023,910258028
+      - ORGFORM_WHITELIST=ADOS,FKF,FYLK,IKS,KF,KIRK,KOMM,ORGL,SF,STAT,SÆR
     depends_on:
       - nginx-altinn-proxy-mock
 
