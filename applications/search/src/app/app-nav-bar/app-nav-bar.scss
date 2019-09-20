@@ -8,6 +8,12 @@
       }
     }
   }
+  .fdk-button-menu {
+    @include themify($themes) {
+      background-color: themed('color-button-primary-1');
+      color: themed('color-button-text-primary');
+    }
+  }
 }
 
 .fdk-button-lang {
