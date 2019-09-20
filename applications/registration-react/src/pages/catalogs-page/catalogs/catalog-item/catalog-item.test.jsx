@@ -7,7 +7,7 @@ let wrapper;
 
 beforeEach(() => {
   defaultProps = {
-    publisherId: '123',
+    linkUri: '/catalogs/1/datasets',
     type: 'datasets'
   };
   wrapper = shallow(<CatalogItem {...defaultProps} />);
