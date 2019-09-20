@@ -7,6 +7,7 @@ import Helptext from '../../../components/helptext/helptext.component';
 import SelectField from '../../../components/field-select/field-select.component';
 import TextAreaField from '../../../components/field-textarea/field-textarea.component';
 import DatepickerField from '../../../components/field-datepicker/field-datepicker.component';
+import MultilingualField from '../../../components/multilingual-field/multilingual-field.component';
 
 const handleProvenanceChange = (componentProps, event, provenanceItem) => {
   const { input } = componentProps;
@@ -65,8 +66,7 @@ export const renderProvenance = componentProps => {
   return null;
 };
 
-export const FormProvenance = props => {
-  const { initialValues } = props;
+export const FormProvenance = ({ initialValues, languages }) => {
   const { provenance, provenanceItems, frequencyItems } = initialValues;
   if (provenance) {
     return (
@@ -110,10 +110,11 @@ export const FormProvenance = props => {
             title={localization.schema.provenance.helptext.currentness}
             term="Dataset_hasQualityAnnotation_currentness"
           />
-          <Field
-            name={`hasCurrentnessAnnotation.hasBody.${localization.getLanguage()}`}
+          <MultilingualField
+            name="hasCurrentnessAnnotation.hasBody"
             component={TextAreaField}
             label={localization.schema.provenance.hasCurrentnessAnnotationLabel}
+            languages={languages}
           />
         </div>
       </form>
@@ -123,9 +124,11 @@ export const FormProvenance = props => {
 };
 
 FormProvenance.defaultProps = {
-  initialValues: null
+  initialValues: null,
+  languages: []
 };
 
 FormProvenance.propTypes = {
-  initialValues: PropTypes.object
+  initialValues: PropTypes.object,
+  languages: PropTypes.array
 };

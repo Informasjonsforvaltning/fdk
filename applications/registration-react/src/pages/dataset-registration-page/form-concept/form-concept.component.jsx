@@ -7,9 +7,9 @@ import localization from '../../../lib/localization';
 import Helptext from '../../../components/helptext/helptext.component';
 import InputTagsFieldConcepts from './input-tags-concepts/input-tags-concepts.component';
 import InputTagsFieldArray from '../../../components/field-input-tags-objects/field-input-tags-objects.component';
+import MultilingualField from '../../../components/multilingual-field/multilingual-field.component';
 
-export const FormConcept = props => {
-  const { syncErrors } = props;
+export const FormConcept = ({ syncErrors, languages }) => {
   return (
     <form>
       <div className="form-group">
@@ -30,12 +30,13 @@ export const FormConcept = props => {
           title={localization.schema.concept.helptext.keyword}
           term="Dataset_keyword"
         />
-        <Field
+        <MultilingualField
           name="keyword"
           type="text"
+          languages={languages}
           component={InputTagsFieldArray}
           label={localization.schema.concept.keywordLabel}
-          fieldLabel={localization.getLanguage()}
+          // fieldLabel={localization.getLanguage()}
         />
         {_.get(syncErrors, 'keyword') && (
           <div className="alert alert-danger mt-3">
@@ -48,8 +49,10 @@ export const FormConcept = props => {
 };
 
 FormConcept.defaultProps = {
-  syncErrors: null
+  syncErrors: null,
+  languages: []
 };
 FormConcept.propTypes = {
-  syncErrors: PropTypes.object
+  syncErrors: PropTypes.object,
+  languages: PropTypes.array
 };
