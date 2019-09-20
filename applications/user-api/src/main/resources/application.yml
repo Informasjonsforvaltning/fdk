@@ -11,6 +11,11 @@ management:
   endpoints.web.exposure.include: health, readiness
 application:
   altinnProxyHost: ${ALTINN_PROXY_HOST:http://nginx-altinn-proxy:8080}
+  # 920210023   /* this matches in prod system "GJELDSREGISTERET AS”*/
+  # 910258028   /* this matches in mock data "LILAND OG ERDAL REVISJON", used in dev, ut1, st1 and it1*/
+  orgNrWhitelist: ${ORGNR_WHITELIST:920210023,910258028}
+  orgFormWhitelist: ${ORGFORM_WHITELIST:ADOS,FKF,FYLK,IKS,KF,KIRK,KOMM,ORGL,SF,STAT,SÆR}
+
 ---
 #Utv-miljø lokalt på egen PC
 spring:

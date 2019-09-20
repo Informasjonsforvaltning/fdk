@@ -2,6 +2,7 @@ package no.fdk.userapi;
 
 import no.fdk.altinn.Organisation;
 import no.fdk.altinn.Person;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -11,13 +12,23 @@ import java.util.stream.Collectors;
 
 @Service
 public class AltinnUserConverter {
+    private String orgNrWhitelistString;
+    private String orgFormWhitelistString;
+    private Predicate<Organisation> organisationFilter = (o) -> getOrgNrWhitelist().contains(o.getOrganisationNumber()) || getOrgFormWhitelist().contains(o.getOrganisationForm());
 
-    private List<String> INCLUDED_ORGNR = Arrays.asList(
-        "920210023"     /* this matches in prod system "GJELDSREGISTERET AS”*/
-        , "910258028"   /* this matches in mock data "LILAND OG ERDAL REVISJON", used in dev, ut1, st1 and it1*/
-    );
-    private List<String> INCLUDED_ORGFORM = Arrays.asList("ADOS", "FKF", "FYLK", "IKS", "KF", "KIRK", "KOMM", "ORGL", "SF", "STAT", "SÆR");
-    private Predicate<Organisation> organisationPrivilegeFilter = (o) -> INCLUDED_ORGNR.contains(o.getOrganisationNumber()) || INCLUDED_ORGFORM.contains(o.getOrganisationForm());
+    AltinnUserConverter(@Value("${application.orgNrWhitelist}") String orgNrWhitelistString,
+                        @Value("${application.orgFormWhitelist}") String orgFormWhitelistString) {
+        this.orgNrWhitelistString = orgNrWhitelistString;
+        this.orgFormWhitelistString = orgFormWhitelistString;
+    }
+
+    private List<String> getOrgNrWhitelist() {
+        return Arrays.asList(orgNrWhitelistString.split(","));
+    }
+
+    private List<String> getOrgFormWhitelist() {
+        return Arrays.asList(orgFormWhitelistString.split(","));
+    }
 
     User convert(Person person) {
         return new AltinnUserConverter.AltinnUserAdapter(person);
@@ -49,7 +60,7 @@ public class AltinnUserConverter {
 
         public String getAuthorities() {
             List<String> privilegesList = person.getOrganisations().stream()
-                .filter(organisationPrivilegeFilter)
+                .filter(organisationFilter)
                 .map(o -> "publisher:" + o.getOrganisationNumber() + ":admin").collect(Collectors.toList());
             return String.join(",", privilegesList);
         }
