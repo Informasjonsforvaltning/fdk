@@ -16,9 +16,11 @@ public class UsersController {
     private static final Logger logger = LoggerFactory.getLogger(UsersController.class);
 
     AltinnClient altinnClient;
+    AltinnUserConverter altinnUserConverter;
 
-    UsersController(AltinnClient altinnClient) {
+    UsersController(AltinnClient altinnClient, AltinnUserConverter altinnUserConverter) {
         this.altinnClient = altinnClient;
+        this.altinnUserConverter = altinnUserConverter;
     }
 
     /*
@@ -36,7 +38,7 @@ public class UsersController {
 
         Person altinnPerson = altinnClient.getPerson(id).orElseThrow(NotFoundException::new);
 
-        return new UserAltinnAdapter(altinnPerson);
+        return altinnUserConverter.convert(altinnPerson);
     }
 
 
