@@ -288,6 +288,10 @@ export const DatasetStats = props => {
     </div>
   );
 
+  const conceptsPieData = [
+    { value: stats.subjectCount, color: '#3CBEF0' },
+    { value: stats.total - stats.subjectCount, color: '#AAE6FF' }
+  ];
   const concepts = (
     <div className="d-flex flex-fill py-5 border-top">
       <StatBox
@@ -304,16 +308,14 @@ export const DatasetStats = props => {
         </Link>
       </StatBox>
 
-      <PieChart
-        className="d-flex p-4 w-25"
-        data={[
-          { value: stats.subjectCount, color: '#3CBEF0' },
-          { value: stats.total - stats.subjectCount, color: '#AAE6FF' }
-        ]}
-        startAngle={0}
-        lineWidth={45}
-        animate
-      />
+      {conceptsPieData && _.some(conceptsPieData, 'value') && (
+        <PieChart
+          className="d-flex p-4 w-25"
+          data={conceptsPieData}
+          startAngle={0}
+          lineWidth={45}
+          animate
+        />)}
 
       <StatBox
         iconType="book"

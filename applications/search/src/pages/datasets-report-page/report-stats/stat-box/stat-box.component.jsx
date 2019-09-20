@@ -58,6 +58,7 @@ export const StatBox = props => {
     [`fa-${iconType}`]: true
   });
 
+  console.log('piedata', pieData)
   return (
     <div className={statBoxClass}>
       {iconType && (
@@ -78,7 +79,7 @@ export const StatBox = props => {
           </Motion>
         </div>
       )}
-      {pieData && (
+      {pieData && _.some(pieData,'value') && (
         <div className="d-flex align-items-center stat-box--icon mb-5">
           <PieChart
             className={statBoxCircle}
