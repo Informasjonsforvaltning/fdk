@@ -184,6 +184,8 @@ services:
       - nginx-altinn-proxy-mock
     environment:
       - ALTINN_PROXY_HOST
+      - ORGNR_WHITELIST
+      - ORGFORM_WHITELIST
 
   ### test and mock modules
   ###########################
