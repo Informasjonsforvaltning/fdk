@@ -29,13 +29,18 @@ const initialState = {
 export default function reducer(state = initialState, action) {
   switch (action.type) {
     case SET_INPUT_LANGUAGES: {
+      const allowedLanguages = state.languages.map(({ code }) => code);
+      const inputLanguages = action.payload.languages.filter(lang =>
+        allowedLanguages.includes(lang)
+      );
+
       return {
         ...state,
-        languages: action.payload.languages.length
+        languages: inputLanguages.length
           ? state.languages.map(({ code, title }) => ({
               code,
               title,
-              selected: action.payload.languages.includes(code)
+              selected: inputLanguages.includes(code)
             }))
           : initialState.languages
       };
