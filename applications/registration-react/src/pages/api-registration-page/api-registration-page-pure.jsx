@@ -42,7 +42,6 @@ export const ApiRegistrationPagePure = ({
   justPublishedOrUnPublished,
   item,
   location,
-  publisher,
   referencedDatasets,
   showImportError,
   showImportSuccess,
@@ -195,7 +194,6 @@ export const ApiRegistrationPagePure = ({
               >
                 <FormRelatedDatasets
                   apiItem={item}
-                  orgPath={_.get(publisher, 'orgPath')}
                   referencedDatasets={referencedDatasets}
                 />
               </FormTemplateWithState>
@@ -241,7 +239,6 @@ ApiRegistrationPagePure.defaultProps = {
   apiServiceTypeItems: null,
   item: null,
   location: null,
-  publisher: null,
   referencedDatasets: null,
   showImportError: false,
   showImportSuccess: false,
@@ -266,7 +263,6 @@ ApiRegistrationPagePure.propTypes = {
   apiServiceTypeItems: PropTypes.array,
   item: PropTypes.object,
   location: PropTypes.object,
-  publisher: PropTypes.object,
   referencedDatasets: PropTypes.array,
   showImportError: PropTypes.bool,
   showImportSuccess: PropTypes.bool,
