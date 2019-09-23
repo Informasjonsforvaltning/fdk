@@ -1,3 +1,4 @@
+import get from 'lodash/get';
 import { getConfig } from '../../config';
 import { searchApiGet } from './host';
 
@@ -14,3 +15,6 @@ export const searchDatasets = params =>
     params,
     authorization: getConfig().datasetApi.authorization
   });
+
+export const extractDatasets = searchResponse =>
+  get(searchResponse, 'hits.hits', []).map(hit => hit._source);
