@@ -1,7 +1,9 @@
-import { getFormSyncErrors } from 'redux-form';
+import { getFormSyncErrors, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import _ from 'lodash';
-import { ConfiguredFormRelatedDatasets } from './configured-form-related-datasets';
+import { compose } from 'recompose';
+import { FormRelatedDatasetsPure } from './form-related-datasets-pure';
+import { asyncValidate } from '../async-patch/async-patch';
 
 const mapStateToProps = ({ form }, ownProps) => {
   const { apiItem } = ownProps;
@@ -13,6 +15,12 @@ const mapStateToProps = ({ form }, ownProps) => {
   };
 };
 
-export const FormRelatedDatasets = connect(mapStateToProps)(
-  ConfiguredFormRelatedDatasets
+const enhance = compose(
+  connect(mapStateToProps),
+  reduxForm({
+    form: 'apiDatasetReferences',
+    asyncValidate
+  })
 );
+
+export const FormRelatedDatasets = enhance(FormRelatedDatasetsPure);
