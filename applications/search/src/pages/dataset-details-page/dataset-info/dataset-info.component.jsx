@@ -13,6 +13,7 @@ import {
   getReferenceDataByUri,
   REFERENCEDATA_PATH_REFERENCETYPES
 } from '../../../redux/modules/referenceData';
+import { getConfig } from '../../../config';
 
 const renderReferences = (references, referencedItems, referenceData) => {
   const children = items =>
@@ -39,7 +40,9 @@ const renderReferences = (references, referencedItems, referenceData) => {
           <div className="col-8">
             <LinkExternal
               uri={
-                referencedItem ? `/datasets/${referencedItem.id}` : referenceUri
+                referencedItem
+                  ? `${getConfig().searchHost}/datasets/${referencedItem.id}`
+                  : referenceUri
               }
               prefLabel={
                 getTranslateText(_.get(referencedItem, 'title')) || referenceUri
