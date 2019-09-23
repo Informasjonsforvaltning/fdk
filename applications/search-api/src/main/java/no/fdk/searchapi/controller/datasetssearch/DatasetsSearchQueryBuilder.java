@@ -1,6 +1,5 @@
 package no.fdk.searchapi.controller.datasetssearch;
 
-import no.dcat.client.referencedata.ReferenceDataClient;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.Operator;
 import org.elasticsearch.index.query.QueryBuilder;
@@ -16,7 +15,7 @@ import static no.fdk.searchapi.controller.datasetssearch.Common.MISSING;
 import static no.fdk.searchapi.controller.datasetssearch.QueryUtil.*;
 import static org.apache.commons.lang3.StringUtils.isEmpty;
 
-public class DatasetsSearchQueryBuilder {
+class DatasetsSearchQueryBuilder {
     private static Logger logger = LoggerFactory.getLogger(DatasetsSearchQueryBuilder.class);
 
     private BoolQueryBuilder composedQuery;
@@ -194,10 +193,10 @@ public class DatasetsSearchQueryBuilder {
         static QueryBuilder losTheme(String losMainOrSubThemes, DatasetsSearchQueryBuilder queryBuilder) {
             String[] themes = losMainOrSubThemes.split("\\|");
 
-            QueryBuilder builder = QueryBuilders.boolQuery();
+            BoolQueryBuilder builder = QueryBuilders.boolQuery();
             for (String expandedMainTheme : themes) {
-                String [] themesAndSubthemes = expandedMainTheme.split(",");
-                builder = ((BoolQueryBuilder) builder).must(QueryBuilders.termsQuery("losTheme.losPaths", themesAndSubthemes));
+                String[] themesAndSubthemes = expandedMainTheme.split(",");
+                builder = builder.must(QueryBuilders.termsQuery("losTheme.losPaths", themesAndSubthemes));
             }
             return builder;
         }
