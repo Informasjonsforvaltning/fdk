@@ -72,9 +72,6 @@ public class DatasetsSearchController {
         @RequestParam(value = "sortdirection", defaultValue = "desc", required = false)
             String sortdirection,
 
-        @RequestParam(value = "returnfields", defaultValue = "", required = false)
-            String returnFields,
-
         @RequestParam(value = "aggregations", defaultValue = "", required = false)
             String aggregations,
 
@@ -122,6 +119,8 @@ public class DatasetsSearchController {
                 .forEach(aggregation -> searchBuilder.addAggregation(aggregation));
         }
 
+        String returnFields = params.entrySet().stream().filter((entry) -> entry.getKey().equalsIgnoreCase("returnfields")).findFirst().map(entry -> entry.getValue()).orElse("");
+
         if (isNotEmpty(returnFields)) {
             searchBuilder.setFetchSource(returnFields.split(","), null);
         }
@@ -161,8 +160,6 @@ public class DatasetsSearchController {
         @RequestParam(value = "sortdirection", defaultValue = "desc", required = false)
             String sortdirection,
 
-        @RequestParam(value = "returnfields", defaultValue = "", required = false)
-            String returnFields,
 
         @RequestParam(value = "aggregations", defaultValue = "", required = false)
             String aggregations,
@@ -176,7 +173,7 @@ public class DatasetsSearchController {
         Map<String, String> mergedParams = new HashMap<>(params);
         body.forEach((key, value) -> mergedParams.put(key, value.toString()));
 
-        return search(mergedParams, lang, sortfield, sortdirection, returnFields, aggregations, pageable);
+        return search(mergedParams, lang, sortfield, sortdirection, aggregations, pageable);
     }
 
     private int checkAndAdjustFrom(int from) {

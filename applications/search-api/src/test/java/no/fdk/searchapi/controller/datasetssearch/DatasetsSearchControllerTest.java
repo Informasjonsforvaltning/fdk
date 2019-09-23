@@ -48,7 +48,7 @@ public class DatasetsSearchControllerTest {
      */
     @Test
     public void testValidWithSortdirection() {
-        ResponseEntity<String> actual = sqs.search(ImmutableMap.of(), "nb", "modified", "asc", "", "", PageRequest.of(0, 10));
+        ResponseEntity<String> actual = sqs.search(ImmutableMap.of(), "nb", "modified", "asc", "", PageRequest.of(0, 10));
 
         verify(client.prepareSearch("dcat")
             .setTypes("dataset")
@@ -64,7 +64,7 @@ public class DatasetsSearchControllerTest {
      */
     @Test
     public void testValidWithDefaultSortdirection() {
-        ResponseEntity<String> actual = sqs.search(ImmutableMap.of(), "nb", "", "", "", "", PageRequest.of(0, 10));
+        ResponseEntity<String> actual = sqs.search(ImmutableMap.of(), "nb", "", "", "", PageRequest.of(0, 10));
 
         verify(client.prepareSearch("dcat").setTypes("dataset").setQuery(any(QueryBuilder.class)).setFrom(0).setSize(10), never()).addSort(any());
         assertThat(actual.getStatusCodeValue()).isEqualTo(HttpStatus.OK.value());
@@ -75,7 +75,7 @@ public class DatasetsSearchControllerTest {
      */
     @Test
     public void testValidWithTheme() {
-        ResponseEntity<String> actual = sqs.search(ImmutableMap.of("theme", "GOVE"), "nb", "", "", "", "", PageRequest.of(0, 10));
+        ResponseEntity<String> actual = sqs.search(ImmutableMap.of("theme", "GOVE"), "nb", "", "",  "", PageRequest.of(0, 10));
 
         assertThat(actual.getStatusCodeValue()).isEqualTo(HttpStatus.OK.value());
     }
@@ -85,7 +85,7 @@ public class DatasetsSearchControllerTest {
      */
     @Test
     public void return200IfSizeIsLargerThan100() {
-        ResponseEntity<String> actual = sqs.search(ImmutableMap.of(), "nb", "", "", "", "", PageRequest.of(0, 101));
+        ResponseEntity<String> actual = sqs.search(ImmutableMap.of(), "nb", "", "", "",  PageRequest.of(0, 101));
 
         assertThat(actual.getStatusCodeValue()).isEqualTo(HttpStatus.OK.value());
     }
@@ -93,36 +93,36 @@ public class DatasetsSearchControllerTest {
 
     @Test
     public void checkAccessRights() {
-        sqs.search(ImmutableMap.of("accessRights", "OPEN"), "nb", "", "", "", "", PageRequest.of(0, 10));
+        sqs.search(ImmutableMap.of("accessRights", "OPEN"), "nb", "", "", "",  PageRequest.of(0, 10));
     }
 
     @Test
     public void checkOrgpath() {
-        sqs.search(ImmutableMap.of("orgPath", "/ANNET"), "nb", "", "", "", "", PageRequest.of(0, 10));
+        sqs.search(ImmutableMap.of("orgPath", "/ANNET"), "nb", "", "", "",  PageRequest.of(0, 10));
     }
 
 
     @Test
     public void checkTitle() {
-        sqs.search(ImmutableMap.of("title", "TITLE"), "nb", "", "", "", "", PageRequest.of(0, 10));
+        sqs.search(ImmutableMap.of("title", "TITLE"), "nb", "", "", "",  PageRequest.of(0, 10));
     }
 
     @Test
     public void checkProvenance() {
-        sqs.search(ImmutableMap.of("provenance", "NASJONAL"), "nb", "", "", "", "", PageRequest.of(0, 10));
+        sqs.search(ImmutableMap.of("provenance", "NASJONAL"), "nb", "", "", "",  PageRequest.of(0, 10));
     }
 
     @Test
     public void checkSpatial() {
-        sqs.search(ImmutableMap.of("spatial", "Oslo"), "nb", "", "", "", "", PageRequest.of(0, 10));
-        sqs.search(ImmutableMap.of("spatial", "http://tulletse"), "nb", "", "", "", "", PageRequest.of(0, 10));
-        sqs.search(ImmutableMap.of("spatial", "Ukjent"), "nb", "", "", "", "", PageRequest.of(0, 10));
-        sqs.search(ImmutableMap.of("spatial", "Ukjent,Oslo Fylke"), "nb", "", "", "", "", PageRequest.of(0, 10));
+        sqs.search(ImmutableMap.of("spatial", "Oslo"), "nb", "", "", "",  PageRequest.of(0, 10));
+        sqs.search(ImmutableMap.of("spatial", "http://tulletse"), "nb", "", "", "",  PageRequest.of(0, 10));
+        sqs.search(ImmutableMap.of("spatial", "Ukjent"), "nb", "", "", "",  PageRequest.of(0, 10));
+        sqs.search(ImmutableMap.of("spatial", "Ukjent,Oslo Fylke"), "nb", "", "", "",  PageRequest.of(0, 10));
     }
 
     @Test
     public void checkDatasetAggregations() {
-        sqs.search(ImmutableMap.of(), "nb", "modified", "asc", "", "distributionCountForTypeApi,distributionCountForTypeFeed,distributionCountForTypeFile", PageRequest.of(0, 10));
+        sqs.search(ImmutableMap.of(), "nb", "modified", "asc", "distributionCountForTypeApi,distributionCountForTypeFeed,distributionCountForTypeFile", PageRequest.of(0, 10));
     }
 
     private void populateMock() {
