@@ -15,6 +15,7 @@ exports[`should render SearchHitItem 1`] = `
     <header>
       <SearchHitHeader
         darkThemeBackground={false}
+        externalLink={false}
         nationalComponent={true}
         publisher={
           Object {

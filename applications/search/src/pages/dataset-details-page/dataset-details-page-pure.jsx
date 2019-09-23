@@ -303,6 +303,7 @@ const renderApis = ({ heading, publisherItems, apis }) => {
         publisherItems={publisherItems}
         tag="h4"
         darkThemeBackground
+        externalLink={!!getConfig().themeNap}
       />
       <div className="uu-invisible" aria-hidden="false">
         Beskrivelse av api

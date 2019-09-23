@@ -4,6 +4,7 @@ exports[`should render DatasetDescription correctly 1`] = `
 <header>
   <SearchHitHeader
     darkThemeBackground={true}
+    externalLink={false}
     nationalComponent={false}
     publisher={
       Object {
@@ -105,6 +106,7 @@ exports[`should render DatasetDescription correctly with no props 1`] = `
 <header>
   <SearchHitHeader
     darkThemeBackground={true}
+    externalLink={false}
     nationalComponent={false}
     publisher={null}
     publisherItems={null}

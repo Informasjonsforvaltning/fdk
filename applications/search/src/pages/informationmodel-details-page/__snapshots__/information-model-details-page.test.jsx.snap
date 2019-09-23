@@ -68,6 +68,7 @@ exports[`should render InformationModelDetailsPage correctly with informationMod
       >
         <SearchHitHeader
           darkThemeBackground={true}
+          externalLink={false}
           nationalComponent={false}
           publisher={null}
           publisherItems={null}
