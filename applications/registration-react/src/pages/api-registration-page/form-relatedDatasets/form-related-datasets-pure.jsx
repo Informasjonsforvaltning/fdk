@@ -1,11 +1,52 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
+import _ from 'lodash';
+import { Link } from 'react-router-dom';
 import localization from '../../../lib/localization';
 import Helptext from '../../../components/helptext/helptext.component';
 import { InputTagsDatasetsField } from '../field-tagsinput-datasets/field-tagsinput-datasets.components';
+import { getConfig } from '../../../config';
+import { getTranslateText } from '../../../lib/translateText';
 
-export const FormRelatedDatasetsPure = ({ referencedDatasets }) => (
+const renderReferecingDatasets = datasets =>
+  datasets &&
+  datasets.length > 0 && (
+    <div className="px-3 mt-5 mb-5">
+      <div className="d-flex border-bottom py-3">
+        <span className="w-75">
+          <strong>{localization.connectedDatasets}</strong>
+        </span>
+        <span className="w-25">
+          <strong>Tilbyder</strong>
+        </span>
+      </div>
+      {datasets.map(item => (
+        <div
+          key={item.id}
+          className="d-flex align-items-center border-bottom py-3"
+        >
+          <span className="w-75">
+            <Link
+              target="_blank"
+              rel="noopener noreferrer"
+              to={`${getConfig().searchHost}/datasets/${item.id}`}
+            >
+              {getTranslateText(item.title)}
+            </Link>
+          </span>
+          <span className="w-25 breakword">
+            {_.get(item, ['publisher', 'name'])}
+          </span>
+        </div>
+      ))}
+    </div>
+  );
+
+export const FormRelatedDatasetsPure = ({
+  referencedDatasets,
+  referencingDatasets
+}) => (
   <form>
     <div className="form-group">
       <Helptext
@@ -23,13 +64,16 @@ export const FormRelatedDatasetsPure = ({ referencedDatasets }) => (
         referencedDatasets={referencedDatasets}
       />
     </div>
+    {renderReferecingDatasets(referencingDatasets)}
   </form>
 );
 
 FormRelatedDatasetsPure.defaultProps = {
-  referencedDatasets: null
+  referencedDatasets: [],
+  referencingDatasets: []
 };
 
 FormRelatedDatasetsPure.propTypes = {
-  referencedDatasets: PropTypes.array
+  referencedDatasets: PropTypes.array,
+  referencingDatasets: PropTypes.array
 };

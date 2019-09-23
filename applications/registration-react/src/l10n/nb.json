@@ -15,6 +15,7 @@
   "getNew": "hent ny",
   "specification": "spesifikasjon",
   "connectedAPI": "API-beskrivelser koblet til dette datasettet av andre",
+  "connectedDatasets": "Datasettbeskrivelser koblet til dette API-et av andre",
   "provider": "Tilbyder",
   "category": "Kategori",
   "topic": "Emne",
