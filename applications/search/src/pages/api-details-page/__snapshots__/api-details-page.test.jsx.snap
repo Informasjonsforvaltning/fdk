@@ -107,6 +107,7 @@ exports[`should render ApiDetailsPage correctly with apiItem 1`] = `
         >
           <SearchHitHeader
             darkThemeBackground={true}
+            externalLink={false}
             nationalComponent={false}
             publisher={
               Object {
@@ -421,6 +422,7 @@ exports[`should render ApiDetailsPage correctly with missing api-properties 1`] 
         >
           <SearchHitHeader
             darkThemeBackground={true}
+            externalLink={false}
             nationalComponent={false}
             publisher={null}
             publisherItems={null}

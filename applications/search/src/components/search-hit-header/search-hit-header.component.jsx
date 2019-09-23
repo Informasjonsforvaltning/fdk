@@ -12,6 +12,8 @@ import { getTranslateText } from '../../lib/translateText';
 import localization from '../../lib/localization';
 import './search-hit-header.scss';
 import { LabelNational } from '../label-national/label-national.component';
+import { LinkExternal } from '../link-external/link-external.component';
+import { getConfig } from '../../config';
 
 const renderPublisher = (publisherLabel, publisher, publisherItems) => {
   if (!publisher) {
@@ -47,13 +49,21 @@ const renderThemes = (theme, losItems, darkThemeBackground) => {
   return themeNodes;
 };
 
-const renderTitle = (Tag, title, titleLink) => {
+const renderTitle = (Tag, title, titleLink, externalLink) => {
   const titleTag = (Tag, title) => (
     <Tag className="mr-3" name={title}>
       {title}
     </Tag>
   );
   if (titleLink) {
+    if (externalLink) {
+      return (
+        <LinkExternal
+          uri={getConfig().searchHost.concat(titleLink)}
+          prefLabel={title}
+        />
+      );
+    }
     return (
       <Link
         className="search-hit__title-link"
@@ -80,7 +90,8 @@ export const SearchHitHeader = props => {
     nationalComponent,
     statusCode,
     referenceData,
-    darkThemeBackground
+    darkThemeBackground,
+    externalLink
   } = props;
 
   const losItems = getLosStructure(referenceData);
@@ -88,7 +99,7 @@ export const SearchHitHeader = props => {
     <>
       {title && (
         <div className="mb-2 d-flex flex-wrap align-items-center">
-          {renderTitle(Tag, title, titleLink)}
+          {renderTitle(Tag, title, titleLink, externalLink)}
           {statusCode && (
             <LabelStatus
               statusCode={statusCode}
@@ -134,7 +145,8 @@ SearchHitHeader.defaultProps = {
   nationalComponent: false,
   statusCode: null,
   referenceData: null,
-  darkThemeBackground: false
+  darkThemeBackground: false,
+  externalLink: false
 };
 
 SearchHitHeader.propTypes = {
@@ -149,5 +161,6 @@ SearchHitHeader.propTypes = {
   nationalComponent: PropTypes.bool,
   statusCode: PropTypes.string,
   referenceData: PropTypes.object,
-  darkThemeBackground: PropTypes.bool
+  darkThemeBackground: PropTypes.bool,
+  externalLink: PropTypes.bool
 };

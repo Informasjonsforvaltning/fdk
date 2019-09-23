@@ -14,6 +14,7 @@ exports[`should render api-SearchHitItem correctly 1`] = `
     <SearchHitHeader
       darkThemeBackground={false}
       detialsPage={false}
+      externalLink={false}
       nationalComponent={false}
       publisher={
         Object {
@@ -93,6 +94,7 @@ exports[`should render api-SearchHitItem correctly with no props 1`] = `
     <SearchHitHeader
       darkThemeBackground={false}
       detialsPage={false}
+      externalLink={false}
       nationalComponent={false}
       publisher={null}
       publisherItems={null}
@@ -126,6 +128,7 @@ exports[`should render api-SearchHitItem with long description 1`] = `
     <SearchHitHeader
       darkThemeBackground={false}
       detialsPage={false}
+      externalLink={false}
       nationalComponent={false}
       publisher={null}
       publisherItems={null}

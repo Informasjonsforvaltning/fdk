@@ -26,6 +26,7 @@ exports[`should render informatiomModel-SearchHitItem correctly 1`] = `
   <header>
     <SearchHitHeader
       darkThemeBackground={false}
+      externalLink={false}
       nationalComponent={false}
       publisher={
         Object {

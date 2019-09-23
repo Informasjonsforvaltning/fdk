@@ -74,6 +74,7 @@ exports[`should render ConceptDetailsPage correctly with conceptItem 1`] = `
         >
           <SearchHitHeader
             darkThemeBackground={true}
+            externalLink={false}
             nationalComponent={false}
             publisher={
               Object {
