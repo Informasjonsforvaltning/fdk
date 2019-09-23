@@ -27,6 +27,7 @@ import {
 import { SearchHitHeader } from '../../components/search-hit-header/search-hit-header.component';
 import { getFirstLineOfText } from '../../lib/stringUtils';
 import './dataset-details-page.scss';
+import { getConfig } from '../../config';
 
 const renderPublished = datasetItem => {
   if (!datasetItem) {
@@ -186,23 +187,34 @@ const renderContactPoints = dataset => {
   );
 };
 
+const resolveLinkOrExternalLink = item => {
+  const datasetPath = `/concepts/${item.uri.substring(
+    item.uri.lastIndexOf('/') + 1
+  )}`;
+  if (getConfig().themeNap) {
+    return (
+      <LinkExternal
+        uri={getConfig().searchHost.concat(datasetPath)}
+        prefLabel={_.capitalize(getTranslateText(_.get(item, 'prefLabel')))}
+      />
+    );
+  }
+  return (
+    <Link to={datasetPath}>
+      {_.capitalize(getTranslateText(_.get(item, 'prefLabel')))}
+    </Link>
+  );
+};
+
 const renderSubjects = subject => {
   const subjectItems = items =>
     items.map(item => (
       <TwoColRow
         key={item.uri}
         col1={
-          item.uri ? (
-            <Link
-              to={`/concepts/${item.uri.substring(
-                item.uri.lastIndexOf('/') + 1
-              )}`}
-            >
-              {_.capitalize(getTranslateText(_.get(item, 'prefLabel')))}
-            </Link>
-          ) : (
-            _.capitalize(getTranslateText(_.get(item, 'prefLabel')))
-          )
+          item.uri
+            ? resolveLinkOrExternalLink(item)
+            : _.capitalize(getTranslateText(_.get(item, 'prefLabel')))
         }
         col2={getTranslateText(_.get(item, 'definition'))}
       />
