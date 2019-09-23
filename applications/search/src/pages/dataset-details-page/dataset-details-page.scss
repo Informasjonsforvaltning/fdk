@@ -2,6 +2,7 @@
   width: 3.5em; 
   height: 3.5em;
   display: inline-block;
+  margin: auto;
   background-repeat: no-repeat;
 }
 
@@ -15,4 +16,8 @@
   .fdk-icon-catalog-dataset {
     background-image: url("/static/img/icon-catalog-dataset-nap-md.svg");
   }
+}
+
+.dataset-description-nowrap {
+  white-space: nowrap;
 }
