@@ -12,18 +12,9 @@ const renderHarvested = harvest => {
   return (
     <span className="d-flex flex-wrap align-self-center">
       {localization.dataset.firstHarvested}&nbsp;
-      <Moment format="DD.MM.YYYY">{harvest.firstHarvested}</Moment>
+      <Moment format="DD.MM.YYYY">{harvest.firstHarvested}</Moment>&nbsp;/&nbsp;
     </span>
   );
-};
-
-const renderHarvestSeparator = harvest => {
-  if (_.get(harvest, 'firstHarvested') && _.get(harvest, 'lastChanged')) {
-    return (
-      <span className="d-flex flex-wrap align-self-center">&nbsp;/&nbsp;</span>
-    );
-  }
-  return null;
 };
 
 const renderLastChanged = harvest => {
@@ -45,11 +36,10 @@ export const HarvestDate = props => {
   }
 
   return (
-    <>
+    <div className="d-flex flex-wrap">
       {renderHarvested(harvest)}
-      {renderHarvestSeparator(harvest)}
       {renderLastChanged(harvest)}
-    </>
+    </div>
   );
 };
 
