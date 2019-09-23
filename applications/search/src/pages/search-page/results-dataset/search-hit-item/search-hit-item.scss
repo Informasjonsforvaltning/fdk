@@ -8,6 +8,18 @@
   padding-top: 0.5em;
 }
 
+.theme-fdk {
+  .fdk-icon-public {
+    background-image: url("/static/img/icon-dataset-public-md.svg");
+  }
+}
+
+.theme-nap {
+  .fdk-icon-public {
+    background-image: url("/static/img/icon-dataset-public-nap-md.svg");
+  }
+}
+
 .fdk-icon-public {
   background-image: url("/static/img/icon-dataset-public-md.svg");
   width: 2em; 
