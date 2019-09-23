@@ -1,5 +1,5 @@
 import { reduxForm } from 'redux-form';
-import { FormRelatedDatasets } from './form-related-datasets.component';
+import { FormRelatedDatasetsPure } from './form-related-datasets-pure';
 import { asyncValidate } from '../async-patch/async-patch';
 
 const config = {
@@ -8,5 +8,5 @@ const config = {
 };
 
 export const ConfiguredFormRelatedDatasets = reduxForm(config)(
-  FormRelatedDatasets
+  FormRelatedDatasetsPure
 );
