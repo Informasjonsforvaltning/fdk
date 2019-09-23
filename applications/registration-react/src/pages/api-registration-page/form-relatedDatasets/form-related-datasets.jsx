@@ -13,6 +13,6 @@ const mapStateToProps = ({ form }, ownProps) => {
   };
 };
 
-export const ConnectedFormRelatedDatasets = connect(mapStateToProps)(
+export const FormRelatedDatasets = connect(mapStateToProps)(
   ConfiguredFormRelatedDatasets
 );

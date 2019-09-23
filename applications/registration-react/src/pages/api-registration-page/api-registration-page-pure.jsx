@@ -10,7 +10,7 @@ import { FormTemplateWithState } from '../../components/form-template/form-templ
 import { ConnectedFormMeta } from './form-meta/connected-form-meta';
 import { ConnectedFormApiServiceType } from './form-api-service-type/connected-form-api-service-type';
 import { ConnectedFormAccess } from './form-access/connected-form-access';
-import { ConnectedFormRelatedDatasets } from './form-relatedDatasets/connected-form-related-datasets';
+import { FormRelatedDatasets } from './form-relatedDatasets/form-related-datasets';
 import { ConnectedFormApiStatus } from './form-apiStatus/connected-form-apiStatus';
 import { StatusBar } from '../../components/status-bar/status-bar.component';
 import { ConnectedFormPublish } from './connected-form-publish/connected-form-publish';
@@ -193,7 +193,7 @@ export const ApiRegistrationPagePure = ({
                 showInitially
                 title={localization.schema.apiDatasetReferences.title}
               >
-                <ConnectedFormRelatedDatasets
+                <FormRelatedDatasets
                   apiItem={item}
                   orgPath={_.get(publisher, 'orgPath')}
                   referencedDatasets={referencedDatasets}
