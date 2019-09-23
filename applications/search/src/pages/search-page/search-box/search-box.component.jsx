@@ -61,6 +61,7 @@ export const SearchBoxPure = props => {
                 role="button"
                 tabIndex="0"
                 className="clear-icon"
+                aria-label={localization.query.reset}
                 onClick={e => {
                   clearInputTextHandler(e);
                 }}

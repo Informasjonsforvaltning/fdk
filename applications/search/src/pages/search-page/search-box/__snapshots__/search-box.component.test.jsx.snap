@@ -38,6 +38,7 @@ exports[`should render SearchBoxPure correctly 1`] = `
             value="enhetsregister"
           />
           <div
+            aria-label="Clear"
             className="clear-icon"
             onClick={[Function]}
             onKeyDown={[Function]}
