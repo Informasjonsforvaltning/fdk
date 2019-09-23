@@ -8,9 +8,9 @@ export const getDatasetByURI = uri =>
     authorization: getConfig().datasetApi.authorization
   });
 
-export const searchDatasets = ({ title, orgPath, returnFields }) =>
+export const searchDatasets = params =>
   searchApiGet({
     url: `${getConfig().datasetApi.host}/api/datasets`,
-    params: { title, orgPath, returnFields },
+    params,
     authorization: getConfig().datasetApi.authorization
   });

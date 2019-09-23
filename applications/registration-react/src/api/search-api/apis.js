@@ -1,9 +1,9 @@
 import { getConfig } from '../../config';
 import { searchApiGet } from './host';
 
-export const searchApis = ({ title, datasetUri, returnFields }) =>
+export const searchApis = params =>
   searchApiGet({
     url: `${getConfig().apiApi.host}/api/apis`,
-    params: { title, dataseturi: datasetUri, returnFields },
+    params,
     authorization: getConfig().apiApi.authorization
   });
