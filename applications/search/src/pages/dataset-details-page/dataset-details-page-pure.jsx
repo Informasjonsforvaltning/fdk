@@ -4,7 +4,6 @@ import _ from 'lodash';
 import DocumentMeta from 'react-document-meta';
 import Moment from 'react-moment';
 import { Link } from 'react-router-dom';
-import cx from 'classnames';
 
 import localization from '../../lib/localization';
 import { DatasetDescription } from './dataset-description/dataset-description.component';
@@ -28,7 +27,6 @@ import {
 import { SearchHitHeader } from '../../components/search-hit-header/search-hit-header.component';
 import { getFirstLineOfText } from '../../lib/stringUtils';
 import './dataset-details-page.scss';
-import { getConfig } from '../../config';
 
 const renderPublished = datasetItem => {
   if (!datasetItem) {
@@ -416,11 +414,6 @@ export const DatasetDetailsPagePure = props => {
     description: getTranslateText(_.get(datasetItem, 'description'))
   };
 
-  const datasetIconClass = cx('align-self-center', 'mr-2', {
-    'fdk-icon-catalog-dataset': !getConfig().themeNap,
-    'nap-icon-catalog-dataset': getConfig().themeNap
-  });
-
   return (
     <main id="content" className="container">
       <article>
@@ -428,13 +421,15 @@ export const DatasetDetailsPagePure = props => {
           <div className="col-12 col-lg-8 offset-lg-4">
             <DocumentMeta {...meta} />
 
-            <div className="d-flex fdk-detail-date mb-5">
-              <i className={datasetIconClass} />
-              <strong className="align-self-center">
+            <div className="d-flex align-items-center fdk-detail-date mb-5">
+              <div className="text-center">
+                <i className="fdk-icon-catalog-dataset" />
+              </div>
+              <strong className="align-self-center dataset-description-nowrap">
                 {localization.dataset.datasetdescription}&nbsp;
               </strong>
               <HarvestDate
-                className="align-self-center"
+                className="d-flex flex-wrap align-self-center"
                 harvest={_.get(datasetItem, 'harvest')}
               />
             </div>
