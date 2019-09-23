@@ -72,11 +72,9 @@ export class InputTagsDatasetsField extends React.Component {
 
   loadSuggestions(value) {
     const datasets = [];
-    const { orgPath } = this.props;
 
     searchDatasets({
       title: value,
-      orgPath,
       returnFields: 'title,uri'
     })
       .then(responseData => {
@@ -120,12 +118,10 @@ export class InputTagsDatasetsField extends React.Component {
 
 InputTagsDatasetsField.defaultProps = {
   input: null,
-  referencedDatasets: null,
-  orgPath: ''
+  referencedDatasets: null
 };
 
 InputTagsDatasetsField.propTypes = {
   input: PropTypes.object,
-  referencedDatasets: PropTypes.array,
-  orgPath: PropTypes.string
+  referencedDatasets: PropTypes.array
 };
