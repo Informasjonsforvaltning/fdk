@@ -27,9 +27,10 @@ const memoizedGetInformationModelByHarvestSourceUri = _.memoize(
 // todo when we migrate to dcat 2.0, we can have more reasonably link together datasets and apis,
 //  right now it is api id stored in that peculiar property.
 const getDatasetsByApiId = id =>
-  datasetsSearch({ distributionAccessServiceEndpointDescriptionUri: id }).then(
-    extractDatasets
-  );
+  datasetsSearch({
+    distributionAccessServiceEndpointDescriptionUri: id,
+    returnFields: 'id,title,publisher,description'
+  }).then(extractDatasets);
 const memoizedGetDatasetsByApiId = _.memoize(getDatasetsByApiId);
 
 const mapProps = {
