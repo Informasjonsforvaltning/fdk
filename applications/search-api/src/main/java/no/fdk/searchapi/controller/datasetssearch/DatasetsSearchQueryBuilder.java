@@ -229,5 +229,15 @@ class DatasetsSearchQueryBuilder {
             return QueryBuilders.termQuery("distribution.accessService.endpointDescription.uri.keyword", value);
         }
 
+        static QueryBuilder themeProfile(String value, DatasetsSearchQueryBuilder queryBuilder) {
+            if (!"transport".equalsIgnoreCase(value)) {
+                return null;
+            }
+            BoolQueryBuilder builder = QueryBuilders.boolQuery();
+            builder.should(FilterBuilders.losTheme("trafikk-reiser-og-samferdsel", queryBuilder));
+            builder.should(FilterBuilders.theme("TRAN", queryBuilder));
+            return builder;
+        }
+
     }
 }
