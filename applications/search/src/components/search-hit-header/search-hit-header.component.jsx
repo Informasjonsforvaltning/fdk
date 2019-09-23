@@ -102,14 +102,13 @@ export const SearchHitHeader = props => {
         {publisherItems &&
           renderPublisher(publisherLabel, publisher, publisherItems)}
 
-        {!publisherItems &&
-          publisher && (
-            <PublisherLabel
-              tag={publisherTag}
-              label={publisherLabel}
-              publisherItem={publisher}
-            />
-          )}
+        {!publisherItems && publisher && (
+          <PublisherLabel
+            tag={publisherTag}
+            label={publisherLabel}
+            publisherItem={publisher}
+          />
+        )}
       </div>
 
       {(nationalComponent || theme) && (

@@ -97,12 +97,8 @@ renderValidationErrorOverlayDialog.propTypes = {
 
 const renderMessageForPublishStatusChange = ({ published, type }) =>
   published
-    ? `${localization.formStatus.type[type]} ${
-        localization.formStatus.published
-      }.`
-    : `${localization.formStatus.type[type]} ${
-        localization.formStatus.unPublished
-      }.`;
+    ? `${localization.formStatus.type[type]} ${localization.formStatus.published}.`
+    : `${localization.formStatus.type[type]} ${localization.formStatus.unPublished}.`;
 
 const renderMessageForUpdate = ({ isSaving, published }) => {
   if (isSaving) {

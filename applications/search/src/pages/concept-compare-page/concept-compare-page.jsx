@@ -165,9 +165,8 @@ export const ConceptComparePage = props => {
             {conceptsCompare && (
               <>
                 <h1 className="title">
-                  {localization.menu.conceptsCompare} ({
-                    Object.keys(conceptsCompare).length
-                  })
+                  {localization.menu.conceptsCompare} (
+                  {Object.keys(conceptsCompare).length})
                 </h1>
 
                 <section className="scrollable">

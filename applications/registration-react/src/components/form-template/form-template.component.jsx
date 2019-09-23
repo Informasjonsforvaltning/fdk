@@ -55,13 +55,12 @@ export const FormTemplate = props => {
             </div>
           )}
         </div>
-        {!collapse &&
-          values && (
-            <div className="d-flex text-left fdk-text-size-small fdk-color-neutral-dark">
-              <i className="fa fa-2x fa-angle-down mr-2 visibilityHidden" />
-              <span className="text-ellipsis">{values}</span>
-            </div>
-          )}
+        {!collapse && values && (
+          <div className="d-flex text-left fdk-text-size-small fdk-color-neutral-dark">
+            <i className="fa fa-2x fa-angle-down mr-2 visibilityHidden" />
+            <span className="text-ellipsis">{values}</span>
+          </div>
+        )}
       </button>
       <Collapse className={collapseContentClass} isOpen={collapse}>
         {children}

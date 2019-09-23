@@ -24,10 +24,9 @@ const InputTagsField = props => {
           inputProps={{ placeholder: '' }}
           onChange={tags => handleChange(props, tags)}
         />
-        {touched &&
-          !error && (
-            <i className="fa fa-check-circle fa-lg ml-2 fdk-reg-save-success" />
-          )}
+        {touched && !error && (
+          <i className="fa fa-check-circle fa-lg ml-2 fdk-reg-save-success" />
+        )}
         {!touched && <i className="fa fa-check-circle fa-lg ml-2 invisible" />}
       </label>
       {touched &&

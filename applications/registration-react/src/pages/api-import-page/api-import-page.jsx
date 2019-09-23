@@ -154,14 +154,12 @@ export class ApiImportPage extends React.Component {
 
         <div className="row">
           <div className="col-12">
-            {!error &&
-              !showImportByLink &&
-              !showImportByFile && (
-                <ImportDialog
-                  showLinkImport={this.showLinkImport}
-                  handleFileUpload={this.onFileUpload}
-                />
-              )}
+            {!error && !showImportByLink && !showImportByFile && (
+              <ImportDialog
+                showLinkImport={this.showLinkImport}
+                handleFileUpload={this.onFileUpload}
+              />
+            )}
 
             {showImportByFile && (
               <ImportFileUpload

@@ -31,8 +31,11 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-const mergeProps = (stateProps, dispatchProps, ownProps) =>
-  Object.assign({}, stateProps, dispatchProps, ownProps);
+const mergeProps = (stateProps, dispatchProps, ownProps) => ({
+  ...stateProps,
+  ...dispatchProps,
+  ...ownProps
+});
 
 export const ConnectedFormAccessRights = connect(
   mapStateToProps,

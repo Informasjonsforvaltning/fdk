@@ -43,9 +43,7 @@ export const accessRightsValues = values => {
       accessRights.uri ===
       'http://publications.europa.eu/resource/authority/access-right/PUBLIC'
     ) {
-      retVal += `${
-        localization.datasets.formValues.accessRights.publicString
-      }. `;
+      retVal += `${localization.datasets.formValues.accessRights.publicString}. `;
     } else if (
       accessRights.uri ===
       'http://publications.europa.eu/resource/authority/access-right/NON_PUBLIC'
@@ -252,11 +250,10 @@ export const contentsValues = values => {
       hasAvailabilityAnnotation
     } = values;
     if (conformsTo) {
-      retVal += conformsTo.map(
-        item =>
-          getTranslateText(item.prefLabel)
-            ? `${getTranslateText(item.prefLabel)}. `
-            : ''
+      retVal += conformsTo.map(item =>
+        getTranslateText(item.prefLabel)
+          ? `${getTranslateText(item.prefLabel)}. `
+          : ''
       );
     }
 
@@ -315,9 +312,7 @@ export const referenceValues = values => {
       ).length;
     }
     if (countReferences > 0) {
-      return `${countReferences} ${
-        localization.datasets.formValues.references
-      }`;
+      return `${countReferences} ${localization.datasets.formValues.references}`;
     }
     return null;
   }
@@ -362,9 +357,7 @@ export const distributionValues = values => {
       ).length;
     }
     if (countDistributions > 0) {
-      return `${countDistributions} ${
-        localization.datasets.formValues.distributions
-      }`;
+      return `${countDistributions} ${localization.datasets.formValues.distributions}`;
     }
   }
   return null;
@@ -379,9 +372,7 @@ export const distributionAPIValues = values => {
         .length;
     }
     if (countDistributions > 0) {
-      return `${countDistributions} ${
-        localization.datasets.formValues.distributions
-      }`;
+      return `${countDistributions} ${localization.datasets.formValues.distributions}`;
     }
   }
   return null;

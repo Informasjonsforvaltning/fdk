@@ -60,28 +60,27 @@ export const renderSamples = ({ fields, onDeleteFieldAtIndex }) => {
             </div>
           </div>
         ))}
-      {fields &&
-        fields.length === 0 && (
-          <button
-            className="fdk-btn-no-border"
-            type="button"
-            onClick={() =>
-              fields.push({
-                id: '',
-                description: textType,
-                accessURL: [],
-                license: licenseType,
-                conformsTo: [],
-                page: [licenseType],
-                format: [],
-                type: ''
-              })
-            }
-          >
-            <i className="fa fa-plus mr-2" />
-            {localization.schema.sample.addSampleLabel}
-          </button>
-        )}
+      {fields && fields.length === 0 && (
+        <button
+          className="fdk-btn-no-border"
+          type="button"
+          onClick={() =>
+            fields.push({
+              id: '',
+              description: textType,
+              accessURL: [],
+              license: licenseType,
+              conformsTo: [],
+              page: [licenseType],
+              format: [],
+              type: ''
+            })
+          }
+        >
+          <i className="fa fa-plus mr-2" />
+          {localization.schema.sample.addSampleLabel}
+        </button>
+      )}
     </div>
   );
 };

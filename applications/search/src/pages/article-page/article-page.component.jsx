@@ -33,8 +33,9 @@ export const ArticlePage = () => {
                 href="https://www.altinn.no/"
               >
                 Altinn
-              </a>, og eventuelt tildele deg rollen {'"Tilgangsstyring"'},
-              dersom du skal delegere tilgangen videre.
+              </a>
+              , og eventuelt tildele deg rollen {'"Tilgangsstyring"'}, dersom du
+              skal delegere tilgangen videre.
               <br />
               Kontakt den som kan delegere tilganger i{' '}
               <a
@@ -49,7 +50,8 @@ export const ArticlePage = () => {
             </p>
             <p>
               Når du har fått tilgang, vil din virksomhets datakatalog være
-              tilgjengelig etter innlogging.<br />
+              tilgjengelig etter innlogging.
+              <br />
               <a
                 title="Lenke til registreringsløsning"
                 target="_blank"
@@ -71,7 +73,8 @@ export const ArticlePage = () => {
 
             <div>
               Du må ha rollen <strong>Tilgangsstyring</strong> for din
-              virksomhet for å tildele roller og rettigheter til andre.<br />
+              virksomhet for å tildele roller og rettigheter til andre.
+              <br />
               Du trenger <strong>fødselsnummer</strong> (11 siffer) og{' '}
               <strong>etternavnet</strong> til den du ønsker å tildele
               rettigheter til.

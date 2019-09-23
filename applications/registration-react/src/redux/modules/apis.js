@@ -112,8 +112,8 @@ export default function apis(state = initialState, action) {
       const isNew = !_.find(items, { id: action.payload.id });
       const newItems = isNew
         ? [...items, action.payload]
-        : items.map(
-            item => (item.id === action.payload.id ? action.payload : item)
+        : items.map(item =>
+            item.id === action.payload.id ? action.payload : item
           );
       return {
         ...state,

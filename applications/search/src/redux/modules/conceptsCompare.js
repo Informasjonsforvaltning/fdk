@@ -20,17 +20,19 @@ function shouldFetch(metaState) {
 
 export function fetchConceptsToCompareIfNeededAction(iDs) {
   return (dispatch, getState) => {
-    iDs.filter(id => !!id).forEach(id => {
-      if (shouldFetch(_.get(getState(), ['conceptsCompare', 'meta', id]))) {
-        dispatch(
-          reduxFsaThunk(() => getConcept(id), {
-            onBeforeStart: { type: CONCEPTSCOMPARE_REQUEST, meta: { id } },
-            onSuccess: { type: CONCEPTSCOMPARE_SUCCESS, meta: { id } },
-            onError: { type: CONCEPTSCOMPARE_FAILURE, meta: { id } }
-          })
-        );
-      }
-    });
+    iDs
+      .filter(id => !!id)
+      .forEach(id => {
+        if (shouldFetch(_.get(getState(), ['conceptsCompare', 'meta', id]))) {
+          dispatch(
+            reduxFsaThunk(() => getConcept(id), {
+              onBeforeStart: { type: CONCEPTSCOMPARE_REQUEST, meta: { id } },
+              onSuccess: { type: CONCEPTSCOMPARE_SUCCESS, meta: { id } },
+              onError: { type: CONCEPTSCOMPARE_FAILURE, meta: { id } }
+            })
+          );
+        }
+      });
   };
 }
 

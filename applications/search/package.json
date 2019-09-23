@@ -3,7 +3,6 @@
   "repository": "https://github.com/Informasjonsforvaltning/fdk/tree/develop/applications/search",
   "description": "Search",
   "scripts": {
-    "precommit": "lint-staged",
     "start": "node start.js",
     "dev": "webpack-dev-server --hot --inline --config webpack.hostdev.config.js",
     "build": "webpack --config webpack.prod.config.js -p",
@@ -11,13 +10,7 @@
     "test": "jest ",
     "test:coverage": "jest --coverage",
     "tdd": "jest --watch",
-    "lint": "eslint ./ --ext=.js,.jsx --fix"
-  },
-  "lint-staged": {
-    "*.{js,jsx}": [
-      "eslint --fix",
-      "git add"
-    ]
+    "lint": "(cd ../../; npx eslint applications/search --ext=.js,.jsx --fix)"
   },
   "license": "ISC",
   "dependencies": {
@@ -29,7 +22,6 @@
     "@babel/preset-react": "^7.0.0-beta.54",
     "axios": "^0.19.0",
     "babel-core": "^7.0.0-bridge.0",
-    "babel-eslint": "^8.2.6",
     "babel-loader": "^8.0.0-beta.4",
     "body-parser": "^1.18.3",
     "bootstrap": "^4.3.1",
@@ -94,20 +86,8 @@
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.9.1",
     "enzyme-to-json": "^3.3.3",
-    "eslint": "^5.16.0",
-    "eslint-config-airbnb": "^17.1.0",
-    "eslint-config-prettier": "^4.3.0",
-    "eslint-loader": "^2.1.2",
-    "eslint-plugin-eslint-comments": "^3.1.1",
-    "eslint-plugin-import": "^2.17.3",
-    "eslint-plugin-jsx-a11y": "^6.2.1",
-    "eslint-plugin-prettier": "^3.1.0",
-    "eslint-plugin-react": "^7.13.0",
-    "eslint-plugin-react-hooks": "^1.6.0",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^24.8.0",
-    "lint-staged": "^9.2.5",
-    "prettier": "1.13.7",
     "resolve-url-loader": "^3.1.0",
     "webpack-cli": "^3.3.8",
     "webpack-dev-server": "^3.8.0"

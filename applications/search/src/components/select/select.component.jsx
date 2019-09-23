@@ -38,9 +38,7 @@ export class Select extends React.Component {
         id="search-result-dropdown-1"
         className="ml-auto"
         title={`${localization.sort.by} ${localization.sort[selectedValue]}`}
-        aria-label={`Sorter søkeresultat, ${localization.sort.by} ${
-          localization.sort[selectedValue]
-        }`}
+        aria-label={`Sorter søkeresultat, ${localization.sort.by} ${localization.sort[selectedValue]}`}
       >
         <DropdownToggle className="fdk-button" caret color="primary" title="">
           {localization.sort.by} {localization.sort[selectedValue]}

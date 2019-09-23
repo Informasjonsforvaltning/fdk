@@ -247,33 +247,32 @@ export const FilterTree = props => {
                 onClickArrow,
                 openArrows
               })}
-              {collapseItems &&
-                aggregationsForest.length > 5 && (
-                  <div>
-                    <Collapse isOpen={openList}>
-                      <div>
-                        {mainTree({
-                          aggregationsForest: aggregationsForest.slice(5),
-                          activeFilter,
-                          referenceDataItems,
-                          handleFiltering,
-                          onClickArrow,
-                          openArrows
-                        })}
-                      </div>
-                    </Collapse>
-                    <button
-                      type="button"
-                      className="fdk-toggleList"
-                      onClick={handleToggleOpenList}
-                    >
-                      <i className={openIconClass} />
-                      {openList
-                        ? localization.facet.showfewer
-                        : localization.facet.showmore}
-                    </button>
-                  </div>
-                )}
+              {collapseItems && aggregationsForest.length > 5 && (
+                <div>
+                  <Collapse isOpen={openList}>
+                    <div>
+                      {mainTree({
+                        aggregationsForest: aggregationsForest.slice(5),
+                        activeFilter,
+                        referenceDataItems,
+                        handleFiltering,
+                        onClickArrow,
+                        openArrows
+                      })}
+                    </div>
+                  </Collapse>
+                  <button
+                    type="button"
+                    className="fdk-toggleList"
+                    onClick={handleToggleOpenList}
+                  >
+                    <i className={openIconClass} />
+                    {openList
+                      ? localization.facet.showfewer
+                      : localization.facet.showmore}
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         </Collapse>

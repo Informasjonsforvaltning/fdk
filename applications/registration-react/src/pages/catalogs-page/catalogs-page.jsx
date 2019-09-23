@@ -73,30 +73,29 @@ export const RegCatalogs = props => {
   return (
     <div className="container">
       {catalogItems && renderCatalogs(props)}
-      {!isFetching &&
-        !catalogItems && (
-          <div className="row mb-2 mb-md-5">
-            <div id="no-catalogs">
-              <h1 className="fdk-text-strong">
-                {localization.catalogs.missingCatalogs.title}
-              </h1>
-              <div className="mt-2 mb-2">
-                {localization.catalogs.missingCatalogs.ingress}
-              </div>
-              <div className="fdk-text-size-small">
-                <strong>
-                  {localization.catalogs.missingCatalogs.accessTitle}
-                </strong>
-                <p>
-                  <a href="https://fellesdatakatalog.brreg.no/about-registration">
-                    {localization.catalogs.missingCatalogs.accessText}
-                    <i className="fa fa-external-link fdk-fa-right" />
-                  </a>
-                </p>
-              </div>
+      {!isFetching && !catalogItems && (
+        <div className="row mb-2 mb-md-5">
+          <div id="no-catalogs">
+            <h1 className="fdk-text-strong">
+              {localization.catalogs.missingCatalogs.title}
+            </h1>
+            <div className="mt-2 mb-2">
+              {localization.catalogs.missingCatalogs.ingress}
+            </div>
+            <div className="fdk-text-size-small">
+              <strong>
+                {localization.catalogs.missingCatalogs.accessTitle}
+              </strong>
+              <p>
+                <a href="https://fellesdatakatalog.brreg.no/about-registration">
+                  {localization.catalogs.missingCatalogs.accessText}
+                  <i className="fa fa-external-link fdk-fa-right" />
+                </a>
+              </p>
             </div>
           </div>
-        )}
+        </div>
+      )}
     </div>
   );
 };

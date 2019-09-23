@@ -56,13 +56,11 @@ export class FormCatalogPure extends React.Component {
           <Field name="id" component={InputField} label="Beskrivelse" />
         </div>
         <div className="d-flex align-items-center justify-content-between">
-          {title &&
-            title.nb &&
-            !collapseTitle && (
-              <h1 className="w-75 fdk-text-strong">
-                {getTranslateText(title, localization.getLanguage())}
-              </h1>
-            )}
+          {title && title.nb && !collapseTitle && (
+            <h1 className="w-75 fdk-text-strong">
+              {getTranslateText(title, localization.getLanguage())}
+            </h1>
+          )}
           <div className={fieldClass}>
             <Field
               name={`title.${localization.getLanguage()}`}
@@ -74,12 +72,11 @@ export class FormCatalogPure extends React.Component {
           </div>
         </div>
 
-        {publisher &&
-          publisher.name && (
-            <div className="fdk-reg-datasets-publisher mt-2 mb-4">
-              {localization.schema.catalog.ownedByLabel} {publisher.name}
-            </div>
-          )}
+        {publisher && publisher.name && (
+          <div className="fdk-reg-datasets-publisher mt-2 mb-4">
+            {localization.schema.catalog.ownedByLabel} {publisher.name}
+          </div>
+        )}
 
         <div className={collapseClass}>
           <div className="d-flex justify-content-between w-100">
