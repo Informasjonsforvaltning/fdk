@@ -63,6 +63,7 @@
   },
   "query": {
     "intro": "Søk etter innhald",
+    "reset": "Nullstill",
     "do": "Søk",
     "clear": "Nullstill alle filter"
   },
