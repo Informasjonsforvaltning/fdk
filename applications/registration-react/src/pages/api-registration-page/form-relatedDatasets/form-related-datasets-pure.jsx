@@ -5,7 +5,7 @@ import localization from '../../../lib/localization';
 import Helptext from '../../../components/helptext/helptext.component';
 import { InputTagsDatasetsField } from '../field-tagsinput-datasets/field-tagsinput-datasets.components';
 
-export const FormRelatedDatasets = ({ orgPath, referencedDatasets }) => (
+export const FormRelatedDatasetsPure = ({ orgPath, referencedDatasets }) => (
   <form>
     <div className="form-group">
       <Helptext
@@ -27,12 +27,12 @@ export const FormRelatedDatasets = ({ orgPath, referencedDatasets }) => (
   </form>
 );
 
-FormRelatedDatasets.defaultProps = {
+FormRelatedDatasetsPure.defaultProps = {
   orgPath: null,
   referencedDatasets: null
 };
 
-FormRelatedDatasets.propTypes = {
+FormRelatedDatasetsPure.propTypes = {
   orgPath: PropTypes.string,
   referencedDatasets: PropTypes.array
 };
