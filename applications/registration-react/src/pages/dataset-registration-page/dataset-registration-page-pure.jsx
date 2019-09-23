@@ -96,8 +96,7 @@ export function DatasetRegistrationPagePure(props) {
     contactPoint = {},
     distribution = {},
     sample = {}
-  } =
-    form || {};
+  } = form || {};
 
   useEffect(() => dispatchEnsureData(catalogId, datasetId), [
     catalogId,
@@ -125,15 +124,12 @@ export function DatasetRegistrationPagePure(props) {
       : [];
   };
 
-  useEffect(
-    () => {
-      if (datasetItem && !languagesDetermined) {
-        setInputLanguages(getUsedLanguages());
-        setLanguagesDetermined(true);
-      }
-    },
-    [datasetItem]
-  );
+  useEffect(() => {
+    if (datasetItem && !languagesDetermined) {
+      setInputLanguages(getUsedLanguages());
+      setLanguagesDetermined(true);
+    }
+  }, [datasetItem]);
 
   return (
     <div className="container">

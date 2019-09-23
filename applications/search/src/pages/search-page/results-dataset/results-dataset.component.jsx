@@ -202,75 +202,74 @@ export const ResultsDatasetPure = ({
             losItems={losItems}
           />
 
-          {datasetItems &&
-            datasetAggregations && (
-              <div>
-                {_renderFilterModal({
-                  showFilterModal,
-                  closeFilterModal,
-                  datasetAggregations,
-                  onFilterTheme,
-                  onFilterAccessRights,
-                  onFilterPublisherHierarchy,
-                  onFilterProvenance,
-                  onFilterSpatial,
-                  onFilterLos,
-                  locationSearch,
-                  themesItems,
-                  publishers,
-                  referenceData
-                })}
-                <FilterTree
-                  title={localization.facet.theme}
-                  aggregations={filterLosThemesFromAggregation(
-                    _.get(datasetAggregations, ['los', 'buckets']),
-                    losItems
-                  )}
-                  handleFiltering={onFilterLos}
-                  activeFilter={locationSearch.losTheme}
-                  referenceDataItems={losItems}
-                  collapseItems
-                />
-                <FilterBox
-                  htmlKey={1}
-                  title={localization.facet.themeEU}
-                  filter={datasetAggregations.theme}
-                  onClick={onFilterTheme}
-                  activeFilter={locationSearch.theme}
-                  themesItems={themesItems}
-                />
-                {!getConfig().themeNap && (
-                  <FilterBox
-                    htmlKey={2}
-                    title={localization.facet.accessRight}
-                    filter={datasetAggregations.accessRights}
-                    onClick={onFilterAccessRights}
-                    activeFilter={locationSearch.accessrights}
-                  />
+          {datasetItems && datasetAggregations && (
+            <div>
+              {_renderFilterModal({
+                showFilterModal,
+                closeFilterModal,
+                datasetAggregations,
+                onFilterTheme,
+                onFilterAccessRights,
+                onFilterPublisherHierarchy,
+                onFilterProvenance,
+                onFilterSpatial,
+                onFilterLos,
+                locationSearch,
+                themesItems,
+                publishers,
+                referenceData
+              })}
+              <FilterTree
+                title={localization.facet.theme}
+                aggregations={filterLosThemesFromAggregation(
+                  _.get(datasetAggregations, ['los', 'buckets']),
+                  losItems
                 )}
-                <FilterTree
-                  title={localization.facet.organisation}
-                  aggregations={datasetAggregations.orgPath.buckets}
-                  handleFiltering={onFilterPublisherHierarchy}
-                  activeFilter={locationSearch.orgPath}
-                  referenceDataItems={publishers}
-                />
+                handleFiltering={onFilterLos}
+                activeFilter={locationSearch.losTheme}
+                referenceDataItems={losItems}
+                collapseItems
+              />
+              <FilterBox
+                htmlKey={1}
+                title={localization.facet.themeEU}
+                filter={datasetAggregations.theme}
+                onClick={onFilterTheme}
+                activeFilter={locationSearch.theme}
+                themesItems={themesItems}
+              />
+              {!getConfig().themeNap && (
                 <FilterBox
-                  htmlKey={3}
-                  title={localization.facet.spatial}
-                  filter={datasetAggregations.spatial}
-                  onClick={onFilterSpatial}
-                  activeFilter={locationSearch.spatial}
+                  htmlKey={2}
+                  title={localization.facet.accessRight}
+                  filter={datasetAggregations.accessRights}
+                  onClick={onFilterAccessRights}
+                  activeFilter={locationSearch.accessrights}
                 />
-                <FilterBox
-                  htmlKey={4}
-                  title={localization.facet.provenance}
-                  filter={datasetAggregations.provenance}
-                  onClick={onFilterProvenance}
-                  activeFilter={locationSearch.provenance}
-                />
-              </div>
-            )}
+              )}
+              <FilterTree
+                title={localization.facet.organisation}
+                aggregations={datasetAggregations.orgPath.buckets}
+                handleFiltering={onFilterPublisherHierarchy}
+                activeFilter={locationSearch.orgPath}
+                referenceDataItems={publishers}
+              />
+              <FilterBox
+                htmlKey={3}
+                title={localization.facet.spatial}
+                filter={datasetAggregations.spatial}
+                onClick={onFilterSpatial}
+                activeFilter={locationSearch.spatial}
+              />
+              <FilterBox
+                htmlKey={4}
+                title={localization.facet.provenance}
+                filter={datasetAggregations.provenance}
+                onClick={onFilterProvenance}
+                activeFilter={locationSearch.provenance}
+              />
+            </div>
+          )}
         </aside>
 
         <section className="col-12 col-lg-8">

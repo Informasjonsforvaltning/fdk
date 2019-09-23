@@ -32,9 +32,7 @@ const renderSource = ({ sourceRelationship, sources }) => {
     return (
       <div className="fdk-ingress">
         <span>
-          {`${localization.compare.source}: ${
-            localization.sourceRelationship[sourceRelationship]
-          }`}
+          {`${localization.compare.source}: ${localization.sourceRelationship[sourceRelationship]}`}
         </span>
       </div>
     );
@@ -47,9 +45,7 @@ const renderSource = ({ sourceRelationship, sources }) => {
   return (
     <div className="fdk-ingress">
       <span>
-        {`${localization.compare.source}: ${
-          localization.sourceRelationship[sourceRelationship]
-        }`}
+        {`${localization.compare.source}: ${localization.sourceRelationship[sourceRelationship]}`}
       </span>
       {sources.map(({ text, uri }, index) => (
         <Fragment key={`${text}-${uri}`}>

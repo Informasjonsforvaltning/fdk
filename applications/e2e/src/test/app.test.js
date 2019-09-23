@@ -1,3 +1,4 @@
+import delay from 'delay';
 import * as browser from '../lib/browser';
 import {
   activeTabSelector,
@@ -10,7 +11,6 @@ import {
   searchButtonSelector
 } from '../pages/search-page';
 import { extractNumber } from '../lib/extract-number';
-import delay from 'delay';
 
 afterAll(() => {
   browser.close(); // we might not want to close the browser between each suite
@@ -40,13 +40,17 @@ describe('SUITE: Main page', () => {
       });
 
       test('ART:API-705 THEN: Dataset tab is active', async () => {
-        const activeTabLabels = await searchPage.selectorsContent(activeTabSelector);
+        const activeTabLabels = await searchPage.selectorsContent(
+          activeTabSelector
+        );
         expect(activeTabLabels).toHaveLength(1); // only one tab is active
         expect(activeTabLabels[0]).toContain('Datasett'); // default language is nb
       });
 
       test('ART:API-705 THEN: Api tab label shows number larger than 3', async () => {
-        const apiTabLabel = (await searchPage.selectorsContent(apiTabSelector))[0];
+        const apiTabLabel = (await searchPage.selectorsContent(
+          apiTabSelector
+        ))[0];
 
         expect(apiTabLabel).toContain('API-er');
         expect(extractNumber(apiTabLabel)).toBeGreaterThan(5);
@@ -67,7 +71,9 @@ describe('SUITE: Main page', () => {
       });
 
       test('ART:API-201 THEN: Results block is displayed with more than 3 api items in it', async () => {
-        const articleTexts = await searchPage.selectorsContent(apiArticleSelector);
+        const articleTexts = await searchPage.selectorsContent(
+          apiArticleSelector
+        );
         expect(articleTexts.length).toBeGreaterThan(3);
       });
     });
@@ -84,11 +90,13 @@ describe('SUITE: Main page', () => {
         const searchText = 'ks';
         await searchPage.typeSearchTextAndEnter(searchText);
         // wait for api call to be finished
-        delay(5000)
+        delay(5000);
       });
 
       test("ART:API-201 THEN: Results block is displayed with exactly 1 api item that contains 'KS Fiks'", async () => {
-        const articleTexts = await searchPage.selectorsContent(apiArticleSelector);
+        const articleTexts = await searchPage.selectorsContent(
+          apiArticleSelector
+        );
 
         expect(articleTexts).toHaveLength(1);
         expect(articleTexts[0]).toContain('KS Fiks');

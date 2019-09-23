@@ -142,16 +142,15 @@ export const APIListPage = props => {
       {!apiCatalogs && (
         <div className="row mb-5">
           <div className="col-12 d-flex">
-            {registeredApiItems &&
-              registeredApiItems.length === 0 && (
-                <Link
-                  className="ml-0 mr-3 btn btn-primary fdk-button card-link"
-                  to={`/catalogs/${catalogId}/apis/import`}
-                >
-                  <i className="fa fa-plus-circle mr-2" />
-                  {localization.api.register.registerNew}
-                </Link>
-              )}
+            {registeredApiItems && registeredApiItems.length === 0 && (
+              <Link
+                className="ml-0 mr-3 btn btn-primary fdk-button card-link"
+                to={`/catalogs/${catalogId}/apis/import`}
+              >
+                <i className="fa fa-plus-circle mr-2" />
+                {localization.api.register.registerNew}
+              </Link>
+            )}
 
             {!showHarvestLink && (
               <Button
@@ -199,98 +198,93 @@ export const APIListPage = props => {
               </>
             )}
           </div>
-          {touched &&
-            error && (
+          {touched && error && (
+            <div className="col-12 mt-3">
+              <div className="alert alert-danger">{error}</div>
+            </div>
+          )}
+        </div>
+      )}
+
+      {apiCatalogs && harvestedApiItems && (
+        <>
+          <div className="row mb-2">
+            <div className="col-12">
+              <h2>{localization.api.harvest.harvestedFromCatalogTitle}</h2>
+
+              {!showHarvestLink && (
+                <>
+                  <span>{apiCatalogs.harvestSourceUri}</span>
+                  <button
+                    type="button"
+                    className="btn bg-transparent fdk-color-link"
+                    onClick={onToggle}
+                  >
+                    <i className="fa fa-pencil mr-2" />
+                    {localization.api.harvest.changeHarvestUrl}
+                  </button>
+                </>
+              )}
+              {showHarvestLink && (
+                <div className="d-flex">
+                  <label className="d-flex flex-grow-1" htmlFor="importUrl">
+                    <span className="align-self-center">
+                      {localization.api.harvest.labelHarvestUrl}
+                    </span>
+                    <input
+                      name="importUrl"
+                      onChange={e => handleChangeUrl(e)}
+                      type="input"
+                      className="ml-2 py-2 px-4 flex-grow-1"
+                      autoComplete="off"
+                      defaultValue={apiCatalogs.harvestSourceUri}
+                    />
+                  </label>
+                  <Button
+                    type="button"
+                    className="ml-3 btn btn-primary fdk-button"
+                    color={
+                      !touched || !!error || harvestUrl === ''
+                        ? 'secondary'
+                        : 'primary'
+                    }
+                    disabled={!touched || !!error || harvestUrl === ''}
+                    onClick={() => setApiCatalogUrl()}
+                  >
+                    {localization.api.harvest.harvestAction}
+                  </Button>
+                  <button
+                    type="button"
+                    className="btn bg-transparent fdk-color-link"
+                    onClick={onToggle}
+                  >
+                    {localization.app.cancel}
+                  </button>
+                </div>
+              )}
+            </div>
+            {touched && error && (
               <div className="col-12 mt-3">
                 <div className="alert alert-danger">{error}</div>
               </div>
             )}
-        </div>
-      )}
+          </div>
 
-      {apiCatalogs &&
-        harvestedApiItems && (
-          <>
-            <div className="row mb-2">
-              <div className="col-12">
-                <h2>{localization.api.harvest.harvestedFromCatalogTitle}</h2>
-
-                {!showHarvestLink && (
-                  <>
-                    <span>{apiCatalogs.harvestSourceUri}</span>
-                    <button
-                      type="button"
-                      className="btn bg-transparent fdk-color-link"
-                      onClick={onToggle}
-                    >
-                      <i className="fa fa-pencil mr-2" />
-                      {localization.api.harvest.changeHarvestUrl}
-                    </button>
-                  </>
-                )}
-                {showHarvestLink && (
-                  <div className="d-flex">
-                    <label className="d-flex flex-grow-1" htmlFor="importUrl">
-                      <span className="align-self-center">
-                        {localization.api.harvest.labelHarvestUrl}
-                      </span>
-                      <input
-                        name="importUrl"
-                        onChange={e => handleChangeUrl(e)}
-                        type="input"
-                        className="ml-2 py-2 px-4 flex-grow-1"
-                        autoComplete="off"
-                        defaultValue={apiCatalogs.harvestSourceUri}
-                      />
-                    </label>
-                    <Button
-                      type="button"
-                      className="ml-3 btn btn-primary fdk-button"
-                      color={
-                        !touched || !!error || harvestUrl === ''
-                          ? 'secondary'
-                          : 'primary'
-                      }
-                      disabled={!touched || !!error || harvestUrl === ''}
-                      onClick={() => setApiCatalogUrl()}
-                    >
-                      {localization.api.harvest.harvestAction}
-                    </Button>
-                    <button
-                      type="button"
-                      className="btn bg-transparent fdk-color-link"
-                      onClick={onToggle}
-                    >
-                      {localization.app.cancel}
-                    </button>
-                  </div>
-                )}
+          <div style={{ marginBottom: '6rem' }} className="row">
+            {harvestedApiItems.length > 0 && (
+              <div className="col-12 fdk-reg-datasets-list">
+                <ListItems
+                  catalogId={catalogId}
+                  items={harvestedApiItems}
+                  itemTitleField={['apiSpecification', 'info', 'title']}
+                  prefixPath={`/catalogs/${catalogId}/apis`}
+                  defaultEmptyListText={localization.listItems.missingApiItems}
+                />
               </div>
-              {touched &&
-                error && (
-                  <div className="col-12 mt-3">
-                    <div className="alert alert-danger">{error}</div>
-                  </div>
-                )}
-            </div>
-
-            <div style={{ marginBottom: '6rem' }} className="row">
-              {harvestedApiItems.length > 0 && (
-                <div className="col-12 fdk-reg-datasets-list">
-                  <ListItems
-                    catalogId={catalogId}
-                    items={harvestedApiItems}
-                    itemTitleField={['apiSpecification', 'info', 'title']}
-                    prefixPath={`/catalogs/${catalogId}/apis`}
-                    defaultEmptyListText={
-                      localization.listItems.missingApiItems
-                    }
-                  />
-                </div>
-              )}
-            </div>
-          </>
-        )}
+            )}
+          </div>
+        </>
+      )}
 
       {registeredApiItems && (
         <>

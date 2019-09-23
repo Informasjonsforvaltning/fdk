@@ -29,6 +29,7 @@
     "react/prop-types": 0,
     "react/forbid-prop-types": ["error", { "forbid": ["any"] }],
     "react/no-array-index-key": "off",
+    "react/jsx-props-no-spreading": "off",
     "no-param-reassign": ["error", { "props": true, "ignorePropertyModificationsFor": ["accumulator"] }],
     "no-restricted-globals": ["error", "event", "fdescribe"],
     "react/no-danger": 0,
@@ -40,6 +41,7 @@
     "prefer-destructuring":"off",
     "react-hooks/rules-of-hooks": "error",
     "eslint-comments/no-unused-disable": "error",
-    "jsx-a11y/label-has-for": "off" //*deprecated for label-has-associated-control
+    "jsx-a11y/label-has-for": "off", //*deprecated for label-has-associated-control
+    "import/no-extraneous-dependencies": ["error", {"devDependencies": ["**/test/**/*.js", "**/*test.{js,jsx}"]}]
   }
 }

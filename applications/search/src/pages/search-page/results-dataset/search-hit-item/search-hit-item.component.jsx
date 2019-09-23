@@ -46,8 +46,7 @@ const renderFormats = (source, referenceData) => {
   if (distribution && _.isArray(Object.keys(distribution))) {
     return (
       <div className="d-flex flex-wrap mb-4">
-        {localization.search_hit.distributionType}:
-        {children(distribution)}
+        {localization.search_hit.distributionType}:{children(distribution)}
       </div>
     );
   }

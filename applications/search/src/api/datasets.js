@@ -10,12 +10,10 @@ export const datasetsUrlBase = () =>
 const transportProfileIfNeeded = () =>
   getConfig().filterTransportDatasets
     ? {
-      accessrights: 'PUBLIC',
-      themeprofile: 'transport'
-
-    }
+        accessrights: 'PUBLIC',
+        themeprofile: 'transport'
+      }
     : undefined;
-
 
 export const datasetsSearch = params =>
   axios

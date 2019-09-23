@@ -16,19 +16,18 @@ const DatepickerField = props => {
       <label className="fdk-form-label" htmlFor={input.name}>
         {' '}
         {showLabel ? label : null}
-        {input.value &&
-          input.value !== 'Invalid date' && (
-            <DatePicker
-              id={input.name}
-              className="fdk-reg-datepicker"
-              dateFormat="DD.MM.YYYY"
-              locale="nb-no"
-              showYearDropdown
-              yearDropdownItemNumber={5}
-              selected={input.value ? moment(input.value) : null}
-              onChange={date => handleChange(props, date)}
-            />
-          )}
+        {input.value && input.value !== 'Invalid date' && (
+          <DatePicker
+            id={input.name}
+            className="fdk-reg-datepicker"
+            dateFormat="DD.MM.YYYY"
+            locale="nb-no"
+            showYearDropdown
+            yearDropdownItemNumber={5}
+            selected={input.value ? moment(input.value) : null}
+            onChange={date => handleChange(props, date)}
+          />
+        )}
         {(!input.value || (input.value && input.value === 'Invalid date')) && (
           <DatePicker
             id={input.name}

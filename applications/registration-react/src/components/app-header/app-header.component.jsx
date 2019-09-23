@@ -61,13 +61,12 @@ export const AppHeaderPure = ({ location, user }) => {
               </span>
             </div>
             <div className="col-md-4 d-flex align-items-center fdk-header-text_items justify-content-end">
-              {user &&
-                user.name && (
-                  <div className="mr-4">
-                    <i className="fa fa-user fdk-fa-left fdk-color-primary" />
-                    {user.name}
-                  </div>
-                )}
+              {user && user.name && (
+                <div className="mr-4">
+                  <i className="fa fa-user fdk-fa-left fdk-color-primary" />
+                  {user.name}
+                </div>
+              )}
               {user && (
                 <div className="mr-4 fdk-auth-link">
                   <button

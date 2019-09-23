@@ -308,16 +308,15 @@ export const DatasetStats = props => {
         </Link>
       </StatBox>
 
-      {conceptsPieData &&
-        _.some(conceptsPieData, 'value') && (
-          <PieChart
-            className="d-flex p-4 w-25"
-            data={conceptsPieData}
-            startAngle={0}
-            lineWidth={45}
-            animate
-          />
-        )}
+      {conceptsPieData && _.some(conceptsPieData, 'value') && (
+        <PieChart
+          className="d-flex p-4 w-25"
+          data={conceptsPieData}
+          startAngle={0}
+          lineWidth={45}
+          animate
+        />
+      )}
 
       <StatBox
         iconType="book"

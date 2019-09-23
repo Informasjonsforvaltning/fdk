@@ -88,9 +88,8 @@ export const ResultsTabsPure = ({
           <i className="mr-2 search-results-tab-infomodel" />
 
           <div className="align-self-center mr-4">
-            {localization.page.informationModelTab}&nbsp;({
-              countInformationModels
-            })
+            {localization.page.informationModelTab}&nbsp;(
+            {countInformationModels})
           </div>
         </Link>
       </li>

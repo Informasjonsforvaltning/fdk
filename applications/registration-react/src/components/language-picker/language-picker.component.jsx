@@ -27,7 +27,8 @@ const LanguagePicker = ({ languages, toggleInputLanguage }) => {
             })}
             color={shouldDisableLanguage(code) ? 'secondary' : 'primary'}
             disabled={shouldDisableLanguage(code)}
-            onClick={() => toggleInputLanguage(code)}>
+            onClick={() => toggleInputLanguage(code)}
+          >
             {selected && (
               <img src="/static/img/icon-checked-white-sm.svg" alt="icon" />
             )}

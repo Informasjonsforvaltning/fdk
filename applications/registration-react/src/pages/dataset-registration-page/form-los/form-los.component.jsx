@@ -68,9 +68,8 @@ export const FormLOSPure = ({
             });
             return (
               <div key={item.uri} className={itemClass}>
-                {item.name.nb} [{item.isTema
-                  ? localization.category
-                  : localization.topic}]
+                {item.name.nb} [
+                {item.isTema ? localization.category : localization.topic}]
               </div>
             );
           }}
