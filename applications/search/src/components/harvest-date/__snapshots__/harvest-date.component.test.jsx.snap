@@ -1,7 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`should render HarvestDate with harvest dates 1`] = `
-<Fragment>
+<div
+  className="d-flex flex-wrap"
+>
   <span
     className="d-flex flex-wrap align-self-center"
   >
@@ -24,10 +26,6 @@ exports[`should render HarvestDate with harvest dates 1`] = `
     >
       2018-06-25T19":51:05+0200
     </t>
-  </span>
-  <span
-    className="d-flex flex-wrap align-self-center"
-  >
      / 
   </span>
   <span
@@ -53,7 +51,7 @@ exports[`should render HarvestDate with harvest dates 1`] = `
       2018-07-09T14:40:37+0200
     </t>
   </span>
-</Fragment>
+</div>
 `;
 
 exports[`should render HarvestDate with no props 1`] = `""`;

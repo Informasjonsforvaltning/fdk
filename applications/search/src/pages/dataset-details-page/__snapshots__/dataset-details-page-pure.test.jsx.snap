@@ -17,19 +17,23 @@ exports[`should render DatasetDetailsPagePure correctly with datasetItem 1`] = `
           title="Markagrensen"
         />
         <div
-          className="d-flex fdk-detail-date mb-5"
+          className="d-flex align-items-center fdk-detail-date mb-5 color-neutral-darker"
         >
-          <i
-            className="align-self-center mr-2 fdk-icon-catalog-dataset"
-          />
+          <div
+            className="text-center"
+          >
+            <i
+              className="fdk-icon-catalog-dataset"
+            />
+          </div>
           <strong
-            className="align-self-center"
+            className="align-self-center dataset-description-nowrap"
           >
             Dataset description
              
           </strong>
           <HarvestDate
-            className="align-self-center"
+            className="d-flex flex-wrap align-self-center"
             harvest={
               Object {
                 "changed": Array [

@@ -1,3 +1,5 @@
+@import '../../../node_modules/designsystemet/fdk-designsystem-bootstrap4/scss/colors.scss';
+
 .fdk-icon-catalog-dataset {
   width: 3.5em; 
   height: 3.5em;
@@ -20,4 +22,10 @@
 
 .dataset-description-nowrap {
   white-space: nowrap;
+}
+
+.color-neutral-darker {
+  @include themify($themes) {
+    color: themed('color-neutral-darker') !important;
+  }
 }

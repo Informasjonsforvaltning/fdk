@@ -421,7 +421,7 @@ export const DatasetDetailsPagePure = props => {
           <div className="col-12 col-lg-8 offset-lg-4">
             <DocumentMeta {...meta} />
 
-            <div className="d-flex align-items-center fdk-detail-date mb-5">
+            <div className="d-flex align-items-center fdk-detail-date mb-5 color-neutral-darker">
               <div className="text-center">
                 <i className="fdk-icon-catalog-dataset" />
               </div>
