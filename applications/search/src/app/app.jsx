@@ -39,6 +39,11 @@ export function App({ language }) {
     'theme-nap': getConfig().themeNap,
     'theme-fdk': !getConfig().themeNap
   });
+
+  const footerText = !getConfig().themeNap
+    ? localization.footer.information_text
+    : localization.footer.information_textNap;
+
   return (
     <div className={themeClass}>
       <div>
@@ -131,9 +136,7 @@ export function App({ language }) {
         <div className="container">
           <div className="row">
             <div className="col-sm-12 text-center mb-2">
-              <p className="fdk-p-footer">
-                {localization.footer.information_text}
-              </p>
+              <p className="fdk-p-footer">{footerText}</p>
             </div>
             <div className="col-sm-12 text-center mb-2">
               <p className="fdk-p-footer">
@@ -173,9 +176,7 @@ export function App({ language }) {
               <span className="uu-invisible" aria-hidden="false">
                 Felles Datakatalog.
               </span>
-              <p className="fdk-p-footer">
-                {localization.footer.information_text}
-              </p>
+              <p className="fdk-p-footer">{footerText}</p>
             </div>
             <div className="col-md-3 text-right">
               <p className="fdk-p-footer">
