@@ -37,6 +37,8 @@
   "datasetLabel": "Datasett",
   "activeFilter": "Aktive filtre",
   "goTo": "Gå til",
+  "linkToFdk": "Lenke til Felles datakatalog",
+  "linkToNap": "Lenke til NAP",
   "app": {
     "menu": "Meny"
   },

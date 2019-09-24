@@ -37,6 +37,8 @@
   "datasetLabel": "Dataset",
   "activeFilter": "Enabled filters",
   "goTo": "Go to",
+  "linkToFdk": "Link to the National Data Catalog",
+  "linkToNap": "Link to the National Access Point for Transport Data",
   "app": {
     "menu": "Menu"
   },

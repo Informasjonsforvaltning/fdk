@@ -26,7 +26,14 @@ export function AppNavBar(props) {
       <div className="container">
         <div className="row d-flex justify-content-between align-items-center">
           <div>
-            <a title="Link til Felles datakatalog" href="/">
+            <a
+              title={
+                getConfig().themeNap
+                  ? localization.linkToNap
+                  : localization.linkToFdk
+              }
+              href="/"
+            >
               <span className="uu-invisible" aria-hidden="false">
                 Gå til forside
               </span>
