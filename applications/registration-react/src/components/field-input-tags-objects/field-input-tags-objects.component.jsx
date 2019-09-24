@@ -10,27 +10,33 @@ const InputTagsFieldArray = ({
   label,
   fieldLabel,
   showLabel,
-  language
+  language,
+  isOnlyOneSelectedLanguage
 }) => {
   let tagNodes = [];
 
   if (input && input.value && input.value.length > 0) {
-    tagNodes = input.value.map(item => item[fieldLabel]);
+    tagNodes = (fieldLabel
+      ? input.value.map(item => item[fieldLabel])
+      : input.value
+    ).filter(Boolean);
   }
 
-  const handleChange = tags => {
-    debugger;
-
-    // We are getting keyword.nb here instead of keyword. @See: multilingual-field-component
-
-    input.onChange(tags.map(item => ({ [language || fieldLabel]: item })));
-  };
+  const handleChange = tags =>
+    input.onChange(
+      (fieldLabel ? tags.map(item => ({ [fieldLabel]: item })) : tags).filter(
+        Boolean
+      )
+    );
 
   return (
     <div className={cx('pl-2', { 'multilingual-field': !!language })}>
       <label className="fdk-form-label w-100" htmlFor={input.name}>
         {showLabel ? label : null}
-        {language && <span className="language-indicator">{language}</span>}
+        {!!language &&
+          !isOnlyOneSelectedLanguage && (
+            <span className="language-indicator">{language}</span>
+          )}
         <TagsInput
           value={tagNodes}
           className="fdk-reg-input-tags"
@@ -46,7 +52,8 @@ InputTagsFieldArray.defaultProps = {
   label: null,
   fieldLabel: null,
   showLabel: false,
-  language: null
+  language: null,
+  isOnlyOneSelectedLanguage: false
 };
 
 InputTagsFieldArray.propTypes = {
@@ -54,7 +61,8 @@ InputTagsFieldArray.propTypes = {
   label: PropTypes.string,
   fieldLabel: PropTypes.string,
   showLabel: PropTypes.bool,
-  language: PropTypes.string
+  language: PropTypes.string,
+  isOnlyOneSelectedLanguage: PropTypes.bool
 };
 
 export default InputTagsFieldArray;

@@ -14,7 +14,8 @@ const MultilingualField = ({ name, component, languages, label }) =>
           name={`${name}.${code}`}
           label={`${label}.${code}`}
           component={component}
-          language={isOnlyOneSelectedLanguage ? undefined : code}
+          language={code}
+          isOnlyOneSelectedLanguage={isOnlyOneSelectedLanguage}
         />
       )
     );

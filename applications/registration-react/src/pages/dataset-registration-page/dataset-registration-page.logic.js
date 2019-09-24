@@ -153,7 +153,7 @@ export const conceptValues = values => {
       });
     }
     if (keyword) {
-      keyword.forEach(item => {
+      (keyword[localization.getLanguage()] || []).forEach(item => {
         retVal += getTranslateText(item) ? `${getTranslateText(item)}. ` : '';
       });
     }

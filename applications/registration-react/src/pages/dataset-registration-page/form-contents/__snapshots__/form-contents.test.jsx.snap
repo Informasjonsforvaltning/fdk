@@ -31,10 +31,11 @@ exports[`should render FormContentsComponent, { renderS correctly 1`] = `
       term="Dataset_hasQualityAnnotation_relevance"
       title="Relevans"
     />
-    <Field
+    <MultilingualField
       component={[Function]}
       label="Relevans"
-      name="hasRelevanceAnnotation.hasBody.nb"
+      languages={Array []}
+      name="hasRelevanceAnnotation.hasBody"
     />
   </div>
   <div
@@ -44,10 +45,11 @@ exports[`should render FormContentsComponent, { renderS correctly 1`] = `
       term="Dataset_hasQualityAnnotation_completeness"
       title="Kompletthet"
     />
-    <Field
+    <MultilingualField
       component={[Function]}
       label="Kompletthet"
-      name="hasCompletenessAnnotation.hasBody.nb"
+      languages={Array []}
+      name="hasCompletenessAnnotation.hasBody"
     />
   </div>
   <div
@@ -57,10 +59,11 @@ exports[`should render FormContentsComponent, { renderS correctly 1`] = `
       term="Dataset_hasQualityAnnotation_accuracy"
       title="Nøyaktighet"
     />
-    <Field
+    <MultilingualField
       component={[Function]}
       label="Nøyaktighet"
-      name="hasAccuracyAnnotation.hasBody.nb"
+      languages={Array []}
+      name="hasAccuracyAnnotation.hasBody"
     />
   </div>
   <div
@@ -70,10 +73,11 @@ exports[`should render FormContentsComponent, { renderS correctly 1`] = `
       term="Dataset_hasQualityAnnotation_availability"
       title="Tilgjengelighet"
     />
-    <Field
+    <MultilingualField
       component={[Function]}
       label="Tilgjengelighet"
-      name="hasAvailabilityAnnotation.hasBody.nb"
+      languages={Array []}
+      name="hasAvailabilityAnnotation.hasBody"
     />
   </div>
 </form>

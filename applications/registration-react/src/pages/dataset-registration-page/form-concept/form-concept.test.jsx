@@ -1,30 +1,15 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { createMockStore } from 'redux-test-utils';
+import shallowWithStore from '../../../../test/shallowWithStore';
 import { FormConcept } from './form-concept.component';
+import dataset from '../../../../test/fixtures/datasets';
 
-let defaultProps;
 let wrapper;
 
-beforeEach(() => {
-  defaultProps = {
-    syncErrors: {
-      keyword: null
-    }
-  };
-  wrapper = shallow(<FormConcept {...defaultProps} />);
-});
-
-test('should render FormConcept correctly', () => {
-  expect(wrapper).toMatchSnapshot();
-});
-
-test('should render FormConcept correctly with syncErrors', () => {
-  wrapper.setProps({
-    syncErrors: {
-      keyword: {
-        nb: 'Feil'
-      }
-    }
-  });
-  expect(wrapper).toMatchSnapshot();
+test('should render ConnectedFormConcept correctly', () => {
+  const testState = {};
+  const store = createMockStore(testState);
+  const datasetItem = dataset.datasetItems._embedded.datasets[0];
+  wrapper = shallowWithStore(<FormConcept datasetItem={datasetItem} />, store);
+  expect(wrapper).toHaveLength(1);
 });

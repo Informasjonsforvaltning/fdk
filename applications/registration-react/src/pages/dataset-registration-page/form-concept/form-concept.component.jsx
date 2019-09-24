@@ -1,58 +1,43 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Field } from 'redux-form';
-import _ from 'lodash';
+import { getFormSyncErrors, reduxForm } from 'redux-form';
+import { connect } from 'react-redux';
 
-import localization from '../../../lib/localization';
-import Helptext from '../../../components/helptext/helptext.component';
-import InputTagsFieldConcepts from './input-tags-concepts/input-tags-concepts.component';
-import InputTagsFieldArray from '../../../components/field-input-tags-objects/field-input-tags-objects.component';
-import MultilingualField from '../../../components/multilingual-field/multilingual-field.component';
+import { FormConceptPure } from './form-concept-pure';
 
-export const FormConcept = ({ syncErrors, languages }) => {
-  return (
-    <form>
-      <div className="form-group">
-        <Helptext
-          title={localization.schema.concept.helptext.content}
-          term="Dataset_content"
-        />
-        <Field
-          name="concepts"
-          type="text"
-          component={InputTagsFieldConcepts}
-          label={localization.schema.concept.conceptLabel}
-          fieldLabel="no"
-        />
-      </div>
-      <div className="form-group">
-        <Helptext
-          title={localization.schema.concept.helptext.keyword}
-          term="Dataset_keyword"
-        />
-        <MultilingualField
-          name="keyword"
-          type="text"
-          languages={languages}
-          component={InputTagsFieldArray}
-          label={localization.schema.concept.keywordLabel}
-          // fieldLabel={localization.getLanguage()}
-        />
-        {_.get(syncErrors, 'keyword') && (
-          <div className="alert alert-danger mt-3">
-            {_.get(syncErrors, 'keyword')[localization.getLanguage()]}
-          </div>
-        )}
-      </div>
-    </form>
-  );
+import validate from './form-concept-validations';
+import { asyncValidateDatasetInvokePatch } from '../formsLib/asyncValidateDatasetInvokePatch';
+
+import {
+  multilingualTagsArrayToMultilingualObject,
+  multilingualObjectToMultilingualTagsArray
+} from '../../../lib/multilingual-tags-converter';
+
+const mapStateToProps = (state, { datasetItem }) => {
+  const { concepts = [], keyword = [] } = datasetItem;
+  return {
+    initialValues: {
+      concepts,
+      keyword: multilingualTagsArrayToMultilingualObject(keyword)
+    },
+    errors: getFormSyncErrors('concept')(state)
+  };
 };
 
-FormConcept.defaultProps = {
-  syncErrors: null,
-  languages: []
+const reduxFormConfig = {
+  form: 'concept',
+  validate,
+  asyncValidate: ({ keyword, ...values }, dispatch, props) =>
+    Object.keys(validate({ keyword })).length
+      ? Promise.resolve()
+      : asyncValidateDatasetInvokePatch(
+          {
+            ...values,
+            keyword: multilingualObjectToMultilingualTagsArray(keyword)
+          },
+          dispatch,
+          props
+        )
 };
-FormConcept.propTypes = {
-  syncErrors: PropTypes.object,
-  languages: PropTypes.array
-};
+
+export const FormConcept = connect(mapStateToProps)(
+  reduxForm(reduxFormConfig)(FormConceptPure)
+);
