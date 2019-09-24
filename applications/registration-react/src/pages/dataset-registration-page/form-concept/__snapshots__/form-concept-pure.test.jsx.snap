@@ -29,6 +29,7 @@ exports[`should render FormConcept correctly 1`] = `
       label="Søkeord"
       languages={Array []}
       name="keyword"
+      showLabel={false}
     />
   </div>
 </form>
@@ -63,6 +64,7 @@ exports[`should render FormConcept correctly with errors 1`] = `
       label="Søkeord"
       languages={Array []}
       name="keyword"
+      showLabel={false}
     />
     <div
       className="alert alert-danger mt-3"

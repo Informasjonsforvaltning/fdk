@@ -8,39 +8,36 @@ import InputField from '../../../components/field-input/field-input.component';
 import TextAreaField from '../../../components/field-textarea/field-textarea.component';
 import MultilingualField from '../../../components/multilingual-field/multilingual-field.component';
 
-export const renderStandardFields = (item, index, fields, fieldProps) => (
-  <div className="d-flex mb-5" key={index}>
-    <div className="w-50">
-      <Field
-        name={`${item}.prefLabel.${localization.getLanguage()}`}
-        component={InputField}
-        label={fieldProps.titleLabel}
-        showLabel
-      />
-    </div>
-    <div className="w-50">
-      <Field
-        name={`${item}.uri`}
-        component={InputField}
-        label={fieldProps.linkLabel}
-        showLabel
-      />
-    </div>
+// At the moment, support only one standard entry
+export const renderStandard = ({
+  fields,
+  titleLabel,
+  linkLabel,
+  languages
+}) => (
+  <div>
+    {fields &&
+      fields.map((item, index) => (
+        <div className="d-flex flex-column mb-5" key={index}>
+          <MultilingualField
+            name={`${item}.prefLabel`}
+            component={InputField}
+            label={titleLabel}
+            showLabel
+            languages={languages}
+          />
+          <div className="mt-2">
+            <Field
+              name={`${item}.uri`}
+              component={InputField}
+              label={linkLabel}
+              showLabel
+            />
+          </div>
+        </div>
+      ))}
   </div>
 );
-
-// At the moment, support only one standard entry
-export const renderStandard = fieldProps => {
-  const { fields } = fieldProps;
-  return (
-    <div>
-      {fields &&
-        fields.map((item, index) =>
-          renderStandardFields(item, index, fields, fieldProps)
-        )}
-    </div>
-  );
-};
 
 export const FormContentsComponent = ({ languages }) => (
   <form>
@@ -57,6 +54,7 @@ export const FormContentsComponent = ({ languages }) => (
               component={renderStandard}
               titleLabel={localization.schema.common.titleLabel}
               linkLabel={localization.schema.common.linkLabel}
+              languages={languages}
             />
           </div>
         </div>
