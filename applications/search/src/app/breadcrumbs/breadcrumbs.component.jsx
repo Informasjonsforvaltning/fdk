@@ -13,10 +13,18 @@ import { ConceptBreadcrumb } from './concept-breadcrumb/concept-breadcrumb';
 import { InformationModelBreadcrumb } from './informationModel-breadbrumb/information-breadcrumb';
 import { PathNameBreadcrumb } from './pathname-breadcrumb/pathname-breadcrumb';
 import './breadcrumbs.scss';
+import { getConfig } from '../../config';
 
 // define some custom breadcrumbs for certain routes (optional)
 const routes = [
-  { path: '/', breadcrumb: <PathNameBreadcrumb pathName="home" /> },
+  {
+    path: '/',
+    breadcrumb: (
+      <PathNameBreadcrumb
+        pathName={getConfig().themeNap ? 'homeNAP' : 'home'}
+      />
+    )
+  },
   { path: '/datasets/:id', breadcrumb: DatasetBreadcrumb },
   { path: '/apis/:id', breadcrumb: ApiBreadcrumb },
   {
