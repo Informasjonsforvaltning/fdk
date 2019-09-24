@@ -23,6 +23,7 @@ export const FormContentsComponent = ({ languages }) => (
               component={Standard}
               titleLabel={localization.schema.common.titleLabel}
               linkLabel={localization.schema.common.linkLabel}
+              languages={languages}
             />
           </div>
         </div>

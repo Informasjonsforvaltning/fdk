@@ -111,6 +111,7 @@ export function DatasetRegistrationPagePure(props) {
     'title',
     'description',
     'objective',
+    'conformsTo',
     'hasCurrentnessAnnotation',
     'hasRelevanceAnnotation',
     'hasCompletenessAnnotation',
