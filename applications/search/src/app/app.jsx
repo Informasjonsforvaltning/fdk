@@ -44,6 +44,10 @@ export function App({ language }) {
     ? localization.footer.information_text
     : localization.footer.information_textNap;
 
+  const footerEmail = !getConfig().themeNap
+    ? localization.footer.mail
+    : localization.footer.mailNap;
+
   return (
     <div className={themeClass}>
       <div>
@@ -150,9 +154,7 @@ export function App({ language }) {
 
             <div className="col-sm-12 text-center mb-2">
               <p className="fdk-p-footer">
-                <a href="mailto:fellesdatakatalog@brreg.no">
-                  {localization.footer.mail}
-                </a>
+                <a href={`mailto:${footerEmail}`}>{footerEmail}</a>
               </p>
             </div>
           </div>
@@ -180,13 +182,13 @@ export function App({ language }) {
             </div>
             <div className="col-md-3 text-right">
               <p className="fdk-p-footer">
-                <a href="mailto:fellesdatakatalog@brreg.no">
+                <a href={`mailto:${footerEmail}`}>
                   <span className="uu-invisible" aria-hidden="false">
                     Mailadresse.
                   </span>
                   {localization.footer.contact}
                   <br />
-                  {localization.footer.mail}
+                  {footerEmail}
                 </a>
               </p>
             </div>
