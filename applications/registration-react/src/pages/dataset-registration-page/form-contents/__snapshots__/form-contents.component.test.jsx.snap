@@ -36,6 +36,7 @@ exports[`should render FormContentsComponent, { renderS correctly 1`] = `
       label="Relevans"
       languages={Array []}
       name="hasRelevanceAnnotation.hasBody"
+      showLabel={false}
     />
   </div>
   <div
@@ -50,6 +51,7 @@ exports[`should render FormContentsComponent, { renderS correctly 1`] = `
       label="Kompletthet"
       languages={Array []}
       name="hasCompletenessAnnotation.hasBody"
+      showLabel={false}
     />
   </div>
   <div
@@ -64,6 +66,7 @@ exports[`should render FormContentsComponent, { renderS correctly 1`] = `
       label="Nøyaktighet"
       languages={Array []}
       name="hasAccuracyAnnotation.hasBody"
+      showLabel={false}
     />
   </div>
   <div
@@ -78,6 +81,7 @@ exports[`should render FormContentsComponent, { renderS correctly 1`] = `
       label="Tilgjengelighet"
       languages={Array []}
       name="hasAvailabilityAnnotation.hasBody"
+      showLabel={false}
     />
   </div>
 </form>

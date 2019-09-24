@@ -15,6 +15,7 @@ exports[`should render FormTitle, { renderLandingpage  correctly 1`] = `
       label="Tittel"
       languages={Array []}
       name="title"
+      showLabel={false}
     />
   </div>
   <div
@@ -30,6 +31,7 @@ exports[`should render FormTitle, { renderLandingpage  correctly 1`] = `
       label="Beskrivelse"
       languages={Array []}
       name="description"
+      showLabel={false}
     />
   </div>
   <div
@@ -44,6 +46,7 @@ exports[`should render FormTitle, { renderLandingpage  correctly 1`] = `
       label="Formål"
       languages={Array []}
       name="objective"
+      showLabel={false}
     />
   </div>
   <div
