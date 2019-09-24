@@ -1,19 +1,12 @@
 FROM node:12-alpine
 
 #the only reason why we need git here, is that we have designsystem in another github repo
-RUN apk add --no-cache git
+RUN apk add --no-cache git gettext
 # to run localhost docker
 
-RUN npm init -y
-RUN npm config set unsafe-perm true
-RUN npm install ejs express method-override body-parser compression --loglevel error
-RUN npm install pm2 -g --loglevel error
-
-# Create app directory
-RUN mkdir -p /usr/src/app && chmod 777 /usr/src/app
-RUN mkdir /.pm2 && chmod 777 /.pm2
 WORKDIR /usr/src/app
 
+# most volatile files latest, in order to reuse layers.
 COPY package.json /usr/src/app/package.json
 COPY package-lock.json /usr/src/app/package-lock.json
 
@@ -22,20 +15,31 @@ RUN npm install --loglevel=warn
 RUN npm audit
 
 COPY server /usr/src/app/server
+COPY start.js /usr/src/app/
 COPY .babelrc /usr/src/app/
 COPY webpack.prod.config.js /usr/src/app/
 
-# most volatile directory latest, in order to reuse layers.
+COPY test /usr/src/app/test
 COPY src /usr/src/app/src
 
-COPY test /usr/src/app/test
 RUN npm test
-RUN rm -rf /usr/src/app/test
 
 RUN npm run build
 
-RUN npm prune --production
+RUN rm -rf src
+RUN rm -rf test
+RUN rm -rf coverage
+RUN rm -rf node_modules
+RUN rm package.json
+RUN rm package-lock.json
 
+RUN npm init -y
+RUN npm config set unsafe-perm true
+RUN npm install ejs express method-override body-parser compression lodash --loglevel error
+RUN npm install pm2 -g --loglevel error
+
+COPY entrypoint.sh /usr/src/app/
+RUN chmod +x entrypoint.sh
 EXPOSE 4300
 
-CMD [ "pm2-docker", "./server/start.js" ]
+ENTRYPOINT ./entrypoint.sh
