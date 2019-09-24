@@ -23,18 +23,18 @@ RUN npm audit
 
 COPY server /usr/src/app/server
 COPY .babelrc /usr/src/app/
-COPY webpack.* /usr/src/app/
+COPY webpack.prod.config.js /usr/src/app/
 
 # most volatile directory latest, in order to reuse layers.
 COPY src /usr/src/app/src
 
 COPY test /usr/src/app/test
 RUN npm test
-
-RUN npm prune --production
 RUN rm -rf /usr/src/app/test
 
 RUN npm run build
+
+RUN npm prune --production
 
 EXPOSE 4300
 
