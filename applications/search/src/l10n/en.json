@@ -57,6 +57,7 @@
   },
   "menu": {
     "home": "Search in The National Data Catalog",
+    "homeNAP": "Search in The National Access Point for Transport Data ",
     "about": "About The National Data Catalog",
     "aboutRegistration": "Registration",
     "reports": "Reports",

@@ -57,6 +57,7 @@
   },
   "menu": {
     "home": "Søk i Felles datakatalog",
+    "homeNAP": "Søk i NAP",
     "about": "Felles Datakatalog",
     "aboutRegistration": "Registrering",
     "reports": "Rapportar",
