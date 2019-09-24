@@ -64,9 +64,9 @@ export function AppNavBar(props) {
             {getConfig().themeNap && (
               <Nav className="d-none d-lg-inline-flex">
                 <NavItem>
-                  <Link className="nav-link" to={PATHNAME_ABOUT_NAP}>
+                  <a className="nav-link" href={PATHNAME_ABOUT_NAP}>
                     {localization.menu.aboutNap}
-                  </Link>
+                  </a>
                 </NavItem>
                 <NavItem>
                   <Link className="nav-link" to={PATHNAME_ABOUT_REGISTRATION}>
