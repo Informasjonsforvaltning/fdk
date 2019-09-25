@@ -1,10 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Field, FieldArray } from 'redux-form';
 
 import localization from '../../../lib/localization';
 import Helptext from '../../../components/helptext/helptext.component';
 import InputField from '../../../components/field-input/field-input.component';
 import TextAreaField from '../../../components/field-textarea/field-textarea.component';
+import MultilingualField from '../../../components/multilingual-field/multilingual-field.component';
 
 export const renderStandardFields = (item, index, fields, fieldProps) => (
   <div className="d-flex mb-5" key={index}>
@@ -40,7 +42,7 @@ export const renderStandard = fieldProps => {
   );
 };
 
-export const FormContentsComponent = () => (
+export const FormContentsComponent = ({ languages }) => (
   <form>
     <div className="form-group">
       {
@@ -65,10 +67,11 @@ export const FormContentsComponent = () => (
         title={localization.schema.content.helptext.relevance}
         term="Dataset_hasQualityAnnotation_relevance"
       />
-      <Field
-        name={`hasRelevanceAnnotation.hasBody.${localization.getLanguage()}`}
+      <MultilingualField
+        name="hasRelevanceAnnotation.hasBody"
         component={TextAreaField}
         label={localization.schema.content.hasRelevanceAnnotationLabel}
+        languages={languages}
       />
     </div>
     <div className="form-group">
@@ -76,10 +79,11 @@ export const FormContentsComponent = () => (
         title={localization.schema.content.helptext.completeness}
         term="Dataset_hasQualityAnnotation_completeness"
       />
-      <Field
-        name={`hasCompletenessAnnotation.hasBody.${localization.getLanguage()}`}
+      <MultilingualField
+        name="hasCompletenessAnnotation.hasBody"
         component={TextAreaField}
         label={localization.schema.content.hasCompletenessAnnotationLabel}
+        languages={languages}
       />
     </div>
     <div className="form-group">
@@ -87,10 +91,11 @@ export const FormContentsComponent = () => (
         title={localization.schema.content.helptext.accuracy}
         term="Dataset_hasQualityAnnotation_accuracy"
       />
-      <Field
-        name={`hasAccuracyAnnotation.hasBody.${localization.getLanguage()}`}
+      <MultilingualField
+        name="hasAccuracyAnnotation.hasBody"
         component={TextAreaField}
         label={localization.schema.content.hasAccuracyAnnotationLabel}
+        languages={languages}
       />
     </div>
     <div className="form-group">
@@ -98,11 +103,20 @@ export const FormContentsComponent = () => (
         title={localization.schema.content.helptext.availability}
         term="Dataset_hasQualityAnnotation_availability"
       />
-      <Field
-        name={`hasAvailabilityAnnotation.hasBody.${localization.getLanguage()}`}
+      <MultilingualField
+        name="hasAvailabilityAnnotation.hasBody"
         component={TextAreaField}
         label={localization.schema.content.hasAvailabilityAnnotationLabel}
+        languages={languages}
       />
     </div>
   </form>
 );
+
+FormContentsComponent.defaultProps = {
+  languages: []
+};
+
+FormContentsComponent.propTypes = {
+  languages: PropTypes.array
+};
