@@ -1,24 +1,22 @@
 import { getFormSyncErrors, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
-import _ from 'lodash';
 import { compose } from 'recompose';
 
-import validate from './form-concept-validations';
+import {
+  multilingualObjectToMultilingualTagsArray,
+  multilingualTagsArrayToMultilingualObject
+} from '../../../lib/multilingual-tags-converter';
 import { asyncValidateDatasetInvokePatch } from '../formsLib/asyncValidateDatasetInvokePatch';
+
+import validate from './form-concept-validations';
 import { FormConceptPure } from './form-concept-pure.component';
 
-const mapStateToProps = (state, ownProps) => {
-  const { datasetItem } = ownProps;
+const mapStateToProps = (state, { datasetItem }) => {
+  const { concepts = [], keyword = [] } = datasetItem;
   return {
     initialValues: {
-      concepts:
-        _.get(datasetItem, 'concepts', []).length > 0
-          ? _.get(datasetItem, 'concepts')
-          : [],
-      keyword:
-        _.get(datasetItem, 'keyword', []).length > 0
-          ? _.get(datasetItem, 'keyword')
-          : []
+      concepts,
+      keyword: multilingualTagsArrayToMultilingualObject(keyword)
     },
     errors: getFormSyncErrors('concept')(state)
   };
@@ -27,7 +25,17 @@ const mapStateToProps = (state, ownProps) => {
 const formConfig = {
   form: 'concept',
   validate,
-  asyncValidate: asyncValidateDatasetInvokePatch
+  asyncValidate: ({ keyword, ...values }, dispatch, props) =>
+    Object.keys(validate({ keyword })).length
+      ? Promise.resolve()
+      : asyncValidateDatasetInvokePatch(
+          {
+            ...values,
+            keyword: multilingualObjectToMultilingualTagsArray(keyword)
+          },
+          dispatch,
+          props
+        )
 };
 
 const enhance = compose(

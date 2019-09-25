@@ -6,8 +6,9 @@ import localization from '../../../lib/localization';
 import Helptext from '../../../components/helptext/helptext.component';
 import InputTagsFieldConcepts from './input-tags-concepts/input-tags-concepts.component';
 import InputTagsFieldArray from '../../../components/field-input-tags-objects/field-input-tags-objects.component';
+import MultilingualField from '../../../components/multilingual-field/multilingual-field.component';
 
-export const FormConceptPure = ({ errors }) => (
+export const FormConceptPure = ({ languages, errors }) => (
   <form>
     <div className="form-group">
       <Helptext
@@ -27,12 +28,11 @@ export const FormConceptPure = ({ errors }) => (
         title={localization.schema.concept.helptext.keyword}
         term="Dataset_keyword"
       />
-      <Field
+      <MultilingualField
         name="keyword"
-        type="text"
+        languages={languages}
         component={InputTagsFieldArray}
         label={localization.schema.concept.keywordLabel}
-        fieldLabel={localization.getLanguage()}
       />
       {errors && errors.keyword && (
         <div className="alert alert-danger mt-3">
@@ -44,8 +44,10 @@ export const FormConceptPure = ({ errors }) => (
 );
 
 FormConceptPure.defaultProps = {
-  errors: null
+  errors: {},
+  languages: []
 };
 FormConceptPure.propTypes = {
-  errors: PropTypes.object
+  errors: PropTypes.object,
+  languages: PropTypes.array
 };

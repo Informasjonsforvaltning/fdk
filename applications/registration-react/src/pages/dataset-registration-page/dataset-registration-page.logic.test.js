@@ -15,6 +15,8 @@ import {
 } from './dataset-registration-page.logic';
 import datasets from '../../../test/fixtures/datasets';
 
+import { multilingualTagsArrayToMultilingualObject } from '../../lib/multilingual-tags-converter';
+
 it('should run titleValues without errors', () => {
   const dataset = datasets.datasetItems._embedded.datasets[0];
   expect(titleValues(dataset)).not.toBeNull();
@@ -41,6 +43,7 @@ it('should run typeValues without errors', () => {
 
 it('should run conceptValues without errors', () => {
   const dataset = datasets.datasetItems._embedded.datasets[0];
+  dataset.keyword = multilingualTagsArrayToMultilingualObject(dataset.keyword);
   expect(conceptValues(dataset)).not.toBeNull();
   expect(conceptValues(null)).toBeNull();
 });

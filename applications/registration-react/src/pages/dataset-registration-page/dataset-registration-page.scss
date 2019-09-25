@@ -29,9 +29,11 @@
       top: 10px;
       margin-left: 10px;
       text-transform: uppercase;
+      z-index: 1;
 
       + input,
-      + textarea {
+      + textarea,
+      + .fdk-reg-input-tags {
         padding-left: 40px;
       }
 
