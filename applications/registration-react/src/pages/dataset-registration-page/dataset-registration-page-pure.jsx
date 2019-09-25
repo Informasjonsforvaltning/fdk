@@ -111,6 +111,11 @@ export function DatasetRegistrationPagePure(props) {
     'title',
     'description',
     'objective',
+    'hasCurrentnessAnnotation',
+    'hasRelevanceAnnotation',
+    'hasCompletenessAnnotation',
+    'hasAccuracyAnnotation',
+    'hasAvailabilityAnnotation',
     'distribution',
     'sample'
   ];
@@ -247,6 +252,7 @@ export function DatasetRegistrationPagePure(props) {
                   frequencyItems={frequencyItems}
                   catalogId={catalogId}
                   datasetId={datasetId}
+                  languages={languages}
                 />
               </FormTemplateWithState>
 
@@ -259,6 +265,7 @@ export function DatasetRegistrationPagePure(props) {
                   datasetItem={datasetItem}
                   catalogId={catalogId}
                   datasetId={datasetId}
+                  languages={languages}
                 />
               </FormTemplateWithState>
 
