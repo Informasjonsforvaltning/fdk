@@ -1,18 +1,14 @@
 import { validateMinTwoChars } from '../../../validation/validation';
-import localization from '../../../lib/localization';
 
-const validate = values => {
+const validate = ({ keyword }) => {
   let errors = {};
-  const { keyword } = values;
 
   if (keyword) {
-    keyword.forEach(item => {
-      errors = validateMinTwoChars(
-        'keyword',
-        item[localization.getLanguage()],
-        errors
-      );
-    });
+    Object.values(keyword).forEach(value =>
+      Object.values(value).forEach(item => {
+        errors = validateMinTwoChars('keyword', item, errors);
+      })
+    );
   }
   return errors;
 };

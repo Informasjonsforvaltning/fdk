@@ -7,7 +7,7 @@ let wrapper;
 
 beforeEach(() => {
   defaultProps = {
-    syncErrors: {
+    errors: {
       keyword: null
     }
   };
@@ -18,9 +18,9 @@ test('should render FormConceptPure correctly', () => {
   expect(wrapper).toMatchSnapshot();
 });
 
-test('should render FormConceptPure correctly with syncErrors', () => {
+test('should render FormConceptPure correctly with errors', () => {
   wrapper.setProps({
-    syncErrors: {
+    errors: {
       keyword: {
         nb: 'Feil'
       }

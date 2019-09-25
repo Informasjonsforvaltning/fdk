@@ -24,18 +24,18 @@ exports[`should render FormConceptPure correctly 1`] = `
       term="Dataset_keyword"
       title="Søkeord"
     />
-    <Field
+    <MultilingualField
       component={[Function]}
-      fieldLabel="nb"
       label="Søkeord"
+      languages={Array []}
       name="keyword"
-      type="text"
+      showLabel={false}
     />
   </div>
 </form>
 `;
 
-exports[`should render FormConceptPure correctly with syncErrors 1`] = `
+exports[`should render FormConceptPure correctly with errors 1`] = `
 <form>
   <div
     className="form-group"
@@ -59,13 +59,18 @@ exports[`should render FormConceptPure correctly with syncErrors 1`] = `
       term="Dataset_keyword"
       title="Søkeord"
     />
-    <Field
+    <MultilingualField
       component={[Function]}
-      fieldLabel="nb"
       label="Søkeord"
+      languages={Array []}
       name="keyword"
-      type="text"
+      showLabel={false}
     />
+    <div
+      className="alert alert-danger mt-3"
+    >
+      Feil
+    </div>
   </div>
 </form>
 `;
