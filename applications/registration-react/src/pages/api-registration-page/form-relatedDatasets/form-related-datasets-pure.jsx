@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 import _ from 'lodash';
-import { Link } from 'react-router-dom';
 import localization from '../../../lib/localization';
 import Helptext from '../../../components/helptext/helptext.component';
 import { InputTagsDatasetsField } from '../field-tagsinput-datasets/field-tagsinput-datasets.components';
@@ -27,13 +26,13 @@ const renderReferecingDatasets = datasets =>
           className="d-flex align-items-center border-bottom py-3"
         >
           <span className="w-75">
-            <Link
+            <a
               target="_blank"
               rel="noopener noreferrer"
-              to={`${getConfig().searchHost}/datasets/${item.id}`}
+              href={`${getConfig().searchHost}/datasets/${item.id}`}
             >
               {getTranslateText(item.title)}
-            </Link>
+            </a>
           </span>
           <span className="w-25 breakword">
             {_.get(item, ['publisher', 'name'])}
