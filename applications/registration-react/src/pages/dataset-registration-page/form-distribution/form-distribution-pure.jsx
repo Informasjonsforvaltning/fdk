@@ -5,11 +5,11 @@ import _ from 'lodash';
 
 import localization from '../../../lib/localization';
 import Helptext from '../../../components/helptext/helptext.component';
-import InputField from '../../../components/field-input/field-input.component';
-import InputTagsField from '../../../components/field-input-tags/field-input-tags.component';
-import TextAreaField from '../../../components/field-textarea/field-textarea.component';
-import RadioField from '../../../components/field-radio/field-radio.component';
-import SelectField from '../../../components/field-select/field-select.component';
+import InputField from '../../../components/fields/field-input/field-input.component';
+import InputTagsField from '../../../components/fields/field-input-tags/field-input-tags.component';
+import TextAreaField from '../../../components/fields/field-textarea/field-textarea.component';
+import RadioField from '../../../components/fields/field-radio/field-radio.component';
+import SelectField from '../../../components/fields/field-select/field-select.component';
 import { licenseType, textType } from '../../../schemaTypes';
 import { datasetFormPatchThunk } from '../formsLib/asyncValidateDatasetInvokePatch';
 import MultilingualField from '../../../components/multilingual-field/multilingual-field.component';

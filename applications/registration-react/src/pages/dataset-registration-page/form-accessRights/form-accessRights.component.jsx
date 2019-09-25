@@ -4,8 +4,8 @@ import { Field, FieldArray } from 'redux-form';
 
 import localization from '../../../lib/localization';
 import Helptext from '../../../components/helptext/helptext.component';
-import InputField from '../../../components/field-input/field-input.component';
-import RadioField from '../../../components/field-radio/field-radio.component';
+import InputField from '../../../components/fields/field-input/field-input.component';
+import RadioField from '../../../components/fields/field-radio/field-radio.component';
 import { legalBasisType } from '../../../schemaTypes';
 import { datasetFormPatchThunk } from '../formsLib/asyncValidateDatasetInvokePatch';
 

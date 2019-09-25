@@ -5,10 +5,10 @@ import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 import localization from '../../../lib/localization';
 import Helptext from '../../../components/helptext/helptext.component';
-import SelectField from '../../../components/field-select/field-select.component';
-import DatepickerField from '../../../components/field-datepicker/field-datepicker.component';
-import TextAreaField from '../../../components/field-textarea/field-textarea.component';
-import InputField from '../../../components/field-input/field-input.component';
+import SelectField from '../../../components/fields/field-select/field-select.component';
+import DatepickerField from '../../../components/fields/field-datepicker/field-datepicker.component';
+import TextAreaField from '../../../components/fields/field-textarea/field-textarea.component';
+import InputField from '../../../components/fields/field-input/field-input.component';
 
 const apiStatusSortOrder = {
   EXPERIMENTAL: 0,

@@ -4,10 +4,10 @@ import { Field, FieldArray } from 'redux-form';
 
 import localization from '../../../lib/localization';
 import Helptext from '../../../components/helptext/helptext.component';
-import InputField from '../../../components/field-input/field-input.component';
+import InputField from '../../../components/fields/field-input/field-input.component';
 import MultilingualField from '../../../components/multilingual-field/multilingual-field.component';
-import InputTagsField from '../../../components/field-input-tags/field-input-tags.component';
-import TextAreaField from '../../../components/field-textarea/field-textarea.component';
+import InputTagsField from '../../../components/fields/field-input-tags/field-input-tags.component';
+import TextAreaField from '../../../components/fields/field-textarea/field-textarea.component';
 import { licenseType, textType } from '../../../schemaTypes';
 import { datasetFormPatchThunk } from '../formsLib/asyncValidateDatasetInvokePatch';
 

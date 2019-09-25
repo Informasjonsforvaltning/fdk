@@ -4,7 +4,7 @@ import { FieldArray } from 'redux-form';
 
 import localization from '../../../lib/localization';
 import Helptext from '../../../components/helptext/helptext.component';
-import TextAreaField from '../../../components/field-textarea/field-textarea.component';
+import TextAreaField from '../../../components/fields/field-textarea/field-textarea.component';
 import MultilingualField from '../../../components/multilingual-field/multilingual-field.component';
 import { Standard } from './standard/standard.component';
 

@@ -1,7 +1,7 @@
 import { Field } from 'redux-form';
 import React from 'react';
 import PropTypes from 'prop-types';
-import InputField from '../../../../components/field-input/field-input.component';
+import InputField from '../../../../components/fields/field-input/field-input.component';
 import MultilingualField from '../../../../components/multilingual-field/multilingual-field.component';
 
 export const Standard = ({ fields, titleLabel, linkLabel, languages }) => (

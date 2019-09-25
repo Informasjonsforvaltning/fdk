@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import localization from '../../lib/localization';
+import localization from '../../../lib/localization';
 import './field-input-title.scss';
 
 export default class InputTitleField extends React.Component {
