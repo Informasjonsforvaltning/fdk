@@ -4,9 +4,9 @@ import { Field, FieldArray } from 'redux-form';
 
 import localization from '../../../lib/localization';
 import Helptext from '../../../components/helptext/helptext.component';
-import InputTagsFieldArray from '../../../components/field-input-tags-objects/field-input-tags-objects.component';
-import DatepickerField from '../../../components/field-datepicker/field-datepicker.component';
-import CheckboxField from '../../../components/field-checkbox/field-checkbox.component';
+import InputTagsFieldArray from '../../../components/fields/field-input-tags-objects/field-input-tags-objects.component';
+import DatepickerField from '../../../components/fields/field-datepicker/field-datepicker.component';
+import CheckboxField from '../../../components/fields/field-checkbox/field-checkbox.component';
 import { datasetFormPatchThunk } from '../formsLib/asyncValidateDatasetInvokePatch';
 
 export const renderTemporalFields = ({

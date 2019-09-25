@@ -8,7 +8,7 @@ import _ from 'lodash';
 import localization from '../../../../lib/localization';
 import { searchConcepts } from '../../../../api/search-api/concepts';
 import { getTranslateText } from '../../../../lib/translateText';
-import '../../../../components/field-input-tags/field-input-tags.scss';
+import '../../../../components/fields/field-input-tags/field-input-tags.scss';
 
 const updateInput = (updates, props) => {
   const { input } = props;

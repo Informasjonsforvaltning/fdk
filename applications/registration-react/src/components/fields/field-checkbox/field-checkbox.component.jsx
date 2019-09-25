@@ -13,8 +13,7 @@ const handleChangeLang = (props, event) => {
     input.onChange(newInput);
   } else {
     // Skal legge til array
-    let updates = [];
-    updates = input.value.map(item => ({
+    const updates = input.value.map(item => ({
       uri: item.uri,
       code: item.code
     }));
@@ -48,7 +47,7 @@ const handleChangeLang = (props, event) => {
 };
 
 const CheckboxField = props => {
-  const { input, label } = props;
+  const { input } = props;
 
   let langCodes = [];
 
@@ -101,13 +100,11 @@ const CheckboxField = props => {
 CheckboxField.defaultProps = {
   input: {
     value: []
-  },
-  label: null
+  }
 };
 
 CheckboxField.propTypes = {
-  input: PropTypes.object,
-  label: PropTypes.string
+  input: PropTypes.object
 };
 
 export default CheckboxField;

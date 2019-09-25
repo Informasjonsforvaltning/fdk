@@ -4,9 +4,9 @@ import { Field } from 'redux-form';
 
 import localization from '../../../lib/localization';
 import Helptext from '../../../components/helptext/helptext.component';
-import SelectField from '../../../components/field-select/field-select.component';
-import TextAreaField from '../../../components/field-textarea/field-textarea.component';
-import DatepickerField from '../../../components/field-datepicker/field-datepicker.component';
+import SelectField from '../../../components/fields/field-select/field-select.component';
+import TextAreaField from '../../../components/fields/field-textarea/field-textarea.component';
+import DatepickerField from '../../../components/fields/field-datepicker/field-datepicker.component';
 import MultilingualField from '../../../components/multilingual-field/multilingual-field.component';
 
 const handleProvenanceChange = (componentProps, event, provenanceItem) => {
@@ -22,7 +22,7 @@ const handleProvenanceChange = (componentProps, event, provenanceItem) => {
 };
 
 export const renderProvenance = componentProps => {
-  const { input, label, provenanceItems } = componentProps;
+  const { input, provenanceItems } = componentProps;
   let provenanceNodes;
   if (provenanceItems) {
     provenanceNodes = provenanceItems.map(provenanceItem => {

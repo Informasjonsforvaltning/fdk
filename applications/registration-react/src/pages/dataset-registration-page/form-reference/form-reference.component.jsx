@@ -4,7 +4,7 @@ import { Field, FieldArray } from 'redux-form';
 
 import localization from '../../../lib/localization';
 import Helptext from '../../../components/helptext/helptext.component';
-import SelectField from '../../../components/field-select/field-select.component';
+import SelectField from '../../../components/fields/field-select/field-select.component';
 import { datasetFormPatchThunk } from '../formsLib/asyncValidateDatasetInvokePatch';
 
 const renderReferenceFields = ({

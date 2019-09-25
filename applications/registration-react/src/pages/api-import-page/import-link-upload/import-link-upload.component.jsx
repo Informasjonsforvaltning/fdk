@@ -6,7 +6,7 @@ import { withState, withHandlers, compose } from 'recompose';
 
 import localization from '../../../lib/localization';
 import { PanelBase } from '../../../components/panel-base/panel-base.component';
-import InputField from '../../../components/field-input/field-input.component';
+import InputField from '../../../components/fields/field-input/field-input.component';
 import { AlertMessage } from '../../../components/alert-message/alert-message.component';
 import { validateURL } from '../../../validation/validation';
 

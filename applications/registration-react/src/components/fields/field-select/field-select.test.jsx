@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import SelectField from './field-select.component';
-import frequency from '../../../test/fixtures/frequency';
+import frequency from '../../../../test/fixtures/frequency';
 
 let defaultProps;
 let wrapper;

@@ -7,9 +7,9 @@ import { Collapse } from 'reactstrap';
 import localization from '../../../lib/localization';
 import { getTranslateText } from '../../../lib/translateText';
 import Helptext from '../../../components/helptext/helptext.component';
-import InputField from '../../../components/field-input/field-input.component';
-import InputTitleField from '../../../components/field-input-title/field-input-title.component';
-import TextAreaField from '../../../components/field-textarea/field-textarea.component';
+import InputField from '../../../components/fields/field-input/field-input.component';
+import InputTitleField from '../../../components/fields/field-input-title/field-input-title.component';
+import TextAreaField from '../../../components/fields/field-textarea/field-textarea.component';
 
 export class FormCatalogPure extends React.Component {
   constructor(props) {

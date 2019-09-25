@@ -5,7 +5,7 @@ import { Button } from 'reactstrap';
 import { withState, withHandlers, compose } from 'recompose';
 
 import localization from '../../../lib/localization';
-import InputField from '../../../components/field-input/field-input.component';
+import InputField from '../../../components/fields/field-input/field-input.component';
 import { validateURL } from '../../../validation/validation';
 
 export const ImportLinkUploadPure = props => {
