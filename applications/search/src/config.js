@@ -2,7 +2,6 @@ import axios from 'axios';
 import { isNapProfile } from './lib/nap-profile';
 
 const createConfig = env => {
-  const searchHost = env.SEARCH_HOST || 'https://fellesdatakatalog.brreg.no';
   const searchApi = {
     host: env.SEARCH_API_HOST || '',
     // in ut1 and st1, search api requires basic authentication
@@ -24,7 +23,7 @@ const createConfig = env => {
     publisherApi: defaultToSearchApi(env.PUBLISHER_API_HOST),
     catalogApi: defaultToSearchApi(env.CATALOG_API_HOST),
     referenceDataApi: defaultToSearchApi(env.REFERENCE_DATA_HOST),
-    searchHost
+    searchHost: defaultToSearchApi(env.SEARCH_HOST),
   };
 };
 
