@@ -82,5 +82,3 @@ exports[`should render FormContentsComponent, { renderS correctly 1`] = `
   </div>
 </form>
 `;
-
-exports[`should render renderStandard correctly 1`] = `<div />`;
