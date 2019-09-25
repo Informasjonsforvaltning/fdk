@@ -5,7 +5,7 @@ import cx from 'classnames';
 
 import '../field-input-tags/field-input-tags.scss';
 
-const InputTagsFieldArray = ({
+const TagsInputFieldArray = ({
   input,
   label,
   fieldLabel,
@@ -47,7 +47,7 @@ const InputTagsFieldArray = ({
   );
 };
 
-InputTagsFieldArray.defaultProps = {
+TagsInputFieldArray.defaultProps = {
   label: null,
   fieldLabel: null,
   showLabel: false,
@@ -55,7 +55,7 @@ InputTagsFieldArray.defaultProps = {
   isOnlyOneSelectedLanguage: false
 };
 
-InputTagsFieldArray.propTypes = {
+TagsInputFieldArray.propTypes = {
   input: PropTypes.object.isRequired,
   label: PropTypes.string,
   fieldLabel: PropTypes.string,
@@ -64,4 +64,4 @@ InputTagsFieldArray.propTypes = {
   isOnlyOneSelectedLanguage: PropTypes.bool
 };
 
-export default InputTagsFieldArray;
+export default TagsInputFieldArray;
