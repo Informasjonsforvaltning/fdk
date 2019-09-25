@@ -107,7 +107,7 @@ export function DatasetRegistrationPagePure(props) {
 
   const [languagesDetermined, setLanguagesDetermined] = useState(false);
 
-  const translatableFields = ['title', 'description'];
+  const translatableFields = ['title', 'description', 'objective'];
   const getUsedLanguages = () =>
     datasetItem
       ? [
@@ -330,6 +330,7 @@ export function DatasetRegistrationPagePure(props) {
                   openLicenseItems={openLicenseItems}
                   catalogId={catalogId}
                   datasetId={datasetId}
+                  languages={languages}
                 />
               </FormTemplateWithState>
 

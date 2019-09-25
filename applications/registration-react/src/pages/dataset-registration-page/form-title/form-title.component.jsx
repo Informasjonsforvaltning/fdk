@@ -54,10 +54,11 @@ export const FormTitle = ({ languages }) => (
         title={localization.schema.title.helptext.objective}
         term="Dataset_objective"
       />
-      <Field
-        name={`objective.${localization.getLanguage()}`}
+      <MultilingualField
+        name="objective"
         component={TextAreaField}
         label={localization.schema.title.objectiveLabel}
+        languages={languages}
       />
     </div>
 
