@@ -21,27 +21,6 @@ import {
 import { filterLosThemesFromAggregation } from '../los-aggregations-helper';
 import { getConfig } from '../../../config';
 
-export const showEUThemeFilter = ({ buckets }) =>
-  buckets &&
-  buckets.length > 0 &&
-  !(buckets.length === 1 && buckets[0].key === 'Ukjent');
-
-/*
-export const showEUThemeFilter = ({ buckets }) => {
-  if (!buckets) {
-    return false;
-  }
-  if (
-    buckets &&
-    buckets.length === 1 &&
-    _.get(buckets, [0, 'key']) === 'Ukjent'
-  ) {
-    return false;
-  }
-  return true;
-};
- */
-
 function _renderFilterModal({
   showFilterModal,
   closeFilterModal,
@@ -74,16 +53,14 @@ function _renderFilterModal({
             activeFilter={locationSearch.losTheme}
             referenceDataItems={losItems}
           />
-          {showEUThemeFilter(datasetAggregations.theme) && (
-            <FilterBox
-              htmlKey={1}
-              title={localization.facet.themeEU}
-              filter={datasetAggregations.theme}
-              onClick={onFilterTheme}
-              activeFilter={locationSearch.theme}
-              themesItems={themesItems}
-            />
-          )}
+          <FilterBox
+            htmlKey={1}
+            title={localization.facet.themeEU}
+            filter={datasetAggregations.theme}
+            onClick={onFilterTheme}
+            activeFilter={locationSearch.theme}
+            themesItems={themesItems}
+          />
           {!getConfig().themeNap && (
             <FilterBox
               htmlKey={2}
@@ -253,16 +230,14 @@ export const ResultsDatasetPure = ({
                 referenceDataItems={losItems}
                 collapseItems
               />
-              {showEUThemeFilter(datasetAggregations.theme) && (
-                <FilterBox
-                  htmlKey={1}
-                  title={localization.facet.themeEU}
-                  filter={datasetAggregations.theme}
-                  onClick={onFilterTheme}
-                  activeFilter={locationSearch.theme}
-                  themesItems={themesItems}
-                />
-              )}
+              <FilterBox
+                htmlKey={1}
+                title={localization.facet.themeEU}
+                filter={datasetAggregations.theme}
+                onClick={onFilterTheme}
+                activeFilter={locationSearch.theme}
+                themesItems={themesItems}
+              />
               {!getConfig().themeNap && (
                 <FilterBox
                   htmlKey={2}
