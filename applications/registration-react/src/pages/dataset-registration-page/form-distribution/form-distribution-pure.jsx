@@ -12,7 +12,7 @@ import RadioField from '../../../components/field-radio/field-radio.component';
 import SelectField from '../../../components/field-select/field-select.component';
 import { licenseType, textType } from '../../../schemaTypes';
 import { datasetFormPatchThunk } from '../formsLib/asyncValidateDatasetInvokePatch';
-// import { minLength } from '../../../validation/validation';
+import MultilingualField from '../../../components/multilingual-field/multilingual-field.component';
 
 export const renderDistributionLandingpage = ({ fields }) => {
   return (
@@ -37,7 +37,8 @@ export const renderDistributions = ({
   fields,
   openLicenseItems,
   initialValues,
-  onDeleteFieldAtIndex
+  onDeleteFieldAtIndex,
+  languages
 }) => {
   return (
     <div>
@@ -134,10 +135,11 @@ export const renderDistributions = ({
                   title={localization.schema.distribution.helptext.description}
                   term="Distribution_description"
                 />
-                <Field
-                  name={`${distribution}.description.${localization.getLanguage()}`}
+                <MultilingualField
+                  name={`${distribution}.description`}
                   component={TextAreaField}
                   label={localization.schema.distribution.descriptionLabel}
+                  languages={languages}
                 />
               </div>
 
@@ -208,7 +210,8 @@ renderDistributions.propTypes = {
   fields: PropTypes.object.isRequired,
   initialValues: PropTypes.object.isRequired,
   openLicenseItems: PropTypes.array.isRequired,
-  onDeleteFieldAtIndex: PropTypes.func.isRequired
+  onDeleteFieldAtIndex: PropTypes.func.isRequired,
+  languages: PropTypes.array.isRequired
 };
 
 export const FormDistributionPure = ({
@@ -216,7 +219,8 @@ export const FormDistributionPure = ({
   openLicenseItems,
   dispatch,
   catalogId,
-  datasetId
+  datasetId,
+  languages
 }) => {
   const deleteFieldAtIndex = (fields, index) => {
     const values = fields.getAll();
@@ -235,6 +239,7 @@ export const FormDistributionPure = ({
         openLicenseItems={openLicenseItems}
         initialValues={initialValues}
         onDeleteFieldAtIndex={deleteFieldAtIndex}
+        languages={languages}
       />
     </form>
   );
@@ -244,12 +249,14 @@ FormDistributionPure.defaultProps = {
   dispatch: null,
   catalogId: null,
   datasetId: null,
-  openLicenseItems: []
+  openLicenseItems: [],
+  languages: []
 };
 FormDistributionPure.propTypes = {
   initialValues: PropTypes.object.isRequired,
   dispatch: PropTypes.func,
   catalogId: PropTypes.string,
   datasetId: PropTypes.string,
-  openLicenseItems: PropTypes.array
+  openLicenseItems: PropTypes.array,
+  languages: PropTypes.array
 };

@@ -57,6 +57,7 @@ exports[`should render FormDistributionPure correctly 1`] = `
         ],
       }
     }
+    languages={Array []}
     name="distribution"
     onDeleteFieldAtIndex={[Function]}
     openLicenseItems={Array []}
