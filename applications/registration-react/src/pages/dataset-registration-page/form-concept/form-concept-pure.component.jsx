@@ -8,7 +8,7 @@ import Helptext from '../../../components/helptext/helptext.component';
 import InputTagsFieldConcepts from './input-tags-concepts/input-tags-concepts.component';
 import InputTagsFieldArray from '../../../components/field-input-tags-objects/field-input-tags-objects.component';
 
-export const FormConcept = props => {
+export const FormConceptPure = props => {
   const { syncErrors } = props;
   return (
     <form>
@@ -47,9 +47,9 @@ export const FormConcept = props => {
   );
 };
 
-FormConcept.defaultProps = {
+FormConceptPure.defaultProps = {
   syncErrors: null
 };
-FormConcept.propTypes = {
+FormConceptPure.propTypes = {
   syncErrors: PropTypes.object
 };
