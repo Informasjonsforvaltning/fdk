@@ -2,6 +2,7 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+import DocumentMeta from 'react-document-meta';
 
 import localization from '../lib/localization';
 import { ConnectedSearchPage } from '../pages/search-page/connected-search-page';
@@ -50,6 +51,8 @@ export function App({ language }) {
 
   return (
     <div className={themeClass}>
+      <DocumentMeta {...{title: 'NAP'}} />
+
       <div>
         <a
           id="focus-element"
