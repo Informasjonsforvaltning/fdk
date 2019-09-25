@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import InputTagsFieldArray from './field-input-tags-objects.component';
+import TagsInputFieldArray from './tags-input-field-array.component';
 
 let defaultProps;
 let wrapper;
@@ -31,9 +31,9 @@ beforeEach(() => {
     fieldLabel: 'uri',
     showLabel: false
   };
-  wrapper = shallow(<InputTagsFieldArray {...defaultProps} />);
+  wrapper = shallow(<TagsInputFieldArray {...defaultProps} />);
 });
 
-test('should render InputTagsFieldArray correctly', () => {
+test('should render TagsInputFieldArray correctly', () => {
   expect(wrapper).toMatchSnapshot();
 });

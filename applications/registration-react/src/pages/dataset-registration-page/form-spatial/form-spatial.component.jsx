@@ -4,7 +4,7 @@ import { Field, FieldArray } from 'redux-form';
 
 import localization from '../../../lib/localization';
 import Helptext from '../../../components/helptext/helptext.component';
-import InputTagsFieldArray from '../../../components/fields/field-input-tags-objects/field-input-tags-objects.component';
+import TagsInputFieldArray from '../../../components/fields/field-input-tags-objects/tags-input-field-array.component';
 import DatepickerField from '../../../components/fields/field-datepicker/field-datepicker.component';
 import CheckboxField from '../../../components/fields/field-checkbox/field-checkbox.component';
 import { datasetFormPatchThunk } from '../formsLib/asyncValidateDatasetInvokePatch';
@@ -101,7 +101,7 @@ export const FormSpatial = ({
           <Field
             name="spatial"
             type="text"
-            component={InputTagsFieldArray}
+            component={TagsInputFieldArray}
             label={localization.schema.spatial.spatialLabel}
             fieldLabel="uri"
           />
