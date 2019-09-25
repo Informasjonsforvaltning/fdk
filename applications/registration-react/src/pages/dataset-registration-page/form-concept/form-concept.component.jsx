@@ -1,8 +1,11 @@
-import { getFormSyncErrors } from 'redux-form';
+import { getFormSyncErrors, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import _ from 'lodash';
+import { compose } from 'recompose';
 
-import { ConfiguredFormConcept } from './configured-form-concept';
+import validate from './form-concept-validations';
+import { asyncValidateDatasetInvokePatch } from '../formsLib/asyncValidateDatasetInvokePatch';
+import { FormConceptPure } from './form-concept-pure.component';
 
 const mapStateToProps = (state, ownProps) => {
   const { datasetItem } = ownProps;
@@ -21,4 +24,14 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-export const FormConcept = connect(mapStateToProps)(ConfiguredFormConcept);
+const formConfig = {
+  form: 'concept',
+  validate,
+  asyncValidate: asyncValidateDatasetInvokePatch
+};
+
+const enhance = compose(
+  connect(mapStateToProps),
+  reduxForm(formConfig)
+);
+export const FormConcept = enhance(FormConceptPure);
