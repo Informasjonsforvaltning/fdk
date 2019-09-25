@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`should render FormConcept correctly 1`] = `
+exports[`should render FormConceptPure correctly 1`] = `
 <form>
   <div
     className="form-group"
@@ -35,7 +35,7 @@ exports[`should render FormConcept correctly 1`] = `
 </form>
 `;
 
-exports[`should render FormConcept correctly with syncErrors 1`] = `
+exports[`should render FormConceptPure correctly with syncErrors 1`] = `
 <form>
   <div
     className="form-group"

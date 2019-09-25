@@ -1,6 +1,6 @@
 import { reduxForm } from 'redux-form';
 
-import { FormConcept } from './form-concept.component';
+import { FormConceptPure } from './form-concept-pure.component';
 import validate from './form-concept-validations';
 import { asyncValidateDatasetInvokePatch } from '../formsLib/asyncValidateDatasetInvokePatch';
 
@@ -10,4 +10,4 @@ const config = {
   asyncValidate: asyncValidateDatasetInvokePatch
 };
 
-export const ConfiguredFormConcept = reduxForm(config)(FormConcept);
+export const ConfiguredFormConcept = reduxForm(config)(FormConceptPure);

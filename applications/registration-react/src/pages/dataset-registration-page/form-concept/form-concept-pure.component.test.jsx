@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { FormConcept } from './form-concept.component';
+import { FormConceptPure } from './form-concept-pure.component';
 
 let defaultProps;
 let wrapper;
@@ -11,14 +11,14 @@ beforeEach(() => {
       keyword: null
     }
   };
-  wrapper = shallow(<FormConcept {...defaultProps} />);
+  wrapper = shallow(<FormConceptPure {...defaultProps} />);
 });
 
-test('should render FormConcept correctly', () => {
+test('should render FormConceptPure correctly', () => {
   expect(wrapper).toMatchSnapshot();
 });
 
-test('should render FormConcept correctly with syncErrors', () => {
+test('should render FormConceptPure correctly with syncErrors', () => {
   wrapper.setProps({
     syncErrors: {
       keyword: {
