@@ -66,11 +66,6 @@ exports[`should render FormConceptPure correctly with syncErrors 1`] = `
       name="keyword"
       type="text"
     />
-    <div
-      className="alert alert-danger mt-3"
-    >
-      Feil
-    </div>
   </div>
 </form>
 `;
