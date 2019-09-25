@@ -1,10 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import TagsInput from 'react-tagsinput';
+import cx from 'classnames';
 
 import '../field-input-tags/field-input-tags.scss';
 
-const InputTagsFieldArray = ({ input, label, fieldLabel, showLabel }) => {
+const InputTagsFieldArray = ({
+  input,
+  label,
+  fieldLabel,
+  showLabel,
+  language,
+  isOnlyOneSelectedLanguage
+}) => {
   let tagNodes = [];
 
   if (input && input.value && input.value.length > 0) {
@@ -22,9 +30,12 @@ const InputTagsFieldArray = ({ input, label, fieldLabel, showLabel }) => {
     );
 
   return (
-    <div className="pl-2">
+    <div className={cx('pl-2', { 'multilingual-field': !!language })}>
       <label className="fdk-form-label w-100" htmlFor={input.name}>
         {showLabel ? label : null}
+        {language && !isOnlyOneSelectedLanguage && (
+          <span className="language-indicator">{language}</span>
+        )}
         <TagsInput
           value={tagNodes}
           className="fdk-reg-input-tags"
@@ -39,14 +50,18 @@ const InputTagsFieldArray = ({ input, label, fieldLabel, showLabel }) => {
 InputTagsFieldArray.defaultProps = {
   label: null,
   fieldLabel: null,
-  showLabel: false
+  showLabel: false,
+  language: null,
+  isOnlyOneSelectedLanguage: false
 };
 
 InputTagsFieldArray.propTypes = {
   input: PropTypes.object.isRequired,
   label: PropTypes.string,
   fieldLabel: PropTypes.string,
-  showLabel: PropTypes.bool
+  showLabel: PropTypes.bool,
+  language: PropTypes.string,
+  isOnlyOneSelectedLanguage: PropTypes.bool
 };
 
 export default InputTagsFieldArray;
