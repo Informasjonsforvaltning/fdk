@@ -4,6 +4,9 @@ exports[`should render App correctly 1`] = `
 <div
   className="theme-fdk"
 >
+  <SideEffect(DocumentMeta)
+    title="NAP"
+  />
   <div>
     <a
       aria-hidden="true"
