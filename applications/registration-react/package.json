@@ -7,7 +7,8 @@
     "start": "echo 'feature removed temporarily, run in container instead'",
     "dev": "webpack-dev-server --hot --inline --config webpack.hostdev.config.js",
     "build": "webpack --config webpack.prod.config.js -p",
-    "lint": "(cd ../../; npx eslint applications/registration-react --ext=.js,.jsx --fix)",
+    "lint:all": "(cd ../../; npx eslint applications/registration-react --ext=.js,.jsx --fix)",
+    "lint": "(cd ../../; npx lint-staged)",
     "test": "jest",
     "test:coverage": "jest --coverage",
     "tdd": "jest --watch"
