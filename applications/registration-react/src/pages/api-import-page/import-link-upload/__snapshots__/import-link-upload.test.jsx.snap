@@ -19,6 +19,7 @@ exports[`should render ImportLinkUpload correctly 1`] = `
           "onChange": [Function],
         }
       }
+      isOnlyOneSelectedLanguage={false}
       label="Lenke til spesifikasjon"
       language={null}
       meta={
