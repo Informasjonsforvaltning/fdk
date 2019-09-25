@@ -194,7 +194,7 @@ const resolveLinkOrExternalLink = item => {
   if (getConfig().themeNap) {
     return (
       <LinkExternal
-        uri={getConfig().searchHost.concat(datasetPath)}
+        uri={getConfig().searchHost.host.concat(datasetPath)}
         prefLabel={_.capitalize(getTranslateText(_.get(item, 'prefLabel')))}
       />
     );

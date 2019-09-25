@@ -59,7 +59,7 @@ const renderTitle = (Tag, title, titleLink, externalLink) => {
     if (externalLink) {
       return (
         <LinkExternal
-          uri={getConfig().searchHost.concat(titleLink)}
+          uri={getConfig().searchHost.host.concat(titleLink)}
           prefLabel={title}
         />
       );
