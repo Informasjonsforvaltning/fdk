@@ -20,7 +20,7 @@ const mapStateToProps = (state, ownProps) => {
           ? _.get(datasetItem, 'keyword')
           : []
     },
-    syncErrors: getFormSyncErrors('concept')(state)
+    errors: getFormSyncErrors('concept')(state)
   };
 };
 
