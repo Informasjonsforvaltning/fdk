@@ -8,12 +8,15 @@ const TextAreaField = ({
   type,
   meta: { touched, error, warning },
   showLabel,
-  language
+  language,
+  isOnlyOneSelectedLanguage
 }) => (
   <div className={cx('pl-2', { 'multilingual-field': !!language })}>
     <label className="fdk-form-label w-100" htmlFor={input.name}>
       {showLabel ? label : null}
-      {language && <span className="language-indicator">{language}</span>}
+      {!!language && !isOnlyOneSelectedLanguage && (
+        <span className="language-indicator">{language}</span>
+      )}
       <textarea rows="5" {...input} type={type} className="form-control" />
     </label>
     {touched &&
@@ -28,7 +31,8 @@ TextAreaField.defaultProps = {
   label: null,
   type: null,
   meta: null,
-  language: null
+  language: null,
+  isOnlyOneSelectedLanguage: false
 };
 
 TextAreaField.propTypes = {
@@ -37,7 +41,8 @@ TextAreaField.propTypes = {
   label: PropTypes.string,
   type: PropTypes.string,
   meta: PropTypes.object,
-  language: PropTypes.string
+  language: PropTypes.string,
+  isOnlyOneSelectedLanguage: PropTypes.bool
 };
 
 export default TextAreaField;

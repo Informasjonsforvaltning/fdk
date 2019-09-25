@@ -8,13 +8,16 @@ const InputField = ({
   type,
   meta: { touched, error, warning },
   showLabel,
-  language
+  language,
+  isOnlyOneSelectedLanguage
 }) => (
   <div className={cx('pl-2', { 'multilingual-field': !!language })}>
     <div className="d-flex align-items-center">
       <label className="fdk-form-label w-100" htmlFor={input.name}>
         {showLabel ? label : null}
-        {language && <span className="language-indicator">{language}</span>}
+        {!!language && !isOnlyOneSelectedLanguage && (
+          <span className="language-indicator">{language}</span>
+        )}
         <input {...input} type={type} className="form-control" />
       </label>
     </div>
@@ -30,7 +33,8 @@ InputField.defaultProps = {
   label: null,
   type: null,
   meta: null,
-  language: null
+  language: null,
+  isOnlyOneSelectedLanguage: false
 };
 
 InputField.propTypes = {
@@ -39,7 +43,8 @@ InputField.propTypes = {
   label: PropTypes.string,
   type: PropTypes.string,
   meta: PropTypes.object,
-  language: PropTypes.string
+  language: PropTypes.string,
+  isOnlyOneSelectedLanguage: PropTypes.bool
 };
 
 export default InputField;
