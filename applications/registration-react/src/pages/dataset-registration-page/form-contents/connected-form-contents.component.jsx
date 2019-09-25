@@ -31,14 +31,6 @@ const mapStateToProps = ({ state }, { datasetItem = {} }) => {
   };
 };
 
-const mergeProps = (stateProps, dispatchProps, ownProps) => ({
-  ...stateProps,
-  ...dispatchProps,
-  ...ownProps
-});
-
-export const ConnectedFormContents = connect(
-  mapStateToProps,
-  null,
-  mergeProps
-)(ConfiguredFormTitle);
+export const ConnectedFormContents = connect(mapStateToProps)(
+  ConfiguredFormTitle
+);
