@@ -21,6 +21,4 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-export const ConnectedFormConcept = connect(mapStateToProps)(
-  ConfiguredFormConcept
-);
+export const FormConcept = connect(mapStateToProps)(ConfiguredFormConcept);

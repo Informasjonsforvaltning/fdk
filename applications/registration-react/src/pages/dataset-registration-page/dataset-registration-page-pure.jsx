@@ -11,7 +11,7 @@ import { ConnectedFormSpatial } from './form-spatial/connected-form-spatial.comp
 import { ConnectedFormProvenance } from './form-provenance/connected-form-provenance.component';
 import { ConnectedFormThemes } from './form-theme/connected-form-theme.component';
 import { ConnectedFormType } from './form-type/connected-form-type.component';
-import { ConnectedFormConcept } from './form-concept/connected-form-concept.component';
+import { FormConcept } from './form-concept/form-concept.component';
 import { ConnectedFormAccessRights } from './form-accessRights/connected-form-accessRights.component';
 import { ConnectedFormReference } from './form-reference/connected-form-reference.component';
 import { ConnectedFormInformationModel } from './form-informationmodel/connected-form-informationmodel.component';
@@ -218,7 +218,7 @@ export function DatasetRegistrationPagePure(props) {
                 values={conceptValues(concept.values)}
                 syncErrors={concept.syncErrors}
               >
-                <ConnectedFormConcept
+                <FormConcept
                   datasetItem={datasetItem}
                   catalogId={catalogId}
                   datasetId={datasetId}
