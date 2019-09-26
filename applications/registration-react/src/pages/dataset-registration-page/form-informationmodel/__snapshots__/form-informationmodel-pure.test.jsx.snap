@@ -26,5 +26,3 @@ exports[`should render FormInformationModelPure, { renderS correctly 1`] = `
   </div>
 </form>
 `;
-
-exports[`should render renderInformationModel correctly 1`] = `<div />`;
