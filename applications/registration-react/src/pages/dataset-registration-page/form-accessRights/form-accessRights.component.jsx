@@ -5,6 +5,7 @@ import { Field, FieldArray } from 'redux-form';
 import localization from '../../../lib/localization';
 import Helptext from '../../../components/helptext/helptext.component';
 import InputField from '../../../components/fields/field-input/field-input.component';
+import MultilingualField from '../../../components/multilingual-field/multilingual-field.component';
 import RadioField from '../../../components/fields/field-radio/field-radio.component';
 import { legalBasisType } from '../../../schemaTypes';
 import { datasetFormPatchThunk } from '../formsLib/asyncValidateDatasetInvokePatch';
@@ -24,18 +25,18 @@ export const renderLegalBasisFields = ({
   fields,
   titleLabel,
   linkLabel,
-  onDeleteFieldAtIndex
+  onDeleteFieldAtIndex,
+  languages
 }) => (
-  <div className="d-flex mb-2" key={index}>
-    <div className="w-50">
-      <Field
-        name={`${item}.prefLabel.${localization.getLanguage()}`}
-        component={InputField}
-        label={titleLabel}
-        showLabel
-      />
-    </div>
-    <div className="w-50">
+  <div className="d-flex flex-column mb-2" key={index}>
+    <MultilingualField
+      name={`${item}.prefLabel`}
+      component={InputField}
+      label={titleLabel}
+      showLabel
+      languages={languages}
+    />
+    <div className="mt-2">
       <Field
         name={`${item}.uri`}
         component={InputField}
@@ -61,14 +62,16 @@ renderLegalBasisFields.propTypes = {
   fields: PropTypes.object.isRequired,
   titleLabel: PropTypes.string.isRequired,
   linkLabel: PropTypes.string.isRequired,
-  onDeleteFieldAtIndex: PropTypes.func.isRequired
+  onDeleteFieldAtIndex: PropTypes.func.isRequired,
+  languages: PropTypes.array.isRequired
 };
 
 export const renderLegalBasis = ({
   fields,
   titleLabel,
   linkLabel,
-  onDeleteFieldAtIndex
+  onDeleteFieldAtIndex,
+  languages
 }) => {
   return (
     <div>
@@ -80,7 +83,8 @@ export const renderLegalBasis = ({
             fields,
             titleLabel,
             linkLabel,
-            onDeleteFieldAtIndex
+            onDeleteFieldAtIndex,
+            languages
           })
         )}
       <button
@@ -106,7 +110,8 @@ export const FormAccessRights = props => {
     hasAccessRightsURI,
     dispatch,
     catalogId,
-    datasetId
+    datasetId,
+    languages
   } = props;
   const accessRight = syncErrors ? syncErrors.accessRight : null;
   const deleteFieldAtIndex = (fields, index) => {
@@ -225,6 +230,7 @@ export const FormAccessRights = props => {
                   localization.schema.accessRights.legalBasisForAccess.linkLabel
                 }
                 onDeleteFieldAtIndex={deleteFieldAtIndex}
+                languages={languages}
               />
             </div>
           </div>
@@ -239,12 +245,14 @@ FormAccessRights.defaultProps = {
   hasAccessRightsURI: null,
   dispatch: null,
   catalogId: null,
-  datasetId: null
+  datasetId: null,
+  languages: []
 };
 FormAccessRights.propTypes = {
   syncErrors: PropTypes.object,
   hasAccessRightsURI: PropTypes.string,
   dispatch: PropTypes.func,
   catalogId: PropTypes.string,
-  datasetId: PropTypes.string
+  datasetId: PropTypes.string,
+  languages: PropTypes.array
 };

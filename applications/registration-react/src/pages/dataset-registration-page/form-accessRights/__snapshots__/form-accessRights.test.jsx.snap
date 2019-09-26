@@ -119,6 +119,7 @@ exports[`should render FormAccessRights correctly with syncErrors 1`] = `
         />
         <FieldArray
           component={[Function]}
+          languages={Array []}
           linkLabel="Lenke"
           name="legalBasisForAccess"
           onDeleteFieldAtIndex={[Function]}
@@ -133,20 +134,18 @@ exports[`should render FormAccessRights correctly with syncErrors 1`] = `
 exports[`should render renderLegalBasis correctly 1`] = `
 <div>
   <div
-    className="d-flex mb-2"
+    className="d-flex flex-column mb-2"
     key="0"
   >
+    <MultilingualField
+      component={[Function]}
+      label={null}
+      languages={Array []}
+      name="[object Object].prefLabel"
+      showLabel={true}
+    />
     <div
-      className="w-50"
-    >
-      <Field
-        component={[Function]}
-        name="[object Object].prefLabel.nb"
-        showLabel={true}
-      />
-    </div>
-    <div
-      className="w-50"
+      className="mt-2"
     >
       <Field
         component={[Function]}
