@@ -1,23 +1,18 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import {
-  FormInformationModel,
-  renderInformationModel
-} from './form-informationmodel.component';
+import { createMockStore } from 'redux-test-utils';
+import shallowWithStore from '../../../../test/shallowWithStore';
+import { FormInformationModel } from './form-informationmodel.component';
+import dataset from '../../../../test/fixtures/datasets';
 
-let defaultProps;
 let wrapper;
 
-beforeEach(() => {
-  defaultProps = {};
-  wrapper = shallow(<FormInformationModel {...defaultProps} />);
-});
-
-test('should render FormInformationModel, { renderS correctly', () => {
-  expect(wrapper).toMatchSnapshot();
-});
-
-test('should render renderInformationModel correctly', () => {
-  wrapper = shallow(renderInformationModel(defaultProps));
-  expect(wrapper).toMatchSnapshot();
+test('should render FormInformationModel correctly', () => {
+  const testState = {};
+  const store = createMockStore(testState);
+  const datasetItem = dataset.datasetItems._embedded.datasets[0];
+  wrapper = shallowWithStore(
+    <FormInformationModel datasetItem={datasetItem} />,
+    store
+  );
+  expect(wrapper).toHaveLength(1);
 });

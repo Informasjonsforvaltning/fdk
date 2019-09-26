@@ -15,7 +15,7 @@ import { ConnectedFormType } from './form-type/connected-form-type.component';
 import { FormConcept } from './form-concept/form-concept.component';
 import { ConnectedFormAccessRights } from './form-accessRights/connected-form-accessRights.component';
 import { ConnectedFormReference } from './form-reference/connected-form-reference.component';
-import { ConnectedFormInformationModel } from './form-informationmodel/connected-form-informationmodel.component';
+import { FormInformationModel } from './form-informationmodel/form-informationmodel.component';
 import { ConnectedFormContactPoint } from './form-contactPoint/connected-form-contactPoint.component';
 import { ConnectedFormContents } from './form-contents/connected-form-contents.component';
 import { StatusBar } from '../../components/status-bar/status-bar.component';
@@ -280,7 +280,7 @@ export function DatasetRegistrationPagePure(props) {
                 values={informationModelValues(informationModel.values)}
                 syncErrors={informationModel.syncErrors}
               >
-                <ConnectedFormInformationModel
+                <FormInformationModel
                   datasetItem={datasetItem}
                   catalogId={catalogId}
                   datasetId={datasetId}
