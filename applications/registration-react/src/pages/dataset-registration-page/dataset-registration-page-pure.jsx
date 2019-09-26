@@ -111,6 +111,9 @@ export function DatasetRegistrationPagePure(props) {
     'title',
     'description',
     'objective',
+    'legalBasisForRestriction',
+    'legalBasisForProcessing',
+    'legalBasisForAccess',
     'conformsTo',
     'hasCurrentnessAnnotation',
     'hasRelevanceAnnotation',
@@ -176,6 +179,7 @@ export function DatasetRegistrationPagePure(props) {
                   datasetItem={datasetItem}
                   catalogId={catalogId}
                   datasetId={datasetId}
+                  languages={languages}
                 />
               </FormTemplateWithState>
 
