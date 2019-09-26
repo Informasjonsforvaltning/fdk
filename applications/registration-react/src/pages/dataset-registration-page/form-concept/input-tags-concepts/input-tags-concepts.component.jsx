@@ -130,7 +130,7 @@ class InputTagsFieldConcepts extends React.Component {
             isLoading: false,
             suggestions: concepts
           });
-        }, 1000);
+        }, 250);
       })
       .catch(error => {
         if (process.env.NODE_ENV !== 'production') {
