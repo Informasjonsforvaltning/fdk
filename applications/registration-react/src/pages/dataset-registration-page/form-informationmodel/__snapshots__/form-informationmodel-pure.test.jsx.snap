@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`should render FormInformationModelPure, { renderS correctly 1`] = `
+exports[`should render FormInformationModelPure correctly 1`] = `
 <form>
   <div
     className="form-group"
@@ -17,6 +17,7 @@ exports[`should render FormInformationModelPure, { renderS correctly 1`] = `
         />
         <FieldArray
           component={[Function]}
+          languages={Array []}
           linkLabel="Lenke"
           name="informationModel"
           titleLabel="Tittel"

@@ -120,6 +120,7 @@ export function DatasetRegistrationPagePure(props) {
     'hasCompletenessAnnotation',
     'hasAccuracyAnnotation',
     'hasAvailabilityAnnotation',
+    'informationModel',
     'distribution',
     'sample'
   ];
@@ -284,6 +285,7 @@ export function DatasetRegistrationPagePure(props) {
                   datasetItem={datasetItem}
                   catalogId={catalogId}
                   datasetId={datasetId}
+                  languages={languages}
                 />
               </FormTemplateWithState>
 

@@ -10,6 +10,6 @@ beforeEach(() => {
   wrapper = shallow(<FormInformationModelPure {...defaultProps} />);
 });
 
-test('should render FormInformationModelPure, { renderS correctly', () => {
+test('should render FormInformationModelPure correctly', () => {
   expect(wrapper).toMatchSnapshot();
 });
