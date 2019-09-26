@@ -10,7 +10,8 @@
     "test": "jest ",
     "test:coverage": "jest --coverage",
     "tdd": "jest --watch",
-    "lint": "(cd ../../; npx eslint applications/search --ext=.js,.jsx --fix)"
+    "lint:all": "(cd ../../; npx eslint applications/search --ext=.js,.jsx --fix)",
+    "lint": "(cd ../../; npx lint-staged)"
   },
   "license": "ISC",
   "dependencies": {
