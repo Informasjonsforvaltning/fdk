@@ -12,30 +12,17 @@ import {
 import { getTranslateText } from '../../../../lib/translateText';
 import '../../../../components/fields/field-input-tags/field-input-tags.scss';
 
-const updateInput = (updates, props) => {
-  const { input } = props;
-  let inputValues = input.value;
-  if (!inputValues) {
-    inputValues = [];
-  }
-  inputValues.push(updates);
-  input.onChange(inputValues);
-};
-
-const handleChange = (props, tags, changed, changedIndexes) => {
-  const { input } = props;
-
-  // hvis changedIndex er mindre enn lengden av input.value, da fjerne den indeksen, hvis større så legge til
-  const valueLength = input.value.length;
-  const updates = input.value;
-
-  if (changedIndexes < valueLength) {
-    // skal fjerne en tag på gitt index
-    updates.splice(changedIndexes[0], 1);
-    input.onChange(updates);
+const handleChange = (input, tags, changed, changedIndexes) => {
+  // if changedIndex er smaller than number of tags, then it must be deletion of the tag
+  if (changedIndexes < input.value.length) {
+    const newValue = input.value;
+    newValue.splice(changedIndexes[0], 1);
+    input.onChange(newValue);
   } else if (typeof changed[0] === 'object') {
-    // skal legge til en ny tag
-    updateInput(changed[0], props);
+    // only add if object was selected from droptown, not free text
+    const newValue = input.value || [];
+    newValue.push(changed[0]);
+    input.onChange(newValue);
   }
 };
 
@@ -184,7 +171,7 @@ class ConceptTagsInputField extends React.Component {
               className="fdk-reg-input-tags"
               inputProps={{ placeholder: '' }}
               onChange={(tags, changed, changedIndexes) => {
-                handleChange(this.props, tags, changed, changedIndexes);
+                handleChange(input, tags, changed, changedIndexes);
               }}
               renderInput={this.autosuggestRenderInput}
             />
