@@ -77,7 +77,7 @@ const renderSuggestion = suggestion => (
 const getSuggestionValue = suggestion =>
   getTranslateText(_.get(suggestion, 'prefLabel'));
 
-class InputTagsFieldConcepts extends React.Component {
+class ConceptTagsInputField extends React.Component {
   constructor() {
     super();
 
@@ -210,16 +210,16 @@ class InputTagsFieldConcepts extends React.Component {
   }
 }
 
-InputTagsFieldConcepts.defaultProps = {
+ConceptTagsInputField.defaultProps = {
   showLabel: false,
   input: null,
   label: null
 };
 
-InputTagsFieldConcepts.propTypes = {
+ConceptTagsInputField.propTypes = {
   showLabel: PropTypes.bool,
   input: PropTypes.object,
   label: PropTypes.string
 };
 
-export default InputTagsFieldConcepts;
+export default ConceptTagsInputField;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import InputTagsFieldConcepts from './input-tags-concepts.component';
+import ConceptTagsInputField from './concept-tags-input-field.component';
 
 let defaultProps;
 let wrapper;
@@ -51,9 +51,9 @@ beforeEach(() => {
     },
     fieldLabel: 'fieldLabel'
   };
-  wrapper = shallow(<InputTagsFieldConcepts {...defaultProps} />);
+  wrapper = shallow(<ConceptTagsInputField {...defaultProps} />);
 });
 
-test('should render InputTagsFieldConcepts correctly', () => {
+test('should render ConceptTagsInputField correctly', () => {
   expect(wrapper).toMatchSnapshot();
 });
