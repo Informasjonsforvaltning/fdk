@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Autosuggest from 'react-autosuggest';
 import TagsInput from 'react-tagsinput';
-import AutosizeInput from 'react-input-autosize';
 import _ from 'lodash';
 
 import localization from '../../../../lib/localization';
@@ -148,18 +147,6 @@ class InputTagsFieldConcepts extends React.Component {
       }
     };
 
-    const autosizingRenderInput = ({ addTag, ...componentProps }) => {
-      const { onChange, value, ...other } = componentProps;
-      return (
-        <AutosizeInput
-          type="text"
-          onChange={onChange}
-          value={value}
-          {...other}
-        />
-      );
-    };
-
     const { suggestions, isLoading } = this.state;
 
     return (
@@ -179,7 +166,6 @@ class InputTagsFieldConcepts extends React.Component {
           }}
           onSuggestionsClearRequested={this.onSuggestionsClearRequested}
           onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-          renderInputComponent={autosizingRenderInput}
         />
         {isLoading && (
           <i

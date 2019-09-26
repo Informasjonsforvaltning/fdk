@@ -52,7 +52,6 @@
     "react-datepicker": "^1.0.4",
     "react-dom": "^16.8.6",
     "react-idle-timer": "^4.2.5",
-    "react-input-autosize": "^2.2.1",
     "react-localization": "^0.1.4",
     "react-moment": "^0.7.0",
     "react-redux": "^7.0.3",
