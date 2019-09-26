@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`should render FormInformationModel, { renderS correctly 1`] = `
+exports[`should render FormInformationModelPure, { renderS correctly 1`] = `
 <form>
   <div
     className="form-group"
