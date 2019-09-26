@@ -1,3 +1,4 @@
+import get from 'lodash/get';
 import { getConfig } from '../../config';
 import { searchApiGet } from './host';
 
@@ -7,3 +8,6 @@ export const searchConcepts = params =>
     params,
     authorization: getConfig().conceptApi.authorization
   });
+
+export const extractConcepts = searchResponse =>
+  get(searchResponse, ['_embedded', 'concepts'], []);
