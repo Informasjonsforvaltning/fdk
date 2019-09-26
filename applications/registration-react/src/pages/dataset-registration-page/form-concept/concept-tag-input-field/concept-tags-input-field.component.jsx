@@ -156,7 +156,6 @@ class ConceptTagsInputField extends React.Component {
     return (
       <>
         <Autosuggest
-          ref={props.ref}
           suggestions={suggestions}
           shouldRenderSuggestions={value => value && value.trim().length > 1}
           getSuggestionValue={suggestion => getSuggestionValue(suggestion)}
