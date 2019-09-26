@@ -4,7 +4,7 @@ import { Field } from 'redux-form';
 
 import localization from '../../../lib/localization';
 import Helptext from '../../../components/helptext/helptext.component';
-import InputTagsFieldConcepts from './input-tags-concepts/input-tags-concepts.component';
+import ConceptTagsInputField from './concept-tag-input-field/concept-tags-input-field.component';
 import TagsInputFieldArray from '../../../components/fields/field-input-tags-objects/tags-input-field-array.component';
 import MultilingualField from '../../../components/multilingual-field/multilingual-field.component';
 
@@ -18,7 +18,7 @@ export const FormConceptPure = ({ languages, errors }) => (
       <Field
         name="concepts"
         type="text"
-        component={InputTagsFieldConcepts}
+        component={ConceptTagsInputField}
         label={localization.schema.concept.conceptLabel}
       />
     </div>
