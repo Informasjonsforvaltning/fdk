@@ -5,7 +5,10 @@ import TagsInput from 'react-tagsinput';
 import _ from 'lodash';
 
 import localization from '../../../../lib/localization';
-import { searchConcepts } from '../../../../api/search-api/concepts';
+import {
+  extractConcepts,
+  searchConcepts
+} from '../../../../api/search-api/concepts';
 import { getTranslateText } from '../../../../lib/translateText';
 import '../../../../components/fields/field-input-tags/field-input-tags.scss';
 
@@ -117,17 +120,12 @@ class ConceptTagsInputField extends React.Component {
       isLoading: true
     });
 
-    const concepts = [];
-
     searchConcepts({
       prefLabel: value,
-      returnfields: 'uri,definition.text,publisher.name,publisher.prefLabel',
-      size: 25
+      returnfields: 'uri,definition.text,publisher.prefLabel,publisher.name'
     })
-      .then(responseData => {
-        _.get(responseData, ['_embedded', 'concepts'], []).forEach(item => {
-          concepts.push(item);
-        });
+      .then(extractConcepts)
+      .then(concepts => {
         this.lastRequestId = setTimeout(() => {
           this.setState({
             isLoading: false,
@@ -135,11 +133,7 @@ class ConceptTagsInputField extends React.Component {
           });
         }, 250);
       })
-      .catch(error => {
-        if (process.env.NODE_ENV !== 'production') {
-          console.log('error', error); // eslint-disable-line no-console
-        }
-      });
+      .catch(console.error);
   }
 
   autosuggestRenderInput({ addTag, ...props }) {
