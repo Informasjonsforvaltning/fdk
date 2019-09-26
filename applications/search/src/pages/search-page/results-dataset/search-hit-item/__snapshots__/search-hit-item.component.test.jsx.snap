@@ -118,7 +118,7 @@ exports[`should render SearchHitItem 1`] = `
         className="mr-2 fdk-icon-public"
       />
       <div
-        className="fdk-color-offentlig fdk-themes-text"
+        className="fdk-color-offentlig"
       >
         Dataset is public
       </div>

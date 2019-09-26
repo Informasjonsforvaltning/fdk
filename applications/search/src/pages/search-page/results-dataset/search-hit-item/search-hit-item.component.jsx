@@ -68,7 +68,7 @@ const renderAccessRights = accessRight => {
   switch (code) {
     case 'NON_PUBLIC':
       accessRightsIconClass = 'fdk-icon-non-public';
-      accessRightsColorClass = 'fdk-color-unntatt fdk-themes-text';
+      accessRightsColorClass = 'fdk-color-unntatt';
       accessRightsLabel =
         localization.dataset.accessRights.authorityCode.nonPublicDetailsLabel;
       break;
@@ -80,7 +80,7 @@ const renderAccessRights = accessRight => {
       break;
     case 'PUBLIC':
       accessRightsIconClass = 'fdk-icon-public';
-      accessRightsColorClass = 'fdk-color-offentlig fdk-themes-text';
+      accessRightsColorClass = 'fdk-color-offentlig';
       accessRightsLabel =
         localization.dataset.accessRights.authorityCode.publicDetailsLabel;
       break;
