@@ -143,14 +143,6 @@ class ConceptTagsInputField extends React.Component {
   }
 
   autosuggestRenderInput({ addTag, ...props }) {
-    const handleOnChange = (e, { method }) => {
-      if (method === 'enter') {
-        e.preventDefault();
-      } else {
-        props.onChange(e);
-      }
-    };
-
     const { suggestions, isLoading } = this.state;
 
     return (
@@ -163,7 +155,7 @@ class ConceptTagsInputField extends React.Component {
           renderSuggestionsContainer={({ containerProps, children }) =>
             renderSuggestionContainer(containerProps, children)
           }
-          inputProps={{ ...props, onChange: handleOnChange }}
+          inputProps={{ ...props }}
           onSuggestionSelected={(e, { suggestion }) => {
             addTag(suggestion);
           }}
