@@ -23,7 +23,7 @@ const createConfig = env => {
     publisherApi: defaultToSearchApi(env.PUBLISHER_API_HOST),
     catalogApi: defaultToSearchApi(env.CATALOG_API_HOST),
     referenceDataApi: defaultToSearchApi(env.REFERENCE_DATA_HOST),
-    searchHost: defaultToSearchApi(env.SEARCH_HOST),
+    searchHost: defaultToSearchApi(env.SEARCH_HOST)
   };
 };
 
