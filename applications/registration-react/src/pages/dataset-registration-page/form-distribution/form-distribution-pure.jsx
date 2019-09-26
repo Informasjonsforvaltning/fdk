@@ -161,16 +161,15 @@ export const renderDistributions = ({
                   title={localization.schema.distribution.helptext.conformsTo}
                   term="Distribution_conformsTo"
                 />
-                <div className="d-flex">
-                  <div className="w-50">
-                    <Field
-                      name={`${distribution}.conformsTo[0].prefLabel.${localization.getLanguage()}`}
-                      component={InputField}
-                      showLabel
-                      label={localization.schema.common.titleLabel}
-                    />
-                  </div>
-                  <div className="w-50">
+                <div className="d-flex flex-column">
+                  <MultilingualField
+                    name={`${distribution}.conformsTo[0].prefLabel`}
+                    component={InputField}
+                    label={localization.schema.common.titleLabel}
+                    showLabel
+                    languages={languages}
+                  />
+                  <div className="mt-2">
                     <Field
                       name={`${distribution}.conformsTo[0].uri`}
                       component={InputField}
