@@ -643,7 +643,14 @@ public abstract class AbstractBuilder {
                 SkosCode locCode = locations.get(locUri);
 
                 if (locCode == null) {
-                    logger.warn("Code with uri [{}] does not exist in approved codelist and is removed from dataset.", locUri);
+                    //Issue 2264 (https://github.com/Informasjonsforvaltning/fdk/issues/2264) : Data norge returns https ids for http location links.
+                    locUri = locUri.replaceAll("http","https");
+                    locCode = locations.get(locUri);
+                    if (locCode != null) {
+                        result.add(locCode);
+                    } else {
+                        logger.warn("Code with uri [{}] does not exist in approved codelist and is removed from dataset.", locUri);
+                    }
                     continue;
                 }
                 result.add(locCode);
