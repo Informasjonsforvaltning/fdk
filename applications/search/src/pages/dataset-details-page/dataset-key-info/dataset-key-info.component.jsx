@@ -23,7 +23,7 @@ const renderAccessRights = accessRight => {
   switch (code) {
     case 'NON_PUBLIC':
       accessRightsIconClass = 'fdk-icon-non-public';
-      accessRightsColorClass = 'fdk-color-unntatt fdk-themes-text';
+      accessRightsColorClass = 'fdk-color-unntatt';
       accessRightsLabel =
         localization.dataset.accessRights.authorityCode.nonPublicDetailsLabel;
       break;
@@ -35,7 +35,7 @@ const renderAccessRights = accessRight => {
       break;
     case 'PUBLIC':
       accessRightsIconClass = 'fdk-icon-public';
-      accessRightsColorClass = 'fdk-color-offentlig fdk-themes-text';
+      accessRightsColorClass = 'fdk-color-offentlig';
       accessRightsLabel =
         localization.dataset.accessRights.authorityCode.publicDetailsLabel;
       break;
@@ -48,7 +48,7 @@ const renderAccessRights = accessRight => {
       <div className="align-self-center col-4 pl-0 fdk-text-strong">
         {localization.accessLevel}
       </div>
-      <div className="col-8 d-flex">
+      <div className="col-8 d-flex align-items-center">
         <i className={`${accessRightsIconClass} mr-3`} />
         <span className={accessRightsColorClass}>{accessRightsLabel}</span>
       </div>

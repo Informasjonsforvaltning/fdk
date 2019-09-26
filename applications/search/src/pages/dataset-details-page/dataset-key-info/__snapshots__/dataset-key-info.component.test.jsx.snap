@@ -15,13 +15,13 @@ exports[`should render DatasetKeyInfo correctly 1`] = `
         Accesslevel
       </div>
       <div
-        className="col-8 d-flex"
+        className="col-8 d-flex align-items-center"
       >
         <i
           className="fdk-icon-public mr-3"
         />
         <span
-          className="fdk-color-offentlig fdk-themes-text"
+          className="fdk-color-offentlig"
         >
           Dataset is public
         </span>
