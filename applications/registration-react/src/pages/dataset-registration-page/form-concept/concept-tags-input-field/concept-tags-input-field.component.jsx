@@ -156,11 +156,10 @@ class ConceptTagsInputField extends React.Component {
 
   render() {
     const { input } = this.props;
-    let tagNodes = [];
+    const tagNodes = (input.value || []).map(item =>
+      getTranslateText(item.prefLabel)
+    );
 
-    if (input && input.value && input.value.length > 0) {
-      tagNodes = input.value.map(item => getTranslateText(item.prefLabel));
-    }
     return (
       <div className="pl-2">
         <div className="d-flex align-items-center">
