@@ -21,12 +21,13 @@
   .fdk-form-label {
     display: block;
     position: relative;
-    font-weight: 500;
     margin-bottom: 0;
+    line-height: 1;
+    font-weight: 500;
 
     .language-indicator {
       position: absolute;
-      top: 10px;
+      top: 13px;
       margin-left: 10px;
       text-transform: uppercase;
       z-index: 1;
@@ -39,6 +40,10 @@
 
       + textarea {
         min-height: 41px;
+      }
+
+      &.language-indicator-text-area {
+        top: 11px;
       }
     }
   }
