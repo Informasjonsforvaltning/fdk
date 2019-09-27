@@ -20,7 +20,6 @@ export const FormConceptPure = ({ languages, errors }) => (
         type="text"
         component={InputTagsFieldConcepts}
         label={localization.schema.concept.conceptLabel}
-        fieldLabel="no"
       />
     </div>
     <div className="form-group">
