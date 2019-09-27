@@ -119,7 +119,11 @@ class InputTagsFieldConcepts extends React.Component {
 
     const concepts = [];
 
-    searchConcepts({ prefLabel: value, returnFields: 'uri,definition.text', size: 25 })
+    searchConcepts({
+      prefLabel: value,
+      returnFields: 'uri,definition.text',
+      size: 25
+    })
       .then(responseData => {
         _.get(responseData, ['_embedded', 'concepts'], []).forEach(item => {
           concepts.push(item);
