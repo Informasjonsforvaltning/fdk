@@ -102,7 +102,8 @@ renderLegalBasis.propTypes = {
   fields: PropTypes.object.isRequired,
   titleLabel: PropTypes.string.isRequired,
   linkLabel: PropTypes.string.isRequired,
-  onDeleteFieldAtIndex: PropTypes.func.isRequired
+  onDeleteFieldAtIndex: PropTypes.func.isRequired,
+  languages: PropTypes.array.isRequired
 };
 export const FormAccessRights = props => {
   const {
