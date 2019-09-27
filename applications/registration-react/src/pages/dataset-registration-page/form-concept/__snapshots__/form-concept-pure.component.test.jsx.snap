@@ -11,7 +11,9 @@ exports[`should render FormConceptPure correctly 1`] = `
     />
     <Field
       component={[Function]}
+      getTagFromItem={[Function]}
       name="concepts"
+      renderLookupInput={[Function]}
     />
   </div>
   <div
@@ -43,7 +45,9 @@ exports[`should render FormConceptPure correctly with errors 1`] = `
     />
     <Field
       component={[Function]}
+      getTagFromItem={[Function]}
       name="concepts"
+      renderLookupInput={[Function]}
     />
   </div>
   <div

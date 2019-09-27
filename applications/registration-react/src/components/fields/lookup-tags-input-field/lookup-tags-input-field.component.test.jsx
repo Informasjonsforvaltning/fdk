@@ -1,6 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import ConceptTagsInputField from './concept-tags-input-field.component';
+import LookupTagsInputField from './lookup-tags-input-field.component';
+import { renderConceptAutosuggestForTagsInput } from '../../../pages/dataset-registration-page/form-concept/concept-autosuggest';
 
 let defaultProps;
 let wrapper;
@@ -30,11 +31,12 @@ beforeEach(() => {
           datasets: null
         }
       ]
-    }
+    },
+    renderLookupInput: renderConceptAutosuggestForTagsInput
   };
-  wrapper = shallow(<ConceptTagsInputField {...defaultProps} />);
+  wrapper = shallow(<LookupTagsInputField {...defaultProps} />);
 });
 
-test('should render ConceptTagsInputField correctly', () => {
+test('should render LookupTagsInputField correctly', () => {
   expect(wrapper).toMatchSnapshot();
 });

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`should render ConceptTagsInputField correctly 1`] = `
+exports[`should render LookupTagsInputField correctly 1`] = `
 <div
   className="pl-2"
 >
@@ -47,7 +47,28 @@ exports[`should render ConceptTagsInputField correctly 1`] = `
       validationRegex={/\\.\\*/}
       value={
         Array [
-          "enhet",
+          Object {
+            "altLabel": null,
+            "creator": Object {
+              "uri": "http://data.brreg.no/enhetsregisteret/enhet/974760673",
+            },
+            "datasets": null,
+            "definition": Object {
+              "no": "alt som er registrert med et organisasjonsnummer ",
+            },
+            "identifier": "https://data-david.github.io/Begrep/begrep/Enhet",
+            "inScheme": Array [
+              "http://data-david.github.io/vokabular/Befolkning",
+            ],
+            "note": Object {
+              "no": "Alle hovedenheter, underenheter og organisasjonsledd som er identifisert med et organisasjonsnummer.",
+            },
+            "prefLabel": Object {
+              "no": "enhet",
+            },
+            "source": "https://jira.brreg.no/browse/BEGREP-208",
+            "uri": "https://data-david.github.io/Begrep/begrep/Enhet",
+          },
         ]
       }
     />

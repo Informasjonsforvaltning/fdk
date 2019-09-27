@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import TagsInput from 'react-tagsinput';
 import { getTranslateText } from '../../../../services/translateText';
-import '../../../../components/fields/field-input-tags/field-input-tags.scss';
 import { ConceptAutosuggest } from '../concept-autosuggest';
+import '../field-input-tags/field-input-tags.scss';
 
 const handleChange = (input, tags, changed, changedIndexes) => {
   // if changedIndex er smaller than number of tags, then it must be deletion of the tag
@@ -19,37 +19,34 @@ const handleChange = (input, tags, changed, changedIndexes) => {
   }
 };
 
-const ConceptTagsInputField = props => {
-  const { input } = props;
-  const tagNodes = (input.value || []).map(item =>
-    getTranslateText(item.prefLabel)
-  );
+const LookupTagsInputField = ({ input, renderLookupInput, getTagFromItem }) => {
+  const getTags = value => (value || []).map(getTagFromItem);
 
   return (
     <div className="pl-2">
       <div className="d-flex align-items-center">
         <TagsInput
-          value={tagNodes}
+          value={getTags(input.value)}
           className="fdk-reg-input-tags"
           inputProps={{ placeholder: '' }}
           onChange={(tags, changed, changedIndexes) => {
             handleChange(input, tags, changed, changedIndexes);
           }}
-          renderInput={({ ref, ...restOfProps }) => (
-            <ConceptAutosuggest {...restOfProps} />
-          )}
+          renderInput={renderLookupInput}
         />
       </div>
     </div>
   );
 };
 
-ConceptTagsInputField.defaultProps = {
-  input: null
+LookupTagsInputField.defaultProps = {
+  getTagFromItem: item => item
 };
 
-ConceptTagsInputField.propTypes = {
-  input: PropTypes.object
+LookupTagsInputField.propTypes = {
+  input: PropTypes.object.isRequired,
+  renderLookupInput: PropTypes.func.isRequired,
+  getTagFromItem: PropTypes.func
 };
 
-export default ConceptTagsInputField;
+export default LookupTagsInputField;

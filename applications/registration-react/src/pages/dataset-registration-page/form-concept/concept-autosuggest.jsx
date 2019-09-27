@@ -109,3 +109,15 @@ export const ConceptAutosuggest = ({ addTag, ...inputProps }) => {
 ConceptAutosuggest.propTypes = {
   addTag: PropTypes.func.isRequired
 };
+
+export const renderConceptAutosuggestForTagsInput = ({
+  ref,
+  ...restOfProps
+}) => <ConceptAutosuggest {...restOfProps} />;
+
+renderConceptAutosuggestForTagsInput.defaultProps = {
+  ref: null
+};
+renderConceptAutosuggestForTagsInput.propTypes = {
+  ref: PropTypes.object
+};
