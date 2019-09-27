@@ -186,6 +186,7 @@ export const FormAccessRights = props => {
                     .linkLabel
                 }
                 onDeleteFieldAtIndex={deleteFieldAtIndex}
+                languages={languages}
               />
             </div>
 
@@ -209,6 +210,7 @@ export const FormAccessRights = props => {
                     .linkLabel
                 }
                 onDeleteFieldAtIndex={deleteFieldAtIndex}
+                languages={languages}
               />
             </div>
 
