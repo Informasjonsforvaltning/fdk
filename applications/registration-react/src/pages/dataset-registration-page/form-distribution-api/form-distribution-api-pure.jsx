@@ -14,13 +14,7 @@ export const renderDistributionsAPI = () => (
       title={localization.schema.distributionAPI.helptext.api}
       term="Distribution_api"
     />
-    <Field
-      name="distribution"
-      type="text"
-      component={InputTagsAPIsField}
-      label={localization.schema.concept.conceptLabel}
-      fieldLabel="no"
-    />
+    <Field name="distribution" component={InputTagsAPIsField} />
   </div>
 );
 
