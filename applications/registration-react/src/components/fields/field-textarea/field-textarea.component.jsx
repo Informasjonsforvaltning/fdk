@@ -15,7 +15,9 @@ const TextAreaField = ({
     <label className="fdk-form-label w-100" htmlFor={input.name}>
       {showLabel ? label : null}
       {!!language && !isOnlyOneSelectedLanguage && (
-        <span className="language-indicator">{language}</span>
+        <span className="language-indicator language-indicator-text-area">
+          {language}
+        </span>
       )}
       <textarea rows="5" {...input} type={type} className="form-control" />
     </label>
