@@ -51,6 +51,7 @@ public class SecurityConfigurer extends ResourceServerConfigurerAdapter {
             config.applyPermitDefaultValues();
             config.addAllowedMethod(HttpMethod.PATCH);
             config.addAllowedMethod(HttpMethod.DELETE);
+            config.addAllowedMethod(HttpMethod.PUT);
             return config;
         });
 
