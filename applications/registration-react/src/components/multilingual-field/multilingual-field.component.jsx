@@ -24,7 +24,6 @@ const MultilingualField = ({
           <Field
             key={code}
             name={`${name}.${code}`}
-            label={`${label}.${code}`}
             component={component}
             language={code}
             isOnlyOneSelectedLanguage={isOnlyOneSelectedLanguage}

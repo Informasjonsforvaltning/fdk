@@ -13,7 +13,6 @@ exports[`should render FormCatalogPure correctly 1`] = `
       <Field
         component={[Function]}
         hideInput={false}
-        label="Tittel"
         name="title.nb"
         onToggleTitle={[Function]}
       />

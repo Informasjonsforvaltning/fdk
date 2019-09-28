@@ -61,7 +61,6 @@ export class FormCatalogPure extends React.Component {
             <Field
               name={`title.${localization.getLanguage()}`}
               component={InputTitleField}
-              label={localization.schema.common.titleLabel}
               hideInput={collapseTitle}
               onToggleTitle={this.toggleTitle}
             />

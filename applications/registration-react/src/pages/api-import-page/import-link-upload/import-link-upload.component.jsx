@@ -40,11 +40,11 @@ export const ImportLinkUpload = props => {
       )}
       <div className="mb-5">
         <InputField
-          showLabel
           input={{
             name: 'importUrl',
             onChange: e => handleChangeUrl(e)
           }}
+          showLabel
           label={localization.api.import.linkToSpec}
           type="input"
           meta={{
