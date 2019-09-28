@@ -20,7 +20,7 @@ module.exports = {
         res.json({
           SEARCH_HOST: process.env.SEARCH_HOST || 'http://localhost:8080',
           REGISTRATION_API_HOST:
-            process.env.REGISTRATION_API_HOST || 'http://localhost:8114',
+            process.env.REGISTRATION_API_HOST || 'http://localhost:8098',
           CONCEPT_REGISTRATION_API_HOST:
             process.env.CONCEPT_REGISTRATION_API_HOST ||
             'http://localhost:8200',
