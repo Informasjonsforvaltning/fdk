@@ -5,10 +5,6 @@ import { ButtonRegistrationStatus } from './button-registration-status/button-re
 
 export const FormPublish = () => (
   <form>
-    <Field
-      name="registrationStatus"
-      component={ButtonRegistrationStatus}
-      label="Status"
-    />
+    <Field name="registrationStatus" component={ButtonRegistrationStatus} />
   </form>
 );

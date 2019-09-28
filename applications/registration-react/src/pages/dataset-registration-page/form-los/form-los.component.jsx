@@ -99,7 +99,6 @@ export const FormLOSPure = ({
           <Field
             name="theme"
             component={FieldTreeLos}
-            label={localization.schema.los.title}
             losItems={losItemsToShow}
             defaultOpenTree={typeof searchedItem !== 'undefined'}
             defaultShowTopic={
