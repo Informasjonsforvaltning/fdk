@@ -7,7 +7,6 @@ import { Collapse } from 'reactstrap';
 import localization from '../../../lib/localization';
 import { getTranslateText } from '../../../lib/translateText';
 import Helptext from '../../../components/helptext/helptext.component';
-import InputField from '../../../components/fields/field-input/field-input.component';
 import InputTitleField from '../../../components/fields/field-input-title/field-input-title.component';
 import TextAreaField from '../../../components/fields/field-textarea/field-textarea.component';
 
@@ -52,9 +51,6 @@ export class FormCatalogPure extends React.Component {
 
     return (
       <form className="mb-5 fdk-reg-catalogs">
-        <div className="d-none">
-          <Field name="id" component={InputField} label="Beskrivelse" />
-        </div>
         <div className="d-flex align-items-center justify-content-between">
           {title && title.nb && !collapseTitle && (
             <h1 className="w-75 fdk-text-strong">

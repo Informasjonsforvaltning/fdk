@@ -5,15 +5,6 @@ exports[`should render FormCatalogPure correctly 1`] = `
   className="mb-5 fdk-reg-catalogs"
 >
   <div
-    className="d-none"
-  >
-    <Field
-      component={[Function]}
-      label="Beskrivelse"
-      name="id"
-    />
-  </div>
-  <div
     className="d-flex align-items-center justify-content-between"
   >
     <div
