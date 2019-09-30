@@ -16,6 +16,7 @@ const setInitialValues = withProps(({ datasetItem: { distribution } }) => ({
 const formConfigurer = reduxForm({
   form: 'distribution',
   validate,
+  shouldAsyncValidate: () => true, // override default, save even if sync validation fails
   asyncValidate: _throttle(asyncValidateDatasetInvokePatch, 250)
 });
 
