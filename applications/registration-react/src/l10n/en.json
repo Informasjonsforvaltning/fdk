@@ -25,10 +25,11 @@
     "Registration of API's": "Registration of API's"
   },
   "breadcrumbs": {
-    "home":"Home",
-    "API-descriptions":"API-descriptions",
+    "home":"All catalogs",
+    "API-descriptions":"API-catalog",
     "Register a new API-description": "Register a new API-description",
-    "Datasets": "Datasets"
+    "Datasets": "Datasetscatalog",
+    "datasetRegistration": "Register new dataset description"
   },
   "listItems": {
     "header": {

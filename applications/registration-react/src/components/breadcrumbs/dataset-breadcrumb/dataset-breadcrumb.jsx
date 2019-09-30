@@ -5,10 +5,11 @@ import _ from 'lodash';
 
 import { getDatasetItemByDatasetiId } from '../../../redux/modules/datasets';
 import { getTranslateText } from '../../../lib/translateText';
+import localization from "../../../lib/localization";
 
 export const PuredatasetBreadcrumb = props => {
   const { datasetItem } = props;
-  return <span>{getTranslateText(_.get(datasetItem, 'title'))}</span>;
+  return <span>{getTranslateText(_.get(datasetItem, 'title')) || localization.breadcrumbs.datasetRegistration}</span>;
 };
 
 const mapStateToProps = ({ datasets }, ownProps) => {
