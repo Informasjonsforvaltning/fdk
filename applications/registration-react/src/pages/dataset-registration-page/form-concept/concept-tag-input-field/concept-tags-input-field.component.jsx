@@ -109,7 +109,8 @@ class ConceptTagsInputField extends React.Component {
 
     searchConcepts({
       prefLabel: value,
-      returnfields: 'uri,definition.text,publisher.prefLabel,publisher.name'
+      returnfields: 'uri,definition.text,publisher.prefLabel,publisher.name',
+      size: 25
     })
       .then(extractConcepts)
       .then(concepts => {
