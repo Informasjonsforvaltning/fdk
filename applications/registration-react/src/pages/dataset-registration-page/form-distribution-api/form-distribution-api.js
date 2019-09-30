@@ -16,6 +16,7 @@ export const setInitialValues = withProps(
 
 export const formConfigurer = reduxForm({
   form: 'distribution',
+  shouldAsyncValidate: () => true, // override default, save even if sync validation fails
   asyncValidate: _throttle(asyncValidateDatasetInvokePatch, 250)
 });
 
