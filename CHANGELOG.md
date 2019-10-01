@@ -2,6 +2,44 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.10.0](https://github.com/Informasjonsforvaltning/fdk/compare/v1.9.0...v1.10.0) (2019-10-01)
+
+
+### Bug Fixes
+
+* **harvesting:** Data norge use https ids for http location tags ([0276d21](https://github.com/Informasjonsforvaltning/fdk/commit/0276d21))
+* **refernce-data:** Now actually read and accept open lisences. ([57f8083](https://github.com/Informasjonsforvaltning/fdk/commit/57f8083))
+* **registration-react:** [#2382](https://github.com/Informasjonsforvaltning/fdk/issues/2382) increase concept search size ([5410ab7](https://github.com/Informasjonsforvaltning/fdk/commit/5410ab7))
+* **registration-react:** [#2449](https://github.com/Informasjonsforvaltning/fdk/issues/2449) add missing languages prop to skjermingsgrunnlag and behandlingsgrunnlag fields in access rights form ([8f94ccd](https://github.com/Informasjonsforvaltning/fdk/commit/8f94ccd))
+* **search:** [#2178](https://github.com/Informasjonsforvaltning/fdk/issues/2178) fix access rights styling and remove unused style-class ([99d2613](https://github.com/Informasjonsforvaltning/fdk/commit/99d2613))
+* **search:** [#2359](https://github.com/Informasjonsforvaltning/fdk/issues/2359) fix env-variable SEARCH_HOST ([258bde6](https://github.com/Informasjonsforvaltning/fdk/commit/258bde6))
+* **search:** [#2359](https://github.com/Informasjonsforvaltning/fdk/issues/2359) related datasets with absolute path to SEARCH_HOST ([b9f42b4](https://github.com/Informasjonsforvaltning/fdk/commit/b9f42b4))
+* **search:** [#2370](https://github.com/Informasjonsforvaltning/fdk/issues/2370) change color menu-button mobile view ([5edcd99](https://github.com/Informasjonsforvaltning/fdk/commit/5edcd99))
+* **search:** Changed font-color on heading text. ([c0ab67c](https://github.com/Informasjonsforvaltning/fdk/commit/c0ab67c))
+* **search:** Fixed text-breaking text in dataset description. ([e9126c3](https://github.com/Informasjonsforvaltning/fdk/commit/e9126c3))
+
+
+### Features
+
+* **registration-react:** [#1643](https://github.com/Informasjonsforvaltning/fdk/issues/1643) Show datasets that have been connected to the api specification ([7ec79fe](https://github.com/Informasjonsforvaltning/fdk/commit/7ec79fe))
+* **registration-react:** [#1762](https://github.com/Informasjonsforvaltning/fdk/issues/1762) Remove publisher filter when looking for datasets to relate to api. ([30e31b5](https://github.com/Informasjonsforvaltning/fdk/commit/30e31b5))
+* **registration-react:** [#2261](https://github.com/Informasjonsforvaltning/fdk/issues/2261) add multilingual support for dataset distribution description ([868f21e](https://github.com/Informasjonsforvaltning/fdk/commit/868f21e))
+* **registration-react:** [#2261](https://github.com/Informasjonsforvaltning/fdk/issues/2261) add multilingual support for dataset keyword ([3c39fc5](https://github.com/Informasjonsforvaltning/fdk/commit/3c39fc5))
+* **registration-react:** [#2261](https://github.com/Informasjonsforvaltning/fdk/issues/2261) add multilingual support for dataset objective ([2309004](https://github.com/Informasjonsforvaltning/fdk/commit/2309004))
+* **registration-react:** [#2261](https://github.com/Informasjonsforvaltning/fdk/issues/2261) add multilingual support for dataset provenance and contents ([b16550d](https://github.com/Informasjonsforvaltning/fdk/commit/b16550d))
+* **registration-react:** [#2261](https://github.com/Informasjonsforvaltning/fdk/issues/2261) add multilingual support for dataset samples ([781d7f8](https://github.com/Informasjonsforvaltning/fdk/commit/781d7f8))
+* **registration-react:** [#2261](https://github.com/Informasjonsforvaltning/fdk/issues/2261) add multilingual support to access rights fields ([564d1ae](https://github.com/Informasjonsforvaltning/fdk/commit/564d1ae))
+* **registration-react:** [#2261](https://github.com/Informasjonsforvaltning/fdk/issues/2261) add multilingual support to distribution fields ([23a5ecc](https://github.com/Informasjonsforvaltning/fdk/commit/23a5ecc))
+* **registration-react:** [#2261](https://github.com/Informasjonsforvaltning/fdk/issues/2261) add multilingual support to information model fields ([d53db9e](https://github.com/Informasjonsforvaltning/fdk/commit/d53db9e))
+* **registration-react:** [#2261](https://github.com/Informasjonsforvaltning/fdk/issues/2261) convert conformsTo field to a multilingual field ([1c0f691](https://github.com/Informasjonsforvaltning/fdk/commit/1c0f691))
+* **registration-react:** change breadcrumb texts and update designsystemet v1.4.24 ([da56e8d](https://github.com/Informasjonsforvaltning/fdk/commit/da56e8d))
+* **search:** [#2338](https://github.com/Informasjonsforvaltning/fdk/issues/2338) Bruk themeprofile=“transport” when napProfile is in use ([1841b81](https://github.com/Informasjonsforvaltning/fdk/commit/1841b81))
+* **search:** [#2339](https://github.com/Informasjonsforvaltning/fdk/issues/2339) hide eu-theme filter if only 'ukjent' ([86fc859](https://github.com/Informasjonsforvaltning/fdk/commit/86fc859))
+* **search:** Themify footer email. ([ce6a80c](https://github.com/Informasjonsforvaltning/fdk/commit/ce6a80c))
+* Themify footer text ([c37a52f](https://github.com/Informasjonsforvaltning/fdk/commit/c37a52f))
+* **search-api:** [#2238](https://github.com/Informasjonsforvaltning/fdk/issues/2238) Add macro-filter themeprofile=transport, that requires either lostTheme of theme to be transport ([e75e4b0](https://github.com/Informasjonsforvaltning/fdk/commit/e75e4b0))
+* **user-api:** [#2351](https://github.com/Informasjonsforvaltning/fdk/issues/2351) Add admin role ([3a5abc5](https://github.com/Informasjonsforvaltning/fdk/commit/3a5abc5))
+
 ## [1.9.0](https://github.com/Informasjonsforvaltning/fdk/compare/v1.8.0...v1.9.0) (2019-09-20)
 
 
