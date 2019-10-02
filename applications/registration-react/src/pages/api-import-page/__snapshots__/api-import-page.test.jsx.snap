@@ -11,7 +11,7 @@ exports[`should render ApiImportPage correctly 1`] = `
       className="col-12"
     >
       <h1>
-        Legg til ny API-beskrivelse
+        Registrer ny API-beskrivelse
       </h1>
     </div>
   </div>

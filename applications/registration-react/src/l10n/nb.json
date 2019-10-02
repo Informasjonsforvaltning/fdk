@@ -22,14 +22,10 @@
   "anbefaltTerm": "Anbefalt term",
   "definition": "Definisjon",
   "responsible": "Ansvarlig",
-  "header": {
-    "Registration of Datasets": "Registrering av datasett",
-    "Registration of API's": "Registrering av API'er"
-  },
   "breadcrumbs": {
-    "home":"Alle kataloger",
-    "API-descriptions":"API-katalog",
-    "Register a new API-description": "Registrere ny API-beskrivelse",
+    "home": "Alle kataloger",
+    "API-descriptions": "API-beskrivelser",
+    "Register a new API-description": "Registrer ny API-beskrivelse",
     "Datasets":"Datasettkatalog",
     "datasetRegistration": "Registrer ny datasettbeskrivelse"
   },
@@ -48,7 +44,6 @@
   "app": {
     "skipLink": "Hopp til hovedinnhold",
     "navigateFrontpage": "Gå til forside",
-    "title": "Registrering",
     "publisher": "Virksomhet",
     "menu": "Meny",
     "readMore": "Les mer om ",
@@ -440,7 +435,7 @@
     },
     "register": {
       "apiCatalog": "API-katalog",
-      "registerNew": "Legg til ny API-beskrivelse",
+      "registerNew": "Registrer ny API-beskrivelse",
       "importFromSpecSuccess": "Import fra {0} var vellykket",
       "importFromSpecError": "Import fra {0} feilet!",
       "importFromSpec": "Importert fra spesifikasjon",

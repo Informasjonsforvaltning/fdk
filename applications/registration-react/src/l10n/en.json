@@ -20,13 +20,9 @@
   "anbefaltTerm": "Preferred term",
   "definition": "Definition",
   "responsible": "Responsible",
-  "header": {
-    "Registration of Datasets": "Registration of datasets",
-    "Registration of API's": "Registration of API's"
-  },
   "breadcrumbs": {
-    "home":"All catalogs",
-    "API-descriptions":"API-catalog",
+    "home": "All catalogs",
+    "API-descriptions": "API-catalog",
     "Register a new API-description": "Register a new API-description",
     "Datasets": "Datasetscatalog",
     "datasetRegistration": "Register new dataset description"
@@ -46,7 +42,6 @@
   "app": {
     "skipLink": "Skip link",
     "navigateFrontpage": "Navigate to frontpage",
-    "title": "Title",
     "publisher": "Publisher",
     "menu": "Menu",
     "readMore": "Read more ",
@@ -438,7 +433,7 @@
     },
     "register": {
       "apiCatalog": "API catalog",
-      "registerNew": "Register API description",
+      "registerNew": "Register new API description",
       "importFromSpecSuccess": "Import from {0} was successful!",
       "importFromSpecError": "Import from {0} failed!",
       "importFromSpec": "Imported from specification",
