@@ -52,15 +52,6 @@ exports[`should render AppHeader correctly 1`] = `
           </a>
         </div>
         <div
-          className="col-6 col-md-4 d-flex justify-content-center align-items-center"
-        >
-          <span>
-            <strong>
-              Registrering
-            </strong>
-          </span>
-        </div>
-        <div
           className="col-md-4 d-flex align-items-center fdk-header-text_items justify-content-end"
         >
           <div

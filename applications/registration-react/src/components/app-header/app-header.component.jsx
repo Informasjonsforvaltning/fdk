@@ -10,18 +10,6 @@ import { selectUser } from '../../redux/modules/user';
 import { login, logout } from '../../auth/auth-service';
 
 export const AppHeaderPure = ({ location, user }) => {
-  let headerTitle;
-  switch (location.pathname.split('/')[3]) {
-    case 'datasets':
-      headerTitle = localization.header['Registration of Datasets'];
-      break;
-    case 'apis':
-      headerTitle = localization.header["Registration of API's"];
-      break;
-    default:
-      headerTitle = localization.app.title;
-  }
-
   return (
     <header>
       <div>
@@ -53,12 +41,6 @@ export const AppHeaderPure = ({ location, user }) => {
                   alt="Logo for Felles datakatalog"
                 />
               </a>
-            </div>
-
-            <div className="col-6 col-md-4 d-flex justify-content-center align-items-center">
-              <span>
-                <strong>{headerTitle}</strong>
-              </span>
             </div>
             <div className="col-md-4 d-flex align-items-center fdk-header-text_items justify-content-end">
               {user && user.name && (
