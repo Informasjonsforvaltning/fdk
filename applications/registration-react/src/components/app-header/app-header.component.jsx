@@ -42,7 +42,7 @@ export const AppHeaderPure = ({ location, user }) => {
                 />
               </a>
             </div>
-            <div className="col-md-4 d-flex align-items-center fdk-header-text_items justify-content-end">
+            <div className="col-6 col-md-8 d-flex align-items-center fdk-header-text_items justify-content-end">
               {user && user.name && (
                 <div className="mr-4">
                   <i className="fa fa-user fdk-fa-left fdk-color-primary" />
