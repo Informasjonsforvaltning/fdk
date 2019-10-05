@@ -7,7 +7,6 @@ let wrapper;
 
 beforeEach(() => {
   defaultProps = {
-    showLabel: true,
     input: {
       name: 'subject',
       value: [
@@ -31,25 +30,7 @@ beforeEach(() => {
           datasets: null
         }
       ]
-    },
-    label: 'label',
-    type: 'input',
-    meta: {
-      active: false,
-      asyncValidating: false,
-      autofilled: false,
-      dirty: false,
-      form: 'catalog',
-      initial: 'Datakatalog for RAMSUND OG ROGNAN REVISJON',
-      invalid: false,
-      pristine: true,
-      submitting: false,
-      submitFailed: false,
-      touched: false,
-      valid: true,
-      visited: false
-    },
-    fieldLabel: 'fieldLabel'
+    }
   };
   wrapper = shallow(<ConceptTagsInputField {...defaultProps} />);
 });

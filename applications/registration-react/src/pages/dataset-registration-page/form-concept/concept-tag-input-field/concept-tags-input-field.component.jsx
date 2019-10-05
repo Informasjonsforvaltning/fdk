@@ -155,7 +155,7 @@ class ConceptTagsInputField extends React.Component {
   }
 
   render() {
-    const { input, label, showLabel } = this.props;
+    const { input } = this.props;
     let tagNodes = [];
 
     if (input && input.value && input.value.length > 0) {
@@ -163,36 +163,28 @@ class ConceptTagsInputField extends React.Component {
     }
     return (
       <div className="pl-2">
-        <label className="fdk-form-label w-100" htmlFor={input.name}>
-          {' '}
-          {showLabel ? label : null}
-          <div className="d-flex align-items-center">
-            <TagsInput
-              value={tagNodes}
-              className="fdk-reg-input-tags"
-              inputProps={{ placeholder: '' }}
-              onChange={(tags, changed, changedIndexes) => {
-                handleChange(input, tags, changed, changedIndexes);
-              }}
-              renderInput={this.autosuggestRenderInput}
-            />
-          </div>
-        </label>
+        <div className="d-flex align-items-center">
+          <TagsInput
+            value={tagNodes}
+            className="fdk-reg-input-tags"
+            inputProps={{ placeholder: '' }}
+            onChange={(tags, changed, changedIndexes) => {
+              handleChange(input, tags, changed, changedIndexes);
+            }}
+            renderInput={this.autosuggestRenderInput}
+          />
+        </div>
       </div>
     );
   }
 }
 
 ConceptTagsInputField.defaultProps = {
-  showLabel: false,
-  input: null,
-  label: null
+  input: null
 };
 
 ConceptTagsInputField.propTypes = {
-  showLabel: PropTypes.bool,
-  input: PropTypes.object,
-  label: PropTypes.string
+  input: PropTypes.object
 };
 
 export default ConceptTagsInputField;

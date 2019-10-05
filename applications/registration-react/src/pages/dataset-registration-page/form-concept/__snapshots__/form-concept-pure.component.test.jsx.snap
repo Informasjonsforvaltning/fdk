@@ -11,9 +11,7 @@ exports[`should render FormConceptPure correctly 1`] = `
     />
     <Field
       component={[Function]}
-      label="Begrep"
       name="concepts"
-      type="text"
     />
   </div>
   <div
@@ -45,9 +43,7 @@ exports[`should render FormConceptPure correctly with errors 1`] = `
     />
     <Field
       component={[Function]}
-      label="Begrep"
       name="concepts"
-      type="text"
     />
   </div>
   <div
