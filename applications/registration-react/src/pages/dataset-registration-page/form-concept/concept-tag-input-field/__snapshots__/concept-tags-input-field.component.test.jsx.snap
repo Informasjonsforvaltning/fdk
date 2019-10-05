@@ -4,60 +4,53 @@ exports[`should render ConceptTagsInputField correctly 1`] = `
 <div
   className="pl-2"
 >
-  <label
-    className="fdk-form-label w-100"
-    htmlFor="subject"
+  <div
+    className="d-flex align-items-center"
   >
-     
-    label
-    <div
-      className="d-flex align-items-center"
-    >
-      <TagsInput
-        addKeys={
-          Array [
-            9,
-            13,
-          ]
+    <TagsInput
+      addKeys={
+        Array [
+          9,
+          13,
+        ]
+      }
+      addOnBlur={false}
+      addOnPaste={false}
+      className="fdk-reg-input-tags"
+      disabled={false}
+      focusedClassName="react-tagsinput--focused"
+      inputProps={
+        Object {
+          "placeholder": "",
         }
-        addOnBlur={false}
-        addOnPaste={false}
-        className="fdk-reg-input-tags"
-        disabled={false}
-        focusedClassName="react-tagsinput--focused"
-        inputProps={
-          Object {
-            "placeholder": "",
-          }
+      }
+      maxTags={-1}
+      onChange={[Function]}
+      onlyUnique={false}
+      pasteSplit={[Function]}
+      preventSubmit={true}
+      removeKeys={
+        Array [
+          8,
+        ]
+      }
+      renderInput={[Function]}
+      renderLayout={[Function]}
+      renderTag={[Function]}
+      tagDisplayProp={null}
+      tagProps={
+        Object {
+          "className": "react-tagsinput-tag",
+          "classNameRemove": "react-tagsinput-remove",
         }
-        maxTags={-1}
-        onChange={[Function]}
-        onlyUnique={false}
-        pasteSplit={[Function]}
-        preventSubmit={true}
-        removeKeys={
-          Array [
-            8,
-          ]
-        }
-        renderInput={[Function]}
-        renderLayout={[Function]}
-        renderTag={[Function]}
-        tagDisplayProp={null}
-        tagProps={
-          Object {
-            "className": "react-tagsinput-tag",
-            "classNameRemove": "react-tagsinput-remove",
-          }
-        }
-        validationRegex={/\\.\\*/}
-        value={
-          Array [
-            "enhet",
-          ]
-        }
-      />
-    </div>
-  </label>
+      }
+      validationRegex={/\\.\\*/}
+      value={
+        Array [
+          "enhet",
+        ]
+      }
+    />
+  </div>
 </div>
 `;

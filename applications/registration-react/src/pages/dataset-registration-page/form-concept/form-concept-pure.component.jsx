@@ -15,12 +15,7 @@ export const FormConceptPure = ({ languages, errors }) => (
         title={localization.schema.concept.helptext.content}
         term="Dataset_content"
       />
-      <Field
-        name="concepts"
-        type="text"
-        component={ConceptTagsInputField}
-        label={localization.schema.concept.conceptLabel}
-      />
+      <Field name="concepts" component={ConceptTagsInputField} />
     </div>
     <div className="form-group">
       <Helptext
