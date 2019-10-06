@@ -27,11 +27,18 @@ const InformationModel = ({ fields, titleLabel, linkLabel, languages }) =>
     </div>
   ));
 
+InformationModel.defaultProps = {
+  fields: null,
+  titleLabel: '',
+  linkLabel: '',
+  languages: []
+};
+
 InformationModel.propTypes = {
-  fields: PropTypes.object.isRequired,
-  titleLabel: PropTypes.string.isRequired,
-  linkLabel: PropTypes.string.isRequired,
-  languages: PropTypes.array.isRequired
+  fields: PropTypes.object,
+  titleLabel: PropTypes.string,
+  linkLabel: PropTypes.string,
+  languages: PropTypes.array
 };
 
 export default InformationModel;
