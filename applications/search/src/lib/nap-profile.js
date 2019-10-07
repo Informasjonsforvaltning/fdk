@@ -1,14 +1,3 @@
-import includes from 'lodash/includes';
-
-const napHostnamesWhitelist = {
-  hostnames: [
-    'nap.ut1.fellesdatakatalog.brreg.no',
-    'nap.st1.fellesdatakatalog.brreg.no',
-    'nap.it1.fellesdatakatalog.brreg.no',
-    'nap.fellesdatakatalog.brreg.no'
-  ]
-};
-
-export const isNapProfile = () =>
-  includes(napHostnamesWhitelist.hostnames, window.location.hostname) ||
+export const isNapProfile = (napHost) =>
+  window.location.hostname === napHost ||
   localStorage.getItem('napProfile');
