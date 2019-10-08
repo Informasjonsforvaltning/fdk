@@ -43,11 +43,11 @@ services:
     build: ./applications/sso
     volumes:
       #this allows to run command "npm run keycloak-export"
-      - ./applications/sso/export:/tmp/keycloak/export
+      - ../fdk/applications/sso/export:/tmp/keycloak/export
       #with link, et is enough to restart container to perform, instead of rebuild
-      - ./applications/sso/import:/tmp/keycloak/import
-      - ./applications/sso/import-template:/tmp/keycloak/import-template
-      - ./applications/sso/tools:/opt/fdk/tools
+      - ../fdk/applications/sso/import:/tmp/keycloak/import
+      - ../fdk/applications/sso/import-template:/tmp/keycloak/import-template
+      - ../fdk/applications/sso/tools:/opt/fdk/tools
     # cp libraries/keycloak-user-storage-rest/target/keycloak-user-storage-rest.jar applications-external/sso/deployments/
     #      - ./applications/sso/deployments:/opt/jboss/keycloak/standalone/deployments
     environment:
