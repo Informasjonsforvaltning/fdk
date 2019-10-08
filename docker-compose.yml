@@ -44,6 +44,7 @@ services:
       - SSO_HOST
       - REGISTRATION_HOST
       - CONCEPT_CATALOGUE_HOST
+      - FDK_ADMIN_GUI_HOST
 
   ### ingress modules
   ##################################
