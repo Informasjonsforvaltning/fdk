@@ -1,39 +1,55 @@
-import _get from 'lodash/get';
+import * as Yup from 'yup';
 
-import {
-  validateRequired,
-  validateMinTwoChars,
-  validateURL
-} from '../../../validation/validation';
 import localization from '../../../lib/localization';
 
-const validate = values => {
-  let errors = {};
-  const title = _get(values, ['title', localization.getLanguage()], null);
-  const description = _get(
-    values,
-    ['description', localization.getLanguage()],
-    null
-  );
-  const objective = _get(
-    values,
-    ['objective', localization.getLanguage()],
-    null
-  );
-  const landingPage =
-    values.landingPage && values.landingPage[0] ? values.landingPage[0] : null;
+export const schema = Yup.object().shape({
+  title: Yup.object().shape({
+    nb: Yup.string().nullable().test(function(value) {
+      const { nb, nn, en } = this.parent;
+      if (!nb && !nn && !en) {
+        return this.createError({ message: localization.validation.required, path: this.path });
+      }
+      return true;
+    }),
+    nn: Yup.string().nullable().test(function(value) {
+      const { nb, nn, en } = this.parent;
+      if (!nb && !nn && !en) {
+        return this.createError({ message: localization.validation.required, path: this.path });
+      }
+      return true;
+    }),
+    en: Yup.string().nullable().test(function(value) {
+      const { nb, nn, en } = this.parent;
+      if (!nb && !nn && !en) {
+        return this.createError({ message: localization.validation.required, path: this.path });
+      }
+      return true;
+    })
 
-  errors = validateRequired('title', title, errors);
-  errors = validateMinTwoChars('title', title, errors);
+  }),
+  description: Yup.object().shape({
+    nb: Yup.string().nullable().test(function(value) {
+      const { nb, nn, en } = this.parent;
+      if (!nb && !nn && !en) {
+        return this.createError({ message: localization.validation.required, path: this.path });
+      }
+      return true;
+    }),
+    nn: Yup.string().nullable().test(function(value) {
+      const { nb, nn, en } = this.parent;
+      if (!nb && !nn && !en) {
+        return this.createError({ message: localization.validation.required, path: this.path });
+      }
+      return true;
+    }),
+    en: Yup.string().nullable().test(function(value) {
+      const { nb, nn, en } = this.parent;
+      if (!nb && !nn && !en) {
+        return this.createError({ message: localization.validation.required, path: this.path });
+      }
+      return true;
+    })
 
-  errors = validateRequired('description', description, errors);
-  errors = validateMinTwoChars('description', description, errors);
-
-  errors = validateMinTwoChars('objective', objective, errors);
-
-  errors = validateURL('landingPage', landingPage, errors, true);
-
-  return errors;
-};
-
-export default validate;
+  }),
+  landingPage: Yup.array().of(Yup.string().url(localization.validation.validateLink))
+});
