@@ -160,8 +160,8 @@
     "title": "Dataset",
     "type": "Type",
     "datasetdescription": "Dataset description",
-    "firstHarvested": "Published in The National Data Directory",
-    "lastChanged": "Last changed in The National Data Directory",
+    "firstHarvested": "Published in The National Data Catalog",
+    "lastChanged": "Last changed in The National Data Catalog",
     "conformsTo": "Conforms to",
     "informationModel": "Information model",
     "informationModelDefaultText": "Information model",
@@ -365,7 +365,7 @@
       "json": "JSON Schema"
     },
     "relatedAPIHeader": "Belongs to API",
-    "informationModelDescription": "Informaiton Model Description"
+    "informationModelDescription": "Information Model Description"
   },
   "sourceRelationship": {
     "sitatFraKilde": "Cited in",

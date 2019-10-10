@@ -25,7 +25,7 @@ exports[`should render InformationModelDetailsPage correctly with informationMod
           <strong
             className="align-self-center"
           >
-            Informaiton Model Description
+            Information Model Description
              
           </strong>
           <HarvestDate
