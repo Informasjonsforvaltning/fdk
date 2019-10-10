@@ -7,7 +7,7 @@ exports[`should render HarvestDate with harvest dates 1`] = `
   <span
     className="d-flex flex-wrap align-self-center"
   >
-    Published in The National Data Directory
+    Published in The National Data Catalog
      
     <t
       ago={false}
@@ -31,7 +31,7 @@ exports[`should render HarvestDate with harvest dates 1`] = `
   <span
     className="d-flex flex-wrap align-self-center"
   >
-    Last changed in The National Data Directory
+    Last changed in The National Data Catalog
      
     <t
       ago={false}
