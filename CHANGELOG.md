@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.10.1](https://github.com/Informasjonsforvaltning/fdk/compare/v1.10.0...v1.10.1) (2019-10-11)
+
+
+### Bug Fixes
+
+* **registration-api:** Fix dataset catalog title and description editing by enabling PUT method in cors configuration ([ab064dd](https://github.com/Informasjonsforvaltning/fdk/commit/ab064dd95a14c97efe36d623c217af3cb5010d6d))
+* **registration-react:** Save dataset form values for distribution property even if frontend-side validation gives errors ([f97c4ce](https://github.com/Informasjonsforvaltning/fdk/commit/f97c4ce6fa8748c03d2394dd5d59b5fb0f7826f9))
+* **registration-react:** Set development server default registration api location to proxy, like it is in other environments ([2a92920](https://github.com/Informasjonsforvaltning/fdk/commit/2a929207c0f0691398350b153b99b69cfbb7b7cd))
+
 ## [1.10.0](https://github.com/Informasjonsforvaltning/fdk/compare/v1.9.0...v1.10.0) (2019-10-01)
 
 
