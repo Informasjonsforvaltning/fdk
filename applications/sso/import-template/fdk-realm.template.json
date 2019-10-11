@@ -55,6 +55,7 @@
       "attributes" : { }
     } ],
     "client" : {
+      "a-backend-service" : [ ],
       "realm-management" : [ {
         "id" : "d0f5acee-29cc-4a39-8817-4887670386df",
         "name" : "manage-events",
@@ -287,6 +288,44 @@
     "roles" : [ "offline_access" ]
   } ],
   "clients" : [ {
+    "id" : "a610548f-9d9e-48b0-8a68-bd5fd9184197",
+    "clientId" : "a-backend-service",
+    "surrogateAuthRequired" : false,
+    "enabled" : true,
+    "clientAuthenticatorType" : "client-secret",
+    "redirectUris" : [ ],
+    "webOrigins" : [ ],
+    "notBefore" : 0,
+    "bearerOnly" : true,
+    "consentRequired" : false,
+    "standardFlowEnabled" : true,
+    "implicitFlowEnabled" : false,
+    "directAccessGrantsEnabled" : true,
+    "serviceAccountsEnabled" : false,
+    "publicClient" : false,
+    "frontchannelLogout" : false,
+    "protocol" : "openid-connect",
+    "attributes" : {
+      "saml.assertion.signature" : "false",
+      "saml.force.post.binding" : "false",
+      "saml.multivalued.roles" : "false",
+      "saml.encrypt" : "false",
+      "saml.server.signature" : "false",
+      "saml.server.signature.keyinfo.ext" : "false",
+      "exclude.session.state.from.auth.response" : "false",
+      "saml_force_name_id_format" : "false",
+      "saml.client.signature" : "false",
+      "tls.client.certificate.bound.access.tokens" : "false",
+      "saml.authnstatement" : "false",
+      "display.on.consent.screen" : "false",
+      "saml.onetimeuse.condition" : "false"
+    },
+    "authenticationFlowBindingOverrides" : { },
+    "fullScopeAllowed" : true,
+    "nodeReRegistrationTimeout" : -1,
+    "defaultClientScopes" : [ "web-origins", "role_list", "roles", "profile", "email" ],
+    "optionalClientScopes" : [ "address", "phone", "offline_access" ]
+  }, {
     "id" : "361e3a68-b8a2-4c3b-a9e7-e9d8b19e3e7b",
     "clientId" : "account",
     "name" : "${client_account}",
@@ -557,6 +596,17 @@
         "access.token.claim" : "true",
         "claim.name" : "user_name",
         "jsonType.label" : "String"
+      }
+    }, {
+      "id" : "96f61096-b868-43dd-adaf-54084c510191",
+      "name" : "include a-backend-service audience",
+      "protocol" : "openid-connect",
+      "protocolMapper" : "oidc-audience-mapper",
+      "consentRequired" : false,
+      "config" : {
+        "included.client.audience" : "a-backend-service",
+        "id.token.claim" : "false",
+        "access.token.claim" : "true"
       }
     } ],
     "defaultClientScopes" : [ "web-origins", "role_list", "roles", "profile", "email" ],
