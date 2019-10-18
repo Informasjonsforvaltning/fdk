@@ -22,7 +22,7 @@ application:
 spring:
   profiles: develop, unit-integration
 application:
-#  altinnProxyHost: http://localhost:8126 # the actual proxy, requieres cert configuration
+#  altinnProxyHost: http://localhost:8126 # the actual proxy, requires cert configuration
   altinnProxyHost: http://localhost:8128 #mock
 server:
   port: 8125
