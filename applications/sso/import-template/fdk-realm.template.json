@@ -1351,6 +1351,35 @@
       "logoutUrl" : "${IDPORTEN_OIDC_LOGOUT_URL}",
       "clientSecret" : "${IDPORTEN_CLIENT_SECRET}"
     }
+  }, {
+    "alias" : "local-oidc",
+    "displayName" : "Fellesdatakatalog",
+    "internalId" : "0fdf67be-4dc2-4d9e-824c-a688fe476d4e",
+    "providerId" : "keycloak-oidc",
+    "enabled" : true,
+    "updateProfileFirstLoginMode" : "on",
+    "trustEmail" : false,
+    "storeToken" : false,
+    "addReadTokenRoleOnCreate" : false,
+    "authenticateByDefault" : false,
+    "linkOnly" : false,
+    "firstBrokerLoginFlowAlias" : "first broker login",
+    "config" : {
+      "hideOnLoginPage" : "",
+      "validateSignature" : "true",
+      "clientId" : "fellesdatakatalog",
+      "tokenUrl" : "${SSO_HOST}/auth/realms/fdk-local/protocol/openid-connect/token",
+      "uiLocales" : "",
+      "jwksUrl" : "${SSO_HOST}/auth/realms/fdk-local/protocol/openid-connect/certs",
+      "backchannelSupported" : "",
+      "issuer" : "${SSO_HOST}/auth/realms/fdk-local",
+      "useJwksUrl" : "true",
+      "loginHint" : "",
+      "authorizationUrl" : "${SSO_HOST}/auth/realms/fdk-local/protocol/openid-connect/auth",
+      "disableUserInfo" : "",
+      "logoutUrl" : "${SSO_HOST}/auth/realms/fdk-local/protocol/openid-connect/logout",
+      "clientSecret" : "${FDK_LOCAL_SECRET}"
+    }
   } ],
   "identityProviderMappers" : [ {
     "id" : "0f7ed75b-b2ef-4b62-95ba-4830312dfde6",

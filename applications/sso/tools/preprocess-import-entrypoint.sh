@@ -52,7 +52,7 @@ else
     IDPORTEN_OIDC_LOGOUT_URL=$(echo $OIDC_CONF | jq ".end_session_endpoint" -r)
 fi
 
-set
+FDK_LOCAL_SECRET=$(uuidgen)
 
 sed -e 's,${IDPORTEN_CLIENT_ID},'$IDPORTEN_CLIENT_ID',g' \
  -e 's,${IDPORTEN_CLIENT_SECRET},'$IDPORTEN_CLIENT_SECRET',g' \
@@ -67,7 +67,13 @@ sed -e 's,${IDPORTEN_CLIENT_ID},'$IDPORTEN_CLIENT_ID',g' \
  -e 's,${DEV_REGISTRATION_HOST},'$DEV_REGISTRATION_HOST',g' \
  -e 's,${DEV_CONCEPT_CATALOGUE_HOST},'$DEV_CONCEPT_CATALOGUE_HOST',g' \
  -e 's,${DEV_FDK_ADMIN_GUI_HOST},'$DEV_FDK_ADMIN_GUI_HOST',g' \
-  </tmp/keycloak/import-template/fdk-realm.template.json >/tmp/keycloak/import/fdk-realm.json
+ -e 's,${SSO_HOST},'$SSO_HOST',g' \
+ -e 's,${FDK_LOCAL_SECRET},'$FDK_LOCAL_SECRET',g' \
+   </tmp/keycloak/import-template/fdk-realm.template.json >/tmp/keycloak/import/fdk-realm.json
+
+sed -e 's,${FDK_LOCAL_SECRET},'$FDK_LOCAL_SECRET',g' \
+ -e 's,${SSO_HOST},'$SSO_HOST',g' \
+  </tmp/keycloak/import-template/fdk-local-realm.template.json >/tmp/keycloak/import/fdk-local-realm.json
 
 exec /opt/jboss/tools/docker-entrypoint.sh $@
 exit $?
