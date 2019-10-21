@@ -1,0 +1,14 @@
+[
+  {
+    "Name": "Hildur Ogmoll",
+    "Type": "Person",
+    "SocialSecurityNumber": "01018800006"
+  },
+  {
+    "Name": "Bevaringsverket",
+    "Type": "Enterprise",
+    "OrganizationNumber": "555111006",
+    "OrganizationForm": "ORGL",
+    "Status": "Active"
+  }
+]
