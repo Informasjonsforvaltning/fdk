@@ -73,7 +73,7 @@ public class AltinnUserConverter {
                 .map(o -> "publisher:" + o.getOrganisationNumber() + ":admin").collect(Collectors.toList());
 
             if (getAdminListString().contains(this.getId())) {
-                privilegesList.add("admin");
+                privilegesList.add("system:root:admin");
             }
             return String.join(",", privilegesList);
         }
