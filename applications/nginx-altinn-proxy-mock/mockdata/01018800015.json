@@ -1,0 +1,14 @@
+[
+  {
+    "Name": "Unni Son",
+    "Type": "Person",
+    "SocialSecurityNumber": "01018800015"
+  },
+  {
+    "Name": "Sang og musikktilsynet",
+    "Type": "Enterprise",
+    "OrganizationNumber": "555111015",
+    "OrganizationForm": "ORGL",
+    "Status": "Active"
+  }
+]

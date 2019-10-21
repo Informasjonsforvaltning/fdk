@@ -1,0 +1,14 @@
+[
+  {
+    "Name": "Endre Altnå",
+    "Type": "Person",
+    "SocialSecurityNumber": "01018800012"
+  },
+  {
+    "Name": "Innovasjonsdirektoratet",
+    "Type": "Enterprise",
+    "OrganizationNumber": "555111012",
+    "OrganizationForm": "ORGL",
+    "Status": "Active"
+  }
+]

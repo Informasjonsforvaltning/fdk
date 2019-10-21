@@ -1,0 +1,14 @@
+[
+  {
+    "Name": "Kine Tikk",
+    "Type": "Person",
+    "SocialSecurityNumber": "01018800002"
+  },
+  {
+    "Name": "MAV",
+    "Type": "Enterprise",
+    "OrganizationNumber": "555111002",
+    "OrganizationForm": "ORGL",
+    "Status": "Active"
+  }
+]

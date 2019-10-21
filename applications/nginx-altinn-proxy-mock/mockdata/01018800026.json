@@ -1,0 +1,14 @@
+[
+  {
+    "Name": "Synne Sikke",
+    "Type": "Person",
+    "SocialSecurityNumber": "01018800026"
+  },
+  {
+    "Name": "Rettersetningstjenesten",
+    "Type": "Enterprise",
+    "OrganizationNumber": "555111026",
+    "OrganizationForm": "ORGL",
+    "Status": "Active"
+  }
+]

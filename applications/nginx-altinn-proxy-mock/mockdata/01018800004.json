@@ -1,0 +1,14 @@
+[
+  {
+    "Name": "Ulrik Smål",
+    "Type": "Person",
+    "SocialSecurityNumber": "01018800004"
+  },
+  {
+    "Name": "Utlandstilsynet",
+    "Type": "Enterprise",
+    "OrganizationNumber": "555111004",
+    "OrganizationForm": "ORGL",
+    "Status": "Active"
+  }
+]
