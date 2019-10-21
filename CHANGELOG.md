@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.10.2](https://github.com/Informasjonsforvaltning/fdk/compare/v1.10.1...v1.10.2) (2019-10-21)
+
+
+### Bug Fixes
+
+* **search:** changed information model published text ([c3251e9](https://github.com/Informasjonsforvaltning/fdk/commit/c3251e9))
+* **user-api:** [#2551](https://github.com/Informasjonsforvaltning/fdk/issues/2551) Increase size of response from altinn reportees query ([c5340b9](https://github.com/Informasjonsforvaltning/fdk/commit/c5340b9))
+* **user-api:** [#2551](https://github.com/Informasjonsforvaltning/fdk/issues/2551) Rebuild user-api with altinn-client update ([23f4b4a](https://github.com/Informasjonsforvaltning/fdk/commit/23f4b4a))
+
 ### [1.10.1](https://github.com/Informasjonsforvaltning/fdk/compare/v1.10.0...v1.10.1) (2019-10-11)
 
 
