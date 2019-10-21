@@ -44,7 +44,7 @@ public class AltinnClient {
     private List<Subject> getReportees(String socialSecurityNumber) {
         RestTemplate restTemplate = new RestTemplate();
 
-        String reporteesUrlTemplate = altinnProxyHost + "/api/serviceowner/reportees?ForceEIAuthentication&subject={subject}&servicecode=4814&serviceedition=1";
+        String reporteesUrlTemplate = altinnProxyHost + "/api/serviceowner/reportees?ForceEIAuthentication&subject={subject}&servicecode=4814&serviceedition=1&$top=1000";
         Map<String, String> params = ImmutableMap.of("subject", socialSecurityNumber);
 
         return restTemplate.exchange(reporteesUrlTemplate, GET, null, new ParameterizedTypeReference<List<Subject>>() {
