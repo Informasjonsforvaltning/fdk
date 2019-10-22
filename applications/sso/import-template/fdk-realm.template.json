@@ -509,15 +509,15 @@
       "id" : "30913ff6-4e2c-4ca0-822e-419ed4cb8d55",
       "name" : "Include authorities attribute in tokens",
       "protocol" : "openid-connect",
-      "protocolMapper" : "oidc-usermodel-attribute-mapper",
+      "protocolMapper" : "oidc-script-based-protocol-mapper",
       "consentRequired" : false,
       "config" : {
-        "userinfo.token.claim" : "true",
-        "user.attribute" : "authorities",
-        "id.token.claim" : "true",
+        "userinfo.token.claim" : "false",
+        "id.token.claim" : "false",
         "access.token.claim" : "true",
         "claim.name" : "authorities",
-        "jsonType.label" : "String"
+        "jsonType.label" : "String",
+        "script" : "var HttpClientProvider = Java.type(\"org.keycloak.connections.httpclient.HttpClientProvider\")\nvar Scanner = Java.type(\"java.util.Scanner\");\n\nvar USER_URL_BASE = \"http://user-api:8080/users/\";\n\nvar httpClient = keycloakSession.getProvider(HttpClientProvider.class)\n\nvar inputStream = httpClient.get(USER_URL_BASE + user.username)\nvar scanner = new Scanner(inputStream, \"UTF-8\");\nvar responseText = scanner.useDelimiter(\"\\\\A\").next();\n\nvar user = JSON.parse(responseText)\n\nexports = user && user.authorities"
       }
     } ],
     "defaultClientScopes" : [ "web-origins", "role_list", "roles", "profile", "email" ],
@@ -564,15 +564,15 @@
       "id" : "6d6776fe-6761-4b70-973d-eef0da96ff2d",
       "name" : "Include authorities attribute in tokens",
       "protocol" : "openid-connect",
-      "protocolMapper" : "oidc-usermodel-attribute-mapper",
+      "protocolMapper" : "oidc-script-based-protocol-mapper",
       "consentRequired" : false,
       "config" : {
-        "userinfo.token.claim" : "true",
-        "user.attribute" : "authorities",
-        "id.token.claim" : "true",
+        "userinfo.token.claim" : "false",
+        "id.token.claim" : "false",
         "access.token.claim" : "true",
         "claim.name" : "authorities",
-        "jsonType.label" : "String"
+        "jsonType.label" : "String",
+        "script" : "var HttpClientProvider = Java.type(\"org.keycloak.connections.httpclient.HttpClientProvider\")\nvar Scanner = Java.type(\"java.util.Scanner\");\n\nvar USER_URL_BASE = \"http://user-api:8080/users/\";\n\nvar httpClient = keycloakSession.getProvider(HttpClientProvider.class)\n\nvar inputStream = httpClient.get(USER_URL_BASE + user.username)\nvar scanner = new Scanner(inputStream, \"UTF-8\");\nvar responseText = scanner.useDelimiter(\"\\\\A\").next();\n\nvar user = JSON.parse(responseText)\n\nexports = user && user.authorities"
       }
     }, {
       "id" : "6e611e98-67f5-4b95-af67-2acc39443b78",
@@ -746,15 +746,15 @@
       "id" : "094098b2-6f42-4c28-84a8-15bb1613ceac",
       "name" : "Include authorities attribute in tokens",
       "protocol" : "openid-connect",
-      "protocolMapper" : "oidc-usermodel-attribute-mapper",
+      "protocolMapper" : "oidc-script-based-protocol-mapper",
       "consentRequired" : false,
       "config" : {
-        "userinfo.token.claim" : "true",
-        "user.attribute" : "authorities",
-        "id.token.claim" : "true",
+        "userinfo.token.claim" : "false",
+        "id.token.claim" : "false",
         "access.token.claim" : "true",
         "claim.name" : "authorities",
-        "jsonType.label" : "String"
+        "jsonType.label" : "String",
+        "script" : "var HttpClientProvider = Java.type(\"org.keycloak.connections.httpclient.HttpClientProvider\")\nvar Scanner = Java.type(\"java.util.Scanner\");\n\nvar USER_URL_BASE = \"http://user-api:8080/users/\";\n\nvar httpClient = keycloakSession.getProvider(HttpClientProvider.class)\n\nvar inputStream = httpClient.get(USER_URL_BASE + user.username)\nvar scanner = new Scanner(inputStream, \"UTF-8\");\nvar responseText = scanner.useDelimiter(\"\\\\A\").next();\n\nvar user = JSON.parse(responseText)\n\nexports = user && user.authorities"
       }
     }, {
       "id" : "132656e1-95a8-4b8b-93e7-908274a29f2f",
