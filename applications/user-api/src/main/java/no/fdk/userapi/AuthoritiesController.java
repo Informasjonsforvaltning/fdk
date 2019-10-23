@@ -16,11 +16,21 @@ public class AuthoritiesController {
 
     @Autowired
     private AltinnUserService altinnUserService;
+    @Autowired
+    private LocalUserService localUserService;
+
+    private static Boolean isPid(String username) {
+        return username != null && username.matches("^\\d{11}$");
+    }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public String getAuthorities(@PathVariable String id) throws NotFoundException  {
         logger.debug("Authorities request for user {}", id);
 
-        return altinnUserService.getAuthorities(id).orElseThrow(NotFoundException::new);
+        if (isPid(id)) {
+            return altinnUserService.getAuthorities(id).orElseThrow(NotFoundException::new);
+        }
+        return localUserService.getAuthorities(id);
     }
+
 }

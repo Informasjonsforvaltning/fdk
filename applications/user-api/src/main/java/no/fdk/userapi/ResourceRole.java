@@ -36,6 +36,11 @@ public class ResourceRole {
             public String toString() {
                 return "admin";
             }
+        },
+        READ {
+            public String toString() {
+                return "read";
+            }
         }
     }
 }
