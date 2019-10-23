@@ -545,6 +545,36 @@
     "notBefore" : 0,
     "groups" : [ ]
   }, {
+    "id" : "1f91c1fe-0bdf-446e-9407-d024c29ae2c8",
+    "createdTimestamp" : 1571838493184,
+    "username" : "mto",
+    "enabled" : true,
+    "totp" : false,
+    "emailVerified" : false,
+    "attributes" : {
+      "pid" : [ "01018800030" ]
+    },
+    "credentials" : [ {
+      "type" : "password",
+      "hashedSaltedValue" : "tfTsGFk1P+n+9BIJRUgrYv+V9DgJ40Jm19ZOi8+revhf5Jrpvv1aexptO3nnMBYkB8EaAHFzr35siEJSBv1DnQ==",
+      "salt" : "qkL6kyJjNy8MZY2zhEZshA==",
+      "hashIterations" : 27500,
+      "counter" : 0,
+      "algorithm" : "pbkdf2-sha256",
+      "digits" : 0,
+      "period" : 0,
+      "createdDate" : 1571838514793,
+      "config" : { }
+    } ],
+    "disableableCredentialTypes" : [ "password" ],
+    "requiredActions" : [ ],
+    "realmRoles" : [ "offline_access", "uma_authorization" ],
+    "clientRoles" : {
+      "account" : [ "manage-account", "view-profile" ]
+    },
+    "notBefore" : 0,
+    "groups" : [ ]
+  }, {
     "id" : "749e5b32-fc8f-4c33-82dc-a80b61a2c2c2",
     "createdTimestamp" : 1564647929934,
     "username" : "mw",
@@ -695,6 +725,66 @@
     "notBefore" : 0,
     "groups" : [ ]
   }, {
+    "id" : "7b540110-e9a1-4a00-b583-f7d04397d3ba",
+    "createdTimestamp" : 1571838528104,
+    "username" : "rso",
+    "enabled" : true,
+    "totp" : false,
+    "emailVerified" : false,
+    "attributes" : {
+      "pid" : [ "01018800031" ]
+    },
+    "credentials" : [ {
+      "type" : "password",
+      "hashedSaltedValue" : "XPdyQyqJMQ+FLStiyGKLGcwi2kybRShahQ/18u5RInurRy+oaJJl5Pv6eTViF/mDsptmuww7BH7sCy+4yHUnqw==",
+      "salt" : "O7Om6fPbQG3FcyMT0ZG8rw==",
+      "hashIterations" : 27500,
+      "counter" : 0,
+      "algorithm" : "pbkdf2-sha256",
+      "digits" : 0,
+      "period" : 0,
+      "createdDate" : 1571838559675,
+      "config" : { }
+    } ],
+    "disableableCredentialTypes" : [ "password" ],
+    "requiredActions" : [ ],
+    "realmRoles" : [ "offline_access", "uma_authorization" ],
+    "clientRoles" : {
+      "account" : [ "manage-account", "view-profile" ]
+    },
+    "notBefore" : 0,
+    "groups" : [ ]
+  }, {
+    "id" : "2a3ee918-af31-49dd-8c4d-9f57f70b8dbe",
+    "createdTimestamp" : 1571838315033,
+    "username" : "sbd",
+    "enabled" : true,
+    "totp" : false,
+    "emailVerified" : false,
+    "attributes" : {
+      "pid" : [ "01018800029" ]
+    },
+    "credentials" : [ {
+      "type" : "password",
+      "hashedSaltedValue" : "xQP08M8KVQX4/TDaf+B1ucIlIZFGkzdNaIFG05OHrBo7NTeAozKnhGaVFFtai7Lr6Cl6SJ2zrUmtCDg8WJWFOQ==",
+      "salt" : "EgHAiGpdkleEcKfln/uGfA==",
+      "hashIterations" : 27500,
+      "counter" : 0,
+      "algorithm" : "pbkdf2-sha256",
+      "digits" : 0,
+      "period" : 0,
+      "createdDate" : 1571838372055,
+      "config" : { }
+    } ],
+    "disableableCredentialTypes" : [ "password" ],
+    "requiredActions" : [ ],
+    "realmRoles" : [ "offline_access", "uma_authorization" ],
+    "clientRoles" : {
+      "account" : [ "manage-account", "view-profile" ]
+    },
+    "notBefore" : 0,
+    "groups" : [ ]
+  }, {
     "id" : "c7b62b21-1204-4d21-beb0-636724ee376d",
     "createdTimestamp" : 1564648010168,
     "username" : "se",
@@ -834,6 +924,36 @@
       "digits" : 0,
       "period" : 0,
       "createdDate" : 1571669966628,
+      "config" : { }
+    } ],
+    "disableableCredentialTypes" : [ "password" ],
+    "requiredActions" : [ ],
+    "realmRoles" : [ "offline_access", "uma_authorization" ],
+    "clientRoles" : {
+      "account" : [ "manage-account", "view-profile" ]
+    },
+    "notBefore" : 0,
+    "groups" : [ ]
+  }, {
+    "id" : "5663ccb8-49dd-43ca-b7ad-d939f91796d6",
+    "createdTimestamp" : 1571838572484,
+    "username" : "toh",
+    "enabled" : true,
+    "totp" : false,
+    "emailVerified" : false,
+    "attributes" : {
+      "pid" : [ "01018800032" ]
+    },
+    "credentials" : [ {
+      "type" : "password",
+      "hashedSaltedValue" : "4jTAbWkZ2dyTiRovRR9eh7ayjPhmlMs6dsje9sYgFxp6jGQHStP1p1C4YIw4aTACAcnjOTHjazkfMvRLzNKZXQ==",
+      "salt" : "S0Pbxj+GPHPIcnkyP+MTbg==",
+      "hashIterations" : 27500,
+      "counter" : 0,
+      "algorithm" : "pbkdf2-sha256",
+      "digits" : 0,
+      "period" : 0,
+      "createdDate" : 1571838594423,
       "config" : { }
     } ],
     "disableableCredentialTypes" : [ "password" ],
