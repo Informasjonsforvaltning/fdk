@@ -1,5 +1,6 @@
 package no.fdk.userapi;
 
+import no.fdk.altinn.AltinnClient;
 import no.fdk.altinn.Organisation;
 import no.fdk.altinn.Person;
 import org.springframework.beans.factory.annotation.Value;
@@ -7,23 +8,29 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @Service
-public class AltinnUserConverter {
+public class AltinnUserService {
     private String orgNrWhitelistString;
     private String orgFormWhitelistString;
     private String adminListString;
+    private AltinnClient altinnClient;
+
 
     private Predicate<Organisation> organisationFilter = (o) -> getOrgNrWhitelist().contains(o.getOrganisationNumber()) || getOrgFormWhitelist().contains(o.getOrganisationForm());
 
-    AltinnUserConverter(@Value("${application.orgNrWhitelist}") String orgNrWhitelistString,
-                        @Value("${application.orgFormWhitelist}") String orgFormWhitelistString,
-                        @Value("${application.adminList}") String adminListString) {
+    AltinnUserService(@Value("${application.orgNrWhitelist}") String orgNrWhitelistString,
+                      @Value("${application.orgFormWhitelist}") String orgFormWhitelistString,
+                      @Value("${application.adminList}") String adminListString,
+                      AltinnClient altinnClient
+    ) {
         this.orgNrWhitelistString = orgNrWhitelistString;
         this.orgFormWhitelistString = orgFormWhitelistString;
         this.adminListString = adminListString;
+        this.altinnClient = altinnClient;
     }
 
     private List<String> getOrgNrWhitelist() {
@@ -38,8 +45,11 @@ public class AltinnUserConverter {
         return Arrays.asList(adminListString.split(","));
     }
 
-    User convert(Person person) {
-        return new AltinnUserConverter.AltinnUserAdapter(person);
+    Optional<User> getUser(String id) {
+        // Currently we only fetch one role association from Altinn
+        // and we interpret it as publisher admin role in fdk system
+
+        return altinnClient.getPerson(id).map(AltinnUserService.AltinnUserAdapter::new);
     }
 
     private class AltinnUserAdapter implements User {
