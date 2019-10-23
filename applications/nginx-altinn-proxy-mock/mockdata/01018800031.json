@@ -1,0 +1,14 @@
+[
+  {
+    "Name": "Roger Stenbakk Olsen",
+    "Type": "Person",
+    "SocialSecurityNumber": "01018800031"
+  },
+  {
+    "Name": "Høgskolen for IT og arkitektur",
+    "Type": "Enterprise",
+    "OrganizationNumber": "555111290",
+    "OrganizationForm": "ORGL",
+    "Status": "Active"
+  }
+]
