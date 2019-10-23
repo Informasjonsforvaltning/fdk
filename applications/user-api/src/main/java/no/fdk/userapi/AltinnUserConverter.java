@@ -14,7 +14,6 @@ import java.util.stream.Collectors;
 public class AltinnUserConverter {
     private String orgNrWhitelistString;
     private String orgFormWhitelistString;
-    @Value("${application.adminList}")
     private String adminListString;
 
     private Predicate<Organisation> organisationFilter = (o) -> getOrgNrWhitelist().contains(o.getOrganisationNumber()) || getOrgFormWhitelist().contains(o.getOrganisationForm());
