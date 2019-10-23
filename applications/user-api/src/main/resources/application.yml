@@ -12,6 +12,7 @@ management:
 application:
   hosts:
     altinnProxyHost: ${ALTINN_PROXY_HOST:http://nginx-altinn-proxy:8080}
+    orgCatalogueHost: ${ORGANIZATION_CATALOGUE_HOST:http://organization-catalogue:8080}
   whitelists:
     # 920210023   /* this matches in prod system "GJELDSREGISTERET AS”*/
     # 910258028   /* this matches in mock data "LILAND OG ERDAL REVISJON", used in dev, ut1, st1 and it1*/
@@ -27,5 +28,6 @@ application:
   hosts:
   #  altinnProxyHost: http://localhost:8126 # the actual proxy, requires cert configuration
     altinnProxyHost: http://localhost:8128 #mock
+    orgCatalogueHost: http://localhost:8140
 server:
   port: 8125
