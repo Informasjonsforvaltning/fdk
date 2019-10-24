@@ -12,6 +12,10 @@ import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+import static no.fdk.userapi.ResourceRole.ROOT_ADMIN;
+import static no.fdk.userapi.ResourceRole.ResourceType.PUBLISHER;
+import static no.fdk.userapi.ResourceRole.Role.ADMIN;
+
 @Service
 public class AltinnUserService {
     private String orgNrWhitelistString;
@@ -77,14 +81,18 @@ public class AltinnUserService {
         }
 
         public String getAuthorities() {
-            List<String> privilegesList = person.getOrganisations().stream()
+            List<ResourceRole> resourceRoles = person.getOrganisations().stream()
                 .filter(organisationFilter)
-                .map(o -> "publisher:" + o.getOrganisationNumber() + ":admin").collect(Collectors.toList());
+                .map(o -> new ResourceRole(PUBLISHER, o.getOrganisationNumber(), ADMIN))
+                .collect(Collectors.toList());
 
             if (getAdminListString().contains(this.getId())) {
-                privilegesList.add("system:root:admin");
+                resourceRoles.add(ROOT_ADMIN);
             }
-            return String.join(",", privilegesList);
+
+            List<String> resourceRoleStrings = resourceRoles.stream().map(Object::toString).collect(Collectors.toList());
+
+            return String.join(",", resourceRoleStrings);
         }
     }
 }
