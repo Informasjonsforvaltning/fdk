@@ -1,0 +1,14 @@
+[
+  {
+    "Name": "Hermes Gås",
+    "Type": "Person",
+    "SocialSecurityNumber": "01018800033"
+  },
+  {
+    "Name": "Kildebukt Dataflyttebyrå",
+    "Type": "Enterprise",
+    "OrganizationNumber": "555111304",
+    "OrganizationForm": "ORGL",
+    "Status": "Active"
+  }
+]
