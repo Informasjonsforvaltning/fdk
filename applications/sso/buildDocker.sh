@@ -8,6 +8,9 @@ echo "Start build libraries/keycloak-user-storage-rest";
 (cd ../.. && mvn clean package -B -T 2C --projects libraries/keycloak-user-storage-rest --also-make)
 cp ../../libraries/keycloak-user-storage-rest/target/keycloak-user-storage-rest.jar deployments/
 
+(cd modules/rest-user-mapper && mvn clean package)
+cp modules/rest-user-mapper/target/rest-user-mapper.jar deployments/
+
 echo "SECONDS"
 echo $SECONDS
 
