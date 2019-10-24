@@ -1353,12 +1353,21 @@
     }
   } ],
   "identityProviderMappers" : [ {
-    "id" : "d30922ec-c8c8-4dda-ab08-a7ddfd408169",
+    "id" : "0f7ed75b-b2ef-4b62-95ba-4830312dfde6",
     "name" : "username template",
     "identityProviderAlias" : "idporten-oidc",
     "identityProviderMapper" : "oidc-username-idp-mapper",
     "config" : {
       "template" : "${CLAIM.pid}"
+    }
+  }, {
+    "id" : "cbc31a49-5ba2-46ad-8d1e-4e703ebabd77",
+    "name" : "restuser",
+    "identityProviderAlias" : "idporten-oidc",
+    "identityProviderMapper" : "rest-user-attribute-idp-mapper",
+    "config" : {
+      "user_lookup_url_prefix" : "http://user-api:8080/users/",
+      "claim" : "pid"
     }
   } ],
   "components" : {
@@ -1431,17 +1440,6 @@
       "subType" : "anonymous",
       "subComponents" : { },
       "config" : { }
-    } ],
-    "org.keycloak.storage.UserStorageProvider" : [ {
-      "id" : "ab126fe9-9ffa-4169-bd39-1fc8021bfd08",
-      "name" : "user-storage-rest",
-      "providerId" : "user-storage-rest",
-      "subComponents" : { },
-      "config" : {
-        "cachePolicy" : [ "NO_CACHE" ],
-        "priority" : [ "0" ],
-        "enabled" : [ "true" ]
-      }
     } ]
   },
   "internationalizationEnabled" : false,
