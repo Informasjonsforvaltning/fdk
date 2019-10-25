@@ -3,7 +3,7 @@ package no.fdk.userapi;
 import no.fdk.altinn.AltinnClient;
 import no.fdk.altinn.Organisation;
 import no.fdk.altinn.Person;
-import org.springframework.beans.factory.annotation.Value;
+import no.fdk.userapi.configuration.ApplicationValues;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -18,35 +18,14 @@ import static no.fdk.userapi.ResourceRole.Role.ADMIN;
 
 @Service
 public class AltinnUserService {
-    private String orgNrWhitelistString;
-    private String orgFormWhitelistString;
-    private String adminListString;
     private AltinnClient altinnClient;
+    private ApplicationValues applicationValues;
 
+    private Predicate<Organisation> organisationFilter = (o) -> applicationValues.getOrgNrWhitelist().contains(o.getOrganisationNumber()) || applicationValues.getOrgFormWhitelist().contains(o.getOrganisationForm());
 
-    private Predicate<Organisation> organisationFilter = (o) -> getOrgNrWhitelist().contains(o.getOrganisationNumber()) || getOrgFormWhitelist().contains(o.getOrganisationForm());
-
-    AltinnUserService(@Value("${application.orgNrWhitelist}") String orgNrWhitelistString,
-                      @Value("${application.orgFormWhitelist}") String orgFormWhitelistString,
-                      @Value("${application.adminList}") String adminListString,
-                      AltinnClient altinnClient
-    ) {
-        this.orgNrWhitelistString = orgNrWhitelistString;
-        this.orgFormWhitelistString = orgFormWhitelistString;
-        this.adminListString = adminListString;
+    AltinnUserService(ApplicationValues applicationValues, AltinnClient altinnClient) {
         this.altinnClient = altinnClient;
-    }
-
-    private List<String> getOrgNrWhitelist() {
-        return Arrays.asList(orgNrWhitelistString.split(","));
-    }
-
-    private List<String> getOrgFormWhitelist() {
-        return Arrays.asList(orgFormWhitelistString.split(","));
-    }
-
-    private List<String> getAdminListString() {
-        return Arrays.asList(adminListString.split(","));
+        this.applicationValues = applicationValues;
     }
 
     Optional<User> getUser(String id) {
@@ -86,7 +65,7 @@ public class AltinnUserService {
                 .map(o -> new ResourceRole(PUBLISHER, o.getOrganisationNumber(), ADMIN))
                 .collect(Collectors.toList());
 
-            if (getAdminListString().contains(this.getId())) {
+            if (applicationValues.getAdminList().contains(this.getId())) {
                 resourceRoles.add(ROOT_ADMIN);
             }
 
