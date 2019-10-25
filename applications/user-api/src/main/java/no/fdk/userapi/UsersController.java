@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class UsersController {
     private static final Logger logger = LoggerFactory.getLogger(UsersController.class);
 
-    AltinnUserService altinnUserService;
+    private AltinnUserService altinnUserService;
 
     UsersController(AltinnUserService altinnUserService) {
         this.altinnUserService = altinnUserService;
@@ -30,6 +30,5 @@ public class UsersController {
 
         return altinnUserService.getUser(id).orElseThrow(NotFoundException::new);
     }
-
 
 }
