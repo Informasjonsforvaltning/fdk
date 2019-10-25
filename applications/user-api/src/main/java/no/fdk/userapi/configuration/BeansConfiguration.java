@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 public class BeansConfiguration {
 
     @Bean
-    public AltinnClient altinnClient(@Value("${application.altinnProxyHost}") String altinnProxyHost) {
+    public AltinnClient altinnClient(@Value("${application.hosts.altinnProxyHost}") String altinnProxyHost) {
         return new AltinnClient(altinnProxyHost);
     }
 }
