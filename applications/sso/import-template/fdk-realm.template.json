@@ -517,7 +517,7 @@
         "access.token.claim" : "true",
         "claim.name" : "authorities",
         "jsonType.label" : "String",
-        "script" : "var HttpClientProvider = Java.type(\"org.keycloak.connections.httpclient.HttpClientProvider\")\nvar Scanner = Java.type(\"java.util.Scanner\");\n\nvar USER_URL_BASE = \"http://user-api:8080/users/\";\n\nvar httpClient = keycloakSession.getProvider(HttpClientProvider.class)\n\nvar inputStream = httpClient.get(USER_URL_BASE + user.username)\nvar scanner = new Scanner(inputStream, \"UTF-8\");\nvar responseText = scanner.useDelimiter(\"\\\\A\").next();\n\nvar user = JSON.parse(responseText)\n\nexports = user && user.authorities"
+        "script" : "var HttpClientProvider = Java.type(\"org.keycloak.connections.httpclient.HttpClientProvider\");\nvar Scanner = Java.type(\"java.util.Scanner\");\n\nvar AUTH_URL_BASE = \"http://user-api:8080/authorities/\";\n\nvar httpClient = keycloakSession.getProvider(HttpClientProvider.class);\n\nvar inputStream = httpClient.get(AUTH_URL_BASE + user.username);\nvar scanner = new Scanner(inputStream, \"UTF-8\");\n\nexports = scanner.useDelimiter(\"\\\\A\").next();"
       }
     } ],
     "defaultClientScopes" : [ "web-origins", "role_list", "roles", "profile", "email" ],
@@ -572,7 +572,7 @@
         "access.token.claim" : "true",
         "claim.name" : "authorities",
         "jsonType.label" : "String",
-        "script" : "var HttpClientProvider = Java.type(\"org.keycloak.connections.httpclient.HttpClientProvider\")\nvar Scanner = Java.type(\"java.util.Scanner\");\n\nvar USER_URL_BASE = \"http://user-api:8080/users/\";\n\nvar httpClient = keycloakSession.getProvider(HttpClientProvider.class)\n\nvar inputStream = httpClient.get(USER_URL_BASE + user.username)\nvar scanner = new Scanner(inputStream, \"UTF-8\");\nvar responseText = scanner.useDelimiter(\"\\\\A\").next();\n\nvar user = JSON.parse(responseText)\n\nexports = user && user.authorities"
+        "script" : "var HttpClientProvider = Java.type(\"org.keycloak.connections.httpclient.HttpClientProvider\");\nvar Scanner = Java.type(\"java.util.Scanner\");\n\nvar AUTH_URL_BASE = \"http://user-api:8080/authorities/\";\n\nvar httpClient = keycloakSession.getProvider(HttpClientProvider.class);\n\nvar inputStream = httpClient.get(AUTH_URL_BASE + user.username);\nvar scanner = new Scanner(inputStream, \"UTF-8\");\n\nexports = scanner.useDelimiter(\"\\\\A\").next();"
       }
     }, {
       "id" : "6e611e98-67f5-4b95-af67-2acc39443b78",
@@ -754,7 +754,7 @@
         "access.token.claim" : "true",
         "claim.name" : "authorities",
         "jsonType.label" : "String",
-        "script" : "var HttpClientProvider = Java.type(\"org.keycloak.connections.httpclient.HttpClientProvider\")\nvar Scanner = Java.type(\"java.util.Scanner\");\n\nvar USER_URL_BASE = \"http://user-api:8080/users/\";\n\nvar httpClient = keycloakSession.getProvider(HttpClientProvider.class)\n\nvar inputStream = httpClient.get(USER_URL_BASE + user.username)\nvar scanner = new Scanner(inputStream, \"UTF-8\");\nvar responseText = scanner.useDelimiter(\"\\\\A\").next();\n\nvar user = JSON.parse(responseText)\n\nexports = user && user.authorities"
+        "script" : "var HttpClientProvider = Java.type(\"org.keycloak.connections.httpclient.HttpClientProvider\");\nvar Scanner = Java.type(\"java.util.Scanner\");\n\nvar AUTH_URL_BASE = \"http://user-api:8080/authorities/\";\n\nvar httpClient = keycloakSession.getProvider(HttpClientProvider.class);\n\nvar inputStream = httpClient.get(AUTH_URL_BASE + user.username);\nvar scanner = new Scanner(inputStream, \"UTF-8\");\n\nexports = scanner.useDelimiter(\"\\\\A\").next();"
       }
     }, {
       "id" : "132656e1-95a8-4b8b-93e7-908274a29f2f",
