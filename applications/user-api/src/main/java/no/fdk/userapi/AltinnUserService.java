@@ -35,6 +35,25 @@ public class AltinnUserService {
         return altinnClient.getPerson(id).map(AltinnUserService.AltinnUserAdapter::new);
     }
 
+    Optional<String> getAuthorities(String id) {
+        return altinnClient.getPerson(id).map(this::getPersonAuthorities);
+    }
+
+    private String getPersonAuthorities(Person person) {
+        List<ResourceRole> resourceRoles = person.getOrganisations().stream()
+            .filter(organisationFilter)
+            .map(o -> new ResourceRole(PUBLISHER, o.getOrganisationNumber(), ADMIN))
+            .collect(Collectors.toList());
+
+        if (whitelists.getAdminList().contains(person.getSocialSecurityNumber())) {
+            resourceRoles.add(ROOT_ADMIN);
+        }
+
+        List<String> resourceRoleStrings = resourceRoles.stream().map(Object::toString).collect(Collectors.toList());
+
+        return String.join(",", resourceRoleStrings);
+    }
+
     private class AltinnUserAdapter implements User {
         private Person person;
 
@@ -57,21 +76,6 @@ public class AltinnUserService {
 
         public String getLastName() {
             return getNames().get(getNames().size() - 1);
-        }
-
-        public String getAuthorities() {
-            List<ResourceRole> resourceRoles = person.getOrganisations().stream()
-                .filter(organisationFilter)
-                .map(o -> new ResourceRole(PUBLISHER, o.getOrganisationNumber(), ADMIN))
-                .collect(Collectors.toList());
-
-            if (whitelists.getAdminList().contains(this.getId())) {
-                resourceRoles.add(ROOT_ADMIN);
-            }
-
-            List<String> resourceRoleStrings = resourceRoles.stream().map(Object::toString).collect(Collectors.toList());
-
-            return String.join(",", resourceRoleStrings);
         }
     }
 }

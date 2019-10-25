@@ -6,6 +6,4 @@ interface User {
     String getFirstName();
 
     String getLastName();
-
-    String getAuthorities();
 }
