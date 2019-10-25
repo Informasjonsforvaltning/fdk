@@ -9,8 +9,8 @@ import java.util.List;
 
 @Configuration
 @EnableConfigurationProperties
-@ConfigurationProperties(prefix = "application")
-public class ApplicationValues {
+@ConfigurationProperties(prefix = "application.whitelists")
+public class WhitelistProperties {
 
     private List<String> orgNrWhitelist;
     private List<String> orgFormWhitelist;

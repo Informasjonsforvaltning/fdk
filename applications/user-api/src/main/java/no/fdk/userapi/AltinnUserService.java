@@ -3,7 +3,7 @@ package no.fdk.userapi;
 import no.fdk.altinn.AltinnClient;
 import no.fdk.altinn.Organisation;
 import no.fdk.altinn.Person;
-import no.fdk.userapi.configuration.ApplicationValues;
+import no.fdk.userapi.configuration.WhitelistProperties;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -19,13 +19,13 @@ import static no.fdk.userapi.ResourceRole.Role.ADMIN;
 @Service
 public class AltinnUserService {
     private AltinnClient altinnClient;
-    private ApplicationValues applicationValues;
+    private WhitelistProperties whitelists;
 
-    private Predicate<Organisation> organisationFilter = (o) -> applicationValues.getOrgNrWhitelist().contains(o.getOrganisationNumber()) || applicationValues.getOrgFormWhitelist().contains(o.getOrganisationForm());
+    private Predicate<Organisation> organisationFilter = (o) -> whitelists.getOrgNrWhitelist().contains(o.getOrganisationNumber()) || whitelists.getOrgFormWhitelist().contains(o.getOrganisationForm());
 
-    AltinnUserService(ApplicationValues applicationValues, AltinnClient altinnClient) {
+    AltinnUserService(WhitelistProperties whitelists, AltinnClient altinnClient) {
         this.altinnClient = altinnClient;
-        this.applicationValues = applicationValues;
+        this.whitelists = whitelists;
     }
 
     Optional<User> getUser(String id) {
@@ -65,7 +65,7 @@ public class AltinnUserService {
                 .map(o -> new ResourceRole(PUBLISHER, o.getOrganisationNumber(), ADMIN))
                 .collect(Collectors.toList());
 
-            if (applicationValues.getAdminList().contains(this.getId())) {
+            if (whitelists.getAdminList().contains(this.getId())) {
                 resourceRoles.add(ROOT_ADMIN);
             }
 
