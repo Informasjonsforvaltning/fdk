@@ -10,7 +10,7 @@ import { DatasetRegistrationPage } from '../pages/dataset-registration-page/data
 import { AppHeader } from '../components/app-header/app-header.component';
 import { Breadcrumbs } from '../components/breadcrumbs/breadcrumbs.component';
 import Footer from '../components/app-footer/app-footer.component';
-import { LoginDialog } from '../components/app-login-dialog/app-login-dialog.component';
+import { LoginPage } from '../pages/login-page/login-page';
 import { ConnectedApiImportPage } from '../pages/api-import-page/connected-api-import-page';
 
 const Routes = (
@@ -18,9 +18,9 @@ const Routes = (
     <Route
       exact
       path="/loggedOut"
-      render={props => <LoginDialog {...props} loggedOut />}
+      render={props => <LoginPage {...props} loggedOut />}
     />
-    <Route exact path="/loggin" render={props => <LoginDialog {...props} />} />
+    <Route exact path="/loggin" render={props => <LoginPage {...props} />} />
     <ProtectedRoute exact path="/" component={ConnectedCatalogsPage} />
     <ProtectedRoute
       exact
