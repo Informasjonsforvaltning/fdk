@@ -5,9 +5,9 @@ import PropTypes from 'prop-types';
 
 import localization from '../../lib/localization';
 import { login } from '../../auth/auth-service';
-import './app-login-dialog.scss';
+import './login-page.scss';
 
-export const LoginDialogPure = ({ loggedOut }) => {
+export const LoginPagePure = ({ loggedOut }) => {
   return (
     <div className="login-dialog-wrapper p-5">
       <div className="container">
@@ -61,11 +61,11 @@ export const LoginDialogPure = ({ loggedOut }) => {
   );
 };
 
-LoginDialogPure.defaultProps = {
+LoginPagePure.defaultProps = {
   loggedOut: false
 };
 
-LoginDialogPure.propTypes = {
+LoginPagePure.propTypes = {
   loggedOut: PropTypes.bool
 };
 
@@ -80,4 +80,4 @@ function mapStateToProps({ user }) {
   };
 }
 
-export const LoginDialog = connect(mapStateToProps)(LoginDialogPure);
+export const LoginPage = connect(mapStateToProps)(LoginPagePure);

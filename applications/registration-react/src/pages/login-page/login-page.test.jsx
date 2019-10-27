@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { LoginDialogPure } from './app-login-dialog.component';
+import { LoginPagePure } from './login-page';
 
 let defaultProps;
 let wrapper;
@@ -12,9 +12,9 @@ beforeEach(() => {
     dispatch,
     loggedOut: true
   };
-  wrapper = shallow(<LoginDialogPure {...defaultProps} />);
+  wrapper = shallow(<LoginPagePure {...defaultProps} />);
 });
 
-test('should render LoginDialog correctly', () => {
+test('should render LoginPage correctly', () => {
   expect(wrapper).toMatchSnapshot();
 });
