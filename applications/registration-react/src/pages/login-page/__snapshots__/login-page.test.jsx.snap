@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`should render LoginDialog correctly 1`] = `
+exports[`should render LoginPage correctly 1`] = `
 <div
   className="login-dialog-wrapper p-5"
 >
