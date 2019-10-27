@@ -54,12 +54,13 @@ export function logout() {
   return kc.logout({ redirectUri: `${window.location.origin}/loggedOut` });
 }
 
-export function login() {
+export function login({ readOnly = false }) {
   // TODO For "deep linking", we want to redirect to original selected location,
   //  but with current solution, ProtectedRoutePure component has already redireced to "/loggin".
   //  The original selected location has to be carried over to here.
   //  In addition, for deep linking, we need to handle the case when user does not have access to the resource in url.
-  return kc.login({ redirectUri: window.location.origin });
+  const idpHint = readOnly ? 'local-oidc' : 'idporten-oidc';
+  kc.login({ redirectUri: window.location.origin, idpHint });
 }
 
 export async function getToken() {

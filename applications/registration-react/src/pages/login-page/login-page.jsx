@@ -38,6 +38,12 @@ export const LoginPagePure = ({ loggedOut }) => {
                 </div>
               )}
               <div className="mt-5 mb-5">
+                <Button
+                  className="fdk-button fdk-button-cta"
+                  onClick={() => login({ readOnly: true })}
+                >
+                  {localization.app.logIn} - readonly
+                </Button>
                 <Button className="fdk-button fdk-button-cta" onClick={login}>
                   {localization.app.logIn}
                 </Button>
