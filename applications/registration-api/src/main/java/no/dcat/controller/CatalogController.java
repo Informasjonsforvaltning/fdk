@@ -217,16 +217,16 @@ public class CatalogController {
             return;
         }
 
-        Catalog newCatalog = new Catalog(orgnr);
-
-        String organizationName = enhetService.getByOrgNr(orgnr).getNavn();
-        if (organizationName != null) {
-            newCatalog.getTitle().put("nb", "Datakatalog for " + organizationName);
-        }
-
         try {
+            Catalog newCatalog = new Catalog(orgnr);
+            String organizationName = enhetService.getByOrgNr(orgnr).getNavn();
+            if (organizationName != null) {
+                newCatalog.getTitle().put("nb", "Datakatalog for " + organizationName);
+            }
+
             createCatalog(newCatalog);
-        } catch (BadRequestException ignore) {
+        } catch (Exception e) {
+            logger.error("Error creating catalog for orgnr: {}", orgnr, e);
         }
     }
 
