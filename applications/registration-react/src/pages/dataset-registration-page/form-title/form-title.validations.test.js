@@ -1,4 +1,4 @@
-import {schema} from './form-title.validations';
+import { schema } from './form-title.validations';
 import datasets from '../../../../test/fixtures/datasets';
 
 it('should validate without errors', async () => {
