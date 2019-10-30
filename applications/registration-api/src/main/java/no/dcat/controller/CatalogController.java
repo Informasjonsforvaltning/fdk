@@ -1,11 +1,11 @@
 package no.dcat.controller;
 
-import no.dcat.model.Enhet;
-import no.dcat.service.SpringSecurityContextService;
 import no.dcat.model.Catalog;
+import no.dcat.model.Enhet;
 import no.dcat.service.CatalogRepository;
 import no.dcat.service.EnhetService;
 import no.dcat.service.HarvesterService;
+import no.dcat.service.SpringSecurityContextService;
 import no.dcat.shared.Publisher;
 import no.dcat.shared.admin.DcatSourceDto;
 import no.fdk.webutils.exceptions.BadRequestException;
@@ -24,7 +24,10 @@ import org.springframework.hateoas.Resource;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.*;
 
