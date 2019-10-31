@@ -36,7 +36,7 @@ public class ApiCatalogController {
         this.apiCatalogHarvesterService = apiCatalogHarvesterService;
     }
 
-    @PreAuthorize("hasPermission(#catalogId, 'publisher', 'admin')")
+    @PreAuthorize("hasPermission(#catalogId, 'publisher', 'read')")
     @RequestMapping(
         value = "",
         method = GET,
@@ -52,7 +52,7 @@ public class ApiCatalogController {
         return apiCatalogOptional.get();
     }
 
-    @PreAuthorize("hasPermission(#catalogId, 'publisher', 'admin')")
+    @PreAuthorize("hasPermission(#catalogId, 'publisher', 'write')")
     @RequestMapping(
         value = "",
         method = POST,
@@ -84,7 +84,7 @@ public class ApiCatalogController {
         return apiCatalogSaved;
     }
 
-    @PreAuthorize("hasPermission(#catalogId, 'publisher', 'admin')")
+    @PreAuthorize("hasPermission(#catalogId, 'publisher', 'write')")
     @RequestMapping(
         value = "",
         method = DELETE,

@@ -81,7 +81,7 @@ public class CatalogController {
      * @param catalog catalog skeleton to copy from
      * @return new catalog object
      */
-    @PreAuthorize("hasPermission(#catalog.id, 'publisher', 'admin')")
+    @PreAuthorize("hasPermission(#catalog.id, 'publisher', 'write')")
     @RequestMapping(value = "", method = POST,
         consumes = APPLICATION_JSON_VALUE,
         produces = APPLICATION_JSON_UTF8_VALUE)
@@ -127,7 +127,7 @@ public class CatalogController {
      * @param catalog the catalog object with fields to update
      * @return the saved catalog
      */
-    @PreAuthorize("hasPermission(#catalog.id, 'publisher', 'admin')")
+    @PreAuthorize("hasPermission(#catalog.id, 'publisher', 'write')")
     @RequestMapping(value = "/{id}",
         method = PUT,
         consumes = APPLICATION_JSON_VALUE,
@@ -163,7 +163,7 @@ public class CatalogController {
      * @param id the catalog id to delet
      * @return acknowledgement of success or failure
      */
-    @PreAuthorize("hasPermission(#id, 'publisher', 'admin')")
+    @PreAuthorize("hasPermission(#id, 'publisher', 'write')")
     @RequestMapping(value = "/{id}", method = DELETE,
         produces = APPLICATION_JSON_UTF8_VALUE)
     public void removeCatalog(@PathVariable("id") String id) {
@@ -179,7 +179,7 @@ public class CatalogController {
      * @param id of the catalog
      * @return the catalog if it exist
      */
-    @PreAuthorize("hasPermission(#id, 'publisher', 'admin')")
+    @PreAuthorize("hasPermission(#id, 'publisher', 'read')")
     @RequestMapping(value = "/{id}", method = GET,
         produces = APPLICATION_JSON_UTF8_VALUE)
     public Catalog getCatalog(@PathVariable("id") String id) throws NotFoundException {
