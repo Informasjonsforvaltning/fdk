@@ -88,9 +88,10 @@ export default function apis(state = initialState, action) {
       return {
         ...state,
         [action.meta.catalogId]: {
+          items: [],
           meta: {
             isFetching: false,
-            lastFetch: null
+            lastFetch: Date.now()
           }
         }
       };
