@@ -61,7 +61,7 @@ public class ApiRegistrationController {
      * @param pageable
      * @return List of api registrations
      */
-    @PreAuthorize("hasPermission(#catalogId,'publisher', 'admin')")
+    @PreAuthorize("hasPermission(#catalogId,'publisher', 'read')")
     @RequestMapping(value = "", method = GET, produces = APPLICATION_JSON_UTF8_VALUE)
     public PagedResources<Resource<ApiRegistration>> listApiRegistrations(
         @PathVariable("catalogId") String catalogId,
@@ -79,7 +79,7 @@ public class ApiRegistrationController {
      * @param id Identifier of apiRegistration
      * @return complete apiRegistration
      */
-    @PreAuthorize("hasPermission(#catalogId, 'publisher', 'admin')")
+    @PreAuthorize("hasPermission(#catalogId, 'publisher', 'read')")
     @RequestMapping(value = "/{id}", method = GET, produces = APPLICATION_JSON_UTF8_VALUE)
     public ApiRegistration getApiRegistration(
         @PathVariable("catalogId") String catalogId,
@@ -94,7 +94,7 @@ public class ApiRegistrationController {
      * @param data
      * @return ApiRegistration
      */
-    @PreAuthorize("hasPermission(#catalogId, 'publisher', 'admin')")
+    @PreAuthorize("hasPermission(#catalogId, 'publisher', 'write')")
     @RequestMapping(
         value = "",
         method = POST,
@@ -133,7 +133,7 @@ public class ApiRegistrationController {
      * @return HTTP status 204 NO CONTENT is returned if apiRegistration was successfully deleted. If
      * apiRegistration is not found, HTTP 404 Not found is returned
      */
-    @PreAuthorize("hasPermission(#catalogId, 'publisher', 'admin')")
+    @PreAuthorize("hasPermission(#catalogId, 'publisher', 'write')")
     @RequestMapping(value = "/{id}", method = DELETE, produces = APPLICATION_JSON_UTF8_VALUE)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void deleteApiRegistration(
@@ -160,7 +160,7 @@ public class ApiRegistrationController {
      * @param updates Objects in apiRegistration to be updated
      * @return apiRegistration
      */
-    @PreAuthorize("hasPermission(#catalogId,'publisher', 'admin')")
+    @PreAuthorize("hasPermission(#catalogId,'publisher', 'write')")
     @RequestMapping(
         value = "/{id}",
         method = PATCH,
