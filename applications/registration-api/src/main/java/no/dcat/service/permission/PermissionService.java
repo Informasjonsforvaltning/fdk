@@ -8,20 +8,23 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
+
+import static no.dcat.service.permission.PublisherResourceRole.PublisherPermission;
 
 @Service
 public class PermissionService {
     private static final Logger logger = LoggerFactory.getLogger(PermissionService.class);
 
-    public Authentication getAuthentication() {
-        return SecurityContextHolder.getContext().getAuthentication();
-    }
-
     public boolean hasPermission(String targetType, String targetId, String permission) {
         logger.debug("Checking permission: Granted role={}, checking permission={},{},{} ", getAuthentication().getAuthorities(), targetType, targetId, permission);
         return getResourceRoles().stream()
             .anyMatch(rr -> rr.matchPermission(targetType, targetId, permission));
+    }
+
+    Authentication getAuthentication() {
+        return SecurityContextHolder.getContext().getAuthentication();
     }
 
     private Collection<ResourceRole> getResourceRoles() {
@@ -31,4 +34,19 @@ public class PermissionService {
             .filter(Objects::nonNull)
             .collect(Collectors.toList());
     }
+
+    private <T extends ResourceRole> Collection<T> getRolesByType(Class<T> clazz) {
+        return this.getResourceRoles().stream()
+            .filter(clazz::isInstance)
+            .map(clazz::cast)
+            .collect(Collectors.toList());
+    }
+
+    public Set<String> getPublishersForPermission(PublisherPermission publisherPermission) {
+        return this.getRolesByType(PublisherResourceRole.class).stream()
+            .filter(r -> r.matchPermission(publisherPermission))
+            .map(PublisherResourceRole::getResourceId)
+            .collect(Collectors.toSet());
+    }
+
 }

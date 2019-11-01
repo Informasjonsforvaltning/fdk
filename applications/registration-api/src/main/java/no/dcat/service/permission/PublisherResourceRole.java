@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @RequiredArgsConstructor
-final class PublisherResourceRole implements ResourceRole {
+public final class PublisherResourceRole implements ResourceRole {
     static final String resourceType = "publisher";
     @NonNull
     private String resourceId;
