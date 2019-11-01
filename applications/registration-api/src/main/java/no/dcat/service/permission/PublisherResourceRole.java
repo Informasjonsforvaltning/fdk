@@ -20,12 +20,7 @@ final class PublisherResourceRole implements ResourceRole {
         return resourceType;
     }
 
-    public Boolean matchPermission(String resourceType, String resourceId, String permissionString) {
-        if (!matchResource(resourceType, resourceId)) {
-            return false;
-        }
-        PublisherPermission permission = PublisherPermission.valueOf(permissionString);
-
+    Boolean matchPermission(PublisherPermission permission) {
         if (permission == PublisherPermission.admin) {
             return this.publisherRole == PublisherRole.admin;
         }
@@ -37,6 +32,10 @@ final class PublisherResourceRole implements ResourceRole {
                 this.publisherRole == PublisherRole.read;
         }
         return false;
+    }
+
+    public Boolean matchPermission(String resourceType, String resourceId, String permission) {
+        return matchResource(resourceType, resourceId) && matchPermission(PublisherPermission.valueOf(permission));
     }
 
     public enum PublisherPermission {
