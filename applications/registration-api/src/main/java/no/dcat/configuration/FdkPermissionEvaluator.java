@@ -1,28 +1,24 @@
 package no.dcat.configuration;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.RequiredArgsConstructor;
+import no.dcat.service.permission.PermissionService;
 import org.springframework.security.access.PermissionEvaluator;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
 
 @Component
+@RequiredArgsConstructor
 public class FdkPermissionEvaluator implements PermissionEvaluator {
-    private static final Logger logger = LoggerFactory.getLogger(FdkPermissionEvaluator.class);
 
+    private final PermissionService permissionService;
 
     public boolean hasPermission(Authentication authentication, Object targetDomainObject, Object permission) {
         throw new UnsupportedOperationException("Object permission method not implemented");
     }
 
     public boolean hasPermission(Authentication authentication, Serializable targetId, String targetType, Object permission) {
-        SimpleGrantedAuthority requiredAuthority = new SimpleGrantedAuthority(targetType + ":" + targetId + ":" + permission);
-
-        logger.debug("Checking authrorizattion: granted={} required={} ", authentication.getAuthorities(), requiredAuthority);
-
-        return authentication.getAuthorities().contains(requiredAuthority);
+        return permissionService.hasPermission(targetType, targetId.toString(), permission.toString());
     }
 }
