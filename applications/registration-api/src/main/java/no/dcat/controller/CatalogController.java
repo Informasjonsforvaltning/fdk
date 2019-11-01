@@ -2,6 +2,7 @@ package no.dcat.controller;
 
 import no.dcat.model.Catalog;
 import no.dcat.model.Enhet;
+
 import no.dcat.service.CatalogRepository;
 import no.dcat.service.EnhetService;
 import no.dcat.service.HarvesterService;
@@ -10,7 +11,6 @@ import no.dcat.shared.Publisher;
 import no.dcat.shared.admin.DcatSourceDto;
 import no.fdk.webutils.exceptions.BadRequestException;
 import no.fdk.webutils.exceptions.NotFoundException;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,19 +22,20 @@ import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.PagedResources;
 import org.springframework.hateoas.Resource;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 
-import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.web.bind.annotation.RequestMethod.*;
+import static no.dcat.service.permission.PublisherResourceRole.PublisherPermission;
 
 @RestController
 @RequestMapping(value = "/catalogs")
@@ -73,25 +74,16 @@ public class CatalogController {
         produces = APPLICATION_JSON_UTF8_VALUE)
     public PagedResources<Resource<Catalog>> listCatalogs(Pageable pageable, PagedResourcesAssembler<Catalog> assembler) {
 
-        Authentication auth = permissionService.getAuthentication();
+        Set<String> adminableOrgNrs = permissionService.getPublishersForPermission(PublisherPermission.admin);
+        createCatalogsIfNeeded(adminableOrgNrs);
 
-        Set<String> validCatalogs = new HashSet<>();
+        Set<String> readableOrgNrs = permissionService.getPublishersForPermission(PublisherPermission.read);
 
-        for (GrantedAuthority authority : auth.getAuthorities()) {
-            String authorityString = authority.getAuthority();
-            String publisher = StringUtils.substringBetween(authorityString, "publisher:", ":");
-            if (isNotEmpty(publisher)) {
-                validCatalogs.add(publisher);
-            }
-        }
-
-        if (validCatalogs.size() == 0) {
+        if (readableOrgNrs.size() == 0) {
             return assembler.toResource(new PageImpl<>(new ArrayList<>(), pageable, 0));
         }
 
-        createCatalogsIfNeeded(validCatalogs);
-
-        Page<Catalog> catalogs = catalogRepository.findByIdIn(new ArrayList<>(validCatalogs), pageable);
+        Page<Catalog> catalogs = catalogRepository.findByIdIn(new ArrayList<>(readableOrgNrs), pageable);
 
         return assembler.toResource(catalogs);
     }
