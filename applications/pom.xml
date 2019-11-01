@@ -21,7 +21,6 @@
         <module>dev-management</module>
 
         <module>end2end-test</module>
-        <module>informationmodel-cat</module>
         <module>user-api</module>
     </modules>
 
