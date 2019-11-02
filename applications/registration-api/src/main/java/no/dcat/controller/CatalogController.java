@@ -48,7 +48,7 @@ public class CatalogController {
 
     private final HarvesterService harvesterService;
 
-    EnhetService enhetService;
+    private final EnhetService enhetService;
 
     @Value("${application.openDataEnhet}")
     private String openDataEnhetsregisteret;
