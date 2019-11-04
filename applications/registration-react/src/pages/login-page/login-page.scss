@@ -2,6 +2,8 @@
 
 .login-dialog-wrapper {
   background-color: $color-primary-lighter;
+  margin-top: -3rem;
+  margin-bottom: -6rem;
   flex-grow: 1;
   .fdk-button {
     text-decoration: none;
