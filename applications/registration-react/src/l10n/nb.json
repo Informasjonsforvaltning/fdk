@@ -26,7 +26,7 @@
     "home": "Alle kataloger",
     "API-descriptions": "API-beskrivelser",
     "Register a new API-description": "Registrer ny API-beskrivelse",
-    "Datasets":"Datasettkatalog",
+    "Datasets": "Datasettkatalog",
     "datasetRegistration": "Registrer ny datasettbeskrivelse"
   },
   "listItems": {
@@ -42,6 +42,32 @@
     "statusNew": "Ny"
   },
   "app": {
+    "loginPage": {
+      "preamble1": "Her kan du lese om datasettbeskrivelser for din virksomhet.",
+      "preamble2": "For å få tilgang må du være innlogget.",
+      "postamble1": "Skal du gi andre skrivetilgang?",
+      "postamble2": "Du kan gi andre til a redigere datasett for din virksomhet via Altinn.",
+      "postamble3": "Les mer om",
+      "postamble4": "hvordan du gir andre tilgang.",
+      "readUser": {
+        "heading": "For deg som har lesetilgang",
+        "loginButton": "Logg inn som lesebruker",
+        "description1": "Med lesetilgang kan du se både offentlig informasjon fra din virksomhet, og upublisert materiale.",
+        "description2": "Trenger du lesetilgang?",
+        "description3": {
+          "click": "Klikk",
+          "then": "deretter",
+          "registerUser": "Reistrer bruker"
+        }
+      },
+      "writeUser": {
+        "heading": "For deg som har skrivetilgang",
+        "loginButton": "Logg inn med ID porten",
+        "description1": "For å få tilgang til funksjonalitet som registrering og redigering på vegne av din virksomhet, må du logge inn med IP porten.",
+        "description2": "Trenger du skrivetilgang?",
+        "description3": "Les hvordan du får tilgang til å registrere og redigere innhold."
+      }
+    },
     "skipLink": "Hopp til hovedinnhold",
     "navigateFrontpage": "Gå til forside",
     "publisher": "Virksomhet",

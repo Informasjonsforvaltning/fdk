@@ -11,14 +11,14 @@ const showLoginReadOnly = window.localStorage.getItem('showLoginReadOnly');
 
 export const LoginPagePure = ({ loggedOut }) => {
   return (
-    <div className="login-dialog-wrapper p-5">
-      <div className="container">
-        <div className="row">
-          <div className="col-12">
-            <div className="col-12 col-md-8">
+    <>
+      <div className="login-dialog-wrapper pt-5">
+        <div className="container">
+          <div className="row">
+            <div className="col-12">
               {loggedOut && (
                 <div
-                  className="mt-2 alert alert-warning fdk-text-size-small fdk-color-neutral-darkest"
+                  className="mt-2 alert alert-warning fdk-color-neutral-darkest"
                   role="alert"
                 >
                   <span>
@@ -29,37 +29,79 @@ export const LoginPagePure = ({ loggedOut }) => {
                   <span>{localization.loginDialog.loggedOutMsgPart2}</span>
                 </div>
               )}
-              {!loggedOut && (
-                <div>
-                  <h1 className="fdk-text-extra-strong mb-md-5">
-                    {localization.loginDialog.title}
-                  </h1>
-                  <div className="fdk-text-size-medium fdk-text-line-medium mt-2 mb-md-3">
-                    {localization.loginDialog.ingress}
-                  </div>
-                </div>
-              )}
-              <div className="mt-5 mb-5">
-                {showLoginReadOnly && (
+            </div>
+          </div>
+
+          <div className="row">
+            {showLoginReadOnly && (
+              <div className="col-md-6">
+                <div className="jumbotron jumbotron-login h-100">
+                  <h2>{localization.app.loginPage.readUser.heading}</h2>
                   <Button
-                    className="fdk-button fdk-button-cta"
+                    className="fdk-button fdk-button-cta fdk-bg-color-link mt-4"
                     onClick={() => login({ readOnly: true })}
                   >
-                    {localization.app.logIn} - readonly
+                    {localization.app.loginPage.readUser.loginButton}
                   </Button>
-                )}
-                <Button className="fdk-button fdk-button-cta" onClick={login}>
-                  {localization.app.logIn}
-                </Button>
+                  <p>{localization.app.loginPage.readUser.description1}</p>
+                  <div>
+                    <strong>
+                      {localization.app.loginPage.readUser.description2}
+                    </strong>
+                    <p>
+                      {localization.app.loginPage.readUser.description3.click}{' '}
+                      <strong>
+                        {localization.app.loginPage.readUser.loginButton}
+                      </strong>
+                      , {localization.app.loginPage.readUser.description3.then}{' '}
+                      <strong>
+                        {
+                          localization.app.loginPage.readUser.description3
+                            .registerUser
+                        }
+                      </strong>
+                      .
+                    </p>
+                  </div>
+                </div>
               </div>
-              <div className="fdk-text-size-small fdk-text-line-medium">
-                <strong>
-                  {localization.catalogs.missingCatalogs.accessTitle}
-                </strong>
+            )}
+            <div className="col-md-6 mt-5 mt-md-0">
+              <div className="jumbotron jumbotron-login h-100">
+                <h2>{localization.app.loginPage.writeUser.heading}</h2>
+                <Button
+                  className="fdk-button fdk-button-cta fdk-bg-color-link mt-4"
+                  onClick={login}
+                >
+                  {localization.app.loginPage.writeUser.loginButton}
+                </Button>
+                <p className="">
+                  {localization.app.loginPage.writeUser.description1}
+                </p>
+                <div>
+                  <strong>
+                    {localization.app.loginPage.writeUser.description2}
+                  </strong>
+                  <p>
+                    <a href="https://fellesdatakatalog.brreg.no/about-registration">
+                      {localization.app.loginPage.writeUser.description3}
+                    </a>
+                  </p>
+                  <p />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-12 ml-4 mt-4">
+              <div>
+                <strong>{localization.app.loginPage.postamble1}</strong>
                 <p>
+                  {localization.app.loginPage.postamble2}
+                  <br />
+                  {localization.app.loginPage.postamble3}{' '}
                   <a href="https://fellesdatakatalog.brreg.no/about-registration">
-                    {localization.catalogs.missingCatalogs.accessText}
-                    <i className="fa fa-external-link fdk-fa-right" />
+                    {localization.app.loginPage.postamble4}
                   </a>
                 </p>
               </div>
@@ -67,7 +109,7 @@ export const LoginPagePure = ({ loggedOut }) => {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

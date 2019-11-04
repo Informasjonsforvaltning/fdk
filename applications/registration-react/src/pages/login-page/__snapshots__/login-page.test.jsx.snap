@@ -1,23 +1,21 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`should render LoginPage correctly 1`] = `
-<div
-  className="login-dialog-wrapper p-5"
->
+<Fragment>
   <div
-    className="container"
+    className="login-dialog-wrapper pt-5"
   >
     <div
-      className="row"
+      className="container"
     >
       <div
-        className="col-12"
+        className="row"
       >
         <div
-          className="col-12 col-md-8"
+          className="col-12"
         >
           <div
-            className="mt-2 alert alert-warning fdk-text-size-small fdk-color-neutral-darkest"
+            className="mt-2 alert alert-warning fdk-color-neutral-darkest"
             role="alert"
           >
             <span>
@@ -29,32 +27,68 @@ exports[`should render LoginPage correctly 1`] = `
               Sesjonen ble tidsavbrutt, men vi har tatt vare på alle endringene du har gjort. Logg inn på nytt for å fortsette å jobbe med registreringen.
             </span>
           </div>
+        </div>
+      </div>
+      <div
+        className="row"
+      >
+        <div
+          className="col-md-6 mt-5 mt-md-0"
+        >
           <div
-            className="mt-5 mb-5"
+            className="jumbotron jumbotron-login h-100"
           >
+            <h2>
+              For deg som har skrivetilgang
+            </h2>
             <Button
-              className="fdk-button fdk-button-cta"
+              className="fdk-button fdk-button-cta fdk-bg-color-link mt-4"
               color="secondary"
               onClick={[Function]}
               tag="button"
             >
-              Logg inn
+              Logg inn med ID porten
             </Button>
+            <p
+              className=""
+            >
+              For å få tilgang til funksjonalitet som registrering og redigering på vegne av din virksomhet, må du logge inn med IP porten.
+            </p>
+            <div>
+              <strong>
+                Trenger du skrivetilgang?
+              </strong>
+              <p>
+                <a
+                  href="https://fellesdatakatalog.brreg.no/about-registration"
+                >
+                  Les hvordan du får tilgang til å registrere og redigere innhold.
+                </a>
+              </p>
+              <p />
+            </div>
           </div>
-          <div
-            className="fdk-text-size-small fdk-text-line-medium"
-          >
+        </div>
+      </div>
+      <div
+        className="row"
+      >
+        <div
+          className="col-12 ml-4 mt-4"
+        >
+          <div>
             <strong>
-              Trenger du tilgang?
+              Skal du gi andre skrivetilgang?
             </strong>
             <p>
+              Du kan gi andre til a redigere datasett for din virksomhet via Altinn.
+              <br />
+              Les mer om
+               
               <a
                 href="https://fellesdatakatalog.brreg.no/about-registration"
               >
-                Les mer om hvordan du får tilgang her
-                <i
-                  className="fa fa-external-link fdk-fa-right"
-                />
+                hvordan du gir andre tilgang.
               </a>
             </p>
           </div>
@@ -62,5 +96,5 @@ exports[`should render LoginPage correctly 1`] = `
       </div>
     </div>
   </div>
-</div>
+</Fragment>
 `;

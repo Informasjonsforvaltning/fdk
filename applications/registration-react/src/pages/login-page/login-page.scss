@@ -7,8 +7,11 @@
   flex-grow: 1;
   .fdk-button {
     text-decoration: none;
+    margin-bottom: 1em;
+    border-color: transparent;
     &:hover {
       color: $color-white;
+      border-color: transparent;
     }
   }
 }
@@ -46,3 +49,8 @@
 @media only screen and (min-width : 1200px) {
 }
 
+.jumbotron-login {
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15);
+  background-color: white !important;
+  padding: 2rem 2rem 0rem 2rem !important;
+}
