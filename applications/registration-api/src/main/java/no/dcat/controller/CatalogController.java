@@ -5,7 +5,7 @@ import no.dcat.model.Enhet;
 import no.dcat.service.CatalogRepository;
 import no.dcat.service.EnhetService;
 import no.dcat.service.HarvesterService;
-import no.dcat.service.SpringSecurityContextService;
+import no.dcat.service.permission.PermissionService;
 import no.dcat.shared.Publisher;
 import no.dcat.shared.admin.DcatSourceDto;
 import no.fdk.webutils.exceptions.BadRequestException;
@@ -44,7 +44,7 @@ public class CatalogController {
 
     private final CatalogRepository catalogRepository;
 
-    private final SpringSecurityContextService springSecurityContextService;
+    private final PermissionService permissionService;
 
     private final HarvesterService harvesterService;
 
@@ -55,9 +55,9 @@ public class CatalogController {
 
 
     @Autowired
-    public CatalogController(CatalogRepository catalogRepository, SpringSecurityContextService springSecurityContextService, HarvesterService harvesterService, EnhetService enhetService) {
+    public CatalogController(CatalogRepository catalogRepository, PermissionService permissionService, HarvesterService harvesterService, EnhetService enhetService) {
         this.catalogRepository = catalogRepository;
-        this.springSecurityContextService = springSecurityContextService;
+        this.permissionService = permissionService;
         this.harvesterService = harvesterService;
         this.enhetService = enhetService;
     }
@@ -73,7 +73,7 @@ public class CatalogController {
         produces = APPLICATION_JSON_UTF8_VALUE)
     public PagedResources<Resource<Catalog>> listCatalogs(Pageable pageable, PagedResourcesAssembler<Catalog> assembler) {
 
-        Authentication auth = springSecurityContextService.getAuthentication();
+        Authentication auth = permissionService.getAuthentication();
 
         Set<String> validCatalogs = new HashSet<>();
 
