@@ -5,9 +5,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.security.access.PermissionEvaluator;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
 
+@Component
 public class FdkPermissionEvaluator implements PermissionEvaluator {
     private static final Logger logger = LoggerFactory.getLogger(FdkPermissionEvaluator.class);
 
