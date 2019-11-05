@@ -7,7 +7,7 @@ export const AlertMessage = props => {
   if (!(type && children)) {
     return null;
   }
-  const alertClassnames = cx('alert', 'pt-3', 'pb-3', {
+  const alertClassnames = cx('alert', 'pt-3', 'pb-3', 'mt-3', {
     'alert-success': type === 'success',
     'alert-warning': type === 'warning',
     'alert-danger': type === 'danger',

@@ -2,7 +2,7 @@
 
 exports[`should render AlertMessage danger correctly with props 1`] = `
 <div
-  className="alert pt-3 pb-3 alert-danger"
+  className="alert pt-3 pb-3 mt-3 alert-danger"
 >
   <i
     className="fa mr-2 fa-exclamation-triangle"
@@ -15,7 +15,7 @@ exports[`should render AlertMessage danger correctly with props 1`] = `
 
 exports[`should render AlertMessage success correctly with props 1`] = `
 <div
-  className="alert pt-3 pb-3 alert-success"
+  className="alert pt-3 pb-3 mt-3 alert-success"
 >
   <i
     className="fa mr-2 fa-check"
