@@ -181,6 +181,7 @@ export function DatasetRegistrationPagePure(props) {
                   catalogId={catalogId}
                   datasetId={datasetId}
                   languages={languages}
+                  datasetFormStatus={datasetFormStatus}
                 />
               </FormTemplateWithState>
 
@@ -195,6 +196,7 @@ export function DatasetRegistrationPagePure(props) {
                   losItems={losItems}
                   catalogId={catalogId}
                   datasetId={datasetId}
+                  datasetFormStatus={datasetFormStatus}
                 />
               </FormTemplateWithState>
 

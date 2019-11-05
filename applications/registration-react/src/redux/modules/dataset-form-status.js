@@ -33,7 +33,10 @@ export function datasetFormStatus(state = initialState, action) {
       const { datasetId } = action.payload;
       return {
         ...state,
-        [datasetId]: { isSaving: true }
+        [datasetId]: {
+          ..._.get(state, datasetId, {}),
+          isSaving: true
+        }
       };
     }
     case DATASET_FORM_STATUS_PATCH_SUCCESS: {
@@ -41,7 +44,10 @@ export function datasetFormStatus(state = initialState, action) {
       const justPublishedOrUnPublished = !!patch.registrationStatus;
       return {
         ...state,
-        [datasetId]: { justPublishedOrUnPublished }
+        [datasetId]: {
+          justPublishedOrUnPublished,
+          lastChangedFields: Object.keys(patch)
+        }
       };
     }
     case DATASET_FORM_STATUS_SAVE_ERROR: {

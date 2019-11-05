@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Field, FieldArray } from 'redux-form';
+import includes from 'lodash/includes';
 
 import localization from '../../../lib/localization';
 import Helptext from '../../../components/helptext/helptext.component';
@@ -9,6 +10,8 @@ import MultilingualField from '../../../components/multilingual-field/multilingu
 import RadioField from '../../../components/fields/field-radio/field-radio.component';
 import { legalBasisType } from '../../../schemaTypes';
 import { datasetFormPatchThunk } from '../formsLib/asyncValidateDatasetInvokePatch';
+import { AlertMessage } from '../../../components/alert-message/alert-message.component';
+import {isNapPublish, isNapUnPublishAccessRights} from "../../../lib/napPublish";
 
 /*
  Resets fields when radio button "Offentlig" is chosen.
@@ -112,7 +115,9 @@ export const FormAccessRights = props => {
     dispatch,
     catalogId,
     datasetId,
-    languages
+    languages,
+    datasetFormStatus,
+    datasetItem
   } = props;
   const accessRight = syncErrors ? syncErrors.accessRight : null;
   const deleteFieldAtIndex = (fields, index) => {
@@ -155,6 +160,26 @@ export const FormAccessRights = props => {
           value="http://publications.europa.eu/resource/authority/access-right/NON_PUBLIC"
           label={localization.schema.accessRights.nonPublicLabel}
         />
+
+        {datasetFormStatus &&
+        includes(datasetFormStatus.lastChangedFields, 'accessRights')
+        && isNapPublish(datasetItem)
+        && (
+          <AlertMessage type="warning">
+            <i className="fa fa-info-circle mr-2" />
+            <span>{localization.formStatus.napPublish}</span>
+          </AlertMessage>
+        )}
+
+        {datasetFormStatus &&
+        includes(datasetFormStatus.lastChangedFields, 'accessRights')
+        && isNapUnPublishAccessRights(datasetItem)
+        && (
+          <AlertMessage type="warning">
+            <i className="fa fa-info-circle mr-2" />
+            <span>{localization.formStatus.napUnPublish}</span>
+          </AlertMessage>
+        )}
 
         {accessRight && (
           <div className="alert alert-danger mt-3">
@@ -249,7 +274,9 @@ FormAccessRights.defaultProps = {
   dispatch: null,
   catalogId: null,
   datasetId: null,
-  languages: []
+  languages: [],
+  datasetFormStatus: null,
+  datasetItem: null
 };
 FormAccessRights.propTypes = {
   syncErrors: PropTypes.object,
@@ -257,5 +284,7 @@ FormAccessRights.propTypes = {
   dispatch: PropTypes.func,
   catalogId: PropTypes.string,
   datasetId: PropTypes.string,
-  languages: PropTypes.array
+  languages: PropTypes.array,
+  datasetFormStatus: PropTypes.object,
+  datasetItem: PropTypes.object
 };

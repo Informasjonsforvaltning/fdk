@@ -504,6 +504,8 @@
     "dataset": {
       "confirmDeleteMessage": "Er du sikker på at du vil slette datasettbeskrivelsen permanent?",
       "requiredFieldsMissing": "Datasettet kunne ikke publiseres. Se over felt som er markert med feil og rett disse før du forsøker å publisere på nytt."
-    }
+    },
+    "napPublish": "Datasettbeskrivelsen vil være tilgjengelig i Felles datakatalog og Transportportalen.no når det er publisert",
+    "napUnPublish": "Datasettbeskrivelsen vil kun være tilgjengelig i Felles datakatalog. Bare offentlige datasett med tema eller emner relatert til trafikk, reiser og samferdsel vil vises i Transportportalen.no."
   }
 }
