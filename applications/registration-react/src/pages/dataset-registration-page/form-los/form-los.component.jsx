@@ -18,13 +18,18 @@ import {
   onSelectSearchedLosItem
 } from './autocomplete-helper';
 import './form-los.scss';
+import includes from "lodash/includes";
+import {isNapPublish, isNapUnPublishTheme} from "../../../lib/napPublish";
+import {AlertMessage} from "../../../components/alert-message/alert-message.component";
 
 export const FormLOSPure = ({
   losItems,
   filterText,
   searchedItem,
   handleSetFilterText,
-  handleSetSearchedItem
+  handleSetSearchedItem,
+  datasetItem,
+  datasetFormStatus
 }) => {
   const losItemsToShow = _.uniqBy(
     getLosItemParentsAndChildren(losItems, searchedItem),
@@ -108,6 +113,27 @@ export const FormLOSPure = ({
             }
           />
         </form>
+
+        {datasetFormStatus &&
+        includes(datasetFormStatus.lastChangedFields, 'theme')
+        && isNapPublish(datasetItem)
+        && (
+          <AlertMessage type="warning">
+            <i className="fa fa-info-circle mr-2" />
+            <span>{localization.formStatus.napPublish}</span>
+          </AlertMessage>
+        )}
+
+        {datasetFormStatus &&
+        includes(datasetFormStatus.lastChangedFields, 'theme')
+        && isNapUnPublishTheme(datasetItem)
+        && (
+          <AlertMessage type="warning">
+            <i className="fa fa-info-circle mr-2" />
+            <span>{localization.formStatus.napUnPublish}</span>
+          </AlertMessage>
+        )}
+
       </div>
     );
   }
@@ -119,7 +145,9 @@ FormLOSPure.defaultProps = {
   filterText: '',
   searchedItem: undefined,
   handleSetFilterText: _.noop,
-  handleSetSearchedItem: _.noop
+  handleSetSearchedItem: _.noop,
+  datasetItem: null,
+  datasetFormStatus: null
 };
 
 FormLOSPure.propTypes = {
@@ -127,7 +155,9 @@ FormLOSPure.propTypes = {
   filterText: PropTypes.string,
   searchedItem: PropTypes.object,
   handleSetFilterText: PropTypes.func,
-  handleSetSearchedItem: PropTypes.func
+  handleSetSearchedItem: PropTypes.func,
+  datasetItem: PropTypes.object,
+  datasetFormStatus: PropTypes.object
 };
 
 const enhance = compose(
