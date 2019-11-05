@@ -1,8 +1,8 @@
 package no.dcat.controller;
 
+import lombok.RequiredArgsConstructor;
 import no.dcat.model.Catalog;
 import no.dcat.model.Enhet;
-
 import no.dcat.service.CatalogRepository;
 import no.dcat.service.EnhetService;
 import no.dcat.service.HarvesterService;
@@ -13,7 +13,6 @@ import no.fdk.webutils.exceptions.BadRequestException;
 import no.fdk.webutils.exceptions.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -32,37 +31,25 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
+import static no.dcat.service.permission.PublisherResourceRole.PublisherPermission;
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.web.bind.annotation.RequestMethod.*;
-import static no.dcat.service.permission.PublisherResourceRole.PublisherPermission;
 
 @RestController
 @RequestMapping(value = "/catalogs")
+@RequiredArgsConstructor
 public class CatalogController {
 
     private static Logger logger = LoggerFactory.getLogger(CatalogController.class);
 
     private final CatalogRepository catalogRepository;
-
     private final PermissionService permissionService;
-
     private final HarvesterService harvesterService;
-
     private final EnhetService enhetService;
 
     @Value("${application.openDataEnhet}")
     private String openDataEnhetsregisteret;
-
-
-    @Autowired
-    public CatalogController(CatalogRepository catalogRepository, PermissionService permissionService, HarvesterService harvesterService, EnhetService enhetService) {
-        this.catalogRepository = catalogRepository;
-        this.permissionService = permissionService;
-        this.harvesterService = harvesterService;
-        this.enhetService = enhetService;
-    }
-
 
     /**
      * Lists all authorised catalogs
