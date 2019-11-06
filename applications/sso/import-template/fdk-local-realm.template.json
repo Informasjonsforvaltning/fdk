@@ -920,7 +920,7 @@
     "strictTransportSecurity" : "max-age=31536000; includeSubDomains"
   },
   "smtpServer" : { },
-  "loginTheme" : "keycloak",
+  "loginTheme" : "fdk",
   "accountTheme" : "keycloak",
   "emailTheme" : "keycloak",
   "eventsEnabled" : false,
