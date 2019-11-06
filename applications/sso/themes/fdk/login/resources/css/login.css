@@ -1,6 +1,31 @@
+a {
+    color: #0069A5;
+}
+
+.form-control {
+    border-radius: 2.5px;
+}
+
+button {
+    box-shadow: 0 2px 4px rgba(45,55,65,0.3) !important;
+    color: #FFF;
+    background-color: #0069A5;
+    border-radius: 2.5px !important;
+    padding: 12px 13px !important;
+}
+
+button:hover {
+    color: #FFF !important;
+}
+
+
+
 .login-pf body {
-    background: url("../img/keycloak-bg.png") no-repeat center center fixed;
-    background-size: cover;
+    background: url("../img/illustration-login.svg");
+    background-repeat: no-repeat;
+    background-position: top right;
+    background-size: 50%;
+    background-color: #E5F9FF;
 }
 
 .alert-error {
@@ -96,18 +121,30 @@ div.kc-logo-text span {
     display: none;
 }
 
-#kc-header {
+/* Change content to change the title of the page*/
+div#kc-header::after {
+    font-size: 40px;
+    line-height: 50px;
+    margin-bottom: 15px;
+}
+/*title banner size and colour*/
+div#kc-header {
     color: #ededed;
     overflow: visible;
     white-space: nowrap;
+    width:100%;
+    background-color: #FFF;
+    padding: 16px 20px;
+    border-bottom: 1px solid #DFE1E2;
+    margin-bottom: 30px;
 }
 
 #kc-header-wrapper {
-    font-size: 29px;
-    text-transform: uppercase;
-    letter-spacing: 3px;
-    line-height: 1.2em;
-    padding: 62px 10px 20px;
+    background: url("../img/logo-registrering.svg");
+    background-repeat: no-repeat;
+    background-position: left;
+    background-size: auto;
+    padding: 40px 10px 20px;
     white-space: normal;
 }
 
@@ -276,11 +313,6 @@ a.zocial  {
 }
 
 @media (max-width: 767px) {
-
-    .login-pf body {
-      background: white;
-    }
-
     #kc-header {
         padding-left: 15px;
         padding-right: 15px;
@@ -362,7 +394,7 @@ a.zocial  {
 }
 
 #kc-form-buttons {
-  margin-top: 40px;
+    margin-top: 40px;
 }
 
 .login-pf-page .login-pf-brand {
@@ -377,7 +409,7 @@ a.zocial  {
   padding: 0 20px;
   max-width: 500px;
   border-top: 0;
-  box-shadow: 0 0 0;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.15);
 }
 
 /*tablet*/
