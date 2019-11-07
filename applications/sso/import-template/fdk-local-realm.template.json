@@ -56,6 +56,7 @@
       "attributes" : { }
     } ],
     "client" : {
+      "fellesdatakatalog" : [ ],
       "realm-management" : [ {
         "id" : "1fb320c0-672e-4799-bbe3-1805d6a97cf9",
         "name" : "view-events",
@@ -235,7 +236,6 @@
         "containerId" : "6e8d601a-247a-4be0-8b25-cbb86571bf27",
         "attributes" : { }
       } ],
-      "fellesdatakatalog" : [ ],
       "account" : [ {
         "id" : "d88bbe9e-75d9-41be-91cd-123522836545",
         "name" : "manage-account",
@@ -565,6 +565,7 @@
       "consentRequired" : false,
       "config" : {
         "multivalued" : "true",
+        "userinfo.token.claim" : "true",
         "user.attribute" : "foo",
         "id.token.claim" : "true",
         "access.token.claim" : "true",
