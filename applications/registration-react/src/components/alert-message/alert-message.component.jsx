@@ -7,14 +7,15 @@ export const AlertMessage = props => {
   if (!(type && children)) {
     return null;
   }
-  const alertClassnames = cx('alert', 'pt-3', 'pb-3', 'mt-3', {
+  const alertClassnames = cx('d-flex', 'alert', 'pt-3', 'pb-3', 'mt-3', {
     'alert-success': type === 'success',
     'alert-warning': type === 'warning',
     'alert-danger': type === 'danger',
-    'alert-info': type === 'info'
+    'alert-info fdk-color-neutral-darkest': type === 'info'
   });
-  const iconClassnames = cx('fa', 'mr-2', {
+  const iconClassnames = cx('fa', 'mr-2', 'mt-1', {
     'fa-exclamation-triangle': type === 'danger',
+    'fa-info-circle fdk-color-link': type === 'info',
     'fa-check': type === 'success'
   });
   return (
