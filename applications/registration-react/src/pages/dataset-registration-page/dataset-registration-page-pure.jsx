@@ -182,6 +182,7 @@ export function DatasetRegistrationPagePure(props) {
                   datasetId={datasetId}
                   languages={languages}
                   datasetFormStatus={datasetFormStatus}
+                  losItems={losItems}
                 />
               </FormTemplateWithState>
 
