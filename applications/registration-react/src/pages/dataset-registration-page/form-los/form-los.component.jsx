@@ -116,7 +116,7 @@ export const FormLOSPure = ({
 
         {datasetFormStatus &&
         includes(datasetFormStatus.lastChangedFields, 'theme')
-        && isNapPublish(datasetItem)
+        && isNapPublish(losItems, datasetItem)
         && (
           <AlertMessage type="info">
             <span>{localization.formStatus.napPublish}</span>
@@ -125,7 +125,7 @@ export const FormLOSPure = ({
 
         {datasetFormStatus &&
         includes(datasetFormStatus.lastChangedFields, 'theme')
-        && isNapUnPublishTheme(datasetItem)
+        && isNapUnPublishTheme(losItems, datasetItem)
         && (
           <AlertMessage type="info">
             <span>{localization.formStatus.napUnPublish}</span>

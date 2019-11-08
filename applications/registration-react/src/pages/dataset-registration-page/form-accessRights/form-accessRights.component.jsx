@@ -117,7 +117,8 @@ export const FormAccessRights = props => {
     datasetId,
     languages,
     datasetFormStatus,
-    datasetItem
+    datasetItem,
+    losItems
   } = props;
   const accessRight = syncErrors ? syncErrors.accessRight : null;
   const deleteFieldAtIndex = (fields, index) => {
@@ -163,7 +164,7 @@ export const FormAccessRights = props => {
 
         {datasetFormStatus &&
         includes(datasetFormStatus.lastChangedFields, 'accessRights')
-        && isNapPublish(datasetItem)
+        && isNapPublish(losItems, datasetItem)
         && (
           <AlertMessage type="info">
             <span>{localization.formStatus.napPublish}</span>
@@ -172,7 +173,7 @@ export const FormAccessRights = props => {
 
         {datasetFormStatus &&
         includes(datasetFormStatus.lastChangedFields, 'accessRights')
-        && isNapUnPublishAccessRights(datasetItem)
+        && isNapUnPublishAccessRights(losItems, datasetItem)
         && (
           <AlertMessage type="info">
             <span>{localization.formStatus.napUnPublish}</span>
@@ -274,7 +275,8 @@ FormAccessRights.defaultProps = {
   datasetId: null,
   languages: [],
   datasetFormStatus: null,
-  datasetItem: null
+  datasetItem: null,
+  losItems: null
 };
 FormAccessRights.propTypes = {
   syncErrors: PropTypes.object,
@@ -284,5 +286,6 @@ FormAccessRights.propTypes = {
   datasetId: PropTypes.string,
   languages: PropTypes.array,
   datasetFormStatus: PropTypes.object,
-  datasetItem: PropTypes.object
+  datasetItem: PropTypes.object,
+  losItems: PropTypes.array
 };
