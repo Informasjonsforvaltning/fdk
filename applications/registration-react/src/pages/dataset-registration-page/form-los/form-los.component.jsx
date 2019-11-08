@@ -118,8 +118,7 @@ export const FormLOSPure = ({
         includes(datasetFormStatus.lastChangedFields, 'theme')
         && isNapPublish(datasetItem)
         && (
-          <AlertMessage type="warning">
-            <i className="fa fa-info-circle mr-2" />
+          <AlertMessage type="info">
             <span>{localization.formStatus.napPublish}</span>
           </AlertMessage>
         )}
@@ -128,8 +127,7 @@ export const FormLOSPure = ({
         includes(datasetFormStatus.lastChangedFields, 'theme')
         && isNapUnPublishTheme(datasetItem)
         && (
-          <AlertMessage type="warning">
-            <i className="fa fa-info-circle mr-2" />
+          <AlertMessage type="info">
             <span>{localization.formStatus.napUnPublish}</span>
           </AlertMessage>
         )}
