@@ -165,8 +165,7 @@ export const FormAccessRights = props => {
         includes(datasetFormStatus.lastChangedFields, 'accessRights')
         && isNapPublish(datasetItem)
         && (
-          <AlertMessage type="warning">
-            <i className="fa fa-info-circle mr-2" />
+          <AlertMessage type="info">
             <span>{localization.formStatus.napPublish}</span>
           </AlertMessage>
         )}
@@ -175,8 +174,7 @@ export const FormAccessRights = props => {
         includes(datasetFormStatus.lastChangedFields, 'accessRights')
         && isNapUnPublishAccessRights(datasetItem)
         && (
-          <AlertMessage type="warning">
-            <i className="fa fa-info-circle mr-2" />
+          <AlertMessage type="info">
             <span>{localization.formStatus.napUnPublish}</span>
           </AlertMessage>
         )}
