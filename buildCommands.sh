@@ -10,7 +10,7 @@ for docker_app in $docker_apps; do
     BUILD_CMD[$i]="( cd applications/$docker_app && ./buildDocker.sh )"
 done
 
-maven_apps="harvester harvester-api reference-data registration-api search-api user-api"
+maven_apps="harvester harvester-api registration-api search-api user-api"
 
 for maven_app in $maven_apps; do
     i=$((i+1))

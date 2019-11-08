@@ -10,8 +10,6 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>reference-data</module>
-
         <module>search-api</module>
         <module>registration-api</module>
 
