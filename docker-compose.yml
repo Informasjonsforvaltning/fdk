@@ -45,6 +45,13 @@ services:
       - REGISTRATION_HOST
       - CONCEPT_CATALOGUE_HOST
       - FDK_ADMIN_GUI_HOST
+      #optional
+      - EMAIL_VERIFY
+      - SMTP_FROM
+      - SMTP_FROM_NAME
+      - SMTP_HOST
+      - SMTP_USER
+      - SMTP_PASSWORD
 
   ### ingress modules
   ##################################

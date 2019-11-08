@@ -2,6 +2,8 @@
 
 __dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
+if [[ ! $EMAIL_VERIFY == true ]]; then EMAIL_VERIFY=false; fi
+
 echo "Processing import template"
 echo "IDPORTEN_OIDC_ROOT=$IDPORTEN_OIDC_ROOT"
 echo "IDPORTEN_CLIENT_ID=$IDPORTEN_CLIENT_ID"
@@ -12,6 +14,12 @@ echo "FDK_ADMIN_GUI_HOST=$FDK_ADMIN_GUI_HOST"
 echo "DEV_REGISTRATION_HOST=$DEV_REGISTRATION_HOST"
 echo "DEV_CONCEPT_CATALOGUE_HOST=$DEV_CONCEPT_CATALOGUE_HOST"
 echo "DEV_FDK_ADMIN_GUI_HOST=$DEV_FDK_ADMIN_GUI_HOST"
+
+echo "EMAIL_VERIFY=$EMAIL_VERIFY"
+echo "SMTP_FROM=$SMTP_FROM"
+echo "SMTP_FROM_NAME=$SMTP_FROM_NAME"
+echo "SMTP_HOST=$SMTP_HOST"
+echo "SMTP_USER=$SMTP_USER"
 
 if [[ $IDPORTEN_OIDC_ROOT =~ ^$SSO_HOST ]]; then
     # identiy provider is on the same server (another realm)
@@ -73,6 +81,12 @@ sed -e 's,${IDPORTEN_CLIENT_ID},'$IDPORTEN_CLIENT_ID',g' \
 
 sed -e 's,${FDK_LOCAL_SECRET},'$FDK_LOCAL_SECRET',g' \
  -e 's,${SSO_HOST},'$SSO_HOST',g' \
+ -e 's,${EMAIL_VERIFY},'$EMAIL_VERIFY',g' \
+ -e 's,${SMTP_FROM},'$SMTP_FROM',g' \
+ -e 's,${SMTP_FROM_NAME},'$SMTP_FROM_NAME',g' \
+ -e 's,${SMTP_HOST},'$SMTP_HOST',g' \
+ -e 's,${SMTP_USER},'$SMTP_USER',g' \
+ -e 's,${SMTP_PASSWORD},'$SMTP_PASSWORD',g' \
   </tmp/keycloak/import-template/fdk-local-realm.template.json >/tmp/keycloak/import/update/fdk-local-realm.json
 
 exec /opt/jboss/tools/docker-entrypoint.sh $@

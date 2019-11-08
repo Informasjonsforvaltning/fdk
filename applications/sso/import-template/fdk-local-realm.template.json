@@ -24,7 +24,7 @@
   "registrationAllowed" : true,
   "registrationEmailAsUsername" : true,
   "rememberMe" : true,
-  "verifyEmail" : false,
+  "verifyEmail" : ${EMAIL_VERIFY},
   "loginWithEmailAllowed" : true,
   "duplicateEmailsAllowed" : false,
   "resetPasswordAllowed" : true,
@@ -920,7 +920,17 @@
     "contentSecurityPolicy" : "frame-src 'self'; frame-ancestors 'self'; object-src 'none';",
     "strictTransportSecurity" : "max-age=31536000; includeSubDomains"
   },
-  "smtpServer" : { },
+  "smtpServer" : {
+    "password" : "${SMTP_PASSWORD}",
+    "starttls" : "false",
+    "auth" : "true",
+    "port" : "465",
+    "host" : "${SMTP_HOST}",
+    "from" : "${SMTP_FROM}",
+    "fromDisplayName" : "${SMTP_FROM_NAME}",
+    "ssl" : "true",
+    "user" : "${SMTP_USER}"
+  },
   "loginTheme" : "fdk",
   "accountTheme" : "keycloak",
   "emailTheme" : "keycloak",
