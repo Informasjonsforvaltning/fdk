@@ -7,11 +7,12 @@ COPY tools /opt/fdk/tools
 # deployments are compiled SPI implementation modules. E.g. Federated rest user storage module.
 COPY deployments /opt/jboss/keycloak/standalone/deployments
 
-# SSO service does not have permanent database.
-# On service (re)start we will restore the database from the previously exported state.
+# On service (re)start the stored keycloak state will be compared with the previously exported state, missing components will be restored.
+# The restoration of the realms are ignored during startup if they already exist, an update script is run after startup to ensure they are completely up to date.
 # When exporting state, it needs to be converted to a template file that has environment variable placeholders in it
 # If needed (in dev environment) additional static realms can be included in imports.
 COPY import /tmp/keycloak/import
+COPY startup-scripts /opt/jboss/startup-scripts
 COPY import-template /tmp/keycloak/import-template
 USER root
 RUN chmod o+w /tmp/keycloak/import
@@ -23,4 +24,4 @@ ENTRYPOINT [ "/opt/fdk/tools/preprocess-import-entrypoint.sh" ]
 # host name is made available by specifying it in the hosts file in host machine.
 # port offset will cause changing port to 8084 which will be the same as exposed port to host.
 
-CMD ["-b", "0.0.0.0", "-Dkeycloak.migration.action=import", "-Dkeycloak.migration.provider=dir", "-Dkeycloak.migration.dir=/tmp/keycloak/import", "-Dkeycloak.migration.strategy=OVERWRITE_EXISTING", "-Djboss.socket.binding.port-offset=4"]
+CMD ["-b", "0.0.0.0", "-Dkeycloak.migration.action=import", "-Dkeycloak.migration.provider=dir", "-Dkeycloak.migration.dir=/tmp/keycloak/import", "-Dkeycloak.migration.strategy=IGNORE_EXISTING", "-Djboss.socket.binding.port-offset=4"]

@@ -26,6 +26,10 @@ services:
 
   postgres:
     restart: always
+    environment:
+      - POSTGRES_DB=keycloak
+      - POSTGRES_USER=keycloak
+      - POSTGRES_PASSWORD=password
     volumes:
       - /var/lib/postgresql/data
     ports:
@@ -51,6 +55,12 @@ services:
     # cp libraries/keycloak-user-storage-rest/target/keycloak-user-storage-rest.jar applications-external/sso/deployments/
     #      - ./applications/sso/deployments:/opt/jboss/keycloak/standalone/deployments
     environment:
+      - DB_VENDOR=POSTGRES
+      - DB_ADDR=postgres
+      - DB_DATABASE=keycloak
+      - DB_USER=keycloak
+      - DB_SCHEMA=public
+      - DB_PASSWORD=password
       - KEYCLOAK_USER=admin
       - KEYCLOAK_PASSWORD=admin
     #      - KEYCLOAK_LOGLEVEL=DEBUG
@@ -65,6 +75,8 @@ services:
       - IDPORTEN_OIDC_ROOT=http://localhost:8084/auth/realms/idporten-mock
       - IDPORTEN_CLIENT_ID=oidc_brreg_fellesdatakatalog
       - IDPORTEN_CLIENT_SECRET=29a2cfe1-1a61-4a04-bf84-64d70a340d04
+    depends_on:
+      - postgres
     ports:
       - "8084:8084"
 
