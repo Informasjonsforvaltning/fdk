@@ -18,3 +18,14 @@ show sessions
 select a session
 open attributes
 verify fdk _access values
+
+# Themes - Developing on host with docker volume
+
+1) Copy the fdk theme folder from container:
+Get the sso container id (docker ps), then go to the themes folder and run:
+docker cp <CONTAINERID>:/opt/jboss/keycloak/themes/fdk ./fdk
+
+2) Uncomment this line in fdk/docker-compose.override.yml:
+- ../fdk/applications/sso/themes/fdk:/opt/jboss/keycloak/themes/fdk
+
+Now you can change theme files in ./themes/fdk and see the changes in keycloak. (NB: Shift+Ctrl+R for reloading cached css).
