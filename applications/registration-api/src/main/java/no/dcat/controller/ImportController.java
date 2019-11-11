@@ -39,6 +39,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.*;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
@@ -76,12 +77,12 @@ public class ImportController {
         return new ResponseEntity<>(catalog, HttpStatus.OK);
     }
 
-    Catalog importDatasets(String catalogId, URL url) throws IOException, NotFoundException {
+    private Catalog importDatasets(String catalogId, URL url) throws IOException, NotFoundException {
         if (!(url.getProtocol().equals("http") || url.getProtocol().equals("https"))) {
             throw new MalformedURLException("Supports only http and https");
         }
 
-        Model model = null;
+        Model model;
 
         try {
             model = FileManager.get().loadModel(url.toString());
@@ -107,8 +108,7 @@ public class ImportController {
             throw new NotFoundException(String.format("No datasets found in import data that is part of catalog %s", catalogId));
         }
 
-        List<no.dcat.shared.Dataset> theList = new ArrayList<>();
-        theList.addAll(importedDatasets);
+        List<no.dcat.shared.Dataset> theList = new ArrayList<>(importedDatasets);
         catalogToImportTo.setDataset(theList);
 
 
@@ -135,7 +135,7 @@ public class ImportController {
         return catalogToImportTo;
     }
 
-    List<Dataset> parseAndSaveDatasets(Model model, Catalog catalogToImportTo) throws IOException {
+    List<Dataset> parseAndSaveDatasets(Model model, Catalog catalogToImportTo) {
         List<Dataset> importedDatasets = new ArrayList<>();
         String catalogId = catalogToImportTo.getId();
 
@@ -159,7 +159,7 @@ public class ImportController {
 
     List<Catalog> parseCatalogs(Model model) throws IOException {
 
-        String json = frame(DatasetFactory.create(model), IOUtils.toString(new ClassPathResource("frames/catalog.json").getInputStream(), "UTF-8"));
+        String json = frame(DatasetFactory.create(model), IOUtils.toString(new ClassPathResource("frames/catalog.json").getInputStream(), UTF_8));
 
         return new Gson().fromJson(json, FramedCatalog.class).getGraph();
     }
@@ -168,7 +168,7 @@ public class ImportController {
         return new DcatReader(model, THEMES_SERVICE_URL, "user", "password");
     }
 
-    List<Dataset> parseDatasets(Model model) throws IOException {
+    List<Dataset> parseDatasets(Model model) {
 
         DcatReader reader = getDcatReader(model);
 

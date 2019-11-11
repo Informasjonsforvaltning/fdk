@@ -3,10 +3,10 @@ package no.dcat.service.permission;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ResourceRoleFactory {
+class ResourceRoleFactory {
     private static Logger logger = LoggerFactory.getLogger(ResourceRoleFactory.class);
 
-    public static ResourceRole deserialize(String roleToken) {
+    static ResourceRole deserialize(String roleToken) {
         try {
             String[] parts = roleToken.split(":");
             String resourceType = parts[0];

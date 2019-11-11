@@ -58,7 +58,6 @@ public class ApiRegistrationController {
      * Return list of all apiRegistrations in catalog.
      *
      * @param catalogId the id of the catalog
-     * @param pageable
      * @return List of api registrations
      */
     @PreAuthorize("hasPermission(#catalogId, 'organization', 'read')")
@@ -91,7 +90,6 @@ public class ApiRegistrationController {
     /**
      * Create new apiRegistration in catalog. Id for the apiRegistration is created automatically.
      *
-     * @param data
      * @return ApiRegistration
      */
     @PreAuthorize("hasPermission(#catalogId, 'organization', 'write')")
@@ -130,8 +128,6 @@ public class ApiRegistrationController {
      * Delete apiRegistration
      *
      * @param id Identifier of apiRegistration
-     * @return HTTP status 204 NO CONTENT is returned if apiRegistration was successfully deleted. If
-     * apiRegistration is not found, HTTP 404 Not found is returned
      */
     @PreAuthorize("hasPermission(#catalogId, 'organization', 'write')")
     @RequestMapping(value = "/{id}", method = DELETE, produces = APPLICATION_JSON_UTF8_VALUE)
@@ -194,7 +190,7 @@ public class ApiRegistrationController {
         return savedApiRegistration;
     }
 
-    ApiRegistration getApiRegistrationByIdAndCatalogId(String id, String catalogId) throws NotFoundException {
+    private ApiRegistration getApiRegistrationByIdAndCatalogId(String id, String catalogId) throws NotFoundException {
         return apiRegistrationRepository
             .findById(id)
             .filter(r -> catalogId.equals(r.getCatalogId()))

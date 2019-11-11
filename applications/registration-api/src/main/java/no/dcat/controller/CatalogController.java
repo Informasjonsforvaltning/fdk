@@ -54,7 +54,6 @@ public class CatalogController {
     /**
      * Lists all authorised catalogs
      *
-     * @return
      */
     @RequestMapping(value = "",
         method = GET,
@@ -98,7 +97,7 @@ public class CatalogController {
         return savedCatalog;
     }
 
-    Catalog saveCatalog(Catalog catalog) {
+    private Catalog saveCatalog(Catalog catalog) {
         catalog.setPublisher(getPublisher(catalog));
 
         if (catalog.getUri() == null) {
@@ -108,7 +107,7 @@ public class CatalogController {
         return catalogRepository.save(catalog);
     }
 
-    Publisher getPublisher(Catalog catalog) {
+    private Publisher getPublisher(Catalog catalog) {
         Enhet enhet = enhetService.getByOrgNr(catalog.getId());
 
         Publisher publisher = new Publisher();
@@ -152,16 +151,13 @@ public class CatalogController {
             catalog.setUri(getCatalogUri(catalog.getId()));
         }
 
-        Catalog savedCatalog = catalogRepository.save(catalog);
-
-        return savedCatalog;
+        return catalogRepository.save(catalog);
     }
 
     /**
      * Deletes a catalog
      *
      * @param id the catalog id to delet
-     * @return acknowledgement of success or failure
      */
     @PreAuthorize("hasPermission(#id, 'organization', 'write')")
     @RequestMapping(value = "/{id}", method = DELETE,
@@ -187,11 +183,11 @@ public class CatalogController {
     }
 
 
-    void createCatalogsIfNeeded(Collection<String> organizations) {
+    private void createCatalogsIfNeeded(Collection<String> organizations) {
         organizations.forEach(this::createCatalogIfNotExists);
     }
 
-    void createCatalogIfNotExists(String orgnr) {
+    private void createCatalogIfNotExists(String orgnr) {
         if (!orgnr.matches("\\d{9}")) {
             return;
         }
@@ -213,9 +209,8 @@ public class CatalogController {
      * Create a new data source for the catalog in harvester,
      * if it does not already exist
      *
-     * @param catalog
      */
-    public void createDatasourceInHarvester(Catalog catalog) {
+    private void createDatasourceInHarvester(Catalog catalog) {
         //Get existing harvester entries from harvester
         List<DcatSourceDto> existingHarvesterDataSources = harvesterService.getHarvestEntries();
 
@@ -246,11 +241,11 @@ public class CatalogController {
      *
      * @return String containing base uri
      */
-    public String getRegistrationBaseUrl() {
+    private String getRegistrationBaseUrl() {
         return "http://registration-api:8080";
     }
 
-    String getCatalogUri(String catalogId) {
+    private String getCatalogUri(String catalogId) {
         /*
             Limitation
             Catalog url works differently accoding to the media tyoe (Accepts header)

@@ -23,7 +23,7 @@ public class PermissionService {
             .anyMatch(rr -> rr.matchPermission(targetType, targetId, permission));
     }
 
-    Authentication getAuthentication() {
+    private Authentication getAuthentication() {
         return SecurityContextHolder.getContext().getAuthentication();
     }
 
