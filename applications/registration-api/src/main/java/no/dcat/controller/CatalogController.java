@@ -31,7 +31,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
-import static no.dcat.service.permission.PublisherResourceRole.PublisherPermission;
+import static no.dcat.service.permission.OrganizationResourceRole.OrganizationPermission;
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.web.bind.annotation.RequestMethod.*;
@@ -61,10 +61,10 @@ public class CatalogController {
         produces = APPLICATION_JSON_UTF8_VALUE)
     public PagedResources<Resource<Catalog>> listCatalogs(Pageable pageable, PagedResourcesAssembler<Catalog> assembler) {
 
-        Set<String> adminableOrgNrs = permissionService.getPublishersForPermission(PublisherPermission.admin);
+        Set<String> adminableOrgNrs = permissionService.getOrganizationsForPermission(OrganizationPermission.admin);
         createCatalogsIfNeeded(adminableOrgNrs);
 
-        Set<String> readableOrgNrs = permissionService.getPublishersForPermission(PublisherPermission.read);
+        Set<String> readableOrgNrs = permissionService.getOrganizationsForPermission(OrganizationPermission.read);
 
         if (readableOrgNrs.size() == 0) {
             return assembler.toResource(new PageImpl<>(new ArrayList<>(), pageable, 0));
@@ -81,7 +81,7 @@ public class CatalogController {
      * @param catalog catalog skeleton to copy from
      * @return new catalog object
      */
-    @PreAuthorize("hasPermission(#catalog.id, 'publisher', 'write')")
+    @PreAuthorize("hasPermission(#catalog.id, 'organization', 'write')")
     @RequestMapping(value = "", method = POST,
         consumes = APPLICATION_JSON_VALUE,
         produces = APPLICATION_JSON_UTF8_VALUE)
@@ -127,7 +127,7 @@ public class CatalogController {
      * @param catalog the catalog object with fields to update
      * @return the saved catalog
      */
-    @PreAuthorize("hasPermission(#catalog.id, 'publisher', 'write')")
+    @PreAuthorize("hasPermission(#catalog.id, 'organization', 'write')")
     @RequestMapping(value = "/{id}",
         method = PUT,
         consumes = APPLICATION_JSON_VALUE,
@@ -163,7 +163,7 @@ public class CatalogController {
      * @param id the catalog id to delet
      * @return acknowledgement of success or failure
      */
-    @PreAuthorize("hasPermission(#id, 'publisher', 'write')")
+    @PreAuthorize("hasPermission(#id, 'organization', 'write')")
     @RequestMapping(value = "/{id}", method = DELETE,
         produces = APPLICATION_JSON_UTF8_VALUE)
     public void removeCatalog(@PathVariable("id") String id) {
@@ -179,7 +179,7 @@ public class CatalogController {
      * @param id of the catalog
      * @return the catalog if it exist
      */
-    @PreAuthorize("hasPermission(#id, 'publisher', 'read')")
+    @PreAuthorize("hasPermission(#id, 'organization', 'read')")
     @RequestMapping(value = "/{id}", method = GET,
         produces = APPLICATION_JSON_UTF8_VALUE)
     public Catalog getCatalog(@PathVariable("id") String id) throws NotFoundException {

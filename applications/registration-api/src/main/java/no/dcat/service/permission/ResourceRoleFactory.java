@@ -13,10 +13,10 @@ public class ResourceRoleFactory {
             String resourceId = parts[1];
             String resourceRole = parts[2];
 
-            if (PublisherResourceRole.resourceType.equals(resourceType)) {
-                return new PublisherResourceRole(resourceId, PublisherResourceRole.PublisherRole.valueOf(resourceRole));
+            if (OrganizationResourceRole.resourceType.equals(resourceType)) {
+                return new OrganizationResourceRole(resourceId, OrganizationResourceRole.OrganizationRole.valueOf(resourceRole));
             }
-            throw new IllegalArgumentException("Unknown resoureceType");
+            throw new IllegalArgumentException("Unknown resourceType");
         } catch (Exception e) {
             logger.warn("Error parsing ResourceRole token", e);
             return null;

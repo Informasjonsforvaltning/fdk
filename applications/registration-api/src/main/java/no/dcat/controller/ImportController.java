@@ -60,7 +60,7 @@ public class ImportController {
         this.datasetRepository = datasetRepository;
     }
 
-    @PreAuthorize("hasPermission(#catalogId, 'publisher', 'admin')")
+    @PreAuthorize("hasPermission(#catalogId, 'organization', 'admin')")
     @RequestMapping(value = "",
         method = POST,
         produces = APPLICATION_JSON_UTF8_VALUE)
