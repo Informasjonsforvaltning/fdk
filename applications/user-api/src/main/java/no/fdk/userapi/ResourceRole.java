@@ -1,7 +1,7 @@
 package no.fdk.userapi;
 
 public class ResourceRole {
-    final static ResourceRole ROOT_ADMIN = new ResourceRole(ResourceType.SYSTEM, "root", Role.ADMIN);
+    final static ResourceRole ROOT_ADMIN = new ResourceRole(ResourceType.system, "root", Role.admin);
     private ResourceType resourceType;
     private String resourceId;
     private Role role;
@@ -19,28 +19,12 @@ public class ResourceRole {
     }
 
     public enum ResourceType {
-        PUBLISHER {
-            public String toString() {
-                return "publisher";
-            }
-        },
-        SYSTEM {
-            public String toString() {
-                return "system";
-            }
-        }
+        publisher,
+        system
     }
 
     public enum Role {
-        ADMIN {
-            public String toString() {
-                return "admin";
-            }
-        },
-        READ {
-            public String toString() {
-                return "read";
-            }
-        }
+        admin,
+        read
     }
 }

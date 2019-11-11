@@ -12,8 +12,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static no.fdk.userapi.ResourceRole.ResourceType.PUBLISHER;
-import static no.fdk.userapi.ResourceRole.Role.READ;
+import static no.fdk.userapi.ResourceRole.ResourceType.publisher;
+import static no.fdk.userapi.ResourceRole.Role.read;
 
 @Service
 public class LocalUserService {
@@ -44,7 +44,7 @@ public class LocalUserService {
         List<String> organisations = getOrganisationsAssociatedWithDomain(domain);
 
         List<String> resourceRoleStrings = organisations.stream()
-            .map(o -> new ResourceRole(PUBLISHER, o, READ))
+            .map(o -> new ResourceRole(publisher, o, read))
             .map(Object::toString)
             .collect(Collectors.toList());
 
