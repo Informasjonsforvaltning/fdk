@@ -11,7 +11,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static no.dcat.service.permission.PublisherResourceRole.PublisherPermission;
+import static no.dcat.service.permission.OrganizationResourceRole.OrganizationPermission;
 
 @Service
 public class PermissionService {
@@ -42,10 +42,10 @@ public class PermissionService {
             .collect(Collectors.toList());
     }
 
-    public Set<String> getPublishersForPermission(PublisherPermission publisherPermission) {
-        return this.getRolesByType(PublisherResourceRole.class).stream()
-            .filter(r -> r.matchPermission(publisherPermission))
-            .map(PublisherResourceRole::getResourceId)
+    public Set<String> getOrganizationsForPermission(OrganizationPermission organizationPermission) {
+        return this.getRolesByType(OrganizationResourceRole.class).stream()
+            .filter(r -> r.matchPermission(organizationPermission))
+            .map(OrganizationResourceRole::getResourceId)
             .collect(Collectors.toSet());
     }
 
