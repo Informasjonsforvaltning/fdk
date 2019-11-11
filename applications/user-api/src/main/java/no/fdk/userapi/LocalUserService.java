@@ -1,5 +1,6 @@
 package no.fdk.userapi;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -32,7 +33,7 @@ public class LocalUserService {
             try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
                 String jsonBody = reader.lines().collect(Collectors.joining(System.lineSeparator()));
                 ObjectMapper mapper = new ObjectMapper();
-                return mapper.readValue(jsonBody, List.class);
+                return mapper.readValue(jsonBody, new TypeReference<List<String>>() {});
             }
         } catch (Exception e) {
             return Collections.emptyList();
