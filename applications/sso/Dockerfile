@@ -2,6 +2,12 @@ FROM jboss/keycloak:6.0.1
 
 ENV DB_VENDOR h2
 
+# 1. copy keycloak theme as fdk theme.
+RUN cp -r /opt/jboss/keycloak/themes/keycloak /opt/jboss/keycloak/themes/fdk
+
+# 2. copy modified files from host ( 3 files) - trying to copy only changed files...
+COPY themes/fdk /opt/jboss/keycloak/themes/fdk
+
 COPY tools /opt/fdk/tools
 
 # deployments are compiled SPI implementation modules. E.g. Federated rest user storage module.
