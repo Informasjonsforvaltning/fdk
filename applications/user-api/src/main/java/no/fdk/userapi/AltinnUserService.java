@@ -6,6 +6,7 @@ import no.fdk.altinn.Person;
 import no.fdk.userapi.configuration.WhitelistProperties;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -13,6 +14,7 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import static no.fdk.userapi.ResourceRole.ROOT_ADMIN;
+import static no.fdk.userapi.ResourceRole.ResourceType.organization;
 import static no.fdk.userapi.ResourceRole.ResourceType.publisher;
 import static no.fdk.userapi.ResourceRole.Role.admin;
 
@@ -40,18 +42,30 @@ public class AltinnUserService {
     }
 
     private String getPersonAuthorities(Person person) {
-        List<ResourceRole> resourceRoles = person.getOrganizations().stream()
-            .filter(organizationFilter)
-            .map(o -> new ResourceRole(publisher, o.getOrganizationNumber(), admin))
-            .collect(Collectors.toList());
+
+        List<String> resourceRoleTokens = new ArrayList<>();
+
+        resourceRoleTokens.addAll(
+            person.getOrganizations().stream()
+                .filter(organizationFilter)
+                .map(o -> new ResourceRole(publisher, o.getOrganizationNumber(), admin))
+                .map(Object::toString)
+                .collect(Collectors.toList())
+        );
+
+        resourceRoleTokens.addAll(
+            person.getOrganizations().stream()
+                .filter(organizationFilter)
+                .map(o -> new ResourceRole(organization, o.getOrganizationNumber(), admin))
+                .map(Object::toString)
+                .collect(Collectors.toList())
+        );
 
         if (whitelists.getAdminList().contains(person.getSocialSecurityNumber())) {
-            resourceRoles.add(ROOT_ADMIN);
+            resourceRoleTokens.add(ROOT_ADMIN.toString());
         }
 
-        List<String> resourceRoleStrings = resourceRoles.stream().map(Object::toString).collect(Collectors.toList());
-
-        return String.join(",", resourceRoleStrings);
+        return String.join(",", resourceRoleTokens);
     }
 
     private class AltinnUserAdapter implements User {
