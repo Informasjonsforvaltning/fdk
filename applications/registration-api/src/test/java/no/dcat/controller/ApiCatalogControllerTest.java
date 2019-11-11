@@ -51,7 +51,7 @@ public class ApiCatalogControllerTest {
     }
 
     @Test(expected = NotFoundException.class)
-    public void getApiCatalog_WhenNotFound_ShouldThrowNotFoundException() throws NotFoundException, BadRequestException {
+    public void getApiCatalog_WhenNotFound_ShouldThrowNotFoundException() throws NotFoundException {
         String orgNr = "testOrgNr";
         when(apiCatalogRepositoryMock.findByOrgNo(orgNr)).thenReturn(Optional.empty());
 
@@ -90,7 +90,7 @@ public class ApiCatalogControllerTest {
     }
 
     @Test
-    public void deleteApiCatalog_WhenExisting_ShouldDelete() {
+    public void deleteApiCatalog_WhenExisting_ShouldDelete() throws NotFoundException {
         ApiCatalog existingApiCatalog = new ApiCatalog();
 
         String orgNr = "testOrgNr";
@@ -102,8 +102,8 @@ public class ApiCatalogControllerTest {
         verify(apiCatalogRepositoryMock).delete(existingApiCatalog);
     }
 
-    @Test
-    public void deleteApiCatalog_WhenNotExisting_ShouldDoNothing() {
+    @Test(expected = NotFoundException.class)
+    public void deleteApiCatalog_WhenNotExisting_ShouldThrowNotFoundException() throws NotFoundException {
         String orgNr = "testOrgNr";
 
         when(apiCatalogRepositoryMock.findByOrgNo(orgNr)).thenReturn(Optional.empty());

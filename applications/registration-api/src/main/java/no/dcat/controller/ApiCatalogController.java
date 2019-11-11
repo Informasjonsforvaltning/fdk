@@ -8,7 +8,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -89,12 +92,8 @@ public class ApiCatalogController {
         value = "",
         method = DELETE,
         produces = APPLICATION_JSON_UTF8_VALUE)
-    public void deleteApiCatalog(@PathVariable("catalogId") String catalogId) {
-
-        Optional<ApiCatalog> apiCatalogOptional = apiCatalogRepository.findByOrgNo(catalogId);
-        if (apiCatalogOptional.isPresent()) {
-            apiCatalogRepository.delete(apiCatalogOptional.get());
-        }
-        // if not found, do not throw NotFoundError, because DELETE means "ensure deleted"
+    public void deleteApiCatalog(@PathVariable("catalogId") String catalogId) throws NotFoundException {
+        ApiCatalog apiCatalog = apiCatalogRepository.findByOrgNo(catalogId).orElseThrow(NotFoundException::new);
+        apiCatalogRepository.delete(apiCatalog);
     }
 }
