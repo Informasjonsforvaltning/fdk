@@ -13,8 +13,8 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import static no.fdk.userapi.ResourceRole.ROOT_ADMIN;
-import static no.fdk.userapi.ResourceRole.ResourceType.PUBLISHER;
-import static no.fdk.userapi.ResourceRole.Role.ADMIN;
+import static no.fdk.userapi.ResourceRole.ResourceType.publisher;
+import static no.fdk.userapi.ResourceRole.Role.admin;
 
 @Service
 public class AltinnUserService {
@@ -42,7 +42,7 @@ public class AltinnUserService {
     private String getPersonAuthorities(Person person) {
         List<ResourceRole> resourceRoles = person.getOrganisations().stream()
             .filter(organisationFilter)
-            .map(o -> new ResourceRole(PUBLISHER, o.getOrganisationNumber(), ADMIN))
+            .map(o -> new ResourceRole(publisher, o.getOrganisationNumber(), admin))
             .collect(Collectors.toList());
 
         if (whitelists.getAdminList().contains(person.getSocialSecurityNumber())) {
