@@ -46,18 +46,18 @@
       "preamble1": "Her kan du lese om datasettbeskrivelser for din virksomhet.",
       "preamble2": "For å få tilgang må du være innlogget.",
       "postamble1": "Skal du gi andre skrivetilgang?",
-      "postamble2": "Du kan gi andre til a redigere datasett for din virksomhet via Altinn.",
+      "postamble2": "Du kan gi andre tilgang til å redigere datasettbeskrivelser, API-beskrivelser og begreper for din virksomhet via Altinn.",
       "postamble3": "Les mer om",
       "postamble4": "hvordan du gir andre tilgang.",
       "readUser": {
         "heading": "For deg som har lesetilgang",
         "loginButton": "Logg inn som lesebruker",
-        "description1": "Med lesetilgang kan du se både offentlig informasjon fra din virksomhet, og upublisert materiale.",
+        "description1": "Med lesetilgang kan du se all informasjon din virksomhet har registret i katalogene sine",
         "description2": "Trenger du lesetilgang?",
         "description3": {
           "click": "Klikk",
           "then": "deretter",
-          "registerUser": "Reistrer bruker"
+          "registerUser": "Registrer bruker"
         }
       },
       "writeUser": {

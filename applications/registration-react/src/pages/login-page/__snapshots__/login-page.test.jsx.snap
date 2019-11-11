@@ -81,7 +81,7 @@ exports[`should render LoginPage correctly 1`] = `
               Skal du gi andre skrivetilgang?
             </strong>
             <p>
-              Du kan gi andre til a redigere datasett for din virksomhet via Altinn.
+              Du kan gi andre tilgang til å redigere datasettbeskrivelser, API-beskrivelser og begreper for din virksomhet via Altinn.
               <br />
               Les mer om
                
