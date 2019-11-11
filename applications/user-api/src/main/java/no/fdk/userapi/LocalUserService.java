@@ -25,7 +25,7 @@ public class LocalUserService {
         this.orgCatalogueHost = orgCatalogueHost;
     }
 
-    private List<String> getOrganisationsAssociatedWithDomain(String domain) {
+    private List<String> getOrganizationsAssociatedWithDomain(String domain) {
         try {
             String urlString = orgCatalogueHost + "/domains/" + domain + "/organizations";
             URLConnection connection = new URL(urlString).openConnection();
@@ -42,9 +42,10 @@ public class LocalUserService {
 
     String getAuthorities(String id) {
         String domain = id.substring(id.indexOf("@") + 1);
-        List<String> organisations = getOrganisationsAssociatedWithDomain(domain);
 
-        List<String> resourceRoleStrings = organisations.stream()
+        List<String> organizations = getOrganizationsAssociatedWithDomain(domain);
+
+        List<String> resourceRoleStrings = organizations.stream()
             .map(o -> new ResourceRole(publisher, o, read))
             .map(Object::toString)
             .collect(Collectors.toList());

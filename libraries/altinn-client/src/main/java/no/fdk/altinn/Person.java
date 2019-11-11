@@ -3,12 +3,12 @@ package no.fdk.altinn;
 import java.util.List;
 
 public class Person {
-    List<Organisation> organisations;
+    List<Organization> organizations;
     private Subject subject;
 
-    Person(Subject subject, List<Organisation> organisations) {
+    Person(Subject subject, List<Organization> organizations) {
         this.subject = subject;
-        this.organisations = organisations;
+        this.organizations = organizations;
     }
 
     public String getName() {
@@ -19,7 +19,7 @@ public class Person {
         return subject.socialSecurityNumber;
     }
 
-    public List<Organisation> getOrganisations() {
-        return organisations;
+    public List<Organization> getOrganizations() {
+        return organizations;
     }
 }

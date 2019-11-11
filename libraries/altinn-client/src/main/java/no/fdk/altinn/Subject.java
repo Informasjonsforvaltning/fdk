@@ -10,9 +10,9 @@ public class Subject {
     @JsonProperty("Type")
     public String type;
     @JsonProperty("OrganizationNumber")
-    public String organisationNumber;
+    public String organizationNumber;
     @JsonProperty("OrganizationForm")
-    public String organisationForm;
+    public String organizationForm;
     @JsonProperty("Status")
     public String status;
     @JsonProperty("SocialSecurityNumber")
