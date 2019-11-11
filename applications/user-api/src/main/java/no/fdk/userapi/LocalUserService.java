@@ -9,10 +9,12 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static no.fdk.userapi.ResourceRole.ResourceType.organization;
 import static no.fdk.userapi.ResourceRole.ResourceType.publisher;
 import static no.fdk.userapi.ResourceRole.Role.read;
 
@@ -45,11 +47,22 @@ public class LocalUserService {
 
         List<String> organizations = getOrganizationsAssociatedWithDomain(domain);
 
-        List<String> resourceRoleStrings = organizations.stream()
-            .map(o -> new ResourceRole(publisher, o, read))
-            .map(Object::toString)
-            .collect(Collectors.toList());
+        List<String> resourceRoleTokens = new ArrayList<>();
 
-        return String.join(",", resourceRoleStrings);
+        resourceRoleTokens.addAll(
+            organizations.stream()
+                .map(o -> new ResourceRole(publisher, o, read))
+                .map(Object::toString)
+                .collect(Collectors.toList())
+        );
+
+        resourceRoleTokens.addAll(
+            organizations.stream()
+                .map(o -> new ResourceRole(organization, o, read))
+                .map(Object::toString)
+                .collect(Collectors.toList())
+        );
+
+        return String.join(",", resourceRoleTokens);
     }
 }

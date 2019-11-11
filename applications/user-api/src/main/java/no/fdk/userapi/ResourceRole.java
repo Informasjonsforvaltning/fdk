@@ -19,8 +19,9 @@ public class ResourceRole {
     }
 
     public enum ResourceType {
-        publisher,
-        system
+        system,
+        publisher,//phase out
+        organization
     }
 
     public enum Role {
