@@ -1,7 +1,7 @@
 package no.fdk.userapi;
 
 import no.fdk.altinn.AltinnClient;
-import no.fdk.altinn.Organisation;
+import no.fdk.altinn.Organization;
 import no.fdk.altinn.Person;
 import no.fdk.userapi.configuration.WhitelistProperties;
 import org.springframework.stereotype.Service;
@@ -21,7 +21,7 @@ public class AltinnUserService {
     private AltinnClient altinnClient;
     private WhitelistProperties whitelists;
 
-    private Predicate<Organisation> organisationFilter = (o) -> whitelists.getOrgNrWhitelist().contains(o.getOrganisationNumber()) || whitelists.getOrgFormWhitelist().contains(o.getOrganisationForm());
+    private Predicate<Organization> organizationFilter = (o) -> whitelists.getOrgNrWhitelist().contains(o.getOrganizationNumber()) || whitelists.getOrgFormWhitelist().contains(o.getOrganizationForm());
 
     AltinnUserService(WhitelistProperties whitelists, AltinnClient altinnClient) {
         this.altinnClient = altinnClient;
@@ -40,9 +40,9 @@ public class AltinnUserService {
     }
 
     private String getPersonAuthorities(Person person) {
-        List<ResourceRole> resourceRoles = person.getOrganisations().stream()
-            .filter(organisationFilter)
-            .map(o -> new ResourceRole(publisher, o.getOrganisationNumber(), admin))
+        List<ResourceRole> resourceRoles = person.getOrganizations().stream()
+            .filter(organizationFilter)
+            .map(o -> new ResourceRole(publisher, o.getOrganizationNumber(), admin))
             .collect(Collectors.toList());
 
         if (whitelists.getAdminList().contains(person.getSocialSecurityNumber())) {
