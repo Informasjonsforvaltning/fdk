@@ -1,0 +1,14 @@
+[
+  {
+    "Name": "Kari Katur",
+    "Type": "Person",
+    "SocialSecurityNumber": "01018800033"
+  },
+  {
+    "Name": "Norsk Karikaturforening",
+    "Type": "Enterprise",
+    "OrganizationNumber": "555111029",
+    "OrganizationForm": "ORGL",
+    "Status": "Active"
+  }
+]
