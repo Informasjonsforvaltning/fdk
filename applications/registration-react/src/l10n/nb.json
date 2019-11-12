@@ -52,7 +52,7 @@
       "readUser": {
         "heading": "For deg som har lesetilgang",
         "loginButton": "Logg inn som lesebruker",
-        "description1": "Med lesetilgang kan du se all informasjon din virksomhet har registret i katalogene sine",
+        "description1": "Med lesetilgang kan du se all informasjon din virksomhet har registret i katalogene sine.",
         "description2": "Trenger du lesetilgang?",
         "description3": {
           "click": "Klikk",
@@ -62,7 +62,7 @@
       },
       "writeUser": {
         "heading": "For deg som har skrivetilgang",
-        "loginButton": "Logg inn med ID porten",
+        "loginButton": "Logg inn med ID-porten",
         "description1": "For å få tilgang til funksjonalitet som registrering og redigering på vegne av din virksomhet, må du logge inn med IP porten.",
         "description2": "Trenger du skrivetilgang?",
         "description3": "Les hvordan du får tilgang til å registrere og redigere innhold."
