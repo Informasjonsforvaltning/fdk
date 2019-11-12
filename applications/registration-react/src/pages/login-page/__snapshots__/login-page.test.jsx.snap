@@ -47,7 +47,7 @@ exports[`should render LoginPage correctly 1`] = `
               onClick={[Function]}
               tag="button"
             >
-              Logg inn med ID porten
+              Logg inn med ID-porten
             </Button>
             <p
               className=""
