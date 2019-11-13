@@ -54,7 +54,7 @@ public class AltinnUserService {
         return String.join(",", resourceRoleTokens);
     }
 
-    private class AltinnUserAdapter implements User {
+    private static class AltinnUserAdapter implements User {
         private Person person;
 
         AltinnUserAdapter(Person person) {
