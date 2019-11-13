@@ -70,5 +70,7 @@ export const loadConfig = async () => {
   //   SSO_HOST: 'http://localhost:8084'
   // });
 
+  env.CONCEPT_REGISTRATION_HOST = 'http://localhost:8203';
+
   Object.assign(config, createConfig(env));
 };
