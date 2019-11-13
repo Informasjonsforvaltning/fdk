@@ -10,5 +10,12 @@
     "OrganizationNumber": "555111029",
     "OrganizationForm": "ORGL",
     "Status": "Active"
+  },
+  {
+    "Name": "Forbruksdirektoratet",
+    "Type": "Enterprise",
+    "OrganizationNumber": "555111031",
+    "OrganizationForm": "ORGL",
+    "Status": "Active"
   }
 ]
