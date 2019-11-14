@@ -5,9 +5,9 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import no.ccat.common.model.Concept;
-import no.dcat.model.DatasetFactory;
 import no.dcat.model.Catalog;
 import no.dcat.model.Dataset;
+import no.dcat.model.DatasetFactory;
 import no.dcat.service.CatalogRepository;
 import no.dcat.service.ConceptCatClient;
 import no.dcat.service.DatasetRepository;
@@ -22,7 +22,10 @@ import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.PagedResources;
 import org.springframework.hateoas.Resource;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.lang.reflect.Type;
 import java.util.*;
@@ -78,17 +81,8 @@ public class DatasetController {
     @PreAuthorize("hasPermission(#catalogId, 'organization', 'read')")
     @RequestMapping(value = "/{id}", method = GET, produces = APPLICATION_JSON_UTF8_VALUE)
     public Dataset getDataset(@PathVariable("catalogId") String catalogId, @PathVariable("id") String id) throws NotFoundException {
-
-        Optional<Dataset> datasetOptional = datasetRepository.findById(id);
-        Dataset dataset = datasetOptional.orElseThrow(NotFoundException::new);
-
-        if (!catalogId.equals(dataset.getCatalogId())) {
-            throw new NotFoundException();
-        }
-
-        return dataset;
+        return getDatasetByIdAndCatalogId(id, catalogId);
     }
-
 
     /**
      * Create new dataset in catalog. ID for the dataset is created automatically.
@@ -99,9 +93,7 @@ public class DatasetController {
     @RequestMapping(value = "", method = POST, consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_UTF8_VALUE)
     public Dataset saveDataset(@PathVariable("catalogId") String catalogId, @RequestBody Dataset data) throws NotFoundException {
 
-        Optional<Catalog> catalogOptional = catalogRepository.findById(catalogId);
-
-        Catalog catalog = catalogOptional.orElseThrow(() -> new NotFoundException("Catalog not found"));
+        Catalog catalog = catalogRepository.findById(catalogId).orElseThrow(NotFoundException::new);
 
         Dataset dataset = DatasetFactory.createDataset(catalog, data);
 
@@ -117,17 +109,14 @@ public class DatasetController {
      */
     @PreAuthorize("hasPermission(#catalogId, 'organization', 'write')")
     @RequestMapping(value = "/{id}", method = PUT, consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_UTF8_VALUE)
-    public Dataset saveDataset(@PathVariable("catalogId") String catalogId, @PathVariable("id") String datasetId, @RequestBody Dataset dataset) throws NotFoundException {
+    public Dataset saveDataset(@PathVariable("catalogId") String catalogId, @PathVariable("id") String id, @RequestBody Dataset dataset) throws NotFoundException {
         logger.info("PUT requestbody dataset: " + dataset.toString());
-        dataset.setId(datasetId);
+        dataset.setId(id);
         dataset.setCatalogId(catalogId);
 
-        Optional<Dataset> oldDatasetOptional = datasetRepository.findById(datasetId);
-        Dataset oldDataset = oldDatasetOptional.orElseThrow(NotFoundException::new);
+        // verify that it exists
+        getDatasetByIdAndCatalogId(id, catalogId);
 
-        if (!catalogId.equals(oldDataset.getCatalogId())) {
-            throw new NotFoundException();
-        }
         //Add metainformation about editing
         dataset.set_lastModified(new Date());
 
@@ -144,19 +133,14 @@ public class DatasetController {
     @PreAuthorize("hasPermission(#catalogId, 'organization', 'write')")
     @RequestMapping(value = "/{id}", method = PATCH, consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_UTF8_VALUE)
     public Dataset updateDataset(@PathVariable("catalogId") String catalogId,
-                                 @PathVariable("id") String datasetId,
+                                 @PathVariable("id") String id,
                                  @RequestBody Map<String, Object> updates) throws NotFoundException {
         logger.info("PATCH requestbody update dataset: " + updates.toString());
 
         Gson gson = new Gson();
 
         //get already saved dataset
-        Optional<Dataset> oldDatasetOptional = datasetRepository.findById(datasetId);
-        Dataset oldDataset = oldDatasetOptional.orElseThrow(NotFoundException::new);
-
-        if (!catalogId.equals(oldDataset.getCatalogId())) {
-            throw new NotFoundException();
-        }
+        Dataset oldDataset = getDatasetByIdAndCatalogId(id,catalogId);
 
         logger.info("found old dataset: {}", oldDataset.getId());
 
@@ -248,15 +232,13 @@ and it is quite high in priority list.
     @PreAuthorize("hasPermission(#catalogId, 'organization', 'write')")
     @RequestMapping(value = "/{id}", method = DELETE, produces = APPLICATION_JSON_UTF8_VALUE)
     public void deleteDataset(@PathVariable("catalogId") String catalogId, @PathVariable("id") String id) throws NotFoundException {
-        Optional<Dataset> oldDatasetOptional = datasetRepository.findById(id);
-        Dataset dataset = oldDatasetOptional.orElseThrow(NotFoundException::new);
-
-        if (!catalogId.equals(dataset.getCatalogId())) {
-            throw new NotFoundException();
-        }
+        Dataset dataset = getDatasetByIdAndCatalogId(id,catalogId);
 
         datasetRepository.delete(dataset);
     }
 
+    private Dataset getDatasetByIdAndCatalogId(String id, String catalogId) throws NotFoundException {
+        return datasetRepository.findByIdAndCatalogId(id,catalogId).orElseThrow(NotFoundException::new);
+    }
 
 }
