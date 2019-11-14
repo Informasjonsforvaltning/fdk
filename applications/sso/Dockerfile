@@ -30,4 +30,4 @@ ENTRYPOINT [ "/opt/fdk/tools/preprocess-import-entrypoint.sh" ]
 # host name is made available by specifying it in the hosts file in host machine.
 # port offset will cause changing port to 8084 which will be the same as exposed port to host.
 
-CMD ["-b", "0.0.0.0", "-Dkeycloak.migration.action=import", "-Dkeycloak.migration.provider=dir", "-Dkeycloak.migration.dir=/tmp/keycloak/import", "-Dkeycloak.migration.strategy=IGNORE_EXISTING", "-Djboss.socket.binding.port-offset=4"]
+CMD ["-b", "0.0.0.0", "-Dkeycloak.migration.action=import", "-Dkeycloak.migration.provider=dir", "-Dkeycloak.migration.dir=/tmp/keycloak/import/overwrite", "-Dkeycloak.migration.strategy=OVERWRITE_EXISTING", "-Djboss.socket.binding.port-offset=4"]

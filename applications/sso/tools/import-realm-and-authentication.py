@@ -22,22 +22,44 @@ def doHttpRequest(method, url, data, headers):
         print(e)
         return;
 
-def readFlowsFromFile(realm):
-    with open("/tmp/keycloak/import/" + realm + "-realm.json") as import_file:
-        import_data = json.load(import_file)
-        return import_data["authenticationFlows"]
-
-def readConfigsFromFile(realm):
-    with open("/tmp/keycloak/import/" + realm + "-realm.json") as import_file:
-        import_data = json.load(import_file)
-        return import_data["authenticatorConfig"]
-
 def getAccessToken():
     url = "/auth/realms/master/protocol/openid-connect/token"
     headers = {"Content-Type": "application/x-www-form-urlencoded"}
     params = urllib.urlencode({"username": "admin", "password": "admin", "grant_type": "password", "client_id": "admin-cli"})
     parsed_data = json.loads(doHttpRequest("POST", url, params, headers).read())
     return parsed_data["access_token"]
+
+def createRealm(realm, token):
+    headers = {"Authorization": "Bearer " + token, "Content-Type": "application/json;charset=UTF-8"}
+    data = json.dumps({"enabled": "true", "id": realm, "realm": realm})
+    create_status = doHttpRequest("POST", "/auth/admin/realms", data, headers).status
+    if create_status == 201:
+        print "Realm " + realm + " created"
+    else:
+        print "Unable to create realm " + realm
+
+def realmIsMissing(realm, current_realms):
+    for existing in current_realms:
+        if existing["realm"] == realm:
+            return False
+    return True
+
+def createRealmsIfMissing(realms, token):
+    headers = {"Accept": "application/json", "Authorization": "Bearer " + token}
+    current_realms = json.loads(doHttpRequest("GET", "/auth/admin/realms", "", headers).read())
+    for realm in realms:
+        if realmIsMissing(realm, current_realms):
+            createRealm(realm, token)
+
+def readFlowsFromFile(realm):
+    with open("/tmp/keycloak/import/update/" + realm + "-realm.json") as import_file:
+        import_data = json.load(import_file)
+        return import_data["authenticationFlows"]
+
+def readConfigsFromFile(realm):
+    with open("/tmp/keycloak/import/update/" + realm + "-realm.json") as import_file:
+        import_data = json.load(import_file)
+        return import_data["authenticatorConfig"]
 
 def getFlowsFromKeycloak(realm, token):
     url = "/auth/admin/realms/" + realm + "/authentication/flows"
@@ -89,19 +111,18 @@ def createMissingFlowsAndExecutions(realm, token, import_flows, current_flows):
                     else:
                         createExecution(realm, token, flow["alias"], execution)
 
+access_token = getAccessToken()
+
+createRealmsIfMissing(["fdk", "fdk-local"], access_token)
+
 fdk_import_flows = readFlowsFromFile("fdk")
 fdk_local_import_flows = readFlowsFromFile("fdk-local")
-idporten_mock_import_flows = readFlowsFromFile("idporten-mock")
-
-access_token = getAccessToken()
 
 fdk_current_flows = getFlowsFromKeycloak("fdk", access_token)
 fdk_local_current_flows = getFlowsFromKeycloak("fdk-local", access_token)
-idporten_mock_current_flows = getFlowsFromKeycloak("idporten-mock", access_token)
 
 createMissingFlowsAndExecutions("fdk", access_token, fdk_import_flows, fdk_current_flows)
 createMissingFlowsAndExecutions("fdk-local", access_token, fdk_local_import_flows, fdk_local_current_flows)
-createMissingFlowsAndExecutions("idporten-mock", access_token, idporten_mock_import_flows, idporten_mock_current_flows)
 
 def getExecutions(realm, flow_alias, token):
     url = "/auth/admin/realms/" + realm + "/authentication/flows/" + flow_alias + "/executions"
@@ -172,4 +193,3 @@ def updateExecutions(realm, token, import_flows):
 
 updateExecutions("fdk", access_token, fdk_import_flows)
 updateExecutions("fdk-local", access_token, fdk_local_import_flows)
-updateExecutions("idporten-mock", access_token, idporten_mock_import_flows)
