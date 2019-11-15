@@ -18,9 +18,9 @@ import {
   onSelectSearchedLosItem
 } from './autocomplete-helper';
 import './form-los.scss';
-import includes from "lodash/includes";
-import {isNapPublish, isNapUnPublishTheme} from "../../../lib/napPublish";
-import {AlertMessage} from "../../../components/alert-message/alert-message.component";
+import includes from 'lodash/includes';
+import { isNapPublish, isNapUnPublishTheme } from '../../../lib/napPublish';
+import { AlertMessage } from '../../../components/alert-message/alert-message.component';
 
 export const FormLOSPure = ({
   losItems,
@@ -115,23 +115,20 @@ export const FormLOSPure = ({
         </form>
 
         {datasetFormStatus &&
-        includes(datasetFormStatus.lastChangedFields, 'theme')
-        && isNapPublish(losItems, datasetItem)
-        && (
-          <AlertMessage type="info">
-            <span>{localization.formStatus.napPublish}</span>
-          </AlertMessage>
-        )}
+          includes(datasetFormStatus.lastChangedFields, 'theme') &&
+          isNapPublish(losItems, datasetItem) && (
+            <AlertMessage type="info">
+              <span>{localization.formStatus.napPublish}</span>
+            </AlertMessage>
+          )}
 
         {datasetFormStatus &&
-        includes(datasetFormStatus.lastChangedFields, 'theme')
-        && isNapUnPublishTheme(losItems, datasetItem)
-        && (
-          <AlertMessage type="info">
-            <span>{localization.formStatus.napUnPublish}</span>
-          </AlertMessage>
-        )}
-
+          includes(datasetFormStatus.lastChangedFields, 'theme') &&
+          isNapUnPublishTheme(losItems, datasetItem) && (
+            <AlertMessage type="info">
+              <span>{localization.formStatus.napUnPublish}</span>
+            </AlertMessage>
+          )}
       </div>
     );
   }
