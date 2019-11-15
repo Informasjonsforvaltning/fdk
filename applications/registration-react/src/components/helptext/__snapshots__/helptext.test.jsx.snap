@@ -14,11 +14,10 @@ exports[`should render Helptext correctly 1`] = `
   <div
     className="d-md-flex"
   >
-    <p
-      className="m-0"
+    <div
       dangerouslySetInnerHTML={
         Object {
-          "__html": "<p>Kortfattet om katalogen. Angi, uten å liste, hvilke datasett den omfatter.</p>",
+          "__html": "<p class=\\"m-0\\">Kortfattet om katalogen. Angi, uten å liste, hvilke datasett den omfatter.</p>",
         }
       }
     />
@@ -51,11 +50,11 @@ exports[`should render Helptext correctly 1`] = `
     timeout={350}
     unmountOnExit={false}
   >
-    <p
+    <div
       dangerouslySetInnerHTML={
         Object {
-          "__html": "<p>Kortfattet om katalogen</p>
-<ul>
+          "__html": "<p class=\\"m-0\\">Kortfattet om katalogen</p>
+<ul class=\\"m-0\\">
 <li>Angi, uten å liste, hvilke datasett den omfatter,</li>
 <li>f.eks. datasettene til Brønnøysundregistrene.</li>
 </ul>",
