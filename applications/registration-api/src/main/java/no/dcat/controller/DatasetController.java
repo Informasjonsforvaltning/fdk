@@ -105,28 +105,6 @@ public class DatasetController {
     /**
      * Modify dataset in catalog.
      *
-     * @return HTTP 200 OK if dataset could be could be created.
-     */
-    @PreAuthorize("hasPermission(#catalogId, 'organization', 'write')")
-    @RequestMapping(value = "/{id}", method = PUT, consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_UTF8_VALUE)
-    public Dataset saveDataset(@PathVariable("catalogId") String catalogId, @PathVariable("id") String id, @RequestBody Dataset dataset) throws NotFoundException {
-        logger.info("PUT requestbody dataset: " + dataset.toString());
-        dataset.setId(id);
-        dataset.setCatalogId(catalogId);
-
-        // verify that it exists
-        getDatasetByIdAndCatalogId(id, catalogId);
-
-        //Add metainformation about editing
-        dataset.set_lastModified(new Date());
-
-        return datasetRepository.save(dataset);
-    }
-
-
-    /**
-     * Modify dataset in catalog.
-     *
      * @param updates Objects in datatset to be updated
      * @return HTTP 200 OK if dataset could be could be updated.
      */
