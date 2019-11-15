@@ -116,8 +116,10 @@ export const getLosItemParentsAndChildren = (losItems, item) => {
 
 export const isNapTheme = (losItems, themeUris) => {
   return _.some(themeUris, theme => {
-    const losItem = _.find(losItems, {'uri': theme.uri});
+    const losItem = _.find(losItems, { uri: theme.uri });
     const losPaths = _.get(losItem, 'losPaths', []);
-    return _.some(losPaths, path => _.startsWith(path, 'trafikk-reiser-og-samferdsel'))
-    })
-}
+    return _.some(losPaths, path =>
+      _.startsWith(path, 'trafikk-reiser-og-samferdsel')
+    );
+  });
+};

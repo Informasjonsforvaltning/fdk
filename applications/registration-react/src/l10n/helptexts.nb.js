@@ -2,7 +2,7 @@ export default {
   Dataset_title: {
     abstract:
       'Tittelen skal være kortfattet, kunne stå alene og gi mening. Forkortelser skal skrives helt ut.',
-    description: `• Lov- eller forskriftshjemlede navn bør inkluderes. Eksempel: «Jegerregisteret».  
+    description: `Lov- eller forskriftshjemlede navn bør inkluderes. Eksempel: «Jegerregisteret».  
 * Dersom datasettet har avgrensninger i populasjon bør dette gjenspeiles i tittelen. Eksempel: «Folketellingen av 1910», «Naturområder i Oslo og nærliggende områder».  
 * Bruk offisielle navn og benevnelser fremfor interne.  
 * Eier/virksomhet skal ikke tas med.  

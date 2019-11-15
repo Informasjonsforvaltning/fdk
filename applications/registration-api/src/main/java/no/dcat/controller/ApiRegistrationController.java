@@ -58,10 +58,9 @@ public class ApiRegistrationController {
      * Return list of all apiRegistrations in catalog.
      *
      * @param catalogId the id of the catalog
-     * @param pageable
      * @return List of api registrations
      */
-    @PreAuthorize("hasPermission(#catalogId,'publisher', 'read')")
+    @PreAuthorize("hasPermission(#catalogId, 'organization', 'read')")
     @RequestMapping(value = "", method = GET, produces = APPLICATION_JSON_UTF8_VALUE)
     public PagedResources<Resource<ApiRegistration>> listApiRegistrations(
         @PathVariable("catalogId") String catalogId,
@@ -79,7 +78,7 @@ public class ApiRegistrationController {
      * @param id Identifier of apiRegistration
      * @return complete apiRegistration
      */
-    @PreAuthorize("hasPermission(#catalogId, 'publisher', 'read')")
+    @PreAuthorize("hasPermission(#catalogId, 'organization', 'read')")
     @RequestMapping(value = "/{id}", method = GET, produces = APPLICATION_JSON_UTF8_VALUE)
     public ApiRegistration getApiRegistration(
         @PathVariable("catalogId") String catalogId,
@@ -91,10 +90,9 @@ public class ApiRegistrationController {
     /**
      * Create new apiRegistration in catalog. Id for the apiRegistration is created automatically.
      *
-     * @param data
      * @return ApiRegistration
      */
-    @PreAuthorize("hasPermission(#catalogId, 'publisher', 'write')")
+    @PreAuthorize("hasPermission(#catalogId, 'organization', 'write')")
     @RequestMapping(
         value = "",
         method = POST,
@@ -130,10 +128,8 @@ public class ApiRegistrationController {
      * Delete apiRegistration
      *
      * @param id Identifier of apiRegistration
-     * @return HTTP status 204 NO CONTENT is returned if apiRegistration was successfully deleted. If
-     * apiRegistration is not found, HTTP 404 Not found is returned
      */
-    @PreAuthorize("hasPermission(#catalogId, 'publisher', 'write')")
+    @PreAuthorize("hasPermission(#catalogId, 'organization', 'write')")
     @RequestMapping(value = "/{id}", method = DELETE, produces = APPLICATION_JSON_UTF8_VALUE)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void deleteApiRegistration(
@@ -160,7 +156,7 @@ public class ApiRegistrationController {
      * @param updates Objects in apiRegistration to be updated
      * @return apiRegistration
      */
-    @PreAuthorize("hasPermission(#catalogId,'publisher', 'write')")
+    @PreAuthorize("hasPermission(#catalogId, 'organization', 'write')")
     @RequestMapping(
         value = "/{id}",
         method = PATCH,
@@ -194,7 +190,7 @@ public class ApiRegistrationController {
         return savedApiRegistration;
     }
 
-    ApiRegistration getApiRegistrationByIdAndCatalogId(String id, String catalogId) throws NotFoundException {
+    private ApiRegistration getApiRegistrationByIdAndCatalogId(String id, String catalogId) throws NotFoundException {
         return apiRegistrationRepository
             .findById(id)
             .filter(r -> catalogId.equals(r.getCatalogId()))

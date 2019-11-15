@@ -34,10 +34,10 @@ public class AltinnClient {
             .findFirst();
     }
 
-    private static List<Organisation> extractOrganisations(List<Subject> reportees) {
+    private static List<Organization> extractOrganizations(List<Subject> reportees) {
         return reportees.stream()
             .filter(s -> "Enterprise".equals(s.type))
-            .map(Organisation::new)
+            .map(Organization::new)
             .collect(Collectors.toList());
     }
 
@@ -56,7 +56,7 @@ public class AltinnClient {
 
         Optional<Subject> personSubject = extractPersonSubject(socialSecurityNumber, reportees);
 
-        return personSubject.map(ps -> new Person(ps, extractOrganisations(reportees)));
+        return personSubject.map(ps -> new Person(ps, extractOrganizations(reportees)));
     }
 
 }

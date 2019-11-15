@@ -20,7 +20,7 @@ indent_size = 2
 indent_size = 4
 
 # Markdown files
-[*.md]
+[{*.md,helptexts.*.js}]
 
 # Trailing whitespaces are significant in Markdown.
 trim_trailing_whitespace = false

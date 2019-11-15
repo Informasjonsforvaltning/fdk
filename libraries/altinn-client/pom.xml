@@ -14,7 +14,7 @@
 
     <groupId>no.fdk</groupId>
     <artifactId>altinn-client</artifactId>
-    <version>1.4.0-SNAPSHOT</version>
+    <version>1.5.0-SNAPSHOT</version>
 
     <dependencies>
         <dependency>

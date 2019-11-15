@@ -32,8 +32,7 @@ export const Helptext = props => {
       </div>
       <div className="d-md-flex">
         {abstract && (
-          <p
-            className="m-0"
+          <div
             dangerouslySetInnerHTML={{
               __html: convertToSanitizedHtml(abstract)
             }}
@@ -52,7 +51,7 @@ export const Helptext = props => {
       </div>
       {description && (
         <Collapse className="mt-3" isOpen={showAll}>
-          <p
+          <div
             dangerouslySetInnerHTML={{
               __html: convertToSanitizedHtml(description)
             }}

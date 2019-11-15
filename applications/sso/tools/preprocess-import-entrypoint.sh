@@ -19,9 +19,9 @@ if [[ $IDPORTEN_OIDC_ROOT =~ ^$SSO_HOST ]]; then
     echo "using local idp mock"
 
    sed -e 's,${SSO_HOST},'$SSO_HOST',g' \
-  </tmp/keycloak/import-template/idporten-mock-realm.template.json >/tmp/keycloak/import/idporten-mock-realm.json
+  </tmp/keycloak/import-template/idporten-mock-realm.template.json >/tmp/keycloak/import/overwrite/idporten-mock-realm.json
 
-  cp -f /tmp/keycloak/import-template/idporten-mock-users-0.json /tmp/keycloak/import/
+  cp -f /tmp/keycloak/import-template/idporten-mock-users-0.json /tmp/keycloak/import/overwrite/
 
     IDPORTEN_OIDC_ISSUER=${IDPORTEN_OIDC_ROOT}
     IDPORTEN_OIDC_AUTHORIZATION_URL=${IDPORTEN_OIDC_ROOT}/protocol/openid-connect/auth
@@ -69,11 +69,11 @@ sed -e 's,${IDPORTEN_CLIENT_ID},'$IDPORTEN_CLIENT_ID',g' \
  -e 's,${DEV_FDK_ADMIN_GUI_HOST},'$DEV_FDK_ADMIN_GUI_HOST',g' \
  -e 's,${SSO_HOST},'$SSO_HOST',g' \
  -e 's,${FDK_LOCAL_SECRET},'$FDK_LOCAL_SECRET',g' \
-   </tmp/keycloak/import-template/fdk-realm.template.json >/tmp/keycloak/import/fdk-realm.json
+   </tmp/keycloak/import-template/fdk-realm.template.json >/tmp/keycloak/import/update/fdk-realm.json
 
 sed -e 's,${FDK_LOCAL_SECRET},'$FDK_LOCAL_SECRET',g' \
  -e 's,${SSO_HOST},'$SSO_HOST',g' \
-  </tmp/keycloak/import-template/fdk-local-realm.template.json >/tmp/keycloak/import/fdk-local-realm.json
+  </tmp/keycloak/import-template/fdk-local-realm.template.json >/tmp/keycloak/import/update/fdk-local-realm.json
 
 exec /opt/jboss/tools/docker-entrypoint.sh $@
 exit $?

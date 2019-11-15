@@ -23,7 +23,6 @@
         <module>harvest-queue</module>
         <module>html-cleaner</module>
         <module>informationmodel-cat-bindings</module>
-        <module>publisher-cat-client</module>
         <module>referencedata-client</module>
         <module>registration-api-bindings</module>
         <module>shared</module>
