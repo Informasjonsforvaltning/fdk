@@ -1,6 +1,6 @@
 #!/usr/bin/env python2.7
 
-import httplib, urllib, json
+import os, httplib, urllib, json
 
 def objectHasAttribute(object, attribute_name):
     try:
@@ -23,9 +23,11 @@ def doHttpRequest(method, url, data, headers):
         return;
 
 def getAccessToken():
+    keycloak_user = os.environ['KEYCLOAK_USER']
+    keycloak_password = os.environ['KEYCLOAK_PASSWORD']
     url = "/auth/realms/master/protocol/openid-connect/token"
     headers = {"Content-Type": "application/x-www-form-urlencoded"}
-    params = urllib.urlencode({"username": "admin", "password": "admin", "grant_type": "password", "client_id": "admin-cli"})
+    params = urllib.urlencode({"username": keycloak_user, "password": keycloak_password, "grant_type": "password", "client_id": "admin-cli"})
     parsed_data = json.loads(doHttpRequest("POST", url, params, headers).read())
     return parsed_data["access_token"]
 
