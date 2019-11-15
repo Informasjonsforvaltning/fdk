@@ -21,7 +21,8 @@ COPY import /tmp/keycloak/import
 COPY startup-scripts /opt/jboss/startup-scripts
 COPY import-template /tmp/keycloak/import-template
 USER root
-RUN chmod o+w /tmp/keycloak/import
+RUN chmod o+w /tmp/keycloak/import/update
+RUN chmod o+w /tmp/keycloak/import/overwrite
 USER 1000
 
 ENTRYPOINT [ "/opt/fdk/tools/preprocess-import-entrypoint.sh" ]
