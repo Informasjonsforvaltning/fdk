@@ -1,10 +1,17 @@
 package no.fdk.searchapi.controller.datasetssearch;
 
+import com.rometools.rome.feed.atom.*;
+import com.rometools.rome.feed.rss.Channel;
+import com.rometools.rome.feed.rss.Description;
+import com.rometools.rome.feed.rss.Guid;
+import com.rometools.rome.feed.rss.Item;
+import com.rometools.rome.feed.synd.SyndPerson;
 import no.dcat.client.referencedata.ReferenceDataClient;
 import no.fdk.searchapi.service.ElasticsearchService;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.index.query.QueryBuilder;
+import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.sort.SortBuilder;
 import org.elasticsearch.search.sort.SortBuilders;
 import org.elasticsearch.search.sort.SortOrder;
@@ -19,6 +26,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -38,6 +52,9 @@ public class DatasetsSearchController {
 
     @Value("${application.referenceDataUrl}")
     private String referenceDataUrl;
+
+    @Value("${application.searchApiHostname}")
+    private String searchApiHostname;
 
     @Autowired
     public DatasetsSearchController(ElasticsearchService elasticsearchService) {
@@ -83,6 +100,15 @@ public class DatasetsSearchController {
         int from = checkAndAdjustFrom((int) pageable.getOffset());
         int size = checkAndAdjustSize(pageable.getPageSize());
 
+        SearchResponse response = performElasticSearchSearch(params, lang, sortfield, sortdirection, aggregations, from, size);
+
+        return new ResponseEntity<>(response.toString(), HttpStatus.OK);
+    }
+
+    private SearchResponse performElasticSearchSearch(final Map<String, String> params, final String lang,
+                                                      final String sortfield, final String sortdirection,
+                                                      final String aggregations,
+                                                      final int from, final int size) {
         if (hasLOSFilter(params)) {
             //Since the builder is static, it can not request expanded LOS expressions
             //from reference-data, so we do it here instead.
@@ -140,9 +166,7 @@ public class DatasetsSearchController {
         logger.debug("Executing query: {}", searchBuilder.toString());
         SearchResponse response = searchBuilder.execute().actionGet();
         logger.trace("Search response: {}", response.toString());
-
-        // return response
-        return new ResponseEntity<>(response.toString(), HttpStatus.OK);
+        return response;
     }
 
     @RequestMapping(value = "/datasets/search", method = RequestMethod.POST, produces = "application/json")
@@ -176,6 +200,161 @@ public class DatasetsSearchController {
         return search(mergedParams, lang, sortfield, sortdirection, aggregations, pageable);
     }
 
+    /**
+     * RSS
+     *
+     * @return The most recent datasets as RSS
+     */
+    @RequestMapping(value = "/datasets", method = RequestMethod.GET, produces = "application/rss+xml")
+    public Channel rss(HttpServletRequest httpServletRequest, @RequestParam Map<String, String> params) {
+        logger.debug("RSS GET /datasets?{}", params);
+
+        final String requestUrl = getRequestUrl(httpServletRequest);
+
+        SimpleDateFormat outputDateFormatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+        DateTimeFormatter inputDateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssZ");
+        LocalDateTime now = LocalDateTime.now();
+
+        Channel channel = new Channel();
+        channel.setFeedType("rss_2.0");
+        channel.setTitle("Datasett");
+        channel.setDescription("Felles Datakatalog - Datasett");
+        channel.setLink(requestUrl);
+
+        List<Item> items = new ArrayList<>();
+
+        int from = 0;
+        int size = 50;
+
+        boolean more = true;
+        while (more) {
+            SearchResponse response = performElasticSearchSearch(params, null, "modified", "desc", null, from, size);
+
+            Iterator<SearchHit> iter = response.getHits().iterator();
+            more &= iter.hasNext();
+
+            while (iter.hasNext()) {
+                try {
+                    SearchHit searchHit = iter.next();
+                    Map<String, Object> sourceMap = searchHit.getSourceAsMap();
+
+                    Item item = new Item();
+                    item.setUri(getDatasetsUrl() + "/" + searchHit.getId());
+
+                    Guid guid = new Guid();
+                    guid.setValue(searchHit.getId());
+                    guid.setPermaLink(true);
+                    item.setGuid(guid);
+
+                    final String firstHarvested = (String) ((HashMap) sourceMap.get("harvest")).get("firstHarvested");
+                    item.setPubDate(outputDateFormatter.parse(firstHarvested));
+
+                    item.setTitle((String) ((HashMap) sourceMap.get("title")).get("nb"));
+
+                    Description description = new Description();
+                    description.setValue((String) ((HashMap) sourceMap.get("description")).get("nb"));
+                    item.setDescription(description);
+
+                    item.setAuthor((String) ((HashMap) sourceMap.get("publisher")).get("name"));
+
+                    items.add(item);
+
+                    if (more) {
+                        LocalDateTime itemTime = LocalDateTime.parse(firstHarvested, inputDateFormatter);
+                        if (now.minusHours(24).isAfter(itemTime)) {
+                            more = false;
+                        }
+                    }
+                } catch (Exception e) {
+                }
+            }
+
+            from += size;
+        }
+        channel.setItems(items);
+
+        return channel;
+    }
+
+    /**
+     * Atom
+     *
+     * @return The most recent datasets as Atom
+     */
+    @RequestMapping(value = "/datasets", method = RequestMethod.GET, produces = "application/atom+xml")
+    public Feed atom(HttpServletRequest httpServletRequest, @RequestParam Map<String, String> params) {
+        logger.debug("ATOM GET /datasets?{}", params);
+
+        final String requestUrl = getRequestUrl(httpServletRequest);
+
+        SimpleDateFormat outputDateFormatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+        DateTimeFormatter inputDateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssZ");
+        LocalDateTime now = LocalDateTime.now();
+
+        Feed feed = new Feed();
+        feed.setFeedType("atom_1.0");
+        feed.setTitle("Datasett");
+        feed.setId(requestUrl);
+
+        List<Entry> entries = new ArrayList<>();
+
+        int from = 0;
+        int size = 50;
+
+        boolean more = true;
+        while (more) {
+            SearchResponse response = performElasticSearchSearch(params, null, "modified", "desc", null, from, size);
+
+            Iterator<SearchHit> iter = response.getHits().iterator();
+            more &= iter.hasNext();
+
+            while (iter.hasNext()) {
+                try {
+                    SearchHit searchHit = iter.next();
+                    Map<String, Object> sourceMap = searchHit.getSourceAsMap();
+
+                    Entry entry = new Entry();
+
+                    entry.setId(searchHit.getId());
+
+                    final String firstHarvested = (String) ((HashMap) sourceMap.get("harvest")).get("firstHarvested");
+                    entry.setPublished(outputDateFormatter.parse(firstHarvested));
+
+                    final String title = (String) ((HashMap) sourceMap.get("title")).get("nb");
+                    entry.setTitle(title);
+
+                    Content content = new Content();
+                    content.setValue((String) ((HashMap) sourceMap.get("description")).get("nb"));
+                    entry.setSummary(content);
+
+                    Link datasetLink = new Link();
+                    datasetLink.setHref(getDatasetsUrl() + "/" + searchHit.getId());
+                    datasetLink.setTitle(title);
+                    entry.setOtherLinks(Collections.singletonList(datasetLink));
+
+                    SyndPerson author = new Person();
+                    author.setName((String) ((HashMap) sourceMap.get("publisher")).get("name"));
+                    entry.setAuthors(Collections.singletonList(author));
+
+                    entries.add(entry);
+
+                    if (more) {
+                        LocalDateTime itemTime = LocalDateTime.parse(firstHarvested, inputDateFormatter);
+                        if (now.minusHours(24).isAfter(itemTime)) {
+                            more = false;
+                        }
+                    }
+                } catch (Exception e) {
+                }
+            }
+
+            from += size;
+        }
+        feed.setEntries(entries);
+
+        return feed;
+    }
+
     private int checkAndAdjustFrom(int from) {
         if (from < 0) {
             return 0;
@@ -196,5 +375,33 @@ public class DatasetsSearchController {
         return size;
     }
 
+    private String getDatasetsUrl() {
+        StringBuilder sb = new StringBuilder();
+        if (isNotEmpty(this.searchApiHostname)) {
+            sb.append(this.searchApiHostname);
+            if (!this.searchApiHostname.endsWith("/")) {
+                sb.append('/');
+            }
+        } else {
+            sb.append("https://www.fellesdatakatalog.brreg.no/");
+        }
+
+        sb.append("datasets");
+        return sb.toString();
+    }
+
+    private String getRequestUrl(final HttpServletRequest httpServletRequest) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(getDatasetsUrl());
+        String queryString = httpServletRequest.getQueryString();
+        if (isNotEmpty(queryString)) {
+            sb.append('?');
+            try {
+                sb.append(URLDecoder.decode(queryString, StandardCharsets.UTF_8.name()));
+            } catch (UnsupportedEncodingException e) {
+            }
+        }
+        return sb.toString();
+    }
 
 }

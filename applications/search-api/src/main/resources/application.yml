@@ -4,6 +4,7 @@ logging:
 application:
   fusekiService: http://fuseki:8080/fuseki
   referenceDataUrl: http://reference-data:8080
+  searchApiHostname: ${SEARCH_API_HOST:https://www.fellesdatakatalog.brreg.no/}
 elastic:
   clusterNodes: ${FDK_ES_CLUSTERNODES:elasticsearch5:9300}
   clusterName: ${FDK_ES_CLUSTERNAME:elasticsearch}
