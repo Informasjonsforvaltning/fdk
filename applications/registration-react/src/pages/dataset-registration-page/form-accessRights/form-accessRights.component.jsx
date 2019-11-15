@@ -11,7 +11,10 @@ import RadioField from '../../../components/fields/field-radio/field-radio.compo
 import { legalBasisType } from '../../../schemaTypes';
 import { datasetFormPatchThunk } from '../formsLib/asyncValidateDatasetInvokePatch';
 import { AlertMessage } from '../../../components/alert-message/alert-message.component';
-import {isNapPublish, isNapUnPublishAccessRights} from "../../../lib/napPublish";
+import {
+  isNapPublish,
+  isNapUnPublishAccessRights
+} from '../../../lib/napPublish';
 
 /*
  Resets fields when radio button "Offentlig" is chosen.
@@ -163,22 +166,20 @@ export const FormAccessRights = props => {
         />
 
         {datasetFormStatus &&
-        includes(datasetFormStatus.lastChangedFields, 'accessRights')
-        && isNapPublish(losItems, datasetItem)
-        && (
-          <AlertMessage type="info">
-            <span>{localization.formStatus.napPublish}</span>
-          </AlertMessage>
-        )}
+          includes(datasetFormStatus.lastChangedFields, 'accessRights') &&
+          isNapPublish(losItems, datasetItem) && (
+            <AlertMessage type="info">
+              <span>{localization.formStatus.napPublish}</span>
+            </AlertMessage>
+          )}
 
         {datasetFormStatus &&
-        includes(datasetFormStatus.lastChangedFields, 'accessRights')
-        && isNapUnPublishAccessRights(losItems, datasetItem)
-        && (
-          <AlertMessage type="info">
-            <span>{localization.formStatus.napUnPublish}</span>
-          </AlertMessage>
-        )}
+          includes(datasetFormStatus.lastChangedFields, 'accessRights') &&
+          isNapUnPublishAccessRights(losItems, datasetItem) && (
+            <AlertMessage type="info">
+              <span>{localization.formStatus.napUnPublish}</span>
+            </AlertMessage>
+          )}
 
         {accessRight && (
           <div className="alert alert-danger mt-3">
