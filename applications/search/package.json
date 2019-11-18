@@ -3,8 +3,7 @@
   "repository": "https://github.com/Informasjonsforvaltning/fdk/tree/develop/applications/search",
   "description": "Search",
   "scripts": {
-    "start": "node start.js",
-    "dev": "webpack-dev-server --hot --inline --config webpack.hostdev.config.js",
+    "start": "webpack-dev-server --hot --inline --config webpack.hostdev.config.js",
     "build": "webpack --config webpack.prod.config.js -p",
     "server": "export NODE_ENV=production && node start.js",
     "test": "jest ",
