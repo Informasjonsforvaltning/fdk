@@ -24,7 +24,7 @@ export class DatasetDescription extends React.Component {
 
   render() {
     const { datasetItem, referenceData } = this.props;
-    const { publisher, theme, provenance } = datasetItem || {};
+    const { publisher, theme, provenance, catalog } = datasetItem || {};
     let { title, descriptionFormatted, objective } = datasetItem || {};
     title = getTranslateText(title);
     descriptionFormatted = getTranslateText(descriptionFormatted);
@@ -36,6 +36,7 @@ export class DatasetDescription extends React.Component {
           title={title}
           publisherLabel={localization.search_hit.owned}
           publisher={publisher}
+          catalog={catalog}
           theme={theme}
           nationalComponent={_.get(provenance, 'code') === 'NASJONAL'}
           referenceData={referenceData}

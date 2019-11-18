@@ -2,9 +2,23 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { getTranslateText } from '../../lib/translateText';
+import localization from '../../lib/localization';
+
+const displayCatalogTitle = (publisherItem, catalog) => {
+  if (
+    _.get(catalog, 'id') &&
+    _.get(publisherItem, 'id') !== _.get(catalog, 'id')
+  ) {
+    const catalogTitle = getTranslateText(_.get(catalog, ['title']));
+
+    return ` (${localization.dataset.registeredIn} ${catalogTitle})`;
+  }
+
+  return null;
+};
 
 export const PublisherLabel = props => {
-  const { label, tag: Tag, publisherItem } = props;
+  const { label, tag: Tag, publisherItem, catalog } = props;
   if (!publisherItem) {
     return null;
   }
@@ -16,7 +30,10 @@ export const PublisherLabel = props => {
   return (
     <span className="mr-3">
       {label}&nbsp;
-      <Tag>{publisherPrefLabel}</Tag>
+      <Tag>
+        {publisherPrefLabel}
+        {displayCatalogTitle(publisherItem, catalog)}
+      </Tag>
     </span>
   );
 };
