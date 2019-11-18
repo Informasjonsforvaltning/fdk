@@ -115,15 +115,12 @@ def createMissingFlowsAndExecutions(realm, token, import_flows, current_flows):
 
 access_token = getAccessToken()
 
-createRealmsIfMissing(["fdk", "fdk-local"], access_token)
+createRealmsIfMissing(["fdk-local"], access_token)
 
-fdk_import_flows = readFlowsFromFile("fdk")
 fdk_local_import_flows = readFlowsFromFile("fdk-local")
 
-fdk_current_flows = getFlowsFromKeycloak("fdk", access_token)
 fdk_local_current_flows = getFlowsFromKeycloak("fdk-local", access_token)
 
-createMissingFlowsAndExecutions("fdk", access_token, fdk_import_flows, fdk_current_flows)
 createMissingFlowsAndExecutions("fdk-local", access_token, fdk_local_import_flows, fdk_local_current_flows)
 
 def getExecutions(realm, flow_alias, token):
@@ -193,5 +190,4 @@ def updateExecutions(realm, token, import_flows):
                 else:
                     createConfig(realm, execution_to_update['id'], token, config_to_import)
 
-updateExecutions("fdk", access_token, fdk_import_flows)
 updateExecutions("fdk-local", access_token, fdk_local_import_flows)
