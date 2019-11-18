@@ -3,6 +3,52 @@
 exports[`should render DatasetDescription correctly 1`] = `
 <header>
   <SearchHitHeader
+    catalog={
+      Object {
+        "description": Object {
+          "nb": "GeoNorge er den nasjonale katalogen for geografisk informasjon",
+        },
+        "issued": "2018-02-13T00:00:00+0100",
+        "language": "http://publications.europa.eu/resource/authority/language/NOR",
+        "modified": "2018-01-19T00:00:00+0100",
+        "publisher": Object {
+          "id": "971040238",
+          "naeringskode": Object {
+            "code": "71.123",
+            "prefLabel": Object {
+              "no": "Kart og oppmåling",
+            },
+            "uri": "http://www.ssb.no/nace/sn2007/71.123",
+          },
+          "name": "STATENS KARTVERK",
+          "orgPath": "/STAT/972417858/971040238",
+          "organisasjonsform": "ORGL",
+          "overordnetEnhet": "972417858",
+          "prefLabel": Object {
+            "no": "Kartverket",
+          },
+          "sektorkode": Object {
+            "code": "1110",
+            "prefLabel": Object {
+              "no": "Statens forretningsdrift",
+            },
+            "uri": "http://www.brreg.no/sektorkode/1110",
+          },
+          "type": "no.dcat.datastore.domain.dcat.Publisher",
+          "uri": "http://data.brreg.no/enhetsregisteret/enhet/971040238",
+          "valid": true,
+        },
+        "themeTaxonomy": Array [
+          "https://register.geonorge.no/subregister/metadata-kodelister/kartverket/nasjonal-temainndeling",
+          "http://publications.europa.eu/mdr/resource/authority/data-theme/html/data-theme-eng.html",
+          "http://www.eionet.europa.eu/gemet/inspire_themes",
+        ],
+        "title": Object {
+          "nb": "Geonorge",
+        },
+        "uri": "http://www.geonorge.no/geonetwork",
+      }
+    }
     darkThemeBackground={true}
     externalLink={false}
     nationalComponent={false}

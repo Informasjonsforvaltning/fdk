@@ -110,7 +110,8 @@ const renderSample = dataset => {
 
 export const SearchHitItem = props => {
   const { referenceData, dataset } = props;
-  const { id, publisher, theme, provenance, accessRights } = dataset || {};
+  const { id, catalog, publisher, theme, provenance, accessRights } =
+    dataset || {};
   let { title, description, objective } = dataset || {};
   title = getTranslateText(title);
   description = getTranslateText(description);
@@ -142,6 +143,7 @@ export const SearchHitItem = props => {
             tag="h2"
             title={title}
             titleLink={link}
+            catalog={catalog}
             publisherLabel={localization.search_hit.owned}
             publisher={publisher}
             theme={theme}

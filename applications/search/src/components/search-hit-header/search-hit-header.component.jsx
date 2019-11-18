@@ -15,14 +15,23 @@ import { LabelNational } from '../label-national/label-national.component';
 import { LinkExternal } from '../link-external/link-external.component';
 import { getConfig } from '../../config';
 
-const renderPublisher = (publisherLabel, publisher, publisherItems) => {
+const renderPublisher = (
+  publisherLabel,
+  publisher,
+  publisherItems,
+  catalog
+) => {
   if (!publisher) {
     return null;
   }
   const publisherItem =
     getPublisherByOrgNr(publisherItems, _.get(publisher, 'id')) || publisher;
   return (
-    <PublisherLabel label={publisherLabel} publisherItem={publisherItem} />
+    <PublisherLabel
+      label={publisherLabel}
+      publisherItem={publisherItem}
+      catalog={catalog}
+    />
   );
 };
 
@@ -82,6 +91,7 @@ export const SearchHitHeader = props => {
     tag: Tag,
     title,
     titleLink,
+    catalog,
     publisherLabel,
     publisher,
     publisherTag,
@@ -111,13 +121,14 @@ export const SearchHitHeader = props => {
 
       <div className="mb-4 d-flex flex-wrap align-items-baseline">
         {publisherItems &&
-          renderPublisher(publisherLabel, publisher, publisherItems)}
+          renderPublisher(publisherLabel, publisher, publisherItems, catalog)}
 
         {!publisherItems && publisher && (
           <PublisherLabel
             tag={publisherTag}
             label={publisherLabel}
             publisherItem={publisher}
+            catalog={catalog}
           />
         )}
       </div>
