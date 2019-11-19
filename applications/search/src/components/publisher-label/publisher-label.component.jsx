@@ -6,8 +6,8 @@ import localization from '../../lib/localization';
 
 const displayCatalogTitle = (publisherItem, catalog) => {
   if (
-    _.get(catalog, 'id') &&
-    _.get(publisherItem, 'id') !== _.get(catalog, 'id')
+    catalog &&
+    _.get(publisherItem, 'id') !== _.get(catalog, ['publisher', 'id'])
   ) {
     const catalogTitle = getTranslateText(_.get(catalog, ['title']));
 
