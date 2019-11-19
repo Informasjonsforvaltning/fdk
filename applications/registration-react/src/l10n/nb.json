@@ -22,6 +22,7 @@
   "anbefaltTerm": "Anbefalt term",
   "definition": "Definisjon",
   "responsible": "Ansvarlig",
+  "choose": "Velg",
   "breadcrumbs": {
     "home": "Alle kataloger",
     "API-descriptions": "API-beskrivelser",
@@ -151,6 +152,12 @@
       },
       "ownedByLabel": "Eies av",
       "editDescriptionLabel": "Rediger beskrivelse"
+    },
+    "publisher": {
+      "helptext": {
+        "title": "Ønsker du å registrere på vegne av noen andre?"
+      },
+      "registerBehalfOf": "Du registrerer på vegne av"
     },
     "title": {
       "helptext": {
@@ -405,7 +412,8 @@
       "contactInformation": "Kontaktinformasjon",
       "distribution": "Distribusjoner",
       "distributionAPI": "API-distribusjoner",
-      "sample": "Eksempeldata"
+      "sample": "Eksempeldata",
+      "onBehalf": "Registrer på vegne av noen andre"
     },
     "formValues": {
       "accessRights": {
