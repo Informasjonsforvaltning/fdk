@@ -18,7 +18,7 @@ class ResourceRoleFactory {
             }
             throw new IllegalArgumentException("Unknown resourceType");
         } catch (Exception e) {
-            logger.warn("Error parsing ResourceRole token", e);
+            logger.warn("Error parsing ResourceRole token: {}", roleToken);
             return null;
         }
     }
