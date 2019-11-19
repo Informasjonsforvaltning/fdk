@@ -1,8 +1,12 @@
 #!/bin/bash
 export PATH=$PATH:$JBOSS_HOME/bin
 
-# Note: 'update realms/<realm>' updates realm-attributes and 'create partialImport -r <realm>' updates idp, clients and roles
-# Authentication flows and executions is not covered and is therefore handled by import-realm-and-authentication.py
+# Note: Not everything will be updated with this script, some attributes are still ignored, i.e. identity-provider-mappers.
+# The python-script should be expanded if these attributes needs to be updated.
+
+# The script 'import-realm-and-authentication.py' creates the realm if it's missing and then updates authentication attributes.
+
+# The two kcadm methods, 'update realms/<realm>' and 'create partialImport -r <realm>', is able to update some, but not all, keycloak attributes.
 
 /opt/fdk/tools/import-realm-and-authentication.py
 
