@@ -22,6 +22,7 @@ import { StatusBar } from '../../components/status-bar/status-bar.component';
 import { ConnectedFormPublish } from './connected-form-publish/connected-form-publish';
 import { FormDistributionApi } from './form-distribution-api/form-distribution-api';
 import { ConnectedFormLOS } from './form-los/connected-form-los.component';
+import { ConnectedFormPublisher } from './form-publisher/connected-form-publisher.component';
 import LanguagePicker from '../../components/language-picker/language-picker.component';
 import {
   accessRightsValues,
@@ -81,7 +82,8 @@ export function DatasetRegistrationPagePure(props) {
     dispatchDeleteDataset,
     languages,
     setInputLanguages,
-    toggleInputLanguage
+    toggleInputLanguage,
+    organization
   } = props;
 
   const {
@@ -156,6 +158,19 @@ export function DatasetRegistrationPagePure(props) {
                 languages={languages}
                 toggleInputLanguage={toggleInputLanguage}
               />
+              {organization.allowDelegatedRegistration && (
+                <FormTemplateWithState
+                  title={localization.datasets.formTemplates.onBehalf}
+                >
+                  <ConnectedFormPublisher
+                    datasetItem={datasetItem}
+                    catalogId={catalogId}
+                    datasetId={datasetId}
+                    languages={languages}
+                  />
+                </FormTemplateWithState>
+              )}
+
               <FormTemplateWithState
                 title={localization.datasets.formTemplates.title}
                 required
@@ -416,7 +431,8 @@ DatasetRegistrationPagePure.defaultProps = {
   losItems: null,
   languages: [],
   setInputLanguages: _.noop,
-  toggleInputLanguage: _.noop
+  toggleInputLanguage: _.noop,
+  organization: null
 };
 
 DatasetRegistrationPagePure.propTypes = {
@@ -437,5 +453,6 @@ DatasetRegistrationPagePure.propTypes = {
   losItems: PropTypes.array,
   languages: PropTypes.array,
   setInputLanguages: PropTypes.func,
-  toggleInputLanguage: PropTypes.func
+  toggleInputLanguage: PropTypes.func,
+  organization: PropTypes.object
 };
