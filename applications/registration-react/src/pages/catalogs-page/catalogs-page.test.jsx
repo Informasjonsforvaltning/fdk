@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { RegCatalogs } from './catalogs-page';
+import { CatalogsPagePure } from './catalogs-page-pure';
 import catalogs from '../../../test/fixtures/catalogs';
 
 let defaultProps;
@@ -14,9 +14,9 @@ beforeEach(() => {
     catalogItems: catalogs.catalogItems,
     isFetchingCatalogs: false
   };
-  wrapper = shallow(<RegCatalogs {...defaultProps} />);
+  wrapper = shallow(<CatalogsPagePure {...defaultProps} />);
 });
 
-test('should render RegCatalogs correctly', () => {
+test('should render CatalogsPagePure correctly', () => {
   expect(wrapper).toMatchSnapshot();
 });
