@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`should render RegCatalogs correctly 1`] = `
+exports[`should render CatalogsPagePure correctly 1`] = `
 <div
   className="container"
 >

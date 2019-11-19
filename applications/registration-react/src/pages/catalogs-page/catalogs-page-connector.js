@@ -5,9 +5,8 @@ import {
   selectorForDatasetsState
 } from '../../redux/modules/datasets';
 import { fetchApisIfNeededAction } from '../../redux/modules/apis';
-import { RegCatalogs } from './catalogs-page';
 
-function mapStateToProps(state) {
+const mapStateToProps = state => {
   const { catalogs, apis } = state;
   const { catalogItems, isFetching } = catalogs || {};
   const datasetsState = selectorForDatasetsState(state);
@@ -17,7 +16,7 @@ function mapStateToProps(state) {
     apis,
     isFetching
   };
-}
+};
 
 const mapDispatchToProps = dispatch => ({
   fetchCatalogsIfNeeded: () => dispatch(fetchCatalogsIfNeeded()),
@@ -26,7 +25,7 @@ const mapDispatchToProps = dispatch => ({
   fetchApisIfNeeded: catalogId => dispatch(fetchApisIfNeededAction(catalogId))
 });
 
-export const ConnectedCatalogsPage = connect(
+export const catalogsPageConnector = connect(
   mapStateToProps,
   mapDispatchToProps
-)(RegCatalogs);
+);

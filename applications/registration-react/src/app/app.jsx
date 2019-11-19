@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import { ProtectedRoute } from '../app-protected-route/app-protected-route.component';
-import { ConnectedCatalogsPage } from '../pages/catalogs-page/connected-catalogs-page';
+import { CatalogsPage } from '../pages/catalogs-page/catalogs-page';
 import { DatasetsListPage } from '../pages/dataset-list-page/dataset-list-page';
 import { ConnectedAPIListPage } from '../pages/api-list-page/connected-api-list-page';
 import { ApiRegistrationPage } from '../pages/api-registration-page/api-registration-page';
@@ -21,7 +21,7 @@ const Routes = (
       render={props => <LoginPage {...props} loggedOut />}
     />
     <Route exact path="/loggin" render={props => <LoginPage {...props} />} />
-    <ProtectedRoute exact path="/" component={ConnectedCatalogsPage} />
+    <ProtectedRoute exact path="/" component={CatalogsPage} />
     <ProtectedRoute
       exact
       path="/catalogs/:catalogId/datasets"

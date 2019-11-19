@@ -67,7 +67,7 @@ const renderCatalogs = props => {
   ));
 };
 
-export const RegCatalogs = props => {
+export const CatalogsPagePure = props => {
   const { isFetching, catalogItems, fetchCatalogsIfNeeded } = props;
   fetchCatalogsIfNeeded();
   return (
@@ -100,13 +100,13 @@ export const RegCatalogs = props => {
   );
 };
 
-RegCatalogs.defaultProps = {
+CatalogsPagePure.defaultProps = {
   catalogItems: null,
   isFetching: false,
   fetchCatalogsIfNeeded: _.noop
 };
 
-RegCatalogs.propTypes = {
+CatalogsPagePure.propTypes = {
   catalogItems: PropTypes.array,
   isFetching: PropTypes.bool,
   fetchCatalogsIfNeeded: PropTypes.func
