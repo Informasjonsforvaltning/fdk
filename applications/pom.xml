@@ -13,8 +13,6 @@
         <module>search-api</module>
         <module>registration-api</module>
 
-        <module>harvester</module>
-
         <module>dev-management</module>
 
         <module>end2end-test</module>
