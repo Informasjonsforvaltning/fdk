@@ -191,6 +191,9 @@ public class ApiRegistrationController {
     }
 
     private ApiRegistration getApiRegistrationByIdAndCatalogId(String id, String catalogId) throws NotFoundException {
-        return apiRegistrationRepository.findByIdAndCatalogId(id, catalogId).orElseThrow(NotFoundException::new);
+        return apiRegistrationRepository
+            .findById(id)
+            .filter(r -> catalogId.equals(r.getCatalogId()))
+            .orElseThrow(NotFoundException::new);
     }
 }
