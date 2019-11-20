@@ -1,4 +1,4 @@
-package no.dcat.service;
+package no.dcat.repository;
 
 import no.dcat.model.Dataset;
 import org.springframework.data.domain.Page;
@@ -11,6 +11,7 @@ import java.util.Optional;
 @RepositoryRestResource(exported = false)
 public interface DatasetRepository extends ElasticsearchRepository<Dataset, String> {
 
+    long removeByIdAndCatalogId(String id, String catalogId);
 
     Page<Dataset> findByCatalogId(String catalogId, Pageable pageable);
 

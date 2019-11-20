@@ -1,6 +1,6 @@
 package no.fdk.webutils.exceptions;
 
-public class BadRequestException extends Exception {
+public class BadRequestException extends FDKException {
 
     public BadRequestException() {
         super();

@@ -3,12 +3,14 @@ package no.dcat.controller;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import no.dcat.datastore.domain.dcat.smoke.TestCompleteCatalog;
+import no.dcat.factory.DatasetFactory;
 import no.dcat.model.Catalog;
 import no.dcat.model.Dataset;
+import no.dcat.repository.DatasetRepository;
 import no.dcat.service.CatalogRepository;
-import no.dcat.service.DatasetRepository;
+import no.dcat.service.DatasetService;
 import no.fdk.test.testcategories.UnitTest;
-import no.fdk.webutils.exceptions.NotFoundException;
+import no.fdk.webutils.exceptions.FDKException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -34,6 +36,9 @@ public class DatasetControllerTest {
     private DatasetController datasetController;
 
     @Mock
+    private DatasetService mockDatasetService;
+
+    @Mock
     private DatasetRepository mockDatasetRepository;
 
     @Mock
@@ -48,22 +53,21 @@ public class DatasetControllerTest {
         catalog.setId(catalogId);
         when(mockCatalogRepository.findById(anyString())).thenReturn(Optional.of(catalog));
 
-
-        datasetController = new DatasetController(mockDatasetRepository, mockCatalogRepository, null);
-
+        datasetController = new DatasetController(mockDatasetService);
     }
 
     @Test
-    public void createDatasetOK() throws NotFoundException {
+    public void createDatasetOK() throws FDKException {
         String catalogId = "1234";
         Catalog catalog = new Catalog();
         catalog.setId(catalogId);
 
         Dataset data = new Dataset();
 
+        when(mockDatasetService.createDataset(catalogId, data)).thenReturn(DatasetFactory.create(catalog, data));
         when(mockDatasetRepository.save(any(Dataset.class))).thenAnswer((invocation) -> invocation.getArguments()[0]);
 
-        Dataset saveDataset = datasetController.saveDataset(catalogId, data);
+        Dataset saveDataset = datasetController.createDataset(catalogId, data);
 
         assertThat(saveDataset.getCatalogId(), is(catalogId));
     }

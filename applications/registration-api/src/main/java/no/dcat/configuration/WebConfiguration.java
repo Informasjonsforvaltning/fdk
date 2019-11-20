@@ -15,7 +15,6 @@ public class WebConfiguration implements WebMvcConfigurer {
 
     @Override
     public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
-        RdfMessageConverter converter = new RdfMessageConverter();
         converters.add(0, new RdfMessageConverter());
     }
 }

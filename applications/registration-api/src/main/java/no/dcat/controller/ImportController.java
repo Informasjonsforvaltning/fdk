@@ -8,7 +8,7 @@ import no.dcat.model.Catalog;
 import no.dcat.model.Dataset;
 import no.dcat.model.FramedCatalog;
 import no.dcat.service.CatalogRepository;
-import no.dcat.service.DatasetRepository;
+import no.dcat.repository.DatasetRepository;
 import no.dcat.shared.SkosCode;
 import no.fdk.webutils.exceptions.NotFoundException;
 import org.apache.commons.io.IOUtils;
@@ -146,7 +146,7 @@ public class ImportController {
                 dataset.setCatalogId(catalogId);
                 dataset.setCatalog(null);
 
-                Dataset newDataset = no.dcat.model.DatasetFactory.createDataset(catalogToImportTo, dataset);
+                Dataset newDataset = no.dcat.factory.DatasetFactory.create(catalogToImportTo, dataset);
                 Dataset savedDataset = datasetRepository.save(newDataset);
 
                 importedDatasets.add(savedDataset);

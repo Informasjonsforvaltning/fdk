@@ -3,7 +3,7 @@ package no.dcat.controller;
 import no.dcat.model.Catalog;
 import no.dcat.model.Dataset;
 import no.dcat.service.CatalogRepository;
-import no.dcat.service.DatasetRepository;
+import no.dcat.repository.DatasetRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
