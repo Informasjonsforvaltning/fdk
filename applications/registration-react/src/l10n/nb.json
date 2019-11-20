@@ -23,6 +23,7 @@
   "definition": "Definisjon",
   "responsible": "Ansvarlig",
   "choose": "Velg",
+  "noAccessCatalog": "Du har ikke tilgang til denne katalogen",
   "breadcrumbs": {
     "home": "Alle kataloger",
     "API-descriptions": "API-beskrivelser",
