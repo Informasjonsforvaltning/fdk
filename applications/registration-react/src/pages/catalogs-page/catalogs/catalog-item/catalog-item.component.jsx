@@ -5,9 +5,18 @@ import cx from 'classnames';
 import localization from '../../../../lib/localization';
 import './catalog-item.component.scss';
 
-export const CatalogItem = props => {
-  const { type, itemsCount, linkUri } = props;
+const isConcept = type => type === 'concepts';
 
+const renderItemContent = ({ itemClass, iconClass, itemsCount, type }) => (
+  <div className={itemClass}>
+    <h3 className={iconClass}>{localization.catalogs[type]}</h3>
+    <span className="fdk-text-size-small fdk-color-neutral-dark">
+      {itemsCount || 0} {localization.catalogs.type[type]}
+    </span>
+  </div>
+);
+
+export const CatalogItem = ({ type, itemsCount, linkUri }) => {
   const iconClass = cx('catalog-icon', {
     'catalog-icon--dataset': type === 'datasets',
     'catalog-icon--api': type === 'apis',
@@ -25,31 +34,18 @@ export const CatalogItem = props => {
     }
   );
 
-  if (type === 'concepts') {
-    return (
-      <div className="col-md-4 pl-0">
-        <a className="catalog-item" href={linkUri}>
-          <div className={itemClass}>
-            <h3 className={iconClass}>{localization.catalogs[type]}</h3>
-            <span className="fdk-text-size-small fdk-color-neutral-dark">
-              {itemsCount || 0} {localization.catalogs.type[type]}
-            </span>
-          </div>
-        </a>
-      </div>
-    );
-  }
-
   return (
     <div className="col-md-4 pl-0">
-      <Link className="catalog-item" to={linkUri}>
-        <div className={itemClass}>
-          <h3 className={iconClass}>{localization.catalogs[type]}</h3>
-          <span className="fdk-text-size-small fdk-color-neutral-dark">
-            {itemsCount || 0} {localization.catalogs.type[type]}
-          </span>
-        </div>
-      </Link>
+      {isConcept(type) && (
+        <a className="catalog-item" href={linkUri}>
+          {renderItemContent({ itemClass, iconClass, itemsCount, type })}
+        </a>
+      )}
+      {!isConcept(type) && (
+        <Link className="catalog-item" to={linkUri}>
+          {renderItemContent({ itemClass, iconClass, itemsCount, type })}
+        </Link>
+      )}
     </div>
   );
 };
