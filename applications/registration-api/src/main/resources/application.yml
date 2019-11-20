@@ -6,6 +6,7 @@ logging:
   level.org.springframework.data.elasticsearch.core: ${LOG_LEVEL:INFO}
   level.org.opensaml: INFO
 application:
+  organizationCatalogueUrl: ${ORGANIZATION_CATALOGUE_URL:https://organization-catalogue.fellesdatakatalog.brreg.no}
   themesServiceUrl: http://reference-data:8080
   catalogUriPrefix: http://localhost:8099
   httpUsername: ${themesHttpUsername:user}
@@ -51,6 +52,7 @@ spring:
 server:
   port: 8115
 application:
+  organizationCatalogueUrl: http://localhost:8140
   harvesterUrl: http://localhost:8082
   apiRootUrl: http://localhost:8080/api
   openDataEnhetProxy: http://localhost:8132/enhetsregisteret/api/enheter/ #mock

@@ -1,5 +1,6 @@
 package no.dcat.model;
 
+import no.dcat.factory.DatasetFactory;
 import no.fdk.test.testcategories.UnitTest;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -19,7 +20,7 @@ public class DatasetFactoryTest {
         Catalog catalog = new Catalog();
         catalog.setId(catalogId);
         Dataset data = new Dataset();
-        Dataset result = DatasetFactory.createDataset(catalog, data);
+        Dataset result = DatasetFactory.create(catalog, data);
 
         assertThat(result.getUri(), containsString("http://brreg.no/catalogs/" + catalogId + "/datasets/"));
     }
