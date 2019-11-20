@@ -16,7 +16,7 @@ const renderItemContent = ({ itemClass, iconClass, itemsCount, type }) => (
   </div>
 );
 
-export const CatalogItem = ({ type, itemsCount, linkUri }) => {
+export const CatalogItem = ({ type, itemsCount, linkUri, isReadOnly }) => {
   const iconClass = cx('catalog-icon', {
     'catalog-icon--dataset': type === 'datasets',
     'catalog-icon--api': type === 'apis',
@@ -29,6 +29,7 @@ export const CatalogItem = ({ type, itemsCount, linkUri }) => {
     'flex-column',
     'align-items-center',
     {
+      readOnly: isReadOnly,
       beta: type === 'concepts',
       'h-100': !itemsCount
     }
@@ -36,26 +37,36 @@ export const CatalogItem = ({ type, itemsCount, linkUri }) => {
 
   return (
     <div className="col-md-4 pl-0">
-      {isConcept(type) && (
+      {isConcept(type) && !isReadOnly && (
         <a className="catalog-item" href={linkUri}>
           {renderItemContent({ itemClass, iconClass, itemsCount, type })}
         </a>
       )}
-      {!isConcept(type) && (
+      {!isConcept(type) && !isReadOnly && (
         <Link className="catalog-item" to={linkUri}>
           {renderItemContent({ itemClass, iconClass, itemsCount, type })}
         </Link>
+      )}
+      {isReadOnly && (
+        <div className="catalog-item">
+          {renderItemContent({ itemClass, iconClass, itemsCount, type })}
+          <div className="overlay">
+            <div className="text">{localization.noAccessCatalog}</div>
+          </div>
+        </div>
       )}
     </div>
   );
 };
 
 CatalogItem.defaultProps = {
-  itemsCount: null
+  itemsCount: null,
+  isReadOnly: false
 };
 
 CatalogItem.propTypes = {
   type: PropTypes.string.isRequired,
   itemsCount: PropTypes.number,
-  linkUri: PropTypes.string.isRequired
+  linkUri: PropTypes.string.isRequired,
+  isReadOnly: PropTypes.bool
 };

@@ -3,16 +3,34 @@
 
 .catalog-item {
 
-
   color: $color-neutral-darkest;
   text-decoration: none;
   &:hover, &:focus, &:active {
+    .catalog-item__body.readOnly {
+      opacity: 0.3;
+    }
+    .overlay {
+      opacity: 1;
+    }
+  }
 
+  .overlay {
+    border-radius: 0.5em;
+    background-color: $color-neutral-dark;
+    color: $color-white;
+    transition: .5s ease;
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    padding: 1em;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    text-align: center;
   }
 }
 
 .catalog-item__body {
-
 
   &.beta {
     background-image: url("/static/img/banner-beta.svg");
@@ -21,8 +39,16 @@
     background-size: 3em;
   }
 
-  background-color: $color_white;
+  &.readOnly {
+    opacity: 0.5;
+    box-shadow: none;
+    &:hover {
+      transform: none;
 
+    }
+  }
+
+  background-color: $color_white;
   border-radius: 5px;
   padding: 2em;
   word-wrap: break-word;

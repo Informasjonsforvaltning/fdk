@@ -2,6 +2,7 @@
 
 exports[`should render CatalogPure correctly with minimum props 1`] = `
 <CatalogItem
+  isReadOnly={false}
   itemsCount={null}
   key="910244132"
   linkUri="/catalogs/910244132/datasets"
@@ -12,6 +13,7 @@ exports[`should render CatalogPure correctly with minimum props 1`] = `
 
 exports[`should render CatalogPure correctly with one dataset item 1`] = `
 <CatalogItem
+  isReadOnly={false}
   itemsCount={null}
   key="910244132"
   linkUri="/catalogs/910244132/datasets"
