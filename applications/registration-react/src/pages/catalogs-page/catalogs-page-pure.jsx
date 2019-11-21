@@ -63,7 +63,6 @@ const renderCatalogs = props => {
             key={`concepts-${catalog.id}`}
             catalogId={catalog.id}
             type="concepts"
-            isReadOnly={!hasOrganizationAdminPermission(catalog.id)}
           />
         </CardGroup>
       </div>
