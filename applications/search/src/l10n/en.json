@@ -59,10 +59,10 @@
     "home": "Search in The National Data Catalog",
     "homeNAP": "Search in The National Access Point for Transport Data ",
     "about": "About The National Data Catalog",
-    "aboutRegistration": "Registration",
+    "aboutRegistration": "Register data",
     "reports": "Reports",
     "conceptsCompare": "Compare concepts",
-    "aboutNap": "About National Access Point for Transport Data"
+    "aboutNap": "About Transportportal.no"
   },
   "query": {
     "intro": "Search for contents",
