@@ -1,10 +1,13 @@
 @import '../../../node_modules/designsystemet/fdk-designsystem-bootstrap4/scss/colors.scss';
 
 .fdk-header {
+  @include themify($themes) {
+    background-color: themed('color-header-bg') !important;
+  }
   .nav {
     a {
       @include themify($themes) {
-        color: themed('color-text-link') !important;
+        color: themed('color-header') !important;
       }
     }
   }
@@ -26,12 +29,12 @@
   text-decoration: none !important;
   margin-right: .5em !important;
   @include themify($themes) {
-    color: themed('color-text-link') !important;
+    color: themed('color-header') !important;
   }
   font-size: 1.5rem;
   &:focus, &:active, &:hover {
     @include themify($themes) {
-      color: themed('color-text-link') !important;
+      color: themed('color-header') !important;
     }
     background-color: transparent !important;
     border-color: transparent !important;
