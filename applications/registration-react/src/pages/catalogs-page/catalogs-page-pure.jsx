@@ -8,6 +8,7 @@ import { getTranslateText } from '../../lib/translateText';
 import { selectorForCatalogDatasetsFromDatasetsState } from '../../redux/modules/datasets';
 import { getAPIItemsCount } from '../../redux/modules/apis';
 import './catalogs-page.scss';
+import { hasOrganizationAdminPermission } from '../../auth/auth-service';
 
 const renderCatalogs = props => {
   const {
@@ -45,6 +46,7 @@ const renderCatalogs = props => {
                   )
                 ).length
               }
+              isReadOnly={!hasOrganizationAdminPermission(catalog.id)}
             />
           )}
           {apis && (
@@ -54,12 +56,14 @@ const renderCatalogs = props => {
               fetchItems={fetchApisIfNeeded}
               type="apis"
               itemsCount={getAPIItemsCount(apis, catalog.id)}
+              isReadOnly={!hasOrganizationAdminPermission(catalog.id)}
             />
           )}
           <Catalog
             key={`concepts-${catalog.id}`}
             catalogId={catalog.id}
             type="concepts"
+            isReadOnly={!hasOrganizationAdminPermission(catalog.id)}
           />
         </CardGroup>
       </div>

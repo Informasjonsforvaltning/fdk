@@ -8,7 +8,7 @@ import { CatalogItem } from './catalog-item/catalog-item.component';
 import { getConceptCount } from '../../../api/concept-registration-api/host';
 
 export const CatalogPure = props => {
-  const { catalogId, type, fetchItems, itemsCount } = props;
+  const { catalogId, type, fetchItems, itemsCount, isReadOnly } = props;
   fetchItems(catalogId);
 
   const linkUri =
@@ -23,6 +23,7 @@ export const CatalogPure = props => {
       publisherId={catalogId}
       type={type}
       itemsCount={itemsCount}
+      isReadOnly={isReadOnly}
     />
   );
 };
@@ -30,14 +31,16 @@ export const CatalogPure = props => {
 CatalogPure.defaultProps = {
   catalogId: null,
   fetchItems: () => {},
-  itemsCount: null
+  itemsCount: null,
+  isReadOnly: false
 };
 
 CatalogPure.propTypes = {
   catalogId: PropTypes.string,
   type: PropTypes.string.isRequired,
   fetchItems: PropTypes.func,
-  itemsCount: PropTypes.number
+  itemsCount: PropTypes.number,
+  isReadOnly: PropTypes.bool
 };
 
 const memoizedGetConceptCount = memoize(getConceptCount);

@@ -7,6 +7,10 @@ import { loadTokens, removeTokens, storeTokens } from './token-store';
 
 let kc;
 
+const PERMISSION_ADMIN = 'PERMISSION_ADMIN';
+const RESOURCE_ORGANIZATION = 'organization';
+const ROLE_ADMIN = 'admin';
+
 function setOnAuthSuccess({ onAuthSuccess }) {
   const handler = () => {
     storeTokens({ token: kc.token, refreshToken: kc.refreshToken });
@@ -69,3 +73,44 @@ export async function getToken() {
 }
 
 export const getUserProfile = () => _.pick(kc.tokenParsed, 'name');
+
+const extractResourceRoles = authorities => {
+  return (authorities || '')
+    .split(',')
+    .map(authorityDescriptor => authorityDescriptor.split(':'))
+    .map(parts => ({
+      resource: parts[0],
+      resourceId: parts[1],
+      role: parts[2]
+    }));
+};
+
+export const getResourceRoles = () => {
+  if (!(kc && kc.tokenParsed)) {
+    return null;
+  }
+  return extractResourceRoles(_.get(kc.tokenParsed, 'authorities'));
+};
+
+export const hasOrganizationAdminPermission = resourceId => {
+  return hasPermissionForResource(
+    RESOURCE_ORGANIZATION,
+    resourceId,
+    PERMISSION_ADMIN
+  );
+};
+
+const hasPermissionForResource = (resource, resourceId, permission) => {
+  switch (permission) {
+    case PERMISSION_ADMIN: {
+      return !!_.find(getResourceRoles(), {
+        resource: RESOURCE_ORGANIZATION,
+        resourceId,
+        role: ROLE_ADMIN
+      });
+    }
+    default: {
+      throw new Error('no permission');
+    }
+  }
+};
