@@ -100,6 +100,8 @@
   "hitstats": {
     "nosearch": "Søk blant {0} datasett, {1} API, {2} omgrep og {3} informasjonsmodellar",
     "search": "Søket gav {0} treff i datasett, {1} treff i API, {2} treff i omgrep og {3} treff i informasjonsmodellar",
+    "nosearchNap": "Søk blant {0} datasett",
+    "searchNap": "Søket gav {0} treff i datasett",
     "nohits": "Søket ga dessverre ingen treff"
   },
   "facet": {

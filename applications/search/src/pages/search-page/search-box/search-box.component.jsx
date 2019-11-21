@@ -6,7 +6,6 @@ import _ from 'lodash';
 import { getParamFromUrl } from '../../../lib/addOrReplaceUrlParam';
 import localization from '../../../lib/localization';
 import { HitsStats } from './hits-stats/hits-stats.component';
-import { getConfig } from '../../../config';
 import './search-box.scss';
 
 export const SearchBoxPure = props => {
@@ -82,24 +81,22 @@ export const SearchBoxPure = props => {
           {localization.query.do}
         </button>
       </div>
-      {!getConfig().themeNap && (
-        <div className="col-md-12 text-center">
-          <HitsStats
-            countDatasets={countDatasets}
-            countTerms={countTerms}
-            countApis={countApis}
-            countInformationModels={countInformationModels}
-            filteringOrTextSearchPerformed={
-              !!(
-                getParamFromUrl('q') ||
-                getParamFromUrl('theme') ||
-                getParamFromUrl('accessRight') ||
-                getParamFromUrl('publisher')
-              )
-            }
-          />
-        </div>
-      )}
+      <div className="col-md-12 text-center">
+        <HitsStats
+          countDatasets={countDatasets}
+          countTerms={countTerms}
+          countApis={countApis}
+          countInformationModels={countInformationModels}
+          filteringOrTextSearchPerformed={
+            !!(
+              getParamFromUrl('q') ||
+              getParamFromUrl('theme') ||
+              getParamFromUrl('accessRight') ||
+              getParamFromUrl('publisher')
+            )
+          }
+        />
+      </div>
     </div>
   );
 };
