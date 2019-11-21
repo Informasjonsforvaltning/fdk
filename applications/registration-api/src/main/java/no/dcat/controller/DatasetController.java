@@ -216,7 +216,10 @@ and it is quite high in priority list.
     }
 
     private Dataset getDatasetByIdAndCatalogId(String id, String catalogId) throws NotFoundException {
-        return datasetRepository.findByIdAndCatalogId(id,catalogId).orElseThrow(NotFoundException::new);
+        return datasetRepository
+            .findById(id)
+            .filter(r -> catalogId.equals(r.getCatalogId()))
+            .orElseThrow(NotFoundException::new);
     }
 
 }
