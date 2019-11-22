@@ -36,18 +36,10 @@ public class Dataset extends no.dcat.shared.Dataset {
 
     public Dataset() {
         super();
-        initialize();
     }
 
     public Dataset(String id) {
         this.setId(id);
-        initialize();
-    }
-
-    private void initialize() {
-        setTitle(new HashMap<>());
-        setDescription(new HashMap<>());
-        setObjective(new HashMap<>());
     }
 
     @Override
