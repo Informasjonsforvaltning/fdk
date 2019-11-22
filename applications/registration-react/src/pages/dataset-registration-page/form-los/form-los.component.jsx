@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
+import includes from 'lodash/includes';
 import { Field } from 'redux-form';
 import Autocomplete from 'react-autocomplete';
 import cx from 'classnames';
@@ -18,7 +19,6 @@ import {
   onSelectSearchedLosItem
 } from './autocomplete-helper';
 import './form-los.scss';
-import includes from 'lodash/includes';
 import { isNapPublish, isNapUnPublishTheme } from '../../../lib/napPublish';
 import { AlertMessage } from '../../../components/alert-message/alert-message.component';
 
