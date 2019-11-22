@@ -514,7 +514,7 @@
       "confirmDeleteMessage": "Er du sikker på at du vil slette datasettbeskrivelsen permanent?",
       "requiredFieldsMissing": "Datasettet kunne ikke publiseres. Se over felt som er markert med feil og rett disse før du forsøker å publisere på nytt."
     },
-    "napPublish": "Datasettbeskrivelsen vil være tilgjengelig i Felles datakatalog og Transportportal.no når det er publisert.",
-    "napUnPublish": "Datasettbeskrivelsen vil være tilgjengelig i Felles datakatalog når det er publisert."
+    "napPublish": "Datasettbeskrivelsen vil være tilgjengelig i Felles datakatalog og Transportportal.no når den er publisert.",
+    "napUnPublish": "Datasettbeskrivelsen vil være tilgjengelig i Felles datakatalog når den er publisert."
   }
 }
