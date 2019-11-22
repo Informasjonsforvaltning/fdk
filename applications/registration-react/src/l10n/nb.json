@@ -414,7 +414,7 @@
       "distribution": "Distribusjoner",
       "distributionAPI": "API-distribusjoner",
       "sample": "Eksempeldata",
-      "onBehalf": "Registrer på vegne av noen andre"
+      "onBehalf": "Registrer på vegne av andre"
     },
     "formValues": {
       "accessRights": {
