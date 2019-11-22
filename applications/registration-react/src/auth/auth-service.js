@@ -92,14 +92,6 @@ export const getResourceRoles = () => {
   return extractResourceRoles(_.get(kc.tokenParsed, 'authorities'));
 };
 
-export const hasOrganizationAdminPermission = resourceId => {
-  return hasPermissionForResource(
-    RESOURCE_ORGANIZATION,
-    resourceId,
-    PERMISSION_ADMIN
-  );
-};
-
 const hasPermissionForResource = (resource, resourceId, permission) => {
   switch (permission) {
     case PERMISSION_ADMIN: {
@@ -113,4 +105,12 @@ const hasPermissionForResource = (resource, resourceId, permission) => {
       throw new Error('no permission');
     }
   }
+};
+
+export const hasOrganizationAdminPermission = resourceId => {
+  return hasPermissionForResource(
+    RESOURCE_ORGANIZATION,
+    resourceId,
+    PERMISSION_ADMIN
+  );
 };

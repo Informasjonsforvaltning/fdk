@@ -58,6 +58,16 @@ export const CatalogItem = ({ type, itemsCount, linkUri, isReadOnly }) => {
     </div>
   );
 };
+renderItemContent.propTypes = {
+  itemClass: PropTypes.string.isRequired,
+  iconClass: PropTypes.string.isRequired,
+  itemsCount: PropTypes.string,
+  type: PropTypes.string.isRequired
+};
+
+renderItemContent.defaultProps = {
+  itemsCount: null
+};
 
 CatalogItem.defaultProps = {
   itemsCount: null,

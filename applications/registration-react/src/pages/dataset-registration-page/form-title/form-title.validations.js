@@ -1,3 +1,5 @@
+/* eslint-disable func-names */
+
 import * as Yup from 'yup';
 
 import localization from '../../../lib/localization';
@@ -6,7 +8,7 @@ export const schema = Yup.object().shape({
   title: Yup.object().shape({
     nb: Yup.string()
       .nullable()
-      .test(function(value) {
+      .test(function() {
         const { nb, nn, en } = this.parent;
         if (!nb && !nn && !en) {
           return this.createError({
@@ -18,7 +20,7 @@ export const schema = Yup.object().shape({
       }),
     nn: Yup.string()
       .nullable()
-      .test(function(value) {
+      .test(function() {
         const { nb, nn, en } = this.parent;
         if (!nb && !nn && !en) {
           return this.createError({
@@ -30,7 +32,7 @@ export const schema = Yup.object().shape({
       }),
     en: Yup.string()
       .nullable()
-      .test(function(value) {
+      .test(function() {
         const { nb, nn, en } = this.parent;
         if (!nb && !nn && !en) {
           return this.createError({
@@ -44,7 +46,7 @@ export const schema = Yup.object().shape({
   description: Yup.object().shape({
     nb: Yup.string()
       .nullable()
-      .test(function(value) {
+      .test(function() {
         const { nb, nn, en } = this.parent;
         if (!nb && !nn && !en) {
           return this.createError({
@@ -56,7 +58,7 @@ export const schema = Yup.object().shape({
       }),
     nn: Yup.string()
       .nullable()
-      .test(function(value) {
+      .test(function() {
         const { nb, nn, en } = this.parent;
         if (!nb && !nn && !en) {
           return this.createError({
@@ -68,7 +70,7 @@ export const schema = Yup.object().shape({
       }),
     en: Yup.string()
       .nullable()
-      .test(function(value) {
+      .test(function() {
         const { nb, nn, en } = this.parent;
         if (!nb && !nn && !en) {
           return this.createError({
@@ -83,3 +85,5 @@ export const schema = Yup.object().shape({
     Yup.string().url(localization.validation.validateLink)
   )
 });
+
+/* eslint-enable func-names */
