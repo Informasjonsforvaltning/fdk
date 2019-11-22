@@ -6,8 +6,9 @@
   "scripts": {
     "start": "webpack-dev-server --hot --inline --config webpack.hostdev.config.js",
     "build": "webpack --config webpack.prod.config.js -p",
-    "lint:all": "(cd ../../; npx eslint applications/registration-react --ext=.js,.jsx --fix)",
-    "lint": "(cd ../../; npx lint-staged)",
+    "lint:project": "eslint --ext jsx,js ./",
+    "lint:project:fix": "eslint --ext jsx,js ./ --fix",
+    "lint:staged:fix": "eslint --ext jsx,js --fix",
     "test": "jest",
     "test:coverage": "jest --coverage",
     "tdd": "jest --watch"
@@ -84,8 +85,10 @@
     "enzyme-adapter-react-16": "^1.9.1",
     "enzyme-to-json": "^3.3.3",
     "html-webpack-plugin": "^3.2.0",
+    "husky": "^3.1.0",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^24.8.0",
+    "lint-staged": "^9.4.3",
     "redux-test-utils": "^0.2.2",
     "rxjs-compat": "^6.5.2",
     "webpack": "^4.39.0",

@@ -1,0 +1,6 @@
+{
+    "*.{js,jsx}": [
+      "npm run lint:staged:fix",
+      "git add"
+    ]
+  }
