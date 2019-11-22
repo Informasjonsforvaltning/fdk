@@ -22,6 +22,9 @@ export const FormPublisher = ({ datasetItem }) => {
           </span>
         </div>
         <Helptext title={localization.schema.publisher.helptext.title} />
+        <label className="fdk-form-label mb-2" htmlFor="publisher">
+          {localization.schema.publisher.searchOrgNr}
+        </label>
         <div className="d-flex">
           <SearchPublisher onChosenPublisher={setChosenPublisher} />
           <form>

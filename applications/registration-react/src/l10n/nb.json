@@ -158,7 +158,8 @@
       "helptext": {
         "title": "Ønsker du å registrere på vegne av noen andre?"
       },
-      "registerBehalfOf": "Du registrerer på vegne av"
+      "registerBehalfOf": "Du registrerer på vegne av",
+      "searchOrgNr": "Søk på organisasjonsnummer"
     },
     "title": {
       "helptext": {
