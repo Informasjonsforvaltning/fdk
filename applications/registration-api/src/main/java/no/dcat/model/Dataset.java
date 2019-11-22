@@ -32,7 +32,7 @@ public class Dataset extends no.dcat.shared.Dataset {
     private Date _lastModified;
 
     @Field
-    private String registrationStatus = REGISTRATION_STATUS_DRAFT; // DRAFT is default
+    private String registrationStatus;
 
     public Dataset() {
         super();
