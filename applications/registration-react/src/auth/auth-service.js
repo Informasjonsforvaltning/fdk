@@ -67,6 +67,8 @@ export function login({ readOnly = false }) {
   kc.login({ redirectUri: window.location.origin, idpHint });
 }
 
+export const isAuthenticated = () => kc && kc.authenticated;
+
 export async function getToken() {
   await kc.updateToken(5);
   return kc.token;
