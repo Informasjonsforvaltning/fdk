@@ -1722,8 +1722,49 @@ Flateobjektene avgrenses uavhengig av de administrative grensene.",
       </ErrorBoundary>
     </section>
     <section
-      className="col-12 col-lg-8 offset-lg-4 d-flex justify-content-center"
+      className="col-12 col-lg-8 offset-lg-4 d-flex justify-content-center position-relative"
     >
+      <div
+        className="position-absolute d-flex"
+        style={
+          Object {
+            "left": 15,
+          }
+        }
+      >
+        <a
+          className="d-flex justify-content-center align-items-center"
+          href="/datasets.rss"
+        >
+          <img
+            alt="RSS icon"
+            src="/static/img/icon-feed-sm.svg"
+            style={
+              Object {
+                "height": "15px",
+                "marginRight": "5px",
+              }
+            }
+          />
+          RSS
+        </a>
+        <a
+          className="d-flex justify-content-center align-items-center ml-4"
+          href="/datasets.atom"
+        >
+          <img
+            alt="Atom icon"
+            src="/static/img/icon-feed-sm.svg"
+            style={
+              Object {
+                "height": "15px",
+                "marginRight": "5px",
+              }
+            }
+          />
+          Atom
+        </a>
+      </div>
       <span
         aria-hidden="false"
         className="uu-invisible"
@@ -1826,8 +1867,49 @@ exports[`should render ResultsDataset correctly with minimum of props 1`] = `
       className="col-12 col-lg-8"
     />
     <section
-      className="col-12 col-lg-8 offset-lg-4 d-flex justify-content-center"
+      className="col-12 col-lg-8 offset-lg-4 d-flex justify-content-center position-relative"
     >
+      <div
+        className="position-absolute d-flex"
+        style={
+          Object {
+            "left": 15,
+          }
+        }
+      >
+        <a
+          className="d-flex justify-content-center align-items-center"
+          href="/datasets.rss"
+        >
+          <img
+            alt="RSS icon"
+            src="/static/img/icon-feed-sm.svg"
+            style={
+              Object {
+                "height": "15px",
+                "marginRight": "5px",
+              }
+            }
+          />
+          RSS
+        </a>
+        <a
+          className="d-flex justify-content-center align-items-center ml-4"
+          href="/datasets.atom"
+        >
+          <img
+            alt="Atom icon"
+            src="/static/img/icon-feed-sm.svg"
+            style={
+              Object {
+                "height": "15px",
+                "marginRight": "5px",
+              }
+            }
+          />
+          Atom
+        </a>
+      </div>
       <span
         aria-hidden="false"
         className="uu-invisible"
