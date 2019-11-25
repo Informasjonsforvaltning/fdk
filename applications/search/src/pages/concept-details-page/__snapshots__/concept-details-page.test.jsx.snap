@@ -91,7 +91,7 @@ exports[`should render ConceptDetailsPage correctly with conceptItem 1`] = `
             referenceData={null}
             statusCode={null}
             tag="h1"
-            theme={null}
+            theme={Array []}
             title="engelsk preflabel14"
             titleLink={null}
           />

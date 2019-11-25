@@ -77,7 +77,7 @@ exports[`should render InformationModelDetailsPage correctly with informationMod
           referenceData={null}
           statusCode={null}
           tag="h1"
-          theme={null}
+          theme={Array []}
           title="Åpne Data fra Enhetsregisteret - API Dokumentasjon"
           titleLink={null}
         />
