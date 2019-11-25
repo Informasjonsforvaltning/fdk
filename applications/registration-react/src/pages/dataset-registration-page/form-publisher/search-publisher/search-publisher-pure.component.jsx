@@ -13,9 +13,7 @@ const renderInput = props => (
 );
 
 const shouldItemRender = (item, value) =>
-  get(item, 'name', '')
-    .toLowerCase()
-    .indexOf(value.toLowerCase()) > -1;
+  get(item, 'organizationId', '').indexOf(value) > -1;
 
 const getItemValue = item => get(item, 'norwegianRegistry', '');
 
@@ -25,7 +23,8 @@ const renderItem = (item, isHighlighted) => {
   });
   return (
     <div key={item.norwegianRegistry} className={itemClass}>
-      {get(item, 'name', '')}
+      <span>{get(item, 'organizationId', '')}</span> -{' '}
+      <span>{get(item, 'name', '')}</span>
     </div>
   );
 };
