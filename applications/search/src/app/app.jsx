@@ -51,9 +51,7 @@ export function App({ language }) {
 
   return (
     <div className={themeClass}>
-      {getConfig().themeNap && (
-        <DocumentMeta {...{title: 'NAP'}} />
-      )}
+      {getConfig().themeNap && <DocumentMeta {...{ title: 'NAP' }} />}
       <div>
         <a
           id="focus-element"

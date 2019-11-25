@@ -41,7 +41,9 @@ const renderReferences = (references, referencedItems, referenceData) => {
             <LinkExternal
               uri={
                 referencedItem
-                  ? `${getConfig().searchHost.host}/datasets/${referencedItem.id}`
+                  ? `${getConfig().searchHost.host}/datasets/${
+                      referencedItem.id
+                    }`
                   : referenceUri
               }
               prefLabel={
