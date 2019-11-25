@@ -17,7 +17,7 @@ export const Routes = () => (
       path="/loggedOut"
       render={props => <LoginPage {...props} loggedOut />}
     />
-    <Route exact path="/loggin" render={props => <LoginPage {...props} />} />
+    <Route exact path="/login" render={props => <LoginPage {...props} />} />
     <Redirect exact from="/" to="/catalogs" />
     <ProtectedRoute exact path="/catalogs" component={CatalogsPage} />
     <ProtectedRoute

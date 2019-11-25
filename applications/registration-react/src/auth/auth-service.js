@@ -60,7 +60,7 @@ export function logout() {
 
 export function login({ readOnly = false }) {
   // TODO For "deep linking", we want to redirect to original selected location,
-  //  but with current solution, ProtectedRoutePure component has already redireced to "/loggin".
+  //  but with current solution, ProtectedRoutePure component has already redireced to "/login".
   //  The original selected location has to be carried over to here.
   //  In addition, for deep linking, we need to handle the case when user does not have access to the resource in url.
   const idpHint = readOnly ? 'local-oidc' : 'idporten-oidc';
