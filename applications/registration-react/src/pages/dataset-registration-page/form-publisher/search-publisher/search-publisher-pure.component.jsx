@@ -29,11 +29,16 @@ const renderItem = (item, isHighlighted) => {
   );
 };
 
-const renderMenu = (items, value, style) => (
-  <div className="fdk-autocomplete-menu" style={{ ...style }}>
-    {items.slice(0, 50)}
-  </div>
-);
+const renderMenu = (items, value, style) => {
+  if (value.length < 1) {
+    return <div />;
+  }
+  return (
+    <div className="fdk-autocomplete-menu" style={{ ...style }}>
+      {items.slice(0, 50)}
+    </div>
+  );
+};
 
 export const SearchPublisherPure = ({ suggestions, onChosenPublisher }) => {
   const [searchText, setSearchText] = useState('');
