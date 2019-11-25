@@ -160,6 +160,13 @@ export const ResultsDatasetPure = ({
     window.scrollTo(0, 0);
   };
 
+  const generateSubscriptionLink = type =>
+    type === 'rss' || type === 'atom'
+      ? `${getConfig().searchHost.host}/datasets.${type}${
+          window.location.search
+        }`
+      : '#';
+
   const losItems = getLosStructure(referenceData);
   const themesItems = getThemesStructure(referenceData);
 
@@ -276,7 +283,31 @@ export const ResultsDatasetPure = ({
           {_renderHits({ datasetItems, referenceData })}
         </section>
 
-        <section className="col-12 col-lg-8 offset-lg-4 d-flex justify-content-center">
+        <section className="col-12 col-lg-8 offset-lg-4 d-flex justify-content-center position-relative">
+          <div className="position-absolute d-flex" style={{ left: 15 }}>
+            <a
+              href={generateSubscriptionLink('rss')}
+              className="d-flex justify-content-center align-items-center"
+            >
+              <img
+                src="/static/img/icon-feed-sm.svg"
+                alt="RSS icon"
+                style={{ height: '15px', marginRight: '5px' }}
+              />
+              RSS
+            </a>
+            <a
+              href={generateSubscriptionLink('atom')}
+              className="d-flex justify-content-center align-items-center ml-4"
+            >
+              <img
+                src="/static/img/icon-feed-sm.svg"
+                alt="Atom icon"
+                style={{ height: '15px', marginRight: '5px' }}
+              />
+              Atom
+            </a>
+          </div>
           <span className="uu-invisible" aria-hidden="false">
             Sidepaginering.
           </span>
