@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import DocumentMeta from 'react-document-meta';
-import Disqus from 'disqus-react';
 
 import localization from '../../lib/localization';
 import { getTranslateText } from '../../lib/translateText';
@@ -31,7 +30,6 @@ import {
   getReferenceDataByCode,
   REFERENCEDATA_PATH_APISERVICETYPE
 } from '../../redux/modules/referenceData';
-import { getConfig } from '../../config';
 
 const renderDescription = descriptionFormatted => {
   if (!descriptionFormatted) {
@@ -433,14 +431,6 @@ export const ApiDetailsPage = ({
     description: getTranslateText(apiItem.description)
   };
 
-  const disqusShortname = getConfig().disqusShortname;
-
-  const disqusConfig = {
-    url: window.location.href,
-    identifier: apiItem.id,
-    title: meta.title
-  };
-
   const { isFree, isOpenAccess, isOpenLicense } = apiItem;
 
   return (
@@ -525,12 +515,6 @@ export const ApiDetailsPage = ({
             {renderInformationModelReferences(referencedInformationModels)}
 
             {renderContactPoints(apiItem.contactPoint)}
-            {disqusShortname && (
-              <Disqus.DiscussionEmbed
-                shortname={disqusShortname}
-                config={disqusConfig}
-              />
-            )}
             <div style={{ height: '75vh' }} />
           </section>
         </div>
