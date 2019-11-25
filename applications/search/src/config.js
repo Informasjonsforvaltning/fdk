@@ -13,7 +13,6 @@ const createConfig = env => {
 
   return {
     store: { useLogger: env.REDUX_LOG === 'true' },
-    disqusShortname: env.DISQUS_SHORTNAME,
     filterTransportDatasets: isNapProfile(env.NAP_HOST),
     themeNap: isNapProfile(env.NAP_HOST),
     datasetApi: defaultToSearchApi(env.DATASET_API_HOST),
