@@ -35,27 +35,33 @@ const renderPublisher = (
   );
 };
 
-const renderThemes = (theme, losItems, darkThemeBackground) => {
+const renderThemes = (themes, losItems, darkThemeBackground) => {
   const themeClass = cx('align-self-center mr-2 mb-2', {
     'fdk-label': !darkThemeBackground,
     'fdk-label-details': darkThemeBackground
   });
 
-  let themeNodes;
-  if (theme) {
-    themeNodes = theme.map((singleTheme, index) => {
+  return themes
+    .map((singleTheme, index) => {
       const losItem = _.find(losItems, { uri: singleTheme.id });
-      return (
-        <div key={`dataset-description-theme-${index}`} className={themeClass}>
-          <span className="uu-invisible" aria-hidden="false">
-            Datasettets tema.
-          </span>
-          {getTranslateText(_.get(losItem, 'prefLabel') || singleTheme.title)}
-        </div>
+      const title = getTranslateText(
+        _.get(losItem, 'prefLabel') || singleTheme.title
       );
-    });
-  }
-  return themeNodes;
+      return (
+        title && (
+          <div
+            key={`dataset-description-theme-${index}`}
+            className={themeClass}
+          >
+            <span className="uu-invisible" aria-hidden="false">
+              Datasettets tema.
+            </span>
+            {title}
+          </div>
+        )
+      );
+    })
+    .filter(Boolean);
 };
 
 const renderTitle = (Tag, title, titleLink, externalLink) => {
@@ -96,7 +102,7 @@ export const SearchHitHeader = props => {
     publisher,
     publisherTag,
     publisherItems,
-    theme,
+    theme: themes = [],
     nationalComponent,
     statusCode,
     referenceData,
@@ -133,11 +139,10 @@ export const SearchHitHeader = props => {
         )}
       </div>
 
-      {(nationalComponent || theme) && (
+      {(nationalComponent || !!themes.length) && (
         <div className="mb-4 d-flex flex-wrap align-items-baseline align-items-center">
           {nationalComponent && <LabelNational />}
-
-          {theme && renderThemes(theme, losItems, darkThemeBackground)}
+          {renderThemes(themes, losItems, darkThemeBackground)}
         </div>
       )}
     </>
@@ -152,7 +157,7 @@ SearchHitHeader.defaultProps = {
   publisher: null,
   publisherTag: 'span',
   publisherItems: null,
-  theme: null,
+  theme: [],
   nationalComponent: false,
   statusCode: null,
   referenceData: null,

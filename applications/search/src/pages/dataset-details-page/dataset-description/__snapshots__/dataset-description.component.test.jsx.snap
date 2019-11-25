@@ -161,7 +161,7 @@ exports[`should render DatasetDescription correctly with no props 1`] = `
     referenceData={null}
     statusCode={null}
     tag="h1"
-    theme={null}
+    theme={Array []}
     title={null}
     titleLink={null}
   />

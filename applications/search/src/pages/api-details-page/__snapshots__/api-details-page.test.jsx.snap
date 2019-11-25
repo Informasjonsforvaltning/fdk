@@ -126,7 +126,7 @@ exports[`should render ApiDetailsPage correctly with apiItem 1`] = `
             referenceData={null}
             statusCode={null}
             tag="h1"
-            theme={null}
+            theme={Array []}
             title="National API Directory Search API"
             titleLink={null}
           />
@@ -431,7 +431,7 @@ exports[`should render ApiDetailsPage correctly with missing api-properties 1`] 
             referenceData={null}
             statusCode={null}
             tag="h1"
-            theme={null}
+            theme={Array []}
             title={null}
             titleLink={null}
           />

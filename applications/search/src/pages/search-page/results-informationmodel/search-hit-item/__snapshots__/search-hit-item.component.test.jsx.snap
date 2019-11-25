@@ -45,7 +45,7 @@ exports[`should render informatiomModel-SearchHitItem correctly 1`] = `
       referenceData={null}
       statusCode={null}
       tag="h2"
-      theme={null}
+      theme={Array []}
       title="Enhetsregisteret"
       titleLink="/informationmodels/eadda99c-781e-4900-8f54-8dd298168382"
     />
