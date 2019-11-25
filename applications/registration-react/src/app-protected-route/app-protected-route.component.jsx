@@ -25,7 +25,7 @@ export const ProtectedRoutePure = props => {
   };
 
   if (!user) {
-    return <Redirect to="/loggin" />;
+    return <Redirect to="/login" />;
   }
 
   return (
