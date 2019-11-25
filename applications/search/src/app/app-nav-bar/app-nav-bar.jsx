@@ -15,7 +15,8 @@ import {
   PATHNAME_REPORTS,
   PATHNAME_ABOUT,
   PATHNAME_ABOUT_REGISTRATION,
-  PATHNAME_ABOUT_NAP
+  PATHNAME_ABOUT_NAP,
+  PATHNAME_HOME_NAP
 } from '../../constants/constants';
 import './app-nav-bar.scss';
 import { getConfig } from '../../config';
@@ -32,7 +33,7 @@ export function AppNavBar(props) {
                   ? localization.linkToNap
                   : localization.linkToFdk
               }
-              href="/"
+              href={getConfig().themeNap ? PATHNAME_HOME_NAP : '/'}
             >
               <span className="uu-invisible" aria-hidden="false">
                 Gå til forside
