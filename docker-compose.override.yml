@@ -18,7 +18,7 @@ services:
       - ES_JAVA_OPTS=-Xms512m -Xmx512m
 
   fuseki:
-    build: ./applications/fuseki
+    image: eu.gcr.io/fdk-infra/fuseki:env_ut1_latest
     volumes:
       - /etc/fuseki/databases/
     ports:
@@ -44,7 +44,7 @@ services:
   # 127.0.0.1       sso
 
   sso:
-    build: ./applications/sso
+    image: eu.gcr.io/fdk-infra/sso:env_ut1_latest
     volumes:
       #use this for theme development
       #- ../fdk/applications/sso/themes/fdk:/opt/jboss/keycloak/themes/fdk
@@ -86,7 +86,7 @@ services:
   ##################################
 
   nginx-search:
-    build: ./applications/nginx-search
+    image: eu.gcr.io/fdk-infra/nginx-search:env_ut1_latest
     ports:
       - "8080:8080"
 
@@ -114,7 +114,7 @@ services:
   ####################################
 
   search:
-    build: ./applications/search
+    image: eu.gcr.io/fdk-infra/search:env_ut1_latest
     ports:
       - "3000:3000"
     volumes:
@@ -124,7 +124,7 @@ services:
       - DISQUS_SHORTNAME=CHANGE_ME
 
   registration-react:
-    build: ./applications/registration-react
+    image: eu.gcr.io/fdk-infra/registration-react:env_ut1_latest
     ports:
       - "4300:4300"
     volumes:
@@ -140,6 +140,7 @@ services:
   #############################
 
   api-cat:
+    image: eu.gcr.io/fdk-infra/api-cat:env_ut1_latest
     ports:
       - "8102:8080"
     environment:
@@ -148,6 +149,7 @@ services:
       - LOG_FORMAT=compact
 
   concept-cat:
+    image: eu.gcr.io/fdk-infra/concept-cat:env_ut1_latest
     ports:
       - "8104:8080"
     environment:
@@ -155,6 +157,7 @@ services:
       - LOG_LEVEL=DEBUG
 
   informationmodel-cat:
+    image: eu.gcr.io/fdk-infra/informationmodel-cat:env_ut1_latest
     ports:
       - "8108:8080"
     environment:
@@ -162,6 +165,7 @@ services:
       - LOG_LEVEL=DEBUG
 
   harvester:
+    image: eu.gcr.io/fdk-infra/harvester:env_ut1_latest
     ports:
       - "8082:8080"
     environment:
@@ -170,6 +174,7 @@ services:
       - harvester_adminPassword=password
 
   harvester-api:
+    image: eu.gcr.io/fdk-infra/harvester-api:env_ut1_latest
     ports:
       - "8106:8080"
     environment:
@@ -179,6 +184,7 @@ services:
       - LOG_FORMAT=compact
 
   reference-data:
+    image: eu.gcr.io/fdk-infra/reference-data:env_ut1_latest
     ports:
       - "8112:8080"
     environment:
@@ -188,6 +194,7 @@ services:
       - FDK_SQL_PASSWORD=password
 
   registration-api:
+    image: dcatno/registration-api:latest
     ports:
       - "8114:8080"
     environment:
@@ -198,13 +205,26 @@ services:
       - LOG_FORMAT=compact
       - FDK_ENHETSREGISTERET_PROXY_URL=http://nginx-enhetsregisteret-proxy-mock:8080/enhetsregisteret/api/enheter/
 
+  api-catalogue:
+    ports:
+      - "8116:8080"
+    environment:
+      - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
+      - registrationApi_harvesterUsername=test_admin
+      - registrationApi_harvesterPassword=password
+      - LOG_LEVEL=DEBUG
+      - LOG_FORMAT=compact
+      - FDK_ENHETSREGISTERET_PROXY_URL=http://nginx-enhetsregisteret-proxy-mock:8080/enhetsregisteret/api/enheter/
+
   search-api:
+    image: eu.gcr.io/fdk-infra/search-api:env_ut1_latest
     ports:
       - "8118:8080"
     environment:
       - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
 
   user-api:
+    image: eu.gcr.io/fdk-infra/user-api:env_ut1_latest
     ports:
       - "8124:8080"
     environment:
@@ -219,17 +239,17 @@ services:
   ###########################
 
   nginx-altinn-proxy-mock:
-    build: ./applications/nginx-altinn-proxy-mock
+    image: eu.gcr.io/fdk-infra/nginx-altinn-proxy-mock:env_ut1_latest
     ports:
       - "8128:8080"
 
   nginx-enhetsregisteret-proxy-mock:
-    build: ./applications/nginx-enhetsregisteret-proxy-mock
+    image: eu.gcr.io/fdk-infra/nginx-enhetsregisteret-proxy-mock:env_ut1_latest
     ports:
       - "8132:8080"
 
   e2e:
-    build: ./applications/e2e
+    image: eu.gcr.io/fdk-infra/e2e:env_ut1_latest
     volumes:
       - ./applications/e2e/test:/usr/src/app/test
       - ./applications/e2e/reports:/usr/src/app/reports

@@ -162,6 +162,15 @@ services:
       - reference-data
       - api-cat
 
+  api-catalogue:
+    image: dcatno/api-catalogue:latest
+    expose:
+      - "8080"
+    depends_on:
+      - elasticsearch5
+      - reference-data
+      - api-cat
+
   reference-data:
     image: dcatno/reference-data:latest
     expose:
@@ -192,12 +201,10 @@ services:
   ###########################
 
   nginx-altinn-proxy-mock:
-    build: dcatno/nginx-altinn-proxy-mock:latest
     expose:
       - "8080"
 
   nginx-enhetsregisteret-proxy-mock:
-    build: dcatno/nginx-enhetsregisteret-proxy-mock:latest
     expose:
       - "8080"
 
