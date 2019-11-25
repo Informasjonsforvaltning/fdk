@@ -24,7 +24,9 @@ const sanitizerConfig = {
   allowedTags: sanitizeHtml.defaults.allowedTags.concat(['h2', 'p', 'ul']),
   allowedAttributes: {
     p: ['class'],
-    ul: ['class']
+    ul: ['class'],
+    i: ['class'],
+    a: ['href', 'target', 'style']
   }
 };
 
@@ -32,6 +34,7 @@ export function convertToSanitizedHtml(markdownContent) {
   if (typeof markdownContent !== 'string') {
     return '';
   }
+
   const unsanitizedHtml = showDownConverter.makeHtml(markdownContent);
   return sanitizeHtml(unsanitizedHtml, sanitizerConfig);
 }
