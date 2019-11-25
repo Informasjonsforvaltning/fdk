@@ -299,7 +299,7 @@ Velg Feed dersom det er en distribusjon hvor endringer hentes gjennom f.eks. RSS
     abstract:
       'Velg format(er) fra IANAs liste over offisielle medietyper. Dersom formatet ikke finnes i listen kan du angi eget.',
     description: `Skriv inn format og avlsutt med TAB eller Enter. Vi anbefaler at du bruker de samme formatbeskrivelsene som du finner i lenken nedenfor. (Obs: Du må selv kopiere over formatet fra listen.) 
-Lenke til IANAs liste over offisielle medietyper: <a href='http://www.iana.org/assignments/media-types/media-types.xhtml'>http://www.iana.org/assignments/media-types/media-types.xhtml</a>`
+Lenke til IANAs liste over offisielle medietyper: <a style="font-weight: bold;" target='_blank' href='http://www.iana.org/assignments/media-types/media-types.xhtml'>Media Types<i class="fa fa-external-link fdk-fa-right"/></a>`
   },
   Distribution_accessURL: {
     abstract:
