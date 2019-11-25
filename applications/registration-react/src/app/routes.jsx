@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch } from 'react-router';
+import { Redirect, Route, Switch } from 'react-router';
 
 import { LoginPage } from '../pages/login-page/login-page';
 import { ProtectedRoute } from '../app-protected-route/app-protected-route.component';
@@ -18,7 +18,8 @@ export const Routes = () => (
       render={props => <LoginPage {...props} loggedOut />}
     />
     <Route exact path="/loggin" render={props => <LoginPage {...props} />} />
-    <ProtectedRoute exact path="/" component={CatalogsPage} />
+    <Redirect exact from="/" to="/catalogs" />
+    <ProtectedRoute exact path="/catalogs" component={CatalogsPage} />
     <ProtectedRoute
       exact
       path="/catalogs/:catalogId/datasets"
