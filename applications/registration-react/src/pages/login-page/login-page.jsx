@@ -1,10 +1,13 @@
+import pick from 'lodash/pick';
 import React from 'react';
 import { Button } from 'reactstrap';
 import PropTypes from 'prop-types';
+import { withProps } from 'recompose';
 
 import localization from '../../lib/localization';
 import { login } from '../../auth/auth-service';
 import './login-page.scss';
+import { getLoginState } from '../../auth/login-store';
 
 const showLoginReadOnly = window.localStorage.getItem('showLoginReadOnly');
 
@@ -24,11 +27,11 @@ const renderMessageForLoggedOutDueToTimeout = () => (
   </div>
 );
 
-export const LoginPagePure = ({ loggedOut }) => (
+export const LoginPagePure = ({ loggedOutDueToTimeout }) => (
   <>
     <div className="login-dialog-wrapper pt-5">
       <div className="container">
-        {loggedOut && renderMessageForLoggedOutDueToTimeout()}
+        {loggedOutDueToTimeout && renderMessageForLoggedOutDueToTimeout()}
         <div className="row">
           {showLoginReadOnly && (
             <div className="col-md-6">
@@ -110,11 +113,15 @@ export const LoginPagePure = ({ loggedOut }) => (
 );
 
 LoginPagePure.defaultProps = {
-  loggedOut: false
+  loggedOutDueToTimeout: false
 };
 
 LoginPagePure.propTypes = {
-  loggedOut: PropTypes.bool
+  loggedOutDueToTimeout: PropTypes.bool
 };
 
-export const LoginPage = LoginPagePure;
+const withLoginProps = withProps(() =>
+  pick(getLoginState(), 'loggedOutDueToTimeout')
+);
+
+export const LoginPage = withLoginProps(LoginPagePure);

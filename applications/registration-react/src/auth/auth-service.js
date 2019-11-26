@@ -4,6 +4,7 @@ import Keycloak from 'keycloak-js';
 
 import { getConfig } from '../config';
 import { loadTokens, removeTokens, storeTokens } from './token-store';
+import { clearLoginState, setLoginState } from './login-store';
 
 let kc;
 
@@ -13,6 +14,7 @@ const ROLE_ADMIN = 'admin';
 
 function setOnAuthSuccess() {
   const handler = () => {
+    clearLoginState();
     storeTokens({ token: kc.token, refreshToken: kc.refreshToken });
   };
 
@@ -43,7 +45,12 @@ export async function initAuth() {
 
 export function logout() {
   removeTokens();
-  return kc.logout({ redirectUri: `${window.location.origin}/loggedOut` });
+  return kc.logout();
+}
+
+export function logoutByTimeout() {
+  setLoginState({ loggedOutDueToTimeout: true });
+  logout();
 }
 
 export function login({ readOnly = false }) {

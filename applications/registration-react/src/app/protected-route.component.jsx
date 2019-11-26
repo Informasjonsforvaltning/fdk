@@ -1,7 +1,7 @@
 import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import IdleTimer from 'react-idle-timer';
-import { isAuthenticated, logout } from '../auth/auth-service';
+import { isAuthenticated, logoutByTimeout } from '../auth/auth-service';
 
 export const ProtectedRoutePure = props => {
   if (!isAuthenticated()) {
@@ -13,7 +13,7 @@ export const ProtectedRoutePure = props => {
       <Route {...props} />
       <IdleTimer
         element={document}
-        onIdle={logout}
+        onIdle={logoutByTimeout}
         timeout={27.5 * 60 * 1000}
         debounce={5000}
       />

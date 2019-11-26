@@ -7,7 +7,7 @@ let wrapper;
 
 beforeEach(() => {
   defaultProps = {
-    loggedOut: true
+    loggedOutDueToTimeout: true
   };
   wrapper = shallow(<LoginPagePure {...defaultProps} />);
 });
