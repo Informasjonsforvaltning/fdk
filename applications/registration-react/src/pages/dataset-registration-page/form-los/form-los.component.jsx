@@ -50,7 +50,12 @@ export const FormLOSPure = ({
           items={losItems}
           renderInput={props => (
             <div className="input-group">
-              <input type="text" className="form-control" {...props} />
+              <input
+                type="text"
+                className="form-control"
+                {...props}
+                placeholder={localization.schema.los.losSearchPlaceholder}
+              />
               <span className="input-group-btn input-group-append">
                 <button
                   type="button"

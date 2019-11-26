@@ -376,6 +376,7 @@
       "title": "LOS tema",
       "themeLabel": "Tema",
       "topicsLabel": "Foreslåtte emner",
+      "losSearchPlaceholder": "Søk etter tema eller emne",
       "helptext": {
         "title": "Tema og emner"
       }
