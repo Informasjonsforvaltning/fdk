@@ -2,7 +2,7 @@ import React from 'react';
 import { Redirect, Route, Switch } from 'react-router';
 
 import { LoginPage } from '../pages/login-page/login-page';
-import { ProtectedRoute } from '../app-protected-route/app-protected-route.component';
+import { ProtectedRoute } from './protected-route.component';
 import { CatalogsPage } from '../pages/catalogs-page/catalogs-page';
 import { CatalogRoutes } from './catalog-routes';
 
