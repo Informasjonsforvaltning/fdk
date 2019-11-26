@@ -68,7 +68,7 @@ const renderNodes = ({ nodes, losItems, input, defaultOpenTree }) => {
               />
             }
             defaultCollapsed={!nodeIsOpen}
-            itemClassName="tree-view_main d-flex flex-row-reverse justify-content-end ml-2 py-2"
+            itemClassName="tree-view_main d-flex flex-row-reverse justify-content-end align-items-center ml-2 py-2"
           >
             {renderChildrenNodes({
               childrenNodes: getAllLosChildrenNodes(losItems, children),
