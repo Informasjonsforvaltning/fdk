@@ -238,7 +238,6 @@ class DatasetsSearchQueryBuilder {
             builder.should(FilterBuilders.losTheme("trafikk-og-transport/trafikkinformasjon", queryBuilder));
             builder.should(FilterBuilders.losTheme("trafikk-og-transport/veg-og-vegregulering", queryBuilder));
             builder.should(FilterBuilders.losTheme("trafikk-og-transport/yrkestransport", queryBuilder));
-            builder.should(FilterBuilders.theme("TRAN", queryBuilder));
             return builder;
         }
 
