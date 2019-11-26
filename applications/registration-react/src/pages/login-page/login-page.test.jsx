@@ -4,12 +4,9 @@ import { LoginPagePure } from './login-page';
 
 let defaultProps;
 let wrapper;
-let dispatch;
 
 beforeEach(() => {
-  dispatch = jest.fn();
   defaultProps = {
-    dispatch,
     loggedOut: true
   };
   wrapper = shallow(<LoginPagePure {...defaultProps} />);

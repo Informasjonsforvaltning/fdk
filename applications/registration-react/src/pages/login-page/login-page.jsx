@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { Button } from 'reactstrap';
 import PropTypes from 'prop-types';
 
@@ -117,15 +116,4 @@ LoginPagePure.propTypes = {
   loggedOut: PropTypes.bool
 };
 
-function mapStateToProps({ user }) {
-  const { userItem, isFetchingUser } = user || {
-    userItem: null,
-    isFetchingUser: false
-  };
-  return {
-    userItem,
-    isFetchingUser
-  };
-}
-
-export const LoginPage = connect(mapStateToProps)(LoginPagePure);
+export const LoginPage = LoginPagePure;
