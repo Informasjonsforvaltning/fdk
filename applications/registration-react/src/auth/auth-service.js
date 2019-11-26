@@ -11,24 +11,13 @@ const PERMISSION_ADMIN = 'PERMISSION_ADMIN';
 const RESOURCE_ORGANIZATION = 'organization';
 const ROLE_ADMIN = 'admin';
 
-function setOnAuthSuccess({ onAuthSuccess }) {
+function setOnAuthSuccess() {
   const handler = () => {
     storeTokens({ token: kc.token, refreshToken: kc.refreshToken });
-
-    if (typeof onAuthSuccess === 'function') {
-      onAuthSuccess();
-    }
   };
 
   kc.onAuthRefreshSuccess = handler;
   kc.onAuthSuccess = handler;
-}
-
-function setOnAuthError({ onAuthError }) {
-  if (typeof onAuthError === 'function') {
-    kc.onAuthError = onAuthError;
-    kc.onAuthRefreshError = onAuthError;
-  }
 }
 
 async function initialize() {
@@ -43,12 +32,11 @@ async function initialize() {
   await kc.init(initOptions);
 }
 
-export async function configureAuth({ onAuthSuccess, onAuthError }) {
+export async function initAuth() {
   const kcConfig = getConfig().keycloak;
   kc = Keycloak(kcConfig);
 
-  setOnAuthSuccess({ onAuthSuccess });
-  setOnAuthError({ onAuthError });
+  setOnAuthSuccess();
 
   await initialize();
 }

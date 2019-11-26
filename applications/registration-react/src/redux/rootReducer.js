@@ -1,6 +1,5 @@
 import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form';
-import user from './modules/user';
 import catalog from './modules/catalog';
 import datasets from './modules/datasets';
 import catalogs from './modules/catalogs';
@@ -13,7 +12,6 @@ import { referenceDataReducer } from './modules/referenceData';
 
 const rootReducer = combineReducers({
   form: formReducer,
-  user,
   catalog,
   datasets,
   catalogs,
