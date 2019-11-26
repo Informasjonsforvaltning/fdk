@@ -8,7 +8,6 @@ import { CatalogRoutes } from './catalog-routes';
 
 export const Routes = () => (
   <Switch>
-    <Route exact path="/loggedOut" render={() => <LoginPage loggedOut />} />
     <Route exact path="/login" component={LoginPage} />
     <Redirect exact from="/" to="/catalogs" />
     <ProtectedRoute exact path="/catalogs" component={CatalogsPage} />
