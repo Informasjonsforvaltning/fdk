@@ -1,13 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { compose } from 'recompose';
+import { compose, withProps } from 'recompose';
 import { withRouter } from 'react-router';
 
 import localization from '../../lib/localization';
 import './app-header.scss';
-import { selectUser } from '../../redux/modules/user';
-import { logout } from '../../auth/auth-service';
+import { getUserProfile, logout } from '../../auth/auth-service';
 
 export const AppHeaderPure = ({ location, user }) => {
   return (
@@ -77,11 +75,9 @@ AppHeaderPure.propTypes = {
   location: PropTypes.object.isRequired
 };
 
-const mapStateToProps = state => ({ user: selectUser(state) });
-
 const enhance = compose(
   withRouter,
-  connect(mapStateToProps)
+  withProps(() => ({ user: getUserProfile() }))
 );
 
 export const AppHeader = enhance(AppHeaderPure);
