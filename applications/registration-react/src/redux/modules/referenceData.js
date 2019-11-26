@@ -118,8 +118,13 @@ export const isNapTheme = (losItems, themeUris) => {
   return _.some(themeUris, theme => {
     const losItem = _.find(losItems, { uri: theme.uri });
     const losPaths = _.get(losItem, 'losPaths', []);
-    return _.some(losPaths, path =>
-      _.startsWith(path, 'trafikk-reiser-og-samferdsel')
+    return _.some(
+      losPaths,
+      path =>
+        _.startsWith(path, 'trafikk-og-transport/mobilitetstilbud') ||
+        _.startsWith(path, 'trafikk-og-transport/trafikkinformasjon') ||
+        _.startsWith(path, 'trafikk-og-transport/veg-og-vegregulering') ||
+        _.startsWith(path, 'trafikk-og-transport/yrkestransport')
     );
   });
 };
