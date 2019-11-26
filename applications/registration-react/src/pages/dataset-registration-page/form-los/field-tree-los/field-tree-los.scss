@@ -18,7 +18,19 @@
   }
   .tree-view_arrow {
     font-size: 1.8rem;
-    margin-left: 0.25rem;
+    margin-left: 0.5rem;
+    &:after {
+      color: $color-link;
+      content: '\F106';
+      font-family: FontAwesome;
+      font-size: 2rem;
+    }
+  }
+  .tree-view_arrow-collapsed {
+    -webkit-transform: rotate(-180deg);
+    -moz-transform: rotate(-180deg);
+    -ms-transform: rotate(-180deg);
+    transform: rotate(-180deg);
   }
 }
 
