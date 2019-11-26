@@ -1,21 +1,19 @@
 import React from 'react';
-import { Redirect, Route, withRouter } from 'react-router-dom';
+import { Redirect, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import IdleTimer from 'react-idle-timer';
 import { selectUser } from '../redux/modules/user';
 import { logout } from '../auth/auth-service';
 
-export const ProtectedRoutePure = props => {
-  const { user, component: Component } = props;
-
+export const ProtectedRoutePure = ({ user, ...props }) => {
   if (!user) {
     return <Redirect to="/login" />;
   }
 
   return (
     <>
-      <Route {...props} component={Component} />
+      <Route {...props} />
       <IdleTimer
         element={document}
         onIdle={logout}
@@ -42,6 +40,4 @@ function mapStateToProps(state) {
   };
 }
 
-export const ProtectedRoute = withRouter(
-  connect(mapStateToProps)(ProtectedRoutePure)
-);
+export const ProtectedRoute = connect(mapStateToProps)(ProtectedRoutePure);
