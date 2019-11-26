@@ -53,7 +53,27 @@ exports[`should render AppHeader correctly 1`] = `
         </div>
         <div
           className="col-6 col-md-8 d-flex align-items-center fdk-header-text_items justify-content-end"
-        />
+        >
+          <div
+            className="mr-4"
+          >
+            <i
+              className="fa fa-user fdk-fa-left fdk-color-primary"
+            />
+            john doe
+          </div>
+          <div
+            className="mr-4 fdk-auth-link"
+          >
+            <button
+              className="fdk-btn-no-border"
+              onClick={[Function]}
+              type="button"
+            >
+              Logg ut
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </div>

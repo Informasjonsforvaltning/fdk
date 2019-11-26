@@ -4,13 +4,11 @@ import { AppHeaderPure } from './app-header.component';
 
 let defaultProps;
 let wrapper;
-let dispatch;
 
 beforeEach(() => {
-  dispatch = jest.fn();
   defaultProps = {
-    dispatch,
-    location: { pathname: 'abc' }
+    location: { pathname: 'abc' },
+    user: { name: 'john doe' }
   };
   wrapper = shallow(<AppHeaderPure {...defaultProps} />);
 });

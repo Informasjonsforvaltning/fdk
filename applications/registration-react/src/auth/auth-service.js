@@ -74,7 +74,8 @@ export async function getToken() {
   return kc.token;
 }
 
-export const getUserProfile = () => _.pick(kc.tokenParsed, 'name');
+export const getUserProfile = () =>
+  isAuthenticated() ? _.pick(kc.tokenParsed, 'name') : null;
 
 const extractResourceRoles = authorities => {
   return (authorities || '')
