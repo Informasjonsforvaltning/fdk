@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { compose, withProps } from 'recompose';
-import { withRouter } from 'react-router';
+import { withRouter } from 'react-router-dom';
 
 import localization from '../../lib/localization';
 import './app-header.scss';

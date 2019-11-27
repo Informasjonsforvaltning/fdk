@@ -1,5 +1,5 @@
 import React from 'react';
-import { Redirect, Route, Switch } from 'react-router';
+import { Redirect, Route, Switch } from 'react-router-dom';
 
 import { LoginPage } from '../pages/login-page/login-page';
 import { ProtectedRoute } from './protected-route.component';

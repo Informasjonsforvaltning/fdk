@@ -1,5 +1,5 @@
 import React from 'react';
-import { Redirect, Route, Switch } from 'react-router';
+import { Redirect, Route, Switch } from 'react-router-dom';
 import { DatasetsListPage } from '../pages/dataset-list-page/dataset-list-page';
 import { DatasetRegistrationPage } from '../pages/dataset-registration-page/dataset-registration-page';
 import { ConnectedAPIListPage } from '../pages/api-list-page/connected-api-list-page';
