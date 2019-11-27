@@ -17,8 +17,8 @@ export const StatusBar = ({
   published,
   justPublishedOrUnPublished,
   onDelete,
-  formComponent,
-  allowPublish
+  allowPublish,
+  onChange
 }) => {
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
   const toggleShowConfirmDelete = () =>
@@ -52,8 +52,8 @@ export const StatusBar = ({
         published={published}
         type={type}
         isSaving={isSaving}
-        formComponent={formComponent}
         allowPublish={allowPublish}
+        onChange={onChange}
       />
     </>
   );
@@ -66,8 +66,8 @@ StatusBar.defaultProps = {
   published: false,
   justPublishedOrUnPublished: false,
   onDelete: noop(),
-  formComponent: null,
-  allowPublish: true
+  allowPublish: true,
+  onChange: noop()
 };
 
 StatusBar.propTypes = {
@@ -78,6 +78,6 @@ StatusBar.propTypes = {
   published: PropTypes.bool,
   justPublishedOrUnPublished: PropTypes.bool,
   onDelete: PropTypes.func,
-  formComponent: PropTypes.object,
-  allowPublish: PropTypes.bool
+  allowPublish: PropTypes.bool,
+  onChange: PropTypes.func
 };

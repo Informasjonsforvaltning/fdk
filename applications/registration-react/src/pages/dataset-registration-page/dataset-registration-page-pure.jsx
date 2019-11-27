@@ -18,7 +18,6 @@ import { ConnectedFormReference } from './form-reference/connected-form-referenc
 import { FormInformationModel } from './form-informationmodel/form-informationmodel.component';
 import { ConnectedFormContactPoint } from './form-contactPoint/connected-form-contactPoint.component';
 import { ConnectedFormContents } from './form-contents/connected-form-contents.component';
-import { StatusBar } from '../../components/status-bar/status-bar.component';
 import { FormPublish } from './form-publish/form-publish';
 import { FormDistributionApi } from './form-distribution-api/form-distribution-api';
 import { ConnectedFormLOS } from './form-los/connected-form-los.component';
@@ -377,7 +376,14 @@ export function DatasetRegistrationPagePure(props) {
                 />
               </FormTemplateWithState>
               {!isReadOnly && (
-                <StatusBar
+                <FormPublish
+                  initialItemStatus={_.get(
+                    datasetItem,
+                    'registrationStatus',
+                    ''
+                  )}
+                  catalogId={catalogId}
+                  datasetId={datasetId}
                   type="dataset"
                   isSaving={datasetFormStatus && datasetFormStatus.isSaving}
                   lastSaved={datasetItem._lastModified}
@@ -396,17 +402,6 @@ export function DatasetRegistrationPagePure(props) {
                     })
                   }
                   allowPublish={isAllowedToPublish(form)}
-                  formComponent={
-                    <FormPublish
-                      initialItemStatus={_.get(
-                        datasetItem,
-                        'registrationStatus',
-                        ''
-                      )}
-                      catalogId={catalogId}
-                      datasetId={datasetId}
-                    />
-                  }
                 />
               )}
             </div>

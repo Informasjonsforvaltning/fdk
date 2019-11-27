@@ -1,26 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import _ from 'lodash';
+import noop from 'lodash/noop';
 import { Button } from 'reactstrap';
 
-const handleChange = (props, registrationStatus) => {
-  const { input } = props;
-
-  input.onChange(registrationStatus);
+const handleChange = (onChange, registrationStatus) => {
+  onChange(registrationStatus);
 };
 
-export const ButtonRegistrationStatus = props => {
-  const { input } = props;
-  const registrationStatus = _.get(input, 'value');
-  const isPublished = registrationStatus === 'PUBLISH';
-
-  if (!isPublished) {
+export const ButtonRegistrationStatus = ({ onChange, published }) => {
+  if (!published) {
     return (
       <Button
         id="dataset-setPublish-button"
         className="fdk-button mr-3"
         color="primary"
-        onClick={() => handleChange(props, 'PUBLISH')}
+        onClick={() => handleChange(onChange, 'PUBLISH')}
       >
         Publiser
       </Button>
@@ -30,7 +24,7 @@ export const ButtonRegistrationStatus = props => {
     <Button
       id="dataset-setDraft-button"
       className="fdk-button shadow-none bg-transparent btn-outline-primary mr-3"
-      onClick={() => handleChange(props, 'DRAFT')}
+      onClick={() => handleChange(onChange, 'DRAFT')}
     >
       Avpubliser
     </Button>
@@ -38,9 +32,11 @@ export const ButtonRegistrationStatus = props => {
 };
 
 ButtonRegistrationStatus.defaultProps = {
-  input: null
+  onChange: noop(),
+  published: false
 };
 
 ButtonRegistrationStatus.propTypes = {
-  input: PropTypes.object
+  onChange: PropTypes.func,
+  published: PropTypes.bool
 };

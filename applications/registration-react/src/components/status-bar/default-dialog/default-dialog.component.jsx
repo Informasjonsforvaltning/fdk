@@ -4,6 +4,7 @@ import noop from 'lodash/noop';
 import cx from 'classnames';
 import { Button } from 'reactstrap';
 import localization from '../../../lib/localization';
+import { ButtonRegistrationStatus } from '../../form-publish/button-registration-status/button-registration-status.component';
 
 const renderMessageForPublishStatusChange = ({ published, type }) =>
   published
@@ -39,9 +40,9 @@ export const DefaultDialog = ({
   published,
   type,
   isSaving,
-  formComponent,
   allowPublish,
-  error
+  error,
+  onChange
 }) => {
   let messageClass;
   let message;
@@ -68,7 +69,7 @@ export const DefaultDialog = ({
       <div className="d-flex">
         {/* if it is not allowed to publish, it is still a llowed to unpublish */}
         {allowPublish || published
-          ? formComponent
+          ? ButtonRegistrationStatus({ onChange, published })
           : renderToggleShowValidationButton(onShowValidationError)}
 
         <button
@@ -91,8 +92,8 @@ DefaultDialog.defaultProps = {
   error: null,
   published: false,
   justPublishedOrUnPublished: false,
-  formComponent: null,
-  allowPublish: true
+  allowPublish: true,
+  onChange: noop()
 };
 
 DefaultDialog.propTypes = {
@@ -103,6 +104,6 @@ DefaultDialog.propTypes = {
   error: PropTypes.object,
   published: PropTypes.bool,
   justPublishedOrUnPublished: PropTypes.bool,
-  formComponent: PropTypes.object,
-  allowPublish: PropTypes.bool
+  allowPublish: PropTypes.bool,
+  onChange: PropTypes.func
 };
