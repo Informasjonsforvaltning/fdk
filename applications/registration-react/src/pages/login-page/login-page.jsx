@@ -8,26 +8,27 @@ import './login-page.scss';
 
 const showLoginReadOnly = window.localStorage.getItem('showLoginReadOnly');
 
+const renderMessageForLoggedOutDueToTimeout = () => (
+  <div className="row">
+    <div className="col-12">
+      <div
+        className="mt-2 alert alert-warning fdk-color-neutral-darkest"
+        role="alert"
+      >
+        <span>
+          <strong>{localization.loginDialog.loggedOutMsgPart1}</strong>
+        </span>
+        <span>{localization.loginDialog.loggedOutMsgPart2}</span>
+      </div>
+    </div>
+  </div>
+);
+
 export const LoginPagePure = ({ loggedOut }) => (
   <>
     <div className="login-dialog-wrapper pt-5">
       <div className="container">
-        <div className="row">
-          <div className="col-12">
-            {loggedOut && (
-              <div
-                className="mt-2 alert alert-warning fdk-color-neutral-darkest"
-                role="alert"
-              >
-                <span>
-                  <strong>{localization.loginDialog.loggedOutMsgPart1}</strong>
-                </span>
-                <span>{localization.loginDialog.loggedOutMsgPart2}</span>
-              </div>
-            )}
-          </div>
-        </div>
-
+        {loggedOut && renderMessageForLoggedOutDueToTimeout()}
         <div className="row">
           {showLoginReadOnly && (
             <div className="col-md-6">
