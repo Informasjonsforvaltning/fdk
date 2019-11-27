@@ -19,7 +19,7 @@ public class DatasetFactory {
 
         createdDataset.setId(UUID.randomUUID().toString());
         createdDataset.setCatalogId(catalog.getId());
-        createdDataset.setUri(format("%s/datasets/%s", getCatalogUri(catalog.getId()), dataset.getId()));
+        createdDataset.setUri(format("%s/datasets/%s", getCatalogUri(catalog.getId()), createdDataset.getId()));
         createdDataset.set_lastModified(new Date());
 
         if (createdDataset.getRegistrationStatus() == null) {
