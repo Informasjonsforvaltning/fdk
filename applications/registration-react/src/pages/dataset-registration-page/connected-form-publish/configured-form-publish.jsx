@@ -1,5 +1,5 @@
 import { reduxForm } from 'redux-form';
-import { FormPublish } from '../../../components/form-publish/form-publish.component';
+import { FormPublishPure } from '../../../components/form-publish/form-publish-pure.component';
 
 import { asyncValidateDatasetInvokePatch } from '../formsLib/asyncValidateDatasetInvokePatch';
 
@@ -8,4 +8,4 @@ const config = {
   asyncValidate: asyncValidateDatasetInvokePatch
 };
 
-export const ConfiguredFormPublish = reduxForm(config)(FormPublish);
+export const ConfiguredFormPublish = reduxForm(config)(FormPublishPure);
