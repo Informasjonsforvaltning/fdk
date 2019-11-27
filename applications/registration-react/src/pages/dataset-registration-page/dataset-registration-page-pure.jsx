@@ -19,7 +19,7 @@ import { FormInformationModel } from './form-informationmodel/form-informationmo
 import { ConnectedFormContactPoint } from './form-contactPoint/connected-form-contactPoint.component';
 import { ConnectedFormContents } from './form-contents/connected-form-contents.component';
 import { StatusBar } from '../../components/status-bar/status-bar.component';
-import { ConnectedFormPublish } from './connected-form-publish/connected-form-publish';
+import { FormPublish } from './form-publish/form-publish';
 import { FormDistributionApi } from './form-distribution-api/form-distribution-api';
 import { ConnectedFormLOS } from './form-los/connected-form-los.component';
 import { ConnectedFormPublisher } from './form-publisher/connected-form-publisher.component';
@@ -397,7 +397,7 @@ export function DatasetRegistrationPagePure(props) {
                   }
                   allowPublish={isAllowedToPublish(form)}
                   formComponent={
-                    <ConnectedFormPublish
+                    <FormPublish
                       initialItemStatus={_.get(
                         datasetItem,
                         'registrationStatus',
