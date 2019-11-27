@@ -7,35 +7,7 @@ import { Button } from 'reactstrap';
 import localization from '../../lib/localization';
 import './status-bar.scss';
 import { ErrorDialog } from './error-dialog/error-dialog.component';
-
-const renderConfirmDeleteOverlayDialog = ({
-  type,
-  onDelete,
-  toggleShowConfirmDelete
-}) => (
-  <div className="form-status-bar-overlay d-flex align-items-center justify-content-between alert-danger">
-    <div>
-      <span>{localization.formStatus[type].confirmDeleteMessage}</span>
-    </div>
-    <div>
-      <Button className="fdk-button mr-3" color="primary" onClick={onDelete}>
-        {localization.formStatus.confirmDelete}
-      </Button>
-      <button
-        type="button"
-        className="btn bg-transparent fdk-color-link"
-        onClick={toggleShowConfirmDelete}
-      >
-        {localization.formStatus.cancelDelete}
-      </button>
-    </div>
-  </div>
-);
-renderConfirmDeleteOverlayDialog.propTypes = {
-  type: PropTypes.oneOf(['dataset', 'api']).isRequired,
-  onDelete: PropTypes.func.isRequired,
-  toggleShowConfirmDelete: PropTypes.func.isRequired
-};
+import { ConfirmDialog } from './confirm-dialog/confirm-dialog.component';
 
 const renderValidationErrorOverlayDialog = ({
   type,
@@ -122,12 +94,14 @@ export const StatusBar = props => {
   return (
     <>
       {error && <ErrorDialog error={error} lastSaved={lastSaved} />}
-      {showConfirmDelete &&
-        renderConfirmDeleteOverlayDialog({
-          type,
-          onDelete,
-          toggleShowConfirmDelete
-        })}
+      {showConfirmDelete && (
+        <ConfirmDialog
+          onConfirm={onDelete}
+          onCancel={toggleShowConfirmDelete}
+          confirmText={localization.formStatus[type].confirmDeleteMessage}
+          confirmButtonText={localization.formStatus.confirmDelete}
+        />
+      )}
       {showValidatonError &&
         renderValidationErrorOverlayDialog({ type, toggleShowValidationError })}
       <div
@@ -167,7 +141,7 @@ StatusBar.defaultProps = {
   error: null,
   published: false,
   justPublishedOrUnPublished: false,
-  onDelete: _.noop,
+  onDelete: _.noop(),
   formComponent: null,
   allowPublish: true
 };
