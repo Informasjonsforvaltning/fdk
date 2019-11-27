@@ -55,7 +55,7 @@
     "react-moment": "^0.7.0",
     "react-redux": "^7.0.3",
     "react-resolver": "^3.1.2",
-    "react-router": "^5.0.0",
+    "react-router": "^5.1.2",
     "react-router-breadcrumbs-hoc": "^3.2.0",
     "react-router-dom": "^5.0.0",
     "react-select": "^1.2.1",
