@@ -8,30 +8,7 @@ import localization from '../../lib/localization';
 import './status-bar.scss';
 import { ErrorDialog } from './error-dialog/error-dialog.component';
 import { ConfirmDialog } from './confirm-dialog/confirm-dialog.component';
-
-const renderValidationErrorOverlayDialog = ({
-  type,
-  toggleShowValidationError
-}) => (
-  <div className="form-status-bar-overlay d-flex align-items-center justify-content-between alert-danger">
-    <div>
-      <span>{localization.formStatus[type].requiredFieldsMissing}</span>
-    </div>
-    <div>
-      <button
-        type="button"
-        className="btn bg-transparent fdk-color-link"
-        onClick={toggleShowValidationError}
-      >
-        {localization.app.cancel}
-      </button>
-    </div>
-  </div>
-);
-renderValidationErrorOverlayDialog.propTypes = {
-  type: PropTypes.oneOf(['dataset', 'api']).isRequired,
-  toggleShowValidationError: PropTypes.func.isRequired
-};
+import { ValidationErrorDialog } from './validation-error-dialog/validation-error-dialog.component';
 
 const renderMessageForPublishStatusChange = ({ published, type }) =>
   published
@@ -102,8 +79,12 @@ export const StatusBar = props => {
           confirmButtonText={localization.formStatus.confirmDelete}
         />
       )}
-      {showValidatonError &&
-        renderValidationErrorOverlayDialog({ type, toggleShowValidationError })}
+      {showValidatonError && (
+        <ValidationErrorDialog
+          type={type}
+          onCancel={toggleShowValidationError}
+        />
+      )}
       <div
         className={cx(
           'form-status-bar',
