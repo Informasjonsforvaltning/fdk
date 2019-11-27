@@ -12,7 +12,6 @@ import { ConnectedFormApiServiceType } from './form-api-service-type/connected-f
 import { ConnectedFormAccess } from './form-access/connected-form-access';
 import { FormRelatedDatasets } from './form-relatedDatasets/form-related-datasets';
 import { ConnectedFormApiStatus } from './form-apiStatus/connected-form-apiStatus';
-import { StatusBar } from '../../components/status-bar/status-bar.component';
 import { FormPublish } from './form-publish/form-publish';
 import { APISpecificationInfo } from './api-specification-info.component';
 
@@ -200,7 +199,9 @@ export const ApiRegistrationPagePure = ({
             </div>
           </div>
 
-          <StatusBar
+          <FormPublish
+            initialItemStatus={_.get(item, 'registrationStatus', '')}
+            apiItem={item}
             type="api"
             isSaving={isSaving}
             lastSaved={item._lastModified}
@@ -214,12 +215,6 @@ export const ApiRegistrationPagePure = ({
                 apiId,
                 dispatchDeleteApi
               })
-            }
-            formComponent={
-              <FormPublish
-                initialItemStatus={_.get(item, 'registrationStatus', '')}
-                apiItem={item}
-              />
             }
           />
         </>

@@ -1158,27 +1158,23 @@ Eksempel på endring som medfører versjonering:
       </withState(withHandlers(FormTemplate))>
     </div>
   </div>
-  <StatusBar
-    allowPublish={true}
-    error={null}
-    formComponent={
-      <withProps(Connect(ReduxForm))
-        apiItem={
-          Object {
-            "_lastModified": "2019-01-16T10:59:24.587+0000",
-            "apiSpecUrl": "https://raw.githubusercontent.com/brreg/openAPI/master/specs/enhetsregisteret.json",
-            "apiSpecification": Object {
-              "formats": Array [
-                "application/json",
-                "application/vnd.enhetsregisteret.enhet.v1+json",
-                "application/vnd.enhetsregisteret.organisasjonsform.v1+json",
-              ],
-              "info": Object {
-                "contact": Object {
-                  "email": "opendata@brreg.no",
-                  "name": "Forenkling og Brukerdialog hos Brønnøysundregistrene",
-                },
-                "description": "Teknisk beskrivelse av REST-tjenestene i Åpne Data fra Enhetsregisteret - Work in progress
+  <withProps(Connect(ReduxForm))
+    apiItem={
+      Object {
+        "_lastModified": "2019-01-16T10:59:24.587+0000",
+        "apiSpecUrl": "https://raw.githubusercontent.com/brreg/openAPI/master/specs/enhetsregisteret.json",
+        "apiSpecification": Object {
+          "formats": Array [
+            "application/json",
+            "application/vnd.enhetsregisteret.enhet.v1+json",
+            "application/vnd.enhetsregisteret.organisasjonsform.v1+json",
+          ],
+          "info": Object {
+            "contact": Object {
+              "email": "opendata@brreg.no",
+              "name": "Forenkling og Brukerdialog hos Brønnøysundregistrene",
+            },
+            "description": "Teknisk beskrivelse av REST-tjenestene i Åpne Data fra Enhetsregisteret - Work in progress
 ---
 
 ## Ordbok
@@ -1275,71 +1271,70 @@ Eksempel på endring som medfører versjonering:
   </tbody>
 </table>
 ",
-                "license": Object {
-                  "name": "Norsk lisens for offentlige data (NLOD)",
-                  "url": "https://data.norge.no/nlod/no/",
-                },
-                "title": "Åpne Data fra Enhetsregisteret - API Dokumentasjon",
-                "version": "1.0.0",
-              },
-              "paths": Object {
-                "/": Object {
-                  "get": Object {
-                    "description": "Hent alle tjenester",
-                  },
-                },
-                "/enheter": Object {
-                  "get": Object {
-                    "description": "Hent alle enheter",
-                  },
-                },
-                "/enheter/{organisasjonsnummer}": Object {
-                  "get": Object {
-                    "description": "Hent detaljer om enhet",
-                  },
-                },
-                "/oppdateringer/enheter": Object {
-                  "get": Object {
-                    "description": "Hent oppdateringer på enheter",
-                  },
-                },
-                "/oppdateringer/underenheter": Object {
-                  "get": Object {
-                    "description": "Hent oppdateringer på underenheter",
-                  },
-                },
-                "/organisasjonsformer": Object {
-                  "get": Object {
-                    "description": "Hent alle organisasjonsformer",
-                  },
-                },
-                "/organisasjonsformer/{orgformKode}": Object {
-                  "get": Object {
-                    "description": "Hent en enkelt organisasjonsform fra kode",
-                  },
-                },
-                "/underenheter": Object {
-                  "get": Object {
-                    "description": "Hent alle underenheter",
-                  },
-                },
-                "/underenheter/{organisasjonsnummer}": Object {
-                  "get": Object {
-                    "description": "Hent detaljer om underenhet",
-                  },
-                },
+            "license": Object {
+              "name": "Norsk lisens for offentlige data (NLOD)",
+              "url": "https://data.norge.no/nlod/no/",
+            },
+            "title": "Åpne Data fra Enhetsregisteret - API Dokumentasjon",
+            "version": "1.0.0",
+          },
+          "paths": Object {
+            "/": Object {
+              "get": Object {
+                "description": "Hent alle tjenester",
               },
             },
-            "catalogId": "910244132",
-            "fromApiCatalog": false,
-            "id": "3ad7ec56-4fb8-471a-8931-7ba0640d42a4",
-            "nationalComponent": false,
-            "registrationStatus": "DRAFT",
-          }
-        }
-        initialItemStatus="DRAFT"
-      />
+            "/enheter": Object {
+              "get": Object {
+                "description": "Hent alle enheter",
+              },
+            },
+            "/enheter/{organisasjonsnummer}": Object {
+              "get": Object {
+                "description": "Hent detaljer om enhet",
+              },
+            },
+            "/oppdateringer/enheter": Object {
+              "get": Object {
+                "description": "Hent oppdateringer på enheter",
+              },
+            },
+            "/oppdateringer/underenheter": Object {
+              "get": Object {
+                "description": "Hent oppdateringer på underenheter",
+              },
+            },
+            "/organisasjonsformer": Object {
+              "get": Object {
+                "description": "Hent alle organisasjonsformer",
+              },
+            },
+            "/organisasjonsformer/{orgformKode}": Object {
+              "get": Object {
+                "description": "Hent en enkelt organisasjonsform fra kode",
+              },
+            },
+            "/underenheter": Object {
+              "get": Object {
+                "description": "Hent alle underenheter",
+              },
+            },
+            "/underenheter/{organisasjonsnummer}": Object {
+              "get": Object {
+                "description": "Hent detaljer om underenhet",
+              },
+            },
+          },
+        },
+        "catalogId": "910244132",
+        "fromApiCatalog": false,
+        "id": "3ad7ec56-4fb8-471a-8931-7ba0640d42a4",
+        "nationalComponent": false,
+        "registrationStatus": "DRAFT",
+      }
     }
+    error={null}
+    initialItemStatus="DRAFT"
     isSaving={false}
     justPublishedOrUnPublished={false}
     lastSaved="2019-01-16T10:59:24.587+0000"
