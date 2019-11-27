@@ -3,44 +3,10 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import _ from 'lodash';
 import { Button } from 'reactstrap';
-import moment from 'moment';
-import 'moment/locale/nb';
 
 import localization from '../../lib/localization';
 import './status-bar.scss';
-
-const renderErrorMessage = ({ error }) =>
-  error.code === 'network_error'
-    ? localization.formStatus.error.network
-    : localization.formStatus.error.saving;
-
-const renderLastSavedMessage = ({ lastSaved }) => {
-  const formatLastSaved = lastSaved =>
-    moment(lastSaved).calendar(null, {
-      lastDay: '[i går kl.] LT',
-      sameDay() {
-        return `[for ${this.fromNow()}]`;
-      },
-      lastWeek: '[på] dddd [kl.] LT',
-      sameElse: 'DD.MM.YYYY'
-    });
-
-  return ` ${localization.app.lastSaved} ${formatLastSaved(lastSaved)}.`;
-};
-
-const renderErrorOverlay = ({ error, lastSaved }) => (
-  <div className="form-status-bar-overlay d-flex align-items-center justify-content-between alert-warning">
-    {renderErrorMessage({ error, lastSaved })}
-    {lastSaved && renderLastSavedMessage({ lastSaved })}
-  </div>
-);
-renderErrorOverlay.defaultProps = {
-  lastSaved: ''
-};
-renderErrorOverlay.propTypes = {
-  error: PropTypes.object.isRequired,
-  lastSaved: PropTypes.string
-};
+import { ErrorDialog } from './error-dialog/error-dialog.component';
 
 const renderConfirmDeleteOverlayDialog = ({
   type,
@@ -155,7 +121,7 @@ export const StatusBar = props => {
 
   return (
     <>
-      {error && renderErrorOverlay({ error, lastSaved })}
+      {error && <ErrorDialog error={error} lastSaved={lastSaved} />}
       {showConfirmDelete &&
         renderConfirmDeleteOverlayDialog({
           type,
