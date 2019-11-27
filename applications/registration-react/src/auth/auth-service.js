@@ -27,6 +27,7 @@ async function initialize() {
   const initOptions = {
     promiseType: 'native',
     onLoad: 'check-sso',
+    redirectUri: location.origin,
     token,
     refreshToken
   };
@@ -59,7 +60,7 @@ export function login({ readOnly = false }) {
   //  The original selected location has to be carried over to here.
   //  In addition, for deep linking, we need to handle the case when user does not have access to the resource in url.
   const idpHint = readOnly ? 'local-oidc' : 'idporten-oidc';
-  kc.login({ redirectUri: window.location.origin, idpHint });
+  kc.login({ idpHint });
 }
 
 export const isAuthenticated = () => kc && kc.authenticated;
