@@ -83,7 +83,8 @@ export function DatasetRegistrationPagePure(props) {
     languages,
     setInputLanguages,
     toggleInputLanguage,
-    organization
+    organization,
+    isReadOnly
   } = props;
 
   const {
@@ -154,10 +155,12 @@ export function DatasetRegistrationPagePure(props) {
           openLicenseItems &&
           losItems && (
             <div className="col-12">
-              <LanguagePicker
-                languages={languages}
-                toggleInputLanguage={toggleInputLanguage}
-              />
+              {!isReadOnly && (
+                <LanguagePicker
+                  languages={languages}
+                  toggleInputLanguage={toggleInputLanguage}
+                />
+              )}
               {organization.allowDelegatedRegistration && (
                 <FormTemplateWithState
                   title={localization.datasets.formTemplates.onBehalf}
@@ -432,7 +435,8 @@ DatasetRegistrationPagePure.defaultProps = {
   languages: [],
   setInputLanguages: _.noop,
   toggleInputLanguage: _.noop,
-  organization: null
+  organization: null,
+  isReadOnly: false
 };
 
 DatasetRegistrationPagePure.propTypes = {
@@ -454,5 +458,6 @@ DatasetRegistrationPagePure.propTypes = {
   languages: PropTypes.array,
   setInputLanguages: PropTypes.func,
   toggleInputLanguage: PropTypes.func,
-  organization: PropTypes.object
+  organization: PropTypes.object,
+  isReadOnly: PropTypes.bool
 };
