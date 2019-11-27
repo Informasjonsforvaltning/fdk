@@ -376,38 +376,39 @@ export function DatasetRegistrationPagePure(props) {
                   languages={languages}
                 />
               </FormTemplateWithState>
-
-              <StatusBar
-                type="dataset"
-                isSaving={datasetFormStatus && datasetFormStatus.isSaving}
-                lastSaved={datasetItem._lastModified}
-                published={datasetItem.registrationStatus === 'PUBLISH'}
-                error={datasetFormStatus && datasetFormStatus.error}
-                justPublishedOrUnPublished={
-                  datasetFormStatus &&
-                  datasetFormStatus.justPublishedOrUnPublished
-                }
-                onDelete={() =>
-                  deleteAndNavigateToList({
-                    history,
-                    catalogId,
-                    datasetId,
-                    dispatchDeleteDataset
-                  })
-                }
-                allowPublish={isAllowedToPublish(form)}
-                formComponent={
-                  <ConnectedFormPublish
-                    initialItemStatus={_.get(
-                      datasetItem,
-                      'registrationStatus',
-                      ''
-                    )}
-                    catalogId={catalogId}
-                    datasetId={datasetId}
-                  />
-                }
-              />
+              {!isReadOnly && (
+                <StatusBar
+                  type="dataset"
+                  isSaving={datasetFormStatus && datasetFormStatus.isSaving}
+                  lastSaved={datasetItem._lastModified}
+                  published={datasetItem.registrationStatus === 'PUBLISH'}
+                  error={datasetFormStatus && datasetFormStatus.error}
+                  justPublishedOrUnPublished={
+                    datasetFormStatus &&
+                    datasetFormStatus.justPublishedOrUnPublished
+                  }
+                  onDelete={() =>
+                    deleteAndNavigateToList({
+                      history,
+                      catalogId,
+                      datasetId,
+                      dispatchDeleteDataset
+                    })
+                  }
+                  allowPublish={isAllowedToPublish(form)}
+                  formComponent={
+                    <ConnectedFormPublish
+                      initialItemStatus={_.get(
+                        datasetItem,
+                        'registrationStatus',
+                        ''
+                      )}
+                      catalogId={catalogId}
+                      datasetId={datasetId}
+                    />
+                  }
+                />
+              )}
             </div>
           )}
         <div className="col-md-2" />
