@@ -9,7 +9,7 @@ const mapRouteParams = withProps(({ match: { params } }) =>
   _.pick(params, ['catalogId', 'datasetId'])
 );
 
-const withReadOnly = withProps(catalogId => ({
+const withReadOnly = withProps(({ catalogId }) => ({
   isReadOnly: !hasOrganizationAdminPermission(catalogId)
 }));
 
