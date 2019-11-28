@@ -498,13 +498,20 @@
     "savedAsDraft": "Lagret som utkast",
     "changesUpdated": "Endringene er publisert",
     "publish": "Publiser",
+    "publishChecked": "Publisert",
     "published": "er publisert",
     "unPublish": "Avpubliser",
     "unPublished": "er avpublisert",
+    "approved": "er godkjent",
+    "isDraft": "er lagret som utkast",
     "delete": "Slett",
     "confirmDeleted": "ble slettet",
     "confirmDelete": "Ja, slett",
     "cancelDelete": "Nei, avbryt",
+    "confirmChangeStatus": "Ja, endre",
+    "draft": "Utkast",
+    "approve": "Godkjenn",
+    "approveChecked": "Godkjent",
     "error": {
       "saving": "Det har oppstått problemer med å lagre.",
       "network": "Det ser ikke ut som du er koblet til internett. Koble til for å fortsette."
@@ -514,7 +521,9 @@
     },
     "dataset": {
       "confirmDeleteMessage": "Er du sikker på at du vil slette datasettbeskrivelsen permanent?",
-      "requiredFieldsMissing": "Datasettet kunne ikke publiseres. Se over felt som er markert med feil og rett disse før du forsøker å publisere på nytt."
+      "requiredFieldsMissing": "Datasettet kunne ikke publiseres. Se over felt som er markert med feil og rett disse før du forsøker å publisere på nytt.",
+      "confirmSetStatusDraft": "Vil du endre status til 'Utkast'",
+      "confirmSetStatusApprove": "Vil du endre status til 'Godkjent'? Datasettbeskrivelsen vil ikke lenger være tilgjengelig i Felles datakatalog"
     },
     "napPublish": "Datasettbeskrivelsen vil være tilgjengelig i Felles datakatalog og Transportportal.no når den er publisert.",
     "napUnPublish": "Datasettbeskrivelsen vil være tilgjengelig i Felles datakatalog når den er publisert."

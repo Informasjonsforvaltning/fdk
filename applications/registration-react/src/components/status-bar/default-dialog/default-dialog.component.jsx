@@ -2,15 +2,24 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import noop from 'lodash/noop';
 import cx from 'classnames';
+import { Button } from 'reactstrap';
+
 import localization from '../../../services/localization';
 import { ButtonRegistrationStatus } from './button-registration-status/button-registration-status.component';
-import { isPublished } from '../../../lib/registration-status';
+import {
+  isApproved,
+  isDraft,
+  isPublished
+} from '../../../lib/registration-status';
 
 const renderMessageForPublishStatusChange = (registrationStatus, type) => {
   if (isPublished(registrationStatus)) {
     return `${localization.formStatus.type[type]} ${localization.formStatus.published}.`;
   }
-  return `${localization.formStatus.type[type]} ${localization.formStatus.unPublished}.`;
+  if (isApproved(registrationStatus)) {
+    return `${localization.formStatus.type[type]} ${localization.formStatus.approved}.`;
+  }
+  return `${localization.formStatus.type[type]} ${localization.formStatus.isDraft}.`;
 };
 
 const renderMessageForUpdate = (isSaving, registrationStatus) => {
@@ -18,7 +27,7 @@ const renderMessageForUpdate = (isSaving, registrationStatus) => {
     return `${localization.formStatus.isSaving}...`;
   }
 
-  if (isPublished(registrationStatus)) {
+  if (isPublished(registrationStatus) || isApproved(registrationStatus)) {
     return `${localization.formStatus.changesUpdated}.`;
   }
   return `${localization.formStatus.savedAsDraft}.`;
@@ -33,7 +42,9 @@ export const DefaultDialog = ({
   allowPublish,
   error,
   onChange,
-  registrationStatus
+  registrationStatus,
+  onShowConfirmDraft,
+  onShowConfirmApprove
 }) => {
   let messageClass;
   let message;
@@ -57,13 +68,55 @@ export const DefaultDialog = ({
     >
       <div>{message}</div>
       <div className="d-flex">
-        <ButtonRegistrationStatus
-          onChange={onChange}
-          published={isPublished(registrationStatus)}
-          allowPublish={allowPublish}
-          onShowValidationError={onShowValidationError}
-        />
-
+        {type === 'api' && (
+          <ButtonRegistrationStatus
+            onChange={onChange}
+            published={isPublished(registrationStatus)}
+            allowPublish={allowPublish}
+            onShowValidationError={onShowValidationError}
+          />
+        )}
+        {type === 'dataset' && (
+          <>
+            <Button
+              id="dataset-setPublish-button"
+              className="fdk-button"
+              color={isDraft(registrationStatus) ? 'dark' : 'primary'}
+              style={{ border: 0, borderRadius: 0 }}
+              onClick={onShowConfirmDraft}
+            >
+              <i className="fa fa-pencil mr-2" />
+              {localization.formStatus.draft}
+            </Button>
+            <Button
+              id="dataset-setPublish-button"
+              className="fdk-button"
+              color={isApproved(registrationStatus) ? 'dark' : 'primary'}
+              style={{ border: 0, borderRadius: 0 }}
+              onClick={
+                isPublished(registrationStatus)
+                  ? onShowConfirmApprove
+                  : () => onChange('APPROVE')
+              }
+            >
+              <i className="fa fa-check-square-o mr-2" />
+              {isApproved(registrationStatus)
+                ? localization.formStatus.approveChecked
+                : localization.formStatus.approve}
+            </Button>
+            <Button
+              id="dataset-setPublish-button"
+              className="fdk-button"
+              color={isPublished(registrationStatus) ? 'dark' : 'primary'}
+              style={{ border: 0, borderRadius: 0 }}
+              onClick={() => onChange('PUBLISH')}
+            >
+              {isPublished(registrationStatus)
+                ? localization.formStatus.publishChecked
+                : localization.formStatus.publish}
+            </Button>
+          </>
+        )}
         <button
           type="button"
           className="btn bg-transparent fdk-color-link"
@@ -97,5 +150,7 @@ DefaultDialog.propTypes = {
   justPublishedOrUnPublished: PropTypes.bool,
   allowPublish: PropTypes.bool,
   onChange: PropTypes.func,
-  registrationStatus: PropTypes.string
+  registrationStatus: PropTypes.string,
+  onShowConfirmDraft: PropTypes.func.isRequired,
+  onShowConfirmApprove: PropTypes.func.isRequired
 };
