@@ -1162,7 +1162,7 @@ Eksempel på endring som medfører versjonering:
     allowPublish={true}
     error={null}
     formComponent={
-      <Memo(ConnectFunction)
+      <withProps(Connect(ReduxForm))
         apiItem={
           Object {
             "_lastModified": "2019-01-16T10:59:24.587+0000",
