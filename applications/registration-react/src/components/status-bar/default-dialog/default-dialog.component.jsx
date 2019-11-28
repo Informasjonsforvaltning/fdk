@@ -2,9 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import noop from 'lodash/noop';
 import cx from 'classnames';
-import { Button } from 'reactstrap';
 import localization from '../../../services/localization';
-import { ButtonRegistrationStatus } from '../../form-publish/button-registration-status/button-registration-status.component';
+import { ButtonRegistrationStatus } from './button-registration-status/button-registration-status.component';
 
 const renderMessageForPublishStatusChange = ({ published, type }) =>
   published
@@ -21,17 +20,6 @@ const renderMessageForUpdate = ({ isSaving, published }) => {
   }
   return `${localization.formStatus.savedAsDraft}.`;
 };
-
-const renderToggleShowValidationButton = onShowValidationError => (
-  <Button
-    id="dataset-setPublish-button"
-    className="fdk-button mr-3"
-    color="primary"
-    onClick={onShowValidationError}
-  >
-    {localization.formStatus.publish}
-  </Button>
-);
 
 export const DefaultDialog = ({
   onShowValidationError,
@@ -66,10 +54,12 @@ export const DefaultDialog = ({
     >
       <div>{message}</div>
       <div className="d-flex">
-        {/* if it is not allowed to publish, it is still a llowed to unpublish */}
-        {allowPublish || published
-          ? ButtonRegistrationStatus({ onChange, published })
-          : renderToggleShowValidationButton(onShowValidationError)}
+        <ButtonRegistrationStatus
+          onChange={onChange}
+          published={published}
+          allowPublish={allowPublish}
+          onShowValidationError={onShowValidationError}
+        />
 
         <button
           type="button"
