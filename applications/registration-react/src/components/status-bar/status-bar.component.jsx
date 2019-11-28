@@ -21,12 +21,7 @@ export const StatusBar = ({
   onChange
 }) => {
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
-  const toggleShowConfirmDelete = () =>
-    setShowConfirmDelete(!showConfirmDelete);
-
   const [showValidatonError, setShowValidationError] = useState(false);
-  const toggleShowValidationError = () =>
-    setShowValidationError(!showValidatonError);
 
   return (
     <>
@@ -34,7 +29,7 @@ export const StatusBar = ({
       {showConfirmDelete && (
         <ConfirmDialog
           onConfirm={onDelete}
-          onCancel={toggleShowConfirmDelete}
+          onCancel={() => setShowConfirmDelete(false)}
           confirmText={localization.formStatus[type].confirmDeleteMessage}
           confirmButtonText={localization.formStatus.confirmDelete}
         />
@@ -42,12 +37,12 @@ export const StatusBar = ({
       {showValidatonError && (
         <ValidationErrorDialog
           type={type}
-          onCancel={toggleShowValidationError}
+          onCancel={() => setShowValidationError(false)}
         />
       )}
       <DefaultDialog
-        onShowValidationError={toggleShowValidationError}
-        onShowConfirmDelete={toggleShowConfirmDelete}
+        onShowValidationError={() => setShowValidationError(true)}
+        onShowConfirmDelete={() => setShowConfirmDelete(true)}
         justPublishedOrUnPublished={justPublishedOrUnPublished}
         published={published}
         type={type}
