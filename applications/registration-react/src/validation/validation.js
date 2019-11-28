@@ -39,7 +39,7 @@ export const validateAtLeastRequired = (
   errors,
   useLangField = true
 ) => {
-  if (value && value.length <= minRequired) {
+  if (value && value.length < minRequired) {
     errors[`${nameOfObject}`] = useLangField
       ? { [localization.getLanguage()]: localization.validation.required }
       : localization.validation.required;
