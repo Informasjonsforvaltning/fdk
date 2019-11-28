@@ -61,6 +61,10 @@ export const ArticlePage = () => {
                 Logg inn i registreringsløsningen
               </a>
             </p>
+            <p>
+              Det er også mulig at din virksomhet kan få registrere på vegne av andre.
+              Dersom du ønsker dette, må du kontakte FDK på: fellesdatakatalog@brreg.no
+            </p>
           </div>
 
           <div className="fdk-subtitle">
