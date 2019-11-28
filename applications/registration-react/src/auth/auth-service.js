@@ -12,6 +12,12 @@ const PERMISSION_ADMIN = 'PERMISSION_ADMIN';
 const RESOURCE_ORGANIZATION = 'organization';
 const ROLE_ADMIN = 'admin';
 
+function toPromise(keycloakPromise) {
+  return new Promise((resolve, reject) =>
+    keycloakPromise.success(resolve).error(reject)
+  );
+}
+
 function setOnAuthSuccess() {
   const handler = () => {
     clearLoginState();
@@ -22,17 +28,16 @@ function setOnAuthSuccess() {
   kc.onAuthSuccess = handler;
 }
 
-async function initialize() {
+function initialize() {
   const { token, refreshToken } = loadTokens();
   const initOptions = {
-    promiseType: 'native',
     onLoad: 'check-sso',
     redirectUri: location.origin,
     token,
     refreshToken
   };
 
-  await kc.init(initOptions);
+  return toPromise(kc.init(initOptions));
 }
 
 export async function initAuth() {
@@ -46,7 +51,7 @@ export async function initAuth() {
 
 export function logout() {
   removeTokens();
-  return kc.logout();
+  kc.logout(); // redirects;
 }
 
 export function logoutByTimeout() {
@@ -60,7 +65,7 @@ export function login({ readOnly = false }) {
   //  The original selected location has to be carried over to here.
   //  In addition, for deep linking, we need to handle the case when user does not have access to the resource in url.
   const idpHint = readOnly ? 'local-oidc' : 'idporten-oidc';
-  kc.login({ idpHint });
+  kc.login({ idpHint }); // redirects
 }
 
 export const isAuthenticated = () => kc && kc.authenticated;
