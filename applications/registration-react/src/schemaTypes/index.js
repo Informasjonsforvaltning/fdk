@@ -1,9 +1,5 @@
 export const textType = {};
 
-export const uriType = {
-  uri: null
-};
-
 export const accessRights = {
   uri: '',
   prefLabel: {}
@@ -16,10 +12,6 @@ export const languageType = {
 };
 
 export const emptyArray = [''];
-
-export const themeType = {
-  uri: ''
-};
 
 export const legalBasisType = {
   uri: '',
