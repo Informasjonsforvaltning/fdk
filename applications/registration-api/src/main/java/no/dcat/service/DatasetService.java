@@ -120,7 +120,8 @@ public class DatasetService {
 
     private void updateDatasetConcepts(List<Concept> newConcepts, Dataset dataset) {
         logger.info("Dataset concepts update has been requested");
-        List<Concept> concepts = conceptCatClient.getByIds(newConcepts.stream().map(Concept::getId).collect(Collectors.toList()));
+        List<String> ids = newConcepts.stream().map(Concept::getId).collect(Collectors.toList());
+        List<Concept> concepts = conceptCatClient.getByIds(ids);
         List<Subject> subjects = concepts.stream().map(this::convertConceptToSubject).collect(Collectors.toList());
         dataset.setSubject(subjects);
         dataset.setConcepts(concepts);
