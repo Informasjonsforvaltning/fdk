@@ -21,6 +21,10 @@ export const StatusBar = ({
   registrationStatus
 }) => {
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
+  const [showConfirmStatusDraft, setShowConfirmStatusDraft] = useState(false);
+  const [showConfirmStatusApprove, setShowConfirmStatusApprove] = useState(
+    false
+  );
   const [showValidatonError, setShowValidationError] = useState(false);
 
   return (
@@ -34,6 +38,22 @@ export const StatusBar = ({
           confirmButtonText={localization.formStatus.confirmDelete}
         />
       )}
+      {showConfirmStatusDraft && (
+        <ConfirmDialog
+          onConfirm={() => onChange('DRAFT')}
+          onCancel={() => setShowConfirmStatusDraft(false)}
+          confirmText={localization.formStatus.dataset.confirmSetStatusDraft}
+          confirmButtonText={localization.formStatus.confirmChangeStatus}
+        />
+      )}
+      {showConfirmStatusApprove && (
+        <ConfirmDialog
+          onConfirm={() => onChange('APPROVE')}
+          onCancel={() => setShowConfirmStatusApprove(false)}
+          confirmText={localization.formStatus.dataset.confirmSetStatusApprove}
+          confirmButtonText={localization.formStatus.confirmChangeStatus}
+        />
+      )}
       {showValidatonError && (
         <ValidationErrorDialog
           type={type}
@@ -43,6 +63,8 @@ export const StatusBar = ({
       <DefaultDialog
         onShowValidationError={() => setShowValidationError(true)}
         onShowConfirmDelete={() => setShowConfirmDelete(true)}
+        onShowConfirmDraft={() => setShowConfirmStatusDraft(true)}
+        onShowConfirmApprove={() => setShowConfirmStatusApprove(true)}
         justPublishedOrUnPublished={justPublishedOrUnPublished}
         type={type}
         isSaving={isSaving}
