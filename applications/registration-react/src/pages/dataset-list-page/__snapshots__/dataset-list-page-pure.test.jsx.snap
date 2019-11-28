@@ -3,6 +3,7 @@
 exports[`should render DatasetsListPagePure correctly 1`] = `
 <div
   className="container"
+  id="content"
 >
   <div
     className="row"

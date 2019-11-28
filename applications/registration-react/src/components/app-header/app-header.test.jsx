@@ -7,7 +7,6 @@ let wrapper;
 
 beforeEach(() => {
   defaultProps = {
-    location: { pathname: 'abc' },
     user: { name: 'john doe' }
   };
   wrapper = shallow(<AppHeaderPure {...defaultProps} />);

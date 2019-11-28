@@ -6,7 +6,7 @@ exports[`should render AppHeader correctly 1`] = `
     <a
       aria-hidden="true"
       className="uu-invisible"
-      href="abc#content"
+      href="/#content"
       id="focus-element"
     >
       Hopp til hovedinnhold
@@ -16,7 +16,7 @@ exports[`should render AppHeader correctly 1`] = `
     id="skip-link-wrap"
   >
     <a
-      href="abc#content"
+      href="/#content"
       id="skip-link"
     >
       Hopp til hovedinnhold

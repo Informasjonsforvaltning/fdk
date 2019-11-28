@@ -1,13 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { compose, withProps } from 'recompose';
-import { withRouter } from 'react-router-dom';
 
 import localization from '../../lib/localization';
 import './app-header.scss';
 import { getUserProfile, logout } from '../../auth/auth-service';
 
-export const AppHeaderPure = ({ location, user }) => {
+export const AppHeaderPure = ({ user }) => {
   return (
     <header>
       <div>
@@ -71,13 +70,9 @@ AppHeaderPure.defaultProps = {
 };
 
 AppHeaderPure.propTypes = {
-  user: PropTypes.object,
-  location: PropTypes.object.isRequired
+  user: PropTypes.object
 };
 
-const enhance = compose(
-  withRouter,
-  withProps(() => ({ user: getUserProfile() }))
-);
+const enhance = compose(withProps(() => ({ user: getUserProfile() })));
 
 export const AppHeader = enhance(AppHeaderPure);
