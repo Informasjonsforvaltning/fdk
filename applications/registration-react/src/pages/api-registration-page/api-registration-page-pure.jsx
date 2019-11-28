@@ -13,7 +13,7 @@ import { ConnectedFormAccess } from './form-access/connected-form-access';
 import { FormRelatedDatasets } from './form-relatedDatasets/form-related-datasets';
 import { ConnectedFormApiStatus } from './form-apiStatus/connected-form-apiStatus';
 import { StatusBar } from '../../components/status-bar/status-bar.component';
-import { ConnectedFormPublish } from './connected-form-publish/connected-form-publish';
+import { FormPublish } from './form-publish/form-publish';
 import { APISpecificationInfo } from './api-specification-info.component';
 
 async function deleteAndNavigateToList({
@@ -216,7 +216,7 @@ export const ApiRegistrationPagePure = ({
               })
             }
             formComponent={
-              <ConnectedFormPublish
+              <FormPublish
                 initialItemStatus={_.get(item, 'registrationStatus', '')}
                 apiItem={item}
               />
