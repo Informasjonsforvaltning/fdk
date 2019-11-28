@@ -48,7 +48,7 @@ export const StatusBar = ({
         type={type}
         isSaving={isSaving}
         allowPublish={allowPublish}
-        onChange={onChange}
+        onChange={status => onChange(status)}
       />
     </>
   );
