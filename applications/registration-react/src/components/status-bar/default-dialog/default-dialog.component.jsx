@@ -61,7 +61,6 @@ export const DefaultDialog = ({
         'd-flex',
         'align-items-center',
         'justify-content-between',
-        'fadeFromBottom-500',
         messageClass
       )}
     >
