@@ -21,7 +21,7 @@ export const DatasetsListPagePure = props => {
   useEffect(() => dispatchEnsureData(catalogId), [catalogId]);
 
   return (
-    <div className="container">
+    <div className="container" id="content">
       {_.get(location, ['state', 'confirmDelete'], false) && (
         <div className="row mb-5">
           <div className="col-12">

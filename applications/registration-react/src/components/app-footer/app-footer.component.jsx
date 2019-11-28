@@ -1,19 +1,15 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
-import _ from 'lodash';
 
 import localization from '../../lib/localization';
 import './app-footer.scss';
 
-export const Footer = props => {
-  const { location } = props;
+export const Footer = () => {
   let isRegistrationPage = false;
 
   // check if matches dataset registration page or api registration page
   if (
     /^\/catalogs\/[0-9a-z]+\/[apis\\datasets]+\/[0-9a-z-]+\/?$/.test(
-      _.get(location, 'pathname')
+      location.pathname
     )
   ) {
     isRegistrationPage = true;
@@ -60,12 +56,4 @@ export const Footer = props => {
   );
 };
 
-Footer.defaultProps = {
-  location: null
-};
-
-Footer.propTypes = {
-  location: PropTypes.object
-};
-
-export default withRouter(Footer);
+export default Footer;
