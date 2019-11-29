@@ -6,17 +6,19 @@ import localization from '../../../services/localization';
 import { ButtonRegistrationStatus } from './button-registration-status/button-registration-status.component';
 import { isPublished } from '../../../lib/registration-status';
 
-const renderMessageForPublishStatusChange = ({ published, type }) =>
-  published
-    ? `${localization.formStatus.type[type]} ${localization.formStatus.published}.`
-    : `${localization.formStatus.type[type]} ${localization.formStatus.unPublished}.`;
+const renderMessageForPublishStatusChange = (registrationStatus, type) => {
+  if (isPublished(registrationStatus)) {
+    return `${localization.formStatus.type[type]} ${localization.formStatus.published}.`;
+  }
+  return `${localization.formStatus.type[type]} ${localization.formStatus.unPublished}.`;
+};
 
-const renderMessageForUpdate = ({ isSaving, published }) => {
+const renderMessageForUpdate = (isSaving, registrationStatus) => {
   if (isSaving) {
     return `${localization.formStatus.isSaving}...`;
   }
 
-  if (published) {
+  if (isPublished(registrationStatus)) {
     return `${localization.formStatus.changesUpdated}.`;
   }
   return `${localization.formStatus.savedAsDraft}.`;
@@ -33,15 +35,14 @@ export const DefaultDialog = ({
   onChange,
   registrationStatus
 }) => {
-  const published = isPublished(registrationStatus);
   let messageClass;
   let message;
   if (justPublishedOrUnPublished) {
     messageClass = 'alert-success';
-    message = renderMessageForPublishStatusChange({ published, type });
+    message = renderMessageForPublishStatusChange(registrationStatus, type);
   } else {
     messageClass = 'alert-primary';
-    message = renderMessageForUpdate({ isSaving, published });
+    message = renderMessageForUpdate(isSaving, registrationStatus);
   }
 
   return (
@@ -58,7 +59,7 @@ export const DefaultDialog = ({
       <div className="d-flex">
         <ButtonRegistrationStatus
           onChange={onChange}
-          published={published}
+          published={isPublished(registrationStatus)}
           allowPublish={allowPublish}
           onShowValidationError={onShowValidationError}
         />
@@ -66,7 +67,7 @@ export const DefaultDialog = ({
         <button
           type="button"
           className="btn bg-transparent fdk-color-link"
-          disabled={published || isSaving || error}
+          disabled={isPublished(registrationStatus) || isSaving || error}
           onClick={onShowConfirmDelete}
         >
           {localization.formStatus.delete}
