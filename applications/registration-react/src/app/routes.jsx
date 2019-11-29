@@ -10,7 +10,6 @@ import { isAuthenticated } from '../services/auth/auth-service';
 export const Routes = () => (
   <Switch>
     <Route exact path="/login" component={LoginPage} />
-    <Redirect exact from="/" to="/catalogs" />
     <ProtectedRoute
       exact
       path="/catalogs"
@@ -22,5 +21,6 @@ export const Routes = () => (
       check={() => isAuthenticated()}
       component={CatalogRoutes}
     />
+    <Redirect to={isAuthenticated() ? '/catalogs' : '/login'} />
   </Switch>
 );
