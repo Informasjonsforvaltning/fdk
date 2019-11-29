@@ -6,12 +6,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
-import java.util.Optional;
+import java.util.List;
 
 @RepositoryRestResource(exported = false)
 public interface DatasetRepository extends ElasticsearchRepository<Dataset, String> {
 
-    long removeByIdAndCatalogId(String id, String catalogId);
+    List<Dataset> removeByIdAndCatalogId(String id, String catalogId);
 
     Page<Dataset> findByCatalogId(String catalogId, Pageable pageable);
 

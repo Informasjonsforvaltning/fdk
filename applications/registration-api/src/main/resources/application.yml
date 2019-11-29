@@ -21,6 +21,14 @@ application:
   harvestCron: 0 0 */6 * * *
 
 spring:
+  rabbitmq:
+    host: rabbitmq
+    port: 5672
+    username: ${RABBIT_USERNAME}
+    password: ${RABBIT_PASSWORD}
+    template:
+      routing-key: 'DatasetPublisherService.HarvestTrigger'
+      exchange: 'harvests'
   jackson:
     default-property-inclusion: non_null
   hateoas:
@@ -45,6 +53,14 @@ server:
 ---
 spring:
   profiles: develop
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: admin
+    password: admin
+    template:
+      routing-key: 'DatasetPublisherService.HarvestTrigger'
+      exchange: 'harvests'
   data:
     elasticsearch:
       clusterNodes: localhost:9300

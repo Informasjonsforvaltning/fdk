@@ -29,12 +29,13 @@ import static java.lang.String.format;
 @Service
 @RequiredArgsConstructor
 public class DatasetService {
-    private static Logger logger = LoggerFactory.getLogger(DatasetService.class);
+    private final static Logger logger = LoggerFactory.getLogger(DatasetService.class);
 
     private final OrganizationService organizationService;
     private final DatasetRepository datasetRepository;
     private final CatalogRepository catalogRepository;
     private final ConceptCatClient conceptCatClient;
+    private final DatasetPublisherService datasetPublisherService;
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -63,6 +64,8 @@ public class DatasetService {
         logger.info("Creating dataset in catalog with ID {}", catalog.getId());
         Dataset createdDataset = DatasetFactory.create(catalog, dataset);
 
+        triggerHarvestIfNecessary(createdDataset);
+
         logger.info("Created dataset with ID {} in catalog with ID {} ready to be saved", createdDataset.getId(), catalogId);
         return datasetRepository.save(createdDataset);
     }
@@ -81,14 +84,17 @@ public class DatasetService {
             updateDatasetPublisher(patch.getPublisher(), dataset);
         }
 
+        triggerHarvestIfNecessary(dataset);
+
         logger.info("Updated dataset with ID {} in catalog with ID {} ready to be saved", dataset.getId(), dataset.getCatalogId());
         return datasetRepository.save(dataset);
     }
 
     public void removeDataset(String catalogId, String datasetId) {
         logger.info("Preparing to remove dataset with ID {} from catalog with ID {}", datasetId, catalogId);
-        long count = datasetRepository.removeByIdAndCatalogId(datasetId, catalogId);
-        logger.info("{} dataset with ID {} from catalog with ID {}", count > 0 ? "Successfully removed" : "Failed to remove", datasetId, catalogId);
+        List<Dataset> removedDatasets = datasetRepository.removeByIdAndCatalogId(datasetId, catalogId);
+        logger.info("{} dataset with ID {} from catalog with ID {}", !removedDatasets.isEmpty() ? "Successfully removed" : "Failed to remove", datasetId, catalogId);
+        removedDatasets.forEach(this::triggerHarvestIfNecessary);
     }
 
     private Dataset applyPatch(Dataset dataset, Dataset patch) throws InternalServerErrorException {
@@ -143,5 +149,17 @@ public class DatasetService {
         subject.setAltLabel(concept.getAltLabel());
         subject.setIdentifier(concept.getIdentifier());
         return subject;
+    }
+
+    private boolean isDatasetPublished(Dataset dataset) {
+        return dataset.getRegistrationStatus().equalsIgnoreCase("PUBLISH");
+    }
+
+    private void triggerHarvestIfNecessary(Dataset dataset) {
+        logger.info("Checking whether dataset with ID {} in catalog with ID {} should be harvested", dataset.getId(), dataset.getCatalogId());
+        if (isDatasetPublished(dataset)) {
+            logger.info("Dataset status is {}, so a harvest message should be sent for dataset with ID {} in catalog with ID {}", dataset.getRegistrationStatus(), dataset.getId(), dataset.getCatalogId());
+            datasetPublisherService.sendHarvestMessage(dataset);
+        }
     }
 }
