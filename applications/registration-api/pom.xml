@@ -44,7 +44,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
+        </dependency>
         <!-- må ha actuator for å kjøre på openshift. kreves av readyness probe -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
