@@ -1339,7 +1339,6 @@ Eksempel på endring som medfører versjonering:
     justPublishedOrUnPublished={false}
     lastSaved="2019-01-16T10:59:24.587+0000"
     onDelete={[Function]}
-    published={false}
     type="api"
   />
 </div>

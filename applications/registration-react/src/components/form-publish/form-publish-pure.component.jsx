@@ -9,7 +9,6 @@ export const FormPublishPure = ({
   isSaving,
   lastSaved,
   error,
-  published,
   justPublishedOrUnPublished,
   onDelete,
   allowPublish,
@@ -23,12 +22,12 @@ export const FormPublishPure = ({
           type={type}
           isSaving={isSaving}
           lastSaved={lastSaved}
-          published={published}
           error={error}
           justPublishedOrUnPublished={justPublishedOrUnPublished}
           onDelete={onDelete}
           allowPublish={allowPublish}
           onChange={input.onChange}
+          registrationStatus={input.value}
         />
       )}
     />
@@ -39,7 +38,6 @@ FormPublishPure.defaultProps = {
   isSaving: false,
   lastSaved: null,
   error: null,
-  published: false,
   justPublishedOrUnPublished: false,
   onDelete: noop,
   allowPublish: true
@@ -49,7 +47,6 @@ FormPublishPure.propTypes = {
   isSaving: PropTypes.bool,
   lastSaved: PropTypes.string,
   error: PropTypes.object,
-  published: PropTypes.bool,
   justPublishedOrUnPublished: PropTypes.bool,
   onDelete: PropTypes.func,
   allowPublish: PropTypes.bool,

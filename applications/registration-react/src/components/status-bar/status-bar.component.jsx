@@ -14,11 +14,11 @@ export const StatusBar = ({
   isSaving,
   lastSaved,
   error,
-  published,
   justPublishedOrUnPublished,
   onDelete,
   allowPublish,
-  onChange
+  onChange,
+  registrationStatus
 }) => {
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
   const [showValidatonError, setShowValidationError] = useState(false);
@@ -44,11 +44,11 @@ export const StatusBar = ({
         onShowValidationError={() => setShowValidationError(true)}
         onShowConfirmDelete={() => setShowConfirmDelete(true)}
         justPublishedOrUnPublished={justPublishedOrUnPublished}
-        published={published}
         type={type}
         isSaving={isSaving}
         allowPublish={allowPublish}
         onChange={status => onChange(status)}
+        registrationStatus={registrationStatus}
       />
     </>
   );
@@ -58,11 +58,11 @@ StatusBar.defaultProps = {
   isSaving: false,
   lastSaved: null,
   error: null,
-  published: false,
   justPublishedOrUnPublished: false,
   onDelete: noop,
   allowPublish: true,
-  onChange: noop
+  onChange: noop,
+  registrationStatus: null
 };
 
 StatusBar.propTypes = {
@@ -70,9 +70,9 @@ StatusBar.propTypes = {
   isSaving: PropTypes.bool,
   lastSaved: PropTypes.string,
   error: PropTypes.object,
-  published: PropTypes.bool,
   justPublishedOrUnPublished: PropTypes.bool,
   onDelete: PropTypes.func,
   allowPublish: PropTypes.bool,
-  onChange: PropTypes.func
+  onChange: PropTypes.func,
+  registrationStatus: PropTypes.string
 };
