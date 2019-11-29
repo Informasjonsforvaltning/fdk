@@ -4,6 +4,7 @@ import noop from 'lodash/noop';
 import cx from 'classnames';
 import localization from '../../../services/localization';
 import { ButtonRegistrationStatus } from './button-registration-status/button-registration-status.component';
+import { isPublished } from '../../../lib/registration-status';
 
 const renderMessageForPublishStatusChange = ({ published, type }) =>
   published
@@ -25,13 +26,14 @@ export const DefaultDialog = ({
   onShowValidationError,
   onShowConfirmDelete,
   justPublishedOrUnPublished,
-  published,
   type,
   isSaving,
   allowPublish,
   error,
-  onChange
+  onChange,
+  registrationStatus
 }) => {
+  const published = isPublished(registrationStatus);
   let messageClass;
   let message;
   if (justPublishedOrUnPublished) {
@@ -79,10 +81,10 @@ DefaultDialog.defaultProps = {
   onShowConfirmDelete: noop,
   isSaving: false,
   error: null,
-  published: false,
   justPublishedOrUnPublished: false,
   allowPublish: true,
-  onChange: noop
+  onChange: noop,
+  registrationStatus: null
 };
 
 DefaultDialog.propTypes = {
@@ -91,8 +93,8 @@ DefaultDialog.propTypes = {
   type: PropTypes.oneOf(['dataset', 'api']).isRequired,
   isSaving: PropTypes.bool,
   error: PropTypes.object,
-  published: PropTypes.bool,
   justPublishedOrUnPublished: PropTypes.bool,
   allowPublish: PropTypes.bool,
-  onChange: PropTypes.func
+  onChange: PropTypes.func,
+  registrationStatus: PropTypes.string
 };

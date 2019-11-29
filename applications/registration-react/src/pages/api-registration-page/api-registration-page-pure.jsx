@@ -205,7 +205,6 @@ export const ApiRegistrationPagePure = ({
             type="api"
             isSaving={isSaving}
             lastSaved={item._lastModified}
-            published={item.registrationStatus === 'PUBLISH'}
             error={error}
             justPublishedOrUnPublished={justPublishedOrUnPublished}
             onDelete={() =>
