@@ -45,7 +45,7 @@ export const FormTemplate = props => {
           <i className={collapseIconClass} />
           <h2 className="mb-0 text-ellipsis">{title}</h2>
           {required && (
-            <span className="fdk-badge badge badge-secondary ml-2 fdk-text-size-small">
+            <span className="fdk-badge badge fdk-bg-color-warning-lightest ml-2 fdk-text-size-small">
               {localization.helptext.required}
             </span>
           )}
