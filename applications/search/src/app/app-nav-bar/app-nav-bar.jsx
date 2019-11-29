@@ -22,6 +22,10 @@ import './app-nav-bar.scss';
 import { getConfig } from '../../config';
 
 export function AppNavBar(props) {
+  const fdkLogoPath = getConfig().useDemoLogo
+    ? 'fdk-logo-demo.svg'
+    : 'fdk-logo@2x.png';
+
   return (
     <div className="fdk-header">
       <div className="container">
@@ -43,7 +47,7 @@ export function AppNavBar(props) {
                 src={
                   getConfig().themeNap
                     ? '/static/img/logo-transport.svg'
-                    : '/static/img/fdk-logo@2x.png'
+                    : `/static/img/${fdkLogoPath}`
                 }
                 alt="Logo for Felles datakatalog"
               />
