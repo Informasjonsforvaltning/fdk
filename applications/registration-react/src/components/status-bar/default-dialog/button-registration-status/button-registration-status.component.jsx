@@ -29,7 +29,7 @@ export const ButtonRegistrationStatus = ({
         color="primary"
         onClick={() => onChange('PUBLISH')}
       >
-        Publiser
+        {localization.formStatus.publish}
       </Button>
     );
   }
@@ -42,7 +42,7 @@ export const ButtonRegistrationStatus = ({
       className="fdk-button shadow-none bg-transparent btn-outline-primary mr-3"
       onClick={() => onChange('DRAFT')}
     >
-      Avpubliser
+      {localization.formStatus.unPublish}
     </Button>
   );
 };
