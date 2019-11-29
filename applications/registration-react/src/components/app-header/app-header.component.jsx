@@ -5,8 +5,13 @@ import { compose, withProps } from 'recompose';
 import localization from '../../lib/localization';
 import './app-header.scss';
 import { getUserProfile, logout } from '../../auth/auth-service';
+import { getConfig } from '../../config';
 
 export const AppHeaderPure = ({ user }) => {
+  const logoImagePath = getConfig().useDemoLogo
+    ? '/static/img/logo-registrering-demo.svg'
+    : '/static/img/logo-registrering.svg';
+
   return (
     <header>
       <div>
@@ -34,7 +39,7 @@ export const AppHeaderPure = ({ user }) => {
                 </span>
                 <img
                   className="fdk-logo"
-                  src="/static/img/logo-registrering.svg"
+                  src={logoImagePath}
                   alt="Logo for Felles datakatalog"
                 />
               </a>

@@ -40,7 +40,8 @@ const createConfig = env => {
       host:
         env.ORGANIZATION_API_HOST ||
         'https://organization-catalogue.fellesdatakatalog.brreg.no'
-    }
+    },
+    useDemoLogo: env.USE_DEMO_LOGO || false
   };
 };
 
@@ -66,7 +67,8 @@ export const loadConfig = async () => {
   //     'https://registrering-begrep.ut1.fellesdatakatalog.brreg.no',
   //   SSO_HOST: 'https://sso.ut1.fellesdatakatalog.brreg.no',
   //   ORGANIZATION_API_HOST:
-  //     'https://organization-catalogue.ut1.fellesdatakatalog.brreg.no'
+  //     'https://organization-catalogue.ut1.fellesdatakatalog.brreg.no',
+  //   USE_DEMO_LOGO: true
   // });
 
   // override all env variables to local docker
@@ -77,7 +79,8 @@ export const loadConfig = async () => {
   //   CONCEPT_REGISTRATION_HOST: 'http://localhost:8202',
   //   SSO_HOST: 'http://localhost:8084',
   //   ORGANIZATION_API_HOST:
-  //     'https://organization-catalogue.ut1.fellesdatakatalog.brreg.no'
+  //     'https://organization-catalogue.ut1.fellesdatakatalog.brreg.no',
+  //   USE_DEMO_LOGO: true
   // });
 
   Object.assign(config, createConfig(env));
