@@ -25,7 +25,7 @@ export const Helptext = props => {
       <div className="d-flex align-items-center">
         <h3>{title}</h3>
         {required && (
-          <span className="fdk-badge badge badge-secondary ml-2">
+          <span className="fdk-badge badge fdk-bg-color-warning-lightest ml-2">
             {localization.helptext.required}
           </span>
         )}
