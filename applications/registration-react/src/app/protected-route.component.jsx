@@ -16,8 +16,13 @@ export const ProtectedRoute = ({ check, ...props }) => {
   const { pathname, search, hash, state } = location;
   const redirectLocation = { pathname, search, hash, state };
 
-  if (!(isAuthenticated() && check(params))) {
+  if (!isAuthenticated()) {
     logout({ redirectLocation });
+    return <Redirect to="/login" />; // render preemptively to reduce flicker
+  }
+
+  if (!check(params)) {
+    logout();
     return <Redirect to="/login" />; // render preemptively to reduce flicker
   }
 
