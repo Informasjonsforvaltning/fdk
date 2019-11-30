@@ -11,7 +11,7 @@ import { getLoginState } from '../../auth/login-store';
 
 const showLoginReadOnly = window.localStorage.getItem('showLoginReadOnly');
 
-const renderMessageForLoggedOutDueToTimeout = () => (
+const renderMessageForReauthenticateDueToTimeout = () => (
   <div className="row">
     <div className="col-12">
       <div
@@ -27,11 +27,12 @@ const renderMessageForLoggedOutDueToTimeout = () => (
   </div>
 );
 
-export const LoginPagePure = ({ loggedOutDueToTimeout }) => (
+export const LoginPagePure = ({ reauthenticateDueToTimeout }) => (
   <>
     <div className="login-dialog-wrapper pt-5">
       <div className="container">
-        {loggedOutDueToTimeout && renderMessageForLoggedOutDueToTimeout()}
+        {reauthenticateDueToTimeout &&
+          renderMessageForReauthenticateDueToTimeout()}
         <div className="row">
           {showLoginReadOnly && (
             <div className="col-md-6">
@@ -113,15 +114,15 @@ export const LoginPagePure = ({ loggedOutDueToTimeout }) => (
 );
 
 LoginPagePure.defaultProps = {
-  loggedOutDueToTimeout: false
+  reauthenticateDueToTimeout: false
 };
 
 LoginPagePure.propTypes = {
-  loggedOutDueToTimeout: PropTypes.bool
+  reauthenticateDueToTimeout: PropTypes.bool
 };
 
 const withLoginProps = withProps(() =>
-  pick(getLoginState(), 'loggedOutDueToTimeout')
+  pick(getLoginState(), 'reauthenticateDueToTimeout')
 );
 
 export const LoginPage = withLoginProps(LoginPagePure);

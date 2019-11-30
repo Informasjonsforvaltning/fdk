@@ -49,7 +49,10 @@ export async function initAuthService() {
 
   await initializeKeycloak();
   if (isAuthenticated()) {
-    popLoginState();
+    const { targetUrl } = popLoginState();
+    if (targetUrl) {
+      location.replace(targetUrl);
+    }
   }
 }
 
@@ -58,8 +61,15 @@ export function logout() {
   kc.logout(); // redirects;
 }
 
-export function logoutByTimeout() {
-  setLoginState({ loggedOutDueToTimeout: true });
+export function reauthenticateDueToUnauthenticated() {
+  // Reauthenticate is called when protected route is accessed without authentication
+  // After authentication, user will be redirected back to the original location
+  setLoginState({ targetUrl: location.href });
+  logout();
+}
+
+export function reauthenticateDueToTimeout() {
+  setLoginState({ reauthenticateDueToTimeout: true, targetUrl: location.href });
   logout();
 }
 
