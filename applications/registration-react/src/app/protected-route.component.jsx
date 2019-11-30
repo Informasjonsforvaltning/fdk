@@ -4,6 +4,7 @@ import { Redirect, Route } from 'react-router-dom';
 
 import {
   isAuthenticated,
+  logout,
   reauthenticateDueToTimeout,
   reauthenticateDueToUnauthenticated
 } from '../services/auth/auth-service';
@@ -16,8 +17,13 @@ export const ProtectedRoute = ({ check, ...props }) => {
     computedMatch: { params }
   } = props;
 
-  if (!(isAuthenticated() && check(params))) {
+  if (!isAuthenticated()) {
     reauthenticateDueToUnauthenticated();
+    return <Redirect to="/login" />; // render preemptively to reduce flicker
+  }
+
+  if (!check(params)) {
+    logout();
     return <Redirect to="/login" />; // render preemptively to reduce flicker
   }
 
