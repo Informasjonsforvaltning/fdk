@@ -4,7 +4,7 @@ import Keycloak from 'keycloak-js';
 
 import { getConfig } from '../config';
 import { loadTokens, removeTokens, storeTokens } from './token-store';
-import { clearLoginState, setLoginState } from './login-store';
+import { popLoginState, setLoginState } from './login-store';
 
 let kc;
 
@@ -49,7 +49,7 @@ export async function initAuthService() {
 
   await initializeKeycloak();
   if (isAuthenticated()) {
-    clearLoginState();
+    popLoginState();
   }
 }
 

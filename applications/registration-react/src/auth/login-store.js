@@ -1,14 +1,20 @@
 export const getLoginState = () => {
-  const stateString = sessionStorage.getItem('login') || '{}';
-  return JSON.parse(stateString);
+  const valueString = sessionStorage.getItem('login');
+  try {
+    const parsed = JSON.parse(valueString);
+    return typeof parsed === 'object' && parsed !== null ? parsed : {};
+  } catch (e) {
+    return {};
+  }
 };
 
-export const setLoginState = patch => {
-  const state = getLoginState() || {};
-  Object.assign(state, patch);
-  sessionStorage.setItem('login', JSON.stringify(state));
+export const setLoginState = value => {
+  const valueString = JSON.stringify({ ...value });
+  sessionStorage.setItem('login', valueString);
 };
 
-export const clearLoginState = () => {
+export const popLoginState = () => {
+  const state = getLoginState();
   sessionStorage.removeItem('login');
+  return state;
 };
