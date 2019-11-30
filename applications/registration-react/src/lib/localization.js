@@ -10,6 +10,6 @@ const localization = new LocalizedStrings({
 
 export default localization;
 
-export function configureLocalization() {
+export function initLocalization() {
   localization.setLanguage(getConfig().registrationLanguage);
 }
