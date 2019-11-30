@@ -41,7 +41,7 @@ function initializeKeycloak() {
 
 export const isAuthenticated = () => kc && kc.authenticated;
 
-export async function initAuth() {
+export async function initAuthService() {
   const kcConfig = getConfig().keycloak;
   kc = Keycloak(kcConfig);
 

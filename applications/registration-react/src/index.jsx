@@ -4,21 +4,21 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 
 import { configureStore } from './redux/configureStore';
-import { loadConfig } from './config';
-import { configureLocalization } from './lib/localization';
+import { initConfig } from './config';
+import { initLocalization } from './lib/localization';
 import { App } from './app/app';
-import { initAuth } from './auth/auth-service';
+import { initAuthService } from './auth/auth-service';
 
 import './styles';
 
-async function configureServices() {
-  await loadConfig();
-  configureLocalization();
-  await initAuth();
+async function initServices() {
+  await initConfig();
+  initLocalization();
+  await initAuthService();
 }
 
 async function main() {
-  await configureServices();
+  await initServices();
   const store = configureStore();
 
   const app = (
