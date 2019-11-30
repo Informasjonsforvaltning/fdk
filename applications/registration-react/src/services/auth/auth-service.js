@@ -3,7 +3,6 @@ import _ from 'lodash';
 import Keycloak from 'keycloak-js';
 
 import { getConfig } from '../config';
-import { loadTokens, removeTokens, storeTokens } from './token-store';
 import { setLoginState } from './login-store';
 
 let kc;
@@ -13,28 +12,20 @@ const PERMISSION_ADMIN = 'PERMISSION_ADMIN';
 const RESOURCE_ORGANIZATION = 'organization';
 const ROLE_ADMIN = 'admin';
 
+const redirectPath = '/auth_response';
+const loginPath = '/login';
+const redirectUri = `${location.origin}${redirectPath}`;
+
 function toPromise(keycloakPromise) {
   return new Promise((resolve, reject) =>
     keycloakPromise.success(resolve).error(reject)
   );
 }
 
-function setOnAuthSuccess() {
-  const handler = () => {
-    storeTokens({ token: kc.token, refreshToken: kc.refreshToken });
-  };
-
-  kc.onAuthRefreshSuccess = handler;
-  kc.onAuthSuccess = handler;
-}
-
 function initializeKeycloak() {
-  const { token, refreshToken } = loadTokens();
   const initOptions = {
     onLoad: 'check-sso',
-    redirectUri: `${location.origin}/auth_response`,
-    token,
-    refreshToken
+    redirectUri
   };
 
   return toPromise(kc.init(initOptions));
@@ -42,11 +33,25 @@ function initializeKeycloak() {
 
 export const isAuthenticated = () => kc && kc.authenticated;
 
+function storeRedirectLocationIfDirectNavigation() {
+  // this is hack - we need to exlcude full list of addresses that don't need authentication
+  const relativeLocation = location.href.substr(location.origin.length);
+  if (
+    !(
+      relativeLocation.startsWith(loginPath) ||
+      relativeLocation.startsWith(redirectPath)
+    )
+  ) {
+    // redirectLocation is used in react-router redirect, that supports both string and object form
+    setLoginState({ redirectLocation: relativeLocation });
+  }
+}
+
 export async function initAuthService() {
+  storeRedirectLocationIfDirectNavigation();
+
   const kcConfig = getConfig().keycloak;
   kc = Keycloak(kcConfig);
-
-  setOnAuthSuccess();
 
   await initializeKeycloak();
 }
@@ -55,7 +60,6 @@ export function logout(loginState) {
   if (loginState) {
     setLoginState(loginState);
   }
-  removeTokens();
   kc.logout(); // redirects;
 }
 
