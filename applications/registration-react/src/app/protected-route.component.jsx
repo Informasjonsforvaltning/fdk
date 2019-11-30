@@ -1,7 +1,11 @@
 import React from 'react';
-import { Redirect, Route } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { logoutByTimeout } from '../services/auth/auth-service';
+import { Redirect, Route } from 'react-router-dom';
+
+import {
+  isAuthenticated,
+  logoutByTimeout
+} from '../services/auth/auth-service';
 import { Timeout } from '../components/timeout.component';
 
 const TIMEOUT = 27.5 * 60 * 1000;
@@ -11,7 +15,7 @@ export const ProtectedRoute = ({ check, ...props }) => {
     computedMatch: { params }
   } = props;
 
-  if (!check(params)) {
+  if (!(isAuthenticated() && check(params))) {
     return <Redirect to="/login" />;
   }
 
@@ -24,10 +28,11 @@ export const ProtectedRoute = ({ check, ...props }) => {
 };
 
 ProtectedRoute.propTypes = {
-  check: PropTypes.func.isRequired,
+  check: PropTypes.func,
   computedMatch: PropTypes.object
 };
 
 ProtectedRoute.defaultProps = {
+  check: () => true,
   computedMatch: {}
 };
