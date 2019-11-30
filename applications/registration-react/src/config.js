@@ -49,7 +49,7 @@ const config = createConfig({});
 
 export const getConfig = () => config;
 
-export const loadConfig = async () => {
+export const initConfig = async () => {
   const response = await axios.get('/env.json');
   const env = response.data;
 

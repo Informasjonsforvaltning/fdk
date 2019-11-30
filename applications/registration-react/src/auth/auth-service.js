@@ -40,7 +40,7 @@ function initialize() {
   return toPromise(kc.init(initOptions));
 }
 
-export async function initAuth() {
+export async function initAuthService() {
   const kcConfig = getConfig().keycloak;
   kc = Keycloak(kcConfig);
 
