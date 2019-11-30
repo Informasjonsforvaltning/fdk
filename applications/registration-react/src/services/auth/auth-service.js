@@ -9,6 +9,7 @@ import { globalHistory } from '../global-history';
 
 let kc;
 
+const PERMISSION_READ = 'PERMISSION_READ';
 const PERMISSION_ADMIN = 'PERMISSION_ADMIN';
 const RESOURCE_ORGANIZATION = 'organization';
 const ROLE_ADMIN = 'admin';
@@ -110,6 +111,13 @@ export const getResourceRoles = () => {
 
 const hasPermissionForResource = (resource, resourceId, permission) => {
   switch (permission) {
+    case PERMISSION_READ: {
+      return !!_.find(getResourceRoles(), {
+        resource: RESOURCE_ORGANIZATION,
+        resourceId
+        // match any role
+      });
+    }
     case PERMISSION_ADMIN: {
       return !!_.find(getResourceRoles(), {
         resource: RESOURCE_ORGANIZATION,
@@ -121,6 +129,14 @@ const hasPermissionForResource = (resource, resourceId, permission) => {
       throw new Error('no permission');
     }
   }
+};
+
+export const hasOrganizationReadPermission = resourceId => {
+  return hasPermissionForResource(
+    RESOURCE_ORGANIZATION,
+    resourceId,
+    PERMISSION_READ
+  );
 };
 
 export const hasOrganizationAdminPermission = resourceId => {

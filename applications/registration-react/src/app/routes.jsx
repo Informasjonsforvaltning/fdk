@@ -5,13 +5,20 @@ import { LoginPage } from '../pages/login-page/login-page';
 import { ProtectedRoute } from './protected-route.component';
 import { CatalogsPage } from '../pages/catalogs-page/catalogs-page';
 import { CatalogRoutes } from './catalog-routes';
-import { isAuthenticated } from '../services/auth/auth-service';
+import {
+  hasOrganizationReadPermission,
+  isAuthenticated
+} from '../services/auth/auth-service';
 
 export const Routes = () => (
   <Switch>
     <Route exact path="/login" component={LoginPage} />
     <ProtectedRoute exact path="/catalogs" component={CatalogsPage} />
-    <ProtectedRoute path="/catalogs/:catalogId" component={CatalogRoutes} />
+    <ProtectedRoute
+      path="/catalogs/:catalogId"
+      check={({ catalogId }) => hasOrganizationReadPermission(catalogId)}
+      component={CatalogRoutes}
+    />
     <Redirect to={isAuthenticated() ? '/catalogs' : '/login'} />
   </Switch>
 );
