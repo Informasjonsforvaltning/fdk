@@ -20,7 +20,6 @@ function toPromise(keycloakPromise) {
 
 function setOnAuthSuccess() {
   const handler = () => {
-    clearLoginState();
     storeTokens({ token: kc.token, refreshToken: kc.refreshToken });
   };
 
@@ -28,7 +27,7 @@ function setOnAuthSuccess() {
   kc.onAuthSuccess = handler;
 }
 
-function initialize() {
+function initializeKeycloak() {
   const { token, refreshToken } = loadTokens();
   const initOptions = {
     onLoad: 'check-sso',
@@ -40,13 +39,18 @@ function initialize() {
   return toPromise(kc.init(initOptions));
 }
 
+export const isAuthenticated = () => kc && kc.authenticated;
+
 export async function initAuthService() {
   const kcConfig = getConfig().keycloak;
   kc = Keycloak(kcConfig);
 
   setOnAuthSuccess();
 
-  await initialize();
+  await initializeKeycloak();
+  if (isAuthenticated()) {
+    clearLoginState();
+  }
 }
 
 export function logout() {
@@ -67,8 +71,6 @@ export function login({ readOnly = false }) {
   const idpHint = readOnly ? 'local-oidc' : 'idporten-oidc';
   kc.login({ idpHint }); // redirects
 }
-
-export const isAuthenticated = () => kc && kc.authenticated;
 
 export async function getToken() {
   await toPromise(kc.updateToken(5));
