@@ -3,7 +3,6 @@ import _ from 'lodash';
 import Keycloak from 'keycloak-js';
 
 import { getConfig } from '../config';
-import { loadTokens, removeTokens, storeTokens } from './token-store';
 import { popLoginState, setLoginState } from './login-store';
 import { globalHistory } from '../global-history';
 
@@ -14,28 +13,18 @@ const PERMISSION_ADMIN = 'PERMISSION_ADMIN';
 const RESOURCE_ORGANIZATION = 'organization';
 const ROLE_ADMIN = 'admin';
 
+const redirectUri = location.origin;
+
 function toPromise(keycloakPromise) {
   return new Promise((resolve, reject) =>
     keycloakPromise.success(resolve).error(reject)
   );
 }
 
-function setOnAuthSuccess() {
-  const handler = () => {
-    storeTokens({ token: kc.token, refreshToken: kc.refreshToken });
-  };
-
-  kc.onAuthRefreshSuccess = handler;
-  kc.onAuthSuccess = handler;
-}
-
 function initializeKeycloak() {
-  const { token, refreshToken } = loadTokens();
   const initOptions = {
     onLoad: 'check-sso',
-    redirectUri: location.origin,
-    token,
-    refreshToken
+    redirectUri
   };
 
   return toPromise(kc.init(initOptions));
@@ -47,20 +36,19 @@ export async function initAuthService() {
   const kcConfig = getConfig().keycloak;
   kc = Keycloak(kcConfig);
 
-  setOnAuthSuccess();
-
   await initializeKeycloak();
+
   if (isAuthenticated()) {
     const { targetLocation } = popLoginState();
     if (targetLocation) {
+      // this navigates within the app without running init again
       globalHistory.replace(targetLocation);
     }
   }
 }
 
 export function logout() {
-  removeTokens();
-  kc.logout(); // redirects;
+  kc.logout();
 }
 
 export function reauthenticateDueToUnauthenticated() {
