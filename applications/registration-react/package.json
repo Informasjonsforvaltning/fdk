@@ -35,6 +35,7 @@
     "express": "^4.16.2",
     "file-loader": "^1.1.11",
     "font-awesome": "^4.7.0",
+    "history": "^4.10.1",
     "is-url": "^1.2.2",
     "keycloak-js": "^6.0.1",
     "lodash": "^4.17.15",
