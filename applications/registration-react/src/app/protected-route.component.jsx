@@ -4,7 +4,8 @@ import { Redirect, Route } from 'react-router-dom';
 
 import {
   isAuthenticated,
-  logoutByTimeout
+  reauthenticateDueToTimeout,
+  reauthenticateDueToUnauthenticated
 } from '../services/auth/auth-service';
 import { Timeout } from '../components/timeout.component';
 
@@ -16,13 +17,14 @@ export const ProtectedRoute = ({ check, ...props }) => {
   } = props;
 
   if (!(isAuthenticated() && check(params))) {
-    return <Redirect to="/login" />;
+    reauthenticateDueToUnauthenticated();
+    return <Redirect to="/login" />; // render preemptively to reduce flicker
   }
 
   return (
     <>
       <Route {...props} />
-      <Timeout timeout={TIMEOUT} onTimeout={logoutByTimeout} />
+      <Timeout timeout={TIMEOUT} onTimeout={reauthenticateDueToTimeout} />
     </>
   );
 };

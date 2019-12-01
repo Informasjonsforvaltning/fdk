@@ -5,6 +5,7 @@ import Keycloak from 'keycloak-js';
 import { getConfig } from '../config';
 import { loadTokens, removeTokens, storeTokens } from './token-store';
 import { popLoginState, setLoginState } from './login-store';
+import { globalHistory } from '../global-history';
 
 let kc;
 
@@ -49,7 +50,10 @@ export async function initAuthService() {
 
   await initializeKeycloak();
   if (isAuthenticated()) {
-    popLoginState();
+    const { targetLocation } = popLoginState();
+    if (targetLocation) {
+      globalHistory.replace(targetLocation);
+    }
   }
 }
 
@@ -58,16 +62,22 @@ export function logout() {
   kc.logout(); // redirects;
 }
 
-export function logoutByTimeout() {
-  setLoginState({ loggedOutDueToTimeout: true });
+export function reauthenticateDueToUnauthenticated() {
+  // Reauthenticate is called when protected route is accessed without authentication
+  // After authentication, user will be redirected back to the original location
+  setLoginState({ targetLocation: globalHistory.location });
+  logout();
+}
+
+export function reauthenticateDueToTimeout() {
+  setLoginState({
+    reauthenticateDueToTimeout: true,
+    targetLocation: globalHistory.location
+  });
   logout();
 }
 
 export function login({ readOnly = false }) {
-  // TODO For "deep linking", we want to redirect to original selected location,
-  //  but with current solution, ProtectedRoutePure component has already redireced to "/login".
-  //  The original selected location has to be carried over to here.
-  //  In addition, for deep linking, we need to handle the case when user does not have access to the resource in url.
   const idpHint = readOnly ? 'local-oidc' : 'idporten-oidc';
   kc.login({ idpHint }); // redirects
 }
