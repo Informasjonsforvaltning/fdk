@@ -4,7 +4,7 @@ import _ from 'lodash';
 import { Button } from 'reactstrap';
 import { withState, withHandlers, compose } from 'recompose';
 
-import localization from '../../../lib/localization';
+import localization from '../../../services/localization';
 import InputField from '../../../components/fields/field-input/field-input.component';
 import { validateURL } from '../../../validation/validation';
 

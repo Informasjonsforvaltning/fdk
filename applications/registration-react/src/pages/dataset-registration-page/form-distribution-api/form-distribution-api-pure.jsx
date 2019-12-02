@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import { Field, FieldArray } from 'redux-form';
 import _ from 'lodash';
 
-import localization from '../../../lib/localization';
+import localization from '../../../services/localization';
 import Helptext from '../../../components/helptext/helptext.component';
 import { InputTagsAPIsField } from '../field-tagsinput-apis/field-tagsinput-apis.component';
-import { getConfig } from '../../../config';
+import { getConfig } from '../../../services/config';
 
 export const renderDistributionsAPI = () => (
   <div className="form-group">

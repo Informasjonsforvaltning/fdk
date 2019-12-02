@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Field, FieldArray } from 'redux-form';
 
-import localization from '../../../lib/localization';
+import localization from '../../../services/localization';
 import Helptext from '../../../components/helptext/helptext.component';
 import TagsInputFieldArray from '../../../components/fields/field-input-tags-objects/tags-input-field-array.component';
 import DatepickerField from '../../../components/fields/field-datepicker/field-datepicker.component';

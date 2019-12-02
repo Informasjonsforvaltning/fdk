@@ -12,7 +12,7 @@ import { DatasetsListPagePure } from './dataset-list-page-pure';
 import {
   createDataset,
   datasetPath
-} from '../../api/registration-api/datasets';
+} from '../../services/api/registration-api/datasets';
 
 const mapRouteParams = withProps(({ match: { params } }) =>
   _.pick(params, ['catalogId'])

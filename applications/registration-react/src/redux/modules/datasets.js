@@ -3,9 +3,9 @@ import { compose } from 'recompose';
 import {
   datasetListAllPath,
   deleteDataset
-} from '../../api/registration-api/datasets';
+} from '../../services/api/registration-api/datasets';
 import { reduxFsaThunk } from '../../lib/redux-fsa-thunk';
-import { registrationApiGet } from '../../api/registration-api/host';
+import { registrationApiGet } from '../../services/api/registration-api/host';
 
 export const DATASETS_REQUEST = 'DATASETS_REQUEST';
 export const DATASETS_SUCCESS = 'DATASETS_SUCCESS';

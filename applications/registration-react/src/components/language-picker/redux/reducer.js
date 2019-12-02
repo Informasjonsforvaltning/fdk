@@ -1,6 +1,6 @@
 import { SET_INPUT_LANGUAGES, TOGGLE_INPUT_LANGUAGE } from './actionTypes';
 
-import localization from '../../../lib/localization';
+import localization from '../../../services/localization';
 
 const NB = 'nb';
 const NN = 'nn';

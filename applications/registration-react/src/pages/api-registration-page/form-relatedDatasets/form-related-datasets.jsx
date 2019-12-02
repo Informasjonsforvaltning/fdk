@@ -9,8 +9,8 @@ import { asyncValidate } from '../async-patch/async-patch';
 import {
   extractDatasets,
   searchDatasets
-} from '../../../api/search-api/datasets';
-import { extractApis, searchApis } from '../../../api/search-api/apis';
+} from '../../../services/api/search-api/datasets';
+import { extractApis, searchApis } from '../../../services/api/search-api/apis';
 
 export const getApiByHarvestSourceUri = harvestSourceUri =>
   searchApis({ harvestSourceUri, returnFields: 'id' })

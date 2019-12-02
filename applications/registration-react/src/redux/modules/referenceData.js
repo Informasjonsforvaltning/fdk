@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import { reduxFsaThunk } from '../../lib/redux-fsa-thunk';
-import { getReferenceData } from '../../api/search-api/reference-data';
+import { getReferenceData } from '../../services/api/search-api/reference-data';
 
 const REFERENCEDATA_REQUEST = 'REFERENCEDATA_REQUEST';
 const REFERENCEDATA_SUCCESS = 'REFERENCEDATA_SUCCESS';

@@ -1,6 +1,9 @@
 import _ from 'lodash';
 import { fetchApisIfNeededAction } from './apis';
-import { getApiCatalog, postApiCatalog } from '../../api/registration-api/apis';
+import {
+  getApiCatalog,
+  postApiCatalog
+} from '../../services/api/registration-api/apis';
 
 export const API_CATALOG_REQUEST = 'API_CATALOG_REQUEST';
 export const API_CATALOG_SUCCESS = 'API_CATALOG_SUCCESS';

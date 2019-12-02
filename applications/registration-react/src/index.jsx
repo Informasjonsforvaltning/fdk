@@ -3,11 +3,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 
-import { configureStore } from './redux/configureStore';
-import { initConfig } from './config';
-import { initLocalization } from './lib/localization';
 import { App } from './app/app';
-import { initAuthService } from './auth/auth-service';
+
+import { configureStore } from './redux/configureStore';
+import { initConfig } from './services/config';
+import { initLocalization } from './services/localization';
+import { initAuthService } from './services/auth/auth-service';
 
 import './styles';
 

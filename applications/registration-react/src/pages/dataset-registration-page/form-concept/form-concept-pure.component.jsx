@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 
-import localization from '../../../lib/localization';
+import localization from '../../../services/localization';
 import Helptext from '../../../components/helptext/helptext.component';
 import ConceptTagsInputField from './concept-tags-input-field/concept-tags-input-field.component';
 import TagsInputFieldArray from '../../../components/fields/field-input-tags-objects/tags-input-field-array.component';

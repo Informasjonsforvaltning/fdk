@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import localization from '../../../lib/localization';
+import localization from '../../../services/localization';
 
 export const ValidationErrorDialog = ({ type, onCancel }) => (
   <div className="form-status-bar-overlay d-flex align-items-center justify-content-between alert-danger">

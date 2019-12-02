@@ -8,7 +8,7 @@ import validate from './form-catalog-validations';
 import { asyncValidateCatalog } from './async-validate-catalog';
 import { textType } from '../../../schemaTypes';
 import './form-catalog.scss';
-import { getConfig } from '../../../config';
+import { getConfig } from '../../../services/config';
 
 const formConfigurer = compose(
   reduxForm({

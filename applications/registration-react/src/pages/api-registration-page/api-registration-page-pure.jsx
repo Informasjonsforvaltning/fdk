@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { parse } from 'qs';
 
-import { getTranslateText } from '../../lib/translateText';
-import localization from '../../lib/localization';
+import { getTranslateText } from '../../services/translateText';
+import localization from '../../services/localization';
 import { AlertMessage } from '../../components/alert-message/alert-message.component';
 import { FormTemplateWithState } from '../../components/form-template/form-template-with-state.component';
 import { ConnectedFormMeta } from './form-meta/connected-form-meta';

@@ -5,9 +5,9 @@ import { Link } from 'react-router-dom';
 import { Button } from 'reactstrap';
 import { withState, withHandlers, compose } from 'recompose';
 
-import localization from '../../lib/localization';
+import localization from '../../services/localization';
 import ListItems from '../../components/list-items/list-items.component';
-import { getTranslateText } from '../../lib/translateText';
+import { getTranslateText } from '../../services/translateText';
 import { validateURL } from '../../validation/validation';
 import { AlertMessage } from '../../components/alert-message/alert-message.component';
 

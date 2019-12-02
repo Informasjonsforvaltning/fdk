@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import 'moment/locale/nb';
 
-import localization from '../../../lib/localization';
+import localization from '../../../services/localization';
 
 const renderErrorMessage = ({ error }) =>
   error.code === 'network_error'

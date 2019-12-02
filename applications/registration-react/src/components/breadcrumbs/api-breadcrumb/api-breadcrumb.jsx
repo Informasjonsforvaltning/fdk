@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { getTranslateText } from '../../../lib/translateText';
+import { getTranslateText } from '../../../services/translateText';
 
 export const ApiBreadcrumb = props => {
   const { apiItem } = props;

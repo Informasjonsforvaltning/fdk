@@ -1,6 +1,6 @@
 import React from 'react';
 import { Field } from 'redux-form';
-import localization from '../../../lib/localization';
+import localization from '../../../services/localization';
 import Helptext from '../../../components/helptext/helptext.component';
 import RadioField from '../../../components/fields/field-radio/field-radio.component';
 import './form-access.scss';

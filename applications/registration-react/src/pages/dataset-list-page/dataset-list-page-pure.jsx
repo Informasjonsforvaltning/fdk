@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 
-import localization from '../../lib/localization';
+import localization from '../../services/localization';
 import { FormCatalog } from './form-catalog/form-catalog';
 import { DatasetItemsList } from './items-list/dataset-item-list.component';
 import { AlertMessage } from '../../components/alert-message/alert-message.component';

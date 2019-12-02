@@ -4,7 +4,7 @@ import {
   validateMinTwoChars,
   validateURL
 } from '../../../validation/validation';
-import localization from '../../../lib/localization';
+import localization from '../../../services/localization';
 
 const validate = values => {
   const errors = {};

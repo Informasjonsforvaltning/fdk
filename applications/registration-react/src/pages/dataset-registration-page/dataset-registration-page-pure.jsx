@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import pick from 'lodash/pick';
 
-import localization from '../../lib/localization';
+import localization from '../../services/localization';
 import { FormTemplateWithState } from '../../components/form-template/form-template-with-state.component';
 import { ConnectedFormTitle } from './form-title/connected-form-title.component';
 import { FormDistribution } from './form-distribution/form-distribution';

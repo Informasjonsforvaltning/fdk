@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { readAsText } from 'promise-file-reader';
 
-import { postApi } from '../../api/registration-api/apis';
-import localization from '../../lib/localization';
+import { postApi } from '../../services/api/registration-api/apis';
+import localization from '../../services/localization';
 import { ImportDialog } from './import-dialog/import-dialog.component';
 import { ImportFileUpload } from './import-file-upload/import-file-upload.component';
 import ImportLinkUpload from './import-link-upload/import-link-upload.component';

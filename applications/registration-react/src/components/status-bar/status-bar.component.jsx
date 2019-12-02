@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import noop from 'lodash/noop';
 
-import localization from '../../lib/localization';
+import localization from '../../services/localization';
 import './status-bar.scss';
 import { ErrorDialog } from './error-dialog/error-dialog.component';
 import { ConfirmDialog } from './confirm-dialog/confirm-dialog.component';

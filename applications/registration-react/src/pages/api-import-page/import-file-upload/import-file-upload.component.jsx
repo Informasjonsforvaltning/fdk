@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Button } from 'reactstrap';
 import _ from 'lodash';
 
-import localization from '../../../lib/localization';
+import localization from '../../../services/localization';
 import { PanelBase } from '../../../components/panel-base/panel-base.component';
 import { InputFile } from '../../../components/input-file/input-file.component';
 import { AlertMessage } from '../../../components/alert-message/alert-message.component';

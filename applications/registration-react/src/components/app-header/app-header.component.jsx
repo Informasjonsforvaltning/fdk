@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { compose, withProps } from 'recompose';
 
-import localization from '../../lib/localization';
+import localization from '../../services/localization';
 import './app-header.scss';
-import { getUserProfile, logout } from '../../auth/auth-service';
-import { getConfig } from '../../config';
+import { getUserProfile, logout } from '../../services/auth/auth-service';
+import { getConfig } from '../../services/config';
 
 export const AppHeaderPure = ({ user }) => {
   const logoImagePath = getConfig().useDemoLogo

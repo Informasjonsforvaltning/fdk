@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import ReactTags from 'react-tag-autocomplete';
 
-import { getTranslateText } from '../../../lib/translateText';
-import { searchApis } from '../../../api/search-api/apis';
-import localization from '../../../lib/localization';
+import { getTranslateText } from '../../../services/translateText';
+import { searchApis } from '../../../services/api/search-api/apis';
+import localization from '../../../services/localization';
 
 const TYPE_API = 'API';
 
