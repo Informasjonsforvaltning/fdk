@@ -71,7 +71,7 @@ export function login({ readOnly = false }) {
 }
 
 export async function getToken() {
-  await toPromise(kc.updateToken(5));
+  await toPromise(kc.updateToken(5)).catch(() => logout());
   return kc.token;
 }
 
