@@ -54,7 +54,7 @@ export const AppHeaderPure = ({ user }) => {
               {user && (
                 <div className="mr-4 fdk-auth-link">
                   <button
-                    onClick={logout}
+                    onClick={() => logout()}
                     type="button"
                     className="fdk-btn-no-border"
                   >
