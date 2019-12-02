@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import cx from 'classnames';
 
-import localization from '../../../lib/localization';
+import localization from '../../../services/localization';
 import './list-item.scss';
 
 export const ListItem = props => {

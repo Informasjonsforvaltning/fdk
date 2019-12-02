@@ -5,8 +5,8 @@ import { withState, withHandlers, compose } from 'recompose';
 import _ from 'lodash';
 import { readAsText } from 'promise-file-reader';
 
-import localization from '../../../lib/localization';
-import { patchApi } from '../../../api/registration-api/apis';
+import localization from '../../../services/localization';
+import { patchApi } from '../../../services/api/registration-api/apis';
 import { InputFile } from '../../../components/input-file/input-file.component';
 import { ImportLinkUpload } from '../import-link-upload/import-link-upload.component';
 

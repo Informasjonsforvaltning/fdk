@@ -1,6 +1,6 @@
 import React from 'react';
 
-import localization from '../../lib/localization';
+import localization from '../../services/localization';
 import './app-footer.scss';
 
 export const Footer = () => {

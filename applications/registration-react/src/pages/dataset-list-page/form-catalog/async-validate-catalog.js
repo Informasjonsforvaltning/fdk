@@ -1,5 +1,5 @@
 import { CATALOG_SUCCESS } from '../../../redux/modules/catalog';
-import { saveCatalog } from '../../../api/registration-api/datasets';
+import { saveCatalog } from '../../../services/api/registration-api/datasets';
 
 const catalogSaveThunk = ({ catalog }) => async dispatch => {
   const savedCatalog = await saveCatalog(catalog);

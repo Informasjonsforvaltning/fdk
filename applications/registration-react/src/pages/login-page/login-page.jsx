@@ -4,10 +4,10 @@ import { Button } from 'reactstrap';
 import PropTypes from 'prop-types';
 import { withProps } from 'recompose';
 
-import localization from '../../lib/localization';
-import { login } from '../../auth/auth-service';
+import localization from '../../services/localization';
+import { login } from '../../services/auth/auth-service';
 import './login-page.scss';
-import { getLoginState } from '../../auth/login-store';
+import { getLoginState } from '../../services/auth/login-store';
 
 const showLoginReadOnly = window.localStorage.getItem('showLoginReadOnly');
 

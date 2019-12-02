@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 import _ from 'lodash';
-import localization from '../../../lib/localization';
+import localization from '../../../services/localization';
 import Helptext from '../../../components/helptext/helptext.component';
 import { InputTagsDatasetsField } from '../field-tagsinput-datasets/field-tagsinput-datasets.components';
-import { getConfig } from '../../../config';
-import { getTranslateText } from '../../../lib/translateText';
+import { getConfig } from '../../../services/config';
+import { getTranslateText } from '../../../services/translateText';
 
 const renderReferecingDatasets = datasets =>
   datasets &&

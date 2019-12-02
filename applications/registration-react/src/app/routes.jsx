@@ -5,7 +5,7 @@ import { LoginPage } from '../pages/login-page/login-page';
 import { ProtectedRoute } from './protected-route.component';
 import { CatalogsPage } from '../pages/catalogs-page/catalogs-page';
 import { CatalogRoutes } from './catalog-routes';
-import { isAuthenticated } from '../auth/auth-service';
+import { isAuthenticated } from '../services/auth/auth-service';
 
 export const Routes = () => (
   <Switch>

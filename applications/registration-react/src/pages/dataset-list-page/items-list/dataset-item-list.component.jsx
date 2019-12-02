@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 
-import localization from '../../../lib/localization';
+import localization from '../../../services/localization';
 import { ListItems } from '../../../components/list-items/list-items.component';
 import './dataset-items-list.scss';
 

@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import { resolve } from 'react-resolver';
-import { getDatasetByURI } from '../../api/search-api/datasets';
+import { getDatasetByURI } from '../../services/api/search-api/datasets';
 
 const memoizedGetDatasetByURI = _.memoize(getDatasetByURI);
 

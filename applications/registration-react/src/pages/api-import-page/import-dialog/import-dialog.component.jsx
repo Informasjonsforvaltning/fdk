@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Button } from 'reactstrap';
 
-import localization from '../../../lib/localization';
+import localization from '../../../services/localization';
 import { PanelBase } from '../../../components/panel-base/panel-base.component';
 import { InputFile } from '../../../components/input-file/input-file.component';
 

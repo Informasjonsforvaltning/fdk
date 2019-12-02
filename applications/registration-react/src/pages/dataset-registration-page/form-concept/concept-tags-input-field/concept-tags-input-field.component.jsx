@@ -4,12 +4,12 @@ import Autosuggest from 'react-autosuggest';
 import TagsInput from 'react-tagsinput';
 import _ from 'lodash';
 
-import localization from '../../../../lib/localization';
+import localization from '../../../../services/localization';
 import {
   extractConcepts,
   searchConcepts
-} from '../../../../api/search-api/concepts';
-import { getTranslateText } from '../../../../lib/translateText';
+} from '../../../../services/api/search-api/concepts';
+import { getTranslateText } from '../../../../services/translateText';
 import '../../../../components/fields/field-input-tags/field-input-tags.scss';
 
 const handleChange = (input, tags, changed, changedIndexes) => {

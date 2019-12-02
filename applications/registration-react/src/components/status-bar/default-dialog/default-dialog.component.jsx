@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import noop from 'lodash/noop';
 import cx from 'classnames';
 import { Button } from 'reactstrap';
-import localization from '../../../lib/localization';
+import localization from '../../../services/localization';
 import { ButtonRegistrationStatus } from '../../form-publish/button-registration-status/button-registration-status.component';
 
 const renderMessageForPublishStatusChange = ({ published, type }) =>

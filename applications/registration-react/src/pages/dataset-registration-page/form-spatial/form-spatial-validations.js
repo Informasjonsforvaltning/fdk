@@ -1,6 +1,6 @@
 import _get from 'lodash/get';
 
-import localization from '../../../lib/localization';
+import localization from '../../../services/localization';
 
 const validate = values => {
   const errors = {};

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { Button } from 'reactstrap';
 
-import localization from '../../lib/localization';
+import localization from '../../services/localization';
 
 import './language-picker.styles.scss';
 

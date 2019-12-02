@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
 import 'react-select/dist/react-select.css';
-import { getTranslateText } from '../../../lib/translateText';
+import { getTranslateText } from '../../../services/translateText';
 
 const handleChange = (props, selectedValue, valueKey, saveObject) => {
   const { input, items } = props;

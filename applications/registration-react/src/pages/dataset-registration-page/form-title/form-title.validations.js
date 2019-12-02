@@ -2,7 +2,7 @@
 
 import * as Yup from 'yup';
 
-import localization from '../../../lib/localization';
+import localization from '../../../services/localization';
 
 export const schema = Yup.object().shape({
   title: Yup.object().shape({

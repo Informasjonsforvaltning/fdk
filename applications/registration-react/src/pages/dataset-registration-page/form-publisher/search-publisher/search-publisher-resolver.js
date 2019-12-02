@@ -1,5 +1,5 @@
 import { resolve } from 'react-resolver';
-import { memoizedGetOrganizationList } from '../../../../api/organization-api/host';
+import { memoizedGetOrganizationList } from '../../../../services/api/organization-api/host';
 
 const mapProps = {
   suggestions: memoizedGetOrganizationList

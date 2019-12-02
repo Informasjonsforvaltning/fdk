@@ -7,7 +7,7 @@ import Autocomplete from 'react-autocomplete';
 import cx from 'classnames';
 import { withState, withHandlers, compose } from 'recompose';
 
-import localization from '../../../lib/localization';
+import localization from '../../../services/localization';
 import Helptext from '../../../components/helptext/helptext.component';
 import { FieldTreeLos } from './field-tree-los/field-tree-los.component';
 import { FilterPillsLos } from './filter-pills-los/filter-pills-los.component';

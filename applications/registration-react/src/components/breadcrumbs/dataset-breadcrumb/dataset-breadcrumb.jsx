@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 
 import { getDatasetItemByDatasetiId } from '../../../redux/modules/datasets';
-import { getTranslateText } from '../../../lib/translateText';
-import localization from '../../../lib/localization';
+import { getTranslateText } from '../../../services/translateText';
+import localization from '../../../services/localization';
 
 export const PuredatasetBreadcrumb = props => {
   const { datasetItem } = props;

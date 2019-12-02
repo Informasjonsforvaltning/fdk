@@ -5,7 +5,7 @@ import { Collapse } from 'reactstrap';
 import _ from 'lodash';
 import { withStateHandlers } from 'recompose';
 
-import localization from '../../lib/localization';
+import localization from '../../services/localization';
 import './helptext.scss';
 import { convertToSanitizedHtml } from '../../lib/markdown-converter';
 

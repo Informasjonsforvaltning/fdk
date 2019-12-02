@@ -2,13 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { CardGroup } from 'reactstrap';
 import _ from 'lodash';
-import localization from '../../lib/localization';
+import localization from '../../services/localization';
 import { Catalog } from './catalogs/catalog.component';
-import { getTranslateText } from '../../lib/translateText';
+import { getTranslateText } from '../../services/translateText';
 import { selectorForCatalogDatasetsFromDatasetsState } from '../../redux/modules/datasets';
 import { getAPIItemsCount } from '../../redux/modules/apis';
 import './catalogs-page.scss';
-import { hasOrganizationAdminPermission } from '../../auth/auth-service';
+import { hasOrganizationAdminPermission } from '../../services/auth/auth-service';
 
 const renderCatalogs = props => {
   const {

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Button } from 'reactstrap';
 
-import localization from '../../../lib/localization';
+import localization from '../../../services/localization';
 
 export const ConfirmDialog = ({
   onConfirm,

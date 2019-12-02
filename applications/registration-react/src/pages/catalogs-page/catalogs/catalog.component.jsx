@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import memoize from 'lodash/memoize';
 
 import { resolve } from 'react-resolver';
-import { getConfig } from '../../../config';
+import { getConfig } from '../../../services/config';
 import { CatalogItem } from './catalog-item/catalog-item.component';
-import { getConceptCount } from '../../../api/concept-registration-api/host';
+import { getConceptCount } from '../../../services/api/concept-registration-api/host';
 
 export const CatalogPure = props => {
   const { catalogId, type, fetchItems, itemsCount, isReadOnly } = props;
