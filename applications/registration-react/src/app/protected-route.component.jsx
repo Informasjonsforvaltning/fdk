@@ -13,7 +13,8 @@ export const ProtectedRoute = ({ check, ...props }) => {
   } = props;
 
   if (!(isAuthenticated() && check(params))) {
-    return <Redirect to="/login" />;
+    logout();
+    return <Redirect to="/login" />; // render preemptively to reduce flicker
   }
 
   return (
