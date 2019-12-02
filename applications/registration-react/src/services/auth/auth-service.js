@@ -53,14 +53,12 @@ export async function initAuthService() {
   }
 }
 
-export function logout() {
+export function logout(loginState) {
+  if (loginState) {
+    setLoginState(loginState);
+  }
   removeTokens();
   kc.logout(); // redirects;
-}
-
-export function logoutByTimeout() {
-  setLoginState({ loggedOutDueToTimeout: true });
-  logout();
 }
 
 export function login({ readOnly = false }) {
