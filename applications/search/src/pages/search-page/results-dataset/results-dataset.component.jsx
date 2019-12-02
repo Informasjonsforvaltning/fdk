@@ -160,11 +160,20 @@ export const ResultsDatasetPure = ({
     window.scrollTo(0, 0);
   };
 
+  const generateSearchParams = () => {
+    const searchParams = new URLSearchParams(window.location.search);
+    if (getConfig().themeNap) {
+      searchParams.append('accessRights', 'PUBLIC');
+      searchParams.append('themeprofile', 'transport');
+    }
+    return searchParams.toString() ? `?${searchParams.toString()}` : '';
+  };
+
   const generateSubscriptionLink = type =>
     type === 'rss' || type === 'atom'
-      ? `${getConfig().searchHost.host}/datasets.${type}${
-          window.location.search
-        }`
+      ? `${
+          getConfig().searchHost.host
+        }/datasets.${type}${generateSearchParams()}`
       : '#';
 
   const losItems = getLosStructure(referenceData);
