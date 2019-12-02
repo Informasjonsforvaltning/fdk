@@ -5,6 +5,7 @@ import { LoginPage } from '../pages/login-page/login-page';
 import { ProtectedRoute } from './protected-route.component';
 import { CatalogsPage } from '../pages/catalogs-page/catalogs-page';
 import { CatalogRoutes } from './catalog-routes';
+import { hasOrganizationReadPermission } from '../services/auth/auth-service';
 import { AuthResponseHandler } from './auth-response-handler.component';
 
 export const Routes = () => (
@@ -17,7 +18,11 @@ export const Routes = () => (
       />
     </Route>
     <ProtectedRoute exact path="/catalogs" component={CatalogsPage} />
-    <ProtectedRoute path="/catalogs/:catalogId" component={CatalogRoutes} />
+    <ProtectedRoute
+      path="/catalogs/:catalogId"
+      check={({ catalogId }) => hasOrganizationReadPermission(catalogId)}
+      component={CatalogRoutes}
+    />
     <Redirect to="/catalogs" />
   </Switch>
 );
