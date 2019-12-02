@@ -71,7 +71,7 @@ export function login({ readOnly = false }) {
 export const isAuthenticated = () => kc && kc.authenticated;
 
 export async function getToken() {
-  await kc.updateToken(5);
+  await toPromise(kc.updateToken(5));
   return kc.token;
 }
 
