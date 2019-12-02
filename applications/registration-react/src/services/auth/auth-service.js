@@ -4,7 +4,7 @@ import Keycloak from 'keycloak-js';
 
 import { getConfig } from '../config';
 import { loadTokens, removeTokens, storeTokens } from './token-store';
-import { popLoginState, setLoginState } from './login-store';
+import { setLoginState } from './login-store';
 
 let kc;
 
@@ -31,7 +31,7 @@ function initializeKeycloak() {
   const { token, refreshToken } = loadTokens();
   const initOptions = {
     onLoad: 'check-sso',
-    redirectUri: location.origin,
+    redirectUri: `${location.origin}/auth_response`,
     token,
     refreshToken
   };
@@ -48,9 +48,6 @@ export async function initAuthService() {
   setOnAuthSuccess();
 
   await initializeKeycloak();
-  if (isAuthenticated()) {
-    popLoginState();
-  }
 }
 
 export function logout(loginState) {
