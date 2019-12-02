@@ -2,7 +2,7 @@ import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { logoutByTimeout } from '../services/auth/auth-service';
-import { Timeout } from './timeout.component';
+import { Timeout } from '../components/timeout.component';
 
 const TIMEOUT = 27.5 * 60 * 1000;
 
