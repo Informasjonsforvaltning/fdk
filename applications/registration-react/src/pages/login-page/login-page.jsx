@@ -1,4 +1,3 @@
-import pick from 'lodash/pick';
 import React from 'react';
 import { Button } from 'reactstrap';
 import PropTypes from 'prop-types';
@@ -120,8 +119,4 @@ LoginPagePure.propTypes = {
   loggedOutDueToTimeout: PropTypes.bool
 };
 
-const withLoginProps = withProps(() =>
-  pick(getLoginState(), 'loggedOutDueToTimeout')
-);
-
-export const LoginPage = withLoginProps(LoginPagePure);
+export const LoginPage = withProps(getLoginState)(LoginPagePure);
