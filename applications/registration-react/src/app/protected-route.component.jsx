@@ -9,11 +9,15 @@ const TIMEOUT = 27.5 * 60 * 1000;
 
 export const ProtectedRoute = ({ check, ...props }) => {
   const {
-    computedMatch: { params }
+    computedMatch: { params },
+    location
   } = props;
 
+  const { pathname, search, hash, state } = location;
+  const redirectLocation = { pathname, search, hash, state };
+
   if (!(isAuthenticated() && check(params))) {
-    logout();
+    logout({ redirectLocation });
     return <Redirect to="/login" />; // render preemptively to reduce flicker
   }
 
@@ -22,7 +26,9 @@ export const ProtectedRoute = ({ check, ...props }) => {
       <Route {...props} />
       <Timeout
         timeout={TIMEOUT}
-        onTimeout={() => logout({ loggedOutDueToTimeout: true })}
+        onTimeout={() =>
+          logout({ loggedOutDueToTimeout: true, redirectLocation })
+        }
       />
     </>
   );
@@ -30,10 +36,12 @@ export const ProtectedRoute = ({ check, ...props }) => {
 
 ProtectedRoute.propTypes = {
   check: PropTypes.func,
-  computedMatch: PropTypes.object
+  computedMatch: PropTypes.object,
+  location: PropTypes.object
 };
 
 ProtectedRoute.defaultProps = {
   check: () => true,
-  computedMatch: {}
+  computedMatch: {},
+  location: {}
 };

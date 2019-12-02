@@ -13,9 +13,9 @@ export const AuthResponseHandler = ({
     return <Redirect to={unAuthenticatedRedirect} />;
   }
 
-  popLoginState();
+  const { redirectLocation } = popLoginState();
 
-  return <Redirect to={defaultRedirect} />;
+  return <Redirect to={redirectLocation || defaultRedirect} />;
 };
 
 AuthResponseHandler.propTypes = {
