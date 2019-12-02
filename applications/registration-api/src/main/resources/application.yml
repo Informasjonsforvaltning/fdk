@@ -27,7 +27,7 @@ spring:
     username: ${RABBIT_USERNAME}
     password: ${RABBIT_PASSWORD}
     template:
-      routing-key: 'DatasetPublisherService.HarvestTrigger'
+      routing-key: 'dataset.publisher.HarvestTrigger'
       exchange: 'harvests'
   jackson:
     default-property-inclusion: non_null
@@ -58,9 +58,6 @@ spring:
     port: 5672
     username: admin
     password: admin
-    template:
-      routing-key: 'DatasetPublisherService.HarvestTrigger'
-      exchange: 'harvests'
   data:
     elasticsearch:
       clusterNodes: localhost:9300
