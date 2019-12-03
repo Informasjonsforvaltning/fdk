@@ -20,5 +20,5 @@ export const AuthResponseHandler = ({
 
 AuthResponseHandler.propTypes = {
   unAuthenticatedRedirect: PropTypes.string.isRequired,
-  defaultRedirect: PropTypes.object.isRequired
+  defaultRedirect: PropTypes.string.isRequired
 };
