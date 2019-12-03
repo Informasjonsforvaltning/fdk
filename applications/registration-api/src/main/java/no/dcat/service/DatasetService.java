@@ -62,16 +62,20 @@ public class DatasetService {
         }
 
         logger.info("Creating dataset in catalog with ID {}", catalog.getId());
-        Dataset createdDataset = DatasetFactory.create(catalog, dataset);
-
-        triggerHarvestIfNecessary(createdDataset);
-
+        Dataset createdDataset = datasetRepository.save(DatasetFactory.create(catalog, dataset));
         logger.info("Created dataset with ID {} in catalog with ID {} ready to be saved", createdDataset.getId(), catalogId);
-        return datasetRepository.save(createdDataset);
+
+        if (isDatasetPublished(createdDataset)) {
+            triggerHarvest(createdDataset);
+        }
+
+        return createdDataset;
     }
 
     public Dataset updateDataset(Dataset dataset, Dataset patch) throws FDKException {
         logger.info("Updating dataset with ID {} for catalog with ID {}", dataset.getId(), dataset.getCatalogId());
+        boolean previouslyPublished = isDatasetPublished(dataset);
+
         dataset = applyPatch(dataset, patch);
         dataset.set_lastModified(new Date());
         logger.info("Applied patch successfully to dataset with ID {} for catalog with ID {}", dataset.getId(), dataset.getCatalogId());
@@ -84,17 +88,21 @@ public class DatasetService {
             updateDatasetPublisher(patch.getPublisher(), dataset);
         }
 
-        triggerHarvestIfNecessary(dataset);
-
         logger.info("Updated dataset with ID {} in catalog with ID {} ready to be saved", dataset.getId(), dataset.getCatalogId());
-        return datasetRepository.save(dataset);
+        dataset = datasetRepository.save(dataset);
+
+        if (isDatasetPublished(dataset) || previouslyPublished) {
+            triggerHarvest(dataset);
+        }
+
+        return dataset;
     }
 
     public void removeDataset(String catalogId, String datasetId) {
         logger.info("Preparing to remove dataset with ID {} from catalog with ID {}", datasetId, catalogId);
         List<Dataset> removedDatasets = datasetRepository.removeByIdAndCatalogId(datasetId, catalogId);
         logger.info("{} dataset with ID {} from catalog with ID {}", !removedDatasets.isEmpty() ? "Successfully removed" : "Failed to remove", datasetId, catalogId);
-        removedDatasets.forEach(this::triggerHarvestIfNecessary);
+        removedDatasets.stream().filter(this::isDatasetPublished).forEach(this::triggerHarvest);
     }
 
     private Dataset applyPatch(Dataset dataset, Dataset patch) throws InternalServerErrorException {
@@ -152,14 +160,12 @@ public class DatasetService {
     }
 
     private boolean isDatasetPublished(Dataset dataset) {
+        logger.info("Checking whether dataset with ID {} in catalog with ID {} should be harvested", dataset.getId(), dataset.getCatalogId());
         return dataset.getRegistrationStatus().equalsIgnoreCase("PUBLISH");
     }
 
-    private void triggerHarvestIfNecessary(Dataset dataset) {
-        logger.info("Checking whether dataset with ID {} in catalog with ID {} should be harvested", dataset.getId(), dataset.getCatalogId());
-        if (isDatasetPublished(dataset)) {
-            logger.info("Dataset status is {}, so a harvest message should be sent for dataset with ID {} in catalog with ID {}", dataset.getRegistrationStatus(), dataset.getId(), dataset.getCatalogId());
-            datasetPublisherService.sendHarvestMessage(dataset);
-        }
+    private void triggerHarvest(Dataset dataset) {
+        logger.info("Dataset status is {}, so a harvest message should be sent for dataset with ID {} in catalog with ID {}", dataset.getRegistrationStatus(), dataset.getId(), dataset.getCatalogId());
+        datasetPublisherService.sendHarvestMessage(dataset);
     }
 }
