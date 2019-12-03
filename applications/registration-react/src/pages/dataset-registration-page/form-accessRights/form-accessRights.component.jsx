@@ -2,11 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Field, FieldArray } from 'redux-form';
 import includes from 'lodash/includes';
+import get from 'lodash/get';
 
 import localization from '../../../services/localization';
 import Helptext from '../../../components/helptext/helptext.component';
 import InputField from '../../../components/fields/field-input/field-input.component';
+import InputFieldReadonly from '../../../components/fields/field-input-readonly/field-input-readonly.component';
 import MultilingualField from '../../../components/multilingual-field/multilingual-field.component';
+import LinkReadonlyField from '../../../components/fields/field-link-readonly/field-link-readonly.component';
 import RadioField from '../../../components/fields/field-radio/field-radio.component';
 import { legalBasisType } from '../../../schemaTypes';
 import { datasetFormPatchThunk } from '../formsLib/asyncValidateDatasetInvokePatch';
@@ -24,6 +27,18 @@ const resetFields = props => {
   props.change('legalBasisForProcessing', [legalBasisType]);
   props.change('legalBasisForAccess', [legalBasisType]);
 };
+const getAccessRightLabel = value => {
+  switch (value) {
+    case 'http://publications.europa.eu/resource/authority/access-right/PUBLIC':
+      return get(localization, 'schema.accessRights.publicLabel');
+    case 'http://publications.europa.eu/resource/authority/access-right/RESTRICTED':
+      return get(localization, 'schema.accessRights.restrictedLabel');
+    case 'http://publications.europa.eu/resource/authority/access-right/NON_PUBLIC':
+      return get(localization, 'schema.accessRights.nonPublicLabel');
+    default:
+      return null;
+  }
+};
 
 export const renderLegalBasisFields = ({
   item,
@@ -32,12 +47,13 @@ export const renderLegalBasisFields = ({
   titleLabel,
   linkLabel,
   onDeleteFieldAtIndex,
-  languages
+  languages,
+  isReadOnly
 }) => (
   <div className="d-flex flex-column mb-2" key={index}>
     <MultilingualField
       name={`${item}.prefLabel`}
-      component={InputField}
+      component={isReadOnly ? InputFieldReadonly : InputField}
       label={titleLabel}
       showLabel
       languages={languages}
@@ -45,21 +61,23 @@ export const renderLegalBasisFields = ({
     <div className="mt-2">
       <Field
         name={`${item}.uri`}
-        component={InputField}
+        component={isReadOnly ? LinkReadonlyField : InputField}
         label={linkLabel}
         showLabel
       />
     </div>
-    <div className="d-flex align-items-end">
-      <button
-        className="fdk-btn-no-border"
-        type="button"
-        title="Remove legal basis"
-        onClick={() => onDeleteFieldAtIndex(fields, index)}
-      >
-        <i className="fa fa-trash mr-2" />
-      </button>
-    </div>
+    {!isReadOnly && (
+      <div className="d-flex align-items-end">
+        <button
+          className="fdk-btn-no-border"
+          type="button"
+          title="Remove legal basis"
+          onClick={() => onDeleteFieldAtIndex(fields, index)}
+        >
+          <i className="fa fa-trash mr-2" />
+        </button>
+      </div>
+    )}
   </div>
 );
 renderLegalBasisFields.propTypes = {
@@ -69,7 +87,8 @@ renderLegalBasisFields.propTypes = {
   titleLabel: PropTypes.string.isRequired,
   linkLabel: PropTypes.string.isRequired,
   onDeleteFieldAtIndex: PropTypes.func.isRequired,
-  languages: PropTypes.array.isRequired
+  languages: PropTypes.array.isRequired,
+  isReadOnly: PropTypes.bool.isRequired
 };
 
 export const renderLegalBasis = ({
@@ -77,7 +96,8 @@ export const renderLegalBasis = ({
   titleLabel,
   linkLabel,
   onDeleteFieldAtIndex,
-  languages
+  languages,
+  isReadOnly
 }) => {
   return (
     <div>
@@ -90,17 +110,20 @@ export const renderLegalBasis = ({
             titleLabel,
             linkLabel,
             onDeleteFieldAtIndex,
-            languages
+            languages,
+            isReadOnly
           })
         )}
-      <button
-        className="fdk-btn-no-border"
-        type="button"
-        onClick={() => fields.push({})}
-      >
-        <i className="fa fa-plus mr-2" />
-        {localization.schema.common.add}
-      </button>
+      {!isReadOnly && (
+        <button
+          className="fdk-btn-no-border"
+          type="button"
+          onClick={() => fields.push({})}
+        >
+          <i className="fa fa-plus mr-2" />
+          {localization.schema.common.add}
+        </button>
+      )}
     </div>
   );
 };
@@ -109,7 +132,8 @@ renderLegalBasis.propTypes = {
   titleLabel: PropTypes.string.isRequired,
   linkLabel: PropTypes.string.isRequired,
   onDeleteFieldAtIndex: PropTypes.func.isRequired,
-  languages: PropTypes.array.isRequired
+  languages: PropTypes.array.isRequired,
+  isReadOnly: PropTypes.bool.isRequired
 };
 export const FormAccessRights = props => {
   const {
@@ -121,7 +145,8 @@ export const FormAccessRights = props => {
     languages,
     datasetFormStatus,
     datasetItem,
-    losItems
+    losItems,
+    isReadOnly
   } = props;
   const accessRight = syncErrors ? syncErrors.accessRight : null;
   const deleteFieldAtIndex = (fields, index) => {
@@ -139,31 +164,40 @@ export const FormAccessRights = props => {
           title={localization.schema.accessRights.heading}
           term="Dataset_accessRights"
         />
-        <Field
-          name="accessRights.uri"
-          radioId="accessRight-public"
-          component={RadioField}
-          type="radio"
-          value="http://publications.europa.eu/resource/authority/access-right/PUBLIC"
-          label={localization.schema.accessRights.publicLabel}
-          onChange={() => resetFields(props)}
-        />
-        <Field
-          name="accessRights.uri"
-          radioId="accessRight-restricted"
-          component={RadioField}
-          type="radio"
-          value="http://publications.europa.eu/resource/authority/access-right/RESTRICTED"
-          label={localization.schema.accessRights.restrictedLabel}
-        />
-        <Field
-          name="accessRights.uri"
-          radioId="accessRight-non_public"
-          component={RadioField}
-          type="radio"
-          value="http://publications.europa.eu/resource/authority/access-right/NON_PUBLIC"
-          label={localization.schema.accessRights.nonPublicLabel}
-        />
+        {isReadOnly && (
+          <div className="pl-3">
+            {getAccessRightLabel(datasetItem.accessRights.uri)}
+          </div>
+        )}
+        {!isReadOnly && (
+          <>
+            <Field
+              name="accessRights.uri"
+              radioId="accessRight-public"
+              component={RadioField}
+              type="radio"
+              value="http://publications.europa.eu/resource/authority/access-right/PUBLIC"
+              label={localization.schema.accessRights.publicLabel}
+              onChange={() => resetFields(props)}
+            />
+            <Field
+              name="accessRights.uri"
+              radioId="accessRight-restricted"
+              component={RadioField}
+              type="radio"
+              value="http://publications.europa.eu/resource/authority/access-right/RESTRICTED"
+              label={localization.schema.accessRights.restrictedLabel}
+            />
+            <Field
+              name="accessRights.uri"
+              radioId="accessRight-non_public"
+              component={RadioField}
+              type="radio"
+              value="http://publications.europa.eu/resource/authority/access-right/NON_PUBLIC"
+              label={localization.schema.accessRights.nonPublicLabel}
+            />
+          </>
+        )}
 
         {datasetFormStatus &&
           includes(datasetFormStatus.lastChangedFields, 'accessRights') &&
@@ -213,6 +247,7 @@ export const FormAccessRights = props => {
                 }
                 onDeleteFieldAtIndex={deleteFieldAtIndex}
                 languages={languages}
+                isReadOnly={isReadOnly}
               />
             </div>
 
@@ -237,6 +272,7 @@ export const FormAccessRights = props => {
                 }
                 onDeleteFieldAtIndex={deleteFieldAtIndex}
                 languages={languages}
+                isReadOnly={isReadOnly}
               />
             </div>
 
@@ -259,6 +295,7 @@ export const FormAccessRights = props => {
                 }
                 onDeleteFieldAtIndex={deleteFieldAtIndex}
                 languages={languages}
+                isReadOnly={isReadOnly}
               />
             </div>
           </div>
@@ -277,7 +314,8 @@ FormAccessRights.defaultProps = {
   languages: [],
   datasetFormStatus: null,
   datasetItem: null,
-  losItems: null
+  losItems: null,
+  isReadOnly: false
 };
 FormAccessRights.propTypes = {
   syncErrors: PropTypes.object,
@@ -288,5 +326,6 @@ FormAccessRights.propTypes = {
   languages: PropTypes.array,
   datasetFormStatus: PropTypes.object,
   datasetItem: PropTypes.object,
-  losItems: PropTypes.array
+  losItems: PropTypes.array,
+  isReadOnly: PropTypes.bool
 };
