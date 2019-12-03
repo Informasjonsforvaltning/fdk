@@ -58,6 +58,7 @@ exports[`should render FormTitle, { renderLandingpage  correctly 1`] = `
     />
     <FieldArray
       component={[Function]}
+      isReadOnly={false}
       name="landingPage"
     />
   </div>

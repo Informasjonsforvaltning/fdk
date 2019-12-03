@@ -5,6 +5,8 @@ import { Field, FieldArray } from 'redux-form';
 import localization from '../../../services/localization';
 import Helptext from '../../../components/helptext/helptext.component';
 import InputField from '../../../components/fields/field-input/field-input.component';
+import LinkReadonlyField from '../../../components/fields/field-link-readonly/field-link-readonly.component';
+import InputFieldReadonly from '../../../components/fields/field-input-readonly/field-input-readonly.component';
 import MultilingualField from '../../../components/multilingual-field/multilingual-field.component';
 import TextAreaField from '../../../components/fields/field-textarea/field-textarea.component';
 
@@ -14,14 +16,14 @@ export const renderLandingpage = componentProps => (
       <Field
         key={index}
         name={`${item}`}
-        component={InputField}
+        component={componentProps.isReadOnly ? LinkReadonlyField : InputField}
         label="Landingsside"
       />
     ))}
   </div>
 );
 
-export const FormTitle = ({ languages }) => (
+export const FormTitle = ({ languages, isReadOnly }) => (
   <form>
     <div className="form-group">
       <Helptext
@@ -31,7 +33,7 @@ export const FormTitle = ({ languages }) => (
       />
       <MultilingualField
         name="title"
-        component={InputField}
+        component={isReadOnly ? InputFieldReadonly : InputField}
         languages={languages}
         label={localization.schema.title.titleLabel}
       />
@@ -44,7 +46,7 @@ export const FormTitle = ({ languages }) => (
       />
       <MultilingualField
         name="description"
-        component={TextAreaField}
+        component={isReadOnly ? InputFieldReadonly : TextAreaField}
         languages={languages}
         label={localization.schema.title.descriptionLabel}
       />
@@ -56,7 +58,7 @@ export const FormTitle = ({ languages }) => (
       />
       <MultilingualField
         name="objective"
-        component={TextAreaField}
+        component={isReadOnly ? InputFieldReadonly : TextAreaField}
         label={localization.schema.title.objectiveLabel}
         languages={languages}
       />
@@ -67,15 +69,21 @@ export const FormTitle = ({ languages }) => (
         title={localization.schema.title.helptext.landingPage}
         term="Dataset_landingpage"
       />
-      <FieldArray name="landingPage" component={renderLandingpage} />
+      <FieldArray
+        name="landingPage"
+        isReadOnly={isReadOnly}
+        component={renderLandingpage}
+      />
     </div>
   </form>
 );
 
 FormTitle.defaultProps = {
-  languages: []
+  languages: [],
+  isReadOnly: false
 };
 
 FormTitle.propTypes = {
-  languages: PropTypes.array
+  languages: PropTypes.array,
+  isReadOnly: PropTypes.bool
 };
