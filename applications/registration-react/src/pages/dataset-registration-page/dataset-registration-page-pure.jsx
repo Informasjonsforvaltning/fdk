@@ -201,6 +201,7 @@ export function DatasetRegistrationPagePure(props) {
                   languages={languages}
                   datasetFormStatus={datasetFormStatus}
                   losItems={losItems}
+                  isReadOnly={isReadOnly}
                 />
               </FormTemplateWithState>
 
