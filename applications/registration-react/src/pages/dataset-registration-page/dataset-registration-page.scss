@@ -26,6 +26,23 @@
     line-height: 1;
     font-weight: 500;
 
+    .readonly-language-field {
+      display: flex;
+      flex-direction: start;
+    }
+
+    .indicator {
+      background-color: $color-primary-lighter;
+      border-radius: 2px;
+      padding: 4px;
+    }
+
+    .read-only-text {
+      font-weight: 400;
+      padding: 5px;
+      line-height: 1.6em;
+    }
+
     .language-indicator {
       position: absolute;
       top: 13px;
