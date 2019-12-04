@@ -441,10 +441,12 @@
     "datasets": "Datasettkatalog",
     "apis": "API-katalog",
     "concepts": "Begrepskatalog",
+    "protocol": "Protokoll",
     "type": {
       "datasets": "datasett",
       "apis": "API-er",
-      "concepts": "begreper"
+      "concepts": "begreper",
+      "protocol": "behandlingsaktiviteter"
     }
   },
   "loginDialog": {

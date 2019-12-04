@@ -11,10 +11,20 @@ export const CatalogPure = props => {
   const { catalogId, type, fetchItems, itemsCount, isReadOnly } = props;
   fetchItems(catalogId);
 
-  const linkUri =
-    type === 'concepts'
-      ? `${getConfig().conceptRegistrationHost}/${catalogId}`
-      : `/catalogs/${catalogId}/${type}`;
+  const getLinkUri = () => {
+    switch (type) {
+      case 'concepts': {
+        return `${getConfig().conceptRegistrationHost}/${catalogId}`;
+      }
+      case 'protocol': {
+        return `${getConfig().recordsOfProcessingActivitiesHost}/${catalogId}`;
+      }
+      default:
+        return `/catalogs/${catalogId}/${type}`;
+    }
+  };
+
+  const linkUri = getLinkUri();
 
   return (
     <CatalogItem
@@ -46,10 +56,18 @@ CatalogPure.propTypes = {
 const memoizedGetConceptCount = memoize(getConceptCount);
 
 const mapProps = {
-  itemsCount: props =>
-    props.type === 'concepts'
-      ? memoizedGetConceptCount(props.catalogId) // placeholder for api request promise
-      : props.itemsCount
+  itemsCount: ({ type, catalogId, itemsCount }) => {
+    switch (type) {
+      case 'concepts': {
+        return memoizedGetConceptCount(catalogId); // placeholder for api request promise
+      }
+      case 'protocol': {
+        return memoizedGetConceptCount('123'); // placeholder for api request promise
+      }
+      default:
+        return itemsCount;
+    }
+  }
 };
 
 export const Catalog = resolve(mapProps)(CatalogPure);
