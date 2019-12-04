@@ -27,6 +27,10 @@ public class WhitelistedEmailValidator implements FormAction, FormActionFactory 
     private static final String ORGANISATION_CATALOGUE_DOMAINS_URL_PATTERN = "http://organization-catalogue:8080/domains/:domain";
     private static final String PROVIDER_ID = "whitelisted-email-validator-action";
     private static final Logger logger = Logger.getLogger(WhitelistedEmailValidator.class);
+    private static AuthenticationExecutionModel.Requirement[] REQUIREMENT_CHOICES = {
+        AuthenticationExecutionModel.Requirement.REQUIRED,
+        AuthenticationExecutionModel.Requirement.DISABLED
+    };
 
     @Override
     public String getHelpText() {
@@ -47,7 +51,7 @@ public class WhitelistedEmailValidator implements FormAction, FormActionFactory 
 
         String email = formData.getFirst(Validation.FIELD_EMAIL);
 
-        if (!isValidEmail(email, context.getSession())) {
+        if (email == null || !isValidEmail(email, context.getSession())) {
             errors.add(new FormMessage(RegistrationPage.FIELD_EMAIL, Messages.INVALID_EMAIL));
         }
 
@@ -132,11 +136,6 @@ public class WhitelistedEmailValidator implements FormAction, FormActionFactory 
     public boolean isConfigurable() {
         return false;
     }
-
-    private static AuthenticationExecutionModel.Requirement[] REQUIREMENT_CHOICES = {
-        AuthenticationExecutionModel.Requirement.REQUIRED,
-        AuthenticationExecutionModel.Requirement.DISABLED
-    };
 
     @Override
     public AuthenticationExecutionModel.Requirement[] getRequirementChoices() {
