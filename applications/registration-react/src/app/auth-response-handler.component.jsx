@@ -15,7 +15,21 @@ export const AuthResponseHandler = ({
 
   const { redirectLocation } = popLoginState();
 
-  return <Redirect to={redirectLocation || defaultRedirect} />;
+  // redirectLocation is absolute url
+  if (
+    typeof redirectLocation === 'string' &&
+    redirectLocation.startsWith('http')
+  ) {
+    location.replace(redirectLocation);
+    return null;
+  }
+
+  // redirectLocation is relative url or location object.
+  if (redirectLocation) {
+    return <Redirect to={redirectLocation} />;
+  }
+
+  return <Redirect to={defaultRedirect} />;
 };
 
 AuthResponseHandler.propTypes = {
