@@ -84,7 +84,7 @@ export const SearchPublisherPure = ({ suggestions, onChosenPublisher }) => {
 
 SearchPublisherPure.defaultProps = {
   suggestions: null,
-  onChosenPublisher: noop()
+  onChosenPublisher: noop
 };
 
 SearchPublisherPure.propTypes = {

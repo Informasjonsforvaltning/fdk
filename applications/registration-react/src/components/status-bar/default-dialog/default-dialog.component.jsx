@@ -75,14 +75,14 @@ export const DefaultDialog = ({
 };
 
 DefaultDialog.defaultProps = {
-  onShowValidationError: noop(),
-  onShowConfirmDelete: noop(),
+  onShowValidationError: noop,
+  onShowConfirmDelete: noop,
   isSaving: false,
   error: null,
   published: false,
   justPublishedOrUnPublished: false,
   allowPublish: true,
-  onChange: noop()
+  onChange: noop
 };
 
 DefaultDialog.propTypes = {

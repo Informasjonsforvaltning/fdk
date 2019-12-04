@@ -48,10 +48,10 @@ export const ButtonRegistrationStatus = ({
 };
 
 ButtonRegistrationStatus.defaultProps = {
-  onChange: noop(),
+  onChange: noop,
   published: false,
   allowPublish: true,
-  onShowValidationError: noop()
+  onShowValidationError: noop
 };
 
 ButtonRegistrationStatus.propTypes = {
