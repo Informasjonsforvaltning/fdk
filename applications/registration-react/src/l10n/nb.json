@@ -24,6 +24,7 @@
   "responsible": "Ansvarlig",
   "choose": "Velg",
   "noAccessCatalog": "Du har ikke tilgang til denne katalogen",
+  "none": "Ingen",
   "breadcrumbs": {
     "home": "Alle kataloger",
     "API-descriptions": "API-beskrivelser",

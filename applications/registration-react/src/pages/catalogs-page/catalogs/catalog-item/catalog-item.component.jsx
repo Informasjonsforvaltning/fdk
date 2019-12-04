@@ -11,7 +11,7 @@ const renderItemContent = ({ itemClass, iconClass, itemsCount, type }) => (
   <div className={itemClass}>
     <h3 className={iconClass}>{localization.catalogs[type]}</h3>
     <span className="fdk-text-size-small fdk-color-neutral-dark">
-      {itemsCount || 0} {localization.catalogs.type[type]}
+      {itemsCount || localization.none} {localization.catalogs.type[type]}
     </span>
   </div>
 );
