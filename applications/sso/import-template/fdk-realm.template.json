@@ -1363,7 +1363,7 @@
     "addReadTokenRoleOnCreate" : false,
     "authenticateByDefault" : false,
     "linkOnly" : false,
-    "firstBrokerLoginFlowAlias" : "first broker login",
+    "firstBrokerLoginFlowAlias" : "link accounts",
     "config" : {
       "hideOnLoginPage" : "",
       "validateSignature" : "true",
