@@ -2,6 +2,7 @@
 import _ from 'lodash';
 import Keycloak from 'keycloak-js';
 
+import qs from 'qs';
 import { getConfig } from '../config';
 import { setLoginState } from './login-store';
 
@@ -33,8 +34,15 @@ function initializeKeycloak() {
 
 export const isAuthenticated = () => kc && kc.authenticated;
 
-function storeRedirectLocationIfDirectNavigation() {
-  // this is hack - we need to exlcude full list of addresses that don't need authentication
+function storeRedirectLocation() {
+  // if redirectLocation is explicitly provided
+  const query = qs.parse(location.search, { ignoreQueryPrefix: true }) || {};
+  if (query.redirectLocation) {
+    setLoginState({ redirectLocation: query.redirectLocation });
+    return;
+  }
+
+  // exclude locations that don't need authentication
   const relativeLocation = location.href.substr(location.origin.length);
   if (
     !(
@@ -48,7 +56,7 @@ function storeRedirectLocationIfDirectNavigation() {
 }
 
 export async function initAuthService() {
-  storeRedirectLocationIfDirectNavigation();
+  storeRedirectLocation();
 
   const kcConfig = getConfig().keycloak;
   kc = Keycloak(kcConfig);
