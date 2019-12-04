@@ -5,7 +5,7 @@ import cx from 'classnames';
 import localization from '../../../../services/localization';
 import './catalog-item.component.scss';
 
-const isConcept = type => type === 'concepts';
+const isExternalLink = type => !!(type === 'concepts' || type === 'protocol');
 
 const renderItemContent = ({ itemClass, iconClass, itemsCount, type }) => (
   <div className={itemClass}>
@@ -37,12 +37,12 @@ export const CatalogItem = ({ type, itemsCount, linkUri, isReadOnly }) => {
 
   return (
     <div className="col-md-4 pl-0 mb-4">
-      {isConcept(type) && !isReadOnly && (
+      {isExternalLink(type) && !isReadOnly && (
         <a className="catalog-item" href={linkUri}>
           {renderItemContent({ itemClass, iconClass, itemsCount, type })}
         </a>
       )}
-      {!isConcept(type) && !isReadOnly && (
+      {!isExternalLink(type) && !isReadOnly && (
         <Link className="catalog-item" to={linkUri}>
           {renderItemContent({ itemClass, iconClass, itemsCount, type })}
         </Link>
