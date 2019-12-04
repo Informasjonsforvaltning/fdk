@@ -53,14 +53,16 @@ function _renderFilterModal({
             activeFilter={locationSearch.losTheme}
             referenceDataItems={losItems}
           />
-          <FilterBox
-            htmlKey={1}
-            title={localization.facet.themeEU}
-            filter={datasetAggregations.theme}
-            onClick={onFilterTheme}
-            activeFilter={locationSearch.theme}
-            themesItems={themesItems}
-          />
+          {!getConfig().themeNap && (
+            <FilterBox
+              htmlKey={1}
+              title={localization.facet.themeEU}
+              filter={datasetAggregations.theme}
+              onClick={onFilterTheme}
+              activeFilter={locationSearch.theme}
+              themesItems={themesItems}
+            />
+          )}
           {!getConfig().themeNap && (
             <FilterBox
               htmlKey={2}
@@ -246,14 +248,16 @@ export const ResultsDatasetPure = ({
                 referenceDataItems={losItems}
                 collapseItems
               />
-              <FilterBox
-                htmlKey={1}
-                title={localization.facet.themeEU}
-                filter={datasetAggregations.theme}
-                onClick={onFilterTheme}
-                activeFilter={locationSearch.theme}
-                themesItems={themesItems}
-              />
+              {!getConfig().themeNap && (
+                <FilterBox
+                  htmlKey={1}
+                  title={localization.facet.themeEU}
+                  filter={datasetAggregations.theme}
+                  onClick={onFilterTheme}
+                  activeFilter={locationSearch.theme}
+                  themesItems={themesItems}
+                />
+              )}
               {!getConfig().themeNap && (
                 <FilterBox
                   htmlKey={2}
