@@ -36,7 +36,7 @@ export const CatalogItem = ({ type, itemsCount, linkUri, isReadOnly }) => {
   );
 
   return (
-    <div className="col-md-4 pl-0">
+    <div className="col-md-4 pl-0 mb-4">
       {isConcept(type) && !isReadOnly && (
         <a className="catalog-item" href={linkUri}>
           {renderItemContent({ itemClass, iconClass, itemsCount, type })}
