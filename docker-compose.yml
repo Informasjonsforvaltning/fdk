@@ -74,7 +74,8 @@ services:
       - "8080"
     depends_on:
       - registration-react
-      - registration-api
+      - dataset-catalogue
+      - api-catalogue
       - reference-data
       - search-api
       - api-cat
@@ -160,9 +161,18 @@ services:
       - elasticsearch5
       - reference-data
 
-  registration-api:
-    image: dcatno/registration-api:latest
-    expose:
+  dataset-catalogue:
+    image: eu.gcr.io/fdk-infra/dataset-catalogue:latest
+    ports:
+      - "8080"
+    depends_on:
+      - elasticsearch5
+      - reference-data
+      - api-cat
+
+  api-catalogue:
+    image: eu.gcr.io/fdk-infra/api-catalogue:latest
+    ports:
       - "8080"
     depends_on:
       - elasticsearch5

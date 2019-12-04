@@ -11,7 +11,6 @@
 
     <modules>
         <module>search-api</module>
-        <module>registration-api</module>
 
         <module>dev-management</module>
 

@@ -123,18 +123,27 @@ services:
       - REDUX_LOG
       - DISQUS_SHORTNAME=CHANGE_ME
 
-  registration-react:
-    build: ./applications/registration-react
+  dataset-catalogue:
     ports:
-      - "4300:4300"
-    volumes:
-      - ./applications/registration-react/src:/usr/src/app/src
+      - "8114:8080"
     environment:
-      - REDUX_LOG
-      - CONCEPT_REGISTRATION_API_HOST=http://localhost:8200
-      - CONCEPT_REGISTRATION_HOST=http://localhost:8202
-      - SEARCH_HOST=http://localhost:8080
-      - SSO_HOST=http://localhost:8084
+      - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
+      - registrationApi_harvesterUsername=test_admin
+      - registrationApi_harvesterPassword=password
+      - LOG_LEVEL=DEBUG
+      - LOG_FORMAT=compact
+      - FDK_ENHETSREGISTERET_PROXY_URL=http://nginx-enhetsregisteret-proxy-mock:8080/enhetsregisteret/api/enheter/
+      - ORGANIZATION_CATALOGUE_URL=http://organization-catalogue:8080/
+
+  api-catalogue:
+    ports:
+      - "8116:8080"
+    environment:
+      - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
+      - registrationApi_harvesterUsername=test_admin
+      - registrationApi_harvesterPassword=password
+      - LOG_LEVEL=DEBUG
+      - LOG_FORMAT=compact
 
   ### java services
   #############################
