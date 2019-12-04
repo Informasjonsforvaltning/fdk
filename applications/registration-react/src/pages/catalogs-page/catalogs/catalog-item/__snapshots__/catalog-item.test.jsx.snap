@@ -2,7 +2,7 @@
 
 exports[`should render CatalogItem correctly with itemsCount set to 10 1`] = `
 <div
-  className="col-md-4 pl-0"
+  className="col-md-4 pl-0 mb-4"
 >
   <Link
     className="catalog-item"
@@ -30,7 +30,7 @@ exports[`should render CatalogItem correctly with itemsCount set to 10 1`] = `
 
 exports[`should render CatalogItem correctly with missing itemsCount 1`] = `
 <div
-  className="col-md-4 pl-0"
+  className="col-md-4 pl-0 mb-4"
 >
   <Link
     className="catalog-item"
