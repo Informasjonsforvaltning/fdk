@@ -47,7 +47,7 @@ exports[`should render CatalogItem correctly with missing itemsCount 1`] = `
       <span
         className="fdk-text-size-small fdk-color-neutral-dark"
       >
-        0
+        Ingen
          
         datasett
       </span>
