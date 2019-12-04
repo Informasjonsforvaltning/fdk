@@ -23,6 +23,10 @@ const renderCatalogs = props => {
     return null;
   }
 
+  const canShowProtocols = localStorage.getItem(
+    'FEATURE_TOGGLE_PROTOCOL_REGISTRATION'
+  );
+
   return catalogItems.map(catalog => (
     <div key={_.get(catalog, 'id')} className="row mb-2 mb-md-5">
       <div className="col-12">
@@ -64,6 +68,13 @@ const renderCatalogs = props => {
             catalogId={catalog.id}
             type="concepts"
           />
+          {canShowProtocols && (
+            <Catalog
+              key={`protocol-${catalog.id}`}
+              catalogId={catalog.id}
+              type="protocol"
+            />
+          )}
         </CardGroup>
       </div>
     </div>

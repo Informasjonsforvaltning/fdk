@@ -20,7 +20,8 @@ export const CatalogItem = ({ type, itemsCount, linkUri, isReadOnly }) => {
   const iconClass = cx('catalog-icon', {
     'catalog-icon--dataset': type === 'datasets',
     'catalog-icon--api': type === 'apis',
-    'catalog-icon--concepts': type === 'concepts'
+    'catalog-icon--concepts': type === 'concepts',
+    'catalog-icon--protokoll': type === 'protocol'
   });
 
   const itemClass = cx(
@@ -30,7 +31,7 @@ export const CatalogItem = ({ type, itemsCount, linkUri, isReadOnly }) => {
     'align-items-center',
     {
       readOnly: isReadOnly,
-      beta: type === 'concepts',
+      beta: type === 'concepts' || type === 'protocol',
       'h-100': !itemsCount
     }
   );

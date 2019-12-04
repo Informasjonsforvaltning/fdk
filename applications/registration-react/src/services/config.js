@@ -41,7 +41,10 @@ const createConfig = env => {
         env.ORGANIZATION_API_HOST ||
         'https://organization-catalogue.fellesdatakatalog.brreg.no'
     },
-    useDemoLogo: env.USE_DEMO_LOGO || false
+    useDemoLogo: env.USE_DEMO_LOGO || false,
+    recordsOfProcessingActivitiesHost:
+      env.RECORDS_OF_PROCESSING_ACTIVITIES_HOST ||
+      'https://registrering-protokoll.fellesdatakatalog.brreg.no'
   };
 };
 
@@ -68,7 +71,9 @@ export const initConfig = async () => {
   //   SSO_HOST: 'https://sso.ut1.fellesdatakatalog.brreg.no',
   //   ORGANIZATION_API_HOST:
   //     'https://organization-catalogue.ut1.fellesdatakatalog.brreg.no',
-  //   USE_DEMO_LOGO: true
+  //   USE_DEMO_LOGO: true,
+  //   RECORDS_OF_PROCESSING_ACTIVITIES_HOST:
+  //     'https://registrering-protokoll.ut1.fellesdatakatalog.brreg.no'
   // });
 
   // override all env variables to local docker
@@ -80,7 +85,9 @@ export const initConfig = async () => {
   //   SSO_HOST: 'http://localhost:8084',
   //   ORGANIZATION_API_HOST:
   //     'https://organization-catalogue.ut1.fellesdatakatalog.brreg.no',
-  //   USE_DEMO_LOGO: true
+  //   USE_DEMO_LOGO: true,
+  //   RECORDS_OF_PROCESSING_ACTIVITIES_HOST:
+  //     'https://registrering-protokoll.ut1.fellesdatakatalog.brreg.no'
   // });
 
   Object.assign(config, createConfig(env));
