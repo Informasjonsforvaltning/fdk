@@ -60,9 +60,9 @@ StatusBar.defaultProps = {
   error: null,
   published: false,
   justPublishedOrUnPublished: false,
-  onDelete: noop(),
+  onDelete: noop,
   allowPublish: true,
-  onChange: noop()
+  onChange: noop
 };
 
 StatusBar.propTypes = {
