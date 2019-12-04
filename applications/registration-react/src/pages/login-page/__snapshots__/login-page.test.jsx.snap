@@ -33,6 +33,47 @@ exports[`should render LoginPage correctly 1`] = `
         className="row"
       >
         <div
+          className="col-md-6"
+        >
+          <div
+            className="jumbotron jumbotron-login h-100"
+          >
+            <h2>
+              For deg som har lesetilgang
+            </h2>
+            <Button
+              className="fdk-button fdk-button-cta fdk-bg-color-link mt-4"
+              color="secondary"
+              onClick={[Function]}
+              tag="button"
+            >
+              Logg inn som lesebruker
+            </Button>
+            <p>
+              Med lesetilgang kan du se all informasjon din virksomhet har registret i katalogene sine.
+            </p>
+            <div>
+              <strong>
+                Trenger du lesetilgang?
+              </strong>
+              <p>
+                Klikk
+                 
+                <strong>
+                  Logg inn som lesebruker
+                </strong>
+                , 
+                deretter
+                 
+                <strong>
+                  Registrer bruker
+                </strong>
+                .
+              </p>
+            </div>
+          </div>
+        </div>
+        <div
           className="col-md-6 mt-5 mt-md-0"
         >
           <div

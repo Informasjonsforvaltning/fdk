@@ -8,8 +8,6 @@ import { login } from '../../services/auth/auth-service';
 import './login-page.scss';
 import { getLoginState } from '../../services/auth/login-store';
 
-const showLoginReadOnly = window.localStorage.getItem('showLoginReadOnly');
-
 const renderMessageForLoggedOutDueToTimeout = () => (
   <div className="row">
     <div className="col-12">
@@ -32,39 +30,37 @@ export const LoginPagePure = ({ loggedOutDueToTimeout }) => (
       <div className="container">
         {loggedOutDueToTimeout && renderMessageForLoggedOutDueToTimeout()}
         <div className="row">
-          {showLoginReadOnly && (
-            <div className="col-md-6">
-              <div className="jumbotron jumbotron-login h-100">
-                <h2>{localization.app.loginPage.readUser.heading}</h2>
-                <Button
-                  className="fdk-button fdk-button-cta fdk-bg-color-link mt-4"
-                  onClick={() => login({ readOnly: true })}
-                >
-                  {localization.app.loginPage.readUser.loginButton}
-                </Button>
-                <p>{localization.app.loginPage.readUser.description1}</p>
-                <div>
+          <div className="col-md-6">
+            <div className="jumbotron jumbotron-login h-100">
+              <h2>{localization.app.loginPage.readUser.heading}</h2>
+              <Button
+                className="fdk-button fdk-button-cta fdk-bg-color-link mt-4"
+                onClick={() => login({ readOnly: true })}
+              >
+                {localization.app.loginPage.readUser.loginButton}
+              </Button>
+              <p>{localization.app.loginPage.readUser.description1}</p>
+              <div>
+                <strong>
+                  {localization.app.loginPage.readUser.description2}
+                </strong>
+                <p>
+                  {localization.app.loginPage.readUser.description3.click}{' '}
                   <strong>
-                    {localization.app.loginPage.readUser.description2}
+                    {localization.app.loginPage.readUser.loginButton}
                   </strong>
-                  <p>
-                    {localization.app.loginPage.readUser.description3.click}{' '}
-                    <strong>
-                      {localization.app.loginPage.readUser.loginButton}
-                    </strong>
-                    , {localization.app.loginPage.readUser.description3.then}{' '}
-                    <strong>
-                      {
-                        localization.app.loginPage.readUser.description3
-                          .registerUser
-                      }
-                    </strong>
-                    .
-                  </p>
-                </div>
+                  , {localization.app.loginPage.readUser.description3.then}{' '}
+                  <strong>
+                    {
+                      localization.app.loginPage.readUser.description3
+                        .registerUser
+                    }
+                  </strong>
+                  .
+                </p>
               </div>
             </div>
-          )}
+          </div>
           <div className="col-md-6 mt-5 mt-md-0">
             <div className="jumbotron jumbotron-login h-100">
               <h2>{localization.app.loginPage.writeUser.heading}</h2>
