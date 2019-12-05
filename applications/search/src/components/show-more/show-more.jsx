@@ -24,11 +24,8 @@ export const ShowMorePure = ({
   children
 }) => {
   function onRef(element) {
-    if (element) {
-      const h = element.getBoundingClientRect().height;
-      if (h !== contentHeight) {
-        setContentHeight(h);
-      }
+    if (element && !contentHeight) {
+      setContentHeight(element.getBoundingClientRect().height);
     }
   }
   function _renderContent(extraClass) {
