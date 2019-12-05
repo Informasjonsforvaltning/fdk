@@ -1,52 +1,36 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Redirect, Route } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 
-import { isAuthenticated, logout } from '../services/auth/auth-service';
+import { isAuthenticated, login, logout } from '../services/auth/auth-service';
 import { Timeout } from '../components/timeout.component';
 
 const TIMEOUT = 27.5 * 60 * 1000;
 
 export const ProtectedRoute = ({ check, ...props }) => {
   const {
-    computedMatch: { params },
-    location
+    computedMatch: { params }
   } = props;
 
-  const { pathname, search, hash, state } = location;
-  const redirectLocation = { pathname, search, hash, state };
-
-  if (!isAuthenticated()) {
-    logout({ redirectLocation });
-    return <Redirect to="/login" />; // render preemptively to reduce flicker
-  }
-
-  if (!check(params)) {
-    logout();
-    return <Redirect to="/login" />; // render preemptively to reduce flicker
+  if (!isAuthenticated() || !check(params)) {
+    login();
+    return null;
   }
 
   return (
     <>
       <Route {...props} />
-      <Timeout
-        timeout={TIMEOUT}
-        onTimeout={() =>
-          logout({ loggedOutDueToTimeout: true, redirectLocation })
-        }
-      />
+      <Timeout timeout={TIMEOUT} onTimeout={logout} />
     </>
   );
 };
 
 ProtectedRoute.propTypes = {
   check: PropTypes.func,
-  computedMatch: PropTypes.object,
-  location: PropTypes.object
+  computedMatch: PropTypes.object
 };
 
 ProtectedRoute.defaultProps = {
   check: () => true,
-  computedMatch: {},
-  location: {}
+  computedMatch: {}
 };

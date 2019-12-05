@@ -1,10 +1,7 @@
 /* Facade for keycloak */
 import _ from 'lodash';
 import Keycloak from 'keycloak-js';
-
-import qs from 'qs';
 import { getConfig } from '../config';
-import { setLoginState } from './login-store';
 
 let kc;
 
@@ -13,67 +10,30 @@ const PERMISSION_ADMIN = 'PERMISSION_ADMIN';
 const RESOURCE_ORGANIZATION = 'organization';
 const ROLE_ADMIN = 'admin';
 
-const redirectPath = '/auth_response';
-const loginPath = '/login';
-const redirectUri = `${location.origin}${redirectPath}`;
-
 function toPromise(keycloakPromise) {
   return new Promise((resolve, reject) =>
     keycloakPromise.success(resolve).error(reject)
   );
 }
 
-function initializeKeycloak() {
-  const initOptions = {
-    onLoad: 'check-sso',
-    redirectUri
-  };
-
-  return toPromise(kc.init(initOptions));
-}
-
 export const isAuthenticated = () => kc && kc.authenticated;
 
-function storeRedirectLocation() {
-  // if redirectLocation is explicitly provided
-  const query = qs.parse(location.search, { ignoreQueryPrefix: true }) || {};
-  if (query.redirectLocation) {
-    setLoginState({ redirectLocation: query.redirectLocation });
-    return;
-  }
-
-  // exclude locations that don't need authentication
-  const relativeLocation = location.href.substr(location.origin.length);
-  if (
-    !(
-      relativeLocation.startsWith(loginPath) ||
-      relativeLocation.startsWith(redirectPath)
-    )
-  ) {
-    // redirectLocation is used in react-router redirect, that supports both string and object form
-    setLoginState({ redirectLocation: relativeLocation });
-  }
-}
-
 export async function initAuthService() {
-  storeRedirectLocation();
-
   const kcConfig = getConfig().keycloak;
   kc = Keycloak(kcConfig);
 
-  await initializeKeycloak();
+  return toPromise(kc.init({ onLoad: 'login-required' })).catch(err => {
+    console.error(err);
+    return false;
+  });
 }
 
-export function logout(loginState) {
-  if (loginState) {
-    setLoginState(loginState);
-  }
-  kc.logout(); // redirects;
+export function logout() {
+  kc.logout({ redirectUri: location.origin }); // redirects;
 }
 
-export function login({ readOnly = false }) {
-  const idpHint = readOnly ? 'local-oidc' : 'idporten-oidc';
-  kc.login({ idpHint }); // redirects
+export function login() {
+  kc.login(); // redirects
 }
 
 export async function getToken() {
