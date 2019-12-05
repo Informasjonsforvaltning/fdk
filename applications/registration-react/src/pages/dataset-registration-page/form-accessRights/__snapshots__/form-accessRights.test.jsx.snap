@@ -89,6 +89,7 @@ exports[`should render FormAccessRights correctly with syncErrors 1`] = `
         />
         <FieldArray
           component={[Function]}
+          isReadOnly={false}
           languages={Array []}
           linkLabel="Lenke"
           name="legalBasisForRestriction"
@@ -105,6 +106,7 @@ exports[`should render FormAccessRights correctly with syncErrors 1`] = `
         />
         <FieldArray
           component={[Function]}
+          isReadOnly={false}
           languages={Array []}
           linkLabel="Lenke"
           name="legalBasisForProcessing"
@@ -121,6 +123,7 @@ exports[`should render FormAccessRights correctly with syncErrors 1`] = `
         />
         <FieldArray
           component={[Function]}
+          isReadOnly={false}
           languages={Array []}
           linkLabel="Lenke"
           name="legalBasisForAccess"

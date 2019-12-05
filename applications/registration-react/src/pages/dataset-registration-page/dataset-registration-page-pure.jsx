@@ -204,7 +204,6 @@ export function DatasetRegistrationPagePure(props) {
                   isReadOnly={isReadOnly}
                 />
               </FormTemplateWithState>
-
               <FormTemplateWithState
                 title={localization.datasets.formTemplates.theme}
                 required
@@ -214,9 +213,11 @@ export function DatasetRegistrationPagePure(props) {
                 <ConnectedFormLOS
                   datasetItem={datasetItem}
                   losItems={losItems}
+                  themes={themes}
                   catalogId={catalogId}
                   datasetId={datasetId}
                   datasetFormStatus={datasetFormStatus}
+                  isReadOnly={isReadOnly}
                 />
               </FormTemplateWithState>
 
