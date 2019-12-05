@@ -1317,6 +1317,7 @@
     "strictTransportSecurity" : "max-age=31536000; includeSubDomains"
   },
   "smtpServer" : { },
+  "loginTheme" : "fdk-choose-provider",
   "eventsEnabled" : false,
   "eventsListeners" : [ "jboss-logging" ],
   "enabledEventTypes" : [ ],
@@ -1828,7 +1829,7 @@
     "id" : "e64d7cd7-aa69-4b47-8c6c-aaa4ff3ffbf7",
     "alias" : "default-idporten-config",
     "config" : {
-      "defaultProvider" : "idporten-oidc"
+      "defaultProvider" : ""
     }
   }, {
     "id" : "048bd0f8-b2ea-4b77-b8ed-18c396ea546c",

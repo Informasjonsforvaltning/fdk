@@ -4,9 +4,11 @@ ENV DB_VENDOR h2
 
 # 1. copy keycloak theme as fdk theme.
 RUN cp -r /opt/jboss/keycloak/themes/keycloak /opt/jboss/keycloak/themes/fdk
+RUN cp -r /opt/jboss/keycloak/themes/keycloak /opt/jboss/keycloak/themes/fdk-choose-provider
 
 # 2. copy modified files from host ( 3 files) - trying to copy only changed files...
 COPY themes/fdk /opt/jboss/keycloak/themes/fdk
+COPY themes/fdk-choose-provider /opt/jboss/keycloak/themes/fdk-choose-provider
 
 COPY tools /opt/fdk/tools
 
