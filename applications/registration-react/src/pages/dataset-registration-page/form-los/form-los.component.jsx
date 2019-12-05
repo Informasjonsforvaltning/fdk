@@ -21,6 +21,7 @@ import {
 import './form-los.scss';
 import { isNapPublish, isNapUnPublishTheme } from '../../../lib/napPublish';
 import { AlertMessage } from '../../../components/alert-message/alert-message.component';
+import { losValues } from '../dataset-registration-page.logic';
 
 export const FormLOSPure = ({
   losItems,
@@ -29,7 +30,9 @@ export const FormLOSPure = ({
   handleSetFilterText,
   handleSetSearchedItem,
   datasetItem,
-  datasetFormStatus
+  datasetFormStatus,
+  isReadOnly,
+  themes
 }) => {
   const losItemsToShow = _.uniqBy(
     getLosItemParentsAndChildren(losItems, searchedItem),
@@ -44,80 +47,96 @@ export const FormLOSPure = ({
           term="themesLos"
         />
 
-        <Autocomplete
-          wrapperProps={{ style: { width: '100%' } }}
-          getItemValue={item => item.name.nb}
-          items={losItems}
-          renderInput={props => (
-            <div className="input-group">
-              <input
-                type="text"
-                className="form-control"
-                {...props}
-                placeholder={localization.schema.los.losSearchPlaceholder}
-              />
-              <span className="input-group-btn input-group-append">
-                <button
-                  type="button"
-                  className="btn btn-default input-group-text"
-                  onClick={() =>
-                    onClearSearchInput(
-                      handleSetFilterText,
-                      handleSetSearchedItem
-                    )
-                  }
-                >
-                  <i className="fa fa-times-circle" />
-                </button>
-              </span>
-            </div>
-          )}
-          renderItem={(item, isHighlighted) => {
-            const itemClass = cx('px-2', {
-              'fdk-bg-color-neutral-lightest': isHighlighted
-            });
-            return (
-              <div key={item.uri} className={itemClass}>
-                {item.name.nb} [
-                {item.isTema ? localization.category : localization.topic}]
-              </div>
-            );
-          }}
-          renderMenu={(items, value, style) => (
-            <div className="fdk-autocomplete-menu" style={{ ...style }}>
-              {items.slice(0, 50)}
-            </div>
-          )}
-          value={filterText}
-          onChange={e =>
-            onChangeSearchInput(e, handleSetFilterText, handleSetSearchedItem)
-          }
-          onSelect={(val, item) =>
-            onSelectSearchedLosItem(
-              val,
-              item,
-              handleSetFilterText,
-              handleSetSearchedItem
-            )
-          }
-          menuStyle={{ zIndex: '1000' }}
-          shouldItemRender={matchInputStateToLosTerm}
-        />
+        {!isReadOnly && (
+          <>
+            <Autocomplete
+              wrapperProps={{ style: { width: '100%' } }}
+              getItemValue={item => item.name.nb}
+              items={losItems}
+              renderInput={props => (
+                <div className="input-group">
+                  <input
+                    type="text"
+                    className="form-control"
+                    {...props}
+                    placeholder={localization.schema.los.losSearchPlaceholder}
+                  />
+                  <span className="input-group-btn input-group-append">
+                    <button
+                      type="button"
+                      className="btn btn-default input-group-text"
+                      onClick={() =>
+                        onClearSearchInput(
+                          handleSetFilterText,
+                          handleSetSearchedItem
+                        )
+                      }
+                    >
+                      <i className="fa fa-times-circle" />
+                    </button>
+                  </span>
+                </div>
+              )}
+              renderItem={(item, isHighlighted) => {
+                const itemClass = cx('px-2', {
+                  'fdk-bg-color-neutral-lightest': isHighlighted
+                });
+                return (
+                  <div key={item.uri} className={itemClass}>
+                    {item.name.nb} [
+                    {item.isTema ? localization.category : localization.topic}]
+                  </div>
+                );
+              }}
+              renderMenu={(items, value, style) => (
+                <div className="fdk-autocomplete-menu" style={{ ...style }}>
+                  {items.slice(0, 50)}
+                </div>
+              )}
+              value={filterText}
+              onChange={e =>
+                onChangeSearchInput(
+                  e,
+                  handleSetFilterText,
+                  handleSetSearchedItem
+                )
+              }
+              onSelect={(val, item) =>
+                onSelectSearchedLosItem(
+                  val,
+                  item,
+                  handleSetFilterText,
+                  handleSetSearchedItem
+                )
+              }
+              menuStyle={{ zIndex: '1000' }}
+              shouldItemRender={matchInputStateToLosTerm}
+            />
 
-        <form>
-          <Field name="theme" component={FilterPillsLos} losItems={losItems} />
-          <Field
-            name="theme"
-            component={FieldTreeLos}
-            losItems={losItemsToShow}
-            defaultOpenTree={typeof searchedItem !== 'undefined'}
-            defaultShowTopic={
-              searchedItem && !_.get(searchedItem, 'isTema')
-                ? searchedItem
-                : null
-            }
-          />
-        </form>
+            <form>
+              <Field
+                name="theme"
+                component={FilterPillsLos}
+                losItems={losItems}
+              />
+              <Field
+                name="theme"
+                component={FieldTreeLos}
+                losItems={losItemsToShow}
+                defaultOpenTree={typeof searchedItem !== 'undefined'}
+                defaultShowTopic={
+                  searchedItem && !_.get(searchedItem, 'isTema')
+                    ? searchedItem
+                    : null
+                }
+              />
+            </form>
+          </>
+        )}
+
+        {isReadOnly && (
+          <div className="pl-3">{losValues(themes.values, losItems)}</div>
+        )}
 
         {datasetFormStatus &&
           includes(datasetFormStatus.lastChangedFields, 'theme') &&
@@ -147,7 +166,9 @@ FormLOSPure.defaultProps = {
   handleSetFilterText: _.noop,
   handleSetSearchedItem: _.noop,
   datasetItem: null,
-  datasetFormStatus: null
+  datasetFormStatus: null,
+  isReadOnly: false,
+  themes: null
 };
 
 FormLOSPure.propTypes = {
@@ -157,7 +178,9 @@ FormLOSPure.propTypes = {
   handleSetFilterText: PropTypes.func,
   handleSetSearchedItem: PropTypes.func,
   datasetItem: PropTypes.object,
-  datasetFormStatus: PropTypes.object
+  datasetFormStatus: PropTypes.object,
+  isReadOnly: PropTypes.bool,
+  themes: PropTypes.object
 };
 
 const enhance = compose(
