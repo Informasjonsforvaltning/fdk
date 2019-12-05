@@ -48,6 +48,7 @@ services:
     volumes:
       #use this for theme development
       #- ../fdk/applications/sso/themes/fdk:/opt/jboss/keycloak/themes/fdk
+      #- ../fdk/applications/sso/themes/fdk-choose-provider:/opt/jboss/keycloak/themes/fdk-choose-provider
       #this allows to run command "npm run keycloak-export"
       - ../fdk/applications/sso/export:/tmp/keycloak/export
       #with link, et is enough to restart container to perform, instead of rebuild

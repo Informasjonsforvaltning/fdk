@@ -29,3 +29,26 @@ fdk/login/resources/img/*
 
 !fdk/login/resources/img/illustration-login.svg
 !fdk/login/resources/img/logo-registrering.svg
+
+!fdk-choose-provider
+fdk-choose-provider/*
+
+!fdk-choose-provider/login
+fdk-choose-provider/login/*
+
+!fdk-choose-provider/login/login.ftl
+!fdk-choose-provider/login/template.ftl
+
+!fdk-choose-provider/login/resources
+fdk-choose-provider/login/resources/*
+
+!fdk-choose-provider/login/resources/css
+fdk-choose-provider/login/resources/css/*
+
+!fdk-choose-provider/login/resources/css/login.css
+
+!fdk-choose-provider/login/resources/img
+fdk-choose-provider/login/resources/img/*
+
+!fdk-choose-provider/login/resources/img/illustration-login.svg
+!fdk-choose-provider/login/resources/img/logo-registrering.svg
