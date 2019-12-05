@@ -229,8 +229,10 @@ export function DatasetRegistrationPagePure(props) {
                 <ConnectedFormThemes
                   datasetItem={datasetItem}
                   themesItems={themesItems}
+                  themes={themes}
                   catalogId={catalogId}
                   datasetId={datasetId}
+                  isReadOnly={isReadOnly}
                 />
               </FormTemplateWithState>
 
