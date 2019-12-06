@@ -1,9 +1,0 @@
-{
-  "catalog": {
-    "properties": {
-      "id": {
-        "type": "text"
-      }
-    }
-  }
-}

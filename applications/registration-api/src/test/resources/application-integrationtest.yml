@@ -1,4 +1,0 @@
-application:
-  harvesterUserName: test_admin
-  harvesterPassword: password
-  harvesterUrl: http://localhost:8082
