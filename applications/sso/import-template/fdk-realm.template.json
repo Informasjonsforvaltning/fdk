@@ -1469,7 +1469,8 @@
       "authorizationUrl" : "${SSO_HOST}/auth/realms/fdk-local/protocol/openid-connect/auth",
       "disableUserInfo" : "",
       "logoutUrl" : "${SSO_HOST}/auth/realms/fdk-local/protocol/openid-connect/logout",
-      "clientSecret" : "${FDK_LOCAL_SECRET}"
+      "clientSecret" : "${FDK_LOCAL_SECRET}",
+      "guiOrder" : "1"
     }
   }, {
     "alias" : "idporten-oidc",
@@ -1498,7 +1499,8 @@
       "authorizationUrl" : "${IDPORTEN_OIDC_AUTHORIZATION_URL}",
       "disableUserInfo" : "",
       "logoutUrl" : "${IDPORTEN_OIDC_LOGOUT_URL}",
-      "clientSecret" : "${IDPORTEN_CLIENT_SECRET}"
+      "clientSecret" : "${IDPORTEN_CLIENT_SECRET}",
+      "guiOrder" : "2"
     }
   } ],
   "identityProviderMappers" : [ {
