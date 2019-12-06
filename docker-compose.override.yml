@@ -126,6 +126,19 @@ services:
       - REDUX_LOG
       - DISQUS_SHORTNAME=CHANGE_ME
 
+  registration-react:
+    build: ./applications/registration-react
+    ports:
+      - "4300:4300"
+    volumes:
+      - ./applications/registration-react/src:/usr/src/app/src
+    environment:
+      - REDUX_LOG
+      - CONCEPT_REGISTRATION_API_HOST=http://localhost:8200
+      - CONCEPT_REGISTRATION_HOST=http://localhost:8202
+      - SEARCH_HOST=http://localhost:8080
+      - SSO_HOST=http://localhost:8084
+
   dataset-catalogue:
     ports:
       - "8114:8080"
@@ -198,17 +211,6 @@ services:
       - FDK_SQL_JDBC_CONNECTION=jdbc:postgresql://postgres:5432/postgres?currentSchema=fdkreference
       - FDK_SQL_USERNAME=postgres
       - FDK_SQL_PASSWORD=password
-
-  registration-api:
-    ports:
-      - "8114:8080"
-    environment:
-      - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
-      - registrationApi_harvesterUsername=test_admin
-      - registrationApi_harvesterPassword=password
-      - LOG_LEVEL=DEBUG
-      - LOG_FORMAT=compact
-      - FDK_ENHETSREGISTERET_PROXY_URL=http://nginx-enhetsregisteret-proxy-mock:8080/enhetsregisteret/api/enheter/
 
   search-api:
     ports:
