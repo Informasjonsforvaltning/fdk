@@ -74,8 +74,8 @@ services:
       - DEV_CONCEPT_CATALOGUE_HOST=http://localhost:8203
       - FDK_ADMIN_GUI_HOST=http://localhost:8136
       - DEV_FDK_ADMIN_GUI_HOST=http://localhost:8137
-      - RECORDS_OF_PROCESSING_ACTIVITIES_HOST=http://localhost:8140
-      - DEV_RECORDS_OF_PROCESSING_ACTIVITIES_HOST=http://localhost:8141
+      - RECORDS_OF_PROCESSING_ACTIVITIES_GUI_HOST=http://localhost:8140
+      - DEV_RECORDS_OF_PROCESSING_ACTIVITIES_GUI_HOST=http://localhost:8141
     # This is local mock for ID-Porten, use this in dev, ut1 and st1. in it1 use idporten test, and in prod use idporten prod
       - IDPORTEN_OIDC_ROOT=http://localhost:8084/auth/realms/idporten-mock
       - IDPORTEN_CLIENT_ID=oidc_brreg_fellesdatakatalog
