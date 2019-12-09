@@ -123,11 +123,13 @@ const renderSubjectAndApplication = (subject, application) => {
 
 const renderTerms = (altLabel, hiddenLabel) => {
   const labels = labelArray =>
-    labelArray.map((item, index) => (
-      <span key={`altLabel-${index}`} className="fdk-label-item">
-        {getTranslateText(item)}
-      </span>
-    ));
+    labelArray
+      .filter(label => localization.getLanguage() in label)
+      .map((item, index) => (
+        <span key={`altLabel-${index}`} className="fdk-label-item">
+          {getTranslateText(item)}
+        </span>
+      ));
 
   const existFieldValue = value =>
     Array.isArray(value) ? value.some(valueItem => !!valueItem) : !!value;
