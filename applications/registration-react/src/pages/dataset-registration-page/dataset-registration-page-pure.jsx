@@ -282,6 +282,7 @@ export function DatasetRegistrationPagePure(props) {
                   datasetItem={datasetItem}
                   catalogId={catalogId}
                   datasetId={datasetId}
+                  isReadOnly={isReadOnly}
                 />
               </FormTemplateWithState>
 
