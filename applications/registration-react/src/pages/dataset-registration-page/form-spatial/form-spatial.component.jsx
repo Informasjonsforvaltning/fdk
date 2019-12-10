@@ -5,6 +5,7 @@ import { Field, FieldArray } from 'redux-form';
 import localization from '../../../services/localization';
 import Helptext from '../../../components/helptext/helptext.component';
 import TagsInputFieldArray from '../../../components/fields/field-input-tags-objects/tags-input-field-array.component';
+import TagsInputFieldArrayReadOnly from '../../../components/fields/field-input-tags-objects-readonly/field-input-tags-objects-readonly.component';
 import DatepickerField from '../../../components/fields/field-datepicker/field-datepicker.component';
 import CheckboxField from '../../../components/fields/field-checkbox/field-checkbox.component';
 import { datasetFormPatchThunk } from '../formsLib/asyncValidateDatasetInvokePatch';
@@ -76,11 +77,59 @@ renderTemporal.propTypes = {
   onDeleteFieldAtIndex: PropTypes.func.isRequired
 };
 
+const renderTemporalReadOnlyField = ({ item }) => (
+  <div>
+    <Field
+      name={`${item}.endDate`}
+      type="text"
+      component={({ input }) => {
+        return <span>{input.value} - </span>;
+      }}
+      label={localization.schema.common.endDateLabel}
+      showLabel
+    />
+    <Field
+      name={`${item}.startDate`}
+      type="text"
+      component={({ input }) => {
+        return <span>{input.value}</span>;
+      }}
+      label={localization.schema.common.endDateLabel}
+      showLabel
+    />
+  </div>
+);
+const renderTemporalReadOnly = ({ fields }) => {
+  return fields.map((item, index) =>
+    renderTemporalReadOnlyField({ item, index, fields })
+  );
+};
+const translateCode = code => {
+  switch (code) {
+    case 'NOR':
+      return 'Norsk';
+    case 'SMI':
+      return 'Samisk';
+    case 'ENG':
+      return 'Engelsk';
+    default:
+      return '';
+  }
+};
+const renderLanguageReadOnly = ({ input }) => {
+  return input.value.map(item => translateCode(item.code)).join(', ');
+};
+
+renderTemporalReadOnly.propTypes = {
+  fields: PropTypes.object.isRequired
+};
+
 export const FormSpatial = ({
   initialValues,
   dispatch,
   catalogId,
-  datasetId
+  datasetId,
+  isReadOnly
 }) => {
   const deleteFieldAtIndex = (fields, index) => {
     const values = fields.getAll();
@@ -98,43 +147,77 @@ export const FormSpatial = ({
             title={localization.schema.spatial.helptext.spatial}
             term="Dataset_spatial"
           />
-          <Field
-            name="spatial"
-            type="text"
-            component={TagsInputFieldArray}
-            label={localization.schema.spatial.spatialLabel}
-            fieldLabel="uri"
-          />
+          {isReadOnly && (
+            <Field
+              name="spatial"
+              type="text"
+              component={TagsInputFieldArrayReadOnly}
+              label={localization.schema.spatial.spatialLabel}
+              fieldLabel="uri"
+            />
+          )}
+          {!isReadOnly && (
+            <Field
+              name="spatial"
+              type="text"
+              component={TagsInputFieldArray}
+              label={localization.schema.spatial.spatialLabel}
+              fieldLabel="uri"
+            />
+          )}
         </div>
         <div className="form-group">
           <Helptext
             title={localization.schema.spatial.helptext.temporal}
             term="Dataset_temporal"
           />
-          <FieldArray
-            name="temporal"
-            component={renderTemporal}
-            onDeleteFieldAtIndex={deleteFieldAtIndex}
-          />
+          {isReadOnly && (
+            <FieldArray
+              name="temporal"
+              component={renderTemporalReadOnly}
+              onDeleteFieldAtIndex={deleteFieldAtIndex}
+            />
+          )}
+          {!isReadOnly && (
+            <FieldArray
+              name="temporal"
+              component={renderTemporal}
+              onDeleteFieldAtIndex={deleteFieldAtIndex}
+            />
+          )}
         </div>
         <div className="form-group">
           <Helptext
             title={localization.schema.spatial.helptext.issued}
             term="Dataset_issued"
           />
-          <Field
-            name="issued"
-            type="text"
-            component={DatepickerField}
-            label={localization.schema.spatial.issuedLabel}
-          />
+          {isReadOnly && (
+            <Field
+              name="issued"
+              type="text"
+              component={({ input }) => <div>{input.value}</div>}
+              label={localization.schema.spatial.issuedLabel}
+            />
+          )}
+          {!isReadOnly && (
+            <Field
+              name="issued"
+              type="text"
+              component={DatepickerField}
+              label={localization.schema.spatial.issuedLabel}
+            />
+          )}
         </div>
         <div className="form-group">
           <Helptext
             title={localization.schema.spatial.helptext.language}
             term="Dataset_language"
           />
-          <Field name="language" component={CheckboxField} />
+
+          {isReadOnly && (
+            <Field name="language" component={renderLanguageReadOnly} />
+          )}
+          {!isReadOnly && <Field name="language" component={CheckboxField} />}
         </div>
       </form>
     );
@@ -146,12 +229,14 @@ FormSpatial.defaultProps = {
   initialValues: null,
   dispatch: null,
   catalogId: null,
-  datasetId: null
+  datasetId: null,
+  isReadOnly: false
 };
 
 FormSpatial.propTypes = {
   initialValues: PropTypes.object,
   dispatch: PropTypes.func,
   catalogId: PropTypes.string,
-  datasetId: PropTypes.string
+  datasetId: PropTypes.string,
+  isReadOnly: PropTypes.bool
 };
