@@ -42,6 +42,7 @@ import {
 } from './dataset-registration-page.logic';
 import './dataset-registration-page.scss';
 import { deepKeys } from '../../lib/deep-keys';
+import { RegistrationStatus } from './registration-status/registration-status.component';
 
 // check the validation state of all rendered forms
 const isAllowedToPublish = form =>
@@ -154,6 +155,14 @@ export function DatasetRegistrationPagePure(props) {
           openLicenseItems &&
           losItems && (
             <div className="col-12">
+              <div className="d-flex align-items-center mb-5">
+                <h1 className="pb-0 mb-0">
+                  {localization.breadcrumbs.datasetRegistration}
+                </h1>
+                <RegistrationStatus
+                  registrationStatus={datasetItem.registrationStatus}
+                />
+              </div>
               {!isReadOnly && (
                 <LanguagePicker
                   languages={languages}
