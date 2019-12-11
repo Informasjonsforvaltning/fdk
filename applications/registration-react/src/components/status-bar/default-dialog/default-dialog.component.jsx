@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import noop from 'lodash/noop';
 import cx from 'classnames';
 import { Button } from 'reactstrap';
+import moment from 'moment';
 
 import localization from '../../../services/localization';
 import { ButtonRegistrationStatus } from './button-registration-status/button-registration-status.component';
@@ -22,15 +23,11 @@ const renderMessageForPublishStatusChange = (registrationStatus, type) => {
   return `${localization.formStatus.type[type]} ${localization.formStatus.isDraft}.`;
 };
 
-const renderMessageForUpdate = (isSaving, registrationStatus) => {
+const renderMessageForUpdate = (isSaving, lastSaved) => {
   if (isSaving) {
     return `${localization.formStatus.isSaving}...`;
   }
-
-  if (isPublished(registrationStatus) || isApproved(registrationStatus)) {
-    return `${localization.formStatus.changesUpdated}.`;
-  }
-  return `${localization.formStatus.savedAsDraft}.`;
+  return `${localization.formStatus.changesUpdated} ${moment(lastSaved).format('LLLL')}.`;
 };
 
 export const DefaultDialog = ({
@@ -44,7 +41,8 @@ export const DefaultDialog = ({
   onChange,
   registrationStatus,
   onShowConfirmDraft,
-  onShowConfirmApprove
+  onShowConfirmApprove,
+  lastSaved
 }) => {
   let messageClass;
   let message;
@@ -53,7 +51,7 @@ export const DefaultDialog = ({
     message = renderMessageForPublishStatusChange(registrationStatus, type);
   } else {
     messageClass = 'alert-primary';
-    message = renderMessageForUpdate(isSaving, registrationStatus);
+    message = renderMessageForUpdate(isSaving, lastSaved);
   }
 
   return (
@@ -140,7 +138,8 @@ DefaultDialog.defaultProps = {
   justPublishedOrUnPublished: false,
   allowPublish: true,
   onChange: noop,
-  registrationStatus: null
+  registrationStatus: null,
+  lastSaved: null
 };
 
 DefaultDialog.propTypes = {
@@ -154,5 +153,6 @@ DefaultDialog.propTypes = {
   onChange: PropTypes.func,
   registrationStatus: PropTypes.string,
   onShowConfirmDraft: PropTypes.func.isRequired,
-  onShowConfirmApprove: PropTypes.func.isRequired
+  onShowConfirmApprove: PropTypes.func.isRequired,
+  lastSaved: PropTypes.string
 };
