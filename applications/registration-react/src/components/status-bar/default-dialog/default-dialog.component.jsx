@@ -27,7 +27,9 @@ const renderMessageForUpdate = (isSaving, lastSaved) => {
   if (isSaving) {
     return `${localization.formStatus.isSaving}...`;
   }
-  return `${localization.formStatus.changesUpdated} ${moment(lastSaved).format('LLLL')}.`;
+  return `${localization.formStatus.changesUpdated} ${moment(lastSaved).format(
+    'LLLL'
+  )}.`;
 };
 
 export const DefaultDialog = ({
