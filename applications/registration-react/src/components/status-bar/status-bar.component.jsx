@@ -71,6 +71,7 @@ export const StatusBar = ({
         allowPublish={allowPublish}
         onChange={status => onChange(status)}
         registrationStatus={registrationStatus}
+        lastSaved={lastSaved}
       />
     </>
   );
