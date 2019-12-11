@@ -5,6 +5,7 @@ import cx from 'classnames';
 
 import localization from '../../../services/localization';
 import './list-item.scss';
+import { RegistrationStatus } from '../../registration-status/registration-status.component';
 
 export const ListItem = props => {
   const { title, status, path, statusNew } = props;
@@ -25,18 +26,7 @@ export const ListItem = props => {
             {title || localization.listItems.missingTitle}
           </span>
           <div className="d-flex w-25 justify-content-between">
-            {status === 'PUBLISH' && (
-              <span>
-                <i className="fa fa-circle fdk-color-primary mr-2 d-none d-sm-inline" />
-                <span>{localization.listItems.statusPublished}</span>
-              </span>
-            )}
-            {status === 'DRAFT' && (
-              <span>
-                <i className="fa fa-circle fdk-color-neutral-dark mr-2 d-none d-sm-inline" />
-                <span>{localization.listItems.statusDraft}</span>
-              </span>
-            )}
+            <RegistrationStatus registrationStatus={status} />
             {statusNew && (
               <span className="badge badge-pill badge-success">
                 {localization.listItems.statusNew}
