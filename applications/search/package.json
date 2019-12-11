@@ -27,7 +27,7 @@
     "bootstrap": "^4.3.1",
     "classnames": "^2.2.5",
     "compression": "^1.7.3",
-    "copy-webpack-plugin": "^4.5.1",
+    "copy-webpack-plugin": "^5.1.0",
     "css-loader": "^3.1.0",
     "designsystemet": "git+https://github.com/Informasjonsforvaltning/designsystemet.git#1.4.25",
     "detect-browser": "^2.1.0",
