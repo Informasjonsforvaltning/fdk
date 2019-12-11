@@ -43,7 +43,7 @@ const createConfig = env => {
     },
     useDemoLogo: env.USE_DEMO_LOGO || false,
     recordsOfProcessingActivitiesHost:
-      env.RECORDS_OF_PROCESSING_ACTIVITIES_HOST ||
+      env.RECORDS_OF_PROCESSING_ACTIVITIES_GUI_HOST ||
       'https://registrering-protokoll.fellesdatakatalog.brreg.no'
   };
 };
@@ -72,7 +72,7 @@ export const initConfig = async () => {
   //   ORGANIZATION_API_HOST:
   //     'https://organization-catalogue.ut1.fellesdatakatalog.brreg.no',
   //   USE_DEMO_LOGO: true,
-  //   RECORDS_OF_PROCESSING_ACTIVITIES_HOST:
+  //   RECORDS_OF_PROCESSING_ACTIVITIES_GUI_HOST:
   //     'https://registrering-protokoll.ut1.fellesdatakatalog.brreg.no'
   // });
 
@@ -86,7 +86,7 @@ export const initConfig = async () => {
   //   ORGANIZATION_API_HOST:
   //     'https://organization-catalogue.ut1.fellesdatakatalog.brreg.no',
   //   USE_DEMO_LOGO: true,
-  //   RECORDS_OF_PROCESSING_ACTIVITIES_HOST:
+  //   RECORDS_OF_PROCESSING_ACTIVITIES_GUI_HOST:
   //     'https://registrering-protokoll.ut1.fellesdatakatalog.brreg.no'
   // });
 
