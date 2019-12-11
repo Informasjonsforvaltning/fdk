@@ -109,7 +109,9 @@ export const DefaultDialog = ({
               className="fdk-button"
               color={isPublished(registrationStatus) ? 'dark' : 'primary'}
               style={{ border: 0, borderRadius: 0 }}
-              onClick={() => onChange('PUBLISH')}
+              onClick={
+                allowPublish ? () => onChange('PUBLISH') : onShowValidationError
+              }
             >
               {isPublished(registrationStatus)
                 ? localization.formStatus.publishChecked
