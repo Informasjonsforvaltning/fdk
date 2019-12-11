@@ -6,8 +6,10 @@ import localization from '../../../services/localization';
 import Helptext from '../../../components/helptext/helptext.component';
 import SelectField from '../../../components/fields/field-select/field-select.component';
 import TextAreaField from '../../../components/fields/field-textarea/field-textarea.component';
+import InputFieldReadonly from '../../../components/fields/field-input-readonly/field-input-readonly.component';
 import DatepickerField from '../../../components/fields/field-datepicker/field-datepicker.component';
 import MultilingualField from '../../../components/multilingual-field/multilingual-field.component';
+import { getTranslateText } from '../../../services/translateText';
 
 const handleProvenanceChange = (componentProps, event, provenanceItem) => {
   const { input } = componentProps;
@@ -19,6 +21,11 @@ const handleProvenanceChange = (componentProps, event, provenanceItem) => {
     // Skal legge til array
     input.onChange(provenanceItem);
   }
+};
+
+export const renderProvenanceReadOnly = componentProps => {
+  const { input } = componentProps;
+  return <div className="pl-3">{getTranslateText(input.value.prefLabel)}</div>;
 };
 
 export const renderProvenance = componentProps => {
@@ -66,8 +73,31 @@ export const renderProvenance = componentProps => {
   return null;
 };
 
+const requenzyReadOnly = ({ input }) => {
+  return <div className="pl-3">{getTranslateText(input.value.prefLabel)}</div>;
+};
+requenzyReadOnly.defaultProps = {
+  input: null
+};
+requenzyReadOnly.propTypes = {
+  input: PropTypes.object
+};
+const lastUpdateReadOnly = ({ input }) => {
+  return <div className="pl-3">{input.value}</div>;
+};
+lastUpdateReadOnly.defaultProps = {
+  input: null
+};
+lastUpdateReadOnly.propTypes = {
+  input: PropTypes.object
+};
 export const FormProvenance = ({ initialValues, languages }) => {
-  const { provenance, provenanceItems, frequencyItems } = initialValues;
+  const {
+    provenance,
+    provenanceItems,
+    frequencyItems,
+    isReadOnly
+  } = initialValues;
   if (provenance) {
     return (
       <form>
@@ -78,7 +108,7 @@ export const FormProvenance = ({ initialValues, languages }) => {
           />
           <Field
             name="provenance"
-            component={renderProvenance}
+            component={isReadOnly ? renderProvenance : renderProvenanceReadOnly}
             provenanceItems={provenanceItems}
           />
         </div>
@@ -89,7 +119,7 @@ export const FormProvenance = ({ initialValues, languages }) => {
           />
           <Field
             name="accrualPeriodicity"
-            component={SelectField}
+            component={isReadOnly ? SelectField : requenzyReadOnly}
             items={frequencyItems}
           />
         </div>
@@ -101,7 +131,7 @@ export const FormProvenance = ({ initialValues, languages }) => {
           <Field
             name="modified"
             type="text"
-            component={DatepickerField}
+            component={isReadOnly ? DatepickerField : lastUpdateReadOnly}
             label={localization.schema.provenance.modifiedLabel}
           />
         </div>
@@ -112,7 +142,7 @@ export const FormProvenance = ({ initialValues, languages }) => {
           />
           <MultilingualField
             name="hasCurrentnessAnnotation.hasBody"
-            component={TextAreaField}
+            component={isReadOnly ? TextAreaField : InputFieldReadonly}
             label={localization.schema.provenance.hasCurrentnessAnnotationLabel}
             languages={languages}
           />
@@ -125,10 +155,12 @@ export const FormProvenance = ({ initialValues, languages }) => {
 
 FormProvenance.defaultProps = {
   initialValues: null,
-  languages: []
+  languages: [],
+  isReadOnly: false
 };
 
 FormProvenance.propTypes = {
   initialValues: PropTypes.object,
-  languages: PropTypes.array
+  languages: PropTypes.array,
+  isReadOnly: PropTypes.bool
 };
