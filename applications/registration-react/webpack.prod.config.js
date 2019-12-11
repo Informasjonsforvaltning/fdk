@@ -2,7 +2,6 @@ const path = require('path');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
   context: path.join(__dirname),
@@ -61,29 +60,6 @@ module.exports = {
   },
   resolveLoader: {
     modules: [__dirname, 'node_modules']
-  },
-  optimization: {
-    minimizer: [
-      new UglifyJsPlugin({
-        uglifyOptions: {
-          ecma: 6,
-          compress: {
-            warnings: false,
-            conditionals: true,
-            unused: true,
-            comparisons: true,
-            sequences: true,
-            dead_code: true,
-            evaluate: true,
-            if_return: true,
-            join_vars: true
-          },
-          output: {
-            comments: false
-          }
-        }
-      })
-    ]
   },
   plugins: [
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
