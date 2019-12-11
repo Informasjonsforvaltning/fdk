@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import './registration-status.scss';
-import localization from '../../../services/localization';
+import localization from '../../services/localization';
 
 const getStatusIconAndLabel = registrationStatus =>
   ({
@@ -26,7 +26,7 @@ export const RegistrationStatus = ({ registrationStatus }) => {
     <div className="fdk-registration-status">
       <img
         src={`/static/img/${iconAndLabel.icon}`}
-        className="ml-3 mr-2"
+        className="mr-2"
         alt="icon"
       />
       <span>{iconAndLabel.label}</span>
