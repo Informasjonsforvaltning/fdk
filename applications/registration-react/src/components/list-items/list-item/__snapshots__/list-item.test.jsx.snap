@@ -19,14 +19,9 @@ exports[`should render ListItem correctly "DRAFT" item 1`] = `
       <div
         className="d-flex w-25 justify-content-between"
       >
-        <span>
-          <i
-            className="fa fa-circle fdk-color-neutral-dark mr-2 d-none d-sm-inline"
-          />
-          <span>
-            Utkast
-          </span>
-        </span>
+        <RegistrationStatus
+          registrationStatus="DRAFT"
+        />
       </div>
     </div>
   </Link>
@@ -52,14 +47,9 @@ exports[`should render ListItem correctly "PUBLISH" item 1`] = `
       <div
         className="d-flex w-25 justify-content-between"
       >
-        <span>
-          <i
-            className="fa fa-circle fdk-color-primary mr-2 d-none d-sm-inline"
-          />
-          <span>
-            Publisert
-          </span>
-        </span>
+        <RegistrationStatus
+          registrationStatus="PUBLISH"
+        />
       </div>
     </div>
   </Link>
@@ -85,14 +75,9 @@ exports[`should render ListItem correctly when missing title 1`] = `
       <div
         className="d-flex w-25 justify-content-between"
       >
-        <span>
-          <i
-            className="fa fa-circle fdk-color-neutral-dark mr-2 d-none d-sm-inline"
-          />
-          <span>
-            Utkast
-          </span>
-        </span>
+        <RegistrationStatus
+          registrationStatus="DRAFT"
+        />
       </div>
     </div>
   </Link>
