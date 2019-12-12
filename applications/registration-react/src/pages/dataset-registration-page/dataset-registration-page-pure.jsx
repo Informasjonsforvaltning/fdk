@@ -83,7 +83,7 @@ export function DatasetRegistrationPagePure(props) {
     languages,
     setInputLanguages,
     toggleInputLanguage,
-    organization,
+    allowDelegatedRegistration,
     isReadOnly
   } = props;
 
@@ -169,7 +169,7 @@ export function DatasetRegistrationPagePure(props) {
                   toggleInputLanguage={toggleInputLanguage}
                 />
               )}
-              {organization.allowDelegatedRegistration && (
+              {allowDelegatedRegistration && (
                 <FormTemplateWithState
                   title={localization.datasets.formTemplates.onBehalf}
                 >
@@ -446,7 +446,7 @@ DatasetRegistrationPagePure.defaultProps = {
   languages: [],
   setInputLanguages: _.noop,
   toggleInputLanguage: _.noop,
-  organization: null,
+  allowDelegatedRegistration: false,
   isReadOnly: false
 };
 
@@ -469,6 +469,6 @@ DatasetRegistrationPagePure.propTypes = {
   languages: PropTypes.array,
   setInputLanguages: PropTypes.func,
   toggleInputLanguage: PropTypes.func,
-  organization: PropTypes.object,
+  allowDelegatedRegistration: PropTypes.bool,
   isReadOnly: PropTypes.bool
 };
