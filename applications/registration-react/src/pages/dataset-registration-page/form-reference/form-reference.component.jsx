@@ -6,6 +6,25 @@ import localization from '../../../services/localization';
 import Helptext from '../../../components/helptext/helptext.component';
 import SelectField from '../../../components/fields/field-select/field-select.component';
 import { datasetFormPatchThunk } from '../formsLib/asyncValidateDatasetInvokePatch';
+import { getTranslateText } from '../../../services/translateText';
+
+const renderReadOnly = ({ input, referenceDatasetsItems }) => {
+  const referenceType = getTranslateText(input.value.referenceType.prefLabel);
+  const dataset = referenceDatasetsItems.find(
+    i => i.uri === input.value.source.uri
+  );
+  const datasetTitle = getTranslateText(dataset.title);
+
+  return (
+    <div className="pl-3">
+      {referenceType} {datasetTitle}
+    </div>
+  );
+};
+renderReadOnly.propTypes = {
+  input: PropTypes.object.isRequired,
+  referenceDatasetsItems: PropTypes.array.isRequired
+};
 
 const renderReferenceFields = ({
   item,
@@ -13,34 +32,46 @@ const renderReferenceFields = ({
   fields,
   referenceTypesItems,
   referenceDatasetsItems,
-  onDeleteFieldAtIndex
+  onDeleteFieldAtIndex,
+  isReadOnly
 }) => (
-  <div className="d-flex mb-2" key={index}>
-    <div className="w-50">
+  <div key={item}>
+    {isReadOnly && (
       <Field
-        name={`${item}.referenceType`}
-        component={SelectField}
-        items={referenceTypesItems}
+        name={`${item}`}
+        component={renderReadOnly}
+        referenceDatasetsItems={referenceDatasetsItems}
       />
-    </div>
-    <div className="w-50">
-      <Field
-        name={`${item}.source`}
-        component={SelectField}
-        items={referenceDatasetsItems}
-        labelKey="title"
-      />
-    </div>
-    <div className="d-flex align-items-end">
-      <button
-        className="fdk-btn-no-border"
-        type="button"
-        title="Remove reference"
-        onClick={() => onDeleteFieldAtIndex(fields, index)}
-      >
-        <i className="fa fa-trash mr-2" />
-      </button>
-    </div>
+    )}
+    {!isReadOnly && (
+      <div className="d-flex mb-2" key={index}>
+        <div className="w-50">
+          <Field
+            name={`${item}.referenceType`}
+            component={SelectField}
+            items={referenceTypesItems}
+          />
+        </div>
+        <div className="w-50">
+          <Field
+            name={`${item}.source`}
+            component={SelectField}
+            items={referenceDatasetsItems}
+            labelKey="title"
+          />
+        </div>
+        <div className="d-flex align-items-end">
+          <button
+            className="fdk-btn-no-border"
+            type="button"
+            title="Remove reference"
+            onClick={() => onDeleteFieldAtIndex(fields, index)}
+          >
+            <i className="fa fa-trash mr-2" />
+          </button>
+        </div>
+      </div>
+    )}
   </div>
 );
 renderReferenceFields.propTypes = {
@@ -49,14 +80,16 @@ renderReferenceFields.propTypes = {
   fields: PropTypes.object.isRequired,
   referenceTypesItems: PropTypes.array.isRequired,
   referenceDatasetsItems: PropTypes.array.isRequired,
-  onDeleteFieldAtIndex: PropTypes.func.isRequired
+  onDeleteFieldAtIndex: PropTypes.func.isRequired,
+  isReadOnly: PropTypes.bool.isRequired
 };
 
 export const renderReference = ({
   fields,
   referenceTypesItems,
   referenceDatasetsItems,
-  onDeleteFieldAtIndex
+  onDeleteFieldAtIndex,
+  isReadOnly
 }) => {
   return (
     <div>
@@ -68,17 +101,20 @@ export const renderReference = ({
             fields,
             referenceTypesItems,
             referenceDatasetsItems,
-            onDeleteFieldAtIndex
+            onDeleteFieldAtIndex,
+            isReadOnly
           })
         )}
-      <button
-        className="fdk-btn-no-border"
-        type="button"
-        onClick={() => fields.push({})}
-      >
-        <i className="fa fa-plus mr-2" />
-        {localization.schema.reference.addReferenceLabel}
-      </button>
+      {!isReadOnly && (
+        <button
+          className="fdk-btn-no-border"
+          type="button"
+          onClick={() => fields.push({})}
+        >
+          <i className="fa fa-plus mr-2" />
+          {localization.schema.reference.addReferenceLabel}
+        </button>
+      )}
     </div>
   );
 };
@@ -86,10 +122,11 @@ renderReference.propTypes = {
   fields: PropTypes.object.isRequired,
   referenceTypesItems: PropTypes.array.isRequired,
   referenceDatasetsItems: PropTypes.array.isRequired,
-  onDeleteFieldAtIndex: PropTypes.func.isRequired
+  onDeleteFieldAtIndex: PropTypes.func.isRequired,
+  isReadOnly: PropTypes.bool.isRequired
 };
 export const FormReference = props => {
-  const { initialValues, dispatch, catalogId, datasetId } = props;
+  const { initialValues, dispatch, catalogId, datasetId, isReadOnly } = props;
   const { referenceTypesItems, referenceDatasetsItems } = initialValues;
   const deleteFieldAtIndex = (fields, index) => {
     const values = fields.getAll();
@@ -114,6 +151,7 @@ export const FormReference = props => {
             referenceTypesItems={referenceTypesItems}
             referenceDatasetsItems={referenceDatasetsItems}
             onDeleteFieldAtIndex={deleteFieldAtIndex}
+            isReadOnly={isReadOnly}
           />
         </div>
       </form>
@@ -133,5 +171,6 @@ FormReference.propTypes = {
   initialValues: PropTypes.object,
   dispatch: PropTypes.func,
   catalogId: PropTypes.string,
-  datasetId: PropTypes.string
+  datasetId: PropTypes.string,
+  isReadOnly: PropTypes.bool.isRequired
 };
