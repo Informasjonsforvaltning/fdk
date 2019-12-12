@@ -7,8 +7,9 @@ import Helptext from '../../../components/helptext/helptext.component';
 import TextAreaField from '../../../components/fields/field-textarea/field-textarea.component';
 import MultilingualField from '../../../components/multilingual-field/multilingual-field.component';
 import { Standard } from './standard/standard.component';
+import InputFieldReadonly from '../../../components/fields/field-input-readonly/field-input-readonly.component';
 
-export const FormContentsComponent = ({ languages }) => (
+export const FormContentsComponent = ({ languages, isReadOnly }) => (
   <form>
     <div className="form-group">
       {
@@ -24,6 +25,7 @@ export const FormContentsComponent = ({ languages }) => (
               titleLabel={localization.schema.common.titleLabel}
               linkLabel={localization.schema.common.linkLabel}
               languages={languages}
+              isReadOnly={isReadOnly}
             />
           </div>
         </div>
@@ -36,7 +38,7 @@ export const FormContentsComponent = ({ languages }) => (
       />
       <MultilingualField
         name="hasRelevanceAnnotation.hasBody"
-        component={TextAreaField}
+        component={isReadOnly ? InputFieldReadonly : TextAreaField}
         label={localization.schema.content.hasRelevanceAnnotationLabel}
         languages={languages}
       />
@@ -48,7 +50,7 @@ export const FormContentsComponent = ({ languages }) => (
       />
       <MultilingualField
         name="hasCompletenessAnnotation.hasBody"
-        component={TextAreaField}
+        component={isReadOnly ? InputFieldReadonly : TextAreaField}
         label={localization.schema.content.hasCompletenessAnnotationLabel}
         languages={languages}
       />
@@ -60,7 +62,7 @@ export const FormContentsComponent = ({ languages }) => (
       />
       <MultilingualField
         name="hasAccuracyAnnotation.hasBody"
-        component={TextAreaField}
+        component={isReadOnly ? InputFieldReadonly : TextAreaField}
         label={localization.schema.content.hasAccuracyAnnotationLabel}
         languages={languages}
       />
@@ -72,7 +74,7 @@ export const FormContentsComponent = ({ languages }) => (
       />
       <MultilingualField
         name="hasAvailabilityAnnotation.hasBody"
-        component={TextAreaField}
+        component={isReadOnly ? InputFieldReadonly : TextAreaField}
         label={localization.schema.content.hasAvailabilityAnnotationLabel}
         languages={languages}
       />
