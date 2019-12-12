@@ -340,6 +340,7 @@ export function DatasetRegistrationPagePure(props) {
                   referenceDatasetsItems={referenceDatasetsItems}
                   catalogId={catalogId}
                   datasetId={datasetId}
+                  isReadOnly={isReadOnly}
                 />
               </FormTemplateWithState>
 
