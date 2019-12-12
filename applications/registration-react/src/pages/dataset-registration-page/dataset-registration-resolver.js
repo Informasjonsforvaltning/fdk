@@ -8,4 +8,4 @@ const mapProps = {
       .catch(() => false)
 };
 
-export const datasetRegistrationnResolver = resolve(mapProps);
+export const datasetRegistrationResolver = resolve(mapProps);
