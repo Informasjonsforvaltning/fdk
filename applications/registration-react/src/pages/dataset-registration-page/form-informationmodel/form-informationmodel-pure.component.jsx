@@ -7,7 +7,7 @@ import localization from '../../../services/localization';
 import Helptext from '../../../components/helptext/helptext.component';
 import InformationModel from './information-model/information-model.component';
 
-export const FormInformationModelPure = ({ languages }) => (
+export const FormInformationModelPure = ({ languages, isReadOnly }) => (
   <form>
     <div className="form-group">
       {
@@ -25,6 +25,7 @@ export const FormInformationModelPure = ({ languages }) => (
               titleLabel={localization.schema.informationModel.titleLabel}
               linkLabel={localization.schema.informationModel.linkLabel}
               languages={languages}
+              isReadOnly={isReadOnly}
             />
           </div>
         </div>
@@ -38,5 +39,6 @@ FormInformationModelPure.defaultProps = {
 };
 
 FormInformationModelPure.propTypes = {
-  languages: PropTypes.array
+  languages: PropTypes.array,
+  isReadOnly: PropTypes.bool.isRequired
 };
