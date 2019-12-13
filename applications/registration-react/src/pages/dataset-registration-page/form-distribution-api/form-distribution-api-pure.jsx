@@ -7,18 +7,41 @@ import localization from '../../../services/localization';
 import Helptext from '../../../components/helptext/helptext.component';
 import { InputTagsAPIsField } from '../field-tagsinput-apis/field-tagsinput-apis.component';
 import { getConfig } from '../../../services/config';
+import { getTranslateText } from '../../../services/translateText';
 
-export const renderDistributionsAPI = () => (
+const renderReadOnly = ({ input }) => {
+  return (
+    <>
+      {input.value.map(dist => {
+        const title = getTranslateText(
+          _.get(dist, ['accessService', 'description', 'nb'])
+        );
+        return <div className="pl-3">{title}</div>;
+      })}
+    </>
+  );
+};
+renderReadOnly.propTypes = {
+  input: PropTypes.bool.isRequired
+};
+
+export const renderDistributionsAPI = ({ isReadOnly }) => (
   <div className="form-group">
     <Helptext
       title={localization.schema.distributionAPI.helptext.api}
       term="Distribution_api"
     />
-    <Field name="distribution" component={InputTagsAPIsField} />
+    <Field
+      name="distribution"
+      component={isReadOnly ? renderReadOnly : InputTagsAPIsField}
+    />
   </div>
 );
+renderDistributionsAPI.propTypes = {
+  isReadOnly: PropTypes.bool.isRequired
+};
 
-const renderConnectedApisByDatasetId = connectedApisByDatasetId => {
+const renderConnectedApisByDatasetId = ({ connectedApisByDatasetId }) => {
   if (
     !(
       connectedApisByDatasetId &&
@@ -63,13 +86,23 @@ const renderConnectedApisByDatasetId = connectedApisByDatasetId => {
     </div>
   );
 };
+renderConnectedApisByDatasetId.defaultProps = {
+  connectedApisByDatasetId: null
+};
+renderConnectedApisByDatasetId.propTypes = {
+  connectedApisByDatasetId: PropTypes.object
+};
 
 export const FormDistributionApiPure = props => {
-  const { connectedApisByDatasetId } = props;
+  const { connectedApisByDatasetId, isReadOnly } = props;
   return (
     <>
       <form>
-        <FieldArray name="distribution" component={renderDistributionsAPI} />
+        <FieldArray
+          name="distribution"
+          isReadOnly={isReadOnly}
+          component={renderDistributionsAPI}
+        />
       </form>
       {renderConnectedApisByDatasetId(connectedApisByDatasetId)}
     </>
@@ -81,5 +114,6 @@ FormDistributionApiPure.defaultProps = {
 };
 
 FormDistributionApiPure.propTypes = {
-  connectedApisByDatasetId: PropTypes.object
+  connectedApisByDatasetId: PropTypes.object,
+  isReadOnly: PropTypes.bool.isRequired
 };
