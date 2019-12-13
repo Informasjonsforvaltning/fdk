@@ -90,12 +90,14 @@ const renderSubject = subject => {
 
 const renderApplication = application => {
   const applicationItems = items =>
-    items.map((item, index) => (
-      <span key={index}>
-        {index > 0 ? ', ' : ''}
-        {getTranslateText(item)}
-      </span>
-    ));
+    items
+      .filter(item => localization.getLanguage() in item)
+      .map((item, index) => (
+        <span key={index}>
+          {index > 0 ? ', ' : ''}
+          {getTranslateText(item)}
+        </span>
+      ));
 
   if (!application || application.length === 0) {
     return null;
