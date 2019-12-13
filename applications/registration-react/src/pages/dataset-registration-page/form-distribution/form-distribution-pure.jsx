@@ -13,8 +13,11 @@ import SelectField from '../../../components/fields/field-select/field-select.co
 import { licenseType, textType } from '../../../schemaTypes';
 import { datasetFormPatchThunk } from '../formsLib/asyncValidateDatasetInvokePatch';
 import MultilingualField from '../../../components/multilingual-field/multilingual-field.component';
+import LinkReadonlyField from '../../../components/fields/field-link-readonly/field-link-readonly.component';
+import InputFieldReadonly from '../../../components/fields/field-input-readonly/field-input-readonly.component';
+import { getTranslateText } from '../../../services/translateText';
 
-export const renderDistributionLandingpage = ({ fields }) => {
+export const renderDistributionLandingpage = ({ fields, isReadOnly }) => {
   return (
     <div>
       {fields &&
@@ -22,7 +25,7 @@ export const renderDistributionLandingpage = ({ fields }) => {
           <Field
             key={index}
             name={`${item}.uri`}
-            component={InputField}
+            component={isReadOnly ? LinkReadonlyField : InputField}
             label={localization.schema.distribution.landingPageLabel}
           />
         ))}
@@ -30,7 +33,26 @@ export const renderDistributionLandingpage = ({ fields }) => {
   );
 };
 renderDistributionLandingpage.propTypes = {
-  fields: PropTypes.object.isRequired
+  fields: PropTypes.object.isRequired,
+  isReadOnly: PropTypes.bool.isRequired
+};
+
+const renderFomatsReadOnly = ({ input }) => {
+  return <div className="pl-3">{input.value.join(', ')}</div>;
+};
+renderFomatsReadOnly.propTypes = {
+  input: PropTypes.bool.isRequired
+};
+
+const renderLicence = ({ input }) => {
+  return (
+    <div className="pl-3">
+      {getTranslateText(_.get(input, ['value', 'prefLabel']))}
+    </div>
+  );
+};
+renderLicence.propTypes = {
+  input: PropTypes.bool.isRequired
 };
 
 export const renderDistributions = ({
@@ -38,7 +60,8 @@ export const renderDistributions = ({
   openLicenseItems,
   initialValues,
   onDeleteFieldAtIndex,
-  languages
+  languages,
+  isReadOnly
 }) => {
   return (
     <div>
@@ -66,30 +89,41 @@ export const renderDistributions = ({
                   title={localization.schema.distribution.helptext.type}
                   term="Distribution_type"
                 />
-                <Field
-                  name={`${distribution}.type`}
-                  radioId={`distribution-api-${index}`}
-                  component={RadioField}
-                  type="radio"
-                  value="API"
-                  label={localization.schema.distribution.apiLabel}
-                />
-                <Field
-                  name={`${distribution}.type`}
-                  radioId={`distribution-feed-${index}`}
-                  component={RadioField}
-                  type="radio"
-                  value="Feed"
-                  label={localization.schema.distribution.feedLabel}
-                />
-                <Field
-                  name={`${distribution}.type`}
-                  radioId={`distribution-file-${index}`}
-                  component={RadioField}
-                  type="radio"
-                  value="Nedlastbar fil"
-                  label={localization.schema.distribution.downloadLabel}
-                />
+                {isReadOnly && (
+                  <>
+                    <div className="pl-3">
+                      {_.get(initialValues, ['distribution', index, 'type'])}
+                    </div>
+                  </>
+                )}
+                {!isReadOnly && (
+                  <>
+                    <Field
+                      name={`${distribution}.type`}
+                      radioId={`distribution-api-${index}`}
+                      component={RadioField}
+                      type="radio"
+                      value="API"
+                      label={localization.schema.distribution.apiLabel}
+                    />
+                    <Field
+                      name={`${distribution}.type`}
+                      radioId={`distribution-feed-${index}`}
+                      component={RadioField}
+                      type="radio"
+                      value="Feed"
+                      label={localization.schema.distribution.feedLabel}
+                    />
+                    <Field
+                      name={`${distribution}.type`}
+                      radioId={`distribution-file-${index}`}
+                      component={RadioField}
+                      type="radio"
+                      value="Nedlastbar fil"
+                      label={localization.schema.distribution.downloadLabel}
+                    />
+                  </>
+                )}
               </div>
               <div className="form-group">
                 <Helptext
@@ -99,7 +133,7 @@ export const renderDistributions = ({
                 <Field
                   name={`${distribution}.accessURL.0`}
                   type="text"
-                  component={InputField}
+                  component={isReadOnly ? LinkReadonlyField : InputField}
                   label={localization.schema.distribution.accessURLLabel}
                 />
               </div>
@@ -112,7 +146,7 @@ export const renderDistributions = ({
                 <Field
                   name={`${distribution}.format`}
                   type="text"
-                  component={InputTagsField}
+                  component={isReadOnly ? renderFomatsReadOnly : InputTagsField}
                   label={localization.schema.distribution.formatLabel}
                   // todo Proper fix needed. right now is temporarily removed because
                   //  validation somehow causes render loop
@@ -126,7 +160,7 @@ export const renderDistributions = ({
                 />
                 <Field
                   name={`${distribution}.license`}
-                  component={SelectField}
+                  component={isReadOnly ? renderLicence : SelectField}
                   items={openLicenseItems}
                 />
               </div>
@@ -137,7 +171,7 @@ export const renderDistributions = ({
                 />
                 <MultilingualField
                   name={`${distribution}.description`}
-                  component={TextAreaField}
+                  component={isReadOnly ? InputFieldReadonly : TextAreaField}
                   label={localization.schema.distribution.descriptionLabel}
                   languages={languages}
                 />
@@ -153,6 +187,7 @@ export const renderDistributions = ({
                 <FieldArray
                   name={`${distribution}.page`}
                   component={renderDistributionLandingpage}
+                  isReadOnly={isReadOnly}
                 />
               </div>
 
@@ -164,7 +199,7 @@ export const renderDistributions = ({
                 <div className="d-flex flex-column">
                   <MultilingualField
                     name={`${distribution}.conformsTo[0].prefLabel`}
-                    component={InputField}
+                    component={isReadOnly ? InputFieldReadonly : TextAreaField}
                     label={localization.schema.common.titleLabel}
                     showLabel
                     languages={languages}
@@ -172,7 +207,7 @@ export const renderDistributions = ({
                   <div className="mt-2">
                     <Field
                       name={`${distribution}.conformsTo[0].uri`}
-                      component={InputField}
+                      component={isReadOnly ? LinkReadonlyField : TextAreaField}
                       showLabel
                       label={localization.schema.common.linkLabel}
                     />
@@ -210,7 +245,8 @@ renderDistributions.propTypes = {
   initialValues: PropTypes.object.isRequired,
   openLicenseItems: PropTypes.array.isRequired,
   onDeleteFieldAtIndex: PropTypes.func.isRequired,
-  languages: PropTypes.array.isRequired
+  languages: PropTypes.array.isRequired,
+  isReadOnly: PropTypes.bool.isRequired
 };
 
 export const FormDistributionPure = ({
@@ -219,7 +255,8 @@ export const FormDistributionPure = ({
   dispatch,
   catalogId,
   datasetId,
-  languages
+  languages,
+  isReadOnly
 }) => {
   const deleteFieldAtIndex = (fields, index) => {
     const values = fields.getAll();
@@ -239,6 +276,7 @@ export const FormDistributionPure = ({
         initialValues={initialValues}
         onDeleteFieldAtIndex={deleteFieldAtIndex}
         languages={languages}
+        isReadOnly={isReadOnly}
       />
     </form>
   );
@@ -257,5 +295,6 @@ FormDistributionPure.propTypes = {
   catalogId: PropTypes.string,
   datasetId: PropTypes.string,
   openLicenseItems: PropTypes.array,
-  languages: PropTypes.array
+  languages: PropTypes.array,
+  isReadOnly: PropTypes.bool.isRequired
 };
