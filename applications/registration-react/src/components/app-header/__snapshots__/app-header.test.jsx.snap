@@ -47,7 +47,7 @@ exports[`should render AppHeader correctly 1`] = `
             <img
               alt="Logo for Felles datakatalog"
               className="fdk-logo"
-              src="/static/img/logo-registrering.svg"
+              src="/img/logo-registrering.svg"
             />
           </a>
         </div>

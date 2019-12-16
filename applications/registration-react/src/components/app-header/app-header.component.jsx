@@ -9,8 +9,8 @@ import { getConfig } from '../../services/config';
 
 export const AppHeaderPure = ({ user }) => {
   const logoImagePath = getConfig().useDemoLogo
-    ? '/static/img/logo-registrering-demo.svg'
-    : '/static/img/logo-registrering.svg';
+    ? '/img/logo-registrering-demo.svg'
+    : '/img/logo-registrering.svg';
 
   return (
     <header>
