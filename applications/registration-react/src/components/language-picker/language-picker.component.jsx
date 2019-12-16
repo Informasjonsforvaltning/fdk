@@ -30,7 +30,7 @@ const LanguagePicker = ({ languages, toggleInputLanguage }) => {
             onClick={() => toggleInputLanguage(code)}
           >
             {selected && (
-              <img src="/static/img/icon-checked-white-sm.svg" alt="icon" />
+              <img src="/img/icon-checked-white-sm.svg" alt="icon" />
             )}
             {title}
           </Button>

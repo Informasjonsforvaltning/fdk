@@ -24,11 +24,7 @@ export const RegistrationStatus = ({ registrationStatus }) => {
   const iconAndLabel = getStatusIconAndLabel(registrationStatus);
   return (
     <div className="fdk-registration-status">
-      <img
-        src={`/static/img/${iconAndLabel.icon}`}
-        className="mr-2"
-        alt="icon"
-      />
+      <img src={`/img/${iconAndLabel.icon}`} className="mr-2" alt="icon" />
       <span>{iconAndLabel.label}</span>
     </div>
   );

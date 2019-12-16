@@ -33,7 +33,7 @@
 .catalog-item__body {
 
   &.beta {
-    background-image: url("/static/img/banner-beta.svg");
+    background-image: url("/img/banner-beta.svg");
     background-repeat: no-repeat;
     background-position: top right;
     background-size: 3em;
@@ -69,17 +69,17 @@
 }
 
 .catalog-icon--dataset {
-  background-image: url("/static/img/icon-catalog-dataset-lg.svg");
+  background-image: url("/img/icon-catalog-dataset-lg.svg");
 }
 
 .catalog-icon--api {
-  background-image: url("/static/img/icon-catalog-api-lg.svg");
+  background-image: url("/img/icon-catalog-api-lg.svg");
 }
 
 .catalog-icon--concepts {
-  background-image: url("/static/img/icon-catalog-concept-lg.svg");
+  background-image: url("/img/icon-catalog-concept-lg.svg");
 }
 
 .catalog-icon--protokoll {
-  background-image: url("/static/img/icon-catalog-protocol-xl.svg");
+  background-image: url("/img/icon-catalog-protocol-xl.svg");
 }

@@ -8,7 +8,7 @@ export default {
   output: {
     path: path.join(__dirname, '../dist'),
     filename: 'bundle.js',
-    publicPath: '/static/'
+    publicPath: '/'
   },
   module: {
     rules: [
@@ -67,7 +67,7 @@ export default {
       filename: 'styles.css'
     }),
     new CopyWebpackPlugin(
-      [{ from: './src/assets/img/*', to: './img', flatten: true }],
+      [{ from: './src/img/*', to: './img', flatten: true }],
       {
         copyUnmodified: true
       }
