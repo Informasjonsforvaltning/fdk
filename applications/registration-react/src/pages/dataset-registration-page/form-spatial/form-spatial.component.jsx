@@ -78,7 +78,7 @@ renderTemporal.propTypes = {
 };
 
 const renderTemporalReadOnlyField = ({ item }) => (
-  <div>
+  <div className="pl-3">
     <Field
       name={`${item}.endDate`}
       type="text"
@@ -121,7 +121,14 @@ const translateCode = code => {
   }
 };
 const renderLanguageReadOnly = ({ input }) => {
-  return input.value.map(item => translateCode(item.code)).join(', ');
+  return (
+    <div className="pl-3">
+      {input.value.map(item => translateCode(item.code)).join(', ')}
+    </div>
+  );
+};
+renderLanguageReadOnly.propTypes = {
+  input: PropTypes.object.isRequired
 };
 
 renderTemporalReadOnly.propTypes = {
@@ -147,6 +154,7 @@ export const FormSpatial = ({
     return (
       <form>
         <div className="form-group">
+          <h1>Gjermund</h1>
           <Helptext
             title={localization.schema.spatial.helptext.spatial}
             term="Dataset_spatial"
@@ -199,7 +207,9 @@ export const FormSpatial = ({
             <Field
               name="issued"
               type="text"
-              component={({ input }) => <div>{input.value}</div>}
+              component={({ input }) => (
+                <div className="pl-3">{input.value}</div>
+              )}
               label={localization.schema.spatial.issuedLabel}
             />
           )}
