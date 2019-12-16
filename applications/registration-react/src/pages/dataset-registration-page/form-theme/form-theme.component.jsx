@@ -13,43 +13,35 @@ export const FormThemes = props => {
   const { syncErrors, initialValues, isReadOnly, themes } = props;
   const { theme, themesItems } = initialValues;
   if (theme && themesItems) {
-    if (!isReadOnly) {
-      return (
-        <form>
-          <div className="form-group">
-            <Helptext
-              title={localization.schema.theme.helptext.theme}
-              term="Dataset_theme"
-            />
-            <AlertMessage type="warning">
-              <i className="fa fa-info-circle mr-2" />
-              <span>{localization.schema.theme.deprecatedTheme}</span>
-            </AlertMessage>
+    return (
+      <form>
+        <div className="form-group">
+          <Helptext
+            title={localization.schema.theme.helptext.theme}
+            term="Dataset_theme"
+          />
+          <AlertMessage type="warning">
+            <i className="fa fa-info-circle mr-2" />
+            <span>{localization.schema.theme.deprecatedTheme}</span>
+          </AlertMessage>
+          {isReadOnly && (
+            <div className="pl-3">{themesValues(themes.values)}</div>
+          )}
+          {!isReadOnly && (
             <Field
               name="theme"
               component={CheckboxFieldTheme}
               themesItems={themesItems}
             />
-            {_.get(syncErrors, 'errorTheme') && (
-              <div className="alert alert-danger mt-3">
-                {_.get(syncErrors, 'errorTheme')}
-              </div>
-            )}
-          </div>
-        </form>
-      );
-    }
-    if (isReadOnly) {
-      return (
-        <>
-          <Helptext
-            title={localization.schema.theme.helptext.theme}
-            term="Dataset_theme"
-          />
-          <div className="pl-3">{themesValues(themes.values)}</div>
-        </>
-      );
-    }
+          )}
+          {_.get(syncErrors, 'errorTheme') && (
+            <div className="alert alert-danger mt-3">
+              {_.get(syncErrors, 'errorTheme')}
+            </div>
+          )}
+        </div>
+      </form>
+    );
   }
   return null;
 };
