@@ -154,7 +154,6 @@ export const FormSpatial = ({
     return (
       <form>
         <div className="form-group">
-          <h1>Gjermund</h1>
           <Helptext
             title={localization.schema.spatial.helptext.spatial}
             term="Dataset_spatial"

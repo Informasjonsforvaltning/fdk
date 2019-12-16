@@ -11,6 +11,7 @@ exports[`should render FormContactPoint correctly 1`] = `
     />
     <Field
       component={[Function]}
+      isOnlyOneSelectedLanguage={true}
       label="Kontaktpunkt"
       name="contactPoint[0].organizationUnit"
     />
@@ -24,6 +25,7 @@ exports[`should render FormContactPoint correctly 1`] = `
     />
     <Field
       component={[Function]}
+      isOnlyOneSelectedLanguage={true}
       label="Kontaktskjema"
       name="contactPoint[0].hasURL"
     />
@@ -37,6 +39,7 @@ exports[`should render FormContactPoint correctly 1`] = `
     />
     <Field
       component={[Function]}
+      isOnlyOneSelectedLanguage={true}
       label="E-post"
       name="contactPoint[0].email"
     />
@@ -53,6 +56,7 @@ exports[`should render FormContactPoint correctly 1`] = `
     >
       <Field
         component={[Function]}
+        isOnlyOneSelectedLanguage={true}
         label="Telefon"
         name="contactPoint[0].hasTelephone"
       />
