@@ -35,7 +35,7 @@ RUN rm package-lock.json
 
 RUN npm init -y
 RUN npm config set unsafe-perm true
-RUN npm install ejs express method-override body-parser compression lodash --loglevel error
+RUN npm install express compression lodash --loglevel error
 RUN npm install pm2 -g --loglevel error
 
 COPY entrypoint.sh /usr/src/app/
