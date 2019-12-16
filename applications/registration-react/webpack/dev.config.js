@@ -1,15 +1,34 @@
 const path = require('path');
-const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
-  context: path.join(__dirname),
-  entry: ['@babel/polyfill', './src/index.jsx'],
+  mode: 'development',
+  devtool: 'cheap-module-source-map',
+  entry: ['@babel/polyfill', 'whatwg-fetch', './src/index.jsx'],
   output: {
-    path: path.join(__dirname, 'dist'),
-    filename: 'bundle.js',
-    publicPath: '/static/'
+    path: path.join(__dirname, '../dist'),
+    filename: 'bundle.js'
+  },
+  devServer: {
+    host: '0.0.0.0',
+    port: 4301,
+    historyApiFallback: true,
+    before: app =>
+      app.get('/env.json', (_, res) =>
+        res.json({
+          SEARCH_HOST: process.env.SEARCH_HOST || 'http://localhost:8080',
+          REGISTRATION_API_HOST:
+            process.env.REGISTRATION_API_HOST || 'http://localhost:8098',
+          CONCEPT_REGISTRATION_API_HOST:
+            process.env.CONCEPT_REGISTRATION_API_HOST ||
+            'http://localhost:8200',
+          CONCEPT_REGISTRATION_HOST:
+            process.env.CONCEPT_REGISTRATION_HOST || 'http://localhost:8202',
+          SSO_HOST: process.env.SSO_HOST || 'http://localhost:8084'
+        })
+      )
   },
   module: {
     rules: [
@@ -61,14 +80,20 @@ module.exports = {
   resolveLoader: {
     modules: [__dirname, 'node_modules']
   },
+  optimization: {
+    minimize: false
+  },
   plugins: [
-    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
-    new webpack.optimize.OccurrenceOrderPlugin(true),
+    new HtmlWebpackPlugin({
+      template: './src/index.html',
+      filename: 'index.html',
+      inject: true
+    }),
     new MiniCssExtractPlugin({
       filename: 'styles.css'
     }),
     new CopyWebpackPlugin(
-      [{ from: './src/assets/img/*', to: './img', flatten: true }],
+      [{ from: './src/assets/img/*', to: './static/img', flatten: true }],
       {
         copyUnmodified: true
       }
