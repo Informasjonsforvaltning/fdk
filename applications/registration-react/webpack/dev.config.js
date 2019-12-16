@@ -6,7 +6,7 @@ import CopyWebpackPlugin from 'copy-webpack-plugin';
 export default {
   mode: 'development',
   devtool: 'cheap-module-source-map',
-  entry: ['@babel/polyfill', 'whatwg-fetch', './src/index.jsx'],
+  entry: ['@babel/polyfill', './src/index.jsx'],
   output: {
     path: path.join(__dirname, '../dist'),
     filename: 'bundle.js'
