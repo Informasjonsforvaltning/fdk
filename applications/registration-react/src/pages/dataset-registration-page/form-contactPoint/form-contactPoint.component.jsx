@@ -5,6 +5,7 @@ import localization from '../../../services/localization';
 import Helptext from '../../../components/helptext/helptext.component';
 import InputField from '../../../components/fields/field-input/field-input.component';
 import InputFieldReadonly from '../../../components/fields/field-input-readonly/field-input-readonly.component';
+import LinkReadonlyField from '../../../components/fields/field-link-readonly/field-link-readonly.component';
 
 export const FormContactPoint = ({ isReadOnly }) => (
   <form>
@@ -17,6 +18,7 @@ export const FormContactPoint = ({ isReadOnly }) => (
         name="contactPoint[0].organizationUnit"
         component={isReadOnly ? InputFieldReadonly : InputField}
         label={localization.schema.contactPoint.organizationUnitLabel}
+        isOnlyOneSelectedLanguage
       />
     </div>
     <div className="form-group">
@@ -26,8 +28,9 @@ export const FormContactPoint = ({ isReadOnly }) => (
       />
       <Field
         name="contactPoint[0].hasURL"
-        component={isReadOnly ? InputFieldReadonly : InputField}
+        component={isReadOnly ? LinkReadonlyField : InputField}
         label={localization.schema.contactPoint.hasURLLabel}
+        isOnlyOneSelectedLanguage
       />
     </div>
     <div className="form-group">
@@ -39,6 +42,7 @@ export const FormContactPoint = ({ isReadOnly }) => (
         name="contactPoint[0].email"
         component={isReadOnly ? InputFieldReadonly : InputField}
         label={localization.schema.contactPoint.emailLabel}
+        isOnlyOneSelectedLanguage
       />
     </div>
     <div className="form-group">
@@ -51,6 +55,7 @@ export const FormContactPoint = ({ isReadOnly }) => (
           name="contactPoint[0].hasTelephone"
           component={isReadOnly ? InputFieldReadonly : InputField}
           label={localization.schema.contactPoint.hasTelephoneLabel}
+          isOnlyOneSelectedLanguage
         />
       </div>
     </div>

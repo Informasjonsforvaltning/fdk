@@ -141,7 +141,7 @@ exports[`should render FormAccessRights correctly with syncErrors 1`] = `
 exports[`should render renderLegalBasis correctly 1`] = `
 <div>
   <div
-    className="d-flex flex-column mb-2"
+    className="d-flex flex-column mb-5"
     key="0"
   >
     <MultilingualField
