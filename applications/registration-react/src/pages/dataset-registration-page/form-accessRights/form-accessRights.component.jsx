@@ -50,7 +50,7 @@ export const renderLegalBasisFields = ({
   languages,
   isReadOnly
 }) => (
-  <div className="d-flex flex-column mb-2" key={index}>
+  <div className="d-flex flex-column mb-5" key={index}>
     <MultilingualField
       name={`${item}.prefLabel`}
       component={isReadOnly ? InputFieldReadonly : InputField}
