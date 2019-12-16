@@ -237,25 +237,20 @@ const renderSubjects = subject => {
   );
 };
 
-const renderKeywords = keyword => {
+const renderKeywords = keywordItems => {
   const language = localization.getLanguage();
-  const keywordItems = items => {
-    const retArray = [];
-    items.map((item, index) => {
-      if (item[language]) {
-        retArray.push(item[language]);
-      }
-    });
-    return retArray;
-  };
+  const keywords = items =>
+    items
+      .filter(item => !!(item && item[language]))
+      .map(item => item[language]);
 
-  if (!keyword || keyword.length === 0) {
+  if (!keywordItems || keywordItems.length === 0) {
     return null;
   }
   return (
     <ListRegular title={localization.dataset.keyword}>
       <div className="d-flex list-regular--item">
-        {keywordItems(keyword).join(', ')}
+        {keywords(keywordItems).join(', ')}
       </div>
     </ListRegular>
   );
