@@ -163,6 +163,7 @@ export const FormAccessRights = props => {
         <Helptext
           title={localization.schema.accessRights.heading}
           term="Dataset_accessRights"
+          required
         />
         {isReadOnly && (
           <div className="pl-3">

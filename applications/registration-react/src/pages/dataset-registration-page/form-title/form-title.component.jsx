@@ -55,6 +55,7 @@ export const FormTitle = ({ languages, isReadOnly }) => (
       <Helptext
         title={localization.schema.title.helptext.objective}
         term="Dataset_objective"
+        required
       />
       <MultilingualField
         name="objective"
