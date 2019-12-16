@@ -74,15 +74,17 @@ export const renderDistributions = ({
             <div key={index}>
               <div className="d-flex">
                 <h4>Distribusjon #{index + 1}</h4>
-                <button
-                  className="fdk-btn-no-border"
-                  type="button"
-                  title="Remove distribution"
-                  onClick={() => onDeleteFieldAtIndex(fields, index)}
-                >
-                  <i className="fa fa-trash mr-2" />
-                  {localization.schema.distribution.deleteDistributionLabel}
-                </button>
+                {!isReadOnly && (
+                  <button
+                    className="fdk-btn-no-border"
+                    type="button"
+                    title="Remove distribution"
+                    onClick={() => onDeleteFieldAtIndex(fields, index)}
+                  >
+                    <i className="fa fa-trash mr-2" />
+                    {localization.schema.distribution.deleteDistributionLabel}
+                  </button>
+                )}
               </div>
               <div className="form-group">
                 <Helptext
@@ -218,25 +220,27 @@ export const renderDistributions = ({
             </div>
           );
         })}
-      <button
-        className="fdk-btn-no-border"
-        type="button"
-        onClick={() =>
-          fields.push({
-            id: '',
-            description: textType,
-            accessURL: [],
-            license: licenseType,
-            conformsTo: [],
-            page: [licenseType],
-            format: [],
-            type: ''
-          })
-        }
-      >
-        <i className="fa fa-plus mr-2" />
-        {localization.schema.distribution.addDistributionLabel}
-      </button>
+      {!isReadOnly && (
+        <button
+          className="fdk-btn-no-border"
+          type="button"
+          onClick={() =>
+            fields.push({
+              id: '',
+              description: textType,
+              accessURL: [],
+              license: licenseType,
+              conformsTo: [],
+              page: [licenseType],
+              format: [],
+              type: ''
+            })
+          }
+        >
+          <i className="fa fa-plus mr-2" />
+          {localization.schema.distribution.addDistributionLabel}
+        </button>
+      )}
     </div>
   );
 };
