@@ -44,17 +44,16 @@ services:
   # 127.0.0.1       sso
 
   sso:
-    build: ./applications/sso
     volumes:
       #use this for theme development
       #- ../fdk/applications/sso/themes/fdk:/opt/jboss/keycloak/themes/fdk
       #- ../fdk/applications/sso/themes/fdk-choose-provider:/opt/jboss/keycloak/themes/fdk-choose-provider
       #this allows to run command "npm run keycloak-export"
-      - ../fdk/applications/sso/export:/tmp/keycloak/export
+      - ../sso/export:/tmp/keycloak/export
       #with link, et is enough to restart container to perform, instead of rebuild
-      - ../fdk/applications/sso/import:/tmp/keycloak/import
-      - ../fdk/applications/sso/import-template:/tmp/keycloak/import-template
-      - ../fdk/applications/sso/tools:/opt/fdk/tools
+      - ../sso/import:/tmp/keycloak/import
+      - ../sso/import-template:/tmp/keycloak/import-template
+      - ../sso/tools:/opt/fdk/tools
     # cp libraries/keycloak-user-storage-rest/target/keycloak-user-storage-rest.jar applications-external/sso/deployments/
     #      - ./applications/sso/deployments:/opt/jboss/keycloak/standalone/deployments
     environment:
