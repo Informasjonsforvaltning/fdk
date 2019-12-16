@@ -3,6 +3,7 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
+import { BaseHrefWebpackPlugin } from 'base-href-webpack-plugin';
 
 export default {
   entry: ['@babel/polyfill', './src/index.jsx'],
@@ -75,6 +76,9 @@ export default {
       {
         copyUnmodified: true
       }
-    )
+    ),
+    new BaseHrefWebpackPlugin({
+      baseHref: '/'
+    })
   ]
 };
