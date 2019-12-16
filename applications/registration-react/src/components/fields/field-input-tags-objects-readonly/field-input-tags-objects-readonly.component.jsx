@@ -6,7 +6,7 @@ const renderSpatials = spatials => {
 };
 
 const TagsInputFieldArrayReadOnly = ({ input }) => {
-  return <div className="pl-2">{renderSpatials(input.value)}</div>;
+  return <div className="pl-3">{renderSpatials(input.value)}</div>;
 };
 
 TagsInputFieldArrayReadOnly.propTypes = {
