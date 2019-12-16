@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --hot --inline --config webpack/dev.config.js",
-    "build": "webpack --config webpack/prod.config.js -p",
+    "start": "webpack-dev-server --hot --inline --config-register @babel/register --config webpack/dev.config.js",
+    "build": "webpack --config-register @babel/register --config webpack/prod.config.js -p",
     "lint:all": "(cd ../../; npx eslint applications/registration-react --ext=.js,.jsx --fix)",
     "lint": "(cd ../../; npx lint-staged)",
     "test": "jest",
@@ -21,6 +21,7 @@
     "@babel/polyfill": "^7.0.0-beta.54",
     "@babel/preset-env": "^7.3.1",
     "@babel/preset-react": "^7.0.0-beta.54",
+    "@babel/register": "^7.7.4",
     "axios": "^0.19.0",
     "babel-core": "^7.0.0-bridge.0",
     "babel-loader": "^8.0.0-beta.4",
