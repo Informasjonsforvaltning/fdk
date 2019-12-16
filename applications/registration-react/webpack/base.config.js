@@ -66,6 +66,7 @@ export default {
     new HtmlWebpackPlugin({
       template: './src/index.html',
       filename: 'index.html',
+      favicon: './src/img/favicon.ico',
       inject: true
     }),
     new MiniCssExtractPlugin({
