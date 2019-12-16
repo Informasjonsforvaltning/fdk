@@ -38,6 +38,7 @@ exports[`should render FormTitle, { renderLandingpage  correctly 1`] = `
     className="form-group"
   >
     <withStateHandlers(Helptext)
+      required={true}
       term="Dataset_objective"
       title="Formålet med datasettet"
     />

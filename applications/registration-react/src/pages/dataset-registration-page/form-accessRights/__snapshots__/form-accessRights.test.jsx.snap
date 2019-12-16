@@ -6,6 +6,7 @@ exports[`should render FormAccessRights correctly 1`] = `
     className="form-group"
   >
     <withStateHandlers(Helptext)
+      required={true}
       term="Dataset_accessRights"
       title="Tilgangsnivå"
     />
@@ -44,6 +45,7 @@ exports[`should render FormAccessRights correctly with syncErrors 1`] = `
     className="form-group"
   >
     <withStateHandlers(Helptext)
+      required={true}
       term="Dataset_accessRights"
       title="Tilgangsnivå"
     />
