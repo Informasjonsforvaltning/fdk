@@ -17,7 +17,7 @@ RUN npm audit
 COPY server /usr/src/app/server
 COPY start.js /usr/src/app/
 COPY .babelrc /usr/src/app/
-COPY webpack.prod.config.js /usr/src/app/
+COPY webpack /usr/src/app/webpack
 
 COPY test /usr/src/app/test
 COPY src /usr/src/app/src

@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --hot --inline --config webpack.hostdev.config.js",
-    "build": "webpack --config webpack.prod.config.js -p",
+    "start": "webpack-dev-server --hot --inline --config webpack/dev.config.js",
+    "build": "webpack --config webpack/prod.config.js -p",
     "lint:all": "(cd ../../; npx eslint applications/registration-react --ext=.js,.jsx --fix)",
     "lint": "(cd ../../; npx lint-staged)",
     "test": "jest",
