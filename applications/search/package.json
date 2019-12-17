@@ -9,8 +9,8 @@
     "test": "jest ",
     "test:coverage": "jest --coverage",
     "tdd": "jest --watch",
-    "lint:all": "(cd ../../; npx eslint applications/search --ext=.js,.jsx --fix)",
-    "lint": "(cd ../../; npx lint-staged)"
+    "lint:project": "eslint .",
+    "lint:project:fix": "eslint . --fix"
   },
   "license": "ISC",
   "dependencies": {
@@ -22,6 +22,7 @@
     "@babel/preset-react": "^7.0.0-beta.54",
     "axios": "^0.19.0",
     "babel-core": "^7.0.0-bridge.0",
+    "babel-eslint": "^10.0.3",
     "babel-loader": "^8.0.0-beta.4",
     "body-parser": "^1.18.3",
     "bootstrap": "^4.3.1",
@@ -32,15 +33,25 @@
     "designsystemet": "git+https://github.com/Informasjonsforvaltning/designsystemet.git#1.4.25",
     "detect-browser": "^2.1.0",
     "ejs": "^2.3.4",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-config-prettier": "^6.7.0",
+    "eslint-plugin-eslint-comments": "^3.1.2",
+    "eslint-plugin-import": "^2.19.1",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-prettier": "^3.1.2",
+    "eslint-plugin-react": "^7.17.0",
+    "eslint-plugin-react-hooks": "^2.3.0",
     "express": "^4.16.3",
     "file-loader": "^1.1.11",
     "font-awesome": "^4.7.0",
     "html-webpack-plugin": "^3.2.0",
+    "lint-staged": "^9.5.0",
     "lodash": "^4.17.15",
     "method-override": "^3.0.0",
     "mini-css-extract-plugin": "^0.8.0",
     "moment": "^2.19.4",
     "node-sass": "^4.12.0",
+    "prettier": "^1.19.1",
     "prop-types": "^15.6.2",
     "qs": "^6.3.0",
     "react": "^16.8.6",
@@ -84,11 +95,19 @@
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.9.1",
     "enzyme-to-json": "^3.3.3",
+    "eslint": "^6.7.2",
+    "eslint-plugin-json": "^2.0.1",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^24.8.0",
     "resolve-url-loader": "^3.1.0",
     "webpack-cli": "^3.3.8",
     "webpack-dev-server": "^3.8.0"
+  },
+  "lint-staged": {
+    "*": [
+      "eslint --fix",
+      "git add"
+    ]
   },
   "jest": {
     "testMatch": [

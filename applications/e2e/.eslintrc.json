@@ -1,4 +1,5 @@
 {
+  "root": true,
   "env": {
     "browser": true,
     "es6": true,
@@ -6,8 +7,8 @@
     "mocha": true,
     "jest": true
   },
-  "extends": ["airbnb", "prettier","plugin:eslint-comments/recommended"],
-  "plugins": ["prettier", "eslint-comments"],
+  "extends": ["prettier", "plugin:eslint-comments/recommended","plugin:json/recommended"],
+  "plugins": ["prettier", "eslint-comments", "import"],
   "parser": "babel-eslint",
   "globals": {
     "$": false
