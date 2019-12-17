@@ -1,11 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`should render FormApiServiceType, { renderLandingpage  correctly 1`] = `
+exports[
+  `should render FormApiServiceType, { renderLandingpage  correctly 1`
+] = `
 <form>
   <div
     className="form-group"
   >
-    <withStateHandlers(Helptext)
+    <withStateHandlers(Component)
       title="Tjenestetype (standard)"
     />
     <Field

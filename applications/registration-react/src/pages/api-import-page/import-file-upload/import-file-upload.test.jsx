@@ -1,6 +1,7 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { mount, shallow } from 'enzyme';
 import { ImportFileUpload } from './import-file-upload.component';
+import { InputFile } from '../../../components/input-file/input-file.component';
 
 let defaultProps;
 let wrapper;
@@ -28,7 +29,9 @@ test('should handle input file upload', () => {
   const mockedEvent = {
     preventDefault
   };
-  wrapper.find('InputFile').prop('onChange')(mockedEvent);
+  mount(<ImportFileUpload {...defaultProps} />)
+    .find(InputFile)
+    .prop('onChange')(mockedEvent);
   expect(handleFileUpload).toHaveBeenCalled();
 });
 

@@ -11,6 +11,9 @@ export default {
     path: path.join(__dirname, '../dist'),
     filename: 'bundle.js'
   },
+  resolve: {
+    extensions: ['.ts', '.tsx', '.js', '.jsx']
+  },
   module: {
     rules: [
       {
@@ -49,17 +52,12 @@ export default {
             options: { limit: 10000 } // Convert images < 10k to base64 strings
           }
         ]
+      },
+      {
+        test: /\.tsx?$/,
+        loader: ['ts-loader']
       }
     ]
-  },
-  resolve: {
-    alias: {
-      react: path.resolve('./node_modules/react')
-    },
-    extensions: ['.js', '.jsx', '.webpack.js', '.web.js']
-  },
-  resolveLoader: {
-    modules: [__dirname, 'node_modules']
   },
   plugins: [
     new CleanWebpackPlugin(),

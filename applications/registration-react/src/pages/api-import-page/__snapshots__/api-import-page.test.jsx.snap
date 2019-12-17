@@ -21,7 +21,7 @@ exports[`should render ApiImportPage correctly 1`] = `
     <div
       className="col-12"
     >
-      <ImportDialog
+      <Component
         handleFileUpload={[Function]}
         showLinkImport={[Function]}
       />

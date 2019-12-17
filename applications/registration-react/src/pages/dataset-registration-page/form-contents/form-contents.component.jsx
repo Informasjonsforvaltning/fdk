@@ -12,24 +12,22 @@ import InputFieldReadonly from '../../../components/fields/field-input-readonly/
 export const FormContentsComponent = ({ languages, isReadOnly }) => (
   <form>
     <div className="form-group">
-      {
-        <div className="mt-4">
-          <div className="form-group">
-            <Helptext
-              title={localization.schema.content.helptext.conformsTo}
-              term="Dataset_conformsTo"
-            />
-            <FieldArray
-              name="conformsTo"
-              component={Standard}
-              titleLabel={localization.schema.common.titleLabel}
-              linkLabel={localization.schema.common.linkLabel}
-              languages={languages}
-              isReadOnly={isReadOnly}
-            />
-          </div>
+      <div className="mt-4">
+        <div className="form-group">
+          <Helptext
+            title={localization.schema.content.helptext.conformsTo}
+            term="Dataset_conformsTo"
+          />
+          <FieldArray
+            name="conformsTo"
+            component={Standard}
+            titleLabel={localization.schema.common.titleLabel}
+            linkLabel={localization.schema.common.linkLabel}
+            languages={languages}
+            isReadOnly={isReadOnly}
+          />
         </div>
-      }
+      </div>
     </div>
     <div className="form-group">
       <Helptext

@@ -19,7 +19,7 @@ exports[`should render ListItem correctly "DRAFT" item 1`] = `
       <div
         className="d-flex w-25 justify-content-between"
       >
-        <RegistrationStatus
+        <Component
           registrationStatus="DRAFT"
         />
       </div>
@@ -47,7 +47,7 @@ exports[`should render ListItem correctly "PUBLISH" item 1`] = `
       <div
         className="d-flex w-25 justify-content-between"
       >
-        <RegistrationStatus
+        <Component
           registrationStatus="PUBLISH"
         />
       </div>
@@ -75,7 +75,7 @@ exports[`should render ListItem correctly when missing title 1`] = `
       <div
         className="d-flex w-25 justify-content-between"
       >
-        <RegistrationStatus
+        <Component
           registrationStatus="DRAFT"
         />
       </div>

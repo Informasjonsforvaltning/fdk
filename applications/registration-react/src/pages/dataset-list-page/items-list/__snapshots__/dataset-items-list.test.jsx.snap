@@ -16,7 +16,7 @@ exports[`should render DatasetItemsList correctly with datasetItems 1`] = `
       Legg til ny datasettbeskrivelse
     </button>
   </div>
-  <ListItems
+  <Component
     catalogId="123"
     defaultEmptyListText={null}
     itemTitleField={
@@ -33,7 +33,9 @@ exports[`should render DatasetItemsList correctly with datasetItems 1`] = `
 </div>
 `;
 
-exports[`should render DatasetItemsList correctly with missing datasetItems 1`] = `
+exports[
+  `should render DatasetItemsList correctly with missing datasetItems 1`
+] = `
 <div>
   <div
     className="d-flex mb-3"
@@ -49,7 +51,7 @@ exports[`should render DatasetItemsList correctly with missing datasetItems 1`] 
       Legg til ny datasettbeskrivelse
     </button>
   </div>
-  <ListItems
+  <Component
     catalogId="123"
     defaultEmptyListText={null}
     itemTitleField={
@@ -82,7 +84,7 @@ exports[`should render DatasetItemsList correctly with missing items 1`] = `
       Legg til ny datasettbeskrivelse
     </button>
   </div>
-  <ListItems
+  <Component
     catalogId="123"
     defaultEmptyListText={null}
     itemTitleField={

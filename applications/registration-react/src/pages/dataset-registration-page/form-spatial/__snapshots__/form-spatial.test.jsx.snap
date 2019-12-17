@@ -7,7 +7,7 @@ exports[`should render FormSpatial correctly with initialValues 1`] = `
   <div
     className="form-group"
   >
-    <withStateHandlers(Helptext)
+    <withStateHandlers(Component)
       term="Dataset_spatial"
       title="Geografisk avgrensning"
     />
@@ -22,7 +22,7 @@ exports[`should render FormSpatial correctly with initialValues 1`] = `
   <div
     className="form-group"
   >
-    <withStateHandlers(Helptext)
+    <withStateHandlers(Component)
       term="Dataset_temporal"
       title="Tidsmessig avgrenset til"
     />
@@ -35,7 +35,7 @@ exports[`should render FormSpatial correctly with initialValues 1`] = `
   <div
     className="form-group"
   >
-    <withStateHandlers(Helptext)
+    <withStateHandlers(Component)
       term="Dataset_issued"
       title="Utgivelsesdato"
     />
@@ -49,7 +49,7 @@ exports[`should render FormSpatial correctly with initialValues 1`] = `
   <div
     className="form-group"
   >
-    <withStateHandlers(Helptext)
+    <withStateHandlers(Component)
       term="Dataset_language"
       title="Språk"
     />

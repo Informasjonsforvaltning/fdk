@@ -5,7 +5,7 @@ exports[`should render FormAccessRights correctly 1`] = `
   <div
     className="form-group"
   >
-    <withStateHandlers(Helptext)
+    <withStateHandlers(Component)
       required={true}
       term="Dataset_accessRights"
       title="Tilgangsnivå"
@@ -44,7 +44,7 @@ exports[`should render FormAccessRights correctly with syncErrors 1`] = `
   <div
     className="form-group"
   >
-    <withStateHandlers(Helptext)
+    <withStateHandlers(Component)
       required={true}
       term="Dataset_accessRights"
       title="Tilgangsnivå"
@@ -85,7 +85,7 @@ exports[`should render FormAccessRights correctly with syncErrors 1`] = `
       <div
         className="form-group"
       >
-        <withStateHandlers(Helptext)
+        <withStateHandlers(Component)
           term="Dataset_legalBasisForRestriction"
           title="Skjermingshjemmel"
         />
@@ -102,7 +102,7 @@ exports[`should render FormAccessRights correctly with syncErrors 1`] = `
       <div
         className="form-group"
       >
-        <withStateHandlers(Helptext)
+        <withStateHandlers(Component)
           term="Dataset_legalBasisForProcessing"
           title="Behandlingsgrunnlag"
         />
@@ -119,7 +119,7 @@ exports[`should render FormAccessRights correctly with syncErrors 1`] = `
       <div
         className="form-group"
       >
-        <withStateHandlers(Helptext)
+        <withStateHandlers(Component)
           term="Dataset_legalBasisForAccess"
           title="Utleveringshjemmel"
         />

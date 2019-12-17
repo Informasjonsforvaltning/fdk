@@ -27,7 +27,7 @@ function retryWhileHarvestPending(apiCatalog, dispatch, catalogId) {
   const retryTimeout = 1000;
   if (isApiCatalogHarvestPending(apiCatalog)) {
     setTimeout(() => {
-      dispatch(fetchApiCatalogIfNeededThunk(catalogId, true)); // eslint-disable-line no-use-before-define
+      dispatch(fetchApiCatalogIfNeededThunk(catalogId, true)); // eslint-disable-line @typescript-eslint/no-use-before-define
       dispatch(fetchApisIfNeededAction(catalogId, true));
     }, retryTimeout);
   }

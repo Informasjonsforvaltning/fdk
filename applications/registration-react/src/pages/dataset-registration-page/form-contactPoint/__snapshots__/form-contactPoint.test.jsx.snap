@@ -5,7 +5,7 @@ exports[`should render FormContactPoint correctly 1`] = `
   <div
     className="form-group"
   >
-    <withStateHandlers(Helptext)
+    <withStateHandlers(Component)
       term="ContactPoint_organizational-unit"
       title="Kontaktpunkt"
     />
@@ -19,7 +19,7 @@ exports[`should render FormContactPoint correctly 1`] = `
   <div
     className="form-group"
   >
-    <withStateHandlers(Helptext)
+    <withStateHandlers(Component)
       term="ContactPoint_hasURL"
       title="Kontaktskjema"
     />
@@ -33,7 +33,7 @@ exports[`should render FormContactPoint correctly 1`] = `
   <div
     className="form-group"
   >
-    <withStateHandlers(Helptext)
+    <withStateHandlers(Component)
       term="ContactPoint_hasEmail"
       title="E-post"
     />
@@ -47,7 +47,7 @@ exports[`should render FormContactPoint correctly 1`] = `
   <div
     className="form-group"
   >
-    <withStateHandlers(Helptext)
+    <withStateHandlers(Component)
       term="ContactPoint_hasTelephone"
       title="Telefon"
     />
