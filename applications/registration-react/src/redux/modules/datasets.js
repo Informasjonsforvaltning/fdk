@@ -51,7 +51,7 @@ export const deleteDatasetThunk = (catalogId, datasetId) => dispatch => {
 
 const initialState = {};
 
-export default function datasets(state = initialState, action) {
+export function datasetsReducer(state = initialState, action) {
   switch (action.type) {
     case DATASETS_REQUEST:
       return {

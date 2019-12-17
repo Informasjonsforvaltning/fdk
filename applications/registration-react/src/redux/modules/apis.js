@@ -64,7 +64,7 @@ export const deleteApiThunk = (catalogId, apiId) => async dispatch => {
 
 const initialState = {};
 
-export default function apis(state = initialState, action) {
+export function apisReducer(state = initialState, action) {
   switch (action.type) {
     case APIS_REQUEST:
       return {

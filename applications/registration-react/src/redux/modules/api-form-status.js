@@ -26,7 +26,7 @@ export const apiFormPatchErrorAction = (apiId, error) => ({
 
 const initialState = {};
 
-export default function apiFormStatus(state = initialState, action) {
+export function apiFormStatusReducer(state = initialState, action) {
   switch (action.type) {
     case API_FORM_STATUS_IS_SAVING: {
       const { apiId } = action.payload;

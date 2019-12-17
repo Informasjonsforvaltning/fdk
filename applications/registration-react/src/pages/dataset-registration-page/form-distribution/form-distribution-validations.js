@@ -10,62 +10,73 @@ import localization from '../../../services/localization';
 const validate = values => {
   const errors = {};
   const { distribution } = values;
-  let errorNodes = null;
   let conformsToNodes = null;
 
   if (distribution) {
-    errorNodes = distribution.map(item => {
-      let errors = {};
+    const distributionErrors = distribution.map(distributionItem => {
+      let itemErrors = {};
 
-      const accessURL = _.get(item, ['accessURL', 0]);
-      const license = _.get(item, ['license', 'uri'], null);
+      const accessURL = _.get(distributionItem, ['accessURL', 0]);
+      const license = _.get(distributionItem, ['license', 'uri'], null);
       const description = _.get(
-        item,
+        distributionItem,
         ['description', localization.getLanguage()],
         null
       );
       const page =
-        item.page && item.page[0] && item.page[0].uri ? item.page[0].uri : null;
-      const { conformsTo } = item || null;
+        distributionItem.page &&
+        distributionItem.page[0] &&
+        distributionItem.page[0].uri
+          ? distributionItem.page[0].uri
+          : null;
+      const { conformsTo } = distributionItem || null;
 
-      errors = validateURL('accessURL', accessURL, errors, true);
-      errors = validateMinTwoChars('license', license, errors, 'uri');
-      errors = validateMinTwoChars('description', description, errors);
-      errors = validateLinkReturnAsSkosType('page', page, errors, 'uri');
+      itemErrors = validateURL('accessURL', accessURL, itemErrors, true);
+      itemErrors = validateMinTwoChars('license', license, itemErrors, 'uri');
+      itemErrors = validateMinTwoChars('description', description, itemErrors);
+      itemErrors = validateLinkReturnAsSkosType(
+        'page',
+        page,
+        itemErrors,
+        'uri'
+      );
 
       if (conformsTo) {
-        conformsToNodes = conformsTo.map(item => {
-          let itemErrors = {};
+        conformsToNodes = conformsTo.map(conformsToItem => {
+          let conformsToItemErrors = {};
           const conformsToPrefLabel = _.get(
-            item,
+            conformsToItem,
             ['prefLabel', localization.getLanguage()],
             null
           );
-          const conformsToURI = item.uri || null;
-          itemErrors = validateMinTwoChars(
+          const conformsToURI = conformsToItem.uri || null;
+          conformsToItemErrors = validateMinTwoChars(
             'prefLabel',
             conformsToPrefLabel,
-            itemErrors
+            conformsToItemErrors
           );
-          itemErrors = validateURL('uri', conformsToURI, itemErrors);
-          return itemErrors;
+          conformsToItemErrors = validateURL(
+            'uri',
+            conformsToURI,
+            conformsToItemErrors
+          );
+          return conformsToItemErrors;
         });
         let showSyncError = false;
         showSyncError =
           conformsToNodes.filter(item => item && JSON.stringify(item) !== '{}')
             .length > 0;
         if (showSyncError) {
-          errors.conformsTo = conformsToNodes;
+          itemErrors.conformsTo = conformsToNodes;
         }
       }
-      return errors;
+      return itemErrors;
     });
-    let showSyncError = false;
-    showSyncError =
-      errorNodes.filter(item => item && JSON.stringify(item) !== '{}').length >
-      0;
-    if (showSyncError) {
-      errors.distribution = errorNodes;
+    if (
+      distributionErrors.filter(item => item && JSON.stringify(item) !== '{}')
+        .length > 0
+    ) {
+      errors.distribution = distributionErrors;
     }
   }
   return errors;

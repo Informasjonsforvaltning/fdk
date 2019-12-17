@@ -9,8 +9,8 @@ export const API_CATALOG_REQUEST = 'API_CATALOG_REQUEST';
 export const API_CATALOG_SUCCESS = 'API_CATALOG_SUCCESS';
 export const API_CATALOG_FAILURE = 'API_CATALOG_FAILURE';
 
-export function isApiCatalogHarvestPending(itemState) {
-  return itemState && itemState.harvestSourceUri && !itemState.harvestStatus;
+export function isApiCatalogHarvestPending(apiCatalog) {
+  return apiCatalog && apiCatalog.harvestSourceUri && !apiCatalog.harvestStatus;
 }
 
 function shouldFetch(metaState) {
@@ -23,7 +23,7 @@ function shouldFetch(metaState) {
   );
 }
 
-function forceRetryIfPending(apiCatalog, dispatch, catalogId) {
+function retryWhileHarvestPending(apiCatalog, dispatch, catalogId) {
   const retryTimeout = 1000;
   if (isApiCatalogHarvestPending(apiCatalog)) {
     setTimeout(() => {
@@ -51,7 +51,7 @@ export function fetchApiCatalogIfNeededThunk(catalogId, force) {
         meta: { catalogId, force },
         payload: apiCatalog
       });
-      forceRetryIfPending(apiCatalog, dispatch, catalogId);
+      retryWhileHarvestPending(apiCatalog, dispatch, catalogId);
     } catch (e) {
       dispatch({
         type: API_CATALOG_FAILURE,
@@ -72,7 +72,7 @@ export function postApiCatalogThunk(catalogId, data) {
         meta: { catalogId },
         payload: apiCatalog
       });
-      forceRetryIfPending(apiCatalog, dispatch, catalogId);
+      retryWhileHarvestPending(apiCatalog, dispatch, catalogId);
     } catch (e) {
       dispatch({ type: API_CATALOG_FAILURE, meta: { catalogId }, payload: e });
     }
@@ -81,7 +81,7 @@ export function postApiCatalogThunk(catalogId, data) {
 
 const initialState = {};
 
-export function apiCatalog(state = initialState, action) {
+export function apiCatalogReducer(state = initialState, action) {
   switch (action.type) {
     case API_CATALOG_REQUEST:
       return {

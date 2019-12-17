@@ -10,32 +10,52 @@ import localization from '../../../services/localization';
 const validate = values => {
   const errors = {};
   const { sample } = values;
-  let errorNodes = null;
-  let conformsToNodes = null;
 
   if (sample) {
-    errorNodes = sample.map(item => {
-      let errors = {};
+    const sampleErrors = sample.map(sampleItem => {
+      let sampleItemErrors = {};
 
-      const accessURL = _get(item, 'accessURL', null);
-      const license =
-        item.license && item.license.uri ? item.license.uri : null;
+      const accessURL = _get(sampleItem, 'accessURL', null);
+      const license = (sampleItem.license && sampleItem.license.uri) || null;
       const description = _get(
-        item,
+        sampleItem,
         ['description', localization.getLanguage()],
         null
       );
       const page =
-        item.page && item.page[0] && item.page[0].uri ? item.page[0].uri : null;
-      const { conformsTo } = item || null;
+        (sampleItem &&
+          sampleItem.page &&
+          sampleItem.page[0] &&
+          sampleItem.page[0].uri) ||
+        null;
+      const conformsTo = (sampleItem && sampleItem.conformsTo) || null;
 
-      errors = validateURL('accessURL', accessURL[0], errors, true);
-      errors = validateMinTwoChars('license', license, errors, 'uri');
-      errors = validateMinTwoChars('description', description, errors);
-      errors = validateLinkReturnAsSkosType('page', page, errors, 'uri');
+      sampleItemErrors = validateURL(
+        'accessURL',
+        accessURL[0],
+        sampleItemErrors,
+        true
+      );
+      sampleItemErrors = validateMinTwoChars(
+        'license',
+        license,
+        sampleItemErrors,
+        'uri'
+      );
+      sampleItemErrors = validateMinTwoChars(
+        'description',
+        description,
+        sampleItemErrors
+      );
+      sampleItemErrors = validateLinkReturnAsSkosType(
+        'page',
+        page,
+        sampleItemErrors,
+        'uri'
+      );
 
       if (conformsTo) {
-        conformsToNodes = conformsTo.map(item => {
+        const conformsToNodes = conformsTo.map(item => {
           let itemErrors = {};
           const conformsToPrefLabel = _get(
             item,
@@ -56,17 +76,16 @@ const validate = values => {
           conformsToNodes.filter(item => item && JSON.stringify(item) !== '{}')
             .length > 0;
         if (showSyncError) {
-          errors.conformsTo = conformsToNodes;
+          sampleItemErrors.conformsTo = conformsToNodes;
         }
       }
-      return errors;
+      return sampleItemErrors;
     });
-    let showSyncError = false;
-    showSyncError =
-      errorNodes.filter(item => item && JSON.stringify(item) !== '{}').length >
-      0;
-    if (showSyncError) {
-      errors.sample = errorNodes;
+    if (
+      sampleErrors.filter(item => item && JSON.stringify(item) !== '{}')
+        .length > 0
+    ) {
+      errors.sample = sampleErrors;
     }
   }
   return errors;
