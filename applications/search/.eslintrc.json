@@ -6,7 +6,7 @@
     "mocha": true,
     "jest": true
   },
-  "extends": ["airbnb", "prettier", "prettier/react","plugin:eslint-comments/recommended"],
+  "extends": ["airbnb", "prettier", "prettier/react","plugin:eslint-comments/recommended", "plugin:json/recommended"],
   "plugins": ["prettier", "react-hooks", "eslint-comments"],
   "parser": "babel-eslint",
   "globals": {

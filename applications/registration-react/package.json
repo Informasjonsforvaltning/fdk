@@ -6,8 +6,8 @@
   "scripts": {
     "start": "webpack-dev-server --hot --inline --config-register @babel/register --config webpack/dev.config.js",
     "build": "webpack --config-register @babel/register --config webpack/prod.config.js -p",
-    "lint:all": "(cd ../../; npx eslint applications/registration-react --ext=.js,.jsx --fix)",
-    "lint": "(cd ../../; npx lint-staged)",
+    "lint:project": "eslint .",
+    "lint:project:fix": "eslint . --fix",
     "test": "jest",
     "test:coverage": "jest --coverage",
     "tdd": "jest --watch"
@@ -24,6 +24,7 @@
     "@babel/register": "^7.7.4",
     "axios": "^0.19.0",
     "babel-core": "^7.0.0-bridge.0",
+    "babel-eslint": "^10.0.3",
     "babel-loader": "^8.0.0-beta.4",
     "base-href-webpack-plugin": "^2.0.0",
     "body-parser": "^1.18.2",
@@ -35,16 +36,28 @@
     "css-loader": "^1.0.0",
     "designsystemet": "git+https://github.com/Informasjonsforvaltning/designsystemet.git#1.4.24",
     "ejs": "^2.5.7",
+    "eslint": "^6.7.2",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-config-prettier": "^6.7.0",
+    "eslint-plugin-eslint-comments": "^3.1.2",
+    "eslint-plugin-import": "^2.19.1",
+    "eslint-plugin-json": "^2.0.1",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-prettier": "^3.1.2",
+    "eslint-plugin-react": "^7.17.0",
+    "eslint-plugin-react-hooks": "^2.3.0",
     "express": "^4.16.2",
     "file-loader": "^1.1.11",
     "font-awesome": "^4.7.0",
     "is-url": "^1.2.2",
     "keycloak-js": "^6.0.1",
+    "lint-staged": "^9.5.0",
     "lodash": "^4.17.15",
     "method-override": "^2.3.10",
     "mini-css-extract-plugin": "^0.4.1",
     "moment": "^2.20.1",
     "node-sass": "^4.12.0",
+    "prettier": "^1.19.1",
     "promise-file-reader": "^1.0.2",
     "prop-types": "^15.6.0",
     "qs": "^6.5.2",
@@ -93,6 +106,12 @@
     "webpack": "^4.39.0",
     "webpack-cli": "^3.3.7",
     "webpack-dev-server": "^3.8.0"
+  },
+  "lint-staged": {
+    "*": [
+      "eslint --fix",
+      "git add"
+    ]
   },
   "jest": {
     "testURL": "http://localhost/",

@@ -20,9 +20,6 @@ const formConfigurer = reduxForm({
   asyncValidate: _throttle(asyncValidateDatasetInvokePatch, 250)
 });
 
-const enhance = compose(
-  setInitialValues,
-  formConfigurer
-);
+const enhance = compose(setInitialValues, formConfigurer);
 
 export const FormDistribution = enhance(FormDistributionPure);

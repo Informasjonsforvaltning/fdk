@@ -48,9 +48,9 @@ describe('SUITE: Main page', () => {
       });
 
       test('ART:API-705 THEN: Api tab label shows number larger than 3', async () => {
-        const apiTabLabel = (await searchPage.selectorsContent(
-          apiTabSelector
-        ))[0];
+        const apiTabLabel = (
+          await searchPage.selectorsContent(apiTabSelector)
+        )[0];
 
         expect(apiTabLabel).toContain('API-er');
         expect(extractNumber(apiTabLabel)).toBeGreaterThan(5);

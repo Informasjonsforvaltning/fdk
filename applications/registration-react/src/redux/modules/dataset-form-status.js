@@ -66,7 +66,4 @@ export function datasetFormStatus(state = initialState, action) {
 const selectorForDatasetFormStatusState = state => state.datasetFormStatus;
 
 export const selectorForDatasetFormStatus = datasetId =>
-  compose(
-    state => state[datasetId],
-    selectorForDatasetFormStatusState
-  );
+  compose(state => state[datasetId], selectorForDatasetFormStatusState);

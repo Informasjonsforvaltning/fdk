@@ -4,21 +4,8 @@
   "description": "Fellesdatakatalog",
   "main": " ",
   "dependencies": {
-    "babel-eslint": "^10.0.3",
-    "eslint": "^6.4.0",
-    "eslint-config-airbnb": "^18.0.1",
-    "eslint-config-prettier": "^6.3.0",
-    "eslint-plugin-eslint-comments": "^3.1.2",
-    "eslint-plugin-import": "^2.18.2",
-    "eslint-plugin-jsx-a11y": "^6.2.3",
-    "eslint-plugin-prettier": "^3.1.1",
-    "eslint-plugin-react": "^7.14.3",
-    "eslint-plugin-react-hooks": "^1.7.0",
     "husky": "^3.0.5",
-    "lint-staged": "^9.3.0",
-    "lodash": "^4.17.15",
-    "lodash.template": "^4.5.0",
-    "prettier": "^1.18.2",
+    "npm-run-all": "^4.1.5",
     "standard-version": "^7.0.0"
   },
   "scripts": {
@@ -26,28 +13,13 @@
     "_comment1": "a method to export, is to run keycloak server on another port, and run startup migration action export.",
     "_comment2": "check the logs, and after export is done, and server started, stop manually with ctrl+c",
     "keycloak-export": "docker-compose exec sso sh -c \"/opt/jboss/keycloak/bin/standalone.sh -Dkeycloak.migration.action=export -Dkeycloak.migration.provider=dir -Dkeycloak.migration.dir=/tmp/keycloak/export -Dkeycloak.migration.strategy=OVERWRITE_EXISTING -Djboss.http.port=8888 -Djboss.https.port=9999 -Djboss.management.http.port=7777\"",
-    "audit": "(cd applications/e2e;npm audit fix);(cd applications/registration-react;npm audit fix);(cd applications/search;npm audit fix);",
-    "lint": "eslint applications/e2e applications/registration-react applications/search --ext=.js,.jsx --fix",
+    "audit": "(cd applications/e2e && npm audit fix) && (cd applications/registration-react && npm audit fix) && (cd applications/search && npm audit fix);",
+    "lint:all": "(cd applications/e2e && npm run lint:project) && (cd applications/registration-react && npm run lint:project) && (cd applications/search && npm run lint:project)",
+    "lint:all:fix": "(cd applications/e2e && npm run lint:project:fix) && (cd applications/registration-react && npm run lint:project:fix) && (cd applications/search && npm run lint:project:fix)",
+    "precommit:search": "cd applications/search && npx lint-staged",
+    "precommit:registration-react": "cd applications/registration-react && npx lint-staged",
+    "precommit:e2e": "cd applications/e2e && npx lint-staged",
     "install": "(cd applications/e2e && npm i);(cd applications/search && npm i);(cd applications/registration-react && npm i);"
-  },
-  "lint-staged": {
-    "applications/search/**/*.{js,jsx}": [
-      "eslint --fix",
-      "git add"
-    ],
-    "applications/registration-react/**/*.{js,jsx}": [
-      "eslint --fix",
-      "git add"
-    ],
-    "applications/e2e/**/*.{js}": [
-      "eslint --fix",
-      "git add"
-    ]
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
   },
   "repository": {
     "type": "git",
