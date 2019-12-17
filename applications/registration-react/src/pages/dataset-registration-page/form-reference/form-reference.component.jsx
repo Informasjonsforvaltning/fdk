@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Field, FieldArray } from 'redux-form';
-
 import localization from '../../../services/localization';
 import Helptext from '../../../components/helptext/helptext.component';
 import SelectField from '../../../components/fields/field-select/field-select.component';
@@ -9,7 +8,10 @@ import { datasetFormPatchThunk } from '../formsLib/asyncValidateDatasetInvokePat
 import { getTranslateText } from '../../../services/translateText';
 
 const renderReadOnly = ({ input, referenceDatasetsItems }) => {
-  const referenceType = getTranslateText(input.value.referenceType.prefLabel);
+  const { referenceType } = input.value || {};
+  const referenceTypeText = getTranslateText(
+    referenceType && referenceType.prefLabel
+  );
   const dataset = referenceDatasetsItems.find(
     i => i.uri === input.value.source.uri
   );
@@ -17,7 +19,7 @@ const renderReadOnly = ({ input, referenceDatasetsItems }) => {
 
   return (
     <div className="pl-3">
-      {referenceType} {datasetTitle}
+      {referenceTypeText} {datasetTitle}
     </div>
   );
 };
