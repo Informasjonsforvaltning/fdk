@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`should render ImportFileUpload correctly 1`] = `
-<PanelBase>
+<Component>
   <div
     className="mb-5"
   >
@@ -12,7 +12,7 @@ exports[`should render ImportFileUpload correctly 1`] = `
   <div
     className="mb-5"
   >
-    <AlertMessage
+    <Component
       type="danger"
     >
       Noe gikk galt med importen. Kontroller at du har valgt riktig fil, eller prøv å 
@@ -23,7 +23,7 @@ exports[`should render ImportFileUpload correctly 1`] = `
       >
         importere via lenke
       </button>
-    </AlertMessage>
+    </Component>
   </div>
   <div
     className="mb-3"
@@ -36,12 +36,12 @@ exports[`should render ImportFileUpload correctly 1`] = `
       Api.json
     </span>
   </div>
-  <InputFile
+  <Component
     className="btn btn-primary mr-3 mb-0"
     onChange={[MockFunction]}
   >
     Importer ny fil
-  </InputFile>
+  </Component>
   <Button
     className="fdk-color-link fdk-bg-color-white"
     color="transparent"
@@ -50,5 +50,5 @@ exports[`should render ImportFileUpload correctly 1`] = `
   >
     Avbryt
   </Button>
-</PanelBase>
+</Component>
 `;

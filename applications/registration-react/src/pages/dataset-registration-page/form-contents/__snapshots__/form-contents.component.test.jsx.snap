@@ -11,7 +11,7 @@ exports[`should render FormContentsComponent, { renderS correctly 1`] = `
       <div
         className="form-group"
       >
-        <withStateHandlers(Helptext)
+        <withStateHandlers(Component)
           term="Dataset_conformsTo"
           title="Standard"
         />
@@ -27,7 +27,7 @@ exports[`should render FormContentsComponent, { renderS correctly 1`] = `
   <div
     className="form-group"
   >
-    <withStateHandlers(Helptext)
+    <withStateHandlers(Component)
       term="Dataset_hasQualityAnnotation_relevance"
       title="Relevans"
     />
@@ -42,7 +42,7 @@ exports[`should render FormContentsComponent, { renderS correctly 1`] = `
   <div
     className="form-group"
   >
-    <withStateHandlers(Helptext)
+    <withStateHandlers(Component)
       term="Dataset_hasQualityAnnotation_completeness"
       title="Kompletthet"
     />
@@ -57,7 +57,7 @@ exports[`should render FormContentsComponent, { renderS correctly 1`] = `
   <div
     className="form-group"
   >
-    <withStateHandlers(Helptext)
+    <withStateHandlers(Component)
       term="Dataset_hasQualityAnnotation_accuracy"
       title="Nøyaktighet"
     />
@@ -72,7 +72,7 @@ exports[`should render FormContentsComponent, { renderS correctly 1`] = `
   <div
     className="form-group"
   >
-    <withStateHandlers(Helptext)
+    <withStateHandlers(Component)
       term="Dataset_hasQualityAnnotation_availability"
       title="Tilgjengelighet"
     />

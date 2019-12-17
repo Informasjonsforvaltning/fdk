@@ -18,6 +18,8 @@ COPY server /usr/src/app/server
 COPY start.js /usr/src/app/
 COPY .babelrc /usr/src/app/
 COPY webpack /usr/src/app/webpack
+COPY jest.config.js /usr/src/app/
+COPY tsconfig.json /usr/src/app/
 
 COPY test /usr/src/app/test
 COPY src /usr/src/app/src

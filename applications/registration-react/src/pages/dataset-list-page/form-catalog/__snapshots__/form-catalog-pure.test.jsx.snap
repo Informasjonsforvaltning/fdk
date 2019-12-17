@@ -60,7 +60,7 @@ exports[`should render FormCatalogPure correctly 1`] = `
       <div
         className="form-group"
       >
-        <withStateHandlers(Helptext)
+        <withStateHandlers(Component)
           required={true}
           term="Catalog_title"
           title="Beskrivelse"

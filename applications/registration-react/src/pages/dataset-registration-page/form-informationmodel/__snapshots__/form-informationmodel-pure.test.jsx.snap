@@ -11,7 +11,7 @@ exports[`should render FormInformationModelPure correctly 1`] = `
       <div
         className="form-group"
       >
-        <withStateHandlers(Helptext)
+        <withStateHandlers(Component)
           term="Dataset_informationModel"
           title="Informasjonsmodell"
         />

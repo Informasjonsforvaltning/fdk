@@ -227,79 +227,79 @@ export const FormAccessRights = props => {
           hasAccessRightsURI ===
             'http://publications.europa.eu/resource/authority/access-right/NON_PUBLIC') && (
           <div className="mt-4">
-            <div className="form-group">
+              <div className="form-group">
               <Helptext
-                title={
+                  title={
                   localization.schema.accessRights.legalBasisForRestriction
                     .heading
                 }
-                term="Dataset_legalBasisForRestriction"
-              />
+                  term="Dataset_legalBasisForRestriction"
+                />
               <FieldArray
-                name="legalBasisForRestriction"
-                component={renderLegalBasis}
-                titleLabel={
+                  name="legalBasisForRestriction"
+                  component={renderLegalBasis}
+                  titleLabel={
                   localization.schema.accessRights.legalBasisForRestriction
                     .titleLabel
                 }
-                linkLabel={
+                  linkLabel={
                   localization.schema.accessRights.legalBasisForRestriction
                     .linkLabel
                 }
-                onDeleteFieldAtIndex={deleteFieldAtIndex}
-                languages={languages}
-                isReadOnly={isReadOnly}
-              />
+                  onDeleteFieldAtIndex={deleteFieldAtIndex}
+                  languages={languages}
+                  isReadOnly={isReadOnly}
+                />
             </div>
 
-            <div className="form-group">
+              <div className="form-group">
               <Helptext
-                title={
+                  title={
                   localization.schema.accessRights.legalBasisForProcessing
                     .heading
                 }
-                term="Dataset_legalBasisForProcessing"
-              />
+                  term="Dataset_legalBasisForProcessing"
+                />
               <FieldArray
-                name="legalBasisForProcessing"
-                component={renderLegalBasis}
-                titleLabel={
+                  name="legalBasisForProcessing"
+                  component={renderLegalBasis}
+                  titleLabel={
                   localization.schema.accessRights.legalBasisForProcessing
                     .titleLabel
                 }
-                linkLabel={
+                  linkLabel={
                   localization.schema.accessRights.legalBasisForProcessing
                     .linkLabel
                 }
-                onDeleteFieldAtIndex={deleteFieldAtIndex}
-                languages={languages}
-                isReadOnly={isReadOnly}
-              />
+                  onDeleteFieldAtIndex={deleteFieldAtIndex}
+                  languages={languages}
+                  isReadOnly={isReadOnly}
+                />
             </div>
 
-            <div className="form-group">
+              <div className="form-group">
               <Helptext
-                title={
+                  title={
                   localization.schema.accessRights.legalBasisForAccess.heading
                 }
-                term="Dataset_legalBasisForAccess"
-              />
+                  term="Dataset_legalBasisForAccess"
+                />
               <FieldArray
-                name="legalBasisForAccess"
-                component={renderLegalBasis}
-                titleLabel={
+                  name="legalBasisForAccess"
+                  component={renderLegalBasis}
+                  titleLabel={
                   localization.schema.accessRights.legalBasisForAccess
                     .titleLabel
                 }
-                linkLabel={
+                  linkLabel={
                   localization.schema.accessRights.legalBasisForAccess.linkLabel
                 }
-                onDeleteFieldAtIndex={deleteFieldAtIndex}
-                languages={languages}
-                isReadOnly={isReadOnly}
-              />
+                  onDeleteFieldAtIndex={deleteFieldAtIndex}
+                  languages={languages}
+                  isReadOnly={isReadOnly}
+                />
             </div>
-          </div>
+            </div>
         )}
       </div>
     </form>

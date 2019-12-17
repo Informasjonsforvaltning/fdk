@@ -24,7 +24,7 @@ exports[`should render ApiRegistrationPagePure correctly 1`] = `
     <div
       className="col-12"
     >
-      <APISpecificationInfo
+      <Component
         apiId="3ad7ec56-4fb8-471a-8931-7ba0640d42a4"
         apiSuccess={[Function]}
         catalogId="910244132"
@@ -216,7 +216,7 @@ Eksempel på endring som medfører versjonering:
     <div
       className="col-12"
     >
-      <withState(withHandlers(FormTemplate))
+      <withState(withHandlers(Component))
         showInitially={true}
         title="Tilgang"
       >
@@ -396,7 +396,7 @@ Eksempel på endring som medfører versjonering:
             }
           }
         />
-      </withState(withHandlers(FormTemplate))>
+      </withState(withHandlers(Component))>
     </div>
   </div>
   <div
@@ -405,7 +405,7 @@ Eksempel på endring som medfører versjonering:
     <div
       className="col-12"
     >
-      <withState(withHandlers(FormTemplate))
+      <withState(withHandlers(Component))
         showInitially={true}
         title="Vilkår og begrensninger"
       >
@@ -585,7 +585,7 @@ Eksempel på endring som medfører versjonering:
             }
           }
         />
-      </withState(withHandlers(FormTemplate))>
+      </withState(withHandlers(Component))>
     </div>
   </div>
   <div
@@ -594,7 +594,7 @@ Eksempel på endring som medfører versjonering:
     <div
       className="col-12"
     >
-      <withState(withHandlers(FormTemplate))
+      <withState(withHandlers(Component))
         showInitially={true}
         title="Tjenestetype (standard)"
       >
@@ -775,7 +775,7 @@ Eksempel på endring som medfører versjonering:
           }
           apiServiceTypeItems={null}
         />
-      </withState(withHandlers(FormTemplate))>
+      </withState(withHandlers(Component))>
     </div>
   </div>
   <div
@@ -784,7 +784,7 @@ Eksempel på endring som medfører versjonering:
     <div
       className="col-12"
     >
-      <withState(withHandlers(FormTemplate))
+      <withState(withHandlers(Component))
         showInitially={true}
         title="Status på API-et"
       >
@@ -965,7 +965,7 @@ Eksempel på endring som medfører versjonering:
           }
           apiStatusItems={null}
         />
-      </withState(withHandlers(FormTemplate))>
+      </withState(withHandlers(Component))>
     </div>
   </div>
   <div
@@ -974,7 +974,7 @@ Eksempel på endring som medfører versjonering:
     <div
       className="col-12"
     >
-      <withState(withHandlers(FormTemplate))
+      <withState(withHandlers(Component))
         showInitially={true}
         title="Tilknyttede datasettbeskrivelser"
       >
@@ -1155,7 +1155,7 @@ Eksempel på endring som medfører versjonering:
           }
           referencedDatasets={null}
         />
-      </withState(withHandlers(FormTemplate))>
+      </withState(withHandlers(Component))>
     </div>
   </div>
   <withProps(Connect(ReduxForm))

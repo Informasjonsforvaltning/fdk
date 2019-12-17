@@ -1,6 +1,7 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { mount, shallow } from 'enzyme';
 import { ImportDialog } from './import-dialog.component';
+import { InputFile } from '../../../components/input-file/input-file.component';
 
 let defaultProps;
 let wrapper;
@@ -35,6 +36,8 @@ test('should handle input file upload', () => {
   const mockedEvent = {
     preventDefault
   };
-  wrapper.find('InputFile').prop('onChange')(mockedEvent);
+  mount(<ImportDialog {...defaultProps} />)
+    .find(InputFile)
+    .prop('onChange')(mockedEvent);
   expect(handleFileUpload).toHaveBeenCalled();
 });

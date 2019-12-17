@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const createConfig = env => {
+const createConfig: any = env => {
   const searchHost = env.SEARCH_HOST || 'https://fellesdatakatalog.brreg.no';
   const searchApi = {
     host: env.SEARCH_API_HOST || searchHost,

@@ -103,10 +103,7 @@ export function DatasetRegistrationPagePure(props) {
     sample = {}
   } = form || {};
 
-  useEffect(() => dispatchEnsureData(catalogId, datasetId), [
-    catalogId,
-    datasetId
-  ]);
+  useEffect(() => dispatchEnsureData(catalogId), [catalogId]);
 
   const [languagesDetermined, setLanguagesDetermined] = useState(false);
 

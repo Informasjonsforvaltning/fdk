@@ -7,11 +7,11 @@ exports[`should render FormThemes correctly with theme 1`] = `
   <div
     className="form-group"
   >
-    <withStateHandlers(Helptext)
+    <withStateHandlers(Component)
       term="Dataset_theme"
       title="Tema"
     />
-    <AlertMessage
+    <Component
       type="warning"
     >
       <i
@@ -20,7 +20,7 @@ exports[`should render FormThemes correctly with theme 1`] = `
       <span>
         Disse EU-temaene skal fases ut. Vi anbefaler at du benytter Los-temaene i listen over i stedet.
       </span>
-    </AlertMessage>
+    </Component>
     <Field
       component={[Function]}
       name="theme"

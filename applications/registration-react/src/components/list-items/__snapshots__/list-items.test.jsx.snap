@@ -36,14 +36,14 @@ exports[`should render ListItem correctly with props 1`] = `
       />
     </div>
   </div>
-  <ListItem
+  <Component
     key="1"
     path="/catalogs/123/datasets/1"
     status="DRAFT"
     statusNew={false}
     title="Test item"
   />
-  <ListItem
+  <Component
     key="2"
     path="/catalogs/123/datasets/2"
     status="PUBLISH"

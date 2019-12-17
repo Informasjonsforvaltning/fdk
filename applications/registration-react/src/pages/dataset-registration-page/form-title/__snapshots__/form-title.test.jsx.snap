@@ -5,7 +5,7 @@ exports[`should render FormTitle, { renderLandingpage  correctly 1`] = `
   <div
     className="form-group"
   >
-    <withStateHandlers(Helptext)
+    <withStateHandlers(Component)
       required={true}
       term="Dataset_title"
       title="Tittel"
@@ -21,7 +21,7 @@ exports[`should render FormTitle, { renderLandingpage  correctly 1`] = `
   <div
     className="form-group"
   >
-    <withStateHandlers(Helptext)
+    <withStateHandlers(Component)
       required={true}
       term="Dataset_description"
       title="Beskrivelse av datasettet"
@@ -37,7 +37,7 @@ exports[`should render FormTitle, { renderLandingpage  correctly 1`] = `
   <div
     className="form-group"
   >
-    <withStateHandlers(Helptext)
+    <withStateHandlers(Component)
       required={true}
       term="Dataset_objective"
       title="Formålet med datasettet"
@@ -53,7 +53,7 @@ exports[`should render FormTitle, { renderLandingpage  correctly 1`] = `
   <div
     className="form-group"
   >
-    <withStateHandlers(Helptext)
+    <withStateHandlers(Component)
       term="Dataset_landingpage"
       title="Lenke til mer informasjon om datasettet"
     />
