@@ -4,7 +4,7 @@ import { createLogger } from 'redux-logger';
 import persistState from 'redux-localstorage';
 
 import rootReducer from './rootReducer';
-import { getConfig } from '../services/config';
+import { getConfig } from '../config';
 
 function selectCompose() {
   return window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

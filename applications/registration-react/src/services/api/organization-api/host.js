@@ -1,6 +1,6 @@
 import axios from 'axios';
 import memoize from 'lodash/memoize';
-import { getConfig } from '../../config';
+import { getConfig } from '../../../config';
 
 export const organizationApi = async (method, path) =>
   axios({

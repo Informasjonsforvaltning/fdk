@@ -1,7 +1,7 @@
 /* Facade for keycloak */
 import _ from 'lodash';
 import Keycloak from 'keycloak-js';
-import { getConfig } from '../config';
+import { getConfig } from '../../config';
 
 let kc;
 

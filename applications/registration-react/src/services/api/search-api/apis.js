@@ -1,5 +1,5 @@
 import get from 'lodash/get';
-import { getConfig } from '../../config';
+import { getConfig } from '../../../config';
 import { searchApiGet } from './host';
 
 export const searchApis = params =>

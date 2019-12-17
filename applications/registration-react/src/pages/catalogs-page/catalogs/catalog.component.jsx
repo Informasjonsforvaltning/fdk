@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import memoize from 'lodash/memoize';
 
 import { resolve } from 'react-resolver';
-import { getConfig } from '../../../services/config';
+import { getConfig } from '../../../config';
 import { CatalogItem } from './catalog-item/catalog-item.component';
 import { getConceptCount } from '../../../services/api/concept-registration-api/host';
 

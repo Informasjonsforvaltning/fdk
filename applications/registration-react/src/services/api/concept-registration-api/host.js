@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { getToken } from '../../auth/auth-service';
-import { getConfig } from '../../config';
+import { getConfig } from '../../../config';
 
 export const getConcepts = async orgnr =>
   axios
