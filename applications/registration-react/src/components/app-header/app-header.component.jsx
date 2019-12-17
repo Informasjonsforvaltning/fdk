@@ -5,7 +5,7 @@ import { compose, withProps } from 'recompose';
 import localization from '../../services/localization';
 import './app-header.scss';
 import { getUserProfile, logout } from '../../services/auth/auth-service';
-import { getConfig } from '../../services/config';
+import { getConfig } from '../../config';
 
 export const AppHeaderPure = ({ user }) => {
   const logoImagePath = getConfig().useDemoLogo

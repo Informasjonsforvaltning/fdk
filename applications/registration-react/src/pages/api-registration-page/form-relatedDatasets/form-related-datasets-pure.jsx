@@ -5,7 +5,7 @@ import _ from 'lodash';
 import localization from '../../../services/localization';
 import Helptext from '../../../components/helptext/helptext.component';
 import { InputTagsDatasetsField } from '../field-tagsinput-datasets/field-tagsinput-datasets.components';
-import { getConfig } from '../../../services/config';
+import { getConfig } from '../../../config';
 import { getTranslateText } from '../../../services/translateText';
 
 const renderReferecingDatasets = datasets =>

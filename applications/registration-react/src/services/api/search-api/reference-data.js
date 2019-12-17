@@ -1,4 +1,4 @@
-import { getConfig } from '../../config';
+import { getConfig } from '../../../config';
 import { searchApiGet } from './host';
 
 export const getReferenceData = path =>

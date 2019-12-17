@@ -6,7 +6,7 @@ import _ from 'lodash';
 import localization from '../../../services/localization';
 import Helptext from '../../../components/helptext/helptext.component';
 import { InputTagsAPIsField } from '../field-tagsinput-apis/field-tagsinput-apis.component';
-import { getConfig } from '../../../services/config';
+import { getConfig } from '../../../config';
 import { getTranslateText } from '../../../services/translateText';
 
 const renderReadOnly = ({ input }) => {

@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import { App } from './app/app';
 
 import { configureStore } from './redux/configureStore';
-import { initConfig } from './services/config';
+import { initConfig } from './config';
 import { initLocalization } from './services/localization';
 import { initAuthService } from './services/auth/auth-service';
 
