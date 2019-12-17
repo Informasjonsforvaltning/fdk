@@ -9,22 +9,8 @@ export default merge(baseConfig, {
     host: '0.0.0.0',
     port: 4301,
     historyApiFallback: true,
-    before: app =>
-      app.get('/env.json', (_, res) =>
-        res.json({
-          SEARCH_HOST: process.env.SEARCH_HOST || 'http://localhost:8080',
-          REGISTRATION_API_HOST:
-            process.env.REGISTRATION_API_HOST || 'http://localhost:8098',
-          CONCEPT_REGISTRATION_API_HOST:
-            process.env.CONCEPT_REGISTRATION_API_HOST ||
-            'http://localhost:8200',
-          CONCEPT_REGISTRATION_HOST:
-            process.env.CONCEPT_REGISTRATION_HOST || 'http://localhost:8202',
-          SSO_HOST: process.env.SSO_HOST || 'http://localhost:8084'
-        })
-      )
+    before: app => app.get('/config.js', (_, res) => res.status(204).send())
   },
-
   optimization: {
     minimize: false
   }
