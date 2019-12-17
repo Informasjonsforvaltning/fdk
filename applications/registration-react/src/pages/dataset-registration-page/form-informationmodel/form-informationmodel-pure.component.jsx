@@ -35,10 +35,11 @@ export const FormInformationModelPure = ({ languages, isReadOnly }) => (
 );
 
 FormInformationModelPure.defaultProps = {
-  languages: []
+  languages: [],
+  isReadOnly: false
 };
 
 FormInformationModelPure.propTypes = {
   languages: PropTypes.array,
-  isReadOnly: PropTypes.bool.isRequired
+  isReadOnly: PropTypes.bool
 };

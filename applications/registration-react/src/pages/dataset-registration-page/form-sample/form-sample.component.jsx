@@ -142,7 +142,8 @@ FormSample.defaultProps = {
   dispatch: null,
   catalogId: null,
   datasetId: null,
-  languages: []
+  languages: [],
+  isReadOnly: false
 };
 
 FormSample.propTypes = {
@@ -150,5 +151,5 @@ FormSample.propTypes = {
   catalogId: PropTypes.string,
   datasetId: PropTypes.string,
   languages: PropTypes.array,
-  isReadOnly: PropTypes.bool.isRequired
+  isReadOnly: PropTypes.bool
 };

@@ -99,6 +99,10 @@ const renderTemporalReadOnlyField = ({ item }) => (
     />
   </div>
 );
+renderTemporalReadOnlyField.propTypes = {
+  item: PropTypes.object.isRequired
+};
+
 const renderTemporalReadOnly = ({ fields }) => {
   return fields.map((item, index) =>
     renderTemporalReadOnlyField({ item, index, fields })

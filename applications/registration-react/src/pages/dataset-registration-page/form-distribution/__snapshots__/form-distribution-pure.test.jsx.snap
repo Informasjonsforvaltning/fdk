@@ -57,6 +57,7 @@ exports[`should render FormDistributionPure correctly 1`] = `
         ],
       }
     }
+    isReadOnly={false}
     languages={Array []}
     name="distribution"
     onDeleteFieldAtIndex={[Function]}

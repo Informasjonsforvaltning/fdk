@@ -11,6 +11,7 @@ exports[`should render FormReference correctly 1`] = `
     />
     <FieldArray
       component={[Function]}
+      isReadOnly={false}
       name="references"
       onDeleteFieldAtIndex={[Function]}
     />

@@ -287,7 +287,8 @@ FormDistributionPure.defaultProps = {
   catalogId: null,
   datasetId: null,
   openLicenseItems: [],
-  languages: []
+  languages: [],
+  isReadOnly: false
 };
 FormDistributionPure.propTypes = {
   initialValues: PropTypes.object.isRequired,
@@ -296,5 +297,5 @@ FormDistributionPure.propTypes = {
   datasetId: PropTypes.string,
   openLicenseItems: PropTypes.array,
   languages: PropTypes.array,
-  isReadOnly: PropTypes.bool.isRequired
+  isReadOnly: PropTypes.bool
 };

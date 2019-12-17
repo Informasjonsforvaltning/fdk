@@ -56,7 +56,9 @@ export const FormContactPoint = ({ isReadOnly }) => (
     </div>
   </form>
 );
-
 FormContactPoint.propTypes = {
-  isReadOnly: PropTypes.bool.isRequired
+  isReadOnly: PropTypes.bool
+};
+FormContactPoint.defaultProps = {
+  isReadOnly: false
 };
