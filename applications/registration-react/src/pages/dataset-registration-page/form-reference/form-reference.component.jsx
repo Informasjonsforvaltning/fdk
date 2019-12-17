@@ -164,7 +164,8 @@ FormReference.defaultProps = {
   initialValues: null,
   dispatch: null,
   catalogId: null,
-  datasetId: null
+  datasetId: null,
+  isReadOnly: false
 };
 
 FormReference.propTypes = {
@@ -172,5 +173,5 @@ FormReference.propTypes = {
   dispatch: PropTypes.func,
   catalogId: PropTypes.string,
   datasetId: PropTypes.string,
-  isReadOnly: PropTypes.bool.isRequired
+  isReadOnly: PropTypes.bool
 };

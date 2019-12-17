@@ -83,9 +83,11 @@ export const FormContentsComponent = ({ languages, isReadOnly }) => (
 );
 
 FormContentsComponent.defaultProps = {
-  languages: []
+  languages: [],
+  isReadOnly: false
 };
 
 FormContentsComponent.propTypes = {
-  languages: PropTypes.array
+  languages: PropTypes.array,
+  isReadOnly: PropTypes.bool
 };

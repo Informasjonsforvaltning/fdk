@@ -17,6 +17,7 @@ exports[`should render FormInformationModelPure correctly 1`] = `
         />
         <FieldArray
           component={[Function]}
+          isReadOnly={false}
           languages={Array []}
           linkLabel="Lenke"
           name="informationModel"

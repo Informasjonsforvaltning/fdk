@@ -4,6 +4,7 @@ exports[`should render FormSample correctly 1`] = `
 <form>
   <FieldArray
     component={[Function]}
+    isReadOnly={false}
     languages={Array []}
     name="sample"
     onDeleteFieldAtIndex={[Function]}
