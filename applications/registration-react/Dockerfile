@@ -1,48 +1,38 @@
-FROM node:12-alpine
+FROM node:12 AS build
 
-#the only reason why we need git here, is that we have designsystem in another github repo
-RUN apk add --no-cache git gettext
-# to run localhost docker
+WORKDIR /app
 
-WORKDIR /usr/src/app
+COPY  package.json package-lock.json ./
+RUN npm set progress=false && \
+  npm config set depth 0 && \
+  npm ci
 
-# most volatile files latest, in order to reuse layers.
-COPY package.json /usr/src/app/package.json
-COPY package-lock.json /usr/src/app/package-lock.json
-
-# Install app dependencies
-RUN npm install --loglevel=warn
 RUN npm audit
 
-COPY server /usr/src/app/server
-COPY start.js /usr/src/app/
-COPY config.template.js /usr/src/app/
-COPY .babelrc /usr/src/app/
-COPY webpack /usr/src/app/webpack
-COPY jest.config.js /usr/src/app/
-COPY tsconfig.json /usr/src/app/
-
-COPY test /usr/src/app/test
-COPY src /usr/src/app/src
+COPY .babelrc tsconfig.json jest.config.js ./
+COPY webpack ./webpack
+COPY src ./src
+COPY test ./test
 
 RUN npm test
+RUN npm run build:prod
 
-RUN npm run build
-
-RUN rm -rf src
-RUN rm -rf test
-RUN rm -rf coverage
-RUN rm -rf node_modules
-RUN rm package.json
-RUN rm package-lock.json
-
-RUN npm init -y
-RUN npm config set unsafe-perm true
-RUN npm install express compression lodash --loglevel error
-RUN npm install pm2 -g --loglevel error
-
-COPY entrypoint.sh /usr/src/app/
-RUN chmod +x entrypoint.sh
-EXPOSE 4300
+FROM nginx:alpine
+RUN mkdir /app
+RUN addgroup -g 1001 -S app && \
+  adduser -u 1001 -S app -G app && \
+  chown -R app:app /app && \
+  chown -R app:app /var/cache/nginx && \
+  touch /var/run/nginx.pid && \
+  chown -R app:app /var/run/nginx.pid && \
+  chmod 770 /app
+USER app:app
+WORKDIR /app
+COPY --chown=app:app nginx/nginx.conf /etc/nginx/nginx.conf
+COPY --chown=app:app nginx/app.conf /etc/nginx/conf.d/default.conf
+COPY --chown=app:app --from=build /app/dist ./
+COPY --chown=app:app entrypoint.sh config.template.js ./
+RUN dos2unix entrypoint.sh && chmod +x entrypoint.sh
 
 ENTRYPOINT ./entrypoint.sh
+EXPOSE 8080

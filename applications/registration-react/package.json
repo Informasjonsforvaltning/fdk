@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --hot --inline --config-register @babel/register --config webpack/dev.config.js",
-    "build": "webpack --config-register @babel/register --config webpack/prod.config.js -p",
+    "build:prod": "webpack --config-register @babel/register --config webpack/prod.config.js -p",
     "lint:project": "eslint .",
     "lint:project:fix": "eslint . --fix",
     "test": "jest",

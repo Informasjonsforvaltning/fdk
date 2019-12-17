@@ -128,7 +128,7 @@ services:
   registration-react:
     build: ./applications/registration-react
     ports:
-      - "4300:4300"
+      - "4300:8080"
     volumes:
       - ./applications/registration-react/src:/usr/src/app/src
     environment:
