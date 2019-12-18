@@ -8,13 +8,13 @@ import { fetchApisIfNeededAction } from '../../redux/modules/apis';
 
 const mapStateToProps = state => {
   const { catalogs, apis } = state;
-  const { catalogItems, isFetching } = catalogs || {};
+  const { catalogItems, isFetching: isFetchingCatalogs } = catalogs || {};
   const datasetsState = selectorForDatasetsState(state);
   return {
     catalogItems,
     datasetsState,
     apis,
-    isFetching
+    isFetchingCatalogs
   };
 };
 
