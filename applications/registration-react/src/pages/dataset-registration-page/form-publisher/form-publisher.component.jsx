@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 
 import localization from '../../../services/localization';
-import Helptext from '../../../components/helptext/helptext.component';
+import { Helptext } from '../../../components/helptext/helptext.component';
 import { SearchPublisher } from './search-publisher/search-publisher.component';
 import { PublisherField } from './field-publisher/field-publisher.component';
 import { getTranslateText } from '../../../services/translateText';

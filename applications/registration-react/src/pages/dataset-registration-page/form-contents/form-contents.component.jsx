@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { FieldArray } from 'redux-form';
 
 import localization from '../../../services/localization';
-import Helptext from '../../../components/helptext/helptext.component';
+import { Helptext } from '../../../components/helptext/helptext.component';
 import TextAreaField from '../../../components/fields/field-textarea/field-textarea.component';
 import MultilingualField from '../../../components/multilingual-field/multilingual-field.component';
 import { Standard } from './standard/standard.component';

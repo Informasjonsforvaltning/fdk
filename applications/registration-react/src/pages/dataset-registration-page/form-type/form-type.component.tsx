@@ -3,7 +3,7 @@ import { Field } from 'redux-form';
 import _ from 'lodash';
 
 import localization from '../../../services/localization';
-import Helptext from '../../../components/helptext/helptext.component';
+import { Helptext } from '../../../components/helptext/helptext.component';
 import CheckBoxFieldType from './field-checkbox-type/field-checkbox.component';
 import { typeValues } from '../dataset-registration-page.logic';
 

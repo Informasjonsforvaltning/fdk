@@ -4,7 +4,7 @@ import { FieldArray } from 'redux-form';
 
 import localization from '../../../services/localization';
 
-import Helptext from '../../../components/helptext/helptext.component';
+import { Helptext } from '../../../components/helptext/helptext.component';
 import InformationModel from './information-model/information-model.component';
 
 export const FormInformationModelPure = ({ languages, isReadOnly }) => (

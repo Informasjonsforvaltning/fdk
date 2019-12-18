@@ -1,7 +1,7 @@
 import React from 'react';
 import { Field } from 'redux-form';
 import localization from '../../../services/localization';
-import Helptext from '../../../components/helptext/helptext.component';
+import { Helptext } from '../../../components/helptext/helptext.component';
 import InputField from '../../../components/fields/field-input/field-input.component';
 
 export const FormMeta = () => (

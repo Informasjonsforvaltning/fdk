@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Field, FieldArray } from 'redux-form';
 
 import localization from '../../../services/localization';
-import Helptext from '../../../components/helptext/helptext.component';
+import { Helptext } from '../../../components/helptext/helptext.component';
 import TagsInputFieldArray from '../../../components/fields/field-input-tags-objects/tags-input-field-array.component';
 import TagsInputFieldArrayReadOnly from '../../../components/fields/field-input-tags-objects-readonly/field-input-tags-objects-readonly.component';
 import DatepickerField from '../../../components/fields/field-datepicker/field-datepicker.component';

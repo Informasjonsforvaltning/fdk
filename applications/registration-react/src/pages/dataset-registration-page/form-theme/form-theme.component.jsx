@@ -4,7 +4,7 @@ import { Field } from 'redux-form';
 import _ from 'lodash';
 
 import localization from '../../../services/localization';
-import Helptext from '../../../components/helptext/helptext.component';
+import { Helptext } from '../../../components/helptext/helptext.component';
 import CheckboxFieldTheme from './theme-checkbox/theme-checkbox.component';
 import { AlertMessage } from '../../../components/alert-message/alert-message.component';
 import { themesValues } from '../dataset-registration-page.logic';

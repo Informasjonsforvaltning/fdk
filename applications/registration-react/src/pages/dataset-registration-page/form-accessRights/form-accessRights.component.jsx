@@ -5,7 +5,7 @@ import includes from 'lodash/includes';
 import get from 'lodash/get';
 
 import localization from '../../../services/localization';
-import Helptext from '../../../components/helptext/helptext.component';
+import { Helptext } from '../../../components/helptext/helptext.component';
 import InputField from '../../../components/fields/field-input/field-input.component';
 import InputFieldReadonly from '../../../components/fields/field-input-readonly/field-input-readonly.component';
 import MultilingualField from '../../../components/multilingual-field/multilingual-field.component';

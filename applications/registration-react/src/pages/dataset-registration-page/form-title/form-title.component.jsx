@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Field, FieldArray } from 'redux-form';
 
 import localization from '../../../services/localization';
-import Helptext from '../../../components/helptext/helptext.component';
+import { Helptext } from '../../../components/helptext/helptext.component';
 import InputField from '../../../components/fields/field-input/field-input.component';
 import LinkReadonlyField from '../../../components/fields/field-link-readonly/field-link-readonly.component';
 import InputFieldReadonly from '../../../components/fields/field-input-readonly/field-input-readonly.component';

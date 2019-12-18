@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Field, FieldArray } from 'redux-form';
 import localization from '../../../services/localization';
-import Helptext from '../../../components/helptext/helptext.component';
+import { Helptext } from '../../../components/helptext/helptext.component';
 import SelectField from '../../../components/fields/field-select/field-select.component';
 import { datasetFormPatchThunk } from '../formsLib/asyncValidateDatasetInvokePatch';
 import { getTranslateText } from '../../../services/translateText';

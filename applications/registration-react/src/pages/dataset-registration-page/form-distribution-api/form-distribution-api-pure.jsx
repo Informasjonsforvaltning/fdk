@@ -4,7 +4,7 @@ import { Field, FieldArray } from 'redux-form';
 import _ from 'lodash';
 
 import localization from '../../../services/localization';
-import Helptext from '../../../components/helptext/helptext.component';
+import { Helptext } from '../../../components/helptext/helptext.component';
 import { InputTagsAPIsField } from '../field-tagsinput-apis/field-tagsinput-apis.component';
 import { getConfig } from '../../../config';
 import { getTranslateText } from '../../../services/translateText';
