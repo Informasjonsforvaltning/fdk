@@ -194,7 +194,7 @@ services:
       - elasticsearch5
 
   user-api:
-    image: dcatno/user-api:latest
+    image: eu.gcr.io/fdk-infra/user-api:latest
     expose:
       - "8080"
     depends_on:
