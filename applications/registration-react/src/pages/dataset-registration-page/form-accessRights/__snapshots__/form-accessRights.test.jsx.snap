@@ -75,11 +75,6 @@ exports[`should render FormAccessRights correctly with syncErrors 1`] = `
       value="http://publications.europa.eu/resource/authority/access-right/NON_PUBLIC"
     />
     <div
-      className="alert alert-danger mt-3"
-    >
-      Feil
-    </div>
-    <div
       className="mt-4"
     >
       <div
@@ -91,7 +86,6 @@ exports[`should render FormAccessRights correctly with syncErrors 1`] = `
         />
         <FieldArray
           component={[Function]}
-          isReadOnly={false}
           languages={Array []}
           linkLabel="Lenke"
           name="legalBasisForRestriction"
@@ -108,7 +102,6 @@ exports[`should render FormAccessRights correctly with syncErrors 1`] = `
         />
         <FieldArray
           component={[Function]}
-          isReadOnly={false}
           languages={Array []}
           linkLabel="Lenke"
           name="legalBasisForProcessing"
@@ -125,7 +118,6 @@ exports[`should render FormAccessRights correctly with syncErrors 1`] = `
         />
         <FieldArray
           component={[Function]}
-          isReadOnly={false}
           languages={Array []}
           linkLabel="Lenke"
           name="legalBasisForAccess"
