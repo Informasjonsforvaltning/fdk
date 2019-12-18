@@ -6,7 +6,7 @@ import CopyWebpackPlugin from 'copy-webpack-plugin';
 import { BaseHrefWebpackPlugin } from 'base-href-webpack-plugin';
 
 export default {
-  entry: ['@babel/polyfill', './src/index.jsx'],
+  entry: ['./src/index.jsx'],
   output: {
     path: path.join(__dirname, '../dist'),
     filename: 'bundle.js'
