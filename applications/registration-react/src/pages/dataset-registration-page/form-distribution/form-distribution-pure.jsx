@@ -41,7 +41,7 @@ const renderFomatsReadOnly = ({ input }) => {
   return <div className="pl-3">{input.value.join(', ')}</div>;
 };
 renderFomatsReadOnly.propTypes = {
-  input: PropTypes.bool.isRequired
+  input: PropTypes.object.isRequired
 };
 
 const renderLicence = ({ input }) => {
@@ -52,7 +52,7 @@ const renderLicence = ({ input }) => {
   );
 };
 renderLicence.propTypes = {
-  input: PropTypes.bool.isRequired
+  input: PropTypes.object.isRequired
 };
 
 export const renderDistributions = ({
