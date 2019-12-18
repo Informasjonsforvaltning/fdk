@@ -78,7 +78,7 @@ renderTemporal.propTypes = {
 };
 
 const renderTemporalReadOnlyField = ({ item }) => (
-  <div className="pl-3">
+  <div className="pl-3" key={item}>
     <Field
       name={`${item}.endDate`}
       type="text"
