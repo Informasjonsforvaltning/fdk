@@ -48,12 +48,12 @@ const mapDispatchToProps = (dispatch, { history }) => ({
 });
 
 const withReadOnly = withProps(({ catalogId }) => ({
-  isReadOnly: !authService.hasOrganizationAdminPermission(catalogId)
+  isReadOnly: !authService.hasOrganizationWritePermission(catalogId)
 }));
 
 export const enhance = compose(
-  withReadOnly,
   mapRouteParams,
+  withReadOnly,
   connect(mapStateToProps, mapDispatchToProps)
 );
 
