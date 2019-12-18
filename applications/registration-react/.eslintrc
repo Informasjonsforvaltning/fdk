@@ -98,6 +98,6 @@
     "react-hooks/rules-of-hooks": "error",
     "eslint-comments/no-unused-disable": "error",
     "jsx-a11y/label-has-for": "off",
-    "no-underscore-dangle": ["error", { "allow": ["_embedded", "_source"] }]
+    "no-underscore-dangle": ["error", { "allow": ["_embedded", "_source", "_lastModified"] }]
   }
 }

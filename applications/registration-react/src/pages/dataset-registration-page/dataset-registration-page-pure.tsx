@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import _ from 'lodash';
 import pick from 'lodash/pick';
 
@@ -63,7 +62,36 @@ async function deleteAndNavigateToList({
   }
 }
 
-export function DatasetRegistrationPagePure(props) {
+interface DatasetRegistrationPagePureProps {
+  dispatchEnsureData: (string) => void;
+  dispatchDeleteDataset: () => void;
+  catalogId: string;
+  datasetId: string;
+  themesItems: {}[];
+  provenanceItems: {}[];
+  frequencyItems: {}[];
+  form: any;
+  datasetItem: { registrationStatus: string; _lastModified: string };
+  referenceTypesItems: {}[];
+  referenceDatasetsItems: {}[];
+  openLicenseItems: {}[];
+  datasetFormStatus: {
+    isSaving: boolean;
+    error: any;
+    justPublishedOrUnPublished: boolean;
+  };
+  history: {}[];
+  losItems: {}[];
+  languages: string[];
+  setInputLanguages: (any) => void;
+  toggleInputLanguage: () => void;
+  allowDelegatedRegistration: boolean;
+  isReadOnly: boolean;
+}
+
+export function DatasetRegistrationPagePure(
+  props: DatasetRegistrationPagePureProps
+) {
   const {
     dispatchEnsureData,
     form,
@@ -128,7 +156,7 @@ export function DatasetRegistrationPagePure(props) {
     datasetItem
       ? [
           ...new Set(
-            deepKeys(pick(datasetItem, translatableFields), (_, v) => !!v)
+            deepKeys(pick(datasetItem, translatableFields), (__, v) => !!v)
           )
         ]
       : [];
@@ -455,27 +483,4 @@ DatasetRegistrationPagePure.defaultProps = {
   toggleInputLanguage: _.noop,
   allowDelegatedRegistration: false,
   isReadOnly: false
-};
-
-DatasetRegistrationPagePure.propTypes = {
-  dispatchEnsureData: PropTypes.func,
-  dispatchDeleteDataset: PropTypes.func,
-  catalogId: PropTypes.string,
-  datasetId: PropTypes.string,
-  themesItems: PropTypes.array,
-  provenanceItems: PropTypes.array,
-  frequencyItems: PropTypes.array,
-  form: PropTypes.object,
-  datasetItem: PropTypes.object,
-  referenceTypesItems: PropTypes.array,
-  referenceDatasetsItems: PropTypes.array,
-  openLicenseItems: PropTypes.array,
-  datasetFormStatus: PropTypes.object,
-  history: PropTypes.object,
-  losItems: PropTypes.array,
-  languages: PropTypes.array,
-  setInputLanguages: PropTypes.func,
-  toggleInputLanguage: PropTypes.func,
-  allowDelegatedRegistration: PropTypes.bool,
-  isReadOnly: PropTypes.bool
 };
