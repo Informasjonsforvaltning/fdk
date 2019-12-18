@@ -6,8 +6,8 @@
   "scripts": {
     "start": "webpack-dev-server --hot --inline --config-register @babel/register --config webpack/dev.config.js",
     "build:prod": "webpack --config-register @babel/register --config webpack/prod.config.js -p",
-    "lint:project": "eslint .",
-    "lint:project:fix": "eslint . --fix",
+    "lint:project": "eslint \"**\"",
+    "lint:project:fix": "eslint \"**\" --fix",
     "test": "jest",
     "test:coverage": "jest --coverage",
     "tdd": "jest --watch"
