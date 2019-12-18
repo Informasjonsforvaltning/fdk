@@ -53,7 +53,7 @@ export const renderProvenance = componentProps => {
                 handleProvenanceChange(componentProps, e, provenanceItem)
               }
             />
-            {/* eslint-disable-next-line jsx-a11y/control-has-associated-label,jsx-a11y/label-has-associated-control */}
+            {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
             <label
               className="form-check-label fdk-form-check-label"
               htmlFor={code}
