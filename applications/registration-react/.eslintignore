@@ -1,8 +1,9 @@
-.nyc_output
 coverage
 dist
 node_modules
-target
 Dockerfile
 *.sh
 nginx
+*.scss
+assets
+img
