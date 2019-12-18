@@ -6,7 +6,10 @@ export const getConcepts = async orgnr =>
   axios
     .get(`${getConfig().conceptRegistrationApi.host}/begreper`, {
       params: { orgNummer: orgnr },
-      headers: { Authorization: `Bearer ${await getToken()}` }
+      headers: {
+        Authorization: `Bearer ${await getToken()}`,
+        Accept: 'application/json'
+      }
     })
     .then(r => r.data);
 

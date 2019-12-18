@@ -8,7 +8,8 @@ export const registrationApi = async (method, path, data) =>
     method,
     data,
     headers: {
-      Authorization: `Bearer ${await getToken()}`
+      Authorization: `Bearer ${await getToken()}`,
+      Accept: 'application/json'
     }
   }).then(r => r.data);
 

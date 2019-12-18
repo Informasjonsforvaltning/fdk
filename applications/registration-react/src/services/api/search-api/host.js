@@ -9,4 +9,9 @@ For developer convenience, different sub-apis can be configured on different hos
 */
 
 export const searchApiGet = ({ url, params, authorization }) =>
-  axios.get(url, { params, headers: { authorization } }).then(r => r.data);
+  axios
+    .get(url, {
+      params,
+      headers: { authorization, Accept: 'application/json' }
+    })
+    .then(r => r.data);
