@@ -5,7 +5,7 @@ import { Field } from 'redux-form';
 import localization from '../../../services/localization';
 import { Helptext } from '../../../components/helptext/helptext.component';
 import ConceptTagsInputField from './concept-tags-input-field/concept-tags-input-field.component';
-import ConceptTagReadOnlyField from './concept-tags-readonly-field/concept-tags-readonly-field';
+import { ConceptTagReadOnlyField } from './concept-tags-readonly-field/concept-tags-readonly-field';
 import TagsInputFieldArray from '../../../components/fields/field-input-tags-objects/tags-input-field-array.component';
 import MultilingualField from '../../../components/multilingual-field/multilingual-field.component';
 import InputFieldReadonly from '../../../components/fields/field-input-readonly/field-input-readonly.component';

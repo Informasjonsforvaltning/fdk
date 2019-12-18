@@ -68,5 +68,3 @@ ConceptTagReadOnlyField.propTypes = {
   input: PropTypes.object,
   languages: PropTypes.array
 };
-
-export default ConceptTagReadOnlyField;
