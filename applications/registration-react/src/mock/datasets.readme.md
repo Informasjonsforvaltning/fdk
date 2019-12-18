@@ -1,0 +1,1 @@
+curl 'https://registrering.it1.fellesdatakatalog.brreg.no/catalogs/910258028/datasets?size=1000' -H 'accept: application/json' 'authorization: Bearer <token>'

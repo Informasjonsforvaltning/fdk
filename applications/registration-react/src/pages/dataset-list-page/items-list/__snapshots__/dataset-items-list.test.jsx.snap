@@ -24,7 +24,2012 @@ exports[`should render DatasetItemsList correctly with datasetItems 1`] = `
         "title",
       ]
     }
-    items={null}
+    items={
+      Array [
+        Object {
+          "_lastModified": "2019-11-21T08:38:35.141+0000",
+          "catalogId": "910258028",
+          "description": Object {},
+          "id": "c536ddb2-1133-4443-96d1-ef0445d43543",
+          "objective": Object {},
+          "publisher": Object {
+            "name": "LILAND OG ERDAL REVISJON",
+            "uri": "https://data.brreg.no/enhetsregisteret/api/enheter/910258028",
+          },
+          "registrationStatus": "DRAFT",
+          "title": Object {},
+          "uri": "http://brreg.no/catalogs/910258028/datasets/c536ddb2-1133-4443-96d1-ef0445d43543",
+        },
+        Object {
+          "_lastModified": "2019-09-04T12:32:26.621+0000",
+          "accessRights": Object {
+            "prefLabel": Object {},
+            "uri": "http://publications.europa.eu/resource/authority/access-right/PUBLIC",
+          },
+          "catalogId": "910258028",
+          "concepts": Array [
+            Object {
+              "altLabel": Array [],
+              "contactPoint": Object {
+                "email": "begrepskatalogen@skatteetaten.no",
+              },
+              "definition": Object {
+                "text": Object {
+                  "nb": "drikk som inneholder over 4,7 og mindre enn 22 volumprosent alkohol",
+                },
+              },
+              "hiddenLabel": Array [],
+              "id": "893bdea3-609a-4fff-b24a-c66bc99c28ad",
+              "identifier": "http://begrepskatalogen/begrep/37446662-ef03-11e8-a4aa-005056821322",
+              "prefLabel": Object {
+                "nb": "annen alkoholholdig drikk over 4,7 volumprosent",
+              },
+              "subject": Object {
+                "nb": "Særavgift/Særavgift - Avgift på alkoholholdige drikkevarer",
+              },
+              "uri": "https://fellesdatakatalog.brreg.no/api/concepts/893bdea3-609a-4fff-b24a-c66bc99c28ad",
+            },
+          ],
+          "description": Object {
+            "nb": "Når testdirektøren er på fest, danser...",
+          },
+          "id": "993649c4-fd9d-4f49-906a-7ed0ab23cb70",
+          "keyword": Array [],
+          "landingPage": Array [
+            "",
+          ],
+          "language": Array [
+            Object {
+              "code": "SMI",
+              "prefLabel": Object {},
+              "uri": "http://publications.europa.eu/resource/authority/language/SMI",
+            },
+            Object {
+              "code": "NOR",
+              "prefLabel": Object {},
+              "uri": "http://publications.europa.eu/resource/authority/language/NOR",
+            },
+            Object {
+              "code": "ENG",
+              "prefLabel": Object {
+                "nb": "Engelsk",
+              },
+              "uri": "http://publications.europa.eu/resource/authority/language/ENG",
+            },
+          ],
+          "legalBasisForAccess": Array [
+            Object {
+              "prefLabel": Object {},
+              "uri": "",
+            },
+          ],
+          "legalBasisForProcessing": Array [
+            Object {
+              "prefLabel": Object {},
+              "uri": "",
+            },
+          ],
+          "legalBasisForRestriction": Array [
+            Object {
+              "prefLabel": Object {},
+              "uri": "",
+            },
+          ],
+          "objective": Object {},
+          "publisher": Object {
+            "name": "LILAND OG ERDAL REVISJON",
+            "uri": "https://data.brreg.no/enhetsregisteret/api/enheter/910258028",
+          },
+          "registrationStatus": "PUBLISH",
+          "spatial": Array [],
+          "subject": Array [
+            Object {
+              "altLabel": Array [],
+              "definition": Object {
+                "nb": "drikk som inneholder over 4,7 og mindre enn 22 volumprosent alkohol",
+              },
+              "identifier": "http://begrepskatalogen/begrep/37446662-ef03-11e8-a4aa-005056821322",
+              "prefLabel": Object {
+                "nb": "annen alkoholholdig drikk over 4,7 volumprosent",
+              },
+              "uri": "https://fellesdatakatalog.brreg.no/api/concepts/893bdea3-609a-4fff-b24a-c66bc99c28ad",
+            },
+          ],
+          "temporal": Array [
+            Object {},
+          ],
+          "theme": Array [
+            Object {
+              "uri": "http://psi.norge.no/los/tema/skatt-og-avgift",
+            },
+          ],
+          "title": Object {
+            "nb": "Prodtest uten Sindre",
+          },
+          "uri": "http://brreg.no/catalogs/910258028/datasets/993649c4-fd9d-4f49-906a-7ed0ab23cb70",
+        },
+        Object {
+          "_lastModified": "2019-10-21T11:34:56.275+0000",
+          "accessRights": Object {
+            "prefLabel": Object {},
+            "uri": "http://publications.europa.eu/resource/authority/access-right/PUBLIC",
+          },
+          "catalogId": "910258028",
+          "description": Object {
+            "nb": "to",
+          },
+          "id": "21e74a2f-52c0-4fa2-9564-393ebabf0d10",
+          "landingPage": Array [
+            "",
+          ],
+          "legalBasisForAccess": Array [
+            Object {
+              "prefLabel": Object {},
+              "uri": "",
+            },
+          ],
+          "legalBasisForProcessing": Array [
+            Object {
+              "prefLabel": Object {},
+              "uri": "",
+            },
+          ],
+          "legalBasisForRestriction": Array [
+            Object {
+              "prefLabel": Object {},
+              "uri": "",
+            },
+          ],
+          "objective": Object {},
+          "publisher": Object {
+            "name": "LILAND OG ERDAL REVISJON",
+            "uri": "https://data.brreg.no/enhetsregisteret/api/enheter/910258028",
+          },
+          "registrationStatus": "DRAFT",
+          "theme": Array [
+            Object {
+              "uri": "http://psi.norge.no/los/tema/helse-og-omsorg",
+            },
+          ],
+          "title": Object {
+            "nb": "en",
+          },
+          "uri": "http://brreg.no/catalogs/910258028/datasets/21e74a2f-52c0-4fa2-9564-393ebabf0d10",
+        },
+        Object {
+          "_lastModified": "2019-06-24T12:18:07.584+0000",
+          "accessRights": Object {
+            "prefLabel": Object {},
+            "uri": "http://publications.europa.eu/resource/authority/access-right/PUBLIC",
+          },
+          "accrualPeriodicity": Object {
+            "prefLabel": Object {},
+            "uri": "http://publications.europa.eu/resource/authority/frequency",
+          },
+          "catalogId": "910258028",
+          "concepts": Array [
+            Object {
+              "altLabel": Array [],
+              "contactPoint": Object {
+                "email": "informasjonsforvaltning@brreg.no",
+                "telephone": "+4775007500",
+              },
+              "definition": Object {
+                "remark": Object {
+                  "nb": "Dokumentobjekt er et nivå i arkivstrukturen, det vil si en arkivenhet. Dokumentobjekt er det laveste nivået i arkivstrukturen. 
+
+Et dokumentobjekt skal referere til én og kun en dokumentfil. Dokumentfila inneholder selve dokumentet.  Dersom dokumentet er arkivert i flere versjoner, må vi ha et dokumentobjekt og en dokumentfil for hver versjon. Hver versjon av dokumentet kan dessuten arkiveres i flere forskjellige formater, og da må det i tillegg opprettes egne dokumentobjekter og dokumentfiler for hvert format. I noen tilfeller kan det også være aktuelt å lage varianter av enkelte dokumenter.",
+                },
+                "source": Object {
+                  "prefLabel": Object {
+                    "nb": "Arkivverket (2016) Noark5-standarden [Internett]. Versjon 4.0 Standard for elektronisk arkiv. Tilgjengelig fra https://www.arkivverket.no/ [Lest 10. januar 2018]",
+                  },
+                },
+                "text": Object {
+                  "nb": "metadata til dokumentfiler  ",
+                },
+              },
+              "hiddenLabel": Array [],
+              "id": "3d3c60b7-8051-41a6-858d-8d4d9b1e73b5",
+              "identifier": "http://data.brreg.no/begrep/28229",
+              "prefLabel": Object {
+                "nb": "dokumentobjekt",
+              },
+              "subject": Object {
+                "nb": "Arkiv",
+              },
+              "uri": "https://fellesdatakatalog.brreg.no/api/concepts/3d3c60b7-8051-41a6-858d-8d4d9b1e73b5",
+            },
+            Object {
+              "altLabel": Array [],
+              "contactPoint": Object {
+                "email": "informasjonsforvaltning@brreg.no",
+                "telephone": "+4775007500",
+              },
+              "definition": Object {
+                "remark": Object {
+                  "nb": "rettighetshaver i henhold til en pantheftelse oppstått gjennom en tvangsforretning.
+
+",
+                },
+                "source": Object {
+                  "prefLabel": Object {
+                    "nb": "Gisle, J. (2007). _Jusleksikon._ Oslo: Kunnskapsforlaget.",
+                  },
+                },
+                "text": Object {
+                  "nb": "person eller enhet som begjærer tvangsfullbyrdelse av et krav hos namsmyndigheten",
+                },
+              },
+              "hiddenLabel": Array [],
+              "id": "8a276e41-712f-47f4-8e2a-0129f75cbe37",
+              "identifier": "http://data.brreg.no/begrep/43442",
+              "prefLabel": Object {
+                "nb": "saksøker",
+              },
+              "subject": Object {
+                "nb": "Tvangsfullbyrdelse",
+              },
+              "uri": "https://fellesdatakatalog.brreg.no/api/concepts/8a276e41-712f-47f4-8e2a-0129f75cbe37",
+            },
+            Object {
+              "altLabel": Array [],
+              "contactPoint": Object {
+                "email": "informasjonsforvaltning@brreg.no",
+                "telephone": "+4775007500",
+              },
+              "definition": Object {
+                "remark": Object {
+                  "nb": "Private beslagsforbud kan bestemmes av en gavegiver eller ved et testament, jf. dekningsloven § 3-1. Ved vederlagsfrie overdragelser av formuesgoder kan giveren treffe beslutning om at de overdratte verdier skal være unntatt fra kreditorbeslag på mottagerens hånd. Forbudet tinglyses i Løsøreregisteret for å få rettsvern mot tredjemann.",
+                },
+                "source": Object {
+                  "prefLabel": Object {
+                    "nb": "Privat beslagsforbud, i: Kartverket [Internett]. Tilgjengelig fra https://www.kartverket.no/eiendom/tinglyse-rettighet/Beslagsforbud/ [Lest 21.9.2018]",
+                  },
+                },
+                "text": Object {
+                  "nb": "forbud mot å ta pant i et formuesgode som tilhører skyldneren",
+                },
+              },
+              "hiddenLabel": Array [],
+              "id": "6997ab29-28fb-43a2-ad9c-6f794c175d96",
+              "identifier": "http://data.brreg.no/begrep/52083",
+              "prefLabel": Object {
+                "nb": "privat beslagsforbud",
+              },
+              "subject": Object {
+                "nb": "Tinglysing",
+              },
+              "uri": "https://fellesdatakatalog.brreg.no/api/concepts/6997ab29-28fb-43a2-ad9c-6f794c175d96",
+            },
+          ],
+          "conformsTo": Array [
+            Object {
+              "prefLabel": Object {
+                "nb": "Uten standard",
+              },
+              "uri": "https://standard.no",
+            },
+          ],
+          "contactPoint": Array [
+            Object {
+              "email": "mail@mail.no",
+              "hasTelephone": "00221",
+              "hasURL": "",
+              "organizationUnit": "Brønnøysundregistrene",
+            },
+          ],
+          "description": Object {
+            "nb": "En samling av navneendringer på statlige eide foretak.   
+Her er dagens ekstra tekst",
+          },
+          "distribution": Array [
+            Object {
+              "accessURL": Array [
+                "https://vg.no",
+              ],
+              "conformsTo": Array [
+                Object {
+                  "prefLabel": Object {
+                    "nb": "Helt standard",
+                  },
+                  "uri": "https://standard.no",
+                },
+              ],
+              "description": Object {
+                "nb": "Hvordan ser dette ut?",
+              },
+              "format": Array [
+                "application/ATXML",
+              ],
+              "license": Object {
+                "uri": "http://creativecommons.org/publicdomain/zero/1.0/",
+              },
+              "page": Array [
+                Object {
+                  "prefLabel": Object {},
+                  "uri": "https://lenke.no",
+                },
+              ],
+              "type": "API",
+            },
+          ],
+          "hasAccuracyAnnotation": Object {
+            "hasBody": Object {
+              "nb": "Nei",
+            },
+            "inDimension": "iso:Accuracy",
+            "motivatedBy": "dqv:qualityAssessment",
+          },
+          "hasAvailabilityAnnotation": Object {
+            "hasBody": Object {
+              "nb": "Nei",
+            },
+            "inDimension": "iso:Availability",
+            "motivatedBy": "dqv:qualityAssessment",
+          },
+          "hasCompletenessAnnotation": Object {
+            "hasBody": Object {
+              "nb": "Nei",
+            },
+            "inDimension": "iso:Completeness",
+            "motivatedBy": "dqv:qualityAssessment",
+          },
+          "hasCurrentnessAnnotation": Object {
+            "hasBody": Object {
+              "nb": "Nei",
+            },
+            "inDimension": "iso:Currentness",
+            "motivatedBy": "dqv:qualityAssessment",
+          },
+          "hasRelevanceAnnotation": Object {
+            "hasBody": Object {
+              "nb": "Nei",
+            },
+            "inDimension": "iso:Relevance",
+            "motivatedBy": "dqv:qualityAssessment",
+          },
+          "id": "f0f8a93d-4f61-4f2a-845a-9550b51ff9d8",
+          "informationModel": Array [
+            Object {
+              "prefLabel": Object {
+                "nb": "modell",
+              },
+              "uri": "https://www.it1.fellesdatakatalog.brreg.no/informationmodels/904e5a47-08fb-464a-8127-c8e890728658",
+            },
+          ],
+          "issued": "2019-04-10T22:00:00.000+0000",
+          "keyword": Array [
+            Object {
+              "nb": "statoil",
+            },
+            Object {
+              "nb": "equinor",
+            },
+            Object {
+              "nb": "nsb",
+            },
+            Object {
+              "nb": "vy",
+            },
+          ],
+          "landingPage": Array [
+            "",
+          ],
+          "language": Array [
+            Object {
+              "code": "ENG",
+              "prefLabel": Object {},
+              "uri": "http://publications.europa.eu/resource/authority/language/ENG",
+            },
+            Object {
+              "code": "NOR",
+              "prefLabel": Object {},
+              "uri": "http://publications.europa.eu/resource/authority/language/NOR",
+            },
+            Object {
+              "code": "SMI",
+              "prefLabel": Object {
+                "nb": "Samisk",
+              },
+              "uri": "http://publications.europa.eu/resource/authority/language/SMI",
+            },
+          ],
+          "legalBasisForAccess": Array [
+            Object {
+              "prefLabel": Object {},
+              "uri": "",
+            },
+          ],
+          "legalBasisForProcessing": Array [
+            Object {
+              "prefLabel": Object {},
+              "uri": "",
+            },
+          ],
+          "legalBasisForRestriction": Array [
+            Object {
+              "prefLabel": Object {},
+              "uri": "",
+            },
+          ],
+          "modified": "2019-04-03T22:00:00.000+0000",
+          "objective": Object {},
+          "provenance": Object {
+            "code": "BRUKER",
+            "prefLabel": Object {
+              "en": "User collection",
+              "nb": "Brukerinnsamlede data",
+              "nn": "Brukerinnsamlede data",
+            },
+            "uri": "http://data.brreg.no/datakatalog/provinens/bruker",
+          },
+          "publisher": Object {
+            "name": "LILAND OG ERDAL REVISJON",
+            "uri": "https://data.brreg.no/enhetsregisteret/api/enheter/910258028",
+          },
+          "references": Array [
+            Object {
+              "referenceType": Object {
+                "code": "hasVersion",
+                "prefLabel": Object {},
+                "uri": "http://purl.org/dc/terms/hasVersion",
+              },
+              "source": Object {
+                "uri": "http://brreg.no/catalogs/910258028/datasets/f0f8a93d-4f61-4f2a-845a-9550b51ff9d8",
+              },
+            },
+          ],
+          "registrationStatus": "PUBLISH",
+          "spatial": Array [
+            Object {
+              "prefLabel": Object {},
+              "uri": "https://data.geonorge.no/administrativeEnheter/fylke/id/173142",
+            },
+          ],
+          "subject": Array [
+            Object {
+              "altLabel": Array [],
+              "definition": Object {
+                "nb": "metadata til dokumentfiler  ",
+              },
+              "identifier": "http://data.brreg.no/begrep/28229",
+              "prefLabel": Object {
+                "nb": "dokumentobjekt",
+              },
+              "uri": "https://fellesdatakatalog.brreg.no/api/concepts/3d3c60b7-8051-41a6-858d-8d4d9b1e73b5",
+            },
+            Object {
+              "altLabel": Array [],
+              "definition": Object {
+                "nb": "person eller enhet som begjærer tvangsfullbyrdelse av et krav hos namsmyndigheten",
+              },
+              "identifier": "http://data.brreg.no/begrep/43442",
+              "prefLabel": Object {
+                "nb": "saksøker",
+              },
+              "uri": "https://fellesdatakatalog.brreg.no/api/concepts/8a276e41-712f-47f4-8e2a-0129f75cbe37",
+            },
+            Object {
+              "altLabel": Array [],
+              "definition": Object {
+                "nb": "forbud mot å ta pant i et formuesgode som tilhører skyldneren",
+              },
+              "identifier": "http://data.brreg.no/begrep/52083",
+              "prefLabel": Object {
+                "nb": "privat beslagsforbud",
+              },
+              "uri": "https://fellesdatakatalog.brreg.no/api/concepts/6997ab29-28fb-43a2-ad9c-6f794c175d96",
+            },
+          ],
+          "temporal": Array [
+            Object {
+              "endDate": "2019-04-18T22:00:00.000+0000",
+              "startDate": "2015-04-15T22:00:00.000+0000",
+            },
+          ],
+          "theme": Array [
+            Object {
+              "title": Object {
+                "nb": "Transport",
+              },
+              "uri": "http://publications.europa.eu/resource/authority/data-theme/TRAN",
+            },
+            Object {
+              "title": Object {
+                "nb": "Vitenskap og teknologi",
+              },
+              "uri": "http://publications.europa.eu/resource/authority/data-theme/TECH",
+            },
+            Object {
+              "title": Object {
+                "nb": "Befolkning og samfunn",
+              },
+              "uri": "http://publications.europa.eu/resource/authority/data-theme/SOCI",
+            },
+            Object {
+              "uri": "http://psi.norge.no/los/tema/landbruk",
+            },
+          ],
+          "title": Object {
+            "nb": "Navneendringer",
+          },
+          "type": "Tesauri",
+          "uri": "http://brreg.no/catalogs/910258028/datasets/f0f8a93d-4f61-4f2a-845a-9550b51ff9d8",
+        },
+        Object {
+          "_lastModified": "2019-09-30T10:54:40.728+0000",
+          "accessRights": Object {
+            "prefLabel": Object {},
+            "uri": "http://publications.europa.eu/resource/authority/access-right/PUBLIC",
+          },
+          "catalogId": "910258028",
+          "concepts": Array [
+            Object {
+              "altLabel": Array [],
+              "application": Array [],
+              "contactPoint": Object {
+                "email": "informasjonsforvaltning@brreg.no",
+                "telephone": "+4775007500",
+              },
+              "definition": Object {
+                "remark": Object {
+                  "nb": "En sak skal knyttes til en saksansvarlig, selv om det kan være forskjellige saksbehandlere til de ulike dokumentene i saken.",
+                },
+                "source": Object {
+                  "prefLabel": Object {
+                    "nb": "Arkivverket (2016) Noark5-standarden [Internett]. Versjon 4.0 Standard for elektronisk arkiv. Tilgjengelig fra https://www.arkivverket.no/ [Lest 10. januar 2018]",
+                  },
+                },
+                "sources": Array [],
+                "text": Object {
+                  "nb": "person som er ansvarlig for behandling av saken som helhet",
+                },
+              },
+              "hiddenLabel": Array [
+                Object {
+                  "nb": "Mappeansvarlig",
+                },
+              ],
+              "id": "482ef166-14b1-4453-b842-11e248e28631",
+              "identifier": "http://data.brreg.no/begrep/28156",
+              "prefLabel": Object {
+                "nb": "saksansvarlig",
+              },
+              "subject": Object {
+                "nb": "Arkiv",
+              },
+              "uri": "https://fellesdatakatalog.brreg.no/api/concepts/482ef166-14b1-4453-b842-11e248e28631",
+            },
+          ],
+          "description": Object {
+            "en": "This is english",
+            "nb": "Dette er norsk",
+          },
+          "distribution": Array [
+            Object {
+              "accessService": Object {
+                "description": Object {
+                  "nb": "Accounts API SPAREBANK 1 SMN",
+                },
+                "endpointDescription": Array [
+                  Object {
+                    "uri": "9d869626-d28c-49e6-8547-69c75f452d1a",
+                  },
+                ],
+              },
+              "format": Array [],
+              "type": "API",
+            },
+          ],
+          "id": "8a81d42b-8cc0-46ca-8963-fcafd8eb24e7",
+          "keyword": Array [],
+          "landingPage": Array [
+            "",
+          ],
+          "legalBasisForAccess": Array [
+            Object {
+              "prefLabel": Object {},
+              "uri": "",
+            },
+          ],
+          "legalBasisForProcessing": Array [
+            Object {
+              "prefLabel": Object {},
+              "uri": "",
+            },
+          ],
+          "legalBasisForRestriction": Array [
+            Object {
+              "prefLabel": Object {},
+              "uri": "",
+            },
+          ],
+          "objective": Object {},
+          "publisher": Object {
+            "name": "LILAND OG ERDAL REVISJON",
+            "uri": "https://data.brreg.no/enhetsregisteret/api/enheter/910258028",
+          },
+          "registrationStatus": "PUBLISH",
+          "subject": Array [
+            Object {
+              "altLabel": Array [],
+              "definition": Object {
+                "nb": "person som er ansvarlig for behandling av saken som helhet",
+              },
+              "identifier": "http://data.brreg.no/begrep/28156",
+              "prefLabel": Object {
+                "nb": "saksansvarlig",
+              },
+              "uri": "https://fellesdatakatalog.brreg.no/api/concepts/482ef166-14b1-4453-b842-11e248e28631",
+            },
+          ],
+          "theme": Array [
+            Object {
+              "uri": "http://psi.norge.no/los/ord/vaksine",
+            },
+          ],
+          "title": Object {
+            "en": "Nap",
+            "nb": "Lur",
+          },
+          "uri": "http://brreg.no/catalogs/910258028/datasets/8a81d42b-8cc0-46ca-8963-fcafd8eb24e7",
+        },
+        Object {
+          "_lastModified": "2019-08-26T12:41:32.029+0000",
+          "accessRights": Object {
+            "prefLabel": Object {},
+            "uri": "http://publications.europa.eu/resource/authority/access-right/PUBLIC",
+          },
+          "catalogId": "910258028",
+          "concepts": Array [
+            Object {
+              "altLabel": Array [],
+              "contactPoint": Object {
+                "email": "begrepskatalogen@skatteetaten.no",
+              },
+              "definition": Object {
+                "text": Object {
+                  "nb": "I hvilken grad, uttrykt i prosent, en spesifisert testdekningsenhet har blitt oppnådd av en testsuite. For eksempel i hvilken grad strukturen eller koden er utført under testen,  i hvilken grad alle mulige kombinasjoner av input er testet, eller hvor mange prosent av alle spesifiserte  krav som er testet.",
+                },
+              },
+              "hiddenLabel": Array [],
+              "id": "0bb398b3-c0e5-4d43-b480-906f3cdb3ef9",
+              "identifier": "http://begrepskatalogen/begrep/5cd23f70-dc82-11e5-9b2b-d6d6eb145c82",
+              "prefLabel": Object {
+                "nb": "testdekning",
+              },
+              "subject": Object {
+                "nb": "Test",
+              },
+              "uri": "https://fellesdatakatalog.brreg.no/api/concepts/0bb398b3-c0e5-4d43-b480-906f3cdb3ef9",
+            },
+          ],
+          "description": Object {
+            "nb": "Servieedition bugfix testen",
+          },
+          "distribution": Array [
+            Object {
+              "accessService": Object {
+                "description": Object {
+                  "nb": "FS-API",
+                },
+                "endpointDescription": Array [
+                  Object {
+                    "uri": "d468c49f-f649-44a1-a494-b5b2ee3d0693",
+                  },
+                ],
+              },
+              "format": Array [],
+              "type": "API",
+            },
+          ],
+          "id": "ceb1e9b6-056a-4e02-8788-7faa40f7d832",
+          "keyword": Array [
+            Object {
+              "nb": "tullogtøys",
+            },
+          ],
+          "landingPage": Array [
+            "",
+          ],
+          "legalBasisForAccess": Array [
+            Object {
+              "prefLabel": Object {},
+              "uri": "",
+            },
+          ],
+          "legalBasisForProcessing": Array [
+            Object {
+              "prefLabel": Object {},
+              "uri": "",
+            },
+          ],
+          "legalBasisForRestriction": Array [
+            Object {
+              "prefLabel": Object {},
+              "uri": "",
+            },
+          ],
+          "objective": Object {
+            "nb": "test ",
+          },
+          "publisher": Object {
+            "name": "LILAND OG ERDAL REVISJON",
+            "uri": "https://data.brreg.no/enhetsregisteret/api/enheter/910258028",
+          },
+          "registrationStatus": "PUBLISH",
+          "subject": Array [
+            Object {
+              "altLabel": Array [],
+              "definition": Object {
+                "nb": "I hvilken grad, uttrykt i prosent, en spesifisert testdekningsenhet har blitt oppnådd av en testsuite. For eksempel i hvilken grad strukturen eller koden er utført under testen,  i hvilken grad alle mulige kombinasjoner av input er testet, eller hvor mange prosent av alle spesifiserte  krav som er testet.",
+              },
+              "identifier": "http://begrepskatalogen/begrep/5cd23f70-dc82-11e5-9b2b-d6d6eb145c82",
+              "prefLabel": Object {
+                "nb": "testdekning",
+              },
+              "uri": "https://fellesdatakatalog.brreg.no/api/concepts/0bb398b3-c0e5-4d43-b480-906f3cdb3ef9",
+            },
+          ],
+          "theme": Array [],
+          "title": Object {
+            "nb": "Mandag morra blues",
+          },
+          "type": "Kodelister",
+          "uri": "http://brreg.no/catalogs/910258028/datasets/ceb1e9b6-056a-4e02-8788-7faa40f7d832",
+        },
+        Object {
+          "_lastModified": "2019-11-27T13:55:48.539+0000",
+          "accessRights": Object {
+            "prefLabel": Object {},
+            "uri": "http://publications.europa.eu/resource/authority/access-right/RESTRICTED",
+          },
+          "catalogId": "910258028",
+          "description": Object {
+            "nb": "Oppfølger til Ut mot havet",
+            "nn": "Oppfølgjer",
+          },
+          "id": "0269f14c-2fd0-49b3-afed-1e116b2464a6",
+          "landingPage": Array [
+            "",
+          ],
+          "legalBasisForAccess": Array [
+            Object {
+              "prefLabel": Object {},
+              "uri": "",
+            },
+          ],
+          "legalBasisForProcessing": Array [
+            Object {
+              "prefLabel": Object {},
+              "uri": "",
+            },
+          ],
+          "legalBasisForRestriction": Array [
+            Object {
+              "prefLabel": Object {
+                "nb": "En tittel",
+                "nn": "Ein tittel",
+              },
+              "uri": "https://vg.no",
+            },
+          ],
+          "objective": Object {
+            "nb": "",
+          },
+          "publisher": Object {
+            "name": "LILAND OG ERDAL REVISJON",
+            "uri": "https://data.brreg.no/enhetsregisteret/api/enheter/910258028",
+          },
+          "registrationStatus": "PUBLISH",
+          "theme": Array [
+            Object {
+              "uri": "http://psi.norge.no/los/tema/trafikk-og-transport",
+            },
+            Object {
+              "uri": "http://psi.norge.no/los/tema/trafikkinformasjon",
+            },
+            Object {
+              "uri": "http://psi.norge.no/los/tema/mobilitetstilbud",
+            },
+          ],
+          "title": Object {
+            "nb": "Opp på fjellet",
+            "nn": "Opp ",
+          },
+          "uri": "http://brreg.no/catalogs/910258028/datasets/0269f14c-2fd0-49b3-afed-1e116b2464a6",
+        },
+        Object {
+          "_lastModified": "2019-12-18T09:15:08.564+0000",
+          "accessRights": Object {
+            "prefLabel": Object {},
+            "uri": "http://publications.europa.eu/resource/authority/access-right/NON_PUBLIC",
+          },
+          "accrualPeriodicity": Object {
+            "code": "ANNUAL_3",
+            "prefLabel": Object {
+              "bg": "три пъти на година",
+              "cs": "třikrát do roka",
+              "da": "tre gange årligt",
+              "de": "dreimal im Jahr",
+              "el": "τετραμηνιαίος",
+              "en": "three times a year",
+              "es": "cuatrimestral",
+              "et": "kolm korda aastas",
+              "fi": "kolme kertaa vuodessa",
+              "fr": "trois fois par an",
+              "ga": "trí uair sa bhliain",
+              "hr": "triput godišnje",
+              "hu": "évente háromszori",
+              "it": "tre volte all'anno",
+              "lt": "tris kartus per metus",
+              "lv": "trīsreiz gadā",
+              "mt": "tliet darbiet fis-sena",
+              "nl": "drie keer per jaar",
+              "no": "tre ganger per år",
+              "pl": "trzy razy w roku",
+              "pt": "três vezes por ano",
+              "ro": "de trei ori pe an",
+              "sk": "trikrát do roka",
+              "sl": "trikrat na leto",
+              "sv": "tre gånger per år",
+            },
+            "uri": "http://publications.europa.eu/resource/authority/frequency/ANNUAL_3",
+          },
+          "catalogId": "910258028",
+          "concepts": Array [
+            Object {
+              "altLabel": Array [],
+              "contactPoint": Object {
+                "email": "begrepskatalogen@skatteetaten.no",
+              },
+              "definition": Object {
+                "text": Object {
+                  "nb": "rent leketilbud uten de samme krav til pedagogiske personale som for barnehager",
+                },
+              },
+              "hiddenLabel": Array [],
+              "id": "5af26279-e7a5-4f2f-8db4-a7374197fe15",
+              "identifier": "http://begrepskatalogen/begrep/20b52ae4-9fe1-11e5-a9f8-e4115b280940",
+              "prefLabel": Object {
+                "nb": "barnepark",
+              },
+              "subject": Object {
+                "nb": "Tredjepartsopplysninger",
+              },
+              "uri": "https://fellesdatakatalog.brreg.no/api/concepts/5af26279-e7a5-4f2f-8db4-a7374197fe15",
+            },
+          ],
+          "description": Object {
+            "nb": "En historisk oversikt",
+          },
+          "hasCurrentnessAnnotation": Object {
+            "hasBody": Object {
+              "nb": "Nja",
+            },
+            "inDimension": "iso:Currentness",
+            "motivatedBy": "dqv:qualityAssessment",
+          },
+          "id": "25c45902-5f62-4020-896d-afa23e1097ae",
+          "issued": "2020-01-05T00:00:00.000+0000",
+          "keyword": Array [
+            Object {
+              "nb": "representanter",
+            },
+            Object {
+              "nb": "tinget",
+            },
+          ],
+          "landingPage": Array [
+            "https://www.stortinget.no/no/Representanter-og-komiteer/",
+          ],
+          "language": Array [
+            Object {
+              "code": "ENG",
+              "prefLabel": Object {},
+              "uri": "http://publications.europa.eu/resource/authority/language/ENG",
+            },
+            Object {
+              "code": "NOR",
+              "prefLabel": Object {
+                "nb": "Norsk",
+              },
+              "uri": "http://publications.europa.eu/resource/authority/language/NOR",
+            },
+          ],
+          "legalBasisForAccess": Array [
+            Object {
+              "prefLabel": Object {},
+              "uri": "",
+            },
+          ],
+          "legalBasisForProcessing": Array [
+            Object {
+              "prefLabel": Object {},
+              "uri": "",
+            },
+          ],
+          "legalBasisForRestriction": Array [
+            Object {
+              "prefLabel": Object {
+                "nb": "",
+              },
+              "uri": "",
+            },
+          ],
+          "modified": "2019-12-02T00:00:00.000+0000",
+          "objective": Object {
+            "nb": "Hvem satt på tinget når?...",
+          },
+          "provenance": Object {
+            "code": "VEDTAK",
+            "prefLabel": Object {
+              "en": "Governmental decisions",
+              "nb": "Vedtak",
+              "nn": "Vedtak",
+            },
+            "uri": "http://data.brreg.no/datakatalog/provinens/vedtak",
+          },
+          "publisher": Object {
+            "name": "LILAND OG ERDAL REVISJON",
+            "uri": "https://data.brreg.no/enhetsregisteret/api/enheter/910258028",
+          },
+          "registrationStatus": "PUBLISH",
+          "spatial": Array [
+            Object {
+              "prefLabel": Object {},
+              "uri": "https://data.geonorge.no/administrativeEnheter/nasjon/id/173163",
+            },
+          ],
+          "subject": Array [
+            Object {
+              "altLabel": Array [],
+              "definition": Object {
+                "nb": "rent leketilbud uten de samme krav til pedagogiske personale som for barnehager",
+              },
+              "identifier": "http://begrepskatalogen/begrep/20b52ae4-9fe1-11e5-a9f8-e4115b280940",
+              "prefLabel": Object {
+                "nb": "barnepark",
+              },
+              "uri": "https://fellesdatakatalog.brreg.no/api/concepts/5af26279-e7a5-4f2f-8db4-a7374197fe15",
+            },
+          ],
+          "temporal": Array [
+            Object {
+              "endDate": "2019-12-06T00:00:00.000+0000",
+              "startDate": "2019-11-25T00:00:00.000+0000",
+            },
+            Object {
+              "endDate": "2019-12-07T00:00:00.000+0000",
+              "startDate": "2019-11-27T00:00:00.000+0000",
+            },
+          ],
+          "theme": Array [
+            Object {
+              "uri": "http://psi.norge.no/los/tema/demokrati-og-innbyggerrettigheter",
+            },
+            Object {
+              "uri": "http://psi.norge.no/los/tema/politikk-og-valg",
+            },
+            Object {
+              "title": Object {
+                "nb": "Befolkning og samfunn",
+              },
+              "uri": "http://publications.europa.eu/resource/authority/data-theme/SOCI",
+            },
+          ],
+          "title": Object {
+            "nb": "Oversikt over Stortingsrepresentanter",
+          },
+          "type": "Testdata",
+          "uri": "http://brreg.no/catalogs/910258028/datasets/25c45902-5f62-4020-896d-afa23e1097ae",
+        },
+        Object {
+          "_lastModified": "2019-11-25T14:09:39.063+0000",
+          "accessRights": Object {
+            "prefLabel": Object {},
+            "uri": "http://publications.europa.eu/resource/authority/access-right/PUBLIC",
+          },
+          "catalogId": "910258028",
+          "concepts": Array [
+            Object {
+              "altLabel": Array [
+                Object {
+                  "nb": "stabilisator",
+                },
+              ],
+              "application": Array [],
+              "definition": Object {
+                "sources": Array [],
+                "text": Object {
+                  "nb": "en stabilisator på midten",
+                },
+              },
+              "hiddenLabel": Array [],
+              "id": "db0bcd83-7784-49ae-8fe0-b3c6052cc3ef",
+              "identifier": "https://registrering-begrep-api.it1.fellesdatakatalog.brreg.no/910258028/3609b02d-72c5-47e0-a6b8-df0a503cf190",
+              "prefLabel": Object {
+                "nb": "midtbaneanker",
+              },
+              "uri": "https://fellesdatakatalog.brreg.no/api/concepts/db0bcd83-7784-49ae-8fe0-b3c6052cc3ef",
+            },
+          ],
+          "description": Object {
+            "nb": "En oversikt over midtbanespillere som Kante, Fabinho, Dunga, Makelele, Skammelsrud",
+          },
+          "distribution": Array [
+            Object {
+              "accessService": Object {
+                "description": Object {
+                  "nb": "Åpne Data fra Enhetsregisteret - API Dokumentasjon",
+                },
+                "endpointDescription": Array [
+                  Object {
+                    "uri": "a90d6df8-4bae-4431-8d3e-259f96cc6677",
+                  },
+                ],
+              },
+              "format": Array [],
+              "type": "API",
+            },
+          ],
+          "id": "1c9ab841-92a8-46ac-863f-aea973b69c87",
+          "keyword": Array [],
+          "landingPage": Array [
+            "",
+          ],
+          "legalBasisForAccess": Array [
+            Object {
+              "prefLabel": Object {},
+              "uri": "",
+            },
+          ],
+          "legalBasisForProcessing": Array [
+            Object {
+              "prefLabel": Object {},
+              "uri": "",
+            },
+          ],
+          "legalBasisForRestriction": Array [
+            Object {
+              "prefLabel": Object {},
+              "uri": "",
+            },
+          ],
+          "objective": Object {},
+          "publisher": Object {
+            "name": "LILAND OG ERDAL REVISJON",
+            "uri": "https://data.brreg.no/enhetsregisteret/api/enheter/910258028",
+          },
+          "registrationStatus": "PUBLISH",
+          "subject": Array [
+            Object {
+              "altLabel": Array [
+                Object {
+                  "nb": "stabilisator",
+                },
+              ],
+              "definition": Object {
+                "nb": "en stabilisator på midten",
+              },
+              "identifier": "https://registrering-begrep-api.it1.fellesdatakatalog.brreg.no/910258028/3609b02d-72c5-47e0-a6b8-df0a503cf190",
+              "prefLabel": Object {
+                "nb": "midtbaneanker",
+              },
+              "uri": "https://fellesdatakatalog.brreg.no/api/concepts/db0bcd83-7784-49ae-8fe0-b3c6052cc3ef",
+            },
+          ],
+          "theme": Array [
+            Object {
+              "uri": "http://psi.norge.no/los/tema/helse-og-omsorg",
+            },
+            Object {
+              "uri": "http://psi.norge.no/los/ord/batforerbevis",
+            },
+          ],
+          "title": Object {
+            "nb": "Stabilisatorer",
+            "nn": "Stabilisatorar",
+          },
+          "uri": "http://brreg.no/catalogs/910258028/datasets/null",
+        },
+        Object {
+          "_lastModified": "2019-06-24T10:52:40.039+0000",
+          "accessRights": Object {
+            "prefLabel": Object {},
+            "uri": "http://publications.europa.eu/resource/authority/access-right/PUBLIC",
+          },
+          "accrualPeriodicity": Object {
+            "code": "BIENNIAL",
+            "prefLabel": Object {
+              "bg": "двегодишен",
+              "cs": "dvouletý",
+              "da": "toårigt",
+              "de": "zweijährlich",
+              "el": "διετής",
+              "en": "biennial",
+              "es": "bienal",
+              "et": "iga kahe aasta järel",
+              "fi": "kaksivuotinen",
+              "fr": "biennal",
+              "ga": "dhébhliantúil",
+              "hr": "bijenale",
+              "hu": "kétévenkénti",
+              "it": "biennale",
+              "lt": "dvimetis",
+              "lv": "reizi divos gados",
+              "mt": "biennali",
+              "nl": "tweejaarlijks",
+              "no": "annethvert år",
+              "pl": "dwuletni",
+              "pt": "bienal",
+              "ro": "bienal",
+              "sk": "dvojročný",
+              "sl": "bienale",
+              "sv": "vartannat år",
+            },
+            "uri": "http://publications.europa.eu/resource/authority/frequency/BIENNIAL",
+          },
+          "catalogId": "910258028",
+          "concepts": Array [
+            Object {
+              "altLabel": Array [],
+              "contactPoint": Object {
+                "email": "begrepskatalogen@skatteetaten.no",
+              },
+              "definition": Object {
+                "text": Object {
+                  "nb": "dokumenter som er kommet inn til eller lagt frem for et organ, eller som organet selv har opprettet, og som gjelder ansvarsområdet eller virksomheten til organet",
+                },
+              },
+              "hiddenLabel": Array [],
+              "id": "d21d6e9d-18c1-4275-9e8f-31f9d57ee9c7",
+              "identifier": "http://begrepskatalogen/begrep/8ef7c471-0ef8-11e7-a910-005056821322",
+              "prefLabel": Object {
+                "nb": "saksdokument",
+              },
+              "subject": Object {
+                "nb": "Arkiv",
+              },
+              "uri": "https://fellesdatakatalog.brreg.no/api/concepts/d21d6e9d-18c1-4275-9e8f-31f9d57ee9c7",
+            },
+            Object {
+              "altLabel": Array [],
+              "contactPoint": Object {
+                "email": "begrepskatalogen@skatteetaten.no",
+              },
+              "definition": Object {
+                "text": Object {
+                  "nb": "helheten av prinsipper, metoder og modeller som beskriver arkivfunksjonen i et organ, dens organisering, arbeidsprosesser og systemløsninger; del av organets samlede virksomhetsarkitektur",
+                },
+              },
+              "hiddenLabel": Array [],
+              "id": "911e31bf-2d7f-4759-b4ab-f283564806af",
+              "identifier": "http://begrepskatalogen/begrep/8ef7c416-0ef8-11e7-a910-005056821322",
+              "prefLabel": Object {
+                "nb": "arkivarkitektur",
+              },
+              "subject": Object {
+                "nb": "Arkiv",
+              },
+              "uri": "https://fellesdatakatalog.brreg.no/api/concepts/911e31bf-2d7f-4759-b4ab-f283564806af",
+            },
+            Object {
+              "altLabel": Array [],
+              "contactPoint": Object {
+                "email": "informasjonsforvaltning@brreg.no",
+                "telephone": "+4775007500",
+              },
+              "definition": Object {
+                "remark": Object {
+                  "nb": "{color:#000000}Et eksempel på en IP-adresse er 158.38.130.37{color}",
+                },
+                "source": Object {
+                  "prefLabel": Object {
+                    "nb": "Norid (2016) Ordliste internett]. Tilgjengelig fra: [https://www.norid.no/no/ordliste/ [lest 20. november 2018]",
+                  },
+                },
+                "text": Object {
+                  "nb": "nummer som brukes til å adressere en datamaskin eller annen enhet i et IP-basert nettverk",
+                },
+              },
+              "hiddenLabel": Array [],
+              "id": "cc5e0782-ba01-4227-b46f-7144970f4af6",
+              "identifier": "http://data.brreg.no/begrep/43497",
+              "prefLabel": Object {
+                "nb": "IP-adresse",
+              },
+              "subject": Object {
+                "nb": "IKT",
+              },
+              "uri": "https://fellesdatakatalog.brreg.no/api/concepts/cc5e0782-ba01-4227-b46f-7144970f4af6",
+            },
+            Object {
+              "altLabel": Array [],
+              "contactPoint": Object {
+                "email": "begrepskatalogen@skatteetaten.no",
+              },
+              "definition": Object {
+                "text": Object {
+                  "nb": "I hvilken grad, uttrykt i prosent, en spesifisert testdekningsenhet har blitt oppnådd av en testsuite. For eksempel i hvilken grad strukturen eller koden er utført under testen,  i hvilken grad alle mulige kombinasjoner av input er testet, eller hvor mange prosent av alle spesifiserte  krav som er testet.",
+                },
+              },
+              "hiddenLabel": Array [],
+              "id": "0bb398b3-c0e5-4d43-b480-906f3cdb3ef9",
+              "identifier": "http://begrepskatalogen/begrep/5cd23f70-dc82-11e5-9b2b-d6d6eb145c82",
+              "prefLabel": Object {
+                "nb": "testdekning",
+              },
+              "subject": Object {
+                "nb": "Test",
+              },
+              "uri": "https://fellesdatakatalog.brreg.no/api/concepts/0bb398b3-c0e5-4d43-b480-906f3cdb3ef9",
+            },
+            Object {
+              "altLabel": Array [],
+              "contactPoint": Object {
+                "email": "begrepskatalogen@skatteetaten.no",
+              },
+              "definition": Object {
+                "remark": Object {
+                  "nb": "Skrogets lengde omfatter alle såkalte strukturelle og faste deler av båten. I lengdeberegningen skal man ikke ta med deler som kan demonteres uten at det har konsekvenser for konstruksjonen. Eksempler på det er  baugnebb, pulpitt og beslag på akter- og forstavn, ror, hekkaggregater, utenbordsmotorer og påmontert badeplattform.",
+                },
+                "source": Object {
+                  "prefLabel": Object {
+                    "nb": "Norsk Standard-EN ISO 8666",
+                  },
+                },
+                "text": Object {
+                  "nb": "avstanden mellom den fremste og bakerste del av skroget på båten målt i fot",
+                },
+              },
+              "example": Object {
+                "nb": "37",
+              },
+              "hiddenLabel": Array [],
+              "id": "6e0126de-8350-4f88-a958-7a70a8891c05",
+              "identifier": "http://begrepskatalogen/begrep/b574088e-d96a-11e6-8d9b-005056821322",
+              "prefLabel": Object {
+                "nb": "båtlengde i fot",
+              },
+              "subject": Object {
+                "nb": "Formues- og inntektsskatt",
+              },
+              "uri": "https://fellesdatakatalog.brreg.no/api/concepts/6e0126de-8350-4f88-a958-7a70a8891c05",
+            },
+          ],
+          "conformsTo": Array [
+            Object {
+              "prefLabel": Object {
+                "nb": "Kvinnefotball",
+              },
+              "uri": "https://www.fotball.no/landslag/norge-a-kvinner/",
+            },
+          ],
+          "contactPoint": Array [
+            Object {
+              "email": "post@fotball.no",
+              "hasTelephone": "12312312",
+              "hasURL": "https://www.fotball.no/tema/kontaktskjema/",
+              "organizationUnit": "Han derre svensken",
+            },
+          ],
+          "description": Object {
+            "nb": "En litt lang beskrivelse som skal vise  at dette er litt mer utførlig test av regresjonsløsningen etter at det er utført en litt større refaktorering",
+          },
+          "distribution": Array [
+            Object {
+              "accessService": Object {
+                "description": Object {
+                  "nb": "Accounts API SPAREBANK 1 SØRE SUNNMØRE",
+                },
+                "endpointDescription": Array [
+                  Object {
+                    "uri": "c41ec239-8270-4a1a-be11-9e5d8f2bceb3",
+                  },
+                ],
+              },
+              "accessURL": Array [],
+              "conformsTo": Array [],
+              "description": Object {},
+              "format": Array [],
+              "license": Object {
+                "prefLabel": Object {},
+                "uri": "",
+              },
+              "page": Array [
+                Object {
+                  "prefLabel": Object {},
+                  "uri": "",
+                },
+              ],
+              "type": "API",
+            },
+            Object {
+              "accessService": Object {
+                "description": Object {
+                  "nb": "Nasjonalt skoleregister API",
+                },
+                "endpointDescription": Array [
+                  Object {
+                    "uri": "119f6f04-bc9b-486e-86b3-f74a46f8dccd",
+                  },
+                ],
+              },
+              "accessURL": Array [],
+              "conformsTo": Array [],
+              "description": Object {},
+              "format": Array [],
+              "license": Object {
+                "prefLabel": Object {},
+                "uri": "",
+              },
+              "page": Array [
+                Object {
+                  "prefLabel": Object {},
+                  "uri": "",
+                },
+              ],
+              "type": "API",
+            },
+            Object {
+              "accessService": Object {
+                "description": Object {
+                  "nb": "FS-API",
+                },
+                "endpointDescription": Array [
+                  Object {
+                    "uri": "d468c49f-f649-44a1-a494-b5b2ee3d0693",
+                  },
+                ],
+              },
+              "accessURL": Array [],
+              "conformsTo": Array [],
+              "description": Object {},
+              "format": Array [],
+              "license": Object {
+                "prefLabel": Object {},
+                "uri": "",
+              },
+              "page": Array [
+                Object {
+                  "prefLabel": Object {},
+                  "uri": "",
+                },
+              ],
+              "type": "API",
+            },
+            Object {
+              "accessURL": Array [
+                "https://difi.no",
+              ],
+              "conformsTo": Array [
+                Object {
+                  "prefLabel": Object {
+                    "nb": "Kommentartor",
+                  },
+                  "uri": "https://vg.no",
+                },
+              ],
+              "description": Object {
+                "nb": "Beskrivelse av API distribusjon 1",
+              },
+              "format": Array [
+                "application/EmergencyCallData.SubscriberInfo+xml",
+              ],
+              "license": Object {
+                "prefLabel": Object {
+                  "en": "Creative Commons Attribution 4.0 International",
+                  "no": "Creative Commons Navngivelse 4.0 Internasjonal",
+                },
+                "uri": "http://creativecommons.org/licenses/by/4.0/",
+              },
+              "page": Array [
+                Object {
+                  "prefLabel": Object {},
+                  "uri": "https://dokument.no",
+                },
+              ],
+              "type": "API",
+            },
+            Object {
+              "accessURL": Array [
+                "https://bt.no",
+              ],
+              "conformsTo": Array [
+                Object {
+                  "prefLabel": Object {
+                    "nb": "Kommetator2",
+                  },
+                  "uri": "https://fedrelandsvennen.no",
+                },
+              ],
+              "description": Object {
+                "nb": "Beskrivelse av FEED distribusjon",
+              },
+              "format": Array [
+                "application/1d-interleaved-parityfec",
+              ],
+              "license": Object {
+                "prefLabel": Object {
+                  "en": "Norwegian Licence for Open Government Data",
+                  "no": "Norsk lisens for offentlige data",
+                },
+                "uri": "http://data.norge.no/nlod/",
+              },
+              "page": Array [
+                Object {
+                  "prefLabel": Object {},
+                  "uri": "https://stavangeraftenblad.no",
+                },
+              ],
+              "type": "Feed",
+            },
+            Object {
+              "accessURL": Array [
+                "https://dagbladet.no",
+              ],
+              "conformsTo": Array [
+                Object {
+                  "prefLabel": Object {
+                    "nb": "kommentator3",
+                  },
+                  "uri": "https://hamararbeiderblad.no",
+                },
+              ],
+              "description": Object {
+                "nb": "Beskrivelse av distribusjon \\"nedlastbar fil\\"",
+              },
+              "format": Array [
+                "application/conference-info+xml",
+              ],
+              "license": Object {
+                "prefLabel": Object {
+                  "en": "Creative Commons Universal Public Domain Dedication",
+                  "no": "Creative Commons Universal Fristatus-erklæring",
+                },
+                "uri": "http://creativecommons.org/publicdomain/zero/1.0/",
+              },
+              "page": Array [
+                Object {
+                  "prefLabel": Object {},
+                  "uri": "https://vaartland.no",
+                },
+              ],
+              "type": "Nedlastbar fil",
+            },
+          ],
+          "hasAccuracyAnnotation": Object {
+            "hasBody": Object {
+              "nb": "Veldig nøyaktig",
+            },
+            "inDimension": "iso:Accuracy",
+            "motivatedBy": "dqv:qualityAssessment",
+          },
+          "hasAvailabilityAnnotation": Object {
+            "hasBody": Object {
+              "nb": "Veldig tilgjengelig",
+            },
+            "inDimension": "iso:Availability",
+            "motivatedBy": "dqv:qualityAssessment",
+          },
+          "hasCompletenessAnnotation": Object {
+            "hasBody": Object {
+              "nb": " Veldig komplett",
+            },
+            "inDimension": "iso:Completeness",
+            "motivatedBy": "dqv:qualityAssessment",
+          },
+          "hasCurrentnessAnnotation": Object {
+            "hasBody": Object {
+              "nb": "Litt mer aktuelt .    Selv om det vanligvis blir oppdatert annet hvert år skjer det ofteere",
+            },
+            "inDimension": "iso:Currentness",
+            "motivatedBy": "dqv:qualityAssessment",
+          },
+          "hasRelevanceAnnotation": Object {
+            "hasBody": Object {
+              "nb": "Vedlig relevant til navnet på dette datasettet",
+            },
+            "inDimension": "iso:Relevance",
+            "motivatedBy": "dqv:qualityAssessment",
+          },
+          "id": "03b124a4-b6be-49e9-a922-945bff27ab86",
+          "informationModel": Array [
+            Object {
+              "prefLabel": Object {
+                "nb": "Info1b",
+              },
+              "uri": "https://www.it1.fellesdatakatalog.brreg.no/informationmodels/08892309-c412-4005-8f43-6fbc4346bec1",
+            },
+          ],
+          "issued": "2019-06-23T22:00:00.000+0000",
+          "keyword": Array [
+            Object {
+              "nb": "fotball",
+            },
+            Object {
+              "nb": "Sæbøvikåsen",
+            },
+          ],
+          "landingPage": Array [
+            "https://fotball.no",
+          ],
+          "language": Array [
+            Object {
+              "code": "ENG",
+              "prefLabel": Object {},
+              "uri": "http://publications.europa.eu/resource/authority/language/ENG",
+            },
+            Object {
+              "code": "NOR",
+              "prefLabel": Object {},
+              "uri": "http://publications.europa.eu/resource/authority/language/NOR",
+            },
+            Object {
+              "code": "SMI",
+              "prefLabel": Object {
+                "nb": "Samisk",
+              },
+              "uri": "http://publications.europa.eu/resource/authority/language/SMI",
+            },
+          ],
+          "legalBasisForAccess": Array [
+            Object {
+              "prefLabel": Object {},
+              "uri": "",
+            },
+          ],
+          "legalBasisForProcessing": Array [
+            Object {
+              "prefLabel": Object {},
+              "uri": "",
+            },
+          ],
+          "legalBasisForRestriction": Array [
+            Object {
+              "prefLabel": Object {},
+              "uri": "",
+            },
+          ],
+          "modified": "2019-05-31T22:00:00.000+0000",
+          "objective": Object {
+            "nb": "Forsatt er formålet utstrakt test av ",
+          },
+          "provenance": Object {
+            "code": "BRUKER",
+            "prefLabel": Object {
+              "en": "User collection",
+              "nb": "Brukerinnsamlede data",
+              "nn": "Brukerinnsamlede data",
+            },
+            "uri": "http://data.brreg.no/datakatalog/provinens/bruker",
+          },
+          "publisher": Object {
+            "name": "LILAND OG ERDAL REVISJON",
+            "uri": "https://data.brreg.no/enhetsregisteret/api/enheter/910258028",
+          },
+          "references": Array [
+            Object {
+              "referenceType": Object {
+                "code": "hasVersion",
+                "prefLabel": Object {
+                  "en": "Has version",
+                  "nb": "Har versjon",
+                  "nn": "Har versjon",
+                },
+                "uri": "http://purl.org/dc/terms/hasVersion",
+              },
+              "source": Object {
+                "uri": "http://brreg.no/catalogs/910258028/datasets/05c52ca4-9612-4c0f-bca7-4bb13df0d5a8",
+              },
+            },
+            Object {
+              "referenceType": Object {
+                "code": "isPartOf",
+                "prefLabel": Object {
+                  "en": "Is Part Of",
+                  "nb": "Er en del av",
+                  "nn": "Er del av",
+                },
+                "uri": "http://purl.org/dc/terms/isPartOf",
+              },
+              "source": Object {
+                "uri": "http://brreg.no/catalogs/910258028/datasets/f0f8a93d-4f61-4f2a-845a-9550b51ff9d8",
+              },
+            },
+            Object {
+              "referenceType": Object {
+                "code": "isReferencedBy",
+                "prefLabel": Object {
+                  "en": "Is Referenced By",
+                  "nb": "Er referert av",
+                  "nn": "Er referert av",
+                },
+                "uri": "http://purl.org/dc/terms/isReferencedBy",
+              },
+              "source": Object {
+                "uri": "http://brreg.no/catalogs/910258028/datasets/05c52ca4-9612-4c0f-bca7-4bb13df0d5a8",
+              },
+            },
+            Object {},
+          ],
+          "registrationStatus": "PUBLISH",
+          "sample": Array [
+            Object {
+              "accessURL": Array [
+                "https://brreg.no",
+              ],
+              "conformsTo": Array [],
+              "description": Object {
+                "nb": "Eksempel på beskrivelse av eksempeldata",
+              },
+              "format": Array [
+                "json",
+              ],
+              "license": Object {
+                "prefLabel": Object {},
+                "uri": "",
+              },
+              "page": Array [
+                Object {
+                  "prefLabel": Object {},
+                  "uri": "",
+                },
+              ],
+              "type": "",
+            },
+          ],
+          "spatial": Array [
+            Object {
+              "prefLabel": Object {},
+              "uri": "https://data.geonorge.no/administrativeEnheter/fylke/id/173142",
+            },
+          ],
+          "subject": Array [
+            Object {
+              "altLabel": Array [],
+              "definition": Object {
+                "nb": "dokumenter som er kommet inn til eller lagt frem for et organ, eller som organet selv har opprettet, og som gjelder ansvarsområdet eller virksomheten til organet",
+              },
+              "identifier": "http://begrepskatalogen/begrep/8ef7c471-0ef8-11e7-a910-005056821322",
+              "prefLabel": Object {
+                "nb": "saksdokument",
+              },
+              "uri": "https://fellesdatakatalog.brreg.no/api/concepts/d21d6e9d-18c1-4275-9e8f-31f9d57ee9c7",
+            },
+            Object {
+              "altLabel": Array [],
+              "definition": Object {
+                "nb": "helheten av prinsipper, metoder og modeller som beskriver arkivfunksjonen i et organ, dens organisering, arbeidsprosesser og systemløsninger; del av organets samlede virksomhetsarkitektur",
+              },
+              "identifier": "http://begrepskatalogen/begrep/8ef7c416-0ef8-11e7-a910-005056821322",
+              "prefLabel": Object {
+                "nb": "arkivarkitektur",
+              },
+              "uri": "https://fellesdatakatalog.brreg.no/api/concepts/911e31bf-2d7f-4759-b4ab-f283564806af",
+            },
+            Object {
+              "altLabel": Array [],
+              "definition": Object {
+                "nb": "nummer som brukes til å adressere en datamaskin eller annen enhet i et IP-basert nettverk",
+              },
+              "identifier": "http://data.brreg.no/begrep/43497",
+              "prefLabel": Object {
+                "nb": "IP-adresse",
+              },
+              "uri": "https://fellesdatakatalog.brreg.no/api/concepts/cc5e0782-ba01-4227-b46f-7144970f4af6",
+            },
+            Object {
+              "altLabel": Array [],
+              "definition": Object {
+                "nb": "I hvilken grad, uttrykt i prosent, en spesifisert testdekningsenhet har blitt oppnådd av en testsuite. For eksempel i hvilken grad strukturen eller koden er utført under testen,  i hvilken grad alle mulige kombinasjoner av input er testet, eller hvor mange prosent av alle spesifiserte  krav som er testet.",
+              },
+              "identifier": "http://begrepskatalogen/begrep/5cd23f70-dc82-11e5-9b2b-d6d6eb145c82",
+              "prefLabel": Object {
+                "nb": "testdekning",
+              },
+              "uri": "https://fellesdatakatalog.brreg.no/api/concepts/0bb398b3-c0e5-4d43-b480-906f3cdb3ef9",
+            },
+            Object {
+              "altLabel": Array [],
+              "definition": Object {
+                "nb": "avstanden mellom den fremste og bakerste del av skroget på båten målt i fot",
+              },
+              "identifier": "http://begrepskatalogen/begrep/b574088e-d96a-11e6-8d9b-005056821322",
+              "prefLabel": Object {
+                "nb": "båtlengde i fot",
+              },
+              "uri": "https://fellesdatakatalog.brreg.no/api/concepts/6e0126de-8350-4f88-a958-7a70a8891c05",
+            },
+          ],
+          "temporal": Array [
+            Object {
+              "endDate": "2020-11-30T23:00:00.000+0000",
+              "startDate": "2019-05-31T22:00:00.000+0000",
+            },
+          ],
+          "theme": Array [
+            Object {
+              "uri": "http://psi.norge.no/los/ord/idrettslag",
+            },
+            Object {
+              "uri": "http://psi.norge.no/los/ord/idrettsarrangement",
+            },
+          ],
+          "title": Object {
+            "nb": "Isabell Herlovsen",
+          },
+          "type": "Kodelister",
+          "uri": "http://brreg.no/catalogs/910258028/datasets/03b124a4-b6be-49e9-a922-945bff27ab86",
+        },
+        Object {
+          "_lastModified": "2019-11-27T14:05:49.882+0000",
+          "accessRights": Object {
+            "prefLabel": Object {},
+            "uri": "http://publications.europa.eu/resource/authority/access-right/PUBLIC",
+          },
+          "accrualPeriodicity": Object {
+            "code": "MONTHLY_3",
+            "prefLabel": Object {
+              "bg": "три пъти месечно",
+              "cs": "třikrát za měsíc",
+              "da": "tre gange månedligt",
+              "de": "dreimal im Monat",
+              "el": "τρεις φορές τον μήνα",
+              "en": "three times a month",
+              "es": "tres veces por mes",
+              "et": "kolm korda kuus",
+              "fi": "kolme kertaa kuukaudessa",
+              "fr": "trois fois par mois",
+              "ga": "trí uair sa mhí",
+              "hr": "triput mjesečno",
+              "hu": "havonta háromszori",
+              "it": "tre volte al mese",
+              "lt": "tris kartus per mėnesį",
+              "lv": "trīsreiz mēnesī",
+              "mt": "tliet darbiet fix-xahar",
+              "nl": "drie keer per maand",
+              "no": "tre ganger i måneden",
+              "pl": "trzy razy w miesiącu",
+              "pt": "três vezes por mês",
+              "ro": "de trei ori pe lună",
+              "sk": "trikrát mesačne",
+              "sl": "trikrat na mesec",
+              "sv": "tre gånger per månad",
+            },
+            "uri": "http://publications.europa.eu/resource/authority/frequency/MONTHLY_3",
+          },
+          "catalogId": "910258028",
+          "concepts": Array [
+            Object {
+              "altLabel": Array [
+                Object {
+                  "nb": "stabilisator",
+                },
+              ],
+              "application": Array [],
+              "definition": Object {
+                "sources": Array [],
+                "text": Object {
+                  "nb": "en stabilisator på midten",
+                },
+              },
+              "hiddenLabel": Array [],
+              "id": "db0bcd83-7784-49ae-8fe0-b3c6052cc3ef",
+              "identifier": "https://registrering-begrep-api.it1.fellesdatakatalog.brreg.no/910258028/3609b02d-72c5-47e0-a6b8-df0a503cf190",
+              "prefLabel": Object {
+                "nb": "midtbaneanker",
+              },
+              "uri": "https://fellesdatakatalog.brreg.no/api/concepts/db0bcd83-7784-49ae-8fe0-b3c6052cc3ef",
+            },
+          ],
+          "conformsTo": Array [
+            Object {
+              "prefLabel": Object {
+                "nb": "VG",
+              },
+              "uri": "https://vg.no",
+            },
+          ],
+          "contactPoint": Array [
+            Object {
+              "email": "",
+              "hasTelephone": "",
+              "hasURL": "",
+              "organizationUnit": "Rune",
+            },
+          ],
+          "description": Object {
+            "nb": "Dette er en hyllest av Rune Rudberg.",
+          },
+          "distribution": Array [
+            Object {
+              "accessURL": Array [
+                "https://vg.no",
+              ],
+              "conformsTo": Array [
+                Object {
+                  "prefLabel": Object {
+                    "nb": "VG",
+                  },
+                  "uri": "https://vg.no",
+                },
+              ],
+              "description": Object {
+                "nb": "Dette er en",
+              },
+              "format": Array [
+                "application/json",
+              ],
+              "license": Object {
+                "prefLabel": Object {
+                  "en": "Norwegian Licence for Open Government Data",
+                  "no": "Norsk lisens for offentlige data",
+                },
+                "uri": "http://data.norge.no/nlod/",
+              },
+              "page": Array [
+                Object {
+                  "prefLabel": Object {},
+                  "uri": "https://vg.no",
+                },
+              ],
+              "type": "Feed",
+            },
+          ],
+          "hasAccuracyAnnotation": Object {
+            "hasBody": Object {
+              "nb": "Nei",
+            },
+            "inDimension": "iso:Accuracy",
+            "motivatedBy": "dqv:qualityAssessment",
+          },
+          "hasAvailabilityAnnotation": Object {
+            "hasBody": Object {
+              "nb": "Nei",
+            },
+            "inDimension": "iso:Availability",
+            "motivatedBy": "dqv:qualityAssessment",
+          },
+          "hasCompletenessAnnotation": Object {
+            "hasBody": Object {
+              "nb": "Nei",
+            },
+            "inDimension": "iso:Completeness",
+            "motivatedBy": "dqv:qualityAssessment",
+          },
+          "hasCurrentnessAnnotation": Object {
+            "hasBody": Object {
+              "nb": "Nei",
+            },
+            "inDimension": "iso:Currentness",
+            "motivatedBy": "dqv:qualityAssessment",
+          },
+          "hasRelevanceAnnotation": Object {
+            "hasBody": Object {
+              "nb": "Nei",
+            },
+            "inDimension": "iso:Relevance",
+            "motivatedBy": "dqv:qualityAssessment",
+          },
+          "id": "efceee29-c7c9-4a2b-8bac-5994ff9db837",
+          "informationModel": Array [
+            Object {
+              "prefLabel": Object {
+                "nb": "VG",
+              },
+              "uri": "https://vg.no",
+            },
+          ],
+          "issued": "2019-11-27T00:00:00.000+0000",
+          "keyword": Array [
+            Object {
+              "nb": "hav",
+            },
+          ],
+          "landingPage": Array [
+            "https://www.vg.no",
+          ],
+          "language": Array [],
+          "legalBasisForAccess": Array [
+            Object {
+              "prefLabel": Object {},
+              "uri": "",
+            },
+          ],
+          "legalBasisForProcessing": Array [
+            Object {
+              "prefLabel": Object {},
+              "uri": "",
+            },
+          ],
+          "legalBasisForRestriction": Array [
+            Object {
+              "prefLabel": Object {},
+              "uri": "",
+            },
+          ],
+          "modified": "2019-11-27T00:00:00.000+0000",
+          "objective": Object {
+            "nb": "Det finnes ikke noe formål.",
+          },
+          "provenance": Object {
+            "code": "TREDJEPART",
+            "prefLabel": Object {
+              "en": "Third party",
+              "nb": "Tredjepart",
+              "nn": "Tredjepart",
+            },
+            "uri": "http://data.brreg.no/datakatalog/provinens/tredjepart",
+          },
+          "publisher": Object {
+            "name": "LILAND OG ERDAL REVISJON",
+            "uri": "https://data.brreg.no/enhetsregisteret/api/enheter/910258028",
+          },
+          "references": Array [
+            Object {
+              "referenceType": Object {
+                "code": "isPartOf",
+                "prefLabel": Object {
+                  "en": "Is Part Of",
+                  "nb": "Er en del av",
+                  "nn": "Er del av",
+                },
+                "uri": "http://purl.org/dc/terms/isPartOf",
+              },
+              "source": Object {
+                "uri": "http://brreg.no/catalogs/910258028/datasets/993649c4-fd9d-4f49-906a-7ed0ab23cb70",
+              },
+            },
+          ],
+          "registrationStatus": "PUBLISH",
+          "spatial": Array [
+            Object {
+              "prefLabel": Object {},
+              "uri": "https://data.geonorge.no/administrativeEnheter/fylke/id/173159",
+            },
+          ],
+          "subject": Array [
+            Object {
+              "altLabel": Array [
+                Object {
+                  "nb": "stabilisator",
+                },
+              ],
+              "definition": Object {
+                "nb": "en stabilisator på midten",
+              },
+              "identifier": "https://registrering-begrep-api.it1.fellesdatakatalog.brreg.no/910258028/3609b02d-72c5-47e0-a6b8-df0a503cf190",
+              "prefLabel": Object {
+                "nb": "midtbaneanker",
+              },
+              "uri": "https://fellesdatakatalog.brreg.no/api/concepts/db0bcd83-7784-49ae-8fe0-b3c6052cc3ef",
+            },
+          ],
+          "temporal": Array [
+            Object {
+              "endDate": "2024-11-13T00:00:00.000+0000",
+              "startDate": "2019-11-27T00:00:00.000+0000",
+            },
+          ],
+          "theme": Array [
+            Object {
+              "uri": "http://psi.norge.no/los/tema/trafikk-og-transport",
+            },
+            Object {
+              "uri": "http://psi.norge.no/los/ord/vegnett",
+            },
+          ],
+          "title": Object {
+            "nb": "Ut mot havet",
+          },
+          "type": "Tesauri",
+          "uri": "http://brreg.no/catalogs/910258028/datasets/efceee29-c7c9-4a2b-8bac-5994ff9db837",
+        },
+      ]
+    }
     onSortField={[Function]}
     prefixPath="/catalogs/123/datasets"
     sortField=""
