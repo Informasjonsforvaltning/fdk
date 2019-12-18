@@ -33,10 +33,9 @@ const defaultToSearchApi = host => (host ? { host } : searchApi);
 const config = {
   store: { useLogger: env.REDUX_LOG === 'true' },
   registrationLanguage: env.REGISTRATION_LANGUAGE || 'nb',
-  keycloak: {
-    realm: 'fdk',
-    url: `${env.SSO_HOST}/auth`,
-    clientId: 'fdk-registration-public'
+  auth: {
+    oidcIssuer: `${env.SSO_HOST}/auth/realms/fdk`,
+    oidcClientId: 'fdk-registration-public'
   },
 
   // frontend hosts

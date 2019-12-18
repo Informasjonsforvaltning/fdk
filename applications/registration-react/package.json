@@ -22,7 +22,7 @@
     "designsystemet": "git+https://github.com/Informasjonsforvaltning/designsystemet.git#1.4.24",
     "font-awesome": "^4.7.0",
     "is-url": "^1.2.2",
-    "keycloak-js": "^6.0.1",
+    "keycloak-js": "^8.0.1",
     "lodash": "^4.17.15",
     "moment": "^2.20.1",
     "promise-file-reader": "^1.0.2",

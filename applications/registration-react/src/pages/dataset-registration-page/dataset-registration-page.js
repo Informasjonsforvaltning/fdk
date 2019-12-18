@@ -3,14 +3,14 @@ import { compose, withProps } from 'recompose';
 import { DatasetRegistrationPagePure } from './dataset-registration-page-pure';
 import { datasetRegistrationConnector } from './dataset-registration-connector';
 import { datasetRegistrationResolver } from './dataset-registration-resolver';
-import { hasOrganizationAdminPermission } from '../../services/auth/auth-service';
+import { authService } from '../../services/auth/auth-service';
 
 const mapRouteParams = withProps(({ match: { params } }) =>
   _.pick(params, ['catalogId', 'datasetId'])
 );
 
 const withReadOnly = withProps(({ catalogId }) => ({
-  isReadOnly: !hasOrganizationAdminPermission(catalogId)
+  isReadOnly: !authService.hasOrganizationWritePermission(catalogId)
 }));
 
 const enhance = compose(

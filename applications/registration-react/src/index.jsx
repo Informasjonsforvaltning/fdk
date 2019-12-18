@@ -9,17 +9,16 @@ import { App } from './app/app';
 
 import { configureStore } from './redux/configureStore';
 import { initLocalization } from './services/localization';
-import { initAuthService } from './services/auth/auth-service';
+import { authService } from './services/auth/auth-service';
 
 import './styles';
 
-async function initServices() {
-  initLocalization();
-  await initAuthService();
-}
-
 async function main() {
-  await initServices();
+  const authenticated = await authService.init({ loginRequired: true });
+  if (!authenticated) {
+    return;
+  }
+  initLocalization();
   const store = configureStore();
 
   const app = (
