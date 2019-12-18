@@ -9,16 +9,16 @@ export const TreeLosOption = props => {
   let inputRef;
 
   return (
-    <div className={`checkbox ${displayClass}`}>
-      <label
-        className="checkbox_label"
-        onKeyPress={() => {
-          inputRef.click();
-        }}
-        tabIndex="0"
-        role="button"
-        htmlFor={id}
-      >
+    <div
+      className={`checkbox ${displayClass}`}
+      onKeyPress={e => {
+        inputRef.click();
+        e.preventDefault();
+      }}
+      tabIndex="0"
+      role="button"
+    >
+      <label className="checkbox_label" htmlFor={id}>
         <input
           ref={input => {
             inputRef = input;
