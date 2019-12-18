@@ -8,7 +8,7 @@ root = true
 # Use bracketed regexp to target specific file types or file locations
 
 
-[*.{js,jsx,json,java}]
+[*.{ts,tsx,js,jsx,json,java}]
 indent_style = space
 end_of_line = lf
 charset = utf-8
