@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 
 import localization from '../../../services/localization';
-import { ListItems } from '../../../components/list-items/list-items.component';
+import { ListItemsPure } from '../../../components/list-items/list-items.component';
 import './dataset-items-list.scss';
 
 export const DatasetItemsList = ({
@@ -35,7 +35,7 @@ export const DatasetItemsList = ({
         </div>
       )}
 
-      <ListItems
+      <ListItemsPure
         catalogId={catalogId}
         items={datasetItems}
         sortField={sortField}
