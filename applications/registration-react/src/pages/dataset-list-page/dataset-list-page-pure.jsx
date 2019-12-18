@@ -10,6 +10,7 @@ import './dataset-list-page.scss';
 
 export const DatasetsListPagePure = props => {
   const {
+    isReadOnly,
     catalogId,
     catalog,
     datasetItems,
@@ -40,6 +41,7 @@ export const DatasetsListPagePure = props => {
           <div className="col-12 fdk-reg-datasets-list">
             <FormCatalog catalogId={catalogId} />
             <DatasetItemsList
+              isReadOnly={isReadOnly}
               catalogId={catalogId}
               datasetItems={datasetItems}
               defaultEmptyListText={localization.listItems.missingDatasetItems}

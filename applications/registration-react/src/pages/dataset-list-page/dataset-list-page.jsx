@@ -13,6 +13,7 @@ import {
   createDataset,
   datasetPath
 } from '../../services/api/registration-api/datasets';
+import { hasOrganizationAdminPermission } from '../../services/auth/auth-service';
 
 const mapRouteParams = withProps(({ match: { params } }) =>
   _.pick(params, ['catalogId'])
@@ -46,7 +47,12 @@ const mapDispatchToProps = (dispatch, { history }) => ({
     dispatch(createDatasetAndNavigateThunk(catalogId, history))
 });
 
+const withReadOnly = withProps(({ catalogId }) => ({
+  isReadOnly: !hasOrganizationAdminPermission(catalogId)
+}));
+
 export const enhance = compose(
+  withReadOnly,
   mapRouteParams,
   connect(
     mapStateToProps,
