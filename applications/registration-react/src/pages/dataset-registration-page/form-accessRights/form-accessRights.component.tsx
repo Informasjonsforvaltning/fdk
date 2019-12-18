@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Field, FieldArray } from 'redux-form';
 import includes from 'lodash/includes';
 import get from 'lodash/get';
@@ -22,10 +21,10 @@ import {
 /*
  Resets fields when radio button "Offentlig" is chosen.
  */
-const resetFields = props => {
-  props.change('legalBasisForRestriction', [legalBasisType]);
-  props.change('legalBasisForProcessing', [legalBasisType]);
-  props.change('legalBasisForAccess', [legalBasisType]);
+const resetFields = change => {
+  change('legalBasisForRestriction', [legalBasisType]);
+  change('legalBasisForProcessing', [legalBasisType]);
+  change('legalBasisForAccess', [legalBasisType]);
 };
 const getAccessRightLabel = value => {
   switch (value) {
@@ -40,6 +39,17 @@ const getAccessRightLabel = value => {
   }
 };
 
+interface LegalBasisFieldsProps {
+  item: {};
+  index: number;
+  fields: any;
+  titleLabel: string;
+  linkLabel: string;
+  onDeleteFieldAtIndex: (any, number) => void;
+  languages: string[];
+  isReadOnly: boolean;
+}
+
 export const renderLegalBasisFields = ({
   item,
   index,
@@ -49,7 +59,7 @@ export const renderLegalBasisFields = ({
   onDeleteFieldAtIndex,
   languages,
   isReadOnly
-}) => (
+}: LegalBasisFieldsProps) => (
   <div className="d-flex flex-column mb-5" key={index}>
     <MultilingualField
       name={`${item}.prefLabel`}
@@ -80,16 +90,15 @@ export const renderLegalBasisFields = ({
     )}
   </div>
 );
-renderLegalBasisFields.propTypes = {
-  item: PropTypes.object.isRequired,
-  index: PropTypes.number.isRequired,
-  fields: PropTypes.object.isRequired,
-  titleLabel: PropTypes.string.isRequired,
-  linkLabel: PropTypes.string.isRequired,
-  onDeleteFieldAtIndex: PropTypes.func.isRequired,
-  languages: PropTypes.array.isRequired,
-  isReadOnly: PropTypes.bool.isRequired
-};
+
+interface LegalBasisProps {
+  fields: any;
+  titleLabel: string;
+  linkLabel: string;
+  onDeleteFieldAtIndex: (any, number) => void;
+  languages: string[];
+  isReadOnly: boolean;
+}
 
 export const renderLegalBasis = ({
   fields,
@@ -98,7 +107,7 @@ export const renderLegalBasis = ({
   onDeleteFieldAtIndex,
   languages,
   isReadOnly
-}) => {
+}: LegalBasisProps) => {
   return (
     <div>
       {fields &&
@@ -127,28 +136,32 @@ export const renderLegalBasis = ({
     </div>
   );
 };
-renderLegalBasis.propTypes = {
-  fields: PropTypes.object.isRequired,
-  titleLabel: PropTypes.string.isRequired,
-  linkLabel: PropTypes.string.isRequired,
-  onDeleteFieldAtIndex: PropTypes.func.isRequired,
-  languages: PropTypes.array.isRequired,
-  isReadOnly: PropTypes.bool.isRequired
-};
-export const FormAccessRights = props => {
-  const {
-    syncErrors,
-    hasAccessRightsURI,
-    dispatch,
-    catalogId,
-    datasetId,
-    languages,
-    datasetFormStatus,
-    datasetItem,
-    losItems,
-    isReadOnly
-  } = props;
-  const accessRight = syncErrors ? syncErrors.accessRight : null;
+
+interface FormAccessRightsProps {
+  hasAccessRightsURI: string;
+  dispatch: (any) => void;
+  catalogId: string;
+  datasetId: string;
+  languages: {}[];
+  datasetFormStatus: { lastChangedFields: string[] };
+  datasetItem: { accessRights: { uri: string } };
+  losItems: {}[];
+  isReadOnly: boolean;
+  change: (key: string, value: any) => void;
+}
+
+export const FormAccessRights = ({
+  hasAccessRightsURI,
+  dispatch,
+  catalogId,
+  datasetId,
+  languages = [],
+  datasetFormStatus,
+  datasetItem,
+  losItems,
+  isReadOnly,
+  change
+}: FormAccessRightsProps) => {
   const deleteFieldAtIndex = (fields, index) => {
     const values = fields.getAll();
     // use splice instead of skip, for changing the bound value
@@ -179,7 +192,7 @@ export const FormAccessRights = props => {
               type="radio"
               value="http://publications.europa.eu/resource/authority/access-right/PUBLIC"
               label={localization.schema.accessRights.publicLabel}
-              onChange={() => resetFields(props)}
+              onChange={() => resetFields(change)}
             />
             <Field
               name="accessRights.uri"
@@ -216,117 +229,86 @@ export const FormAccessRights = props => {
             </AlertMessage>
           )}
 
-        {accessRight && (
-          <div className="alert alert-danger mt-3">
-            {accessRight[localization.getLanguage()]}
-          </div>
-        )}
-
         {(hasAccessRightsURI ===
           'http://publications.europa.eu/resource/authority/access-right/RESTRICTED' ||
           hasAccessRightsURI ===
             'http://publications.europa.eu/resource/authority/access-right/NON_PUBLIC') && (
           <div className="mt-4">
-              <div className="form-group">
+            <div className="form-group">
               <Helptext
-                  title={
+                title={
                   localization.schema.accessRights.legalBasisForRestriction
                     .heading
                 }
-                  term="Dataset_legalBasisForRestriction"
-                />
+                term="Dataset_legalBasisForRestriction"
+              />
               <FieldArray
-                  name="legalBasisForRestriction"
-                  component={renderLegalBasis}
-                  titleLabel={
+                name="legalBasisForRestriction"
+                component={renderLegalBasis}
+                titleLabel={
                   localization.schema.accessRights.legalBasisForRestriction
                     .titleLabel
                 }
-                  linkLabel={
+                linkLabel={
                   localization.schema.accessRights.legalBasisForRestriction
                     .linkLabel
                 }
-                  onDeleteFieldAtIndex={deleteFieldAtIndex}
-                  languages={languages}
-                  isReadOnly={isReadOnly}
-                />
+                onDeleteFieldAtIndex={deleteFieldAtIndex}
+                languages={languages}
+                isReadOnly={isReadOnly}
+              />
             </div>
 
-              <div className="form-group">
+            <div className="form-group">
               <Helptext
-                  title={
+                title={
                   localization.schema.accessRights.legalBasisForProcessing
                     .heading
                 }
-                  term="Dataset_legalBasisForProcessing"
-                />
+                term="Dataset_legalBasisForProcessing"
+              />
               <FieldArray
-                  name="legalBasisForProcessing"
-                  component={renderLegalBasis}
-                  titleLabel={
+                name="legalBasisForProcessing"
+                component={renderLegalBasis}
+                titleLabel={
                   localization.schema.accessRights.legalBasisForProcessing
                     .titleLabel
                 }
-                  linkLabel={
+                linkLabel={
                   localization.schema.accessRights.legalBasisForProcessing
                     .linkLabel
                 }
-                  onDeleteFieldAtIndex={deleteFieldAtIndex}
-                  languages={languages}
-                  isReadOnly={isReadOnly}
-                />
+                onDeleteFieldAtIndex={deleteFieldAtIndex}
+                languages={languages}
+                isReadOnly={isReadOnly}
+              />
             </div>
 
-              <div className="form-group">
+            <div className="form-group">
               <Helptext
-                  title={
+                title={
                   localization.schema.accessRights.legalBasisForAccess.heading
                 }
-                  term="Dataset_legalBasisForAccess"
-                />
+                term="Dataset_legalBasisForAccess"
+              />
               <FieldArray
-                  name="legalBasisForAccess"
-                  component={renderLegalBasis}
-                  titleLabel={
+                name="legalBasisForAccess"
+                component={renderLegalBasis}
+                titleLabel={
                   localization.schema.accessRights.legalBasisForAccess
                     .titleLabel
                 }
-                  linkLabel={
+                linkLabel={
                   localization.schema.accessRights.legalBasisForAccess.linkLabel
                 }
-                  onDeleteFieldAtIndex={deleteFieldAtIndex}
-                  languages={languages}
-                  isReadOnly={isReadOnly}
-                />
+                onDeleteFieldAtIndex={deleteFieldAtIndex}
+                languages={languages}
+                isReadOnly={isReadOnly}
+              />
             </div>
-            </div>
+          </div>
         )}
       </div>
     </form>
   );
-};
-
-FormAccessRights.defaultProps = {
-  syncErrors: null,
-  hasAccessRightsURI: null,
-  dispatch: null,
-  catalogId: null,
-  datasetId: null,
-  languages: [],
-  datasetFormStatus: null,
-  datasetItem: null,
-  losItems: null,
-  isReadOnly: false
-};
-FormAccessRights.propTypes = {
-  syncErrors: PropTypes.object,
-  hasAccessRightsURI: PropTypes.string,
-  dispatch: PropTypes.func,
-  catalogId: PropTypes.string,
-  datasetId: PropTypes.string,
-  languages: PropTypes.array,
-  datasetFormStatus: PropTypes.object,
-  datasetItem: PropTypes.object,
-  losItems: PropTypes.array,
-  isReadOnly: PropTypes.bool
 };
