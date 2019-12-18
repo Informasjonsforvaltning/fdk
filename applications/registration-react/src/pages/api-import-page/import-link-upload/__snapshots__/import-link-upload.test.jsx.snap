@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`should render ImportLinkUpload correctly 1`] = `
+exports[`should render ImportLinkUploadPure correctly 1`] = `
 <Component>
   <div
     className="mb-5"

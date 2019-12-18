@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { ImportLinkUpload } from './import-link-upload.component';
+import { ImportLinkUploadPure } from './import-link-upload.component';
 
 let defaultProps;
 let wrapper;
@@ -22,10 +22,10 @@ beforeEach(() => {
     touched: false,
     error: null
   };
-  wrapper = shallow(<ImportLinkUpload {...defaultProps} />);
+  wrapper = shallow(<ImportLinkUploadPure {...defaultProps} />);
 });
 
-test('should render ImportLinkUpload correctly', () => {
+test('should render ImportLinkUploadPure correctly', () => {
   expect(wrapper).toMatchSnapshot();
 });
 
