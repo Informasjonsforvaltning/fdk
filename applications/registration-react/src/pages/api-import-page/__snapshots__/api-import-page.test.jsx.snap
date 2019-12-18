@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`should render ApiImportPage correctly 1`] = `
+exports[`should render ApiImportPagePure correctly 1`] = `
 <div
   className="container"
 >
