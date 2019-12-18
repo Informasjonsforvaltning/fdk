@@ -2,4 +2,6 @@
 
 exports[`should render PathNameBreadcrumb  correctly 1`] = `<span />`;
 
-exports[`should render PathNameBreadcrumb correctly with no pathname 1`] = `<span />`;
+exports[
+  `should render PathNameBreadcrumb correctly with no pathname 1`
+] = `<span />`;
