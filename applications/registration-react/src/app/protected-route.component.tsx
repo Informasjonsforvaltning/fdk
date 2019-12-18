@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Route } from 'react-router-dom';
 
 import { isAuthenticated, login, logout } from '../services/auth/auth-service';
@@ -7,7 +6,12 @@ import { Timeout } from '../components/timeout.component';
 
 const TIMEOUT = 27.5 * 60 * 1000;
 
-export const ProtectedRoute = ({ check, ...props }) => {
+interface Props {
+  check: (params: any) => boolean;
+  computedMatch: any;
+}
+
+export const ProtectedRoute = ({ check, ...props }: Props) => {
   const {
     computedMatch: { params }
   } = props;
@@ -20,17 +24,7 @@ export const ProtectedRoute = ({ check, ...props }) => {
   return (
     <>
       <Route {...props} />
-      <Timeout timeout={TIMEOUT} onTimeout={logout} />
+      <Timeout timeout={TIMEOUT} onTimeout={() => logout()} />
     </>
   );
-};
-
-ProtectedRoute.propTypes = {
-  check: PropTypes.func,
-  computedMatch: PropTypes.object
-};
-
-ProtectedRoute.defaultProps = {
-  check: () => true,
-  computedMatch: {}
 };
