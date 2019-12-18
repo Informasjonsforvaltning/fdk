@@ -6,7 +6,7 @@ import { Collapse } from 'reactstrap';
 
 import localization from '../../../services/localization';
 import { getTranslateText } from '../../../services/translateText';
-import Helptext from '../../../components/helptext/helptext.component';
+import { Helptext } from '../../../components/helptext/helptext.component';
 import InputTitleField from '../../../components/fields/field-input-title/field-input-title.component';
 import TextAreaField from '../../../components/fields/field-textarea/field-textarea.component';
 

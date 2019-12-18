@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`should render Helptext correctly 1`] = `
+exports[`should render HelpTextPure correctly 1`] = `
 <div
   className="fdk-reg-helptext mb-3 p-3"
 >

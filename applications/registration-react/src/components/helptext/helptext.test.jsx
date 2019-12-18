@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { Helptext } from './helptext.component';
+import { HelpTextPure } from './helptext.component';
 
 let defaultProps;
 let wrapper;
@@ -11,9 +11,9 @@ beforeEach(() => {
     required: false,
     term: 'Catalog_title'
   };
-  wrapper = shallow(<Helptext {...defaultProps} />);
+  wrapper = shallow(<HelpTextPure {...defaultProps} />);
 });
 
-test('should render Helptext correctly', () => {
+test('should render HelpTextPure correctly', () => {
   expect(wrapper).toMatchSnapshot();
 });

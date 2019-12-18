@@ -9,7 +9,7 @@ import localization from '../../services/localization';
 import './helptext.scss';
 import { convertToSanitizedHtml } from '../../lib/markdown-converter';
 
-export const Helptext = props => {
+export const HelpTextPure = props => {
   const { title, term, required, toggleShowAll, showAll } = props;
 
   const collapseClass = cx('fa', 'fdk-fa-left', {
@@ -62,7 +62,7 @@ export const Helptext = props => {
   );
 };
 
-Helptext.defaultProps = {
+HelpTextPure.defaultProps = {
   title: '',
   term: '',
   required: false,
@@ -70,7 +70,7 @@ Helptext.defaultProps = {
   showAll: false
 };
 
-Helptext.propTypes = {
+HelpTextPure.propTypes = {
   title: PropTypes.string,
   term: PropTypes.string,
   required: PropTypes.bool,
@@ -90,4 +90,4 @@ const enhance = withStateHandlers(
   }
 );
 
-export default enhance(Helptext);
+export const Helptext = enhance(HelpTextPure);
