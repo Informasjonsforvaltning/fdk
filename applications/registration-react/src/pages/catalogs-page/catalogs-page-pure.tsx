@@ -7,7 +7,7 @@ import { getTranslateText } from '../../services/translateText';
 import { selectorForCatalogDatasetsFromDatasetsState } from '../../redux/modules/datasets';
 import { getAPIItemsCount } from '../../redux/modules/apis';
 import './catalogs-page.scss';
-import { hasOrganizationAdminPermission } from '../../services/auth/auth-service';
+import { authService } from '../../services/auth/auth-service';
 
 interface Props {
   catalogItems: any[];
@@ -63,7 +63,9 @@ export const CatalogsPagePure = ({
                         )
                       ).length
                     }
-                    isReadOnly={!hasOrganizationAdminPermission(catalog.id)}
+                    isReadOnly={
+                      !authService.hasOrganizationWritePermission(catalog.id)
+                    }
                   />
                 )}
                 {apis && (
@@ -73,7 +75,9 @@ export const CatalogsPagePure = ({
                     fetchItems={fetchApisIfNeeded}
                     type="apis"
                     itemsCount={getAPIItemsCount(apis, catalog.id)}
-                    isReadOnly={!hasOrganizationAdminPermission(catalog.id)}
+                    isReadOnly={
+                      !authService.hasOrganizationWritePermission(catalog.id)
+                    }
                   />
                 )}
                 <Catalog

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getToken } from '../../auth/auth-service';
+import { authService } from '../../auth/auth-service';
 import { getConfig } from '../../../config';
 
 export const getConcepts = async orgnr =>
@@ -7,7 +7,7 @@ export const getConcepts = async orgnr =>
     .get(`${getConfig().conceptRegistrationApi.host}/begreper`, {
       params: { orgNummer: orgnr },
       headers: {
-        Authorization: `Bearer ${await getToken()}`,
+        Authorization: await authService.getAuthorizationHeader(),
         Accept: 'application/json'
       }
     })

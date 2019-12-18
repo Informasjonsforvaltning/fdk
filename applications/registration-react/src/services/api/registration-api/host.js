@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getToken } from '../../auth/auth-service';
+import { authService } from '../../auth/auth-service';
 import { getConfig } from '../../../config';
 
 export const registrationApi = async (method, path, data) =>
@@ -8,7 +8,7 @@ export const registrationApi = async (method, path, data) =>
     method,
     data,
     headers: {
-      Authorization: `Bearer ${await getToken()}`,
+      Authorization: await authService.getAuthorizationHeader(),
       Accept: 'application/json'
     }
   }).then(r => r.data);

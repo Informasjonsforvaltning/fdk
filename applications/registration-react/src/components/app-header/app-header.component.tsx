@@ -3,11 +3,12 @@ import { compose, withProps } from 'recompose';
 
 import localization from '../../services/localization';
 import './app-header.scss';
-import { getUserProfile, logout } from '../../services/auth/auth-service';
+import { authService } from '../../services/auth/auth-service';
 import { getConfig } from '../../config';
+import { User } from '../../lib/auth/auth';
 
 interface Props {
-  user: { name: string };
+  user: User;
 }
 
 export const AppHeaderPure = ({ user }: Props) => {
@@ -57,7 +58,7 @@ export const AppHeaderPure = ({ user }: Props) => {
               {user && (
                 <div className="mr-4 fdk-auth-link">
                   <button
-                    onClick={() => logout()}
+                    onClick={() => authService.logout()}
                     type="button"
                     className="fdk-btn-no-border"
                   >
@@ -73,6 +74,6 @@ export const AppHeaderPure = ({ user }: Props) => {
   );
 };
 
-const enhance = compose(withProps(() => ({ user: getUserProfile() })));
+const enhance = compose(withProps(() => ({ user: authService.getUser() })));
 
 export const AppHeader = enhance(AppHeaderPure);

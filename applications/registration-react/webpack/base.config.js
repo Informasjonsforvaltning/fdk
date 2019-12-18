@@ -76,6 +76,12 @@ export default {
         copyUnmodified: true
       }
     ),
+    new CopyWebpackPlugin(
+      [{ from: './src/lib/auth/silent-check-sso.html', to: './' }],
+      {
+        copyUnmodified: true
+      }
+    ),
     new BaseHrefWebpackPlugin({
       baseHref: '/'
     })
