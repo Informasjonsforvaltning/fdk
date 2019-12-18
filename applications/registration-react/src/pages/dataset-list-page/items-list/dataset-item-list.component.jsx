@@ -7,6 +7,7 @@ import { ListItems } from '../../../components/list-items/list-items.component';
 import './dataset-items-list.scss';
 
 export const DatasetItemsList = ({
+  isReadOnly,
   catalogId,
   datasetItems,
   onClickCreateDataset
@@ -21,16 +22,19 @@ export const DatasetItemsList = ({
 
   return (
     <div>
-      <div className="d-flex mb-3">
-        <button
-          type="button"
-          className="fdk-button fdk-button-cta"
-          onClick={() => onClickCreateDataset(catalogId)}
-        >
-          <i className="fa fa-plus fdk-color-white mr-2" />
-          {localization.datasets.list.btnNewDataset}
-        </button>
-      </div>
+
+      {!isReadOnly && (
+        <div className="d-flex mb-3">
+          <button
+            type="button"
+            className="fdk-button fdk-button-cta"
+            onClick={() => onClickCreateDataset(catalogId)}
+          >
+            <i className="fa fa-plus fdk-color-white mr-2" />
+            {localization.datasets.list.btnNewDataset}
+          </button>
+        </div>
+      )}
 
       <ListItems
         catalogId={catalogId}
