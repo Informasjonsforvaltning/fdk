@@ -1,13 +1,13 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { ApiImportPage } from './api-import-page';
+import { ApiImportPagePure } from './api-import-page-pure';
 
 let wrapper;
 
 beforeEach(() => {
-  wrapper = shallow(<ApiImportPage />);
+  wrapper = shallow(<ApiImportPagePure />);
 });
 
-test('should render ApiImportPage correctly', () => {
+test('should render ApiImportPagePure correctly', () => {
   expect(wrapper).toMatchSnapshot();
 });
