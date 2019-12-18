@@ -67,7 +67,7 @@ const renderItems = (
   );
 };
 
-export const ListItems = props => {
+export const ListItemsPure = props => {
   const {
     catalogId,
     items,
@@ -116,7 +116,7 @@ export const ListItems = props => {
   );
 };
 
-ListItems.defaultProps = {
+ListItemsPure.defaultProps = {
   items: null,
   itemTitleField: ['title'],
   sortField: null,
@@ -126,7 +126,7 @@ ListItems.defaultProps = {
   defaultEmptyListText: null
 };
 
-ListItems.propTypes = {
+ListItemsPure.propTypes = {
   catalogId: PropTypes.string.isRequired,
   items: PropTypes.array,
   itemTitleField: PropTypes.array,
@@ -148,4 +148,4 @@ const enhance = compose(
   })
 );
 
-export default enhance(ListItems);
+export const ListItems = enhance(ListItemsPure);

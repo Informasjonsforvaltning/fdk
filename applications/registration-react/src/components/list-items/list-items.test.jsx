@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { ListItems } from './list-items.component';
+import { ListItemsPure } from './list-items.component';
 
 let defaultProps;
 let wrapper;
@@ -34,7 +34,7 @@ beforeEach(() => {
     prefixPath: '/catalogs/123/datasets',
     defaultEmptyListText: 'Ingen beskrivelser er registrert'
   };
-  wrapper = shallow(<ListItems {...defaultProps} />);
+  wrapper = shallow(<ListItemsPure {...defaultProps} />);
 });
 
 test('should render ListItem correctly with props', () => {
