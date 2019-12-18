@@ -22,7 +22,6 @@ export const DatasetItemsList = ({
 
   return (
     <div>
-
       {!isReadOnly && (
         <div className="d-flex mb-3">
           <button

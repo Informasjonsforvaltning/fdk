@@ -38,8 +38,5 @@ const formConfig = {
         )
 };
 
-const enhance = compose(
-  connect(mapStateToProps),
-  reduxForm(formConfig)
-);
+const enhance = compose(connect(mapStateToProps), reduxForm(formConfig));
 export const FormConcept = enhance(FormConceptPure);

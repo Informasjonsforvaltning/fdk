@@ -1,5 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`should render Pureapi-descriptionBreadcrumb correctly with no api-descriptionItem 1`] = `<span />`;
+exports[
+  `should render Pureapi-descriptionBreadcrumb correctly with no api-descriptionItem 1`
+] = `<span />`;
 
-exports[`should render Pureapi-descriptionBreadcrumb with "api-description" active correctly 1`] = `<span />`;
+exports[
+  `should render Pureapi-descriptionBreadcrumb with "api-description" active correctly 1`
+] = `<span />`;

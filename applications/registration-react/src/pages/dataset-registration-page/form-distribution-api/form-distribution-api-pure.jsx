@@ -16,7 +16,11 @@ const renderReadOnly = ({ input }) => {
         const title = getTranslateText(
           _.get(dist, ['accessService', 'description', 'nb'])
         );
-        return <div key={index} className="pl-3">{title}</div>;
+        return (
+          <div key={index} className="pl-3">
+            {title}
+          </div>
+        );
       })}
     </>
   );

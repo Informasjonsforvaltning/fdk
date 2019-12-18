@@ -1,12 +1,16 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`should render PuredatasetBreadcrumb correctly with no datasetItem 1`] = `
+exports[
+  `should render PuredatasetBreadcrumb correctly with no datasetItem 1`
+] = `
 <span>
   Registrer ny datasettbeskrivelse
 </span>
 `;
 
-exports[`should render PuredatasetBreadcrumb with "dataset" active correctly 1`] = `
+exports[
+  `should render PuredatasetBreadcrumb with "dataset" active correctly 1`
+] = `
 <span>
   dataset title
 </span>
