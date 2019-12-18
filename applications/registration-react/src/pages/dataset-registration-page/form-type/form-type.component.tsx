@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 import _ from 'lodash';
 
@@ -8,7 +7,13 @@ import Helptext from '../../../components/helptext/helptext.component';
 import CheckBoxFieldType from './field-checkbox-type/field-checkbox.component';
 import { typeValues } from '../dataset-registration-page.logic';
 
-export const FormType = props => {
+interface Props {
+  syncErrors: any;
+  type: any;
+  isReadOnly: boolean;
+}
+
+export const FormType = (props: Props) => {
   const { syncErrors, isReadOnly, type } = props;
   return (
     <form>
@@ -27,16 +32,4 @@ export const FormType = props => {
       </div>
     </form>
   );
-};
-
-FormType.defaultProps = {
-  syncErrors: null,
-  type: null,
-  isReadOnly: false
-};
-
-FormType.propTypes = {
-  syncErrors: PropTypes.object,
-  type: PropTypes.object,
-  isReadOnly: PropTypes.bool
 };
