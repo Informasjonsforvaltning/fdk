@@ -22,7 +22,7 @@ const renderReadOnly = ({ input }) => {
   );
 };
 renderReadOnly.propTypes = {
-  input: PropTypes.bool.isRequired
+  input: PropTypes.object.isRequired
 };
 
 export const renderDistributionsAPI = ({ isReadOnly }) => (
