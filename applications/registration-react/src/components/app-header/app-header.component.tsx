@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { compose, withProps } from 'recompose';
 
 import localization from '../../services/localization';
@@ -7,7 +6,11 @@ import './app-header.scss';
 import { getUserProfile, logout } from '../../services/auth/auth-service';
 import { getConfig } from '../../config';
 
-export const AppHeaderPure = ({ user }) => {
+interface Props {
+  user: { name: string };
+}
+
+export const AppHeaderPure = ({ user }: Props) => {
   const logoImagePath = getConfig().useDemoLogo
     ? '/img/logo-registrering-demo.svg'
     : '/img/logo-registrering.svg';
@@ -68,14 +71,6 @@ export const AppHeaderPure = ({ user }) => {
       </div>
     </header>
   );
-};
-
-AppHeaderPure.defaultProps = {
-  user: null
-};
-
-AppHeaderPure.propTypes = {
-  user: PropTypes.object
 };
 
 const enhance = compose(withProps(() => ({ user: getUserProfile() })));
