@@ -12,11 +12,11 @@ import { getTranslateText } from '../../../services/translateText';
 const renderReadOnly = ({ input }) => {
   return (
     <>
-      {input.value.map(dist => {
+      {input.value.map((dist, index) => {
         const title = getTranslateText(
           _.get(dist, ['accessService', 'description', 'nb'])
         );
-        return <div className="pl-3">{title}</div>;
+        return <div key={index} className="pl-3">{title}</div>;
       })}
     </>
   );
