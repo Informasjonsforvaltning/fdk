@@ -50,7 +50,6 @@ const renderCatalogs = props => {
                   )
                 ).length
               }
-              isReadOnly={!hasOrganizationAdminPermission(catalog.id)}
             />
           )}
           {apis && (
