@@ -10,7 +10,7 @@ import InputField from '../../../components/fields/field-input/field-input.compo
 import { AlertMessage } from '../../../components/alert-message/alert-message.component';
 import { validateURL } from '../../../validation/validation';
 
-export const ImportLinkUpload = props => {
+export const ImportLinkUploadPure = props => {
   const {
     importByLinkError,
     handleChangeUrl,
@@ -75,13 +75,13 @@ export const ImportLinkUpload = props => {
   );
 };
 
-ImportLinkUpload.defaultProps = {
+ImportLinkUploadPure.defaultProps = {
   importByLinkError: false,
   touched: false,
   error: null
 };
 
-ImportLinkUpload.propTypes = {
+ImportLinkUploadPure.propTypes = {
   importByLinkError: PropTypes.bool,
   handleChangeUrl: PropTypes.func.isRequired,
   handleLinkUpload: PropTypes.func.isRequired,
@@ -107,4 +107,4 @@ const enhance = compose(
   })
 );
 
-export default enhance(ImportLinkUpload);
+export const ImportLinkUpload = enhance(ImportLinkUploadPure);
