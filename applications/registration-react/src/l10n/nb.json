@@ -106,6 +106,8 @@
     "NO_NN": "Norsk nynorsk (NN)",
     "SMI": "Samisk"
   },
+  "expand": "Åpne alle faner",
+  "collapse": "Lukk alle faner",
   "menu": {
     "title": "Meny",
     "guide": "Veileder",

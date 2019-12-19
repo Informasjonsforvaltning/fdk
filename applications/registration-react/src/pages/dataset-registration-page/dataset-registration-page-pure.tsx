@@ -3,7 +3,7 @@ import _ from 'lodash';
 import pick from 'lodash/pick';
 
 import localization from '../../services/localization';
-import { FormTemplateWithState } from '../../components/form-template/form-template-with-state.component';
+import { FormTemplate } from '../../components/form-template/form-template.component';
 import { ConnectedFormTitle } from './form-title/connected-form-title.component';
 import { FormDistribution } from './form-distribution/form-distribution';
 import { ConnectedFormSample } from './form-sample/connected-form-sample.component';
@@ -131,9 +131,29 @@ export function DatasetRegistrationPagePure(
     sample = {}
   } = form || {};
 
+  const renderExpandButton = (expanded) => {
+    const text = expanded ? localization.collapse : localization.expand;
+    const icon = expanded ? "icon-collapse-text-sm.svg" : "icon-expand-text-sm.svg";
+    const iconFile = `/img/${icon}`;
+
+    return (
+      <div className="d-flex justify-content-end">
+          <button className="toggleExpandButton" onClick={toggleExpand}>
+            <img className="chevronIcon" src={iconFile} alt="icon" />
+            {text}
+            </button>
+      </div>
+    );
+  };
+
   useEffect(() => dispatchEnsureData(catalogId), [catalogId]);
 
   const [languagesDetermined, setLanguagesDetermined] = useState(false);
+  const [expandAll, setExpandAll] = useState(false);
+
+  const toggleExpand = () => {
+    setExpandAll(!expandAll);
+  };
 
   const translatableFields = [
     'title',
@@ -187,16 +207,18 @@ export function DatasetRegistrationPagePure(
                 <RegistrationStatus
                   registrationStatus={datasetItem.registrationStatus}
                 />
-              </div>
+            </div>
               {!isReadOnly && (
                 <LanguagePicker
                   languages={languages}
                   toggleInputLanguage={toggleInputLanguage}
                 />
               )}
+              {renderExpandButton(expandAll)}
               {allowDelegatedRegistration && (
-                <FormTemplateWithState
-                  title={localization.datasets.formTemplates.onBehalf}
+                <FormTemplate
+                title={localization.datasets.formTemplates.onBehalf}
+                showInitially={expandAll}
                 >
                   <ConnectedFormPublisher
                     datasetItem={datasetItem}
@@ -204,14 +226,15 @@ export function DatasetRegistrationPagePure(
                     datasetId={datasetId}
                     languages={languages}
                   />
-                </FormTemplateWithState>
+                </FormTemplate>
               )}
 
-              <FormTemplateWithState
+              <FormTemplate
                 title={localization.datasets.formTemplates.title}
                 required
                 values={titleValues(title.values)}
                 syncErrors={title.syncErrors}
+                showInitially={expandAll}
               >
                 <ConnectedFormTitle
                   datasetItem={datasetItem}
@@ -220,13 +243,14 @@ export function DatasetRegistrationPagePure(
                   languages={languages}
                   isReadOnly={isReadOnly}
                 />
-              </FormTemplateWithState>
+              </FormTemplate>
 
-              <FormTemplateWithState
+              <FormTemplate
                 title={localization.datasets.formTemplates.accessRight}
                 required
                 values={accessRightsValues(accessRights.values)}
                 syncErrors={accessRights.syncErrors}
+                showInitially={expandAll}
               >
                 <ConnectedFormAccessRights
                   datasetItem={datasetItem}
@@ -237,12 +261,13 @@ export function DatasetRegistrationPagePure(
                   losItems={losItems}
                   isReadOnly={isReadOnly}
                 />
-              </FormTemplateWithState>
-              <FormTemplateWithState
+              </FormTemplate>
+              <FormTemplate
                 title={localization.datasets.formTemplates.theme}
                 required
                 values={losValues(themes.values, losItems)}
                 syncErrors={themes.syncErrors}
+                showInitially={expandAll}
               >
                 <ConnectedFormLOS
                   datasetItem={datasetItem}
@@ -253,12 +278,13 @@ export function DatasetRegistrationPagePure(
                   datasetFormStatus={datasetFormStatus}
                   isReadOnly={isReadOnly}
                 />
-              </FormTemplateWithState>
+              </FormTemplate>
 
-              <FormTemplateWithState
+              <FormTemplate
                 title={localization.datasets.formTemplates.euTheme}
                 values={themesValues(themes.values)}
                 syncErrors={themes.syncErrors}
+                showInitially={expandAll}
               >
                 <ConnectedFormThemes
                   datasetItem={datasetItem}
@@ -268,12 +294,13 @@ export function DatasetRegistrationPagePure(
                   datasetId={datasetId}
                   isReadOnly={isReadOnly}
                 />
-              </FormTemplateWithState>
+              </FormTemplate>
 
-              <FormTemplateWithState
+              <FormTemplate
                 title={localization.datasets.formTemplates.type}
                 values={typeValues(type.values)}
                 syncErrors={type.syncErrors}
+                showInitially={expandAll}
               >
                 <ConnectedFormType
                   datasetItem={datasetItem}
@@ -282,12 +309,13 @@ export function DatasetRegistrationPagePure(
                   isReadOnly={isReadOnly}
                   type={type}
                 />
-              </FormTemplateWithState>
+              </FormTemplate>
 
-              <FormTemplateWithState
+              <FormTemplate
                 title={localization.datasets.formTemplates.concept}
                 values={conceptValues(concept.values)}
                 syncErrors={concept.syncErrors}
+                showInitially={expandAll}
               >
                 <FormConcept
                   datasetItem={datasetItem}
@@ -296,12 +324,13 @@ export function DatasetRegistrationPagePure(
                   languages={languages}
                   isReadOnly={isReadOnly}
                 />
-              </FormTemplateWithState>
+              </FormTemplate>
 
-              <FormTemplateWithState
+              <FormTemplate
                 title={localization.datasets.formTemplates.spatial}
                 values={spatialValues(spatial.values)}
                 syncErrors={spatial.syncErrors}
+                showInitially={expandAll}
               >
                 <ConnectedFormSpatial
                   datasetItem={datasetItem}
@@ -309,12 +338,13 @@ export function DatasetRegistrationPagePure(
                   datasetId={datasetId}
                   isReadOnly={isReadOnly}
                 />
-              </FormTemplateWithState>
+              </FormTemplate>
 
-              <FormTemplateWithState
+              <FormTemplate
                 title={localization.datasets.formTemplates.provenance}
                 values={provenanceValues(formProvenance.values)}
                 syncErrors={formProvenance.syncErrors}
+                showInitially={expandAll}
               >
                 <ConnectedFormProvenance
                   datasetItem={datasetItem}
@@ -325,12 +355,13 @@ export function DatasetRegistrationPagePure(
                   languages={languages}
                   isReadOnly={isReadOnly}
                 />
-              </FormTemplateWithState>
+              </FormTemplate>
 
-              <FormTemplateWithState
+              <FormTemplate
                 title={localization.datasets.formTemplates.content}
                 values={contentsValues(contents.values)}
                 syncErrors={contents.syncErrors}
+                showInitially={expandAll}
               >
                 <ConnectedFormContents
                   datasetItem={datasetItem}
@@ -339,12 +370,13 @@ export function DatasetRegistrationPagePure(
                   languages={languages}
                   isReadOnly={isReadOnly}
                 />
-              </FormTemplateWithState>
+              </FormTemplate>
 
-              <FormTemplateWithState
+              <FormTemplate
                 title={localization.datasets.formTemplates.informationModel}
                 values={informationModelValues(informationModel.values)}
                 syncErrors={informationModel.syncErrors}
+                showInitially={expandAll}
               >
                 <FormInformationModel
                   datasetItem={datasetItem}
@@ -353,11 +385,12 @@ export function DatasetRegistrationPagePure(
                   languages={languages}
                   isReadOnly={isReadOnly}
                 />
-              </FormTemplateWithState>
+              </FormTemplate>
 
-              <FormTemplateWithState
+              <FormTemplate
                 title={localization.datasets.formTemplates.reference}
                 values={referenceValues(reference.values)}
+                showInitially={expandAll}
               >
                 <ConnectedFormReference
                   datasetItem={datasetItem}
@@ -367,12 +400,13 @@ export function DatasetRegistrationPagePure(
                   datasetId={datasetId}
                   isReadOnly={isReadOnly}
                 />
-              </FormTemplateWithState>
+              </FormTemplate>
 
-              <FormTemplateWithState
+              <FormTemplate
                 title={localization.datasets.formTemplates.contactInformation}
                 values={contactPointValues(contactPoint.values)}
                 syncErrors={contactPoint.syncErrors}
+                showInitially={expandAll}
               >
                 <ConnectedFormContactPoint
                   datasetItem={datasetItem}
@@ -380,11 +414,12 @@ export function DatasetRegistrationPagePure(
                   datasetId={datasetId}
                   isReadOnly={isReadOnly}
                 />
-              </FormTemplateWithState>
+              </FormTemplate>
 
-              <FormTemplateWithState
+              <FormTemplate
                 title={localization.datasets.formTemplates.distributionAPI}
                 values={distributionAPIValues(distribution.values)}
+                showInitially={expandAll}
               >
                 <FormDistributionApi
                   datasetItem={datasetItem}
@@ -393,13 +428,14 @@ export function DatasetRegistrationPagePure(
                   datasetUri={_.get(datasetItem, 'uri')}
                   isReadOnly={isReadOnly}
                 />
-              </FormTemplateWithState>
+              </FormTemplate>
 
-              <FormTemplateWithState
+              <FormTemplate
                 title={localization.datasets.formTemplates.distribution}
                 backgroundBlue
                 values={distributionValues(distribution.values)}
                 syncErrors={distribution.syncErrors}
+                showInitially={expandAll}
               >
                 <FormDistribution
                   datasetItem={datasetItem}
@@ -409,13 +445,14 @@ export function DatasetRegistrationPagePure(
                   languages={languages}
                   isReadOnly={isReadOnly}
                 />
-              </FormTemplateWithState>
+              </FormTemplate>
 
-              <FormTemplateWithState
+              <FormTemplate
                 title={localization.datasets.formTemplates.sample}
                 backgroundBlue
                 values={sampleValues(sample.values)}
                 syncErrors={sample.syncErrors}
+                showInitially={expandAll}
               >
                 <ConnectedFormSample
                   datasetItem={datasetItem}
@@ -425,7 +462,7 @@ export function DatasetRegistrationPagePure(
                   languages={languages}
                   isReadOnly={isReadOnly}
                 />
-              </FormTemplateWithState>
+              </FormTemplate>
               {!isReadOnly && (
                 <FormPublish
                   initialItemStatus={_.get(

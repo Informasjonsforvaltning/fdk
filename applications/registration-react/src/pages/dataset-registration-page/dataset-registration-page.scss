@@ -16,6 +16,20 @@
   }
 }
 
+.chevronIcon {
+  height: 20px;
+  width: 20px;
+}
+
+.toggleExpandButton {
+  border: none;
+  color: $color-link;
+  background-color: inherit;
+  padding: 8px 8px;
+  cursor: pointer;
+  display: inline-block;
+}
+
 .form-group {
   margin-bottom: 4.8rem;
   padding-bottom: 1em;
