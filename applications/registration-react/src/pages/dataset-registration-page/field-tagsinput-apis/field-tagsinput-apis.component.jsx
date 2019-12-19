@@ -55,7 +55,7 @@ export class InputTagsAPIsField extends React.Component {
     this.handleInputChange = this.handleInputChange.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     const { input } = this.props;
     const datasetReferences = [];
     _.get(input, 'value', []).forEach(item => {
