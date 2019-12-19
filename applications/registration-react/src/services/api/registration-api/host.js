@@ -2,16 +2,20 @@ import axios from 'axios';
 import { authService } from '../../auth/auth-service';
 import { getConfig } from '../../../config';
 
-export const registrationApi = async (method, path, data) =>
-  axios({
+export const registrationApi = async (method, path, data) => {
+  const Authorization = await authService.getAuthorizationHeader();
+  const response = await axios({
     url: `${getConfig().registrationApi.host}${path}`,
     method,
     data,
     headers: {
-      Authorization: await authService.getAuthorizationHeader(),
-      Accept: 'application/json'
+      Authorization,
+      Accept: 'application/json',
+      'Cache-Control': 'no-cache'
     }
-  }).then(r => r.data);
+  });
+  return response.data;
+};
 
 export const registrationApiDelete = path => registrationApi('DELETE', path);
 
