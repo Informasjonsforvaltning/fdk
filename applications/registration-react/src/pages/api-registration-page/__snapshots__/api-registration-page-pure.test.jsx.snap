@@ -216,9 +216,15 @@ Eksempel på endring som medfører versjonering:
     <div
       className="col-12"
     >
-      <withState(withHandlers(Component))
+      <Component
+        backgroundBlue={false}
+        collapse={false}
+        onToggle={[Function]}
+        required={false}
         showInitially={true}
+        syncErrors={false}
         title="Tilgang"
+        values={null}
       >
         <Connect(ReduxForm)
           apiItem={
@@ -396,7 +402,7 @@ Eksempel på endring som medfører versjonering:
             }
           }
         />
-      </withState(withHandlers(Component))>
+      </Component>
     </div>
   </div>
   <div
@@ -405,9 +411,15 @@ Eksempel på endring som medfører versjonering:
     <div
       className="col-12"
     >
-      <withState(withHandlers(Component))
+      <Component
+        backgroundBlue={false}
+        collapse={false}
+        onToggle={[Function]}
+        required={false}
         showInitially={true}
+        syncErrors={false}
         title="Vilkår og begrensninger"
+        values={null}
       >
         <Connect(ReduxForm)
           apiItem={
@@ -585,7 +597,7 @@ Eksempel på endring som medfører versjonering:
             }
           }
         />
-      </withState(withHandlers(Component))>
+      </Component>
     </div>
   </div>
   <div
@@ -594,9 +606,15 @@ Eksempel på endring som medfører versjonering:
     <div
       className="col-12"
     >
-      <withState(withHandlers(Component))
+      <Component
+        backgroundBlue={false}
+        collapse={false}
+        onToggle={[Function]}
+        required={false}
         showInitially={true}
+        syncErrors={false}
         title="Tjenestetype (standard)"
+        values={null}
       >
         <Connect(ReduxForm)
           apiItem={
@@ -775,7 +793,7 @@ Eksempel på endring som medfører versjonering:
           }
           apiServiceTypeItems={null}
         />
-      </withState(withHandlers(Component))>
+      </Component>
     </div>
   </div>
   <div
@@ -784,9 +802,15 @@ Eksempel på endring som medfører versjonering:
     <div
       className="col-12"
     >
-      <withState(withHandlers(Component))
+      <Component
+        backgroundBlue={false}
+        collapse={false}
+        onToggle={[Function]}
+        required={false}
         showInitially={true}
+        syncErrors={false}
         title="Status på API-et"
+        values={null}
       >
         <Connect(ReduxForm)
           apiItem={
@@ -965,7 +989,7 @@ Eksempel på endring som medfører versjonering:
           }
           apiStatusItems={null}
         />
-      </withState(withHandlers(Component))>
+      </Component>
     </div>
   </div>
   <div
@@ -974,9 +998,15 @@ Eksempel på endring som medfører versjonering:
     <div
       className="col-12"
     >
-      <withState(withHandlers(Component))
+      <Component
+        backgroundBlue={false}
+        collapse={false}
+        onToggle={[Function]}
+        required={false}
         showInitially={true}
+        syncErrors={false}
         title="Tilknyttede datasettbeskrivelser"
+        values={null}
       >
         <Connect(ReduxForm)
           apiItem={
@@ -1155,7 +1185,7 @@ Eksempel på endring som medfører versjonering:
           }
           referencedDatasets={null}
         />
-      </withState(withHandlers(Component))>
+      </Component>
     </div>
   </div>
   <withProps(Connect(ReduxForm))

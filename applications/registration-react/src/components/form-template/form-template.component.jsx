@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { Collapse } from 'reactstrap';
@@ -14,10 +14,19 @@ export const FormTemplate = props => {
     values,
     syncErrors,
     required,
-    collapse,
-    onToggle,
-    children
+    children,
+    showInitially
   } = props;
+
+  const [collapse, toggleCollapse] = useState(showInitially);
+
+  const onToggle = changeProp => {
+    toggleCollapse(changeProp);
+  };
+
+  useEffect(() => {
+    onToggle(showInitially);
+  }, [showInitially]);
 
   const collapseClass = cx('fdk-reg_collapse', {
     'fdk-reg_backgroundDefault': !backgroundBlue,
@@ -40,7 +49,11 @@ export const FormTemplate = props => {
 
   return (
     <div className={collapseClass}>
-      <button type="button" className={buttonClass} onClick={onToggle}>
+      <button
+        type="button"
+        className={buttonClass}
+        onClick={() => onToggle(!collapse)}
+      >
         <div className="d-flex align-items-center">
           <i className={collapseIconClass} />
           <h2 className="mb-0 text-ellipsis">{title}</h2>

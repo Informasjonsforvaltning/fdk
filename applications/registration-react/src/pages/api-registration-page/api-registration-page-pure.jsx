@@ -6,7 +6,7 @@ import { parse } from 'qs';
 import { getTranslateText } from '../../services/translateText';
 import localization from '../../services/localization';
 import { AlertMessage } from '../../components/alert-message/alert-message.component';
-import { FormTemplateWithState } from '../../components/form-template/form-template-with-state.component';
+import { FormTemplate } from '../../components/form-template/form-template.component';
 import { ConnectedFormMeta } from './form-meta/connected-form-meta';
 import { ConnectedFormApiServiceType } from './form-api-service-type/connected-form-api-service-type';
 import { ConnectedFormAccess } from './form-access/connected-form-access';
@@ -140,27 +140,27 @@ export const ApiRegistrationPagePure = ({
         <>
           <div className="row mb-5">
             <div className="col-12">
-              <FormTemplateWithState
+              <FormTemplate
                 showInitially
                 title={localization.schema.apiAccess.title}
               >
                 <ConnectedFormAccess apiItem={item} />
-              </FormTemplateWithState>
+              </FormTemplate>
             </div>
           </div>
           <div className="row mb-5">
             <div className="col-12">
-              <FormTemplateWithState
+              <FormTemplate
                 showInitially
                 title={localization.schema.apiMeta.title}
               >
                 <ConnectedFormMeta apiItem={item} />
-              </FormTemplateWithState>
+              </FormTemplate>
             </div>
           </div>
           <div className="row mb-5">
             <div className="col-12">
-              <FormTemplateWithState
+              <FormTemplate
                 showInitially
                 title={localization.schema.apiServiceType.title}
               >
@@ -168,12 +168,12 @@ export const ApiRegistrationPagePure = ({
                   apiItem={item}
                   apiServiceTypeItems={apiServiceTypeItems}
                 />
-              </FormTemplateWithState>
+              </FormTemplate>
             </div>
           </div>
           <div className="row mb-5">
             <div className="col-12">
-              <FormTemplateWithState
+              <FormTemplate
                 showInitially
                 title={localization.schema.apiStatus.title}
               >
@@ -181,13 +181,13 @@ export const ApiRegistrationPagePure = ({
                   apiItem={item}
                   apiStatusItems={apiStatusItems}
                 />
-              </FormTemplateWithState>
+              </FormTemplate>
             </div>
           </div>
 
           <div className="row mb-5">
             <div className="col-12">
-              <FormTemplateWithState
+              <FormTemplate
                 showInitially
                 title={localization.schema.apiDatasetReferences.title}
               >
@@ -195,7 +195,7 @@ export const ApiRegistrationPagePure = ({
                   apiItem={item}
                   referencedDatasets={referencedDatasets}
                 />
-              </FormTemplateWithState>
+              </FormTemplate>
             </div>
           </div>
 
