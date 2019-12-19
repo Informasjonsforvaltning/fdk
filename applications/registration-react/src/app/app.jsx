@@ -3,7 +3,7 @@ import { BrowserRouter } from 'react-router-dom';
 
 import { AppHeader } from '../components/app-header/app-header.component';
 import { Breadcrumbs } from '../components/breadcrumbs/breadcrumbs.component';
-import Footer from '../components/app-footer/app-footer.component';
+import { Footer } from '../components/app-footer/app-footer.component';
 import { Routes } from './routes';
 
 export const App = () => (
