@@ -2,6 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 
+const isOnlyOneSelectedLanguage = languages =>
+  languages.filter(l => l.selected).length === 1;
+
 const MultilingualField = ({
   name,
   component,
@@ -16,9 +19,6 @@ const MultilingualField = ({
       </label>
     )}
     {languages.map(({ code, selected }) => {
-      const isOnlyOneSelectedLanguage =
-        languages.filter(({ selected }) => selected).length === 1;
-
       return (
         selected && (
           <Field
@@ -26,7 +26,7 @@ const MultilingualField = ({
             name={`${name}.${code}`}
             component={component}
             language={code}
-            isOnlyOneSelectedLanguage={isOnlyOneSelectedLanguage}
+            isOnlyOneSelectedLanguage={isOnlyOneSelectedLanguage(languages)}
           />
         )
       );
