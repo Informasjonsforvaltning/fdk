@@ -36,7 +36,7 @@ export class InputTagsDatasetsField extends React.Component {
     this.handleInputChange = this.handleInputChange.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     const { input, referencedDatasets } = this.props;
     const datasetReferences = [];
     _.get(input, 'value', []).forEach(item => {
