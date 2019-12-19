@@ -12,10 +12,12 @@ const renderReadOnly = ({ input, referenceDatasetsItems }) => {
   const referenceTypeText = getTranslateText(
     referenceType && referenceType.prefLabel
   );
-  const dataset = referenceDatasetsItems.find(
-    i => i.uri === input.value.source.uri
-  );
-  const datasetTitle = getTranslateText(dataset.title);
+
+  const uri = input.value && input.value.source && input.value.source.uri;
+
+  const dataset = referenceDatasetsItems.find(i => i.uri === uri);
+
+  const datasetTitle = getTranslateText(dataset && dataset.title);
 
   return (
     <div className="pl-3">
