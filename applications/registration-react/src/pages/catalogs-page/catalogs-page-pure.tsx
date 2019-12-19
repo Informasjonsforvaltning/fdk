@@ -63,9 +63,6 @@ export const CatalogsPagePure = ({
                         )
                       ).length
                     }
-                    isReadOnly={
-                      !authService.hasOrganizationWritePermission(catalog.id)
-                    }
                   />
                 )}
                 {apis && (
