@@ -46,8 +46,8 @@ export function AppNavBar(props) {
                 className="fdk-logo"
                 src={
                   getConfig().themeNap
-                    ? '/static/img/logo-transport.svg'
-                    : `/static/img/${fdkLogoPath}`
+                    ? '/img/logo-transport.svg'
+                    : `/img/${fdkLogoPath}`
                 }
                 alt="Logo for Felles datakatalog"
               />

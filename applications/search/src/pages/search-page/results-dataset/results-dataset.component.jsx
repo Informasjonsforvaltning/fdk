@@ -303,7 +303,7 @@ export const ResultsDatasetPure = ({
               className="d-flex justify-content-center align-items-center"
             >
               <img
-                src="/static/img/icon-feed-sm.svg"
+                src="/img/icon-feed-sm.svg"
                 alt="RSS icon"
                 style={{ height: '15px', marginRight: '5px' }}
               />
@@ -314,7 +314,7 @@ export const ResultsDatasetPure = ({
               className="d-flex justify-content-center align-items-center ml-4"
             >
               <img
-                src="/static/img/icon-feed-sm.svg"
+                src="/img/icon-feed-sm.svg"
                 alt="Atom icon"
                 style={{ height: '15px', marginRight: '5px' }}
               />

@@ -16,16 +16,14 @@ export const ArticlePage = () => {
           <h1 className="title">{localization.registration.title}</h1>
           <div className="fdk-subtitle">
             <span>
-              Jeg &oslash;nsker tilgang til registreringsl&oslash;sningen for
-              min virksomhet
+              Jeg ønsker tilgang til registreringsløsningen for min virksomhet
             </span>
           </div>
 
           <div className="fdk-box fdk-box--white">
             <p>
-              {
-                'Din leder må gi deg tilgang til tjenesten "Registrering i datakatalog" i '
-              }
+              Din leder må gi deg tilgang til tjenesten &quot;Registrering i
+              datakatalog&quot; i{' '}
               <a
                 title="Lenke til Altinn"
                 target="_blank"
@@ -34,8 +32,8 @@ export const ArticlePage = () => {
               >
                 Altinn
               </a>
-              , og eventuelt tildele deg rollen {'"Tilgangsstyring"'}, dersom du
-              skal delegere tilgangen videre.
+              , og eventuelt tildele deg rollen &quot;Tilgangsstyring&quot;,
+              dersom du skal delegere tilgangen videre.
               <br />
               Kontakt den som kan delegere tilganger i{' '}
               <a
@@ -62,8 +60,9 @@ export const ArticlePage = () => {
               </a>
             </p>
             <p>
-              Det er også mulig at din virksomhet kan få registrere på vegne av andre.
-              Dersom du ønsker dette, må du kontakte FDK på: fellesdatakatalog@brreg.no
+              Det er også mulig at din virksomhet kan få registrere på vegne av
+              andre. Dersom du ønsker dette, må du kontakte FDK på:
+              fellesdatakatalog@brreg.no
             </p>
           </div>
 
@@ -99,7 +98,7 @@ export const ArticlePage = () => {
             <div className="fdk-box__rowItem fdk-box--flex">
               <div className="fdk-box__rowItem__number">1</div>
               <div className="fdk-box__rowItem__text">
-                Logg inn i&nbsp;
+                Logg inn i{' '}
                 <a
                   title="Lenke til Altinn"
                   target="_blank"
@@ -115,11 +114,7 @@ export const ArticlePage = () => {
                 />
               </div>
               <div className="fdk-box__rowItem--big">
-                <img
-                  alt=""
-                  src="/static/img/image_choose_person.png"
-                  title=""
-                />
+                <img alt="" src="/img/image_choose_person.png" title="" />
               </div>
             </div>
 
@@ -132,11 +127,7 @@ export const ArticlePage = () => {
                 }}
               />
               <div className="fdk-box__rowItem--big">
-                <img
-                  alt=""
-                  src="/static/img/image_choose_profile.png"
-                  title=""
-                />
+                <img alt="" src="/img/image_choose_profile.png" title="" />
               </div>
             </div>
 
@@ -155,11 +146,7 @@ export const ArticlePage = () => {
                 </div>
               </div>
               <div className="fdk-box__rowItem--big">
-                <img
-                  alt=""
-                  src="/static/img/image_add_new_person.png"
-                  title=""
-                />
+                <img alt="" src="/img/image_add_new_person.png" title="" />
               </div>
             </div>
 
@@ -180,7 +167,7 @@ export const ArticlePage = () => {
               <div className="fdk-box__rowItem--big">
                 <img
                   alt=""
-                  src="/static/img/image_give_and_remove_rights.png"
+                  src="/img/image_give_and_remove_rights.png"
                   title=""
                 />
               </div>
@@ -202,7 +189,7 @@ export const ArticlePage = () => {
               <div className="fdk-box__rowItem--big">
                 <img
                   alt=""
-                  src="/static/img/image_give_and_remove_rights_confirmation.png"
+                  src="/img/image_give_and_remove_rights_confirmation.png"
                   title=""
                 />
               </div>
