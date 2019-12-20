@@ -1,9 +1,11 @@
 <!DOCTYPE html>
-<html class="no-js" lang="no">
+<html>
 <head>
 	<base href="/" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<title>Felles datakatalog</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<meta name="author" content="Brønnøysundregistrene" />
 
 	<meta property="og:url"                content="https://fellesdatakatalog.brreg.no" />
@@ -11,16 +13,15 @@
 	<meta property="og:title"              content="Felles datakatalog" />
 	<meta property="og:description"        content="Felles Datakatalog er en oversikt over hvilke data de ulike offentlige virksomhetene har, hvordan de henger sammen og hva de betyr. Datakatalogen gjør det mulig for deg å søke i opplysningene hos offentlige virksomheter og bruke de til for eksempel analyseformål." />
 
-	<title>Felles datakatalog</title>
 	<script>
-		if (location.hostname.indexOf("nap.") >= 0) {
-			document.write('\
-					<link rel="icon" type="image/x-icon" href="/static/img/favicon-nap.ico">\
-				');
+		if (location.hostname.indexOf('nap.') >= 0) {
+		  document.write(
+    '<link rel="icon" type="image/x-icon" href="/static/img/favicon-nap.ico">'
+  );
 		} else {
-			document.write('\
-					<link rel="icon" type="image/x-icon" href="/static/img/favicon.ico">\
-				');
+		  document.write(
+    '<link rel="icon" type="image/x-icon" href="/static/img/favicon.ico">'
+  );
 		}
 	</script>
 
@@ -30,7 +31,7 @@
 </head>
 
 <body>
-	<div id='root'></div>
+	<div id="root"></div>
 	<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 </body>
 
