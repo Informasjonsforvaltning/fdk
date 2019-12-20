@@ -4,7 +4,7 @@
   "description": "Search",
   "scripts": {
     "start": "webpack-dev-server --hot --inline --config webpack.hostdev.config.js",
-    "build": "webpack --config webpack.prod.config.js -p",
+    "build": "webpack --config webpack.prod.config.js",
     "server": "export NODE_ENV=production && node start.js",
     "test": "jest ",
     "test:coverage": "jest --coverage",
