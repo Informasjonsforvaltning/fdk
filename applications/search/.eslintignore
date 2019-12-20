@@ -1,4 +1,9 @@
 coverage
 dist
 node_modules
-
+Dockerfile
+*.sh
+nginx
+*.scss
+assets
+img
