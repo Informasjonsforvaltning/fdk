@@ -120,7 +120,6 @@ services:
       - ./applications/search/src:/usr/src/app/src
     environment:
       - REDUX_LOG
-      - DISQUS_SHORTNAME=CHANGE_ME
 
   registration-react:
     build: ./applications/registration-react
