@@ -25,7 +25,7 @@
     font-size: 1.8rem;
 
     &.beta {
-      background-image: url("/static/img/banner-beta.svg");
+      background-image: url("/img/banner-beta.svg");
       background-repeat: no-repeat;
       background-position: right;
       background-size: 2.4em;
@@ -54,7 +54,7 @@
       font-size: 1.8rem;
 
       &.beta {
-        background-image: url("/static/img/banner-beta.svg");
+        background-image: url("/img/banner-beta.svg");
         background-repeat: no-repeat;
         background-position: right;
         background-size: 2.7em;
@@ -65,28 +65,28 @@
   }
 }
 .search-results-tab-dataset {
-  background-image: url("/static/img/icon-catalog-dataset-md.svg");
+  background-image: url("/img/icon-catalog-dataset-md.svg");
   width: 1.5em; 
   height: 1.5em;
   display: inline-block;
 }
 
 .search-results-tab-api {
-  background-image: url("/static/img/icon-catalog-api-md.svg");
+  background-image: url("/img/icon-catalog-api-md.svg");
   width: 1.5em; 
   height: 1.5em;
   display: inline-block;
 }
 
 .search-results-tab-term {
-  background-image: url("/static/img/icon-catalog-concept-md.svg");
+  background-image: url("/img/icon-catalog-concept-md.svg");
   width: 1.5em; 
   height: 1.5em;
   display: inline-block;
 }
 
 .search-results-tab-infomodel {
-  background-image: url("/static/img/icon-catalog-infomodel-md.svg");
+  background-image: url("/img/icon-catalog-infomodel-md.svg");
   width: 1.5em; 
   height: 1.5em;
   display: inline-block;

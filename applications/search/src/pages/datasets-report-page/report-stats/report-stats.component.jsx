@@ -54,7 +54,7 @@ export const ReportStats = props => {
         <div className="col-12 fdk-container-stats fdk-container-stats-total">
           <div className="row">
             <div className="col-4">
-              <img src="/static/img/icon-catalog-dataset.svg" alt="" />
+              <img src="/img/icon-catalog-dataset.svg" alt="" />
               <br />
               <Link
                 title={localization.report.aggregation.public}
@@ -78,7 +78,7 @@ export const ReportStats = props => {
               </Link>
             </div>
             <div className="col-4">
-              <img src="/static/img/icon-catalog-api.svg" alt="" />
+              <img src="/img/icon-catalog-api.svg" alt="" />
               <br />
               <Link
                 title={localization.report.aggregation.public}
@@ -105,7 +105,7 @@ export const ReportStats = props => {
               </Link>
             </div>
             <div className="col-4">
-              <img src="/static/img/icon-catalog-begrep.svg" alt="" />
+              <img src="/img/icon-catalog-begrep.svg" alt="" />
               <br />
               <Link
                 title={localization.report.aggregation.public}

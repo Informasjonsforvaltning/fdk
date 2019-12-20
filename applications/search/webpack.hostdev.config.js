@@ -80,7 +80,7 @@ module.exports = {
       filename: 'styles.css'
     }),
     new CopyWebpackPlugin(
-      [{ from: './src/static/img/*', to: './static/img', flatten: true }],
+      [{ from: './src/img/*', to: './img', flatten: true }],
       {
         copyUnmodified: true
       }

@@ -30,7 +30,7 @@ exports[`should render ReportStats correctly 1`] = `
         >
           <img
             alt=""
-            src="/static/img/icon-catalog-dataset.svg"
+            src="/img/icon-catalog-dataset.svg"
           />
           <br />
           <Link
@@ -62,7 +62,7 @@ exports[`should render ReportStats correctly 1`] = `
         >
           <img
             alt=""
-            src="/static/img/icon-catalog-api.svg"
+            src="/img/icon-catalog-api.svg"
           />
           <br />
           <Link
@@ -92,7 +92,7 @@ exports[`should render ReportStats correctly 1`] = `
         >
           <img
             alt=""
-            src="/static/img/icon-catalog-begrep.svg"
+            src="/img/icon-catalog-begrep.svg"
           />
           <br />
           <Link

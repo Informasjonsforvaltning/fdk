@@ -19,7 +19,7 @@ export const ConceptStats = props => {
   const conceptsRelatedToDatasets = (
     <div className="d-flex flex-fill py-5">
       <StatBox label={localization.report.conceptsRelatedToDataset}>
-        <img src="/static/img/icon-report-concept.svg" alt="icon" />
+        <img src="/img/icon-report-concept.svg" alt="icon" />
         <span className="stat-box--number">
           {Object.keys(_.get(stats, 'datasetCountsByConceptUri')).length}
         </span>

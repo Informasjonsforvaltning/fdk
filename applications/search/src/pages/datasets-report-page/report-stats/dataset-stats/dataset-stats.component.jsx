@@ -238,7 +238,7 @@ export const DatasetStats = props => {
       </div>
       <div className="d-flex flex-fill py-5">
         <StatBox label={localization.report.apis}>
-          <img src="/static/img/icon-report-api.svg" alt="icon" />
+          <img src="/img/icon-report-api.svg" alt="icon" />
           <Link
             title={localization.report.apis}
             className="mb-3"
@@ -249,7 +249,7 @@ export const DatasetStats = props => {
         </StatBox>
 
         <StatBox label={localization.report.aggregation.typeFile}>
-          <img src="/static/img/icon-report-nedlastbar-fil.svg" alt="icon" />
+          <img src="/img/icon-report-nedlastbar-fil.svg" alt="icon" />
           <Link
             title={localization.report.aggregation.typeFile}
             className="mb-3"
@@ -260,7 +260,7 @@ export const DatasetStats = props => {
         </StatBox>
 
         <StatBox label={localization.report.aggregation.typeFeed}>
-          <img src="/static/img/icon-report-feed.svg" alt="icon" />
+          <img src="/img/icon-report-feed.svg" alt="icon" />
           <Link
             title={localization.report.aggregation.typeFeed}
             className="mb-3"
@@ -276,7 +276,7 @@ export const DatasetStats = props => {
   const national = (
     <div className="d-flex flex-fill py-5 border-top">
       <StatBox label={localization.report.aggregation.national}>
-        <img src="/static/img/icon-authoritative.svg" alt="icon" />
+        <img src="/img/icon-authoritative.svg" alt="icon" />
         <Link
           title={localization.report.aggregation.national}
           className="mb-3"
@@ -360,7 +360,7 @@ export const DatasetStats = props => {
     <div className="d-flex flex-column p-5 border-top">
       {!isFilterActive && (
         <StatBox label={localization.report.countCatalogsLabel}>
-          <img src="/static/img/icon-catalog-dataset.svg" alt="icon" />
+          <img src="/img/icon-catalog-dataset.svg" alt="icon" />
           <span className="stat-box--number">
             {Object.keys(catalogs).length}
           </span>
