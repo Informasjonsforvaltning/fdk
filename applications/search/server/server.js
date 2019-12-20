@@ -8,8 +8,8 @@ module.exports = {
     const port = Number(process.env.PORT || 3000);
     app.set('port', port);
 
-    app.get('/env.json', (req, res) => {
-      res.sendFile(path.join(__dirname, '../env.json'));
+    app.get('/config.js', (req, res) => {
+      res.sendFile(path.join(__dirname, '../config.js'));
     });
 
     app.use('/static', express.static(path.join(__dirname, '/../dist')));

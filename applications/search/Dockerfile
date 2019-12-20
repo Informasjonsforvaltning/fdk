@@ -21,7 +21,7 @@ RUN npm install --loglevel=warn
 RUN npm audit
 
 COPY server /usr/src/app/server
-COPY env.template.json /usr/src/app/
+COPY config.template.js /usr/src/app/
 COPY start.js /usr/src/app/
 COPY .babelrc /usr/src/app/
 COPY webpack.* /usr/src/app/
