@@ -1734,7 +1734,7 @@ Flateobjektene avgrenses uavhengig av de administrative grensene.",
       >
         <a
           className="d-flex justify-content-center align-items-center"
-          href="/datasets.rss"
+          href="http://localhost:8080/datasets.rss"
         >
           <img
             alt="RSS icon"
@@ -1750,7 +1750,7 @@ Flateobjektene avgrenses uavhengig av de administrative grensene.",
         </a>
         <a
           className="d-flex justify-content-center align-items-center ml-4"
-          href="/datasets.atom"
+          href="http://localhost:8080/datasets.atom"
         >
           <img
             alt="Atom icon"
@@ -1879,7 +1879,7 @@ exports[`should render ResultsDataset correctly with minimum of props 1`] = `
       >
         <a
           className="d-flex justify-content-center align-items-center"
-          href="/datasets.rss"
+          href="http://localhost:8080/datasets.rss"
         >
           <img
             alt="RSS icon"
@@ -1895,7 +1895,7 @@ exports[`should render ResultsDataset correctly with minimum of props 1`] = `
         </a>
         <a
           className="d-flex justify-content-center align-items-center ml-4"
-          href="/datasets.atom"
+          href="http://localhost:8080/datasets.atom"
         >
           <img
             alt="Atom icon"

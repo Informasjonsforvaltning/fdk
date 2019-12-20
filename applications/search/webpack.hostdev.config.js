@@ -15,15 +15,7 @@ module.exports = {
     host: '0.0.0.0',
     port: 3001,
     historyApiFallback: true,
-    before: app =>
-      app.get('/env.json', (_, res) =>
-        res.json({
-          REDUX_LOG: '',
-          SEARCH_API_HOST:
-            process.env.SEARCH_API_HOST || 'http://localhost:8080',
-          SEARCH_API_AUTHORIZATION: process.env.SEARCH_API_AUTHORIZATION || ''
-        })
-      )
+    before: app => app.get('/config.js', (_, res) => res.status(204).send())
   },
   module: {
     rules: [
