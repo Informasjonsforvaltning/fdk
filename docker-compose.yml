@@ -85,8 +85,8 @@ services:
   ##################################
 
 #docker-compose does not allow removing services this is actually prod configuration
-#  nginx-altinn-proxy:
-#    image: dcatno/nginx-altinn-proxy:latest
+#  fdk-nginx-altinn-proxy:
+#    image: eu.gcr.io/fdk-infra/fdk-nginx-altinn-proxy:latest
 #    expose:
 #      - "8080"
 #    environment:

@@ -100,8 +100,7 @@ services:
   ##################################
 
   # disabled in dev because we use mock
-  # nginx-altinn-proxy:
-  #   build: ../fdk/applications/nginx-altinn-proxy
+  # fdk-nginx-altinn-proxy:
   #   ports:
   #     - "8126:8080"
 
