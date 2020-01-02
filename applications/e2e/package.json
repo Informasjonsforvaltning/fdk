@@ -6,7 +6,7 @@
     "test:browser": "bash -c \"BROWSER=chromium npm t\"",
     "test:skipoutfile": "./wait_for_dependencies.sh && jest",
     "test": "bash -c \" ./wait_for_dependencies.sh && jest > >(tee ./reports/stdout.log) 2> >(tee ./reports/test-report.txt >&2)\"",
-    "test:in_container": "BROWSER=google-chrome-unstable HOST_SEARCH=http://nginx-search:8080 npm t",
+    "test:in_container": "BROWSER=google-chrome-unstable HOST_SEARCH=http://fdk-nginx-search:8080 npm t",
     "lint:project": "eslint .",
     "lint:project:fix": "eslint . --fix"
   },

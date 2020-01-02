@@ -56,8 +56,8 @@ services:
   ### ingress modules
   ##################################
 
-  nginx-search:
-    image: dcatno/nginx-search:latest
+  fdk-nginx-search:
+    image: eu.gcr.io/fdk-infra/fdk-nginx-search:latest
     expose:
       - "8080"
     depends_on:

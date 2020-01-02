@@ -87,8 +87,7 @@ services:
   ### ingress modules
   ##################################
 
-  nginx-search:
-    build: ./applications/nginx-search
+  fdk-nginx-search:
     ports:
       - "8080:8080"
 

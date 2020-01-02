@@ -50,7 +50,7 @@ const enhance = compose(
       // The only trace back to the registration id is the harvest source uri. This is hard-coded uri that is
       // working in all environments in cluster for local api  registration system.
       // We are waiting for DCAT-no 2.0 so that harvesting process could be more standardised
-      const harvestSourceUri = `http://nginx-search:8080/api/registration/apis/${apiItem.id}`;
+      const harvestSourceUri = `http://fdk-nginx-search:8080/api/registration/apis/${apiItem.id}`;
       const harvestedApis = await memoizedGetApiByHarvestSourceUri(
         harvestSourceUri
       );
