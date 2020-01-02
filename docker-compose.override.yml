@@ -210,7 +210,7 @@ services:
       - FDK_SQL_USERNAME=postgres
       - FDK_SQL_PASSWORD=password
 
-  search-api:
+  fdk-dataset-api:
     ports:
       - "8118:8080"
     environment:

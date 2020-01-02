@@ -62,7 +62,7 @@ services:
       - "8080"
     depends_on:
       - search
-      - search-api
+      - fdk-dataset-api
       - harvester-api
       - api-cat
       - concept-cat
@@ -77,7 +77,7 @@ services:
       - dataset-catalogue
       - api-catalogue
       - reference-data
-      - search-api
+      - fdk-dataset-api
       - api-cat
       - concept-cat
 
@@ -132,7 +132,7 @@ services:
     depends_on:
       - elasticsearch5
       - reference-data
-      - search-api
+      - fdk-dataset-api
 
   concept-cat:
     image: dcatno/concept-cat:latest
@@ -186,8 +186,8 @@ services:
     depends_on:
       - postgres
 
-  search-api:
-    image: dcatno/search-api:latest
+  fdk-dataset-api:
+    image: eu.gcr.io/fdk-infra/fdk-dataset-api:latest
     expose:
       - "8080"
     depends_on:
