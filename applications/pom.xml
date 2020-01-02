@@ -10,8 +10,6 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>search-api</module>
-
         <module>dev-management</module>
 
         <module>end2end-test</module>
