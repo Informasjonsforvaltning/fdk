@@ -145,7 +145,7 @@ services:
       - registrationApi_harvesterPassword=password
       - LOG_LEVEL=DEBUG
       - LOG_FORMAT=compact
-      - FDK_ENHETSREGISTERET_PROXY_URL=http://nginx-enhetsregisteret-proxy-mock:8080/enhetsregisteret/api/enheter/
+      - FDK_ENHETSREGISTERET_PROXY_URL=http://fdk-nginx-enhetsregisteret-proxy-mock:8080/enhetsregisteret/api/enheter/
       - ORGANIZATION_CATALOGUE_URL=http://organization-catalogue:8080/
 
   api-catalogue:
@@ -233,8 +233,7 @@ services:
     ports:
       - "8128:8080"
 
-  nginx-enhetsregisteret-proxy-mock:
-    build: ./applications/nginx-enhetsregisteret-proxy-mock
+  fdk-nginx-enhetsregisteret-proxy-mock:
     ports:
       - "8132:8080"
 

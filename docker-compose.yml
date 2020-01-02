@@ -213,8 +213,8 @@ services:
     expose:
       - "8080"
 
-  nginx-enhetsregisteret-proxy-mock:
-    build: dcatno/nginx-enhetsregisteret-proxy-mock:latest
+  fdk-nginx-enhetsregisteret-proxy-mock:
+    image: eu.gcr.io/fdk-nginx-enhetsregisteret-proxy-mock:latest
     expose:
       - "8080"
 
