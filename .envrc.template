@@ -31,7 +31,7 @@ export IDPORTEN_CLIENT_SECRET=29a2cfe1-1a61-4a04-bf84-64d70a340d04
 #use actual proxy
 #export ALTINN_PROXY_HOST=http://fdk-nginx-altinn-proxy:8080
 #use mock proxy
-export ALTINN_PROXY_HOST=http://nginx-altinn-proxy-mock:8080
+export ALTINN_PROXY_HOST=http://fdk-nginx-altinn-proxy-mock:8080
 
 # This is host for altinn test environment, that should be only used in our it1 environmemt.
 # in st1 and in dev, we should use local mock service (once it is available)

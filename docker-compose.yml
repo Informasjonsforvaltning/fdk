@@ -199,7 +199,7 @@ services:
       - "8080"
     depends_on:
       # in prod, it would be ngninx-altinn-proxy
-      - nginx-altinn-proxy-mock
+      - fdk-nginx-altinn-proxy-mock
     environment:
       - ALTINN_PROXY_HOST
       - ORGNR_WHITELIST
@@ -208,8 +208,8 @@ services:
   ### test and mock modules
   ###########################
 
-  nginx-altinn-proxy-mock:
-    build: dcatno/nginx-altinn-proxy-mock:latest
+  fdk-nginx-altinn-proxy-mock:
+    image: eu.gcr.io/fdk-nginx-altinn-proxy-mock:latest
     expose:
       - "8080"
 

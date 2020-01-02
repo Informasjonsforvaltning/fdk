@@ -219,18 +219,17 @@ services:
     ports:
       - "8124:8080"
     environment:
-      - ALTINN_PROXY_HOST=http://nginx-altinn-proxy-mock:8080
+      - ALTINN_PROXY_HOST=http://fdk-nginx-altinn-proxy-mock:8080
       - ORGNR_WHITELIST=920210023,910258028
       - ORGFORM_WHITELIST=ADOS,FKF,FYLK,IKS,KF,KIRK,KOMM,ORGL,SF,STAT,SÆR
       - ADMIN_LIST=23076102252
     depends_on:
-      - nginx-altinn-proxy-mock
+      - fdk-nginx-altinn-proxy-mock
 
   ### test and mock modules
   ###########################
 
-  nginx-altinn-proxy-mock:
-    build: ./applications/nginx-altinn-proxy-mock
+  fdk-nginx-altinn-proxy-mock:
     ports:
       - "8128:8080"
 
