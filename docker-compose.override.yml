@@ -105,8 +105,7 @@ services:
   #     - "8126:8080"
 
   # disabled in dev because we use mock
-  #nginx-enhetsregisteret-proxy:
-  #  build: ./applications/nginx-enhetsregisteret-proxy
+  #fdk-nginx-enhetsregisteret-proxy:
   #  ports:
   #    - "8130:8080"
 

@@ -96,8 +96,8 @@ services:
 #      - ALTINN_SSL_BR_KEY_PEM
 
 #docker-compose does not allow removing services this is actually prod configuration
-#  nginx-enhetsregisteret-proxy:
-#    image: dcatno/nginx-enhetsregisteret-proxy
+#  fdk-nginx-enhetsregisteret-proxy:
+#    image: eu.gcr.io/fdk-infra/fdk-nginx-enhetsregisteret-proxy
 #    expose:
 #      - "8080"
 
