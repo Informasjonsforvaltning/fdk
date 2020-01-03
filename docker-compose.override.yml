@@ -118,7 +118,7 @@ services:
   search:
     build: ./applications/search
     ports:
-      - "3000:3000"
+      - "3000:8080"
     volumes:
       - ./applications/search/src:/usr/src/app/src
     environment:
