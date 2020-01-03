@@ -8,3 +8,4 @@ docker build -t dcatno/search:latest .
 
 echo "SECONDS"
 echo $SECONDS
+
