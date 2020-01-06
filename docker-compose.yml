@@ -68,8 +68,8 @@ services:
       - concept-cat
       - informationmodel-cat
 
-  nginx-registration:
-    image: dcatno/nginx-registration:latest
+  fdk-nginx-registration:
+    image: eu.gcr.io/fdk-infra/fdk-nginx-registration:latest
     expose:
       - "8080"
     depends_on:
