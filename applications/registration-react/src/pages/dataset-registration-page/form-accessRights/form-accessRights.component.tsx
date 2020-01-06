@@ -180,7 +180,7 @@ export const FormAccessRights = ({
         />
         {isReadOnly && (
           <div className="pl-3">
-            {getAccessRightLabel(datasetItem.accessRights.uri)}
+            {getAccessRightLabel(get(datasetItem, ['accessRights', 'uri']))}
           </div>
         )}
         {!isReadOnly && (
