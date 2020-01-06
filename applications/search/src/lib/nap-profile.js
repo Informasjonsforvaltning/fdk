@@ -1,2 +1,3 @@
-export const isNapProfile = napHost =>
-  window.location.hostname === napHost || localStorage.getItem('napProfile');
+export const isNapProfile = napHosts =>
+  (napHosts && napHosts.split(',').includes(window.location.hostname)) ||
+  localStorage.getItem('napProfile');
