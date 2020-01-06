@@ -108,7 +108,7 @@ export const FormProvenance = ({ initialValues, languages }) => {
           />
           <Field
             name="provenance"
-            component={isReadOnly ? renderProvenance : renderProvenanceReadOnly}
+            component={isReadOnly ? renderProvenanceReadOnly : renderProvenance}
             provenanceItems={provenanceItems}
           />
         </div>
@@ -119,7 +119,7 @@ export const FormProvenance = ({ initialValues, languages }) => {
           />
           <Field
             name="accrualPeriodicity"
-            component={isReadOnly ? SelectField : requenzyReadOnly}
+            component={isReadOnly ? requenzyReadOnly : SelectField}
             items={frequencyItems}
           />
         </div>
@@ -131,7 +131,7 @@ export const FormProvenance = ({ initialValues, languages }) => {
           <Field
             name="modified"
             type="text"
-            component={isReadOnly ? DatepickerField : lastUpdateReadOnly}
+            component={isReadOnly ? lastUpdateReadOnly : DatepickerField}
             label={localization.schema.provenance.modifiedLabel}
           />
         </div>
@@ -142,7 +142,7 @@ export const FormProvenance = ({ initialValues, languages }) => {
           />
           <MultilingualField
             name="hasCurrentnessAnnotation.hasBody"
-            component={isReadOnly ? TextAreaField : InputFieldReadonly}
+            component={isReadOnly ? InputFieldReadonly : TextAreaField}
             label={localization.schema.provenance.hasCurrentnessAnnotationLabel}
             languages={languages}
           />
