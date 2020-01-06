@@ -131,17 +131,19 @@ export function DatasetRegistrationPagePure(
     sample = {}
   } = form || {};
 
-  const renderExpandButton = (expanded) => {
+  const renderExpandButton = expanded => {
     const text = expanded ? localization.collapse : localization.expand;
-    const icon = expanded ? "icon-collapse-text-sm.svg" : "icon-expand-text-sm.svg";
+    const icon = expanded
+      ? 'icon-collapse-text-sm.svg'
+      : 'icon-expand-text-sm.svg';
     const iconFile = `/img/${icon}`;
 
     return (
       <div className="d-flex justify-content-end">
-          <button className="toggleExpandButton" onClick={toggleExpand}>
-            <img className="chevronIcon" src={iconFile} alt="icon" />
-            {text}
-            </button>
+        <button className="toggleExpandButton" onClick={toggleExpand}>
+          <img className="chevronIcon" src={iconFile} alt="icon" />
+          {text}
+        </button>
       </div>
     );
   };
@@ -207,7 +209,7 @@ export function DatasetRegistrationPagePure(
                 <RegistrationStatus
                   registrationStatus={datasetItem.registrationStatus}
                 />
-            </div>
+              </div>
               {!isReadOnly && (
                 <LanguagePicker
                   languages={languages}
@@ -217,8 +219,8 @@ export function DatasetRegistrationPagePure(
               {renderExpandButton(expandAll)}
               {allowDelegatedRegistration && (
                 <FormTemplate
-                title={localization.datasets.formTemplates.onBehalf}
-                showInitially={expandAll}
+                  title={localization.datasets.formTemplates.onBehalf}
+                  showInitially={expandAll}
                 >
                   <ConnectedFormPublisher
                     datasetItem={datasetItem}
