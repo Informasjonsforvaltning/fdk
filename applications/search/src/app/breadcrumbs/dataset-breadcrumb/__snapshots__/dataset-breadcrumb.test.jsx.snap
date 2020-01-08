@@ -1,9 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`should render PureDatasetBreadcrumb correctly with no datasetItem 1`] = `<span />`;
-
-exports[`should render PureDatasetBreadcrumb with "Dataset" active correctly 1`] = `
-<span>
-  dataset title
-</span>
-`;

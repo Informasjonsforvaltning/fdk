@@ -2,7 +2,7 @@
 
 i=0
 
-docker_apps="e2e search registration-react fuseki"
+docker_apps="e2e registration-react fuseki"
 
 for docker_app in $docker_apps; do
     i=$((i+1))

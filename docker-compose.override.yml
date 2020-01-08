@@ -111,8 +111,7 @@ services:
   ### nodejs services
   ####################################
 
-  search:
-    build: ./applications/search
+  fdk-portal:
     ports:
       - "3000:8080"
     volumes:
