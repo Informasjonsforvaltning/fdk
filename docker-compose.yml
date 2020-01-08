@@ -61,7 +61,7 @@ services:
     expose:
       - "8080"
     depends_on:
-      - search
+      - fdk-portal
       - fdk-dataset-api
       - harvester-api
       - api-cat
@@ -104,8 +104,8 @@ services:
   ### nodejs services
   ####################################
 
-  search:
-    image: dcatno/search:latest
+  fdk-portal:
+    image: eu.gcr.io/fdk-infra/fdk-portal:latest
     expose:
       - "8080"
     environment:
