@@ -187,7 +187,7 @@ services:
       - harvester_adminUsername=test_admin
       - harvester_adminPassword=password
 
-  harvester-api:
+  fdk-dataset-harvester:
     ports:
       - "8106:8080"
     environment:

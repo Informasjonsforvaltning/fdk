@@ -9,7 +9,7 @@ application:
   elasticsearchPort: 9300
   elasticsearchCluster: elasticsearch
   fusekiHost: http://fuseki:8080
-  harvesterHost: http://harvester-api:8080
+  harvesterHost: http://fdk-dataset-harvester:8080
 
 ---
 spring:
