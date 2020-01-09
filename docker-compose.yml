@@ -63,7 +63,7 @@ services:
     depends_on:
       - fdk-portal
       - fdk-dataset-api
-      - harvester-api
+      - fdk-dataset-harvester
       - api-cat
       - concept-cat
       - informationmodel-cat
@@ -150,10 +150,10 @@ services:
       - "8080"
     depends_on:
       - fuseki
-      - harvester-api
+      - fdk-dataset-harvester
 
-  harvester-api:
-    image: dcatno/harvester-api:latest
+  fdk-dataset-harvester:
+    image: eu.gcr.io/fdk-infra/fdk-dataset-harvester:latest
     expose:
       - "8080"
     depends_on:
