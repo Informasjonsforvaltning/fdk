@@ -87,6 +87,9 @@ export const CatalogsPagePure = ({
                     key={`protocol-${catalog.id}`}
                     catalogId={catalog.id}
                     type="protocol"
+                    isReadOnly={
+                      !authService.hasOrganizationWritePermission(catalog.id)
+                    }
                   />
                 )}
               </CardGroup>
