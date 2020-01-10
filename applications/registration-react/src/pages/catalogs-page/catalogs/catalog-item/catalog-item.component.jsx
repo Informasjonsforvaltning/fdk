@@ -31,7 +31,7 @@ export const CatalogItem = ({ type, itemsCount, linkUri, isReadOnly }) => {
     'align-items-center',
     {
       readOnly: isReadOnly,
-      beta: type === 'concepts' || type === 'protocol',
+      beta: type === 'protocol',
       'h-100': !itemsCount
     }
   );
