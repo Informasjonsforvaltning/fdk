@@ -33,9 +33,7 @@ export const CatalogsPagePure = ({
   if (isFetchingCatalogs) {
     return null;
   }
-  const canShowProtocols = localStorage.getItem(
-    'FEATURE_TOGGLE_PROTOCOL_REGISTRATION'
-  );
+
   return (
     <div className="container">
       {catalogItems &&
@@ -82,16 +80,14 @@ export const CatalogsPagePure = ({
                   catalogId={catalog.id}
                   type="concepts"
                 />
-                {canShowProtocols && (
-                  <Catalog
-                    key={`protocol-${catalog.id}`}
-                    catalogId={catalog.id}
-                    type="protocol"
-                    isReadOnly={
-                      !authService.hasOrganizationWritePermission(catalog.id)
-                    }
-                  />
-                )}
+                <Catalog
+                  key={`protocol-${catalog.id}`}
+                  catalogId={catalog.id}
+                  type="protocol"
+                  isReadOnly={
+                    !authService.hasOrganizationWritePermission(catalog.id)
+                  }
+                />
               </CardGroup>
             </div>
           </div>

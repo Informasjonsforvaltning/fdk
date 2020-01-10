@@ -26,6 +26,12 @@ exports[`should render CatalogsPagePure correctly 1`] = `
           key="concepts-910244132"
           type="concepts"
         />
+        <ItemsCountResolver
+          catalogId="910244132"
+          isReadOnly={true}
+          key="protocol-910244132"
+          type="protocol"
+        />
       </CardGroup>
     </div>
   </div>
