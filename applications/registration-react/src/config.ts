@@ -7,7 +7,8 @@ const env = (window as any).env || {
   USE_DEMO_LOGO: false,
   SSO_HOST: 'http://localhost:8084',
   // todo given that the it uses the same port as the organization-api, no-one has ever tried to run these services together. Update when this need arises
-  RECORDS_OF_PROCESSING_ACTIVITIES_GUI_HOST: 'http://localhost:8140'
+  RECORDS_OF_PROCESSING_ACTIVITIES_GUI_BASE_URI: 'http://localhost:8140',
+  RECORDS_OF_PROCESSING_ACTIVITIES_API_BASE_URI: 'http://localhost:8141'
 };
 
 // override all env variables to ut1 (inspired by https://registrering.ut1.fellesdatakatalog.brreg.no/config.js)
@@ -19,8 +20,8 @@ const env = (window as any).env || {
 // env.SSO_HOST = 'https://sso.ut1.fellesdatakatalog.brreg.no';
 // env.ORGANIZATION_API_HOST = 'https://organization-catalogue.ut1.fellesdatakatalog.brreg.no';
 // env.USE_DEMO_LOGO = true;
-// env.RECORDS_OF_PROCESSING_ACTIVITIES_GUI_HOST = 'https://registrering-protokoll.ut1.fellesdatakatalog.brreg.no';
-// env.RECORDS_OF_PROCESSING_ACTIVITIES_GUI_API = 'https://registrering-protokoll-api.ut1.fellesdatakatalog.brreg.no';
+// env.RECORDS_OF_PROCESSING_ACTIVITIES_GUI_BASE_URI = 'https://registrering-protokoll.ut1.fellesdatakatalog.brreg.no';
+// env.RECORDS_OF_PROCESSING_ACTIVITIES_API_BASE_URI = 'https://registrering-protokoll-api.ut1.fellesdatakatalog.brreg.no';
 
 const searchHost = env.SEARCH_HOST || 'https://fellesdatakatalog.brreg.no';
 const searchApi = {
@@ -64,10 +65,10 @@ const config = {
   },
   useDemoLogo: env.USE_DEMO_LOGO || false,
   recordsOfProcessingActivitiesHost:
-    env.RECORDS_OF_PROCESSING_ACTIVITIES_GUI_HOST ||
+    env.RECORDS_OF_PROCESSING_ACTIVITIES_GUI_BASE_URI ||
     'https://registrering-protokoll.fellesdatakatalog.brreg.no',
   recordsOfProcessingActivitiesApi:
-    env.RECORDS_OF_PROCESSING_ACTIVITIES_GUI_API ||
+    env.RECORDS_OF_PROCESSING_ACTIVITIES_API_BASE_URI ||
     'https://registrering-protokoll-api.fellesdatakatalog.brreg.no'
 };
 
