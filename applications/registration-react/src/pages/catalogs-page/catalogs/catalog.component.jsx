@@ -6,6 +6,7 @@ import { resolve } from 'react-resolver';
 import { getConfig } from '../../../config';
 import { CatalogItem } from './catalog-item/catalog-item.component';
 import { getConceptCount } from '../../../services/api/concept-registration-api/host';
+import { getRecordsCount } from '../../../services/api/records-registration-api/host';
 
 export const CatalogPure = props => {
   const { catalogId, type, fetchItems, itemsCount, isReadOnly } = props;
@@ -54,15 +55,16 @@ CatalogPure.propTypes = {
 };
 
 const memoizedGetConceptCount = memoize(getConceptCount);
+const memoizedGetRecordsCount = memoize(getRecordsCount);
 
 const mapProps = {
   itemsCount: ({ type, catalogId, itemsCount }) => {
     switch (type) {
       case 'concepts': {
-        return memoizedGetConceptCount(catalogId); // placeholder for api request promise
+        return memoizedGetConceptCount(catalogId);
       }
       case 'protocol': {
-        return memoizedGetConceptCount('123'); // placeholder for api request promise
+        return memoizedGetRecordsCount(catalogId);
       }
       default:
         return itemsCount;
