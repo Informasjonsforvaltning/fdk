@@ -91,13 +91,8 @@ lastUpdateReadOnly.defaultProps = {
 lastUpdateReadOnly.propTypes = {
   input: PropTypes.object
 };
-export const FormProvenance = ({ initialValues, languages }) => {
-  const {
-    provenance,
-    provenanceItems,
-    frequencyItems,
-    isReadOnly
-  } = initialValues;
+export const FormProvenance = ({ initialValues, languages, isReadOnly }) => {
+  const { provenance, provenanceItems, frequencyItems } = initialValues;
   if (provenance) {
     return (
       <form>
