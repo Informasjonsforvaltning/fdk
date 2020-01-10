@@ -20,6 +20,7 @@ const env = (window as any).env || {
 // env.ORGANIZATION_API_HOST = 'https://organization-catalogue.ut1.fellesdatakatalog.brreg.no';
 // env.USE_DEMO_LOGO = true;
 // env.RECORDS_OF_PROCESSING_ACTIVITIES_GUI_HOST = 'https://registrering-protokoll.ut1.fellesdatakatalog.brreg.no';
+// env.RECORDS_OF_PROCESSING_ACTIVITIES_GUI_API = 'https://registrering-protokoll-api.ut1.fellesdatakatalog.brreg.no';
 
 const searchHost = env.SEARCH_HOST || 'https://fellesdatakatalog.brreg.no';
 const searchApi = {
@@ -64,7 +65,10 @@ const config = {
   useDemoLogo: env.USE_DEMO_LOGO || false,
   recordsOfProcessingActivitiesHost:
     env.RECORDS_OF_PROCESSING_ACTIVITIES_GUI_HOST ||
-    'https://registrering-protokoll.fellesdatakatalog.brreg.no'
+    'https://registrering-protokoll.fellesdatakatalog.brreg.no',
+  recordsOfProcessingActivitiesApi:
+    env.RECORDS_OF_PROCESSING_ACTIVITIES_GUI_API ||
+    'https://registrering-protokoll-api.fellesdatakatalog.brreg.no'
 };
 
 export const getConfig = () => config;
