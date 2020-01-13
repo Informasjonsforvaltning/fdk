@@ -17,7 +17,7 @@ services:
       - xpack.security.enabled
 
   fuseki:
-    image: dcatno/fuseki:latest
+    image: eu.gcr.io/fdk-infra/fuseki:latest
     volumes:
       - fuseki-data:/etc/fuseki/databases/
     expose:
