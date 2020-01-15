@@ -73,7 +73,7 @@ services:
     expose:
       - "8080"
     depends_on:
-      - registration-react
+      - dataset-catalogue-gui
       - dataset-catalogue
       - api-catalogue
       - reference-data
@@ -112,8 +112,8 @@ services:
       - NODE_ENV
       - DISQUS_SHORTNAME
 
-  registration-react:
-    image: dcatno/registration-react:latest
+  dataset-catalogue-gui:
+    image: eu.gcr.io/fdk-infra/dataset-catalogue-gui:latest
     expose:
       - "4300"
     environment:
