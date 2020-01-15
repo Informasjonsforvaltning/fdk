@@ -1,5 +1,0 @@
-// TODO this should be something stable, but we can't relly use prod here. 
-
-// TODO UPDATE WHEN OpenAPI migration is done!
-
-curl 'https://localhost:8098/catalogs/910244132/apis?size=1000' -H 'DNT: 1' -H 'Accept-Encoding: gzip, deflate, br' -H 'Accept-Language: et,en-US;q=0.9,en;q=0.8,nb;q=0.7,da;q=0.6' -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36' -H 'Accept: application/json' -H 'Referer: https://localhost:8098/' -H 'Cookie: Idea-5c34ef69=93f56dd9-049c-4c1b-9a87-787071c6384d; grafana_sess=48a3fa0f190354bd; Idea-5c34ef6a=e488b634-15ac-4c26-84f3-fbb2eaa54b90; Idea-5c34ef6b=6fd7fd1b-91a8-4392-b40b-8a7026caaf4c; JSESSIONID=7766CFC45D6AF64E4326ED4C1E802F30' -H 'Connection: keep-alive' --compressed --insecure -o apis.response.json

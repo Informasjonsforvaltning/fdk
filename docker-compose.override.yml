@@ -118,12 +118,11 @@ services:
     environment:
       - REDUX_LOG
 
-  registration-react:
-    build: ./applications/registration-react
+  dataset-catalogue-gui:
     ports:
       - "4300:8080"
     volumes:
-      - ./applications/registration-react/src:/usr/src/app/src
+      - ../dataset-catalogue-gui/src:/usr/src/app/src
     environment:
       - REDUX_LOG
       - CONCEPT_REGISTRATION_API_HOST=http://localhost:8200

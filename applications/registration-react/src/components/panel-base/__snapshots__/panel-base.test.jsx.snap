@@ -1,9 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`should render PanelBase success correctly with props 1`] = `
-<div
-  className="panel-base"
->
-  Panel base
-</div>
-`;
