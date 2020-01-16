@@ -144,8 +144,8 @@ services:
     expose:
       - "8080"
 
-  harvester:
-    image: dcatno/harvester:latest
+  fdk-dataset-harvester-gui:
+    image: eu.gcr.io/fdk-infra/fdk-dataset-harvester-gui:latest
     expose:
       - "8080"
     depends_on:
