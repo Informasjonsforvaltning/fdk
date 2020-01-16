@@ -155,7 +155,7 @@ services:
   ### java services
   #############################
 
-  api-cat:
+  fdk-api-harvester:
     ports:
       - "8102:8080"
     environment:
