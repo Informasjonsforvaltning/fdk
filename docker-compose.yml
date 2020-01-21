@@ -17,7 +17,7 @@ services:
       - xpack.security.enabled
 
   fuseki:
-    image: eu.gcr.io/fdk-infra/fuseki:latest
+    image: eu.gcr.io/fdk-infra/fdk-fuseki-service:latest
     volumes:
       - fuseki-data:/etc/fuseki/databases/
     expose:
@@ -29,6 +29,14 @@ services:
       - postgres-data:/var/lib/postgresql/data
     expose:
       - "5432"
+
+  mongodb:
+    image: mongo:latest
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME
+      - MONGO_INITDB_ROOT_PASSWORD
+    expose:
+      - "27017"
 
   sso:
     image: eu.gcr.io/fdk-infra/sso:latest
@@ -66,7 +74,8 @@ services:
       - fdk-dataset-harvester
       - fdk-api-harvester
       - concept-cat
-      - informationmodel-cat
+      - fdk-informationmodel-harvester
+      - api-catalogue
 
   fdk-nginx-registration:
     image: eu.gcr.io/fdk-infra/fdk-nginx-registration:latest
@@ -135,12 +144,15 @@ services:
       - fdk-dataset-api
 
   concept-cat:
-    image: dcatno/concept-cat:latest
+    image: eu.gcr.io/fdk-infra/concept-cat:env_prod_latest
     expose:
       - "8080"
+    depends_on:
+      - rabbitmq
+      - fdk-harvest-admin
 
-  informationmodel-cat:
-    image: dcatno/informationmodel-cat:latest
+  fdk-informationmodel-harvester:
+    image: eu.gcr.io/fdk-infra/fdk-informationmodel-harvester:latest
     expose:
       - "8080"
 
@@ -152,6 +164,15 @@ services:
       - fuseki
       - fdk-dataset-harvester
 
+  fdk-harvest-admin:
+    image: eu.gcr.io/fdk-infra/fdk-harvest-admin:env_prod_latest
+    expose:
+      - "8080"
+    depends_on:
+      - rabbitmq
+      - mongodb
+      - sso
+
   fdk-dataset-harvester:
     image: eu.gcr.io/fdk-infra/fdk-dataset-harvester:latest
     expose:
@@ -160,6 +181,13 @@ services:
       - fuseki
       - elasticsearch5
       - reference-data
+      - rabbitmq
+    environment:
+      - JAVA_OPTS
+      - application.crawlerThreadPoolSize
+      - harvestRecordRetentionDays
+      - LOG_FORMAT
+      - SPRING_PROFILES_ACTIVE
 
   dataset-catalogue:
     image: eu.gcr.io/fdk-infra/dataset-catalogue:latest
@@ -180,7 +208,7 @@ services:
       - fdk-api-harvester
 
   reference-data:
-    image: dcatno/reference-data:latest
+    image: eu.gcr.io/fdk-infra/reference-data:latest
     expose:
       - "8080"
     depends_on:
@@ -205,24 +233,27 @@ services:
       - ORGNR_WHITELIST
       - ORGFORM_WHITELIST
 
+  rabbitmq:
+    image: rabbitmq:3.8.2-management
+    expose:
+      - "4672"
+      - "15672"
+    environment:
+      - RABBITMQ_DEFAULT_USER
+      - RABBITMQ_DEFAULT_PASS
+
   ### test and mock modules
   ###########################
 
   fdk-nginx-altinn-proxy-mock:
-    image: eu.gcr.io/fdk-nginx-altinn-proxy-mock:latest
+    image: eu.gcr.io/fdk-infra/fdk-nginx-altinn-proxy-mock:staging_latest
     expose:
       - "8080"
 
   fdk-nginx-enhetsregisteret-proxy-mock:
-    image: eu.gcr.io/fdk-nginx-enhetsregisteret-proxy-mock:latest
+    image: eu.gcr.io/fdk-infra/fdk-nginx-enhetsregisteret-proxy-mock:staging_latest
     expose:
       - "8080"
-
-  # TODO this is not a service, does not need to be always started, implement as "run" command instead
-  e2e:
-    image: dcatno/e2e:latest
-    volumes:
-      - ./applications/e2e/test:/usr/src/app/test:rw
 
 volumes:
   fuseki-data:

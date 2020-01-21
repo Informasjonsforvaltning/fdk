@@ -34,6 +34,13 @@ services:
     ports:
       - "5432:5432"
 
+  mongodb:
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=admin
+    ports:
+      - 27017:27017
+
   # OIDC requires host names to be available both in service and for browsers for redirects.
   # The simplest way to achieve this is to register the service names as hostnames also in the host machine hosts file:
   # mac: /private/etc/hosts
@@ -134,7 +141,7 @@ services:
     ports:
       - "8114:8080"
     environment:
-      - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
+      - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=develop
       - registrationApi_harvesterUsername=test_admin
       - registrationApi_harvesterPassword=password
       - LOG_LEVEL=DEBUG
@@ -146,7 +153,7 @@ services:
     ports:
       - "8116:8080"
     environment:
-      - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
+      - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=develop
       - registrationApi_harvesterUsername=test_admin
       - registrationApi_harvesterPassword=password
       - LOG_LEVEL=DEBUG
@@ -159,7 +166,7 @@ services:
     ports:
       - "8102:8080"
     environment:
-      - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
+      - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=develop
       - LOG_LEVEL=DEBUG
       - LOG_FORMAT=compact
 
@@ -167,38 +174,45 @@ services:
     ports:
       - "8104:8080"
     environment:
-      - JAVA_OPTS=-Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
+      - JAVA_OPTS=-Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=develop
       - LOG_LEVEL=DEBUG
+      - RABBIT_USERNAME=admin
+      - RABBIT_PASSWORD=admin
+      - HARVEST_ADMIN_ROOT_URL=http://localhost:8135/api
 
-  informationmodel-cat:
+  fdk-informationmodel-harvester:
     ports:
       - "8108:8080"
     environment:
-      - JAVA_OPTS=-Djava.security.egd=file:/dev/./urandom -Xmx512M -Dspring.profiles.active=docker
+      - JAVA_OPTS=-Djava.security.egd=file:/dev/./urandom -Xmx512M -Dspring.profiles.active=develop
       - LOG_LEVEL=DEBUG
+      - SPRING_PROFILES_ACTIVE=develop
 
-  harvester:
+  fdk-harvest-admin:
     ports:
-      - "8082:8080"
+      - "8135:8080"
     environment:
-      - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
-      - harvester_adminUsername=test_admin
-      - harvester_adminPassword=password
+      - KEYCLOAK_AUTH_URL=http://localhost:8084/auth
+      - RABBIT_USERNAME=admin
+      - RABBIT_PASSWORD=admin
+      - MONGO_USERNAME=admin
+      - MONGO_PASSWORD=admin
 
   fdk-dataset-harvester:
     ports:
       - "8106:8080"
     environment:
-      - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx1024M -Dspring.profiles.active=docker
+      - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx1024M -Dspring.profiles.active=develop
       - application.crawlerThreadPoolSize=2
       - harvestRecordRetentionDays=30
       - LOG_FORMAT=compact
+      - SPRING_PROFILES_ACTIVE=develop
 
   reference-data:
     ports:
       - "8112:8080"
     environment:
-      - JAVA_OPTS=-Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
+      - JAVA_OPTS=-Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=develop
       - FDK_SQL_JDBC_CONNECTION=jdbc:postgresql://postgres:5432/postgres?currentSchema=fdkreference
       - FDK_SQL_USERNAME=postgres
       - FDK_SQL_PASSWORD=password
@@ -207,7 +221,9 @@ services:
     ports:
       - "8118:8080"
     environment:
-      - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=docker
+      - JAVA_OPTS= -ea -Djava.security.egd=file:/dev/./urandom -Xmx256M -Dspring.profiles.active=develop
+    depends_on:
+      - rabbitmq
 
   user-api:
     ports:
@@ -220,6 +236,14 @@ services:
     depends_on:
       - fdk-nginx-altinn-proxy-mock
 
+  rabbitmq:
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=admin
+    ports:
+      - 5672:5672
+      - 15672:15672
+
   ### test and mock modules
   ###########################
 
@@ -230,9 +254,3 @@ services:
   fdk-nginx-enhetsregisteret-proxy-mock:
     ports:
       - "8132:8080"
-
-  e2e:
-    build: ./applications/e2e
-    volumes:
-      - ./applications/e2e/test:/usr/src/app/test
-      - ./applications/e2e/reports:/usr/src/app/reports
